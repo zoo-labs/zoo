@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  script.
+    if(localStorage.czUser) {
+      window.location.href = '/feed'
+    }
+  main#HomePage
+    #HomePage-inner
+      img(src="/images/logo.jpg", alt="CryptoZoo")
+      a.button.modal-trigger(data-modal-name="login") Login
+      a.button.modal-trigger(data-modal-name="register") Register
+      a#MetamaskLogin.button(onclick="metamaskLogin()") Login with Metamask
+      
+      .modal.hidden(data-modal-name="login")
+        .modal-close
+        .js-form(data-method="POST", data-action="/users/login", data-cb-key="login")
+          h2 Login
+          .formfield 
+            label Name/Email
+            input(name="name", type="text", required="required")
+          .formfield 
+            label Password 
+            input(name="password", type="password", required="required")
+          button.formbutton Submit
+
+      .modal.hidden(data-modal-name="register")
+        .modal-close
+        .js-form(data-method="POST", data-action="/users/register", data-cb-key="register")
+          h2 Register
+          .formfield 
+            label Name
+            input(name="name", type="text", required="required")
+          .formfield 
+            label Email
+            input(name="email", type="email", required="required")
+          .formfield 
+            label Password 
+            input(name="password", type="password", required="required")
+          button.formbutton Submit

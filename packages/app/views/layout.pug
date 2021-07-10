@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    script.
+      if(!localStorage.czUser && window.location.pathname != '/') {
+        window.location.href = '/'
+      }
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+  body(class=bodyclass)
+    block content
+
+    script(src="https://kit.fontawesome.com/ff8599541c.js", crossorigin="anonymous")
+    script. 
+      window.initialServerTime = #{currentServerTime};
+      window.initialClientTime = (new Date()).getTime();
+    script(src="/javascripts/web3.min.js")
+    script(src="/javascripts/main.js")
+    block scripts
