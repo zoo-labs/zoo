@@ -1,0 +1,66 @@
+{
+  "name": "@cryptozoo/monorepo",
+  "version": "1.0.0",
+  "keywords": [
+    "ethereum",
+    "react",
+    "uniswap",
+    "workspaces",
+    "yarn"
+  ],
+  "private": true,
+  "scripts": {
+    "react-app:build": "yarn workspace @cryptozoo/react-app build --max-old-space-size=12288",
+    "react-app:eject": "yarn workspace @cryptozoo/react-app eject",
+    "react-app:start": "yarn workspace @cryptozoo/react-app start",
+    "react-app:test": "yarn workspace @cryptozoo/react-app test",
+    "build": "yarn workspace @cryptozoo/react-app build --max-old-space-size=12288",
+    "chain": "yarn workspace @cryptozoo/hardhat chain",
+    "fork": "yarn workspace @cryptozoo/hardhat fork",
+    "node": "yarn workspace @cryptozoo/hardhat chain",
+    "test": "yarn workspace @cryptozoo/hardhat test",
+    "start": "yarn workspace @cryptozoo/react-app start",
+    "compile": "yarn workspace @cryptozoo/hardhat compile",
+    "deploy": "yarn workspace @cryptozoo/hardhat deploy",
+    "watch": "yarn workspace @cryptozoo/hardhat watch",
+    "accounts": "yarn workspace @cryptozoo/hardhat accounts",
+    "balance": "yarn workspace @cryptozoo/hardhat balance",
+    "send": "yarn workspace @cryptozoo/hardhat send",
+    "ipfs": "yarn workspace @cryptozoo/react-app ipfs",
+    "surge": "yarn workspace @cryptozoo/react-app surge",
+    "s3": "yarn workspace @cryptozoo/react-app s3",
+    "ship": "yarn workspace @cryptozoo/react-app ship",
+    "generate": "yarn workspace @cryptozoo/hardhat generate",
+    "account": "yarn workspace @cryptozoo/hardhat account",
+    "mineContractAddress": "cd packages/hardhat && npx hardhat mineContractAddress",
+    "wallet": "cd packages/hardhat && npx hardhat wallet",
+    "fundedwallet": "cd packages/hardhat && npx hardhat fundedwallet",
+    "flatten": "cd packages/hardhat && npx hardhat flatten",
+    "clean": "cd packages/hardhat && npx hardhat clean",
+    "run-graph-node": "yarn workspace @cryptozoo/services run-graph-node",
+    "remove-graph-node": "yarn workspace @cryptozoo/services remove-graph-node",
+    "clean-graph-node": "yarn workspace @cryptozoo/services clean-graph-node",
+    "graph-prepare": "mustache packages/subgraph/config/config.json packages/subgraph/src/subgraph.template.yaml > packages/subgraph/subgraph.yaml",
+    "graph-codegen": "yarn workspace @cryptozoo/subgraph graph codegen",
+    "graph-build": "yarn workspace @cryptozoo/subgraph graph build",
+    "graph-create-local": "yarn workspace @cryptozoo/subgraph graph create --node http://localhost:8020/ scaffold-eth/your-contract",
+    "graph-remove-local": "yarn workspace @cryptozoo/subgraph graph remove --node http://localhost:8020/ scaffold-eth/your-contract",
+    "graph-deploy-local": "yarn workspace @cryptozoo/subgraph graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 scaffold-eth/your-contract",
+    "graph-ship-local": "yarn graph-prepare && yarn graph-codegen && yarn graph-deploy-local",
+    "deploy-and-graph": "yarn deploy && yarn graph-ship-local",
+    "theme": "yarn workspace @cryptozoo/react-app theme",
+    "watch-theme": "yarn workspace @cryptozoo/react-app watch"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/@graphprotocol/graph-ts",
+      "**/@graphprotocol/graph-ts/**",
+      "**/hardhat",
+      "**/hardhat/**"
+    ]
+  },
+  "dependencies": {}
+}
