@@ -641,7 +641,8 @@ class ZooFeed {
       this.elems.buttonLookup.yield.classList.remove('hidden')
       this.elems.popupContentLookup.yield.innerHTML = `
         YTD: ${data.yield.YTD.toLocaleString()} $ZOO<br>
-        Daily: ${data.yield.daily.toLocaleString()} $ZOO
+        Daily: ${data.yield.daily.toLocaleString()} $ZOO<br>
+        <button>Free and claim yield</button>
       `
     } else {
       this.elems.buttonLookup.yield.classList.add('hidden')
