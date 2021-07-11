@@ -2,7 +2,7 @@
   const utils = document.querySelector('.account-utils')
   utils.addEventListener('click', e => {
     const tgt = e.target.closest('.ac-js')
-    if(tgt){
+    if(tgt) {
       switch(tgt.dataset.action){
         case 'logout':
           if(window.confirm('Log Out?')){
@@ -33,7 +33,7 @@
     hatchRevealTimeout,
     allowHatchClose,
     requestCreatureRender
-    
+
 
   async function updateCreatures(){
     const { creatures } = await window.EndpointManager.get(`/data/creatures/${user.id}`)
@@ -75,7 +75,7 @@
                 breedTimeoutKey = creature.breed_count > 5 ? 5 : creature.breed_count,
                 breedTimeout = window.getMilliseconds(window.breedTimeouts[breedTimeoutKey]),
                 elapsedTime = now - lastBred
-                
+
               if(elapsedTime < breedTimeout){
                 const timeRemaining = breedTimeout - elapsedTime,
                   timeRemainingDaysHours = window.getDaysHours(timeRemaining),
@@ -101,11 +101,11 @@
               }
               obj[creature.name].push(creature)
             }
-            
+
             return obj
           }, { }),
           animalKeys = Object.keys(breedableByAnimal).sort()
-        
+
         animalsInTimeout.sort((a, b) => a.timeRemaining - b.timeRemaining)
 
         animalsHTMLarr.push(`<div class="account-row">
@@ -140,7 +140,7 @@
 
       if(nonbreedable.length){
         const nonBreedableByAnimal = {}
-        
+
         await Promise.all(nonbreedable.map(async (creature) => {
           if(!nonBreedableByAnimal[creature.name]){
             nonBreedableByAnimal[creature.name] = {
@@ -174,10 +174,10 @@
           }).join('')}
         </div>
       </div>`)
-      }      
-      
+      }
+
       animalsHTML = animalsHTMLarr.join('')
-    }    
+    }
 
     const eggs = userZoo.eggs.map(egg => {
       if(egg.is_hybrid){
@@ -220,7 +220,7 @@
 
     detailsElem.innerHTML = `
       <div class="account-row">
-        <h3>Wallet Balance - ${user.wallet_balance}</h3>
+        <h3>Balance - ${user.zooBalance} $ZOO</h3>
         <button class="account-button ac-js" data-action="add funds">Add Funds</button>
       </div>
       <div class="account-row">
@@ -241,7 +241,7 @@
       ${animalsHTML}
     `
   }
-  
+
   //bind click events
   detailsElem.addEventListener('click', async e => {
     const tgt = e.target.closest('.ac-js')
@@ -278,14 +278,14 @@
                   user_id: user.id
                 })
               }
-              
+
               const data = await window.EndpointManager.post('/users/update', {
                 id: user.id,
                 vals: {
                   "wallet_balance": remainingBalance
                 }
               })
-  
+
               user = data.user
               localStorage.czUser = JSON.stringify(user)
 
@@ -305,7 +305,7 @@
               eggModalVideo = eggModalVideos.hybrid
               eggModalVideos.basic.classList.add('hidden')
               imgstr = window.cloudinaryImgURL(egg.hybrid_name_1, egg.name)
-            } else {            
+            } else {
               eggModalVideo = eggModalVideos.basic
               eggModalVideos.hybrid.classList.add('hidden')
               imgstr = window.cloudinaryImgURL(egg.name, egg.name)
@@ -331,7 +331,7 @@
               updateCreatures().then(renderAccountDetails)
             } else {
               //close button hasn't been clicked, allow it
-              allowHatchClose = true              
+              allowHatchClose = true
             }
 
 
@@ -355,7 +355,7 @@
             if(confirmBreed){
               //trigger breed
               breedCreature.classList.add('-active')
-              
+
               if(breedPair[0].dataset.name === 'Blobfish'){
                 //if it's a blobfish in slot 1, push it to slot 2
                 breedPair.unshift(breedCreature)
@@ -367,9 +367,9 @@
                 animal_id_2 =  breedPair[1].dataset.animalId,
                 creature_id_1 = breedPair[0].dataset.id,
                 creature_id_2 = breedPair[1] === breedPair[0] ? breedPair[1].dataset.nextId : breedPair[1].dataset.id
-                
+
               await Promise.all([
-                window.EndpointManager.post('/data/generate-egg', { 
+                window.EndpointManager.post('/data/generate-egg', {
                   user_id: user.id,
                   animal_id_1,
                   animal_id_2
@@ -379,7 +379,7 @@
               ])
 
               breedPair.splice(0, 2)
-            
+
               window.quickFormPromise('Hybrid egg created successfully!', {}, 'Ok')
 
               updateCreatures().then(renderAccountDetails)

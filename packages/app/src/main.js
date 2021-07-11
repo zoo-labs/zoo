@@ -347,7 +347,7 @@ import ZooToken from '../../hardhat/artifacts/contracts/ZooToken.sol/ZooToken.js
 
     const web3Status    = wallet.status
     const contract      = new Contract(tokenAddress, tokenAbi, wallet.provider)
-    const balance       = await contract.balanceOf(wallet.address)
+    const balance       = (await contract.balanceOf(wallet.address)).toString()
     const symbol        = await contract.symbol()
     const name          = await contract.name()
     const contractOwner = await contract.owner()
@@ -365,6 +365,8 @@ import ZooToken from '../../hardhat/artifacts/contracts/ZooToken.sol/ZooToken.js
       userdata = newUserData.user
     }
 
+    // Update balance
+    userdata.zooBalance = balance
     localStorage.czUser = JSON.stringify(userdata)
 
     // Logged in
