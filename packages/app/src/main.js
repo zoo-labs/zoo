@@ -1,3 +1,7 @@
+import { ethers, Contract } from "ethers"
+
+import ZooToken from '../../hardhat/artifacts/contracts/ZooToken.sol/ZooToken.json'
+
 ;(function(){
 
   window.rarityTable = {
@@ -99,7 +103,7 @@
     return new Promise(resolve => {
       new ConfirmBox(txt, resolve)
     })
-  } 
+  }
 
   class DialogBox {
     constructor(txt, fields, resolve, cta = "Submit"){ // fields { name: type, }
@@ -154,7 +158,7 @@
     return new Promise(resolve => {
       new DialogBox(txt, fields, resolve, cta)
     })
-  } 
+  }
 
   //Endpoint manager
   class _EndpointManager {
@@ -176,7 +180,7 @@
         let obj
         if(typeof resp === "object") obj = resp
         else obj = JSON.parse(resp)
-        
+
         return obj;
       }
     }
@@ -244,7 +248,7 @@
       this.originalText = this.elem.textContent
       let i = 0
       const dots = '...'
-      
+
       this.renderInterval = window.setInterval(() => {
         ++i
         this.elem.textContent = `Wait${dots.slice(0,i)}`
@@ -284,25 +288,8 @@
   }
 
   async function connectWallet () {
-    if (window.ethereum) {
-      try {
-        const addressArray = await window.ethereum.request({
-          method: "eth_requestAccounts"
-        }),
-        obj = {
-          success: true,
-          status: "Wallet Connected.",
-          address: addressArray[0]
-        }
-        return obj;
-      } catch (err) {
-        return {
-          success: false,
-          address: "",
-          status: "😥 " + err.message
-        }
-      }
-    } else {
+    console.log('connectWallet')
+    if (!window.ethereum) {
       return {
         success: false,
         address: "",
@@ -317,46 +304,78 @@
           </span>`
       }
     }
+
+    try {
+      console.log('getting provider')
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+
+      const accounts = await provider.send('eth_requestAccounts', [])
+      const address  = await signer.getAddress()
+
+      console.log('accounts', accounts)
+      console.log('address', address)
+
+      return {
+        success: true,
+        status: "Wallet Connected.",
+        address: address,
+        provider: provider,
+        signer: signer,
+      }
+    } catch (err) {
+      return {
+        success: false,
+        address: "",
+        status: "😥 " + err.message
+      }
+    }
   }
 
   window.metamaskLogin = async () => {
-    const contractAddress = '0x6130273d6696676BBCA06717a6E23aa6b6e57DE3',
-      abiData = await fetch('/data/contract').then(resp => resp.json()),
-      cryptoAnimalABI = abiData.data,
-      walletResponse = await connectWallet()
-      
-    if(!walletResponse.success){
-      window.quickFormPromise(walletResponse.status, {}, 'Ok')
+    const wallet = await connectWallet()
+
+    // Bail out if we can't connect to wallet
+    if (!wallet.success) {
+      window.quickFormPromise(wallet.status, {}, 'Ok')
       return null
     }
-    //else
-    const web3Status = walletResponse.status,
-      account = walletResponse.address,
-    //const web3 = new Web3(Web3.givenProvider);
-      web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/ad21490a359b42a38df6e0fba956355c')),
-      contract = new web3.eth.Contract(cryptoAnimalABI['abi'] , contractAddress),
-      symbol = await contract.methods.symbol().call(),
-      name = await contract.methods.name().call(),
-      contractOwner = await contract.methods.owner().call(),
-      existingRecord = await fetch(`/users/${account}`).then(resp => resp.json())
-      
+
+    // Zoo Token
+    const tokenAddress = '0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997';
+    const tokenAbi = ZooToken.abi
+
+    const web3Status    = wallet.status
+    const contract      = new Contract(tokenAddress, tokenAbi, wallet.provider)
+    const balance       = await contract.balanceOf(wallet.address)
+    const symbol        = await contract.symbol()
+    const name          = await contract.name()
+    const contractOwner = await contract.owner()
+
+    console.log('symbol', symbol, 'name', name, 'contractOwner', contractOwner, 'balance', balance, 'wallet.address', wallet.address)
+
+    // TODO: Remove backend code
+    const existingRecord = await fetch(`/users/${wallet.address}`).then(resp => resp.json())
+
     let userdata;
-    if(existingRecord && existingRecord.user){
+    if (existingRecord && existingRecord.user) {
       userdata = existingRecord.user
     } else {
-      const newUserData = await window.EndpointManager.post('/users/registermm', { mmid: account })
+      const newUserData = await window.EndpointManager.post('/users/registermm', { mmid: wallet.address })
       userdata = newUserData.user
-    }    
+    }
 
     localStorage.czUser = JSON.stringify(userdata)
+
+    // Logged in
     location.href = '/feed'
 
     return {
+      balance,
       symbol,
       name,
       contractOwner,
-      web3Status,
-      account
+      web3Status
     }
   }
 
