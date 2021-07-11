@@ -10,6 +10,7 @@
   ],
   "private": true,
   "scripts": {
+    "app:start": "yarn workspace @cryptozoo/app start --max-old-space-size=12288",
     "dev-app:build": "yarn workspace @cryptozoo/dev-app build --max-old-space-size=12288",
     "dev-app:eject": "yarn workspace @cryptozoo/dev-app eject",
     "dev-app:start": "yarn workspace @cryptozoo/dev-app start",
@@ -20,6 +21,7 @@
     "node": "yarn workspace @cryptozoo/hardhat chain",
     "test": "yarn workspace @cryptozoo/hardhat test",
     "start": "yarn workspace @cryptozoo/app start",
+    "dev": "yarn workspace @cryptozoo/dev-app start",
     "compile": "yarn workspace @cryptozoo/hardhat compile",
     "deploy": "yarn workspace @cryptozoo/hardhat deploy",
     "watch": "yarn workspace @cryptozoo/hardhat watch",
@@ -62,5 +64,7 @@
       "**/hardhat/**"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "node-gyp": "^3.8.0"
+  }
 }
