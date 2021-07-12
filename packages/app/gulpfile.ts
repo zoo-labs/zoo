@@ -6,31 +6,32 @@ const terser  = require('gulp-terser')
 const ts      = require('gulp-typescript')
 const webpack = require('webpack-stream')
 
-function html() {
-  return gulp.src('./src/html/*.pug')
-    .pipe(pug({ verbose: true }))
-    .pipe(gulp.dest('./public'))
-}
-
-function css() {
-  return gulp.src('src/css/style.scss')
-    .pipe(sass())
-    .pipe(gulp.dest('./public'))
-}
-
 const tsProject = ts.createProject('tsconfig.json')
 
 function js() {
-    return gulp.src('src/js/app.ts')
+    return gulp.src('src/app.ts')
         .pipe(tsProject())
         .pipe(gulp.dest('./public'));
 }
 
-function watch() {
-  return gulp.watch(["src/*"], () => gulp.parallel([html, css, js]))
+function css() {
+  return gulp.src('src/style.scss')
+    .pipe(sass())
+    .pipe(gulp.dest('./public'))
 }
 
-exports.build   = gulp.parallel([html, css, js])
+function html() {
+  return gulp.src('./src/pages/*.pug')
+    .pipe(pug({ verbose: true }))
+    .pipe(gulp.dest('./public'))
+}
+
+
+function watch() {
+  return gulp.watch(["src/*"], () => gulp.parallel([js, css, html]))
+}
+
+exports.build   = gulp.parallel([js, css, html])
 exports.html    = html
 exports.css     = css
 exports.js      = js

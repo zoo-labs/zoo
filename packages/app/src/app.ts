@@ -1,10 +1,10 @@
 import { ethers, Contract } from 'ethers'
-import { breedTimeouts, rarityTable } from './constants'
-import { getMilliseconds, getDaysHours } from './utils'
+import { breedTimeouts, rarityTable } from './zoo/constants'
+import { getMilliseconds, getDaysHours } from './zoo/utils'
 
-import API from './api'
-import Form from './form'
-import Modal from './modal'
+import API from './zoo/api'
+import Form from './zoo/form'
+import Modal from './zoo/modal'
 
 const api = new API()
 

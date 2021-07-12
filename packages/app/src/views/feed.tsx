@@ -1,4 +1,5 @@
 const rootelem = document.documentElement
+
 function calculateHeight(){
   rootelem.style.setProperty('--vh', [rootelem.clientHeight / 100, 'px'].join(''))
 }
@@ -12,7 +13,7 @@ function getURLParams(){
   //else
   const paramLookup = s.split('&').reduce((obj, param) => {
     const pair = param.split('=')
-    obj[pair[0]] = pair[1] || ""
+    obj[pair[0]] = pair[1] || ''
     return obj
   }, {})
 
@@ -33,21 +34,21 @@ class MiniCart {
     this.state = {}
 
     const elem = document.createElement('div')
-    elem.id = "MiniCart"
+    elem.id = 'MiniCart'
     elem.className = 'minicart'
 
     elem.innerHTML = `
-      <div id="MiniCart__header">
-        <img src="${CART_ICON_URL}" alt="Cart" />
+      <div id='MiniCart__header'>
+        <img src='${CART_ICON_URL}' alt='Cart' />
         <h1>Cart</h1>
       </div>
-      <div id="MiniCart__empty">
+      <div id='MiniCart__empty'>
         <h2>Your cart is currently empty</h2>
       </div>
-      <div id="MiniCart__items">
+      <div id='MiniCart__items'>
 
       </div>
-      <div id="MiniCart__summary">
+      <div id='MiniCart__summary'>
 
       </div>
     `
@@ -127,44 +128,44 @@ class MiniCart {
   }
 
   emptyCart(){
-    
+
   }
 
   renderCart(){
     if(this.state.items.length){
-      this.elems.main.dataset.state = "has items"
+      this.elems.main.dataset.state = 'has items'
       this.elems.items.innerHTML = this.state.items.map(item => `
-        <div class="MiniCart__item" data-product-id="${item.id}">
-          <div class="MiniCart__item-image" style="background-image: url(${item.featured_image.url})"></div>
-          <div class="MiniCart__item-details">
-            <h3 class="MiniCart__item-details__title">${item.title}</h3>
-            <h4 class="MiniCart__item-details__price">${formatPrice(item.price)}</h4>
-            <div class="MiniCart__item-details__row MiniCart__item-details__quantity">
+        <div class='MiniCart__item' data-product-id='${item.id}'>
+          <div class='MiniCart__item-image' style='background-image: url(${item.featured_image.url})'></div>
+          <div class='MiniCart__item-details'>
+            <h3 class='MiniCart__item-details__title'>${item.title}</h3>
+            <h4 class='MiniCart__item-details__price'>${formatPrice(item.price)}</h4>
+            <div class='MiniCart__item-details__row MiniCart__item-details__quantity'>
               <label>Quantity: </label>
-              ${item.quantity > 1 ? `<a class="MiniCart__item-details__quantity-button cart-js" data-action="set item quantity" data-quantity="${item.quantity - 1}" data-product-id="${item.id}">-</a>` : '<span class="MiniCart__item-details__quantity-placeholder">&nbsp;</span>'}
-              <span class="MiniCart__item-details__quantity-count">${item.quantity}</span>
-              <a class="MiniCart__item-details__quantity-button cart-js" data-action="set item quantity" data-quantity="${item.quantity + 1}" data-product-id="${item.id}">+</a>
+              ${item.quantity > 1 ? `<a class='MiniCart__item-details__quantity-button cart-js' data-action='set item quantity' data-quantity='${item.quantity - 1}' data-product-id='${item.id}'>-</a>` : '<span class='MiniCart__item-details__quantity-placeholder'>&nbsp;</span>'}
+              <span class='MiniCart__item-details__quantity-count'>${item.quantity}</span>
+              <a class='MiniCart__item-details__quantity-button cart-js' data-action='set item quantity' data-quantity='${item.quantity + 1}' data-product-id='${item.id}'>+</a>
             </div>
-            <a class="MiniCart__item-details__remove cart-js" data-action="remove item" data-product-id="${item.id}">Remove Item</a>
+            <a class='MiniCart__item-details__remove cart-js' data-action='remove item' data-product-id='${item.id}'>Remove Item</a>
           </div>
         </div>
       `)
 
       this.elems.summary.innerHTML = `
-        <div class="MiniCart__summary-row">
+        <div class='MiniCart__summary-row'>
           <label>Subtotal</label>
           <span>$${formatPrice(this.state.total_price)}</span>
         </div>
-        <a id="MiniCart__checkout-button" href="/checkout">Checkout</a>
+        <a id='MiniCart__checkout-button' href='/checkout'>Checkout</a>
       `
 
       this.elems.icon.classList.add('-has-items')
       this.elems.icon.setAttribute('data-item-count', this.state.items.length)
     } else {
-      this.elems.main.dataset.state = "empty"
+      this.elems.main.dataset.state = 'empty'
       this.elems.items.innerHTML = ''
       this.elems.summary.innerHTML = ''
-      
+
       this.elems.icon.classList.remove('-has-items')
       this.elems.icon.removeAttribute('data-item-count')
     }
@@ -206,7 +207,7 @@ class ZooFeed {
         icon_key: 'heartbeat'
       }
     ]
-    
+
     elem.classList.add('sv')
 
     this.currentPage = null
@@ -237,7 +238,7 @@ class ZooFeed {
           options: [],
           type: t.dataset.type
         }
-        if(t.dataset.type === "single"){
+        if(t.dataset.type === 'single'){
           filterobj.active_option = null
         } else {
           filterobj.active_options = []
@@ -272,18 +273,18 @@ class ZooFeed {
           this.filterLists[key].options.push(post[key])
         }
       })
-      
+
       return post
     })
     this.active_dataset = this.base_dataset.slice(0)
     this.filter_preview_dataset = null //this will be used in the filtering flow
-    
+
     if(this.elems.filterParent){
       Object.keys(this.filterLists).forEach(key => {
         const filterObj = this.filterLists[key]
 
         filterObj.elem.innerHTML = filterObj.options.map(option => {
-          return `<li class="sv__filter-option sv-js" data-action="add filter" data-type="${filterObj.type}" data-filter-name="${key}" data-val="${option}">
+          return `<li class='sv__filter-option sv-js' data-action='add filter' data-type='${filterObj.type}' data-filter-name='${key}' data-val='${option}'>
             <span>${option}</span>
           </li>`
         }).join('')
@@ -312,7 +313,7 @@ class ZooFeed {
   }
   closeFilterMenu(){
     this.elems.filterParent.classList.remove('-open')
-    
+
     if(this.makeFilterChange){
       this.makeFilterChange = false
       this.filterPosts()
@@ -405,7 +406,7 @@ class ZooFeed {
               if(arr.indexOf(val) === -1){
                 arr.push(val)
               }
-            })          
+            })
             return arr
           }, [])
         }
@@ -442,29 +443,29 @@ class ZooFeed {
       const tgt = e.target.closest('.sv-js')
       if(tgt){
         switch (tgt.dataset.action){
-          case "add to cart":
+          case 'add to cart':
             this.cart.addItem(tgt.dataset.variantId)
             break;
-          case "open popup":
+          case 'open popup':
             this.openPopup(tgt.dataset.name)
             break;
-          case "close popup":
+          case 'close popup':
             //only fire this if it's a click on the container itself
             if(tgt === e.target){
               this.closePopup()
             }
             break;
-          case "toggle filters":
+          case 'toggle filters':
             if(this.elems.filterParent.classList.contains('-open')){
               this.closeFilterMenu()
             } else {
               this.openFilterMenu()
             }
             break;
-          case "apply filters":
+          case 'apply filters':
             this.closeFilterMenu()
             break;
-          case "clear filters":
+          case 'clear filters':
             this.state.filters = null
             this.elems.filterOptions.querySelectorAll('.sv__filter-option').forEach(t => {
               t.classList.remove('-active')
@@ -474,12 +475,12 @@ class ZooFeed {
             this.makeFilterChange = true
             this.closeFilterMenu()
             break;
-          case "add filter":
+          case 'add filter':
             this.makeFilterChange = true
             this.addFilter(tgt)
             this.updateFilterPreviewDataset()
             break;
-          case "remove filter":
+          case 'remove filter':
             this.makeFilterChange = true
             this.removeFilter(tgt)
             this.updateFilterPreviewDataset()
@@ -552,8 +553,8 @@ class ZooFeed {
         }, { once: true })
       }
     })
-    
-    //filters swipe events    
+
+    //filters swipe events
     if(this.elems.filterParent){
       this.elems.filterParent.addEventListener('mousedown', e => {
         const popupY = e.pageY - this.elems.main.offsetTop
@@ -599,7 +600,7 @@ class ZooFeed {
             _feedElem.removeEventListener('touchmove', handleTouchmove)
             _touchendHandler(y)
           }
-        
+
         this.elems.main.addEventListener('touchend', handleTouchend, { once: true })
         this.elems.feed.addEventListener('touchmove', handleTouchmove)
       }
@@ -619,7 +620,7 @@ class ZooFeed {
             _feedElem.removeEventListener('mousemove', handleMousemove)
             _mouseupHandler(y)
           }).bind(this)
-        
+
         this.elems.main.addEventListener('mouseup', handleMouseup, { once: true })
         this.elems.feed.addEventListener('mousemove', handleMousemove)
       }
@@ -633,7 +634,7 @@ class ZooFeed {
       this.elems.popupContentLookup.info.innerHTML = data.info_text
     } else {
       this.elems.buttonLookup.info.classList.add('hidden')
-      this.elems.popupContentLookup.info.innerHTML = ""
+      this.elems.popupContentLookup.info.innerHTML = ''
     }
 
     //yield popup
@@ -646,7 +647,7 @@ class ZooFeed {
       `
     } else {
       this.elems.buttonLookup.yield.classList.add('hidden')
-      this.elems.popupContentLookup.yield.innerHTML = ""
+      this.elems.popupContentLookup.yield.innerHTML = ''
     }
   }
 
@@ -716,7 +717,7 @@ class ZooFeed {
     this.elems.feed.style.top = [this.initialFeedY + diff, 'px'].join('')
   }
 
-  handleSwipeStart(type){    
+  handleSwipeStart(type){
     this.initialFeedY = this.elems.feed.offsetTop
     this.elems.feed.classList.add('-free-scroll')
   }
@@ -735,20 +736,20 @@ class ZooFeed {
     const rarity = creature.rarity ? window.rarityTable[creature.rarity] : null
 
     page.innerHTML =`
-      <div class="cz__animal" style="background-image: url(${creature.imgstr})" data-id="${creature.creature_id}"></div>
+      <div class='cz__animal' style='background-image: url(${creature.imgstr})' data-id='${creature.creature_id}'></div>
 
-      <div class="cz__animal-name">
-        <a class="cz__animal-name__name">${creature.name}</a>
-        ${rarity ? `<span class="cz__animal-name__rarity">${rarity}</span>` : ''}
+      <div class='cz__animal-name'>
+        <a class='cz__animal-name__name'>${creature.name}</a>
+        ${rarity ? `<span class='cz__animal-name__rarity'>${rarity}</span>` : ''}
       </div>
 
-      <div class="sv__page-info">
-        <div class="cz__animal-name">
-          <a class="cz__animal-name__name">${creature.name}</a>
-          ${rarity ? `<span class="cz__animal-name__rarity">${rarity}</span>` : ''}
+      <div class='sv__page-info'>
+        <div class='cz__animal-name'>
+          <a class='cz__animal-name__name'>${creature.name}</a>
+          ${rarity ? `<span class='cz__animal-name__rarity'>${rarity}</span>` : ''}
         </div>
-        ${creature.description && creature.description.length ? `<p class="sv__page-info-description">${creature.description}</p>` : ''}
-        <span class="cz__animal-birthdate">Born on: <span class="cz__animal-birthdate__date">${creature.birthdate}</span></span>
+        ${creature.description && creature.description.length ? `<p class='sv__page-info-description'>${creature.description}</p>` : ''}
+        <span class='cz__animal-birthdate'>Born on: <span class='cz__animal-birthdate__date'>${creature.birthdate}</span></span>
       </div>
     `
     //todo fill in other info
@@ -756,13 +757,13 @@ class ZooFeed {
 
     ++this.feedSize
     this.elems.feed.style.setProperty('--size', this.feedSize)
-    this.elems.feed.appendChild(page)      
+    this.elems.feed.appendChild(page)
   }
 
   closePopup(){
     this.elems.popupsParent.classList.remove('-open')
     //wait for animation
-    window.setTimeout(() => {      
+    window.setTimeout(() => {
       delete this.elems.popupsParent.dataset.state
     }, 400)
   }
@@ -774,12 +775,12 @@ class ZooFeed {
 
   //sets data for current post
   setActive(){
-    //only fire on post change
-    if(this.active_dataset[this.idx] != this.currentPage){      
+    // only fire on post change
+    if(this.active_dataset[this.idx] != this.currentPage){
       if(this.currentPage){
-        
+
       }
-      
+
       this.currentPage = this.active_dataset[this.idx]
 
       this.state.id = this.currentPage.id
