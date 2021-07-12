@@ -1,3 +1,5 @@
+import {formatLargeNumber} from '../zoo/utils'
+
 ;(async function(){
   const utils = document.querySelector('.account-utils')
   utils.addEventListener('click', e => {
