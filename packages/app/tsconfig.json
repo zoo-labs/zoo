@@ -1,5 +1,7 @@
 {
-  "files": ["src/app.ts"],
+  "files": [
+    "src/app.ts"
+  ],
   "compilerOptions": {
     "lib": [
       "dom",
@@ -19,6 +21,16 @@
     "strict": false,
     "target": "esnext",
     "rootDir": "src",
-    "types": ["node", "preact"]
-  }
+    "types": [
+      "node",
+      "preact"
+    ],
+    "allowSyntheticDefaultImports": true,
+    "noFallthroughCasesInSwitch": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src"
+  ]
 }

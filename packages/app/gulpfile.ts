@@ -22,7 +22,7 @@ function css() {
 
 function html() {
   return gulp.src('./src/pages/*.pug')
-    .pipe(pug({ verbose: true }))
+    .pipe(pug())
     .pipe(gulp.dest('./public'))
 }
 
@@ -32,9 +32,8 @@ function watch() {
 }
 
 exports.build   = gulp.parallel([js, css, html])
-exports.html    = html
-exports.css     = css
 exports.js      = js
-exports.pug     = pug
+exports.css     = css
+exports.html    = html
 exports.watch   = watch
 exports.default = exports.build

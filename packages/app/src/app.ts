@@ -8,6 +8,8 @@ import Modal from './zoo/modal'
 
 const api = new API()
 
+console.log('app wired')
+
 // Wire up forms and modals
 document.querySelectorAll('.modal').forEach(elem => new Modal(elem))
 document.querySelectorAll('.js-form').forEach(elem => new Form(elem))
