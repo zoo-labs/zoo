@@ -1,0 +1,24 @@
+{
+  "files": ["src/app.ts"],
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "preserveSymlinks": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "target": "esnext",
+    "rootDir": "src",
+    "types": ["node", "preact"]
+  }
+}
