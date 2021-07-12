@@ -60,6 +60,23 @@ import ZooToken from '../../hardhat/artifacts/contracts/ZooToken.sol/ZooToken.js
     return `http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/${encodeURIComponent(basename)}/${encodeURIComponent(name)}.jpg`
   }
 
+  //format large numbers
+  const numberAbbreviations = ['k','M','B','T','Qa','Qi','Sx','Sp','Oc','No']
+  window.formatLargeNumber = n => {
+    let idx = -1
+    if(n < 1000){
+      return n
+    }
+    //else
+    while(n >= 1000){
+      n /= 1000
+      ++idx
+    }
+
+    return n.toString().replace(/(\.\d{3}).+/, '$1') + numberAbbreviations[idx]
+  }
+
+
   class ConfirmBox {
     constructor(txt, resolve){
       this.elem = document.createElement('div')

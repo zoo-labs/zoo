@@ -220,7 +220,7 @@
 
     detailsElem.innerHTML = `
       <div class="account-row">
-        <h3>Balance - ${user.zooBalance} $ZOO</h3>
+        <h3>Balance - ${window.formatLargeNumber(user.zooBalance)} $ZOO</h3>
         <button class="account-button ac-js" data-action="add funds">Add Funds</button>
       </div>
       <div class="account-row">
