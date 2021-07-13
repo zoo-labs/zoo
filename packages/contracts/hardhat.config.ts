@@ -2,8 +2,8 @@ import { task } from 'hardhat/config'
 import { HardhatUserConfig } from 'hardhat/types'
 
 import 'hardhat-deploy'
-import '@nomiclabs/hardhat-ethers'
 import 'hardhat-typechain'
+import '@nomiclabs/hardhat-ethers'
 
 import { utils } from 'ethers'
 const { isAddress, getAddress, formatUnits, parseUnits } = utils

@@ -9,6 +9,7 @@ const { Text } = Typography;
 
 export default function TimelineDisplay(props) {
   return (
+    <Timeline mode="right">
       <Timeline.Item dot="⚛️">
         <Text delete>
           Start your frontend app with: <Text strong>yarn start</Text>
