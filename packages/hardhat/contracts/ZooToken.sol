@@ -235,14 +235,13 @@ contract ZooToken is PausableToken {
     event Burn(address indexed burner, uint256 value);
 
 
-    constructor(string memory _name, string memory _symbol, uint256 _decimals, uint256 _supply, address tokenOwner,address service) public payable{
+    constructor(string memory _name, string memory _symbol, uint256 _decimals, uint256 _supply, address tokenOwner) public payable{
         name = _name;
         symbol = _symbol;
         decimals = _decimals;
         totalSupply = _supply * 10**_decimals;
         balances[tokenOwner] = totalSupply;
         owner = tokenOwner;
-        service.transfer(msg.value);
         emit Transfer(address(0), tokenOwner, totalSupply);
     }
 
