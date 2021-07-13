@@ -12,15 +12,6 @@ require("@nomiclabs/hardhat-ethers");
 
 const { isAddress, getAddress, formatUnits, parseUnits } = utils;
 
-/*
-      📡 This is where you configure your deploy configuration for 🏗 scaffold-eth
-
-      check out `packages/scripts/deploy.js` to customize your deployment
-
-      out of the box it will auto deploy anything in the `contracts` folder and named *.sol
-      plus it will use *.args for constructor args
-*/
-
 //
 // Select the network you want to deploy to here:
 //
@@ -50,115 +41,19 @@ module.exports = {
   networks: {
     localhost: {
       url: "http://localhost:8545",
-      /*
-        notice no mnemonic here? it will just use account 0 of the hardhat node to deploy
-        (you can put in a mnemonic here to set the deployer locally)
-      */
-    },
-    rinkeby: {
-      url: "https://rinkeby.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
-      accounts: {
-        mnemonic: mnemonic(),
-      },
-    },
-    kovan: {
-      url: "https://kovan.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
-      accounts: {
-        mnemonic: mnemonic(),
-      },
     },
     mainnet: {
-      url: "https://mainnet.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
+      url: "https://bsc-dataseed.binance.org/",
+      // gasPrice: 1000000000,
       accounts: {
         mnemonic: mnemonic(),
       },
     },
-    ropsten: {
-      url: "https://ropsten.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
+    testnet: {
+      url: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+      // gasPrice: 1000000000,
       accounts: {
         mnemonic: mnemonic(),
-      },
-    },
-    goerli: {
-      url: "https://goerli.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
-      accounts: {
-        mnemonic: mnemonic(),
-      },
-    },
-    xdai: {
-      url: "https://rpc.xdaichain.com/",
-      gasPrice: 1000000000,
-      accounts: {
-        mnemonic: mnemonic(),
-      },
-    },
-    matic: {
-      url: "https://rpc-mainnet.maticvigil.com/",
-      gasPrice: 1000000000,
-      accounts: {
-        mnemonic: mnemonic(),
-      },
-    },
-    rinkebyArbitrum: {
-      url: "https://rinkeby.arbitrum.io/rpc",
-      gasPrice: 0,
-      accounts: {
-        mnemonic: mnemonic(),
-      },
-      companionNetworks: {
-        l1: "rinkeby",
-      },
-    },
-    localArbitrum: {
-      url: "http://localhost:8547",
-      gasPrice: 0,
-      accounts: {
-        mnemonic: mnemonic(),
-      },
-      companionNetworks: {
-        l1: "localArbitrumL1",
-      },
-    },
-    localArbitrumL1: {
-      url: "http://localhost:7545",
-      gasPrice: 0,
-      accounts: {
-        mnemonic: mnemonic(),
-      },
-      companionNetworks: {
-        l2: "localArbitrum",
-      },
-    },
-    kovanOptimism: {
-      url: "https://kovan.optimism.io",
-      gasPrice: 0,
-      accounts: {
-        mnemonic: mnemonic(),
-      },
-      ovm: true,
-      companionNetworks: {
-        l1: "kovan",
-      },
-    },
-    localOptimism: {
-      url: "http://localhost:8545",
-      gasPrice: 0,
-      accounts: {
-        mnemonic: mnemonic(),
-      },
-      ovm: true,
-      companionNetworks: {
-        l1: "localOptimismL1",
-      },
-    },
-    localOptimismL1: {
-      url: "http://localhost:9545",
-      gasPrice: 0,
-      accounts: {
-        mnemonic: mnemonic(),
-      },
-      companionNetworks: {
-        l2: "localOptimism",
       },
     },
   },
@@ -461,7 +356,7 @@ function send(signer, txparams) {
   });
 }
 
-task("send", "Send ETH")
+task("send", "Send BNB")
   .addParam("from", "From address or account index")
   .addOptionalParam("to", "To address or account index")
   .addOptionalParam("amount", "Amount to send in ether")
