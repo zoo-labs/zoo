@@ -32,7 +32,7 @@
     "balance": "hardhat balance",
     "chain": "hardhat node --network hardhat --no-deploy",
     "compile": "hardhat compile",
-    "deploy": "hardhat deploy scripts/deploy.js",
+    "deploy": "hardhat run --network hardhat scripts/deploy.js",
     "export": "hardhat deploy --export-all ../app/src/contracts/hardhat_contracts.json",
     "fork": "hardhat node --fork https://mainnet.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad",
     "generate": "hardhat generate",
