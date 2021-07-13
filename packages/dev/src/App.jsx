@@ -174,8 +174,8 @@ function App(props) {
   // const setPurposeEvents = useEventListener(readContracts, "ZooToken", "SetPurpose", localProvider, 1);
 
   /*
-  const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
-  console.log("🏷 Resolved austingriffith.eth as:",addressFromENS)
+  const addressFromENS = useResolveName(mainnetProvider, "zeekay.eth");
+  console.log("🏷 Resolved zeekay.eth as:",addressFromENS)
   */
 
   //
