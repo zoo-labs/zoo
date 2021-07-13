@@ -32,7 +32,7 @@ export default function Ramp(props) {
 
   const allFaucets = [];
   for (const n in props.networks) {
-    if (props.networks[n].chainId !== 31337 && props.networks[n].chainId !== 1) {
+    if (props.networks[n].chainId !== 1337 && props.networks[n].chainId !== 1) {
       allFaucets.push(
         <p key={props.networks[n].chainId}>
           <Button

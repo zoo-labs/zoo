@@ -128,7 +128,7 @@ function App(props) {
   }, [userSigner]);
 
   // You can warn the user if you would like them to be on a specific network
-  const localChainId = localProvider && localProvider._network && localProvider._network.chainId;
+  const localChainId = 1337
   const selectedChainId =
     userSigner && userSigner.provider && userSigner.provider._network && userSigner.provider._network.chainId;
 
@@ -220,40 +220,21 @@ function App(props) {
   if (NETWORKCHECK && localChainId && selectedChainId && localChainId !== selectedChainId) {
     const networkSelected = NETWORK(selectedChainId);
     const networkLocal = NETWORK(localChainId);
-    if (selectedChainId === 1337 && localChainId === 31337) {
-      networkDisplay = (
-        <div style={{ zIndex: 2, position: "absolute", right: 0, top: 60, padding: 16 }}>
-          <Alert
-            message="⚠️ Wrong Network ID"
-            description={
-              <div>
-                You have <b>chain id 1337</b> for localhost and you need to change it to <b>31337</b> to work with
-                HardHat.
-                <div>(MetaMask -&gt; Settings -&gt; Networks -&gt; Chain ID -&gt; 31337)</div>
-              </div>
-            }
-            type="error"
-            closable={false}
-          />
-        </div>
-      );
-    } else {
-      networkDisplay = (
-        <div style={{ zIndex: 2, position: "absolute", right: 0, top: 60, padding: 16 }}>
-          <Alert
-            message="⚠️ Wrong Network"
-            description={
-              <div>
-                You have <b>{networkSelected && networkSelected.name}</b> selected and you need to be on{" "}
-                <b>{networkLocal && networkLocal.name}</b>.
-              </div>
-            }
-            type="error"
-            closable={false}
-          />
-        </div>
-      );
-    }
+    networkDisplay = (
+      <div style={{ zIndex: 2, position: "absolute", right: 0, top: 60, padding: 16 }}>
+        <Alert
+          message="⚠️ Wrong Network"
+          description={
+            <div>
+              You have <b>{networkSelected && networkSelected.name}</b> selected and you need to be on{" "}
+              <b>{networkLocal && networkLocal.name}</b>.
+            </div>
+          }
+          type="error"
+          closable={false}
+        />
+      </div>
+    );
   } else {
     networkDisplay = (
       <div style={{ zIndex: -1, position: "absolute", right: 154, top: 28, padding: 16, color: targetNetwork.color }}>
@@ -302,7 +283,7 @@ function App(props) {
     !faucetClicked &&
     localProvider &&
     localProvider._network &&
-    localProvider._network.chainId === 31337 &&
+    localProvider._network.chainId === 1337 &&
     yourLocalBalance &&
     ethers.utils.formatEther(yourLocalBalance) <= 0
   ) {
