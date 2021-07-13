@@ -390,7 +390,7 @@ function App(props) {
               name="CryptoAnimalAdmin"
               signer={userSigner}
               provider={localProvider}
-              address={"0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"}
+              address={"0xd1cc20d0c8e65a95d2159acaa18458d62f76c9fb1fd7211b033399a9cbee3995"}
               blockExplorer={blockExplorer}
             />
           </Route>

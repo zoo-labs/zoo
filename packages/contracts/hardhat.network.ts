@@ -20,7 +20,7 @@ function mnemonic() {
 //
 const networks: HardhatUserConfig['networks'] = {
   localhost: {
-    chainId: 31337,
+    chainId: 1337,
     url: 'http://127.0.0.1:8545',
     allowUnlimitedContractSize: true,
   },
