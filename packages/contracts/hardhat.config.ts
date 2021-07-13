@@ -1,12 +1,12 @@
-import { task, HardhatUserConfig } from 'hardhat/config'
+import { task } from 'hardhat/config'
+import { HardhatUserConfig } from 'hardhat/types'
+
+import 'hardhat-deploy'
+import '@nomiclabs/hardhat-ethers'
+import 'hardhat-typechain'
 
 import { utils } from 'ethers'
 const { isAddress, getAddress, formatUnits, parseUnits } = utils
-
-import 'hardhat-deploy'
-import "@typechain/hardhat"
-import '@nomiclabs/hardhat-ethers'
-import '@tenderly/hardhat-tenderly'
 
 import fs from 'fs'
 import chalk from 'chalk'
@@ -53,10 +53,16 @@ const config: HardhatUserConfig = {
       },
     ],
   },
+
   namedAccounts: {
     deployer: {
       default: 0, // here this will by default take the first account as deployer
     },
+  },
+
+  typechain: {
+    outDir: 'types',
+    target: 'ethers-v5',
   },
 }
 
