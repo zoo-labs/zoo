@@ -43,49 +43,9 @@
         "console"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/contracts/CryptoAnimal/Animal.sol": {
-      "lastModificationDate": 1625270052550,
-      "contentHash": "83f437eb2e17e9acb8bd77ca8f9eeff5",
-      "sourceName": "contracts/CryptoAnimal/Animal.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "devdoc",
-                "userdoc",
-                "storageLayout",
-                "evm.gasEstimates"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "metadata": {
-            "useLiteralContent": true
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.4"
-      ],
-      "artifacts": []
-    },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/contracts/ZooToken.sol": {
-      "lastModificationDate": 1625270052531,
-      "contentHash": "caef098c7f6e6508bf71606906757ebc",
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/contracts/ZooToken.sol": {
+      "lastModificationDate": 1626154168335,
+      "contentHash": "7dc0bdb664d2cd2798942e8f1b658b29",
       "sourceName": "contracts/ZooToken.sol",
       "solcConfig": {
         "version": "0.4.24",
@@ -132,8 +92,48 @@
         "ZooToken"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/contracts/CryptoAnimal/CryptoAnimalBase.sol": {
-      "lastModificationDate": 1625270052554,
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/contracts/CryptoAnimal/Animal.sol": {
+      "lastModificationDate": 1626153768101,
+      "contentHash": "83f437eb2e17e9acb8bd77ca8f9eeff5",
+      "sourceName": "contracts/CryptoAnimal/Animal.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.4"
+      ],
+      "artifacts": []
+    },
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/contracts/CryptoAnimal/CryptoAnimalBase.sol": {
+      "lastModificationDate": 1626153768100,
       "contentHash": "345d4a3a98bf9a62a42e7d9871956e1e",
       "sourceName": "contracts/CryptoAnimal/CryptoAnimalBase.sol",
       "solcConfig": {
@@ -178,7 +178,7 @@
         "CryptoAnimalBase"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol": {
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol": {
       "lastModificationDate": 1625960091534,
       "contentHash": "68557a95c05dac5415ccbeb0a389ccaf",
       "sourceName": "@openzeppelin/contracts/token/ERC721/ERC721.sol",
@@ -228,7 +228,7 @@
         "ERC721"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
       "lastModificationDate": 1625960084042,
       "contentHash": "4fe56b59ced59d87df6b796758f62895",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
@@ -272,7 +272,7 @@
         "Ownable"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
       "lastModificationDate": 1625960091534,
       "contentHash": "53919d6975f2c0f3dffee5e3a1064116",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
@@ -316,7 +316,7 @@
         "IERC721"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol": {
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol": {
       "lastModificationDate": 1625960091534,
       "contentHash": "9a367cecca6fed80a3e975b7e6b3bd5c",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
@@ -358,7 +358,7 @@
         "IERC721Receiver"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol": {
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol": {
       "lastModificationDate": 1625960094158,
       "contentHash": "8aa69ca8424167555baaaa9f607801db",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
@@ -402,7 +402,7 @@
         "IERC721Metadata"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/node_modules/@openzeppelin/contracts/utils/Address.sol": {
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/node_modules/@openzeppelin/contracts/utils/Address.sol": {
       "lastModificationDate": 1625960084132,
       "contentHash": "1ea1589528625ace210951bc8cd186c9",
       "sourceName": "@openzeppelin/contracts/utils/Address.sol",
@@ -444,7 +444,7 @@
         "Address"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/node_modules/@openzeppelin/contracts/utils/Context.sol": {
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/node_modules/@openzeppelin/contracts/utils/Context.sol": {
       "lastModificationDate": 1625960084132,
       "contentHash": "07f148e0d44b2ffc23b3ae6dd6e38cfb",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
@@ -486,7 +486,7 @@
         "Context"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/node_modules/@openzeppelin/contracts/utils/Strings.sol": {
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/node_modules/@openzeppelin/contracts/utils/Strings.sol": {
       "lastModificationDate": 1625960084136,
       "contentHash": "62142442bed149f965c5ed971fae4182",
       "sourceName": "@openzeppelin/contracts/utils/Strings.sol",
@@ -528,7 +528,7 @@
         "Strings"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol": {
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol": {
       "lastModificationDate": 1625960091584,
       "contentHash": "a9a5319dff9088c6ffe757ea1c2a6729",
       "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165.sol",
@@ -572,7 +572,7 @@
         "ERC165"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
       "lastModificationDate": 1625960091586,
       "contentHash": "9a04322bb8f6b8f2767d8358d1d2537b",
       "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
@@ -614,8 +614,8 @@
         "IERC165"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/contracts/CryptoAnimal/CryptoAnimalAdmin.sol": {
-      "lastModificationDate": 1625270052557,
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/contracts/CryptoAnimal/CryptoAnimalAdmin.sol": {
+      "lastModificationDate": 1626153768101,
       "contentHash": "a7b63d7940790a814458dfb9386c8e0a",
       "sourceName": "contracts/CryptoAnimal/CryptoAnimalAdmin.sol",
       "solcConfig": {
@@ -659,8 +659,8 @@
         "CryptoAnimalAdmin"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/contracts/CryptoAnimal/CryptoAnimalUser.sol": {
-      "lastModificationDate": 1625270052535,
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/contracts/CryptoAnimal/CryptoAnimalUser.sol": {
+      "lastModificationDate": 1626153768099,
       "contentHash": "b997c9f7b37700af6864a12be43033c2",
       "sourceName": "contracts/CryptoAnimal/CryptoAnimalUser.sol",
       "solcConfig": {
@@ -704,8 +704,8 @@
         "CryptoAnimalUser"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/contracts/CryptoAnimal/CryptoAnimalSell.sol": {
-      "lastModificationDate": 1625270052539,
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/contracts/CryptoAnimal/CryptoAnimalSell.sol": {
+      "lastModificationDate": 1626153768099,
       "contentHash": "ff4b1278a408b200bfdf6d399b557799",
       "sourceName": "contracts/CryptoAnimal/CryptoAnimalSell.sol",
       "solcConfig": {
@@ -749,8 +749,8 @@
         "CryptoAnimalSell"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/contracts/CryptoAnimal/CryptoAnimalAuction.sol": {
-      "lastModificationDate": 1625270052543,
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/contracts/CryptoAnimal/CryptoAnimalAuction.sol": {
+      "lastModificationDate": 1626153768100,
       "contentHash": "592802e63d4b42d8054cb5c1839872aa",
       "sourceName": "contracts/CryptoAnimal/CryptoAnimalAuction.sol",
       "solcConfig": {
@@ -794,8 +794,8 @@
         "CryptoAnimalAuction"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/contracts/CryptoAnimal/CryptoAnimal.sol": {
-      "lastModificationDate": 1625270052547,
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/contracts/CryptoAnimal/CryptoAnimal.sol": {
+      "lastModificationDate": 1626153768101,
       "contentHash": "62ea211ca3f096ba7e9a53ad7605df8c",
       "sourceName": "contracts/CryptoAnimal/CryptoAnimal.sol",
       "solcConfig": {
@@ -840,7 +840,7 @@
         "CryptoAnimal"
       ]
     },
-    "/Users/zk/dev/zoo/monorepo/packages/hardhat/node_modules/@openzeppelin/contracts/utils/math/Math.sol": {
+    "/Users/zk/dev/zoo/cryptozoo/packages/contracts/node_modules/@openzeppelin/contracts/utils/math/Math.sol": {
       "lastModificationDate": 1625960091573,
       "contentHash": "4f2b7cfee254db30f906ebcd2e2b1d32",
       "sourceName": "@openzeppelin/contracts/utils/math/Math.sol",
