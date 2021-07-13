@@ -340,6 +340,28 @@ function App(props) {
               ZooToken
             </Link>
           </Menu.Item>
+
+          <Menu.Item key="/crypto-animal-admin">
+            <Link
+              onClick={() => {
+                setRoute("/crypto-animal-admin");
+              }}
+              to="/crypto-animal-admin"
+            >
+              CryptoAnimalAdmin
+            </Link>
+          </Menu.Item>
+
+          <Menu.Item key="/crypto-animal">
+            <Link
+              onClick={() => {
+                setRoute("/crypto-animal");
+              }}
+              to="/crypto-animal"
+            >
+              Crypto Animal
+            </Link>
+          </Menu.Item>
           <Menu.Item key="/subgraph">
             <Link
               onClick={() => {
@@ -354,14 +376,32 @@ function App(props) {
 
         <Switch>
           <Route exact path="/">
-            {/*
-                🎛 this scaffolding is full of commonly used components
-                this <Contract/> component will automatically parse your ABI
-                and give you a form to interact with it locally
-            */}
-
+            // The <Contract/> component will automatically parse your ABI
+            // and give you a form to interact with it locally
             <Contract
               name="ZooToken"
+              signer={userSigner}
+              provider={localProvider}
+              address={address}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+          <Route exact path="/crypto-animal-admin">
+            // The <Contract/> component will automatically parse your ABI
+            // and give you a form to interact with it locally
+            <Contract
+              name="CryptoAnimalAdmin"
+              signer={userSigner}
+              provider={localProvider}
+              address={address}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+          <Route exact path="/crypto-animal">
+            // The <Contract/> component will automatically parse your ABI
+            // and give you a form to interact with it locally
+            <Contract
+              name="CryptoAnimal"
               signer={userSigner}
               provider={localProvider}
               address={address}
