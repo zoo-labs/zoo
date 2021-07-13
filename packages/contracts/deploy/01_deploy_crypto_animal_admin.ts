@@ -1,4 +1,4 @@
-// deploy/02_deploy_crypto_animal.js
+// deploy/01_deploy_crypto_animal_admin.js
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
@@ -11,7 +11,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // Proxy only in non-live network (localhost and hardhat network) enabling
   // HCR (Hot Contract Replacement) in live network, proxy is disabled and
   // constructor is invoked
-  await deploy('CryptoAnimal', {
+  await deploy('CryptoAnimalAdmin', {
     from: deployer,
     args: [],
     log: true,
@@ -22,5 +22,5 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 }
 
 export default func
-func.id = 'deploy_crypto_animal' // ID required to prevent reexecution
-func.tags = ['CryptoAnimal']
+func.id = 'deploy_crypto_animal_admin' // ID required to prevent reexecution
+func.tags = ['CryptoAnimalAdmin']
