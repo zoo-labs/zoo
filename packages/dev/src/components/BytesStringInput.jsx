@@ -12,7 +12,7 @@ const { utils, constants } = require("ethers");
 
   <BytesStringInput
     autofocus
-    value={"scaffold-eth"}
+    value={"cryptozoo"}
     placeholder="Enter value..."
     onChange={value => {
       setValue(value);
