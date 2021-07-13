@@ -7,6 +7,7 @@ import { DeployFunction } from 'hardhat-deploy/types'
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const {deployments, getNamedAccounts} = hre
   const {deploy} = deployments
+  const {deployer} = await getNamedAccounts()
 
   const useProxy = !hre.network.live
 
@@ -17,7 +18,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     from: deployer,
     args: ['ZooToken', 'ZOO', 18, 2000000000, deployer],
     log: true,
-    proxy: useProxy && 'postUpgrade',
+    // proxy: useProxy && 'postUpgrade',
   })
 
   return !useProxy // When live network, record the script as executed to prevent rexecution

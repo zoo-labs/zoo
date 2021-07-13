@@ -4,8 +4,10 @@ import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployer } = await hre.getNamedAccounts()
-  const { deploy } = hre.deployments
+  const { deployments, getNamedAccounts } = hre
+  const { deploy } = deployments
+  const { deployer } = await getNamedAccounts()
+
   const useProxy = !hre.network.live
 
   // Proxy only in non-live network (localhost and hardhat network) enabling
@@ -13,9 +15,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // constructor is invoked
   await deploy('CryptoAnimal', {
     from: deployer,
-    args: [],
+    args: ["CRYPTOZOO", "🦍"],
     log: true,
-    proxy: useProxy && 'postUpgrade',
+    // proxy: useProxy && 'postUpgrade',
   })
 
   return !useProxy // When live network, record the script as executed to prevent rexecution
