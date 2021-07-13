@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
+    "@apollo/client": "^3.3.21",
     "@apollo/react-hooks": "^4.0.0",
     "@ethersproject/contracts": "^5.4.0",
     "@ramp-network/ramp-instant-sdk": "^2.2.0",

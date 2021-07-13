@@ -72,7 +72,7 @@ function Subgraph(props) {
 
   return (
     <>
-      <div>
+      <div style={{ width: 780, margin: "auto", paddingBottom: 64 }}>
         {data ? (
           <Table dataSource={data.purposes} columns={purposeColumns} rowKey="id" />
         ) : (

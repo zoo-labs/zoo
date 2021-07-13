@@ -139,7 +139,7 @@ function App(props) {
   // Faucet Tx can be used to send funds from the faucet
   const faucetTx = Transactor(localProvider, gasPrice);
 
-  // 🏗 scaffold-eth is full of handy hooks like this one to get your balance:
+  // Project is full of handy hooks like this one to get your balance:
   const yourLocalBalance = useBalance(localProvider, address);
 
   // Just plug in different 🛰 providers to get your balance on different chains:
@@ -167,10 +167,10 @@ function App(props) {
   ]);
 
   // keep track of a variable from the contract in the local React state:
-  const purpose = useContractReader(readContracts, "ZooToken", "purpose");
+  // const purpose = useContractReader(readContracts, "ZooToken", "totalSupply");
 
   // 📟 Listen for broadcast events
-  const setPurposeEvents = useEventListener(readContracts, "ZooToken", "SetPurpose", localProvider, 1);
+  // const setPurposeEvents = useEventListener(readContracts, "ZooToken", "SetPurpose", localProvider, 1);
 
   /*
   const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
