@@ -264,5 +264,4 @@ contract ZooToken is PausableToken {
         emit Mint(address(0), account, amount);
         emit Transfer(address(0), account, amount);
     }
-
 }
