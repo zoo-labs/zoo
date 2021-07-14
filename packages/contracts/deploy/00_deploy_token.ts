@@ -1,28 +1,33 @@
 // deploy/00_deploy_token.js
-require('dotenv').config()
 
+import {getDeployerAddress, getWallet} from '../lib/deploy_helper'
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
-
-const OWNER_ADDRESS = process.env.CONTRACT_OWNER_ADDRESS ?? "0xf8f59f0269c4f6d7b5C5ab98d70180EAa0C7507E";
-
+import { Contract } from 'ethers'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const {deployments, getNamedAccounts} = hre
+  const {deployments, getNamedAccounts, getUnnamedAccounts} = hre
   const {deploy} = deployments
   const {deployer} = await getNamedAccounts()
+  const unnamed = await getUnnamedAccounts();
 
   const useProxy = !hre.network.live
+
+  const OWNER_ADDRESS = await getDeployerAddress(hre);
+  const ownerWallet = await getWallet(hre);
 
   // Proxy only in non-live network (localhost and hardhat network) enabling
   // HCR (Hot Contract Replacement) in live network, proxy is disabled and
   // constructor is invoked
-  await deploy('ZooToken', {
+  const result = await deploy('ZooToken', {
     from: deployer,
-    args: ['ZooToken', 'ZOO', 18, 2000000000, OWNER_ADDRESS],
+    args: ['ZooToken', 'ZOO', 18, 2000000000, deployer],
     log: true,
     // proxy: useProxy && 'postUpgrade',
   })
+
+  // const c = new hre.ethers.Contract(result.address, result.abi, ownerWallet);
+  // await c.transferOwnership(OWNER_ADDRESS);
 
   return !useProxy // When live network, record the script as executed to prevent rexecution
 }
