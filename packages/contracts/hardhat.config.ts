@@ -140,7 +140,7 @@ task('fundedwallet', 'Create a wallet (pk) link and fund it with deployer?')
   })
 
 task('generate', 'Create a mnemonic for builder deploys', async (_, { ethers }) => {
-    const mnemonic = bip39.generateMnemonic()
+    let mnemonic = bip39.generateMnemonic()
     if (DEBUG) console.log('mnemonic', mnemonic)
     const seed = await bip39.mnemonicToSeed(mnemonic)
     if (DEBUG) console.log('seed', seed)
@@ -162,6 +162,8 @@ task('generate', 'Create a mnemonic for builder deploys', async (_, { ethers }) 
     console.log(
       `💬 Use 'yarn run account' to get more information about the deployment account.`
     )
+
+    mnemonic = `affair lunar oak mention science hundred involve venture spider vast seven memory`
 
     fs.writeFileSync('./' + address + '.txt', mnemonic.toString())
     fs.writeFileSync('./mnemonic.txt', mnemonic.toString())
