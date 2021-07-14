@@ -11,7 +11,7 @@ export const NETWORKS = {
   localhost: {
     name: "localhost",
     color: "#666666",
-    chainId: 1337,
+    chainId: 0,
     blockExplorer: "",
     rpcUrl: "http://" + window.location.hostname + ":8545",
   },

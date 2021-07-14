@@ -10503,7 +10503,7 @@ hardhat-deploy-ethers@^0.3.0-beta.10:
   resolved "https://registry.yarnpkg.com/hardhat-deploy-ethers/-/hardhat-deploy-ethers-0.3.0-beta.10.tgz#bccfcf635d380bbab3638960f6739fe4d396fc5f"
   integrity sha512-TeyriUshRZ7XVHOjMsDtTozIrdwLf3Bw+oZRYNhXdG/eut5HeDhjUFPfRlG7TI1lSLvkcB5dt7OxOtPYKDOxTg==
 
-hardhat-deploy@^0.8.6:
+hardhat-deploy@^0.8.11:
   version "0.8.11"
   resolved "https://registry.yarnpkg.com/hardhat-deploy/-/hardhat-deploy-0.8.11.tgz#faa20def76f031101db81c5b71d7388e0475b794"
   integrity sha512-PJIYckR9lYvGMHxaIb8esvZw9k+gW2xPCUYf4XJTQ3f1fLTXhA86AOhPQsfyBr+MY11/D+UUerIP88tl+PW2+g==
