@@ -24,6 +24,7 @@
     "dev": "yarn workspace @cryptozoo/dev start",
     "compile": "yarn workspace @cryptozoo/contracts compile",
     "deploy": "yarn workspace @cryptozoo/contracts deploy",
+    "export": "yarn workspace @cryptozoo/contracts export",
     "watch": "yarn workspace @cryptozoo/contracts watch",
     "accounts": "yarn workspace @cryptozoo/contracts accounts",
     "balance": "yarn workspace @cryptozoo/contracts balance",

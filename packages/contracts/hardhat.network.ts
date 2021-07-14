@@ -23,6 +23,17 @@ const networks: HardhatUserConfig['networks'] = {
     chainId: 1337,
     url: 'http://127.0.0.1:8545',
     allowUnlimitedContractSize: true,
+    accounts: {
+      mnemonic: mnemonic(),
+    }
+  },
+  hardhat: {
+    allowUnlimitedContractSize: true,
+    // chainId: 31337,
+    accounts: {
+      mnemonic: mnemonic(),
+      count: 1
+    }
   },
   coverage: {
     url: 'http://127.0.0.1:8555',
@@ -59,9 +70,6 @@ const networks: HardhatUserConfig['networks'] = {
 //     },
 //   }
 // }  else {
-  networks.hardhat = {
-    allowUnlimitedContractSize: true,
-  }
 // }
 
 export default networks

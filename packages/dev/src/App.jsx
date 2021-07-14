@@ -396,7 +396,6 @@ function App(props) {
               name="ZooToken"
               signer={userSigner}
               provider={localProvider}
-              address={"0x5FbDB2315678afecb367f032d93F642f64180aa3"}
               blockExplorer={blockExplorer}
             />
           </Route>
@@ -405,7 +404,6 @@ function App(props) {
               name="CryptoAnimalAdmin"
               signer={userSigner}
               provider={localProvider}
-              address={"0xd1cc20d0c8e65a95d2159acaa18458d62f76c9fb1fd7211b033399a9cbee3995"}
               blockExplorer={blockExplorer}
             />
           </Route>
@@ -414,7 +412,6 @@ function App(props) {
               name="CryptoAnimal"
               signer={userSigner}
               provider={localProvider}
-              address={"0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"}
               blockExplorer={blockExplorer}
             />
           </Route>
@@ -423,7 +420,6 @@ function App(props) {
               name="CryptoAnimalSell"
               signer={userSigner}
               provider={localProvider}
-              address={"0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9"}
               blockExplorer={blockExplorer}
             />
           </Route>
@@ -432,7 +428,6 @@ function App(props) {
               name="CryptoAnimalAuction"
               signer={userSigner}
               provider={localProvider}
-              address={"0xdc64a140aa3e981100a9beca4e685f962f0cf6c9"}
               blockExplorer={blockExplorer}
             />
           </Route>
@@ -441,7 +436,6 @@ function App(props) {
               name="CryptoAnimalUser"
               signer={userSigner}
               provider={localProvider}
-              address={"0x5fc8d32690cc91d4c39d9d3abcbd16989f875707"}
               blockExplorer={blockExplorer}
             />
           </Route>

@@ -5,7 +5,7 @@
       "chainId": "31337",
       "contracts": {
         "CryptoAnimal": {
-          "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+          "address": "0xaF16f94DEAe27a46F6A157CBd1b3C85F14CF0Cb8",
           "abi": [
             {
               "inputs": [
@@ -1312,7 +1312,7 @@
           ]
         },
         "CryptoAnimalAdmin": {
-          "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+          "address": "0x86D9d34b581c3f5C954d7ee272A0eB46c8E1A803",
           "abi": [
             {
               "inputs": [
@@ -2170,7 +2170,7 @@
           ]
         },
         "CryptoAnimalAuction": {
-          "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+          "address": "0x351DcE5B0972f4E9b369e5Fc726295E37360ce19",
           "abi": [
             {
               "inputs": [
@@ -3377,7 +3377,7 @@
           ]
         },
         "CryptoAnimalSell": {
-          "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+          "address": "0xb3C26aAFa12DeBE5EcFd5dA4D71E9910586dDAF7",
           "abi": [
             {
               "inputs": [
@@ -4440,7 +4440,7 @@
           ]
         },
         "CryptoAnimalUser": {
-          "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+          "address": "0x1D8A3bF24Fe919c90Af60fd1c722BB69B85a562e",
           "abi": [
             {
               "inputs": [
@@ -5446,7 +5446,7 @@
           ]
         },
         "ZooToken": {
-          "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+          "address": "0x117FbB2f404e2F1e9FbaC0DdB372C25dD979bc60",
           "abi": [
             {
               "constant": true,
@@ -5945,7 +5945,7 @@
       "chainId": "31337",
       "contracts": {
         "ZooToken": {
-          "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+          "address": "0x117FbB2f404e2F1e9FbaC0DdB372C25dD979bc60",
           "abi": [
             {
               "constant": true,
@@ -6438,7 +6438,7 @@
           ]
         },
         "CryptoAnimalAdmin": {
-          "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+          "address": "0x86D9d34b581c3f5C954d7ee272A0eB46c8E1A803",
           "abi": [
             {
               "inputs": [
@@ -7296,7 +7296,7 @@
           ]
         },
         "CryptoAnimal": {
-          "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+          "address": "0xaF16f94DEAe27a46F6A157CBd1b3C85F14CF0Cb8",
           "abi": [
             {
               "inputs": [
@@ -8603,7 +8603,7 @@
           ]
         },
         "CryptoAnimalSell": {
-          "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+          "address": "0xb3C26aAFa12DeBE5EcFd5dA4D71E9910586dDAF7",
           "abi": [
             {
               "inputs": [
@@ -9666,7 +9666,7 @@
           ]
         },
         "CryptoAnimalAuction": {
-          "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+          "address": "0x351DcE5B0972f4E9b369e5Fc726295E37360ce19",
           "abi": [
             {
               "inputs": [
@@ -10873,7 +10873,7 @@
           ]
         },
         "CryptoAnimalUser": {
-          "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+          "address": "0x1D8A3bF24Fe919c90Af60fd1c722BB69B85a562e",
           "abi": [
             {
               "inputs": [
