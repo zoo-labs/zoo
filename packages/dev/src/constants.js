@@ -9,9 +9,9 @@ export const BLOCKNATIVE_DAPPID = "0b58206a-f3c0-4701-a62f-73c7243e8c77";
 
 export const NETWORKS = {
   localhost: {
-    name: "localhost",
+    name: "hardhat",
     color: "#666666",
-    chainId: 0,
+    chainId: 31337,
     blockExplorer: "",
     rpcUrl: "http://" + window.location.hostname + ":8545",
   },
@@ -120,22 +120,22 @@ export const NETWORKS = {
     blockExplorer: "",
     rpcUrl: "http://" + window.location.hostname + ":9545",
   },
-  localOptimism: {
-    name: "localOptimism",
-    color: "#f01a37",
-    chainId: 420,
-    blockExplorer: "",
-    rpcUrl: "http://" + window.location.hostname + ":8545",
-    gasPrice: 0,
-  },
-  kovanOptimism: {
-    name: "kovanOptimism",
-    color: "#f01a37",
-    chainId: 69,
-    blockExplorer: "https://kovan-optimistic.etherscan.io/",
-    rpcUrl: `https://kovan.optimism.io`,
-    gasPrice: 0,
-  },
+  // localOptimism: {
+  //   name: "localOptimism",
+  //   color: "#f01a37",
+  //   chainId: 420,
+  //   blockExplorer: "",
+  //   rpcUrl: "http://" + window.location.hostname + ":8545",
+  //   gasPrice: 0,
+  // },
+  // kovanOptimism: {
+  //   name: "kovanOptimism",
+  //   color: "#f01a37",
+  //   chainId: 69,
+  //   blockExplorer: "https://kovan-optimistic.etherscan.io/",
+  //   rpcUrl: `https://kovan.optimism.io`,
+  //   gasPrice: 0,
+  // },
   optimism: {
     name: "optimism",
     color: "#f01a37",
