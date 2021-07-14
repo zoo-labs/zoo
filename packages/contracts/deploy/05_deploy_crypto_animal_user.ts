@@ -1,4 +1,4 @@
-// deploy/03_deploy_crypto_animal_auction.js
+// deploy/04_deploy_crypto_animal_user.js
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
@@ -24,5 +24,5 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 }
 
 export default func
-func.id = 'deploy_crypto_animal_auction' // ID required to prevent reexecution
+func.id = 'deploy_crypto_animal_user' // ID required to prevent reexecution
 func.tags = ['CryptoAnimalUser']

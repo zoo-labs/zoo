@@ -70,7 +70,7 @@ const walletLinkProvider = walletLink.makeWeb3Provider(
 const web3Modal = new Web3Modal({
   network: "mainnet", // Optional. If using WalletConnect on xDai, change network to "xdai" and add RPC info below for xDai chain.
   cacheProvider: true, // optional
-  theme:"light", // optional. Change to "dark" for a dark theme.
+  theme: "dark", // optional. Change to "dark" for a dark theme.
   providerOptions: {
     walletconnect: {
       package: WalletConnectProvider, // required
@@ -367,6 +367,17 @@ function App(props) {
             </Link>
           </Menu.Item>
 
+          <Menu.Item key="/crypto-animal-user">
+            <Link
+              onClick={() => {
+                setRoute("/crypto-animal-user");
+              }}
+              to="/crypto-animal-user"
+            >
+              CryptoAnimalUser
+            </Link>
+          </Menu.Item>
+
           <Menu.Item key="/subgraph">
             <Link
               onClick={() => {
@@ -412,7 +423,7 @@ function App(props) {
               name="CryptoAnimalSell"
               signer={userSigner}
               provider={localProvider}
-              address={"0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"}
+              address={"0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9"}
               blockExplorer={blockExplorer}
             />
           </Route>
@@ -421,7 +432,16 @@ function App(props) {
               name="CryptoAnimalAuction"
               signer={userSigner}
               provider={localProvider}
-              address={"0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"}
+              address={"0xdc64a140aa3e981100a9beca4e685f962f0cf6c9"}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+          <Route exact path="/crypto-animal-user">
+            <Contract
+              name="CryptoAnimalUser"
+              signer={userSigner}
+              provider={localProvider}
+              address={"0x5fc8d32690cc91d4c39d9d3abcbd16989f875707"}
               blockExplorer={blockExplorer}
             />
           </Route>
