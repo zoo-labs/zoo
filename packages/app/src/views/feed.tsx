@@ -142,7 +142,7 @@ class MiniCart {
             <h4 class='MiniCart__item-details__price'>${formatPrice(item.price)}</h4>
             <div class='MiniCart__item-details__row MiniCart__item-details__quantity'>
               <label>Quantity: </label>
-              ${item.quantity > 1 ? `<a class='MiniCart__item-details__quantity-button cart-js' data-action='set item quantity' data-quantity='${item.quantity - 1}' data-product-id='${item.id}'>-</a>` : '<span class='MiniCart__item-details__quantity-placeholder'>&nbsp;</span>'}
+              ${item.quantity > 1 ? `<a class='MiniCart__item-details__quantity-button cart-js' data-action='set item quantity' data-quantity='${item.quantity - 1}' data-product-id='${item.id}'>-</a>` : '<span class=\'MiniCart__item-details__quantity-placeholder\'>&nbsp;</span>'}
               <span class='MiniCart__item-details__quantity-count'>${item.quantity}</span>
               <a class='MiniCart__item-details__quantity-button cart-js' data-action='set item quantity' data-quantity='${item.quantity + 1}' data-product-id='${item.id}'>+</a>
             </div>
