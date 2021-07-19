@@ -2,8 +2,9 @@ import {formatLargeNumber} from '../zoo/utils'
 
 ;(async function(){
   const utils = document.querySelector('.account-utils')
-  utils.addEventListener('click', e => {
-    const tgt = e.target.closest('.ac-js')
+  utils.addEventListener('click', (e: any) => {
+
+    const tgt = (e.target as any).closest('.ac-js')
     if(tgt) {
       switch(tgt.dataset.action){
         case 'logout':
@@ -17,7 +18,7 @@ import {formatLargeNumber} from '../zoo/utils'
   })
 
   const detailsElem = document.getElementById('AccountDetails'),
-    eggModal = window.modals["hatch egg"],
+    eggModal = ((window as any).modals as any)["hatch egg"],
     _eggModalVideos = eggModal.elem.querySelectorAll('video'),
     eggModalVideos = {
       basic: _eggModalVideos[0],
