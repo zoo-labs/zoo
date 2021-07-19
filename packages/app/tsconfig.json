@@ -1,7 +1,4 @@
 {
-  "files": [
-    "src/app.ts"
-  ],
   "compilerOptions": {
     "lib": [
       "dom",
@@ -27,8 +24,8 @@
     ],
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "isolatedModules": true
   },
   "include": [
     "src"
