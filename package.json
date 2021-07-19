@@ -11,6 +11,7 @@
   "private": true,
   "scripts": {
     "app:start": "yarn workspace @cryptozoo/app start --max-old-space-size=12288",
+    "frontend:start": "yarn workspace @cryptozoo/frontend start",
     "dev:build": "yarn workspace @cryptozoo/dev build --max-old-space-size=12288",
     "dev:eject": "yarn workspace @cryptozoo/dev eject",
     "dev:start": "yarn workspace @cryptozoo/dev start",
