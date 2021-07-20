@@ -1,4 +1,4 @@
-// deploy/04_deploy_crypto_animal_user.js
+// deploy/05_deploy_crypto_animal_user.js
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
