@@ -33,7 +33,7 @@ export function useEagerConnect() {
   return tried
 }
 
-type OnChangeProps = {
+export type OnChangeProps = {
   account?: string
   chainId?: string | number
 }
@@ -80,5 +80,5 @@ export function useInactiveListener(suppress: boolean = false) {
         }
       }
     }
-  }, [active, error, suppress])
+  }, [activate, active, error, suppress])
 }

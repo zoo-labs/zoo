@@ -40,28 +40,26 @@ export const useAppState = create<StateContext>((set, get) => ({
   transaction: undefined,
 
   setAuthenticated: (authenticated: boolean) => set({ isAuthenticated: authenticated }),
-  setContract: async (library: any, chainId: number) => {
+  setContract: async (library: any = "ZooToken", chainId: number = 31337) => {
     try {
       if (!library) throw new Error('No Web3 Found')
 
-      const networkid = (id: number) => {
-        switch (id) {
-          case 1337:
-            return 5777
-          default:
-            return id
-        }
-      }
-      console.log(CONTRACTS)
-      const deployedNetwork = null
-        // Object.keys(NFTT)[String(networkid(chainId)) as keyof typeof Object.keys(NFTT)]
+      const networkIds = Object.keys(CONTRACTS);
+      const networks = networkIds.map((id: string) => parseInt(id));
+      const deployedNetwork = networks[chainId]
 
-      if (!deployedNetwork) {
+      // TODO: FIX THIS 
+      const hardhat = (deployedNetwork as any)["hardhat"] as any;
+      const contracts = hardhat.contracts as any;
+      const deployedContract = contracts[library];
+      //
+
+      if (!deployedContract) {
         throw new Error('The network you selected is no supported yet.')
       }
 
-      const { address } = deployedNetwork
-      const contract = new Contract(address, CONTRACTS, library.getSigner())
+      const { address } = deployedContract
+      const contract = new Contract(address, deployedContract.abi, library.getSigner())
 
       const name = await contract.name()
       const symbol = await contract.symbol()

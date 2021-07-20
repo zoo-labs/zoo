@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Card, Flex, Spinner } from 'theme-ui'
+import ClipLoader from "react-spinners/ClipLoader";
 import { useAppState } from '../../state'
 import { toShort } from '../../utils'
 
@@ -26,7 +26,7 @@ const TransactionProgress = () => {
   }, [setTransaction, setUser, updateTokensOnSale])
 
   useEffect(() => {
-    useAppState.subscribe(async ({ transaction }) => {
+    useAppState.subscribe(async ({ transaction }: { transaction: any }) => {
       try {
         transactionRef.current = transaction
         if (!transaction) return
@@ -49,12 +49,10 @@ const TransactionProgress = () => {
   if (!loading) return null
 
   return (
-    <Card variant="transaction">
-      <Flex sx={{ alignItems: 'center' }}>
-        <Spinner size={20} color="white" sx={{ mr: 2 }} /> Transaction:{' '}
+    <div>
+        <ClipLoader size={20} color="white" /> Transaction:{' '}
         {toShort(transactionRef.current.hash)}
-      </Flex>
-    </Card>
+      </div>
   )
 }
 
