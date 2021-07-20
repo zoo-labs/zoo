@@ -1,6 +1,7 @@
 {
   "name": "@cryptozoo/frontend",
   "version": "0.1.0",
+  "typings": "declarations.d.ts",
   "private": true,
   "dependencies": {
     "@ethersproject/constants": "^5.4.0",

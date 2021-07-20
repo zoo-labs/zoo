@@ -40,7 +40,7 @@ export const Profile = () => {
               </Text>
             </Heading>
             <Grid gap={4} columns={['1fr 1fr', '1fr 1fr 1fr']}>
-              {ownedTokens.map((t, index) => (
+              {/* {ownedTokens.map((t, index) => (
                 <Token
                   isOnSale={
                     !!tokensOnSale?.find(a => utils.formatUnits(a.id) === utils.formatUnits(t.id))
@@ -50,7 +50,7 @@ export const Profile = () => {
                   token={t}
                   key={index}
                 />
-              ))}
+              ))} */}
             </Grid>
           </Box>
         ) : (

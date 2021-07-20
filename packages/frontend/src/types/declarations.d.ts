@@ -19,3 +19,5 @@ export type UserProps = {
   balance: string
   ownedTokens: TokenProps[]
 }
+
+declare module 'jazzicon'
