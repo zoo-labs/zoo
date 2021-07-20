@@ -69,7 +69,7 @@ export default function useContractLoader(providerOrSigner, config = {}) {
           let contractList = {};
           let externalContractList = {};
           try {
-            contractList = config.hardhatContracts || require("../contracts/hardhat_contracts.json");
+            contractList = config.hardhatContracts || require("../contracts.json");
           } catch (e) {
             console.log(e);
           }

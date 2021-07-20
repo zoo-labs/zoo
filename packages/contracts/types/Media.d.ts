@@ -31,6 +31,7 @@ interface MediaInterface extends ethers.utils.Interface {
     "balanceOf(address)": FunctionFragment;
     "baseURI()": FunctionFragment;
     "burn(uint256)": FunctionFragment;
+    "configure(address)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "marketContract()": FunctionFragment;
@@ -96,6 +97,7 @@ interface MediaInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(functionFragment: "baseURI", values?: undefined): string;
   encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: "configure", values: [string]): string;
   encodeFunctionData(
     functionFragment: "getApproved",
     values: [BigNumberish]
@@ -271,6 +273,7 @@ interface MediaInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "baseURI", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "configure", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getApproved",
     data: BytesLike
@@ -497,6 +500,16 @@ export class Media extends Contract {
 
     "burn(uint256)"(
       tokenId: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    configure(
+      marketContractAddress: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "configure(address)"(
+      marketContractAddress: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
@@ -969,6 +982,16 @@ export class Media extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
+  configure(
+    marketContractAddress: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "configure(address)"(
+    marketContractAddress: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
   getApproved(
     tokenId: BigNumberish,
     overrides?: CallOverrides
@@ -1423,6 +1446,16 @@ export class Media extends Contract {
 
     "burn(uint256)"(
       tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    configure(
+      marketContractAddress: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "configure(address)"(
+      marketContractAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1928,6 +1961,16 @@ export class Media extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
+    configure(
+      marketContractAddress: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "configure(address)"(
+      marketContractAddress: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -2398,6 +2441,16 @@ export class Media extends Contract {
 
     "burn(uint256)"(
       tokenId: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    configure(
+      marketContractAddress: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "configure(address)"(
+      marketContractAddress: string,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 

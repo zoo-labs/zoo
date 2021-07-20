@@ -10,13 +10,13 @@ describe('ZooToken', function () {
   it('should deploy ZooToken contract', async function () {
     const [signer] = await ethers.getSigners()
     const ZooToken = await ethers.getContractFactory('ZooToken')
-    token = await ZooToken.deploy('ZooToken', 'ZOO', 18, 2000000000, signer.address)
+    token = await ZooToken.deploy()
   })
 
   it('should have correct name and symbol and decimal', async () => {
     const [signer] = await ethers.getSigners()
     const ZooToken = await ethers.getContractFactory('ZooToken')
-    token = await ZooToken.deploy('ZooToken', 'ZOO', 18, 2000000000, signer.address)
+    token = await ZooToken.deploy()
     const name = await token.name()
     const symbol = await token.symbol()
     const decimals = await token.decimals()

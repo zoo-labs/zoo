@@ -4,11 +4,7 @@
 
 import { Signer } from "ethers";
 import { Provider, TransactionRequest } from "@ethersproject/providers";
-import {
-  Contract,
-  ContractFactory,
-  PayableOverrides,
-} from "@ethersproject/contracts";
+import { Contract, ContractFactory, Overrides } from "@ethersproject/contracts";
 
 import type { ZooMarket } from "../ZooMarket";
 
@@ -17,10 +13,10 @@ export class ZooMarket__factory extends ContractFactory {
     super(_abi, _bytecode, signer);
   }
 
-  deploy(overrides?: PayableOverrides): Promise<ZooMarket> {
+  deploy(overrides?: Overrides): Promise<ZooMarket> {
     return super.deploy(overrides || {}) as Promise<ZooMarket>;
   }
-  getDeployTransaction(overrides?: PayableOverrides): TransactionRequest {
+  getDeployTransaction(overrides?: Overrides): TransactionRequest {
     return super.getDeployTransaction(overrides || {});
   }
   attach(address: string): ZooMarket {
@@ -39,33 +35,34 @@ export class ZooMarket__factory extends ContractFactory {
 
 const _abi = [
   {
-    inputs: [],
-    stateMutability: "payable",
-    type: "constructor",
-  },
-  {
     anonymous: false,
     inputs: [
       {
         indexed: true,
         internalType: "uint256",
-        name: "animalIndex",
+        name: "tokenId",
         type: "uint256",
       },
       {
+        components: [
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "currency",
+            type: "address",
+          },
+        ],
         indexed: false,
-        internalType: "uint256",
-        name: "value",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "fromAddress",
-        type: "address",
+        internalType: "struct IMarket.Ask",
+        name: "ask",
+        type: "tuple",
       },
     ],
-    name: "AnimalBidEntered",
+    name: "AskCreated",
     type: "event",
   },
   {
@@ -74,23 +71,29 @@ const _abi = [
       {
         indexed: true,
         internalType: "uint256",
-        name: "animalIndex",
+        name: "tokenId",
         type: "uint256",
       },
       {
+        components: [
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "currency",
+            type: "address",
+          },
+        ],
         indexed: false,
-        internalType: "uint256",
-        name: "value",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "fromAddress",
-        type: "address",
+        internalType: "struct IMarket.Ask",
+        name: "ask",
+        type: "tuple",
       },
     ],
-    name: "AnimalBidWithdrawn",
+    name: "AskRemoved",
     type: "event",
   },
   {
@@ -99,29 +102,51 @@ const _abi = [
       {
         indexed: true,
         internalType: "uint256",
-        name: "animalIndex",
+        name: "tokenId",
         type: "uint256",
       },
       {
+        components: [
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "currency",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "bidder",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "recipient",
+            type: "address",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "sellOnShare",
+            type: "tuple",
+          },
+        ],
         indexed: false,
-        internalType: "uint256",
-        name: "value",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "fromAddress",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "toAddress",
-        type: "address",
+        internalType: "struct IMarket.Bid",
+        name: "bid",
+        type: "tuple",
       },
     ],
-    name: "AnimalBought",
+    name: "BidCreated",
     type: "event",
   },
   {
@@ -130,36 +155,161 @@ const _abi = [
       {
         indexed: true,
         internalType: "uint256",
-        name: "animalIndex",
-        type: "uint256",
-      },
-    ],
-    name: "AnimalNoLongerForSale",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "animalIndex",
+        name: "tokenId",
         type: "uint256",
       },
       {
+        components: [
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "currency",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "bidder",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "recipient",
+            type: "address",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "sellOnShare",
+            type: "tuple",
+          },
+        ],
         indexed: false,
+        internalType: "struct IMarket.Bid",
+        name: "bid",
+        type: "tuple",
+      },
+    ],
+    name: "BidFinalized",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: "uint256",
-        name: "minValue",
+        name: "tokenId",
         type: "uint256",
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "toAddress",
-        type: "address",
+        components: [
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "currency",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "bidder",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "recipient",
+            type: "address",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "sellOnShare",
+            type: "tuple",
+          },
+        ],
+        indexed: false,
+        internalType: "struct IMarket.Bid",
+        name: "bid",
+        type: "tuple",
       },
     ],
-    name: "AnimalOffered",
+    name: "BidRemoved",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        components: [
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "prevOwner",
+            type: "tuple",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "creator",
+            type: "tuple",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "owner",
+            type: "tuple",
+          },
+        ],
+        indexed: false,
+        internalType: "struct IMarket.BidShares",
+        name: "bidShares",
+        type: "tuple",
+      },
+    ],
+    name: "BidShareUpdated",
     type: "event",
   },
   {
@@ -168,125 +318,76 @@ const _abi = [
       {
         indexed: true,
         internalType: "address",
-        name: "from",
+        name: "previousOwner",
         type: "address",
       },
       {
         indexed: true,
         internalType: "address",
-        name: "to",
+        name: "newOwner",
         type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "animalIndex",
-        type: "uint256",
       },
     ],
-    name: "AnimalTransfer",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "animalIndex",
-        type: "uint256",
-      },
-    ],
-    name: "Assign",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "value",
-        type: "uint256",
-      },
-    ],
-    name: "Transfer",
+    name: "OwnershipTransferred",
     type: "event",
   },
   {
     inputs: [
       {
         internalType: "uint256",
-        name: "animalIndex",
+        name: "tokenId",
         type: "uint256",
       },
       {
-        internalType: "uint256",
-        name: "minPrice",
-        type: "uint256",
+        components: [
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "currency",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "bidder",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "recipient",
+            type: "address",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "sellOnShare",
+            type: "tuple",
+          },
+        ],
+        internalType: "struct IMarket.Bid",
+        name: "expectedBid",
+        type: "tuple",
       },
     ],
-    name: "acceptBidForAnimal",
+    name: "acceptBid",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [],
-    name: "allAnimalsAssigned",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "allInitialOwnersAssigned",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "animalBids",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "hasBid",
-        type: "bool",
-      },
-      {
-        internalType: "uint256",
-        name: "animalIndex",
+        name: "tokenId",
         type: "uint256",
       },
       {
@@ -294,10 +395,47 @@ const _abi = [
         name: "bidder",
         type: "address",
       },
+    ],
+    name: "bidForTokenBidder",
+    outputs: [
       {
-        internalType: "uint256",
-        name: "value",
-        type: "uint256",
+        components: [
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "currency",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "bidder",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "recipient",
+            type: "address",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "sellOnShare",
+            type: "tuple",
+          },
+        ],
+        internalType: "struct IMarket.Bid",
+        name: "",
+        type: "tuple",
       },
     ],
     stateMutability: "view",
@@ -307,30 +445,68 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "tokenId",
         type: "uint256",
       },
     ],
-    name: "animalIndexToAddress",
+    name: "bidSharesForToken",
     outputs: [
       {
-        internalType: "address",
+        components: [
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "prevOwner",
+            type: "tuple",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "creator",
+            type: "tuple",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "owner",
+            type: "tuple",
+          },
+        ],
+        internalType: "struct IMarket.BidShares",
         name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "mediaContractAddress",
         type: "address",
       },
     ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "animalIndex",
-        type: "uint256",
-      },
-    ],
-    name: "animalNoLongerForSale",
+    name: "configure",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -339,203 +515,125 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "tokenId",
         type: "uint256",
       },
     ],
-    name: "animalsOfferedForSale",
+    name: "currentAskForToken",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "currency",
+            type: "address",
+          },
+        ],
+        internalType: "struct IMarket.Ask",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "bidAmount",
+        type: "uint256",
+      },
+    ],
+    name: "isValidBid",
     outputs: [
       {
         internalType: "bool",
-        name: "isForSale",
+        name: "",
         type: "bool",
       },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
       {
-        internalType: "uint256",
-        name: "animalIndex",
-        type: "uint256",
+        components: [
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "prevOwner",
+            type: "tuple",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "creator",
+            type: "tuple",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "owner",
+            type: "tuple",
+          },
+        ],
+        internalType: "struct IMarket.BidShares",
+        name: "bidShares",
+        type: "tuple",
       },
+    ],
+    name: "isValidBidShares",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "mediaContract",
+    outputs: [
       {
         internalType: "address",
-        name: "seller",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "minValue",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "onlySellTo",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "animalsRemainingToAssign",
-    outputs: [
-      {
-        internalType: "uint256",
         name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    name: "balanceOf",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "animalIndex",
-        type: "uint256",
-      },
-    ],
-    name: "buyAnimal",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "decimals",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "dropHash",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "animalIndex",
-        type: "uint256",
-      },
-    ],
-    name: "enterBidForAnimal",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "animalIndex",
-        type: "uint256",
-      },
-    ],
-    name: "getAnimal",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "name",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "nextAnimalIndexToAssign",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "animalIndex",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "minSalePriceInWei",
-        type: "uint256",
-      },
-    ],
-    name: "offerAnimalForSale",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "animalIndex",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "minSalePriceInWei",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "toAddress",
         type: "address",
       },
     ],
-    name: "offerAnimalForSaleToAddress",
-    outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -554,12 +652,205 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "removeAsk",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
         internalType: "address",
-        name: "",
+        name: "bidder",
         type: "address",
       },
     ],
-    name: "pendingWithdrawals",
+    name: "removeBid",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "currency",
+            type: "address",
+          },
+        ],
+        internalType: "struct IMarket.Ask",
+        name: "ask",
+        type: "tuple",
+      },
+    ],
+    name: "setAsk",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "currency",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "bidder",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "recipient",
+            type: "address",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "sellOnShare",
+            type: "tuple",
+          },
+        ],
+        internalType: "struct IMarket.Bid",
+        name: "bid",
+        type: "tuple",
+      },
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+    ],
+    name: "setBid",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        components: [
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "prevOwner",
+            type: "tuple",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "creator",
+            type: "tuple",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Decimal.D256",
+            name: "owner",
+            type: "tuple",
+          },
+        ],
+        internalType: "struct IMarket.BidShares",
+        name: "bidShares",
+        type: "tuple",
+      },
+    ],
+    name: "setBidShares",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "value",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct Decimal.D256",
+        name: "sharePercentage",
+        type: "tuple",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "splitShare",
     outputs: [
       {
         internalType: "uint256",
@@ -567,118 +858,18 @@ const _abi = [
         type: "uint256",
       },
     ],
-    stateMutability: "view",
+    stateMutability: "pure",
     type: "function",
   },
   {
     inputs: [
       {
         internalType: "address",
-        name: "to",
+        name: "newOwner",
         type: "address",
       },
-      {
-        internalType: "uint256",
-        name: "animalIndex",
-        type: "uint256",
-      },
     ],
-    name: "setInitialOwner",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address[]",
-        name: "addresses",
-        type: "address[]",
-      },
-      {
-        internalType: "uint256[]",
-        name: "indices",
-        type: "uint256[]",
-      },
-    ],
-    name: "setInitialOwners",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "standard",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "symbol",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "totalSupply",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "animalIndex",
-        type: "uint256",
-      },
-    ],
-    name: "transferAnimal",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "withdraw",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "animalIndex",
-        type: "uint256",
-      },
-    ],
-    name: "withdrawBidForAnimal",
+    name: "transferOwnership",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -686,4 +877,4 @@ const _abi = [
 ];
 
 const _bytecode =
-  "0x60e0604090815260808181529062001f3a60a03980516200002991600091602090910190620000f9565b506040805180820190915260098082526843727970746f5a6f6f60b81b60209092019182526200005c91600291620000f9565b5060006007556008805460ff19169055600180546001600160a01b03191633179055613e80600681905560095560408051808201909152600a808252695a6f6f416e696d616c7360b01b6020909201918252620000bc91600391620000f9565b50604080518082019091526004808252631053935360e21b6020909201918252620000e89181620000f9565b506005805460ff19169055620001dc565b82805462000107906200019f565b90600052602060002090601f0160209004810192826200012b576000855562000176565b82601f106200014657805160ff191683800117855562000176565b8280016001018555821562000176579182015b828111156200017657825182559160200191906001019062000159565b506200018492915062000188565b5090565b5b8082111562000184576000815560010162000189565b600181811c90821680620001b457607f821691505b60208210811415620001d657634e487b7160e01b600052602260045260246000fd5b50919050565b611d4e80620001ec6000396000f3fe6080604052600436106101b75760003560e01c80636c7e6ca7116100ec57806395d89b411161008a578063b6820d2b11610064578063b6820d2b14610575578063bc2e6d6a146105ab578063c4a26096146105cb578063f3f43703146105eb57600080fd5b806395d89b411461052a578063a75a90491461053f578063ad06601c1461055f57600080fd5b806382147948116100c657806382147948146104925780638553d726146104b25780638da5cb5b146104d257806392b94e371461050a57600080fd5b80636c7e6ca7146103cd57806370a08231146104505780637ecedac91461047d57600080fd5b80633ccfd60b116101595780635d6a79ee116101335780635d6a79ee1461035a5780636014a7a814610370578063679af428146103835780636a1bb939146103a357600080fd5b80633ccfd60b1461031057806345d3cc81146103255780635a3b7e421461034557600080fd5b806318160ddd1161019557806318160ddd1461028b5780631a14e94a146102af578063313ce567146102c457806339c5dde6146102f057600080fd5b806306fdde03146101bc57806308dedc8b146101e75780630fc3b5dc146101fc575b600080fd5b3480156101c857600080fd5b506101d1610618565b6040516101de9190611bbf565b60405180910390f35b3480156101f357600080fd5b506101d16106a6565b34801561020857600080fd5b50610255610217366004611b52565b600c602052600090815260409020805460018201546002830154600384015460049094015460ff9093169391926001600160a01b0391821692911685565b60408051951515865260208601949094526001600160a01b0392831693850193909352606084015216608082015260a0016101de565b34801561029757600080fd5b506102a160065481565b6040519081526020016101de565b6102c26102bd366004611b52565b6106b3565b005b3480156102d057600080fd5b506005546102de9060ff1681565b60405160ff90911681526020016101de565b3480156102fc57600080fd5b506102c261030b366004611a91565b6109e2565b34801561031c57600080fd5b506102c2610a71565b34801561033157600080fd5b506102c2610340366004611b52565b610ac6565b34801561035157600080fd5b506101d1610b9e565b34801561036657600080fd5b506102a160095481565b6102c261037e366004611b52565b610bab565b34801561038f57600080fd5b506102c261039e366004611b6a565b610d67565b3480156103af57600080fd5b506008546103bd9060ff1681565b60405190151581526020016101de565b3480156103d957600080fd5b5061041f6103e8366004611b52565b600d60205260009081526040902080546001820154600283015460039093015460ff9092169290916001600160a01b039091169084565b6040516101de9493929190931515845260208401929092526001600160a01b03166040830152606082015260800190565b34801561045c57600080fd5b506102a161046b366004611a47565b600b6020526000908152604090205481565b34801561048957600080fd5b506102c2610e69565b34801561049e57600080fd5b506102c26104ad366004611b6a565b610e90565b3480156104be57600080fd5b506102c26104cd366004611a68565b61123b565b3480156104de57600080fd5b506001546104f2906001600160a01b031681565b6040516001600160a01b0390911681526020016101de565b34801561051657600080fd5b506102c2610525366004611b8b565b6114b3565b34801561053657600080fd5b506101d16115c0565b34801561054b57600080fd5b506102c261055a366004611a68565b6115cd565b34801561056b57600080fd5b506102a160075481565b34801561058157600080fd5b506104f2610590366004611b52565b600a602052600090815260409020546001600160a01b031681565b3480156105b757600080fd5b506102c26105c6366004611b52565b61171f565b3480156105d757600080fd5b506102c26105e6366004611b52565b611818565b3480156105f757600080fd5b506102a1610606366004611a47565b600e6020526000908152604090205481565b6003805461062590611c96565b80601f016020809104026020016040519081016040528092919081815260200182805461065190611c96565b801561069e5780601f106106735761010080835404028352916020019161069e565b820191906000526020600020905b81548152906001019060200180831161068157829003601f168201915b505050505081565b6000805461062590611c96565b60085460ff16156106c357600080fd5b6000818152600c6020908152604091829020825160a081018452815460ff161515815260018201549281019290925260028101546001600160a01b03908116938301939093526003810154606083015260040154909116608082015261271082101561072e57600080fd5b80511561073a57600080fd5b60808101516001600160a01b031615801590610763575060808101516001600160a01b03163314155b61076c57600080fd5b8060600151341061077c57600080fd5b6000828152600a60205260409081902054908201516001600160a01b03908116911614156107a957600080fd5b6040808201516000848152600a602090815283822080546001600160a01b031916331790556001600160a01b0383168252600b9052918220805491926107ee83611c7f565b9091555050336000908152600b6020526040812080549161080e83611cd1565b90915550506040516001815233906001600160a01b038316907fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9060200160405180910390a360405183907f2910a2a466f0ca0d640bba549d01d7e66473d037266844a3347640589f72fa4390600090a26001600160a01b0381166000908152600e6020526040812080543492906108a7908490611c67565b909155505060405134815233906001600160a01b0383169085907f611d646e0fbe5ba093cef708a3a515b29415fa1bb7e5a35afbef5da4665395d99060200160405180910390a46000838152600d60209081526040918290208251608081018452815460ff161515815260018201549281019290925260028101546001600160a01b0316928201839052600301546060820152903314156109dc576060810151336000908152600e602052604081208054909190610966908490611c67565b90915550506040805160808101825260008082526020808301888152838501838152606085018481528a8552600d909352949092209251835460ff19169015151783559051600183015591516002820180546001600160a01b0319166001600160a01b0390921691909117905590516003909101555b50505050565b6001546001600160a01b03163314156109fa57600080fd5b815160005b818110156109dc57610a5f848281518110610a2a57634e487b7160e01b600052603260045260246000fd5b6020026020010151848381518110610a5257634e487b7160e01b600052603260045260246000fd5b60200260200101516115cd565b80610a6981611cd1565b9150506109ff565b60085460ff1615610a8157600080fd5b336000818152600e6020526040808220805490839055905190929183156108fc02918491818181858888f19350505050158015610ac2573d6000803e3d6000fd5b5050565b60085460ff1615610ad657600080fd5b60095415610ae357600080fd5b6000818152600a60205260409020546001600160a01b0316610b0457600080fd5b612710811015610b1357600080fd5b6000818152600a6020908152604080832080546001600160a01b031916339081179091558352600b9091528120805491610b4c83611cd1565b909155505060098054906000610b6183611c7f565b909155505060405181815233907f8a0e37b73a0d9c82e205d4d1a3ff3d0b57ce5f4d7bccf6bac03336dc101cb7ba9060200160405180910390a250565b6002805461062590611c96565b612710811015610bba57600080fd5b60085460ff1615610bca57600080fd5b6000818152600a60205260409020546001600160a01b031615610bec57600080fd5b6000818152600a60205260409020546001600160a01b03163314610c0f57600080fd5b3415610c1a57600080fd5b6000818152600d60209081526040918290208251608081018452815460ff161515815260018201549281019290925260028101546001600160a01b03169282019290925260039091015460608201819052341115610c7757600080fd5b606081015115610cb85760608101516040808301516001600160a01b03166000908152600e6020529081208054909190610cb2908490611c67565b90915550505b604080516080810182526001808252602080830186815233848601818152346060870181815260008b8152600d87528990209751885460ff1916901515178855935195870195909555516002860180546001600160a01b0319166001600160a01b0390921691909117905590516003909401939093559251908152909184917faf5a2dd3aa967bb72074d448d92de986945fef65cdde4a12385f184c44598f5f91015b60405180910390a35050565b60085460ff1615610d7757600080fd5b6000828152600a60205260409020546001600160a01b0316331415610d9b57600080fd5b612710821015610daa57600080fd5b6040805160a0810182526001808252602080830186815233848601908152606085018781526000608087018181528a8252600c86528882209751885460ff191690151517885593519587019590955590516002860180546001600160a01b03199081166001600160a01b0393841617909155915160038701559151600490950180549091169490911693909317909255915183815284917fed3332bb2915067a1de6c130dba8e18755f13ed8c2052f65556fac3303df3fd09101610d5b565b6001546001600160a01b0316331415610e8157600080fd5b6008805460ff19166001179055565b612710821015610e9f57600080fd5b60085460ff1615610eaf57600080fd5b6000828152600a60205260409020546001600160a01b0316331415610ed357600080fd5b6000828152600d60209081526040918290208251608081018452815460ff161515815260018201549281019290925260028101546001600160a01b0316928201929092526003909101546060820181905233919015610f3157600080fd5b82816060015110610f4157600080fd5b6040818101516000868152600a602090815283822080546001600160a01b0319166001600160a01b039485161790559185168152600b909152908120805491610f8983611c7f565b90915550506040808201516001600160a01b03166000908152600b602052908120805491610fb683611cd1565b919050555080604001516001600160a01b0316826001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef600160405161100591815260200190565b60405180910390a36040518060a0016040528060001515815260200185815260200182604001516001600160a01b031681526020016000815260200160006001600160a01b0316815250600c600086815260200190815260200160002060008201518160000160006101000a81548160ff0219169083151502179055506020820151816001015560408201518160020160006101000a8154816001600160a01b0302191690836001600160a01b031602179055506060820151816003015560808201518160040160006101000a8154816001600160a01b0302191690836001600160a01b03160217905550905050600081606001519050604051806080016040528060001515815260200186815260200160006001600160a01b031681526020016000815250600d600087815260200190815260200160002060008201518160000160006101000a81548160ff0219169083151502179055506020820151816001015560408201518160020160006101000a8154816001600160a01b0302191690836001600160a01b031602179055506060820151816003015590505080600e6000856001600160a01b03166001600160a01b0316815260200190815260200160002060008282546111d79190611c67565b9250508190555081604001516001600160a01b0316836001600160a01b0316867f611d646e0fbe5ba093cef708a3a515b29415fa1bb7e5a35afbef5da4665395d9856060015160405161122c91815260200190565b60405180910390a45050505050565b60085460ff161561124b57600080fd5b6000818152600a60205260409020546001600160a01b031633141561126f57600080fd5b61271081101561127e57600080fd5b6000818152600c602052604090205460ff16156112c15760405181907f2910a2a466f0ca0d640bba549d01d7e66473d037266844a3347640589f72fa4390600090a25b6000818152600a6020908152604080832080546001600160a01b0319166001600160a01b038716179055338352600b909152812080549161130183611c7f565b90915550506001600160a01b0382166000908152600b6020526040812080549161132a83611cd1565b9091555050604051600181526001600160a01b0383169033907fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9060200160405180910390a36040518181526001600160a01b0383169033907fa64d9769a68590f1d8a8351178a3597dad451035064bf3ee30d97fb84d3130429060200160405180910390a36000818152600d60209081526040918290208251608081018452815460ff161515815260018201549281019290925260028101546001600160a01b039081169383018490526003909101546060830152909190841614156114ae5760608101516001600160a01b0384166000908152600e602052604081208054909190611438908490611c67565b9091555050604080516080810182526000808252602080830186815283850183815260608501848152888552600d909352949092209251835460ff19169015151783559051600183015591516002820180546001600160a01b0319166001600160a01b0390921691909117905590516003909101555b505050565b60085460ff16156114c357600080fd5b6000838152600a60205260409020546001600160a01b03163314156114e757600080fd5b6127108310156114f657600080fd5b6040805160a0810182526001808252602080830187815233848601908152606085018881526001600160a01b038881166080880181815260008d8152600c88528a90209851895460ff191690151517895594519688019690965591516002870180546001600160a01b031990811692851692909217905590516003870155915160049095018054909216941693909317909255915184815285917fed3332bb2915067a1de6c130dba8e18755f13ed8c2052f65556fac3303df3fd0910160405180910390a3505050565b6004805461062590611c96565b6001546001600160a01b03163314156115e557600080fd5b60085460ff166115f457600080fd5b61271081101561160357600080fd5b6000818152600a60205260409020546001600160a01b03838116911614610ac2576000818152600a60205260409020546001600160a01b03161561167b576000818152600a60209081526040808320546001600160a01b03168352600b909152812080549161167183611c7f565b9190505550611691565b6009805490600061168b83611c7f565b91905055505b6000818152600a6020908152604080832080546001600160a01b0319166001600160a01b0387169081179091558352600b90915281208054916116d383611cd1565b9190505550816001600160a01b03167f8a0e37b73a0d9c82e205d4d1a3ff3d0b57ce5f4d7bccf6bac03336dc101cb7ba8260405161171391815260200190565b60405180910390a25050565b60085460ff161561172f57600080fd5b6000818152600a60205260409020546001600160a01b031633141561175357600080fd5b61271081101561176257600080fd5b6040805160a08101825260008082526020808301858152338486019081526060850184815260808601858152888652600c9094528685209551865460ff191690151517865591516001860155516002850180546001600160a01b03199081166001600160a01b0393841617909155915160038601559151600490940180549091169390911692909217909155905182917f2910a2a466f0ca0d640bba549d01d7e66473d037266844a3347640589f72fa4391a250565b61271081101561182757600080fd5b60085460ff161561183757600080fd5b6000818152600a60205260409020546001600160a01b03161561185957600080fd5b6000818152600a60205260409020546001600160a01b0316331461187c57600080fd5b6000818152600d60209081526040918290208251608081018452815460ff161515815260018201549281019290925260028101546001600160a01b0316928201839052600301546060820152903314156118d557600080fd5b336001600160a01b0316827fd7159e42809bb9660018d8102eff669e9c374ef2b5d90381e2e2ef73fbf7d4f1836060015160405161191591815260200190565b60405180910390a36060818101516040805160808101825260008082526020808301888152838501838152968401838152898452600d9092528483209351845460ff191690151517845551600184015594516002830180546001600160a01b0319166001600160a01b03909216919091179055935160039091015551909133916108fc84150291849190818181858888f193505050501580156109dc573d6000803e3d6000fd5b80356001600160a01b03811681146119d357600080fd5b919050565b600082601f8301126119e8578081fd5b813560206119fd6119f883611c43565b611c12565b80838252828201915082860187848660051b8901011115611a1c578586fd5b855b85811015611a3a57813584529284019290840190600101611a1e565b5090979650505050505050565b600060208284031215611a58578081fd5b611a61826119bc565b9392505050565b60008060408385031215611a7a578081fd5b611a83836119bc565b946020939093013593505050565b60008060408385031215611aa3578182fd5b823567ffffffffffffffff80821115611aba578384fd5b818501915085601f830112611acd578384fd5b81356020611add6119f883611c43565b8083825282820191508286018a848660051b8901011115611afc578889fd5b8896505b84871015611b2557611b11816119bc565b835260019690960195918301918301611b00565b5096505086013592505080821115611b3b578283fd5b50611b48858286016119d8565b9150509250929050565b600060208284031215611b63578081fd5b5035919050565b60008060408385031215611b7c578182fd5b50508035926020909101359150565b600080600060608486031215611b9f578081fd5b8335925060208401359150611bb6604085016119bc565b90509250925092565b6000602080835283518082850152825b81811015611beb57858101830151858201604001528201611bcf565b81811115611bfc5783604083870101525b50601f01601f1916929092016040019392505050565b604051601f8201601f1916810167ffffffffffffffff81118282101715611c3b57611c3b611d02565b604052919050565b600067ffffffffffffffff821115611c5d57611c5d611d02565b5060051b60200190565b60008219821115611c7a57611c7a611cec565b500190565b600081611c8e57611c8e611cec565b506000190190565b600181811c90821680611caa57607f821691505b60208210811415611ccb57634e487b7160e01b600052602260045260246000fd5b50919050565b6000600019821415611ce557611ce5611cec565b5060010190565b634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052604160045260246000fdfea264697066735822122067b179dce76332a9cd47ef8fa1d28a6e81c119d4d845231464f7a664affd3c8364736f6c6343000804003361633339616634373933313139656534366262666633353164386362366235663233646136303232323132366164643432363865323631313939613239323162";
+  "0x608060405234801561001057600080fd5b50600180546001600160a01b0319163317905561003261002d3390565b610037565b610089565b600580546001600160a01b038381166001600160a01b0319831681179093556040519116919082907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a35050565b61214a806100986000396000f3fe608060405234801561001057600080fd5b506004361061010b5760003560e01c8063776a0835116100a2578063ba33939911610071578063ba33939914610297578063bdb58698146102aa578063eb55683a146102bd578063f2fde38b146102d0578063f9ce0582146102e357600080fd5b8063776a0835146102325780638da5cb5b14610245578063ad827dc414610256578063b920c1231461027657600080fd5b8063578064f6116100de578063578064f61461018b57806362f24b7014610204578063715018a61461021757806375cb26721461021f57600080fd5b806302e8fe131461011057806328220f3514610138578063360636eb1461014d5780634e21f9c014610160575b600080fd5b61012361011e366004611e74565b61031b565b60405190151581526020015b60405180910390f35b61014b610146366004611c6d565b6103dc565b005b61012361015b366004611c28565b61048d565b600054610173906001600160a01b031681565b6040516001600160a01b03909116815260200161012f565b6101e0610199366004611c6d565b604080518082019091526000808252602082015250600090815260046020908152604091829020825180840190935280548352600101546001600160a01b03169082015290565b60408051825181526020928301516001600160a01b0316928101929092520161012f565b61014b610212366004611ccc565b6104cb565b61014b6105dc565b61014b61022d366004611bd0565b610642565b61014b610240366004611c9d565b61077c565b6005546001600160a01b0316610173565b610269610264366004611c9d565b610916565b60405161012f9190611f1b565b610289610284366004611c43565b6109be565b60405190815260200161012f565b61014b6102a5366004611d78565b6109dc565b61014b6102b8366004611dae565b610c20565b61014b6102cb366004611d4c565b61117f565b61014b6102de366004611bd0565b611287565b6102f66102f1366004611c6d565b611352565b604080518251518152602080840151519082015291810151519082015260600161012f565b60008061032784611352565b90506103328161048d565b61038f5760405162461bcd60e51b8152602060048201526024808201527f4d61726b65743a20496e76616c6964206269642073686172657320666f72207460448201526337b5b2b760e11b60648201526084015b60405180910390fd5b82158015906103d257506103cf6103aa8260400151856109be565b6103c96103bb8460000151876109be565b6103c98560200151886109be565b906113dd565b83145b9150505b92915050565b6000546001600160a01b031633146104065760405162461bcd60e51b815260040161038690611ee4565b807fbf58f6d6c7d7c6efc69e7444efa93ed26d7cdc0e82e12a37df96f36a367561df600460008481526020019081526020016000206040516104619190815481526001909101546001600160a01b0316602082015260400190565b60405180910390a2600090815260046020526040812090815560010180546001600160a01b0319169055565b60006104a661049e6012600a611fdf565b6064906113e9565b8251516040840151516020850151516104c492916103c991906113dd565b1492915050565b6000546001600160a01b031633146104f55760405162461bcd60e51b815260040161038690611ee4565b61050382826000015161031b565b61055f5760405162461bcd60e51b815260206004820152602760248201527f4d61726b65743a2041736b20696e76616c696420666f722073686172652073706044820152666c697474696e6760c81b6064820152608401610386565b60008281526004602090815260409182902083518082558483018051600190930180546001600160a01b0319166001600160a01b039485161790558451918252519091169181019190915283917ff7347cb9e91d8cbe995b51920ba5f92cbf84a9e09cbed3cd7a739fef4d1d07cf91015b60405180910390a25050565b6005546001600160a01b031633146106365760405162461bcd60e51b815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e65726044820152606401610386565b61064060006113f5565b565b6001546001600160a01b031633146106915760405162461bcd60e51b815260206004820152601260248201527126b0b935b2ba1d1027b7363c9037bbb732b960711b6044820152606401610386565b6000546001600160a01b0316156106ea5760405162461bcd60e51b815260206004820152601a60248201527f4d61726b65743a20416c726561647920636f6e666967757265640000000000006044820152606401610386565b6001600160a01b03811661075a5760405162461bcd60e51b815260206004820152603160248201527f4d61726b65743a2063616e6e6f7420736574206d6564696120636f6e7472616360448201527074206173207a65726f206164647265737360781b6064820152608401610386565b600080546001600160a01b0319166001600160a01b0392909216919091179055565b6000546001600160a01b031633146107a65760405162461bcd60e51b815260040161038690611ee4565b60008281526002602090815260408083206001600160a01b0380861685529252909120805460018201549192909116816108305760405162461bcd60e51b815260206004820152602560248201527f4d61726b65743a2063616e6e6f742072656d6f76652062696420616d6f756e746044820152640206f6620360dc1b6064820152608401610386565b6000819050857fcbebd567b8a5c57f63ec61dc46746aab28daff6bdd1f4a6a0a305c17fa5465c9856040516108a191908154815260018201546001600160a01b0390811660208301526002830154811660408301526003830154166060820152600490910154608082015260a00190565b60405180910390a260008681526002602081815260408084206001600160a01b03808b168652925283208381556001810180546001600160a01b031990811690915592810180548416905560038101805490931690925560049091019190915561090e9082168685611447565b505050505050565b6109506040805160a08101825260008082526020808301829052828401829052606083018290528351908101909352825290608082015290565b5060009182526002602081815260408085206001600160a01b039485168652825293849020845160a081018652815481526001820154851681840152928101548416838601526003810154909316606083015283519081019093526004909101548252608081019190915290565b60006109d560646109cf84866114aa565b906114c6565b9392505050565b6000546001600160a01b03163314610a065760405162461bcd60e51b815260040161038690611ee4565b600082815260026020526040808220908290610a289060608601908601611bd0565b6001600160a01b0390811682526020808301939093526040918201600020825160a0810184528154815260018201548316818601526002820154831681850152600382015490921660608301528251938401909252600490910154825260808101919091528051909150610ade5760405162461bcd60e51b815260206004820152601e60248201527f4d61726b65743a2063616e6e6f742061636365707420626964206f66203000006044820152606401610386565b80518235148015610b135750610afa6040830160208401611bd0565b6001600160a01b031681602001516001600160a01b0316145b8015610b2757506080818101515190830135145b8015610b575750610b3e6080830160608401611bd0565b6001600160a01b031681606001516001600160a01b0316145b610ba35760405162461bcd60e51b815260206004820152601d60248201527f4d61726b65743a20556e65787065637465642062696420666f756e642e0000006044820152606401610386565b610bb183826000015161031b565b610c0d5760405162461bcd60e51b815260206004820152602760248201527f4d61726b65743a2042696420696e76616c696420666f722073686172652073706044820152666c697474696e6760c81b6064820152608401610386565b610c1b8382604001516114d2565b505050565b6000546001600160a01b03163314610c4a5760405162461bcd60e51b815260040161038690611ee4565b6000838152600360209081526040918290208251608081018452815460608201908152815283518084018552600183015481528184015283519283018452600290910154825291820152610ca361049e6012600a611fdf565b608084015151602083015151610cb8916113dd565b1115610d1e5760405162461bcd60e51b815260206004820152602f60248201527f4d61726b65743a2053656c6c206f6e2066656520696e76616c696420666f722060448201526e73686172652073706c697474696e6760881b6064820152608401610386565b60408301516001600160a01b0316610d835760405162461bcd60e51b815260206004820152602260248201527f4d61726b65743a206269646465722063616e6e6f742062652030206164647265604482015261737360f01b6064820152608401610386565b8251610dd15760405162461bcd60e51b815260206004820152601e60248201527f4d61726b65743a2063616e6e6f742062696420616d6f756e74206f66203000006044820152606401610386565b60208301516001600160a01b0316610e3c5760405162461bcd60e51b815260206004820152602860248201527f4d61726b65743a206269642063757272656e63792063616e6e6f742062652030604482015267206164647265737360c01b6064820152608401610386565b60608301516001600160a01b0316610ea85760405162461bcd60e51b815260206004820152602960248201527f4d61726b65743a2062696420726563697069656e742063616e6e6f742062652060448201526830206164647265737360b81b6064820152608401610386565b6000848152600260209081526040808320868201516001600160a01b031684529091529020805415610ee257610ee285856040015161077c565b60208401516040516370a0823160e01b81523060048201526000906001600160a01b038316906370a082319060240160206040518083038186803b158015610f2957600080fd5b505afa158015610f3d573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610f619190611c85565b8651909150610f7e906001600160a01b03841690879030906118b7565b6040516370a0823160e01b81523060048201526000906001600160a01b038416906370a082319060240160206040518083038186803b158015610fc057600080fd5b505afa158015610fd4573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610ff89190611c85565b90506040518060a0016040528061101884846118f590919063ffffffff16565b81526020898101516001600160a01b03908116828401526040808c0180518316828601526060808e01518416818701526080808f01519681019690965260008f8152600280875284822093518616825292865283902087518155948701516001860180549186166001600160a01b031992831617905587840151928601805493861693821693909317909255860151600385018054919094169116179091559290910151516004909101555188907f327bc9021bfbee403a11b13dd6c819999006aff090cc129f07e9f2840af38dd5906110f3908a90611f1b565b60405180910390a26000888152600460205260409020600101546001600160a01b0316158015906111475750600088815260046020908152604090912060010154908801516001600160a01b039081169116145b80156111625750600088815260046020526040902054875110155b15611175576111758888604001516114d2565b5050505050505050565b6000546001600160a01b031633146111a95760405162461bcd60e51b815260040161038690611ee4565b6111b28161048d565b6112125760405162461bcd60e51b815260206004820152602b60248201527f4d61726b65743a20496e76616c696420626964207368617265732c206d75737460448201526a02073756d20746f203130360ac1b6064820152608401610386565b6000828152600360209081526040918290208351518082558483018051516001840155858501805151600290940193909355845191825251519281019290925251519181019190915282907fdb88d4e96cb8697aaee5e575ee5f460817709a1dfcfbf7ba15192e90b5c86f9f906060016105d0565b6005546001600160a01b031633146112e15760405162461bcd60e51b815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e65726044820152606401610386565b6001600160a01b0381166113465760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b6064820152608401610386565b61134f816113f5565b50565b61138f6040805160808101825260006060820181815282528251602080820185528282528084019190915283519081018452908152909182015290565b50600090815260036020908152604091829020825160808101845281546060820190815281528351808401855260018301548152818401528351928301845260029091015482529182015290565b60006109d58284611f64565b60006109d58284612087565b600580546001600160a01b038381166001600160a01b0319831681179093556040519116919082907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a35050565b6040516001600160a01b038316602482015260448101829052610c1b90849063a9059cbb60e01b906064015b60408051601f198184030181529190526020810180516001600160e01b03166001600160e01b031990931692909217909152611901565b80516000906109d59084906114c16012600a611fdf565b6119d3565b60006109d58284611f7c565b60008281526002602081815260408084206001600160a01b038681168652908352818520825160a0810184528154815260018201548316818601908152958201548316818501526003808301548416606083015284518087018652600493840154815260808301528988529094528286209451955492516331a9108f60e11b81529081018890529294926115ec9290911690636352211e9060240160206040518083038186803b15801561158557600080fd5b505afa158015611599573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906115bd9190611bec565b60408051602081019091526002850154815285516115db91906109be565b6001600160a01b0384169190611447565b60005460405163e0fd045f60e01b815260048101879052611688916001600160a01b03169063e0fd045f9060240160206040518083038186803b15801561163257600080fd5b505afa158015611646573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061166a9190611bec565b60408051602081019091526001850154815285516115db91906109be565b6000546040516304ec739360e51b815260048101879052611721916001600160a01b031690639d8e72609060240160206040518083038186803b1580156116ce57600080fd5b505afa1580156116e2573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906117069190611bec565b60408051602081019091528454815285516115db91906109be565b6000546060840151604051630f6b630f60e41b8152600481018890526001600160a01b03918216602482015291169063f6b630f090604401600060405180830381600087803b15801561177357600080fd5b505af1158015611787573d6000803e3d6000fd5b5050604080516020808201835260808801515160008b81526003909252929020600101549093508392506117cd91906117c7908161049e6012600a611fdf565b906118f5565b905251600283810191825560808501515184556000878152602082815260408083206001600160a01b038a1684528252808320838155600180820180546001600160a01b0319908116909155958201805487169055600382018054909616909555600401929092558151865481529286015490830152915481830152905186917fdb88d4e96cb8697aaee5e575ee5f460817709a1dfcfbf7ba15192e90b5c86f9f919081900360600190a2847fb6ef177c7a6f32b283a49b5e0463a39240cdaa278028dfb219480d050e8ee54c846040516118a89190611f1b565b60405180910390a25050505050565b6040516001600160a01b03808516602483015283166044820152606481018290526118ef9085906323b872dd60e01b90608401611473565b50505050565b60006109d582846120a6565b6000611956826040518060400160405280602081526020017f5361666545524332303a206c6f772d6c6576656c2063616c6c206661696c6564815250856001600160a01b03166119eb9092919063ffffffff16565b805190915015610c1b57808060200190518101906119749190611c08565b610c1b5760405162461bcd60e51b815260206004820152602a60248201527f5361666545524332303a204552433230206f7065726174696f6e20646964206e6044820152691bdd081cdd58d8d9595960b21b6064820152608401610386565b60006119e3826109cf86866113e9565b949350505050565b60606119e3848460008585843b611a445760405162461bcd60e51b815260206004820152601d60248201527f416464726573733a2063616c6c20746f206e6f6e2d636f6e74726163740000006044820152606401610386565b600080866001600160a01b03168587604051611a609190611e95565b60006040518083038185875af1925050503d8060008114611a9d576040519150601f19603f3d011682016040523d82523d6000602084013e611aa2565b606091505b5091509150611ab2828286611abd565b979650505050505050565b60608315611acc5750816109d5565b825115611adc5782518084602001fd5b8160405162461bcd60e51b81526004016103869190611eb1565b8035611b01816120ff565b919050565b600060608284031215611b17578081fd5b6040516060810181811067ffffffffffffffff82111715611b4657634e487b7160e01b83526041600452602483fd5b604052905080611b568484611b83565b8152611b658460208501611b83565b6020820152611b778460408501611b83565b60408201525092915050565b600060208284031215611b94578081fd5b6040516020810181811067ffffffffffffffff82111715611bc357634e487b7160e01b83526041600452602483fd5b6040529135825250919050565b600060208284031215611be1578081fd5b81356109d5816120ff565b600060208284031215611bfd578081fd5b81516109d5816120ff565b600060208284031215611c19578081fd5b815180151581146109d5578182fd5b600060608284031215611c39578081fd5b6109d58383611b06565b60008060408385031215611c55578081fd5b611c5f8484611b83565b946020939093013593505050565b600060208284031215611c7e578081fd5b5035919050565b600060208284031215611c96578081fd5b5051919050565b60008060408385031215611caf578182fd5b823591506020830135611cc1816120ff565b809150509250929050565b6000808284036060811215611cdf578283fd5b833592506040601f1982011215611cf4578182fd5b506040516040810181811067ffffffffffffffff82111715611d2457634e487b7160e01b83526041600452602483fd5b604090815260208501358252840135611d3c816120ff565b6020820152919491935090915050565b60008060808385031215611d5e578182fd5b82359150611d6f8460208501611b06565b90509250929050565b60008082840360c0811215611d8b578283fd5b8335925060a0601f1982011215611da0578182fd5b506020830190509250929050565b600080600083850360e0811215611dc3578182fd5b8435935060a0601f1982011215611dd8578182fd5b5060405160a0810181811067ffffffffffffffff82111715611e0857634e487b7160e01b83526041600452602483fd5b604090815260208601358252850135611e20816120ff565b60208201526060850135611e33816120ff565b60408201526080850135611e46816120ff565b6060820152611e588660a08701611b83565b60808201529150611e6b60c08501611af6565b90509250925092565b60008060408385031215611e86578182fd5b50508035926020909101359150565b60008251611ea78184602087016120bd565b9190910192915050565b6020815260008251806020840152611ed08160408501602087016120bd565b601f01601f19169190910160400192915050565b6020808252601b908201527f4d61726b65743a204f6e6c79206d6564696120636f6e74726163740000000000604082015260600190565b815181526020808301516001600160a01b039081169183019190915260408084015182169083015260608084015190911690820152608091820151519181019190915260a00190565b60008219821115611f7757611f776120e9565b500190565b600082611f9757634e487b7160e01b81526012600452602481fd5b500490565b600181815b80851115611fd7578160001904821115611fbd57611fbd6120e9565b80851615611fca57918102915b93841c9390800290611fa1565b509250929050565b60006109d58383600082611ff5575060016103d6565b81612002575060006103d6565b816001811461201857600281146120225761203e565b60019150506103d6565b60ff841115612033576120336120e9565b50506001821b6103d6565b5060208310610133831016604e8410600b8410161715612061575081810a6103d6565b61206b8383611f9c565b806000190482111561207f5761207f6120e9565b029392505050565b60008160001904831182151516156120a1576120a16120e9565b500290565b6000828210156120b8576120b86120e9565b500390565b60005b838110156120d85781810151838201526020016120c0565b838111156118ef5750506000910152565b634e487b7160e01b600052601160045260246000fd5b6001600160a01b038116811461134f57600080fdfea26469706673582212208bcfc86249ddef77cef59bbacac320d99b792cfc45e0b15928923970e32f623d64736f6c63430008040033";
