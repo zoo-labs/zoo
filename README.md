@@ -9,7 +9,7 @@ Prerequisites: [Node](https://nodejs.org/dist/latest-v12.x/) plus [Yarn](https:/
 > clone/fork 🏗 cryptozoo:
 
 ```bash
-git clone https://github.com/zenabidata/cryptozoo.git
+git clone https://github.com/zoo-labs/cryptozoo.git
 ```
 
 > install and start your 👷‍ Hardhat chain:
