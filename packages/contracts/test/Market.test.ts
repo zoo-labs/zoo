@@ -1,18 +1,19 @@
 import chai, { expect } from 'chai';
 import asPromised from 'chai-as-promised';
+chai.use(asPromised);
+
+import { BigNumber, BigNumberish, Wallet } from 'ethers';
+import { AddressZero, MaxUint256 } from '@ethersproject/constants';
 import { JsonRpcProvider } from '@ethersproject/providers';
+import { formatUnits } from '@ethersproject/units';
+
+import Decimal from '../utils/Decimal';
 import { Blockchain } from '../utils/Blockchain';
 import { generatedWallets } from '../utils/generatedWallets';
-import { Market__factory } from '../types';
-import { Wallet } from 'ethers';
-import Decimal from '../utils/Decimal';
-import { BigNumber, BigNumberish } from 'ethers';
-import { formatUnits } from '@ethersproject/units';
-import { AddressZero, MaxUint256 } from '@ethersproject/constants';
-import { ERC20__factory } from '../types';
-import { Market } from '../types/Market';
 
-chai.use(asPromised);
+import { Market } from '../types/Market';
+import { Market__factory } from '../types';
+import { ZooToken__factory } from '../types';
 
 let provider = new JsonRpcProvider();
 let blockchain = new Blockchain(provider);
@@ -104,15 +105,12 @@ describe('Market', () => {
   }
 
   async function deployCurrency() {
-    const currency = await new ERC20__factory(deployerWallet).deploy(
-      'test',
-      'TEST'
-    );
+    const currency = await new ZooToken__factory(deployerWallet).deploy();
     return currency.address;
   }
 
   async function mintCurrency(currency: string, to: string, value: number) {
-    await ERC20__factory.connect(currency, deployerWallet).mint(to, value);
+    await ZooToken__factory.connect(currency, deployerWallet).mint(to, value);
   }
 
   async function approveCurrency(
@@ -120,13 +118,13 @@ describe('Market', () => {
     spender: string,
     owner: Wallet
   ) {
-    await ERC20__factory.connect(currency, owner).approve(
+    await ZooToken__factory.connect(currency, owner).approve(
       spender,
       MaxUint256
     );
   }
   async function getBalance(currency: string, owner: string) {
-    return ERC20__factory.connect(currency, deployerWallet).balanceOf(owner);
+    return ZooToken__factory.connect(currency, deployerWallet).balanceOf(owner);
   }
   async function setBid(
     auction: Market,
@@ -457,7 +455,7 @@ describe('Market', () => {
       await approveCurrency(currency, auction.address, bidderWallet);
 
       const bidderBalance = toNumWei(
-        await ERC20__factory.connect(currency, bidderWallet).balanceOf(
+        await ZooToken__factory.connect(currency, bidderWallet).balanceOf(
           bidderWallet.address
         )
       );
@@ -472,7 +470,7 @@ describe('Market', () => {
       ).fulfilled;
 
       const afterBalance = toNumWei(
-        await ERC20__factory.connect(currency, bidderWallet).balanceOf(
+        await ZooToken__factory.connect(currency, bidderWallet).balanceOf(
           bidderWallet.address
         )
       );
