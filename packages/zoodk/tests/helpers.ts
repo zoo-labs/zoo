@@ -2,7 +2,7 @@ import {
   BaseErc20Factory,
   MarketFactory,
   MediaFactory,
-} from '@zoolabs/core/dist/typechain'
+} from '@zoolabs/contracts/dist/typechain'
 import { Wallet } from '@ethersproject/wallet'
 import { BigNumber } from '@ethersproject/bignumber'
 import { ContractTransaction } from '@ethersproject/contracts'

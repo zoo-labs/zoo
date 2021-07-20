@@ -937,9 +937,9 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@zoolabs/core@^1.0.3":
+"@zoolabs/contracts@^1.0.3":
   version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@zoolabs/core/-/core-1.0.3.tgz#a4ca994510a0fa4e3de82639c682fb1124bef35b"
+  resolved "https://registry.yarnpkg.com/@zoolabs/contracts/-/core-1.0.3.tgz#a4ca994510a0fa4e3de82639c682fb1124bef35b"
   integrity sha512-yLCbZMmjf59R2/BtUQiIxytHYKZRtGFhHLGwnN26FdAW8kN9lTmuZ41ijMujA14z0RT+xHpTa4L6DvfACc+Aag==
   dependencies:
     ethers "^5.0.19"
@@ -960,7 +960,7 @@
   resolved "https://registry.yarnpkg.com/@zoolabs/zdk/-/zdk-1.0.3.tgz#cd026ad3979ccf20dc53d16df0fc20e9e35af69c"
   integrity sha512-ADfQjIcrh/DGBOYnR8dlQEiIUsNgIVJJ0LomQrkF5tvovwFb5HMSzdi+mcurxzz8IZYChFS+/7Y8tt6CjCMCCQ==
   dependencies:
-    "@zoolabs/core" "^1.0.3"
+    "@zoolabs/contracts" "^1.0.3"
     "@zoolabs/media-metadata-schemas" "^0.1.0"
     axios "^0.21.1"
     eth-sig-util "^3.0.0"

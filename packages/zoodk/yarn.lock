@@ -1541,15 +1541,15 @@
   integrity sha512-PeEuqR9HNRllSfsUcsPYeUDPrIs8K9W6uEissHMzFdV1P/eqEsIUMRP0xnMuOjLHMSIWntZVqSYA2Oc5AS1voA==
   dependencies:
     "@openzeppelin/contracts" "^3.2.0"
-    "@zoolabs/core" "^1.0.3"
+    "@zoolabs/contracts" "^1.0.3"
     dotenv "^8.2.0"
     fs-extra "^9.1.0"
     minimist "^1.2.5"
     solidity-coverage "^0.7.16"
 
-"@zoolabs/core@^1.0.3", "@zoolabs/core@^1.0.5":
+"@zoolabs/contracts@^1.0.3", "@zoolabs/contracts@^1.0.5":
   version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@zoolabs/core/-/core-1.0.5.tgz#4b487e90c7aeda0d0ba33fdcc2f4246a94dbc4c5"
+  resolved "https://registry.yarnpkg.com/@zoolabs/contracts/-/core-1.0.5.tgz#4b487e90c7aeda0d0ba33fdcc2f4246a94dbc4c5"
   integrity sha512-tiww0kI4lxhtP6X2499sz5upummBKiRzA5fdYW56lAFR45sl0j1gITir3pssb5nBG60l+aXiGdpgOhiLK/nEFg==
   dependencies:
     ethers "^5.0.19"
