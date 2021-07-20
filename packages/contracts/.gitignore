@@ -2,3 +2,5 @@ deployments/
 cache/
 *.txt
 cache/
+types/
+artifacts/

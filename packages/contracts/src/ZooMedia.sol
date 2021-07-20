@@ -3,13 +3,11 @@
 pragma solidity 0.8.4;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import {Media} from "./Media.sol";
+import { Media } from "./Media.sol";
 
 
 contract ZooMedia is Media, Ownable {
-    constructor(string memory symbol, string memory name, address marketAddress) Media(symbol, name, marketAddress) {
-        marketContract = marketAddress;
-    }
+    constructor(string memory symbol, string memory name, address marketAddress) Media(symbol, name, marketAddress) { }
 
     function addDrop() public onlyOwner returns (bool) {
 
