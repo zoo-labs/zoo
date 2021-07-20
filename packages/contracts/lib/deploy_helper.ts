@@ -4,7 +4,7 @@ import '@nomiclabs/hardhat-ethers'
 import { HardhatUserConfig } from 'hardhat/types'
 
 import 'hardhat-deploy'
-import 'hardhat-typechain'
+import '@typechain/hardhat'
 import '@nomiclabs/hardhat-ethers'
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
