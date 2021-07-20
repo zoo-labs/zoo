@@ -1,18 +1,15 @@
 require('dotenv').config()
 
-import '@nomiclabs/hardhat-ethers'
-import { HardhatUserConfig } from 'hardhat/types'
 
 import 'hardhat-deploy'
+import 'hardhat-deploy-ethers'
 import '@typechain/hardhat'
-import '@nomiclabs/hardhat-ethers'
 
-import { HardhatRuntimeEnvironment } from 'hardhat/types'
+import { HardhatUserConfig, HardhatRuntimeEnvironment } from 'hardhat/types'
 import { privateToAddress } from 'ethereumjs-util'
 import fs from 'fs'
 
 
-// export const OWNER_ADDRESS = process.env.CONTRACT_OWNER_ADDRESS ?? "0xf8f59f0269c4f6d7b5C5ab98d70180EAa0C7507E";
 export const getWallet = async (hre: HardhatRuntimeEnvironment) => {
     let localDeployerMnemonic;
     localDeployerMnemonic = fs.readFileSync('./mnemonic.txt')
