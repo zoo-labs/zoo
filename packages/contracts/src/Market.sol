@@ -148,15 +148,15 @@ contract Market is IMarket {
      * @notice Sets the media contract address. This address is the only permitted address that
      * can call the mutable functions. This method can only be called once.
      */
-    function configure(address mediaContractAddress) external override {
+    function configure(address mediaAddress) external override {
         require(msg.sender == _owner, "Market: Only owner");
         require(mediaContract == address(0), "Market: Already configured");
         require(
-            mediaContractAddress != address(0),
+            mediaAddress != address(0),
             "Market: cannot set media contract as zero address"
         );
 
-        mediaContract = mediaContractAddress;
+        mediaContract = mediaAddress;
     }
 
     /**
