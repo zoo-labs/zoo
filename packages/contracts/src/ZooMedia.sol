@@ -2,21 +2,8 @@
 
 pragma solidity 0.8.4;
 
-pragma experimental ABIEncoderV2;
-
-import "./ERC721Burnable.sol";
-
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/Context.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-
-import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-
 import {Media} from "./Media.sol";
-import {Market} from "./Market.sol";
 
 
 contract ZooMedia is Media, Ownable {
@@ -34,9 +21,6 @@ contract ZooMedia is Media, Ownable {
         return true;
     }
 }
-
-contract ZooMarket is Market, Ownable { }
-
 
 // // A given species of animal
 // abstract contract Animal {
@@ -129,4 +113,3 @@ contract ZooMarket is Market, Ownable { }
 //         data = _data;
 //     }
 // }
-

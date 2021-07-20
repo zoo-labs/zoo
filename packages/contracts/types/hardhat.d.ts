@@ -61,14 +61,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
-      name: "ZooMarket",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ZooMarket__factory>;
-    getContractFactory(
-      name: "ZooMedia",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ZooMedia__factory>;
-    getContractFactory(
       name: "ERC721",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC721__factory>;
@@ -92,6 +84,14 @@ declare module "hardhat/types/runtime" {
       name: "Media",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Media__factory>;
+    getContractFactory(
+      name: "ZooMarket",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ZooMarket__factory>;
+    getContractFactory(
+      name: "ZooMedia",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ZooMedia__factory>;
     getContractFactory(
       name: "ZooToken",
       signerOrOptions?: ethers.Signer | FactoryOptions
