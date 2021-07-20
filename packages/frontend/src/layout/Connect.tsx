@@ -6,7 +6,6 @@ import {
 } from '@web3-react/injected-connector'
 import { UserRejectedRequestError as UserRejectedRequestErrorWalletConnect } from '@web3-react/walletconnect-connector'
 
-import { Container, Text, Heading } from 'theme-ui'
 import useSWR from 'swr'
 import { useEagerConnect, useInactiveListener } from '../hooks/web3'
 import { ETHSCAN_API } from '../utils'
@@ -38,7 +37,7 @@ export const Connect: FC = ({ children }) => {
 
   const { setContract, setUser } = useAppState(
     useCallback(
-      ({ setContract, setUser }) => ({
+      ({ setContract, setUser }: { setContract: any, setUser: any }) => ({
         setContract,
         setUser,
       }),
@@ -69,10 +68,9 @@ export const Connect: FC = ({ children }) => {
   return (
     <>
       {error ? (
-        <Container>
-          <Heading as="h2">❌ Something is not right</Heading>
-          <Text sx={{ mt: 3 }}>{getErrorMessage(error)}</Text>
-        </Container>
+          <div>
+              Something isn't right
+          </div>
       ) : (
         children
       )}

@@ -1,23 +1,10 @@
 import { FormEvent, MouseEvent, useState } from 'react'
-import { utils, BigNumber, constants } from 'ethers'
-import {
-    Spinner,
-    Box,
-    Flex,
-    Card,
-    Button,
-    Image,
-    Input,
-    Text,
-    Heading,
-    Divider,
-    NavLink,
-  } from 'theme-ui'
-
+import { utils, BigNumber } from 'ethers'
+import ClipLoader from 'react-spinners/ClipLoader'
 import useSWR from 'swr'
 import { useAppState } from '../../state'
 import { fetcherMetadata, fetchOwner } from '../../utils/fetchers'
-import { formatPriceEth, METADATA_API, toShort } from '../../utils'
+import { formatPriceEth, METADATA_API } from '../../utils'
 
 export type TokenProps = {
     id: string
@@ -71,10 +58,16 @@ export const Token = ({ token, isOnSale, onTransfer, onBuy, onSale }: TokenCompo
     
       if (!data)
         return (
-          <Card variant="nft">
-            <Spinner />
-          </Card>
+          <div>
+            <ClipLoader />
+          </div>
         )
     
       if (!data.name) return null
+
+      return (
+        <div>
+            Token
+        </div>
+      )
 }

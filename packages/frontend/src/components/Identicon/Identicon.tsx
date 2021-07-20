@@ -1,11 +1,16 @@
+import {css} from '@emotion/css'
 import { useEffect, useRef } from 'react'
-import { Flex } from 'theme-ui'
 import jazzicon from 'jazzicon'
 
 export type IdenticonProps = {
   address: string
   size?: number
 }
+
+const style = css`
+justify-content: 'center';
+width: 18;
+`
 
 const Identicon = ({ address, size = 16 }: IdenticonProps) => {
   const ref = useRef<HTMLDivElement>(null)
@@ -20,12 +25,9 @@ const Identicon = ({ address, size = 16 }: IdenticonProps) => {
   }, [address, size])
 
   return (
-    <Flex
+    <div
       ref={ref}
-      sx={{
-        justifyContent: 'center',
-        width: size + 2,
-      }}
+      className={style}
     />
   )
 }

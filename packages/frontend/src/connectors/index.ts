@@ -6,7 +6,6 @@ export enum ConnectorNames {
     WalletConnect = 'WalletConnect'
 }
 
-const POLLING_INTERVAL = 12000
 const RPC_URLS: { [chainId: number]: string } = {
     1: process.env.REACT_APP_RPC_URL_1 as string,
     3: process.env.REACT_APP_RPC_URL_3 as string,

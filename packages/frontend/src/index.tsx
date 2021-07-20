@@ -1,15 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ThemeProvider } from 'theme-ui'
 import reportWebVitals from './reportWebVitals'
 import { Root } from './layout';
-import theme from './theme'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
+  <React.StrictMode>    
       <Root />
-    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

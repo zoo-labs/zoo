@@ -1,11 +1,9 @@
-  
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Web3ReactProvider } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
 
 import { Profile, Connect } from './'
-import { Header, PrivateRoute, TransactionProgress, Homepage } from '../components'
-import { Container } from 'theme-ui'
+import { Header, PrivateRoute, TransactionProgress, Homepage  } from '../components'
 
 function getLibrary(provider: any): Web3Provider {
   const library = new Web3Provider(provider)
@@ -19,13 +17,13 @@ export const Root = () => {
       <Header />
       <Web3ReactProvider getLibrary={getLibrary}>
         <Connect>
-          <Container>
+          <div>
             <Switch>
               <PrivateRoute path="/profile" component={Profile} />
               <Route exact path="/" component={Homepage} />
             </Switch>
             <TransactionProgress />
-          </Container>
+          </div>
         </Connect>
       </Web3ReactProvider>
     </Router>
