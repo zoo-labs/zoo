@@ -9,13 +9,11 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-} from "ethers";
-import {
-  Contract,
+  BaseContract,
   ContractTransaction,
   Overrides,
   CallOverrides,
-} from "@ethersproject/contracts";
+} from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
@@ -166,10 +164,33 @@ interface IMarketInterface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: "BidShareUpdated"): EventFragment;
 }
 
-export class IMarket extends Contract {
+export class IMarket extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
+
+  listeners<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
+  ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
+  off<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  on<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  once<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
+  ): this;
 
   listeners(eventName?: string): Array<Listener>;
   off(eventName: string, listener: Listener): this;
@@ -178,32 +199,11 @@ export class IMarket extends Contract {
   removeListener(eventName: string, listener: Listener): this;
   removeAllListeners(eventName?: string): this;
 
-  listeners<T, G>(
-    eventFilter?: TypedEventFilter<T, G>
-  ): Array<TypedListener<T, G>>;
-  off<T, G>(
-    eventFilter: TypedEventFilter<T, G>,
-    listener: TypedListener<T, G>
-  ): this;
-  on<T, G>(
-    eventFilter: TypedEventFilter<T, G>,
-    listener: TypedListener<T, G>
-  ): this;
-  once<T, G>(
-    eventFilter: TypedEventFilter<T, G>,
-    listener: TypedListener<T, G>
-  ): this;
-  removeListener<T, G>(
-    eventFilter: TypedEventFilter<T, G>,
-    listener: TypedListener<T, G>
-  ): this;
-  removeAllListeners<T, G>(eventFilter: TypedEventFilter<T, G>): this;
-
-  queryFilter<T, G>(
-    event: TypedEventFilter<T, G>,
+  queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
+    event: TypedEventFilter<EventArgsArray, EventArgsObject>,
     fromBlockOrBlockhash?: string | number | undefined,
     toBlock?: string | number | undefined
-  ): Promise<Array<TypedEvent<T & G>>>;
+  ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
   interface: IMarketInterface;
 
@@ -217,44 +217,10 @@ export class IMarket extends Contract {
         recipient: string;
         sellOnShare: { value: BigNumberish };
       },
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "acceptBid(uint256,tuple)"(
-      tokenId: BigNumberish,
-      expectedBid: {
-        amount: BigNumberish;
-        currency: string;
-        bidder: string;
-        recipient: string;
-        sellOnShare: { value: BigNumberish };
-      },
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     bidForTokenBidder(
-      tokenId: BigNumberish,
-      bidder: string,
-      overrides?: CallOverrides
-    ): Promise<
-      [
-        [
-          BigNumber,
-          string,
-          string,
-          string,
-          [BigNumber] & { value: BigNumber }
-        ] & {
-          amount: BigNumber;
-          currency: string;
-          bidder: string;
-          recipient: string;
-          sellOnShare: [BigNumber] & { value: BigNumber };
-        }
-      ]
-    >;
-
-    "bidForTokenBidder(uint256,address)"(
       tokenId: BigNumberish,
       bidder: string,
       overrides?: CallOverrides
@@ -293,31 +259,9 @@ export class IMarket extends Contract {
       ]
     >;
 
-    "bidSharesForToken(uint256)"(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [
-        [
-          [BigNumber] & { value: BigNumber },
-          [BigNumber] & { value: BigNumber },
-          [BigNumber] & { value: BigNumber }
-        ] & {
-          prevOwner: [BigNumber] & { value: BigNumber };
-          creator: [BigNumber] & { value: BigNumber };
-          owner: [BigNumber] & { value: BigNumber };
-        }
-      ]
-    >;
-
     configure(
       mediaContractAddress: string,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "configure(address)"(
-      mediaContractAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     currentAskForToken(
@@ -325,18 +269,7 @@ export class IMarket extends Contract {
       overrides?: CallOverrides
     ): Promise<[[BigNumber, string] & { amount: BigNumber; currency: string }]>;
 
-    "currentAskForToken(uint256)"(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[[BigNumber, string] & { amount: BigNumber; currency: string }]>;
-
     isValidBid(
-      tokenId: BigNumberish,
-      bidAmount: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    "isValidBid(uint256,uint256)"(
       tokenId: BigNumberish,
       bidAmount: BigNumberish,
       overrides?: CallOverrides
@@ -351,47 +284,21 @@ export class IMarket extends Contract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    "isValidBidShares(tuple)"(
-      bidShares: {
-        prevOwner: { value: BigNumberish };
-        creator: { value: BigNumberish };
-        owner: { value: BigNumberish };
-      },
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
     removeAsk(
       tokenId: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "removeAsk(uint256)"(
-      tokenId: BigNumberish,
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     removeBid(
       tokenId: BigNumberish,
       bidder: string,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "removeBid(uint256,address)"(
-      tokenId: BigNumberish,
-      bidder: string,
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setAsk(
       tokenId: BigNumberish,
       ask: { amount: BigNumberish; currency: string },
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "setAsk(uint256,tuple)"(
-      tokenId: BigNumberish,
-      ask: { amount: BigNumberish; currency: string },
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setBid(
@@ -404,20 +311,7 @@ export class IMarket extends Contract {
         sellOnShare: { value: BigNumberish };
       },
       spender: string,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "setBid(uint256,tuple,address)"(
-      tokenId: BigNumberish,
-      bid: {
-        amount: BigNumberish;
-        currency: string;
-        bidder: string;
-        recipient: string;
-        sellOnShare: { value: BigNumberish };
-      },
-      spender: string,
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setBidShares(
@@ -427,26 +321,10 @@ export class IMarket extends Contract {
         creator: { value: BigNumberish };
         owner: { value: BigNumberish };
       },
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "setBidShares(uint256,tuple)"(
-      tokenId: BigNumberish,
-      bidShares: {
-        prevOwner: { value: BigNumberish };
-        creator: { value: BigNumberish };
-        owner: { value: BigNumberish };
-      },
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     splitShare(
-      sharePercentage: { value: BigNumberish },
-      amount: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    "splitShare(tuple,uint256)"(
       sharePercentage: { value: BigNumberish },
       amount: BigNumberish,
       overrides?: CallOverrides
@@ -462,36 +340,10 @@ export class IMarket extends Contract {
       recipient: string;
       sellOnShare: { value: BigNumberish };
     },
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  "acceptBid(uint256,tuple)"(
-    tokenId: BigNumberish,
-    expectedBid: {
-      amount: BigNumberish;
-      currency: string;
-      bidder: string;
-      recipient: string;
-      sellOnShare: { value: BigNumberish };
-    },
-    overrides?: Overrides
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   bidForTokenBidder(
-    tokenId: BigNumberish,
-    bidder: string,
-    overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, string, string, string, [BigNumber] & { value: BigNumber }] & {
-      amount: BigNumber;
-      currency: string;
-      bidder: string;
-      recipient: string;
-      sellOnShare: [BigNumber] & { value: BigNumber };
-    }
-  >;
-
-  "bidForTokenBidder(uint256,address)"(
     tokenId: BigNumberish,
     bidder: string,
     overrides?: CallOverrides
@@ -520,29 +372,9 @@ export class IMarket extends Contract {
     }
   >;
 
-  "bidSharesForToken(uint256)"(
-    tokenId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [
-      [BigNumber] & { value: BigNumber },
-      [BigNumber] & { value: BigNumber },
-      [BigNumber] & { value: BigNumber }
-    ] & {
-      prevOwner: [BigNumber] & { value: BigNumber };
-      creator: [BigNumber] & { value: BigNumber };
-      owner: [BigNumber] & { value: BigNumber };
-    }
-  >;
-
   configure(
     mediaContractAddress: string,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  "configure(address)"(
-    mediaContractAddress: string,
-    overrides?: Overrides
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   currentAskForToken(
@@ -550,18 +382,7 @@ export class IMarket extends Contract {
     overrides?: CallOverrides
   ): Promise<[BigNumber, string] & { amount: BigNumber; currency: string }>;
 
-  "currentAskForToken(uint256)"(
-    tokenId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<[BigNumber, string] & { amount: BigNumber; currency: string }>;
-
   isValidBid(
-    tokenId: BigNumberish,
-    bidAmount: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  "isValidBid(uint256,uint256)"(
     tokenId: BigNumberish,
     bidAmount: BigNumberish,
     overrides?: CallOverrides
@@ -576,47 +397,21 @@ export class IMarket extends Contract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  "isValidBidShares(tuple)"(
-    bidShares: {
-      prevOwner: { value: BigNumberish };
-      creator: { value: BigNumberish };
-      owner: { value: BigNumberish };
-    },
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
   removeAsk(
     tokenId: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  "removeAsk(uint256)"(
-    tokenId: BigNumberish,
-    overrides?: Overrides
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   removeBid(
     tokenId: BigNumberish,
     bidder: string,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  "removeBid(uint256,address)"(
-    tokenId: BigNumberish,
-    bidder: string,
-    overrides?: Overrides
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setAsk(
     tokenId: BigNumberish,
     ask: { amount: BigNumberish; currency: string },
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  "setAsk(uint256,tuple)"(
-    tokenId: BigNumberish,
-    ask: { amount: BigNumberish; currency: string },
-    overrides?: Overrides
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setBid(
@@ -629,20 +424,7 @@ export class IMarket extends Contract {
       sellOnShare: { value: BigNumberish };
     },
     spender: string,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  "setBid(uint256,tuple,address)"(
-    tokenId: BigNumberish,
-    bid: {
-      amount: BigNumberish;
-      currency: string;
-      bidder: string;
-      recipient: string;
-      sellOnShare: { value: BigNumberish };
-    },
-    spender: string,
-    overrides?: Overrides
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setBidShares(
@@ -652,26 +434,10 @@ export class IMarket extends Contract {
       creator: { value: BigNumberish };
       owner: { value: BigNumberish };
     },
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  "setBidShares(uint256,tuple)"(
-    tokenId: BigNumberish,
-    bidShares: {
-      prevOwner: { value: BigNumberish };
-      creator: { value: BigNumberish };
-      owner: { value: BigNumberish };
-    },
-    overrides?: Overrides
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   splitShare(
-    sharePercentage: { value: BigNumberish },
-    amount: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  "splitShare(tuple,uint256)"(
     sharePercentage: { value: BigNumberish },
     amount: BigNumberish,
     overrides?: CallOverrides
@@ -690,39 +456,7 @@ export class IMarket extends Contract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "acceptBid(uint256,tuple)"(
-      tokenId: BigNumberish,
-      expectedBid: {
-        amount: BigNumberish;
-        currency: string;
-        bidder: string;
-        recipient: string;
-        sellOnShare: { value: BigNumberish };
-      },
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     bidForTokenBidder(
-      tokenId: BigNumberish,
-      bidder: string,
-      overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        string,
-        string,
-        string,
-        [BigNumber] & { value: BigNumber }
-      ] & {
-        amount: BigNumber;
-        currency: string;
-        bidder: string;
-        recipient: string;
-        sellOnShare: [BigNumber] & { value: BigNumber };
-      }
-    >;
-
-    "bidForTokenBidder(uint256,address)"(
       tokenId: BigNumberish,
       bidder: string,
       overrides?: CallOverrides
@@ -757,27 +491,7 @@ export class IMarket extends Contract {
       }
     >;
 
-    "bidSharesForToken(uint256)"(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [
-        [BigNumber] & { value: BigNumber },
-        [BigNumber] & { value: BigNumber },
-        [BigNumber] & { value: BigNumber }
-      ] & {
-        prevOwner: [BigNumber] & { value: BigNumber };
-        creator: [BigNumber] & { value: BigNumber };
-        owner: [BigNumber] & { value: BigNumber };
-      }
-    >;
-
     configure(
-      mediaContractAddress: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "configure(address)"(
       mediaContractAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -787,18 +501,7 @@ export class IMarket extends Contract {
       overrides?: CallOverrides
     ): Promise<[BigNumber, string] & { amount: BigNumber; currency: string }>;
 
-    "currentAskForToken(uint256)"(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber, string] & { amount: BigNumber; currency: string }>;
-
     isValidBid(
-      tokenId: BigNumberish,
-      bidAmount: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    "isValidBid(uint256,uint256)"(
       tokenId: BigNumberish,
       bidAmount: BigNumberish,
       overrides?: CallOverrides
@@ -813,29 +516,9 @@ export class IMarket extends Contract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    "isValidBidShares(tuple)"(
-      bidShares: {
-        prevOwner: { value: BigNumberish };
-        creator: { value: BigNumberish };
-        owner: { value: BigNumberish };
-      },
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
     removeAsk(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    "removeAsk(uint256)"(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     removeBid(
-      tokenId: BigNumberish,
-      bidder: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "removeBid(uint256,address)"(
       tokenId: BigNumberish,
       bidder: string,
       overrides?: CallOverrides
@@ -847,26 +530,7 @@ export class IMarket extends Contract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "setAsk(uint256,tuple)"(
-      tokenId: BigNumberish,
-      ask: { amount: BigNumberish; currency: string },
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     setBid(
-      tokenId: BigNumberish,
-      bid: {
-        amount: BigNumberish;
-        currency: string;
-        bidder: string;
-        recipient: string;
-        sellOnShare: { value: BigNumberish };
-      },
-      spender: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "setBid(uint256,tuple,address)"(
       tokenId: BigNumberish,
       bid: {
         amount: BigNumberish;
@@ -889,23 +553,7 @@ export class IMarket extends Contract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "setBidShares(uint256,tuple)"(
-      tokenId: BigNumberish,
-      bidShares: {
-        prevOwner: { value: BigNumberish };
-        creator: { value: BigNumberish };
-        owner: { value: BigNumberish };
-      },
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     splitShare(
-      sharePercentage: { value: BigNumberish },
-      amount: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "splitShare(tuple,uint256)"(
       sharePercentage: { value: BigNumberish },
       amount: BigNumberish,
       overrides?: CallOverrides
@@ -914,36 +562,36 @@ export class IMarket extends Contract {
 
   filters: {
     AskCreated(
-      tokenId: BigNumberish | null,
-      ask: null
+      tokenId?: BigNumberish | null,
+      ask?: null
     ): TypedEventFilter<
       [
         BigNumber,
-        [BigNumber, string],
-        { amount: BigNumber; currency: string }
-      ] & {
+        [BigNumber, string] & { amount: BigNumber; currency: string }
+      ],
+      {
         tokenId: BigNumber;
         ask: [BigNumber, string] & { amount: BigNumber; currency: string };
       }
     >;
 
     AskRemoved(
-      tokenId: BigNumberish | null,
-      ask: null
+      tokenId?: BigNumberish | null,
+      ask?: null
     ): TypedEventFilter<
       [
         BigNumber,
-        [BigNumber, string],
-        { amount: BigNumber; currency: string }
-      ] & {
+        [BigNumber, string] & { amount: BigNumber; currency: string }
+      ],
+      {
         tokenId: BigNumber;
         ask: [BigNumber, string] & { amount: BigNumber; currency: string };
       }
     >;
 
     BidCreated(
-      tokenId: BigNumberish | null,
-      bid: null
+      tokenId?: BigNumberish | null,
+      bid?: null
     ): TypedEventFilter<
       [
         BigNumber,
@@ -952,8 +600,7 @@ export class IMarket extends Contract {
           string,
           string,
           string,
-          [BigNumber],
-          { value: BigNumber }
+          [BigNumber] & { value: BigNumber }
         ] & {
           amount: BigNumber;
           currency: string;
@@ -961,7 +608,8 @@ export class IMarket extends Contract {
           recipient: string;
           sellOnShare: [BigNumber] & { value: BigNumber };
         }
-      ] & {
+      ],
+      {
         tokenId: BigNumber;
         bid: [
           BigNumber,
@@ -980,8 +628,8 @@ export class IMarket extends Contract {
     >;
 
     BidFinalized(
-      tokenId: BigNumberish | null,
-      bid: null
+      tokenId?: BigNumberish | null,
+      bid?: null
     ): TypedEventFilter<
       [
         BigNumber,
@@ -990,8 +638,7 @@ export class IMarket extends Contract {
           string,
           string,
           string,
-          [BigNumber],
-          { value: BigNumber }
+          [BigNumber] & { value: BigNumber }
         ] & {
           amount: BigNumber;
           currency: string;
@@ -999,7 +646,8 @@ export class IMarket extends Contract {
           recipient: string;
           sellOnShare: [BigNumber] & { value: BigNumber };
         }
-      ] & {
+      ],
+      {
         tokenId: BigNumber;
         bid: [
           BigNumber,
@@ -1018,8 +666,8 @@ export class IMarket extends Contract {
     >;
 
     BidRemoved(
-      tokenId: BigNumberish | null,
-      bid: null
+      tokenId?: BigNumberish | null,
+      bid?: null
     ): TypedEventFilter<
       [
         BigNumber,
@@ -1028,8 +676,7 @@ export class IMarket extends Contract {
           string,
           string,
           string,
-          [BigNumber],
-          { value: BigNumber }
+          [BigNumber] & { value: BigNumber }
         ] & {
           amount: BigNumber;
           currency: string;
@@ -1037,7 +684,8 @@ export class IMarket extends Contract {
           recipient: string;
           sellOnShare: [BigNumber] & { value: BigNumber };
         }
-      ] & {
+      ],
+      {
         tokenId: BigNumber;
         bid: [
           BigNumber,
@@ -1056,14 +704,13 @@ export class IMarket extends Contract {
     >;
 
     BidShareUpdated(
-      tokenId: BigNumberish | null,
-      bidShares: null
+      tokenId?: BigNumberish | null,
+      bidShares?: null
     ): TypedEventFilter<
       [
         BigNumber,
         [
-          [BigNumber],
-          { value: BigNumber },
+          [BigNumber] & { value: BigNumber },
           [BigNumber] & { value: BigNumber },
           [BigNumber] & { value: BigNumber }
         ] & {
@@ -1071,7 +718,8 @@ export class IMarket extends Contract {
           creator: [BigNumber] & { value: BigNumber };
           owner: [BigNumber] & { value: BigNumber };
         }
-      ] & {
+      ],
+      {
         tokenId: BigNumber;
         bidShares: [
           [BigNumber] & { value: BigNumber },
@@ -1096,28 +744,10 @@ export class IMarket extends Contract {
         recipient: string;
         sellOnShare: { value: BigNumberish };
       },
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    "acceptBid(uint256,tuple)"(
-      tokenId: BigNumberish,
-      expectedBid: {
-        amount: BigNumberish;
-        currency: string;
-        bidder: string;
-        recipient: string;
-        sellOnShare: { value: BigNumberish };
-      },
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     bidForTokenBidder(
-      tokenId: BigNumberish,
-      bidder: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "bidForTokenBidder(uint256,address)"(
       tokenId: BigNumberish,
       bidder: string,
       overrides?: CallOverrides
@@ -1128,19 +758,9 @@ export class IMarket extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "bidSharesForToken(uint256)"(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     configure(
       mediaContractAddress: string,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    "configure(address)"(
-      mediaContractAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     currentAskForToken(
@@ -1148,18 +768,7 @@ export class IMarket extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "currentAskForToken(uint256)"(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     isValidBid(
-      tokenId: BigNumberish,
-      bidAmount: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "isValidBid(uint256,uint256)"(
       tokenId: BigNumberish,
       bidAmount: BigNumberish,
       overrides?: CallOverrides
@@ -1174,44 +783,21 @@ export class IMarket extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "isValidBidShares(tuple)"(
-      bidShares: {
-        prevOwner: { value: BigNumberish };
-        creator: { value: BigNumberish };
-        owner: { value: BigNumberish };
-      },
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    removeAsk(tokenId: BigNumberish, overrides?: Overrides): Promise<BigNumber>;
-
-    "removeAsk(uint256)"(
+    removeAsk(
       tokenId: BigNumberish,
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     removeBid(
       tokenId: BigNumberish,
       bidder: string,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    "removeBid(uint256,address)"(
-      tokenId: BigNumberish,
-      bidder: string,
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setAsk(
       tokenId: BigNumberish,
       ask: { amount: BigNumberish; currency: string },
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    "setAsk(uint256,tuple)"(
-      tokenId: BigNumberish,
-      ask: { amount: BigNumberish; currency: string },
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setBid(
@@ -1224,20 +810,7 @@ export class IMarket extends Contract {
         sellOnShare: { value: BigNumberish };
       },
       spender: string,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    "setBid(uint256,tuple,address)"(
-      tokenId: BigNumberish,
-      bid: {
-        amount: BigNumberish;
-        currency: string;
-        bidder: string;
-        recipient: string;
-        sellOnShare: { value: BigNumberish };
-      },
-      spender: string,
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setBidShares(
@@ -1247,26 +820,10 @@ export class IMarket extends Contract {
         creator: { value: BigNumberish };
         owner: { value: BigNumberish };
       },
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    "setBidShares(uint256,tuple)"(
-      tokenId: BigNumberish,
-      bidShares: {
-        prevOwner: { value: BigNumberish };
-        creator: { value: BigNumberish };
-        owner: { value: BigNumberish };
-      },
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     splitShare(
-      sharePercentage: { value: BigNumberish },
-      amount: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "splitShare(tuple,uint256)"(
       sharePercentage: { value: BigNumberish },
       amount: BigNumberish,
       overrides?: CallOverrides
@@ -1283,28 +840,10 @@ export class IMarket extends Contract {
         recipient: string;
         sellOnShare: { value: BigNumberish };
       },
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "acceptBid(uint256,tuple)"(
-      tokenId: BigNumberish,
-      expectedBid: {
-        amount: BigNumberish;
-        currency: string;
-        bidder: string;
-        recipient: string;
-        sellOnShare: { value: BigNumberish };
-      },
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     bidForTokenBidder(
-      tokenId: BigNumberish,
-      bidder: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "bidForTokenBidder(uint256,address)"(
       tokenId: BigNumberish,
       bidder: string,
       overrides?: CallOverrides
@@ -1315,19 +854,9 @@ export class IMarket extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "bidSharesForToken(uint256)"(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     configure(
       mediaContractAddress: string,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "configure(address)"(
-      mediaContractAddress: string,
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     currentAskForToken(
@@ -1335,18 +864,7 @@ export class IMarket extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "currentAskForToken(uint256)"(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     isValidBid(
-      tokenId: BigNumberish,
-      bidAmount: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "isValidBid(uint256,uint256)"(
       tokenId: BigNumberish,
       bidAmount: BigNumberish,
       overrides?: CallOverrides
@@ -1361,47 +879,21 @@ export class IMarket extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "isValidBidShares(tuple)"(
-      bidShares: {
-        prevOwner: { value: BigNumberish };
-        creator: { value: BigNumberish };
-        owner: { value: BigNumberish };
-      },
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     removeAsk(
       tokenId: BigNumberish,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "removeAsk(uint256)"(
-      tokenId: BigNumberish,
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     removeBid(
       tokenId: BigNumberish,
       bidder: string,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "removeBid(uint256,address)"(
-      tokenId: BigNumberish,
-      bidder: string,
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setAsk(
       tokenId: BigNumberish,
       ask: { amount: BigNumberish; currency: string },
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "setAsk(uint256,tuple)"(
-      tokenId: BigNumberish,
-      ask: { amount: BigNumberish; currency: string },
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setBid(
@@ -1414,20 +906,7 @@ export class IMarket extends Contract {
         sellOnShare: { value: BigNumberish };
       },
       spender: string,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "setBid(uint256,tuple,address)"(
-      tokenId: BigNumberish,
-      bid: {
-        amount: BigNumberish;
-        currency: string;
-        bidder: string;
-        recipient: string;
-        sellOnShare: { value: BigNumberish };
-      },
-      spender: string,
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setBidShares(
@@ -1437,26 +916,10 @@ export class IMarket extends Contract {
         creator: { value: BigNumberish };
         owner: { value: BigNumberish };
       },
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "setBidShares(uint256,tuple)"(
-      tokenId: BigNumberish,
-      bidShares: {
-        prevOwner: { value: BigNumberish };
-        creator: { value: BigNumberish };
-        owner: { value: BigNumberish };
-      },
-      overrides?: Overrides
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     splitShare(
-      sharePercentage: { value: BigNumberish },
-      amount: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "splitShare(tuple,uint256)"(
       sharePercentage: { value: BigNumberish },
       amount: BigNumberish,
       overrides?: CallOverrides

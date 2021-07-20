@@ -22,6 +22,10 @@ import {Market} from "./Market.sol";
 contract ZooMedia is Media, Ownable {
     constructor() Media("CryptoZoo", "ANML") { }
 
+    function addDrop() public onlyOwner returns (bool) {
+
+    }
+
     function buyEgg() public pure returns (uint256) {
         return 0;
     }

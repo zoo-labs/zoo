@@ -2,19 +2,12 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer } from "ethers";
+import { Contract, Signer, utils } from "ethers";
 import { Provider } from "@ethersproject/providers";
-
-import type { Erc721Burnable } from "../Erc721Burnable";
-
-export class Erc721Burnable__factory {
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): Erc721Burnable {
-    return new Contract(address, _abi, signerOrProvider) as Erc721Burnable;
-  }
-}
+import type {
+  ERC721Burnable,
+  ERC721BurnableInterface,
+} from "../ERC721Burnable";
 
 const _abi = [
   {
@@ -430,3 +423,16 @@ const _abi = [
     type: "function",
   },
 ];
+
+export class ERC721Burnable__factory {
+  static readonly abi = _abi;
+  static createInterface(): ERC721BurnableInterface {
+    return new utils.Interface(_abi) as ERC721BurnableInterface;
+  }
+  static connect(
+    address: string,
+    signerOrProvider: Signer | Provider
+  ): ERC721Burnable {
+    return new Contract(address, _abi, signerOrProvider) as ERC721Burnable;
+  }
+}

@@ -2,19 +2,12 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer } from "ethers";
+import { Contract, Signer, utils } from "ethers";
 import { Provider } from "@ethersproject/providers";
-
-import type { Ierc721Enumerable } from "../Ierc721Enumerable";
-
-export class Ierc721Enumerable__factory {
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): Ierc721Enumerable {
-    return new Contract(address, _abi, signerOrProvider) as Ierc721Enumerable;
-  }
-}
+import type {
+  IERC721Enumerable,
+  IERC721EnumerableInterface,
+} from "../IERC721Enumerable";
 
 const _abi = [
   {
@@ -359,3 +352,16 @@ const _abi = [
     type: "function",
   },
 ];
+
+export class IERC721Enumerable__factory {
+  static readonly abi = _abi;
+  static createInterface(): IERC721EnumerableInterface {
+    return new utils.Interface(_abi) as IERC721EnumerableInterface;
+  }
+  static connect(
+    address: string,
+    signerOrProvider: Signer | Provider
+  ): IERC721Enumerable {
+    return new Contract(address, _abi, signerOrProvider) as IERC721Enumerable;
+  }
+}

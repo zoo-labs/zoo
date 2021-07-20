@@ -2,7 +2,7 @@ import { task } from 'hardhat/config'
 import { HardhatUserConfig } from 'hardhat/types'
 
 import 'hardhat-deploy'
-import 'hardhat-typechain'
+import '@typechain/hardhat'
 import '@nomiclabs/hardhat-ethers'
 
 import { utils } from 'ethers'
@@ -47,8 +47,10 @@ const config: HardhatUserConfig = {
   },
 
   typechain: {
-    outDir: 'types',
+    outDir: './types',
     target: 'ethers-v5',
+    alwaysGenerateOverloads: false,
+    externalArtifacts: [],
   },
 
 }
