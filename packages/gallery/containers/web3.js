@@ -4,7 +4,7 @@ import {
   sha256FromBuffer,
   generateMetadata,
   constructBidShares,
-} from "@zoolabs/zdk"; // Zoo provider
+} from "@zoolabs/zoodk"; // Zoo provider
 import axios from "axios"; // axios requests
 import Web3Modal from "web3modal"; // Web3Modal
 import { providers } from "ethers"; // Ethers
