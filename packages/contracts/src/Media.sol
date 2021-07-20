@@ -33,6 +33,9 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
      * *******
      */
 
+    // Deployment Address
+    address private _owner;
+
     // Address for the market
     address public marketContract;
 
@@ -156,9 +159,25 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
      * @notice On deployment, set the market contract address and register the
      * ERC721 metadata interface
      */
-    constructor(address marketContractAddr) ERC721("CryptoZooAnimal", "ZOOANML") {
-        marketContract = marketContractAddr;
+    constructor(string memory name, string memory symbol) ERC721(name, symbol) {
+        _owner = msg.sender;
         _registerInterface(_INTERFACE_ID_ERC721_METADATA);
+    }
+
+
+    /**
+     * @notice Sets the media contract address. This address is the only permitted address that
+     * can call the mutable functions. This method can only be called once.
+     */
+    function configure(address marketContractAddress) external {
+        require(msg.sender == _owner, "Media: Only owner");
+        require(marketContract == address(0), "Media: Already configured");
+        require(
+            marketContract != address(0),
+            "Market: cannot set media contract as zero address"
+        );
+
+        marketContract = marketContractAddress;
     }
 
     /* **************

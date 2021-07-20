@@ -323,58 +323,25 @@ function App(props) {
             </Link>
           </Menu.Item>
 
-          <Menu.Item key="/crypto-animal-admin">
+          <Menu.Item key="/zoomedia">
             <Link
               onClick={() => {
-                setRoute("/crypto-animal-admin");
+                setRoute("/zoomedia");
               }}
-              to="/crypto-animal-admin"
+              to="/zoomedia"
             >
-              CryptoAnimalAdmin
+              ZooMedia
             </Link>
           </Menu.Item>
 
-          <Menu.Item key="/crypto-animal">
+          <Menu.Item key="/zoomarket">
             <Link
               onClick={() => {
-                setRoute("/crypto-animal");
+                setRoute("/zoomarket");
               }}
-              to="/crypto-animal"
+              to="/zoomarket"
             >
-              CryptoAnimal
-            </Link>
-          </Menu.Item>
-
-          <Menu.Item key="/crypto-animal-sell">
-            <Link
-              onClick={() => {
-                setRoute("/crypto-animal-sell");
-              }}
-              to="/crypto-animal-sell"
-            >
-              CryptoAnimalSell
-            </Link>
-          </Menu.Item>
-
-          <Menu.Item key="/crypto-animal-auction">
-            <Link
-              onClick={() => {
-                setRoute("/crypto-animal-auction");
-              }}
-              to="/crypto-animal-auction"
-            >
-              CryptoAnimalAuction
-            </Link>
-          </Menu.Item>
-
-          <Menu.Item key="/crypto-animal-user">
-            <Link
-              onClick={() => {
-                setRoute("/crypto-animal-user");
-              }}
-              to="/crypto-animal-user"
-            >
-              CryptoAnimalUser
+              ZooMarket
             </Link>
           </Menu.Item>
 
@@ -399,41 +366,17 @@ function App(props) {
               blockExplorer={blockExplorer}
             />
           </Route>
-          <Route exact path="/crypto-animal-admin">
+          <Route exact path="/zoomedia">
             <Contract
-              name="CryptoAnimalAdmin"
+              name="ZooMedia"
               signer={userSigner}
               provider={localProvider}
               blockExplorer={blockExplorer}
             />
           </Route>
-          <Route exact path="/crypto-animal">
+          <Route exact path="/zoomarket">
             <Contract
-              name="CryptoAnimal"
-              signer={userSigner}
-              provider={localProvider}
-              blockExplorer={blockExplorer}
-            />
-          </Route>
-          <Route exact path="/crypto-animal-sell">
-            <Contract
-              name="CryptoAnimalSell"
-              signer={userSigner}
-              provider={localProvider}
-              blockExplorer={blockExplorer}
-            />
-          </Route>
-          <Route exact path="/crypto-animal-auction">
-            <Contract
-              name="CryptoAnimalAuction"
-              signer={userSigner}
-              provider={localProvider}
-              blockExplorer={blockExplorer}
-            />
-          </Route>
-          <Route exact path="/crypto-animal-user">
-            <Contract
-              name="CryptoAnimalUser"
+              name="ZooMarket"
               signer={userSigner}
               provider={localProvider}
               blockExplorer={blockExplorer}

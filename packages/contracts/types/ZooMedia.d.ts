@@ -21,7 +21,7 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
-interface MediaInterface extends ethers.utils.Interface {
+interface ZooMediaInterface extends ethers.utils.Interface {
   functions: {
     "MINT_WITH_SIG_TYPEHASH()": FunctionFragment;
     "PERMIT_TYPEHASH()": FunctionFragment;
@@ -31,20 +31,24 @@ interface MediaInterface extends ethers.utils.Interface {
     "balanceOf(address)": FunctionFragment;
     "baseURI()": FunctionFragment;
     "burn(uint256)": FunctionFragment;
+    "buyEgg()": FunctionFragment;
     "configure(address)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
+    "hatchEgg()": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "marketContract()": FunctionFragment;
     "mint(tuple,tuple)": FunctionFragment;
     "mintWithSig(address,tuple,tuple,tuple)": FunctionFragment;
     "mintWithSigNonces(address)": FunctionFragment;
     "name()": FunctionFragment;
+    "owner()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "permit(address,uint256,tuple)": FunctionFragment;
     "permitNonces(address,uint256)": FunctionFragment;
     "previousTokenOwners(uint256)": FunctionFragment;
     "removeAsk(uint256)": FunctionFragment;
     "removeBid(uint256)": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
     "revokeApproval(uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
@@ -61,6 +65,7 @@ interface MediaInterface extends ethers.utils.Interface {
     "tokenURI(uint256)": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
     "updateTokenMetadataURI(uint256,string)": FunctionFragment;
     "updateTokenURI(uint256,string)": FunctionFragment;
   };
@@ -97,11 +102,13 @@ interface MediaInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(functionFragment: "baseURI", values?: undefined): string;
   encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: "buyEgg", values?: undefined): string;
   encodeFunctionData(functionFragment: "configure", values: [string]): string;
   encodeFunctionData(
     functionFragment: "getApproved",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "hatchEgg", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [string, string]
@@ -149,6 +156,7 @@ interface MediaInterface extends ethers.utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
     values: [BigNumberish]
@@ -176,6 +184,10 @@ interface MediaInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "removeBid",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "renounceOwnership",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "revokeApproval",
@@ -248,6 +260,10 @@ interface MediaInterface extends ethers.utils.Interface {
     values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "updateTokenMetadataURI",
     values: [BigNumberish, string]
   ): string;
@@ -273,11 +289,13 @@ interface MediaInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "baseURI", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "buyEgg", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "configure", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getApproved",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "hatchEgg", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
     data: BytesLike
@@ -296,6 +314,7 @@ interface MediaInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "permit", data: BytesLike): Result;
   decodeFunctionResult(
@@ -308,6 +327,10 @@ interface MediaInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "removeAsk", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "removeBid", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "revokeApproval",
     data: BytesLike
@@ -361,6 +384,10 @@ interface MediaInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "updateTokenMetadataURI",
     data: BytesLike
   ): Result;
@@ -372,6 +399,7 @@ interface MediaInterface extends ethers.utils.Interface {
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
     "TokenMetadataURIUpdated(uint256,address,string)": EventFragment;
     "TokenURIUpdated(uint256,address,string)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
@@ -379,12 +407,13 @@ interface MediaInterface extends ethers.utils.Interface {
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TokenMetadataURIUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TokenURIUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
-export class Media extends Contract {
+export class ZooMedia extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -423,7 +452,7 @@ export class Media extends Contract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<T & G>>>;
 
-  interface: MediaInterface;
+  interface: ZooMediaInterface;
 
   functions: {
     MINT_WITH_SIG_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
@@ -503,6 +532,10 @@ export class Media extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
+    buyEgg(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "buyEgg()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     configure(
       marketContractAddress: string,
       overrides?: Overrides
@@ -522,6 +555,10 @@ export class Media extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
+
+    hatchEgg(overrides?: CallOverrides): Promise<[boolean]>;
+
+    "hatchEgg()"(overrides?: CallOverrides): Promise<[boolean]>;
 
     isApprovedForAll(
       owner: string,
@@ -627,6 +664,10 @@ export class Media extends Contract {
 
     "name()"(overrides?: CallOverrides): Promise<[string]>;
 
+    owner(overrides?: CallOverrides): Promise<[string]>;
+
+    "owner()"(overrides?: CallOverrides): Promise<[string]>;
+
     ownerOf(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -702,6 +743,10 @@ export class Media extends Contract {
       tokenId: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
+
+    renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
+
+    "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
 
     revokeApproval(
       tokenId: BigNumberish,
@@ -880,6 +925,16 @@ export class Media extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "transferOwnership(address)"(
+      newOwner: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
     updateTokenMetadataURI(
       tokenId: BigNumberish,
       metadataURI: string,
@@ -982,6 +1037,10 @@ export class Media extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
+  buyEgg(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "buyEgg()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   configure(
     marketContractAddress: string,
     overrides?: Overrides
@@ -1001,6 +1060,10 @@ export class Media extends Contract {
     tokenId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
+
+  hatchEgg(overrides?: CallOverrides): Promise<boolean>;
+
+  "hatchEgg()"(overrides?: CallOverrides): Promise<boolean>;
 
   isApprovedForAll(
     owner: string,
@@ -1106,6 +1169,10 @@ export class Media extends Contract {
 
   "name()"(overrides?: CallOverrides): Promise<string>;
 
+  owner(overrides?: CallOverrides): Promise<string>;
+
+  "owner()"(overrides?: CallOverrides): Promise<string>;
+
   ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   "ownerOf(uint256)"(
@@ -1178,6 +1245,10 @@ export class Media extends Contract {
     tokenId: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
+
+  renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
+
+  "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
 
   revokeApproval(
     tokenId: BigNumberish,
@@ -1350,6 +1421,16 @@ export class Media extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
+  transferOwnership(
+    newOwner: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "transferOwnership(address)"(
+    newOwner: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
   updateTokenMetadataURI(
     tokenId: BigNumberish,
     metadataURI: string,
@@ -1449,6 +1530,10 @@ export class Media extends Contract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    buyEgg(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "buyEgg()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     configure(
       marketContractAddress: string,
       overrides?: CallOverrides
@@ -1468,6 +1553,10 @@ export class Media extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    hatchEgg(overrides?: CallOverrides): Promise<boolean>;
+
+    "hatchEgg()"(overrides?: CallOverrides): Promise<boolean>;
 
     isApprovedForAll(
       owner: string,
@@ -1573,6 +1662,10 @@ export class Media extends Contract {
 
     "name()"(overrides?: CallOverrides): Promise<string>;
 
+    owner(overrides?: CallOverrides): Promise<string>;
+
+    "owner()"(overrides?: CallOverrides): Promise<string>;
+
     ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     "ownerOf(uint256)"(
@@ -1639,6 +1732,10 @@ export class Media extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    "renounceOwnership()"(overrides?: CallOverrides): Promise<void>;
 
     revokeApproval(
       tokenId: BigNumberish,
@@ -1814,6 +1911,16 @@ export class Media extends Contract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    transferOwnership(
+      newOwner: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "transferOwnership(address)"(
+      newOwner: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     updateTokenMetadataURI(
       tokenId: BigNumberish,
       metadataURI: string,
@@ -1856,6 +1963,14 @@ export class Media extends Contract {
     ): TypedEventFilter<
       [string, string, boolean],
       { owner: string; operator: string; approved: boolean }
+    >;
+
+    OwnershipTransferred(
+      previousOwner: string | null,
+      newOwner: string | null
+    ): TypedEventFilter<
+      [string, string],
+      { previousOwner: string; newOwner: string }
     >;
 
     TokenMetadataURIUpdated(
@@ -1961,6 +2076,10 @@ export class Media extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
+    buyEgg(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "buyEgg()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     configure(
       marketContractAddress: string,
       overrides?: Overrides
@@ -1980,6 +2099,10 @@ export class Media extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    hatchEgg(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "hatchEgg()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
@@ -2085,6 +2208,10 @@ export class Media extends Contract {
 
     "name()"(overrides?: CallOverrides): Promise<BigNumber>;
 
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     ownerOf(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -2154,6 +2281,10 @@ export class Media extends Contract {
       tokenId: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
+
+    renounceOwnership(overrides?: Overrides): Promise<BigNumber>;
+
+    "renounceOwnership()"(overrides?: Overrides): Promise<BigNumber>;
 
     revokeApproval(
       tokenId: BigNumberish,
@@ -2332,6 +2463,16 @@ export class Media extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "transferOwnership(address)"(
+      newOwner: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
     updateTokenMetadataURI(
       tokenId: BigNumberish,
       metadataURI: string,
@@ -2444,6 +2585,10 @@ export class Media extends Contract {
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
+    buyEgg(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "buyEgg()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     configure(
       marketContractAddress: string,
       overrides?: Overrides
@@ -2463,6 +2608,10 @@ export class Media extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    hatchEgg(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "hatchEgg()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       owner: string,
@@ -2570,6 +2719,10 @@ export class Media extends Contract {
 
     "name()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "owner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     ownerOf(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -2645,6 +2798,10 @@ export class Media extends Contract {
       tokenId: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
+
+    renounceOwnership(overrides?: Overrides): Promise<PopulatedTransaction>;
+
+    "renounceOwnership()"(overrides?: Overrides): Promise<PopulatedTransaction>;
 
     revokeApproval(
       tokenId: BigNumberish,
@@ -2820,6 +2977,16 @@ export class Media extends Contract {
       from: string,
       to: string,
       tokenId: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "transferOwnership(address)"(
+      newOwner: string,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 

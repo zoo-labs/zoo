@@ -14,7 +14,6 @@ import {
   Contract,
   ContractTransaction,
   Overrides,
-  PayableOverrides,
   CallOverrides,
 } from "@ethersproject/contracts";
 import { BytesLike } from "@ethersproject/bytes";
@@ -24,224 +23,179 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface ZooMarketInterface extends ethers.utils.Interface {
   functions: {
-    "acceptBidForAnimal(uint256,uint256)": FunctionFragment;
-    "allAnimalsAssigned()": FunctionFragment;
-    "allInitialOwnersAssigned()": FunctionFragment;
-    "animalBids(uint256)": FunctionFragment;
-    "animalIndexToAddress(uint256)": FunctionFragment;
-    "animalNoLongerForSale(uint256)": FunctionFragment;
-    "animalsOfferedForSale(uint256)": FunctionFragment;
-    "animalsRemainingToAssign()": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "buyAnimal(uint256)": FunctionFragment;
-    "decimals()": FunctionFragment;
-    "dropHash()": FunctionFragment;
-    "enterBidForAnimal(uint256)": FunctionFragment;
-    "getAnimal(uint256)": FunctionFragment;
-    "name()": FunctionFragment;
-    "nextAnimalIndexToAssign()": FunctionFragment;
-    "offerAnimalForSale(uint256,uint256)": FunctionFragment;
-    "offerAnimalForSaleToAddress(uint256,uint256,address)": FunctionFragment;
+    "acceptBid(uint256,tuple)": FunctionFragment;
+    "bidForTokenBidder(uint256,address)": FunctionFragment;
+    "bidSharesForToken(uint256)": FunctionFragment;
+    "configure(address)": FunctionFragment;
+    "currentAskForToken(uint256)": FunctionFragment;
+    "isValidBid(uint256,uint256)": FunctionFragment;
+    "isValidBidShares(tuple)": FunctionFragment;
+    "mediaContract()": FunctionFragment;
     "owner()": FunctionFragment;
-    "pendingWithdrawals(address)": FunctionFragment;
-    "setInitialOwner(address,uint256)": FunctionFragment;
-    "setInitialOwners(address[],uint256[])": FunctionFragment;
-    "standard()": FunctionFragment;
-    "symbol()": FunctionFragment;
-    "totalSupply()": FunctionFragment;
-    "transferAnimal(address,uint256)": FunctionFragment;
-    "withdraw()": FunctionFragment;
-    "withdrawBidForAnimal(uint256)": FunctionFragment;
+    "removeAsk(uint256)": FunctionFragment;
+    "removeBid(uint256,address)": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
+    "setAsk(uint256,tuple)": FunctionFragment;
+    "setBid(uint256,tuple,address)": FunctionFragment;
+    "setBidShares(uint256,tuple)": FunctionFragment;
+    "splitShare(tuple,uint256)": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "acceptBidForAnimal",
+    functionFragment: "acceptBid",
+    values: [
+      BigNumberish,
+      {
+        amount: BigNumberish;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      }
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "bidForTokenBidder",
+    values: [BigNumberish, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "bidSharesForToken",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "configure", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "currentAskForToken",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isValidBid",
     values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "allAnimalsAssigned",
+    functionFragment: "isValidBidShares",
+    values: [
+      {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      }
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mediaContract",
     values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "allInitialOwnersAssigned",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "animalBids",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "animalIndexToAddress",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "animalNoLongerForSale",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "animalsOfferedForSale",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "animalsRemainingToAssign",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "buyAnimal",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
-  encodeFunctionData(functionFragment: "dropHash", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "enterBidForAnimal",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getAnimal",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "nextAnimalIndexToAssign",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "offerAnimalForSale",
-    values: [BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "offerAnimalForSaleToAddress",
-    values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "pendingWithdrawals",
-    values: [string]
+    functionFragment: "removeAsk",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "setInitialOwner",
-    values: [string, BigNumberish]
+    functionFragment: "removeBid",
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
-    functionFragment: "setInitialOwners",
-    values: [string[], BigNumberish[]]
-  ): string;
-  encodeFunctionData(functionFragment: "standard", values?: undefined): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "totalSupply",
+    functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "transferAnimal",
-    values: [string, BigNumberish]
+    functionFragment: "setAsk",
+    values: [BigNumberish, { amount: BigNumberish; currency: string }]
   ): string;
-  encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "withdrawBidForAnimal",
-    values: [BigNumberish]
+    functionFragment: "setBid",
+    values: [
+      BigNumberish,
+      {
+        amount: BigNumberish;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
+      string
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setBidShares",
+    values: [
+      BigNumberish,
+      {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      }
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "splitShare",
+    values: [{ value: BigNumberish }, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [string]
   ): string;
 
+  decodeFunctionResult(functionFragment: "acceptBid", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "acceptBidForAnimal",
+    functionFragment: "bidForTokenBidder",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "allAnimalsAssigned",
+    functionFragment: "bidSharesForToken",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "configure", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "currentAskForToken",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "isValidBid", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "isValidBidShares",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "allInitialOwnersAssigned",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "animalBids", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "animalIndexToAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "animalNoLongerForSale",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "animalsOfferedForSale",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "animalsRemainingToAssign",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "buyAnimal", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "dropHash", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "enterBidForAnimal",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "getAnimal", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "nextAnimalIndexToAssign",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "offerAnimalForSale",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "offerAnimalForSaleToAddress",
+    functionFragment: "mediaContract",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "removeAsk", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "removeBid", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "pendingWithdrawals",
+    functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "setAsk", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "setBid", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "setInitialOwner",
+    functionFragment: "setBidShares",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "splitShare", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "setInitialOwners",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "standard", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferAnimal",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawBidForAnimal",
+    functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
 
   events: {
-    "AnimalBidEntered(uint256,uint256,address)": EventFragment;
-    "AnimalBidWithdrawn(uint256,uint256,address)": EventFragment;
-    "AnimalBought(uint256,uint256,address,address)": EventFragment;
-    "AnimalNoLongerForSale(uint256)": EventFragment;
-    "AnimalOffered(uint256,uint256,address)": EventFragment;
-    "AnimalTransfer(address,address,uint256)": EventFragment;
-    "Assign(address,uint256)": EventFragment;
-    "Transfer(address,address,uint256)": EventFragment;
+    "AskCreated(uint256,tuple)": EventFragment;
+    "AskRemoved(uint256,tuple)": EventFragment;
+    "BidCreated(uint256,tuple)": EventFragment;
+    "BidFinalized(uint256,tuple)": EventFragment;
+    "BidRemoved(uint256,tuple)": EventFragment;
+    "BidShareUpdated(uint256,tuple)": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AnimalBidEntered"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AnimalBidWithdrawn"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AnimalBought"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AnimalNoLongerForSale"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AnimalOffered"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AnimalTransfer"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Assign"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "AskCreated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "AskRemoved"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "BidCreated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "BidFinalized"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "BidRemoved"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "BidShareUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
 
 export class ZooMarket extends Contract {
@@ -286,1297 +240,1375 @@ export class ZooMarket extends Contract {
   interface: ZooMarketInterface;
 
   functions: {
-    acceptBidForAnimal(
-      animalIndex: BigNumberish,
-      minPrice: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "acceptBidForAnimal(uint256,uint256)"(
-      animalIndex: BigNumberish,
-      minPrice: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    allAnimalsAssigned(overrides?: CallOverrides): Promise<[boolean]>;
-
-    "allAnimalsAssigned()"(overrides?: CallOverrides): Promise<[boolean]>;
-
-    allInitialOwnersAssigned(
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "allInitialOwnersAssigned()"(
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    animalBids(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber, string, BigNumber] & {
-        hasBid: boolean;
-        animalIndex: BigNumber;
+    acceptBid(
+      tokenId: BigNumberish,
+      expectedBid: {
+        amount: BigNumberish;
+        currency: string;
         bidder: string;
-        value: BigNumber;
-      }
-    >;
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
 
-    "animalBids(uint256)"(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber, string, BigNumber] & {
-        hasBid: boolean;
-        animalIndex: BigNumber;
+    "acceptBid(uint256,tuple)"(
+      tokenId: BigNumberish,
+      expectedBid: {
+        amount: BigNumberish;
+        currency: string;
         bidder: string;
-        value: BigNumber;
-      }
-    >;
-
-    animalIndexToAddress(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    "animalIndexToAddress(uint256)"(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    animalNoLongerForSale(
-      animalIndex: BigNumberish,
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    "animalNoLongerForSale(uint256)"(
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    animalsOfferedForSale(
-      arg0: BigNumberish,
+    bidForTokenBidder(
+      tokenId: BigNumberish,
+      bidder: string,
       overrides?: CallOverrides
     ): Promise<
-      [boolean, BigNumber, string, BigNumber, string] & {
-        isForSale: boolean;
-        animalIndex: BigNumber;
-        seller: string;
-        minValue: BigNumber;
-        onlySellTo: string;
-      }
+      [
+        [
+          BigNumber,
+          string,
+          string,
+          string,
+          [BigNumber] & { value: BigNumber }
+        ] & {
+          amount: BigNumber;
+          currency: string;
+          bidder: string;
+          recipient: string;
+          sellOnShare: [BigNumber] & { value: BigNumber };
+        }
+      ]
     >;
 
-    "animalsOfferedForSale(uint256)"(
-      arg0: BigNumberish,
+    "bidForTokenBidder(uint256,address)"(
+      tokenId: BigNumberish,
+      bidder: string,
       overrides?: CallOverrides
     ): Promise<
-      [boolean, BigNumber, string, BigNumber, string] & {
-        isForSale: boolean;
-        animalIndex: BigNumber;
-        seller: string;
-        minValue: BigNumber;
-        onlySellTo: string;
-      }
+      [
+        [
+          BigNumber,
+          string,
+          string,
+          string,
+          [BigNumber] & { value: BigNumber }
+        ] & {
+          amount: BigNumber;
+          currency: string;
+          bidder: string;
+          recipient: string;
+          sellOnShare: [BigNumber] & { value: BigNumber };
+        }
+      ]
     >;
 
-    animalsRemainingToAssign(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    "animalsRemainingToAssign()"(
+    bidSharesForToken(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<
+      [
+        [
+          [BigNumber] & { value: BigNumber },
+          [BigNumber] & { value: BigNumber },
+          [BigNumber] & { value: BigNumber }
+        ] & {
+          prevOwner: [BigNumber] & { value: BigNumber };
+          creator: [BigNumber] & { value: BigNumber };
+          owner: [BigNumber] & { value: BigNumber };
+        }
+      ]
+    >;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    "balanceOf(address)"(
-      arg0: string,
+    "bidSharesForToken(uint256)"(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<
+      [
+        [
+          [BigNumber] & { value: BigNumber },
+          [BigNumber] & { value: BigNumber },
+          [BigNumber] & { value: BigNumber }
+        ] & {
+          prevOwner: [BigNumber] & { value: BigNumber };
+          creator: [BigNumber] & { value: BigNumber };
+          owner: [BigNumber] & { value: BigNumber };
+        }
+      ]
+    >;
 
-    buyAnimal(
-      animalIndex: BigNumberish,
-      overrides?: PayableOverrides
-    ): Promise<ContractTransaction>;
-
-    "buyAnimal(uint256)"(
-      animalIndex: BigNumberish,
-      overrides?: PayableOverrides
-    ): Promise<ContractTransaction>;
-
-    decimals(overrides?: CallOverrides): Promise<[number]>;
-
-    "decimals()"(overrides?: CallOverrides): Promise<[number]>;
-
-    dropHash(overrides?: CallOverrides): Promise<[string]>;
-
-    "dropHash()"(overrides?: CallOverrides): Promise<[string]>;
-
-    enterBidForAnimal(
-      animalIndex: BigNumberish,
-      overrides?: PayableOverrides
-    ): Promise<ContractTransaction>;
-
-    "enterBidForAnimal(uint256)"(
-      animalIndex: BigNumberish,
-      overrides?: PayableOverrides
-    ): Promise<ContractTransaction>;
-
-    getAnimal(
-      animalIndex: BigNumberish,
+    configure(
+      mediaContractAddress: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    "getAnimal(uint256)"(
-      animalIndex: BigNumberish,
+    "configure(address)"(
+      mediaContractAddress: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    name(overrides?: CallOverrides): Promise<[string]>;
-
-    "name()"(overrides?: CallOverrides): Promise<[string]>;
-
-    nextAnimalIndexToAssign(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    "nextAnimalIndexToAssign()"(
+    currentAskForToken(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<[[BigNumber, string] & { amount: BigNumber; currency: string }]>;
 
-    offerAnimalForSale(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
+    "currentAskForToken(uint256)"(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[[BigNumber, string] & { amount: BigNumber; currency: string }]>;
 
-    "offerAnimalForSale(uint256,uint256)"(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
+    isValidBid(
+      tokenId: BigNumberish,
+      bidAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
 
-    offerAnimalForSaleToAddress(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
-      toAddress: string,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
+    "isValidBid(uint256,uint256)"(
+      tokenId: BigNumberish,
+      bidAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
 
-    "offerAnimalForSaleToAddress(uint256,uint256,address)"(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
-      toAddress: string,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
+    isValidBidShares(
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
+    "isValidBidShares(tuple)"(
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
+    mediaContract(overrides?: CallOverrides): Promise<[string]>;
+
+    "mediaContract()"(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     "owner()"(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingWithdrawals(
-      arg0: string,
+    removeAsk(
+      tokenId: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "removeAsk(uint256)"(
+      tokenId: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    removeBid(
+      tokenId: BigNumberish,
+      bidder: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "removeBid(uint256,address)"(
+      tokenId: BigNumberish,
+      bidder: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
+
+    "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
+
+    setAsk(
+      tokenId: BigNumberish,
+      ask: { amount: BigNumberish; currency: string },
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "setAsk(uint256,tuple)"(
+      tokenId: BigNumberish,
+      ask: { amount: BigNumberish; currency: string },
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    setBid(
+      tokenId: BigNumberish,
+      bid: {
+        amount: BigNumberish;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
+      spender: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "setBid(uint256,tuple,address)"(
+      tokenId: BigNumberish,
+      bid: {
+        amount: BigNumberish;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
+      spender: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    setBidShares(
+      tokenId: BigNumberish,
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "setBidShares(uint256,tuple)"(
+      tokenId: BigNumberish,
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    splitShare(
+      sharePercentage: { value: BigNumberish },
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    "pendingWithdrawals(address)"(
-      arg0: string,
+    "splitShare(tuple,uint256)"(
+      sharePercentage: { value: BigNumberish },
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    setInitialOwner(
-      to: string,
-      animalIndex: BigNumberish,
+    transferOwnership(
+      newOwner: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    "setInitialOwner(address,uint256)"(
-      to: string,
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    setInitialOwners(
-      addresses: string[],
-      indices: BigNumberish[],
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "setInitialOwners(address[],uint256[])"(
-      addresses: string[],
-      indices: BigNumberish[],
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    standard(overrides?: CallOverrides): Promise<[string]>;
-
-    "standard()"(overrides?: CallOverrides): Promise<[string]>;
-
-    symbol(overrides?: CallOverrides): Promise<[string]>;
-
-    "symbol()"(overrides?: CallOverrides): Promise<[string]>;
-
-    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    "totalSupply()"(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    transferAnimal(
-      to: string,
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "transferAnimal(address,uint256)"(
-      to: string,
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    withdraw(overrides?: Overrides): Promise<ContractTransaction>;
-
-    "withdraw()"(overrides?: Overrides): Promise<ContractTransaction>;
-
-    withdrawBidForAnimal(
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "withdrawBidForAnimal(uint256)"(
-      animalIndex: BigNumberish,
+    "transferOwnership(address)"(
+      newOwner: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
   };
 
-  acceptBidForAnimal(
-    animalIndex: BigNumberish,
-    minPrice: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  "acceptBidForAnimal(uint256,uint256)"(
-    animalIndex: BigNumberish,
-    minPrice: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  allAnimalsAssigned(overrides?: CallOverrides): Promise<boolean>;
-
-  "allAnimalsAssigned()"(overrides?: CallOverrides): Promise<boolean>;
-
-  allInitialOwnersAssigned(overrides?: Overrides): Promise<ContractTransaction>;
-
-  "allInitialOwnersAssigned()"(
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  animalBids(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [boolean, BigNumber, string, BigNumber] & {
-      hasBid: boolean;
-      animalIndex: BigNumber;
+  acceptBid(
+    tokenId: BigNumberish,
+    expectedBid: {
+      amount: BigNumberish;
+      currency: string;
       bidder: string;
-      value: BigNumber;
-    }
-  >;
+      recipient: string;
+      sellOnShare: { value: BigNumberish };
+    },
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
 
-  "animalBids(uint256)"(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [boolean, BigNumber, string, BigNumber] & {
-      hasBid: boolean;
-      animalIndex: BigNumber;
+  "acceptBid(uint256,tuple)"(
+    tokenId: BigNumberish,
+    expectedBid: {
+      amount: BigNumberish;
+      currency: string;
       bidder: string;
-      value: BigNumber;
-    }
-  >;
-
-  animalIndexToAddress(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  "animalIndexToAddress(uint256)"(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  animalNoLongerForSale(
-    animalIndex: BigNumberish,
+      recipient: string;
+      sellOnShare: { value: BigNumberish };
+    },
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  "animalNoLongerForSale(uint256)"(
-    animalIndex: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  animalsOfferedForSale(
-    arg0: BigNumberish,
+  bidForTokenBidder(
+    tokenId: BigNumberish,
+    bidder: string,
     overrides?: CallOverrides
   ): Promise<
-    [boolean, BigNumber, string, BigNumber, string] & {
-      isForSale: boolean;
-      animalIndex: BigNumber;
-      seller: string;
-      minValue: BigNumber;
-      onlySellTo: string;
+    [BigNumber, string, string, string, [BigNumber] & { value: BigNumber }] & {
+      amount: BigNumber;
+      currency: string;
+      bidder: string;
+      recipient: string;
+      sellOnShare: [BigNumber] & { value: BigNumber };
     }
   >;
 
-  "animalsOfferedForSale(uint256)"(
-    arg0: BigNumberish,
+  "bidForTokenBidder(uint256,address)"(
+    tokenId: BigNumberish,
+    bidder: string,
     overrides?: CallOverrides
   ): Promise<
-    [boolean, BigNumber, string, BigNumber, string] & {
-      isForSale: boolean;
-      animalIndex: BigNumber;
-      seller: string;
-      minValue: BigNumber;
-      onlySellTo: string;
+    [BigNumber, string, string, string, [BigNumber] & { value: BigNumber }] & {
+      amount: BigNumber;
+      currency: string;
+      bidder: string;
+      recipient: string;
+      sellOnShare: [BigNumber] & { value: BigNumber };
     }
   >;
 
-  animalsRemainingToAssign(overrides?: CallOverrides): Promise<BigNumber>;
-
-  "animalsRemainingToAssign()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-  balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-  "balanceOf(address)"(
-    arg0: string,
+  bidSharesForToken(
+    tokenId: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  ): Promise<
+    [
+      [BigNumber] & { value: BigNumber },
+      [BigNumber] & { value: BigNumber },
+      [BigNumber] & { value: BigNumber }
+    ] & {
+      prevOwner: [BigNumber] & { value: BigNumber };
+      creator: [BigNumber] & { value: BigNumber };
+      owner: [BigNumber] & { value: BigNumber };
+    }
+  >;
 
-  buyAnimal(
-    animalIndex: BigNumberish,
-    overrides?: PayableOverrides
-  ): Promise<ContractTransaction>;
+  "bidSharesForToken(uint256)"(
+    tokenId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [
+      [BigNumber] & { value: BigNumber },
+      [BigNumber] & { value: BigNumber },
+      [BigNumber] & { value: BigNumber }
+    ] & {
+      prevOwner: [BigNumber] & { value: BigNumber };
+      creator: [BigNumber] & { value: BigNumber };
+      owner: [BigNumber] & { value: BigNumber };
+    }
+  >;
 
-  "buyAnimal(uint256)"(
-    animalIndex: BigNumberish,
-    overrides?: PayableOverrides
-  ): Promise<ContractTransaction>;
-
-  decimals(overrides?: CallOverrides): Promise<number>;
-
-  "decimals()"(overrides?: CallOverrides): Promise<number>;
-
-  dropHash(overrides?: CallOverrides): Promise<string>;
-
-  "dropHash()"(overrides?: CallOverrides): Promise<string>;
-
-  enterBidForAnimal(
-    animalIndex: BigNumberish,
-    overrides?: PayableOverrides
-  ): Promise<ContractTransaction>;
-
-  "enterBidForAnimal(uint256)"(
-    animalIndex: BigNumberish,
-    overrides?: PayableOverrides
-  ): Promise<ContractTransaction>;
-
-  getAnimal(
-    animalIndex: BigNumberish,
+  configure(
+    mediaContractAddress: string,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  "getAnimal(uint256)"(
-    animalIndex: BigNumberish,
+  "configure(address)"(
+    mediaContractAddress: string,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  name(overrides?: CallOverrides): Promise<string>;
+  currentAskForToken(
+    tokenId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<[BigNumber, string] & { amount: BigNumber; currency: string }>;
 
-  "name()"(overrides?: CallOverrides): Promise<string>;
+  "currentAskForToken(uint256)"(
+    tokenId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<[BigNumber, string] & { amount: BigNumber; currency: string }>;
 
-  nextAnimalIndexToAssign(overrides?: CallOverrides): Promise<BigNumber>;
+  isValidBid(
+    tokenId: BigNumberish,
+    bidAmount: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
-  "nextAnimalIndexToAssign()"(overrides?: CallOverrides): Promise<BigNumber>;
+  "isValidBid(uint256,uint256)"(
+    tokenId: BigNumberish,
+    bidAmount: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
-  offerAnimalForSale(
-    animalIndex: BigNumberish,
-    minSalePriceInWei: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
+  isValidBidShares(
+    bidShares: {
+      prevOwner: { value: BigNumberish };
+      creator: { value: BigNumberish };
+      owner: { value: BigNumberish };
+    },
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
-  "offerAnimalForSale(uint256,uint256)"(
-    animalIndex: BigNumberish,
-    minSalePriceInWei: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
+  "isValidBidShares(tuple)"(
+    bidShares: {
+      prevOwner: { value: BigNumberish };
+      creator: { value: BigNumberish };
+      owner: { value: BigNumberish };
+    },
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
-  offerAnimalForSaleToAddress(
-    animalIndex: BigNumberish,
-    minSalePriceInWei: BigNumberish,
-    toAddress: string,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
+  mediaContract(overrides?: CallOverrides): Promise<string>;
 
-  "offerAnimalForSaleToAddress(uint256,uint256,address)"(
-    animalIndex: BigNumberish,
-    minSalePriceInWei: BigNumberish,
-    toAddress: string,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
+  "mediaContract()"(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   "owner()"(overrides?: CallOverrides): Promise<string>;
 
-  pendingWithdrawals(
-    arg0: string,
+  removeAsk(
+    tokenId: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "removeAsk(uint256)"(
+    tokenId: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  removeBid(
+    tokenId: BigNumberish,
+    bidder: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "removeBid(uint256,address)"(
+    tokenId: BigNumberish,
+    bidder: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
+
+  "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
+
+  setAsk(
+    tokenId: BigNumberish,
+    ask: { amount: BigNumberish; currency: string },
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "setAsk(uint256,tuple)"(
+    tokenId: BigNumberish,
+    ask: { amount: BigNumberish; currency: string },
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  setBid(
+    tokenId: BigNumberish,
+    bid: {
+      amount: BigNumberish;
+      currency: string;
+      bidder: string;
+      recipient: string;
+      sellOnShare: { value: BigNumberish };
+    },
+    spender: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "setBid(uint256,tuple,address)"(
+    tokenId: BigNumberish,
+    bid: {
+      amount: BigNumberish;
+      currency: string;
+      bidder: string;
+      recipient: string;
+      sellOnShare: { value: BigNumberish };
+    },
+    spender: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  setBidShares(
+    tokenId: BigNumberish,
+    bidShares: {
+      prevOwner: { value: BigNumberish };
+      creator: { value: BigNumberish };
+      owner: { value: BigNumberish };
+    },
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "setBidShares(uint256,tuple)"(
+    tokenId: BigNumberish,
+    bidShares: {
+      prevOwner: { value: BigNumberish };
+      creator: { value: BigNumberish };
+      owner: { value: BigNumberish };
+    },
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  splitShare(
+    sharePercentage: { value: BigNumberish },
+    amount: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  "pendingWithdrawals(address)"(
-    arg0: string,
+  "splitShare(tuple,uint256)"(
+    sharePercentage: { value: BigNumberish },
+    amount: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  setInitialOwner(
-    to: string,
-    animalIndex: BigNumberish,
+  transferOwnership(
+    newOwner: string,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  "setInitialOwner(address,uint256)"(
-    to: string,
-    animalIndex: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  setInitialOwners(
-    addresses: string[],
-    indices: BigNumberish[],
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  "setInitialOwners(address[],uint256[])"(
-    addresses: string[],
-    indices: BigNumberish[],
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  standard(overrides?: CallOverrides): Promise<string>;
-
-  "standard()"(overrides?: CallOverrides): Promise<string>;
-
-  symbol(overrides?: CallOverrides): Promise<string>;
-
-  "symbol()"(overrides?: CallOverrides): Promise<string>;
-
-  totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-  "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-  transferAnimal(
-    to: string,
-    animalIndex: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  "transferAnimal(address,uint256)"(
-    to: string,
-    animalIndex: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  withdraw(overrides?: Overrides): Promise<ContractTransaction>;
-
-  "withdraw()"(overrides?: Overrides): Promise<ContractTransaction>;
-
-  withdrawBidForAnimal(
-    animalIndex: BigNumberish,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  "withdrawBidForAnimal(uint256)"(
-    animalIndex: BigNumberish,
+  "transferOwnership(address)"(
+    newOwner: string,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    acceptBidForAnimal(
-      animalIndex: BigNumberish,
-      minPrice: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "acceptBidForAnimal(uint256,uint256)"(
-      animalIndex: BigNumberish,
-      minPrice: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    allAnimalsAssigned(overrides?: CallOverrides): Promise<boolean>;
-
-    "allAnimalsAssigned()"(overrides?: CallOverrides): Promise<boolean>;
-
-    allInitialOwnersAssigned(overrides?: CallOverrides): Promise<void>;
-
-    "allInitialOwnersAssigned()"(overrides?: CallOverrides): Promise<void>;
-
-    animalBids(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber, string, BigNumber] & {
-        hasBid: boolean;
-        animalIndex: BigNumber;
+    acceptBid(
+      tokenId: BigNumberish,
+      expectedBid: {
+        amount: BigNumberish;
+        currency: string;
         bidder: string;
-        value: BigNumber;
-      }
-    >;
-
-    "animalBids(uint256)"(
-      arg0: BigNumberish,
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber, string, BigNumber] & {
-        hasBid: boolean;
-        animalIndex: BigNumber;
+    ): Promise<void>;
+
+    "acceptBid(uint256,tuple)"(
+      tokenId: BigNumberish,
+      expectedBid: {
+        amount: BigNumberish;
+        currency: string;
         bidder: string;
-        value: BigNumber;
-      }
-    >;
-
-    animalIndexToAddress(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    "animalIndexToAddress(uint256)"(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    animalNoLongerForSale(
-      animalIndex: BigNumberish,
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "animalNoLongerForSale(uint256)"(
-      animalIndex: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    animalsOfferedForSale(
-      arg0: BigNumberish,
+    bidForTokenBidder(
+      tokenId: BigNumberish,
+      bidder: string,
       overrides?: CallOverrides
     ): Promise<
-      [boolean, BigNumber, string, BigNumber, string] & {
-        isForSale: boolean;
-        animalIndex: BigNumber;
-        seller: string;
-        minValue: BigNumber;
-        onlySellTo: string;
+      [
+        BigNumber,
+        string,
+        string,
+        string,
+        [BigNumber] & { value: BigNumber }
+      ] & {
+        amount: BigNumber;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: [BigNumber] & { value: BigNumber };
       }
     >;
 
-    "animalsOfferedForSale(uint256)"(
-      arg0: BigNumberish,
+    "bidForTokenBidder(uint256,address)"(
+      tokenId: BigNumberish,
+      bidder: string,
       overrides?: CallOverrides
     ): Promise<
-      [boolean, BigNumber, string, BigNumber, string] & {
-        isForSale: boolean;
-        animalIndex: BigNumber;
-        seller: string;
-        minValue: BigNumber;
-        onlySellTo: string;
+      [
+        BigNumber,
+        string,
+        string,
+        string,
+        [BigNumber] & { value: BigNumber }
+      ] & {
+        amount: BigNumber;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: [BigNumber] & { value: BigNumber };
       }
     >;
 
-    animalsRemainingToAssign(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "animalsRemainingToAssign()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    "balanceOf(address)"(
-      arg0: string,
+    bidSharesForToken(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    ): Promise<
+      [
+        [BigNumber] & { value: BigNumber },
+        [BigNumber] & { value: BigNumber },
+        [BigNumber] & { value: BigNumber }
+      ] & {
+        prevOwner: [BigNumber] & { value: BigNumber };
+        creator: [BigNumber] & { value: BigNumber };
+        owner: [BigNumber] & { value: BigNumber };
+      }
+    >;
 
-    buyAnimal(
-      animalIndex: BigNumberish,
+    "bidSharesForToken(uint256)"(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<
+      [
+        [BigNumber] & { value: BigNumber },
+        [BigNumber] & { value: BigNumber },
+        [BigNumber] & { value: BigNumber }
+      ] & {
+        prevOwner: [BigNumber] & { value: BigNumber };
+        creator: [BigNumber] & { value: BigNumber };
+        owner: [BigNumber] & { value: BigNumber };
+      }
+    >;
 
-    "buyAnimal(uint256)"(
-      animalIndex: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    decimals(overrides?: CallOverrides): Promise<number>;
-
-    "decimals()"(overrides?: CallOverrides): Promise<number>;
-
-    dropHash(overrides?: CallOverrides): Promise<string>;
-
-    "dropHash()"(overrides?: CallOverrides): Promise<string>;
-
-    enterBidForAnimal(
-      animalIndex: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "enterBidForAnimal(uint256)"(
-      animalIndex: BigNumberish,
+    configure(
+      mediaContractAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    getAnimal(
-      animalIndex: BigNumberish,
+    "configure(address)"(
+      mediaContractAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "getAnimal(uint256)"(
-      animalIndex: BigNumberish,
+    currentAskForToken(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<[BigNumber, string] & { amount: BigNumber; currency: string }>;
 
-    name(overrides?: CallOverrides): Promise<string>;
-
-    "name()"(overrides?: CallOverrides): Promise<string>;
-
-    nextAnimalIndexToAssign(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "nextAnimalIndexToAssign()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    offerAnimalForSale(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
+    "currentAskForToken(uint256)"(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<[BigNumber, string] & { amount: BigNumber; currency: string }>;
 
-    "offerAnimalForSale(uint256,uint256)"(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
+    isValidBid(
+      tokenId: BigNumberish,
+      bidAmount: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<boolean>;
 
-    offerAnimalForSaleToAddress(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
-      toAddress: string,
+    "isValidBid(uint256,uint256)"(
+      tokenId: BigNumberish,
+      bidAmount: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<boolean>;
 
-    "offerAnimalForSaleToAddress(uint256,uint256,address)"(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
-      toAddress: string,
+    isValidBidShares(
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<boolean>;
+
+    "isValidBidShares(tuple)"(
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    mediaContract(overrides?: CallOverrides): Promise<string>;
+
+    "mediaContract()"(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     "owner()"(overrides?: CallOverrides): Promise<string>;
 
-    pendingWithdrawals(
-      arg0: string,
+    removeAsk(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    "removeAsk(uint256)"(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    removeBid(
+      tokenId: BigNumberish,
+      bidder: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "removeBid(uint256,address)"(
+      tokenId: BigNumberish,
+      bidder: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    "renounceOwnership()"(overrides?: CallOverrides): Promise<void>;
+
+    setAsk(
+      tokenId: BigNumberish,
+      ask: { amount: BigNumberish; currency: string },
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "setAsk(uint256,tuple)"(
+      tokenId: BigNumberish,
+      ask: { amount: BigNumberish; currency: string },
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setBid(
+      tokenId: BigNumberish,
+      bid: {
+        amount: BigNumberish;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "setBid(uint256,tuple,address)"(
+      tokenId: BigNumberish,
+      bid: {
+        amount: BigNumberish;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setBidShares(
+      tokenId: BigNumberish,
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "setBidShares(uint256,tuple)"(
+      tokenId: BigNumberish,
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    splitShare(
+      sharePercentage: { value: BigNumberish },
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "pendingWithdrawals(address)"(
-      arg0: string,
+    "splitShare(tuple,uint256)"(
+      sharePercentage: { value: BigNumberish },
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    setInitialOwner(
-      to: string,
-      animalIndex: BigNumberish,
+    transferOwnership(
+      newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "setInitialOwner(address,uint256)"(
-      to: string,
-      animalIndex: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    setInitialOwners(
-      addresses: string[],
-      indices: BigNumberish[],
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "setInitialOwners(address[],uint256[])"(
-      addresses: string[],
-      indices: BigNumberish[],
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    standard(overrides?: CallOverrides): Promise<string>;
-
-    "standard()"(overrides?: CallOverrides): Promise<string>;
-
-    symbol(overrides?: CallOverrides): Promise<string>;
-
-    "symbol()"(overrides?: CallOverrides): Promise<string>;
-
-    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    transferAnimal(
-      to: string,
-      animalIndex: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "transferAnimal(address,uint256)"(
-      to: string,
-      animalIndex: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    withdraw(overrides?: CallOverrides): Promise<void>;
-
-    "withdraw()"(overrides?: CallOverrides): Promise<void>;
-
-    withdrawBidForAnimal(
-      animalIndex: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "withdrawBidForAnimal(uint256)"(
-      animalIndex: BigNumberish,
+    "transferOwnership(address)"(
+      newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
 
   filters: {
-    AnimalBidEntered(
-      animalIndex: BigNumberish | null,
-      value: null,
-      fromAddress: string | null
+    AskCreated(
+      tokenId: BigNumberish | null,
+      ask: null
     ): TypedEventFilter<
-      [BigNumber, BigNumber, string],
-      { animalIndex: BigNumber; value: BigNumber; fromAddress: string }
-    >;
-
-    AnimalBidWithdrawn(
-      animalIndex: BigNumberish | null,
-      value: null,
-      fromAddress: string | null
-    ): TypedEventFilter<
-      [BigNumber, BigNumber, string],
-      { animalIndex: BigNumber; value: BigNumber; fromAddress: string }
-    >;
-
-    AnimalBought(
-      animalIndex: BigNumberish | null,
-      value: null,
-      fromAddress: string | null,
-      toAddress: string | null
-    ): TypedEventFilter<
-      [BigNumber, BigNumber, string, string],
-      {
-        animalIndex: BigNumber;
-        value: BigNumber;
-        fromAddress: string;
-        toAddress: string;
+      [
+        BigNumber,
+        [BigNumber, string],
+        { amount: BigNumber; currency: string }
+      ] & {
+        tokenId: BigNumber;
+        ask: [BigNumber, string] & { amount: BigNumber; currency: string };
       }
     >;
 
-    AnimalNoLongerForSale(
-      animalIndex: BigNumberish | null
-    ): TypedEventFilter<[BigNumber], { animalIndex: BigNumber }>;
-
-    AnimalOffered(
-      animalIndex: BigNumberish | null,
-      minValue: null,
-      toAddress: string | null
+    AskRemoved(
+      tokenId: BigNumberish | null,
+      ask: null
     ): TypedEventFilter<
-      [BigNumber, BigNumber, string],
-      { animalIndex: BigNumber; minValue: BigNumber; toAddress: string }
+      [
+        BigNumber,
+        [BigNumber, string],
+        { amount: BigNumber; currency: string }
+      ] & {
+        tokenId: BigNumber;
+        ask: [BigNumber, string] & { amount: BigNumber; currency: string };
+      }
     >;
 
-    AnimalTransfer(
-      from: string | null,
-      to: string | null,
-      animalIndex: null
+    BidCreated(
+      tokenId: BigNumberish | null,
+      bid: null
     ): TypedEventFilter<
-      [string, string, BigNumber],
-      { from: string; to: string; animalIndex: BigNumber }
+      [
+        BigNumber,
+        [
+          BigNumber,
+          string,
+          string,
+          string,
+          [BigNumber],
+          { value: BigNumber }
+        ] & {
+          amount: BigNumber;
+          currency: string;
+          bidder: string;
+          recipient: string;
+          sellOnShare: [BigNumber] & { value: BigNumber };
+        }
+      ] & {
+        tokenId: BigNumber;
+        bid: [
+          BigNumber,
+          string,
+          string,
+          string,
+          [BigNumber] & { value: BigNumber }
+        ] & {
+          amount: BigNumber;
+          currency: string;
+          bidder: string;
+          recipient: string;
+          sellOnShare: [BigNumber] & { value: BigNumber };
+        };
+      }
     >;
 
-    Assign(
-      to: string | null,
-      animalIndex: null
+    BidFinalized(
+      tokenId: BigNumberish | null,
+      bid: null
     ): TypedEventFilter<
-      [string, BigNumber],
-      { to: string; animalIndex: BigNumber }
+      [
+        BigNumber,
+        [
+          BigNumber,
+          string,
+          string,
+          string,
+          [BigNumber],
+          { value: BigNumber }
+        ] & {
+          amount: BigNumber;
+          currency: string;
+          bidder: string;
+          recipient: string;
+          sellOnShare: [BigNumber] & { value: BigNumber };
+        }
+      ] & {
+        tokenId: BigNumber;
+        bid: [
+          BigNumber,
+          string,
+          string,
+          string,
+          [BigNumber] & { value: BigNumber }
+        ] & {
+          amount: BigNumber;
+          currency: string;
+          bidder: string;
+          recipient: string;
+          sellOnShare: [BigNumber] & { value: BigNumber };
+        };
+      }
     >;
 
-    Transfer(
-      from: string | null,
-      to: string | null,
-      value: null
+    BidRemoved(
+      tokenId: BigNumberish | null,
+      bid: null
     ): TypedEventFilter<
-      [string, string, BigNumber],
-      { from: string; to: string; value: BigNumber }
+      [
+        BigNumber,
+        [
+          BigNumber,
+          string,
+          string,
+          string,
+          [BigNumber],
+          { value: BigNumber }
+        ] & {
+          amount: BigNumber;
+          currency: string;
+          bidder: string;
+          recipient: string;
+          sellOnShare: [BigNumber] & { value: BigNumber };
+        }
+      ] & {
+        tokenId: BigNumber;
+        bid: [
+          BigNumber,
+          string,
+          string,
+          string,
+          [BigNumber] & { value: BigNumber }
+        ] & {
+          amount: BigNumber;
+          currency: string;
+          bidder: string;
+          recipient: string;
+          sellOnShare: [BigNumber] & { value: BigNumber };
+        };
+      }
+    >;
+
+    BidShareUpdated(
+      tokenId: BigNumberish | null,
+      bidShares: null
+    ): TypedEventFilter<
+      [
+        BigNumber,
+        [
+          [BigNumber],
+          { value: BigNumber },
+          [BigNumber] & { value: BigNumber },
+          [BigNumber] & { value: BigNumber }
+        ] & {
+          prevOwner: [BigNumber] & { value: BigNumber };
+          creator: [BigNumber] & { value: BigNumber };
+          owner: [BigNumber] & { value: BigNumber };
+        }
+      ] & {
+        tokenId: BigNumber;
+        bidShares: [
+          [BigNumber] & { value: BigNumber },
+          [BigNumber] & { value: BigNumber },
+          [BigNumber] & { value: BigNumber }
+        ] & {
+          prevOwner: [BigNumber] & { value: BigNumber };
+          creator: [BigNumber] & { value: BigNumber };
+          owner: [BigNumber] & { value: BigNumber };
+        };
+      }
+    >;
+
+    OwnershipTransferred(
+      previousOwner: string | null,
+      newOwner: string | null
+    ): TypedEventFilter<
+      [string, string],
+      { previousOwner: string; newOwner: string }
     >;
   };
 
   estimateGas: {
-    acceptBidForAnimal(
-      animalIndex: BigNumberish,
-      minPrice: BigNumberish,
+    acceptBid(
+      tokenId: BigNumberish,
+      expectedBid: {
+        amount: BigNumberish;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    "acceptBidForAnimal(uint256,uint256)"(
-      animalIndex: BigNumberish,
-      minPrice: BigNumberish,
+    "acceptBid(uint256,tuple)"(
+      tokenId: BigNumberish,
+      expectedBid: {
+        amount: BigNumberish;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    allAnimalsAssigned(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "allAnimalsAssigned()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    allInitialOwnersAssigned(overrides?: Overrides): Promise<BigNumber>;
-
-    "allInitialOwnersAssigned()"(overrides?: Overrides): Promise<BigNumber>;
-
-    animalBids(
-      arg0: BigNumberish,
+    bidForTokenBidder(
+      tokenId: BigNumberish,
+      bidder: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "animalBids(uint256)"(
-      arg0: BigNumberish,
+    "bidForTokenBidder(uint256,address)"(
+      tokenId: BigNumberish,
+      bidder: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    animalIndexToAddress(
-      arg0: BigNumberish,
+    bidSharesForToken(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "animalIndexToAddress(uint256)"(
-      arg0: BigNumberish,
+    "bidSharesForToken(uint256)"(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    animalNoLongerForSale(
-      animalIndex: BigNumberish,
+    configure(
+      mediaContractAddress: string,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    "animalNoLongerForSale(uint256)"(
-      animalIndex: BigNumberish,
+    "configure(address)"(
+      mediaContractAddress: string,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    animalsOfferedForSale(
-      arg0: BigNumberish,
+    currentAskForToken(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "animalsOfferedForSale(uint256)"(
-      arg0: BigNumberish,
+    "currentAskForToken(uint256)"(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    animalsRemainingToAssign(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "animalsRemainingToAssign()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    "balanceOf(address)"(
-      arg0: string,
+    isValidBid(
+      tokenId: BigNumberish,
+      bidAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    buyAnimal(
-      animalIndex: BigNumberish,
-      overrides?: PayableOverrides
+    "isValidBid(uint256,uint256)"(
+      tokenId: BigNumberish,
+      bidAmount: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "buyAnimal(uint256)"(
-      animalIndex: BigNumberish,
-      overrides?: PayableOverrides
+    isValidBidShares(
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    decimals(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "decimals()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    dropHash(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "dropHash()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    enterBidForAnimal(
-      animalIndex: BigNumberish,
-      overrides?: PayableOverrides
+    "isValidBidShares(tuple)"(
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "enterBidForAnimal(uint256)"(
-      animalIndex: BigNumberish,
-      overrides?: PayableOverrides
-    ): Promise<BigNumber>;
+    mediaContract(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAnimal(
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    "getAnimal(uint256)"(
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    name(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "name()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    nextAnimalIndexToAssign(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "nextAnimalIndexToAssign()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    offerAnimalForSale(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    "offerAnimalForSale(uint256,uint256)"(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    offerAnimalForSaleToAddress(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
-      toAddress: string,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    "offerAnimalForSaleToAddress(uint256,uint256,address)"(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
-      toAddress: string,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
+    "mediaContract()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingWithdrawals(
-      arg0: string,
+    removeAsk(tokenId: BigNumberish, overrides?: Overrides): Promise<BigNumber>;
+
+    "removeAsk(uint256)"(
+      tokenId: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    removeBid(
+      tokenId: BigNumberish,
+      bidder: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "removeBid(uint256,address)"(
+      tokenId: BigNumberish,
+      bidder: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    renounceOwnership(overrides?: Overrides): Promise<BigNumber>;
+
+    "renounceOwnership()"(overrides?: Overrides): Promise<BigNumber>;
+
+    setAsk(
+      tokenId: BigNumberish,
+      ask: { amount: BigNumberish; currency: string },
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "setAsk(uint256,tuple)"(
+      tokenId: BigNumberish,
+      ask: { amount: BigNumberish; currency: string },
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    setBid(
+      tokenId: BigNumberish,
+      bid: {
+        amount: BigNumberish;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
+      spender: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "setBid(uint256,tuple,address)"(
+      tokenId: BigNumberish,
+      bid: {
+        amount: BigNumberish;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
+      spender: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    setBidShares(
+      tokenId: BigNumberish,
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "setBidShares(uint256,tuple)"(
+      tokenId: BigNumberish,
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    splitShare(
+      sharePercentage: { value: BigNumberish },
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "pendingWithdrawals(address)"(
-      arg0: string,
+    "splitShare(tuple,uint256)"(
+      sharePercentage: { value: BigNumberish },
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    setInitialOwner(
-      to: string,
-      animalIndex: BigNumberish,
+    transferOwnership(
+      newOwner: string,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    "setInitialOwner(address,uint256)"(
-      to: string,
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    setInitialOwners(
-      addresses: string[],
-      indices: BigNumberish[],
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    "setInitialOwners(address[],uint256[])"(
-      addresses: string[],
-      indices: BigNumberish[],
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    standard(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "standard()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    symbol(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "symbol()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    transferAnimal(
-      to: string,
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    "transferAnimal(address,uint256)"(
-      to: string,
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    withdraw(overrides?: Overrides): Promise<BigNumber>;
-
-    "withdraw()"(overrides?: Overrides): Promise<BigNumber>;
-
-    withdrawBidForAnimal(
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    "withdrawBidForAnimal(uint256)"(
-      animalIndex: BigNumberish,
+    "transferOwnership(address)"(
+      newOwner: string,
       overrides?: Overrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    acceptBidForAnimal(
-      animalIndex: BigNumberish,
-      minPrice: BigNumberish,
+    acceptBid(
+      tokenId: BigNumberish,
+      expectedBid: {
+        amount: BigNumberish;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    "acceptBidForAnimal(uint256,uint256)"(
-      animalIndex: BigNumberish,
-      minPrice: BigNumberish,
+    "acceptBid(uint256,tuple)"(
+      tokenId: BigNumberish,
+      expectedBid: {
+        amount: BigNumberish;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    allAnimalsAssigned(
+    bidForTokenBidder(
+      tokenId: BigNumberish,
+      bidder: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "allAnimalsAssigned()"(
+    "bidForTokenBidder(uint256,address)"(
+      tokenId: BigNumberish,
+      bidder: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    allInitialOwnersAssigned(
+    bidSharesForToken(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "bidSharesForToken(uint256)"(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    configure(
+      mediaContractAddress: string,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    "allInitialOwnersAssigned()"(
+    "configure(address)"(
+      mediaContractAddress: string,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    animalBids(
-      arg0: BigNumberish,
+    currentAskForToken(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "animalBids(uint256)"(
-      arg0: BigNumberish,
+    "currentAskForToken(uint256)"(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    animalIndexToAddress(
-      arg0: BigNumberish,
+    isValidBid(
+      tokenId: BigNumberish,
+      bidAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "animalIndexToAddress(uint256)"(
-      arg0: BigNumberish,
+    "isValidBid(uint256,uint256)"(
+      tokenId: BigNumberish,
+      bidAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    animalNoLongerForSale(
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "animalNoLongerForSale(uint256)"(
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    animalsOfferedForSale(
-      arg0: BigNumberish,
+    isValidBidShares(
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "animalsOfferedForSale(uint256)"(
-      arg0: BigNumberish,
+    "isValidBidShares(tuple)"(
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    animalsRemainingToAssign(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    mediaContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "animalsRemainingToAssign()"(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    balanceOf(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "balanceOf(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    buyAnimal(
-      animalIndex: BigNumberish,
-      overrides?: PayableOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "buyAnimal(uint256)"(
-      animalIndex: BigNumberish,
-      overrides?: PayableOverrides
-    ): Promise<PopulatedTransaction>;
-
-    decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "decimals()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    dropHash(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "dropHash()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    enterBidForAnimal(
-      animalIndex: BigNumberish,
-      overrides?: PayableOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "enterBidForAnimal(uint256)"(
-      animalIndex: BigNumberish,
-      overrides?: PayableOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getAnimal(
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "getAnimal(uint256)"(
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "name()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    nextAnimalIndexToAssign(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "nextAnimalIndexToAssign()"(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    offerAnimalForSale(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "offerAnimalForSale(uint256,uint256)"(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    offerAnimalForSaleToAddress(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
-      toAddress: string,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "offerAnimalForSaleToAddress(uint256,uint256,address)"(
-      animalIndex: BigNumberish,
-      minSalePriceInWei: BigNumberish,
-      toAddress: string,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
+    "mediaContract()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "owner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingWithdrawals(
-      arg0: string,
+    removeAsk(
+      tokenId: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "removeAsk(uint256)"(
+      tokenId: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    removeBid(
+      tokenId: BigNumberish,
+      bidder: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "removeBid(uint256,address)"(
+      tokenId: BigNumberish,
+      bidder: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    renounceOwnership(overrides?: Overrides): Promise<PopulatedTransaction>;
+
+    "renounceOwnership()"(overrides?: Overrides): Promise<PopulatedTransaction>;
+
+    setAsk(
+      tokenId: BigNumberish,
+      ask: { amount: BigNumberish; currency: string },
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "setAsk(uint256,tuple)"(
+      tokenId: BigNumberish,
+      ask: { amount: BigNumberish; currency: string },
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    setBid(
+      tokenId: BigNumberish,
+      bid: {
+        amount: BigNumberish;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
+      spender: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "setBid(uint256,tuple,address)"(
+      tokenId: BigNumberish,
+      bid: {
+        amount: BigNumberish;
+        currency: string;
+        bidder: string;
+        recipient: string;
+        sellOnShare: { value: BigNumberish };
+      },
+      spender: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    setBidShares(
+      tokenId: BigNumberish,
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "setBidShares(uint256,tuple)"(
+      tokenId: BigNumberish,
+      bidShares: {
+        prevOwner: { value: BigNumberish };
+        creator: { value: BigNumberish };
+        owner: { value: BigNumberish };
+      },
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    splitShare(
+      sharePercentage: { value: BigNumberish },
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "pendingWithdrawals(address)"(
-      arg0: string,
+    "splitShare(tuple,uint256)"(
+      sharePercentage: { value: BigNumberish },
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    setInitialOwner(
-      to: string,
-      animalIndex: BigNumberish,
+    transferOwnership(
+      newOwner: string,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    "setInitialOwner(address,uint256)"(
-      to: string,
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    setInitialOwners(
-      addresses: string[],
-      indices: BigNumberish[],
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "setInitialOwners(address[],uint256[])"(
-      addresses: string[],
-      indices: BigNumberish[],
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    standard(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "standard()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "symbol()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "totalSupply()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    transferAnimal(
-      to: string,
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "transferAnimal(address,uint256)"(
-      to: string,
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    withdraw(overrides?: Overrides): Promise<PopulatedTransaction>;
-
-    "withdraw()"(overrides?: Overrides): Promise<PopulatedTransaction>;
-
-    withdrawBidForAnimal(
-      animalIndex: BigNumberish,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "withdrawBidForAnimal(uint256)"(
-      animalIndex: BigNumberish,
+    "transferOwnership(address)"(
+      newOwner: string,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
   };
