@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Unlicensed
+// SPDX-License-Identifier: MIT
 
 pragma solidity 0.8.4;
 
@@ -7,7 +7,9 @@ import {Media} from "./Media.sol";
 
 
 contract ZooMedia is Media, Ownable {
-    constructor() Media("CryptoZoo", "ANML") { }
+    constructor(string memory symbol, string memory name, address marketAddress) Media(symbol, name, marketAddress) {
+        marketContract = marketAddress;
+    }
 
     function addDrop() public onlyOwner returns (bool) {
 

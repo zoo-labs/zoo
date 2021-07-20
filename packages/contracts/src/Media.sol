@@ -159,11 +159,11 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
      * @notice On deployment, set the market contract address and register the
      * ERC721 metadata interface
      */
-    constructor(string memory name, string memory symbol) ERC721(name, symbol) {
+    constructor(string memory name, string memory symbol, address marketAddress) ERC721(name, symbol) {
         _owner = msg.sender;
         _registerInterface(_INTERFACE_ID_ERC721_METADATA);
+        marketContract = marketAddress;
     }
-
 
     /**
      * @notice Sets the media contract address. This address is the only permitted address that
