@@ -5,8 +5,8 @@ async function main() {
   const [signer] = await ethers.getSigners()
 
   // Deploy the token contract
-  const ZooToken = await ethers.getContractFactory('ZooToken')
-  const token = await ZooToken.deploy('ZooToken', 'ZOO', 18, 2000000000, signer.address)
+  const ZooToken = await ethers.getContractFactory('ZooToken', signer)
+  const token = await ZooToken.deploy()
   console.log('ZooToken', token.address)
 
   // // Transfer token ownership to farm contract
