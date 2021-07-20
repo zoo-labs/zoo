@@ -3,12 +3,12 @@ import asPromised from 'chai-as-promised';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { Blockchain } from '../utils/Blockchain';
 import { generatedWallets } from '../utils/generatedWallets';
-import { MarketFactory } from '../types/MarketFactory';
+import { Market__factory } from '../types';
 import { ethers, Wallet } from 'ethers';
 import { AddressZero } from '@ethersproject/constants';
 import Decimal from '../utils/Decimal';
 import { BigNumber, BigNumberish, Bytes } from 'ethers';
-import { MediaFactory } from '../types/MediaFactory';
+import { Media__factory } from '../types';
 import { Media } from '../types/Media';
 import {
   approveCurrency,
@@ -114,15 +114,15 @@ describe('Media', () => {
   let tokenAddress: string;
 
   async function tokenAs(wallet: Wallet) {
-    return MediaFactory.connect(tokenAddress, wallet);
+    return Media__factory.connect(tokenAddress, wallet);
   }
   async function deploy() {
     const auction = await (
-      await new MarketFactory(deployerWallet).deploy()
+      await new Market__factory(deployerWallet).deploy()
     ).deployed();
     auctionAddress = auction.address;
     const token = await (
-      await new MediaFactory(deployerWallet).deploy(auction.address)
+      await new Media__factory(deployerWallet).deploy('CryptoZoo', 'ANML')
     ).deployed();
     tokenAddress = token.address;
 
@@ -448,7 +448,7 @@ describe('Media', () => {
 
     it('should mint a token for a given creator with a valid signature', async () => {
       const token = await tokenAs(otherWallet);
-      const market = await MarketFactory.connect(auctionAddress, otherWallet);
+      const market = await Market__factory.connect(auctionAddress, otherWallet);
       const sig = await signMintWithSig(
         creatorWallet,
         token.address,
@@ -685,7 +685,7 @@ describe('Media', () => {
   describe('#removeAsk', () => {
     it('should remove the ask', async () => {
       const token = await tokenAs(ownerWallet);
-      const market = await MarketFactory.connect(
+      const market = await Market__factory.connect(
         auctionAddress,
         deployerWallet
       );
@@ -699,7 +699,7 @@ describe('Media', () => {
 
     it('should emit an Ask Removed event', async () => {
       const token = await tokenAs(ownerWallet);
-      const auction = await MarketFactory.connect(
+      const auction = await Market__factory.connect(
         auctionAddress,
         deployerWallet
       );
@@ -883,7 +883,7 @@ describe('Media', () => {
 
     it('should accept a bid', async () => {
       const token = await tokenAs(ownerWallet);
-      const auction = await MarketFactory.connect(auctionAddress, bidderWallet);
+      const auction = await Market__factory.connect(auctionAddress, bidderWallet);
       const asBidder = await tokenAs(bidderWallet);
       const bid = {
         ...defaultBid(currencyAddr, bidderWallet.address, otherWallet.address),
@@ -925,7 +925,7 @@ describe('Media', () => {
     it('should emit a bid finalized event if the bid is accepted', async () => {
       const asBidder = await tokenAs(bidderWallet);
       const token = await tokenAs(ownerWallet);
-      const auction = await MarketFactory.connect(auctionAddress, bidderWallet);
+      const auction = await Market__factory.connect(auctionAddress, bidderWallet);
       const bid = defaultBid(currencyAddr, bidderWallet.address);
       const block = await provider.getBlockNumber();
       await setBid(asBidder, bid, 0);
@@ -948,7 +948,7 @@ describe('Media', () => {
     it('should emit a bid shares updated event if the bid is accepted', async () => {
       const asBidder = await tokenAs(bidderWallet);
       const token = await tokenAs(ownerWallet);
-      const auction = await MarketFactory.connect(auctionAddress, bidderWallet);
+      const auction = await Market__factory.connect(auctionAddress, bidderWallet);
       const bid = defaultBid(currencyAddr, bidderWallet.address);
       const block = await provider.getBlockNumber();
       await setBid(asBidder, bid, 0);
@@ -1013,7 +1013,7 @@ describe('Media', () => {
 
     it('should remove the ask after a transfer', async () => {
       const token = await tokenAs(ownerWallet);
-      const auction = MarketFactory.connect(auctionAddress, deployerWallet);
+      const auction = Market__factory.connect(auctionAddress, deployerWallet);
       await setAsk(token, 0, defaultAsk);
 
       await expect(

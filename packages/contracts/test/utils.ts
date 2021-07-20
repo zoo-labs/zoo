@@ -1,4 +1,4 @@
-import { BaseErc20Factory, MediaFactory } from '../types';
+import { ZooToken__factory, Media__factory } from '../types';
 import { BigNumber, BigNumberish, Bytes, Wallet } from 'ethers';
 import { MaxUint256, AddressZero } from '@ethersproject/constants';
 import { generatedWallets } from '../utils/generatedWallets';
@@ -22,11 +22,7 @@ let provider = new JsonRpcProvider();
 let [deployerWallet] = generatedWallets(provider);
 
 export async function deployCurrency() {
-  const currency = await new BaseErc20Factory(deployerWallet).deploy(
-    'test',
-    'TEST',
-    18
-  );
+  const currency = await new ZooToken__factory(deployerWallet).deploy();
   return currency.address;
 }
 
@@ -35,7 +31,7 @@ export async function mintCurrency(
   to: string,
   value: number
 ) {
-  await BaseErc20Factory.connect(currency, deployerWallet).mint(to, value);
+  await ZooToken__factory.connect(currency, deployerWallet).mint(to, value);
 }
 
 export async function approveCurrency(
@@ -43,10 +39,10 @@ export async function approveCurrency(
   spender: string,
   owner: Wallet
 ) {
-  await BaseErc20Factory.connect(currency, owner).approve(spender, MaxUint256);
+  await ZooToken__factory.connect(currency, owner).approve(spender, MaxUint256);
 }
 export async function getBalance(currency: string, owner: string) {
-  return BaseErc20Factory.connect(currency, deployerWallet).balanceOf(owner);
+  return ZooToken__factory.connect(currency, deployerWallet).balanceOf(owner);
 }
 
 function revert(message: string) {
@@ -72,7 +68,7 @@ export async function signPermit(
 ) {
   return new Promise<EIP712Sig>(async (res, reject) => {
     let nonce;
-    const mediaContract = MediaFactory.connect(tokenAddress, owner);
+    const mediaContract = Media__factory.connect(tokenAddress, owner);
 
     try {
       nonce = (
@@ -144,7 +140,7 @@ export async function signMintWithSig(
 ) {
   return new Promise<EIP712Sig>(async (res, reject) => {
     let nonce;
-    const mediaContract = MediaFactory.connect(tokenAddress, owner);
+    const mediaContract = Media__factory.connect(tokenAddress, owner);
 
     try {
       nonce = (await mediaContract.mintWithSigNonces(creator)).toNumber();
