@@ -2,16 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer } from "ethers";
+import { Contract, Signer, utils } from "ethers";
 import { Provider } from "@ethersproject/providers";
-
-import type { IMedia } from "../IMedia";
-
-export class IMedia__factory {
-  static connect(address: string, signerOrProvider: Signer | Provider): IMedia {
-    return new Contract(address, _abi, signerOrProvider) as IMedia;
-  }
-}
+import type { IMedia, IMediaInterface } from "../IMedia";
 
 const _abi = [
   {
@@ -544,3 +537,13 @@ const _abi = [
     type: "function",
   },
 ];
+
+export class IMedia__factory {
+  static readonly abi = _abi;
+  static createInterface(): IMediaInterface {
+    return new utils.Interface(_abi) as IMediaInterface;
+  }
+  static connect(address: string, signerOrProvider: Signer | Provider): IMedia {
+    return new Contract(address, _abi, signerOrProvider) as IMedia;
+  }
+}
