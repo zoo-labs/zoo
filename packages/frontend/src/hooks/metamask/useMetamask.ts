@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState, useRef} from 'react'
 import { typeStates, MetaStateContext, MetaDispatchContext} from './store'
 import {ethers} from 'ethers'
+import MetaMaskOnboarding from '@metamask/onboarding';
+
 
 export interface IAccount {
 
@@ -21,35 +23,37 @@ const chains = (chainId: string) => {
 };
 
 const useMetamask = () => {
+    const onboarding = useRef<MetaMaskOnboarding>();
     const state = useContext(MetaStateContext);
-    const dispatch = useContext(MetaDispatchContext);
+    const {dispatch} = useContext(MetaDispatchContext);
     const _isMounted = useRef(true);
     const _isConnectedCalled = useRef(false);
-    const provider = useState(ethers);
+    const provider = useState();
     useEffect(() => {
         return () => {
             _isMounted.current = false;
         }
     }, []);
 
-    const connect = async (Web3Interface, settings = {}) => {
-        if (!provider) throw Error(`Metamask is not available`);
-        if (!Web3Interface) throw Error(`Web3Provider is required`);
-        if (!_isMounted.current) throw Error(`Component is not mounted`);
-        if (_isConnectedCalled.current) throw Error(`Connect method already called`);
-        _isConnectedCalled.current = true;
+    useEffect(() => {
+        if (!onboarding.current) {
+            onboarding.current = new MetaMaskOnboarding();
+        }
+    }, []);
 
-        const _web3 = new Web3Interface(
-            ...Web3Interface(Object.keys(settings).length ? [provider, settings] : [provider])
-        );
-        dispatch({type: typeStates.SET_WEB3, payload: _web3});
+    const connect = async () => {
+        useEffect(() => {
+    
+        })
+        
+        dispatch({type: 'SET_WEB3', payload: onboarding.current});
 
         await getAccounts({ requestPermission: true});
         await getChain();
 
         (window as any).ethereum.on('accountsChanged', (accounts: IAccount[]) => {
-            if (!accounts.length) dispatch({ type: typeStates.SET_CONNECTED, payload: false});
-            dispatch({ type: typeStates.SET_ACCOUNT, payload: accounts});
+            if (!accounts.length) dispatch({ type: 'SET_CONNECTED', payload: false});
+            dispatch({ type: 'SET_ACCOUNT', payload: accounts});
         });
 
         (window as any).ethereum.on('chainChanged', (chainId: string) => {
@@ -60,6 +64,22 @@ const useMetamask = () => {
 
         _isConnectedCalled.current = false;
     };
+
+    const onboardMetamask = async () => {
+        useEffect(() => {
+            if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+                if (state.account.length > 0) {
+                    // Not connected
+                    onboarding.current?.startOnboarding();
+                } else {
+                    // Connected
+                    onboarding.current?.stopOnboarding();
+                }
+            } else {
+                return;
+            }
+        })
+    }
 
     const getAccounts = async ({ requestPermission }: { requestPermission: boolean} = {requestPermission: false}) => {
         if (!provider) {
@@ -73,8 +93,8 @@ const useMetamask = () => {
                 params: [],
             });
             if (accounts.length) {
-                dispatch({ type: typeStates.SET_CONNECTED, payload: true });
-                dispatch({ type: typeStates.SET_ACCOUNT, payload: accounts });
+                dispatch({ type: 'SET_CONNECTED', payload: true });
+                dispatch({ type: 'SET_ACCOUNT', payload: accounts });
             }
             return accounts;
         } catch (error) {
@@ -93,7 +113,7 @@ const useMetamask = () => {
                 params: []
             });
             const _chainInfo = { id: chainId, name: chains(chainId) };
-            dispatch({ type: typeStates.SET_CHAIN, payload: _chainInfo});
+            dispatch({ type: 'SET_CHAIN', payload: _chainInfo});
             return _chainInfo;
         } catch (error) {
             throw Error(error);
