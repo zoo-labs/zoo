@@ -1,18 +1,35 @@
-import React, { MouseEvent } from 'react';
-import { MetamaskStateProvider } from 'use-metamask'
+import React, { MouseEvent, useEffect } from 'react';
 import logo from './../../media/images/logo.jpg';
+import { useMetamask } from '../../hooks/metamask';
 
-import './App.scss';
-function App() {
+import './Homepage.scss';
+import { ethers } from 'ethers';
+import detectEthereumProvider from '@metamask/detect-provider';
+
+export const Homepage = function () {
+    const { connect, metaState } = useMetamask();
   const metamaskLogin = (e: MouseEvent) => {
     console.log("metamask login", e);
   }
   if (localStorage.czUser) {
-    window.location.href = '/feed';
-    
+    window.location.href = '/feed';  
   }
+
+  useEffect(() => {
+      if (!metaState.isConnected) {
+          (async () => {
+              try {
+                  const provider = await detectEthereumProvider();
+                  console.log(provider)
+                  await connect(provider as ethers.providers.Provider);
+              } catch (err) {
+                  console.warn(err);
+              }
+          })();
+      }
+  }, [])
+
   return (
-    <MetamaskStateProvider>
     <main className="HomePage">
       <div className="HomePage-inner">
         
@@ -22,8 +39,7 @@ function App() {
         </a>
       </div>
     </main>
-    </MetamaskStateProvider>
   );
 }
 
-export default App;
+export default Homepage;
