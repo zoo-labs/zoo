@@ -33,24 +33,6 @@ const config: HardhatUserConfig = {
           },
         },
       },
-      {
-        version: '0.6.7',
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 200,
-          },
-        },
-      },
-      {
-        version: '0.4.24',
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 200,
-          },
-        },
-      },
     ],
   },
 
@@ -60,10 +42,15 @@ const config: HardhatUserConfig = {
     },
   },
 
+  paths: {
+    sources: './src'
+  },
+
   typechain: {
     outDir: 'types',
     target: 'ethers-v5',
   },
+
 }
 
 export default config
