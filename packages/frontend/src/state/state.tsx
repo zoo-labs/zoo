@@ -1,9 +1,9 @@
-import NFTT from '../contracts.json'
+import CONTRACTS from '../contracts.json'
 import create from 'zustand'
 import { BigNumber, Contract, utils, Event } from 'ethers'
 
 import { TokenProps } from '../components/Token'
-import { ContractPropsDetails, UserProps } from '../types'
+import { ContractPropsDetails, UserProps } from '../types/declarations'
 export interface StateContext {
   isAuthenticated: boolean
   contract?: Contract
@@ -52,15 +52,16 @@ export const useAppState = create<StateContext>((set, get) => ({
             return id
         }
       }
-      const deployedNetwork =
-        NFTT.networks[String(networkid(chainId)) as keyof typeof NFTT.networks]
+      console.log(CONTRACTS)
+      const deployedNetwork = null
+        // Object.keys(NFTT)[String(networkid(chainId)) as keyof typeof Object.keys(NFTT)]
 
       if (!deployedNetwork) {
         throw new Error('The network you selected is no supported yet.')
       }
 
       const { address } = deployedNetwork
-      const contract = new Contract(address, NFTT.abi, library.getSigner())
+      const contract = new Contract(address, CONTRACTS, library.getSigner())
 
       const name = await contract.name()
       const symbol = await contract.symbol()
