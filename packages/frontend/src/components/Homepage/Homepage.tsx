@@ -17,15 +17,14 @@ export const Homepage = () => {
     useEffect(() => {
         (async () => {
             await connect();
-            
+
             if (state.web3) {
-            const _balance = await state.web3.getBalance(state.account[0]);
-                    
-            setBalance(Number(_balance));
+              const _balance = await state.web3.getBalance(state.account[0]);
+              setBalance(Number(_balance));
             }
         })();
     }, [active])
-  
+
   return (
     <div>
         <h1>Account</h1> {state.account ? state.account[0] : 0}
