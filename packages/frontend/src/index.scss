@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital@0;1&family=Oswald&family=Space+Mono&display=swap&family=Permanent+Marker&display=swap');
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #040404; }
+
+html, label, input, button {
+  font-family: 'Space Mono', sans-serif;
+  text-transform: uppercase;
+}
+
+h4 {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --vh: 1vh; }
+
+@media all and (min-width: 800px) {
+  body.feed {
+    display: flex;
+    background: #222; 
+    height: 100vh; } }
+
+.hidden {
+  display: none !important; }
+
+.invisible {
+  visibility: hidden; }
+
+img {
+  display: block;
+  max-width: 100%;
+}

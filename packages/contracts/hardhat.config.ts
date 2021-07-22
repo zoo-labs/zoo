@@ -10,7 +10,6 @@ const { isAddress, getAddress, formatUnits, parseUnits } = utils
 
 import fs from 'fs'
 import chalk from 'chalk'
-import bip39 from 'bip39'
 import { hdkey } from 'ethereumjs-wallet'
 import rlp from 'rlp'
 import { privateToAddress } from 'ethereumjs-util'
@@ -18,6 +17,8 @@ import qrcode from 'qrcode-terminal'
 // import keccak from 'keccak'
 
 import networks from './hardhat.network'
+
+const bip39 = require('bip39')
 
 const config: HardhatUserConfig = {
   networks,
