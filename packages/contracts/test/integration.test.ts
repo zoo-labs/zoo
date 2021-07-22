@@ -12,9 +12,9 @@ import {
   THOUSANDTH_ETH,
   TWO_ETH,
 } from "./utils";
-import { Market, Media } from "@zoralabs/core/dist/typechain";
+import { ZooMarket, ZooMedia } from "../types";
 import { BigNumber, Signer } from "ethers";
-import { AuctionHouse, TestERC721, WETH } from "../typechain";
+import { ZooAuction, TestERC721, WETH } from "../types";
 
 chai.use(asPromised);
 
@@ -24,10 +24,10 @@ const ONE_DAY = 24 * 60 * 60;
 const smallify = (bn: BigNumber) => bn.div(THOUSANDTH_ETH).toNumber();
 
 describe("integration", () => {
-  let market: Market;
-  let media: Media;
+  let market: ZooMarket;
+  let media: ZooMedia;
   let weth: WETH;
-  let auction: AuctionHouse;
+  let auction: ZooAuction;
   let otherNft: TestERC721;
   let deployer, creator, owner, curator, bidderA, bidderB, otherUser: Signer;
   let deployerAddress,
@@ -38,11 +38,11 @@ describe("integration", () => {
     bidderBAddress,
     otherUserAddress: string;
 
-  async function deploy(): Promise<AuctionHouse> {
+  async function deploy(): Promise<ZooAuction> {
     const AuctionHouse = await ethers.getContractFactory("AuctionHouse");
     const auctionHouse = await AuctionHouse.deploy(media.address, weth.address);
 
-    return auctionHouse as AuctionHouse;
+    return auctionHouse as ZooAuction;
   }
 
   beforeEach(async () => {
