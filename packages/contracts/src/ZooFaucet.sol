@@ -6,7 +6,7 @@ abstract contract Token {
     function balanceOf(address addr) public view virtual returns (uint256);
 }
 
-contract Faucet {
+contract ZooFaucet {
     Token zooToken;
     address payable public owner;
     uint256 public rate = 1000; // 1 ETH = 1000 ZAP
