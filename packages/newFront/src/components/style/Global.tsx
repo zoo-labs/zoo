@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
     color: #FFFFF;
   }
   body {
-    background-color: #FFFFF;
+    background-color: #040404;
   overflow-x: hidden;
 
   position: relative
@@ -22,5 +22,5 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 `
-// 040404
+
 export default GlobalStyle
