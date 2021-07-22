@@ -18,11 +18,10 @@ const Menu: React.FC = (props) => {
   const dispatch = useAppDispatch()
   const web3 = useWeb3()
   const currentPathname = useLocation().pathname
-  const showDocsLinks = currentPathname.includes('/docs/')
 
   return (
     <SideMenu
-      links={showDocsLinks ? docsLinks : links()}
+      links={links()}
       account={account as string}
       chainId={chainId as number}
       login={login}
