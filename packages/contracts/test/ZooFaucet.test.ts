@@ -5,8 +5,8 @@ import { ZooToken } from '../types/ZooToken';
 import { ZooFaucet } from '../types/ZooFaucet';
 
 import chai, { expect } from "chai";
+
 import { BigNumber } from 'ethers';
-import { mint } from './utils';
 
 let zooToken: any;
 
@@ -66,7 +66,6 @@ describe("Test Faucet", () => {
 
     });
 
-
     it("Should be able buy 10k ZOO from ZooFaucet to Zoo", async () => {
 
         await zooToken.mint(zooFaucet.address, mintAmt);
@@ -77,7 +76,7 @@ describe("Test Faucet", () => {
 
             await zooFaucet.buyZoo(
                 signers[i].address,
-                10
+                10000
             );
 
             const signerBalances = await zooToken.balanceOf(signers[i].address);
