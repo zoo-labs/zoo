@@ -9,7 +9,7 @@ import {
   Market__factory,
   Media,
   Media__factory,
-} from '@cryptozoo/contracts/types'
+} from '@zoolabs/contracts/types'
 import { addresses } from './addresses'
 import {
   chainIdToNetworkName,
