@@ -16,6 +16,7 @@ import history from './routerHistory'
 const Account = lazy(() => import('./views/Account'))
 const Login = lazy(() => import('./views/Login'))
 const Marketplace = lazy(() => import('./views/Marketplace'))
+const Splash = lazy(() => import('./views/Splash'))
 
 // This config is required for number formating
 BigNumber.config({
@@ -82,6 +83,10 @@ const App: React.FC = () => {
               <Route path="/marketplace" exact>
                 
                 <Marketplace />
+              </Route>
+              <Route path="/splash" exact>
+                
+                <Splash />
               </Route>
               <Route path="/account" exact>
                 
