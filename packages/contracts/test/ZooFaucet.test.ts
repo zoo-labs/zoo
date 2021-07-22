@@ -6,6 +6,7 @@ import { ZooFaucet } from '../types/ZooFaucet';
 
 import chai, { expect } from "chai";
 import { BigNumber } from 'ethers';
+import { mint } from './utils';
 
 let zooToken: any;
 
@@ -63,6 +64,27 @@ describe("Test Faucet", () => {
 
         expect(parseInt(faucetPostBal._hex)).to.equal(mintAmt);
 
-
     });
+
+
+    it("Should be able buy 10k ZOO from ZooFaucet to Zoo", async () => {
+
+        await zooToken.mint(zooFaucet.address, mintAmt);
+
+        const faucetPreBal: BigNumber = await zooToken.balanceOf(zooFaucet.address);
+
+        for (var i = 0; i < signers.length; i++) {
+
+            await zooFaucet.buyZoo(
+                signers[i].address,
+                10
+            );
+
+            const signerBalances = await zooToken.balanceOf(signers[i].address);
+
+            expect(parseInt(signerBalances)).to.equal(10000);
+        }
+
+    })
+
 })
