@@ -4,9 +4,11 @@ import { ZooToken } from '../types/ZooToken';
 
 import { ZooFaucet } from '../types/ZooFaucet';
 
-let zooToken: ZooToken;
+import chai, { expect } from "chai";
 
-let zooFaucet: ZooFaucet;
+let zooToken: any;
+
+let zooFaucet: any;
 
 let signers: any;
 
@@ -34,7 +36,14 @@ describe("Test Faucet", () => {
 
     })
 
-    it("Should commit hash", async () => {
+    it("Should mint 100,000,000 tokens from ZooToken to ZooFaucet", async () => {
 
-    })
+        const faucetPreBal = await zooToken.balanceOf(zooFaucet.address)
+
+        // await zooToken.mint(zooFaucet.address, 100000000);
+
+        expect(parseInt(faucetPreBal._hex)).to.equal(0);
+
+
+    });
 })
