@@ -25,14 +25,16 @@ const networks: HardhatUserConfig['networks'] = {
     allowUnlimitedContractSize: true,
     accounts: {
       mnemonic: mnemonic(),
+      accountsBalance: '10000000000000000000000',
+      count: 20
     }
   },
   hardhat: {
     allowUnlimitedContractSize: true,
-    // chainId: 31337,
     accounts: {
       mnemonic: mnemonic(),
-      count: 1
+      accountsBalance: '10000000000000000000000',
+      count: 20
     }
   },
   coverage: {
