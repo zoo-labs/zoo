@@ -1,13 +1,18 @@
 import { BigNumber, BigNumberish, ethers, Signer } from 'ethers'
 import { Provider, TransactionReceipt } from '@ethersproject/providers'
 import {
-  AuctionHouse as AuctionHouseContract,
-  AuctionHouse__factory,
-} from '@zoolabs/auction-house/dist/typechain'
-import rinkebyAddresses from '@zoolabs/auction-house/dist/addresses/4.json'
-import mainnetAddresses from '@zoolabs/auction-house/dist/addresses/1.json'
-import polygonAddresses from '@zoolabs/auction-house/dist/addresses/137.json'
-import polygonMumbaiAddresses from '@zoolabs/auction-house/dist/addresses/80001.json'
+  ZooMarket as AuctionHouseContract,
+  ZooMarket__factory as AuctionHouse__factory,
+} from '@zoolabs/contracts/types'
+
+// import zooAddresses from '@zoolabs/contracts/addresses.json'
+
+const zooAddresses = { auctionHouse: '0xdead' }
+const mainnetAddresses = zooAddresses
+const rinkebyAddresses = zooAddresses
+const polygonAddresses = zooAddresses
+const polygonMumbaiAddresses = zooAddresses
+
 import { addresses } from './addresses'
 import { chainIdToNetworkName } from './utils'
 
