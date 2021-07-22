@@ -2,42 +2,32 @@ import { useMatchBreakpoints } from 'hooks'
 import React from 'react'
 import styled from 'styled-components'
 import Button from './Button'
-import { scales, variants } from './types'
+import { scales } from './types'
 
 const BtnContainer = styled.div`
-    
   
     * {
     background: transparent;
-    font-weight: 600;
+    font-weight: 550;
+    
      &:hover {
         transition: all 0.2s;
-        border: 2px solid #a0ec0e;
         color: #a0ec0e;
     }
   }
- 
 
   button {
+      text-decoration: underline;
       text-transform: uppercase;
-      border: 2px solid white;
-      border-radius: 0px;
-      height: 100%;
-      padding: revert;
       letter-spacing: 3px;
-      align-items: center;
-      line-height: 1.5;
       transition: all 0.2s;
-      position: relative;
-
+      
       >
-      
-      
   }
 
 `
 
-const BorderButton = (props): JSX.Element => {
+const LinkButton = (props): JSX.Element => {
     const { disabled } = props;
     const { isXs, isSm } = useMatchBreakpoints()
     const isMobile = isXs || isSm
@@ -54,7 +44,7 @@ const BorderButton = (props): JSX.Element => {
     )
 }
 
-BorderButton.defaultProps = {
+LinkButton.defaultProps = {
     isLoading: false,
     external: false,
     // variant: variants.PRIMARY,
@@ -62,4 +52,4 @@ BorderButton.defaultProps = {
     disabled: false,
 }
 
-export default BorderButton
+export default LinkButton
