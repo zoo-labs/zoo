@@ -129,7 +129,6 @@ const App: React.FC = () => {
                 {/* <Route component={NotFound} /> */}
             </Switch>
           </SuspenseWithChunkError>
-          <Marginer />
         </Menu>
         <ToastListener />
       </Router>
