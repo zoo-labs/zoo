@@ -10,12 +10,14 @@ import SuspenseWithChunkError from './components/SuspenseWithChunkError'
 import ToastListener from './components/ToastListener'
 import PageLoader from './components/Svg/Icons/LoadingLogo'
 import history from './routerHistory'
+import { PrivateRoute } from 'components/PrivateRoute'
 
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page
 const Account = lazy(() => import('./views/Account'))
 const Login = lazy(() => import('./views/Login'))
 const Marketplace = lazy(() => import('./views/Marketplace'))
+// const Splash = lazy(() => import('./views/Splash'))
 
 // This config is required for number formating
 BigNumber.config({
@@ -70,6 +72,8 @@ const App: React.FC = () => {
 
   useEagerConnect()
 
+  const signedIn = window.localStorage.getItem("connectorId")
+
   return (
     <Suspense fallback={null}>
       <Router history={history}>
@@ -79,18 +83,38 @@ const App: React.FC = () => {
           <SuspenseWithChunkError fallback={<PageLoader />}>
             <Switch>
               {/* Zswap Routes  */}
-              <Route path="/marketplace" exact>
+              {/* <Route path="/marketplace" exact>
                 
                 <Marketplace />
+              </Route>
+              <Route path="/splash" exact>
+                
+                <Splash />
               </Route>
               <Route path="/account" exact>
                 
                 <Account />
+              </Route> */}
+
+              <Route exact path="/login">
+                {signedIn? <Redirect to="/account" />: <Login/>}
               </Route>
-              <Route path="/login">
-                
-                <Login />
+              <Route exact path="/account">
+                {signedIn? <Account /> : <Redirect to="/login" />}
               </Route>
+              <Route exact path="/marketplace">
+                {signedIn? <Marketplace /> : <Redirect to="/login" />}
+              </Route>
+              <Route  path="/">
+                {signedIn? <Redirect to="/account" />: <Login />}
+              </Route>
+              {/* <Route exact path="/login" component={Login} />
+              <Route exact path="/account" component={signedIn? Account : <Redirect to="/docs/overview" />} />
+              <Route exact path="/market" component={signedIn? Marketplace : <Redirect to="/docs/overview" />} />
+              <Route exact path="/" component={signedIn? Account : <Redirect to="/docs/overview" />} /> */}
+              {/* <PrivateRoute path="/marketplace" component={Marketplace} />
+              <PrivateRoute path="/account" component={Account} />
+              <PrivateRoute path="/" component={Account} /> */}
               {/* <AppWrapper>
                 <BodyWrapper>
                   <Route exact strict path="/swap" component={Swap} />
