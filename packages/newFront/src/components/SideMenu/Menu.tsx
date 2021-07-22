@@ -120,14 +120,14 @@ const Menu: React.FC<NavProps> = ({
         default:
           setNetwork('Not Supported')
       }
-    } else if (pathname.includes('/labs')) {
-      setNetwork('from ETH')
-    } else if (pathname.includes('/pricefeed') || pathname.includes('/miningevents')) {
-      if (isXs || isSm) {
-        setNetwork('from BSC-T')
-      } else {
-        setNetwork('from BSC-Test')
-      }
+    // } else if (pathname.includes('/labs')) {
+    //   setNetwork('from ETH')
+    // } else if (pathname.includes('/pricefeed') || pathname.includes('/miningevents')) {
+    //   if (isXs || isSm) {
+    //     setNetwork('from BSC-T')
+    //   } else {
+    //     setNetwork('from BSC-Test')
+    //   }
     } else {
       setNetwork('')
     }
