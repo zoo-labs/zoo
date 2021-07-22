@@ -1,6 +1,6 @@
 import BorderButton from 'components/Button/BorderButton'
 import Page from 'components/layout/Page'
-import React from 'react'
+import React, { useState } from 'react'
 import styles from 'styled-components'
 import { Label, Text } from 'components/Text'
 import { Heading } from 'components'
@@ -43,6 +43,8 @@ const RowWrapper = styles.div`
 `
 
 const Account: React.FC = () => {
+    const [eggsOwned, setEggsOwned] = useState(0)
+
     const pageHeading = (<HeadingContainer >
                             <Heading >My Account</Heading>
                                 <StyledButton style={{background: "transparent", border: "none", color: "white", marginLeft: "8px"}}>
@@ -71,18 +73,12 @@ const Account: React.FC = () => {
                         </RowWrapper>
                     <LabelWrapper >
                         <Label>
-                           Eggs Owned
+                          {eggsOwned} Eggs Owned
                         </Label>
                         <BorderButton >
                             Buy Eggs
                         </BorderButton>
                          </LabelWrapper>
-                    <RowWrapper >
-                        <ValueWrapper >
-                        0
-                        </ValueWrapper>
-                        
-                    </RowWrapper>
                     </Body>
             </Page>
         </>
