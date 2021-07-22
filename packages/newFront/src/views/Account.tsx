@@ -56,7 +56,7 @@ const Account: React.FC = () => {
             <Page>
                 {pageHeading}
                 <Body>
-                    {/* <h4>Chain: {chainId}</h4> */}
+                   
                     <LabelWrapper>
                         <Label>
                             Wallet Balance
