@@ -1,0 +1,16 @@
+{
+  "short_name": "StarterAppProtocol",
+  "name": "StarterAppProtocol",
+  "description": "Building critical infrastructure to power the next wave of decentralized applications",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "type": "image/x-icon",
+      "sizes": "256x256"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
