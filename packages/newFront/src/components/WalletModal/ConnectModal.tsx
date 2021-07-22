@@ -38,7 +38,7 @@ const ConnectModal: React.FC<Props> = ({ login, onDismiss = () => null }) => {
       />
     ))}
     <Button
-        width={100}
+        width="100%"
         variant="tertiary"
         onClick={() => {
           bscSwith("bsc")
@@ -52,7 +52,7 @@ const ConnectModal: React.FC<Props> = ({ login, onDismiss = () => null }) => {
         <BSC width="32px" />
     </Button>
     <Button
-        width={100}
+        width="100%"
         variant="tertiary"
         onClick={() => {
           bscSwith("chapel")
