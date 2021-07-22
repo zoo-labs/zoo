@@ -35,15 +35,16 @@
     "ts-node": "^9.1.1"
   },
   "peerDependencies": {
-    "@ethersproject/abstract-signer": "^5.0.7",
-    "@ethersproject/address": "^5.0.5",
-    "@ethersproject/bignumber": "^5.0.5",
-    "@ethersproject/bytes": "^5.0.5",
-    "@ethersproject/contracts": "^5.0.5",
-    "@ethersproject/networks": "^5.0.5",
-    "@ethersproject/providers": "^5.0.5",
-    "@ethersproject/solidity": "^5.0.5",
-    "@ethersproject/transactions": "^5.0.5"
+    "@ethersproject/abstract-signer": "^5.4.0",
+    "@ethersproject/address": "^5.4.0",
+    "@ethersproject/bignumber": "^5.4.0",
+    "@ethersproject/bytes": "^5.4.0",
+    "@ethersproject/signing-key": "^5.4.0",
+    "@ethersproject/contracts": "^5.4.0",
+    "@ethersproject/networks": "^5.4.0",
+    "@ethersproject/providers": "^5.4.0",
+    "@ethersproject/solidity": "^5.4.0",
+    "@ethersproject/transactions": "^5.4.0"
   },
   "devDependencies": {
     "@ethersproject/abstract-signer": "^5.0.7",
