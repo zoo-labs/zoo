@@ -4,23 +4,48 @@ pragma solidity 0.8.4;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import { Media } from "./Media.sol";
+import "./ZooToken.sol";
+import "./ERC721Burnable.sol"
 
-
+// a instance for every egg or animal
 contract ZooMedia is Media, Ownable {
+
     constructor(string memory symbol, string memory name, address marketAddress) Media(symbol, name, marketAddress) { }
 
-    function addDrop() public onlyOwner returns (bool) {
 
-    }
+  uint[] public coolDowns = [
+    4 hours,
+    1 days,
+    3 days,
+    7 days,
+    30 days
+  ];
 
-    function buyEgg() public pure returns (uint256) {
-        return 0;
-    }
+  uint public hybridHatchTime = 36 hours;
 
-    function hatchEgg() public pure returns (bool) {
-        return true;
-    }
+
+    // // Accept ZOO and return Egg NFT
+    // function buyEgg() public pure returns (uint256) {
+    //     // bid for the media
+        
+    //     return 0;
+    // }
+
+    // // Actually mint egg NFT
+    // function mintEgg(MediaData memory data, IMarket.BidShares memory bidShares) public pure returns (bool) {
+    //     mint(data, bidShare)
+    //     return true;
+    // }
+
+    // // Burn egg and randomly return an animal NFT
+    // function hatchEgg(uint256 tokenID) public pure returns (bool) {
+    //     return true;
+    // }
+
+  
+  
 }
+
 
 // // A given species of animal
 // abstract contract Animal {
@@ -113,3 +138,59 @@ contract ZooMedia is Media, Ownable {
 //         data = _data;
 //     }
 // }
+ 
+
+
+
+ contract ZooTreasury is ZooToken {
+    
+    
+    
+    function freeAnimal() public pure returns (bool) {
+
+        // Animal and Hybrid Animal
+
+        // daily zoo accumulate by owner nft
+
+        
+
+        // blocks per day is 28,800 modulo by nft mint
+        
+        // returns the share of zoo based on dail yield metric
+
+            Block %  == 
+
+
+    }  
+
+ 
+    function burn(uint256 tokenId) public virtual {
+        //solhint-disable-next-line max-line-length
+        require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721Burnable: caller is not owner nor approved");
+        _burn(tokenId);
+    }
+
+        //NFT is burned, ZOO is given to user based on number of blocks / daily yield
+
+        function redeem(address to, uint256 value) public virtual {
+            
+        }
+ 
+ }
+
+ // // Take two animals and create a new hybrid egg which can hatch into a
+    // // hybrid animal
+    // function breedAnimal(uint256 animal1, uint256 animal2)) public pure returns (bool) {
+    //     return true;
+    // }
+
+    // // Should burn animal and return yield
+    // function freeAnimal() public pure returns (bool) {
+    //     return true;
+    // }  
+    
+    // // [possible delete] Should take drop configuration and add animals to ZOO
+    // function addDrop() public onlyOwner returns (bool) {
+    //     // Enable new drop to mint it's set of animals
+        
+            
