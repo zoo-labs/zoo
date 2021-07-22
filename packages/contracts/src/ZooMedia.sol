@@ -6,19 +6,40 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import { Media } from "./Media.sol";
 
 
-contract ZooMedia is Media, Ownable {
-    constructor(string memory symbol, string memory name, address marketAddress) Media(symbol, name, marketAddress) { }
-
-    function addDrop() public onlyOwner returns (bool) {
-
-    }
-
+contract ZooDrop contract {
+    // Accept ZOO and return Egg NFT
     function buyEgg() public pure returns (uint256) {
         return 0;
     }
 
-    function hatchEgg() public pure returns (bool) {
+    // Actually mint egg NFT
+    function mintEgg() public pure returns (bool) {
         return true;
+    }
+
+    // Burn egg and randomly return an animal NFT
+    function hatchEgg(uint256 tokenID) public pure returns (bool) {
+        return true;
+    }
+
+    // Take two animals and create a new hybrid egg which can hatch into a
+    // hybrid animal
+    function breedAnimal(uint256 animal1, uint256 animal2)) public pure returns (bool) {
+        return true;
+    }
+
+    // Should burn animal and return yield
+    function freeAnimal() public pure returns (bool) {
+        return true;
+    }
+}
+
+contract ZooMedia is Media, Ownable {
+    constructor(string memory symbol, string memory name, address marketAddress) Media(symbol, name, marketAddress) { }
+
+    // Should take drop configuration and add animals to ZOO
+    function addDrop() public onlyOwner returns (bool) {
+        // Enable new drop to mint it's set of animals
     }
 }
 
