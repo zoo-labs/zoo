@@ -21,7 +21,7 @@ import {
 } from '@ethersproject/bytes'
 import { recoverTypedSignature, signTypedData_v4 } from 'eth-sig-util'
 import { fromRpcSig, toRpcSig } from 'ethereumjs-util'
-import { BaseErc20Factory } from '@cryptozoo/contracts/dist/typechain'
+import { BaseErc20Factory } from '@zoolabs/contracts/dist/typechain'
 import axios from 'axios'
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { ethers, Wallet } from 'ethers'

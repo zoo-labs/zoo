@@ -2,7 +2,7 @@ import {
   ERC20__factory,
   Market__factory,
   Media__factory,
-} from '@cryptozoo/contracts/types'
+} from '@zoolabs/contracts/types'
 import { Wallet } from '@ethersproject/wallet'
 import { BigNumber } from '@ethersproject/bignumber'
 import { ContractTransaction } from '@ethersproject/contracts'
