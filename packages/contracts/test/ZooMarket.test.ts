@@ -39,7 +39,7 @@ type Bid = {
   sellOnShare: { value: BigNumberish };
 };
 
-describe('Market', () => {
+describe('ZooMarket', () => {
   let [
     deployerWallet,
     bidderWallet,
@@ -188,7 +188,7 @@ describe('Market', () => {
       ).rejectedWith('Market: Only media contract');
     });
 
-    it('should set the bid shares if called by the media address', async () => {
+    it.only('should set the bid shares if called by the media address', async () => {
       const auction = await auctionAs(mockTokenWallet);
 
       await expect(setBidShares(auction, defaultTokenId, defaultBidShares))
