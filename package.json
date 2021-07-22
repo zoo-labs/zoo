@@ -1,6 +1,8 @@
 {
   "name": "@zoolabs/cryptozoo",
   "version": "1.0.0",
+  "author": "Zoo Labs Limited <hi@zoolabs.io> (https://cryptozoo.co)",
+  "license": "BSD-3-Clause",
   "keywords": [
     "ethereum",
     "react",
