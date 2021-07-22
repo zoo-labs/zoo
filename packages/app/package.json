@@ -84,7 +84,7 @@
     "react": "^17.0.2",
     "react-accessible-accordion": "^3.3.4",
     "react-card-flip": "^1.1.1",
-    "react-chartjs-2": "^2.11.1",
+    "react-chartjs-2": "^3.0.4",
     "react-countup": "^4.3.3",
     "react-device-detect": "^1.6.2",
     "react-dom": "^17.0.1",
