@@ -188,7 +188,7 @@ describe('ZooMarket', () => {
       ).rejectedWith('Market: Only media contract');
     });
 
-    it.only('should set the bid shares if called by the media address', async () => {
+    it('should set the bid shares if called by the media address', async () => {
       const auction = await auctionAs(mockTokenWallet);
 
       await expect(setBidShares(auction, defaultTokenId, defaultBidShares))
