@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 // Forked from https://github.com/ourzora/core @ 450cd154bfbb70f62e94050cc3f1560d58e0506a
 
-pragma solidity 0.8.4;
+pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
 import {Decimal} from "../Decimal.sol";
