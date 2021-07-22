@@ -18,7 +18,7 @@ struct AnimalSet {
     []Animal animals;
 }
 
-contract ZooDrop contract {
+contract ZooDrop contract onlyOwner {
     // Accept ZOO and return Egg NFT
     function buyEgg() public pure returns (uint256) {
         return 0;
@@ -26,11 +26,15 @@ contract ZooDrop contract {
 
     // Actually mint egg NFT
     function mintEgg() public pure returns (bool) {
+        // ZooMedia.mint();
         return true;
     }
 
     // Burn egg and randomly return an animal NFT
     function hatchEgg(uint256 tokenID) public pure returns (bool) {
+        // ZooMedia.burnToken(tokenID)
+        // blockhash % 1000
+        // ZooMedia.mint()
         return true;
     }
 
