@@ -17,7 +17,7 @@ import { PrivateRoute } from 'components/PrivateRoute'
 const Account = lazy(() => import('./views/Account'))
 const Login = lazy(() => import('./views/Login'))
 const Marketplace = lazy(() => import('./views/Marketplace'))
-const Splash = lazy(() => import('./views/Splash'))
+// const Splash = lazy(() => import('./views/Splash'))
 
 // This config is required for number formating
 BigNumber.config({
