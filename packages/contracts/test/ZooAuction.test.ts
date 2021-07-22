@@ -2,8 +2,8 @@ import chai, { expect } from "chai";
 import asPromised from "chai-as-promised";
 // @ts-ignore
 import { ethers } from "hardhat";
-import { Market, Media } from "../types";
-import { AuctionHouse, BadBidder, TestERC721, BadERC721 } from "../types";
+import { ZooMarket, ZooMedia } from "../types";
+import { ZooAuction, BadBidder, TestERC721, BadERC721 } from "../types";
 import { formatUnits } from "ethers/lib/utils";
 import { BigNumber, Contract, Signer } from "ethers";
 import {
@@ -20,9 +20,9 @@ import {
 
 chai.use(asPromised);
 
-describe("AuctionHouse", () => {
-  let market: Market;
-  let media: Media;
+describe("ZooAuction", () => {
+  let market: ZooMarket;
+  let media: ZooMedia;
   let weth: Contract;
   let badERC721: BadERC721;
   let testERC721: TestERC721;
@@ -38,15 +38,15 @@ describe("AuctionHouse", () => {
     testERC721 = nfts.test;
   });
 
-  async function deploy(): Promise<AuctionHouse> {
-    const AuctionHouse = await ethers.getContractFactory("AuctionHouse");
-    const auctionHouse = await AuctionHouse.deploy(media.address, weth.address);
+  async function deploy(): Promise<ZooAuction> {
+    const ZooAuction = await ethers.getContractFactory("ZooAuction");
+    const auctionHouse = await ZooAuction.deploy(media.address, weth.address);
 
-    return auctionHouse as AuctionHouse;
+    return auctionHouse as ZooAuction;
   }
 
   async function createAuction(
-    auctionHouse: AuctionHouse,
+    auctionHouse: ZooAuction,
     curator: string,
     currency = "0x0000000000000000000000000000000000000000"
   ) {
@@ -67,13 +67,13 @@ describe("AuctionHouse", () => {
 
   describe("#constructor", () => {
     it("should be able to deploy", async () => {
-      const AuctionHouse = await ethers.getContractFactory("AuctionHouse");
-      const auctionHouse = await AuctionHouse.deploy(
+      const ZooAuction = await ethers.getContractFactory("ZooAuction");
+      const auctionHouse = await ZooAuction.deploy(
         media.address,
         weth.address
       );
 
-      expect(await auctionHouse.zora()).to.eq(
+      expect(await auctionHouse.zoo()).to.eq(
         media.address,
         "incorrect zora address"
       );
@@ -88,15 +88,15 @@ describe("AuctionHouse", () => {
     });
 
     it("should not allow a configuration address that is not the Zora Media Protocol", async () => {
-      const AuctionHouse = await ethers.getContractFactory("AuctionHouse");
+      const ZooAuction = await ethers.getContractFactory("ZooAuction");
       await expect(
-        AuctionHouse.deploy(market.address, weth.address)
+        ZooAuction.deploy(market.address, weth.address)
       ).eventually.rejectedWith("Transaction reverted without a reason");
     });
   });
 
   describe("#createAuction", () => {
-    let auctionHouse: AuctionHouse;
+    let auctionHouse: ZooAuction;
     beforeEach(async () => {
       auctionHouse = await deploy();
       await mint(media);
@@ -261,14 +261,14 @@ describe("AuctionHouse", () => {
   });
 
   describe("#setAuctionApproval", () => {
-    let auctionHouse: AuctionHouse;
+    let auctionHouse: ZooAuction;
     let admin: Signer;
     let curator: Signer;
     let bidder: Signer;
 
     beforeEach(async () => {
       [admin, curator, bidder] = await ethers.getSigners();
-      auctionHouse = (await deploy()).connect(curator) as AuctionHouse;
+      auctionHouse = (await deploy()).connect(curator) as ZooAuction;
       await mint(media);
       await approveAuction(media, auctionHouse);
       await createAuction(
@@ -320,7 +320,7 @@ describe("AuctionHouse", () => {
   });
 
   describe("#setAuctionReservePrice", () => {
-    let auctionHouse: AuctionHouse;
+    let auctionHouse: ZooAuction;
     let admin: Signer;
     let creator: Signer;
     let curator: Signer;
@@ -328,7 +328,7 @@ describe("AuctionHouse", () => {
 
     beforeEach(async () => {
       [admin, creator, curator, bidder] = await ethers.getSigners();
-      auctionHouse = (await deploy()).connect(curator) as AuctionHouse;
+      auctionHouse = (await deploy()).connect(curator) as ZooAuction;
       await mint(media.connect(creator));
       await approveAuction(
         media.connect(creator),
@@ -390,7 +390,7 @@ describe("AuctionHouse", () => {
   });
 
   describe("#createBid", () => {
-    let auctionHouse: AuctionHouse;
+    let auctionHouse: ZooAuction;
     let admin: Signer;
     let curator: Signer;
     let bidderA: Signer;
@@ -398,7 +398,7 @@ describe("AuctionHouse", () => {
 
     beforeEach(async () => {
       [admin, curator, bidderA, bidderB] = await ethers.getSigners();
-      auctionHouse = (await (await deploy()).connect(bidderA)) as AuctionHouse;
+      auctionHouse = (await (await deploy()).connect(bidderA)) as ZooAuction;
       await mint(media);
       await approveAuction(media, auctionHouse);
       await createAuction(
@@ -512,7 +512,7 @@ describe("AuctionHouse", () => {
 
     describe("second bid", () => {
       beforeEach(async () => {
-        auctionHouse = auctionHouse.connect(bidderB) as AuctionHouse;
+        auctionHouse = auctionHouse.connect(bidderB) as ZooAuction;
         await auctionHouse
           .connect(bidderA)
           .createBid(0, ONE_ETH, { value: ONE_ETH });
@@ -679,7 +679,7 @@ describe("AuctionHouse", () => {
   });
 
   describe("#cancelAuction", () => {
-    let auctionHouse: AuctionHouse;
+    let auctionHouse: ZooAuction;
     let admin: Signer;
     let creator: Signer;
     let curator: Signer;
@@ -687,7 +687,7 @@ describe("AuctionHouse", () => {
 
     beforeEach(async () => {
       [admin, creator, curator, bidder] = await ethers.getSigners();
-      auctionHouse = (await deploy()).connect(creator) as AuctionHouse;
+      auctionHouse = (await deploy()).connect(creator) as ZooAuction;
       await mint(media.connect(creator));
       await approveAuction(media.connect(creator), auctionHouse);
       await createAuction(
@@ -772,7 +772,7 @@ describe("AuctionHouse", () => {
   });
 
   describe("#endAuction", () => {
-    let auctionHouse: AuctionHouse;
+    let auctionHouse: ZooAuction;
     let admin: Signer;
     let creator: Signer;
     let curator: Signer;
@@ -782,7 +782,7 @@ describe("AuctionHouse", () => {
 
     beforeEach(async () => {
       [admin, creator, curator, bidder, other] = await ethers.getSigners();
-      auctionHouse = (await deploy()) as AuctionHouse;
+      auctionHouse = (await deploy()) as ZooAuction;
       await mint(media.connect(creator));
       await approveAuction(media.connect(creator), auctionHouse);
       await createAuction(
