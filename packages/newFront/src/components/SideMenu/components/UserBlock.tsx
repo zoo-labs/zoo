@@ -1,3 +1,4 @@
+import BorderButton from 'components/Button/BorderButton'
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import Button from '../../../components/Button/Button'
@@ -17,24 +18,23 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
   return (
     <div>
       {account ? (
-        <Button
+        <BorderButton
           scale="sm"
-          variant="tertiary"
           onClick={() => {
             onPresentAccountModal()
           }}
         >
           {accountEllipsis}
-        </Button>
+        </BorderButton>
       ) : (
-        <Button
+        <BorderButton
           scale="sm"
           onClick={() => {
             onPresentConnectModal()
           }}
         >
           Connect
-        </Button>
+        </BorderButton>
       )}
     </div>
   )
