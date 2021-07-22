@@ -1,8 +1,8 @@
 import {
-  BaseErc20Factory,
-  MarketFactory,
-  MediaFactory,
-} from '@cryptozoo/contracts/dist/typechain'
+  ERC20__factory,
+  Market__factory,
+  Media__factory,
+} from '@cryptozoo/contracts/types'
 import { Wallet } from '@ethersproject/wallet'
 import { BigNumber } from '@ethersproject/bignumber'
 import { ContractTransaction } from '@ethersproject/contracts'
@@ -18,16 +18,18 @@ export async function setupZoo(
   wallet: Wallet,
   testWallets: Array<Wallet>
 ): Promise<ZooConfiguredAddresses> {
-  const market = await (await new MarketFactory(wallet).deploy()).deployed()
+  const market = await (await new Market__factory(wallet).deploy()).deployed()
   const marketAddress = market.address
 
-  const media = await (await new MediaFactory(wallet).deploy(market.address)).deployed()
+  const media = await (
+    await new Media__factory(wallet).deploy('ZooAnimals', 'ANML', market.address)
+  ).deployed()
   const mediaAddress = media.address
 
   await market.configure(mediaAddress)
 
   const currency = await (
-    await new BaseErc20Factory(wallet).deploy('TEST', 'TEST', BigNumber.from(18))
+    await new ERC20__factory(wallet).deploy('TEST', 'TEST', BigNumber.from(18))
   ).deployed()
   const currencyAddress = currency.address
 
