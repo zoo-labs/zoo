@@ -75,7 +75,7 @@ type Bid = {
   sellOnShare: { value: BigNumberish };
 };
 
-describe('Media', () => {
+describe('ZooMedia', () => {
   let [
     deployerWallet,
     bidderWallet,
