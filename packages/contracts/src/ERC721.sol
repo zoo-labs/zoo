@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.4;
+pragma solidity >=0.8.4;
 
 /**
  * NOTE: This file is a clone of the OpenZeppelin ERC721.sol contract. It was forked from https://github.com/OpenZeppelin/openzeppelin-contracts
