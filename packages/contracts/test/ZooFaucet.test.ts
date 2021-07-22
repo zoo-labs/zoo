@@ -70,8 +70,6 @@ describe("Test Faucet", () => {
 
         await zooToken.mint(zooFaucet.address, mintAmt);
 
-        const faucetPreBal: BigNumber = await zooToken.balanceOf(zooFaucet.address);
-
         for (var i = 0; i < signers.length; i++) {
 
             await zooFaucet.buyZoo(
