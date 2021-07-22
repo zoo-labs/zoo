@@ -5,13 +5,14 @@ pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
 import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import { IERC721, IERC165 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import { ReentrancyGuard } from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import { IERC165 } from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
+import { ReentrancyGuard } from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
-import { IMarket, Decimal } from "@zoralabs/core/dist/contracts/interfaces/IMarket.sol";
-import { IMedia } from "@zoralabs/core/dist/contracts/interfaces/IMedia.sol";
+import { IMarket, Decimal } from "./interfaces/IMarket.sol";
+import { IMedia } from "./interfaces/IMedia.sol";
 import { IAuctionHouse } from "./interfaces/IAuctionHouse.sol";
 
 interface IWETH {
@@ -39,8 +40,8 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
     // The minimum percentage difference between the last bid amount and the current bid.
     uint8 public minBidIncrementPercentage;
 
-    // The address of the zora protocol to use via this contract
-    address public zora;
+    // The address of the Zoo protocol to use via this contract
+    address public zoo;
 
     // / The address of the WETH contract, so that any ETH transferred can be handled as an ERC-20
     address public wethAddress;
@@ -63,12 +64,9 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
     /*
      * Constructor
      */
-    constructor(address _zora, address _weth) public {
-        require(
-            IERC165(_zora).supportsInterface(interfaceId),
-            "Doesn't support NFT interface"
-        );
-        zora = _zora;
+    constructor(address _zoo, address _weth) {
+        require(IERC165(_zoo).supportsInterface(interfaceId), "Doesn't support NFT interface");
+        zoo = _zoo;
         wethAddress = _weth;
         timeBuffer = 15 * 60; // extend 15 minutes after every bid made in last 15 minutes
         minBidIncrementPercentage = 5; // 5%
@@ -107,7 +105,7 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
             reservePrice: reservePrice,
             curatorFeePercentage: curatorFeePercentage,
             tokenOwner: tokenOwner,
-            bidder: address(0),
+            bidder: payable(address(0)),
             curator: curator,
             auctionCurrency: auctionCurrency
         });
@@ -177,10 +175,10 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
             "Must send more than last bid by minBidIncrementPercentage amount"
         );
 
-        // For Zora Protocol, ensure that the bid is valid for the current bidShare configuration
-        if(auctions[auctionId].tokenContract == zora) {
+        // For Zoo Protocol, ensure that the bid is valid for the current bidShare configuration
+        if(auctions[auctionId].tokenContract == zoo) {
             require(
-                IMarket(IMediaExtended(zora).marketContract()).isValidBid(
+                IMarket(IMediaExtended(zoo).marketContract()).isValidBid(
                     auctions[auctionId].tokenId,
                     amount
                 ),
@@ -199,7 +197,7 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
         _handleIncomingBid(amount, auctions[auctionId].auctionCurrency);
 
         auctions[auctionId].amount = amount;
-        auctions[auctionId].bidder = msg.sender;
+        auctions[auctionId].bidder = payable(msg.sender);
 
 
         bool extended = false;
@@ -243,7 +241,7 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
     }
 
     /**
-     * @notice End an auction, finalizing the bid on Zora if applicable and paying out the respective parties.
+     * @notice End an auction, finalizing the bid on Zoo if applicable and paying out the respective parties.
      * @dev If for some reason the auction cannot be finalized (invalid token recipient, for example),
      * The auction is reset and the NFT is transferred back to the auction creator.
      */
@@ -263,9 +261,9 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
 
         uint256 tokenOwnerProfit = auctions[auctionId].amount;
 
-        if(auctions[auctionId].tokenContract == zora) {
-            // If the auction is running on zora, settle it on the protocol
-            (bool success, uint256 remainingProfit) = _handleZoraAuctionSettlement(auctionId);
+        if(auctions[auctionId].tokenContract == zoo) {
+            // If the auction is running on zoo, settle it on the protocol
+            (bool success, uint256 remainingProfit) = _handleZooAuctionSettlement(auctionId);
             tokenOwnerProfit = remainingProfit;
             if(success != true) {
                 _handleOutgoingBid(auctions[auctionId].bidder, auctions[auctionId].amount, auctions[auctionId].auctionCurrency);
@@ -377,7 +375,7 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
         return auctions[auctionId].tokenOwner != address(0);
     }
 
-    function _handleZoraAuctionSettlement(uint256 auctionId) internal returns (bool, uint256) {
+    function _handleZooAuctionSettlement(uint256 auctionId) internal returns (bool, uint256) {
         address currency = auctions[auctionId].auctionCurrency == address(0) ? wethAddress : auctions[auctionId].auctionCurrency;
 
         IMarket.Bid memory bid = IMarket.Bid({
@@ -388,12 +386,12 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
             sellOnShare: Decimal.D256(0)
         });
 
-        IERC20(currency).approve(IMediaExtended(zora).marketContract(), bid.amount);
-        IMedia(zora).setBid(auctions[auctionId].tokenId, bid);
+        IERC20(currency).approve(IMediaExtended(zoo).marketContract(), bid.amount);
+        IMedia(zoo).setBid(auctions[auctionId].tokenId, bid);
         uint256 beforeBalance = IERC20(currency).balanceOf(address(this));
-        try IMedia(zora).acceptBid(auctions[auctionId].tokenId, bid) {} catch {
+        try IMedia(zoo).acceptBid(auctions[auctionId].tokenId, bid) {} catch {
             // If the underlying NFT transfer here fails, we should cancel the auction and refund the winner
-            IMediaExtended(zora).removeBid(auctions[auctionId].tokenId);
+            IMediaExtended(zoo).removeBid(auctions[auctionId].tokenId);
             return (false, 0);
         }
         uint256 afterBalance = IERC20(currency).balanceOf(address(this));

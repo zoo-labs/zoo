@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 // Forked from https://github.com/ourzora/auction-house @ 54a12ec1a6cf562e49f0a4917990474b11350a2d
 
-pragma solidity 0.6.8;
+pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
 /**
