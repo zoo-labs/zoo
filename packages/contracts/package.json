@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.2.0",
-    "bip": "^3.0.2",
     "bip39": "^3.0.4",
     "ethereumjs-wallet": "^1.0.1",
     "hardhat-deploy-ethers": "^0.3.0-beta.10",
