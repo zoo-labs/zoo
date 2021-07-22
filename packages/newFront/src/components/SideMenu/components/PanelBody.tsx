@@ -98,7 +98,7 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
           )
         }
         return (
-          <MenuEntry key={entry.label} isActive={location.pathname.includes(entry.href)} className={calloutClass}>
+          // <MenuEntry key={entry.label} isActive={location.pathname.includes(entry.href)} className={calloutClass}>
             <MenuLink href={entry.href} onClick={handleClick}>
               {entry.icon.length > 0 && iconElement}
               <LinkLabel isPushed={isPushed}>{entry.label}</LinkLabel>
@@ -108,7 +108,7 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
                 </LinkStatus>
               )}
             </MenuLink>
-          </MenuEntry>
+          // </MenuEntry>
         )
       })}
     </Container>
