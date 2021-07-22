@@ -5,9 +5,7 @@ import Button from './Button'
 import { scales, variants } from './types'
 
 const BtnContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
+    
   
     * {
     background: transparent;
@@ -16,7 +14,7 @@ const BtnContainer = styled.div`
         transition: all 0.2s;
         border: 2px solid #a0ec0e;
         color: #a0ec0e;
-  }
+    }
   }
  
 
