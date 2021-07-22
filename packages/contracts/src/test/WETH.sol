@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0
-
 // FOR TEST PURPOSES ONLY. NOT PRODUCTION SAFE
+
 // Source: https://github.com/gnosis/canonical-weth/blob/0dd1ea3e295eef916d0c6223ec63141137d22d67/contracts/WETH9.sol
-pragma solidity 0.6.8;
-import "hardhat/console.sol";
+
+pragma solidity >=0.8.4;
 
 
 contract WETH {
@@ -28,9 +28,10 @@ contract WETH {
         emit Deposit(msg.sender, msg.value);
     }
     function withdraw(uint wad) public {
+	address payable sender = payable(msg.sender);
         require(balanceOf[msg.sender] >= wad);
         balanceOf[msg.sender] -= wad;
-        msg.sender.transfer(wad);
+        sender.transfer(wad);
         emit Withdrawal(msg.sender, wad);
     }
 
@@ -54,7 +55,7 @@ contract WETH {
     {
         require(balanceOf[src] >= wad);
 
-        if (src != msg.sender && allowance[src][msg.sender] != uint(-1)) {
+        if (src != msg.sender && allowance[src][msg.sender] != 0) {
             require(allowance[src][msg.sender] >= wad);
             allowance[src][msg.sender] -= wad;
         }
