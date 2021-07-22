@@ -19,11 +19,11 @@ import { JsonRpcProvider } from '@ethersproject/providers'
 import { Wallet } from '@ethersproject/wallet'
 import { addresses as ZooAddresses } from '../src/addresses'
 import { deployCurrency, setupZoo, ZooConfiguredAddresses } from './helpers'
-import { Blockchain, generatedWallets } from '@cryptozoo/contracts/dist/utils'
+import { Blockchain, generatedWallets } from '@cryptozoo/contracts/utils'
 import { BigNumber, Bytes } from 'ethers'
 import { formatUnits } from 'ethers/lib/utils'
 import { AddressZero } from '@ethersproject/constants'
-import { MediaFactory } from '@cryptozoo/contracts/dist/typechain'
+import { Media__factory } from '@cryptozoo/contracts/types'
 import MockAdapter from 'axios-mock-adapter'
 import axios from 'axios'
 import { promises as fs } from 'fs'
@@ -345,7 +345,7 @@ describe('Zoo', () => {
 
         it('pads the gas limit by 10%', async () => {
           const otherZooConfig = await setupZoo(otherWallet, [mainWallet])
-          const zooMedia = MediaFactory.connect(zooConfig.media, mainWallet)
+          const zooMedia = Media__factory.connect(zooConfig.media, mainWallet)
           const tx = await zooMedia.mint(defaultMediaData, defaultBidShares)
           const otherZoo = new Zoo(
             otherWallet,
