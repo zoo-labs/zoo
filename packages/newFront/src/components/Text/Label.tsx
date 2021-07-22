@@ -21,7 +21,7 @@ const Label = styled.div<TextProps>`
   font-size: ${getFontSize};
   font-weight: 600;
   line-height: 1.2;
-  width: 100%;
+  
   ${({ textTransform }) => textTransform && `text-transform: ${textTransform};`}
   ${space}
   ${typography}
