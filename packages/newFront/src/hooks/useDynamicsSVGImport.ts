@@ -20,7 +20,7 @@ const useDynamicSVGImport = (name: string, options: UseDynamicSVGImportOptions =
     const importIcon = async (): Promise<void> => {
       try {
         ImportedIconRef.current = (
-          await import(`!!@svgr/webpack?-svgo,+titleProp,+ref!../../../node_modules/cryptocurrency-icons/svg/color/${name}.svg`)
+          await import(`!!@svgr/webpack?-svgo,+titleProp,+ref!../../node_modules/cryptocurrency-icons/svg/color/${name}.svg`)
         ).default;
         onCompleted?.(name, ImportedIconRef.current);
       } catch (err) {
