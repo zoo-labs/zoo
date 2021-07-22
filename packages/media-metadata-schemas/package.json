@@ -1,6 +1,7 @@
 {
-  "name": "@cryptozoo/media-metadata-schemas",
+  "name": "@zoolabs/media-metadata-schemas",
   "version": "0.1.3",
+  "license": "MIT",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
   "files": [
