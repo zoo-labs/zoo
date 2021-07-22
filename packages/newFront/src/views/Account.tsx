@@ -69,14 +69,19 @@ const Account: React.FC = () => {
                             </ValueWrapper>
                             
                         </RowWrapper>
-                    <LabelWrapper >Eggs Owned </LabelWrapper>
+                    <LabelWrapper >
+                        <Label>
+                           Eggs Owned
+                        </Label>
+                        <BorderButton >
+                            Buy Eggs
+                        </BorderButton>
+                         </LabelWrapper>
                     <RowWrapper >
                         <ValueWrapper >
                         0
                         </ValueWrapper>
-                        <BorderButton >
-                            Buy Eggs
-                        </BorderButton>
+                        
                     </RowWrapper>
                     </Body>
             </Page>
