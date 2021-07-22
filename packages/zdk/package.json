@@ -24,8 +24,8 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@cryptozoo/contracts": "^1.0.5",
-    "@cryptozoo/media-metadata-schemas": "^0.1.2",
+    "@zoolabs/contracts": "^1.0.5",
+    "@zoolabs/media-metadata-schemas": "^0.1.2",
     "axios": "^0.21.1",
     "eth-sig-util": "^3.0.0",
     "ethereumjs-util": "^7.0.7",
