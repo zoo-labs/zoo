@@ -33,7 +33,7 @@ The constructor can optionally accept two parameters to `override` the official 
 #### Mainnet
 
 ```typescript
-import { Zoo } from '@cryptozoo/zdk'
+import { Zoo } from '@zoolabs/zdk'
 import { Wallet } from 'ethers'
 
 const wallet = Wallet.createRandom()
@@ -44,7 +44,7 @@ const totalSupply = await zoo.fetchTotalMedia()
 #### Rinkeby
 
 ```typescript
-import { Zoo } from '@cryptozoo/zdk'
+import { Zoo } from '@zoolabs/zdk'
 import { Wallet } from 'ethers'
 
 const wallet = Wallet.createRandom()
@@ -57,7 +57,7 @@ const totalSupply = await zoo.fetchTotalMedia()
 When using a local blockchain you must specify overrides for both `mediaAddress` and `marketAddress`. These should point to the addresses of deployed Zoo Media and Market contracts on your local blockchain.
 
 ```typescript
-import { Zoo } from '@cryptozoo/zdk'
+import { Zoo } from '@zoolabs/zdk'
 import { Wallet } from 'ethers'
 
 const wallet = Wallet.createRandom()
