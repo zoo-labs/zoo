@@ -345,6 +345,28 @@ function App(props) {
             </Link>
           </Menu.Item>
 
+          <Menu.Item key="/zooauction">
+            <Link
+              onClick={() => {
+                setRoute("/zooauction");
+              }}
+              to="/zooauction"
+            >
+              ZooAuction
+            </Link>
+          </Menu.Item>
+
+          <Menu.Item key="/zoodrop">
+            <Link
+              onClick={() => {
+                setRoute("/zoodrop");
+              }}
+              to="/zoodrop"
+            >
+              ZooDrop
+            </Link>
+          </Menu.Item>
+
           <Menu.Item key="/subgraph">
             <Link
               onClick={() => {
@@ -377,6 +399,22 @@ function App(props) {
           <Route exact path="/zoomedia">
             <Contract
               name="ZooMedia"
+              signer={userSigner}
+              provider={localProvider}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+          <Route exact path="/zooauction">
+            <Contract
+              name="ZooAuction"
+              signer={userSigner}
+              provider={localProvider}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+          <Route exact path="/zoodrop">
+            <Contract
+              name="ZooDrop"
               signer={userSigner}
               provider={localProvider}
               blockExplorer={blockExplorer}
