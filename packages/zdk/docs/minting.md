@@ -58,7 +58,7 @@ To generate this hash use any of the sha256 utils defined in [utils](../docs/uti
 #### Example
 
 ```typescript
-import { constructMediaData, sha256FromBuffer, generateMetadata } from '@cryptozoo/zdk'
+import { constructMediaData, sha256FromBuffer, generateMetadata } from '@zoolabs/zdk'
 
 const metadataJSON = generateMetadata('zoo-20210101', {
   description: '',
@@ -110,7 +110,7 @@ The equity (%) the previous owner gets from the next accepted bid of the piece o
 The Zoo Media Contract allows for 18 decimals of precision. To simplify precision, we created the `constructBidShares` method with accepts JS `numbers` and converts them to `ethers` `BigDecimal` types rounded to the **fourth** decimal.
 
 ```typescript
-import { constructBidShares } from '@cryptozoo/zdk'
+import { constructBidShares } from '@zoolabs/zdk'
 
 const bidShares = constructBidShares(
   10, // creator share
@@ -122,14 +122,14 @@ const bidShares = constructBidShares(
 ### All Together Now!
 
 ```typescript
-import { Zoo } from '@cryptozoo/zdk'
+import { Zoo } from '@zoolabs/zdk'
 import { Wallet } from 'ethers'
 import {
   constructBidShares,
   constructMediaData,
   sha256FromBuffer,
   generateMetadata,
-} from '@cryptozoo/zdk'
+} from '@zoolabs/zdk'
 
 const wallet = Wallet.createRandom()
 const zoo = new Zoo(wallet, 4)

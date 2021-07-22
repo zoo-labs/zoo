@@ -6,7 +6,7 @@ Bids are denominated in an ERC-20 of the bidder's choice. To construct a bid use
 **Note**: Placing a bid on a piece of cryptomedia requires that you deposit funds into the Zoo Market contract. In order to successfully place a bid you must `approve` the Zoo Market Contract to transfer your funds. You can use the `approveERC20` method to do this.
 
 ```typescript
-import { Zoo, constructBid, Decimal, approveERC20 } from '@cryptozoo/zdk'
+import { Zoo, constructBid, Decimal, approveERC20 } from '@zoolabs/zdk'
 import { Wallet } from 'ethers'
 import { MaxUint256 } from '@ethersproject/constants'
 
