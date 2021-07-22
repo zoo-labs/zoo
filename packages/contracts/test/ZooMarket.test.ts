@@ -11,8 +11,8 @@ import Decimal from '../utils/Decimal';
 import { Blockchain } from '../utils/Blockchain';
 import { generatedWallets } from '../utils/generatedWallets';
 
-import { Market } from '../types/Market';
-import { Market__factory } from '../types';
+import { ZooMarket } from '../types/ZooMarket';
+import { ZooMarket__factory } from '../types';
 import { ZooToken__factory } from '../types';
 
 let provider = new JsonRpcProvider();
@@ -71,36 +71,36 @@ describe('Market', () => {
   }
 
   async function auctionAs(wallet: Wallet) {
-    return Market__factory.connect(auctionAddress, wallet);
+    return ZooMarket__factory.connect(auctionAddress, wallet);
   }
   async function deploy() {
     const auction = await (
-      await new Market__factory(deployerWallet).deploy()
+      await new ZooMarket__factory(deployerWallet).deploy()
     ).deployed();
     auctionAddress = auction.address;
   }
   async function configure() {
-    return Market__factory.connect(auctionAddress, deployerWallet).configure(
+    return ZooMarket__factory.connect(auctionAddress, deployerWallet).configure(
       mockTokenWallet.address
     );
   }
 
   async function readMediaContract() {
-    return Market__factory.connect(
+    return ZooMarket__factory.connect(
       auctionAddress,
       deployerWallet
     ).mediaContract();
   }
 
   async function setBidShares(
-    auction: Market,
+    auction: ZooMarket,
     tokenId: number,
     bidShares?: BidShares
   ) {
     return auction.setBidShares(tokenId, bidShares);
   }
 
-  async function setAsk(auction: Market, tokenId: number, ask?: Ask) {
+  async function setAsk(auction: ZooMarket, tokenId: number, ask?: Ask) {
     return auction.setAsk(tokenId, ask);
   }
 
@@ -127,7 +127,7 @@ describe('Market', () => {
     return ZooToken__factory.connect(currency, deployerWallet).balanceOf(owner);
   }
   async function setBid(
-    auction: Market,
+    auction: ZooMarket,
     bid: Bid,
     tokenId: number,
     spender?: string
@@ -152,7 +152,7 @@ describe('Market', () => {
 
     it('should revert if not called by the owner', async () => {
       await expect(
-        Market__factory.connect(auctionAddress, otherWallet).configure(
+        ZooMarket__factory.connect(auctionAddress, otherWallet).configure(
           mockTokenWallet.address
         )
       ).eventually.rejectedWith('Market: Only owner');
