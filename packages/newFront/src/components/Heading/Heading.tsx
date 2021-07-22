@@ -27,11 +27,13 @@ const style = {
 
 const Heading = styled(Text).attrs({ bold: true })<HeadingProps>`
   font-size: ${({ size }) => style[size || sizes.MD].fontSize};
-  font-weight: 600;
-  line-height: 1.1;
+  font-weight: 550;
+  line-height: 1.5;
+  letter-spacing: 3px;
+  text-transform: uppercase;
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    font-size: ${({ size }) => style[size || sizes.MD].fontSizeLg};
+    font-size: ${({ size }) => style[size || sizes.LG].fontSizeLg};
   }
 `;
 
