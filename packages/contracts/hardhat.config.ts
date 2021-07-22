@@ -60,7 +60,7 @@ export default config
 
 const DEBUG = false
 
-function debug(text : string) {
+function debug(text: string) {
   if (DEBUG) {
     console.log(text)
   }
@@ -108,10 +108,10 @@ task('fundedwallet', 'Create a wallet (pk) link and fund it with deployer?')
       deployerWallet = deployerWallet.connect(ethers.provider)
       console.log(
         '💵 Sending ' +
-          amount +
-          ' ETH to ' +
-          randomWallet.address +
-          ' using deployer account'
+        amount +
+        ' ETH to ' +
+        randomWallet.address +
+        ' using deployer account'
       )
       let sendresult = await deployerWallet.sendTransaction(tx)
       console.log('\n' + url + '/pk#' + privateKey + '\n')
@@ -119,10 +119,10 @@ task('fundedwallet', 'Create a wallet (pk) link and fund it with deployer?')
     } else {
       console.log(
         '💵 Sending ' +
-          amount +
-          ' BNB to ' +
-          randomWallet.address +
-          ' using local node'
+        amount +
+        ' BNB to ' +
+        randomWallet.address +
+        ' using local node'
       )
       console.log('\n' + url + '/pk#' + privateKey + '\n')
       return send(ethers.provider.getSigner(), tx)
@@ -130,34 +130,34 @@ task('fundedwallet', 'Create a wallet (pk) link and fund it with deployer?')
   })
 
 task('generate', 'Create a mnemonic for builder deploys', async (_, { ethers }) => {
-    let mnemonic = bip39.generateMnemonic()
-    if (DEBUG) console.log('mnemonic', mnemonic)
-    const seed = await bip39.mnemonicToSeed(mnemonic)
-    if (DEBUG) console.log('seed', seed)
-    const hdwallet = hdkey.fromMasterSeed(seed)
-    const wallet_hdpath = `m/44'/60'/0'/0/`
-    const account_index = 0
-    let fullPath = wallet_hdpath + account_index
-    if (DEBUG) console.log('fullPath', fullPath)
-    const wallet = hdwallet.derivePath(fullPath).getWallet()
-    const privateKey = '0x' + wallet.getPrivateKey().toString('hex')
-    if (DEBUG) console.log('privateKey', privateKey)
-    const address =
-      '0x' + privateToAddress(wallet.getPrivateKey()).toString('hex')
-    console.log(
-      '🔐 Account Generated as ' +
-        address +
-        ' and set as mnemonic in packages/hardhat'
-    )
-    console.log(
-      `💬 Use 'yarn run account' to get more information about the deployment account.`
-    )
+  let mnemonic = bip39.generateMnemonic()
+  if (DEBUG) console.log('mnemonic', mnemonic)
+  const seed = await bip39.mnemonicToSeed(mnemonic)
+  if (DEBUG) console.log('seed', seed)
+  const hdwallet = hdkey.fromMasterSeed(seed)
+  const wallet_hdpath = `m/44'/60'/0'/0/`
+  const account_index = 0
+  let fullPath = wallet_hdpath + account_index
+  if (DEBUG) console.log('fullPath', fullPath)
+  const wallet = hdwallet.derivePath(fullPath).getWallet()
+  const privateKey = '0x' + wallet.getPrivateKey().toString('hex')
+  if (DEBUG) console.log('privateKey', privateKey)
+  const address =
+    '0x' + privateToAddress(wallet.getPrivateKey()).toString('hex')
+  console.log(
+    '🔐 Account Generated as ' +
+    address +
+    ' and set as mnemonic in packages/hardhat'
+  )
+  console.log(
+    `💬 Use 'yarn run account' to get more information about the deployment account.`
+  )
 
-    mnemonic = `affair lunar oak mention science hundred involve venture spider vast seven memory`
+  mnemonic = `affair lunar oak mention science hundred involve venture spider vast seven memory`
 
-    fs.writeFileSync('./' + address + '.txt', mnemonic.toString())
-    fs.writeFileSync('./mnemonic.txt', mnemonic.toString())
-  }
+  fs.writeFileSync('./' + address + '.txt', mnemonic.toString())
+  fs.writeFileSync('./mnemonic.txt', mnemonic.toString())
+}
 )
 
 task('mineContractAddress', 'Looks for a deployer account that will give leading zeros')
@@ -200,12 +200,12 @@ task('mineContractAddress', 'Looks for a deployer account that will give leading
 
     console.log(
       '⛏  Account Mined as ' +
-        address +
-        ' and set as mnemonic in packages/hardhat'
+      address +
+      ' and set as mnemonic in packages/hardhat'
     )
     console.log(
       '📜 This will create the first contract: ' +
-        chalk.magenta('0x' + contract_address)
+      chalk.magenta('0x' + contract_address)
     )
     console.log(
       `💬 Use 'yarn run account' to get more information about the deployment account.`
@@ -219,44 +219,44 @@ task('mineContractAddress', 'Looks for a deployer account that will give leading
   })
 
 task('account', 'Get balance informations for the deployment account.', async (_, { ethers }) => {
-    let mnemonic = fs.readFileSync('./mnemonic.txt').toString().trim()
-    if (DEBUG) console.log('mnemonic', mnemonic)
-    const seed = await bip39.mnemonicToSeed(mnemonic)
-    if (DEBUG) console.log('seed', seed)
-    const hdwallet = hdkey.fromMasterSeed(seed)
-    const wallet_hdpath = `m/44'/60'/0'/0/`
-    const account_index = 0
-    let fullPath = wallet_hdpath + account_index
-    if (DEBUG) console.log('fullPath', fullPath)
-    const wallet = hdwallet.derivePath(fullPath).getWallet()
-    const privateKey = '0x' + wallet.getPrivateKey().toString('hex')
+  let mnemonic = fs.readFileSync('./mnemonic.txt').toString().trim()
+  if (DEBUG) console.log('mnemonic', mnemonic)
+  const seed = await bip39.mnemonicToSeed(mnemonic)
+  if (DEBUG) console.log('seed', seed)
+  const hdwallet = hdkey.fromMasterSeed(seed)
+  const wallet_hdpath = `m/44'/60'/0'/0/`
+  const account_index = 0
+  let fullPath = wallet_hdpath + account_index
+  if (DEBUG) console.log('fullPath', fullPath)
+  const wallet = hdwallet.derivePath(fullPath).getWallet()
+  const privateKey = '0x' + wallet.getPrivateKey().toString('hex')
 
-        '0x' + privateToAddress(wallet.getPrivateKey()).toString('hex')
-    if (DEBUG) console.log('privateKey', privateKey)
-    const address =
-      '0x' + privateToAddress(wallet.getPrivateKey()).toString('hex')
+  '0x' + privateToAddress(wallet.getPrivateKey()).toString('hex')
+  if (DEBUG) console.log('privateKey', privateKey)
+  const address =
+    '0x' + privateToAddress(wallet.getPrivateKey()).toString('hex')
 
-    qrcode.generate(address)
+  qrcode.generate(address)
 
-    console.log('‍📬 Deployer Account is ' + address)
+  console.log('‍📬 Deployer Account is ' + address)
 
-    for (let n in networks) {
-      // console.log(config.networks[n],n)
-      try {
-        let provider = new ethers.providers.JsonRpcProvider((networks[n] as any).url)
-        let balance = await provider.getBalance(address)
-        console.log(' -- ' + n + ' --  -- -- 📡 ')
-        console.log('   balance: ' + ethers.utils.formatEther(balance))
-        console.log(
-          '   nonce: ' + (await provider.getTransactionCount(address))
-        )
-      } catch (e) {
-        if (DEBUG) {
-          console.log(e)
-        }
+  for (let n in networks) {
+    // console.log(config.networks[n],n)
+    try {
+      let provider = new ethers.providers.JsonRpcProvider((networks[n] as any).url)
+      let balance = await provider.getBalance(address)
+      console.log(' -- ' + n + ' --  -- -- 📡 ')
+      console.log('   balance: ' + ethers.utils.formatEther(balance))
+      console.log(
+        '   nonce: ' + (await provider.getTransactionCount(address))
+      )
+    } catch (e) {
+      if (DEBUG) {
+        console.log(e)
       }
     }
   }
+}
 )
 
 async function addr(ethers, addr) {
@@ -287,6 +287,11 @@ task('balance', `Prints an account's balance`)
       await addr(ethers, taskArgs.account)
     )
     console.log(formatUnits(balance, 'ether'), 'ETH')
+  })
+
+task('Faucet', `Gives 10K ZOO to each signer wallet`)
+  .setAction(async ({ ethers }) => {
+
   })
 
 function send(signer, txparams) {

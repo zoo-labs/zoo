@@ -41,22 +41,27 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const faucetAddress = (await deployments.get('ZooFaucet')).address;
 
     // Attaches the deployed ZooFaucet address to this instance of faucet
-    const faucet = faucetFactory.attach(faucetAddress)
+    const faucet = faucetFactory.attach(faucetAddress);
+
+    // Amount to fund the faucet with
+    const mintAmt = BigInt(500000000 * 1e18);
+
+    // Amount to give to each signer
+    const buyZooAmt = BigInt(10 * 1e18);
 
     // Mints 100 million ZOO and allocates it to ZooFaucet
-    await zooToken.mint(faucet.address, 100000000);
+    await zooToken.mint(faucet.address, mintAmt);
 
     for (var i = 0; i < signers.length; i++) {
 
         // The 20 signer wallets get 10K ZOO on deployment
         await faucet.buyZoo(
             signers[i].address,
-            10 // Rate: 1:1000 (10 * 1000) = 10000
+            buyZooAmt
         );
     }
 
     return !useProxy // When live network, record the script as executed to prevent rexecution
-
 
 }
 
