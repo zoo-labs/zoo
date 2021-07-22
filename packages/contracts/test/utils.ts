@@ -277,8 +277,8 @@ export const mint = async (media: Media) => {
     },
     {
       prevOwner: Decimal.new(0),
-      owner: Decimal.new(85),
-      creator: Decimal.new(15),
+      owner: Decimal.new(0),
+      creator: Decimal.new(10),
     }
   );
 };
