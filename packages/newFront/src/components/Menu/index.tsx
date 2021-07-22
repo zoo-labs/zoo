@@ -15,9 +15,6 @@ const Menu: React.FC = (props) => {
   const { login, logout } = useAuth()
   const { isDark, toggleTheme } = useTheme()
 
-  const dispatch = useAppDispatch()
-  const web3 = useWeb3()
-  const currentPathname = useLocation().pathname
 
   return (
     <SideMenu

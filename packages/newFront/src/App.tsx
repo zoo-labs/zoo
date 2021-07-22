@@ -2,7 +2,6 @@ import React, { Suspense, useEffect, lazy } from 'react'
 import { Router, Route, Switch, Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
-import { BrowserHistory } from 'history'
 import useEagerConnect from 'hooks/useEagerConnect'
 import  ResetCSS  from './components/ResetCSS'
 import GlobalStyle from './components/style/Global'
@@ -80,7 +79,7 @@ const App: React.FC = () => {
       <Router history={history}>
         <ResetCSS />
         <GlobalStyle />
-        <Menu>
+        {/* <Menu> */}
           <SuspenseWithChunkError fallback={<PageLoader />}>
             <Switch>
               {/* Zswap Routes  */}
@@ -130,7 +129,7 @@ const App: React.FC = () => {
             </Switch>
           </SuspenseWithChunkError>
           <Marginer />
-        </Menu>
+        {/* </Menu> */}
         <ToastListener />
       </Router>
     </Suspense>
