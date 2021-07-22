@@ -8,8 +8,8 @@ import { ethers, Wallet } from 'ethers';
 import { AddressZero } from '@ethersproject/constants';
 import Decimal from '../utils/Decimal';
 import { BigNumber, BigNumberish, Bytes } from 'ethers';
-import { Media__factory } from '../types';
-import { Media } from '../types/Media';
+import { ZooMedia__factory } from '../types';
+import { ZooMedia } from '../types/ZooMedia';
 import {
   approveCurrency,
   deployCurrency,
@@ -114,7 +114,7 @@ describe('Media', () => {
   let tokenAddress: string;
 
   async function tokenAs(wallet: Wallet) {
-    return Media__factory.connect(tokenAddress, wallet);
+    return ZooMedia__factory.connect(tokenAddress, wallet);
   }
   async function deploy() {
     const auction = await (
@@ -122,7 +122,7 @@ describe('Media', () => {
     ).deployed();
     auctionAddress = auction.address;
     const token = await (
-      await new Media__factory(deployerWallet).deploy('CryptoZoo', 'ANML')
+      await new ZooMedia__factory(deployerWallet).deploy('ANML', 'CryptoZoo', auction.address)
     ).deployed();
     tokenAddress = token.address;
 
@@ -130,7 +130,7 @@ describe('Media', () => {
   }
 
   async function mint(
-    token: Media,
+    token: ZooMedia,
     metadataURI: string,
     tokenURI: string,
     contentHash: Bytes,
@@ -147,7 +147,7 @@ describe('Media', () => {
   }
 
   async function mintWithSig(
-    token: Media,
+    token: ZooMedia,
     creator: string,
     tokenURI: string,
     metadataURI: string,
@@ -166,23 +166,23 @@ describe('Media', () => {
     return token.mintWithSig(creator, data, shares, sig);
   }
 
-  async function setAsk(token: Media, tokenId: number, ask: Ask) {
+  async function setAsk(token: ZooMedia, tokenId: number, ask: Ask) {
     return token.setAsk(tokenId, ask);
   }
 
-  async function removeAsk(token: Media, tokenId: number) {
+  async function removeAsk(token: ZooMedia, tokenId: number) {
     return token.removeAsk(tokenId);
   }
 
-  async function setBid(token: Media, bid: Bid, tokenId: number) {
+  async function setBid(token: ZooMedia, bid: Bid, tokenId: number) {
     return token.setBid(tokenId, bid);
   }
 
-  async function removeBid(token: Media, tokenId: number) {
+  async function removeBid(token: ZooMedia, tokenId: number) {
     return token.removeBid(tokenId);
   }
 
-  async function acceptBid(token: Media, tokenId: number, bid: Bid) {
+  async function acceptBid(token: ZooMedia, tokenId: number, bid: Bid) {
     return token.acceptBid(tokenId, bid);
   }
 
