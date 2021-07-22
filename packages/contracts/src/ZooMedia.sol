@@ -6,6 +6,18 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import { Media } from "./Media.sol";
 
 
+struct Animal {
+    string name;
+    uint bonus;
+    uint yield;
+}
+
+struct AnimalSet {
+    string className;
+    uint probability;
+    []Animal animals;
+}
+
 contract ZooDrop contract {
     // Accept ZOO and return Egg NFT
     function buyEgg() public pure returns (uint256) {
