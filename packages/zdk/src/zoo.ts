@@ -6,10 +6,10 @@ import { Provider } from '@ethersproject/providers'
 import { Signer } from '@ethersproject/abstract-signer'
 import {
   Market,
-  MarketFactory,
+  Market__factory,
   Media,
-  MediaFactory,
-} from '@cryptozoo/contracts/dist/typechain'
+  Media__factory,
+} from '@cryptozoo/contracts/types'
 import { addresses } from './addresses'
 import {
   chainIdToNetworkName,
@@ -63,8 +63,8 @@ export class Zoo {
       this.marketAddress = addresses[network].market
     }
 
-    this.media = MediaFactory.connect(this.mediaAddress, signerOrProvider)
-    this.market = MarketFactory.connect(this.marketAddress, signerOrProvider)
+    this.media = Media__factory.connect(this.mediaAddress, signerOrProvider)
+    this.market = Market__factory.connect(this.marketAddress, signerOrProvider)
   }
 
   /*********************
