@@ -2,24 +2,29 @@ import BorderButton from 'components/Button/BorderButton'
 import Page from 'components/layout/Page'
 import React from 'react'
 import styles from 'styled-components'
-import { Text } from 'components/Text'
+import { Label, Text } from 'components/Text'
+import { Heading } from 'components'
+import Body from 'components/layout/Body'
 
 
 const HeadingContainer = styles.div`
     width: 100%;
     display: flex;
     justify-content: start;
-    text-transform: uppercase;
+    margin: 0px 8px;
 `
 
 const StyledButton = styles.button`
+    cursor: pointer;
     text-decoration: underline;
     text-transform: uppercase;
 `
 
-const LabelWrapper = styles(Text)`
-    color: white;
-    font-weight: 600;
+const LabelWrapper = styles.div`
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
 `
 
 const ValueWrapper = styles(Text)`
@@ -29,36 +34,17 @@ const ValueWrapper = styles(Text)`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-left: 16px;
 `
-// style={{textTransform: "uppercase", background: "transparent", border: "none", color: "white", marginLeft: "8px",  width: "100px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", }}
 const RowWrapper = styles.div`
     width: 100%;
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    margin: 16px;
 `
 
-const BodyContainer = styles.div`
-    width: 100%;
-    position: relative;
-    padding: 16px 32px;
-    background: black;
-`
-
-{/* <button style={{ color: "white", fontFamily: 'Space Mono, sans-serif', position: "absolute", display: "flex", right: "0", top: "0", border: "none", background: "transparent"}}> */}
 const Account: React.FC = () => {
-
-    const logoHeader = (<div style={{ display: "flex", position: "relative", width: "100%", justifyContent: "center" }}>
-                            {/* <img src={logo} alt="small logo" height="100px" width="100px" /> */}
-                                <BorderButton position="absolute" left="0" display="flex">
-                                    {/* {state.account ? state.account[0] : 0} */}
-                                <span style={{marginLeft: "4px"}}>Log Out</span>
-                            </BorderButton>
-                        </div>)
-    
-    const pageLabel = (<HeadingContainer >
-                            <LabelWrapper fontWeight="550" style={{letterSpacing: "3px"}}>My Account</LabelWrapper>
+    const pageHeading = (<HeadingContainer >
+                            <Heading >My Account</Heading>
                                 <StyledButton style={{background: "transparent", border: "none", color: "white", marginLeft: "8px"}}>
                                     View Bank
                                 </StyledButton>
@@ -66,21 +52,23 @@ const Account: React.FC = () => {
     return (
         <>
             <Page>
-                {/* <div style={{ width: "100%", height: "100%", padding: "16px 32px", backgroundColor: "black"}}>        */}
-                <BodyContainer>
-                    {logoHeader}
-                    {pageLabel}
+                {pageHeading}
+                <Body>
                     {/* <h4>Chain: {chainId}</h4> */}
-                    
-                    <LabelWrapper>Wallet Balance</LabelWrapper>
-                    <RowWrapper>
-                        <ValueWrapper>
-                            Balance
-                        </ValueWrapper>
+                    <LabelWrapper>
+                        <Label>
+                            Wallet Balance
+                            </Label>
                         <BorderButton>
-                            Add Funds
-                        </BorderButton>
-                    </RowWrapper>
+                                Add Funds
+                            </BorderButton>
+                    </LabelWrapper>
+                        <RowWrapper>
+                            <ValueWrapper>
+                                Balance
+                            </ValueWrapper>
+                            
+                        </RowWrapper>
                     <LabelWrapper >Eggs Owned </LabelWrapper>
                     <RowWrapper >
                         <ValueWrapper >
@@ -90,8 +78,7 @@ const Account: React.FC = () => {
                             Buy Eggs
                         </BorderButton>
                     </RowWrapper>
-                    {/* </div> */}
-                    </BodyContainer>
+                    </Body>
             </Page>
         </>
     )
