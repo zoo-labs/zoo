@@ -1,5 +1,8 @@
-const { ethers } = require('hardhat')
-const { use, expect } = require('chai')
+import { ethers } from "hardhat";
+
+import chai, { expect } from "chai";
+import asPromised from "chai-as-promised";
+chai.use(asPromised);
 
 
 describe('ZooToken', function () {
