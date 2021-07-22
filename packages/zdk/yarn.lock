@@ -1535,28 +1535,28 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@zoolabs/auction-house@^1.1.3":
+"@cryptozoo/auction-house@^1.1.3":
   version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@zoolabs/auction-house/-/auction-house-1.1.3.tgz#1b6d0313605ccea4bb3b5114b23d591d267538b3"
+  resolved "https://registry.yarnpkg.com/@cryptozoo/auction-house/-/auction-house-1.1.3.tgz#1b6d0313605ccea4bb3b5114b23d591d267538b3"
   integrity sha512-PeEuqR9HNRllSfsUcsPYeUDPrIs8K9W6uEissHMzFdV1P/eqEsIUMRP0xnMuOjLHMSIWntZVqSYA2Oc5AS1voA==
   dependencies:
     "@openzeppelin/contracts" "^3.2.0"
-    "@zoolabs/contracts" "^1.0.3"
+    "@cryptozoo/contracts" "^1.0.3"
     dotenv "^8.2.0"
     fs-extra "^9.1.0"
     minimist "^1.2.5"
     solidity-coverage "^0.7.16"
 
-"@zoolabs/contracts@^1.0.3", "@zoolabs/contracts@^1.0.5":
+"@cryptozoo/contracts@^1.0.3", "@cryptozoo/contracts@^1.0.5":
   version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@zoolabs/contracts/-/core-1.0.5.tgz#4b487e90c7aeda0d0ba33fdcc2f4246a94dbc4c5"
+  resolved "https://registry.yarnpkg.com/@cryptozoo/contracts/-/core-1.0.5.tgz#4b487e90c7aeda0d0ba33fdcc2f4246a94dbc4c5"
   integrity sha512-tiww0kI4lxhtP6X2499sz5upummBKiRzA5fdYW56lAFR45sl0j1gITir3pssb5nBG60l+aXiGdpgOhiLK/nEFg==
   dependencies:
     ethers "^5.0.19"
 
-"@zoolabs/media-metadata-schemas@^0.1.2":
+"@cryptozoo/media-metadata-schemas@^0.1.2":
   version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@zoolabs/media-metadata-schemas/-/media-metadata-schemas-0.1.2.tgz#b6f3532e7bca95197fa8a7ca136ad70dbdce1d2d"
+  resolved "https://registry.yarnpkg.com/@cryptozoo/media-metadata-schemas/-/media-metadata-schemas-0.1.2.tgz#b6f3532e7bca95197fa8a7ca136ad70dbdce1d2d"
   integrity sha512-QcvPNb4RkdU9xKfOxnmKRKKVI4Z5oammiz2wYHmqzOvkIgHvm7tjV/MQcTelaRJfjksYx8k6bqsmbSbKIMUJTQ==
   dependencies:
     "@types/jsonschema" "^1.1.1"

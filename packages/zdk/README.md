@@ -20,7 +20,7 @@ The ZDK has 4 primary exports plus some types:
 ### Installation
 
 ```bash
-yarn add @zoolabs/zdk
+yarn add @cryptozoo/zdk
 ```
 
 ### Guides

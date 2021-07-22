@@ -1,5 +1,5 @@
 {
-  "name": "@zoolabs/frontend",
+  "name": "@cryptozoo/frontend",
   "version": "0.1.0",
   "typings": "declarations.d.ts",
   "private": true,

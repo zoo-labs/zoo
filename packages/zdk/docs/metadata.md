@@ -11,7 +11,7 @@ As such, the `media-metadata-schemas` [repository](https://github.com/ourzoo/med
 Given a schema version and some nonformatted json it generates a valid, minified, alphabetized json
 
 ```typescript
-import { generateMetadata } from '@zoolabs/zdk'
+import { generateMetadata } from '@cryptozoo/zdk'
 
 const metadata = {
   version: 'zoo-20210101',
@@ -26,7 +26,7 @@ const minified = generateMetadata(metadata.version, metadata)
 ### Validate
 
 ```typescript
-import { validateMetadata } from '@zoolabs/zdk'
+import { validateMetadata } from '@cryptozoo/zdk'
 
 const metadata = {
   version: 'zoo-20210101',
@@ -41,7 +41,7 @@ const minified = validateMetadata(metadata.version, metadata)
 ### Parse
 
 ```typescript
-import { parseMetadata } from '@zoolabs/zdk'
+import { parseMetadata } from '@cryptozoo/zdk'
 
 const metadata = `
   {

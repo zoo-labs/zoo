@@ -1,5 +1,5 @@
 import { generateMetadata, parseMetadata, validateMetadata } from '../src'
-import { Zoo20210101 } from '@zoolabs/media-metadata-schemas'
+import { Zoo20210101 } from '@cryptozoo/media-metadata-schemas'
 
 describe('Metadata', () => {
   function isZoo20210101(json: Object): json is Zoo20210101 {
