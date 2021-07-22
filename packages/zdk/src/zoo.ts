@@ -4,7 +4,12 @@ import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { ContractTransaction } from '@ethersproject/contracts'
 import { Provider } from '@ethersproject/providers'
 import { Signer } from '@ethersproject/abstract-signer'
-import { Market, MarketFactory, Media, MediaFactory } from '@cryptozoo/contracts/dist/typechain'
+import {
+  Market,
+  MarketFactory,
+  Media,
+  MediaFactory,
+} from '@cryptozoo/contracts/dist/typechain'
 import { addresses } from './addresses'
 import {
   chainIdToNetworkName,
