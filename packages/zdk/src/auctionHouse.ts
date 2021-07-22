@@ -3,9 +3,9 @@ import { Provider, TransactionReceipt } from '@ethersproject/providers'
 import {
   ZooMarket as AuctionHouseContract,
   ZooMarket__factory as AuctionHouse__factory,
-} from '@zoolabs/contracts/types'
+} from '@cryptozoo/contracts/types'
 
-// import zooAddresses from '@zoolabs/contracts/addresses.json'
+// import zooAddresses from '@cryptozoo/contracts/addresses.json'
 
 const zooAddresses = { auctionHouse: '0xdead' }
 const mainnetAddresses = zooAddresses

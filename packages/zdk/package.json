@@ -1,5 +1,5 @@
 {
-  "name": "@zoolabs/zoodk",
+  "name": "@cryptozoo/zdk",
   "description": "An SDK for using the Zoo Media Protocol",
   "version": "1.2.3",
   "main": "dist/src/index.js",
@@ -23,8 +23,8 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@zoolabs/contracts": "^1.0.5",
-    "@zoolabs/media-metadata-schemas": "^0.1.2",
+    "@cryptozoo/contracts": "^1.0.5",
+    "@cryptozoo/media-metadata-schemas": "^0.1.2",
     "axios": "^0.21.1",
     "eth-sig-util": "^3.0.0",
     "ethereumjs-util": "^7.0.7",

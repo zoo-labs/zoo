@@ -1,7 +1,7 @@
-import rinkebyAddresses from '@zoolabs/contracts/dist/addresses/4.json'
-import mainnetAddresses from '@zoolabs/contracts/dist/addresses/1.json'
-import polygonAddresses from '@zoolabs/contracts/dist/addresses/137.json'
-import polygonMumbaiAddresses from '@zoolabs/contracts/dist/addresses/80001.json'
+import rinkebyAddresses from '@cryptozoo/contracts/dist/addresses/4.json'
+import mainnetAddresses from '@cryptozoo/contracts/dist/addresses/1.json'
+import polygonAddresses from '@cryptozoo/contracts/dist/addresses/137.json'
+import polygonMumbaiAddresses from '@cryptozoo/contracts/dist/addresses/80001.json'
 
 interface AddressBook {
   [key: string]: {
