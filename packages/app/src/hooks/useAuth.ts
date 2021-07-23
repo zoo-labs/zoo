@@ -9,35 +9,42 @@ import { UserRejectedRequestError as UserRejectedRequestErrorWalletConnect, Wall
 import { connectorLocalStorageKey, ConnectorNames } from 'components/WalletModal'
 import useToast from 'hooks/useToast'
 import { connectorsByName } from 'connectors'
+import { setupNetwork } from 'util/wallet'
 
 const useAuth = () => {
   const { activate, deactivate } = useWeb3React()
   const { toastError } = useToast()
 
   const login = useCallback((connectorID: ConnectorNames) => {
+    console.log("LOGGING IN.....")
     const connector = connectorsByName[connectorID]
-    console.log(connector, "id")
     if (connector) {
       activate(connector, async (error: Error) => {
-        window.localStorage.removeItem(connectorLocalStorageKey)
         if (error instanceof UnsupportedChainIdError) {
-          toastError('ed Chain Id', 'Unsupported Chain Id Error. Check your chain Id.')
-        } else if (error instanceof NoEthereumProviderError || error instanceof NoBscProviderError) {
-          toastError('Provider Error', 'No provider was found')
-        } else if (
-          error instanceof UserRejectedRequestErrorInjected ||
-          error instanceof UserRejectedRequestErrorWalletConnect
-        ) {
-          if (connector instanceof WalletConnectConnector) {
-            const walletConnector = connector as WalletConnectConnector
-            walletConnector.walletConnectProvider = null
+          console.log("ERROR")
+          const hasSetup = await setupNetwork("chapel")
+          if (hasSetup) {
+            activate(connector)
           }
-          toastError('Authorization Error', 'Please authorize to access your account')
         } else {
-          toastError(error.name, error.message)
+          window.localStorage.removeItem(connectorLocalStorageKey)
+          if (error instanceof NoEthereumProviderError || error instanceof NoBscProviderError) {
+            toastError(('Provider Error'), ('No provider was found'))
+          } else if (
+            error instanceof UserRejectedRequestErrorInjected ||
+            error instanceof UserRejectedRequestErrorWalletConnect
+          ) {
+            if (connector instanceof WalletConnectConnector) {
+              const walletConnector = connector as WalletConnectConnector
+              walletConnector.walletConnectProvider = null
+            }
+            toastError(('Authorization Error'), ('Please authorize to access your account'))
+          } else {
+            toastError(error.name, error.message)
+          }
         }
       })
-    } else {
+    }else {
       toastError("Can't find connector", 'The connector config is wrong')
     }
     
