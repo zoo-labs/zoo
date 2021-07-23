@@ -17,7 +17,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     background-color: #030303;
-    height: calc(100vh - 63px);
+    height: calc(100vh - 64px);
 `
 const Button = styled.button`
     width: 200px;
