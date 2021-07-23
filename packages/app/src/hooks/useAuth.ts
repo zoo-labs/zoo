@@ -21,10 +21,21 @@ const useAuth = () => {
     if (connector) {
       activate(connector, async (error: Error) => {
         if (error instanceof UnsupportedChainIdError) {
-          console.log("ERROR")
-          const hasSetup = await setupNetwork("chapel")
-          if (hasSetup) {
-            activate(connector)
+          toastError('Unsupported Chain Id', 'Unsupported Chain Id Error. Check your chain Id.')
+        } else if (error instanceof NoEthereumProviderError || error instanceof NoBscProviderError) {
+          toastError('Provider Error', 'No provider was found')
+        } else if (
+          error instanceof UserRejectedRequestErrorInjected ||
+          error instanceof UserRejectedRequestErrorWalletConnect
+        ) {
+          if (connector instanceof WalletConnectConnector) {
+            const walletConnector = connector as WalletConnectConnector
+            walletConnector.walletConnectProvider = null
+            console.log("ERROR")
+            const hasSetup = await setupNetwork("chapel")
+            if (hasSetup) {
+              activate(connector)
+            }
           }
         } else {
           window.localStorage.removeItem(connectorLocalStorageKey)
