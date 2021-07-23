@@ -281,11 +281,11 @@ describe("ZooAuction", () => {
       ).to.be.revertedWith("Auction doesn't exist")
     });
 
-    //   it("should revert if not called by the curator", async () => {
-    //     await expect(
-    //       auctionHouse.connect(admin).setAuctionApproval(0, true)
-    //     ).eventually.rejectedWith(revert`Must be auction curator`);
-    //   });
+    it("should revert if not called by the curator", async () => {
+      await expect(
+        auctionHouse.connect(admin).setAuctionApproval(0, true)
+      ).to.be.revertedWith("Must be auction curator");
+    });
 
     //   it("should revert if the auction has already started", async () => {
     //     await auctionHouse.setAuctionApproval(0, true);
