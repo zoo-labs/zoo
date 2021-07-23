@@ -6,9 +6,9 @@ import {
   UserRejectedRequestError as UserRejectedRequestErrorInjected,
 } from '@web3-react/injected-connector'
 import { UserRejectedRequestError as UserRejectedRequestErrorWalletConnect, WalletConnectConnector } from '@web3-react/walletconnect-connector'
-import { connectorLocalStorageKey, ConnectorNames } from 'components/WalletModal'
-import useToast from 'hooks/useToast'
-import { connectorsByName } from 'connectors'
+import { connectorLocalStorageKey, ConnectorNames } from '../components/WalletModal'
+import useToast from './useToast'
+import { connectorsByName } from '../connectors'
 
 const useAuth = () => {
   const { activate, deactivate } = useWeb3React()
@@ -21,7 +21,7 @@ const useAuth = () => {
       activate(connector, async (error: Error) => {
         window.localStorage.removeItem(connectorLocalStorageKey)
         if (error instanceof UnsupportedChainIdError) {
-          toastError('ed Chain Id', 'Unsupported Chain Id Error. Check your chain Id.')
+          toastError('Unsupported Chain Id', 'Unsupported Chain Id Error. Check your chain Id.')
         } else if (error instanceof NoEthereumProviderError || error instanceof NoBscProviderError) {
           toastError('Provider Error', 'No provider was found')
         } else if (
