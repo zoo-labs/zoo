@@ -13,7 +13,7 @@ const initialState: ZooState = test;
 // };
 
 export const ZooSlice = createSlice({
-   name: "Zoo",
+   name: "zoo",
    initialState,
    reducers: {
       addEgg: (state: ZooState, action) => {
