@@ -8,6 +8,7 @@ import Accordion from './Accordion'
 import { MenuEntry, LinkLabel, LinkStatus } from './MenuEntry'
 import MenuLink from './MenuLink'
 import { PanelProps, PushedProps } from '../types'
+import Logo from './Logo'
 
 interface Props extends PanelProps, PushedProps {
   isMobile: boolean
@@ -21,6 +22,7 @@ const Container = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
+  
 `
 
 const IconContainer = styled.div`

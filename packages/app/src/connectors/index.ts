@@ -1,4 +1,4 @@
-import { ConnectorNames } from 'components'
+import { ConnectorNames } from '../components'
 import { Web3Provider } from '@ethersproject/providers'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
@@ -25,7 +25,7 @@ export function getNetworkLibrary(): Web3Provider {
 }
 
 export const injected = new InjectedConnector({
-  supportedChainIds: [1, 42, 31337, 56, 97, 4, 80001],
+  supportedChainIds: [56, 97],
 })
 
 export const bscConnector = new BscConnector({ supportedChainIds: [56, 97] })
