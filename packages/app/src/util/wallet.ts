@@ -1,12 +1,13 @@
 // Set of helper functions to facilitate wallet setup
 
-import { bsc_nodes, chapel_nodes } from './getRpcUrl'
+import { bsc_nodes, chapel_nodes } from '../util/getRpcUrl'
 
 /**
  * Prompt the user to add BSC as a network on Metamask, or switch to BSC if the wallet is on a different network
  * @returns {boolean} true if the setup succeeded, false otherwise
  */
 export const setupNetwork = async (network) => {
+  console.log(bsc_nodes)
   const main = network === "bsc"
   const provider = (window as WindowChain).ethereum
   if (provider) {

@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 // import { Link } from "react-router-dom";
-import { LogoIcon } from "../../../components/Svg";
+import { CloseIcon, LogoIcon } from "../../../components/Svg";
 import Flex from "../../../components/Box/Flex";
-import { HamburgerIcon, HamburgerCloseIcon, LogoIcon as LogoWithText } from "../icons";
+import { HamburgerIcon,  LogoIcon as LogoWithText } from "../icons";
 import MenuButton from "./MenuButton";
 
 interface Props {
@@ -41,12 +41,12 @@ const Logo: React.FC<Props> = ({ isPushed, togglePush, isDark, href }) => {
   );
 
   return (
-    <Flex>
+    <Flex >
       <MenuButton aria-label="Toggle menu" onClick={togglePush} mr="24px">
         {isPushed ? (
-          <HamburgerCloseIcon width="24px" color="textSubtle" />
+            <CloseIcon width="24px" color="card" />
         ) : (
-          <HamburgerIcon width="24px" color="textSubtle" />
+              <HamburgerIcon width="24px" color="card" />
         )}
       </MenuButton>
       {/* {isAbsoluteUrl ? (
