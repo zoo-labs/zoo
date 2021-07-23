@@ -121,76 +121,74 @@ describe("ZooAuction", () => {
         curator.address,
         5,
         "0x0000000000000000000000000000000000000000"
-      )).to.be.revertedWith('okenContract does not support ERC721 interface');
+      )).to.be.revertedWith('tokenContract does not support ERC721 interface');
 
 
     });
 
-    //   it("should revert if the caller is not approved", async () => {
-    //     const duration = 60 * 60 * 24;
-    //     const reservePrice = BigNumber.from(10).pow(18).div(2);
-    //     const [_, curator, __, ___, unapproved] = await ethers.getSigners();
-    //     await expect(
-    //       auctionHouse
-    //         .connect(unapproved)
-    //         .createAuction(
-    //           0,
-    //           media.address,
-    //           duration,
-    //           reservePrice,
-    //           curator.address,
-    //           5,
-    //           "0x0000000000000000000000000000000000000000"
-    //         )
-    //     ).eventually.rejectedWith(
-    //       revert`Caller must be approved or owner for token id`
-    //     );
-    //   });
+    it("should revert if the caller is not approved", async () => {
+      const duration = 60 * 60 * 24;
+      const reservePrice = BigNumber.from(10).pow(18).div(2);
+      const [_, curator, __, ___, unapproved] = await ethers.getSigners();
+      await expect(
+        auctionHouse
+          .connect(unapproved)
+          .createAuction(
+            0,
+            media.address,
+            duration,
+            reservePrice,
+            curator.address,
+            5,
+            "0x0000000000000000000000000000000000000000"
+          )).to.be.revertedWith('Caller must be approved or owner for token id')
 
-    //   it("should revert if the token ID does not exist", async () => {
-    //     const tokenId = 999;
-    //     const duration = 60 * 60 * 24;
-    //     const reservePrice = BigNumber.from(10).pow(18).div(2);
-    //     const owner = await media.ownerOf(0);
-    //     const [admin, curator] = await ethers.getSigners();
+    });
 
-    //     await expect(
-    //       auctionHouse
-    //         .connect(admin)
-    //         .createAuction(
-    //           tokenId,
-    //           media.address,
-    //           duration,
-    //           reservePrice,
-    //           curator.address,
-    //           5,
-    //           "0x0000000000000000000000000000000000000000"
-    //         )
-    //     ).eventually.rejectedWith(
-    //       revert`ERC721: owner query for nonexistent token`
-    //     );
-    //   });
+    // it("should revert if the token ID does not exist", async () => {
+    //   const tokenId = 999;
+    //   const duration = 60 * 60 * 24;
+    //   const reservePrice = BigNumber.from(10).pow(18).div(2);
+    //   const owner = await media.ownerOf(0);
+    //   const [admin, curator] = await ethers.getSigners();
 
-    //   it("should revert if the curator fee percentage is >= 100", async () => {
-    //     const duration = 60 * 60 * 24;
-    //     const reservePrice = BigNumber.from(10).pow(18).div(2);
-    //     const owner = await media.ownerOf(0);
-    //     const [_, curator] = await ethers.getSigners();
-
-    //     await expect(
-    //       auctionHouse.createAuction(
-    //         0,
+    //   await expect(
+    //     auctionHouse
+    //       .connect(admin)
+    //       .createAuction(
+    //         tokenId,
     //         media.address,
     //         duration,
     //         reservePrice,
     //         curator.address,
-    //         100,
+    //         5,
     //         "0x0000000000000000000000000000000000000000"
     //       )
-    //     ).eventually.rejectedWith(
-    //       revert`curatorFeePercentage must be less than 100`
-    //     );
-    //   });
+    //   ).eventually.rejectedWith(
+    //     revert`ERC721: owner query for nonexistent token`
+    //   );
+    // });
+
+    // it("should revert if the curator fee percentage is >= 100", async () => {
+    //   const duration = 60 * 60 * 24;
+    //   const reservePrice = BigNumber.from(10).pow(18).div(2);
+    //   const owner = await media.ownerOf(0);
+    //   const [_, curator] = await ethers.getSigners();
+
+    //   await expect(
+    //     auctionHouse.createAuction(
+    //       0,
+    //       media.address,
+    //       duration,
+    //       reservePrice,
+    //       curator.address,
+    //       100,
+    //       "0x0000000000000000000000000000000000000000"
+    //     )
+    //   ).eventually.rejectedWith(
+    //     revert`curatorFeePercentage must be less than 100`
+    //   );
+    // });
 
     //   it("should create an auction", async () => {
     //     const owner = await media.ownerOf(0);
