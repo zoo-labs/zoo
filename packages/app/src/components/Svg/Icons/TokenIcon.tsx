@@ -1,17 +1,17 @@
 
 import React from 'react'
-import useDynamicSVGImport, { UseDynamicSVGImportOptions } from '../../../hooks/useDynamicsSVGImport';
+import useDynamicsSVGImport, { useDynamicsSVGImportOptions } from '../../../hooks/useDynamicsSVGImport';
 import useMatchBreakpoints from '../../../hooks/useMatchBreakpoints';
 import { ZAP } from './TokenIcons';
 
 export interface TokenIconProps {
   name: string;
-  onCompleted?: UseDynamicSVGImportOptions["onCompleted"];
-  onError?: UseDynamicSVGImportOptions["onError"];
+  onCompleted?: useDynamicsSVGImportOptions["onCompleted"];
+  onError?: useDynamicsSVGImportOptions["onError"];
 }
 
 const Icon: React.FC<TokenIconProps | any> = ({ name, onCompleted, onError, ...rest }) => {
-  const { error, loading, SvgIcon } = useDynamicSVGImport(name, {
+  const { error, loading, SvgIcon } = useDynamicsSVGImport(name, {
     onCompleted,
     onError
   });
