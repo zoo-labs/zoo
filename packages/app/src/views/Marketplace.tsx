@@ -36,7 +36,16 @@ const IconCont = styled.div`
       transform: rotate(360deg);
     }
   }
-`;
+`
+const ImageContainer = styled.div`
+  img {
+    width: 100%;
+    height: 100%;
+    minHeight: 300px;
+    overflow: hidden;
+  }
+`
+
 const InfoBlock = styled.div`
   padding: 24px;
 `;
@@ -118,10 +127,10 @@ const EggMarketplace: React.FC = () => {
           {shownData(data).map((egg) => (
             <Card>
               <CardBody>
-                <CardContent imgSrc="/media/logo.svg">
-                  <Heading mb="8px">{egg.name}</Heading>
-                  {/* <Text>{TranslateString(999, 'Trade in your NFT for CAKE, or just keep it for your collection.')}</Text> */}
-                </CardContent>
+                <Heading mb="8px">{egg.name}</Heading>
+                <ImageContainer >
+                  <img src={egg.imageURL} alt={egg.name}/>  
+                </ImageContainer>
               </CardBody>
               <CardFooter>
                 <InfoBlock>
