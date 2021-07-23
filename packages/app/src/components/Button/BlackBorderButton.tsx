@@ -22,7 +22,7 @@ const BtnContainer = styled.div`
 
   button {
       text-transform: uppercase;
-      border: 2px solid white;
+      border: 2px solid black;
       border-radius: 0px;
       height: 100%;
       padding: revert;
@@ -31,11 +31,13 @@ const BtnContainer = styled.div`
       line-height: 1.5;
       transition: all 0.2s;
       position: relative;
+      background: black;
+      margin-top: 1rem;
   }
 
 `
 
-const BorderButton = (props): JSX.Element => {
+const BlackBorderButton = (props): JSX.Element => {
     const { disabled } = props;
     const { isXs, isSm } = useMatchBreakpoints()
     const isMobile = isXs || isSm
@@ -52,7 +54,7 @@ const BorderButton = (props): JSX.Element => {
     )
 }
 
-BorderButton.defaultProps = {
+BlackBorderButton.defaultProps = {
     isLoading: false,
     external: false,
     // variant: variants.PRIMARY,
@@ -60,4 +62,4 @@ BorderButton.defaultProps = {
     disabled: false,
 }
 
-export default BorderButton
+export default BlackBorderButton
