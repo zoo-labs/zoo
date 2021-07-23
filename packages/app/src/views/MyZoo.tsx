@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Route, useRouteMatch } from "react-router-dom";
-// import { AppState } from "state"
-// import { useSelector } from "react-redux"
+import { AppState } from "state"
+import { useSelector } from "react-redux"
 import { useWeb3React } from "@web3-react/core";
 import styled from "styled-components";
+import { Swiper, SwiperSlide } from 'swiper/react';
 import FlexLayout from "components/layout/Flex";
 import Page from "components/layout/Page";
 import { orderBy, parseInt } from "lodash";
@@ -17,13 +18,28 @@ import {
   CardBody,
   CardFooter,
   CardContent,
+  useModal
 } from "components";
+// import HatchDialog from "components/HatchDialog"
+
 import { VscLoading } from "react-icons/vsc";
 // import { ViewMode } from "./components/types"
+import "swiper/swiper.min.css";
+import "swiper/components/pagination/pagination.min.css"
+
+import "./styles.css";
+
+import SwiperCore, {
+  Pagination
+} from 'swiper/core';
+
+// install Swiper modules
+SwiperCore.use([Pagination]);
 
 const IconCont = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 20px;
   & svg {
     color: ${({ theme }) => theme.colors.primary};
     animation: spin 2s ease infinite;
@@ -51,6 +67,29 @@ const InfoBlock = styled.div`
   padding: 24px;
 `;
 
+const TextWrapper = styled.div`
+  text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 550;
+  line-height: 1.5;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+`
+const RowLayout = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  & > * {
+    min-width: calc(100vw - 20px);
+    max-width: 31.5%;
+    width: 100%;
+    margin: 0 8px;
+    margin-bottom: 32px;
+  }
+`
+
 const _loadCount = 9;
 
 const EggMarketplace: React.FC = () => {
@@ -63,68 +102,8 @@ const EggMarketplace: React.FC = () => {
   const { isXl, isXs } = useMatchBreakpoints();
   const chainIdSet = chainId === undefined ? "1" : String(chainId);
 
-  // const allEggs = useSelector<AppState, AppState['cryptozoo']>((state) => state.cryptozoo.allEggs)
-
-  const allAnimals = {
-      1: {
-         tokenId: "1",
-         name: "Red Panda",
-         description: "Mystery",
-         yield: "543",
-         boost: "5678",
-         rarity: "Legendary",
-         dob: "1627064176",
-         imageUrl:
-            "https://i2.wp.com/bestlifeonline.com/wp-content/uploads/2018/10/red-panda-raising-fist.jpg?resize=640%2C360&ssl=1",
-      },
-      2: {
-         tokenId: "2",
-         name: "Suzanne",
-         description: "LOL",
-         yield: "4223",
-         boost: "2",
-         rarity: "Rare",
-         dob: "1627064176",
-         imageUrl: "https://ichef.bbci.co.uk/images/ic/1200x675/p02k8mcv.jpg",
-      },
-      3: {
-         tokenId: "3",
-         name: "Cool Doggo",
-         description: "WOOF wO0F",
-         yield: "321",
-         boost: "2",
-         rarity: "Uncommon",
-         dob: "1627064176",
-         imageUrl:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIuXjTOdhD--589Qjr310qX4IgAZrz_4-RAw&usqp=CAU",
-      },
-      4: {
-         tokenId: "4",
-         name: "Seal",
-         description: "BARK",
-         yield: "31",
-         boost: "22",
-         rarity: "Common",
-         dob: "1627064176",
-         imageUrl:
-            "https://sites.psu.edu/siowfa16/files/2016/09/baby-seal-29vsgyf.jpg",
-      },
-   }
-
-   const allEggs = {
-      5: {
-         tokenId: "5",
-         parent1: "1",
-         parent2: "2",
-         basic: true
-      },
-      6: {
-         tokenId: "6",
-         parent1: "3",
-         parent2: "4",
-         basic: false
-      },
-    }
+  const allAnimals = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
+  const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
 
   useEffect(() => {
     const showMoreData = (entries) => {
@@ -146,6 +125,14 @@ const EggMarketplace: React.FC = () => {
   const shownData = (data) => {
     return data.slice(0, numVisData);
   };
+
+  const handleHatch = () => {
+    // useModal(
+    //   <HatchDialog />
+    // )
+    console.log('hatch')
+  }
+
   const renderAnimals = (): JSX.Element => {
     const animalData = [];
     // const updatedData = []
@@ -169,23 +156,23 @@ const EggMarketplace: React.FC = () => {
 
 
     return (
-      <FlexLayout>
+      <RowLayout>
         <Route exact path={`${path}`}>
+          <Swiper slidesPerView={1} spaceBetween={30} pagination={{"clickable": true}} className="mySwiper">
           {shownData(animalData).map((animal) => (
-            <Card>
-              {/* <CardHeader>
-                <Heading color="cardLabel">
-                  {animal.name}
-                </Heading>
-              </CardHeader> */}
-              <CardBody style={{backgroundImage: `url("${animal.imageURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 500}}>
-                <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{animal.name}</Heading>
-              </CardBody>
-                <InfoBlock style={{textAlign: 'center'}}>
-                  <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{`BREED`}</Heading>
-                </InfoBlock>
-            </Card>
+            <SwiperSlide>
+              <Card key={animal.id}>
+                <CardBody style={{backgroundImage: `url("${animal.imageURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250}}>
+                  <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{animal.name}</Heading>
+                </CardBody>
+                  <InfoBlock style={{textAlign: 'center'}}>
+                    <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{`BREED`}</Heading>
+                  </InfoBlock>
+              </Card>
+            </SwiperSlide>
+              // <SwiperSlide>Slide 1</SwiperSlide>
           ))}
+          </Swiper>
         </Route>
         <Route exact path={`${path}/history`}>
           {shownData(animalData).map((animal) => (
@@ -194,7 +181,7 @@ const EggMarketplace: React.FC = () => {
             />
           ))}
         </Route>
-      </FlexLayout>
+      </RowLayout>
     );
   };
 
@@ -209,22 +196,27 @@ const EggMarketplace: React.FC = () => {
       });
     });
     empty = eggData.length === 0 && Object.keys(allEggs).length !== 0;
-    const basicEggURL = 'static/images/basic.png'
-    const hybridEggURL = 'static/images/hybrid.png'
+    const basicEggURL = window.location.origin + '/static/images/basic.png'
+    const hybridEggURL = window.location.origin + '/static/images/hybrid.png'
 
     return (
-      <FlexLayout>
+      <RowLayout>
         <Route exact path={`${path}`}>
+          <Swiper slidesPerView={3} spaceBetween={10} pagination={{"clickable": true}} className="mySwiper">
           {shownData(eggData).map((egg) => (
-            <Card style={{backgroundColor: '#000000'}}>
-              <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250}}>
-                <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{egg.name}</Heading>
-              </CardBody>
-              <InfoBlock style={{textAlign: 'center'}}>
-                <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{`HATCH`}</Heading>
-              </InfoBlock>
-            </Card>
+            <SwiperSlide key={egg.id}>
+              <Card style={{backgroundColor: '#000000'}}>
+                <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 150, padding: 10}}>
+                  <TextWrapper>{egg.name}</TextWrapper>
+                  <img src={basicEggURL}/>
+                </CardBody>
+                <InfoBlock style={{textAlign: 'center', backgroundColor: '#ffffff38', padding: 10}}>
+                  <TextWrapper onClick={handleHatch}>{`HATCH`}</TextWrapper>
+                </InfoBlock>
+              </Card>
+            </SwiperSlide>
           ))}
+          </Swiper>
         </Route>
         <Route exact path={`${path}/history`}>
           {shownData(eggData).map((egg) => (
@@ -233,7 +225,7 @@ const EggMarketplace: React.FC = () => {
             />
           ))}
         </Route>
-      </FlexLayout>
+      </RowLayout>
     );
   };
 
