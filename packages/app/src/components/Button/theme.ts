@@ -24,9 +24,9 @@ export const styleVariants = {
   [variants.SECONDARY]: {
     backgroundColor: "transparent",
     border: "2px solid",
-    borderColor: "primary",
+    borderColor: "white",
     boxShadow: "none",
-    color: "primary",
+    color: "white",
     ":disabled": {
       backgroundColor: "transparent",
     },
@@ -54,7 +54,7 @@ export const styleVariants = {
   },
   [variants.TEXT]: {
     backgroundColor: "transparent",
-    color: "primary",
+    color: "white",
     boxShadow: "none",
   },
   [variants.BUBBLEGUM]: {

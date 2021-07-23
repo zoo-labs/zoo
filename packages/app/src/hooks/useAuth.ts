@@ -21,6 +21,7 @@ const useAuth = () => {
     if (connector) {
       activate(connector, async (error: Error) => {
         if (error instanceof UnsupportedChainIdError) {
+          console.log("errpor 1")
           toastError('Unsupported Chain Id', 'Unsupported Chain Id Error. Check your chain Id.')
         } else if (error instanceof NoEthereumProviderError || error instanceof NoBscProviderError) {
           toastError('Provider Error', 'No provider was found')
