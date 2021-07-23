@@ -54,7 +54,7 @@ export const styleVariants = {
   },
   [variants.TEXT]: {
     backgroundColor: "transparent",
-    color: "primary",
+    color: "white",
     boxShadow: "none",
   },
   [variants.BUBBLEGUM]: {
