@@ -23,7 +23,7 @@ export const lightColors: Colors = {
   backgroundDisabled: "#E9EAEB", // not yet created
   contrast: "#191326",
   dropdown: "#F6F6F6",
-  invertedContrast: "#FFFFFF",
+  invertedContrast: "#282c34",
   input: "#EFE9F4",
   inputSecondary: "#d6e5ff",
   tertiary: "#EFF4F5",
@@ -35,9 +35,9 @@ export const lightColors: Colors = {
   data: "#314F81",
   headerTitle: "#20DFDA", // "#ddeafd",99dae4
   headerSubtitle: "#d3f5f3", // b4e5ff
-  borderColor: "#ffffff",
+  borderColor: "#FFFFFF",
   secondaryDark: "#20DFDA",
-  card: "#FFFFFF",
+  card: "#282c34",
   tableHeader: "#FFFFFF", // "#A7C8FB",
   cardLabel: "#314F81",
   gradients: {
@@ -50,9 +50,9 @@ export const lightColors: Colors = {
   disabledBubblegum: "linear-gradient(140.91deg,#5c88cadb 68.36%,#7cccc8de 84.22%)",
   textSecondary: "#000000",
   modal: {
-    background: "#ffffff",
-    color: "#58595B",
-    borderColor: "#ffffee"
+    background: "#282c34",
+    color: "#ffffff",
+    borderColor: "#ffffff"
   },
 };
 

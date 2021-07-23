@@ -6,21 +6,21 @@ import { ArrowBackIcon, CloseIcon } from "../Svg";
 import { IconButton } from "../Button";
 import { ModalProps } from "./types";
 
-export const ModalHeader = styled.div<{ background?: string}>`
-  align-items: center;
-  background: ${({ background }) => background || "transparent"};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
-  display: flex;
-  padding: 12px 24px;
+export const ModalHeader = styled.div<{ background?: string }>`
+   align-items: center;
+   background: ${({ background }) => background || "transparent"};
+   border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
+   display: flex;
+   padding: 12px 24px;
 `;
 
 export const ModalTitle = styled(Flex)`
-  align-items: center;
-  flex: 1;
+   align-items: center;
+   flex: 1;
 `;
 
 export const ModalBody = styled(Flex)`
-  flex-direction: column;
+   flex-direction: column;
 `;
 
 export const ModalCloseButton: React.FC<{ onDismiss: ModalProps["onDismiss"] }> = ({ onDismiss }) => {
@@ -47,9 +47,9 @@ export const ModalContainer = styled(Box)<{ minWidth: string, borderRadius: stri
   width: 100%;
   z-index: ${({ theme }) => theme.zIndices.modal};
 
-  ${({ theme }) => theme.mediaQueries.xs} {
-    width: auto;
-    min-width: ${({ minWidth }) => minWidth};
-    max-width: 100%;
-  }
+   ${({ theme }) => theme.mediaQueries.xs} {
+      width: auto;
+      min-width: ${({ minWidth }) => minWidth};
+      max-width: 100%;
+   }
 `;
