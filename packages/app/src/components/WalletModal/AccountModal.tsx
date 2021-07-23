@@ -50,6 +50,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
   // const { authenticate, isAuthenticated } = useMoralis();
 
   const bscSwith = async (network) => {
+    console.log("CLICKING")
     const connector = connectorsByName.injected
     const hasSetup = await setupNetwork(network)
     if (hasSetup) {
@@ -124,6 +125,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
           onClick={() => {
             logout()
             window.localStorage.removeItem(connectorLocalStorageKey)
+            history.push(`/login`)
             onDismiss()
           }}
         >

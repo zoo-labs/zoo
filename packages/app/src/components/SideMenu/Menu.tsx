@@ -9,6 +9,7 @@ import Logo from './components/Logo'
 import Panel from './components/Panel'
 import UserBlock from './components/UserBlock'
 import { NavProps } from './types'
+import logo from '../../media/logo.jpg'
 import { MENU_HEIGHT, SIDEBAR_WIDTH_REDUCED, SIDEBAR_WIDTH_FULL } from './config'
 
 const Wrapper = styled.div`
@@ -16,11 +17,25 @@ const Wrapper = styled.div`
   width: 100%;
 `
 
-const StyledNav = styled.nav<{ showMenu: boolean }>`
+const LogoContainer = styled.div`
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 8px;
+  left: 30%;
+  z-index: 1;
+
+   ${({ theme }) =>  theme.mediaQueries.md || theme.mediaQueries.lg || theme.mediaQueries.xl} {
+      left: 50%;
+  }
+  
+`
+
+const StyledNav = styled.nav<{ showMenu: boolean, isPushed: boolean }>`
   position: fixed;
   top: ${({ showMenu }) => (showMenu ? 0 : `-${MENU_HEIGHT}px`)};
-  left: 0;
-  transition: top 0.2s;
+  right: 0;
+  transition: top .2s;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,9 +44,10 @@ const StyledNav = styled.nav<{ showMenu: boolean }>`
   width: 100%;
   height: ${MENU_HEIGHT}px;
   background-color: transparent;
-  border-bottom: solid 2px rgba(133, 133, 133, 0.1);
   z-index: 20;
   transform: translate3d(0, 0, 0);
+
+
 `
 
 const BodyWrapper = styled.div`
@@ -167,13 +183,16 @@ const Menu: React.FC<NavProps> = ({
 
   return (
     <Wrapper>
-      <StyledNav showMenu={showMenu}>
+      <StyledNav showMenu={showMenu} isPushed={isPushed}>
         <Logo
           isPushed={isPushed}
           togglePush={() => setIsPushed((prevState: boolean) => !prevState)}
           isDark={isDark}
           href={homeLink?.href ?? '/'}
         />
+         <LogoContainer>
+          <img src={logo} alt="zoo-logo" height="60px" width="60px"/>
+          </LogoContainer>
         <Flex alignItems="center">
           <UserBlock account={account} login={login} logout={logout} />
           {!isXs && !isSm && account && <StyledProviderTitle>{providerTitle}</StyledProviderTitle>}
@@ -181,6 +200,7 @@ const Menu: React.FC<NavProps> = ({
         </Flex>
       </StyledNav>
       <BodyWrapper>
+        
         <Panel
           isPushed={isPushed}
           isMobile={isMobile}
