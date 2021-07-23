@@ -5,14 +5,14 @@ import "./ZooToken.sol";
 import {Decimal} from "./Decimal.sol";
 
 
-contract ZooDrop {;
+contract ZooDrop {
     // this should be the max eggs available for this drop
     uint256 _totalSupply;
     uint256 _currentSupply;
 
     //Declare an Event
     event BuyEgg(address indexed _from);
-    event Hatch(address indexed _from)
+    event Hatch(address indexed _from);
     event Burn(address indexed _from, uint256 _animalTokenId);
     event FreeAnimal(address indexed _from, uint256 _animalTokenId, uint256 _yield);
     // event Breed(address indexed _from, uint256 _animalTokenId1, uint256 _animalTokenId2, uint256 _eggTokenId);
@@ -22,7 +22,7 @@ contract ZooDrop {;
     struct Animal {
         string name;
         string description;
-        MediaData data;
+        ZooMedia.MediaData data;
         uint256 yield ;
         uint256 boost;
         uint256 rarity;
@@ -65,18 +65,18 @@ contract ZooDrop {;
     //Token address of the ZooToken
     ZooToken public token;
     
-    ZooMarket public media;
+    ZooMedia public media;
 
     constructor(address _zooToken, address _zooMedia){
 
         //Initalize token with ZooToken address
-        token = ZooToken(_zooToken)
+        token = ZooToken(_zooToken);
 
         media = ZooMedia(_zooMedia);
     }
 
     // Accept ZOO and return Egg NFT
-    function buyEgg(MediaData memory _data, IMarket.BidShares memory _bidShares) public enoughSupply enoughFunds pure returns (uint256) {
+    function buyEgg(media memory _data, IMarket.BidShares memory _bidShares) public enoughSupply enoughFunds pure returns (uint256) {
         token.approve(msg.sender, 100);
         token.transferFrom(msg.sender, address(this), 100);
         media.mint(_mediaData, _bidShares);
@@ -87,9 +87,10 @@ contract ZooDrop {;
     // Burn egg and randomly return an animal NFT 
     function hatchEgg(uint256 tokenID) public pure returns (bool) {
         // need to grab the egg data to check if hybrid and if it has parents
+        // how do i get the egg?
         // need to check the hatch time delay
                 
-        media.burn(tokenID) // zoomedia.burnToken
+        media.burn(tokenID);
         emit Burn(msg.sender, tokenId);
 
         // get the rarity for an animal    
@@ -97,24 +98,24 @@ contract ZooDrop {;
 
         // if not hybrid
         if (egg.parent1 == "") {
-            string animal = pickAnimal(rarity)
+            string animal = pickAnimal(rarity);
             MediaData memory data = MediaData({
                 tokenURI: "www.tokenURI_for_picked_animal.com",
                 metadataURI: "www.metadataURI_for_picked_animal.com",
                 contentHash: "A SHA256 hash of the content pointed to by tokenURI",
-                metadataHash "dA SHA256 hash of the content pointed to by metadataURI"
-            })
+                metadataHash: "dA SHA256 hash of the content pointed to by metadataURI"
+            });
         } else {
         // if hybrid
             uint256 oneOrTwo = rarity % 2;
-            ZooMedia.Animal[2] possibleAnimals = ZooMedia.hybrid_pair_map[ZooMedia.concatAnimalIds(egg.parent1, egg.parent2)];
+            media.Animal[2] possibleAnimals = media.hybrid_pair_map[media.concatAnimalIds(egg.parent1, egg.parent2)];
             string animal = possibleAnimals[oneOrTwo];
             MediaData memory data = MediaData({
                 tokenURI: "www.tokenURI_for_picked_animal.com",
                 metadataURI: "www.metadataURI_for_picked_animal.com",
                 contentHash: "A SHA256 hash of the content pointed to by tokenURI",
-                metadataHash "dA SHA256 hash of the content pointed to by metadataURI"
-            })
+                metadataHash: "dA SHA256 hash of the content pointed to by metadataURI"
+            });
         }
 
 
@@ -127,7 +128,7 @@ contract ZooDrop {;
         //grab metadataURI for the animal      
         IMarket.BidShares bidShare = IMarket.BidShares({});
 
-        media.mint(data, bidshare) // this time not an egg but an animal
+        media.mint(data, bidshare); // this time not an egg but an animal
         _animalDOB[tokenID] = now;
 
         emit hatch(msg.sender);
@@ -136,14 +137,14 @@ contract ZooDrop {;
 
     // Take two animals and create a new hybrid egg which can hatch into a
     // hybrid animal
-    function breedAnimal(uint256 _animal1, uint256 _animal2)) public pure returns (uint256) {
+    function breedAnimal(uint256 _animal1, uint256 _animal2) public pure returns (uint256) {
         // don't we need to check and make sure both animals are base animals?
         Egg hybridEgg = Egg({parent1: _animal1, parent2: _animal2});
         MediaData data = MediaData({
             tokenURI: "www.example.com",
             metadataURI: "www.example2.com",
             contentHash: "dummy_data",
-            metadataHash "dummy_data"
+            metadataHash: "dummy_data"
         });
         IMarket.BidShares bidShare = IMarket.BidShares({});
         media.mint(data, bidShare);
@@ -159,7 +160,7 @@ contract ZooDrop {;
             string rarity = animals[_tokenID].rarity;
             // burn the token
             media.burn(_tokenID);
-            emit Burn(_owner, _tokenID)
+            emit Burn(_owner, _tokenID);
             // calculate age of animal : probably dont have to use Decimal.sol because we need whole days 
             uint256 age = now-_animalDOB[_tokenID] / 60 / 60 / 24;
             // calculate daily yield
@@ -168,7 +169,7 @@ contract ZooDrop {;
             uint256 yield = Decimal.mul(dailyYield, Decimal.div(_boost[_tokenID], 100));
             // transfer yield
             token.transferFrom(_zooMaster, _owner, yield);
-            emit freeAnimal(_owner, _tokenId, yield)
+            emit freeAnimal(_owner, _tokenId, yield);
         return true;
     }  
 
@@ -180,7 +181,7 @@ contract ZooDrop {;
 
     // Chooses animal based on random number generated, replace strings with ENUMS / data that
     // represents animal instead 
-    function pickAnimal(uint random) returns(string) {
+    function pickAnimal(uint random) internal returns(string) {
         
         if(random < 550){
             uint choice = random % 4;
