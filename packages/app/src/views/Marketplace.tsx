@@ -139,7 +139,6 @@ export default function Marketplace() {
         <BidModal
             item = {temp}
             onDismiss={()=>null}
-            Moralis = {Moralis}
         />
     )
 
@@ -147,7 +146,7 @@ export default function Marketplace() {
         temp["CurrentBid"] = item.get("CurrentBid")
         temp["Name"] = item.get("Name")
         temp["BuyNow"] = item.get("BuyNow")
-        temp["AnimalId"] = item.get("AnimalID")
+        temp["AnimalId"] = item.get("TokenId")
         onBid()
     }
 
@@ -162,9 +161,11 @@ export default function Marketplace() {
     const getAnimals = async () => {
         const query = new Moralis.Query(queryObject)
         query.limit(1000)
+        query.equalTo("Listed", true)
         const results = await query.find()
         setAnimals(results)
     }
+
 
     return (
     <Container isMobile = {isMobile}>
