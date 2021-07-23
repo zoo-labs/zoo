@@ -5,6 +5,8 @@ import styles from 'styled-components'
 import { Label, Text } from 'components/Text'
 import { Heading } from 'components'
 import Body from 'components/layout/Body'
+import { useModal } from "components/Modal";
+import BuyEggs from "components/BuyEggs";
 
 
 const HeadingContainer = styles.div`
@@ -44,6 +46,7 @@ const RowWrapper = styles.div`
 
 const Account: React.FC = () => {
     const [eggsOwned, setEggsOwned] = useState(0)
+    const [onBugEggs] = useModal(<BuyEggs headerColor={'black'} />)
 
     const pageHeading = (<HeadingContainer >
                             <Heading >My Account</Heading>
@@ -75,7 +78,7 @@ const Account: React.FC = () => {
                         <Label>
                           {eggsOwned} Eggs Owned
                         </Label>
-                        <BorderButton >
+                        <BorderButton onClick={() => onBugEggs()} >
                             Buy Eggs
                         </BorderButton>
                          </LabelWrapper>
