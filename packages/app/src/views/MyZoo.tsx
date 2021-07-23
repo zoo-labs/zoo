@@ -196,8 +196,9 @@ const EggMarketplace: React.FC = () => {
       });
     });
     empty = eggData.length === 0 && Object.keys(allEggs).length !== 0;
-    const basicEggURL = window.location.origin + '/static/images/basic.png'
+    // const basicEggURL = window.location.origin + '/static/images/basic.png'
     const hybridEggURL = window.location.origin + '/static/images/hybrid.png'
+    const basicEggURL = 'https://images-ext-2.discordapp.net/external/xxUs-7e2XtKB3quTQw61NweQhjZUhFIxwjl0pYsrmi8/%3Fresize%3D640%252C360%26ssl%3D1/https/i2.wp.com/bestlifeonline.com/wp-content/uploads/2018/10/red-panda-raising-fist.jpg';
 
     return (
       <RowLayout>

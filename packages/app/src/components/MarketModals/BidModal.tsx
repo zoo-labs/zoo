@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
 import {Modal as Existing, Text as Standard} from 'components'
 import BorderButton from 'components/Button/BorderButton'
 import { useModal } from "components/Modal";
@@ -40,12 +41,13 @@ const Text = styled(Standard)`
 const BidModal: React.FC<Props> = ({onDismiss = () => null, item}) => {
     const [value, setValue] = React.useState(parseInt(item.currentBid)+1)
     const {account} = useWeb3React()
+    const dispatch = useDispatch()
 
     const confirmBuy = async() => {
         const toSet:Animal = {...item}
         toSet.listed = false;
         toSet.owner = account
-        addAnimal(toSet)
+        dispatch(addAnimal(toSet))
         // const queryObject = Moralis.Object.extend("Animals")
         // const query = new Moralis.Query(queryObject)
         // query.limit(1000)
@@ -73,7 +75,7 @@ const BidModal: React.FC<Props> = ({onDismiss = () => null, item}) => {
             const toSet:Animal = {...item}
             toSet.currentBid = value.toString()
             toSet.buyNow = (value+100).toString()
-            addAnimal(toSet)
+            dispatch(addAnimal(toSet))
             onDismiss()
     }
 
