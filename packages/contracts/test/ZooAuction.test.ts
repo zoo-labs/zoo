@@ -145,29 +145,27 @@ describe("ZooAuction", () => {
 
     });
 
-    // it("should revert if the token ID does not exist", async () => {
-    //   const tokenId = 999;
-    //   const duration = 60 * 60 * 24;
-    //   const reservePrice = BigNumber.from(10).pow(18).div(2);
-    //   const owner = await media.ownerOf(0);
-    //   const [admin, curator] = await ethers.getSigners();
+    it("should revert if the token ID does not exist", async () => {
+      const tokenId = 999;
+      const duration = 60 * 60 * 24;
+      const reservePrice = BigNumber.from(10).pow(18).div(2);
+      const owner = await media.ownerOf(0);
+      const [admin, curator] = await ethers.getSigners();
 
-    //   await expect(
-    //     auctionHouse
-    //       .connect(admin)
-    //       .createAuction(
-    //         tokenId,
-    //         media.address,
-    //         duration,
-    //         reservePrice,
-    //         curator.address,
-    //         5,
-    //         "0x0000000000000000000000000000000000000000"
-    //       )
-    //   ).eventually.rejectedWith(
-    //     revert`ERC721: owner query for nonexistent token`
-    //   );
-    // });
+      await expect(
+        auctionHouse
+          .connect(admin)
+          .createAuction(
+            tokenId,
+            media.address,
+            duration,
+            reservePrice,
+            curator.address,
+            5,
+            "0x0000000000000000000000000000000000000000"
+          )
+      ).to.be.revertedWith('ERC721: owner query for nonexistent token');
+    });
 
     // it("should revert if the curator fee percentage is >= 100", async () => {
     //   const duration = 60 * 60 * 24;
