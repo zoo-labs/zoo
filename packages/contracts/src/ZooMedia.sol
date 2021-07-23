@@ -9,7 +9,7 @@ import "./ERC721Burnable.sol";
 
 
 // a instance for every egg or animal
-contract ZooMedia is Media, Ownable {
+contract ZooMedia is Media, Ownable, ER721Burnable {
 
     enum Animal{
         PUG, BUTTERFLY, KITTEN, TURTLE, PENGUIN, DUCKLING, ORCA, ELK, PANDA, GORILLA, ELEPHANT, LION, BEAR, SHARK, BLOBFISH, NAKED_MOLE_RAT,
@@ -54,10 +54,48 @@ contract ZooMedia is Media, Ownable {
     1 days,
     3 days,
     7 days,
-    30 days
+    30 days,
   ];
 
   uint public hybridHatchTime = 36 hours;
+
+            //call burn function to burn the nft which returns to ZOO owner 
+    function burn(uint256 tokenId) public override nonReentrant onlyExistingToken(tokenID){
+       
+        _burn(tokenID);
+            returns tokenID
+    }
+
+            // redeems the token after burn then returns to _owner
+    function redeem(address to, uint256 value) public pure returns (_tokenID) {
+             
+        block.number - _animalDOB[_tokenID]
+        mapping(uint256 => _DailyYield
+
+        returns _owner
+    }
+
+
+  function freeAnimal(uint256 _tokenID, address _zooMaster) public pure returns (bool) {
+        // if the animal is a pure breed
+            // get the creator/owner's address of token
+            address _owner = media.tokenCreators[_tokenID];
+            string rarity = animals[_tokenID].rarity;
+            // burn the token
+            media.burn(_tokenID);
+            emit Burn(_owner, _tokenID);
+            // calculate age of animal : probably dont have to use Decimal.sol because we need whole days 
+            uint256 age = now-_animalDOB[_tokenID] / 60 / 60 / 24;
+            // calculate daily yield
+            uint256 dailyYield = Decimal.mul(age, Decimal.div(_dailyYield[rarity], 100));
+            // add in boost
+            uint256 yield = Decimal.mul(dailyYield, Decimal.div(_boost[_tokenID], 100));
+            // transfer yield
+            token.transferFrom(_zooMaster, _owner, yield);
+            emit freeAnimal(_owner, _tokenId, yield);
+        return true;
+    }  
+
 
     // function addToHybridPair() {
 
@@ -66,7 +104,7 @@ contract ZooMedia is Media, Ownable {
     // function addToAnimalID(string[] _list) {
     //     for 
     //     animal_id_map
-    // }
+    // 
 
     // // Accept ZOO and return Egg NFT
     // function buyEgg() public pure returns (uint256) {
@@ -186,41 +224,10 @@ contract ZooMedia is Media, Ownable {
 
 
 
- contract ZooTreasury is ZooToken {
-    
-    
-    
-    // function freeAnimal() public pure returns (bool) {
-
-    //     // Animal and Hybrid Animal
-
-    //     // daily zoo accumulate by owner nft
-
-        
-
-    //     // blocks per day is 28,800 modulo by nft mint
-        
-    //     // returns the share of zoo based on dail yield metric
-
-    //         // Block %  == 
-
-
-    // }  
-
  
-    // function burn(uint256 tokenId) public virtual {
-    //     //solhint-disable-next-line max-line-length
-    //     require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721Burnable: caller is not owner nor approved");
-    //     _burn(tokenId);
-    // }
-
-    // //NFT is burned, ZOO is given to user based on number of blocks / daily yield
-
-    // function redeem(address to, uint256 value) public virtual {
-        
-    // }
- 
- }
+    
+    
+     
 
  // // Take two animals and create a new hybrid egg which can hatch into a
     // // hybrid animal
@@ -229,11 +236,20 @@ contract ZooMedia is Media, Ownable {
     // }
 
     // // Should burn animal and return yield
-    // function freeAnimal() public pure returns (bool) {
-    //     return true;
-    // }  
+       
     
     // // [possible delete] Should take drop configuration and add animals to ZOO
     // function addDrop() public onlyOwner returns (bool) {
     //     // Enable new drop to mint it's set of animals
+
+contract ZooTreasury is ZooMedia, ZooToken, SafeMath {
+    address == 
+    
+    freeAnimal.call(uint256 _tokenID, address _zooMaster) returns (bool);
+    //get the block number
+    // NFT minted / 28800
+    
+
+    }
+   
       
