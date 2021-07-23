@@ -1,101 +1,49 @@
 import { MenuEntry } from './types'
 
 const config: () => MenuEntry[] = () => [
-  // {
-  //   label: 'Bonding Curve Tokens',
-  //   icon: 'MarketIcon',
-  //   href: '/labs/curvetokens',
-  // },
-  // {
-  //   label: 'New Token Wizard',
-  //   icon: 'NewTokenIcon',
-  //   href: '/labs/newtoken',
-  // },
-  // {
-  //   label: 'Block Explorer',
-  //   icon: 'BlockExplorerIcon',
-  //   href: '/labs/blockexplorer',
-  // },
+
   {
-    label: 'Price Feed',
+    label: 'My Zoo',
     icon: 'SearchDollarIcon',
     href: '/pricefeed',
   },
   {
-    label: 'Mining Events',
+    label: 'My Account',
     icon: 'HardHatIcon',
     href: '/miningevents',
   },
-  // {
-  //   label: 'NFTz',
-  //   icon: 'MarketIcon',
-  //   href: '/nftmarket',
-  // },
-  // {
-  //   label: 'NFTz Wizard',
-  //   // TODO: change 
-  //   icon: 'NewTokenIcon',
-  //   href: '/nftwizard',
-  // },
-  // {
-  //   label: 'NFTz Creator Profile',
-  //   // TODO: "
-  //   icon: 'MarketIcon',
-  //   href: '/profile',
-  // },
   {
-    label: 'Block Explorer',
+    label: 'Marketplace',
     icon: 'BlockExplorerIcon',
     href: '/labs/blockexplorer',
   },
+ 
+  // {
+  //   label: 'NFTz',
+  //   icon: 'MarketIcon',
+  //   initialOpenState: false,
+  //   items: [
+  //     {
+  //       label: 'NFTz Market',
+  //       icon: 'MarketIcon',
+  //       href: '/nftmarket',
+  //     },
+  //     {
+  //       label: 'NFTz Wizard',
+  //       // TODO: change 
+  //       icon: 'NewTokenIcon',
+  //       href: '/nftwizard',
+  //     },
+  //     {
+  //       label: 'NFTz Profile',
+  //       // TODO: "
+  //       icon: 'MarketIcon',
+  //       href: '/profile',
+  //     },
+  //   ],
+  // },
   {
-    label: 'StarterApp Labs',
-    icon: 'TradeIcon',
-    initialOpenState: false,
-    items: [
-      {
-        label: 'Bonding Curve Tokens',
-        icon: 'MarketIcon',
-        href: '/labs/curvetokens',
-      },
-      {
-        label: 'New Token Wizard',
-        icon: 'NewTokenIcon',
-        href: '/labs/newtoken',
-      },
-      {
-        label: 'Block Explorer',
-        icon: 'BlockExplorerIcon',
-        href: '/labs/blockexplorer',
-      },
-    ],
-  },
-  {
-    label: 'NFTz',
-    icon: 'MarketIcon',
-    initialOpenState: false,
-    items: [
-      {
-        label: 'NFTz Market',
-        icon: 'MarketIcon',
-        href: '/nftmarket',
-      },
-      {
-        label: 'NFTz Wizard',
-        // TODO: change 
-        icon: 'NewTokenIcon',
-        href: '/nftwizard',
-      },
-      {
-        label: 'NFTz Profile',
-        // TODO: "
-        icon: 'MarketIcon',
-        href: '/profile',
-      },
-    ],
-  },
-  {
-    label: 'StarterApp Docs',
+    label: 'Cryptozoo Docs',
     icon: 'DocsIcon',
     href: '/docs',
   },
