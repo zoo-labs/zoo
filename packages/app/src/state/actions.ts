@@ -1,2 +1,2 @@
 export { clear, remove, push } from './toasts'
-export { add } from './eggs'
+export { addEgg, addAnimal, addEggs, addAnimals, burnEgg, burnAnimal } from './zoo'
