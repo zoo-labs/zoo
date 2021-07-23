@@ -54,8 +54,14 @@ export interface ToastsState {
     data: Toast[]
 }
 
+export interface EggsState {
+    eggs: number
+}
+
+
 // Global state
 
 export interface State {
-    toasts: ToastsState
+    toasts: ToastsState,
+    eggs: EggsState
 }

@@ -17,11 +17,6 @@ const config: () => MenuEntry[] = () => [
     icon: '',
     href: '/marketplace',
   },
-  {
-    label: 'Cryptozoo Docs',
-    icon: '',
-    href: '/docs',
-  },
 ]
 
 

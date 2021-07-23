@@ -81,8 +81,8 @@ const App: React.FC = () => {
       <Router history={history}>
         <ResetCSS />
         <GlobalStyle />
-        <Menu>
-          <SuspenseWithChunkError fallback={<></>}>
+        
+       
             <Switch>
               {/* Zswap Routes  */}
               {/* <Route path="/marketplace" exact>
@@ -101,36 +101,29 @@ const App: React.FC = () => {
               <Route exact path="/login">
                 {signedIn? <Redirect to="/account" />: <Login/>}
               </Route>
-              <Route exact path="/account">
-                {signedIn? <Account /> : <Redirect to="/login" />}
-              </Route>
-              <Route exact path="/marketplace">
-                {signedIn? <Marketplace /> : <Redirect to="/login" />}
-              </Route>
-              <Route  path="/">
-                {signedIn? <Redirect to="/account" />: <Login />}
-              </Route>
-              {/* <Route exact path="/login" component={Login} />
-              <Route exact path="/account" component={signedIn? Account : <Redirect to="/docs/overview" />} />
-              <Route exact path="/market" component={signedIn? Marketplace : <Redirect to="/docs/overview" />} />
-              <Route exact path="/" component={signedIn? Account : <Redirect to="/docs/overview" />} /> */}
-              {/* <PrivateRoute path="/marketplace" component={Marketplace} />
-              <PrivateRoute path="/account" component={Account} />
-              <PrivateRoute path="/" component={Account} /> */}
-              {/* <AppWrapper>
-                <BodyWrapper>
-                  <Route exact strict path="/swap" component={Swap} />
-                  <Route exact strict path="/find" component={PoolFinder} />
-                  <Route exact strict path="/pool" component={Pool} />
-                  <Route exact path="/add" component={AddLiquidity} />
-                  <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
-                </BodyWrapper>
-              </AppWrapper> */}
-
-                {/* <Route component={NotFound} /> */}
+              <Menu>
+                <SuspenseWithChunkError fallback={<></>}>
+                  <Route exact path="/account">
+                    {signedIn? <Account /> : <Redirect to="/login" />}
+                  </Route>
+                  <Route exact path="/marketplace">
+                    {signedIn? <Marketplace /> : <Redirect to="/login" />}
+                  </Route>
+                  <Route  path="/">
+                    {signedIn? <Redirect to="/account" />: <Login />}
+                  </Route>
+                  {/* <Route exact path="/login" component={Login} />
+                  <Route exact path="/account" component={signedIn? Account : <Redirect to="/docs/overview" />} />
+                  <Route exact path="/market" component={signedIn? Marketplace : <Redirect to="/docs/overview" />} />
+                  <Route exact path="/" component={signedIn? Account : <Redirect to="/docs/overview" />} /> */}
+                  {/* <PrivateRoute path="/marketplace" component={Marketplace} />
+                  <PrivateRoute path="/account" component={Account} />
+                  <PrivateRoute path="/" component={Account} /> */}
+                </SuspenseWithChunkError>
+              </Menu>
+              {/* <Route component={NotFound} /> */}
             </Switch>
-          </SuspenseWithChunkError>
-        </Menu>
+        
         <ToastListener />
       </Router>
     </Suspense>

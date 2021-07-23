@@ -125,6 +125,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
           onClick={() => {
             logout()
             window.localStorage.removeItem(connectorLocalStorageKey)
+            history.push(`/login`)
             onDismiss()
           }}
         >

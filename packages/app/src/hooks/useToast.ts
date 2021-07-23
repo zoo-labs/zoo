@@ -7,7 +7,7 @@ import {
   push as pushToast,
   remove as removeToast,
   clear as clearToast
-} from 'state/actions'
+} from '../state/actions'
 
 // Toasts
 const useToast = () => {
