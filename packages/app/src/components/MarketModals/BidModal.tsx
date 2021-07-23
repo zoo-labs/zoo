@@ -42,6 +42,7 @@ const BidModal: React.FC<Props> = ({onDismiss = () => null, item}) => {
     const [value, setValue] = React.useState(parseInt(item.currentBid)+1)
     const {account} = useWeb3React()
     const dispatch = useDispatch()
+    console.log(item)
 
     const confirmBuy = async() => {
         const toSet:Animal = {...item}
