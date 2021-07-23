@@ -6,6 +6,8 @@ import { useModal } from "components/Modal";
 import Confirmation from "./ConfirmationModal"
 import Moralis from 'moralis'
 import { useWeb3React } from '@web3-react/core'
+import { Animal } from "entities/zooentities";
+import {addAnimal} from "state/actions"
 
 Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
 
@@ -14,7 +16,7 @@ Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server"
 
 interface Props {
     onDismiss?: () => void
-    item: any
+    item: Animal
 }
 
 const Modal = styled(Existing)`
@@ -36,30 +38,42 @@ const Text = styled(Standard)`
 
 
 const BidModal: React.FC<Props> = ({onDismiss = () => null, item}) => {
-    const [value, setValue] = React.useState(item.CurrentBid+1)
+    const [value, setValue] = React.useState(parseInt(item.currentBid)+1)
     const {account} = useWeb3React()
+
     const confirmBuy = async() => {
-        const queryObject = Moralis.Object.extend("Animals")
-        const query = new Moralis.Query(queryObject)
-        query.limit(1000)
-        query.equalTo("TokenId", item.AnimalId)
-        const results = await query.find()
-        const currentObject = results[0]
-        currentObject.set("Listed", false)
-        currentObject.set
-        currentObject.save()
+        const toSet:Animal = {...item}
+        toSet.listed = false;
+        toSet.owner = account
+        addAnimal(toSet)
+        // const queryObject = Moralis.Object.extend("Animals")
+        // const query = new Moralis.Query(queryObject)
+        // query.limit(1000)
+        // query.equalTo("TokenId", item.AnimalId)
+        // const results = await query.find()
+        // const currentObject = results[0]
+        // currentObject.set("Listed", false)
+        // currentObject.set
+        // currentObject.set("OwnerAccount", account)
+        // currentObject.save()
+        
         onDismiss()
     }
     const confirmBid = async() => {
             console.log(value)
-            const queryObject = Moralis.Object.extend("Animals")
-            const query = new Moralis.Query(queryObject)
-            query.limit(1000)
-            query.equalTo("TokenId", item.AnimalId)
-            const results = await query.find()
-            const currentObject = results[0]
-            currentObject.set("CurrentBid", value)
-            currentObject.save("OwnerAccount", account)
+            // const queryObject = Moralis.Object.extend("Animals")
+            // const query = new Moralis.Query(queryObject)
+            // query.limit(1000)
+            // query.equalTo("TokenId", item.AnimalId)
+            // const results = await query.find()
+            // const currentObject = results[0]
+            // currentObject.set("CurrentBid", value)
+            // currentObject.set("BuyNow", value + 100)
+            // currentObject.save()
+            const toSet:Animal = {...item}
+            toSet.currentBid = value.toString()
+            toSet.buyNow = (value+100).toString()
+            addAnimal(toSet)
             onDismiss()
     }
 
@@ -68,8 +82,8 @@ const BidModal: React.FC<Props> = ({onDismiss = () => null, item}) => {
             confirmation = {confirmBuy}
             onDismiss={()=>null}
             action = "Buy"
-            name= {item.Name}
-            amount = {item.BuyNow}
+            name= {item.name}
+            amount = {parseFloat(item.buyNow)}
         />
     )
     const [onConfirmBid] = useModal(
@@ -77,8 +91,8 @@ const BidModal: React.FC<Props> = ({onDismiss = () => null, item}) => {
             confirmation = {confirmBid}
             onDismiss={()=>null}
             action = "Bid"
-            name= {item.Name}
-            amount = {item.CurrentBid}
+            name= {item.name}
+            amount = {parseFloat(item.currentBid)}
             submission = {value}
 
         />
@@ -87,15 +101,15 @@ const BidModal: React.FC<Props> = ({onDismiss = () => null, item}) => {
     const changed = () => (e) => {
         const newVal = e.target.value
         if(newVal > value){
-            setValue(newVal)
+            setValue(parseInt(newVal))
         }
     }
 
     return (
         <>
-        <Modal title = {`${item.Name}`} onDismiss={onDismiss}>
-            <Text>{`Current Bid: ${item.CurrentBid}`}</Text>
-            <Text>{`Buy Now: ${item.BuyNow}`}</Text>
+        <Modal title = {`${item.name}`} onDismiss={onDismiss}>
+            <Text>{`Current Bid: ${item.currentBid}`}</Text>
+            <Text>{`Buy Now: ${item.buyNow}`}</Text>
             <BidInput type="number" onChange = {changed()} defaultValue={value}/>
             <BorderButton onClick={()=>onConfirmBuy()}>Buy Now</BorderButton>
             <BorderButton onClick={()=>onConfirmBid()}>Bid</BorderButton>

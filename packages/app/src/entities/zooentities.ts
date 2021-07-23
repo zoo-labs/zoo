@@ -8,8 +8,10 @@ export interface Animal {
    rarity: string;
    dob: string;
    startBid?: string;
+   currentBid?: string;
    buyNow?: string;
    imageUrl: string;
+   listed: boolean
 }
 
 export interface Egg {
