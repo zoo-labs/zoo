@@ -213,13 +213,13 @@ describe("ZooAuction", () => {
       expect(createdAuction.approved).to.eq(true);
     });
 
-    //   it("should be automatically approved if the creator is the Zero Address", async () => {
-    //     await createAuction(auctionHouse, ethers.constants.AddressZero);
+    it("should be automatically approved if the creator is the Zero Address", async () => {
+      await createAuction(auctionHouse, ethers.constants.AddressZero);
 
-    //     const createdAuction = await auctionHouse.auctions(0);
+      const createdAuction = await auctionHouse.auctions(0);
 
-    //     expect(createdAuction.approved).to.eq(true);
-    //   });
+      expect(createdAuction.approved).to.eq(true);
+    });
 
     //   it("should emit an AuctionCreated event", async () => {
     //     const owner = await media.ownerOf(0);
