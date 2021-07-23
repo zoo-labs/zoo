@@ -6,11 +6,11 @@ import { solidity } from "ethereum-waffle";
 
 import chai from "chai";
 
-import { CommitReveal } from "../types/CommitReveal";
+import { Random } from "../types/Random";
 
 chai.use(solidity);
 
-let commitReveal: CommitReveal;
+let random: Random;
 
 let signers: any;
 
@@ -22,28 +22,30 @@ describe("Commit Reveal Test", async () => {
 
         signers = await ethers.getSigners();
 
-        const commitRevealFactory = await ethers.getContractFactory("CommitReveal", signers[0]);
+        const randomFactory = await ethers.getContractFactory("Random", signers[0]);
 
-        commitReveal = (await commitRevealFactory.deploy()) as CommitReveal;
-        await commitReveal.deployed();
+        random = (await randomFactory.deploy()) as Random;
+        await random.deployed();
 
     })
 
     it("Should commit a hash, reveal a hash, and return a random number", async () => {
 
+        console.log(reveal)
+
         // Create unique hash from the randomized hash
-        const commit = await commitReveal.getHash(reveal);
+        const commit = await random.getHash(reveal);
 
         // Commit the unique hash
-        const commitTx = await commitReveal.commit(commit);
+        const commitTx = await random.commit(commit);
 
         const commitReceipt = await commitTx.wait();
 
         // Gets the commit, block number, reveal status
-        const commits = await commitReveal.commits(signers[0].address);
+        const commits = await random.commits(signers[0].address);
 
         // Reveals the commit
-        const revealTx = await commitReveal.reveal(reveal);
+        const revealTx = await random.reveal(reveal);
 
         // Transaction receipt
         const revealReceipt = await revealTx.wait();
