@@ -256,30 +256,30 @@ describe("ZooAuction", () => {
         ethers.constants.AddressZero
       );
     });
-    // });
+  });
 
-    // describe("#setAuctionApproval", () => {
-    //   let auctionHouse: ZooAuction;
-    //   let admin: Signer;
-    //   let curator: Signer;
-    //   let bidder: Signer;
+  describe("#setAuctionApproval", () => {
+    let auctionHouse: ZooAuction;
+    let admin: Signer;
+    let curator: Signer;
+    let bidder: Signer;
 
-    //   beforeEach(async () => {
-    //     [admin, curator, bidder] = await ethers.getSigners();
-    //     auctionHouse = (await deploy()).connect(curator) as ZooAuction;
-    //     await mint(media);
-    //     await approveAuction(media, auctionHouse);
-    //     await createAuction(
-    //       auctionHouse.connect(admin),
-    //       await curator.getAddress()
-    //     );
-    //   });
+    beforeEach(async () => {
+      [admin, curator, bidder] = await ethers.getSigners();
+      auctionHouse = (await deploy()).connect(curator) as ZooAuction;
+      await mint(media);
+      await approveAuction(media, auctionHouse);
+      await createAuction(
+        auctionHouse.connect(admin),
+        await curator.getAddress()
+      );
+    });
 
-    //   it("should revert if the auctionHouse does not exist", async () => {
-    //     await expect(
-    //       auctionHouse.setAuctionApproval(1, true)
-    //     ).eventually.rejectedWith(revert`Auction doesn't exist`);
-    //   });
+    it("should revert if the auctionHouse does not exist", async () => {
+      await expect(
+        auctionHouse.setAuctionApproval(1, true)
+      ).to.be.revertedWith("Auction doesn't exist")
+    });
 
     //   it("should revert if not called by the curator", async () => {
     //     await expect(
