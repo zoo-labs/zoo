@@ -13,6 +13,7 @@ import {
   useMatchBreakpoints,
   Heading,
   Card,
+  CardHeader,
   CardBody,
   CardFooter,
   CardContent,
@@ -126,21 +127,17 @@ const EggMarketplace: React.FC = () => {
         <Route exact path={`${path}`}>
           {shownData(data).map((egg) => (
             <Card>
-              <CardBody>
-                <Heading mb="8px">{egg.name}</Heading>
-                <ImageContainer >
-                  <img src={egg.imageURL} alt={egg.name}/>  
-                </ImageContainer>
+              {/* <CardHeader>
+                <Heading color="cardLabel">
+                  {egg.name}
+                </Heading>
+              </CardHeader> */}
+              <CardBody style={{backgroundImage: `url("${egg.imageURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 500}}>
+                <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{egg.name}</Heading>
               </CardBody>
               <CardFooter>
-                <InfoBlock>
-                  <Text
-                    as="p"
-                    color="textSubtle"
-                    style={{ textAlign: "center" }}
-                  >
-                    0D 7H
-                  </Text>
+                <InfoBlock style={{textAlign: 'center'}}>
+                  <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{`BREED`}</Heading>
                 </InfoBlock>
               </CardFooter>
             </Card>
