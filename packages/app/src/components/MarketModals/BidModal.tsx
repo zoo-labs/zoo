@@ -19,7 +19,6 @@ const Modal = styled(Existing)`
 const BidInput = styled.input.attrs({ 
     type: 'number',
     min: 1,
-    defaultValue: 1
   })`
     width: 90%;
     margin: auto;
@@ -37,7 +36,7 @@ const confirmBid = () => {
 }
 
 const BidModal: React.FC<Props> = ({onDismiss = () => null, item, Moralis}) => {
-    const input = React.useRef(1)
+    const [value, setValue] = React.useState(item.CurrentBid+1)
     const [onConfirmBuy] = useModal(
         <Confirmation
             confirmation = {confirmBuy}
@@ -45,6 +44,7 @@ const BidModal: React.FC<Props> = ({onDismiss = () => null, item, Moralis}) => {
             action = "Buy"
             name= {item.Name}
             amount = {item.BuyNow}
+            submission = {value}
         />
     )
     const [onConfirmBid] = useModal(
@@ -54,8 +54,16 @@ const BidModal: React.FC<Props> = ({onDismiss = () => null, item, Moralis}) => {
             action = "Bid"
             name= {item.Name}
             amount = {item.CurrentBid}
+
         />
     )
+
+    const changed = () => (e) => {
+        const newVal = e.target.value
+        if(newVal > value){
+            setValue(newVal)
+        }
+    }
 
 
     return (
@@ -63,7 +71,7 @@ const BidModal: React.FC<Props> = ({onDismiss = () => null, item, Moralis}) => {
         <Modal title = {`${item.Name}`} onDismiss={onDismiss}>
             <Text>{`Current Bid: ${item.CurrentBid}`}</Text>
             <Text>{`Buy Now: ${item.BuyNow}`}</Text>
-            <BidInput type="number" />
+            <BidInput type="number" onChange = {changed()} defaultValue={value}/>
             <BorderButton onClick={()=>onConfirmBuy()}>Buy Now</BorderButton>
             <BorderButton onClick={()=>onConfirmBid()}>Bid</BorderButton>
         </Modal>

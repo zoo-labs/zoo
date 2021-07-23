@@ -9,6 +9,7 @@ interface Props {
     action: string
     amount: number
     name: string
+    submission?: number
 }
 
 const Modal = styled(Existing)`
@@ -16,7 +17,7 @@ const Modal = styled(Existing)`
 `
 
 
-const Confirmation: React.FC<Props> = ({onDismiss = () => null, confirmation, action, amount}) => {
+const Confirmation: React.FC<Props> = ({onDismiss = () => null, confirmation, action, amount, submission}) => {
     return (
         <Modal title="Are you Sure?" onDismiss={onDismiss}>
             <BorderButton onClick={()=>onDismiss()}>Cancel</BorderButton>
