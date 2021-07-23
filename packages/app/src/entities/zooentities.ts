@@ -1,5 +1,5 @@
 export interface Animal {
-   owner?: string;
+   owner?: string; // wallet address of the owner
    tokenId: string;
    name: string;
    description: string;
@@ -9,11 +9,11 @@ export interface Animal {
    dob: string;
    startBid?: string;
    buyNow?: string;
-   imageUrl: string;
+   imageUrl: string; // should point to IPFS
 }
 
 export interface Egg {
-   owner?: string;
+   owner?: string; // wallet address of the owner
    tokenId: string;
    parent1: string;
    parent2: string;
