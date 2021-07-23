@@ -7,7 +7,7 @@ import BorderButton from 'components/Button/BorderButton'
 import { connectorsByName } from '../../connectors'
 // import { useMoralis } from "react-moralis"
 // import Moralis from 'moralis'
-import { ethers } from 'ethers'
+import { ethers } from "ethers";
 // import starterAppContract from 'config/abi/starterApp.json'
 import Button from '../../components/Button/Button'
 import { Label, Text } from '../../components/Text'
@@ -16,22 +16,21 @@ import { Modal } from '../Modal'
 import CopyToClipboard from './CopyToClipboard'
 // import LinkExternal from '../../components/Link/LinkExternal'
 
-
 interface Props {
-  account: string
-  logout: () => void
-  onDismiss?: () => void
-  history?: any
+   account: string;
+   logout: () => void;
+   onDismiss?: () => void;
+   history?: any;
 }
 
 const FitContent = styled.div`
-  * > * {
-    width: fit-content;
-  }
-  svg {
-    width: 24px;
-  }
-`
+   * > * {
+      width: fit-content;
+   }
+   svg {
+      width: 24px;
+   }
+`;
 
 
 const LabelWrapper = styled.div`
@@ -77,16 +76,16 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
   const zooCount = 99999999999999999
   // const { authenticate, isAuthenticated } = useMoralis();
 
-  const bscSwith = async (network) => {
-    console.log("CLICKING")
-    const connector = connectorsByName.injected
-    const hasSetup = await setupNetwork(network)
-    if (hasSetup) {
-      activate(connector)
-      window.localStorage.setItem(connectorLocalStorageKey, 'injected')
-      onDismiss()
-    }
-  }
+   const bscSwith = async (network) => {
+      console.log("CLICKING");
+      const connector = connectorsByName.injected;
+      const hasSetup = await setupNetwork(network);
+      if (hasSetup) {
+         activate(connector);
+         window.localStorage.setItem(connectorLocalStorageKey, "injected");
+         onDismiss();
+      }
+   };
 
   return (
     <Modal title="Your wallet" onDismiss={onDismiss} styles={{ minHeight: '250px', justifyContent: 'space-between' }}>
@@ -150,4 +149,4 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
   )
 }
 
-export default AccountModal
+export default AccountModal;
