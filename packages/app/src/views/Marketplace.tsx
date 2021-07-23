@@ -1,14 +1,23 @@
-import React, { useState, useRef, useEffect } from "react"
-import { Route, useRouteMatch } from "react-router-dom"
+import React, { useState, useRef, useEffect } from "react";
+import { Route, useRouteMatch } from "react-router-dom";
 // import { AppState } from "state"
 // import { useSelector } from "react-redux"
-import { useWeb3React } from '@web3-react/core'
-import styled from "styled-components"
-import FlexLayout from "components/layout/Flex"
-import Page from "components/layout/Page"
-import { orderBy, parseInt } from "lodash"
-import { Flex, Text, useMatchBreakpoints, Heading, Card, CardBody, CardFooter, CardContent } from "components"
-import { VscLoading } from "react-icons/vsc"
+import { useWeb3React } from "@web3-react/core";
+import styled from "styled-components";
+import FlexLayout from "components/layout/Flex";
+import Page from "components/layout/Page";
+import { orderBy, parseInt } from "lodash";
+import {
+  Flex,
+  Text,
+  useMatchBreakpoints,
+  Heading,
+  Card,
+  CardBody,
+  CardFooter,
+  CardContent,
+} from "components";
+import { VscLoading } from "react-icons/vsc";
 // import { ViewMode } from "./components/types"
 
 const IconCont = styled.div`
@@ -32,13 +41,12 @@ const InfoBlock = styled.div`
   padding: 24px;
 `;
 
-
 const _loadCount = 9;
 
 const EggMarketplace: React.FC = () => {
-  let empty
-  const { path } = useRouteMatch()
-  const { chainId } = useWeb3React()
+  let empty;
+  const { path } = useRouteMatch();
+  const { chainId } = useWeb3React();
   const [numVisData, setNumVisData] = useState(_loadCount);
   const [observerIsSet, setObserverIsSet] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -46,8 +54,23 @@ const EggMarketplace: React.FC = () => {
   const chainIdSet = chainId === undefined ? "1" : String(chainId);
 
   // const allEggs = useSelector<AppState, AppState['cryptozoo']>((state) => state.cryptozoo.allEggs)
-  const allEggs = { '3BCR3nl2wyq95D1xhciAndNT': { currentBid: 500, born: '08/06/2021', rarity: 'Legendary', name: 'Red Panda', updatedAt: '23 July 2021 at 13:59:59 UTC', supply: 300, buyNow: 1000, imageURL: "https://i2.wp.com/bestlifeonline.com/wp-content/uploads/2018/10/red-panda-raising-fist.jpg?resize=640%2C360&ssl=1", animalID: 4, createdAt: "23 July 2021 at 13:56:24 UTC", startBid: 500 }}
-  
+  const allEggs = {
+    "3BCR3nl2wyq95D1xhciAndNT": {
+      currentBid: 500,
+      born: "08/06/2021",
+      rarity: "Legendary",
+      name: "Red Panda",
+      updatedAt: "23 July 2021 at 13:59:59 UTC",
+      supply: 300,
+      buyNow: 1000,
+      imageURL:
+        "https://i2.wp.com/bestlifeonline.com/wp-content/uploads/2018/10/red-panda-raising-fist.jpg?resize=640%2C360&ssl=1",
+      animalID: 4,
+      createdAt: "23 July 2021 at 13:56:24 UTC",
+      startBid: 500,
+    },
+  };
+
   useEffect(() => {
     const showMoreData = (entries) => {
       const [entry] = entries;
@@ -87,27 +110,31 @@ const EggMarketplace: React.FC = () => {
     //     }
     //     updatedData.push({ id: ind, ...token })
     //   })
-debugger; // eslint-disable-line no-debugger
+    debugger; // eslint-disable-line no-debugger
 
     return (
       <FlexLayout>
         <Route exact path={`${path}`}>
           {shownData(data).map((egg) => (
-          <Card>
-            <CardBody>
-              <CardContent imgSrc="/media/logo.svg">
-                <Heading mb="8px">{egg.name}</Heading>
-                {/* <Text>{TranslateString(999, 'Trade in your NFT for CAKE, or just keep it for your collection.')}</Text> */}
-              </CardContent>
-            </CardBody>
+            <Card>
+              <CardBody>
+                <CardContent imgSrc="/media/logo.svg">
+                  <Heading mb="8px">{egg.name}</Heading>
+                  {/* <Text>{TranslateString(999, 'Trade in your NFT for CAKE, or just keep it for your collection.')}</Text> */}
+                </CardContent>
+              </CardBody>
               <CardFooter>
                 <InfoBlock>
-                  <Text as="p" color="textSubtle" style={{ textAlign: 'center' }}>
+                  <Text
+                    as="p"
+                    color="textSubtle"
+                    style={{ textAlign: "center" }}
+                  >
                     0D 7H
                   </Text>
                 </InfoBlock>
-            </CardFooter>
-          </Card>
+              </CardFooter>
+            </Card>
           ))}
         </Route>
         <Route exact path={`${path}/history`}>
