@@ -7,7 +7,10 @@ import { Heading } from 'components'
 import Body from 'components/layout/Body'
 import { useModal } from "components/Modal";
 import BuyEggs from "components/BuyEggs";
+<<<<<<< HEAD
 
+=======
+>>>>>>> 18c992ebf4632f44a094ceef8186ff85bff90ef4
 
 const HeadingContainer = styles.div`
     width: 100%;
@@ -46,7 +49,11 @@ const RowWrapper = styles.div`
 
 const Account: React.FC = () => {
     const [eggsOwned, setEggsOwned] = useState(0)
+<<<<<<< HEAD
     const [onBugEggs] = useModal(<BuyEggs headerColor={'black'} />)
+=======
+    const [onBugEggs] = useModal(<BuyEggs />)
+>>>>>>> 18c992ebf4632f44a094ceef8186ff85bff90ef4
 
     const pageHeading = (<HeadingContainer >
                             <Heading >My Account</Heading>
@@ -78,7 +85,11 @@ const Account: React.FC = () => {
                         <Label>
                           {eggsOwned} Eggs Owned
                         </Label>
+<<<<<<< HEAD
                         <BorderButton onClick={() => onBugEggs()} >
+=======
+                        <BorderButton onClick={() => onBugEggs()}>
+>>>>>>> 18c992ebf4632f44a094ceef8186ff85bff90ef4
                             Buy Eggs
                         </BorderButton>
                          </LabelWrapper>
