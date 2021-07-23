@@ -2,7 +2,7 @@
 
 pragma solidity >=0.8.4;
 
-contract CommitReveal {
+contract Random {
     uint8 public max = 100;
 
     constructor() {}
