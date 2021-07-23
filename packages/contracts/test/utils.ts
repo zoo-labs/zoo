@@ -214,7 +214,6 @@ export async function signMintWithSig(
   });
 }
 
-
 export const THOUSANDTH_ZOO = ethers.utils.parseUnits(
   "0.001",
   "ether"
@@ -224,9 +223,8 @@ export const ONE_ZOO = ethers.utils.parseUnits("1", "ether") as BigNumber;
 export const TWO_ZOO = ethers.utils.parseUnits("2", "ether") as BigNumber;
 
 export const deployZooToken = async () => {
-  const [deployer] = await ethers.getSigners();
   return (await (await ethers.getContractFactory("ZooToken")).deploy()) as ZooToken;
-};
+}
 
 export const deployOtherNFTs = async () => {
   const bad = (await (
