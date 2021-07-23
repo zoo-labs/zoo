@@ -287,15 +287,22 @@ describe("ZooAuction", () => {
       ).to.be.revertedWith("Must be auction curator");
     });
 
-    //   it("should revert if the auction has already started", async () => {
-    //     await auctionHouse.setAuctionApproval(0, true);
-    //     await auctionHouse
-    //       .connect(bidder)
-    //       .createBid(0, ONE_ZOO, { value: ONE_ZOO });
-    //     await expect(
-    //       auctionHouse.setAuctionApproval(0, false)
-    //     ).eventually.rejectedWith(revert`Auction has already started`);
-    //   });
+    it("should revert if the auction has already started", async () => {
+
+      const oneZooValue = parseInt(ONE_ZOO._hex);
+
+      await auctionHouse.setAuctionApproval(0, true);
+
+
+      await auctionHouse
+        .connect(bidder)
+        .createBid(0, BigInt(oneZooValue));
+
+      // await expect(
+      //   auctionHouse.setAuctionApproval(0, false)
+      // ).eventually.rejectedWith(revert`Auction has already started`);
+
+    });
 
     //   it("should set the auction as approved", async () => {
     //     await auctionHouse.setAuctionApproval(0, true);
