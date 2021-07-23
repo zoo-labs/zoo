@@ -1,7 +1,6 @@
 export const test = {
    animals: {
       1: {
-         owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
          tokenId: "1",
          name: "Red Panda",
          description: "Mystery",
@@ -14,10 +13,9 @@ export const test = {
          startBid: "500",
          currentBid: "500",
          buyNow: "1000",
-         listed: false
+         listed: true
       },
       2: {
-         owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
          tokenId: "2",
          name: "Suzanne",
          description: "LOL",

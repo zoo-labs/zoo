@@ -15,6 +15,7 @@ import { useModal } from "components/Modal";
 import BidModal from 'components/MarketModals/BidModal'
 import {useMoralisSubscription} from "react-moralis"
 import { Animal } from "entities/zooentities";
+import MarketplaceCard from "./MarketCard"
 
 
 const Container = styled.div<{isMobile?: boolean}>`
@@ -114,14 +115,7 @@ const Subheading = styled(Text)`
         font-weight: 600;
     }
 `
-const Card2 = styled(Existing)<{url?: string}>`
-    background-image: url(${({ url }) => `${url}`});
-    background-position: center; 
-    background-repeat: no-repeat;
-    background-size: cover;
-    max-height: 773px;
-    max-width: 425px;
-`
+
 
 
 Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
@@ -139,17 +133,18 @@ export default function Marketplace() {
     const history = useHistory()
     let temp: Animal = {...Object.values(animalsState)[0]}
 
-    const [onBid] = useModal(
-        <BidModal
-            item = {temp}
-            onDismiss={()=>null}
-        />
-    )
+    // const [onBid] = useModal(
+    //     <BidModal
+    //         item = {temp}
+    //         onDismiss={()=>null}
+    //     />
+    // )
 
-    const onBidInfo = (item) => {
-        temp = {...item}
-        onBid()
-    }
+    // const onBidInfo = (item) => {
+    //     console.log(item)
+    //     temp = {...item}
+    //     onBid()
+    // }
 
     React.useEffect(()=>{
         console.log("animals", animalsState)
@@ -184,44 +179,18 @@ export default function Marketplace() {
                 onSwiper={(swiper) => console.log(swiper)}
                 direction={'vertical'}
             >
-            {animals.filter((item)=> item.listed).map(item => {
-                const date = new Date(item.dob * 1000)
-                const StringDate = date.toLocaleDateString("en-US")
+            {animals.filter((item)=> item.listed === true).map(item => {
                 return (
                     <SwiperSlide key = {item.tokenId}>
-                        <Card2 url={item.imageUrl}>
-                            <FirstThird/>
-                            <SecondThird>
-                                <IconButton onClick={()=>{alert("Some Yield Component")}}><FaMoneyBillWave /><Text as = "span">Yield</Text></IconButton>
-                                <IconButton onClick={()=>{onBidInfo(item)}}><FaDollarSign /><Text as = "span">Bid</Text></IconButton>
-                                <IconButton onClick={()=>{HomeClick()}}><IoPersonCircle/><Text as = "span">Home</Text></IconButton>
-                            </SecondThird>
-                            <FinalThird>
-                                <MainHeading bold as = "p">{item.name}</MainHeading>  
-                                <Subheading bold as = "p">{item.rarity}</Subheading>  
-                                <Subheading bold as = "p">{`Born: ${StringDate}`}</Subheading>  
-                            </FinalThird>
-                        </Card2>
+                        <MarketplaceCard item={item} />
                     </SwiperSlide>
                 )
             })}
             </Swiper>
             : 
-            animals.map(item => {
+            animals.filter((item)=> item.listed === true).map(item => {
                 return (
-                    <Card2 url={item.imageUrl} key = {item.tokenId}>
-                    <FirstThird/>
-                    <SecondThird>
-                        <IconButton onClick={()=>{alert("Some Yield Component")}}><FaMoneyBillWave /><Text as = "span">Yield</Text></IconButton>
-                        <IconButton onClick={()=>{onBidInfo(item)}}><FaDollarSign /><Text as = "span">Bid</Text></IconButton>
-                        <IconButton onClick={()=>{HomeClick()}}><IoPersonCircle/><Text as = "span">Home</Text></IconButton>
-                    </SecondThird>
-                    <FinalThird>
-                        <MainHeading bold as = "p">{item.name}</MainHeading>  
-                        <Subheading bold as = "p">{item.rarity}</Subheading>  
-                        <Subheading bold as = "p">{`Born: ${item.born}`}</Subheading>  
-                    </FinalThird>
-                </Card2>
+                    <MarketplaceCard item={item} />
                 )
             })
         }   
