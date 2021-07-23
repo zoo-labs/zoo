@@ -39,7 +39,7 @@ describe("integration", () => {
     otherUserAddress: string;
 
   async function deploy(): Promise<ZooAuction> {
-    const AuctionHouse = await ethers.getContractFactory("AuctionHouse");
+    const AuctionHouse = await ethers.getContractFactory("ZooAuction");
     const auctionHouse = await AuctionHouse.deploy(media.address, weth.address);
 
     return auctionHouse as ZooAuction;
@@ -84,7 +84,7 @@ describe("integration", () => {
       .transferFrom(creatorAddress, ownerAddress, 0);
   });
 
-  describe("ETH Auction with no curator", async () => {
+  describe.only("ETH Auction with no curator", async () => {
     async function run() {
       await media.connect(owner).approve(auction.address, 0);
       await auction
