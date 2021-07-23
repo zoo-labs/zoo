@@ -44,7 +44,6 @@ const BidModal: React.FC<Props> = ({onDismiss = () => null, item, Moralis}) => {
             action = "Buy"
             name= {item.Name}
             amount = {item.BuyNow}
-            submission = {value}
         />
     )
     const [onConfirmBid] = useModal(
@@ -54,6 +53,7 @@ const BidModal: React.FC<Props> = ({onDismiss = () => null, item, Moralis}) => {
             action = "Bid"
             name= {item.Name}
             amount = {item.CurrentBid}
+            submission = {value}
 
         />
     )
