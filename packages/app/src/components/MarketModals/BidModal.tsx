@@ -93,7 +93,7 @@ const BidModal: React.FC<Props> = ({onDismiss = () => null, item}) => {
 
     return (
         <>
-        <Modal title = {`${item.Name}`} onDismiss={onDismiss}>
+        <Modal title = {`${item.Name}`} onDismiss={onDismiss} >
             <Text>{`Current Bid: ${item.CurrentBid}`}</Text>
             <Text>{`Buy Now: ${item.BuyNow}`}</Text>
             <BidInput type="number" onChange = {changed()} defaultValue={value}/>
