@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
+import toastsReducer from "./toasts";
+
 
 const store = configureStore({
     devTools: process.env.NODE_ENV !== 'production',
     reducer: {
-      
+      toasts: toastsReducer,
     },
 })
   
