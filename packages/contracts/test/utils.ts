@@ -271,8 +271,8 @@ export const mint = async (media: ZooMedia) => {
     },
     {
       prevOwner: Decimal.new(0),
-      owner: Decimal.new(0),
-      creator: Decimal.new(10),
+      owner: Decimal.new(85),
+      creator: Decimal.new(15),
     }
   );
 };
