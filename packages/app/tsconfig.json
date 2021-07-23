@@ -26,7 +26,7 @@
     // "no-empty-function": "off",
     // "@typescript-eslint/no-empty-function": ["error"]
   },
-  "include": ["mdx.d.ts", "src", "scripts"],
+  "include": ["mdx.d.ts", "src", "scripts", "fonts.d.ts"],
   "exclude": ["node_modules", "dist", "**/*.stories.tsx"],
   "paths": {
     "rebass/styled-components": ["node_modules/rebass/styled-components"],
