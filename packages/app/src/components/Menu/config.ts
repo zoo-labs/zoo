@@ -10,7 +10,7 @@ const config: () => MenuEntry[] = () => [
   {
     label: 'My Account',
     icon: '',
-    href: '/myaccount',
+    href: '/account',
   },
   {
     label: 'Marketplace',
