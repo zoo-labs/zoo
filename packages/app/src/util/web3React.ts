@@ -11,8 +11,6 @@ const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 10)
 
 const injected = new InjectedConnector({
   supportedChainIds: [
-    1, // Mainet
-    42, // Kovan
     56, // BSC
     97, // BSC-Test
     chainId,
