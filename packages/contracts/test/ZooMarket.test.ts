@@ -1,3 +1,4 @@
+import { ethers } from 'hardhat'
 import chai, { expect } from 'chai';
 import asPromised from 'chai-as-promised';
 chai.use(asPromised);
@@ -14,6 +15,7 @@ import { generatedWallets } from '../utils/generatedWallets';
 import { ZooMarket } from '../types/ZooMarket';
 import { ZooMarket__factory } from '../types';
 import { ZooToken__factory } from '../types';
+import { ZooToken } from '../types';
 
 let provider = new JsonRpcProvider();
 let blockchain = new Blockchain(provider);
@@ -106,7 +108,10 @@ describe('ZooMarket', () => {
 
   async function deployCurrency() {
     const currency = await new ZooToken__factory(deployerWallet).deploy();
-    return currency.address;
+    return {
+      address: currency.address,
+      contract: currency
+    };
   }
 
   async function mintCurrency(currency: string, to: string, value: number) {
@@ -132,7 +137,8 @@ describe('ZooMarket', () => {
     tokenId: number,
     spender?: string
   ) {
-    await auction.setBid(tokenId, bid, spender || bid.bidder);
+    await auction.setBid(tokenId, bid, spender || bid.bidder,
+      { gasLimit: 3500000 });
   }
 
   beforeEach(async () => {
@@ -316,13 +322,20 @@ describe('ZooMarket', () => {
       recipient: otherWallet.address,
       spender: bidderWallet.address,
       sellOnShare: Decimal.new(10),
+      contract: null as ZooToken
     };
 
     beforeEach(async () => {
       await deploy();
       await configure();
-      currency = await deployCurrency();
-      defaultBid.currency = currency;
+      let signers = await ethers.getSigners()
+      let { address, contract } = await deployCurrency();
+      defaultBid.currency = address;
+      defaultBid.contract = contract
+
+      for (let index = 0; index < signers.length; index++) {
+        await contract.mint(signers[index].address, 10000000)
+      }
     });
 
     it('should revert if not called by the media contract', async () => {
@@ -334,9 +347,11 @@ describe('ZooMarket', () => {
 
     it('should revert if the bidder does not have a high enough allowance for their bidding currency', async () => {
       const auction = await auctionAs(mockTokenWallet);
-      await expect(setBid(auction, defaultBid, defaultTokenId)).rejectedWith(
-        'SafeErc20: Erc20 operation did not succeed'
-      );
+      try {
+        await setBid(auction, defaultBid as Bid, defaultTokenId);
+      } catch (error) {
+        expect(error.body).to.be.equal('{"jsonrpc":"2.0","id":863,"error":{"code":-32603,"message":"Error: VM Exception while processing transaction: revert ERC20: transfer amount exceeds allowance"}}')
+      }
     });
 
     it('should revert if the bidder does not have enough tokens to bid with', async () => {
