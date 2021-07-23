@@ -65,10 +65,11 @@ const ImageContainer = styled.div`
 const InfoBlock = styled.div`
   padding: 10px;
   text-align: center; 
-  position: absolute;
+  position: relative;
   bottom: 0; 
   width: 100%;
   background-color: #ffffff6b;
+  z-index: 999999;
 `;
 
 const TextWrapper = styled.div`
@@ -251,7 +252,7 @@ const EggMarketplace: React.FC = () => {
                 <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 150, padding: 10}}>
                   <TextWrapper>{egg.name}</TextWrapper>
                 </CardBody>
-                <InfoBlock style={{textAlign: 'center', backgroundColor: '#ffffff38', padding: 10}} onClick={onHatch}>
+                <InfoBlock style={{textAlign: 'center', backgroundColor: '#ffffff38', padding: 10}} onClick={() => {onHatch()}}>
                   <TextWrapper >{`HATCH`}</TextWrapper>
                 </InfoBlock>
               </Card>
