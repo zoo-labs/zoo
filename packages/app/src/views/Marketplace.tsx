@@ -131,7 +131,6 @@ export default function Marketplace() {
     const queryObject = Moralis.Object.extend("Animals")
     const [animals, setAnimals] = React.useState([])
     const history = useHistory()
-    let temp: Animal = {...Object.values(animalsState)[0]}
 
     // const [onBid] = useModal(
     //     <BidModal
