@@ -25,29 +25,19 @@ describe("Commit Reveal Test", async () => {
 
     it("Should be able to commit", async () => {
 
-        // let reveal = this.state.web3.utils.sha3(""+Math.random())
-        //let commit = await contracts.CommitReveal.getHash(reveal).call(
+        let reveal = ethers.utils.id("" + Math.random())
 
-        const randomNum = Math.floor(Math.random() * 100);
+        let commit = await commitReveal.getHash(reveal)
 
-        const numToHex = await ethers.utils.hexlify(randomNum);
+        console.log("Hash created from the reveal variable", commit)
 
-        const reveal = ethers.utils.formatBytes32String(numToHex);
+        await commitReveal.commit(commit)
 
-        const commit = await commitReveal.commit(reveal);
+        const revealTx = await commitReveal.reveal(reveal)
 
-        // const commits = await commitReveal.commits(signers[0].address)
+        const revealReceipt = await revealTx.wait();
 
-        // console.log(commits)
-
-        // const getHash = await commitReveal.getHash(reveal)
-
-        // console.log(getHash)
-
-        // const revealHas = await commitReveal.reveal(reveal)
-
-
-
+        console.log(revealReceipt.events[0].args.random)
 
 
     })
