@@ -45,7 +45,7 @@ const RowWrapper = styles.div`
 
 const Account: React.FC = () => {
     const [eggsOwned, setEggsOwned] = useState(0)
-    const [onBugEggs] = useModal(<BuyEggs />)
+    const [onBugEggs] = useModal(<BuyEggs headerColor={'black'} />)
 
     const pageHeading = (<HeadingContainer >
                             <Heading >My Account</Heading>
@@ -77,7 +77,7 @@ const Account: React.FC = () => {
                         <Label>
                           {eggsOwned} Eggs Owned
                         </Label>
-                        <BorderButton onClick={() => onBugEggs()}>
+                        <BorderButton onClick={() => onBugEggs()} >
                             Buy Eggs
                         </BorderButton>
                          </LabelWrapper>
