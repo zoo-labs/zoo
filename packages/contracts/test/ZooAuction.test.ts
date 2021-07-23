@@ -221,41 +221,41 @@ describe("ZooAuction", () => {
       expect(createdAuction.approved).to.eq(true);
     });
 
-    //   it("should emit an AuctionCreated event", async () => {
-    //     const owner = await media.ownerOf(0);
-    //     const [_, expectedCurator] = await ethers.getSigners();
+    it("should emit an AuctionCreated event", async () => {
+      const owner = await media.ownerOf(0);
+      const [_, expectedCurator] = await ethers.getSigners();
 
-    //     const block = await ethers.provider.getBlockNumber();
-    //     await createAuction(auctionHouse, await expectedCurator.getAddress());
-    //     const currAuction = await auctionHouse.auctions(0);
-    //     const events = await auctionHouse.queryFilter(
-    //       auctionHouse.filters.AuctionCreated(
-    //         null,
-    //         null,
-    //         null,
-    //         null,
-    //         null,
-    //         null,
-    //         null,
-    //         null,
-    //         null
-    //       ),
-    //       block
-    //     );
-    //     expect(events.length).eq(1);
-    //     const logDescription = auctionHouse.interface.parseLog(events[0]);
-    //     expect(logDescription.name).to.eq("AuctionCreated");
-    //     expect(logDescription.args.duration).to.eq(currAuction.duration);
-    //     expect(logDescription.args.reservePrice).to.eq(currAuction.reservePrice);
-    //     expect(logDescription.args.tokenOwner).to.eq(currAuction.tokenOwner);
-    //     expect(logDescription.args.curator).to.eq(currAuction.curator);
-    //     expect(logDescription.args.curatorFeePercentage).to.eq(
-    //       currAuction.curatorFeePercentage
-    //     );
-    //     expect(logDescription.args.auctionCurrency).to.eq(
-    //       ethers.constants.AddressZero
-    //     );
-    //   });
+      const block = await ethers.provider.getBlockNumber();
+      await createAuction(auctionHouse, await expectedCurator.getAddress());
+      const currAuction = await auctionHouse.auctions(0);
+      const events = await auctionHouse.queryFilter(
+        auctionHouse.filters.AuctionCreated(
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ),
+        block
+      );
+      expect(events.length).eq(1);
+      const logDescription = auctionHouse.interface.parseLog(events[0]);
+      expect(logDescription.name).to.eq("AuctionCreated");
+      expect(logDescription.args.duration).to.eq(currAuction.duration);
+      expect(logDescription.args.reservePrice).to.eq(currAuction.reservePrice);
+      expect(logDescription.args.tokenOwner).to.eq(currAuction.tokenOwner);
+      expect(logDescription.args.curator).to.eq(currAuction.curator);
+      expect(logDescription.args.curatorFeePercentage).to.eq(
+        currAuction.curatorFeePercentage
+      );
+      expect(logDescription.args.auctionCurrency).to.eq(
+        ethers.constants.AddressZero
+      );
+    });
     // });
 
     // describe("#setAuctionApproval", () => {
