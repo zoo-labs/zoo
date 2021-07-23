@@ -17,4 +17,5 @@ export interface Egg {
    tokenId: string;
    parent1: string;
    parent2: string;
+   basic: boolean
 }
