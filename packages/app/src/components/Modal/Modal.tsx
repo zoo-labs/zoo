@@ -15,6 +15,7 @@ const Modal: React.FC<ModalProps> = ({
   minWidth = "320px",
   borderRadius = "32px",
   styles = {},
+  headerColor,
   ...props
 }) => (
   <ModalContainer minWidth={minWidth} borderRadius={borderRadius} {...props}>
@@ -22,7 +23,7 @@ const Modal: React.FC<ModalProps> = ({
       <ModalHeader background={headerBackground}>
       <ModalTitle>
         {onBack && <ModalBackButton onBack={onBack} />}
-        <Heading>{title}</Heading>
+        <Heading  headerColor={headerColor}>{title}</Heading>
       </ModalTitle>
       {!hideCloseButton && <ModalCloseButton onDismiss={onDismiss} />}
     </ModalHeader>
