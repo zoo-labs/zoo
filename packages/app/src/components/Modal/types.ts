@@ -20,4 +20,5 @@ export interface ModalProps extends InjectedProps, BoxProps {
   minWidth?: string;
   borderRadius?: string;
   styles?: any;
+  headerColor?: string;
 }
