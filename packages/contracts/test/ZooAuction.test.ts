@@ -187,22 +187,22 @@ describe("ZooAuction", () => {
 
     });
 
-    //   it("should create an auction", async () => {
-    //     const owner = await media.ownerOf(0);
-    //     const [_, expectedCurator] = await ethers.getSigners();
-    //     await createAuction(auctionHouse, await expectedCurator.getAddress());
+    it("should create an auction", async () => {
+      const owner = await media.ownerOf(0);
+      const [_, expectedCurator] = await ethers.getSigners();
+      await createAuction(auctionHouse, await expectedCurator.getAddress());
 
-    //     const createdAuction = await auctionHouse.auctions(0);
+      const createdAuction = await auctionHouse.auctions(0);
 
-    //     expect(createdAuction.duration).to.eq(24 * 60 * 60);
-    //     expect(createdAuction.reservePrice).to.eq(
-    //       BigNumber.from(10).pow(18).div(2)
-    //     );
-    //     expect(createdAuction.curatorFeePercentage).to.eq(5);
-    //     expect(createdAuction.tokenOwner).to.eq(owner);
-    //     expect(createdAuction.curator).to.eq(expectedCurator.address);
-    //     expect(createdAuction.approved).to.eq(false);
-    //   });
+      expect(createdAuction.duration).to.eq(24 * 60 * 60);
+      expect(createdAuction.reservePrice).to.eq(
+        BigNumber.from(10).pow(18).div(2)
+      );
+      expect(createdAuction.curatorFeePercentage).to.eq(5);
+      expect(createdAuction.tokenOwner).to.eq(owner);
+      expect(createdAuction.curator).to.eq(expectedCurator.address);
+      expect(createdAuction.approved).to.eq(false);
+    });
 
     //   it("should be automatically approved if the creator is the curator", async () => {
     //     const owner = await media.ownerOf(0);
