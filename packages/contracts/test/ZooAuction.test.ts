@@ -204,14 +204,14 @@ describe("ZooAuction", () => {
       expect(createdAuction.approved).to.eq(false);
     });
 
-    //   it("should be automatically approved if the creator is the curator", async () => {
-    //     const owner = await media.ownerOf(0);
-    //     await createAuction(auctionHouse, owner);
+    it("should be automatically approved if the creator is the curator", async () => {
+      const owner = await media.ownerOf(0);
+      await createAuction(auctionHouse, owner);
 
-    //     const createdAuction = await auctionHouse.auctions(0);
+      const createdAuction = await auctionHouse.auctions(0);
 
-    //     expect(createdAuction.approved).to.eq(true);
-    //   });
+      expect(createdAuction.approved).to.eq(true);
+    });
 
     //   it("should be automatically approved if the creator is the Zero Address", async () => {
     //     await createAuction(auctionHouse, ethers.constants.AddressZero);
