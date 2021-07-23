@@ -4,47 +4,22 @@ const config: () => MenuEntry[] = () => [
 
   {
     label: 'My Zoo',
-    icon: 'SearchDollarIcon',
-    href: '/pricefeed',
+    icon: '',
+    href: '/myzoo',
   },
   {
     label: 'My Account',
-    icon: 'HardHatIcon',
-    href: '/miningevents',
+    icon: '',
+    href: '/myaccount',
   },
   {
     label: 'Marketplace',
-    icon: 'BlockExplorerIcon',
-    href: '/labs/blockexplorer',
+    icon: '',
+    href: '/marketplace',
   },
- 
-  // {
-  //   label: 'NFTz',
-  //   icon: 'MarketIcon',
-  //   initialOpenState: false,
-  //   items: [
-  //     {
-  //       label: 'NFTz Market',
-  //       icon: 'MarketIcon',
-  //       href: '/nftmarket',
-  //     },
-  //     {
-  //       label: 'NFTz Wizard',
-  //       // TODO: change 
-  //       icon: 'NewTokenIcon',
-  //       href: '/nftwizard',
-  //     },
-  //     {
-  //       label: 'NFTz Profile',
-  //       // TODO: "
-  //       icon: 'MarketIcon',
-  //       href: '/profile',
-  //     },
-  //   ],
-  // },
   {
     label: 'Cryptozoo Docs',
-    icon: 'DocsIcon',
+    icon: '',
     href: '/docs',
   },
 ]
