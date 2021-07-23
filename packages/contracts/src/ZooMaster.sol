@@ -16,7 +16,7 @@ contract ZooMaster is Ownable {
         return true;
     }
 
-    function removeDrop(uint256 _key) public onlyOwner return (bool) {
+    function removeDrop(uint256 _key) public onlyOwner returns (bool) {
         delete drops[_key];
         return true;
     }
