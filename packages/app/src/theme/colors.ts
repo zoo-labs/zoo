@@ -35,7 +35,7 @@ export const lightColors: Colors = {
   data: "#314F81",
   headerTitle: "#20DFDA", // "#ddeafd",99dae4
   headerSubtitle: "#d3f5f3", // b4e5ff
-  borderColor: "#94BFFFA9",
+  borderColor: "#ffffff",
   secondaryDark: "#20DFDA",
   card: "#FFFFFF",
   tableHeader: "#FFFFFF", // "#A7C8FB",
@@ -94,7 +94,7 @@ export const darkColors: Colors = {
   textSecondary: "#FFFFFF",
   modal: {
     background: "#282c34",
-    color: "#ffffff",
+    color: "#000000",
     borderColor: "#ffffff"
   },
 };
