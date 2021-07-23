@@ -1,5 +1,7 @@
 pragma solidity >=0.8.4;
 
+// pragma solidity ^0.4.24;
+
 contract CommitReveal {
     uint8 public max = 100;
 
