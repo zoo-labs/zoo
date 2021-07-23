@@ -11,6 +11,7 @@ import Moralis from 'moralis'
 import { useHistory } from 'react-router-dom'
 import { useModal } from "components/Modal";
 import BidModal from 'components/MarketModals/BidModal'
+import YieldModal from 'components/MarketModals/YieldModal'
 
 
 const Container = styled.div<{isMobile?: boolean}>`
@@ -134,6 +135,7 @@ export default function Marketplace() {
     const [animals, setAnimals] = React.useState([])
     const history = useHistory()
     const temp = {}
+    const ypd = {}
 
     const [onBid] = useModal(
         <BidModal
@@ -150,6 +152,25 @@ export default function Marketplace() {
         temp["AnimalId"] = item.get("AnimalID")
         onBid()
     }
+
+    const [onYield] = useModal(
+        <YieldModal
+            item={temp}
+            onDismiss={() => null}
+            Moralis={Moralis}
+        />
+    )
+
+    const onYieldInfo = (animal) => {
+        ypd['Name'] = animal.get("Name")
+        ypd['currentBlock'] = 'currentBlockNumber'
+        ypd['birthBlock'] = 'birthBlockNumber'
+        ypd['divideBy'] = '28800'
+        ypd['animalYield'] = 'yieldOfAnimal'
+        ypd['price'] = '0'
+        onYield()
+    }
+
 
     React.useEffect(()=>{
         getAnimals()
@@ -181,7 +202,8 @@ export default function Marketplace() {
                         <Card2 url={item.get("ImageURL")}>
                             <FirstThird/>
                             <SecondThird>
-                                <IconButton onClick={()=>{alert("Some Yield Component")}}><FaMoneyBillWave /><Text as = "span">Yield</Text></IconButton>
+                               
+                                <IconButton onClick={() => { onYieldInfo(item) }}><FaMoneyBillWave /><Text as="span">Yield</Text></IconButton>
                                 <IconButton onClick={()=>{onBidInfo(item)}}><FaDollarSign /><Text as = "span">Bid</Text></IconButton>
                                 <IconButton onClick={()=>{HomeClick()}}><IoPersonCircle/><Text as = "span">Home</Text></IconButton>
                             </SecondThird>
@@ -191,6 +213,7 @@ export default function Marketplace() {
                                 <Subheading bold as = "p">{`Born: ${item.get("Born")}`}</Subheading>  
                             </FinalThird>
                         </Card2>
+                        
                     </SwiperSlide>
                 )
             })}
@@ -201,7 +224,7 @@ export default function Marketplace() {
                     <Card2 url={item.get("ImageURL")} key = {item.get("ObjectID")}>
                     <FirstThird/>
                     <SecondThird>
-                        <IconButton onClick={()=>{alert("Some Yield Component")}}><FaMoneyBillWave /><Text as = "span">Yield</Text></IconButton>
+                        <IconButton onClick={() => { onYieldInfo(item) }}><FaMoneyBillWave /><Text as = "span">Yield</Text></IconButton>
                         <IconButton onClick={()=>{onBidInfo(item)}}><FaDollarSign /><Text as = "span">Bid</Text></IconButton>
                         <IconButton onClick={()=>{HomeClick()}}><IoPersonCircle/><Text as = "span">Home</Text></IconButton>
                     </SecondThird>
