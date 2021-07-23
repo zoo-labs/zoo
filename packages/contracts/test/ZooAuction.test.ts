@@ -10,12 +10,12 @@ import {
   approveAuction,
   deployBidder,
   deployOtherNFTs,
-  deployWETH,
-  deployZoraProtocol,
+  deployZooToken,
+  deployZooProtocol,
   mint,
-  ONE_ETH,
+  ONE_ZOO,
   revert,
-  TWO_ETH,
+  TWO_ZOO,
 } from "./utils";
 
 chai.use(asPromised);
@@ -23,24 +23,24 @@ chai.use(asPromised);
 describe("ZooAuction", () => {
   let market: ZooMarket;
   let media: ZooMedia;
-  let weth: Contract;
+  let token: Contract;
   let badERC721: BadERC721;
   let testERC721: TestERC721;
 
   beforeEach(async () => {
     await ethers.provider.send("hardhat_reset", []);
-    const contracts = await deployZoraProtocol();
+    const contracts = await deployZooProtocol();
     const nfts = await deployOtherNFTs();
     market = contracts.market;
     media = contracts.media;
-    weth = await deployWETH();
+    token = await deployZooToken();
     badERC721 = nfts.bad;
     testERC721 = nfts.test;
   });
 
   async function deploy(): Promise<ZooAuction> {
     const ZooAuction = await ethers.getContractFactory("ZooAuction");
-    const auctionHouse = await ZooAuction.deploy(media.address, weth.address);
+    const auctionHouse = await ZooAuction.deploy(media.address, token.address);
 
     return auctionHouse as ZooAuction;
   }
@@ -70,7 +70,7 @@ describe("ZooAuction", () => {
       const ZooAuction = await ethers.getContractFactory("ZooAuction");
       const auctionHouse = await ZooAuction.deploy(
         media.address,
-        weth.address
+        token.address
       );
 
       expect(await auctionHouse.zoo()).to.eq(
@@ -293,7 +293,7 @@ describe("ZooAuction", () => {
       await auctionHouse.setAuctionApproval(0, true);
       await auctionHouse
         .connect(bidder)
-        .createBid(0, ONE_ETH, { value: ONE_ETH });
+        .createBid(0, ONE_ZOO, { value: ONE_ZOO });
       await expect(
         auctionHouse.setAuctionApproval(0, false)
       ).eventually.rejectedWith(revert`Auction has already started`);
@@ -342,42 +342,42 @@ describe("ZooAuction", () => {
 
     it("should revert if the auctionHouse does not exist", async () => {
       await expect(
-        auctionHouse.setAuctionReservePrice(1, TWO_ETH)
+        auctionHouse.setAuctionReservePrice(1, TWO_ZOO)
       ).eventually.rejectedWith(revert`Auction doesn't exist`);
     });
 
     it("should revert if not called by the curator or owner", async () => {
       await expect(
-        auctionHouse.connect(admin).setAuctionReservePrice(0, TWO_ETH)
+        auctionHouse.connect(admin).setAuctionReservePrice(0, TWO_ZOO)
       ).eventually.rejectedWith(revert`Must be auction curator`);
     });
 
     it("should revert if the auction has already started", async () => {
-      await auctionHouse.setAuctionReservePrice(0, TWO_ETH);
+      await auctionHouse.setAuctionReservePrice(0, TWO_ZOO);
       await auctionHouse.setAuctionApproval(0, true);
       await auctionHouse
         .connect(bidder)
-        .createBid(0, TWO_ETH, { value: TWO_ETH });
+        .createBid(0, TWO_ZOO, { value: TWO_ZOO });
       await expect(
-        auctionHouse.setAuctionReservePrice(0, ONE_ETH)
+        auctionHouse.setAuctionReservePrice(0, ONE_ZOO)
       ).eventually.rejectedWith(revert`Auction has already started`);
     });
 
     it("should set the auction reserve price when called by the curator", async () => {
-      await auctionHouse.setAuctionReservePrice(0, TWO_ETH);
+      await auctionHouse.setAuctionReservePrice(0, TWO_ZOO);
 
-      expect((await auctionHouse.auctions(0)).reservePrice).to.eq(TWO_ETH);
+      expect((await auctionHouse.auctions(0)).reservePrice).to.eq(TWO_ZOO);
     });
 
     it("should set the auction reserve price when called by the token owner", async () => {
-      await auctionHouse.connect(creator).setAuctionReservePrice(0, TWO_ETH);
+      await auctionHouse.connect(creator).setAuctionReservePrice(0, TWO_ZOO);
 
-      expect((await auctionHouse.auctions(0)).reservePrice).to.eq(TWO_ETH);
+      expect((await auctionHouse.auctions(0)).reservePrice).to.eq(TWO_ZOO);
     });
 
     it("should emit an AuctionReservePriceUpdated event", async () => {
       const block = await ethers.provider.getBlockNumber();
-      await auctionHouse.setAuctionReservePrice(0, TWO_ETH);
+      await auctionHouse.setAuctionReservePrice(0, TWO_ZOO);
       const events = await auctionHouse.queryFilter(
         auctionHouse.filters.AuctionReservePriceUpdated(null, null, null, null),
         block
@@ -385,7 +385,7 @@ describe("ZooAuction", () => {
       expect(events.length).eq(1);
       const logDescription = auctionHouse.interface.parseLog(events[0]);
 
-      expect(logDescription.args.reservePrice).to.eq(TWO_ETH);
+      expect(logDescription.args.reservePrice).to.eq(TWO_ZOO);
     });
   });
 
@@ -410,14 +410,14 @@ describe("ZooAuction", () => {
 
     it("should revert if the specified auction does not exist", async () => {
       await expect(
-        auctionHouse.createBid(11111, ONE_ETH)
+        auctionHouse.createBid(11111, ONE_ZOO)
       ).eventually.rejectedWith(revert`Auction doesn't exist`);
     });
 
     it("should revert if the specified auction is not approved", async () => {
       await auctionHouse.connect(curator).setAuctionApproval(0, false);
       await expect(
-        auctionHouse.createBid(0, ONE_ETH, { value: ONE_ETH })
+        auctionHouse.createBid(0, ONE_ZOO, { value: ONE_ZOO })
       ).eventually.rejectedWith(revert`Auction must be approved by curator`);
     });
 
@@ -429,42 +429,42 @@ describe("ZooAuction", () => {
 
     it("should revert if the bid is invalid for share splitting", async () => {
       await expect(
-        auctionHouse.createBid(0, ONE_ETH.add(1), {
-          value: ONE_ETH.add(1),
+        auctionHouse.createBid(0, ONE_ZOO.add(1), {
+          value: ONE_ZOO.add(1),
         })
       ).eventually.rejectedWith(revert`Bid invalid for share splitting`);
     });
 
     it("should revert if msg.value does not equal specified amount", async () => {
       await expect(
-        auctionHouse.createBid(0, ONE_ETH, {
-          value: ONE_ETH.mul(2),
+        auctionHouse.createBid(0, ONE_ZOO, {
+          value: ONE_ZOO.mul(2),
         })
       ).eventually.rejectedWith(
-        revert`Sent ETH Value does not match specified bid amount`
+        revert`Sent ZOO Value does not match specified bid amount`
       );
     });
     describe("first bid", () => {
       it("should set the first bid time", async () => {
         // TODO: Fix this test on Sun Oct 04 2274
         await ethers.provider.send("evm_setNextBlockTimestamp", [9617249934]);
-        await auctionHouse.createBid(0, ONE_ETH, {
-          value: ONE_ETH,
+        await auctionHouse.createBid(0, ONE_ZOO, {
+          value: ONE_ZOO,
         });
         expect((await auctionHouse.auctions(0)).firstBidTime).to.eq(9617249934);
       });
 
-      it("should store the transferred ETH as WETH", async () => {
-        await auctionHouse.createBid(0, ONE_ETH, {
-          value: ONE_ETH,
+      it("should store the transferred ZOO", async () => {
+        await auctionHouse.createBid(0, ONE_ZOO, {
+          value: ONE_ZOO,
         });
-        expect(await weth.balanceOf(auctionHouse.address)).to.eq(ONE_ETH);
+        expect(await token.balanceOf(auctionHouse.address)).to.eq(ONE_ZOO);
       });
 
       it("should not update the auction's duration", async () => {
         const beforeDuration = (await auctionHouse.auctions(0)).duration;
-        await auctionHouse.createBid(0, ONE_ETH, {
-          value: ONE_ETH,
+        await auctionHouse.createBid(0, ONE_ZOO, {
+          value: ONE_ZOO,
         });
         const afterDuration = (await auctionHouse.auctions(0)).duration;
 
@@ -472,19 +472,19 @@ describe("ZooAuction", () => {
       });
 
       it("should store the bidder's information", async () => {
-        await auctionHouse.createBid(0, ONE_ETH, {
-          value: ONE_ETH,
+        await auctionHouse.createBid(0, ONE_ZOO, {
+          value: ONE_ZOO,
         });
         const currAuction = await auctionHouse.auctions(0);
 
         expect(currAuction.bidder).to.eq(await bidderA.getAddress());
-        expect(currAuction.amount).to.eq(ONE_ETH);
+        expect(currAuction.amount).to.eq(ONE_ZOO);
       });
 
       it("should emit an AuctionBid event", async () => {
         const block = await ethers.provider.getBlockNumber();
-        await auctionHouse.createBid(0, ONE_ETH, {
-          value: ONE_ETH,
+        await auctionHouse.createBid(0, ONE_ZOO, {
+          value: ONE_ZOO,
         });
         const events = await auctionHouse.queryFilter(
           auctionHouse.filters.AuctionBid(
@@ -504,7 +504,7 @@ describe("ZooAuction", () => {
         expect(logDescription.name).to.eq("AuctionBid");
         expect(logDescription.args.auctionId).to.eq(0);
         expect(logDescription.args.sender).to.eq(await bidderA.getAddress());
-        expect(logDescription.args.value).to.eq(ONE_ETH);
+        expect(logDescription.args.value).to.eq(ONE_ZOO);
         expect(logDescription.args.firstBid).to.eq(true);
         expect(logDescription.args.extended).to.eq(false);
       });
@@ -515,13 +515,13 @@ describe("ZooAuction", () => {
         auctionHouse = auctionHouse.connect(bidderB) as ZooAuction;
         await auctionHouse
           .connect(bidderA)
-          .createBid(0, ONE_ETH, { value: ONE_ETH });
+          .createBid(0, ONE_ZOO, { value: ONE_ZOO });
       });
 
       it("should revert if the bid is smaller than the last bid + minBid", async () => {
         await expect(
-          auctionHouse.createBid(0, ONE_ETH.add(1), {
-            value: ONE_ETH.add(1),
+          auctionHouse.createBid(0, ONE_ZOO.add(1), {
+            value: ONE_ZOO.add(1),
           })
         ).eventually.rejectedWith(
           revert`Must send more than last bid by minBidIncrementPercentage amount`
@@ -533,8 +533,8 @@ describe("ZooAuction", () => {
           await bidderA.getAddress()
         );
         const beforeBidAmount = (await auctionHouse.auctions(0)).amount;
-        await auctionHouse.createBid(0, TWO_ETH, {
-          value: TWO_ETH,
+        await auctionHouse.createBid(0, TWO_ZOO, {
+          value: TWO_ZOO,
         });
         const afterBalance = await ethers.provider.getBalance(
           await bidderA.getAddress()
@@ -545,37 +545,37 @@ describe("ZooAuction", () => {
 
       it("should not update the firstBidTime", async () => {
         const firstBidTime = (await auctionHouse.auctions(0)).firstBidTime;
-        await auctionHouse.createBid(0, TWO_ETH, {
-          value: TWO_ETH,
+        await auctionHouse.createBid(0, TWO_ZOO, {
+          value: TWO_ZOO,
         });
         expect((await auctionHouse.auctions(0)).firstBidTime).to.eq(
           firstBidTime
         );
       });
 
-      it("should transfer the bid to the contract and store it as WETH", async () => {
-        await auctionHouse.createBid(0, TWO_ETH, {
-          value: TWO_ETH,
+      it("should transfer the bid to the contract and store it as ZOO", async () => {
+        await auctionHouse.createBid(0, TWO_ZOO, {
+          value: TWO_ZOO,
         });
 
-        expect(await weth.balanceOf(auctionHouse.address)).to.eq(TWO_ETH);
+        expect(await token.balanceOf(auctionHouse.address)).to.eq(TWO_ZOO);
       });
 
       it("should update the stored bid information", async () => {
-        await auctionHouse.createBid(0, TWO_ETH, {
-          value: TWO_ETH,
+        await auctionHouse.createBid(0, TWO_ZOO, {
+          value: TWO_ZOO,
         });
 
         const currAuction = await auctionHouse.auctions(0);
 
-        expect(currAuction.amount).to.eq(TWO_ETH);
+        expect(currAuction.amount).to.eq(TWO_ZOO);
         expect(currAuction.bidder).to.eq(await bidderB.getAddress());
       });
 
       it("should not extend the duration of the bid if outside of the time buffer", async () => {
         const beforeDuration = (await auctionHouse.auctions(0)).duration;
-        await auctionHouse.createBid(0, TWO_ETH, {
-          value: TWO_ETH,
+        await auctionHouse.createBid(0, TWO_ZOO, {
+          value: TWO_ZOO,
         });
         const afterDuration = (await auctionHouse.auctions(0)).duration;
         expect(beforeDuration).to.eq(afterDuration);
@@ -583,8 +583,8 @@ describe("ZooAuction", () => {
 
       it("should emit an AuctionBid event", async () => {
         const block = await ethers.provider.getBlockNumber();
-        await auctionHouse.createBid(0, TWO_ETH, {
-          value: TWO_ETH,
+        await auctionHouse.createBid(0, TWO_ZOO, {
+          value: TWO_ZOO,
         });
         const events = await auctionHouse.queryFilter(
           auctionHouse.filters.AuctionBid(
@@ -603,7 +603,7 @@ describe("ZooAuction", () => {
 
         expect(logDescription.name).to.eq("AuctionBid");
         expect(logDescription.args.sender).to.eq(await bidderB.getAddress());
-        expect(logDescription.args.value).to.eq(TWO_ETH);
+        expect(logDescription.args.value).to.eq(TWO_ZOO);
         expect(logDescription.args.firstBid).to.eq(false);
         expect(logDescription.args.extended).to.eq(false);
       });
@@ -620,8 +620,8 @@ describe("ZooAuction", () => {
         });
         it("should extend the duration of the bid if inside of the time buffer", async () => {
           const beforeDuration = (await auctionHouse.auctions(0)).duration;
-          await auctionHouse.createBid(0, TWO_ETH, {
-            value: TWO_ETH,
+          await auctionHouse.createBid(0, TWO_ZOO, {
+            value: TWO_ZOO,
           });
 
           const currAuction = await auctionHouse.auctions(0);
@@ -631,8 +631,8 @@ describe("ZooAuction", () => {
         });
         it("should emit an AuctionBid event", async () => {
           const block = await ethers.provider.getBlockNumber();
-          await auctionHouse.createBid(0, TWO_ETH, {
-            value: TWO_ETH,
+          await auctionHouse.createBid(0, TWO_ZOO, {
+            value: TWO_ZOO,
           });
           const events = await auctionHouse.queryFilter(
             auctionHouse.filters.AuctionBid(
@@ -651,7 +651,7 @@ describe("ZooAuction", () => {
 
           expect(logDescription.name).to.eq("AuctionBid");
           expect(logDescription.args.sender).to.eq(await bidderB.getAddress());
-          expect(logDescription.args.value).to.eq(TWO_ETH);
+          expect(logDescription.args.value).to.eq(TWO_ZOO);
           expect(logDescription.args.firstBid).to.eq(false);
           expect(logDescription.args.extended).to.eq(true);
         });
@@ -669,8 +669,8 @@ describe("ZooAuction", () => {
 
         it("should revert if the bid is placed after expiry", async () => {
           await expect(
-            auctionHouse.createBid(0, TWO_ETH, {
-              value: TWO_ETH,
+            auctionHouse.createBid(0, TWO_ZOO, {
+              value: TWO_ZOO,
             })
           ).eventually.rejectedWith(revert`Auction expired`);
         });
@@ -714,7 +714,7 @@ describe("ZooAuction", () => {
     it("should revert if the auction has already begun", async () => {
       await auctionHouse
         .connect(bidder)
-        .createBid(0, ONE_ETH, { value: ONE_ETH });
+        .createBid(0, ONE_ZOO, { value: ONE_ZOO });
       await expect(auctionHouse.cancelAuction(0)).eventually.rejectedWith(
         revert`Can't cancel an auction once it's begun`
       );
@@ -806,8 +806,8 @@ describe("ZooAuction", () => {
     });
 
     it("should revert if the auction has not completed", async () => {
-      await auctionHouse.createBid(0, ONE_ETH, {
-        value: ONE_ETH,
+      await auctionHouse.createBid(0, ONE_ZOO, {
+        value: ONE_ZOO,
       });
 
       await expect(auctionHouse.endAuction(0)).eventually.rejectedWith(
@@ -816,7 +816,7 @@ describe("ZooAuction", () => {
     });
 
     it("should cancel the auction if the winning bidder is unable to receive NFTs", async () => {
-      await badBidder.placeBid(0, TWO_ETH, { value: TWO_ETH });
+      await badBidder.placeBid(0, TWO_ZOO, { value: TWO_ZOO });
       const endTime =
         (await auctionHouse.auctions(0)).duration.toNumber() +
         (await auctionHouse.auctions(0)).firstBidTime.toNumber();
@@ -826,15 +826,15 @@ describe("ZooAuction", () => {
 
       expect(await media.ownerOf(0)).to.eq(await creator.getAddress());
       expect(await ethers.provider.getBalance(badBidder.address)).to.eq(
-        TWO_ETH
+        TWO_ZOO
       );
     });
 
-    describe("ETH auction", () => {
+    describe("ZOO auction", () => {
       beforeEach(async () => {
         await auctionHouse
           .connect(bidder)
-          .createBid(0, ONE_ETH, { value: ONE_ETH });
+          .createBid(0, ONE_ZOO, { value: ONE_ZOO });
         const endTime =
           (await auctionHouse.auctions(0)).duration.toNumber() +
           (await auctionHouse.auctions(0)).firstBidTime.toNumber();
@@ -870,9 +870,9 @@ describe("ZooAuction", () => {
         const creatorBalance = await ethers.provider.getBalance(
           await creator.getAddress()
         );
-        const wethBalance = await weth.balanceOf(await creator.getAddress());
+        const tokenBalance = await token.balanceOf(await creator.getAddress());
         await expect(
-          creatorBalance.sub(beforeBalance).add(wethBalance).toString()
+          creatorBalance.sub(beforeBalance).add(tokenBalance).toString()
         ).to.eq(expectedProfit);
       });
 
@@ -907,7 +907,7 @@ describe("ZooAuction", () => {
         expect(logDescription.args.curatorFee.toString()).to.eq(
           "42500000000000000"
         );
-        expect(logDescription.args.auctionCurrency).to.eq(weth.address);
+        expect(logDescription.args.auctionCurrency).to.eq(token.address);
       });
 
       it("should delete the auction", async () => {
