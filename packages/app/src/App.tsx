@@ -17,7 +17,7 @@ import { useWeb3React } from '@web3-react/core'
 // Only pool is included in the main bundle because of it's the most visited page
 const Account = lazy(() => import('./views/Account'))
 const Login = lazy(() => import('./views/Login'))
-const Marketplace = lazy(() => import('./views/Marketplace'))
+const Marketplace = lazy(() => import('./views/MyZoo'))
 // const Splash = lazy(() => import('./views/Splash'))
 
 // This config is required for number formating
