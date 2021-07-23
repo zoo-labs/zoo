@@ -3,15 +3,16 @@ import styled from 'styled-components'
 import {Text} from 'components'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.min.css';
-import { IoPersonCircle } from "react-icons/io5";
-import { FaMoneyBillWave, FaDollarSign } from "react-icons/fa";
-import {Card as Existing } from 'components'
+import { useSelector } from 'react-redux'
 import { useMatchBreakpoints } from 'hooks';
 import Moralis from 'moralis'
+import { AppState } from 'state/index'
 import { useHistory } from 'react-router-dom'
 import { useModal } from "components/Modal";
 import BidModal from 'components/MarketModals/BidModal'
-import YieldModal from 'components/MarketModals/YieldModal'
+import {useMoralisSubscription} from "react-moralis"
+import { Animal } from "entities/zooentities";
+import MarketplaceCard from "./MarketCard"
 
 
 const Container = styled.div<{isMobile?: boolean}>`
@@ -109,17 +110,9 @@ const Subheading = styled(Text)`
     :nth-child(3){
         font-size: 16px;
         font-weight: 600;
-        
     }
 `
-const Card2 = styled(Existing)<{url?: string}>`
-    background-image: url(${({ url }) => `${url}`});
-    background-position: center; 
-    background-repeat: no-repeat;
-    background-size: cover;
-    max-height: 773px;
-    max-width: 425px;
-`
+
 
 
 Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
@@ -129,112 +122,72 @@ Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server"
 
 
 export default function Marketplace() {
+    const animalsState = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
     const {isXs, isSm, isMd} = useMatchBreakpoints()
     const isMobile = isXs || isSm || isMd
     const queryObject = Moralis.Object.extend("Animals")
     const [animals, setAnimals] = React.useState([])
     const history = useHistory()
-    const temp = {}
-    const ypd = {}
 
-    const [onBid] = useModal(
-        <BidModal
-            item = {temp}
-            onDismiss={()=>null}
-        />
-    )
+    // const [onBid] = useModal(
+    //     <BidModal
+    //         item = {temp}
+    //         onDismiss={()=>null}
+    //     />
+    // )
 
-    const onBidInfo = (item) => {
-        temp["CurrentBid"] = item.get("CurrentBid")
-        temp["Name"] = item.get("Name")
-        temp["BuyNow"] = item.get("BuyNow")
-        temp["AnimalId"] = item.get("TokenId")
-        onBid()
-    }
-
-    const [onYield] = useModal(
-        <YieldModal
-            item={temp}
-            onDismiss={() => null}
-            Moralis={Moralis}
-        />
-    )
-
-    const onYieldInfo = (animal) => {
-        ypd['Name'] = animal.get("Name")
-        ypd['currentBlock'] = 'currentBlockNumber'
-        ypd['birthBlock'] = 'birthBlockNumber'
-        ypd['divideBy'] = '28800'
-        ypd['animalYield'] = 'yieldOfAnimal'
-        ypd['price'] = '0'
-        onYield()
-    }
+    // const onBidInfo = (item) => {
+    //     console.log(item)
+    //     temp = {...item}
+    //     onBid()
+    // }
 
 
     React.useEffect(()=>{
+        console.log("animals", animalsState)
         getAnimals()
-    },[])
+    },[animalsState])
 
     const HomeClick = () => {
         history.push("/account")
     }
 
     const getAnimals = async () => {
-        const query = new Moralis.Query(queryObject)
-        query.limit(1000)
-        query.equalTo("Listed", true)
-        const results = await query.find()
-        setAnimals(results)
+
+        // const query = new Moralis.Query(queryObject)
+        // query.limit(1000)
+        // query.equalTo("Listed", true)
+        // const results = await query.find()
+        setAnimals(Object.values(animalsState))
     }
+
+    // useMoralisSubscription("Animals", q => q, [], {
+    //     onUpdate: data => getAnimals(),
+    //   });
 
 
     return (
     <Container isMobile = {isMobile}>
         {   isMobile?
             <Swiper
-                spaceBetween={50}
+                // spaceBetween={50}
                 slidesPerView={isMobile? 1 : 3}
                 onSlideChange={() => console.log('slide change')}
                 onSwiper={(swiper) => console.log(swiper)}
+                direction={'vertical'}
             >
-            {animals.map(item => {
+            {animals.filter((item)=> item.listed === true).map(item => {
                 return (
-                    <SwiperSlide key = {item.get("ObjectID")}>
-                        <Card2 url={item.get("ImageURL")}>
-                            <FirstThird/>
-                            <SecondThird>
-                               
-                                <IconButton onClick={() => { onYieldInfo(item) }}><FaMoneyBillWave /><Text as="span">Yield</Text></IconButton>
-                                <IconButton onClick={()=>{onBidInfo(item)}}><FaDollarSign /><Text as = "span">Bid</Text></IconButton>
-                                <IconButton onClick={()=>{HomeClick()}}><IoPersonCircle/><Text as = "span">Home</Text></IconButton>
-                            </SecondThird>
-                            <FinalThird>
-                                <MainHeading bold as = "p">{item.get("Name")}</MainHeading>  
-                                <Subheading bold as = "p">{item.get("Rarity")}</Subheading>  
-                                <Subheading bold as = "p">{`Born: ${item.get("Born")}`}</Subheading>  
-                            </FinalThird>
-                        </Card2>
-                        
+                    <SwiperSlide key = {item.tokenId}>
+                        <MarketplaceCard item={item} />
                     </SwiperSlide>
                 )
             })}
             </Swiper>
             : 
-            animals.map(item => {
+            animals.filter((item)=> item.listed === true).map(item => {
                 return (
-                    <Card2 url={item.get("ImageURL")} key = {item.get("ObjectID")}>
-                    <FirstThird/>
-                    <SecondThird>
-                        <IconButton onClick={() => { onYieldInfo(item) }}><FaMoneyBillWave /><Text as = "span">Yield</Text></IconButton>
-                        <IconButton onClick={()=>{onBidInfo(item)}}><FaDollarSign /><Text as = "span">Bid</Text></IconButton>
-                        <IconButton onClick={()=>{HomeClick()}}><IoPersonCircle/><Text as = "span">Home</Text></IconButton>
-                    </SecondThird>
-                    <FinalThird>
-                        <MainHeading bold as = "p">{item.get("Name")}</MainHeading>  
-                        <Subheading bold as = "p">{item.get("Rarity")}</Subheading>  
-                        <Subheading bold as = "p">{`Born: ${item.get("Born")}`}</Subheading>  
-                    </FinalThird>
-                </Card2>
+                    <MarketplaceCard item={item} />
                 )
             })
         }   

@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Route, useRouteMatch } from "react-router-dom";
-// import { AppState } from "state"
-// import { useSelector } from "react-redux"
+import { AppState } from "state"
+import { useSelector } from "react-redux"
 import { useWeb3React } from "@web3-react/core";
 import styled from "styled-components";
+import { Swiper, SwiperSlide } from 'swiper/react';
 import FlexLayout from "components/layout/Flex";
 import Page from "components/layout/Page";
 import { orderBy, parseInt } from "lodash";
@@ -16,17 +17,28 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  CardContent,
   VideoPlayer
 } from "components";
+// import HatchDialog from "components/HatchDialog"
 import { VscLoading } from "react-icons/vsc";
 import { useModal } from "components/Modal";
 import HatchModal from "components/ZooModals/HatchModal"
 // import { ViewMode } from "./components/types"
+import "swiper/swiper.min.css";
+import "swiper/components/pagination/pagination.min.css"
+import "./styles.css";
+import SwiperCore, {
+  Pagination
+} from 'swiper/core';
+import MyMP16OSFFont from '../fonts/MP16OSF.ttf'
+
+// install Swiper modules
+SwiperCore.use([Pagination]);
 
 const IconCont = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 20px;
   & svg {
     color: ${({ theme }) => theme.colors.primary};
     animation: spin 2s ease infinite;
@@ -51,8 +63,58 @@ const ImageContainer = styled.div`
 `
 
 const InfoBlock = styled.div`
-  padding: 24px;
+  padding: 10px;
+  text-align: center; 
+  position: absolute;
+  bottom: 0; 
+  width: 100%;
+  background-color: #ffffff6b;
 `;
+
+const TextWrapper = styled.div`
+  text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 550;
+  line-height: 1.5;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+`
+
+const BreedWrapper = styled.div`
+  text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
+  font-size: 20px;
+  color: #ffffff;
+  font-weight: 550;
+  line-height: 1.5;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+`
+
+const RowTitle = styled.div`
+  @font-face{
+    font-family:'MyMP16OSFFont';
+    src:url('${MyMP16OSFFont}') format('TrueType');   
+  }
+  color: white;
+  font-family: 'MyMP16OSFFont'; 
+  font-size: 20px;
+  margin-t: 15px;
+  margin-bottom: 15px;
+`
+
+const RowLayout = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  & > * {
+    min-width: calc(100vw - 20px);
+    max-width: 31.5%;
+    width: 100%;
+    margin: 0 8px;
+    margin-bottom: 32px;
+  }
+`
 
 const _loadCount = 9;
 
@@ -80,89 +142,37 @@ const EggMarketplace: React.FC = () => {
     />
 )
 
-  // const allEggs = useSelector<AppState, AppState['cryptozoo']>((state) => state.cryptozoo.allEggs)
+  const allAnimals = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
+  const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
 
-  const allAnimals = {
-      1: {
-         tokenId: "1",
-         name: "Red Panda",
-         description: "Mystery",
-         yield: "543",
-         boost: "5678",
-         rarity: "Legendary",
-         dob: "1627064176",
-         imageUrl:
-            "https://i2.wp.com/bestlifeonline.com/wp-content/uploads/2018/10/red-panda-raising-fist.jpg?resize=640%2C360&ssl=1",
-      },
-      2: {
-         tokenId: "2",
-         name: "Suzanne",
-         description: "LOL",
-         yield: "4223",
-         boost: "2",
-         rarity: "Rare",
-         dob: "1627064176",
-         imageUrl: "https://ichef.bbci.co.uk/images/ic/1200x675/p02k8mcv.jpg",
-      },
-      3: {
-         tokenId: "3",
-         name: "Cool Doggo",
-         description: "WOOF wO0F",
-         yield: "321",
-         boost: "2",
-         rarity: "Uncommon",
-         dob: "1627064176",
-         imageUrl:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIuXjTOdhD--589Qjr310qX4IgAZrz_4-RAw&usqp=CAU",
-      },
-      4: {
-         tokenId: "4",
-         name: "Seal",
-         description: "BARK",
-         yield: "31",
-         boost: "22",
-         rarity: "Common",
-         dob: "1627064176",
-         imageUrl:
-            "https://sites.psu.edu/siowfa16/files/2016/09/baby-seal-29vsgyf.jpg",
-      },
-   }
+  // useEffect(() => {
+  //   const showMoreData = (entries) => {
+  //     const [entry] = entries;
+  //     if (entry.isIntersecting) {
+  //       setNumVisData((dataCurrent) => dataCurrent + _loadCount);
+  //     }
+  //   };
 
-   const allEggs = {
-      5: {
-         tokenId: "5",
-         parent1: "1",
-         parent2: "2",
-         basic: true
-      },
-      6: {
-         tokenId: "6",
-         parent1: "3",
-         parent2: "4",
-         basic: false
-      },
-    }
+  //   if (!observerIsSet) {
+  //     const loadMoreObserver = new IntersectionObserver(showMoreData, {
+  //       rootMargin: "0px",
+  //       threshold: 1,
+  //     });
+  //     loadMoreObserver.observe(bottomRef.current);
+  //     setObserverIsSet(true);
+  //   }
+  // }, [observerIsSet]);
+  // const shownData = (data) => {
+  //   return data.slice(0, numVisData);
+  // };
 
-  useEffect(() => {
-    const showMoreData = (entries) => {
-      const [entry] = entries;
-      if (entry.isIntersecting) {
-        setNumVisData((dataCurrent) => dataCurrent + _loadCount);
-      }
-    };
+  const handleHatch = () => {
+    // useModal(
+    //   <HatchDialog />
+    // )
+    console.log('hatch')
+  }
 
-    if (!observerIsSet) {
-      const loadMoreObserver = new IntersectionObserver(showMoreData, {
-        rootMargin: "0px",
-        threshold: 1,
-      });
-      loadMoreObserver.observe(bottomRef.current);
-      setObserverIsSet(true);
-    }
-  }, [observerIsSet]);
-  const shownData = (data) => {
-    return data.slice(0, numVisData);
-  };
   const renderAnimals = (): JSX.Element => {
     const animalData = [];
     // const updatedData = []
@@ -186,32 +196,34 @@ const EggMarketplace: React.FC = () => {
 
 
     return (
-      <FlexLayout>
+      <RowLayout>
         <Route exact path={`${path}`}>
-          {shownData(animalData).map((animal) => (
-            <Card>
-              {/* <CardHeader>
-                <Heading color="cardLabel">
-                  {animal.name}
-                </Heading>
-              </CardHeader> */}
-              <CardBody style={{backgroundImage: `url("${animal.imageURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 500}}>
-                <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{animal.name}</Heading>
-              </CardBody>
-                <InfoBlock style={{textAlign: 'center'}}>
-                  <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{`BREED`}</Heading>
-                </InfoBlock>
-            </Card>
+          <Swiper slidesPerView={3} spaceBetween={10} pagination={{"clickable": true}} className="mySwiper">
+          {/* {shownData(animalData).map((animal) => ( */}
+          {(animalData).map((animal) => (
+            <SwiperSlide>
+              <Card key={animal.id}>
+                <CardBody style={{backgroundImage: `url("${animal.imageUrl}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250}}>
+                  <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{animal.name}</Heading>
+                </CardBody>
+                  <InfoBlock>
+                    <BreedWrapper>{`BREED`}</BreedWrapper>
+                  </InfoBlock>
+              </Card>
+            </SwiperSlide>
+              // <SwiperSlide>Slide 1</SwiperSlide>
           ))}
+          </Swiper>
         </Route>
         <Route exact path={`${path}/history`}>
-          {shownData(animalData).map((animal) => (
+          {/* {shownData(animalData).map((animal) => ( */}
+          {(animalData).map((animal) => (
             <Card
             // key={JSON.stringify(token)}
             />
           ))}
         </Route>
-      </FlexLayout>
+      </RowLayout>
     );
   };
 
@@ -226,31 +238,35 @@ const EggMarketplace: React.FC = () => {
       });
     });
     empty = eggData.length === 0 && Object.keys(allEggs).length !== 0;
-    const basicEggURL = 'static/images/basic.png'
-    const hybridEggURL = 'static/images/hybrid.png'
+    const basicEggURL = window.location.origin + '/static/images/basic.png'
+    const hybridEggURL = window.location.origin + '/static/images/hybrid.png'
 
     return (
-      <FlexLayout>
+      <RowLayout>
         <Route exact path={`${path}`}>
-          {shownData(eggData).map((egg) => (
-            <Card style={{backgroundColor: '#000000'}}>
-              <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250}}>
-                <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{egg.name}</Heading>
-              </CardBody>
-              <InfoBlock style={{textAlign: 'center'}} onClick={onHatch}>
-                <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{`HATCH`}</Heading>
-              </InfoBlock>
-            </Card>
+          <Swiper slidesPerView={3} spaceBetween={10} pagination={{"clickable": true}} className="mySwiper">
+          {(eggData).map((egg) => (
+            <SwiperSlide key={egg.id}>
+              <Card style={{backgroundColor: '#000000'}}>
+                <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 150, padding: 10}}>
+                  <TextWrapper>{egg.name}</TextWrapper>
+                </CardBody>
+                <InfoBlock style={{textAlign: 'center', backgroundColor: '#ffffff38', padding: 10}} onClick={onHatch}>
+                  <TextWrapper >{`HATCH`}</TextWrapper>
+                </InfoBlock>
+              </Card>
+            </SwiperSlide>
           ))}
+          </Swiper>
         </Route>
         <Route exact path={`${path}/history`}>
-          {shownData(eggData).map((egg) => (
+          {(eggData).map((egg) => (
             <Card
             // key={JSON.stringify(token)}
             />
           ))}
         </Route>
-      </FlexLayout>
+      </RowLayout>
     );
   };
 
@@ -262,26 +278,26 @@ const EggMarketplace: React.FC = () => {
 
   const renderZoo = () => {
     return (
-      <>
+      <div>
+        <Page>
         {renderEggs()}
+        <RowTitle>Breedable Animals</RowTitle>
         {renderAnimals()}
-        <IconCont ref={bottomRef}>
+        <RowTitle>Hybrid Animals</RowTitle>
+        {/* <IconCont ref={bottomRef}>
           {" "}
           {numVisData < Object.keys(allEggs).length ? (
             <VscLoading size={36} />
           ) : null}{" "}
-        </IconCont>
-      </>
+        </IconCont> */}
+      </Page>
+    </div>
     )
   }
 
   return (
-    <div>
-      <Page>
-        {playVideo ? renderVideo() : renderZoo()}
-      </Page>
-    </div>
-  );
+    playVideo ? renderVideo() : renderZoo()
+  )
 };
 
 export default EggMarketplace;
