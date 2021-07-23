@@ -4,12 +4,17 @@ import {Modal as Existing, Text as Standard} from 'components'
 import BorderButton from 'components/Button/BorderButton'
 import { useModal } from "components/Modal";
 import Confirmation from "./ConfirmationModal"
+import Moralis from 'moralis'
+import { useWeb3React } from '@web3-react/core'
+
+Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
+
+Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server"
 
 
 interface Props {
     onDismiss?: () => void
     item: any
-    Moralis: any
 }
 
 const Modal = styled(Existing)`
@@ -28,15 +33,36 @@ const Text = styled(Standard)`
 
 `
 
-const confirmBuy = () => {
-    alert("buy")
-}
-const confirmBid = () => {
-    alert("bid")
-}
 
-const BidModal: React.FC<Props> = ({onDismiss = () => null, item, Moralis}) => {
+
+const BidModal: React.FC<Props> = ({onDismiss = () => null, item}) => {
     const [value, setValue] = React.useState(item.CurrentBid+1)
+    const {account} = useWeb3React()
+    const confirmBuy = async() => {
+        const queryObject = Moralis.Object.extend("Animals")
+        const query = new Moralis.Query(queryObject)
+        query.limit(1000)
+        query.equalTo("TokenId", item.AnimalId)
+        const results = await query.find()
+        const currentObject = results[0]
+        currentObject.set("Listed", false)
+        currentObject.set
+        currentObject.save()
+        onDismiss()
+    }
+    const confirmBid = async() => {
+            console.log(value)
+            const queryObject = Moralis.Object.extend("Animals")
+            const query = new Moralis.Query(queryObject)
+            query.limit(1000)
+            query.equalTo("TokenId", item.AnimalId)
+            const results = await query.find()
+            const currentObject = results[0]
+            currentObject.set("CurrentBid", value)
+            currentObject.save("OwnerAccount", account)
+            onDismiss()
+    }
+
     const [onConfirmBuy] = useModal(
         <Confirmation
             confirmation = {confirmBuy}
@@ -64,7 +90,6 @@ const BidModal: React.FC<Props> = ({onDismiss = () => null, item, Moralis}) => {
             setValue(newVal)
         }
     }
-
 
     return (
         <>
