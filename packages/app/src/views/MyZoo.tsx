@@ -17,8 +17,11 @@ import {
   CardBody,
   CardFooter,
   CardContent,
+  VideoPlayer
 } from "components";
 import { VscLoading } from "react-icons/vsc";
+import { useModal } from "components/Modal";
+import HatchModal from "components/ZooModals/HatchModal"
 // import { ViewMode } from "./components/types"
 
 const IconCont = styled.div`
@@ -62,6 +65,20 @@ const EggMarketplace: React.FC = () => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const { isXl, isXs } = useMatchBreakpoints();
   const chainIdSet = chainId === undefined ? "1" : String(chainId);
+  const [ playVideo, setPlayVideo ] = useState(false)
+
+  const hatchEgg = () => {
+    console.log("HATCH")
+    setPlayVideo(true)
+  }
+
+  const [onHatch] = useModal(
+    <HatchModal
+
+        confirmation={hatchEgg}
+        onDismiss={()=>null}
+    />
+)
 
   // const allEggs = useSelector<AppState, AppState['cryptozoo']>((state) => state.cryptozoo.allEggs)
 
@@ -220,7 +237,7 @@ const EggMarketplace: React.FC = () => {
               <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250}}>
                 <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{egg.name}</Heading>
               </CardBody>
-              <InfoBlock style={{textAlign: 'center'}}>
+              <InfoBlock style={{textAlign: 'center'}} onClick={onHatch}>
                 <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{`HATCH`}</Heading>
               </InfoBlock>
             </Card>
@@ -237,9 +254,15 @@ const EggMarketplace: React.FC = () => {
     );
   };
 
-  return (
-    <div>
-      <Page>
+  const renderVideo = () => {
+    return (
+      <VideoPlayer videoPath="hatch_mobile_basic.mp4" onDone={() => setPlayVideo(false)}/>
+    )
+  }
+
+  const renderZoo = () => {
+    return (
+      <>
         {renderEggs()}
         {renderAnimals()}
         <IconCont ref={bottomRef}>
@@ -248,6 +271,14 @@ const EggMarketplace: React.FC = () => {
             <VscLoading size={36} />
           ) : null}{" "}
         </IconCont>
+      </>
+    )
+  }
+
+  return (
+    <div>
+      <Page>
+        {playVideo ? renderVideo() : renderZoo()}
       </Page>
     </div>
   );
