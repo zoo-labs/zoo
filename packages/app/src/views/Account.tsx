@@ -8,7 +8,6 @@ import Body from 'components/layout/Body'
 import { useModal } from "components/Modal";
 import BuyEggs from "components/BuyEggs";
 
-
 const HeadingContainer = styles.div`
     width: 100%;
     display: flex;
