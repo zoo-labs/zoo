@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Modal } from '../Modal'
 import { Label, Text } from 'components/Text'
+import BlackBorderButton from 'components/Button/BlackBorderButton'
 
 const ColumnContainer = styled.div`
   display: flex;
@@ -34,14 +35,12 @@ const EggInput = styled.input.attrs({
   min: 1,
   defaultValue: 1
 })`
-  width: 90%;
-  margin: auto;
+  width: 100%;
+  line-height: 1.5rem;
 `
 
 const SubmitBtn = styled.input.attrs({ 
   type: 'submit',
-  min: 1,
-  defaultValue: 1
 })`
   width: 40%;
   margin: auto;
@@ -58,25 +57,30 @@ const tsxStatus = {
 }
 
 type EggModalProps = {
-  onDismiss?: () => void
+  onDismiss?: () => void,
+  headerColor?: string
 }
 
-const BuyEggs: React.FC<EggModalProps> = ({ onDismiss }) => {
+const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
   return (
     <ModalWrapper>
       <Modal
-        title='How many eggs?'
+        title='How many egg?'
         onDismiss={onDismiss}
         style={{ justifyContent: 'space-between' }}
+        headerColor={headerColor}
       >
         <Text
           fontSize="20px"
-          style={{ whiteSpace: 'nowrap', marginTop: '5px', marginLeft: '28px' }}
+          color="black"
+          style={{ whiteSpace: 'nowrap', marginTop: '5px'}}
         >
           AMOUNT
         </Text>
         <EggInput type="number" />
-        <SubmitBtn />
+        <BlackBorderButton>
+          Submit
+        </BlackBorderButton>
       </Modal>
     </ModalWrapper>
   )
