@@ -11,6 +11,7 @@ import ToastListener from './components/ToastListener'
 import PageLoader from './components/Svg/Icons/LoadingLogo'
 import history from './routerHistory'
 import { PrivateRoute } from 'components/PrivateRoute'
+import { useWeb3React } from '@web3-react/core'
 
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page
@@ -71,8 +72,9 @@ const App: React.FC = () => {
   }, [])
 
   useEagerConnect()
+  const { chainId } = useWeb3React()
 
-  const signedIn = window.localStorage.getItem("connectorId")
+  const signedIn = chainId && window.localStorage.getItem("connectorId")
 
   return (
     <Suspense fallback={null}>
