@@ -298,6 +298,11 @@ task('balance', `Prints an account's balance`)
     console.log(formatUnits(balance, 'ether'), 'ETH')
   })
 
+task('Faucet', `Gives 10K ZOO to each signer wallet`)
+  .setAction(async ({ ethers }) => {
+
+  })
+
 function send(signer, txparams) {
   return signer.sendTransaction(txparams, (error, transactionHash) => {
     if (error) {

@@ -5,8 +5,8 @@ import useToast from 'hooks/useToast'
 import { AppState } from 'state'
 
 const ToastListener = () => {
-  // const toasts: Toast[] = useSelector((state: AppState) => state.toasts)
-  const toasts: Toast[] = []
+  const toasts: Toast[] = useSelector((state: AppState) => state.toasts.data)
+  // const toasts: Toast[] = []
   const { remove } = useToast()
 
   const handleRemove = (id: string) => remove(id)
