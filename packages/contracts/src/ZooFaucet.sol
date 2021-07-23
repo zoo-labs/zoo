@@ -1,4 +1,6 @@
-pragma solidity 0.8.4;
+// SPDX-License-Identifier: MIT
+
+pragma solidity >=0.8.4;
 
 abstract contract Token {
     function transfer(address to, uint256 amount) public virtual returns (bool);
@@ -23,7 +25,7 @@ contract ZooFaucet {
         _;
     }
 
-    constructor(address _zooToken) public {
+    constructor(address _zooToken) {
         owner = payable(msg.sender);
         zooToken = Token(_zooToken);
     }
