@@ -82,7 +82,7 @@ const App: React.FC = () => {
         <ResetCSS />
         <GlobalStyle />
         <Menu>
-          <SuspenseWithChunkError fallback={<PageLoader />}>
+          <SuspenseWithChunkError fallback={<></>}>
             <Switch>
               {/* Zswap Routes  */}
               {/* <Route path="/marketplace" exact>
