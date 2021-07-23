@@ -11,14 +11,11 @@ contract ZooDrop {;
     uint256 _currentSupply;
 
     //Declare an Event
-    event BuyEgg(address indexed _from, uint256 _eggTokenId);
-    event Hatch(address indexed _from, uint256 _animalTokenId);
-    event Burn(uint256 _animalTokenId);
+    event BuyEgg(address indexed _from);
+    event Hatch(address indexed _from)
+    event Burn(address indexed _from, uint256 _animalTokenId);
+    event FreeAnimal(address indexed _from, uint256 _animalTokenId, uint256 _yield);
     // event Breed(address indexed _from, uint256 _animalTokenId1, uint256 _animalTokenId2, uint256 _eggTokenId);
-
-    //Emit an event
-    emit Deposit(msg.sender, _id, msg.value);
-
 
 
     // temp Animal struct
@@ -29,6 +26,7 @@ contract ZooDrop {;
         uint256 yield ;
         uint256 boost;
         uint256 rarity;
+        uint256 id;
     }
 
     struct Egg {
@@ -82,59 +80,70 @@ contract ZooDrop {;
         token.approve(msg.sender, 100);
         token.transferFrom(msg.sender, address(this), 100);
         media.mint(_mediaData, _bidShares);
+        emit BuyEgg(msg.sender);
         return 0;
     }
 
     // Burn egg and randomly return an animal NFT 
     function hatchEgg(uint256 tokenID) public pure returns (bool) {
+        // need to grab the egg data to check if hybrid and if it has parents
         // need to check the hatch time delay
-        // need to check if it's a regular or hybrid egg
-        
-        // will require user owns the egg
+                
         media.burn(tokenID) // zoomedia.burnToken
-        emit burn(tokenId);
+        emit Burn(msg.sender, tokenId);
 
-        // get the probability for an animal    
+        // get the rarity for an animal    
         uint256 rarity = random(); 
 
         // if not hybrid
         if (egg.parent1 == "") {
             string animal = pickAnimal(rarity)
             MediaData memory data = MediaData({
-                tokenURI: "https://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/" + animal + "/" + animal + ".jpg",
-                metadataURI: "www.example2.com",
-                contentHash: this part  ,
-                metadataHash this part,
-
+                tokenURI: "www.tokenURI_for_picked_animal.com",
+                metadataURI: "www.metadataURI_for_picked_animal.com",
+                contentHash: "A SHA256 hash of the content pointed to by tokenURI",
+                metadataHash "dA SHA256 hash of the content pointed to by metadataURI"
+            })
+        } else {
+        // if hybrid
+            uint256 oneOrTwo = rarity % 2;
+            ZooMedia.Animal[2] possibleAnimals = ZooMedia.hybrid_pair_map[ZooMedia.concatAnimalIds(egg.parent1, egg.parent2)];
+            string animal = possibleAnimals[oneOrTwo];
+            MediaData memory data = MediaData({
+                tokenURI: "www.tokenURI_for_picked_animal.com",
+                metadataURI: "www.metadataURI_for_picked_animal.com",
+                contentHash: "A SHA256 hash of the content pointed to by tokenURI",
+                metadataHash "dA SHA256 hash of the content pointed to by metadataURI"
             })
         }
-        // if hybrid
+
 
 
 
         // mint by grabbing the animal 
-        // pick an animal create the data?? then mint using that data and the bidshare. animal data has yield info?
+        // pick an animal. create the data?? then mint using that data and the bidshare. animal data has yield info?
 
         //grab tokenURI for the animal
         //grab metadataURI for the animal      
+        IMarket.BidShares bidShare = IMarket.BidShares({});
 
         media.mint(data, bidshare) // this time not an egg but an animal
         _animalDOB[tokenID] = now;
 
-        emit hatch();
+        emit hatch(msg.sender);
         return true;
     }
 
     // Take two animals and create a new hybrid egg which can hatch into a
     // hybrid animal
     function breedAnimal(uint256 _animal1, uint256 _animal2)) public pure returns (uint256) {
+        // don't we need to check and make sure both animals are base animals?
         Egg hybridEgg = Egg({parent1: _animal1, parent2: _animal2});
         MediaData data = MediaData({
-            tokenURI: "https://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/" + animal + "/" + animal + ".jpg",
+            tokenURI: "www.example.com",
             metadataURI: "www.example2.com",
-            contentHash: this part  ,
-            metadataHash this part,
-
+            contentHash: "dummy_data",
+            metadataHash "dummy_data"
         });
         IMarket.BidShares bidShare = IMarket.BidShares({});
         media.mint(data, bidShare);
@@ -150,6 +159,7 @@ contract ZooDrop {;
             string rarity = animals[_tokenID].rarity;
             // burn the token
             media.burn(_tokenID);
+            emit Burn(_owner, _tokenID)
             // calculate age of animal : probably dont have to use Decimal.sol because we need whole days 
             uint256 age = now-_animalDOB[_tokenID] / 60 / 60 / 24;
             // calculate daily yield
@@ -158,6 +168,7 @@ contract ZooDrop {;
             uint256 yield = Decimal.mul(dailyYield, Decimal.div(_boost[_tokenID], 100));
             // transfer yield
             token.transferFrom(_zooMaster, _owner, yield);
+            emit freeAnimal(_owner, _tokenId, yield)
         return true;
     }  
 
