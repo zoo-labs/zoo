@@ -52,7 +52,7 @@ const PanelFooter: React.FC<Props> = ({
         <SocialLinks />
       </SocialEntry> */}
       <SettingsEntry>
-        <ThemeSwitcher isDark={isDark} toggleTheme={toggleTheme} />
+        {/* <ThemeSwitcher isDark={isDark} toggleTheme={toggleTheme} /> */}
       </SettingsEntry>
     </Container>
   );

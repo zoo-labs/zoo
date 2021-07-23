@@ -65,7 +65,7 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss }) => {
   return (
     <ModalWrapper>
       <Modal
-        title='How many egg?'
+        title='How many eggs?'
         onDismiss={onDismiss}
         style={{ justifyContent: 'space-between' }}
       >
