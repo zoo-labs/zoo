@@ -37,35 +37,6 @@ const ConnectModal: React.FC<Props> = ({ login, onDismiss = () => null }) => {
         mb="8px"
       />
     ))}
-    <Button
-        width="100%"
-        variant="tertiary"
-        onClick={() => {
-          bscSwith("bsc")
-        }}
-        style={{ justifyContent: "space-between", marginBottom: "8px" }}
-        id="wallet-connect-binancesmartchain"
-      >
-        <Text bold color="primary" mr="16px">
-          Binance Smart Chain
-        </Text>
-        <BSC width="32px" />
-    </Button>
-    <Button
-        width="100%"
-        variant="tertiary"
-        onClick={() => {
-          bscSwith("chapel")
-        }}
-        style={{ justifyContent: "space-between", marginBottom: "0px" }}
-        // mb="0"
-        id="wallet-connect-binancesmartchain"
-      >
-        <Text bold color="primary" mr="16px">
-          Binance Smart Chain Testnet
-        </Text>
-        <BSC width="32px" />
-    </Button>
   </Modal>
 )}
 
