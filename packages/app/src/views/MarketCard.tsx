@@ -103,8 +103,8 @@ const MarketplaceCard: React.FC<Props> =  ({ item }) => {
     const HomeClick = () => {
         history.push("/account")
     }
-    // const date = new Date(item.dob * 1000)
-    // const StringDate = date.toLocaleDateString("en-US")
+    const date = new Date(Number(item.dob) * 1000)
+    const StringDate = date.toLocaleDateString("en-US")
 
     const [onYield] = useModal(
         <YieldModal
@@ -133,8 +133,8 @@ const MarketplaceCard: React.FC<Props> =  ({ item }) => {
         onBid()
     }
   
-    const timestampRaw = new Date(Number(item.dob) * 1000).toISOString()
-    const timestampConverted = timestampRaw.replace('T', ' ').substring(0, timestampRaw.length - 5)
+    // const timestampRaw = new Date(Number(item.dob) * 1000).toISOString()
+    // const timestampConverted = timestampRaw.replace('T', ' ').substring(0, timestampRaw.length - 5)
 
     return(
         <>
@@ -148,7 +148,7 @@ const MarketplaceCard: React.FC<Props> =  ({ item }) => {
                 <FinalThird>
                     <MainHeading bold as = "p">{item.name}</MainHeading>  
                     <Subheading bold as = "p">{item.rarity}</Subheading>  
-                    <Subheading bold as = "p">{`Born: ${timestampConverted}`}</Subheading>  
+                    <Subheading bold as = "p">{`Born: ${StringDate}`}</Subheading>  
                 </FinalThird>
             </Card>
         </>
