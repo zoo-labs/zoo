@@ -1,11 +1,11 @@
-pragma solidity >=0.8.4;
+// SPDX-License-Identifier: MIT
 
-// pragma solidity ^0.4.24;
+pragma solidity >=0.8.4;
 
 contract CommitReveal {
     uint8 public max = 100;
 
-    constructor() public {}
+    constructor() {}
 
     struct Commit {
         bytes32 commit;
