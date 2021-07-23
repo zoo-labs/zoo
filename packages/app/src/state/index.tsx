@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 import toastsReducer from "./toasts";
-import eggsReducer from "./toasts";
+import zooReducer from "./zoo"
 
 
 const store = configureStore({
     devTools: process.env.NODE_ENV !== 'production',
     reducer: {
       toasts: toastsReducer,
-      eggs: eggsReducer,
+      zoo: zooReducer,
     },
 })
   
