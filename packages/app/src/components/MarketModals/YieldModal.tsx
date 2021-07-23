@@ -3,7 +3,7 @@ import Sheet from 'react-modal-sheet';
 
 interface Props {
     onDismiss?: () => null
-    item: any
+    item?: any
     Moralis?: any
 }
 
