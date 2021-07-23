@@ -21,9 +21,20 @@ const rainbowAnimation = keyframes`
 `;
 
 const LinkLabel = styled.div<{ isPushed: boolean }>`
-  color: ${({ isPushed, theme }) => (isPushed ? theme.colors.textSubtle : "transparent")};
-  transition: color 0.4s;
+  color: ${({ isPushed, theme }) => (isPushed ? theme.colors.text : "transparent")};
+  transition: color 0.2s;
   flex-grow: 1;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  line-height: 1.5;
+  margin: 8px 24px 8px 0px;
+  text-align: right;
+
+  &:hover {
+    color: ${({ isPushed, theme }) => (isPushed ? theme.colors.secondary : "transparent")};
+  }
+  
 `;
 
 const MenuEntry = styled.div<Props>`
@@ -32,10 +43,9 @@ const MenuEntry = styled.div<Props>`
   align-items: center;
   height: ${MENU_ENTRY_HEIGHT}px;
   padding: ${({ secondary }) => (secondary ? "0 32px" : "0 16px")};
-  font-size: ${({ secondary }) => (secondary ? "14px" : "16px")};
-  background-color: ${({ secondary, theme }) => (secondary ? theme.colors.background : "transparent")};
+  font-size: ${({ secondary }) => (secondary ? "16px" : "18px")};
+  font-weight: 600;
   color: ${({ theme }) => theme.colors.textSubtle};
-  box-shadow: ${({ isActive, theme }) => (isActive ? `inset 4px 0px 0px ${theme.colors.primary}` : "none")};
 
   a {
     display: flex;
@@ -45,11 +55,11 @@ const MenuEntry = styled.div<Props>`
   }
 
   svg {
-    fill: ${({ theme }) => theme.colors.textSubtle};
+    fill: ${({ theme }) => theme.colors.text};
   }
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.tertiary};
+    border-bottom: ${({ theme }) => `3px solid ${theme.colors.secondary}`};
   }
 
   // Safari fix
@@ -58,10 +68,11 @@ const MenuEntry = styled.div<Props>`
   &.rainbow {
     background-clip: text;
     animation: ${rainbowAnimation} 3s ease-in-out infinite;
-    background: ${({ theme }) => theme.colors.gradients.bubblegum};
+    background: ${({ theme }) => theme.colors.secondary};
     background-size: 400% 100%;
   }
 `;
+
 MenuEntry.defaultProps = {
   secondary: false,
   isActive: false,
@@ -70,7 +81,7 @@ MenuEntry.defaultProps = {
 
 const LinkStatus = styled(Text)<{ color: keyof Colors }>`
   border-radius: ${({ theme }) => theme.radii.default};
-  padding: 0 8px;
+  padding: 0 16px;
   border: 2px solid;
   border-color: ${({ theme, color }) => theme.colors[color]};
   box-shadow: none;
