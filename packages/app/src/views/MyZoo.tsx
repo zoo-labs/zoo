@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, cloneElement } from "react";
 import { Route, useRouteMatch } from "react-router-dom";
 import { AppState } from "state"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useWeb3React } from "@web3-react/core";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Modal, useModal } from "components/Modal";
 import FlexLayout from "components/layout/Flex";
 import Page from "components/layout/Page";
 import { orderBy, parseInt } from "lodash";
@@ -13,7 +14,7 @@ import {
   Text,
   useMatchBreakpoints,
   Heading,
-  Card,
+  Card as Existing,
   CardBody,
   EggCard
 } from "components";
@@ -26,6 +27,11 @@ import "swiper/components/pagination/pagination.min.css"
 // import SwiperCore, {
 //   Pagination
 // } from 'swiper/core';
+import { Animal } from "entities/zooentities";
+import { addAnimal } from "state/actions";
+import { ImInsertTemplate } from "react-icons/im";
+import BorderButton from "components/Button/BorderButton";
+import { FaLessThanEqual } from "react-icons/fa";
 
 // install Swiper modules
 // SwiperCore.use([Pagination]);
@@ -107,6 +113,10 @@ const RowLayout = styled.div`
   }
 `
 
+const Card = styled(Existing)<{selected?: boolean}>`
+  border: ${({ selected }) => selected? '2px solid white' : null}
+`
+
 const _loadCount = 9;
 
 const EggMarketplace: React.FC = () => {
@@ -114,6 +124,7 @@ const EggMarketplace: React.FC = () => {
   const {account} = useWeb3React()
   const { path } = useRouteMatch();
   const { chainId } = useWeb3React();
+  const dispatch = useDispatch()
   const [numVisData, setNumVisData] = useState(_loadCount);
   const [observerIsSet, setObserverIsSet] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -123,26 +134,75 @@ const EggMarketplace: React.FC = () => {
   const allAnimals = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
 
-  // useEffect(() => {
-  //   const showMoreData = (entries) => {
-  //     const [entry] = entries;
-  //     if (entry.isIntersecting) {
-  //       setNumVisData((dataCurrent) => dataCurrent + _loadCount);
-  //     }
-  //   };
+  interface Props {
+    onDismiss?: () => void
+    breed: any
+}
 
-  //   if (!observerIsSet) {
-  //     const loadMoreObserver = new IntersectionObserver(showMoreData, {
-  //       rootMargin: "0px",
-  //       threshold: 1,
-  //     });
-  //     loadMoreObserver.observe(bottomRef.current);
-  //     setObserverIsSet(true);
-  //   }
-  // }, [observerIsSet]);
-  // const shownData = (data) => {
-  //   return data.slice(0, numVisData);
-  // };
+  let array = []
+
+  const breed = (onDismiss) => {
+    const animal1: Animal = array[0]
+    const animal2: Animal = array[1]
+    const ID = Object.keys(allAnimals).length
+    animal1.bred = true
+    animal2.bred = true
+
+    const newAnimal: Animal = {
+        tokenId: (ID + 1).toString(),
+        name: "Puggerpillar",
+        imageUrl: "https://i.redd.it/6tt43ut2af331.jpg",
+        owner: account,
+        bloodline: "hybrid",
+        listed: false,
+        rarity: "Legendary",
+        yield: "2342",
+        description: "This little guy",
+        dob: Date.now().toString(),
+        boost: "2432",
+        bred: false
+    }
+
+    array = []
+    dispatch(addAnimal(animal1))
+    dispatch(addAnimal(animal2))
+    dispatch(addAnimal(newAnimal))
+    onDismiss()
+    
+  }
+
+  const breedClick = (animal) => {
+      const selected = Object.values(allAnimals).filter((item) => item.selected)
+      const toSet:Animal = {...animal}
+      toSet.selected = animal.selected ? false : true
+
+      if(!animal.selected && selected.length === 1){
+          const temp = [{...selected[0]}, {...animal}]
+          array = temp
+          onConfirm()
+      }
+      dispatch(addAnimal(toSet))
+  }
+
+  const Confirmation: React.FC<Props> = ({onDismiss = () => null, breed}) => {
+      const animal1 = array[0]
+      const animal2 = array[1]
+    return (
+        <Modal title="Are you Sure?" onDismiss={onDismiss}>
+            <Text>{`You want to breed 1 ${animal1.name} and 1 ${animal2.name}?`}</Text>
+            <BorderButton onClick={()=>onDismiss()}>Cancel</BorderButton>
+            <BorderButton onClick={()=>breed(onDismiss)}>Confirm</BorderButton>
+        </Modal>
+    )
+}
+
+const [onConfirm] = useModal(
+  <Confirmation 
+    onDismiss={()=>null}
+    breed={breed}
+  />
+)
+
 
 
   const renderAnimals = (hybrid): JSX.Element => {
@@ -155,7 +215,6 @@ const EggMarketplace: React.FC = () => {
         name: animal.name.replace(/\u0000/g, ""),
       });
     });
-    console.log(animalData)
     empty = animalData.length === 0 && Object.keys(allAnimals).length !== 0;
     // Object.values(updatedTokens)
     //   .filter((tkn) => tkn.isToken)
@@ -170,13 +229,13 @@ const EggMarketplace: React.FC = () => {
       <RowLayout>
         <Route exact path={`${path}`}>
           <Swiper slidesPerView={2.2} spaceBetween={10}>
-          {(animalData).filter((item)=>item.bloodline === hybrid).filter((item)=>item.owner === account).map((animal) => (
+          {(animalData).filter((item)=>item.bloodline === hybrid).filter((item)=>item.owner === account).filter((item)=>!item.bred).map((animal) => (
             <SwiperSlide>
-              <Card key={animal.id}>
+              <Card key={animal.id} selected={animal.selected? true : false}>
                 <CardBody style={{backgroundImage: `url("${animal.imageUrl}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250, width: 'calc(100vw/2.2 - 13px)', padding: 10}}>
                   <TextWrapper style={{textShadow: '0px 2px 6px rgb(0, 0, 0)', textAlign: 'center', fontSize: 16, letterSpacing: 0}}>{animal.name}</TextWrapper>
                 </CardBody>
-                  <InfoBlock>
+                  <InfoBlock onClick={()=>hybrid === "pure" ? breedClick(animal) : console.log("hybrid")}>
                     <BreedWrapper>{hybrid === "pure" ? `BREED` : `SELL`}</BreedWrapper>
                   </InfoBlock>
               </Card>
@@ -199,7 +258,7 @@ const EggMarketplace: React.FC = () => {
 
   const renderEggs = (): JSX.Element => {
     const eggData = [];
-    // const updatedData = []
+    // const updatedData = [])
     Object.values(allEggs).forEach((egg, index) => {
       eggData.push({
         id: index,
