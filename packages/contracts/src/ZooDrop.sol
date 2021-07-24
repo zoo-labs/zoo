@@ -7,6 +7,7 @@ import "./interfaces/IMarket.sol";
 import {Decimal} from "./Decimal.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import 'hardhat/console.sol';
 
 
 contract ZooDrop is Ownable {
@@ -14,7 +15,7 @@ contract ZooDrop is Ownable {
     // this should be the max eggs available for this drop
     uint256 public _totalSupply;
     uint256 public _currentSupply;
-    uint private eggPrice;
+    uint256 private eggPrice;
 
     uint[] public coolDowns = [
         4 hours,
@@ -64,6 +65,7 @@ contract ZooDrop is Ownable {
 
     // mapping of token id to minted base animals
     mapping (uint256 => string) public existingAnimals;
+
     // mapping of token id to minted hybrids animals
     mapping (uint256 => string) public existingHybrids;
 
@@ -72,9 +74,6 @@ contract ZooDrop is Ownable {
 
     // mapping of animal name to available hybrid animals introduced in this drop
     mapping (string => Hybrid) public hybridAnimals;
-
-    // // mapping of animal id to Rarity 
-    // mapping (uint256 => Rarity) public categories;
 
     // mapping of animal key to animal tokenuri
     mapping (string => string) public tokenURI;
@@ -94,7 +93,7 @@ contract ZooDrop is Ownable {
      */
     // modifer to ensure the max amount of egg supply for this drop does not exceed limit
     modifier enoughSupply {
-        require(_currentSupply < _totalSupply);
+        require(_currentSupply > 0);
         _;
     }
 
@@ -111,19 +110,25 @@ contract ZooDrop is Ownable {
     // Random public random;
 
 
-    constructor(address _zooToken, address _zooMedia){
+    constructor(address _zooToken, address _zooMedia, uint256 _supply){
         //Initalize token with ZooToken address
         token = ZooToken(_zooToken);
         media = ZooMedia(_zooMedia);
+        eggPrice = 200;
+        _totalSupply = _supply;
+        _currentSupply = _supply;
+
     }
 
 
     // owner can set egg cost
-    function setEggPrice(uint _cost) public onlyOwner {
+    function setEggPrice(uint256 _cost) public onlyOwner {
+        require(_cost > 0, "Overflow or non positive price");
+
         eggPrice = _cost;
     }
 
-    function getEggPrice() public returns (uint) {
+    function getEggPrice() public returns (uint256) {
         return eggPrice;
     }
 
@@ -157,7 +162,20 @@ contract ZooDrop is Ownable {
         hybridAnimals[string(abi.encodePacked(_base, _secondary))] = newHybrid;
     }
 
+    /**
+        Getters for mappings
+     */
+     function getAnimal(string memory _animal) public view returns (Animal memory) {
+         return hatchableAnimals[_animal];
+     }
 
+     function getHybrid(string memory _animal) public view returns (Hybrid memory) {
+         return hybridAnimals[_animal];
+     }
+
+    function getTokenURI(string memory _animal) public view returns (string memory) {
+         return tokenURI[_animal];
+     }
 
     /**
         Setters for mappings
@@ -187,13 +205,13 @@ contract ZooDrop is Ownable {
 
     // Accept ZOO and return Egg NFT
     function buyEgg(ZooMedia.MediaData memory _data, IMarket.BidShares memory _bidShares) public enoughSupply enoughFunds returns (uint256) {
-        // may have to multiply eggPrice with 1e18: to test
-        token.approve(msg.sender, eggPrice);
+        
         token.transferFrom(msg.sender, address(this), eggPrice);
         media.mint(_data, _bidShares);
         // bytes32 egg_hash = random.getHash(random());
         // commit(egg_hash);
         emit BuyEgg(msg.sender);
+        _currentSupply--;
         return 0;
     }
 
@@ -272,36 +290,32 @@ contract ZooDrop is Ownable {
 
     // Implemented prior to issue #30
     // Should burn animal and return yield
-    function freeAnimal(uint256 _tokenID, address _zooMaster) public pure returns (bool) {
-            require(bytes(existingHybrids[_tokenID]) > 0 || bytes(existingAnimals[_tokenID]) > 0, "Non-existing animal");
+    function freeAnimal(uint256 _tokenID, address _zooMaster) public returns (bool) {
+            require(bytes(existingHybrids[_tokenID]).length > 0 || bytes(existingAnimals[_tokenID]).length > 0, "Non-existing animal");
 
             // get the creator/owner's address of token
             address _owner = media.tokenCreators(_tokenID);
-
-            // Rarity _rarity = animals[].rarity;
 
             // burn the token
             media.burn(_tokenID);
             emit Burn(_owner, _tokenID);
 
-            Decimal.D256 memory blocks = Decimal.D256(block.number - _animalDOB[_tokenID]);
-            Decimal.D256 memory avgBlocksDaily = Decimal.D256(28800);
-            Decimal.D256 memory age = Decimal.D256(Decimal.div(blocks, avgBlocksDaily));
+            uint256 blocks = block.number - _animalDOB[_tokenID];
+            uint256 avgBlocksDaily = 28800;
+            uint256 age = blocks.div(avgBlocksDaily);
             uint256 dailyYield;
 
             if (bytes(existingHybrids[_tokenID]).length > 0) {
                 // calculate daily yield
-                Decimal.D256 memory percentage = Decimal.D256(hybridAnimals[existingHybrids[_tokenID]].yield);
-                Decimal.D256 memory hundred = Decimal.D256(100);
-                dailyYield = Decimal.mul(age, Decimal.div(percentage, hundred));
+                uint256  percentage = hybridAnimals[existingHybrids[_tokenID]].yield;
+                dailyYield = age.mul(percentage.div(100));
                 // transfer yield
                 token.transferFrom(_zooMaster, _owner, dailyYield);
                 delete existingHybrids[_tokenID];
             } else {
                 // calculate daily yield
-                Decimal.D256 memory percentage = Decimal.D256(hatchableAnimals[existingAnimals[_tokenID]].yield);
-                Decimal.D256 memory hundred = Decimal.D256(100);
-                dailyYield = Decimal.mul(age, Decimal.div(percentage, hundred));
+                uint256 percentage = hatchableAnimals[existingAnimals[_tokenID]].yield;
+                dailyYield = age.mul(percentage.div(100));
                 // transfer yield
                 token.transferFrom(_zooMaster, _owner, dailyYield);
                 delete existingAnimals[_tokenID];
@@ -327,62 +341,63 @@ contract ZooDrop is Ownable {
 
     // Chooses animal based on random number generated from(0-999), replace strings with ENUMS / data that
     // represents animal instead 
-    function pickAnimal(uint256 random) internal returns(string memory) {
+    function pickAnimal(uint256 random) public view returns(string memory) {
         
         if(random < 550){
             uint choice = random % 4;
-            if(random == 0){
+            if(choice == 0){
                 return "Pug";
-            }else if(random == 1){
+            }else if(choice == 1){
                 return "Butterfly";
-            }else if(random == 2){
+            }else if(choice == 2){
                 return "Kitten";
-            }else if(random == 3){
+            }else if(choice == 3){
                 return "Turtle";
             }
         } else if(random > 550 && random < 860){
             uint choice = random % 4;
-            if(random == 0){
+            if(choice == 0){
                 return "Penguin";
-            }else if(random == 1){
+            }else if(choice == 1){
                 return "Duckling";
-            }else if(random == 2){
+            }else if(choice == 2){
                 return "Orca";
-            }else if(random == 3){
+            }else if(choice == 3){
                 return "Elk";
             }
 
         }else if(random > 860 && random < 985){
             uint choice = random % 4;
-            if(random == 0){
+            if(choice == 0){
                 return "Panda";
-            }else if(random == 1){
+            }else if(choice == 1){
                 return "Gorilla";
-            }else if(random == 2){
+            }else if(choice == 2){
                 return "Elephant";
-            }else if(random == 3){
+            }else if(choice == 3){
                 return "Lion";
             }
 
         }else if(random > 985 && random < 995){
             uint choice = random % 2;
-            if(random == 0){
+            if(choice == 0){
                 return "Bear";
-            }else if(random == 1){
+            }else if(choice == 1){
                 return "Shark";
             }
             
         }else if(random > 995 && random < 1000){
             uint choice = random % 2;
-            if(random == 0){
+            if(choice == 0){
                 return "Blobfish";
-            }else if(random == 1){
+            }else if(choice == 1){
                 return "Naked Mole Rat";
             }
+
         }
+            return "";
 
     }
-
 
     function checkBreedDelay() public returns (uint256) {
         uint256 count = _breedCount[msg.sender];
