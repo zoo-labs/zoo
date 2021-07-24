@@ -48,6 +48,7 @@ export const test = {
       currentBid: "500",
       buyNow: "600",
       listed: true,
+      owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
       bloodline: "pure",
     },
     411313: {
