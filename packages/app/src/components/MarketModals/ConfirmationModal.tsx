@@ -13,7 +13,7 @@ interface Props {
 }
 
 const Modal = styled(Existing)`
-    background-color: black;
+    background-color: ${({theme}) => theme.colors.background};
 `
 
 
