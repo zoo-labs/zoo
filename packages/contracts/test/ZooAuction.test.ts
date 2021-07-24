@@ -268,7 +268,7 @@ describe("ZooAuction", () => {
         currAuction.curatorFeePercentage
       );
       expect(logDescription.args.auctionCurrency).to.eq(
-        ethers.constants.AddressZero
+        token.address
       );
     });
   });
