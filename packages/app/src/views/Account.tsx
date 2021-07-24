@@ -1,6 +1,9 @@
 import BorderButton from 'components/Button/BorderButton'
 import Page from 'components/layout/Page'
 import React, { useState } from 'react'
+import { AppState } from "state";
+import { useSelector } from "react-redux";
+import { useWeb3React } from "@web3-react/core";
 import styles from 'styled-components'
 import { Label, Text } from 'components/Text'
 import { Heading } from 'components'
@@ -44,8 +47,15 @@ const RowWrapper = styles.div`
 `
 
 const Account: React.FC = () => {
-    const [eggsOwned, setEggsOwned] = useState(0)
-    const [onBugEggs] = useModal(<BuyEggs />)
+  const [eggsOwned, setEggsOwned] = useState(0)
+const { account } = useWeb3React();
+
+  const [onBuyEggs] = useModal(<BuyEggs />)
+const allEggs = useSelector<AppState, AppState["zoo"]["eggs"]>(
+  (state) => state.zoo.eggs
+);
+const currentEggsOwned = Object.values(allEggs).filter(egg=> egg.owner === account).length
+// setEggsOwned(currentEggsOwned)
 
     const pageHeading = (<HeadingContainer >
                             <Heading >My Account</Heading>
@@ -75,9 +85,9 @@ const Account: React.FC = () => {
                         </RowWrapper>
                     <LabelWrapper >
                         <Label>
-                          {eggsOwned} Eggs Owned
+                          {currentEggsOwned} Eggs Owned
                         </Label>
-                        <BorderButton onClick={() => onBugEggs()} >
+                        <BorderButton onClick={() => onBuyEggs()} >
                             Buy Eggs
                         </BorderButton>
                          </LabelWrapper>
