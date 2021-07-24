@@ -79,7 +79,7 @@ describe("ZooAuction", () => {
 
       expect(await auctionHouse.zoo()).to.eq(
         media.address,
-        "incorrect zora address"
+        "incorrect ZooMedia address"
       );
       expect(formatUnits(await auctionHouse.timeBuffer(), 0)).to.eq(
         "900",
@@ -91,12 +91,12 @@ describe("ZooAuction", () => {
       );
     });
 
-    // it("should not allow a configuration address that is not the Zora Media Protocol", async () => {
-    //   const ZooAuction = await ethers.getContractFactory("ZooAuction");
-    //   await expect(
-    //     ZooAuction.deploy(market.address, weth.address)
-    //   ).eventually.rejectedWith("Transaction reverted without a reason");
-    // });
+    it.only("should not allow a configuration address that is not the Zora Media Protocol", async () => {
+      const ZooAuction = await ethers.getContractFactory("ZooAuction");
+      await expect(
+        ZooAuction.deploy(market.address, token.address)
+      ).eventually.rejectedWith("Transaction reverted without a reason");
+    });
   });
 
   describe("#createAuction", () => {
