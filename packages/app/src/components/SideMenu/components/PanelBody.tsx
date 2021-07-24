@@ -84,7 +84,7 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
                   )
                   return (
                     <MenuEntry key={item.href} secondary isActive={false} onClick={handleClick}>
-                      <MenuLink href={item.href}>
+                      <MenuLink href={item.href} key={item.href}>
                         {subIconElement}
                         <LinkLabel isPushed={isPushed}>{item.label}</LinkLabel>
                         {item.status && (

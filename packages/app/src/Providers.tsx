@@ -12,7 +12,7 @@ import store from 'state'
 
 const Providers: React.FC = ({ children }) => {
   return (
-    // <MoralisProvider appId="" serverUrl="">
+    <MoralisProvider appId="16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy" serverUrl="https://dblpeaqbqk32.usemoralis.com:2053/server">
     <Web3ReactProvider getLibrary={getLibrary}>
       <Provider store={store}>
         <HelmetProvider>
@@ -24,7 +24,7 @@ const Providers: React.FC = ({ children }) => {
         </HelmetProvider>
       </Provider>
     </Web3ReactProvider>
-    // </MoralisProvider >
+   </MoralisProvider >
   )
 }
 

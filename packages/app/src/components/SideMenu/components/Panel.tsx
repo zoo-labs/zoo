@@ -30,7 +30,7 @@ const StyledPanel = styled.div<{ isPushed: boolean; showMenu: boolean; isMobile:
 
   ${({ theme }) => theme.mediaQueries.nav} {
     z-index: 1;
-    border-right: 2px solid #FFFFFF;
+    
     width: ${({ isPushed, isMobile }) => `${isPushed ? (!isMobile ? `${SIDEBAR_WIDTH_FULL}px` : `${0.8 * SIDEBAR_WIDTH_FULL}px`) : SIDEBAR_WIDTH_REDUCED}px`};
   }
 `;
