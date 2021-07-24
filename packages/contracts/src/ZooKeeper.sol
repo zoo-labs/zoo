@@ -46,6 +46,6 @@ contract ZooKeeper is Ownable {
     }
 
     function freeAnimal(uint256 _key, uint256 _tokenID) public pure returns (bool) {
-        return drops[_key].freeAnimal(_tokenID, address.this);
+        return drops[_key].freeAnimal(_tokenID, address(this));
     }
 }
