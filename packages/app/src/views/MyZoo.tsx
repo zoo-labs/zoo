@@ -26,13 +26,13 @@ import { VscLoading } from "react-icons/vsc";
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css"
 import "./styles.css";
-import SwiperCore, {
-  Pagination
-} from 'swiper/core';
+// import SwiperCore, {
+//   Pagination
+// } from 'swiper/core';
 import MyMP16OSFFont from '../fonts/MP16OSF.ttf'
 
 // install Swiper modules
-SwiperCore.use([Pagination]);
+// SwiperCore.use([Pagination]);
 
 const IconCont = styled.div`
   display: flex;
@@ -80,7 +80,7 @@ const TextWrapper = styled.div`
   text-transform: uppercase;
 `
 
-const BreedWrapper = styled.div`
+const BreedWrapper = styled.div<{cols?: number}>`
   text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
   font-size: 20px;
   color: #ffffff;
@@ -88,7 +88,7 @@ const BreedWrapper = styled.div`
   line-height: 1.5;
   letter-spacing: 3px;
   text-transform: uppercase;
-`
+` 
 
 const RowTitle = styled.div`
   @font-face{
@@ -119,6 +119,7 @@ const _loadCount = 9;
 
 const EggMarketplace: React.FC = () => {
   let empty;
+  const {account} = useWeb3React()
   const { path } = useRouteMatch();
   const { chainId } = useWeb3React();
   const [numVisData, setNumVisData] = useState(_loadCount);
@@ -158,7 +159,7 @@ const EggMarketplace: React.FC = () => {
     console.log('hatch')
   }
 
-  const renderAnimals = (): JSX.Element => {
+  const renderAnimals = (hybrid): JSX.Element => {
     const animalData = [];
     // const updatedData = []
     Object.values(allAnimals).forEach((animal, index) => {
@@ -179,20 +180,18 @@ const EggMarketplace: React.FC = () => {
     //     updatedData.push({ id: ind, ...token })
     //   })
 
-
     return (
       <RowLayout>
         <Route exact path={`${path}`}>
-          <Swiper slidesPerView={3} spaceBetween={10} pagination={{"clickable": true}} className="mySwiper">
-          {/* {shownData(animalData).map((animal) => ( */}
-          {(animalData).map((animal) => (
+          <Swiper slidesPerView={2.2} spaceBetween={10} className="mySwiper">
+          {(animalData).filter((item)=>item.bloodline === hybrid).filter((item)=>item.owner === account).map((animal) => (
             <SwiperSlide>
               <Card key={animal.id}>
-                <CardBody style={{backgroundImage: `url("${animal.imageUrl}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250}}>
+                <CardBody style={{backgroundImage: `url("${animal.imageUrl}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250, width: 'calc(100vw/2.2 - 13px)', padding: 20}}>
                   <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{animal.name}</Heading>
                 </CardBody>
                   <InfoBlock>
-                    <BreedWrapper>{`BREED`}</BreedWrapper>
+                    <BreedWrapper>{hybrid === "pure" ? `BREED` : `SELL`}</BreedWrapper>
                   </InfoBlock>
               </Card>
             </SwiperSlide>
@@ -255,14 +254,16 @@ const EggMarketplace: React.FC = () => {
     );
   };
 
+
   return (
     <div>
       <Page>
         <RowTitle>My Eggs</RowTitle>
         {renderEggs()}
         <RowTitle>Breedable Animals</RowTitle>
-        {renderAnimals()}
+        {renderAnimals("pure")}
         <RowTitle>Hybrid Animals</RowTitle>
+        {renderAnimals("hybrid")}
         {/* <IconCont ref={bottomRef}>
           {" "}
           {numVisData < Object.keys(allEggs).length ? (
