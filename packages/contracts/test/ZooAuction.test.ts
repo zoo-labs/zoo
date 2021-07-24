@@ -474,9 +474,9 @@ describe("ZooAuction", () => {
 
         await auctionHouse.createBid(0, 200)
 
-        await token.balanceOf(auctionHouse.address)
+        const balanceAfterBid = await token.balanceOf(auctionHouse.address)
 
-        expect(await token.balanceOf(auctionHouse.address)).to.eq(200);
+        expect(balanceAfterBid).to.eq(200);
       });
 
       it("should not update the auction's duration", async () => {
