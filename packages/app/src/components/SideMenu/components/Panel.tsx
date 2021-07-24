@@ -23,7 +23,7 @@ const StyledPanel = styled.div<{ isPushed: boolean; showMenu: boolean; isMobile:
   width: ${({ isPushed, isMobile }) => (isPushed ? (!isMobile ? `${SIDEBAR_WIDTH_FULL}px` : `${0.8 * SIDEBAR_WIDTH_FULL}px`) : 0)};
   height: 100vh;
   transition: padding-top 0.2s, width 0.2s;
-  border-right: 2px solid #FFFFFF;
+  // border-right: 2px solid #FFFFFF;
   z-index: 90;
   overflow: ${({ isPushed }) => (isPushed ? "initial" : "hidden")};
   transform: translate3d(0, 0, 0);
