@@ -13,7 +13,8 @@ export const test = {
          startBid: "500",
          currentBid: "500",
          buyNow: "1000",
-         listed: true
+         listed: true,
+         bloodline: "pure"
       },
       2: {
          tokenId: "2",
@@ -27,7 +28,9 @@ export const test = {
          startBid: "400",
          currentBid: "800",
          buyNow: "900",
-         listed: true
+         listed: true,
+         bloodline: "pure"
+
       },
       3: {
          tokenId: "3",
@@ -42,7 +45,8 @@ export const test = {
          startBid: "300",
          currentBid: "500",
          buyNow: "600",
-         listed: true
+         listed: true,
+         bloodline: "pure"
       },
       4: {
          tokenId: "4",
@@ -57,7 +61,25 @@ export const test = {
          startBid: "200",
          currentBid: "201",
          buyNow: "300",
-         listed: true
+         listed: false,
+         owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
+         bloodline: "pure"
+      },
+      5: {
+         tokenId: "5",
+         name: "Liger",
+         description: "Meow",
+         yield: "23",
+         boost: "2200",
+         rarity: "Legendary",
+         dob: "1627064176",
+         imageUrl: "https://newsfeed.time.com/wp-content/uploads/sites/9/2013/06/russia-zoo_yang-7.jpg?w=753",
+         startBid: "200",
+         currentBid: "201",
+         buyNow: "300",
+         listed: false,
+         owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
+         bloodline: "hybrid"
       },
    },
    eggs: {
