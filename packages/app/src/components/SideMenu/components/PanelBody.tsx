@@ -22,7 +22,11 @@ const Container = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
-  
+  justify-content: center;
+  padding-bottom: 29vh;
+  a {
+    padding-bottom: 20px;
+  }
 `
 
 const IconContainer = styled.div`
