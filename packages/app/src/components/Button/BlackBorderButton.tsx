@@ -10,19 +10,19 @@ const BtnContainer = styled.div`
   justify-content: space-around;
   
     * {
-    background: transparent;
+    background: black;
     font-weight: 600;
      &:hover {
         transition: all 0.2s;
-        border: 2px solid #a0ec0e;
-        color: #a0ec0e;
+        // border: ${({ theme }) => `2px solid ${theme.colors.primaryDark}`};
+        background: ${({ theme }) => theme.colors.primaryDark};
   }
   }
  
 
   button {
       text-transform: uppercase;
-      border: 2px solid black;
+      border: 2px solid #FFFFFF;
       border-radius: 0px;
       height: 100%;
       padding: revert;
