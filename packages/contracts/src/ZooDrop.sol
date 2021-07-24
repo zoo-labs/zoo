@@ -211,11 +211,11 @@ contract ZooDrop is Ownable {
         // if not hybrid
         if (bytes(egg.parent1).length == 0) {
             string memory animal = pickAnimal(rarity);
-            Animal hatched = hatchableAnimals[animal];
+            Animal memory hatched = hatchableAnimals[animal];
             data.tokenURI = tokenURI[animal];
             data.metadataURI = metaDataURI[animal];
-            data.contentHash = keccak256( data.tokenURI );
-            data.metadataHash = keccak256( data.metadataURI );
+            data.contentHash = keccak256(abi.encodePacked(data.tokenURI));
+            data.metadataHash = keccak256(abi.encodePacked(data.metadataURI));
         } else {
         // if hybrid
             require(egg.eggCreationTime > egg.eggCreationTime.add(4 hours), "Must wait 4 hours for hybrid eggs to hatch.");
@@ -224,8 +224,8 @@ contract ZooDrop is Ownable {
             string memory animal = possibleAnimals[oneOrTwo].name;
             data.tokenURI = tokenURI[animal];
             data.metadataURI = metaDataURI[animal];
-            data.contentHash = keccak256( data.tokenURI );
-            data.metadataHash = keccak256( data.metadataURI );
+            data.contentHash = keccak256(abi.encodePacked(data.tokenURI));
+            data.metadataHash = keccak256(abi.encodePacked(data.metadataURI));
         }
 
         // mint by grabbing the animal 
@@ -286,12 +286,12 @@ contract ZooDrop is Ownable {
             // uint256 age = now-_animalDOB[_tokenID] / 60 / 60 / 24;
             uint256 age = Decimal.div((block.number - _animalDOB[_tokenID]), 28800);
             // calculate daily yield
-            uint256 dailyYield = Decimal.mul(age, Decimal.div(existingHybrids[_tokenID].rarity.yield, 100));
+            uint256 dailyYield = Decimal.mul(age, Decimal.div(hybridAnimals[existingHybrids[_tokenID]].yield, 100));
             // transfer yield
             token.transferFrom(_zooMaster, _owner, dailyYield);
             delete existingHybrids[_tokenID];
             delete _animalDOB[_tokenID];
-            emit freeAnimal(_owner, _tokenID, dailyYield);
+            emit FreeAnimal(_owner, _tokenID, dailyYield);
         return true;
     }  
 
@@ -299,7 +299,7 @@ contract ZooDrop is Ownable {
      //   @Kimani will overwrite this
     // TEMP random function
     function random() private returns (uint256) {
-        uint256 randomNumber = uint256(keccak256(abi.encodePacked(block.number, msg.sender, now))) % 1000;
+        uint256 randomNumber = uint256(keccak256(abi.encodePacked(block.number, msg.sender, block.timestamp))) % 1000;
         return randomNumber;
     }
 
@@ -309,7 +309,7 @@ contract ZooDrop is Ownable {
 
     // Chooses animal based on random number generated from(0-999), replace strings with ENUMS / data that
     // represents animal instead 
-    function pickAnimal(uint random) internal returns(string memory) {
+    function pickAnimal(uint25 random) internal returns(string memory) {
         
         if(random < 550){
             uint choice = random % 4;
