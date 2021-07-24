@@ -206,22 +206,33 @@ describe("Test Faucet", () => {
     it("Should buy a basic egg", async() => {
 
             await zooToken.approve(zooDrop.address, 200)
+
             const buyEgg = await zooDrop.connect(owner).buyEgg({
                 "tokenURI": "test1",
                 "metadataURI":"test2",
                 "contentHash": utils.formatBytes32String("test3"),
                 "metadataHash":utils.formatBytes32String("test4"),
-            },{
-                "prevOwner": {"value": BigNumber.from(2)} ,
-                "creator": {"value": BigNumber.from(2)},
-                "owner": {"value": BigNumber.from(2)},
+            },
+            //Big Shares need to add up to 100 * (10^18)
+            {
+                "prevOwner": {"value": `${30*(10**18)}`} ,
+                "creator": {"value": `${40*(10**18)}`},
+                "owner": {"value": `${30*(10**18)}`},
             });
     
             const buyEggReceipt = await buyEgg.wait();
             
-            const sender = buyEggReceipt.events[0].args._from;
+            const sender = buyEggReceipt.events;
+
+            let from_add
+
+            sender.forEach(element => {
+                if(element.event == "BuyEgg"){
+                    from_add = element.args["_from"]
+                }
+            });
     
-            expect(sender).to.equal(owner.address);
+            expect(from_add).to.equal(owner.address);
         
         
     });
