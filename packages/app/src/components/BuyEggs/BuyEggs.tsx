@@ -75,7 +75,6 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
   
   const changed = () => (e) => {
     const newVal = e.target.value;
-debugger; // eslint-disable-line no-debugger
 
     if (newVal > value) {
       setValue(parseInt(newVal));

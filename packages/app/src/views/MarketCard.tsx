@@ -89,13 +89,15 @@ const Subheading = styled(Text)`
     }
 `
 
-const Card = styled(Existing)<{url?: string}>`
+const Card = styled(Existing)<{url?: string, isMobile?: boolean}>`
     background-image: url(${({ url }) => `${url}`});
     background-position: center; 
     background-repeat: no-repeat;
     background-size: cover;
     max-height: 773px;
     max-width: 425px;
+    min-width: 325px;
+    display: block;
 `
 const MarketplaceCard: React.FC<Props> =  ({ item }) => {
     const history = useHistory()
