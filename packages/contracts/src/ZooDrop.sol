@@ -146,7 +146,7 @@ contract ZooDrop is Ownable {
         /**
         Add animal for possibility of hatching for the drop
      */
-    function addHybrid(string memory _animal, string memory _base, uint256 yield, string memory _secondary, string memory _tokenURI, string memory _metaDataURI) public onlyOwner {
+    function addHybrid(string memory _animal, string memory _base, string memory _secondary, uint256 yield, string memory _tokenURI, string memory _metaDataURI) public onlyOwner {
         Hybrid memory newHybrid;
         newHybrid.name = _animal;
         newHybrid.yield = yield;
@@ -273,7 +273,8 @@ contract ZooDrop is Ownable {
     // Implemented prior to issue #30
     // Should burn animal and return yield
     function freeAnimal(uint256 _tokenID, address _zooMaster) public pure returns (bool) {
-        // if the animal is hybrid
+            require(bytes(existingHybrids[_tokenID]) > 0 || bytes(existingAnimals[_tokenID]) > 0, "Non-existing animal");
+
             // get the creator/owner's address of token
             address _owner = media.tokenCreators(_tokenID);
 
@@ -282,16 +283,33 @@ contract ZooDrop is Ownable {
             // burn the token
             media.burn(_tokenID);
             emit Burn(_owner, _tokenID);
-            // // calculate age of animal : probably dont have to use Decimal.sol because we need whole days 
-            // uint256 age = now-_animalDOB[_tokenID] / 60 / 60 / 24;
-            uint256 age = Decimal.div((block.number - _animalDOB[_tokenID]), 28800);
-            // calculate daily yield
-            uint256 dailyYield = Decimal.mul(age, Decimal.div(hybridAnimals[existingHybrids[_tokenID]].yield, 100));
-            // transfer yield
-            token.transferFrom(_zooMaster, _owner, dailyYield);
-            delete existingHybrids[_tokenID];
+
+            Decimal.D256 memory blocks = Decimal.D256(block.number - _animalDOB[_tokenID]);
+            Decimal.D256 memory avgBlocksDaily = Decimal.D256(28800);
+            Decimal.D256 memory age = Decimal.D256(Decimal.div(blocks, avgBlocksDaily));
+            uint256 dailyYield;
+
+            if (bytes(existingHybrids[_tokenID]).length > 0) {
+                // calculate daily yield
+                Decimal.D256 memory percentage = Decimal.D256(hybridAnimals[existingHybrids[_tokenID]].yield);
+                Decimal.D256 memory hundred = Decimal.D256(100);
+                dailyYield = Decimal.mul(age, Decimal.div(percentage, hundred));
+                // transfer yield
+                token.transferFrom(_zooMaster, _owner, dailyYield);
+                delete existingHybrids[_tokenID];
+            } else {
+                // calculate daily yield
+                Decimal.D256 memory percentage = Decimal.D256(hatchableAnimals[existingAnimals[_tokenID]].yield);
+                Decimal.D256 memory hundred = Decimal.D256(100);
+                dailyYield = Decimal.mul(age, Decimal.div(percentage, hundred));
+                // transfer yield
+                token.transferFrom(_zooMaster, _owner, dailyYield);
+                delete existingAnimals[_tokenID];
+            }
+
             delete _animalDOB[_tokenID];
             emit FreeAnimal(_owner, _tokenID, dailyYield);
+        
         return true;
     }  
 
