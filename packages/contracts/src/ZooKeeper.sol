@@ -36,7 +36,9 @@ contract ZooKeeper is Ownable {
         data.metadataHash= bytes32("d");
 
         IMarket.BidShares memory shares;
-        return drops[_key].buyEgg(data, shares);
+        drops[_key].buyEgg(data, shares);
+
+        return drops[_key].ownedEggs(msg.sender);
     }
 
     function hatchEgg(uint256 _key, uint256 _tokenID) public returns (bool) {
