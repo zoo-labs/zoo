@@ -27,14 +27,14 @@ const style = {
 
 const Heading = styled(Text).attrs({ bold: true })<HeadingProps>`
   font-size: ${({ size }) => style[size || sizes.MD].fontSize};
-  color: ${({ headerColor }) => headerColor || ""};
+  color: ${({ headerColor }) => headerColor || "white"};
   font-weight: 550;
   line-height: 1.5;
   letter-spacing: 3px;
   text-transform: uppercase;
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    font-size: ${({ size }) => style[size || sizes.LG].fontSizeLg};
+    font-size: ${({ size }) => style[size || sizes.MD].fontSizeLg};
   }
 `;
 

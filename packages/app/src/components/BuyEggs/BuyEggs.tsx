@@ -113,7 +113,6 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
       >
         <Text
           fontSize="20px"
-          color="black"
           style={{ whiteSpace: 'nowrap', marginTop: '5px'}}
         >
           AMOUNT
