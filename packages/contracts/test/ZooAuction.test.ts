@@ -707,9 +707,12 @@ describe("ZooAuction", () => {
               .sub(1)
               .toNumber(),
           ]);
+
         });
 
         it("should extend the duration of the bid if inside of the time buffer", async () => {
+          token.connect(auctionHouse.signer)
+          await token.approve(auctionHouse.address, 500)
           const beforeDuration = (await auctionHouse.auctions(0)).duration;
           await auctionHouse.createBid(0, TWO_ZOO, {
             value: TWO_ZOO,
