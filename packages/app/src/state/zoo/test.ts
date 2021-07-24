@@ -96,7 +96,7 @@ export const test = {
         basic: false,
       },
       6222: {
-        tokenId: "622",
+        tokenId: "6222",
         animalId: "11",
         parent1: "3",
         parent2: "4",

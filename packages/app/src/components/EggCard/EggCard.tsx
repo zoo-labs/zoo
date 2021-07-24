@@ -18,6 +18,7 @@ import { Animal } from 'entities/zooentities'
 import { EggCardType } from './types'
 import {burnEgg, addAnimal} from "state/actions"
 import { useDispatch } from 'react-redux'
+import { animalMapping } from 'util/animalMapping'
 
 
 const InfoBlock = styled.div`
@@ -60,89 +61,6 @@ export const EggCard: React.FC<EggCardType> = ({egg})  => {
       />
     )
 
-    const animalArray = [
-        {
-            tokenId:"6124124",
-            name:"Red Panda",
-            description:"Mystery",
-            yield:"543",
-            boost:"5678",
-            rarity:"Legendary",
-            dob:"1627064176",
-            imageUrl:"https://i2.wp.com/bestlifeonline.com/wp-content/uploads/2018/10/red-panda-raising-fist.jpg?resize=640%2C360&ssl=1",
-            startBid:"500",
-            currentBid:"500",
-            buyNow:"1000",
-            listed:true,
-            bloodline:"pure",
-            owner: account
-        },
-        {
-            tokenId: '234',
-            name: 'Suzanne',
-            description: 'LOL',
-            'yield': '4223',
-            boost: '2',
-            rarity: 'Rare',
-            dob: '1627064176',
-            imageUrl: 'https://ichef.bbci.co.uk/images/ic/1200x675/p02k8mcv.jpg',
-            startBid: '400',
-            currentBid: '800',
-            buyNow: '900',
-            listed: true,
-            bloodline: 'pure',
-            owner: account
-          },
-          {
-            tokenId: '31243',
-            name: 'Cool Doggo',
-            description: 'WOOF wO0F',
-            'yield': '321',
-            boost: '2',
-            rarity: 'Uncommon',
-            dob: '1627064176',
-            imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIuXjTOdhD--589Qjr310qX4IgAZrz_4-RAw&usqp=CAU',
-            startBid: '300',
-            currentBid: '500',
-            buyNow: '600',
-            listed: true,
-            bloodline: 'pure',
-            owner: account
-          },
-          {
-            tokenId: '41241',
-            name: 'Seal',
-            description: 'BARK',
-            'yield': '31',
-            boost: '22',
-            rarity: 'Common',
-            dob: '1627064176',
-            imageUrl: 'https://sites.psu.edu/siowfa16/files/2016/09/baby-seal-29vsgyf.jpg',
-            startBid: '200',
-            currentBid: '201',
-            buyNow: '300',
-            listed: false,
-            bloodline: 'pure',
-            owner: account
-          },
-          {
-            tokenId: '51241',
-            name: 'Liger',
-            description: 'Meow',
-            'yield': '23',
-            boost: '2200',
-            rarity: 'Legendary',
-            dob: '1627064176',
-            imageUrl: 'https://newsfeed.time.com/wp-content/uploads/sites/9/2013/06/russia-zoo_yang-7.jpg?w=753',
-            startBid: '200',
-            currentBid: '201',
-            buyNow: '300',
-            listed: false,
-            bloodline: 'hybrid',
-            owner: account
-          }
-    ]
-
     const onVideoEnd = () => {
         setPlayVideo(false)
         console.log(egg)
@@ -151,9 +69,34 @@ export const EggCard: React.FC<EggCardType> = ({egg})  => {
         }
         console.log("BURNING")
         dispatch(burnEgg(egg))
-        const randIdx = Math.floor(Math.random() * (6 - 0) + 0);
+        let randIdx;
+        if(egg.basic){
+            randIdx = Math.floor(Math.random() * (5 - 1) + 1);
+        }
+        else {
+            randIdx = Math.floor(Math.random() * (13 - 10) + 10);
+        }
         console.log(randIdx)
-        const newAnimal: Animal = animalArray[randIdx]
+        const aFromMap = animalMapping[randIdx]
+        console.log(aFromMap, randIdx)
+        const newAnimal: Animal = {
+            tokenId: Math.floor(Math.random() * (999999 - 0) + 0).toString(),
+            animalId: aFromMap.animalId,
+            name: aFromMap.name,
+            description: aFromMap.description,
+            yield: aFromMap.yield,
+            boost: aFromMap.boost,
+            rarity: aFromMap.rarity,
+            dob: aFromMap.dob,
+            imageUrl: aFromMap.imageUrl,
+            startBid: aFromMap.startBid,
+            currentBid: aFromMap.currentBid,
+            buyNow: aFromMap.buyNow,
+            listed: aFromMap.listed,
+            bloodline: aFromMap.bloodline,
+            owner: account
+        }
+        console.log(newAnimal)
         dispatch(addAnimal(newAnimal)) 
     }
 
