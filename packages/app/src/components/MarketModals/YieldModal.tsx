@@ -16,26 +16,29 @@ const YieldModal: React.FC<Props> = ({ item,   onDismiss,  Moralis }) => {
         return (
             <>
                 <Sheet isOpen={isOpen} onClose={onDismiss} >
-                    <Sheet.Container style={{height: "300px", background: "#040404"}}>
+                    <Sheet.Container style={{height: "300px", background: "#040404cf"}}>
                         <Sheet.Header >
-                            <Heading>
+                            <Heading ml="8px" mt="8px" textAlign ="center" fontSize="32px">
                                 Yield Info
                             </Heading>
 
                         </Sheet.Header>
                         <Sheet.Content>
-                            <Label>
-                                Daily Yield
-                            </Label>
-                            <Text>
-                                {item.yield}
-                            </Text>
-                            <Label>
-                                Accumulated Yield
-                            </Label>
-                            <Text>
-                                {item.yield}
-                            </Text>
+                            <Flex justifyContent="center" alignContent="center" flexDirection="column" ml="20px" mt="20px">
+                                <Label fontSize="22px">
+                                    Daily Yield
+                                </Label>
+                                <Text bold fontSize="22px">
+                                    {item.yield}
+                                </Text>
+                                <Label fontSize="22px">
+                                    Accumulated Yield
+                                </Label>
+                                <Text bold fontSize="22px">
+                                    {Math.floor(item.yield * (Math.random() * (12 - 1) + (1)))}
+                                </Text>
+
+                            </Flex>
                         </Sheet.Content>
                     </Sheet.Container>
 
