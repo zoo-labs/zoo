@@ -206,26 +206,27 @@ contract ZooDrop is Ownable {
         emit Burn(msg.sender, tokenID);
 
         // get the rarity for an animal    
-        // uint256 rarity = random(); 
-        uint256 rarity = 1;
+        uint256 rarity = random(); 
+        // uint256 rarity = 1;
         ZooMedia.MediaData memory data;
         // if not hybrid
         if (bytes(egg.parent1).length == 0) {
             string memory animal = pickAnimal(rarity);
-            data.tokenURI = "www.tokenURI_for_picked_animal.com";
-            data.metadataURI = "www.metadataURI_for_picked_animal.com";
-            data.contentHash = bytes32("A");
-            data.metadataHash = bytes32("dA");
+            Animal hatched = hatchableAnimals[animal];
+            data.tokenURI = tokenURI[animal];
+            data.metadataURI = metaDataURI[animal];
+            data.contentHash = keccak256( data.tokenURI );
+            data.metadataHash = keccak256( data.metadataURI );
         } else {
         // if hybrid
             require(egg.eggCreationTime > egg.eggCreationTime.add(4 hours), "Must wait 4 hours for hybrid eggs to hatch.");
             uint256 oneOrTwo = rarity % 2;
             Hybrid[2] memory possibleAnimals = [ hybridAnimals[concatAnimalIds(egg.parent1, egg.parent2)], hybridAnimals[concatAnimalIds(egg.parent2, egg.parent1)]];
             string memory animal = possibleAnimals[oneOrTwo].name;
-            data.tokenURI = "www.tokenURI_for_picked_animal.com";
-            data.metadataURI = "www.metadataURI_for_picked_animal.com";
-            data.contentHash = bytes32("A");
-            data.metadataHash = bytes32("d");
+            data.tokenURI = tokenURI[animal];
+            data.metadataURI = metaDataURI[animal];
+            data.contentHash = keccak256( data.tokenURI );
+            data.metadataHash = keccak256( data.metadataURI );
         }
 
         // mint by grabbing the animal 
@@ -270,37 +271,37 @@ contract ZooDrop is Ownable {
         return true;
     }
 
-    // // Implemented prior to issue #30
-    // // Should burn animal and return yield
-    // function freeAnimal(uint256 _tokenID, address _zooMaster) public pure returns (bool) {
-    //     // if the animal is a pure breed
-    //         // get the creator/owner's address of token
-    //         address _owner = media.tokenCreators(_tokenID);
+    // Implemented prior to issue #30
+    // Should burn animal and return yield
+    function freeAnimal(uint256 _tokenID, address _zooMaster) public pure returns (bool) {
+        // if the animal is a pure breed
+            // get the creator/owner's address of token
+            address _owner = media.tokenCreators(_tokenID);
 
-    //         // Rarity _rarity = animals[].rarity;
+            // Rarity _rarity = animals[].rarity;
 
-    //         // burn the token
-    //         media.burn(_tokenID);
-    //         emit Burn(_owner, _tokenID);
-    //         // // calculate age of animal : probably dont have to use Decimal.sol because we need whole days 
-    //         // uint256 age = now-_animalDOB[_tokenID] / 60 / 60 / 24;
-    //         uint256 age = Decimal.div((block.number - _animalDOB[_tokenID]), 28800);
-    //         // calculate daily yield
-    //         uint256 dailyYield = Decimal.mul(age, Decimal.div(existingAnimals[_tokenID].rarity.yield, 100));
-    //         // transfer yield
-    //         token.transferFrom(_zooMaster, _owner, dailyYield);
-    //         delete existingAnimals[_tokenID];
-    //         delete _animalDOB[_tokenID];
-    //         emit freeAnimal(_owner, _tokenID, dailyYield);
-    //     return true;
-    // }  
+            // burn the token
+            media.burn(_tokenID);
+            emit Burn(_owner, _tokenID);
+            // // calculate age of animal : probably dont have to use Decimal.sol because we need whole days 
+            // uint256 age = now-_animalDOB[_tokenID] / 60 / 60 / 24;
+            uint256 age = Decimal.div((block.number - _animalDOB[_tokenID]), 28800);
+            // calculate daily yield
+            uint256 dailyYield = Decimal.mul(age, Decimal.div(existingAnimals[_tokenID].rarity.yield, 100));
+            // transfer yield
+            token.transferFrom(_zooMaster, _owner, dailyYield);
+            delete existingAnimals[_tokenID];
+            delete _animalDOB[_tokenID];
+            emit freeAnimal(_owner, _tokenID, dailyYield);
+        return true;
+    }  
 
     
      //   @Kimani will overwrite this
     // TEMP random function
-    function random() private returns (bytes32) {
-        bytes32 randomHash = keccak256(abi.encodePacked(block.number, msg.sender, block.timestamp));
-        return randomHash;
+    function random() private returns (uint256) {
+        uint256 randomNumber = uint256(keccak256(abi.encodePacked(block.number, msg.sender, now))) % 1000;
+        return randomNumber;
     }
 
     function concatAnimalIds(string memory a1, string memory a2) internal returns (string memory) {
@@ -385,8 +386,6 @@ contract ZooDrop is Ownable {
         return delay;
         
     }
-
-
 }
 
 
