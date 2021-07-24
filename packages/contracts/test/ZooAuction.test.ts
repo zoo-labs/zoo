@@ -304,7 +304,7 @@ describe("ZooAuction", () => {
 
     // it("should revert if the auction has already started", async () => {
 
-    //   const oneZooValue = parseInt(ONE_ZOO._hex);
+    //   const oneZooValue = parseInt(200._hex);
 
     //   await auctionHouse.setAuctionApproval(0, true);
 
@@ -431,14 +431,14 @@ describe("ZooAuction", () => {
 
     it("should revert if the specified auction does not exist", async () => {
       await expect(
-        auctionHouse.createBid(11111, ONE_ZOO)
+        auctionHouse.createBid(11111, 200)
       ).to.be.revertedWith("Auction doesn't exist")
     });
 
     it("should revert if the specified auction is not approved", async () => {
       await auctionHouse.connect(curator).setAuctionApproval(0, false);
       await expect(
-        auctionHouse.createBid(0, ONE_ZOO, { value: ONE_ZOO })
+        auctionHouse.createBid(0, 200, { value: 200 })
       ).to.be.revertedWith("Auction must be approved by curator")
     });
 
@@ -450,16 +450,16 @@ describe("ZooAuction", () => {
 
     it("should revert if the bid is invalid for share splitting", async () => {
       await expect(
-        auctionHouse.createBid(0, ONE_ZOO.add(1), {
-          value: ONE_ZOO.add(1),
+        auctionHouse.createBid(0, 200, {
+          value: 200,
         })
       ).to.be.revertedWith("Bid invalid for share splitting");
     });
 
     it("should revert if msg.value does not equal specified amount", async () => {
       await expect(
-        auctionHouse.createBid(0, ONE_ZOO, {
-          value: ONE_ZOO.mul(2),
+        auctionHouse.createBid(0, 200, {
+          value: 200,
         })
       ).to.be.revertedWith("Sent ZOO Value does not match specified bid amount");
 
@@ -470,7 +470,7 @@ describe("ZooAuction", () => {
       // it("should set the first bid time", async () => {
       //   // TODO: Fix this test on Sun Oct 04 2274
       //   await ethers.provider.send("evm_setNextBlockTimestamp", [9617249934]);
-      //   await auctionHouse.createBid(0, ONE_ZOO, /*{value: ONE_ZOO,}*/);
+      //   await auctionHouse.createBid(0, 200, /*{value: 200,}*/);
       //   // expect((await auctionHouse.auctions(0)).firstBidTime).to.eq(9617249934);
       // });
 
@@ -502,19 +502,25 @@ describe("ZooAuction", () => {
         expect(beforeDuration).to.eq(afterDuration);
       });
 
-      // it("should store the bidder's information", async () => {
-      //   await auctionHouse.createBid(0, ONE_ZOO);
+      it.only("should store the bidder's information", async () => {
 
-      //   const currAuction = await auctionHouse.auctions(0);
+        token = token.connect(auctionHouse.signer)
 
-      //   expect(currAuction.bidder).to.eq(await bidderA.getAddress());
-      //   expect(currAuction.amount).to.eq(ONE_ZOO);
-      // });
+        await token.approve(auctionHouse.address, 200)
+
+        await auctionHouse.createBid(0, 200);
+
+        const currAuction = await auctionHouse.auctions(0);
+
+        expect(currAuction.bidder).to.eq(await bidderA.getAddress());
+
+        expect(currAuction.amount).to.eq(200);
+      });
 
       //     it("should emit an AuctionBid event", async () => {
       //       const block = await ethers.provider.getBlockNumber();
-      //       await auctionHouse.createBid(0, ONE_ZOO, {
-      //         value: ONE_ZOO,
+      //       await auctionHouse.createBid(0, 200, {
+      //         value: 200,
       //       });
       //       const events = await auctionHouse.queryFilter(
       //         auctionHouse.filters.AuctionBid(
@@ -534,7 +540,7 @@ describe("ZooAuction", () => {
       //       expect(logDescription.name).to.eq("AuctionBid");
       //       expect(logDescription.args.auctionId).to.eq(0);
       //       expect(logDescription.args.sender).to.eq(await bidderA.getAddress());
-      //       expect(logDescription.args.value).to.eq(ONE_ZOO);
+      //       expect(logDescription.args.value).to.eq(200);
       //       expect(logDescription.args.firstBid).to.eq(true);
       //       expect(logDescription.args.extended).to.eq(false);
       //     });
@@ -545,13 +551,13 @@ describe("ZooAuction", () => {
       //       auctionHouse = auctionHouse.connect(bidderB) as ZooAuction;
       //       await auctionHouse
       //         .connect(bidderA)
-      //         .createBid(0, ONE_ZOO, { value: ONE_ZOO });
+      //         .createBid(0, 200, { value: 200 });
       //     });
 
       //     it("should revert if the bid is smaller than the last bid + minBid", async () => {
       //       await expect(
-      //         auctionHouse.createBid(0, ONE_ZOO.add(1), {
-      //           value: ONE_ZOO.add(1),
+      //         auctionHouse.createBid(0, 200.add(1), {
+      //           value: 200.add(1),
       //         })
       //       ).eventually.rejectedWith(
       //         revert`Must send more than last bid by minBidIncrementPercentage amount`
@@ -744,7 +750,7 @@ describe("ZooAuction", () => {
       //   it("should revert if the auction has already begun", async () => {
       //     await auctionHouse
       //       .connect(bidder)
-      //       .createBid(0, ONE_ZOO, { value: ONE_ZOO });
+      //       .createBid(0, 200, { value: 200 });
       //     await expect(auctionHouse.cancelAuction(0)).eventually.rejectedWith(
       //       revert`Can't cancel an auction once it's begun`
       //     );
@@ -836,8 +842,8 @@ describe("ZooAuction", () => {
       //   });
 
       //   it("should revert if the auction has not completed", async () => {
-      //     await auctionHouse.createBid(0, ONE_ZOO, {
-      //       value: ONE_ZOO,
+      //     await auctionHouse.createBid(0, 200, {
+      //       value: 200,
       //     });
 
       //     await expect(auctionHouse.endAuction(0)).eventually.rejectedWith(
@@ -864,7 +870,7 @@ describe("ZooAuction", () => {
       //     beforeEach(async () => {
       //       await auctionHouse
       //         .connect(bidder)
-      //         .createBid(0, ONE_ZOO, { value: ONE_ZOO });
+      //         .createBid(0, 200, { value: 200 });
       //       const endTime =
       //         (await auctionHouse.auctions(0)).duration.toNumber() +
       //         (await auctionHouse.auctions(0)).firstBidTime.toNumber();
