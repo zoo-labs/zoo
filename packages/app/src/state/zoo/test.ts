@@ -83,5 +83,19 @@ export const test = {
       },
    },
    eggs: {
+      5: {
+         owner: "0x93d24FF767a74B1Ceec47F23495edC4195d3081A",
+         tokenId: "5",
+         parent1: "",
+         parent2: "",
+         basic: false,
+      },
+      6: {
+         owner: "0x93d24FF767a74B1Ceec47F23495edC4195d3081A",
+         tokenId: "6",
+         parent1: "",
+         parent2: "",
+         basic: true,
+      }
    },
 };
