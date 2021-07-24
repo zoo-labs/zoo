@@ -3,7 +3,7 @@
 pragma solidity >=0.8.4;
 
 contract Random {
-    uint public max = 1000;
+    uint public max = 100;
 
     constructor() {}
 
