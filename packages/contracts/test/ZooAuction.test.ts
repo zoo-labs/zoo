@@ -441,15 +441,15 @@ describe("ZooAuction", () => {
       ).to.be.revertedWith("Bid invalid for share splitting");
     });
 
-    //   it("should revert if msg.value does not equal specified amount", async () => {
-    //     await expect(
-    //       auctionHouse.createBid(0, ONE_ZOO, {
-    //         value: ONE_ZOO.mul(2),
-    //       })
-    //     ).eventually.rejectedWith(
-    //       revert`Sent ZOO Value does not match specified bid amount`
-    //     );
-    //   });
+    it("should revert if msg.value does not equal specified amount", async () => {
+      await expect(
+        auctionHouse.createBid(0, ONE_ZOO, {
+          value: ONE_ZOO.mul(2),
+        })
+      ).to.be.revertedWith("Sent ZOO Value does not match specified bid amount");
+
+    });
+
     //   describe("first bid", () => {
     //     it("should set the first bid time", async () => {
     //       // TODO: Fix this test on Sun Oct 04 2274

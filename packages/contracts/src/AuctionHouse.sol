@@ -433,7 +433,7 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
         if (currency == address(0)) {
             require(
                 msg.value == amount,
-                "Sent ETH Value does not match specified bid amount"
+                "Sent ZOO Value does not match specified bid amount"
             );
             IWETH(wethAddress).deposit{value: amount}();
         } else {
