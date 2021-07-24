@@ -453,14 +453,11 @@ describe("ZooAuction", () => {
 
       await token.approve(auctionHouse.address, 200)
       await expect(
-        auctionHouse.createBid(0, 200, {
-          value: 200,
-        })
-      ).to.be.revertedWith("Sent ZOO Value does not match specified bid amount");
-
+        auctionHouse.createBid(0, 200)
+      ).to.be.revertedWith("Bid invalid for share splitting");
     });
 
-    describe("first bid", () => {
+    describe("#first bid", () => {
 
       // it("should set the first bid time", async () => {
       //   // TODO: Fix this test on Sun Oct 04 2274
