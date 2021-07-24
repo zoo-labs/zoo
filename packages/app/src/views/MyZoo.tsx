@@ -95,12 +95,7 @@ const BreedWrapper = styled.div<{cols?: number}>`
 ` 
 
 const RowTitle = styled.div`
-  @font-face{
-    font-family:'MyMP16OSFFont';
-    src:url('${MyMP16OSFFont}') format('TrueType');   
-  }
   color: white;
-  font-family: 'MyMP16OSFFont'; 
   font-size: 20px;
   margin-t: 15px;
   margin-bottom: 15px;
