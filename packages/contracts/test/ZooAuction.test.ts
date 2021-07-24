@@ -714,9 +714,7 @@ describe("ZooAuction", () => {
           token.connect(auctionHouse.signer)
           await token.approve(auctionHouse.address, 500)
           const beforeDuration = (await auctionHouse.auctions(0)).duration;
-          await auctionHouse.createBid(0, TWO_ZOO, {
-            value: TWO_ZOO,
-          });
+          await auctionHouse.createBid(0, 500);
 
           const currAuction = await auctionHouse.auctions(0);
           expect(currAuction.duration).to.eq(
