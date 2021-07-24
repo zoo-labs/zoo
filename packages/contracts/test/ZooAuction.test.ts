@@ -474,7 +474,7 @@ describe("ZooAuction", () => {
       //   // expect((await auctionHouse.auctions(0)).firstBidTime).to.eq(9617249934);
       // });
 
-      it.only("should store the transferred ZOO", async () => {
+      it("should store the transferred ZOO", async () => {
 
         token = token.connect(auctionHouse.signer)
 
@@ -482,18 +482,25 @@ describe("ZooAuction", () => {
 
         await auctionHouse.createBid(0, 200)
 
-        console.log(await token.balanceOf(auctionHouse.address))
+        await token.balanceOf(auctionHouse.address)
 
-        // expect(await token.balanceOf(auctionHouse.address)).to.eq(ONE_ZOO);
+        expect(await token.balanceOf(auctionHouse.address)).to.eq(200);
       });
 
-      // it("should not update the auction's duration", async () => {
-      //   const beforeDuration = (await auctionHouse.auctions(0)).duration;
-      //   await auctionHouse.createBid(0, ONE_ZOO)
-      //   const afterDuration = (await auctionHouse.auctions(0)).duration;
+      it("should not update the auction's duration", async () => {
 
-      //   expect(beforeDuration).to.eq(afterDuration);
-      // });
+        token = token.connect(auctionHouse.signer)
+
+        await token.approve(auctionHouse.address, 200)
+
+        const beforeDuration = (await auctionHouse.auctions(0)).duration;
+
+        await auctionHouse.createBid(0, 200)
+
+        const afterDuration = (await auctionHouse.auctions(0)).duration;
+
+        expect(beforeDuration).to.eq(afterDuration);
+      });
 
       // it("should store the bidder's information", async () => {
       //   await auctionHouse.createBid(0, ONE_ZOO);

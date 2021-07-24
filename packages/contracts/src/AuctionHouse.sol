@@ -220,7 +220,6 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
             "Auction expired"
         );
 
-        console.log("RESERVE", auctions[auctionId].reservePrice);
         require(
             amount >= auctions[auctionId].reservePrice,
             "Must send at least reservePrice"
@@ -331,7 +330,6 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
             "Auction hasn't completed"
         );
 
-        console.log("TOKEN ADDRESS", tokenAddress);
         address currency = tokenAddress;
 
         uint256 curatorFee = 0;
@@ -436,13 +434,7 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
         // full amount to the market, resulting in potentally locked funds
         IERC20 token = IERC20(currency);
 
-        console.log("CURRENCY", currency);
-
-        // console.log("TOKEN", token);
-
         uint256 beforeBalance = token.balanceOf(address(this));
-
-        console.log("BEFORE BAL", beforeBalance);
 
         token.safeTransferFrom(msg.sender, address(this), amount);
 
