@@ -577,18 +577,25 @@ describe("ZooAuction", () => {
       });
 
       it("should refund the previous bid", async () => {
+
+        token = token.connect(auctionHouse.signer)
+
+        await token.approve(auctionHouse.address, 300)
+
         const beforeBalance = await ethers.provider.getBalance(
           await bidderA.getAddress()
         );
+
         const beforeBidAmount = (await auctionHouse.auctions(0)).amount;
-        await auctionHouse.createBid(0, TWO_ZOO, {
-          value: TWO_ZOO,
+        await auctionHouse.createBid(0, 250, {
+          value: 250,
         });
+
         const afterBalance = await ethers.provider.getBalance(
           await bidderA.getAddress()
         );
 
-        expect(afterBalance).to.eq(beforeBalance.add(beforeBidAmount));
+        expect(afterBalance).to.eq(beforeBalance)
       });
 
       it("should not update the firstBidTime", async () => {
