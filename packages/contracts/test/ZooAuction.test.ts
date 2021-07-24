@@ -449,14 +449,9 @@ describe("ZooAuction", () => {
     });
 
     it("should revert if the bid is invalid for share splitting", async () => {
-      await expect(
-        auctionHouse.createBid(0, 200, {
-          value: 200,
-        })
-      ).to.be.revertedWith("Bid invalid for share splitting");
-    });
+      token = token.connect(auctionHouse.signer)
 
-    it("should revert if msg.value does not equal specified amount", async () => {
+      await token.approve(auctionHouse.address, 200)
       await expect(
         auctionHouse.createBid(0, 200, {
           value: 200,
