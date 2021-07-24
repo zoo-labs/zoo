@@ -1,14 +1,17 @@
 import { Colors } from "./types";
 
 export const baseColors = {
-  failure: "#C62073",
-  primary: "#2B7EFF",
-  primaryBright: "#94BEFF",
-  primaryDark: "#024ABB",
-  secondary: "#e20092",
-  secondaryDark: "#21c5d9",
-  success: "#20DFDA",
-  warning: "#FFB237",
+  failure: "#B10058",
+  primary: "#193F52",
+  primaryBright: "#8BCACB",
+  primaryLight: "#8BCACB",
+  primaryPop: "#28D7FD",
+  primaryDark: "#AA3866",
+  secondary: "#9FC554",
+  secondaryDark: "#607A2A",
+  accent: "#DFDE4E",
+  success: "#28D7FD",
+  warning: "#B10058",
   white: "#ffffff"
 };
 
@@ -21,6 +24,7 @@ export const lightColors: Colors = {
   ...brandColors,
   background: "#040404",
   backgroundDisabled: "#E9EAEB", // not yet created
+  sidebar: "#212226",
   contrast: "#191326",
   dropdown: "#F6F6F6",
   invertedContrast: "#282c34",
@@ -37,7 +41,7 @@ export const lightColors: Colors = {
   headerSubtitle: "#d3f5f3", // b4e5ff
   borderColor: "#FFFFFF",
   secondaryDark: "#20DFDA",
-  card: "#282c34",
+  card: "#ffffff",
   tableHeader: "#FFFFFF", // "#A7C8FB",
   cardLabel: "#314F81",
   gradients: {
@@ -62,6 +66,7 @@ export const darkColors: Colors = {
   // secondary: "#138AF2",
   background: "#040404",
   backgroundDisabled: "#A6B6CE",
+  sidebar: "#212226",
   contrast: "#FFFFFF",
   dropdown: "#1E1D20",
   invertedContrast: "#282d33",
