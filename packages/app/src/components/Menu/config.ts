@@ -2,20 +2,20 @@ import { MenuEntry } from './types'
 
 const config: () => MenuEntry[] = () => [
 
-  {
-    label: 'My Zoo',
-    icon: '',
-    href: '/myzoo',
-  },
+  // {
+  //   label: 'My Zoo',
+  //   icon: '',
+  //   href: '/myzoo',
+  // },
   {
     label: 'My Account',
     icon: '',
     href: '/account',
   },
   {
-    label: 'Marketplace',
+    label: 'Feed',
     icon: '',
-    href: '/marketplace',
+    href: '/feed',
   },
 ]
 

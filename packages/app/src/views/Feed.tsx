@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Text } from "components";
+import Page from "components/layout/Page";
 import { ButtonMenu, ButtonMenuItem } from "components/ButtonMenu";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRouteMatch, Link, matchPath, useLocation } from "react-router-dom";
@@ -15,12 +16,12 @@ import { useModal } from "components/Modal";
 import BidModal from "components/MarketModals/BidModal";
 import { useMoralisSubscription } from "react-moralis";
 import { Animal } from "entities/zooentities";
-import MarketplaceCard from "./MarketCard";
+import FeedCard from "./FeedCard";
 
 const Container = styled.div<{ isMobile?: boolean }>`
   height: ${({ isMobile }) => (isMobile ? `100vh` : null)};
   display: ${({ isMobile }) => (isMobile ? null : "flex")};
-  flex-direcetion: ${({ isMobile }) => (isMobile ? `column` : "row")};
+  flex-direction: ${({ isMobile }) => (isMobile ? `column` : "row")};
   flex-wrap: wrap;
 `;
 const Card = styled.div<{ url?: string }>`
@@ -36,32 +37,32 @@ const Card = styled.div<{ url?: string }>`
   align-items: center;
   color: white;
   height: 100vh;
-  max-height: 773px;
+  // max-height: 773px;
   max-width: 425px;
   ${({ theme }) => theme.mediaQueries.sm} {
   }
 `;
 const FirstThird = styled.div`
-  height: 33vh;
+  height: 35vh;
   width: 100%;
-  max-height: 256px;
+  // max-height: 256px;
 `;
 const SecondThird = styled.div`
-  height: 33vh;
+  height: 35vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  max-height: 256px;
+  // max-height: 256px;
 `;
 const FinalThird = styled.div`
-  height: 33vh;
+  height: 35vh;
   width: 100%;
   padding-left: 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-height: 256px;
+  // max-height: 256px;
 `;
 const IconButton = styled.button`
   display: flex;
@@ -133,11 +134,28 @@ const ViewControls = styled.div`
   }
 `;
 
+const ToggleContainer = styled.div`
+  div {
+    width: 100%;
+    justify-content: center;
+    z-index: 1000;
+    position: absolute;
+    margin-top: 15px;
+  }
+  a {
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    box-shadow: none;
+    cursor: pointer;
+  }
+`
+
 Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
 
 Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server";
 
-export default function Marketplace() {
+export default function Feed() {
   const animalsState = useSelector<AppState, AppState["zoo"]["animals"]>(
     (state) => state.zoo.animals
   );
@@ -193,7 +211,7 @@ export default function Marketplace() {
 
   let activeIndex = 0;
   switch (true) {
-    case pathname.includes("myZoo"):
+    case pathname.includes("myzoo"):
       activeIndex = 0;
       break;
     case pathname.includes("marketplace"):
@@ -204,7 +222,7 @@ export default function Marketplace() {
       break;
   }
   switch (true) {
-    case subUrl.includes("myZoo"):
+    case subUrl.includes("myzoo"):
       filter = "myZoo";
       break;
     case subUrl.includes("marketplace"):
@@ -231,22 +249,24 @@ export default function Marketplace() {
 
   // useMoralisSubscription("Animals", q => q, [], {
   //     onUpdate: data => getAnimals(),
-  //   });
+  //   });</ToggleContainer>
 
   return (
     <Container isMobile={isMobile}>
-      <ButtonMenu activeIndex={activeIndex} scale="sm" variant="subtle">
-        <ButtonMenuItem
-          as={Link}
-          to={`${url}/myZoo`}
-          onClick={() => getAnimals()}
-        >
-          'MyZoo'
-        </ButtonMenuItem>
-        <ButtonMenuItem as={Link} to={`${url}`} onClick={() => getAnimals()}>
-          'Marketplace'
-        </ButtonMenuItem>
-      </ButtonMenu>
+      <ToggleContainer>
+        <ButtonMenu activeIndex={activeIndex} scale="sm" variant="subtle">
+          <ButtonMenuItem
+            as={Link}
+            to={`${url}/myzoo`}
+            onClick={() => getAnimals()}
+          >
+          My Zoo
+          </ButtonMenuItem>
+          <ButtonMenuItem as={Link} to={`${url}/marketplace`} onClick={() => getAnimals()}>
+            Marketplace
+          </ButtonMenuItem>
+        </ButtonMenu>
+      </ToggleContainer>
       <Swiper
         spaceBetween={30}
         slidesPerView={isMobile ? 1 : 3}
@@ -257,7 +277,7 @@ export default function Marketplace() {
         {animalsFiltered.map((data) => {
           return data.listed ? (
             <SwiperSlide key={data.tokenId}>
-              <MarketplaceCard item={data} />
+              <FeedCard item={data} />
             </SwiperSlide>
           ) : (
             <></>
