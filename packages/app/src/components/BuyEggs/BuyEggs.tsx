@@ -70,7 +70,7 @@ type EggModalProps = {
 
 const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
   const dispatch = useDispatch()
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState(1)
   const {account} = useWeb3React()
   
   const changed = () => (e) => {
@@ -91,12 +91,14 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
   
   const handleSubmit = async () => {
     const testEggs = []
+    console.log("value", value)
     for (let i = 0; i < value; i++) {
       const toSet: Egg = { ...emptyEgg }
       toSet.tokenId = String(Math.floor(Math.random()*100000000)+1) //to be changed
       toSet.animalId = String(Math.floor(Math.random()*4)+1)
       testEggs.push(toSet)
     }
+    console.log(testEggs)
     dispatch(addEggs(testEggs))
     onDismiss()
     }
