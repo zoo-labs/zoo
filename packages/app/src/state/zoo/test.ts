@@ -10,6 +10,11 @@ export const test = {
          dob: "1627064176",
          imageUrl:
             "https://i2.wp.com/bestlifeonline.com/wp-content/uploads/2018/10/red-panda-raising-fist.jpg?resize=640%2C360&ssl=1",
+         startBid: "500",
+         currentBid: "500",
+         buyNow: "1000",
+         listed: true,
+         bloodline: "pure"
       },
       2: {
          tokenId: "2",
@@ -20,6 +25,12 @@ export const test = {
          rarity: "Rare",
          dob: "1627064176",
          imageUrl: "https://ichef.bbci.co.uk/images/ic/1200x675/p02k8mcv.jpg",
+         startBid: "400",
+         currentBid: "800",
+         buyNow: "900",
+         listed: true,
+         bloodline: "pure"
+
       },
       3: {
          tokenId: "3",
@@ -31,6 +42,11 @@ export const test = {
          dob: "1627064176",
          imageUrl:
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIuXjTOdhD--589Qjr310qX4IgAZrz_4-RAw&usqp=CAU",
+         startBid: "300",
+         currentBid: "500",
+         buyNow: "600",
+         listed: true,
+         bloodline: "pure"
       },
       4: {
          tokenId: "4",
@@ -42,6 +58,28 @@ export const test = {
          dob: "1627064176",
          imageUrl:
             "https://sites.psu.edu/siowfa16/files/2016/09/baby-seal-29vsgyf.jpg",
+         startBid: "200",
+         currentBid: "201",
+         buyNow: "300",
+         listed: false,
+         owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
+         bloodline: "pure"
+      },
+      5: {
+         tokenId: "5",
+         name: "Liger",
+         description: "Meow",
+         yield: "23",
+         boost: "2200",
+         rarity: "Legendary",
+         dob: "1627064176",
+         imageUrl: "https://newsfeed.time.com/wp-content/uploads/sites/9/2013/06/russia-zoo_yang-7.jpg?w=753",
+         startBid: "200",
+         currentBid: "201",
+         buyNow: "300",
+         listed: false,
+         owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
+         bloodline: "hybrid"
       },
    },
    eggs: {

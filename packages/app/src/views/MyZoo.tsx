@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Route, useRouteMatch } from "react-router-dom";
-// import { AppState } from "state"
-// import { useSelector } from "react-redux"
+import { AppState } from "state"
+import { useSelector } from "react-redux"
 import { useWeb3React } from "@web3-react/core";
 import styled from "styled-components";
+import { Swiper, SwiperSlide } from 'swiper/react';
 import FlexLayout from "components/layout/Flex";
 import Page from "components/layout/Page";
 import { orderBy, parseInt } from "lodash";
@@ -16,14 +17,29 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  CardContent,
+  CardContent, 
+  VideoPlayer
 } from "components";
+// import HatchDialog from "components/HatchDialog"
 import { VscLoading } from "react-icons/vsc";
+import { useModal } from "components/Modal";
+import HatchModal from "components/ZooModals/HatchModal"
 // import { ViewMode } from "./components/types"
+import "swiper/swiper.min.css";
+import "swiper/components/pagination/pagination.min.css"
+// import "./styles.css";
+// import SwiperCore, {
+//   Pagination
+// } from 'swiper/core';
+import MyMP16OSFFont from '../fonts/MP16OSF.ttf'
+
+// install Swiper modules
+// SwiperCore.use([Pagination]);
 
 const IconCont = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 20px;
   & svg {
     color: ${({ theme }) => theme.colors.primary};
     animation: spin 2s ease infinite;
@@ -48,13 +64,65 @@ const ImageContainer = styled.div`
 `
 
 const InfoBlock = styled.div`
-  padding: 24px;
+  padding: 10px;
+  text-align: center; 
+  position: absolute;
+  bottom: 0; 
+  width: 100%;
+  background-color: #ffffff6b;
+  z-index: 999999;
 `;
+
+const TextWrapper = styled.div`
+  text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 550;
+  line-height: 1.5;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+`
+
+const BreedWrapper = styled.div<{cols?: number}>`
+  text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
+  font-size: 20px;
+  color: #ffffff;
+  font-weight: 550;
+  line-height: 1.5;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+` 
+
+const RowTitle = styled.div`
+  @font-face{
+    font-family:'MyMP16OSFFont';
+    src:url('${MyMP16OSFFont}') format('TrueType');   
+  }
+  color: white;
+  font-family: 'MyMP16OSFFont'; 
+  font-size: 20px;
+  margin-t: 15px;
+  margin-bottom: 15px;
+`
+
+const RowLayout = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  & > * {
+    min-width: calc(100vw - 20px);
+    max-width: 31.5%;
+    width: 100%;
+    margin: 0 8px;
+    margin-bottom: 32px;
+  }
+`
 
 const _loadCount = 9;
 
 const EggMarketplace: React.FC = () => {
   let empty;
+  const {account} = useWeb3React()
   const { path } = useRouteMatch();
   const { chainId } = useWeb3React();
   const [numVisData, setNumVisData] = useState(_loadCount);
@@ -62,56 +130,58 @@ const EggMarketplace: React.FC = () => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const { isXl, isXs } = useMatchBreakpoints();
   const chainIdSet = chainId === undefined ? "1" : String(chainId);
+  const [ playVideo, setPlayVideo ] = useState(false)
 
-  // const allEggs = useSelector<AppState, AppState['cryptozoo']>((state) => state.cryptozoo.allEggs)
-  const allEggs = {
-    "3BCR3nl2wyq95D1xhciAndNT": {
-      currentBid: 500,
-      born: "08/06/2021",
-      rarity: "Legendary",
-      name: "Red Panda",
-      updatedAt: "23 July 2021 at 13:59:59 UTC",
-      supply: 300,
-      buyNow: 1000,
-      imageURL:
-        "https://i2.wp.com/bestlifeonline.com/wp-content/uploads/2018/10/red-panda-raising-fist.jpg?resize=640%2C360&ssl=1",
-      animalID: 4,
-      createdAt: "23 July 2021 at 13:56:24 UTC",
-      startBid: 500,
-    },
-  };
+  const hatchEgg = () => {
+    console.log("HATCH")
+    setPlayVideo(true)
+  }
 
-  useEffect(() => {
-    const showMoreData = (entries) => {
-      const [entry] = entries;
-      if (entry.isIntersecting) {
-        setNumVisData((dataCurrent) => dataCurrent + _loadCount);
-      }
-    };
+  const [onHatch] = useModal(
+    <HatchModal
 
-    if (!observerIsSet) {
-      const loadMoreObserver = new IntersectionObserver(showMoreData, {
-        rootMargin: "0px",
-        threshold: 1,
-      });
-      loadMoreObserver.observe(bottomRef.current);
-      setObserverIsSet(true);
-    }
-  }, [observerIsSet]);
-  const shownData = (data) => {
-    return data.slice(0, numVisData);
-  };
-  const renderContent = (): JSX.Element => {
-    const data = [];
+        confirmation={hatchEgg}
+        onDismiss={()=>null}
+    />
+)
+
+  const allAnimals = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
+  const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
+
+  // useEffect(() => {
+  //   const showMoreData = (entries) => {
+  //     const [entry] = entries;
+  //     if (entry.isIntersecting) {
+  //       setNumVisData((dataCurrent) => dataCurrent + _loadCount);
+  //     }
+  //   };
+
+  //   if (!observerIsSet) {
+  //     const loadMoreObserver = new IntersectionObserver(showMoreData, {
+  //       rootMargin: "0px",
+  //       threshold: 1,
+  //     });
+  //     loadMoreObserver.observe(bottomRef.current);
+  //     setObserverIsSet(true);
+  //   }
+  // }, [observerIsSet]);
+  // const shownData = (data) => {
+  //   return data.slice(0, numVisData);
+  // };
+
+
+  const renderAnimals = (hybrid): JSX.Element => {
+    const animalData = [];
     // const updatedData = []
-    Object.values(allEggs).forEach((egg, index) => {
-      data.push({
+    Object.values(allAnimals).forEach((animal, index) => {
+      animalData.push({
         id: index,
-        ...egg,
-        name: egg.name.replace(/\u0000/g, ""),
+        ...animal,
+        name: animal.name.replace(/\u0000/g, ""),
       });
     });
-    empty = data.length === 0 && Object.keys(allEggs).length !== 0;
+    console.log(animalData)
+    empty = animalData.length === 0 && Object.keys(allAnimals).length !== 0;
     // Object.values(updatedTokens)
     //   .filter((tkn) => tkn.isToken)
     //   .forEach((token, ind) => {
@@ -120,53 +190,111 @@ const EggMarketplace: React.FC = () => {
     //     }
     //     updatedData.push({ id: ind, ...token })
     //   })
-    debugger; // eslint-disable-line no-debugger
 
     return (
-      <FlexLayout>
+      <RowLayout>
         <Route exact path={`${path}`}>
-          {shownData(data).map((egg) => (
-            <Card>
-              {/* <CardHeader>
-                <Heading color="cardLabel">
-                  {egg.name}
-                </Heading>
-              </CardHeader> */}
-              <CardBody style={{backgroundImage: `url("${egg.imageURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 500}}>
-                <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{egg.name}</Heading>
-              </CardBody>
-              <CardFooter>
-                <InfoBlock style={{textAlign: 'center'}}>
-                  <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{`BREED`}</Heading>
-                </InfoBlock>
-              </CardFooter>
-            </Card>
+          <Swiper slidesPerView={2.2} spaceBetween={10}>
+          {(animalData).filter((item)=>item.bloodline === hybrid).filter((item)=>item.owner === account).map((animal) => (
+            <SwiperSlide>
+              <Card key={animal.id}>
+                <CardBody style={{backgroundImage: `url("${animal.imageUrl}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250, width: 'calc(100vw/2.2 - 13px)', padding: 20}}>
+                  <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{animal.name}</Heading>
+                </CardBody>
+                  <InfoBlock>
+                    <BreedWrapper>{hybrid === "pure" ? `BREED` : `SELL`}</BreedWrapper>
+                  </InfoBlock>
+              </Card>
+            </SwiperSlide>
+              // <SwiperSlide>Slide 1</SwiperSlide>
           ))}
+          </Swiper>
         </Route>
         <Route exact path={`${path}/history`}>
-          {shownData(data).map((egg) => (
+          {/* {shownData(animalData).map((animal) => ( */}
+          {(animalData).map((animal) => (
             <Card
             // key={JSON.stringify(token)}
             />
           ))}
         </Route>
-      </FlexLayout>
+      </RowLayout>
     );
   };
 
-  return (
-    <div>
-      <Page>
-        {renderContent()}
-        <IconCont ref={bottomRef}>
+  const renderEggs = (): JSX.Element => {
+    const eggData = [];
+    // const updatedData = []
+    Object.values(allEggs).forEach((egg, index) => {
+      eggData.push({
+        id: index,
+        ...egg,
+        name: egg.basic ? "BASIC" : "HYBRID"
+      });
+    });
+    empty = eggData.length === 0 && Object.keys(allEggs).length !== 0;
+    const basicEggURL = window.location.origin + '/static/images/basic.png'
+    const hybridEggURL = window.location.origin + '/static/images/hybrid.jpeg'
+
+    return (
+      <RowLayout>
+        <Route exact path={`${path}`}>
+          <Swiper slidesPerView={3} spaceBetween={10} pagination={{"clickable": true}}>
+          {(eggData).map((egg) => (
+            <SwiperSlide key={egg.id}>
+              <Card style={{backgroundColor: '#000000'}}>
+                <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 150, padding: 10}}>
+                  <TextWrapper>{egg.name}</TextWrapper>
+                </CardBody>
+                <InfoBlock style={{textAlign: 'center', backgroundColor: '#ffffff38', padding: 10}} onClick={() => {onHatch()}}>
+                  <TextWrapper >{`HATCH`}</TextWrapper>
+                </InfoBlock>
+              </Card>
+            </SwiperSlide>
+          ))}
+          </Swiper>
+        </Route>
+        <Route exact path={`${path}/history`}>
+          {(eggData).map((egg) => (
+            <Card
+            // key={JSON.stringify(token)}
+            />
+          ))}
+        </Route>
+      </RowLayout>
+    );
+  };
+
+  const renderVideo = () => {
+    return (
+      <VideoPlayer videoPath="hatch_mobile_basic.mp4" onDone={() => setPlayVideo(false)}/>
+    )
+  }
+
+  const renderZoo = () => {
+    return (
+      <div>
+        <Page>
+        <RowTitle>My Eggs</RowTitle>
+        {renderEggs()}
+        <RowTitle>Breedable Animals</RowTitle>
+        {renderAnimals("pure")}
+        <RowTitle>Hybrid Animals</RowTitle>
+        {renderAnimals("hybrid")}
+        {/* <IconCont ref={bottomRef}>
           {" "}
           {numVisData < Object.keys(allEggs).length ? (
             <VscLoading size={36} />
           ) : null}{" "}
-        </IconCont>
+        </IconCont> */}
       </Page>
     </div>
-  );
+    )
+  }
+
+  return (
+    playVideo ? renderVideo() : renderZoo()
+  )
 };
 
 export default EggMarketplace;
