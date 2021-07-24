@@ -205,7 +205,7 @@ const EggMarketplace: React.FC = () => {
 
   const renderEggs = (): JSX.Element => {
     const eggData = [];
-    // const updatedData = []
+    // const updatedData = [])
     Object.values(allEggs).forEach((egg, index) => {
       eggData.push({
         id: index,
