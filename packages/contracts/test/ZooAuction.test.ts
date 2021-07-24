@@ -615,13 +615,18 @@ describe("ZooAuction", () => {
         );
       });
 
-      //     it("should transfer the bid to the contract and store it as ZOO", async () => {
-      //       await auctionHouse.createBid(0, TWO_ZOO, {
-      //         value: TWO_ZOO,
-      //       });
+      it("should transfer the bid to the contract and store it as ZOO", async () => {
 
-      //       expect(await token.balanceOf(auctionHouse.address)).to.eq(TWO_ZOO);
-      //     });
+        token = token.connect(auctionHouse.signer)
+
+        await token.approve(auctionHouse.address, 500)
+
+        await auctionHouse.createBid(0, 300, {
+          value: 300,
+        });
+
+        expect(await token.balanceOf(auctionHouse.address)).to.eq(300);
+      });
 
       //     it("should update the stored bid information", async () => {
       //       await auctionHouse.createBid(0, TWO_ZOO, {
