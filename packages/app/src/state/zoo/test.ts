@@ -14,6 +14,7 @@ export const test = {
          currentBid: "500",
          buyNow: "1000",
          listed: true,
+         owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
          bloodline: "pure"
       },
       2: {
@@ -29,6 +30,7 @@ export const test = {
          currentBid: "800",
          buyNow: "900",
          listed: true,
+         owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
          bloodline: "pure"
 
       },
@@ -46,6 +48,7 @@ export const test = {
          currentBid: "500",
          buyNow: "600",
          listed: true,
+         owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
          bloodline: "pure"
       },
       4: {
