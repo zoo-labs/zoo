@@ -109,7 +109,7 @@ describe("ZooAuction", () => {
     it("should not allow a configuration address that is not the Zora Media Protocol", async () => {
       const ZooAuction = await ethers.getContractFactory("ZooAuction");
       await expect(
-        ZooAuction.deploy(media.address, token.address)
+        ZooAuction.deploy("0x0000000000000000000000000000000000000000", token.address)
       ).to.be.reverted
     })
   });
