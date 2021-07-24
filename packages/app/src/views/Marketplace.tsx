@@ -19,7 +19,7 @@ const Container = styled.div<{isMobile?: boolean}>`
 
     height: ${({ isMobile }) => isMobile? `100vh`: null};
     display: ${({ isMobile }) => isMobile? null : "flex"};
-    flex-direcetion: row;
+    flex-direcetion: ${({ isMobile }) => isMobile? `column`: "row"};
     flex-wrap: wrap;
 `
 const Card = styled.div<{url?: string}>`
@@ -123,8 +123,8 @@ Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server"
 
 export default function Marketplace() {
     const animalsState = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
-    const {isXs, isSm, isMd} = useMatchBreakpoints()
-    const isMobile = isXs || isSm || isMd
+    const {isXl, isXs, isSm, isMd} = useMatchBreakpoints()
+    const isMobile = !isXl
     const queryObject = Moralis.Object.extend("Animals")
     const [animals, setAnimals] = React.useState([])
     const history = useHistory()
@@ -141,6 +141,10 @@ export default function Marketplace() {
     //     temp = {...item}
     //     onBid()
     // }
+
+    const handleOnSwipe = () => {
+
+    }
 
 
     React.useEffect(()=>{
@@ -168,29 +172,21 @@ export default function Marketplace() {
 
     return (
     <Container isMobile = {isMobile}>
-        {   isMobile?
             <Swiper
-                // spaceBetween={50}
-                slidesPerView={isMobile? 1 : 3}
+                spaceBetween={30}
+                slidesPerView={isMobile ? 1 : 3}
                 onSlideChange={() => console.log('slide change')}
                 onSwiper={(swiper) => console.log(swiper)}
-                direction={'vertical'}
-            >
-            {animals.filter((item)=> item.listed === true).map(item => {
-                return (
-                    <SwiperSlide key = {item.tokenId}>
-                        <MarketplaceCard item={item} />
+                direction={isMobile ? 'vertical' : 'horizontal'}
+                >
+                    {animals.map((data) => {
+                     return data.listed ? (
+                    <SwiperSlide key={data.tokenId}>
+                        <MarketplaceCard item={data} />
                     </SwiperSlide>
-                )
-            })}
+                ) : (<></>)
+                   })}
             </Swiper>
-            : 
-            animals.filter((item)=> item.listed === true).map(item => {
-                return (
-                    <MarketplaceCard item={item} />
-                )
-            })
-        }   
     </Container> 
     )
 }

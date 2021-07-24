@@ -114,7 +114,7 @@ const App: React.FC = () => {
                     {signedIn? <MyZoo /> : <Redirect to="/login" />}
                   </Route>
                   <Route  path="/">
-                    {signedIn? <Redirect to="/account" />: <Login />}
+                    {signedIn? <Redirect to="/account" />: <Redirect to="/login" />}
                   </Route>
                   {/* <Route exact path="/login" component={Login} />
                   <Route exact path="/account" component={signedIn? Account : <Redirect to="/docs/overview" />} />
