@@ -433,13 +433,13 @@ describe("ZooAuction", () => {
       ).to.be.revertedWith("Must send at least reservePrice")
     });
 
-    //   it("should revert if the bid is invalid for share splitting", async () => {
-    //     await expect(
-    //       auctionHouse.createBid(0, ONE_ZOO.add(1), {
-    //         value: ONE_ZOO.add(1),
-    //       })
-    //     ).eventually.rejectedWith(revert`Bid invalid for share splitting`);
-    //   });
+    it("should revert if the bid is invalid for share splitting", async () => {
+      await expect(
+        auctionHouse.createBid(0, ONE_ZOO.add(1), {
+          value: ONE_ZOO.add(1),
+        })
+      ).to.be.revertedWith("Bid invalid for share splitting");
+    });
 
     //   it("should revert if msg.value does not equal specified amount", async () => {
     //     await expect(
