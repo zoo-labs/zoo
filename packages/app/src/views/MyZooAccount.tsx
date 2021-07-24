@@ -6,9 +6,7 @@ import { useWeb3React } from "@web3-react/core";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Modal, useModal } from "components/Modal";
-import FlexLayout from "components/layout/Flex";
 import Page from "components/layout/Page";
-import { orderBy, parseInt } from "lodash";
 import {
   Flex,
   Text,
@@ -115,20 +113,17 @@ const RowLayout = styled.div`
 `
 
 const Card = styled(Existing)<{selected?: boolean}>`
-  border: ${({ selected }) => selected? '2px solid white' : null}
+  border: ${({ selected }) => selected ? '2px solid white' : null}
 `
 
 const _loadCount = 9;
 
-const EggMarketplace: React.FC = () => {
+const MyZooAccount: React.FC = () => {
   let empty;
   const {account} = useWeb3React()
   const { path } = useRouteMatch();
   const { chainId } = useWeb3React();
   const dispatch = useDispatch()
-  const [numVisData, setNumVisData] = useState(_loadCount);
-  const [observerIsSet, setObserverIsSet] = useState(false);
-  const bottomRef = useRef<HTMLDivElement>(null);
   const { isXl, isXs } = useMatchBreakpoints();
   const chainIdSet = chainId === undefined ? "1" : String(chainId);
 
@@ -333,15 +328,7 @@ const [onSell] = useModal(
           <Swiper slidesPerView={2.2} spaceBetween={10} pagination={{"clickable": true}}>
           {(eggData).map((egg) => (
             <SwiperSlide key={egg.id}>
-              {/* <Card style={{backgroundColor: '#000000'}}>
-                <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 150, padding: 10}}>
-                  <TextWrapper>{egg.name}</TextWrapper>
-                </CardBody>
-                <InfoBlock style={{textAlign: 'center', backgroundColor: '#ffffff38', padding: 10}} onClick={() => {onHatch()}}>
-                  <TextWrapper >{`HATCH`}</TextWrapper>
-                </InfoBlock>  
-              </Card> */}
-              <EggCard egg={egg} />
+              <EggCard egg={egg}/>
             </SwiperSlide>
           ))}
           </Swiper>
@@ -361,21 +348,15 @@ const [onSell] = useModal(
   return (
     <div>
       <Page>
-        <RowTitle>My Eggs</RowTitle>
+        {/* <RowTitle>My Eggs</RowTitle> */}
         {renderEggs()}
         <RowTitle>Breedable Animals</RowTitle>
         {renderAnimals("pure")}
         <RowTitle>Hybrid Animals</RowTitle>
         {renderAnimals("hybrid")}
-        {/* <IconCont ref={bottomRef}>
-          {" "}
-          {numVisData < Object.keys(allEggs).length ? (
-            <VscLoading size={36} />
-          ) : null}{" "}
-        </IconCont> */}
       </Page>
     </div>
   )
 };
 
-export default EggMarketplace;
+export default MyZooAccount;

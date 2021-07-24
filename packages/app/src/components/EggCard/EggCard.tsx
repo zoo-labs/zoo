@@ -22,7 +22,7 @@ import { animalMapping } from 'util/animalMapping'
 
 
 const InfoBlock = styled.div`
-padding: 10px;
+padding: 4px;
 text-align: center; 
 position: relative;
 bottom: 0; 
@@ -40,6 +40,7 @@ line-height: 1.5;
 letter-spacing: 3px;
 text-transform: uppercase;
 `
+
 const basicEggURL = window.location.origin + '/static/images/basic.png'
 const hybridEggURL = window.location.origin + '/static/images/hybrid.jpeg'
 

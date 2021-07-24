@@ -10,6 +10,7 @@ import { Heading } from 'components'
 import Body from 'components/layout/Body'
 import { useModal } from "components/Modal";
 import BuyEggs from "components/BuyEggs";
+import MyZooAccount from "views/MyZooAccount"
 
 const HeadingContainer = styles.div`
     width: 100%;
@@ -92,6 +93,7 @@ const currentEggsOwned = Object.values(allEggs).filter(egg=> egg.owner === accou
                         </BorderButton>
                          </LabelWrapper>
                     </Body>
+                         <MyZooAccount />
             </Page>
         </>
     )
