@@ -6,11 +6,14 @@ import "./ZooToken.sol";
 import "./interfaces/IMarket.sol";
 import {Decimal} from "./Decimal.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+
 import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import 'hardhat/console.sol';
 
 
-contract ZooDrop is Ownable {
+contract ZooDrop is Ownable, IERC721Receiver  {
     using SafeMath for uint256;
     // this should be the max eggs available for this drop
     uint256 public _totalSupply;
@@ -208,10 +211,8 @@ contract ZooDrop is Ownable {
         
         token.transferFrom(msg.sender, address(this), eggPrice);
         media.mint(_data, _bidShares);
-        // bytes32 egg_hash = random.getHash(random());
-        // commit(egg_hash);
-        emit BuyEgg(msg.sender);
         _currentSupply--;
+        emit BuyEgg(msg.sender);
         return 0;
     }
 
@@ -418,6 +419,14 @@ contract ZooDrop is Ownable {
         return delay;
         
     }
+
+// Callback for when ERC721 is minted using this contract
+
+function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes memory _data) public override returns(bytes4) {
+                
+       return 0x150b7a02;
+ }
+
 }
 
 
