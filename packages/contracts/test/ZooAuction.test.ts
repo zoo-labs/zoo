@@ -211,7 +211,7 @@ describe("ZooAuction", () => {
 
       expect(createdAuction.duration).to.eq(24 * 60 * 60);
       expect(createdAuction.reservePrice).to.eq(
-        BigNumber.from(10).pow(18).div(2)
+        100
       );
       expect(createdAuction.curatorFeePercentage).to.eq(5);
       expect(createdAuction.tokenOwner).to.eq(owner);
