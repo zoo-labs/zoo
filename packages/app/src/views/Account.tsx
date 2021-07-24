@@ -45,7 +45,7 @@ const RowWrapper = styles.div`
 
 const Account: React.FC = () => {
     const [eggsOwned, setEggsOwned] = useState(0)
-    const [onBugEggs] = useModal(<BuyEggs headerColor={'black'} />)
+    const [onBugEggs] = useModal(<BuyEggs />)
 
     const pageHeading = (<HeadingContainer >
                             <Heading >My Account</Heading>

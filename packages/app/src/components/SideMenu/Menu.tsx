@@ -104,6 +104,7 @@ const Menu: React.FC<NavProps> = ({
    links,
    children,
 }) => {
+   const containerRef = React.useRef(null)
    const { isXl, isXs, isSm } = useMatchBreakpoints();
    const isMobile = isXl === false;
    const [isPushed, setIsPushed] = useState(!isMobile);
@@ -113,6 +114,12 @@ const Menu: React.FC<NavProps> = ({
    const { pathname } = useLocation();
 
    console.log("MENU", chainId);
+
+   const handleClickOutside = (event) => {
+    if (containerRef.current && !containerRef.current.contains(event.target)) {
+      setIsPushed(false)
+    }
+  }
 
    useEffect(() => {
       if (chainId !== undefined) {
@@ -171,10 +178,21 @@ const Menu: React.FC<NavProps> = ({
       const throttledHandleScroll = throttle(handleScroll, 200);
 
       window.addEventListener("scroll", throttledHandleScroll);
+      document.addEventListener("click", handleClickOutside, true);
       return () => {
          window.removeEventListener("scroll", throttledHandleScroll);
+         document.addEventListener("click", handleClickOutside, true);
       };
-   }, []);
+   }, [isPushed]);
+
+   
+
+  
+
+   // useEffect(() => {
+   //    window.addEventListener("click", handleClickOutside, true);
+      
+   // }, [])
 
    // Find the home link if provided
    const homeLink = links.find((link) => link.label === "Token Raise");
@@ -210,14 +228,16 @@ const Menu: React.FC<NavProps> = ({
                toggleTheme={toggleTheme}
                pushNav={setIsPushed}
                links={links}
+                
             />
-            <Inner isPushed={isPushed} showMenu={showMenu}>
+            <Inner isPushed={isPushed} showMenu={showMenu}  >
                {children}
             </Inner>
             <MobileOnlyOverlay
                show={isPushed}
                onClick={() => setIsPushed(false)}
                role="presentation"
+               ref={containerRef}
             />
          </BodyWrapper>
       </Wrapper>

@@ -8,7 +8,7 @@ declare module 'styled-components' {
 
 const GlobalStyle = createGlobalStyle`
   * {
-    font-family: 'Space Mono', sans-serif;
+    font-family: MyMP16OSFFont;
     color: #FFFFF;
   }
   body {

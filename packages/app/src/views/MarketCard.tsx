@@ -53,26 +53,26 @@ const IconButton = styled.button`
         text-align: center;
         font-weight: bold;
         width: 100%;
-        color: black;
-        -webkit-text-fill-color: white;
-        -webkit-text-stroke-width: 1px;
-        -webkit-text-stroke-color: black;
+        color: ${({theme}) => theme.colors.text};
+        -webkit-text-fill-color: ${({theme}) => theme.colors.text};
+        -webkit-text-stroke-width: .2px;
+        -webkit-text-stroke-color: ${({theme}) => theme.colors.primary};
     }
     & svg {
         height: 30px;
         width: 30px;
-        fill: white;
-        stroke: black;
+        fill: ${({theme}) => theme.colors.primaryLight};
+        stroke: ${({theme}) => theme.colors.primary};
         stroke-width: 15px;
     }
 `
 const MainHeading = styled(Text)`
     font-size: 32px;
     width: 100%;
-    color: black;
+    color: ${({theme}) => theme.colors.primary};
     font-weight: 900;
-    -webkit-text-fill-color: white;
-    -webkit-text-stroke-width: 1px;
+    -webkit-text-fill-color: ${({theme}) => theme.colors.primaryDark};
+    -webkit-text-stroke-width: .5px;
     -webkit-text-stroke-color: black;
 `
 const Subheading = styled(Text)`
@@ -80,9 +80,9 @@ const Subheading = styled(Text)`
     color: black;
     font-weight: 800;
     font-size: 24px;
-    -webkit-text-fill-color: white;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: black;
+    -webkit-text-fill-color: ${({theme}) => theme.colors.text};
+    -webkit-text-stroke-width: .2px;
+    -webkit-text-stroke-color: ${({theme}) => theme.colors.primary};
     :nth-child(3){
         font-size: 24px;
         font-weight: 600;
