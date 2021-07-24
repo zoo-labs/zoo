@@ -273,7 +273,7 @@ contract ZooDrop is Ownable {
     // Implemented prior to issue #30
     // Should burn animal and return yield
     function freeAnimal(uint256 _tokenID, address _zooMaster) public pure returns (bool) {
-        // if the animal is a pure breed
+        // if the animal is hybrid
             // get the creator/owner's address of token
             address _owner = media.tokenCreators(_tokenID);
 
@@ -309,7 +309,7 @@ contract ZooDrop is Ownable {
 
     // Chooses animal based on random number generated from(0-999), replace strings with ENUMS / data that
     // represents animal instead 
-    function pickAnimal(uint25 random) internal returns(string memory) {
+    function pickAnimal(uint256 random) internal returns(string memory) {
         
         if(random < 550){
             uint choice = random % 4;

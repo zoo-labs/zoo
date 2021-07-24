@@ -16,7 +16,7 @@ contract ZooMedia is Media, Ownable {
     constructor(string memory symbol, string memory name, address marketAddress) Media(symbol, name, marketAddress) {
 
     }
-    
+
   uint public hybridHatchTime = 36 hours;
 
     // function setEgg(uint256 _id, uint256 _parent1, uint256 _parent2) public onlyOwner {
