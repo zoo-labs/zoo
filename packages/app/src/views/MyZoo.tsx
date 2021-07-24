@@ -17,11 +17,12 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  CardContent,
-  useModal
+  VideoPlayer
 } from "components";
 // import HatchDialog from "components/HatchDialog"
 import { VscLoading } from "react-icons/vsc";
+import { useModal } from "components/Modal";
+import HatchModal from "components/ZooModals/HatchModal"
 // import { ViewMode } from "./components/types"
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css"
@@ -64,10 +65,11 @@ const ImageContainer = styled.div`
 const InfoBlock = styled.div`
   padding: 10px;
   text-align: center; 
-  position: absolute;
+  position: relative;
   bottom: 0; 
   width: 100%;
   background-color: #ffffff6b;
+  z-index: 999999;
 `;
 
 const TextWrapper = styled.div`
@@ -126,6 +128,20 @@ const EggMarketplace: React.FC = () => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const { isXl, isXs } = useMatchBreakpoints();
   const chainIdSet = chainId === undefined ? "1" : String(chainId);
+  const [ playVideo, setPlayVideo ] = useState(false)
+
+  const hatchEgg = () => {
+    console.log("HATCH")
+    setPlayVideo(true)
+  }
+
+  const [onHatch] = useModal(
+    <HatchModal
+
+        confirmation={hatchEgg}
+        onDismiss={()=>null}
+    />
+)
 
   const allAnimals = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
@@ -236,8 +252,8 @@ const EggMarketplace: React.FC = () => {
                 <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 150, padding: 10}}>
                   <TextWrapper>{egg.name}</TextWrapper>
                 </CardBody>
-                <InfoBlock style={{textAlign: 'center', backgroundColor: '#ffffff38', padding: 10}}>
-                  <TextWrapper onClick={handleHatch}>{`HATCH`}</TextWrapper>
+                <InfoBlock style={{textAlign: 'center', backgroundColor: '#ffffff38', padding: 10}} onClick={() => {onHatch()}}>
+                  <TextWrapper >{`HATCH`}</TextWrapper>
                 </InfoBlock>
               </Card>
             </SwiperSlide>
@@ -255,10 +271,16 @@ const EggMarketplace: React.FC = () => {
     );
   };
 
-  return (
-    <div>
-      <Page>
-        <RowTitle>My Eggs</RowTitle>
+  const renderVideo = () => {
+    return (
+      <VideoPlayer videoPath="hatch_mobile_basic.mp4" onDone={() => setPlayVideo(false)}/>
+    )
+  }
+
+  const renderZoo = () => {
+    return (
+      <div>
+        <Page>
         {renderEggs()}
         <RowTitle>Breedable Animals</RowTitle>
         {renderAnimals()}
@@ -271,7 +293,12 @@ const EggMarketplace: React.FC = () => {
         </IconCont> */}
       </Page>
     </div>
-  );
+    )
+  }
+
+  return (
+    playVideo ? renderVideo() : renderZoo()
+  )
 };
 
 export default EggMarketplace;
