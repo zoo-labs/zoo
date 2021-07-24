@@ -108,11 +108,11 @@ describe("Test Faucet", () => {
     it("Should add an Animal", async () => {
 
 
-        await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test")
+        await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
 
         const Animal = await zooDrop.getAnimal("Pug");
 
-        const tokenURI = await zooDrop.getTokenURI(Animal.name)
+        const tokenURI = await zooDrop.getTokenURI(Animal.name);
 
         expect(Animal.name).to.equal("Pug");
         expect(tokenURI).to.equal("test");
@@ -124,7 +124,7 @@ describe("Test Faucet", () => {
     it("Should pick a pug", async () => {
 
 
-        await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test")
+        await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
 
         const pick = await zooDrop.pickAnimal(20);
 
@@ -137,10 +137,10 @@ describe("Test Faucet", () => {
 
     it("Should add an Hybrid", async () => {
 
-        await zooDrop.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test")
+        await zooDrop.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
 
         const Hybrid = await zooDrop.getHybrid("PugPug");
-        const tokenURI = await zooDrop.getTokenURI("Puggy")
+        const tokenURI = await zooDrop.getTokenURI("Puggy");
 
         expect(Hybrid.name).to.equal("Puggy");
         expect(tokenURI).to.equal("test");
@@ -152,7 +152,7 @@ describe("Test Faucet", () => {
         
         zooDrop = zooDrop.connect(signers[1]);
         try {
-            const tx = await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test")
+            const tx = await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
             // console.log("tx: ", tx.wait())
         } catch (e) {
             // console.log("message", e)
@@ -166,7 +166,7 @@ describe("Test Faucet", () => {
         // await expect(zooDrop.connect(signers[1]).addHybrid("Puggy", "Pug","Pug", 120 ,"test","test")).to.be.reverted
         zooDrop = zooDrop.connect(signers[1]);
         try {
-            const tx = await zooDrop.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test")
+            const tx = await zooDrop.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
             // console.log("tx: ", tx.wait())
         } catch (e) {
             // console.log("message", e)
@@ -179,13 +179,15 @@ describe("Test Faucet", () => {
      * EGG PRICE
      */
     it("Should set & get egg price", async() => {
-        let eggPrice = await zooDrop.getEggPrice()
-        expect(eggPrice).to.equal(200) // default eggPrice
+        // zooDrop = zooDrop.connect(signers[0]);
+        let eggPrice = await zooDrop.getEggPrice();
+        console.log("Eggprice: ", eggPrice)
+        // expect(eggPrice).to.equal(200) // default eggPrice
         
-        // await zooDrop.setEggPrice(333) //set a new price
+        await zooDrop.connect(signers[0]).setEggPrice(333); //set a new price
         
-        // eggPrice = await zooDrop.getEggPrice()
-        // expect(eggPrice).to.equal(333) // gets the new eggPrice        
+        eggPrice = await zooDrop.getEggPrice();
+        expect(eggPrice).to.equal(333) // gets the new eggPrice        
     });
 
     it("Should revert when setting egg price as non owner", async() => {

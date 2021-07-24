@@ -57,11 +57,14 @@ contract ZooDrop is Ownable, IERC721Receiver  {
 
     struct Egg {
         // need this for hatching hybrid eggs
-        uint256 id;
+        // uint256 id;
         string parent1;
         string parent2;
         uint256 eggCreationTime;
     }
+
+    // mapping of address to tokenId of eggs
+    mapping (address => uint256) public ownedEggs;
 
     // mapping of token id to eggs
     mapping (uint256 => Egg) public eggs;
@@ -423,8 +426,11 @@ contract ZooDrop is Ownable, IERC721Receiver  {
 // Callback for when ERC721 is minted using this contract
 
 function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes memory _data) public override returns(bytes4) {
-                
-       return 0x150b7a02;
+    Egg memory newEgg;
+    newEgg.eggCreationTime = block.number;
+    eggs[_tokenId] = newEgg;
+    ownedEggs[_from] = _tokenId;
+    return 0x150b7a02;
  }
 
 }
