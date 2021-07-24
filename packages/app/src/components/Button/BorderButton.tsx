@@ -14,10 +14,11 @@ const BtnContainer = styled.div`
     font-weight: 600;
      &:hover {
         transition: all 0.2s;
-        border: 2px solid #a0ec0e;
-        color: #a0ec0e;
+        // border: ${({ theme }) => `2px solid ${theme.colors.primaryDark}`};
+        background: ${({ theme }) => theme.colors.primaryDark};
   }
   }
+  
  
 
   button {
@@ -31,6 +32,7 @@ const BtnContainer = styled.div`
       line-height: 1.5;
       transition: all 0.2s;
       position: relative;
+
   }
 
 `
@@ -42,12 +44,9 @@ const BorderButton = (props): JSX.Element => {
     
     return (
         <>
-            {disabled ? <Button scale={isMobile ? scales.XS : scales.MD} {...props} />
-                : <BtnContainer>
-                        <Button scale={isMobile ? scales.XS : scales.MD} {...props} />
+           <BtnContainer>
+                <Button disabled={disabled} scale={isMobile ? scales.XS : scales.MD} {...props} />
                 </BtnContainer>
-            }
-
         </>
     )
 }
