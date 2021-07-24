@@ -628,16 +628,21 @@ describe("ZooAuction", () => {
         expect(await token.balanceOf(auctionHouse.address)).to.eq(300);
       });
 
-      //     it("should update the stored bid information", async () => {
-      //       await auctionHouse.createBid(0, TWO_ZOO, {
-      //         value: TWO_ZOO,
-      //       });
+      it.only("should update the stored bid information", async () => {
 
-      //       const currAuction = await auctionHouse.auctions(0);
+        token = token.connect(auctionHouse.signer);
 
-      //       expect(currAuction.amount).to.eq(TWO_ZOO);
-      //       expect(currAuction.bidder).to.eq(await bidderB.getAddress());
-      //     });
+        await token.approve(auctionHouse.address, 500);
+
+        await auctionHouse.createBid(0, 300, {
+          value: 300,
+        });
+
+        const currAuction = await auctionHouse.auctions(0);
+
+        expect(currAuction.amount).to.eq(300);
+        expect(currAuction.bidder).to.eq(await bidderB.getAddress());
+      });
 
       //     it("should not extend the duration of the bid if outside of the time buffer", async () => {
       //       const beforeDuration = (await auctionHouse.auctions(0)).duration;
