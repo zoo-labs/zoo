@@ -22,7 +22,7 @@ import { VscLoading } from "react-icons/vsc";
 // import { ViewMode } from "./components/types"
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css"
-import "./styles.css";
+// import "./styles.css";
 // import SwiperCore, {
 //   Pagination
 // } from 'swiper/core';
@@ -61,7 +61,7 @@ const ImageContainer = styled.div`
 const InfoBlock = styled.div`
   padding: 10px;
   text-align: center; 
-  position: relative;
+  position: absolute;
   bottom: 0; 
   width: 100%;
   background-color: #ffffff6b;
@@ -175,12 +175,12 @@ const EggMarketplace: React.FC = () => {
     return (
       <RowLayout>
         <Route exact path={`${path}`}>
-          <Swiper slidesPerView={2.2} spaceBetween={10} className="mySwiper">
+          <Swiper slidesPerView={2.2} spaceBetween={10}>
           {(animalData).filter((item)=>item.bloodline === hybrid).filter((item)=>item.owner === account).map((animal) => (
             <SwiperSlide>
               <Card key={animal.id}>
-                <CardBody style={{backgroundImage: `url("${animal.imageUrl}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250, width: 'calc(100vw/2.2 - 13px)', padding: 20}}>
-                  <Heading mb="8px" style={{textShadow: '0px 2px rgba(0, 0, 0, 0.2)'}}>{animal.name}</Heading>
+                <CardBody style={{backgroundImage: `url("${animal.imageUrl}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250, width: 'calc(100vw/2.2 - 13px)', padding: 10}}>
+                  <TextWrapper style={{textShadow: '0px 2px 6px rgb(0, 0, 0)', textAlign: 'center', fontSize: 16, letterSpacing: 0}}>{animal.name}</TextWrapper>
                 </CardBody>
                   <InfoBlock>
                     <BreedWrapper>{hybrid === "pure" ? `BREED` : `SELL`}</BreedWrapper>
@@ -220,7 +220,7 @@ const EggMarketplace: React.FC = () => {
     return (
       <RowLayout>
         <Route exact path={`${path}`}>
-          <Swiper slidesPerView={3} spaceBetween={10} pagination={{"clickable": true}} className="mySwiper">
+          <Swiper slidesPerView={3} spaceBetween={10} pagination={{"clickable": true}}>
           {(eggData).map((egg) => (
             <SwiperSlide key={egg.id}>
               {/* <Card style={{backgroundColor: '#000000'}}>
