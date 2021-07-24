@@ -96,7 +96,7 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
     for (let i = 0; i < value; i++) {
       const toSet: Egg = { ...emptyEgg }
       toSet.tokenId = String(Math.floor(Math.random()*100000000)+1) //to be changed
-      toSet.animalId = String(Math.floor(Math.random()*3)+1)
+      toSet.animalId = String(Math.floor(Math.random()*4)+1)
       testEggs.push(toSet)
     }
     dispatch(addEggs(testEggs))
