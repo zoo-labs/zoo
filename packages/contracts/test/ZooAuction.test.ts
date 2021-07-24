@@ -427,11 +427,11 @@ describe("ZooAuction", () => {
       ).to.be.revertedWith("Auction must be approved by curator")
     });
 
-    //   it("should revert if the bid is less than the reserve price", async () => {
-    //     await expect(
-    //       auctionHouse.createBid(0, 0, { value: 0 })
-    //     ).eventually.rejectedWith(revert`Must send at least reservePrice`);
-    //   });
+    it("should revert if the bid is less than the reserve price", async () => {
+      await expect(
+        auctionHouse.createBid(0, 0, { value: 0 })
+      ).to.be.revertedWith("Must send at least reservePrice")
+    });
 
     //   it("should revert if the bid is invalid for share splitting", async () => {
     //     await expect(
