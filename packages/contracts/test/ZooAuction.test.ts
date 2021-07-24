@@ -2,7 +2,7 @@ import chai, { expect } from "chai";
 import asPromised from "chai-as-promised";
 // @ts-ignore
 import { ethers } from "hardhat";
-import { ZooMarket, ZooMedia } from "../types";
+import { AuctionHouse, ZooMarket, ZooMedia } from "../types";
 import { ZooAuction, BadBidder, TestERC721, BadERC721 } from "../types";
 import { formatUnits } from "ethers/lib/utils";
 import { BigNumber, Contract, Signer } from "ethers";
