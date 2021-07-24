@@ -420,12 +420,12 @@ describe("ZooAuction", () => {
       ).to.be.revertedWith("Auction doesn't exist")
     });
 
-    //   it("should revert if the specified auction is not approved", async () => {
-    //     await auctionHouse.connect(curator).setAuctionApproval(0, false);
-    //     await expect(
-    //       auctionHouse.createBid(0, ONE_ZOO, { value: ONE_ZOO })
-    //     ).eventually.rejectedWith(revert`Auction must be approved by curator`);
-    //   });
+    it("should revert if the specified auction is not approved", async () => {
+      await auctionHouse.connect(curator).setAuctionApproval(0, false);
+      await expect(
+        auctionHouse.createBid(0, ONE_ZOO, { value: ONE_ZOO })
+      ).to.be.revertedWith("Auction must be approved by curator")
+    });
 
     //   it("should revert if the bid is less than the reserve price", async () => {
     //     await expect(
