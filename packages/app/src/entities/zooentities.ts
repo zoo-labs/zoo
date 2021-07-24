@@ -13,6 +13,8 @@ export interface Animal {
    imageUrl: string;
    listed: boolean;
    bloodline?: string
+   selected?:boolean
+   bred?:boolean
    
 }
 
