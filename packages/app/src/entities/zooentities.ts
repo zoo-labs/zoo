@@ -11,7 +11,9 @@ export interface Animal {
    currentBid?: string;
    buyNow?: string;
    imageUrl: string;
-   listed: boolean
+   listed: boolean;
+   bloodline?: string
+   
 }
 
 export interface Egg {
