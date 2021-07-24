@@ -40,11 +40,16 @@ export const ZooSlice = createSlice({
       },
       burnEgg: (state: ZooState, action) => {
          const toRemove: Egg = action.payload;
-         state.eggs[toRemove.tokenId] = null;
+         console.log(toRemove)
+         const newState = state;
+         delete newState.eggs[toRemove.tokenId]
+         state = newState
       },
       burnAnimal: (state: ZooState, action) => {
          const toRemove: Animal = action.payload;
-         state.animals[toRemove.tokenId] = null;
+         const newState = state
+         delete newState.animals[toRemove.tokenId]
+         state = newState
       },
       clearZoo: (state: ZooState, action) => {
          state = initialState;
