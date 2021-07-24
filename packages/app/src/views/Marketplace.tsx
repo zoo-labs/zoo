@@ -181,11 +181,12 @@ export default function Marketplace() {
                     direction={'vertical'}
                 >
                     {animals.map((data) => {
-                       return (
-                    <SwiperSlide key={data.listed.tokenId}>
+                     return data.listed ? (
+                    <SwiperSlide key={data.tokenId}>
                         <MarketplaceCard item={data} />
                     </SwiperSlide>
-                )
+                ) : (<></>)
+                    
                    })}
             </Swiper>
             : 
