@@ -83,5 +83,19 @@ export const test = {
       },
    },
    eggs: {
+      5: {
+        tokenId: "5",
+        animalId: "50",
+        parent1: "1",
+        parent2: "2",
+        basic: false,
+      },
+      6: {
+        tokenId: "6",
+        animalId: "51",
+        parent1: "3",
+        parent2: "4",
+        basic: false,
+      },
    },
 };
