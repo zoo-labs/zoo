@@ -27,7 +27,7 @@ import HatchModal from "components/ZooModals/HatchModal"
 // import { ViewMode } from "./components/types"
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css"
-import "./styles.css";
+// import "./styles.css";
 // import SwiperCore, {
 //   Pagination
 // } from 'swiper/core';
@@ -66,7 +66,7 @@ const ImageContainer = styled.div`
 const InfoBlock = styled.div`
   padding: 10px;
   text-align: center; 
-  position: relative;
+  position: absolute;
   bottom: 0; 
   width: 100%;
   background-color: #ffffff6b;
@@ -194,7 +194,7 @@ const EggMarketplace: React.FC = () => {
     return (
       <RowLayout>
         <Route exact path={`${path}`}>
-          <Swiper slidesPerView={2.2} spaceBetween={10} className="mySwiper">
+          <Swiper slidesPerView={2.2} spaceBetween={10}>
           {(animalData).filter((item)=>item.bloodline === hybrid).filter((item)=>item.owner === account).map((animal) => (
             <SwiperSlide>
               <Card key={animal.id}>
@@ -239,7 +239,7 @@ const EggMarketplace: React.FC = () => {
     return (
       <RowLayout>
         <Route exact path={`${path}`}>
-          <Swiper slidesPerView={3} spaceBetween={10} pagination={{"clickable": true}} className="mySwiper">
+          <Swiper slidesPerView={3} spaceBetween={10} pagination={{"clickable": true}}>
           {(eggData).map((egg) => (
             <SwiperSlide key={egg.id}>
               <Card style={{backgroundColor: '#000000'}}>
