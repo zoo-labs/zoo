@@ -279,7 +279,7 @@ const [onConfirm] = useModal(
     return (
       <RowLayout>
         <Route exact path={`${path}`}>
-          <Swiper slidesPerView={3} spaceBetween={10} pagination={{"clickable": true}}>
+          <Swiper slidesPerView={2.2} spaceBetween={10} pagination={{"clickable": true}}>
           {(eggData).map((egg) => (
             <SwiperSlide key={egg.id}>
               {/* <Card style={{backgroundColor: '#000000'}}>
