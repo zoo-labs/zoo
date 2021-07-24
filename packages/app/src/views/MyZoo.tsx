@@ -26,7 +26,6 @@ import "swiper/components/pagination/pagination.min.css"
 // import SwiperCore, {
 //   Pagination
 // } from 'swiper/core';
-import MyMP16OSFFont from '../fonts/MP16OSF.ttf'
 
 // install Swiper modules
 // SwiperCore.use([Pagination]);
@@ -89,12 +88,7 @@ const BreedWrapper = styled.div<{cols?: number}>`
 ` 
 
 const RowTitle = styled.div`
-  @font-face{
-    font-family:'MyMP16OSFFont';
-    src:url('${MyMP16OSFFont}') format('TrueType');   
-  }
   color: white;
-  font-family: 'MyMP16OSFFont'; 
   font-size: 20px;
   margin-t: 15px;
   margin-bottom: 15px;
