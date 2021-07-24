@@ -107,20 +107,21 @@ const MarketplaceCard: React.FC<Props> =  ({ item }) => {
     const StringDate = date.toLocaleDateString("en-US")
 
     const [onYield] = useModal(
-        <YieldModal
+         <YieldModal
+            item={item}
             onDismiss={() => null}
         />
     )
 
-    const onYieldInfo = (animal) => {
-        ypd['Name'] = item.name
-        ypd['currentBlock'] = "1291412"
-        ypd['birthBlock'] = "1234731"
-        ypd['divideBy'] = "28800"
-        ypd['animalYield'] = 'yieldOfAnimal'
-        ypd['price'] = '0'
-        onYield()
-    }
+    // const onYieldInfo = (animal) => {
+    //     ypd['Name'] = item.name
+    //     ypd['currentBlock'] = "1291412"
+    //     ypd['birthBlock'] = "1234731"
+    //     ypd['divideBy'] = "28800"
+    //     ypd['animalYield'] = 'yieldOfAnimal'
+    //     ypd['price'] = '0'
+    //     onYield()
+    // }
     
     const [onBid] = useModal(
         <BidModal
@@ -141,7 +142,7 @@ const MarketplaceCard: React.FC<Props> =  ({ item }) => {
             <Card url={item.imageUrl}>
                 <FirstThird/>
                 <SecondThird>
-                    <IconButton onClick={()=>{alert("Some Yield Component")}}><FaMoneyBillWave /><Text as = "span" fontSize="18px">Yield</Text></IconButton>
+                    <IconButton onClick={()=>{onYield()}}><FaMoneyBillWave /><Text as = "span" fontSize="18px">Yield</Text></IconButton>
                     <IconButton onClick={()=>{onBid()}}><FaDollarSign /><Text as = "span" fontSize="18px">Bid</Text></IconButton>
                     <IconButton onClick={()=>{HomeClick()}}><IoPersonCircle/><Text as = "span" fontSize="18px">Home</Text></IconButton>
                 </SecondThird>
