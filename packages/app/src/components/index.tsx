@@ -29,6 +29,7 @@ export * from "./Svg";
 export * from "./Text";
 // export * from "./Toggle";
 export * from "./VideoPlayer";
+export * from "./EggCard";
 
 // Hooks
 export * from "../hooks";
