@@ -66,7 +66,7 @@ const ImageContainer = styled.div`
 const InfoBlock = styled.div`
   padding: 10px;
   text-align: center; 
-  position: relative;
+  position: absolute;
   bottom: 0; 
   width: 100%;
   background-color: #ffffff6b;
