@@ -28,8 +28,8 @@ import "swiper/components/pagination/pagination.min.css"
 //   Pagination
 // } from 'swiper/core';
 import MyMP16OSFFont from '../fonts/MP16OSF.ttf'
-import { Animal } from "entities/zooentities";
-import { addAnimal } from "state/actions";
+import { Animal, Egg } from "entities/zooentities";
+import { addAnimal, addEgg } from "state/actions";
 import { ImInsertTemplate } from "react-icons/im";
 import BorderButton from "components/Button/BorderButton";
 import { FaLessThanEqual } from "react-icons/fa";
@@ -146,6 +146,17 @@ const EggMarketplace: React.FC = () => {
 }
 
   let array = []
+  let sellAnimal: Animal = {
+    tokenId: "",
+    name: "",
+    description: "",
+    boost: "",
+    yield: "",
+    rarity: "",
+    imageUrl: "",
+    dob: "",
+    listed: false
+  }
 
   const breed = (onDismiss) => {
     const animal1: Animal = array[0]
@@ -153,41 +164,55 @@ const EggMarketplace: React.FC = () => {
     const ID = Object.keys(allAnimals).length
     animal1.bred = true
     animal2.bred = true
+    animal1.selected = false
+    animal2.selected = false
+    
 
-    const newAnimal: Animal = {
-        tokenId: (ID + 1).toString(),
-        name: "Puggerpillar",
-        imageUrl: "https://i.redd.it/6tt43ut2af331.jpg",
-        owner: account,
-        bloodline: "hybrid",
-        listed: false,
-        rarity: "Legendary",
-        yield: "2342",
-        description: "This little guy",
-        dob: Date.now().toString(),
-        boost: "2432",
-        bred: false
+    // const newAnimal: Animal = {
+    //     tokenId: (ID + 1).toString(),
+    //     name: "Puggerpillar",
+    //     imageUrl: "https://i.redd.it/6tt43ut2af331.jpg",
+    //     owner: account,
+    //     bloodline: "hybrid",
+    //     listed: false,
+    //     rarity: "Legendary",
+    //     yield: "2342",
+    //     description: "This little guy",
+    //     dob: Date.now().toString(),
+    //     boost: "2432",
+    //     bred: false
+    // }
+
+    const emptyEgg:Egg =
+    {
+      owner: account,
+      tokenId: String(Math.floor(Math.random()*100000000)+1),
+      animalId: "3123",
+      parent1: "123",
+      parent2: "1231",
+      basic: false
     }
 
     array = []
     dispatch(addAnimal(animal1))
     dispatch(addAnimal(animal2))
-    dispatch(addAnimal(newAnimal))
+    // dispatch(addAnimal(newAnimal))
+    dispatch(addEgg(emptyEgg))
     onDismiss()
     
   }
 
   const breedClick = (animal) => {
-      const selected = Object.values(allAnimals).filter((item) => item.selected)
+      const selected = Object.values(allAnimals).filter((item) => item.selected) 
       const toSet:Animal = {...animal}
-      toSet.selected = animal.selected ? false : true
+      toSet.selected = animal.selected ? false : true 
 
-      if(!animal.selected && selected.length === 1){
-          const temp = [{...selected[0]}, {...animal}]
-          array = temp
-          onConfirm()
+      if(!animal.selected && selected.length === 1){ 
+          const temp = [{...selected[0]}, {...animal}] 
+          array = temp 
+          onConfirm() 
       }
-      dispatch(addAnimal(toSet))
+      dispatch(addAnimal(toSet)) 
   }
 
   const Confirmation: React.FC<Props> = ({onDismiss = () => null, breed}) => {
@@ -195,7 +220,7 @@ const EggMarketplace: React.FC = () => {
       const animal2 = array[1]
     return (
         <Modal title="Are you Sure?" onDismiss={onDismiss}>
-            <Text>{`You want to breed 1 ${animal1.name} and 1 ${animal2.name}?`}</Text>
+            <Text>{`You want to breed this ${animal1.name} with this ${animal2.name}?`}</Text>
             <BorderButton onClick={()=>onDismiss()}>Cancel</BorderButton>
             <BorderButton onClick={()=>breed(onDismiss)}>Confirm</BorderButton>
         </Modal>
@@ -206,6 +231,37 @@ const [onConfirm] = useModal(
   <Confirmation 
     onDismiss={()=>null}
     breed={breed}
+  />
+)
+
+const list = (animal) => {
+  const temp: Animal = {...animal}
+  sellAnimal = temp
+  onSell()
+}
+
+const sell = (onDismiss) => {
+  const animal: Animal = sellAnimal
+  animal.listed = true
+  dispatch(addAnimal(animal))
+  onDismiss()
+}
+
+const SellConfirm: React.FC<Props> = ({onDismiss = () => null, breed}) => {
+
+  return (
+      <Modal title="Are you Sure?" onDismiss={onDismiss}>
+          <Text>{`You want to list this ${sellAnimal.name}?`}</Text>
+          <BorderButton onClick={()=>onDismiss()}>Cancel</BorderButton>
+          <BorderButton onClick={()=>breed(onDismiss)}>Confirm</BorderButton>
+      </Modal>
+  )
+}
+
+const [onSell] = useModal(
+  <SellConfirm 
+    onDismiss={()=>null}
+    breed={sell}
   />
 )
 
@@ -241,7 +297,7 @@ const [onConfirm] = useModal(
                 <CardBody style={{backgroundImage: `url("${animal.imageUrl}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250, width: 'calc(100vw/2.2 - 13px)', padding: 10}}>
                   <TextWrapper style={{textShadow: '0px 2px 6px rgb(0, 0, 0)', textAlign: 'center', fontSize: 16, letterSpacing: 0}}>{animal.name}</TextWrapper>
                 </CardBody>
-                  <InfoBlock onClick={()=>hybrid === "pure" ? breedClick(animal) : console.log("hybrid")}>
+                  <InfoBlock onClick={()=>hybrid === "pure" ? breedClick(animal) : list(animal)}>
                     <BreedWrapper>{hybrid === "pure" ? `BREED` : `SELL`}</BreedWrapper>
                   </InfoBlock>
               </Card>
