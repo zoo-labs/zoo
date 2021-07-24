@@ -356,28 +356,30 @@ describe("ZooAuction", () => {
       ).to.be.revertedWith("Must be auction curator or token owner");
     });
 
-    //   it("should revert if the auction has already started", async () => {
-    //     await auctionHouse.setAuctionReservePrice(0, TWO_ZOO);
-    //     await auctionHouse.setAuctionApproval(0, true);
-    //     await auctionHouse
-    //       .connect(bidder)
-    //       .createBid(0, TWO_ZOO, { value: TWO_ZOO });
-    //     await expect(
-    //       auctionHouse.setAuctionReservePrice(0, ONE_ZOO)
-    //     ).eventually.rejectedWith(revert`Auction has already started`);
-    //   });
+    // it("should revert if the auction has already started", async () => {
+    //   await auctionHouse.setAuctionReservePrice(0, TWO_ZOO);
+    //   await auctionHouse.setAuctionApproval(0, true);
 
-    //   it("should set the auction reserve price when called by the curator", async () => {
-    //     await auctionHouse.setAuctionReservePrice(0, TWO_ZOO);
+    //   await auctionHouse
+    //     .connect(bidder)
+    //     .createBid(0, TWO_ZOO, { value: TWO_ZOO });
 
-    //     expect((await auctionHouse.auctions(0)).reservePrice).to.eq(TWO_ZOO);
-    //   });
+    //   await expect(
+    //     auctionHouse.setAuctionReservePrice(0, TWO_ZOO)
+    //   ).eventually.rejectedWith(revert`Auction has already started`);
+    // });
 
-    //   it("should set the auction reserve price when called by the token owner", async () => {
-    //     await auctionHouse.connect(creator).setAuctionReservePrice(0, TWO_ZOO);
+    it("should set the auction reserve price when called by the curator", async () => {
+      await auctionHouse.setAuctionReservePrice(0, TWO_ZOO);
 
-    //     expect((await auctionHouse.auctions(0)).reservePrice).to.eq(TWO_ZOO);
-    //   });
+      expect((await auctionHouse.auctions(0)).reservePrice).to.eq(TWO_ZOO);
+    });
+
+    it("should set the auction reserve price when called by the token owner", async () => {
+      await auctionHouse.connect(creator).setAuctionReservePrice(0, TWO_ZOO);
+
+      expect((await auctionHouse.auctions(0)).reservePrice).to.eq(TWO_ZOO);
+    });
 
     //   it("should emit an AuctionReservePriceUpdated event", async () => {
     //     const block = await ethers.provider.getBlockNumber();
