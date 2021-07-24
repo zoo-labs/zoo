@@ -111,11 +111,10 @@ contract ZooDrop is Ownable {
     // Random public random;
 
 
-    constructor(address _zooToken, address _zooMedia, address _random){
+    constructor(address _zooToken, address _zooMedia){
         //Initalize token with ZooToken address
         token = ZooToken(_zooToken);
         media = ZooMedia(_zooMedia);
-        // random = Random(_random);
     }
 
 
@@ -287,10 +286,10 @@ contract ZooDrop is Ownable {
             // uint256 age = now-_animalDOB[_tokenID] / 60 / 60 / 24;
             uint256 age = Decimal.div((block.number - _animalDOB[_tokenID]), 28800);
             // calculate daily yield
-            uint256 dailyYield = Decimal.mul(age, Decimal.div(existingAnimals[_tokenID].rarity.yield, 100));
+            uint256 dailyYield = Decimal.mul(age, Decimal.div(existingHybrids[_tokenID].rarity.yield, 100));
             // transfer yield
             token.transferFrom(_zooMaster, _owner, dailyYield);
-            delete existingAnimals[_tokenID];
+            delete existingHybrids[_tokenID];
             delete _animalDOB[_tokenID];
             emit freeAnimal(_owner, _tokenID, dailyYield);
         return true;
