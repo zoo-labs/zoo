@@ -234,7 +234,7 @@ const EggMarketplace: React.FC = () => {
     });
     empty = eggData.length === 0 && Object.keys(allEggs).length !== 0;
     const basicEggURL = window.location.origin + '/static/images/basic.png'
-    const hybridEggURL = window.location.origin + '/static/images/hybrid.png'
+    const hybridEggURL = window.location.origin + '/static/images/hybrid.jpeg'
 
     return (
       <RowLayout>
