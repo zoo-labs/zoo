@@ -25,7 +25,7 @@ const VideoPlayer: React.FC<VideoPlayerTheme> = ({videoPath, onDone}:VideoPlayer
     }, [])
 
     return (
-        <VideoPlayerWrapper autoPlay ref={videoEl}>
+        <VideoPlayerWrapper autoPlay ref={videoEl} controls={false}>
             <source src={videoPath} />
         </VideoPlayerWrapper>
     )
