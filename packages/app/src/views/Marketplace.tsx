@@ -19,7 +19,7 @@ const Container = styled.div<{isMobile?: boolean}>`
 
     height: ${({ isMobile }) => isMobile? `100vh`: null};
     display: ${({ isMobile }) => isMobile? null : "flex"};
-    flex-direcetion: column;
+    flex-direcetion: ${({ isMobile }) => isMobile? `column`: "row"};
     flex-wrap: wrap;
 `
 const Card = styled.div<{url?: string}>`
@@ -172,13 +172,12 @@ export default function Marketplace() {
 
     return (
     <Container isMobile = {isMobile}>
-        {   isMobile?
             <Swiper
-                spaceBetween={5}
-                slidesPerView={isMobile? 1 : 3}
+                spaceBetween={30}
+                slidesPerView={isMobile ? 1 : 3}
                 onSlideChange={() => console.log('slide change')}
                 onSwiper={(swiper) => console.log(swiper)}
-                    direction={'vertical'}
+                direction={isMobile ? 'vertical' : 'horizontal'}
                 >
                     {animals.map((data) => {
                      return data.listed ? (
@@ -186,16 +185,8 @@ export default function Marketplace() {
                         <MarketplaceCard item={data} />
                     </SwiperSlide>
                 ) : (<></>)
-                    
                    })}
             </Swiper>
-            : 
-            animals.filter((item)=> item.listed === true).map(item => {
-                return (
-                    <MarketplaceCard item={item} />
-                )
-            })
-        }   
     </Container> 
     )
 }
