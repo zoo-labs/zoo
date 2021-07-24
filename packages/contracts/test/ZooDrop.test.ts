@@ -88,9 +88,29 @@ describe("Test Faucet", () => {
 
     it("Should get the Faucet owner", async () => {
 
-        const faucetOwner: string = await zooDrop.owner();
+        const zooDropOwner: string = await zooDrop.owner();
 
-        expect(zooDrop).to.equal(owner.address);
+        expect(zooDropOwner).to.equal(owner.address);
+
+    });
+
+    it("Should add an Animal", async () => {
+
+        const zooDropOwner: string = await zooDrop.owner();
+
+        await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test")
+
+        expect(zooDropOwner).to.equal(owner.address);
+
+    });
+
+    it("Should add an Hybrid", async () => {
+
+        const zooDropOwner: string = await zooDrop.owner();
+
+        await zooDrop.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test")
+
+        expect(zooDropOwner).to.equal(owner.address);
 
     });
 
