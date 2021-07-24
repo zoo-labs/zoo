@@ -75,10 +75,8 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
   
   const changed = () => (e) => {
     const newVal = e.target.value;
-
-    if (newVal > value) {
-      setValue(parseInt(newVal));
-    }
+    
+    newVal === "" ? setValue(0) : setValue(parseInt(newVal))
   };
 
   const emptyEgg:Egg =
