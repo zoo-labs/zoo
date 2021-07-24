@@ -14,6 +14,7 @@ import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
 import {IMarket, Decimal} from "./interfaces/IMarket.sol";
 import {IMedia} from "./interfaces/IMedia.sol";
 import {IAuctionHouse} from "./interfaces/IAuctionHouse.sol";
+import "./console.sol";
 
 interface IWETH {
     function deposit() external payable;
@@ -70,8 +71,8 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
             IERC165(_media).supportsInterface(interfaceId),
             "Doesn't support NFT interface"
         );
-        media = _media;
-        token = _token;
+        mediaAddress = _media;
+        tokenAddress = _token;
         timeBuffer = 15 * 60; // extend 15 minutes after every bid made in last 15 minutes
         minBidIncrementPercentage = 5; // 5%
     }
@@ -205,6 +206,7 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
         nonReentrant
     {
         address payable lastBidder = auctions[auctionId].bidder;
+
         require(
             auctions[auctionId].approved,
             "Auction must be approved by curator"
@@ -217,6 +219,8 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
                 ),
             "Auction expired"
         );
+
+        console.log("RESERVE", auctions[auctionId].reservePrice);
         require(
             amount >= auctions[auctionId].reservePrice,
             "Must send at least reservePrice"
@@ -233,12 +237,10 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
         );
 
         // For Zoo Protocol, ensure that the bid is valid for the current bidShare configuration
-        if (auctions[auctionId].tokenContract == token) {
+        if (auctions[auctionId].tokenContract == tokenAddress) {
             require(
-                IMarket(IMediaExtended(zoo).marketContract()).isValidBid(
-                    auctions[auctionId].tokenId,
-                    amount
-                ),
+                IMarket(IMediaExtended(tokenAddress).marketContract())
+                    .isValidBid(auctions[auctionId].tokenId, amount),
                 "Bid invalid for share splitting"
             );
         }
@@ -255,7 +257,7 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
             );
         }
 
-        _handleIncomingBid(amount, auctions[auctionId].auctionCurrency);
+        _handleIncomingBid(amount, tokenAddress);
 
         auctions[auctionId].amount = amount;
         auctions[auctionId].bidder = payable(msg.sender);
@@ -329,14 +331,14 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
             "Auction hasn't completed"
         );
 
-        address currency = auctions[auctionId].auctionCurrency == address(0)
-            ? mediaAddress
-            : auctions[auctionId].auctionCurrency;
+        console.log("TOKEN ADDRESS", tokenAddress);
+        address currency = tokenAddress;
+
         uint256 curatorFee = 0;
 
         uint256 tokenOwnerProfit = auctions[auctionId].amount;
 
-        if (auctions[auctionId].tokenContract == zoo) {
+        if (auctions[auctionId].tokenContract == tokenAddress) {
             // If the auction is running on zoo, settle it on the protocol
             (
                 bool success,
@@ -429,20 +431,18 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
      * If the currency is ETH (0x0), attempt to wrap the amount as WETH
      */
     function _handleIncomingBid(uint256 amount, address currency) internal {
-        // If this is an ETH bid, ensure they sent enough and convert it to WETH under the hood
-        // if (currency == address(0)) {
-
-        require(
-            msg.value == amount,
-            "Sent ZOO Value does not match specified bid amount"
-        );
-
         // We must check the balance that was actually transferred to the auction,
         // as some tokens impose a transfer fee and would not actually transfer the
         // full amount to the market, resulting in potentally locked funds
         IERC20 token = IERC20(currency);
 
+        console.log("CURRENCY", currency);
+
+        // console.log("TOKEN", token);
+
         uint256 beforeBalance = token.balanceOf(address(this));
+
+        console.log("BEFORE BAL", beforeBalance);
 
         token.safeTransferFrom(msg.sender, address(this), amount);
 
@@ -505,9 +505,9 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
         internal
         returns (bool, uint256)
     {
-        address currency = auctions[auctionId].auctionCurrency == address(0)
-            ? tokenAddress
-            : auctions[auctionId].auctionCurrency;
+        address currency = tokenAddress;
+        // ? tokenAddress
+        // : auctions[auctionId].auctionCurrency;
 
         IMarket.Bid memory bid = IMarket.Bid({
             amount: auctions[auctionId].amount,
@@ -518,14 +518,16 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
         });
 
         IERC20(currency).approve(
-            IMediaExtended(zoo).marketContract(),
+            IMediaExtended(tokenAddress).marketContract(),
             bid.amount
         );
-        IMedia(zoo).setBid(auctions[auctionId].tokenId, bid);
+        IMedia(tokenAddress).setBid(auctions[auctionId].tokenId, bid);
         uint256 beforeBalance = IERC20(currency).balanceOf(address(this));
-        try IMedia(zoo).acceptBid(auctions[auctionId].tokenId, bid) {} catch {
+        try
+            IMedia(tokenAddress).acceptBid(auctions[auctionId].tokenId, bid)
+        {} catch {
             // If the underlying NFT transfer here fails, we should cancel the auction and refund the winner
-            IMediaExtended(zoo).removeBid(auctions[auctionId].tokenId);
+            IMediaExtended(tokenAddress).removeBid(auctions[auctionId].tokenId);
             return (false, 0);
         }
         uint256 afterBalance = IERC20(currency).balanceOf(address(this));

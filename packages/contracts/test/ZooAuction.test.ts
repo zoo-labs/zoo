@@ -32,6 +32,10 @@ describe("ZooAuction", () => {
   let testERC721: TestERC721;
 
   beforeEach(async () => {
+
+    const signers = await ethers.getSigners();
+
+
     await ethers.provider.send("hardhat_reset", []);
     const contracts = await deployZooProtocol();
     const nfts = await deployOtherNFTs();
@@ -40,10 +44,21 @@ describe("ZooAuction", () => {
     token = await deployZooToken();
     badERC721 = nfts.bad;
     testERC721 = nfts.test;
+
+    for (var i = 0; i < signers.length; i++) {
+
+      await token.mint(
+        signers[i].address,
+        100000000
+      )
+    }
+
+
   });
 
   async function deploy(): Promise<ZooAuction> {
     const ZooAuction = await ethers.getContractFactory("ZooAuction");
+
     const auctionHouse = await ZooAuction.deploy(media.address, token.address);
 
     return auctionHouse as ZooAuction;
@@ -52,11 +67,11 @@ describe("ZooAuction", () => {
   async function createAuction(
     auctionHouse: ZooAuction,
     curator: string,
-    currency = "0x0000000000000000000000000000000000000000"
+    currency = token.address,
   ) {
     const tokenId = 0;
     const duration = 60 * 60 * 24;
-    const reservePrice = BigNumber.from(10).pow(18).div(2);
+    const reservePrice = 100;
 
     await auctionHouse.createAuction(
       tokenId,
@@ -77,7 +92,7 @@ describe("ZooAuction", () => {
         token.address
       );
 
-      expect(await auctionHouse.zoo()).to.eq(
+      expect(await auctionHouse.mediaAddress()).to.eq(
         media.address,
         "incorrect ZooMedia address"
       );
@@ -94,7 +109,7 @@ describe("ZooAuction", () => {
     it("should not allow a configuration address that is not the Zora Media Protocol", async () => {
       const ZooAuction = await ethers.getContractFactory("ZooAuction");
       await expect(
-        ZooAuction.deploy(market.address, token.address)
+        ZooAuction.deploy(media.address, token.address)
       ).to.be.reverted
     })
   });
@@ -109,7 +124,7 @@ describe("ZooAuction", () => {
 
     it("should revert if the token contract does not support the ERC721 interface", async () => {
       const duration = 60 * 60 * 24;
-      const reservePrice = BigNumber.from(10).pow(18).div(2);
+      const reservePrice = 100
 
       const [_, curator] = await ethers.getSigners();
 
@@ -128,7 +143,7 @@ describe("ZooAuction", () => {
 
     it("should revert if the caller is not approved", async () => {
       const duration = 60 * 60 * 24;
-      const reservePrice = BigNumber.from(10).pow(18).div(2);
+      const reservePrice = 100;
       const [_, curator, __, ___, unapproved] = await ethers.getSigners();
       await expect(
         auctionHouse
@@ -148,7 +163,7 @@ describe("ZooAuction", () => {
     it("should revert if the token ID does not exist", async () => {
       const tokenId = 999;
       const duration = 60 * 60 * 24;
-      const reservePrice = BigNumber.from(10).pow(18).div(2);
+      const reservePrice = 100;
       const owner = await media.ownerOf(0);
       const [admin, curator] = await ethers.getSigners();
 
@@ -169,7 +184,7 @@ describe("ZooAuction", () => {
 
     it("should revert if the curator fee percentage is >= 100", async () => {
       const duration = 60 * 60 * 24;
-      const reservePrice = BigNumber.from(10).pow(18).div(2);
+      const reservePrice = 100;
       const owner = await media.ownerOf(0);
       const [_, curator] = await ethers.getSigners();
 
@@ -461,11 +476,13 @@ describe("ZooAuction", () => {
 
       it.only("should store the transferred ZOO", async () => {
 
-        await token.approve(auctionHouse.address, ONE_ZOO)
+        token = token.connect(auctionHouse.signer)
 
-        await auctionHouse.createBid(0, ONE_ZOO, { value: ONE_ZOO })
+        await token.approve(auctionHouse.address, 200)
 
-        // console.log(await token.balanceOf(auctionHouse.address))
+        await auctionHouse.createBid(0, 200)
+
+        console.log(await token.balanceOf(auctionHouse.address))
 
         // expect(await token.balanceOf(auctionHouse.address)).to.eq(ONE_ZOO);
       });
