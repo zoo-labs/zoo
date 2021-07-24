@@ -10,7 +10,7 @@ import {
   BadBidder,
   BadERC721,
   TestERC721,
-  WETH,
+  ZooToken,
 } from "../types";
 import { sha256 } from "ethers/lib/utils";
 import Decimal from "../utils/Decimal";
@@ -215,17 +215,17 @@ export async function signMintWithSig(
 }
 
 
-export const THOUSANDTH_ETH = ethers.utils.parseUnits(
+export const THOUSANDTH_ZOO = ethers.utils.parseUnits(
   "0.001",
   "ether"
 ) as BigNumber;
-export const TENTH_ETH = ethers.utils.parseUnits("0.1", "ether") as BigNumber;
-export const ONE_ETH = ethers.utils.parseUnits("1", "ether") as BigNumber;
-export const TWO_ETH = ethers.utils.parseUnits("2", "ether") as BigNumber;
+export const TENTH_ZOO = ethers.utils.parseUnits("0.1", "ether") as BigNumber;
+export const ONE_ZOO = ethers.utils.parseUnits("1", "ether") as BigNumber;
+export const TWO_ZOO = ethers.utils.parseUnits("2", "ether") as BigNumber;
 
-export const deployWETH = async () => {
+export const deployZooToken = async () => {
   const [deployer] = await ethers.getSigners();
-  return (await (await ethers.getContractFactory("WETH")).deploy()) as WETH;
+  return (await (await ethers.getContractFactory("ZooToken")).deploy()) as ZooToken;
 };
 
 export const deployOtherNFTs = async () => {
@@ -239,7 +239,7 @@ export const deployOtherNFTs = async () => {
   return { bad, test };
 };
 
-export const deployZoraProtocol = async () => {
+export const deployZooProtocol = async () => {
   const [deployer] = await ethers.getSigners();
   const market = await (await new ZooMarket__factory(deployer).deploy()).deployed();
   const media = await (
@@ -264,15 +264,15 @@ export const mint = async (media: ZooMedia) => {
   const hash = ethers.utils.arrayify(metadataHash);
   await media.mint(
     {
-      tokenURI: "zora.co",
-      metadataURI: "zora.co",
+      tokenURI: "cryptozoo.co",
+      metadataURI: "cryptozoo.co",
       contentHash: hash,
       metadataHash: hash,
     },
     {
       prevOwner: Decimal.new(0),
-      owner: Decimal.new(0),
-      creator: Decimal.new(10),
+      owner: Decimal.new(85),
+      creator: Decimal.new(15),
     }
   );
 };
