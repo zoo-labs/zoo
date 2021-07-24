@@ -18,7 +18,7 @@ import { useWeb3React } from '@web3-react/core'
 const Account = lazy(() => import('./views/Account'))
 const Login = lazy(() => import('./views/Login'))
 const MyZooAccount = lazy(() => import('./views/MyZooAccount'))
-const Marketplace = lazy(() => import('./views/Marketplace'))
+const Feed = lazy(() => import('./views/Feed'))
 // const Splash = lazy(() => import('./views/Splash'))
 
 // This config is required for number formating
@@ -102,17 +102,17 @@ const App: React.FC = () => {
               <Route exact path="/login">
                 {signedIn? <Redirect to="/account" />: <Login/>}
               </Route>
-              <Menu>
+              
                 <SuspenseWithChunkError fallback={<></>}>
                   <Route exact path="/account">
-                    {signedIn? <Account /> : <Redirect to="/login" />}
+                    {signedIn? <Menu><Account /></Menu> : <Redirect to="/login" />}
                   </Route>
-                  <Route path="/marketplace">
-                    {signedIn? <Marketplace /> : <Redirect to="/login" />}
+                  <Route path="/feed">
+                    {signedIn? <Feed /> : <Redirect to="/login" />}
                   </Route>
-                  <Route exact path="/myzoo">
+                  {/* <Route exact path="/myzoo">
                     {signedIn? <MyZooAccount /> : <Redirect to="/login" />}
-                  </Route>
+                  </Route> */}
                   <Route  path="/">
                     {signedIn? <Redirect to="/account" />: <Redirect to="/login" />}
                   </Route>
@@ -124,7 +124,6 @@ const App: React.FC = () => {
                   <PrivateRoute path="/account" component={Account} />
                   <PrivateRoute path="/" component={Account} /> */}
                 </SuspenseWithChunkError>
-              </Menu>
               {/* <Route component={NotFound} /> */}
             </Switch>
         
