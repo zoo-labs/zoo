@@ -41,11 +41,11 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
     // The minimum percentage difference between the last bid amount and the current bid.
     uint8 public minBidIncrementPercentage;
 
-    // The address of the Zoo protocol to use via this contract
-    address public zoo;
+    // The address of the Media protocol to use via this contract
+    address public mediaAddress;
 
-    // / The address of the WETH contract, so that any ETH transferred can be handled as an ERC-20
-    address public wethAddress;
+    // The address of the ZooToken contract
+    address public tokenAddress;
 
     // A mapping of all of the auctions currently running.
     mapping(uint256 => IAuctionHouse.Auction) public auctions;
@@ -65,13 +65,13 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
     /*
      * Constructor
      */
-    constructor(address _zoo, address _weth) {
+    constructor(address _media, address _token) {
         require(
-            IERC165(_zoo).supportsInterface(interfaceId),
+            IERC165(_media).supportsInterface(interfaceId),
             "Doesn't support NFT interface"
         );
-        zoo = _zoo;
-        wethAddress = _weth;
+        media = _media;
+        token = _token;
         timeBuffer = 15 * 60; // extend 15 minutes after every bid made in last 15 minutes
         minBidIncrementPercentage = 5; // 5%
     }
@@ -233,7 +233,7 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
         );
 
         // For Zoo Protocol, ensure that the bid is valid for the current bidShare configuration
-        if (auctions[auctionId].tokenContract == zoo) {
+        if (auctions[auctionId].tokenContract == token) {
             require(
                 IMarket(IMediaExtended(zoo).marketContract()).isValidBid(
                     auctions[auctionId].tokenId,
@@ -330,7 +330,7 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
         );
 
         address currency = auctions[auctionId].auctionCurrency == address(0)
-            ? wethAddress
+            ? mediaAddress
             : auctions[auctionId].auctionCurrency;
         uint256 curatorFee = 0;
 
@@ -430,25 +430,28 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
      */
     function _handleIncomingBid(uint256 amount, address currency) internal {
         // If this is an ETH bid, ensure they sent enough and convert it to WETH under the hood
-        if (currency == address(0)) {
-            require(
-                msg.value == amount,
-                "Sent ZOO Value does not match specified bid amount"
-            );
-            IWETH(wethAddress).deposit{value: amount}();
-        } else {
-            // We must check the balance that was actually transferred to the auction,
-            // as some tokens impose a transfer fee and would not actually transfer the
-            // full amount to the market, resulting in potentally locked funds
-            IERC20 token = IERC20(currency);
-            uint256 beforeBalance = token.balanceOf(address(this));
-            token.safeTransferFrom(msg.sender, address(this), amount);
-            uint256 afterBalance = token.balanceOf(address(this));
-            require(
-                beforeBalance.add(amount) == afterBalance,
-                "Token transfer call did not transfer expected amount"
-            );
-        }
+        // if (currency == address(0)) {
+
+        require(
+            msg.value == amount,
+            "Sent ZOO Value does not match specified bid amount"
+        );
+
+        // We must check the balance that was actually transferred to the auction,
+        // as some tokens impose a transfer fee and would not actually transfer the
+        // full amount to the market, resulting in potentally locked funds
+        IERC20 token = IERC20(currency);
+
+        uint256 beforeBalance = token.balanceOf(address(this));
+
+        token.safeTransferFrom(msg.sender, address(this), amount);
+
+        uint256 afterBalance = token.balanceOf(address(this));
+        require(
+            beforeBalance.add(amount) == afterBalance,
+            "Token transfer call did not transfer expected amount"
+        );
+        // }
     }
 
     function _handleOutgoingBid(
@@ -456,18 +459,7 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
         uint256 amount,
         address currency
     ) internal {
-        // If the auction is in ETH, unwrap it from its underlying WETH and try to send it to the recipient.
-        if (currency == address(0)) {
-            IWETH(wethAddress).withdraw(amount);
-
-            // If the ETH transfer fails (sigh), rewrap the ETH and try send it as WETH.
-            if (!_safeTransferETH(to, amount)) {
-                IWETH(wethAddress).deposit{value: amount}();
-                IERC20(wethAddress).safeTransfer(to, amount);
-            }
-        } else {
-            IERC20(currency).safeTransfer(to, amount);
-        }
+        IERC20(currency).safeTransfer(to, amount);
     }
 
     function _safeTransferETH(address to, uint256 value)
@@ -514,7 +506,7 @@ contract AuctionHouse is IAuctionHouse, ReentrancyGuard {
         returns (bool, uint256)
     {
         address currency = auctions[auctionId].auctionCurrency == address(0)
-            ? wethAddress
+            ? tokenAddress
             : auctions[auctionId].auctionCurrency;
 
         IMarket.Bid memory bid = IMarket.Bid({
