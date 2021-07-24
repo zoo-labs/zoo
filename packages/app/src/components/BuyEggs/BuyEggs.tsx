@@ -81,38 +81,24 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
     }
   };
 
-  const testEggs:Egg[] = [
+  const emptyEgg:Egg =
     {
       owner: account,
-      tokenId: "1",
-      parent1: "1",
-      parent2: "",
-      basic: true
-    },
-    {
-      owner: account,
-      tokenId: "2",
-      parent1: "2",
-      parent2: "",
-      basic: true
-    },
-    {
-      owner: account,
-      tokenId: "3",
-      parent1: "2",
-      parent2: "",
-      basic: true
-    },
-    {
-      owner: account,
-      tokenId: "4",
-      parent1: "4",
+      tokenId: "",
+      animalId: "",
+      parent1: "",
       parent2: "",
       basic: true
     }
-  ]
   
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
+    const testEggs = []
+    for (let i = 0; i < value; i++) {
+      const toSet: Egg = { ...emptyEgg }
+      toSet.tokenId = String(Math.floor(Math.random()*100000000)+1) //to be changed
+      toSet.animalId = String(Math.floor(Math.random()*4)+1)
+      testEggs.push(toSet)
+    }
     dispatch(addEggs(testEggs))
     onDismiss()
     }

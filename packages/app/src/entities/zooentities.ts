@@ -1,6 +1,7 @@
 export interface Animal {
    owner?: string;
    tokenId: string;
+   animalId?: string;
    name: string;
    description: string;
    yield: string;
