@@ -599,10 +599,17 @@ describe("ZooAuction", () => {
       });
 
       it("should not update the firstBidTime", async () => {
+
+        token = token.connect(auctionHouse.signer)
+
+        await token.approve(auctionHouse.address, 500)
+
         const firstBidTime = (await auctionHouse.auctions(0)).firstBidTime;
-        await auctionHouse.createBid(0, TWO_ZOO, {
-          value: TWO_ZOO,
+
+        await auctionHouse.createBid(0, 300, {
+          value: 300,
         });
+
         expect((await auctionHouse.auctions(0)).firstBidTime).to.eq(
           firstBidTime
         );
