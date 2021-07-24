@@ -147,7 +147,7 @@ const EggMarketplace: React.FC = () => {
 
   let array = []
 
-  const breed = () => {
+  const breed = (onDismiss) => {
     const animal1: Animal = array[0]
     const animal2: Animal = array[1]
     const ID = Object.keys(allAnimals).length
@@ -173,8 +173,8 @@ const EggMarketplace: React.FC = () => {
     dispatch(addAnimal(animal1))
     dispatch(addAnimal(animal2))
     dispatch(addAnimal(newAnimal))
-
-
+    onDismiss()
+    
   }
 
   const breedClick = (animal) => {
@@ -197,7 +197,7 @@ const EggMarketplace: React.FC = () => {
         <Modal title="Are you Sure?" onDismiss={onDismiss}>
             <Text>{`You want to breed 1 ${animal1.name} and 1 ${animal2.name}?`}</Text>
             <BorderButton onClick={()=>onDismiss()}>Cancel</BorderButton>
-            <BorderButton onClick={()=>breed()}>Confirm</BorderButton>
+            <BorderButton onClick={()=>breed(onDismiss)}>Confirm</BorderButton>
         </Modal>
     )
 }
