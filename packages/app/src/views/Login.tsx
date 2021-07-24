@@ -5,7 +5,6 @@ import { url } from 'inspector'
 import React from 'react'
 import styled from "styled-components"
 import { Login } from '../components/WalletModal/types'
-import MyMP16OSFFont from '../fonts/MP16OSF.ttf'
 
 interface Props {
   account?: string
@@ -26,6 +25,10 @@ const Button = styled.button`
     border: 2px solid #ffffff;
     padding: 10px;
     cursor: pointer;
+    p {
+        color: white;
+        font-size: 16px;
+    }
     :hover {
         transition: all 0.2s;
         border: 2px solid #a0ec0e;
@@ -33,15 +36,6 @@ const Button = styled.button`
         p {
             color: #a0ec0e;
         }
-    }
-    p {
-        @font-face{
-            font-family:'MyMP16OSFFont';
-            src:url('${MyMP16OSFFont}') format('TrueType');   
-        }
-        color: white;
-        font-family: 'MyMP16OSFFont'; 
-        font-size: 16px;
     }
 `
 
