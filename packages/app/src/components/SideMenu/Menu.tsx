@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 `;
 
 const LogoContainer = styled.div`
-   height: 100%;
+   height: 95%;
    ${({ theme }) =>
       theme.mediaQueries.md || theme.mediaQueries.lg || theme.mediaQueries.xl} {
       left: 50%;
