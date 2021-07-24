@@ -1,7 +1,8 @@
 export const test = {
    animals: {
-      1: {
-         tokenId: "1",
+      143141: {
+         tokenId: "143141",
+         animalId: "1",
          name: "Red Panda",
          description: "Mystery",
          yield: "543",
@@ -16,8 +17,9 @@ export const test = {
          listed: true,
          bloodline: "pure"
       },
-      2: {
-         tokenId: "2",
+      21234214: {
+         tokenId: "21234214",
+         animalId: "2",
          name: "Suzanne",
          description: "LOL",
          yield: "4223",
@@ -32,8 +34,9 @@ export const test = {
          bloodline: "pure"
 
       },
-      3: {
-         tokenId: "3",
+      323: {
+         tokenId: "323",
+         animalId: "3",
          name: "Cool Doggo",
          description: "WOOF wO0F",
          yield: "321",
@@ -48,8 +51,9 @@ export const test = {
          listed: true,
          bloodline: "pure"
       },
-      4: {
-         tokenId: "4",
+      411313: {
+         tokenId: "411313",
+         animalId: "4",
          name: "Seal",
          description: "BARK",
          yield: "31",
@@ -65,8 +69,9 @@ export const test = {
          owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
          bloodline: "pure"
       },
-      5: {
-         tokenId: "5",
+      101311: {
+         tokenId: "101311",
+         animalId: "10",
          name: "Liger",
          description: "Meow",
          yield: "23",
@@ -83,19 +88,19 @@ export const test = {
       },
    },
    eggs: {
-      5: {
-         owner: "0x93d24FF767a74B1Ceec47F23495edC4195d3081A",
-         tokenId: "5",
-         parent1: "",
-         parent2: "",
-         basic: false,
+      54141: {
+        tokenId: "54141",
+        animalId: "10",
+        parent1: "1",
+        parent2: "2",
+        basic: false,
       },
-      6: {
-         owner: "0x93d24FF767a74B1Ceec47F23495edC4195d3081A",
-         tokenId: "6",
-         parent1: "",
-         parent2: "",
-         basic: true,
-      }
+      6222: {
+        tokenId: "622",
+        animalId: "11",
+        parent1: "3",
+        parent2: "4",
+        basic: false,
+      },
    },
 };
