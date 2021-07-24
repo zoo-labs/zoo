@@ -554,20 +554,26 @@ describe("ZooAuction", () => {
 
     describe("second bid", () => {
       beforeEach(async () => {
+
+        token = token.connect(bidderA)
+
+        await token.approve(auctionHouse.address, 300)
+
         auctionHouse = auctionHouse.connect(bidderB) as ZooAuction;
+
         await auctionHouse
           .connect(bidderA)
           .createBid(0, 200, { value: 200 });
       });
 
       it("should revert if the bid is smaller than the last bid + minBid", async () => {
+
         await expect(
-          auctionHouse.createBid(0, 200, {
-            value: 200,
+          auctionHouse.createBid(0, 202, {
+            value: 202,
           })
-        ).eventually.rejectedWith(
-          revert`Must send more than last bid by minBidIncrementPercentage amount`
-        );
+        ).to.be.revertedWith('Must send more than last bid by minBidIncrementPercentage amount');
+
       });
 
       it("should refund the previous bid", async () => {
