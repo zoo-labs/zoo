@@ -25,7 +25,7 @@ export const ZooSlice = createSlice({
          state.animals[toAdd.tokenId] = toAdd;
       },
       addEggs: (state: ZooState, action) => {
-         const toAdd: Egg[] = action.payload;
+        const toAdd: Egg[] = action.payload;
          for (let i = 0; i < toAdd.length; i += 1) {
             const curr = toAdd[i];
             state.eggs[curr.tokenId] = curr;

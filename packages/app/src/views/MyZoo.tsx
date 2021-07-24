@@ -64,7 +64,7 @@ const ImageContainer = styled.div`
 `
 
 const InfoBlock = styled.div`
-  padding: 10px;
+  padding: 5px;
   text-align: center; 
   position: relative;
   bottom: 0; 
@@ -242,7 +242,7 @@ const EggMarketplace: React.FC = () => {
           <Swiper slidesPerView={3} spaceBetween={10} pagination={{"clickable": true}} className="mySwiper">
           {(eggData).map((egg) => (
             <SwiperSlide key={egg.id}>
-              <Card style={{backgroundColor: '#000000'}}>
+              <Card style={{backgroundColor: '#000000', borderRadius:'10px'}}>
                 <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 150, padding: 10}}>
                   <TextWrapper>{egg.name}</TextWrapper>
                 </CardBody>

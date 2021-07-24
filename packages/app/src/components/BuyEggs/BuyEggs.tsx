@@ -3,6 +3,10 @@ import styled from 'styled-components'
 import { Modal } from '../Modal'
 import { Label, Text } from 'components/Text'
 import BlackBorderButton from 'components/Button/BlackBorderButton'
+import { Egg } from "entities/zooentities";
+import { addEggs } from "state/actions";
+import { useWeb3React } from "@web3-react/core";
+import { useDispatch } from "react-redux";
 
 const ColumnContainer = styled.div`
   display: flex;
@@ -61,11 +65,63 @@ type EggModalProps = {
   headerColor?: string
 }
 
+
+
+
 const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
+  const dispatch = useDispatch()
+  const [value, setValue] = useState(0)
+  const {account} = useWeb3React()
+  
+  const changed = () => (e) => {
+    const newVal = e.target.value;
+debugger; // eslint-disable-line no-debugger
+
+    if (newVal > value) {
+      setValue(parseInt(newVal));
+    }
+  };
+
+  const testEggs:Egg[] = [
+    {
+      owner: account,
+      tokenId: "1",
+      parent1: "1",
+      parent2: "",
+      basic: true
+    },
+    {
+      owner: account,
+      tokenId: "2",
+      parent1: "2",
+      parent2: "",
+      basic: true
+    },
+    {
+      owner: account,
+      tokenId: "3",
+      parent1: "2",
+      parent2: "",
+      basic: true
+    },
+    {
+      owner: account,
+      tokenId: "4",
+      parent1: "4",
+      parent2: "",
+      basic: true
+    }
+  ]
+  
+  const handleSubmit = async() => {
+    dispatch(addEggs(testEggs))
+    onDismiss()
+    }
+
   return (
     <ModalWrapper>
       <Modal
-        title='How many egg?'
+        title='How many eggs?'
         onDismiss={onDismiss}
         style={{ justifyContent: 'space-between' }}
         headerColor={headerColor}
@@ -77,8 +133,8 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
         >
           AMOUNT
         </Text>
-        <EggInput type="number" />
-        <BlackBorderButton>
+        <EggInput type="number" onChange = {changed()}/>
+        <BlackBorderButton onClick={()=>handleSubmit()}>
           Submit
         </BlackBorderButton>
       </Modal>
