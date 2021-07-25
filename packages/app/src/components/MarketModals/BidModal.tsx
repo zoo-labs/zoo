@@ -46,7 +46,7 @@ const BidModal: React.FC<Props> = ({onDismiss = () => null, item}) => {
 
     const confirmBuy = async() => {
         const toSet:Animal = {...item}
-        toSet.listed = false;
+        toSet.listed = true;
         toSet.owner = account
         dispatch(addAnimal(toSet))
         // const queryObject = Moralis.Object.extend("Animals")

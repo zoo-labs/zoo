@@ -6,9 +6,7 @@ import { useWeb3React } from "@web3-react/core";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Modal, useModal } from "components/Modal";
-import FlexLayout from "components/layout/Flex";
 import Page from "components/layout/Page";
-import { orderBy, parseInt } from "lodash";
 import {
   Flex,
   Text,
@@ -23,10 +21,8 @@ import { VscLoading } from "react-icons/vsc";
 // import { ViewMode } from "./components/types"
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css"
-// import "./styles.css";
-// import SwiperCore, {
-//   Pagination
-// } from 'swiper/core';
+import { getMilliseconds, getDaysHours } from "util/timeHelpers"
+import { rarityTable, breedTimeouts, eggTimeout } from "constants/constants"
 import MyMP16OSFFont from '../fonts/MP16OSF.ttf'
 import { Animal, Egg } from "entities/zooentities";
 import { addAnimal, addEgg } from "state/actions";
@@ -65,13 +61,15 @@ const ImageContainer = styled.div`
 `
 
 const InfoBlock = styled.div`
-  padding: 5px;
+  padding: 4px;
   text-align: center; 
   position: absolute;
+  left: 0;
   bottom: 0; 
   width: 100%;
-  background-color: #ffffff6b;
+  background-color: rgba(0, 0, 0, 0.6);;
   z-index: 999999;
+  // border-radius: 0px 0px 8px 8px;
 `;
 
 const TextWrapper = styled.div`
@@ -86,7 +84,7 @@ const TextWrapper = styled.div`
 
 const BreedWrapper = styled.div<{cols?: number}>`
   text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
-  font-size: 20px;
+  font-size: 18px;
   color: #ffffff;
   font-weight: 550;
   line-height: 1.5;
@@ -114,21 +112,55 @@ const RowLayout = styled.div`
   }
 `
 
-const Card = styled(Existing)<{selected?: boolean}>`
-  border: ${({ selected }) => selected? '2px solid white' : null}
+const Card = styled(Existing)<{selected?: boolean, timedOut?: boolean}>`
+  border: ${({ selected }) => selected ? '2px solid white' : null};
+  opacity: ${({ timedOut }) => timedOut ? '0.6' : null}
+`
+
+const CardWrapper = styled.div`
+  ${Card} {
+    border-radius: 8px;
+  }
+`
+const TimeoutWrapper = styled.div < { barwidth?: string }>`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  line-height: 1.8;
+  // background: white;
+  text-align: center;
+  color: white;
+  padding: 4px;
+  text-align: center;
+  width: 100%;
+  background-color: #A7565E;
+  z-index: 999999;
+    ::before {
+      content: '';
+      display: block;
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: ${({ barwidth }) => barwidth};
+      background: grey;
+    }
+`
+const TimeoutDisplay = styled.span`
+  position: relative;
+  z-index: 2;
 `
 
 const _loadCount = 9;
 
-const EggMarketplace: React.FC = () => {
+const MyZooAccount: React.FC = () => {
   let empty;
   const {account} = useWeb3React()
   const { path } = useRouteMatch();
   const { chainId } = useWeb3React();
   const dispatch = useDispatch()
-  const [numVisData, setNumVisData] = useState(_loadCount);
-  const [observerIsSet, setObserverIsSet] = useState(false);
-  const bottomRef = useRef<HTMLDivElement>(null);
   const { isXl, isXs } = useMatchBreakpoints();
   const chainIdSet = chainId === undefined ? "1" : String(chainId);
 
@@ -157,42 +189,67 @@ const EggMarketplace: React.FC = () => {
     const animal1: Animal = array[0]
     const animal2: Animal = array[1]
     const ID = Object.keys(allAnimals).length
-    animal1.bred = true
-    animal2.bred = true
-    animal1.selected = false
-    animal2.selected = false
-    
+    const now = new Date().getTime()
+    array.forEach(animal => {
+      animal.bred = true
+      animal.breedCount = animal.breedCount + 1
+      const lastBred = animal.lastBred ? (new Date(Number(animal.lastBred))).getTime() : new Date().getTime()
+      const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount
+      const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey])
+      const elapsedTime = now - lastBred
 
-    // const newAnimal: Animal = {
-    //     tokenId: (ID + 1).toString(),
-    //     name: "Puggerpillar",
-    //     imageUrl: "https://i.redd.it/6tt43ut2af331.jpg",
-    //     owner: account,
-    //     bloodline: "hybrid",
-    //     listed: false,
-    //     rarity: "Legendary",
-    //     yield: "2342",
-    //     description: "This little guy",
-    //     dob: Date.now().toString(),
-    //     boost: "2432",
-    //     bred: false
-    // }
+      if (elapsedTime < breedTimeout) {
+        const timeRemaining = breedTimeout - elapsedTime
+        const timeRemainingDaysHours = getDaysHours(timeRemaining)
+        const barwidth = [100 * (elapsedTime / breedTimeout), '%'].join('')
 
-    const emptyEgg:Egg =
+        animal.timeRemaining = timeRemaining
+        // animal.actionStringOverride = 'data-disabled'
+        animal.CTAOverride = {barwidth, timeRemainingDaysHours}
+      }
+      else {
+        animal.timeRemaining = 0
+        animal.CTAOverride = {barwidth: null, timeRemainingDaysHours: null}
+      }
+      animal.selected = false
+    })
+
+    array = []
+    dispatch(addAnimal(animal1))
+    dispatch(addAnimal(animal2))
+
+    const egg:Egg =
     {
       owner: account,
       tokenId: String(Math.floor(Math.random()*100000000)+1),
       animalId: "3123",
       parent1: "123",
       parent2: "1231",
-      basic: false
-    }
+      basic: false,
+      created: String(new Date().getTime()),
+      timeRemaining: 0,
+      CTAOverride: null
 
-    array = []
-    dispatch(addAnimal(animal1))
-    dispatch(addAnimal(animal2))
-    // dispatch(addAnimal(newAnimal))
-    dispatch(addEgg(emptyEgg))
+    }
+    if (!egg.basic) {
+      const createdDate = egg.created ? (new Date(Number(egg.created))).getTime() : new Date().getTime()
+      const hatchTimeout = getMilliseconds(eggTimeout)
+      const elapsedTime = now - createdDate
+
+      if (elapsedTime < hatchTimeout){
+        const timeRemaining = hatchTimeout - elapsedTime
+        const timeRemainingDaysHours = getDaysHours(timeRemaining)
+        const barwidth = [100 * (elapsedTime / hatchTimeout), '%'].join('')
+
+        egg.timeRemaining = timeRemaining
+        egg.CTAOverride = {barwidth, timeRemainingDaysHours}
+      } else {
+        egg.timeRemaining = 0
+      }
+    } else {
+      egg.timeRemaining = 0
+    }
+    dispatch(addEgg(egg))
     onDismiss()
     
   }
@@ -286,16 +343,26 @@ const [onSell] = useModal(
       <RowLayout>
         <Route exact path={`${path}`}>
           <Swiper slidesPerView={2.2} spaceBetween={10}>
-          {(animalData).filter((item)=>item.bloodline === hybrid).filter((item)=>item.owner === account).filter((item)=>!item.bred).map((animal) => (
+          {(animalData).filter((item)=>item.bloodline === hybrid).filter((item)=>item.owner === account).map((animal) => (
             <SwiperSlide>
-              <Card key={animal.id} selected={animal.selected? true : false}>
-                <CardBody style={{backgroundImage: `url("${animal.imageUrl}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250, width: 'calc(100vw/2.2 - 13px)', padding: 10}}>
-                  <TextWrapper style={{textShadow: '0px 2px 6px rgb(0, 0, 0)', textAlign: 'center', fontSize: 16, letterSpacing: 0}}>{animal.name}</TextWrapper>
-                </CardBody>
-                  <InfoBlock onClick={()=>hybrid === "pure" ? breedClick(animal) : list(animal)}>
-                    <BreedWrapper>{hybrid === "pure" ? `BREED` : `SELL`}</BreedWrapper>
-                  </InfoBlock>
-              </Card>
+              <CardWrapper>
+                <Card key={animal.id} selected={animal.selected? true : false} timedOut={animal.timeRemaining > 0 ? true : false}>
+                  <CardBody style={{backgroundImage: `url("${animal.imageUrl}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250, width: 'calc(100vw/2.2 - 13px)', padding: 10}}>
+                    <TextWrapper style={{ textShadow: '0px 2px 6px rgb(0, 0, 0)', textAlign: 'center', fontSize: 20, letterSpacing: 0 }}>{animal.name}</TextWrapper>
+                    {animal.timeRemaining > 0 ?
+                      <TimeoutWrapper barwidth={animal.CTAOverride ? animal.CTAOverride.barwidth : 0}>
+                        <TimeoutDisplay >
+                          {`${animal.CTAOverride.timeRemainingDaysHours.days}D ${animal.CTAOverride.timeRemainingDaysHours.hours}H`}
+                        </TimeoutDisplay>
+                      </TimeoutWrapper> :
+                      <InfoBlock onClick={()=>hybrid === "pure" ? breedClick(animal) : list(animal)}>
+                        <BreedWrapper>{hybrid === "pure" ? `BREED` : `SELL`}</BreedWrapper>
+                      </InfoBlock>
+                    }
+                  </CardBody>
+                    
+                  </Card>
+              </CardWrapper>  
             </SwiperSlide>
               // <SwiperSlide>Slide 1</SwiperSlide>
           ))}
@@ -304,7 +371,7 @@ const [onSell] = useModal(
         <Route exact path={`${path}/history`}>
           {/* {shownData(animalData).map((animal) => ( */}
           {(animalData).map((animal) => (
-            <Card
+            <Card key={animal.id}
             // key={JSON.stringify(token)}
             />
           ))}
@@ -323,6 +390,7 @@ const [onSell] = useModal(
         name: egg.basic ? "BASIC" : "HYBRID"
       });
     });
+    console.log(eggData)
     empty = eggData.length === 0 && Object.keys(allEggs).length !== 0;
     const basicEggURL = window.location.origin + '/static/images/basic.png'
     const hybridEggURL = window.location.origin + '/static/images/hybrid.jpeg'
@@ -333,14 +401,6 @@ const [onSell] = useModal(
           <Swiper slidesPerView={2.2} spaceBetween={10} pagination={{"clickable": true}}>
           {(eggData).map((egg) => (
             <SwiperSlide key={egg.id}>
-              {/* <Card style={{backgroundColor: '#000000'}}>
-                <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 150, padding: 10}}>
-                  <TextWrapper>{egg.name}</TextWrapper>
-                </CardBody>
-                <InfoBlock style={{textAlign: 'center', backgroundColor: '#ffffff38', padding: 10}} onClick={() => {onHatch()}}>
-                  <TextWrapper >{`HATCH`}</TextWrapper>
-                </InfoBlock>  
-              </Card> */}
               <EggCard egg={egg} />
             </SwiperSlide>
           ))}
@@ -348,7 +408,7 @@ const [onSell] = useModal(
         </Route>
         <Route exact path={`${path}/history`}>
           {(eggData).map((egg) => (
-            <Card
+            <Card key={egg.id}
             // key={JSON.stringify(token)}
             />
           ))}
@@ -361,21 +421,15 @@ const [onSell] = useModal(
   return (
     <div>
       <Page>
-        <RowTitle>My Eggs</RowTitle>
+        {/* <RowTitle>My Eggs</RowTitle> */}
         {renderEggs()}
         <RowTitle>Breedable Animals</RowTitle>
         {renderAnimals("pure")}
         <RowTitle>Hybrid Animals</RowTitle>
         {renderAnimals("hybrid")}
-        {/* <IconCont ref={bottomRef}>
-          {" "}
-          {numVisData < Object.keys(allEggs).length ? (
-            <VscLoading size={36} />
-          ) : null}{" "}
-        </IconCont> */}
       </Page>
     </div>
   )
 };
 
-export default EggMarketplace;
+export default MyZooAccount;
