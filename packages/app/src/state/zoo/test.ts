@@ -33,8 +33,8 @@ export const test = {
       listed: true,
       bloodline: "pure",
     },
-    323: {
-      tokenId: "323",
+    99999923: {
+      tokenId: "99999923",
       animalId: "3",
       name: "Cool Doggo",
       description: "WOOF wO0F",

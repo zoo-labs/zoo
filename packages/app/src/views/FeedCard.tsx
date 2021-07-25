@@ -17,21 +17,21 @@ interface Props {
 }
 
 const FirstThird = styled.div`
-    height: 33vh;
+    height: 35vh;
     width: 100%;
-    max-height: 256px;
+    // max-height: 256px;
 
 `
 const SecondThird = styled.div`
-    height: 33vh;
+    height: 35vh;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    max-height: 256px;
+    // max-height: 256px;
 `
 const FinalThird = styled.div`
-    height: 33vh;
+    height: 35vh;
     width: 100%;
     padding-left: 15px;
     display: flex;
@@ -59,10 +59,13 @@ const IconButton = styled.button`
         -webkit-text-stroke-color: ${({theme}) => theme.colors.primary};
     }
     & svg {
-        height: 30px;
-        width: 30px;
-        fill: ${({theme}) => theme.colors.primaryLight};
-        stroke: ${({theme}) => theme.colors.primary};
+        height: 40px;
+        width: 40px;
+        // fill: ${({ theme }) => theme.colors.primaryLight};
+        fill: white;
+        stroke: #a9a9a9;
+        // text-shadow: 1px 1px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black;
+        // stroke: ${({theme}) => theme.colors.primary};
         stroke-width: 15px;
     }
 `
@@ -73,16 +76,16 @@ const MainHeading = styled(Text)`
     font-weight: 900;
     -webkit-text-fill-color: ${({theme}) => theme.colors.primaryDark};
     -webkit-text-stroke-width: .5px;
-    -webkit-text-stroke-color: black;
+    -webkit-text-stroke-color: ${({theme}) => theme.colors.primaryDarker};
 `
 const Subheading = styled(Text)`
     width: 100%;
     color: black;
-    font-weight: 800;
+    font-weight: 500;
     font-size: 24px;
     -webkit-text-fill-color: ${({theme}) => theme.colors.text};
     -webkit-text-stroke-width: .2px;
-    -webkit-text-stroke-color: ${({theme}) => theme.colors.primary};
+    -webkit-text-stroke-color: #a9a9a9;
     :nth-child(3){
         font-size: 24px;
         font-weight: 600;
@@ -94,12 +97,12 @@ const Card = styled(Existing)<{url?: string, isMobile?: boolean}>`
     background-position: center; 
     background-repeat: no-repeat;
     background-size: cover;
-    max-height: 773px;
+    // max-height: 773px;
     max-width: 425px;
     min-width: 325px;
     display: block;
 `
-const MarketplaceCard: React.FC<Props> =  ({ item }) => {
+const FeedCard: React.FC<Props> =  ({ item }) => {
     const history = useHistory()
     const ypd = {}
     const HomeClick = () => {
@@ -158,4 +161,4 @@ const MarketplaceCard: React.FC<Props> =  ({ item }) => {
     )
 }
 
-export default MarketplaceCard
+export default FeedCard
