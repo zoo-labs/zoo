@@ -231,7 +231,14 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
         override
         nonReentrant
     {
-        _mintForCreator(msg.sender, data, bidShares);
+        _mintForCreator(msg.sender, data, bidShares, "");
+    }
+
+    function mintZoo(MediaData memory data, IMarket.BidShares memory bidShares, bytes memory tokenType)
+        public
+        nonReentrant
+    {
+        _mintForCreator(msg.sender, data, bidShares, tokenType);
     }
 
     /**
@@ -275,7 +282,7 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
             "Media: Signature invalid"
         );
 
-        _mintForCreator(recoveredAddress, data, bidShares);
+        _mintForCreator(recoveredAddress, data, bidShares,"");
     }
 
     /**
@@ -489,7 +496,8 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
     function _mintForCreator(
         address creator,
         MediaData memory data,
-        IMarket.BidShares memory bidShares
+        IMarket.BidShares memory bidShares,
+        bytes memory tokenType
     ) internal onlyValidURI(data.tokenURI) onlyValidURI(data.metadataURI) {
         require(data.contentHash != 0, "Media: content hash must be non-zero");
         // require(
@@ -503,7 +511,7 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
 
         uint256 tokenId = _tokenIdTracker.current();
 
-        _safeMint(creator, tokenId);
+        _safeMint(creator, tokenId, tokenType);
         _tokenIdTracker.increment();
         _setTokenContentHash(tokenId, data.contentHash);
         _setTokenMetadataHash(tokenId, data.metadataHash);

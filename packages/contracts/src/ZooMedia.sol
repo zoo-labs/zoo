@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import { Media } from "./Media.sol";
 import "./ZooToken.sol";
 import "./ERC721Burnable.sol";
+import {IMarket} from "./interfaces/IMarket.sol";
 
 
 // a instance for every egg or animal
@@ -13,9 +14,10 @@ contract ZooMedia is Media, Ownable {
      
 
 
-    constructor(string memory symbol, string memory name, address marketAddress) Media(symbol, name, marketAddress) {
+   constructor(string memory symbol, string memory name, address marketAddress) Media(symbol, name, marketAddress) {
 
-    }
+   }
+
 
   uint public hybridHatchTime = 36 hours;
 
