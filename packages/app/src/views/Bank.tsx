@@ -79,6 +79,10 @@ const Bank: React.FC = () => {
       <Page>
         {pageHeading}
         <Body>
+            <LabelWrapper>
+              <Label>Wallet Balance</Label>
+              <BorderButton>Add Funds</BorderButton>
+            </LabelWrapper>
             <ValueWrapper>
               {zooCount} ZOOTOKENS
             </ValueWrapper>

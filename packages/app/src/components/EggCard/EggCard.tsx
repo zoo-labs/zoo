@@ -50,7 +50,6 @@ export const EggCard: React.FC<EggCardType> = ({egg})  => {
   const { account } = useWeb3React()
 
     const hatchEgg = () => {
-      console.log("HATCH")
       setPlayVideo(true)
     }
   
@@ -95,7 +94,11 @@ export const EggCard: React.FC<EggCardType> = ({egg})  => {
             buyNow: aFromMap.buyNow,
             listed: aFromMap.listed,
             bloodline: aFromMap.bloodline,
-            owner: account
+            owner: account,
+            CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
+            timeRemaining: 0,
+            breedCount: 0,
+            lastBred: ""
         }
         console.log(newAnimal)
         dispatch(addAnimal(newAnimal)) 

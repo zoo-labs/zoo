@@ -15,7 +15,11 @@ export interface Animal {
    bloodline?: string
    selected?:boolean
    bred?:boolean
+   breedCount?:number
    animalId?: string;
+   timeRemaining?: number;
+   CTAOverride?: any;
+   lastBred?: string;
    
 }
 
