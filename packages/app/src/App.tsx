@@ -17,7 +17,7 @@ import { useWeb3React } from '@web3-react/core'
 // Only pool is included in the main bundle because of it's the most visited page
 const Account = lazy(() => import('./views/Account'))
 const Login = lazy(() => import('./views/Login'))
-const MyZooAccount = lazy(() => import('./views/MyZooAccount'))
+const Bank = lazy(() => import('./views/Bank'))
 const Feed = lazy(() => import('./views/Feed'))
 // const Splash = lazy(() => import('./views/Splash'))
 
@@ -110,9 +110,9 @@ const App: React.FC = () => {
                   <Route path="/feed">
                     {signedIn? <Feed /> : <Redirect to="/login" />}
                   </Route>
-                  {/* <Route exact path="/myzoo">
-                    {signedIn? <MyZooAccount /> : <Redirect to="/login" />}
-                  </Route> */}
+                  <Route exact path="/bank">
+                    {signedIn? <Menu><Bank /></Menu> : <Redirect to="/login" />}
+                  </Route>
                   <Route  path="/">
                     {signedIn? <Redirect to="/account" />: <Redirect to="/login" />}
                   </Route>

@@ -63,13 +63,14 @@ const ImageContainer = styled.div`
 `
 
 const InfoBlock = styled.div`
-  padding: 5px;
+  padding: 4px;
   text-align: center; 
   position: absolute;
   bottom: 0; 
   width: 100%;
-  background-color: #ffffff6b;
+  background-color: rgba(0, 0, 0, 0.6);;
   z-index: 999999;
+  // border-radius: 0px 0px 8px 8px;
 `;
 
 const TextWrapper = styled.div`
@@ -84,7 +85,7 @@ const TextWrapper = styled.div`
 
 const BreedWrapper = styled.div<{cols?: number}>`
   text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
-  font-size: 20px;
+  font-size: 18px;
   color: #ffffff;
   font-weight: 550;
   line-height: 1.5;
@@ -114,6 +115,12 @@ const RowLayout = styled.div`
 
 const Card = styled(Existing)<{selected?: boolean}>`
   border: ${({ selected }) => selected ? '2px solid white' : null}
+`
+
+const CardWrapper = styled.div`
+  ${Card} {
+    border-radius: 8px;
+  }
 `
 
 const _loadCount = 9;
@@ -283,14 +290,16 @@ const [onSell] = useModal(
           <Swiper slidesPerView={2.2} spaceBetween={10}>
           {(animalData).filter((item)=>item.bloodline === hybrid).filter((item)=>item.owner === account).filter((item)=>!item.bred).map((animal) => (
             <SwiperSlide>
-              <Card key={animal.id} selected={animal.selected? true : false}>
-                <CardBody style={{backgroundImage: `url("${animal.imageUrl}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250, width: 'calc(100vw/2.2 - 13px)', padding: 10}}>
-                  <TextWrapper style={{textShadow: '0px 2px 6px rgb(0, 0, 0)', textAlign: 'center', fontSize: 16, letterSpacing: 0}}>{animal.name}</TextWrapper>
-                </CardBody>
-                  <InfoBlock onClick={()=>hybrid === "pure" ? breedClick(animal) : list(animal)}>
-                    <BreedWrapper>{hybrid === "pure" ? `BREED` : `SELL`}</BreedWrapper>
-                  </InfoBlock>
-              </Card>
+              <CardWrapper>
+                <Card key={animal.id} selected={animal.selected? true : false}>
+                  <CardBody style={{backgroundImage: `url("${animal.imageUrl}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 250, width: 'calc(100vw/2.2 - 13px)', padding: 10}}>
+                    <TextWrapper style={{textShadow: '0px 2px 6px rgb(0, 0, 0)', textAlign: 'center', fontSize: 16, letterSpacing: 0}}>{animal.name}</TextWrapper>
+                  </CardBody>
+                    <InfoBlock onClick={()=>hybrid === "pure" ? breedClick(animal) : list(animal)}>
+                      <BreedWrapper>{hybrid === "pure" ? `BREED` : `SELL`}</BreedWrapper>
+                    </InfoBlock>
+                  </Card>
+              </CardWrapper>  
             </SwiperSlide>
               // <SwiperSlide>Slide 1</SwiperSlide>
           ))}
@@ -299,7 +308,7 @@ const [onSell] = useModal(
         <Route exact path={`${path}/history`}>
           {/* {shownData(animalData).map((animal) => ( */}
           {(animalData).map((animal) => (
-            <Card
+            <Card key={animal.id}
             // key={JSON.stringify(token)}
             />
           ))}
@@ -335,7 +344,7 @@ const [onSell] = useModal(
         </Route>
         <Route exact path={`${path}/history`}>
           {(eggData).map((egg) => (
-            <Card
+            <Card key={egg.id}
             // key={JSON.stringify(token)}
             />
           ))}
