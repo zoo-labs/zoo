@@ -64,6 +64,7 @@ const InfoBlock = styled.div`
   padding: 4px;
   text-align: center; 
   position: absolute;
+  left: 0;
   bottom: 0; 
   width: 100%;
   background-color: rgba(0, 0, 0, 0.6);;
@@ -192,8 +193,7 @@ const MyZooAccount: React.FC = () => {
     array.forEach(animal => {
       animal.bred = true
       animal.breedCount = animal.breedCount + 1
-      console.log(animal.breedCount)
-      const lastBred = animal.lastBred ? (new Date(animal.lastBred)).getTime() : new Date().getTime()
+      const lastBred = animal.lastBred ? (new Date(Number(animal.lastBred))).getTime() : new Date().getTime()
       const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount
       const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey])
       const elapsedTime = now - lastBred
@@ -218,40 +218,38 @@ const MyZooAccount: React.FC = () => {
     dispatch(addAnimal(animal1))
     dispatch(addAnimal(animal2))
 
-    const emptyEgg:Egg =
+    const egg:Egg =
     {
       owner: account,
       tokenId: String(Math.floor(Math.random()*100000000)+1),
       animalId: "3123",
       parent1: "123",
       parent2: "1231",
-      basic: false
+      basic: false,
+      created: String(new Date().getTime()),
+      timeRemaining: 0,
+      CTAOverride: null
 
     }
-    // if (!basic) {
-    //   const createdDate = egg.created ? (new Date(egg.created)).getTime() : new Date().getTime()
-    //   const hatchTimeout = getMilliseconds(eggTimeout)
-    //   const elapsedTime = now - createdDate
+    if (!egg.basic) {
+      const createdDate = egg.created ? (new Date(Number(egg.created))).getTime() : new Date().getTime()
+      const hatchTimeout = getMilliseconds(eggTimeout)
+      const elapsedTime = now - createdDate
 
-    //     if(elapsedTime < hatchTimeout){
-    //       const timeRemaining = hatchTimeout - elapsedTime,
-    //         timeRemainingDaysHours = window.getDaysHours(timeRemaining),
-    //         barwidth = [100 * (elapsedTime / hatchTimeout), '%'].join('')
+      if (elapsedTime < hatchTimeout){
+        const timeRemaining = hatchTimeout - elapsedTime
+        const timeRemainingDaysHours = getDaysHours(timeRemaining)
+        const barwidth = [100 * (elapsedTime / hatchTimeout), '%'].join('')
 
-    //       egg.actionStringOverride = 'data-disabled'
-    //       egg.CTAOverride = `<div class="creature-card__timeout" style="--barwidth: ${barwidth};">
-    //         <span class="creature-card__timeout-display">${timeRemainingDaysHours.days}d ${timeRemainingDaysHours.hours}h</span>
-    //       </div>`
-
-    //       egg.timeout = timeRemaining
-    //     } else {
-    //       egg.timeout = 0
-    //     }
-    //   } else {
-    //     egg.timeout = 0
-    //   }
-
-    dispatch(addEgg(emptyEgg))
+        egg.timeRemaining = timeRemaining
+        egg.CTAOverride = {barwidth, timeRemainingDaysHours}
+      } else {
+        egg.timeRemaining = 0
+      }
+    } else {
+      egg.timeRemaining = 0
+    }
+    dispatch(addEgg(egg))
     onDismiss()
     
   }
@@ -392,6 +390,7 @@ const [onSell] = useModal(
         name: egg.basic ? "BASIC" : "HYBRID"
       });
     });
+    console.log(eggData)
     empty = eggData.length === 0 && Object.keys(allEggs).length !== 0;
     const basicEggURL = window.location.origin + '/static/images/basic.png'
     const hybridEggURL = window.location.origin + '/static/images/hybrid.jpeg'
@@ -402,7 +401,7 @@ const [onSell] = useModal(
           <Swiper slidesPerView={2.2} spaceBetween={10} pagination={{"clickable": true}}>
           {(eggData).map((egg) => (
             <SwiperSlide key={egg.id}>
-              <EggCard egg={egg}/>
+              <EggCard egg={egg} />
             </SwiperSlide>
           ))}
           </Swiper>

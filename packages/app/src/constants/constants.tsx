@@ -14,4 +14,4 @@ export const breedTimeouts = {
   5: { days: 0, hours: 0 },
 };
 
-export const eggTimeout = { days: 0, hours: 0 };
+export const eggTimeout = { days: 1, hours: 12 };
