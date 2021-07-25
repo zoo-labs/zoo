@@ -59,10 +59,13 @@ const IconButton = styled.button`
         -webkit-text-stroke-color: ${({theme}) => theme.colors.primary};
     }
     & svg {
-        height: 30px;
-        width: 30px;
-        fill: ${({theme}) => theme.colors.primaryLight};
-        stroke: ${({theme}) => theme.colors.primary};
+        height: 40px;
+        width: 40px;
+        // fill: ${({ theme }) => theme.colors.primaryLight};
+        fill: white;
+        stroke: #a9a9a9;
+        // text-shadow: 1px 1px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black;
+        // stroke: ${({theme}) => theme.colors.primary};
         stroke-width: 15px;
     }
 `

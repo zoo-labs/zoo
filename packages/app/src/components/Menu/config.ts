@@ -2,11 +2,11 @@ import { MenuEntry } from './types'
 
 const config: () => MenuEntry[] = () => [
 
-  // {
-  //   label: 'My Zoo',
-  //   icon: '',
-  //   href: '/myzoo',
-  // },
+  {
+    label: 'Bank',
+    icon: '',
+    href: '/bank',
+  },
   {
     label: 'My Account',
     icon: '',
