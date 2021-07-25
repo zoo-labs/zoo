@@ -28,6 +28,12 @@ contract ZooDrop is Ownable, IERC721Receiver  {
         30 days
     ];
 
+    //Types to identify what type of 
+    // media was minted from the onERC721Received(...) callback
+    bytes base_egg_type = "E";
+    bytes base_animal_type = "A";
+    bytes hybrid_egg_type = "H";
+    bytes hybrid_animal_type = "G";
 
     //Declare an Event
     event BuyEgg(address indexed _from);
@@ -213,7 +219,7 @@ contract ZooDrop is Ownable, IERC721Receiver  {
     function buyEgg(ZooMedia.MediaData memory _data, IMarket.BidShares memory _bidShares) public enoughSupply enoughFunds returns (uint256) {
         
         token.transferFrom(msg.sender, address(this), eggPrice);
-        media.mint(_data, _bidShares);
+        media.mintZoo(_data, _bidShares, base_egg_type);
         _currentSupply--;
         emit BuyEgg(msg.sender);
         return 0;
@@ -426,10 +432,24 @@ contract ZooDrop is Ownable, IERC721Receiver  {
 // Callback for when ERC721 is minted using this contract
 
 function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes memory _data) public override returns(bytes4) {
-    Egg memory newEgg;
-    newEgg.eggCreationTime = block.number;
-    eggs[_tokenId] = newEgg;
-    ownedEggs[_from] = _tokenId;
+    
+    if(keccak256(_data) == keccak256(base_egg_type)){
+        console.log("hello erc721 received");
+        Egg memory newEgg;
+        newEgg.eggCreationTime = block.number;
+        eggs[_tokenId] = newEgg;
+        ownedEggs[_from] = _tokenId;
+    }
+    else if(keccak256(_data) == keccak256(base_animal_type)){
+
+    }
+    else if(keccak256(_data) == keccak256(hybrid_egg_type)){
+
+    }    
+    else if(keccak256(_data) == keccak256(hybrid_animal_type)){
+
+    }
+
     return 0x150b7a02;
  }
 
