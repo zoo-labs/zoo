@@ -5,7 +5,7 @@ import { ZooState } from "../types";
 import { Animal, Egg } from "entities/zooentities";
 import { test } from "./test";
 
-const initialState: ZooState = test;
+const initialState: ZooState = test
 
 // const initialState: ZooState = {
 //    animals: {},

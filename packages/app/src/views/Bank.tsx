@@ -11,7 +11,6 @@ import { Heading } from "components";
 import Body from "components/layout/Body";
 import { useModal } from "components/Modal";
 import BuyEggs from "components/BuyEggs";
-import MyZooAccount from "views/MyZooAccount";
 
 const HeadingContainer = styles.div`
     width: 100%;
@@ -49,24 +48,19 @@ const RowWrapper = styles.div`
 `;
 
 
-const Account: React.FC = () => {
+const Bank: React.FC = () => {
   const { account } = useWeb3React()
   const history = useHistory()
-  const [onBuyEggs] = useModal(<BuyEggs />)
-  const allEggs = useSelector<AppState, AppState["zoo"]["eggs"]>(
-    (state) => state.zoo.eggs
-  );
-  const currentEggsOwned = Object.values(allEggs).filter(
-    (egg) => egg.owner === account
-  ).length;
-  // setEggsOwned(currentEggsOwned)
+   // PLACEHOLDER DATA
+  const zooCount = 99999999999999999
+  
   const handleClick = () => {
-    history.push('/bank')
+    history.push('/account')
   }
 
   const pageHeading = (
     <HeadingContainer>
-      <Heading>My Account</Heading>
+      <Heading>My Bank</Heading>
       <StyledButton
         style={{
           background: "transparent",
@@ -76,7 +70,7 @@ const Account: React.FC = () => {
         }}
         onClick={()=>handleClick()}
       >
-        View Bank
+        View Account
       </StyledButton>
     </HeadingContainer>
   );
@@ -85,22 +79,23 @@ const Account: React.FC = () => {
       <Page>
         {pageHeading}
         <Body>
-          <LabelWrapper>
-            <Label>Wallet Balance</Label>
-            <BorderButton>Add Funds</BorderButton>
-          </LabelWrapper>
-          <RowWrapper>
-            <ValueWrapper>Balance</ValueWrapper>
-          </RowWrapper>
-          <LabelWrapper>
-            <Label>{currentEggsOwned} Eggs Owned</Label>
-            <BorderButton onClick={() => onBuyEggs()}>Buy Eggs</BorderButton>
-          </LabelWrapper>
-        </Body>
-        <MyZooAccount />
+            <LabelWrapper>
+              <Label>Wallet Balance</Label>
+              <BorderButton>Add Funds</BorderButton>
+            </LabelWrapper>
+            <ValueWrapper>
+              {zooCount} ZOOTOKENS
+            </ValueWrapper>
+            <ValueWrapper>
+              ~100 USD
+            </ValueWrapper>
+            <ValueWrapper>
+              Total Daily Yield: 200 ZOOTOKENS
+            </ValueWrapper>
+          </Body>
       </Page>
     </>
   );
 };
 
-export default Account;
+export default Bank;
