@@ -4,14 +4,13 @@ import { Text } from "components";
 import Page from "components/layout/Page";
 import { ButtonMenu, ButtonMenuItem } from "components/ButtonMenu";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useRouteMatch, Link, matchPath, useLocation } from "react-router-dom";
+import { useRouteMatch, Link, useLocation, useHistory } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import "swiper/swiper.min.css";
 import { useSelector } from "react-redux";
 import { useMatchBreakpoints } from "hooks";
 import Moralis from "moralis";
 import { AppState } from "state/index";
-import { useHistory } from "react-router-dom";
 import { useModal } from "components/Modal";
 import BidModal from "components/MarketModals/BidModal";
 import { useMoralisSubscription } from "react-moralis";
@@ -149,7 +148,7 @@ const ToggleContainer = styled.div`
     box-shadow: none;
     cursor: pointer;
   }
-`
+`;
 
 Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
 
@@ -196,9 +195,9 @@ export default function Feed() {
     });
   }, [history]);
 
-  const HomeClick = () => {
-    history.push("/account");
-  };
+  // const HomeClick = () => {
+  //   history.push("/account");
+  // };
 
   const getAnimals = async () => {
     // const query = new Moralis.Query(queryObject)
@@ -260,9 +259,13 @@ export default function Feed() {
             to={`${url}/myzoo`}
             onClick={() => getAnimals()}
           >
-          My Zoo
+            My Zoo
           </ButtonMenuItem>
-          <ButtonMenuItem as={Link} to={`${url}/marketplace`} onClick={() => getAnimals()}>
+          <ButtonMenuItem
+            as={Link}
+            to={`${url}/marketplace`}
+            onClick={() => getAnimals()}
+          >
             Marketplace
           </ButtonMenuItem>
         </ButtonMenu>
@@ -270,8 +273,8 @@ export default function Feed() {
       <Swiper
         spaceBetween={30}
         slidesPerView={isMobile ? 1 : 3}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
+        // onSlideChange={() => console.log("slide change")}
+        // onSwiper={(swiper) => console.log(swiper)}
         direction={isMobile ? "vertical" : "horizontal"}
       >
         {animalsFiltered.map((data) => {
