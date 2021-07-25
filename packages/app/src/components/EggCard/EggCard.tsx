@@ -5,7 +5,7 @@ import {
   Text,
   useMatchBreakpoints,
   Heading,
-  Card,
+  Card as Existing,
   CardHeader,
   CardBody,
   CardFooter,
@@ -25,6 +25,7 @@ const InfoBlock = styled.div`
 padding: 4px;
 text-align: center; 
 position: relative;
+left: 0;
 bottom: 0; 
 width: 100%;
 background-color: #ffffff6b;
@@ -40,6 +41,43 @@ line-height: 1.5;
 letter-spacing: 3px;
 text-transform: uppercase;
 `
+
+const TimeoutWrapper = styled.div < { barwidth?: string }>`
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  line-height: 1.8;
+  // background: white;
+  text-align: center;
+  color: white;
+  padding: 4px;
+  text-align: center;
+  width: 100%;
+  background-color: #A7565E;
+  z-index: 999999;
+    ::before {
+      content: '';
+      display: block;
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: ${({ barwidth }) => barwidth};
+      background: grey;
+    }
+`
+const TimeoutDisplay = styled.span`
+  position: relative;
+  z-index: 2;
+`
+const Card = styled(Existing)<{ timedOut?: boolean }>`
+  backgroundColor: "#000000";
+  border-radius: 8px;
+  opacity: ${({ timedOut }) => (timedOut ? "0.6" : null)};
+`;
+
 
 const basicEggURL = window.location.origin + '/static/images/basic.png'
 const hybridEggURL = window.location.origin + '/static/images/hybrid.jpeg'
@@ -100,7 +138,6 @@ export const EggCard: React.FC<EggCardType> = ({egg})  => {
             breedCount: 0,
             lastBred: ""
         }
-        console.log(newAnimal)
         dispatch(addAnimal(newAnimal)) 
     }
 
@@ -110,16 +147,23 @@ export const EggCard: React.FC<EggCardType> = ({egg})  => {
         <VideoPlayer videoPath={egg.basic ? "hatch_mobile_basic.mp4": "hatch_mobile_hybrid.mp4"} onDone={() => onVideoEnd()}/>
         )
     }
-
     const renderCard = () => {
         return (
-            <Card style={{backgroundColor: '#000000'}}>
+            <Card style={{backgroundColor: '#000000'}} timedOut={egg.timeRemaining > 0 ? true : false}>
                 <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 150, padding: 10}}>
                 <TextWrapper>{egg.name}</TextWrapper>
                 </CardBody>
-                <InfoBlock style={{textAlign: 'center', backgroundColor: '#ffffff38', padding: 10}} onClick={() => {onHatch()}}>
-                <TextWrapper >{`HATCH`}</TextWrapper>
-                </InfoBlock>
+                
+                {egg.timeRemaining > 0 ?
+                      <TimeoutWrapper barwidth={egg.CTAOverride ? egg.CTAOverride.barwidth : 0}>
+                        <TimeoutDisplay >
+                          {`${egg.CTAOverride.timeRemainingDaysHours.days}D ${egg.CTAOverride.timeRemainingDaysHours.hours}H`}
+                        </TimeoutDisplay>
+                      </TimeoutWrapper> :
+                      <InfoBlock style={{textAlign: 'center', backgroundColor: '#ffffff38', padding: 4}} onClick={() => {onHatch()}}>
+                        <TextWrapper >{`HATCH`}</TextWrapper>
+                      </InfoBlock>
+                    }
             </Card>
         )
     }

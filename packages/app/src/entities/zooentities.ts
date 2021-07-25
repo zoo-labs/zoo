@@ -30,4 +30,7 @@ export interface Egg {
   parent1: string;
   parent2: string;
   basic: boolean;
+  timeRemaining?: number;
+  CTAOverride?: any;
+  created?: string;
 }
