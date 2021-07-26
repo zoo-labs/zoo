@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, cloneElement } from "react";
+import React from "react";
 import { Route, useRouteMatch } from "react-router-dom";
 import { AppState } from "state";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,57 +8,19 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Modal, useModal } from "components/Modal";
 import Page from "components/layout/Page";
 import {
-  Flex,
   Text,
   useMatchBreakpoints,
-  Heading,
   Card as Existing,
   CardBody,
   EggCard,
 } from "components";
-// import HatchDialog from "components/HatchDialog"
-import { VscLoading } from "react-icons/vsc";
-// import { ViewMode } from "./components/types"
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import { getMilliseconds, getDaysHours } from "util/timeHelpers";
-import { rarityTable, breedTimeouts, eggTimeout } from "constants/constants";
-import MyMP16OSFFont from "../fonts/MP16OSF.ttf";
+import { breedTimeouts, eggTimeout } from "constants/constants";
 import { Animal, Egg } from "entities/zooentities";
 import { addAnimal, addEgg } from "state/actions";
-import { ImInsertTemplate } from "react-icons/im";
 import BorderButton from "components/Button/BorderButton";
-import { FaLessThanEqual } from "react-icons/fa";
-
-// install Swiper modules
-// SwiperCore.use([Pagination]);
-
-const IconCont = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  & svg {
-    color: ${({ theme }) => theme.colors.primary};
-    animation: spin 2s ease infinite;
-  }
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-`;
-const ImageContainer = styled.div`
-  img {
-    width: 100%;
-    height: 100%;
-    minheight: 300px;
-    overflow: hidden;
-  }
-`;
 
 const InfoBlock = styled.div`
   padding: 4px;
@@ -152,8 +114,6 @@ const TimeoutDisplay = styled.span`
   position: relative;
   z-index: 2;
 `;
-
-const _loadCount = 9;
 
 const MyZooAccount: React.FC = () => {
   let empty;
@@ -333,7 +293,8 @@ const MyZooAccount: React.FC = () => {
       const lastBred = animal.lastBred
         ? new Date(Number(animal.lastBred)).getTime()
         : new Date().getTime();
-      const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount || 1;
+      const breedTimeoutKey =
+        animal.breedCount > 5 ? 5 : animal.breedCount || 1;
       const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
       const elapsedTime = now - lastBred;
       const timeRemaining = breedTimeout - elapsedTime;
@@ -361,23 +322,20 @@ const MyZooAccount: React.FC = () => {
     empty =
       animalData.length === 0 && Object.keys(allAnimalsSorted).length !== 0;
 
-    // Object.values(updatedTokens)
-    //   .filter((tkn) => tkn.isToken)
-    //   .forEach((token, ind) => {
-    //     if (token.curve === undefined) {
-    //       return
-    //     }
-    //     updatedData.push({ id: ind, ...token })
-    //   })
+    const animals = animalData.filter(
+      (item) => item.bloodline === hybrid && item.owner === account
+    );
 
     return (
       <RowLayout>
         <Route exact path={`${path}`}>
-          <Swiper slidesPerView={2.2} spaceBetween={10}>
-            {animalData
-              .filter((item) => item.bloodline === hybrid)
-              .filter((item) => item.owner === account)
-              .map((animal) => (
+          {empty ? (
+            <Text textAlign="center">
+              No {hybrid === "pure" ? `breedable` : `hybrid`} animals
+            </Text>
+          ) : (
+            <Swiper slidesPerView={2.2} spaceBetween={10}>
+              {animals.map((animal) => (
                 <SwiperSlide>
                   <CardWrapper>
                     <Card
@@ -436,7 +394,8 @@ const MyZooAccount: React.FC = () => {
                 </SwiperSlide>
                 // <SwiperSlide>Slide 1</SwiperSlide>
               ))}
-          </Swiper>
+            </Swiper>
+          )}
         </Route>
         <Route exact path={`${path}/history`}>
           {/* {shownData(animalData).map((animal) => ( */}
