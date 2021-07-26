@@ -3,19 +3,19 @@ import { MenuEntry } from './types'
 const config: () => MenuEntry[] = () => [
 
   {
-    label: 'My Zoo',
+    label: 'Bank',
     icon: '',
-    href: '/myzoo',
+    href: '/bank',
   },
   {
     label: 'My Account',
     icon: '',
-    href: '/myaccount',
+    href: '/account',
   },
   {
-    label: 'Marketplace',
+    label: 'Feed',
     icon: '',
-    href: '/marketplace',
+    href: '/feed',
   },
 ]
 

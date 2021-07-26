@@ -17,7 +17,8 @@ import { useWeb3React } from '@web3-react/core'
 // Only pool is included in the main bundle because of it's the most visited page
 const Account = lazy(() => import('./views/Account'))
 const Login = lazy(() => import('./views/Login'))
-const Marketplace = lazy(() => import('./views/Marketplace'))
+const Bank = lazy(() => import('./views/Bank'))
+const Feed = lazy(() => import('./views/Feed'))
 // const Splash = lazy(() => import('./views/Splash'))
 
 // This config is required for number formating
@@ -101,16 +102,19 @@ const App: React.FC = () => {
               <Route exact path="/login">
                 {signedIn? <Redirect to="/account" />: <Login/>}
               </Route>
-              <Menu>
+              
                 <SuspenseWithChunkError fallback={<></>}>
                   <Route exact path="/account">
-                    {signedIn? <Account /> : <Redirect to="/login" />}
+                    {signedIn? <Menu><Account /></Menu> : <Redirect to="/login" />}
                   </Route>
-                  <Route exact path="/marketplace">
-                    {signedIn? <Marketplace /> : <Redirect to="/login" />}
+                  <Route path="/feed">
+                    {signedIn? <Feed /> : <Redirect to="/login" />}
+                  </Route>
+                  <Route exact path="/bank">
+                    {signedIn? <Menu><Bank /></Menu> : <Redirect to="/login" />}
                   </Route>
                   <Route  path="/">
-                    {signedIn? <Redirect to="/account" />: <Login />}
+                    {signedIn? <Redirect to="/account" />: <Redirect to="/login" />}
                   </Route>
                   {/* <Route exact path="/login" component={Login} />
                   <Route exact path="/account" component={signedIn? Account : <Redirect to="/docs/overview" />} />
@@ -120,7 +124,6 @@ const App: React.FC = () => {
                   <PrivateRoute path="/account" component={Account} />
                   <PrivateRoute path="/" component={Account} /> */}
                 </SuspenseWithChunkError>
-              </Menu>
               {/* <Route component={NotFound} /> */}
             </Switch>
         
