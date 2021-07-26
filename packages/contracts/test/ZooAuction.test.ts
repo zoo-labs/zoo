@@ -925,7 +925,7 @@ describe("ZooAuction", () => {
     });
 
     describe("#endAuction", () => {
-      let auctionHouse: ZooAuction;
+      // let auctionHouse: ZooAuction;
       let admin: Signer;
       let creator: Signer;
       let curator: Signer;
@@ -937,18 +937,6 @@ describe("ZooAuction", () => {
 
         [admin, creator, curator, bidder, other] = await ethers.getSigners();
 
-        auctionHouse = (await deploy()) as ZooAuction;
-
-        auctionHouse = auctionHouse.connect(creator)
-
-        // await mint(media.connect(creator));
-
-        // await approveAuction(media.connect(creator), auctionHouse);
-
-        // await auctionHouse.setAuctionApproval(1, true)
-
-        // await auctionHouse.connect(curator).setAuctionApproval(0, true);
-        // badBidder = await deployBidder(auctionHouse.address, media.address);
       });
 
       it("should revert if the auction does not exist", async () => {
@@ -959,16 +947,13 @@ describe("ZooAuction", () => {
 
       });
 
-      // it("should revert if the auction has not begun", async () => {
+      it("should revert if the auction has not begun", async () => {
 
-      //   await createAuction(
-      //     auctionHouse.connect(creator),
-      //     await curator.getAddress()
-      //   );
-      //   await expect(auctionHouse.endAuction(0)).eventually.rejectedWith(
-      //     revert`Auction hasn't begun`
-      //   );
-      // });
+        await expect(auctionHouse.endAuction(0)).to.be.revertedWith(
+          "Auction hasn't begun"
+        );
+
+      });
 
       // it("should revert if the auction has not completed", async () => {
 
