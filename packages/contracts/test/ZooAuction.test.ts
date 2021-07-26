@@ -840,19 +840,25 @@ describe("ZooAuction", () => {
         // await auctionHouse.connect(curator).setAuctionApproval(0, true);
       });
 
-      it.only("should revert if the auction does not exist", async () => {
+      it("should revert if the auction does not exist", async () => {
 
-        await expect(auctionHouse.cancelAuction(0)).to.be.rejectedWith("Auction doesn't exist")
+        await expect(auctionHouse.cancelAuction(400)).to.be.rejectedWith("Auction doesn't exist")
 
       });
 
-      // it("should revert if not called by a creator or curator", async () => {
-      //   await expect(
-      //     auctionHouse.connect(bidder).cancelAuction(0)
-      //   ).eventually.rejectedWith(
-      //     `Can only be called by auction creator or curator`
-      //   );
-      // });
+      it.only("should revert if not called by a creator or curator", async () => {
+
+        // await createAuction(
+        //   auctionHouse.connect(creator),
+        //   await curator.getAddress()
+        // );
+
+        await expect(
+          auctionHouse.connect(auctionHouse.signer).cancelAuction(0)
+        ).eventually.rejectedWith(
+          `Can only be called by auction creator or curator`
+        );
+      });
 
       //   it("should revert if the auction has already begun", async () => {
       //     await auctionHouse
