@@ -770,7 +770,7 @@ describe("ZooAuction", () => {
     });
 
     describe("#cancelAuction", () => {
-      let auctionHouse: ZooAuction;
+      // let auctionHouse: ZooAuction;
       let admin: Signer;
       let creator: Signer;
       let curator: Signer;
@@ -779,35 +779,21 @@ describe("ZooAuction", () => {
       beforeEach(async () => {
         [admin, creator, curator, bidder] = await ethers.getSigners();
 
-        auctionHouse = (await deploy()).connect(creator) as ZooAuction;
-
-        // await mint(media.connect(creator))
-
-        // await approveAuction(media.connect(creator), auctionHouse);
-
-        // await createAuction(
-        //   auctionHouse.connect(creator),
-        //   await curator.getAddress()
-        // );
-
-        // await auctionHouse.connect(curator).setAuctionApproval(0, true);
       });
 
       it("should revert if the auction does not exist", async () => {
 
-        // await expect(auctionHouse.cancelAuction(0)).eventually.rejectedWith(
-        //   revert`Auction doesn't exist`
-        // );
+        await expect(auctionHouse.cancelAuction(2)).eventually.rejectedWith(`\'Auction doesn\'t exist\'`);
 
       });
 
-      // it("should revert if not called by a creator or curator", async () => {
-      //   await expect(
-      //     auctionHouse.connect(bidder).cancelAuction(0)
-      //   ).eventually.rejectedWith(
-      //     `Can only be called by auction creator or curator`
-      //   );
-      // });
+      it("should revert if not called by a creator or curator", async () => {
+        await expect(
+          auctionHouse.connect(bidder).cancelAuction(0)
+        ).eventually.rejectedWith(
+          `Can only be called by auction creator or curator`
+        );
+      });
 
       //   it("should revert if the auction has already begun", async () => {
       //     await auctionHouse
