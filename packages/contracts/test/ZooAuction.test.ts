@@ -862,23 +862,35 @@ describe("ZooAuction", () => {
         );
       });
 
-      //   it("should be callable by the creator", async () => {
-      //     await auctionHouse.cancelAuction(0);
+      it.only("should be callable by the creator", async () => {
 
-      //     const auctionResult = await auctionHouse.auctions(0);
+        auctionHouse = auctionHouse.connect(admin);
 
-      //     expect(auctionResult.amount.toNumber()).to.eq(0);
-      //     expect(auctionResult.duration.toNumber()).to.eq(0);
-      //     expect(auctionResult.firstBidTime.toNumber()).to.eq(0);
-      //     expect(auctionResult.reservePrice.toNumber()).to.eq(0);
-      //     expect(auctionResult.curatorFeePercentage).to.eq(0);
-      //     expect(auctionResult.tokenOwner).to.eq(ethers.constants.AddressZero);
-      //     expect(auctionResult.bidder).to.eq(ethers.constants.AddressZero);
-      //     expect(auctionResult.curator).to.eq(ethers.constants.AddressZero);
-      //     expect(auctionResult.auctionCurrency).to.eq(ethers.constants.AddressZero);
+        await auctionHouse.cancelAuction(0)
 
-      //     expect(await media.ownerOf(0)).to.eq(await creator.getAddress());
-      //   });
+        const auctionResult = await auctionHouse.auctions(0);
+
+        expect(auctionResult.amount.toNumber()).to.eq(0);
+
+        expect(auctionResult.duration.toNumber()).to.eq(0);
+
+        expect(auctionResult.firstBidTime.toNumber()).to.eq(0);
+
+        expect(auctionResult.reservePrice.toNumber()).to.eq(0);
+
+        expect(auctionResult.curatorFeePercentage).to.eq(0);
+
+        expect(auctionResult.tokenOwner).to.eq(ethers.constants.AddressZero);
+
+        expect(auctionResult.bidder).to.eq(ethers.constants.AddressZero);
+
+        expect(auctionResult.curator).to.eq(ethers.constants.AddressZero);
+
+        expect(auctionResult.auctionCurrency).to.eq(ethers.constants.AddressZero);
+
+        expect(await media.ownerOf(0)).to.eq(await admin.getAddress());
+
+      });
 
       //   it("should be callable by the curator", async () => {
       //     await auctionHouse.connect(curator).cancelAuction(0);
