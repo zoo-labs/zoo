@@ -795,14 +795,15 @@ describe("ZooAuction", () => {
         );
       });
 
-      //   it("should revert if the auction has already begun", async () => {
-      //     await auctionHouse
-      //       .connect(bidder)
-      //       .createBid(0, 200, { value: 200 });
-      //     await expect(auctionHouse.cancelAuction(0)).eventually.rejectedWith(
-      //       revert`Can't cancel an auction once it's begun`
-      //     );
-      //   });
+      it("should revert if the auction has already begun", async () => {
+        await token.connect(bidder).approve(auctionHouse.address, 200)
+        await auctionHouse
+          .connect(bidder)
+          .createBid(0, 200, { value: 200 });
+        await expect(auctionHouse.connect(admin).cancelAuction(0)).eventually.rejectedWith(
+          `Can't cancel an auction once it's begun`
+        );
+      });
 
       //   it("should be callable by the creator", async () => {
       //     await auctionHouse.cancelAuction(0);
