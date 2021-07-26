@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Modal, useModal } from "components/Modal";
 import Page from "components/layout/Page";
+import CustomModal from "components/CustomizedModal";
 import {
   Flex,
   Text,
@@ -153,6 +154,15 @@ const TimeoutDisplay = styled.span`
   z-index: 2;
 `;
 
+const Button = styled.div`
+  padding: 6px 12px;
+  min-width: 100px;
+  background: black;
+  text-align: center;
+  color: white;
+  margin: auto;
+`
+
 const _loadCount = 9;
 
 const MyZooAccount: React.FC = () => {
@@ -258,7 +268,8 @@ const MyZooAccount: React.FC = () => {
       egg.timeRemaining = 0;
     }
     dispatch(addEgg(egg));
-    onDismiss();
+    onEggCreated();
+    // onDismiss();
   };
 
   const breedClick = (animal) => {
@@ -278,20 +289,39 @@ const MyZooAccount: React.FC = () => {
     const animal1 = array[0];
     const animal2 = array[1];
     return (
-      <Modal title="Are you Sure?" onDismiss={onDismiss}>
-        <Text>{`You want to breed this ${animal1.name} with this ${animal2.name}?`}</Text>
-        <BorderButton scale="md" onClick={() => onDismiss()}>
-          Cancel
-        </BorderButton>
-        <BorderButton scale="md" onClick={() => breed(onDismiss)}>
-          Confirm
-        </BorderButton>
-      </Modal>
+      <CustomModal onDismiss={onDismiss}>
+        <Text color="textSubtle" style={{color: "black"}}>{`You want to breed this ${animal1.name} with this ${animal2.name}?`}</Text>
+        <Flex style={{marginTop: 15}}>
+          <Button onClick={() => breed(onDismiss)}>
+            YES
+          </Button>
+          <Button onClick={() => onDismiss()}>
+            NO
+          </Button>
+        </Flex>
+      </CustomModal>
+    );
+  };
+
+  const EggCreatedNotify: React.FC<any> = ({ onDismiss = () => null}) => {
+    return (
+      <CustomModal style={{width: "230px"}} onDismiss={onDismiss}>
+        <Text color="textSubtle" style={{color: "black"}}>Hybrid egg created successfully</Text>
+        <Flex style={{marginTop: 15}}>
+          <Button onClick={() => onDismiss()}>
+            OK
+          </Button>
+        </Flex>
+      </CustomModal>
     );
   };
 
   const [onConfirm] = useModal(
     <Confirmation onDismiss={() => null} breed={breed} />
+  );
+
+  const [onEggCreated] = useModal(
+    <EggCreatedNotify onDismiss={() => null} />
   );
 
   const list = (animal) => {
