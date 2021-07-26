@@ -7,7 +7,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useHistory } from "react-router-dom";
 import styles from "styled-components";
 import { Label, Text } from "components/Text";
-import { Heading } from "components";
+import { Flex, Heading, useMatchBreakpoints } from "components";
 import Body from "components/layout/Body";
 import { useModal } from "components/Modal";
 import BuyEggs from "components/BuyEggs";
@@ -58,6 +58,7 @@ const RowWrapper = styles.div`
 
 const Account: React.FC = () => {
    const { account } = useWeb3React();
+   const {isXl} = useMatchBreakpoints();
    const history = useHistory();
    const [onBuyEggs] = useModal(<BuyEggs />);
    const allEggs = useSelector<AppState, AppState["zoo"]["eggs"]>(
@@ -90,17 +91,17 @@ const Account: React.FC = () => {
       <>
          <Page>
             {pageHeading}
-            <Body>
+            <Body> 
                <LabelWrapper>
                   <Label small>Wallet Balance</Label>
-                  <BorderButton scale="md">Add Funds</BorderButton>
-               </LabelWrapper>
+                     <BorderButton scale="sm" minWidth={!isXl ? "140px" : "160px"}  style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}>Add Funds</BorderButton>
+               </LabelWrapper>  
                <RowWrapper>
                   <ValueWrapper>Balance</ValueWrapper>
                </RowWrapper>
                <LabelWrapper>
                   <Label small>{currentEggsOwned} Eggs Owned</Label>
-                  <BorderButton scale="md" onClick={() => onBuyEggs()}>
+                  <BorderButton scale="sm" minWidth={!isXl ? "120px" : "140px"}  onClick={() => onBuyEggs()} style={{fontSize: `${!isXl ? "14px" : "16px"}`}}>
                      Buy Eggs
                   </BorderButton>
                </LabelWrapper>

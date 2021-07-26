@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Label, Text, Flex, Button } from 'components'
 import { BottomModal } from 'components/Modal';
+import BorderButton from 'components/Button/BorderButton';
 
 interface Props {
     onDismiss?: () => null
@@ -16,19 +17,19 @@ const YieldModal: React.FC<Props> = ({ item,   onDismiss }) => {
                         <Label fontSize="22px" color="#C82064" fontWeight="550">
                             Daily Yield
                         </Label>
-                        <Text bold ml="16px" fontSize="22px" color="background">
+                        <Text bold ml="16px" fontSize="22px" color="text">
                             {item.yield}
                         </Text>
                         <Label fontSize="22px" color="#C82064" fontWeight="550">
                             Accumulated Yield
                         </Label>
-                        <Text bold ml="16px" fontSize="22px" color="background">
+                        <Text bold ml="16px" fontSize="22px" color="text">
                             {Math.floor(item.yield * (Math.random() * (12 - 1) + (1)))}
                         </Text>
                         <Flex justifyContent="center" mt="16px">
-                       <Button width="250px" variant="primary" color="black" scale="md" style={{border: "0px", letterSpacing: ".1rem", boxShadow: "none", textTransform:"uppercase"}}>
+                       <BorderButton width="250px" scale="md" >
                             Bid
-                            </Button>
+                            </BorderButton>
                             </Flex>
                     </Flex>
                      
