@@ -970,128 +970,130 @@ describe("ZooAuction", () => {
       });
 
       // it("should cancel the auction if the winning bidder is unable to receive NFTs", async () => {
-      //   await badBidder.placeBid(0, TWO_ZOO, { value: TWO_ZOO });
-      //   const endTime =
-      //     (await auctionHouse.auctions(0)).duration.toNumber() +
-      //     (await auctionHouse.auctions(0)).firstBidTime.toNumber();
-      //   await ethers.provider.send("evm_setNextBlockTimestamp", [endTime + 1]);
 
-      //   await auctionHouse.endAuction(0);
+      //   // await badBidder.createBid(0, TWO_ZOO, { value: TWO_ZOO });
+      //   // const endTime =
+      //   //   (await auctionHouse.auctions(0)).duration.toNumber() +
+      //   //   (await auctionHouse.auctions(0)).firstBidTime.toNumber();
+      //   // await ethers.provider.send("evm_setNextBlockTimestamp", [endTime + 1]);
 
-      //   expect(await media.ownerOf(0)).to.eq(await creator.getAddress());
-      //   expect(await ethers.provider.getBalance(badBidder.address)).to.eq(
-      //     TWO_ZOO
-      //   );
+      //   // await auctionHouse.endAuction(0);
+
+      //   // expect(await media.ownerOf(0)).to.eq(await creator.getAddress());
+      //   // expect(await ethers.provider.getBalance(badBidder.address)).to.eq(
+      //   //   TWO_ZOO
+      //   // );
+
+      // });
+
+      describe("ZOO auction", () => {
+        beforeEach(async () => {
+
+          token = token.connect(auctionHouse.signer)
+
+          await token.approve(auctionHouse.address, 200)
+
+          await auctionHouse
+            .connect(bidderA)
+            .createBid(0, 200, { value: 200 });
+
+          const endTime =
+            (await auctionHouse.auctions(0)).duration.toNumber() +
+            (await auctionHouse.auctions(0)).firstBidTime.toNumber();
+          await ethers.provider.send("evm_setNextBlockTimestamp", [endTime + 1]);
+
+        });
+
+        it.only("should transfer the NFT to the winning bidder", async () => {
+
+          await auctionHouse.endAuction(0);
+
+          expect(await media.ownerOf(0)).to.eq(await bidderA.getAddress());
+        });
+
+        // it("should pay the curator their curatorFee percentage", async () => {
+        //   const beforeBalance = await ethers.provider.getBalance(
+        //     await curator.getAddress()
+        //   );
+        //   await auctionHouse.endAuction(0);
+
+        //   const expectedCuratorFee = "42500000000000000";
+
+        //   const curatorBalance = await ethers.provider.getBalance(
+        //     await curator.getAddress()
+        //   );
+        //   await expect(curatorBalance.sub(beforeBalance).toString()).to.eq(
+        //     expectedCuratorFee
+        //   );
+        // });
+
+        // it("should pay the creator the remainder of the winning bid", async () => {
+        //   const beforeBalance = await ethers.provider.getBalance(
+        //     await creator.getAddress()
+        //   );
+        //   await auctionHouse.endAuction(0);
+        //   const expectedProfit = "957500000000000000";
+        //   const creatorBalance = await ethers.provider.getBalance(
+        //     await creator.getAddress()
+        //   );
+        //   const tokenBalance = await token.balanceOf(await creator.getAddress());
+        //   await expect(
+        //     creatorBalance.sub(beforeBalance).add(tokenBalance).toString()
+        //   ).to.eq(expectedProfit);
+        // });
+
+        // it("should emit an AuctionEnded event", async () => {
+        //   const block = await ethers.provider.getBlockNumber();
+        //   const auctionData = await auctionHouse.auctions(0);
+        //   await auctionHouse.endAuction(0);
+        //   const events = await auctionHouse.queryFilter(
+        //     auctionHouse.filters.AuctionEnded(
+        //       null,
+        //       null,
+        //       null,
+        //       null,
+        //       null,
+        //       null,
+        //       null,
+        //       null,
+        //       null
+        //     ),
+        //     block
+        //   );
+        //   expect(events.length).eq(1);
+        //   const logDescription = auctionHouse.interface.parseLog(events[0]);
+
+        //   expect(logDescription.args.tokenId).to.eq(0);
+        //   expect(logDescription.args.tokenOwner).to.eq(auctionData.tokenOwner);
+        //   expect(logDescription.args.curator).to.eq(auctionData.curator);
+        //   expect(logDescription.args.winner).to.eq(auctionData.bidder);
+        //   expect(logDescription.args.amount.toString()).to.eq(
+        //     "807500000000000000"
+        //   );
+        //   expect(logDescription.args.curatorFee.toString()).to.eq(
+        //     "42500000000000000"
+        //   );
+        //   expect(logDescription.args.auctionCurrency).to.eq(token.address);
+        // });
+
+        // it("should delete the auction", async () => {
+
+        //   await auctionHouse.endAuction(0);
+
+        //   const auctionResult = await auctionHouse.auctions(0);
+
+        //   expect(auctionResult.amount.toNumber()).to.eq(0);
+        //   expect(auctionResult.duration.toNumber()).to.eq(0);
+        //   expect(auctionResult.firstBidTime.toNumber()).to.eq(0);
+        //   expect(auctionResult.reservePrice.toNumber()).to.eq(0);
+        //   expect(auctionResult.curatorFeePercentage).to.eq(0);
+        //   expect(auctionResult.tokenOwner).to.eq(ethers.constants.AddressZero);
+        //   expect(auctionResult.bidder).to.eq(ethers.constants.AddressZero);
+        //   expect(auctionResult.curator).to.eq(ethers.constants.AddressZero);
+        //   expect(auctionResult.auctionCurrency).to.eq(
+        //     ethers.constants.AddressZero
+        //   );
+      })
     });
-
-    describe("ZOO auction", () => {
-      // beforeEach(async () => {
-
-      //   token = token.connect(auctionHouse.signer)
-
-      //   await token.approve(auctionHouse.address, 200)
-
-      //   await auctionHouse
-      //     .connect(bidderA)
-      //     .createBid(0, 200, { value: 200 });
-
-      //   const endTime =
-      //     (await auctionHouse.auctions(0)).duration.toNumber() +
-      //     (await auctionHouse.auctions(0)).firstBidTime.toNumber();
-      //   await ethers.provider.send("evm_setNextBlockTimestamp", [endTime + 1]);
-
-    });
-
-    // it("should transfer the NFT to the winning bidder", async () => {
-
-    //   await auctionHouse.endAuction(0);
-
-    //   expect(await media.ownerOf(0)).to.eq(await bidderA.getAddress());
-    // });
-
-    // it("should pay the curator their curatorFee percentage", async () => {
-    //   const beforeBalance = await ethers.provider.getBalance(
-    //     await curator.getAddress()
-    //   );
-    //   await auctionHouse.endAuction(0);
-
-    //   const expectedCuratorFee = "42500000000000000";
-
-    //   const curatorBalance = await ethers.provider.getBalance(
-    //     await curator.getAddress()
-    //   );
-    //   await expect(curatorBalance.sub(beforeBalance).toString()).to.eq(
-    //     expectedCuratorFee
-    //   );
-    // });
-
-    // it("should pay the creator the remainder of the winning bid", async () => {
-    //   const beforeBalance = await ethers.provider.getBalance(
-    //     await creator.getAddress()
-    //   );
-    //   await auctionHouse.endAuction(0);
-    //   const expectedProfit = "957500000000000000";
-    //   const creatorBalance = await ethers.provider.getBalance(
-    //     await creator.getAddress()
-    //   );
-    //   const tokenBalance = await token.balanceOf(await creator.getAddress());
-    //   await expect(
-    //     creatorBalance.sub(beforeBalance).add(tokenBalance).toString()
-    //   ).to.eq(expectedProfit);
-    // });
-
-    // it("should emit an AuctionEnded event", async () => {
-    //   const block = await ethers.provider.getBlockNumber();
-    //   const auctionData = await auctionHouse.auctions(0);
-    //   await auctionHouse.endAuction(0);
-    //   const events = await auctionHouse.queryFilter(
-    //     auctionHouse.filters.AuctionEnded(
-    //       null,
-    //       null,
-    //       null,
-    //       null,
-    //       null,
-    //       null,
-    //       null,
-    //       null,
-    //       null
-    //     ),
-    //     block
-    //   );
-    //   expect(events.length).eq(1);
-    //   const logDescription = auctionHouse.interface.parseLog(events[0]);
-
-    //   expect(logDescription.args.tokenId).to.eq(0);
-    //   expect(logDescription.args.tokenOwner).to.eq(auctionData.tokenOwner);
-    //   expect(logDescription.args.curator).to.eq(auctionData.curator);
-    //   expect(logDescription.args.winner).to.eq(auctionData.bidder);
-    //   expect(logDescription.args.amount.toString()).to.eq(
-    //     "807500000000000000"
-    //   );
-    //   expect(logDescription.args.curatorFee.toString()).to.eq(
-    //     "42500000000000000"
-    //   );
-    //   expect(logDescription.args.auctionCurrency).to.eq(token.address);
-    // });
-
-    // it("should delete the auction", async () => {
-
-    //   await auctionHouse.endAuction(0);
-
-    //   const auctionResult = await auctionHouse.auctions(0);
-
-    //   expect(auctionResult.amount.toNumber()).to.eq(0);
-    //   expect(auctionResult.duration.toNumber()).to.eq(0);
-    //   expect(auctionResult.firstBidTime.toNumber()).to.eq(0);
-    //   expect(auctionResult.reservePrice.toNumber()).to.eq(0);
-    //   expect(auctionResult.curatorFeePercentage).to.eq(0);
-    //   expect(auctionResult.tokenOwner).to.eq(ethers.constants.AddressZero);
-    //   expect(auctionResult.bidder).to.eq(ethers.constants.AddressZero);
-    //   expect(auctionResult.curator).to.eq(ethers.constants.AddressZero);
-    //   expect(auctionResult.auctionCurrency).to.eq(
-    //     ethers.constants.AddressZero
-    //   );
-    // })
-    // });
   });
 });
