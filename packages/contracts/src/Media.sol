@@ -218,6 +218,14 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
         return _tokenMetadataURIs[tokenId];
     }
 
+    function getRecentToken(address creator) internal view returns (uint256){
+
+        uint256 length = EnumerableSet.length(_creatorTokens[creator])-1;
+
+        return  EnumerableSet.at(_creatorTokens[creator],length);
+
+   }
+
     /* ****************
      * Public Functions
      * ****************
@@ -234,12 +242,6 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
         _mintForCreator(msg.sender, data, bidShares, "");
     }
 
-    function mintZoo(MediaData memory data, IMarket.BidShares memory bidShares, bytes memory tokenType)
-        public
-        nonReentrant
-    {
-        _mintForCreator(msg.sender, data, bidShares, tokenType);
-    }
 
     /**
      * @notice see IMedia
