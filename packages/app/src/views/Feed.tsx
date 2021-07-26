@@ -253,7 +253,7 @@ export default function Feed() {
   return (
     <Container isMobile={isMobile}>
       <ToggleContainer>
-        <ButtonMenu activeIndex={activeIndex} scale="sm" variant="subtle">
+        <ButtonMenu activeIndex={activeIndex} scale="sm">
           <ButtonMenuItem
             as={Link}
             to={`${url}/myzoo`}
