@@ -96,6 +96,9 @@ const Bank: React.FC = () => {
          </StyledButton>
       </HeadingContainer>
    );
+   const toLink = () => {
+    location.href = "https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997"
+  }
 
    return (
       <>
@@ -104,7 +107,7 @@ const Bank: React.FC = () => {
             <Body>
                <LabelWrapper>
                   <Label>Wallet Balance</Label>
-                  <BorderButton>Add Funds</BorderButton>
+                  <BorderButton onClick={toLink}>Add Funds</BorderButton>
                </LabelWrapper>
                <ValueWrapper>{zooBalance} ZOOTOKENS</ValueWrapper>
                <ValueWrapper>~100 USD</ValueWrapper>
