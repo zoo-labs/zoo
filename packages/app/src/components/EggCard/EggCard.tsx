@@ -72,9 +72,13 @@ const TimeoutDisplay = styled.span`
   position: relative;
   z-index: 2;
 `
-const Card = styled(Existing)<{ timedOut?: boolean }>`
+const Card = styled(Existing) <{ timedOut?: boolean }>`
+  
+  cursor: pointer;
+  width: 120px;
   backgroundColor: "#000000";
   border-radius: 8px;
+  display: block;
   opacity: ${({ timedOut }) => (timedOut ? "0.6" : null)};
 `;
 
@@ -149,18 +153,17 @@ export const EggCard: React.FC<EggCardType> = ({egg})  => {
     }
     const renderCard = () => {
         return (
-            <Card style={{backgroundColor: '#000000'}} timedOut={egg.timeRemaining > 0 ? true : false}>
+            <Card onClick={() => {onHatch()}} style={{backgroundColor: '#000000'}} timedOut={egg.timeRemaining > 0 ? true : false}>
 		    <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: 150, padding: 10}}>
                 <TextWrapper>{egg.name}</TextWrapper>
                 </CardBody>
-                
                 {egg.timeRemaining > 0 ?
                       <TimeoutWrapper barwidth={egg.CTAOverride ? egg.CTAOverride.barwidth : 0}>
                         <TimeoutDisplay >
                           {`${egg.CTAOverride.timeRemainingDaysHours.days}D ${egg.CTAOverride.timeRemainingDaysHours.hours}H`}
                         </TimeoutDisplay>
                       </TimeoutWrapper> :
-                      <InfoBlock style={{textAlign: 'center', backgroundColor: '#ffffff38', padding: 4}} onClick={() => {onHatch()}}>
+                      <InfoBlock style={{textAlign: 'center', backgroundColor: '#ffffff38', padding: 4}} >
                         <TextWrapper >{`HATCH`}</TextWrapper>
                       </InfoBlock>
                     }
