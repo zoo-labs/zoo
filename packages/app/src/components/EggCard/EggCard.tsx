@@ -150,7 +150,7 @@ export const EggCard: React.FC<EggCardType> = ({egg})  => {
     const renderCard = () => {
         return (
             <Card style={{backgroundColor: '#000000'}} timedOut={egg.timeRemaining > 0 ? true : false}>
-                <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundPosition: 'center', height: 150, padding: 10}}>
+		    <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: 150, padding: 10}}>
                 <TextWrapper>{egg.name}</TextWrapper>
                 </CardBody>
                 
