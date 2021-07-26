@@ -1004,7 +1004,7 @@ describe("ZooAuction", () => {
 
         });
 
-        it.only("should transfer the NFT to the winning bidder", async () => {
+        it("should transfer the NFT to the winning bidder", async () => {
 
           await auctionHouse.endAuction(0);
 
