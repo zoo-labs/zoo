@@ -56,13 +56,13 @@ const IconButton = styled.button`
         color: ${({theme}) => theme.colors.text};
         -webkit-text-fill-color: ${({theme}) => theme.colors.text};
         -webkit-text-stroke-width: .2px;
-        -webkit-text-stroke-color: ${({theme}) => theme.colors.primary};
+        -webkit-text-stroke-color:  #a9a9a9;
     }
     & svg {
         height: 40px;
         width: 40px;
         // fill: ${({ theme }) => theme.colors.primaryLight};
-        fill: white;
+        fill: ${({theme}) => theme.colors.primaryPop};
         stroke: #a9a9a9;
         // text-shadow: 1px 1px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black;
         // stroke: ${({theme}) => theme.colors.primary};

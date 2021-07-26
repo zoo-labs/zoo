@@ -56,8 +56,8 @@ const BorderButton = (props): JSX.Element => {
 BorderButton.defaultProps = {
     isLoading: false,
     external: false,
-    // variant: variants.PRIMARY,
-    // scale: scales.SM,
+    variant: variants.SECONDARY,
+    scale: scales.SM,
     disabled: false,
 }
 
