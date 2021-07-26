@@ -111,9 +111,9 @@ const Bank: React.FC = () => {
                   <Label small>Wallet Balance</Label>
                   <BorderButton minWidth="140px" scale="sm" onClick={toLink}>Add Funds</BorderButton>
                </LabelWrapper>
-               <Flex width="100%" alignItems="center">
+               <Flex width="100%" alignItems="center" justifyContent="space-around">
                   <ValueWrapper>{zooBalance} ZOO Tokens</ValueWrapper>
-                  <ValueWrapper style={{ fontSize: "14px",  color: "#28FD73" }}>0 USD</ValueWrapper>
+                  <ValueWrapper style={{ fontSize: "16px",  color: "rgb(221 224 26)" }}>0 USD</ValueWrapper>
                </Flex>
                <Label small>Total Daily Yield</Label>
                <ValueWrapper> 200 ZOO Tokens</ValueWrapper>

@@ -10,7 +10,7 @@ const BtnContainer = styled.div`
      &:hover {
         transition: all 0.2s;
         // border: ${({ theme }) => `2px solid ${theme.colors.primaryDark}`};
-        background: ${({ theme }) => theme.colors.accent};
+        background: ${({ theme }) => theme.colors.secondary};
     }
   }
 
@@ -18,9 +18,8 @@ const BtnContainer = styled.div`
      background: ${({ theme }) => theme.colors.primaryPop};
       text-transform: uppercase;
       border: transparent;
-      border-radius: 20px;
+      border-radius: 1px;
       transition: all 0.2s;
-     
   }
 
 `;

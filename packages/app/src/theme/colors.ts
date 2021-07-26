@@ -2,15 +2,17 @@ import { Colors } from "./types";
 
 export const baseColors = {
   failure: "#B10058",
-  primary: "#289DFD",
+  primary: "rgb(118 204 204)",
   primaryBright: "#B1DCFF",
   primaryLight: "#B1DCFF",
   primaryPop: "#28D7FD",
   primaryDark: "#C82064",
   primaryDarker: "#651133",
-  secondary: "#28FD73",
-  secondaryDark: "#607A2A",
-  accent: "#F5F775",
+  secondary: "rgb(221 224 26)", //GREEN "#28FD73",
+  secondaryDark: "#607A2A", // rgb(255 59 228)rgb(118 204 204)
+  accent: "rgb(195 0 168)", //PINK  "#12ECE7", 
+  accent2: 'rgb(148 200 60)', // "#C62073",
+  accent3: "#F5F775",
   success: "#28D7FD",
   warning: "#B10058",
   white: "#ffffff"
@@ -69,8 +71,8 @@ export const darkColors: Colors = {
   primaryDark: "#AA3866",
   primaryLight: "#8BCACB",
   primaryPop: "#28D7FD",
-  accent: "#DFDE4E",
   secondary: "#9FC554",
+  accent: "rgb(195 0 168)", // "#DFDE4E",
   background: "#000000",
   backgroundDisabled: "#A6B6CE",
   sidebar: "#212226",

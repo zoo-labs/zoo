@@ -18,7 +18,7 @@ export const scaleVariants = {
 
 export const styleVariants = {
   [variants.PRIMARY]: {
-    backgroundColor: "primaryPop",
+    backgroundColor: "primary",
     color: "black",
   },
   [variants.SECONDARY]: {
@@ -62,7 +62,7 @@ export const styleVariants = {
     color: "primaryPop",
     ":disabled": {
       backgroundColor: "disabledBubblegum",
-      color: "textDisabled"
+      color: "textSubtle"
     },
   },
   [variants.BUTTONGUM]: {
