@@ -328,14 +328,9 @@ describe('ZooMarket', () => {
     beforeEach(async () => {
       await deploy();
       await configure();
-      let signers = await ethers.getSigners()
       let { address, contract } = await deployCurrency();
       defaultBid.currency = address;
       defaultBid.contract = contract
-
-      for (let index = 0; index < signers.length; index++) {
-        await contract.mint(signers[index].address, 10000000)
-      }
     });
 
     it('should revert if not called by the media contract', async () => {
@@ -347,28 +342,31 @@ describe('ZooMarket', () => {
 
     it('should revert if the bidder does not have a high enough allowance for their bidding currency', async () => {
       const auction = await auctionAs(mockTokenWallet);
+      await mintCurrency(defaultBid.currency, defaultBid.bidder, 100000000)
       try {
         await setBid(auction, defaultBid as Bid, defaultTokenId);
       } catch (error) {
-        expect(error.body).to.be.equal('{"jsonrpc":"2.0","id":863,"error":{"code":-32603,"message":"Error: VM Exception while processing transaction: revert ERC20: transfer amount exceeds allowance"}}')
+        expect(error.body).to.be.equal('{"jsonrpc":"2.0","id":508,"error":{"code":-32603,"message":"Error: VM Exception while processing transaction: revert ERC20: transfer amount exceeds allowance"}}')
       }
     });
 
     it('should revert if the bidder does not have enough tokens to bid with', async () => {
       const auction = await auctionAs(mockTokenWallet);
-      await mintCurrency(currency, defaultBid.bidder, defaultBid.amount - 1);
-      await approveCurrency(currency, auction.address, bidderWallet);
+      await mintCurrency(defaultBid.currency, defaultBid.bidder, defaultBid.amount - 1);
+      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
 
-      await expect(setBid(auction, defaultBid, defaultTokenId)).rejectedWith(
-        'SafeErc20: Erc20 operation did not succeed'
-      );
+      try {
+        await setBid(auction, defaultBid as Bid, defaultTokenId)
+      } catch (error) {
+        expect(error.body).to.be.equal('{"jsonrpc":"2.0","id":563,"error":{"code":-32603,"message":"Error: VM Exception while processing transaction: revert ERC20: transfer amount exceeds balance"}}')
+      }
     });
 
     it('should revert if the bid currency is 0 address', async () => {
       const auction = await auctionAs(mockTokenWallet);
-      await setBidShares(auction, defaultTokenId, defaultBidShares);
-      await mintCurrency(currency, defaultBid.bidder, defaultBid.amount);
-      await approveCurrency(currency, auction.address, bidderWallet);
+      await setBidShares(auction, defaultTokenId, defaultBidShares as BidShares);
+      await mintCurrency(defaultBid.currency, defaultBid.bidder, defaultBid.amount);
+      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
 
       await expect(
         setBid(
@@ -382,8 +380,8 @@ describe('ZooMarket', () => {
     it('should revert if the bid recipient is 0 address', async () => {
       const auction = await auctionAs(mockTokenWallet);
       await setBidShares(auction, defaultTokenId, defaultBidShares);
-      await mintCurrency(currency, defaultBid.bidder, defaultBid.amount);
-      await approveCurrency(currency, auction.address, bidderWallet);
+      await mintCurrency(defaultBid.currency, defaultBid.bidder, defaultBid.amount);
+      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
 
       await expect(
         setBid(
@@ -397,8 +395,8 @@ describe('ZooMarket', () => {
     it('should revert if the bidder bids 0 tokens', async () => {
       const auction = await auctionAs(mockTokenWallet);
       await setBidShares(auction, defaultTokenId, defaultBidShares);
-      await mintCurrency(currency, defaultBid.bidder, defaultBid.amount);
-      await approveCurrency(currency, auction.address, bidderWallet);
+      await mintCurrency(defaultBid.currency, defaultBid.bidder, defaultBid.amount);
+      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
 
       await expect(
         setBid(auction, { ...defaultBid, amount: 0 }, defaultTokenId)
@@ -408,20 +406,20 @@ describe('ZooMarket', () => {
     it('should accept a valid bid', async () => {
       const auction = await auctionAs(mockTokenWallet);
       await setBidShares(auction, defaultTokenId, defaultBidShares);
-      await mintCurrency(currency, defaultBid.bidder, defaultBid.amount);
-      await approveCurrency(currency, auction.address, bidderWallet);
+      await mintCurrency(defaultBid.currency, defaultBid.bidder, defaultBid.amount);
+      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
 
       const beforeBalance = toNumWei(
-        await getBalance(currency, defaultBid.bidder)
+        await getBalance(defaultBid.currency, defaultBid.bidder)
       );
 
       await expect(setBid(auction, defaultBid, defaultTokenId)).fulfilled;
 
       const afterBalance = toNumWei(
-        await getBalance(currency, defaultBid.bidder)
+        await getBalance(defaultBid.currency, defaultBid.bidder)
       );
       const bid = await auction.bidForTokenBidder(1, bidderWallet.address);
-      expect(bid.currency).eq(currency);
+      expect(bid.currency).eq(defaultBid.currency);
       expect(toNumWei(bid.amount)).eq(defaultBid.amount);
       expect(bid.bidder).eq(defaultBid.bidder);
       expect(beforeBalance).eq(afterBalance + defaultBid.amount);
@@ -433,7 +431,7 @@ describe('ZooMarket', () => {
 
       const largerValidBid = {
         amount: 130000000,
-        currency: currency,
+        currency: defaultBid.currency,
         bidder: bidderWallet.address,
         recipient: otherWallet.address,
         spender: bidderWallet.address,
@@ -441,23 +439,23 @@ describe('ZooMarket', () => {
       };
 
       await mintCurrency(
-        currency,
+        defaultBid.currency,
         largerValidBid.bidder,
         largerValidBid.amount
       );
-      await approveCurrency(currency, auction.address, bidderWallet);
+      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
 
       const beforeBalance = toNumWei(
-        await getBalance(currency, defaultBid.bidder)
+        await getBalance(defaultBid.currency, defaultBid.bidder)
       );
 
       await expect(setBid(auction, largerValidBid, defaultTokenId)).fulfilled;
 
       const afterBalance = toNumWei(
-        await getBalance(currency, largerValidBid.bidder)
+        await getBalance(defaultBid.currency, largerValidBid.bidder)
       );
       const bid = await auction.bidForTokenBidder(1, bidderWallet.address);
-      expect(bid.currency).eq(currency);
+      expect(bid.currency).eq(defaultBid.currency);
       expect(toNumWei(bid.amount)).eq(largerValidBid.amount);
       expect(bid.bidder).eq(largerValidBid.bidder);
       expect(beforeBalance).eq(afterBalance + largerValidBid.amount);
@@ -466,11 +464,11 @@ describe('ZooMarket', () => {
     it('should refund the original bid if the bidder bids again', async () => {
       const auction = await auctionAs(mockTokenWallet);
       await setBidShares(auction, defaultTokenId, defaultBidShares);
-      await mintCurrency(currency, defaultBid.bidder, 5000);
-      await approveCurrency(currency, auction.address, bidderWallet);
+      await mintCurrency(defaultBid.currency, defaultBid.bidder, 5000);
+      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
 
       const bidderBalance = toNumWei(
-        await ZooToken__factory.connect(currency, bidderWallet).balanceOf(
+        await ZooToken__factory.connect(defaultBid.currency, bidderWallet).balanceOf(
           bidderWallet.address
         )
       );
@@ -485,7 +483,7 @@ describe('ZooMarket', () => {
       ).fulfilled;
 
       const afterBalance = toNumWei(
-        await ZooToken__factory.connect(currency, bidderWallet).balanceOf(
+        await ZooToken__factory.connect(defaultBid.currency, bidderWallet).balanceOf(
           bidderWallet.address
         )
       );
@@ -495,8 +493,8 @@ describe('ZooMarket', () => {
     it('should emit a bid event', async () => {
       const auction = await auctionAs(mockTokenWallet);
       await setBidShares(auction, defaultTokenId, defaultBidShares);
-      await mintCurrency(currency, defaultBid.bidder, 5000);
-      await approveCurrency(currency, auction.address, bidderWallet);
+      await mintCurrency(defaultBid.currency, defaultBid.bidder, 5000);
+      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
 
       const block = await provider.getBlockNumber();
       await setBid(auction, defaultBid, defaultTokenId);
