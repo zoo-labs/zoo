@@ -16,7 +16,7 @@ const BottomModal: React.FC<Props> = ({ children, header,  onDismiss }) => {
         return (
             <>
                 <Sheet isOpen={isOpen} onClose={onDismiss} >
-                    <Sheet.Container style={{height: "300px", background: "#B1DCFF"}}>
+                    <Sheet.Container style={{height: "300px", background: "black"}}>
                         <Sheet.Header />
                            <Sheet.Header>
                              <Label  mt="8px" mb="4px" textTransform="uppercase" textAlign="center" fontSize="22px" fontWeight="600" style={{color: "#C82064"}}>
