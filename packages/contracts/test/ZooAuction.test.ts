@@ -671,50 +671,31 @@ describe("ZooAuction", () => {
         expect(beforeDuration).to.eq(afterDuration);
       });
 
-      // it("should emit an AuctionBid event", async () => {
+      it("should emit an AuctionBid event", async () => {
 
-      //   token = token.connect(auctionHouse.signer);
+        token = token.connect(auctionHouse.signer);
 
-      //   await token.approve(auctionHouse.address, 500);
+        await token.approve(auctionHouse.address, 500);
 
-      //   const block = await ethers.provider.getBlockNumber();
+        const block = await ethers.provider.getBlockNumber();
 
-      //   const createBidTx = await auctionHouse.createBid(0, 300, {
-      //     value: 300,
-      //   });
+        const createBidTx = await auctionHouse.createBid(0, 300, {
+          value: 300,
+        });
 
-      //   const createBidReceipt = await createBidTx.wait()
+        const createBidReceipt = await createBidTx.wait();
 
-      //   const eventData = createBidReceipt.events[1].data
+        expect(createBidReceipt.events[3].event).to.eq("AuctionBid");
 
-      // const eventTopics = createBidReceipt.events[1].topics
+        expect(createBidReceipt.events[3].args.sender).to.eq(await bidderB.getAddress());
 
-      // const test = auctionHouse.interface.decodeLog("AuctionBid", eventData, eventTopics)
+        expect(parseInt(createBidReceipt.events[3].args.value._hex)).to.eq(300);
 
-      // const events = await auctionHouse.queryFilter(
-      //   auctionHouse.filters.AuctionBid(
-      //     null,
-      //     null,
-      //     null,
-      //     null,
-      //     null,
-      //     null,
-      //     null
-      //   ),
-      //   block
-      // );
+        expect(createBidReceipt.events[3].args.firstBid).to.eq(false);
 
-      // expect(events.length).eq(1);
+        expect(createBidReceipt.events[3].args.extended).to.eq(false);
 
-      // const logDescription = auctionHouse.interface.decodeLog(events[1]);
-
-
-      // expect(logDescription.name).to.eq("AuctionBid");
-      // expect(logDescription.args.sender).to.eq(await bidderB.getAddress());
-      // expect(logDescription.args.value).to.eq(300);
-      // expect(logDescription.args.firstBid).to.eq(false);
-      // expect(logDescription.args.extended).to.eq(false);
-      // });
+      });
 
       describe("last minute bid", () => {
         beforeEach(async () => {
