@@ -92,6 +92,11 @@ const BreedWrapper = styled.div<{cols?: number}>`
   text-transform: uppercase;
 ` 
 
+const DisabledBreedWrapper = styled(BreedWrapper)`
+  color: #888;
+  font-weight: 100;
+`
+
 const RowTitle = styled.div`
   color: white;
   font-size: 20px;
@@ -330,6 +335,7 @@ const [onSell] = useModal(
       });
     });
     empty = animalData.length === 0 && Object.keys(allAnimals).length !== 0;
+    const oneEgg = animalData.length === 1;
     // Object.values(updatedTokens)
     //   .filter((tkn) => tkn.isToken)
     //   .forEach((token, ind) => {
@@ -356,7 +362,7 @@ const [onSell] = useModal(
                         </TimeoutDisplay>
                       </TimeoutWrapper> :
                       <InfoBlock onClick={()=>hybrid === "pure" ? breedClick(animal) : list(animal)}>
-                        <BreedWrapper>{hybrid === "pure" ? `BREED` : `SELL`}</BreedWrapper>
+			      {oneEgg ? <BreedWrapper>{hybrid === "pure" ? `BREED` : `SELL`}</BreedWrapper> : <DisabledBreedWrapper>Breed</DisabledBreedWrapper>}
                       </InfoBlock>
                     }
                   </CardBody>
