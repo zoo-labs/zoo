@@ -28,7 +28,9 @@ const useAuth = () => {
             if (hasSetup) {
               activate(connector)
             }
-            if(isMobile) toastError('Unsupported Chain Id', 'Make sure you are on the Binance Smart Chain Network')
+            else{
+              toastError('Unsupported Chain Id', 'Make sure you are on the Binance Smart Chain Network')
+            }
         } else if (error instanceof NoEthereumProviderError || error instanceof NoBscProviderError) {
           toastError('Provider Error', 'No provider was found')
         } else if (

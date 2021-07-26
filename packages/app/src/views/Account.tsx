@@ -47,6 +47,7 @@ const ValueWrapper = styles(Text)`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 18px;
 `;
 const RowWrapper = styles.div`
     width: 100%;
@@ -55,63 +56,63 @@ const RowWrapper = styles.div`
     margin: 16px;
 `;
 
-
 const Account: React.FC = () => {
-  const { account } = useWeb3React()
-  const history = useHistory()
-  const [onBuyEggs] = useModal(<BuyEggs />)
-  const allEggs = useSelector<AppState, AppState["zoo"]["eggs"]>(
-    (state) => state.zoo.eggs
-  );
-  const currentEggsOwned = Object.values(allEggs).filter(
-    (egg) => egg.owner === account
-  ).length;
-  // setEggsOwned(currentEggsOwned)
-  const handleClick = () => {
-    history.push('/bank')
-  }
+   const { account } = useWeb3React();
+   const history = useHistory();
+   const [onBuyEggs] = useModal(<BuyEggs />);
+   const allEggs = useSelector<AppState, AppState["zoo"]["eggs"]>(
+      (state) => state.zoo.eggs
+   );
+   const currentEggsOwned = Object.values(allEggs).filter(
+      (egg) => egg.owner === account
+   ).length;
+   // setEggsOwned(currentEggsOwned)
+   const handleClick = () => {
+      history.push("/bank");
+   };
 
-  const pageHeading = (
-    <HeadingContainer>
-      <Heading>My Account</Heading>
-      <StyledButton
-        style={{
-          background: "transparent",
-          border: "none",
-          color: "white",
-          marginLeft: "8px",
-        }}
-        onClick={()=>handleClick()}
-      >
-        View Bank
-      </StyledButton>
-    </HeadingContainer>
-  );
+   const pageHeading = (
+      <HeadingContainer>
+         <Heading>My Account</Heading>
+         <StyledButton
+            style={{
+               background: "transparent",
+               border: "none",
+               color: "white",
+               marginLeft: "8px",
+            }}
+            onClick={() => handleClick()}>
+            View Bank
+         </StyledButton>
+      </HeadingContainer>
+   );
 
-  const toLink = () => {
+   const toLink = () => {
     location.href = "https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997"
   }
-  return (
-    <>
-      <Page>
-        {pageHeading}
-        <Body>
-          <LabelWrapper>
-            <Label>Wallet Balance</Label>
-            <BorderButton onClick={toLink}>Add Funds</BorderButton>
-          </LabelWrapper>
-          <RowWrapper>
-            <ValueWrapper>Balance</ValueWrapper>
-          </RowWrapper>
-          <LabelWrapper>
-            <Label>{currentEggsOwned} Eggs Owned</Label>
-            <BorderButton onClick={() => onBuyEggs()}>Buy Eggs</BorderButton>
-                  </LabelWrapper>
+   return (
+      <>
+         <Page>
+            {pageHeading}
+            <Body>
+               <LabelWrapper>
+                  <Label small>Wallet Balance</Label>
+                  <BorderButton scale="md" onClick={toLink}>Add Funds</BorderButton>
+               </LabelWrapper>
+               <RowWrapper>
+                  <ValueWrapper>Balance</ValueWrapper>
+               </RowWrapper>
+               <LabelWrapper>
+                  <Label small>{currentEggsOwned} Eggs Owned</Label>
+                  <BorderButton scale="md" onClick={() => onBuyEggs()}>
+                     Buy Eggs
+                  </BorderButton>
+               </LabelWrapper>
+            </Body>
             <MyZooAccount />
-        </Body>
-      </Page>
-    </>
-  );
+         </Page>
+      </>
+   );
 };
 
 export default Account;
