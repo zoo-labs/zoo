@@ -28,7 +28,6 @@ position: relative;
 left: 0;
 bottom: 0; 
 width: 100%;
-background-color: #ffffff6b;
 z-index: 999999;
 `;
 
@@ -154,7 +153,7 @@ export const EggCard: React.FC<EggCardType> = ({egg})  => {
     const renderCard = () => {
         return (
             <Card onClick={() => {onHatch()}} style={{backgroundColor: '#000000'}} timedOut={egg.timeRemaining > 0 ? true : false}>
-		    <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: 150, padding: 10}}>
+		    <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: 150, padding: 10}}>
                 <TextWrapper>{egg.name}</TextWrapper>
                 </CardBody>
                 {egg.timeRemaining > 0 ?
@@ -163,7 +162,7 @@ export const EggCard: React.FC<EggCardType> = ({egg})  => {
                           {`${egg.CTAOverride.timeRemainingDaysHours.days}D ${egg.CTAOverride.timeRemainingDaysHours.hours}H`}
                         </TimeoutDisplay>
                       </TimeoutWrapper> :
-                      <InfoBlock style={{textAlign: 'center', backgroundColor: '#ffffff38', padding: 4}} >
+                      <InfoBlock style={{textAlign: 'center', boxShadow: '#000000 0px 0px 10px 1px', padding: 4}} >
                         <TextWrapper >{`HATCH`}</TextWrapper>
                       </InfoBlock>
                     }
