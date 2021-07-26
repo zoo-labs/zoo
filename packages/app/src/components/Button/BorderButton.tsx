@@ -9,9 +9,11 @@ const BtnContainer = styled.div`
   display: flex;
   justify-content: space-around;
   
+  
     * {
     background: transparent;
     font-weight: 600;
+    
      &:hover {
         transition: all 0.2s;
         // border: ${({ theme }) => `2px solid ${theme.colors.primaryDark}`};
@@ -26,8 +28,8 @@ const BtnContainer = styled.div`
       border: 2px solid white;
       border-radius: 0px;
       height: 100%;
-      padding: revert;
-      letter-spacing: 3px;
+    //   padding: revert;
+    //   letter-spacing: 3px;
       align-items: center;
       line-height: 1.5;
       transition: all 0.2s;
@@ -45,7 +47,7 @@ const BorderButton = (props): JSX.Element => {
     return (
         <>
            <BtnContainer>
-                <Button disabled={disabled} scale={isMobile ? scales.XS : scales.MD} {...props} />
+                <Button disabled={disabled} scale={isMobile ? scales.XS : scales.MD} {...props}/>
                 </BtnContainer>
         </>
     )
