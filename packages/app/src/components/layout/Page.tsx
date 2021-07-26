@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet-async'
 import Container from './Container'
 
 const StyledPage = styled(Container)`
-  min-height: calc(100vh - 64px);
+  // min-height: calc(100vh - 64px);
   padding-bottom: 8px;
 
   ${({ theme }) => theme.mediaQueries.sm} {
