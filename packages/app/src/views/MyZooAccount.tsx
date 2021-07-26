@@ -103,6 +103,8 @@ const RowLayout = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  padding: 32px;
+  
   & > * {
     min-width: calc(100vw - 20px);
     max-width: 31.5%;
@@ -112,7 +114,7 @@ const RowLayout = styled.div`
   }
 `
 
-const Card = styled(Existing)<{selected?: boolean, timedOut?: boolean}>`
+const Card = styled(Existing) <{ selected?: boolean, timedOut?: boolean }>`
   border: ${({ selected }) => selected ? '2px solid white' : null};
   opacity: ${({ timedOut }) => timedOut ? '0.6' : null}
 `
@@ -162,6 +164,7 @@ const MyZooAccount: React.FC = () => {
   const { chainId } = useWeb3React();
   const dispatch = useDispatch()
   const { isXl, isXs } = useMatchBreakpoints();
+  const isMobile = isXl === false;
   const chainIdSet = chainId === undefined ? "1" : String(chainId);
 
   const allAnimals = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
@@ -382,6 +385,9 @@ const [onSell] = useModal(
 
   const renderEggs = (): JSX.Element => {
     const eggData = [];
+    const eggCardWidth = 120;
+    const maxRowWidth = document.body.getBoundingClientRect().width - 32;
+    const maxCardCount = maxRowWidth / eggCardWidth;
     // const updatedData = [])
     Object.values(allEggs).forEach((egg, index) => {
       eggData.push({
@@ -390,7 +396,7 @@ const [onSell] = useModal(
         name: egg.basic ? "BASIC" : "HYBRID"
       });
     });
-    console.log(eggData)
+    console.log('eggdata', eggData)
     empty = eggData.length === 0 && Object.keys(allEggs).length !== 0;
     const basicEggURL = window.location.origin + '/static/images/basic.png'
     const hybridEggURL = window.location.origin + '/static/images/hybrid.jpeg'
@@ -398,7 +404,7 @@ const [onSell] = useModal(
     return (
       <RowLayout>
         <Route exact path={`${path}`}>
-          <Swiper slidesPerView={2.2} spaceBetween={10} pagination={{"clickable": true}}>
+          <Swiper slidesPerView={maxCardCount} spaceBetween={0} pagination={{"clickable": true}}>
           {(eggData).map((egg) => (
             <SwiperSlide key={egg.id}>
               <EggCard egg={egg} />
@@ -420,14 +426,14 @@ const [onSell] = useModal(
 
   return (
     <div>
-      <Page>
+      {/* <Page> */}
         {/* <RowTitle>My Eggs</RowTitle> */}
         {renderEggs()}
         <RowTitle>Breedable Animals</RowTitle>
         {renderAnimals("pure")}
         <RowTitle>Hybrid Animals</RowTitle>
         {renderAnimals("hybrid")}
-      </Page>
+      {/* </Page> */}
     </div>
   )
 };
