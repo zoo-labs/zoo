@@ -1,7 +1,6 @@
 export default {
     zooToken: {
-        97: '0x8175c10383511b3a1C68f9dB222dc14A19CC950e',
-        56: '0x5e74094Cd416f55179DBd0E45b1a8ED030e396A1',
+        97: '0x8E7788eE2b1d3E5451e182035d6B2b566c2Fe997',
         31337: '0x117FbB2f404e2F1e9FbaC0DdB372C25dD979bc60'
     },
     zooMarket: {
