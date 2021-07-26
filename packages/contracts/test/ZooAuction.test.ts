@@ -955,19 +955,19 @@ describe("ZooAuction", () => {
 
       });
 
-      // it("should revert if the auction has not completed", async () => {
+      it("should revert if the auction has not completed", async () => {
 
-      //   // await createAuction(auctionHouse, await curator.getAddress());
+        token = token.connect(auctionHouse.signer)
 
+        await token.approve(auctionHouse.address, 200)
 
-      //   // await auctionHouse.createBid(0, 200, {
-      //   //   value: 200,
-      //   // });
+        await auctionHouse.createBid(0, 200, {
+          value: 200,
+        });
 
-      //   // await expect(auctionHouse.endAuction(0)).eventually.rejectedWith(
-      //   //   revert`Auction hasn't completed`
-      //   // );
-      // });
+        await expect(auctionHouse.endAuction(0)).to.be.revertedWith("Auction hasn't completed");
+
+      });
 
       // it("should cancel the auction if the winning bidder is unable to receive NFTs", async () => {
       //   await badBidder.placeBid(0, TWO_ZOO, { value: TWO_ZOO });
