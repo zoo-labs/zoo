@@ -826,19 +826,21 @@ describe("ZooAuction", () => {
       beforeEach(async () => {
         [admin, creator, curator, bidder] = await ethers.getSigners();
 
+
+
       });
 
-      it.only("should revert if the auction does not exist", async () => {
+      it("should revert if the auction does not exist", async () => {
 
         await expect(auctionHouse.cancelAuction(2)).eventually.rejectedWith(`\'Auction doesn\'t exist\'`);
 
       });
 
-      it.only("should revert if not called by a creator or curator", async () => {
+      it("should revert if not called by a creator or curator", async () => {
 
-        await expect(
-          auctionHouse.connect(auctionHouse.signer).cancelAuction(0)
-        )
+        await (expect(
+          auctionHouse.connect(bidder).cancelAuction(0)
+        )).to.be.revertedWith("Can only be called by auction creator or curator")
 
       })
 
