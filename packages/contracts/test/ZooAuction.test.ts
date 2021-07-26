@@ -302,21 +302,23 @@ describe("ZooAuction", () => {
       ).to.be.revertedWith("Must be auction curator");
     });
 
-    // it("should revert if the auction has already started", async () => {
+    it("should revert if the auction has already started", async () => {
 
-    //   const oneZooValue = parseInt(200._hex);
+      token = token.connect(bidder)
 
-    //   await auctionHouse.setAuctionApproval(0, true);
+      await token.approve(auctionHouse.address, 100);
 
-    //   await auctionHouse
-    //     .connect(bidder)
-    //     .createBid(0, BigInt(oneZooValue));
+      await auctionHouse.setAuctionApproval(0, true);
 
-    //   // await expect(
-    //   //   auctionHouse.setAuctionApproval(0, false)
-    //   // ).eventually.rejectedWith(revert`Auction has already started`);
+      await auctionHouse
+        .connect(bidder)
+        .createBid(0, 100);
 
-    // });
+      await expect(
+        auctionHouse.setAuctionApproval(0, false)
+      ).to.be.revertedWith('Auction has already started');
+
+    });
 
     it("should set the auction as approved", async () => {
       await auctionHouse.setAuctionApproval(0, true);
