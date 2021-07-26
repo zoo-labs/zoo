@@ -1076,23 +1076,33 @@ describe("ZooAuction", () => {
         //   expect(logDescription.args.auctionCurrency).to.eq(token.address);
         // });
 
-        // it("should delete the auction", async () => {
+        it.only("should delete the auction", async () => {
 
-        //   await auctionHouse.endAuction(0);
+          await auctionHouse.endAuction(0);
 
-        //   const auctionResult = await auctionHouse.auctions(0);
+          const auctionResult = await auctionHouse.auctions(0);
 
-        //   expect(auctionResult.amount.toNumber()).to.eq(0);
-        //   expect(auctionResult.duration.toNumber()).to.eq(0);
-        //   expect(auctionResult.firstBidTime.toNumber()).to.eq(0);
-        //   expect(auctionResult.reservePrice.toNumber()).to.eq(0);
-        //   expect(auctionResult.curatorFeePercentage).to.eq(0);
-        //   expect(auctionResult.tokenOwner).to.eq(ethers.constants.AddressZero);
-        //   expect(auctionResult.bidder).to.eq(ethers.constants.AddressZero);
-        //   expect(auctionResult.curator).to.eq(ethers.constants.AddressZero);
-        //   expect(auctionResult.auctionCurrency).to.eq(
-        //     ethers.constants.AddressZero
-        //   );
+          expect(auctionResult.amount.toNumber()).to.eq(0);
+
+          expect(auctionResult.duration.toNumber()).to.eq(0);
+
+          expect(auctionResult.firstBidTime.toNumber()).to.eq(0);
+
+          expect(auctionResult.reservePrice.toNumber()).to.eq(0);
+
+          expect(auctionResult.curatorFeePercentage).to.eq(0);
+
+          expect(auctionResult.tokenOwner).to.eq(ethers.constants.AddressZero);
+
+          expect(auctionResult.bidder).to.eq(ethers.constants.AddressZero);
+
+          expect(auctionResult.curator).to.eq(ethers.constants.AddressZero);
+
+          expect(auctionResult.auctionCurrency).to.eq(
+            ethers.constants.AddressZero
+          );
+
+        })
       })
     });
   });
