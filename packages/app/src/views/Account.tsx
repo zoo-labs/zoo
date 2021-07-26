@@ -20,6 +20,13 @@ const HeadingContainer = styles.div`
     margin: 0px 8px;
 `;
 
+const MyZooContainer = styles.div`
+    width: 100%;
+    display: flex;
+    padding: 16px;
+    
+`
+
 const StyledButton = styles.button`
     cursor: pointer;
     text-decoration: underline;
