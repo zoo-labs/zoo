@@ -241,7 +241,7 @@ export const deployZooProtocol = async () => {
   const [deployer] = await ethers.getSigners();
   const market = await (await new ZooMarket__factory(deployer).deploy()).deployed();
   const media = await (
-    await new ZooMedia__factory(deployer).deploy("ZooAnimals", "ANML", market.address)
+    await new ZooMedia__factory(deployer).deploy("ANML", "ZooAnimals", market.address)
   ).deployed();
   await market.configure(media.address);
   return { market, media };
