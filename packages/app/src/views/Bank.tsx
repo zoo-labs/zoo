@@ -62,11 +62,15 @@ const Bank: React.FC = () => {
    };
 
    const getBalance = async () => {
-      const decimals = await zooToken.methods.decimals().call();
-      const rawBalance = await zooToken.methods.balanceOf(account).call();
-      const divisor = parseFloat(Math.pow(10, decimals).toString());
-      const balance = rawBalance / divisor;
-      setBalance(balance);
+      try {
+         const decimals = await zooToken.methods.decimals().call();
+         const rawBalance = await zooToken.methods.balanceOf(account).call();
+         const divisor = parseFloat(Math.pow(10, decimals).toString());
+         const balance = rawBalance / divisor;
+         setBalance(balance);
+      } catch (e) {
+         console.error("ISSUE LOADING ZOO BALANCE \n", e);
+      }
    };
 
    useEffect(() => {
