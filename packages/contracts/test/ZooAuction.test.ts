@@ -862,7 +862,7 @@ describe("ZooAuction", () => {
         );
       });
 
-      it.only("should be callable by the creator", async () => {
+      it("should be callable by the creator", async () => {
 
         auctionHouse = auctionHouse.connect(admin);
 
