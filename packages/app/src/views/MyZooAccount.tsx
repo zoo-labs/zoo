@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, cloneElement } from "react";
+import React from "react";
 import { Route, useRouteMatch } from "react-router-dom";
 import { AppState } from "state";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,57 +8,19 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Modal, useModal } from "components/Modal";
 import Page from "components/layout/Page";
 import {
-  Flex,
   Text,
   useMatchBreakpoints,
-  Heading,
   Card as Existing,
   CardBody,
   EggCard,
 } from "components";
-// import HatchDialog from "components/HatchDialog"
-import { VscLoading } from "react-icons/vsc";
-// import { ViewMode } from "./components/types"
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import { getMilliseconds, getDaysHours } from "util/timeHelpers";
-import { rarityTable, breedTimeouts, eggTimeout } from "constants/constants";
-import MyMP16OSFFont from "../fonts/MP16OSF.ttf";
+import { breedTimeouts, eggTimeout } from "constants/constants";
 import { Animal, Egg } from "entities/zooentities";
 import { addAnimal, addEgg } from "state/actions";
-import { ImInsertTemplate } from "react-icons/im";
 import BorderButton from "components/Button/BorderButton";
-import { FaLessThanEqual } from "react-icons/fa";
-
-// install Swiper modules
-// SwiperCore.use([Pagination]);
-
-const IconCont = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  & svg {
-    color: ${({ theme }) => theme.colors.primary};
-    animation: spin 2s ease infinite;
-  }
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-`;
-const ImageContainer = styled.div`
-  img {
-    width: 100%;
-    height: 100%;
-    minheight: 300px;
-    overflow: hidden;
-  }
-`;
 
 const InfoBlock = styled.div`
   padding: 4px;
@@ -122,6 +84,7 @@ const CardWrapper = styled.div`
     border-radius: 8px;
   }
 `;
+
 const TimeoutWrapper = styled.div<{ barwidth?: string }>`
   position: absolute;
   bottom: 0;
@@ -152,8 +115,6 @@ const TimeoutDisplay = styled.span`
   position: relative;
   z-index: 2;
 `;
-
-const _loadCount = 9;
 
 const MyZooAccount: React.FC = () => {
   let empty;
@@ -192,7 +153,6 @@ const MyZooAccount: React.FC = () => {
   const breed = (onDismiss) => {
     const animal1: Animal = array[0];
     const animal2: Animal = array[1];
-    const ID = Object.keys(allAnimals).length;
     const now = new Date().getTime();
     array.forEach((animal) => {
       animal.bred = true;
@@ -333,7 +293,8 @@ const MyZooAccount: React.FC = () => {
       const lastBred = animal.lastBred
         ? new Date(Number(animal.lastBred)).getTime()
         : new Date().getTime();
-      const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount || 1;
+      const breedTimeoutKey =
+        animal.breedCount > 5 ? 5 : animal.breedCount || 1;
       const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
       const elapsedTime = now - lastBred;
       const timeRemaining = breedTimeout - elapsedTime;
@@ -361,24 +322,17 @@ const MyZooAccount: React.FC = () => {
     empty =
       animalData.length === 0 && Object.keys(allAnimalsSorted).length !== 0;
 
-    // Object.values(updatedTokens)
-    //   .filter((tkn) => tkn.isToken)
-    //   .forEach((token, ind) => {
-    //     if (token.curve === undefined) {
-    //       return
-    //     }
-    //     updatedData.push({ id: ind, ...token })
-    //   })
+    const animals = animalData.filter(
+      (item) => item.bloodline === hybrid && item.owner === account
+    );
 
     return (
       <RowLayout>
         <Route exact path={`${path}`}>
-          <Swiper slidesPerView={2.2} spaceBetween={10}>
-            {animalData
-              .filter((item) => item.bloodline === hybrid)
-              .filter((item) => item.owner === account)
-              .map((animal) => (
-                <SwiperSlide>
+          {empty ? (
+            <Swiper slidesPerView={2.2} spaceBetween={10}>
+              {animals.map((animal) => (
+                <SwiperSlide key={animal.id}>
                   <CardWrapper>
                     <Card
                       key={animal.id}
@@ -434,17 +388,17 @@ const MyZooAccount: React.FC = () => {
                     </Card>
                   </CardWrapper>
                 </SwiperSlide>
-                // <SwiperSlide>Slide 1</SwiperSlide>
               ))}
-          </Swiper>
+            </Swiper>
+          ) : (
+            <Text textAlign="center">
+              No {hybrid === "pure" ? `breedable` : `hybrid`} animals
+            </Text>
+          )}
         </Route>
         <Route exact path={`${path}/history`}>
-          {/* {shownData(animalData).map((animal) => ( */}
           {animalData.map((animal) => (
-            <Card
-              key={animal.id}
-              // key={JSON.stringify(token)}
-            />
+            <Card key={animal.id} />
           ))}
         </Route>
       </RowLayout>
@@ -463,7 +417,6 @@ const MyZooAccount: React.FC = () => {
       const timeRemaining = hatchTimeout - elapsedTime;
       const timeRemainingDaysHours = getDaysHours(timeRemaining);
       const barwidth = [100 * (elapsedTime / hatchTimeout), "%"].join("");
-      // const barwidth = [50, '%'].join('')
 
       eggData.push({
         id: index,
@@ -483,8 +436,6 @@ const MyZooAccount: React.FC = () => {
     });
     console.log(eggData);
     empty = eggData.length === 0 && Object.keys(allEggsSorted).length !== 0;
-    const basicEggURL = window.location.origin + "/static/images/basic.png";
-    const hybridEggURL = window.location.origin + "/static/images/hybrid.jpeg";
 
     return (
       <RowLayout>
@@ -503,10 +454,7 @@ const MyZooAccount: React.FC = () => {
         </Route>
         <Route exact path={`${path}/history`}>
           {eggData.map((egg) => (
-            <Card
-              key={egg.id}
-              // key={JSON.stringify(token)}
-            />
+            <Card key={egg.id} />
           ))}
         </Route>
       </RowLayout>
@@ -538,7 +486,6 @@ const MyZooAccount: React.FC = () => {
   return (
     <div>
       <Page>
-        {/* <RowTitle>My Eggs</RowTitle> */}
         {renderEggs()}
         <RowTitle>Breedable Animals</RowTitle>
         {renderAnimals("pure")}
