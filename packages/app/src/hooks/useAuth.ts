@@ -10,10 +10,13 @@ import { connectorLocalStorageKey, ConnectorNames } from 'components/WalletModal
 import useToast from 'hooks/useToast'
 import { connectorsByName } from 'connectors'
 import { setupNetwork } from 'util/wallet'
+import { useMatchBreakpoints } from 'hooks'
 
 const useAuth = () => {
   const { activate, deactivate } = useWeb3React()
   const { toastError } = useToast()
+  const { isXs, isSm } = useMatchBreakpoints()
+  const isMobile = isXs || isSm
 
   const login = useCallback((connectorID: ConnectorNames) => {
     console.log("LOGGING IN.....")
@@ -21,7 +24,13 @@ const useAuth = () => {
     if (connector) {
       activate(connector, async (error: Error) => {
         if (error instanceof UnsupportedChainIdError) {
-          toastError('Unsupported Chain Id', 'Unsupported Chain Id Error. Check your chain Id.')
+          const hasSetup = await setupNetwork("bsc")
+            if (hasSetup) {
+              activate(connector)
+            }
+            else{
+              toastError('Unsupported Chain Id', 'Make sure you are on the Binance Smart Chain Network')
+            }
         } else if (error instanceof NoEthereumProviderError || error instanceof NoBscProviderError) {
           toastError('Provider Error', 'No provider was found')
         } else if (

@@ -6,6 +6,7 @@ packages/hardhat/*.txt
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 **/node_modules
+packages/app/package-lock.json
 packages/hardhat/artifacts*
 packages/hardhat/deployments
 packages/react-app/src/contracts/*
@@ -42,3 +43,4 @@ yarn-error.log*
 .netlify
 
 yarn.lock
+.vscode
