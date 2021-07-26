@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {Modal as Existing, Text as Standard} from 'components'
+import {Modal, Text as Standard} from 'components'
 import BorderButton from 'components/Button/BorderButton'
 import { Flex } from 'components/Box'
 
@@ -8,10 +8,6 @@ interface Props {
     onDismiss?: () => void
     confirmation: any
 }
-
-const Modal = styled(Existing)`
-    background-color: black;
-`
 
 
 const HatchModal: React.FC<Props> = ({ onDismiss = () => null, confirmation }) => {

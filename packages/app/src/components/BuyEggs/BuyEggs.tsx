@@ -3,6 +3,10 @@ import styled from 'styled-components'
 import { Modal } from '../Modal'
 import { Label, Text } from 'components/Text'
 import BlackBorderButton from 'components/Button/BlackBorderButton'
+import { Egg } from "entities/zooentities";
+import { addEggs } from "state/actions";
+import { useWeb3React } from "@web3-react/core";
+import { useDispatch } from "react-redux";
 
 const ColumnContainer = styled.div`
   display: flex;
@@ -61,24 +65,60 @@ type EggModalProps = {
   headerColor?: string
 }
 
+
+
+
 const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
+  const dispatch = useDispatch()
+  const [value, setValue] = useState(1)
+  const {account} = useWeb3React()
+  
+  const changed = () => (e) => {
+    const newVal = e.target.value;
+    
+    newVal === "" ? setValue(0) : setValue(parseInt(newVal))
+  };
+
+  const emptyEgg:Egg =
+    {
+      owner: account,
+      tokenId: "",
+      animalId: "",
+      parent1: "",
+      parent2: "",
+      basic: true
+    }
+  
+  const handleSubmit = async () => {
+    const testEggs = []
+    console.log("value", value)
+    for (let i = 0; i < value; i++) {
+      const toSet: Egg = { ...emptyEgg }
+      toSet.tokenId = String(Math.floor(Math.random()*100000000)+1) //to be changed
+      toSet.animalId = String(Math.floor(Math.random()*4)+1)
+      testEggs.push(toSet)
+    }
+    console.log(testEggs)
+    dispatch(addEggs(testEggs))
+    onDismiss()
+    }
+
   return (
     <ModalWrapper>
       <Modal
-        title='How many egg?'
+        title='How many eggs?'
         onDismiss={onDismiss}
         style={{ justifyContent: 'space-between' }}
         headerColor={headerColor}
       >
         <Text
           fontSize="20px"
-          color="black"
           style={{ whiteSpace: 'nowrap', marginTop: '5px'}}
         >
           AMOUNT
         </Text>
-        <EggInput type="number" />
-        <BlackBorderButton>
+        <EggInput type="number" onChange = {changed()}/>
+        <BlackBorderButton onClick={()=>handleSubmit()}>
           Submit
         </BlackBorderButton>
       </Modal>
