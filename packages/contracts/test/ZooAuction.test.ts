@@ -822,9 +822,10 @@ describe("ZooAuction", () => {
       let creator: Signer;
       let curator: Signer;
       let bidder: Signer;
+      let bidder2: Signer;
 
       beforeEach(async () => {
-        [admin, creator, curator, bidder] = await ethers.getSigners();
+        [admin, curator, bidder, bidder2] = await ethers.getSigners();
 
       });
 
