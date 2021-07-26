@@ -101,7 +101,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
           <Label>
               Balance
           </Label>
-          <BorderButton>
+          <BorderButton scale="sm" minWidth={mobile ? "140px" : "160px"}>
               Add Funds
           </BorderButton>
         </LabelWrapper>
@@ -109,7 +109,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
               {zooCount} ZOO
           </ValueWrapper>
       </Flex>
-      <Flex justifyContent="space-evenly" flexDirection={moreSpace ? 'column' : 'row'}>
+      <Flex justifyContent="space-between" flexDirection={moreSpace ? 'column' : 'row'}>
         {chainId !== 56 ? (
           <BorderButton
             scale="sm"
