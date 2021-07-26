@@ -12,7 +12,7 @@ export * from "./Heading";
 // export * from "./Image";
 export * from "./Input";
 // export * from "./Textarea";
-// export * from "./Layouts";
+// export * from "./layout";
 // export * from "./Link";
 // export * from "./NotificationDot";
 // export * from "./PageHeader";
@@ -29,6 +29,7 @@ export * from "./Svg";
 export * from "./Text";
 // export * from "./Toggle";
 export * from "./VideoPlayer";
+export * from "./EggCard";
 
 // Hooks
 export * from "../hooks";
