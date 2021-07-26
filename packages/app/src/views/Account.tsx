@@ -47,6 +47,7 @@ const ValueWrapper = styles(Text)`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 18px;
 `;
 const RowWrapper = styles.div`
     width: 100%;
@@ -91,14 +92,14 @@ const Account: React.FC = () => {
             {pageHeading}
             <Body>
                <LabelWrapper>
-                  <Label>Wallet Balance</Label>
+                  <Label small>Wallet Balance</Label>
                   <BorderButton scale="md">Add Funds</BorderButton>
                </LabelWrapper>
                <RowWrapper>
                   <ValueWrapper>Balance</ValueWrapper>
                </RowWrapper>
                <LabelWrapper>
-                  <Label>{currentEggsOwned} Eggs Owned</Label>
+                  <Label small>{currentEggsOwned} Eggs Owned</Label>
                   <BorderButton scale="md" onClick={() => onBuyEggs()}>
                      Buy Eggs
                   </BorderButton>

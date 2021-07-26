@@ -4,12 +4,24 @@ import Button from "./Button";
 import { scales } from "./types";
 
 const BtnContainer = styled.div`
-   display: flex;
-   justify-content: space-around;
+  justify-content: space-around;
+  position: relative;
+  
+    * {
+     &:hover {
+        transition: all 0.2s;
+        // border: ${({ theme }) => `2px solid ${theme.colors.primaryDark}`};
+        background: ${({ theme }) => theme.colors.primaryDark};
+    }
+  }
 
+  button {
+      text-transform: uppercase;
+      border: 2px solid white;
+      border-radius: 0px;
       transition: all 0.2s;
-      position: relative;
-   }
+  }
+
 `;
 
 const BorderButton = (props): JSX.Element => {
@@ -19,7 +31,7 @@ const BorderButton = (props): JSX.Element => {
    return (
       <>
          <BtnContainer>
-            <Button scale={isMobile ? scales.XS : scales.MD} {...props} />
+            <Button variant="secondary" scale={isMobile ? scales.XS : scales.MD} {...props} />
          </BtnContainer>
       </>
    );
