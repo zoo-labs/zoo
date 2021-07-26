@@ -23,7 +23,7 @@ let zooFaucet: any;
 
 let zooMarket: any;
 
-let zooDrop: any;
+// let zooDrop: any;
 
 let zooMedia: any;
 
@@ -72,20 +72,20 @@ describe("Test Faucet", () => {
 
         auctionAddress = zooMarket.address;
 
-        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', auctionAddress)) as ZooMedia
+        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', auctionAddress, zooToken.address, 20)) as ZooMedia
         await zooMedia.deployed();
           
         tokenAddress = zooMedia.address;
       
         await zooMarket.configure(tokenAddress);
 
-        const zooDropFactory = await ethers.getContractFactory(
-            "ZooDrop",
-            signers[0]
-        );
+        // const zooDropFactory = await ethers.getContractFactory(
+        //     "ZooDrop",
+        //     signers[0]
+        // );
 
-        zooDrop = (await zooDropFactory.deploy(zooToken.address, zooMedia.address, BigNumber.from(10))) as ZooDrop
-        await zooDrop.deployed();
+        // zooDrop = (await zooDropFactory.deploy(zooToken.address, zooMedia.address, BigNumber.from(10))) as ZooDrop
+        // await zooDrop.deployed();
 
     })
 
@@ -95,7 +95,7 @@ describe("Test Faucet", () => {
 
     it("Should get the ZooDrop owner", async () => {
 
-        const zooDropOwner: string = await zooDrop.owner();
+        const zooDropOwner: string = await zooMedia.owner();
 
         expect(zooDropOwner).to.equal(owner.address);
 
@@ -108,11 +108,11 @@ describe("Test Faucet", () => {
     it("Should add an Animal", async () => {
 
 
-        await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
+        await zooMedia.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
 
-        const Animal = await zooDrop.getAnimal("Pug");
+        const Animal = await zooMedia.getAnimal("Pug");
 
-        const tokenURI = await zooDrop.getTokenURI(Animal.name);
+        const tokenURI = await zooMedia.getTokenURI(Animal.name);
 
         expect(Animal.name).to.equal("Pug");
         expect(tokenURI).to.equal("test");
@@ -124,11 +124,11 @@ describe("Test Faucet", () => {
     it("Should pick a pug", async () => {
 
 
-        await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
+        await zooMedia.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
 
-        const pick = await zooDrop.pickAnimal(20);
+        const pick = await zooMedia.pickAnimal(20);
 
-        const Animal = await zooDrop.getAnimal(pick);
+        const Animal = await zooMedia.getAnimal(pick);
 
         expect(Animal.name).to.equal("Pug");
 
@@ -137,10 +137,10 @@ describe("Test Faucet", () => {
 
     it("Should add an Hybrid", async () => {
 
-        await zooDrop.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
+        await zooMedia.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
 
-        const Hybrid = await zooDrop.getHybrid("PugPug");
-        const tokenURI = await zooDrop.getTokenURI("Puggy");
+        const Hybrid = await zooMedia.getHybrid("PugPug");
+        const tokenURI = await zooMedia.getTokenURI("Puggy");
 
         expect(Hybrid.name).to.equal("Puggy");
         expect(tokenURI).to.equal("test");
@@ -150,9 +150,9 @@ describe("Test Faucet", () => {
     it("Should revert when adding a animal not as owner", async() => {
         // await expect(zooDrop.connect(signers[1]).addAnimal("Pug", 100, "Common", 5500, 1, "test","test")).to.be.reverted('Ownable: caller is not the owner');
         
-        zooDrop = zooDrop.connect(signers[1]);
+        zooMedia = zooMedia.connect(signers[1]);
         try {
-            const tx = await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
+            const tx = await zooMedia.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
             // console.log("tx: ", tx.wait())
         } catch (e) {
             // console.log("message", e)
@@ -164,9 +164,9 @@ describe("Test Faucet", () => {
     
     it("Should revert when adding a hybrid animal not as owner", async() => {
         // await expect(zooDrop.connect(signers[1]).addHybrid("Puggy", "Pug","Pug", 120 ,"test","test")).to.be.reverted
-        zooDrop = zooDrop.connect(signers[1]);
+        zooMedia = zooMedia.connect(signers[1]);
         try {
-            const tx = await zooDrop.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
+            const tx = await zooMedia.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
             // console.log("tx: ", tx.wait())
         } catch (e) {
             // console.log("message", e)
@@ -179,15 +179,16 @@ describe("Test Faucet", () => {
      * EGG PRICE
      */
     it("Should set & get egg price", async() => {
-        // zooDrop = zooDrop.connect(signers[0]);
-        let eggPrice = await zooDrop.getEggPrice();
-        // console.log("Eggprice: ", eggPrice)
-        // expect(eggPrice).to.equal(200) // default eggPrice
+        zooMedia = zooMedia.connect(signers[0]);
+        let bigEggPrice = await zooMedia.getEggPrice();
+        let eggPrice = bigEggPrice.toNumber();
+        expect(eggPrice).to.equal(200); // default eggPrice
         
-        await zooDrop.connect(signers[0]).setEggPrice(333); //set a new price
+        await zooMedia.connect(signers[0]).setEggPrice(333); //set a new price
         
-        eggPrice = await zooDrop.getEggPrice();
-        expect(eggPrice).to.equal(333) // gets the new eggPrice        
+        bigEggPrice = await zooMedia.getEggPrice();
+        eggPrice = bigEggPrice.toNumber();
+        expect(eggPrice).to.equal(333); // gets the new eggPrice        
     });
 
     it("Should revert when setting egg price as non owner", async() => {
@@ -207,9 +208,9 @@ describe("Test Faucet", () => {
      */
     it("Should buy a basic egg", async() => {
 
-            await zooToken.approve(zooDrop.address, 200)
+            await zooToken.approve(zooMedia.address, 200)
 
-            const buyEgg = await zooDrop.connect(owner).buyEgg({
+            const buyEgg = await zooMedia.connect(owner).buyEgg({
                 "tokenURI": "test1",
                 "metadataURI":"test2",
                 "contentHash": utils.formatBytes32String("test3"),
