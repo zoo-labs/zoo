@@ -427,7 +427,7 @@ describe("ZooAuction", () => {
 
     beforeEach(async () => {
       [admin, curator, bidderA, bidderB] = await ethers.getSigners();
-      auctionHouse = (await (await deploy()).connect(bidderA)) as ZooAuction;
+      auctionHouse = (await (await deploy()).connect(bidderA).deployed()) as ZooAuction;
       await mint(media);
       await approveAuction(media, auctionHouse);
       await createAuction(
@@ -869,25 +869,25 @@ describe("ZooAuction", () => {
         expect(auctionResult.curator).to.eq(ethers.constants.AddressZero);
         expect(auctionResult.auctionCurrency).to.eq(ethers.constants.AddressZero);
 
-      //     expect(await media.ownerOf(0)).to.eq(await creator.getAddress());
-      //   });
+        expect(await media.ownerOf(0)).to.eq(await admin.getAddress());
+      });
 
-      //   it("should be callable by the curator", async () => {
-      //     await auctionHouse.connect(curator).cancelAuction(0);
+      it("should be callable by the curator", async () => {
+        await auctionHouse.connect(curator).cancelAuction(0);
 
-      //     const auctionResult = await auctionHouse.auctions(0);
+        const auctionResult = await auctionHouse.auctions(0);
 
-      //     expect(auctionResult.amount.toNumber()).to.eq(0);
-      //     expect(auctionResult.duration.toNumber()).to.eq(0);
-      //     expect(auctionResult.firstBidTime.toNumber()).to.eq(0);
-      //     expect(auctionResult.reservePrice.toNumber()).to.eq(0);
-      //     expect(auctionResult.curatorFeePercentage).to.eq(0);
-      //     expect(auctionResult.tokenOwner).to.eq(ethers.constants.AddressZero);
-      //     expect(auctionResult.bidder).to.eq(ethers.constants.AddressZero);
-      //     expect(auctionResult.curator).to.eq(ethers.constants.AddressZero);
-      //     expect(auctionResult.auctionCurrency).to.eq(ethers.constants.AddressZero);
-      //     expect(await media.ownerOf(0)).to.eq(await creator.getAddress());
-      //   });
+        expect(auctionResult.amount.toNumber()).to.eq(0);
+        expect(auctionResult.duration.toNumber()).to.eq(0);
+        expect(auctionResult.firstBidTime.toNumber()).to.eq(0);
+        expect(auctionResult.reservePrice.toNumber()).to.eq(0);
+        expect(auctionResult.curatorFeePercentage).to.eq(0);
+        expect(auctionResult.tokenOwner).to.eq(ethers.constants.AddressZero);
+        expect(auctionResult.bidder).to.eq(ethers.constants.AddressZero);
+        expect(auctionResult.curator).to.eq(ethers.constants.AddressZero);
+        expect(auctionResult.auctionCurrency).to.eq(ethers.constants.AddressZero);
+        expect(await media.ownerOf(0)).to.eq(await admin.getAddress());
+      });
 
       //   it("should emit an AuctionCanceled event", async () => {
       //     const block = await ethers.provider.getBlockNumber();
