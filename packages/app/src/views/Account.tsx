@@ -20,6 +20,13 @@ const HeadingContainer = styles.div`
     margin: 0px 8px;
 `;
 
+const MyZooContainer = styles.div`
+    width: 100%;
+    display: flex;
+    padding: 16px;
+    
+`
+
 const StyledButton = styles.button`
     cursor: pointer;
     text-decoration: underline;
@@ -40,6 +47,7 @@ const ValueWrapper = styles(Text)`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 18px;
 `;
 const RowWrapper = styles.div`
     width: 100%;
@@ -48,59 +56,59 @@ const RowWrapper = styles.div`
     margin: 16px;
 `;
 
-
 const Account: React.FC = () => {
-  const { account } = useWeb3React()
-  const history = useHistory()
-  const [onBuyEggs] = useModal(<BuyEggs />)
-  const allEggs = useSelector<AppState, AppState["zoo"]["eggs"]>(
-    (state) => state.zoo.eggs
-  );
-  const currentEggsOwned = Object.values(allEggs).filter(
-    (egg) => egg.owner === account
-  ).length;
-  // setEggsOwned(currentEggsOwned)
-  const handleClick = () => {
-    history.push('/bank')
-  }
+   const { account } = useWeb3React();
+   const history = useHistory();
+   const [onBuyEggs] = useModal(<BuyEggs />);
+   const allEggs = useSelector<AppState, AppState["zoo"]["eggs"]>(
+      (state) => state.zoo.eggs
+   );
+   const currentEggsOwned = Object.values(allEggs).filter(
+      (egg) => egg.owner === account
+   ).length;
+   // setEggsOwned(currentEggsOwned)
+   const handleClick = () => {
+      history.push("/bank");
+   };
 
-  const pageHeading = (
-    <HeadingContainer>
-      <Heading>My Account</Heading>
-      <StyledButton
-        style={{
-          background: "transparent",
-          border: "none",
-          color: "white",
-          marginLeft: "8px",
-        }}
-        onClick={()=>handleClick()}
-      >
-        View Bank
-      </StyledButton>
-    </HeadingContainer>
-  );
-  return (
-    <>
-      <Page>
-        {pageHeading}
-        <Body>
-          <LabelWrapper>
-            <Label>Wallet Balance</Label>
-            <BorderButton>Add Funds</BorderButton>
-          </LabelWrapper>
-          <RowWrapper>
-            <ValueWrapper>Balance</ValueWrapper>
-          </RowWrapper>
-          <LabelWrapper>
-            <Label>{currentEggsOwned} Eggs Owned</Label>
-            <BorderButton onClick={() => onBuyEggs()}>Buy Eggs</BorderButton>
-          </LabelWrapper>
-        </Body>
-        <MyZooAccount />
-      </Page>
-    </>
-  );
+   const pageHeading = (
+      <HeadingContainer>
+         <Heading>My Account</Heading>
+         <StyledButton
+            style={{
+               background: "transparent",
+               border: "none",
+               color: "white",
+               marginLeft: "8px",
+            }}
+            onClick={() => handleClick()}>
+            View Bank
+         </StyledButton>
+      </HeadingContainer>
+   );
+   return (
+      <>
+         <Page>
+            {pageHeading}
+            <Body>
+               <LabelWrapper>
+                  <Label small>Wallet Balance</Label>
+                  <BorderButton scale="md">Add Funds</BorderButton>
+               </LabelWrapper>
+               <RowWrapper>
+                  <ValueWrapper>Balance</ValueWrapper>
+               </RowWrapper>
+               <LabelWrapper>
+                  <Label small>{currentEggsOwned} Eggs Owned</Label>
+                  <BorderButton scale="md" onClick={() => onBuyEggs()}>
+                     Buy Eggs
+                  </BorderButton>
+               </LabelWrapper>
+            </Body>
+            <MyZooAccount />
+         </Page>
+      </>
+   );
 };
 
 export default Account;
