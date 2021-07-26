@@ -828,11 +828,19 @@ describe("ZooAuction", () => {
 
       });
 
-      it("should revert if the auction does not exist", async () => {
+      it.only("should revert if the auction does not exist", async () => {
 
         await expect(auctionHouse.cancelAuction(2)).eventually.rejectedWith(`\'Auction doesn\'t exist\'`);
 
       });
+
+      it.only("should revert if not called by a creator or curator", async () => {
+
+        await expect(
+          auctionHouse.connect(auctionHouse.signer).cancelAuction(0)
+        )
+
+      })
 
       it("should revert if not called by a creator or curator", async () => {
         await expect(
