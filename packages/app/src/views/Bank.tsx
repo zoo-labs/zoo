@@ -49,13 +49,16 @@ const RowWrapper = styles.div`
 
 
 const Bank: React.FC = () => {
+  const [zooBalance, setBalance] = useState(0)
   const { account } = useWeb3React()
   const history = useHistory()
-   // PLACEHOLDER DATA
-  const zooCount = 99999999999999999
   
   const handleClick = () => {
     history.push('/account')
+  }
+
+  const getBalance = () => {
+    
   }
 
   const pageHeading = (
@@ -74,6 +77,7 @@ const Bank: React.FC = () => {
       </StyledButton>
     </HeadingContainer>
   );
+
   return (
     <>
       <Page>
@@ -84,7 +88,7 @@ const Bank: React.FC = () => {
               <BorderButton>Add Funds</BorderButton>
             </LabelWrapper>
             <ValueWrapper>
-              {zooCount} ZOOTOKENS
+              {zooBalance} ZOOTOKENS
             </ValueWrapper>
             <ValueWrapper>
               ~100 USD
