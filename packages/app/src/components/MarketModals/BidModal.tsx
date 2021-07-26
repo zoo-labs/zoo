@@ -24,7 +24,7 @@ const BidInput = styled.input.attrs({
 })`
    width: 90%;
    /* margin: auto; */
-   font-size: 20px;
+   font-size: 23px;
 `;
 
 const Content = styled.div`
@@ -129,10 +129,10 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
                   defaultValue={value}
                />
                <ButtonContent>
-               <Button width="200px" variant="primary" color="black" scale="md" style={{border: "0px", letterSpacing: ".1rem", boxShadow: "none", textTransform:"uppercase"}} onClick={() => onConfirmBuy()}>
+               <Button width="140px" variant="primary" color="black" scale="md" style={{border: "0px", letterSpacing: ".1rem", boxShadow: "none", textTransform:"uppercase"}} onClick={() => onConfirmBuy()}>
                Buy Now
                      </Button>
-                     <Button width="200px" variant="primary" color="black" scale="md" style={{border: "0px", letterSpacing: ".1rem", boxShadow: "none", textTransform:"uppercase"}} onClick={() => onConfirmBid()}>
+                     <Button width="140px" variant="primary" color="black" scale="md" style={{border: "0px", letterSpacing: ".1rem", boxShadow: "none", textTransform:"uppercase"}} onClick={() => onConfirmBid()}>
                      Bid
                      </Button>
                      </ButtonContent>
