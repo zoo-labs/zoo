@@ -32,6 +32,14 @@ describe("Test ZooDrop", () => {
         await zooDrop.deployed();
     })
 
+    /**
+     * CurrentSupply
+     */
+    it("Should have current supply equal total supply", async () => {
+        let currentSupply = await zooDrop.getCurrentSupply();
+        expect(currentSupply.toNumber()).to.equal((await zooDrop.totalSupply()).toNumber());
+    });
+
     /*
         Adding Animals
     */
@@ -44,7 +52,6 @@ describe("Test ZooDrop", () => {
 
         expect(Animal.name).to.equal("Pug");
         expect(tokenURI).to.equal("test");
-
 
     });
 
@@ -116,7 +123,7 @@ describe("Test ZooDrop", () => {
     it("Should revert when setting tokenURI as non owner", async() => {
         zooDrop = zooDrop.connect(signers[1]);
         try {
-            const tx = await zooDrop.settokenURI("pug", "TEST");
+            const tx = await zooDrop.setTokenURI("pug", "TEST");
         } catch (e) {
             expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
         }
