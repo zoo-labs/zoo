@@ -87,6 +87,10 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
       }
    };
 
+  const toLink = () => {
+    location.href = "https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997"
+  }
+
   return (
     <Modal title="Your wallet" onDismiss={onDismiss} styles={{ minHeight: '250px', justifyContent: 'space-between' }}>
       <Label>
@@ -101,7 +105,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
           <Label>
               Balance
           </Label>
-          <BorderButton scale="sm" minWidth={mobile ? "140px" : "160px"}>
+          <BorderButton scale="sm" minWidth={mobile ? "140px" : "160px"} onClick={toLink}>
               Add Funds
           </BorderButton>
         </LabelWrapper>
