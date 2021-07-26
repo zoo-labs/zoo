@@ -4,6 +4,7 @@ import { HardhatUserConfig } from 'hardhat/types'
 import 'hardhat-deploy'
 import '@typechain/hardhat'
 import '@nomiclabs/hardhat-ethers'
+import '@nomiclabs/hardhat-web3';
 
 import { utils } from 'ethers'
 const { isAddress, getAddress, formatUnits, parseUnits } = utils
