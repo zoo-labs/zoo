@@ -49,7 +49,7 @@ describe("ZooAuction", () => {
 
       await token.mint(
         signers[i].address,
-        100000000
+        10000000000
       )
     }
 
@@ -709,54 +709,53 @@ describe("ZooAuction", () => {
 
       describe("last minute bid", () => {
         beforeEach(async () => {
+          await token.connect(bidderA).approve(auctionHouse.address, 2000)
           const currAuction = await auctionHouse.auctions(0);
           await ethers.provider.send("evm_setNextBlockTimestamp", [
             currAuction.firstBidTime
               .add(currAuction.duration)
-              .sub(1)
+              .sub(10)
               .toNumber(),
-          ]);
-
+          ])
         });
 
-        // it.only("should extend the duration of the bid if inside of the time buffer", async () => {
-        //   token.connect(auctionHouse.signer)
-        //   await token.approve(auctionHouse.address, 500)
-        //   const beforeDuration = (await auctionHouse.auctions(0)).duration;
-        //   await auctionHouse.createBid(0, 500);
+          it("should extend the duration of the bid if inside of the time buffer", async () => {
+            const beforeDuration = (await auctionHouse.auctions(0)).duration;
+            await auctionHouse.connect(bidderA).createBid(0, 500);
+  
+            const currAuction = await auctionHouse.auctions(0);
+            expect(currAuction.duration).to.eq(
+              beforeDuration.add(await auctionHouse.timeBuffer()).sub(10)
+            );
+          });
 
-        //   const currAuction = await auctionHouse.auctions(0);
-        //   expect(currAuction.duration).to.eq(
-        //     beforeDuration.add(await auctionHouse.timeBuffer()).sub(1)
-        //   );
-        // });
-        //       it("should emit an AuctionBid event", async () => {
-        //         const block = await ethers.provider.getBlockNumber();
-        //         await auctionHouse.createBid(0, TWO_ZOO, {
-        //           value: TWO_ZOO,
-        //         });
-        //         const events = await auctionHouse.queryFilter(
-        //           auctionHouse.filters.AuctionBid(
-        //             null,
-        //             null,
-        //             null,
-        //             null,
-        //             null,
-        //             null,
-        //             null
-        //           ),
-        //           block
-        //         );
-        //         expect(events.length).eq(2);
-        //         const logDescription = auctionHouse.interface.parseLog(events[1]);
+          it("should emit an AuctionBid event", async () => {
+            const block = await ethers.provider.getBlockNumber();
+            await auctionHouse.createBid(0, TWO_ZOO, {
+              value: TWO_ZOO,
+            });
+            const events = await auctionHouse.queryFilter(
+              auctionHouse.filters.AuctionBid(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ),
+              block
+            );
+            expect(events.length).eq(2);
+            const logDescription = auctionHouse.interface.parseLog(events[1]);
 
-        //         expect(logDescription.name).to.eq("AuctionBid");
-        //         expect(logDescription.args.sender).to.eq(await bidderB.getAddress());
-        //         expect(logDescription.args.value).to.eq(TWO_ZOO);
-        //         expect(logDescription.args.firstBid).to.eq(false);
-        //         expect(logDescription.args.extended).to.eq(true);
-        //       });
-        //     });
+            expect(logDescription.name).to.eq("AuctionBid");
+            expect(logDescription.args.sender).to.eq(await bidderB.getAddress());
+            expect(logDescription.args.value).to.eq(TWO_ZOO);
+            expect(logDescription.args.firstBid).to.eq(false);
+            expect(logDescription.args.extended).to.eq(true);
+          });
+
         describe("late bid", () => {
           beforeEach(async () => {
             const currAuction = await auctionHouse.auctions(0);
