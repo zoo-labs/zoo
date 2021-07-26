@@ -227,6 +227,11 @@ contract ZooDrop is Ownable, IERC721Receiver  {
 
     // Burn egg and randomly return an animal NFT 
     function hatchEgg(uint256 tokenID) public returns (bool) {
+
+
+        //TODO: Transfer token back to the contract in order to burn it 
+
+
         // need to check the hatch time delay
         Egg memory egg = eggs[tokenID];      
         media.burn(tokenID);
@@ -292,7 +297,7 @@ contract ZooDrop is Ownable, IERC721Receiver  {
         data.contentHash = bytes32("du");
         data.metadataHash = bytes32("dum");
         IMarket.BidShares memory bidShare;
-        media.mint(data, bidShare);
+        media.mintZoo(data, bidShare);
         _breedCount[msg.sender]++;
 
         return true;
@@ -302,6 +307,9 @@ contract ZooDrop is Ownable, IERC721Receiver  {
     // Should burn animal and return yield
     function freeAnimal(uint256 _tokenID, address _zooMaster) public returns (bool) {
             require(bytes(existingHybrids[_tokenID]).length > 0 || bytes(existingAnimals[_tokenID]).length > 0, "Non-existing animal");
+
+
+            //TODO: Transfer token back to the contract in order to burn it 
 
             // get the creator/owner's address of token
             address _owner = media.tokenCreators(_tokenID);
@@ -433,14 +441,14 @@ contract ZooDrop is Ownable, IERC721Receiver  {
 
 function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes memory _data) public override returns(bytes4) {
     
+
+        //TODO:   Transfer token to the address who bought it 
+
     if(keccak256(_data) == keccak256(base_egg_type)){
-        console.log("hello erc721 received");
-        Egg memory newEgg;
-        newEgg.eggCreationTime = block.number;
-        eggs[_tokenId] = newEgg;
-        ownedEggs[_from] = _tokenId;
+        
     }
     else if(keccak256(_data) == keccak256(base_animal_type)){
+        console.log("hello animal in the making");
 
     }
     else if(keccak256(_data) == keccak256(hybrid_egg_type)){
