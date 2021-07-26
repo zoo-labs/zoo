@@ -74,7 +74,7 @@ const MainHeading = styled(Text)`
     width: 100%;
     color: ${({theme}) => theme.colors.primary};
     font-weight: 900;
-    -webkit-text-fill-color: ${({theme}) => theme.colors.primaryDark};
+    -webkit-text-fill-color: ${({theme}) => theme.colors.accent};
     -webkit-text-stroke-width: .5px;
     -webkit-text-stroke-color: ${({theme}) => theme.colors.primaryDarker};
 `
