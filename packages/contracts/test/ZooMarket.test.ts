@@ -75,12 +75,14 @@ describe('ZooMarket', () => {
   async function auctionAs(wallet: Wallet) {
     return ZooMarket__factory.connect(auctionAddress, wallet);
   }
+
   async function deploy() {
     const auction = await (
       await new ZooMarket__factory(deployerWallet).deploy()
     ).deployed();
     auctionAddress = auction.address;
   }
+
   async function configure() {
     return ZooMarket__factory.connect(auctionAddress, deployerWallet).configure(
       mockTokenWallet.address
