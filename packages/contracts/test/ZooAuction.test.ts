@@ -722,12 +722,12 @@ describe("ZooAuction", () => {
 
         it("should emit an AuctionBid event", async () => {
           const block = await ethers.provider.getBlockNumber();
-          await auctionHouse.createBid(0, TWO_ZOO, {
-            value: TWO_ZOO,
-          });
+          await token.connect(admin).mint(await auctionHouse.signer.getAddress(), TWO_ZOO);
+          await token.connect(auctionHouse.signer).approve(auctionHouse.address, TWO_ZOO);
+          await auctionHouse.createBid(0, TWO_ZOO);
           const events = await auctionHouse.queryFilter(
             auctionHouse.filters.AuctionBid(
-              null,
+              0,
               null,
               null,
               null,
@@ -737,8 +737,8 @@ describe("ZooAuction", () => {
             ),
             block
           );
-          expect(events.length).eq(2);
-          const logDescription = auctionHouse.interface.parseLog(events[1]);
+          expect(events.length).eq(1);
+          const logDescription = auctionHouse.interface.parseLog(events[0]);
 
           expect(logDescription.name).to.eq("AuctionBid");
           expect(logDescription.args.sender).to.eq(await bidderB.getAddress());
