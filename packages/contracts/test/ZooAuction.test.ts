@@ -967,7 +967,7 @@ describe("ZooAuction", () => {
 
       });
 
-      it.only("should cancel the auction if the winning bidder is unable to receive NFTs", async () => {
+      it("should cancel the auction if the winning bidder is unable to receive NFTs", async () => {
         let badBidderFactory = await ethers.getContractFactory("BadBidder");
         badBidder = await badBidderFactory.deploy(auctionHouse.address, token.address);
 
@@ -1041,7 +1041,7 @@ describe("ZooAuction", () => {
 
           await auctionHouse.endAuction(0);
 
-          const expectedProfit = "10000000010";
+          const expectedProfit = "100000010000000000";
 
           const creatorBalance = await ethers.provider.getBalance(
             await creator.getAddress()
@@ -1081,10 +1081,10 @@ describe("ZooAuction", () => {
           expect(logDescription.args.curator).to.eq(auctionData.curator);
           expect(logDescription.args.winner).to.eq(auctionData.bidder);
           expect(logDescription.args.amount.toString()).to.eq(
-            "190"
+            "1900000000000000000"
           );
           expect(logDescription.args.curatorFee.toString()).to.eq(
-            "10"
+            "100000000000000000"
           );
           expect(logDescription.args.auctionCurrency).to.eq(token.address);
         });
