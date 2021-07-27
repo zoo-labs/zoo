@@ -1,14 +1,18 @@
 import { Colors } from "./types";
 
 export const baseColors = {
-  failure: "#C62073",
-  primary: "#2B7EFF",
-  primaryBright: "#94BEFF",
-  primaryDark: "#024ABB",
-  secondary: "#e20092",
-  secondaryDark: "#21c5d9",
-  success: "#20DFDA",
-  warning: "#FFB237",
+  failure: "#B10058",
+  primary: "#289DFD",
+  primaryBright: "#B1DCFF",
+  primaryLight: "#B1DCFF",
+  primaryPop: "#28D7FD",
+  primaryDark: "#C82064",
+  primaryDarker: "#651133",
+  secondary: "#28FD73",
+  secondaryDark: "#607A2A",
+  accent: "#F5F775",
+  success: "#28D7FD",
+  warning: "#B10058",
   white: "#ffffff"
 };
 
@@ -21,9 +25,10 @@ export const lightColors: Colors = {
   ...brandColors,
   background: "#040404",
   backgroundDisabled: "#E9EAEB", // not yet created
+  sidebar: "#FFFFFF", // "#212226",
   contrast: "#191326",
   dropdown: "#F6F6F6",
-  invertedContrast: "#FFFFFF",
+  invertedContrast: "#282c34",
   input: "#EFE9F4",
   inputSecondary: "#d6e5ff",
   tertiary: "#EFF4F5",
@@ -35,9 +40,9 @@ export const lightColors: Colors = {
   data: "#314F81",
   headerTitle: "#20DFDA", // "#ddeafd",99dae4
   headerSubtitle: "#d3f5f3", // b4e5ff
-  borderColor: "#94BFFFA9",
+  borderColor: "#FFFFFF",
   secondaryDark: "#20DFDA",
-  card: "#FFFFFF",
+  card: "#ffffff",
   tableHeader: "#FFFFFF", // "#A7C8FB",
   cardLabel: "#314F81",
   gradients: {
@@ -50,9 +55,9 @@ export const lightColors: Colors = {
   disabledBubblegum: "linear-gradient(140.91deg,#5c88cadb 68.36%,#7cccc8de 84.22%)",
   textSecondary: "#000000",
   modal: {
-    background: "#ffffff",
-    color: "#58595B",
-    borderColor: "#ffffee"
+    background: "#282c34",
+    color: "#ffffff",
+    borderColor: "#ffffff"
   },
 };
 
@@ -62,6 +67,7 @@ export const darkColors: Colors = {
   // secondary: "#138AF2",
   background: "#040404",
   backgroundDisabled: "#A6B6CE",
+  sidebar: "#212226",
   contrast: "#FFFFFF",
   dropdown: "#1E1D20",
   invertedContrast: "#282d33",
@@ -94,7 +100,16 @@ export const darkColors: Colors = {
   textSecondary: "#FFFFFF",
   modal: {
     background: "#282c34",
-    color: "#ffffff",
+    color: "#000000",
     borderColor: "#ffffff"
   },
 };
+
+// sidebar #FFFFFF
+// background #F9F9FA
+// primary #289DFD
+// primaryLight #B1DCFF
+// primaryDark #C82064
+// primaryPop #28D7FD
+// accentColor #F5F775
+// secondaryColor #28FD73
