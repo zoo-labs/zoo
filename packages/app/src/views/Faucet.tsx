@@ -1,61 +1,56 @@
-import React, { useEffect, useState } from 'react'
-import Page from "components/layout/Page";
-import styled from 'styled-components'
+import React, { useEffect, useState } from "react";
+import useWeb3 from "hooks/useWeb3";
 import { useWeb3React } from "@web3-react/core";
-// import {useWeb3, useContract} from 'hooks';
-
-import {ethers} from 'ethers';
-
-/* import CONTRACTS_JSON from '../contracts.json' */
+import Page from "components/layout/Page";
+import styled from "styled-components";
 import BorderButton from "components/Button/BorderButton";
-// import ZooFaucet from '../artifacts/src/ZooFaucet.sol/ZooFaucet.json';
+import { getZooFaucet, getZooToken } from "util/contractHelpers";
 
-// deal with weird hardhat 
-// const CONTRACTS = CONTRACTS_JSON['31337']['hardhat'].contracts
-
-interface FaucetProps {
-}
+interface FaucetProps {}
 
 const FaucetWrapper = styled.div`
-color: white;
-`
+   color: white;
+`;
 
 export const Faucet: React.FC<FaucetProps> = () => {
-	const { account } = useWeb3React();
-	const [balance, setBalance] = useState(0);
+   const { chainId, account } = useWeb3React();
+   const web3 = useWeb3();
+   const [balance, setBalance] = useState(0);
 
-	/* const ctx = useContract();
+   const zooToken = getZooToken(web3, chainId);
 
-	const onBuy = async () => {
-		const {senderContract} = ctx.getContract('ZooFaucet')
-		const txn = await senderContract.buyZoo(account, 10000);
-		await txn.wait();
-		setBalance(0);
-	} */
+   const getBalance = async () => {
+      try {
+         const decimals = await zooToken.methods.decimals().call();
+         const rawBalance = await zooToken.methods.balanceOf(account).call();
+         const divisor = parseFloat(Math.pow(10, decimals).toString());
+         const balance = rawBalance / divisor;
+         setBalance(balance);
+      } catch (e) {
+         console.error("ISSUE LOADING ZOO BALANCE \n", e);
+      }
+   };
 
-	/* useEffect(() => {
-		const getBalance = async () => {
+   useEffect(() => {
+      getBalance();
+   }, [account, chainId]);
 
-		const {contract} = ctx.getContract('ZooToken')
-		const b = await contract.balanceOf(account);
-		setBalance(b.toString());
-		}
+   useEffect(() => {
+      getBalance();
+   }, []);
 
-		getBalance();
-	}, [balance]);
- */
-	return (
+   return (
       <>
          <Page>
-	<FaucetWrapper>
-            <BorderButton scale="md"/*  onClick={onBuy} */>
-               Grant Zoo
-            </BorderButton>
-		<h1>Current balance {balance}</h1>
-		</FaucetWrapper>
-	 </Page>
+            <FaucetWrapper>
+               <BorderButton scale="md" /*  onClick={onBuy} */>
+                  Grant Zoo
+               </BorderButton>
+               <h1>Current balance {balance}</h1>
+            </FaucetWrapper>
+         </Page>
       </>
-	)
+   );
 };
 
 export default Faucet;
