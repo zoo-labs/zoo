@@ -110,20 +110,14 @@ export default function Feed() {
       filter = "";
       break;
   }
-  let animalsFiltered = [];
-  if (filter === "myZoo") {
-    animalsFiltered = animals.filter((animal) => {
-      return animal.owner
+  const isZoo = filter === "myZoo";
+  const animalsFiltered = animals.filter((animal) => {
+    return animal.owner
+      ? isZoo
         ? animal.owner.toLowerCase() === account.toLowerCase()
-        : false;
-    });
-  } else {
-    animalsFiltered = animals.filter((animal) => {
-      return animal.owner
-        ? animal.owner.toLowerCase() !== account.toLowerCase()
-        : true;
-    });
-  }
+        : animal.owner.toLowerCase() !== account.toLowerCase()
+      : !isZoo;
+  });
 
   return (
     <Container isMobile={isMobile}>
@@ -145,7 +139,7 @@ export default function Feed() {
           </ButtonMenuItem>
         </ButtonMenu>
       </ToggleContainer>
-      {animalsFiltered.length ? (
+      {!isZoo || animalsFiltered.length ? (
         <Swiper
           spaceBetween={30}
           slidesPerView={isMobile ? 1 : 3}
