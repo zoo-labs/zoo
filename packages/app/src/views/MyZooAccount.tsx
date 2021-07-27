@@ -330,9 +330,13 @@ const MyZooAccount: React.FC = () => {
       <RowLayout>
         <Route exact path={`${path}`}>
           {empty ? (
+            <Text textAlign="center">
+              No {hybrid === "pure" ? `breedable` : `hybrid`} animals
+            </Text>
+          ) : (
             <Swiper slidesPerView={2.2} spaceBetween={10}>
               {animals.map((animal) => (
-                <SwiperSlide key={animal.id}>
+                <SwiperSlide>
                   <CardWrapper>
                     <Card
                       key={animal.id}
@@ -390,10 +394,6 @@ const MyZooAccount: React.FC = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
-          ) : (
-            <Text textAlign="center">
-              No {hybrid === "pure" ? `breedable` : `hybrid`} animals
-            </Text>
           )}
         </Route>
         <Route exact path={`${path}/history`}>
