@@ -373,7 +373,7 @@ describe("Test ZooMedia (2)", () => {
 
     async function breedHybrid(){
 
-        await zooToken.approve(zooMedia.address, 1000)
+        await zooToken.approve(zooMedia.address, 2000)
 
         const buyFirstEgg = await zooMedia.connect(owner).buyEgg(1);
         const buyFirstEggReceipt = await buyFirstEgg.wait();
@@ -448,379 +448,379 @@ describe("Test ZooMedia (2)", () => {
     Deploy Script
     */
 
-    // it("Should get the ZooDrop owner", async () => {
+    it("Should get the ZooDrop owner", async () => {
 
-    //     const zooDropOwner: string = await zooMedia.owner();
+        const zooDropOwner: string = await zooMedia.owner();
 
-    //     expect(zooDropOwner).to.equal(owner.address);
+        expect(zooDropOwner).to.equal(owner.address);
 
-    // });
+    });
 
-    // /**
-    //  * DROP
-    //  */
-    // it("Should create a new ZooDrop contract with AddDrop event", async () => {
-    //     const block = await ethers.provider.getBlockNumber();
-    //     let dropID = await zooMedia.connect(signers[0]).addDrop("test1", 16000, 210);
-    //     let events = await zooMedia.queryFilter(zooMedia.filters.AddDrop(null,null), block);
-    //     expect(events.length).eq(1);
+    /**
+     * DROP
+     */
+    it("Should create a new ZooDrop contract with AddDrop event", async () => {
+        const block = await ethers.provider.getBlockNumber();
+        let dropID = await zooMedia.connect(signers[0]).addDrop("test1", 16000, 210);
+        let events = await zooMedia.queryFilter(zooMedia.filters.AddDrop(null,null), block);
+        expect(events.length).eq(1);
 
-    //     const log = zooMedia.interface.parseLog(events[0]);
-    //     expect(log.name).to.equal("AddDrop");
-    //     expect(log.args._dropID.toNumber()).to.equal(1);
-    // });
+        const log = zooMedia.interface.parseLog(events[0]);
+        expect(log.name).to.equal("AddDrop");
+        expect(log.args._dropID.toNumber()).to.equal(1);
+    });
 
-    // /**
-    //  * BUYING EGGS
-    //  */
-    // it("Should buy a basic egg", async() => {
-    //         await addDrop();
+    /**
+     * BUYING EGGS
+     */
+    it("Should buy a basic egg", async() => {
+            await addDrop();
 
-    //         await zooToken.approve(zooMedia.address, 210)
+            await zooToken.approve(zooMedia.address, 210)
 
-    //         const buyEgg = await zooMedia.connect(owner).buyEgg(1);
+            const buyEgg = await zooMedia.connect(owner).buyEgg(1);
 
-    //         const buyEggReceipt = await buyEgg.wait();
+            const buyEggReceipt = await buyEgg.wait();
 
-    //         const sender = buyEggReceipt.events;
+            const sender = buyEggReceipt.events;
 
-    //         let from_add
-    //         let token_id
+            let from_add
+            let token_id
 
-    //         sender.forEach(element => {
-    //             if(element.event == "BuyEgg"){
-    //                 from_add = element.args["_from"]
-    //                 token_id = element.args["_tokenID"]
-    //             }
-    //         });
+            sender.forEach(element => {
+                if(element.event == "BuyEgg"){
+                    from_add = element.args["_from"]
+                    token_id = element.args["_tokenID"]
+                }
+            });
 
-    //         expect(from_add).to.equal(owner.address);
-    //         expect(token_id.toNumber()).to.equal(0);
+            expect(from_add).to.equal(owner.address);
+            expect(token_id.toNumber()).to.equal(0);
 
-    //         // add check for types mapping
-    //         expect(await zooMedia.types(token_id.toNumber())).to.equal(token_id.toNumber());
+            // add check for types mapping
+            expect(await zooMedia.types(token_id.toNumber())).to.equal(token_id.toNumber());
 
-    //         // check eggs mapping for new egg
-    //         let egg = await zooMedia.eggs(token_id.toNumber());
-    //         expect(egg.eggCreationTime.toNumber()).to.greaterThan(0);
-    // });
+            // check eggs mapping for new egg
+            let egg = await zooMedia.eggs(token_id.toNumber());
+            expect(egg.eggCreationTime.toNumber()).to.greaterThan(0);
+    });
 
-    // it("Should buy multiple basic eggs", async() => {
+    it("Should buy multiple basic eggs", async() => {
 
-    // });
+    });
 
-    // it("Should revert when totalSupply of eggs are reaching", async() => {
+    it("Should revert when totalSupply of eggs are reaching", async() => {
 
-    // });
+    });
 
-    // it("Should revert when not enough balance", async() => {
+    it("Should revert when not enough balance", async() => {
 
-    // });
+    });
 
-    // it("Should share bidshare from buy egg to contract owner", async() => {
+    it("Should share bidshare from buy egg to contract owner", async() => {
 
-    // });
+    });
 
-    // /**
-    //  * HATCHING EGGS
-    //  */
-    // it("Should hatch & burn basic egg", async() => {
-    //     await addAnimals();
+    /**
+     * HATCHING EGGS
+     */
+    it("Should hatch & burn basic egg", async() => {
+        await addAnimals();
 
-    //     await zooToken.approve(zooMedia.address, 600)
+        await zooToken.approve(zooMedia.address, 600)
 
-    //     const buyEgg = await zooMedia.connect(owner).buyEgg(1);
+        const buyEgg = await zooMedia.connect(owner).buyEgg(1);
 
-    //     const buyEggReceipt = await buyEgg.wait();
+        const buyEggReceipt = await buyEgg.wait();
 
-    //     let sender = buyEggReceipt.events;
+        let sender = buyEggReceipt.events;
 
-    //     let from_add
-    //     let token_id
+        let from_add
+        let token_id
 
-    //     sender.forEach(element => {
-    //         if(element.event == "Hatch"){
-    //             from_add = element.args["_from"]
-    //             token_id = element.args["_tokenID"]
-    //         }
-    //     });
+        sender.forEach(element => {
+            if(element.event == "Hatch"){
+                from_add = element.args["_from"]
+                token_id = element.args["_tokenID"]
+            }
+        });
 
-    //     const hatchEgg  = await zooMedia.hatchEgg(1,0)
+        const hatchEgg  = await zooMedia.hatchEgg(1,0)
 
-    //     const hatchEggReceipt = await hatchEgg.wait();
+        const hatchEggReceipt = await hatchEgg.wait();
 
-    //     sender = hatchEggReceipt.events;
+        sender = hatchEggReceipt.events;
 
-    //     let from_add2
-    //     let token_id2
+        let from_add2
+        let token_id2
 
-    //     sender.forEach(element => {
-    //         if(element.event == "Hatch"){
-    //             from_add2 = element.args["_from"]
-    //             token_id2 = element.args["_tokenID"]
-    //         }
-    //     });
+        sender.forEach(element => {
+            if(element.event == "Hatch"){
+                from_add2 = element.args["_from"]
+                token_id2 = element.args["_tokenID"]
+            }
+        });
 
-    //     expect(from_add2).to.equal(owner.address);
-    //     expect(token_id2.toNumber()).to.equal(1);
+        expect(from_add2).to.equal(owner.address);
+        expect(token_id2.toNumber()).to.equal(1);
 
-    //     const newAnimal = await zooMedia.animals(1);
-    //     expect(newAnimal.name).to.not.equal('');
-    // });
+        const newAnimal = await zooMedia.animals(1);
+        expect(newAnimal.name).to.not.equal('');
+    });
 
-    // it("Should hatch & burn hybrid egg", async() => {
+    it("Should hatch & burn hybrid egg", async() => {
 
-    //     // this.timeout(500000000000000);
-    //     await addAnimals();
-    //     await addHybrids();
-    //     const token = await breedHybrid()
+        // this.timeout(500000000000000);
+        await addAnimals();
+        await addHybrids();
+        const token = await breedHybrid()
 
-    //     const hatchEgg  = await zooMedia.hatchEgg(1,4)
+        const hatchEgg  = await zooMedia.hatchEgg(1,4)
 
-    //     const hatchEggReceipt = await hatchEgg.wait();
+        const hatchEggReceipt = await hatchEgg.wait();
 
-    //     let sender = hatchEggReceipt.events;
+        let sender = hatchEggReceipt.events;
 
-    //     let from_add2
-    //     let token_id2
+        let from_add2
+        let token_id2
 
-    //     sender.forEach(element => {
-    //         if(element.event == "Hatch"){
-    //             from_add2 = element.args["_from"]
-    //             token_id2 = element.args["_tokenID"]
-    //         }
-    //     });
+        sender.forEach(element => {
+            if(element.event == "Hatch"){
+                from_add2 = element.args["_from"]
+                token_id2 = element.args["_tokenID"]
+            }
+        });
 
-    //     expect(from_add2).to.equal(owner.address);
-    //     expect(token_id2.toNumber()).to.equal(5);
+        expect(from_add2).to.equal(owner.address);
+        expect(token_id2.toNumber()).to.equal(5);
 
 
-    // });
+    });
 
-    // it("Should revert when hatching egg with invalid tokenid", async() => {
+    it("Should revert when hatching egg with invalid tokenid", async() => {
 
-    // });
+    });
 
-    // it("Should revert when egg creation time restriction is not met", async() => {
+    it("Should revert when egg creation time restriction is not met", async() => {
 
-    // });
+    });
 
-    // /**
-    //  * BREEDING
-    //  */
-    // it("Should breed a hybrid egg", async() => {
-    //     await addAnimals();
+    /**
+     * BREEDING
+     */
+    it("Should breed a hybrid egg", async() => {
+        await addAnimals();
 
-    //     await zooToken.approve(zooMedia.address, 600)
+        await zooToken.approve(zooMedia.address, 600)
 
-    //     const buyFirstEgg = await zooMedia.connect(owner).buyEgg(1);
-    //     const buyFirstEggReceipt = await buyFirstEgg.wait();
+        const buyFirstEgg = await zooMedia.connect(owner).buyEgg(1);
+        const buyFirstEggReceipt = await buyFirstEgg.wait();
 
-    //     let sender = buyFirstEggReceipt.events;
+        let sender = buyFirstEggReceipt.events;
 
-    //     let from_add
-    //     let token_id_1
+        let from_add
+        let token_id_1
 
-    //     sender.forEach(element => {
-    //         if(element.event == "BuyEgg"){
-    //             from_add = element.args["_from"]
-    //             token_id_1 = element.args["_tokenID"]
-    //         }
-    //     });
+        sender.forEach(element => {
+            if(element.event == "BuyEgg"){
+                from_add = element.args["_from"]
+                token_id_1 = element.args["_tokenID"]
+            }
+        });
 
 
-    //     const buySecondEgg = await zooMedia.connect(owner).buyEgg(1);
-    //     const buySecondEggReceipt = await buySecondEgg.wait();
+        const buySecondEgg = await zooMedia.connect(owner).buyEgg(1);
+        const buySecondEggReceipt = await buySecondEgg.wait();
 
-    //     sender = buySecondEggReceipt.events;
-    //     let token_id_2
+        sender = buySecondEggReceipt.events;
+        let token_id_2
 
-    //     sender.forEach(element => {
-    //         if(element.event == "BuyEgg"){
-    //             from_add = element.args["_from"]
-    //             token_id_2 = element.args["_tokenID"]
-    //         }
-    //     });
+        sender.forEach(element => {
+            if(element.event == "BuyEgg"){
+                from_add = element.args["_from"]
+                token_id_2 = element.args["_tokenID"]
+            }
+        });
 
 
-    //     const firstHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_1);
-    //     const hatchFirstAnimalReceipt = await firstHatchedAnimal.wait();
-    //     sender = hatchFirstAnimalReceipt.events;
+        const firstHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_1);
+        const hatchFirstAnimalReceipt = await firstHatchedAnimal.wait();
+        sender = hatchFirstAnimalReceipt.events;
 
-    //     let token_id_Animal_1
+        let token_id_Animal_1
 
-    //     sender.forEach(element => {
-    //         if(element.event == "Hatch"){
-    //             from_add = element.args["_from"]
-    //             token_id_Animal_1 = element.args["_tokenID"]
-    //         }
-    //     });
+        sender.forEach(element => {
+            if(element.event == "Hatch"){
+                from_add = element.args["_from"]
+                token_id_Animal_1 = element.args["_tokenID"]
+            }
+        });
 
 
-    //     let secondHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_2);
-    //     const secondHatchedAnimalReceipt = await secondHatchedAnimal.wait();
+        let secondHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_2);
+        const secondHatchedAnimalReceipt = await secondHatchedAnimal.wait();
 
-    //     sender = secondHatchedAnimalReceipt.events;
-    //     let token_id_Animal_2
-    //     let token_id_hybridEgg
+        sender = secondHatchedAnimalReceipt.events;
+        let token_id_Animal_2
+        let token_id_hybridEgg
 
-    //     sender.forEach(element => {
-    //         if(element.event == "Hatch"){
-    //             from_add = element.args["_from"]
-    //             token_id_Animal_2 = element.args["_tokenID"]
-    //         }
-    //     });
+        sender.forEach(element => {
+            if(element.event == "Hatch"){
+                from_add = element.args["_from"]
+                token_id_Animal_2 = element.args["_tokenID"]
+            }
+        });
 
-    //     const breedTx = await zooMedia.connect(owner).breedAnimal(1, token_id_Animal_1, token_id_Animal_2);
-    //     const breedReceipt = await breedTx.wait();
-    //     sender = breedReceipt.events;
-    //     sender.forEach(element => {
-    //         if(element.event == "Breed"){
-    //             token_id_hybridEgg = element.args["_eggTokenId"]
-    //         }
-    //     });
+        const breedTx = await zooMedia.connect(owner).breedAnimal(1, token_id_Animal_1, token_id_Animal_2);
+        const breedReceipt = await breedTx.wait();
+        sender = breedReceipt.events;
+        sender.forEach(element => {
+            if(element.event == "Breed"){
+                token_id_hybridEgg = element.args["_eggTokenId"]
+            }
+        });
 
-    //     expect(token_id_hybridEgg.toNumber()).to.equal(4);
+        expect(token_id_hybridEgg.toNumber()).to.equal(4);
 
-    //     const eggType = await zooMedia.connect(owner).types(token_id_hybridEgg);
-    //     expect(eggType).to.equal(2);
-    // });
+        const eggType = await zooMedia.connect(owner).types(token_id_hybridEgg);
+        expect(eggType).to.equal(2);
+    });
 
-    // it("Should revert when breeding with a hybrid", async() => {
-    //     await addAnimals();
-    //     await addHybrids();
+    it("Should revert when breeding with a hybrid", async() => {
+        await addAnimals();
+        await addHybrids();
 
-    //     await zooToken.approve(zooMedia.address, 800)
+        await zooToken.approve(zooMedia.address, 800)
 
-    //     const buyFirstEgg = await zooMedia.connect(owner).buyEgg(1);
-    //     const buyFirstEggReceipt = await buyFirstEgg.wait();
+        const buyFirstEgg = await zooMedia.connect(owner).buyEgg(1);
+        const buyFirstEggReceipt = await buyFirstEgg.wait();
 
-    //     let sender = buyFirstEggReceipt.events;
+        let sender = buyFirstEggReceipt.events;
 
-    //     let from_add
-    //     let token_id_1
+        let from_add
+        let token_id_1
 
-    //     sender.forEach(element => {
-    //         if(element.event == "BuyEgg"){
-    //             from_add = element.args["_from"]
-    //             token_id_1 = element.args["_tokenID"]
-    //         }
-    //     });
+        sender.forEach(element => {
+            if(element.event == "BuyEgg"){
+                from_add = element.args["_from"]
+                token_id_1 = element.args["_tokenID"]
+            }
+        });
 
 
-    //     const buySecondEgg = await zooMedia.connect(owner).buyEgg(1);
-    //     const buySecondEggReceipt = await buySecondEgg.wait();
+        const buySecondEgg = await zooMedia.connect(owner).buyEgg(1);
+        const buySecondEggReceipt = await buySecondEgg.wait();
 
-    //     sender = buySecondEggReceipt.events;
-    //     let token_id_2
+        sender = buySecondEggReceipt.events;
+        let token_id_2
 
-    //     sender.forEach(element => {
-    //         if(element.event == "BuyEgg"){
-    //             from_add = element.args["_from"]
-    //             token_id_2 = element.args["_tokenID"]
-    //         }
-    //     });
+        sender.forEach(element => {
+            if(element.event == "BuyEgg"){
+                from_add = element.args["_from"]
+                token_id_2 = element.args["_tokenID"]
+            }
+        });
 
 
-    //     const firstHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_1);
-    //     const hatchFirstAnimalReceipt = await firstHatchedAnimal.wait();
-    //     sender = hatchFirstAnimalReceipt.events;
+        const firstHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_1);
+        const hatchFirstAnimalReceipt = await firstHatchedAnimal.wait();
+        sender = hatchFirstAnimalReceipt.events;
 
-    //     let token_id_Animal_1
+        let token_id_Animal_1
 
-    //     sender.forEach(element => {
-    //         if(element.event == "Hatch"){
-    //             from_add = element.args["_from"]
-    //             token_id_Animal_1 = element.args["_tokenID"]
-    //         }
-    //     });
+        sender.forEach(element => {
+            if(element.event == "Hatch"){
+                from_add = element.args["_from"]
+                token_id_Animal_1 = element.args["_tokenID"]
+            }
+        });
 
 
-    //     let secondHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_2);
-    //     const secondHatchedAnimalReceipt = await secondHatchedAnimal.wait();
+        let secondHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_2);
+        const secondHatchedAnimalReceipt = await secondHatchedAnimal.wait();
 
-    //     sender = secondHatchedAnimalReceipt.events;
-    //     let token_id_Animal_2
-    //     let token_id_hybridEgg
+        sender = secondHatchedAnimalReceipt.events;
+        let token_id_Animal_2
+        let token_id_hybridEgg
 
-    //     sender.forEach(element => {
-    //         if(element.event == "Hatch"){
-    //             from_add = element.args["_from"]
-    //             token_id_Animal_2 = element.args["_tokenID"]
-    //         }
-    //     });
+        sender.forEach(element => {
+            if(element.event == "Hatch"){
+                from_add = element.args["_from"]
+                token_id_Animal_2 = element.args["_tokenID"]
+            }
+        });
 
-    //     const breedTx = await zooMedia.connect(owner).breedAnimal(1, token_id_Animal_1, token_id_Animal_2);
-    //     const breedReceipt = await breedTx.wait();
-    //     sender = breedReceipt.events;
-    //     sender.forEach(element => {
-    //         if(element.event == "Breed"){
-    //             token_id_hybridEgg = element.args["_eggTokenId"]
-    //         }
-    //     });
-    //     // console.log("hybrid egg id: ", token_id_hybridEgg) // id is 4
+        const breedTx = await zooMedia.connect(owner).breedAnimal(1, token_id_Animal_1, token_id_Animal_2);
+        const breedReceipt = await breedTx.wait();
+        sender = breedReceipt.events;
+        sender.forEach(element => {
+            if(element.event == "Breed"){
+                token_id_hybridEgg = element.args["_eggTokenId"]
+            }
+        });
+        // console.log("hybrid egg id: ", token_id_hybridEgg) // id is 4
 
-    //     const firstHatchedHybridAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_hybridEgg);
-    //     const firstHatchedHybridAnimalReceipt = await firstHatchedHybridAnimal.wait();
-    //     sender = firstHatchedHybridAnimalReceipt.events;
+        const firstHatchedHybridAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_hybridEgg);
+        const firstHatchedHybridAnimalReceipt = await firstHatchedHybridAnimal.wait();
+        sender = firstHatchedHybridAnimalReceipt.events;
 
-    //     let token_id_Hybrid_Animal
+        let token_id_Hybrid_Animal
 
-    //     sender.forEach(element => {
-    //         if(element.event == "Hatch"){
-    //             from_add = element.args["_from"]
-    //             token_id_Hybrid_Animal = element.args["_tokenID"]
-    //         }
-    //     });
-    //     // console.log("hybrid animal id: ", token_id_Hybrid_Animal)
+        sender.forEach(element => {
+            if(element.event == "Hatch"){
+                from_add = element.args["_from"]
+                token_id_Hybrid_Animal = element.args["_tokenID"]
+            }
+        });
+        // console.log("hybrid animal id: ", token_id_Hybrid_Animal)
 
-    //     expect(token_id_Hybrid_Animal.toNumber()).to.equal(5);
+        expect(token_id_Hybrid_Animal.toNumber()).to.equal(5);
 
-    //     // const breedTx2 = await zooMedia.connect(owner).breedAnimal(1, token_id_Animal_1, token_id_Hybrid_Animal);
-    //     // console.log(breedTx2);
-    //     // const breedReceipt2 = await breedTx2.wait();
-    //     // sender = breedReceipt2.events;
-    //     // sender.forEach(element => {
-    //     //     if(element.event == "Breed"){
-    //     //         token_id_hybridEgg = element.args["_eggTokenId"]
-    //     //     }
-    //     // });
-    //     try {
-    //         const breedTx2 = await zooMedia.connect(owner).breedAnimal(1, token_id_Animal_1, token_id_Hybrid_Animal);
-    //     } catch (e) {
-    //         expect(e.message.includes('Hybrid animals cannot breed.')).to.be.true;
-    //     }
+        // const breedTx2 = await zooMedia.connect(owner).breedAnimal(1, token_id_Animal_1, token_id_Hybrid_Animal);
+        // console.log(breedTx2);
+        // const breedReceipt2 = await breedTx2.wait();
+        // sender = breedReceipt2.events;
+        // sender.forEach(element => {
+        //     if(element.event == "Breed"){
+        //         token_id_hybridEgg = element.args["_eggTokenId"]
+        //     }
+        // });
+        try {
+            const breedTx2 = await zooMedia.connect(owner).breedAnimal(1, token_id_Animal_1, token_id_Hybrid_Animal);
+        } catch (e) {
+            expect(e.message.includes('Hybrid animals cannot breed.')).to.be.true;
+        }
 
 
-    // });
+    });
 
-    // it("Should revert when breeding with two hybrids", async() => {
-    //     await addAnimals();
-    //     await addHybrids();
-    //     const token_1 = breedHybrid()
-    //     const token_2 = breedHybrid()
+    it("Should revert when breeding with two hybrids", async() => {
+        await addAnimals();
+        await addHybrids();
+        const token_1 = breedHybrid()
+        const token_2 = breedHybrid()
 
 
-    //     let sender
+        let sender
 
-    //     let token_id_hybridEgg
+        let token_id_hybridEgg
 
-    //     try{
-    //         const breedTx = await zooMedia.connect(owner).breedAnimal(1, token_1, token_2);
-    //         const breedReceipt = await breedTx.wait();
-    //         sender = breedReceipt.events;
-    //         sender.forEach(element => {
-    //             if(element.event == "Breed"){
-    //                 token_id_hybridEgg = element.args["_eggTokenId"]
-    //             }
-    //         });
+        try{
+            const breedTx = await zooMedia.connect(owner).breedAnimal(1, token_1, token_2);
+            const breedReceipt = await breedTx.wait();
+            sender = breedReceipt.events;
+            sender.forEach(element => {
+                if(element.event == "Breed"){
+                    token_id_hybridEgg = element.args["_eggTokenId"]
+                }
+            });
 
-    //     }catch(err){
+        }catch(err){
 
-    //         expect(err).to.exist
+            expect(err).to.exist
 
-    //     }
-    // });
+        }
+    });
 
 
     /**
@@ -870,7 +870,7 @@ describe("Test ZooMedia (2)", () => {
         // TODO increase block number and test yield
         // await ethers.provider.send("evm_setNextBlockTimestamp", [9617249934]);
 
-        const freed = await zooMedia.freeAnimal(1, 1);
+        const freed = await zooMedia.freeAnimal(1);
 
         const freedReceipt = await freed.wait();
 
@@ -892,13 +892,13 @@ describe("Test ZooMedia (2)", () => {
 
         expect(from_add).to.equal(owner.address);
         expect(token_id.toNumber()).to.equal(1);
-        // expect(_yield.toNumber()).to.greaterThan(0);
+        expect(_yield.toNumber()).to.greaterThan(0);
 
         const newAnimal = await zooMedia.animals(token_id.toNumber());
         expect(newAnimal.name).to.equal('');
 
-        // const newBalance = await zooToken.balanceOf(owner.address);
-        // expect(newBalance.toNumber()).to.greaterThan(prevBalance);
+        const newBalance = await zooToken.balanceOf(owner.address);
+        expect(newBalance.toNumber()).to.greaterThan(prevBalance.toNumber());
     });
 
     it("Should free a hybrid animal", async () => {
@@ -930,7 +930,7 @@ describe("Test ZooMedia (2)", () => {
         // TODO increase block number and test yield
         // await ethers.provider.send("evm_setNextBlockTimestamp", [9617249934]);
 
-        const freed = await zooMedia.freeAnimal(1, 5);
+        const freed = await zooMedia.freeAnimal(5);
 
         const freedReceipt = await freed.wait();
 
@@ -952,12 +952,12 @@ describe("Test ZooMedia (2)", () => {
 
         expect(from_add).to.equal(owner.address);
         expect(token_id.toNumber()).to.equal(5);
-        // expect(_yield.toNumber()).to.greaterThan(0);
+        expect(_yield.toNumber()).to.greaterThan(0);
 
         const newAnimal = await zooMedia.animals(token_id.toNumber());
         expect(newAnimal.name).to.equal('');
 
-        // const newBalance = await zooToken.balanceOf(owner.address);
-        // expect(newBalance.toNumber()).to.greaterThan(prevBalance);
+        const newBalance = await zooToken.balanceOf(owner.address);
+        expect(newBalance.toNumber()).to.greaterThan(prevBalance.toNumber());
     });
 })
