@@ -4,7 +4,7 @@ import Button from "./Button";
 import { scales } from "./types";
 
 const BtnContainer = styled.div`
-   max-width: 200px;
+  max-width: 200px;
   position: relative;
     * {
      &:hover {
@@ -15,11 +15,11 @@ const BtnContainer = styled.div`
   }
 
   button {
-     background: ${({ theme }) => theme.colors.primaryPop};
-      text-transform: uppercase;
-      border: transparent;
-      border-radius: 1px;
-      transition: all 0.2s;
+    background: ${({ theme }) => theme.colors.primaryPop};
+    padding: 8px 8px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: all 0.2s;
   }
 
 `;
