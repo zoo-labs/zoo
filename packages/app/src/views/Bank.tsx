@@ -115,7 +115,8 @@ const Bank: React.FC = () => {
                </LabelWrapper>
                <Flex width="100%" alignItems="center" justifyContent="space-around">
                   <ValueWrapper>{zooBalance} ZOO Tokens</ValueWrapper>
-                  <ValueWrapper style={{ fontSize: "16px",  color: "rgb(221 224 26)" }}>0 USD</ValueWrapper>
+                  {/* Commented out since there is to ZOO to USD conversion yet */}
+                  {/* <ValueWrapper style={{ fontSize: "16px",  color: "rgb(221 224 26)" }}>0 USD</ValueWrapper> */} 
                </Flex>
                <Label small>Total Daily Yield</Label>
                <ValueWrapper> 200 ZOO Tokens</ValueWrapper>
