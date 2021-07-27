@@ -22,7 +22,7 @@ const ONE_DAY = 24 * 60 * 60;
 // helper function so we can parse numbers and do approximate number calculations, to avoid annoying gas calculations
 const smallify = (bn: BigNumber) => bn.div(THOUSANDTH_ZOO).toNumber();
 
-describe("integration", () => {
+describe.skip("integration", () => {
   let market: ZooMarket;
   let media: ZooMedia;
   let token: ZooToken;
@@ -83,7 +83,7 @@ describe("integration", () => {
       .transferFrom(creatorAddress, ownerAddress, 0);
   });
 
-  describe.only("Auction with no curator", async () => {
+  describe("Auction with no curator", async () => {
     async function run() {
       console.log('connect media')
       await media.connect(owner).approve(auction.address, 0);
