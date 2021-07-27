@@ -7,7 +7,7 @@ export const rarityTable = {
 
 export const breedTimeouts = {
   0: { days: 0, hours: 0 },
-  1: { days: 0, hours: 0.0056 }, // changed for demo, originally 4 hours
+  1: { days: 0, hours: 0.0028 }, // changed for demo, originally 4 hours
   2: { days: 0, hours: 0 },
   3: { days: 0, hours: 0 },
   4: { days: 0, hours: 0 },
