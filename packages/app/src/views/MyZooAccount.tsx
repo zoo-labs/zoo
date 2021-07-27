@@ -213,7 +213,7 @@ const MyZooAccount: React.FC = () => {
     const eggStruct = {
         owner: egg.owner
     }
-    console.log("BURNING")
+    // console.log("BURNING")
     let randIdx;
 
     // REPLACE WITH HATCH FUNCTION FROM CONTRACT
@@ -223,9 +223,9 @@ const MyZooAccount: React.FC = () => {
     else {
         randIdx = Math.floor(Math.random() * (13 - 10) + 10);
     }
-    console.log(randIdx)
+    // console.log(randIdx)
     const aFromMap = animalMapping[randIdx]
-    console.log(aFromMap, randIdx)
+    // console.log(aFromMap, randIdx)
     const newAnimal: Animal = {
         tokenId: Math.floor(Math.random() * (999999 - 0) + 0).toString(),
         animalId: aFromMap.animalId,
@@ -259,15 +259,13 @@ const MyZooAccount: React.FC = () => {
     const animal2: Animal = array[1];
     const ID = Object.keys(allAnimals).length;
     array.forEach((animal) => {
-      const now = new Date().getTime();
       animal.bred = true;
       animal.breedCount = animal.breedCount + 1 || 1;
-      const lastBred = animal.lastBred
-        ? new Date(Number(animal.lastBred)).getTime()
-        : new Date().getTime();
+      const now = new Date().getTime();
+      animal.lastBred = new Date().getTime();
       const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount;
       const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
-      const elapsedTime = now - lastBred;
+      const elapsedTime = now - animal.lastBred
 
       if (elapsedTime < breedTimeout) {
         const timeRemaining = breedTimeout - elapsedTime;
@@ -277,7 +275,7 @@ const MyZooAccount: React.FC = () => {
         animal.timeRemaining = timeRemaining;
         // animal.actionStringOverride = 'data-disabled'
         animal.CTAOverride = { barwidth, timeRemainingDaysHours };
-        debugger; // eslint-disable-line no-debugger
+
       } else {
         animal.timeRemaining = 0;
         animal.CTAOverride = {
@@ -397,14 +395,23 @@ const MyZooAccount: React.FC = () => {
     setTimeout(()=>{setOpen(false)}, 5000)
   }
 
+  const [timeStartOnPage, setTimeStartOnPage] = useState(new Date().getTime())
+  const [elapsedTimeOnPage, setElapsedTimeOnPage] = useState(new Date().getTime() - timeStartOnPage)
+  
+  useEffect(() => {
+    setTimeout(function () {
+      setElapsedTimeOnPage(elapsedTimeOnPage + 5000);
+    }, 5000);
+  },[elapsedTimeOnPage])
+
   const renderAnimals = (hybrid): JSX.Element => {
     const animalData = [];
-    const now = new Date().getTime();
-
+    
     Object.values(allAnimalsSorted).forEach((animal, index) => {
       const lastBred = animal.lastBred
-        ? new Date(Number(animal.lastBred)).getTime()
-        : new Date().getTime();
+      ? new Date(Number(animal.lastBred)).getTime()
+      : new Date().getTime();
+      const now = new Date().getTime();
       const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount || 1;
       const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
       const elapsedTime = now - lastBred;
@@ -418,13 +425,13 @@ const MyZooAccount: React.FC = () => {
         name: animal.name.replace(/\u0000/g, ""),
         timeRemaining:
           animal.bloodline === "pure"
-            ? elapsedTime < breedTimeout
+            ? animal.breedCount > 0
               ? timeRemaining
               : 0
             : 0,
         CTAOverride:
           animal.bloodline === "pure"
-            ? elapsedTime < breedTimeout
+            ? animal.breedCount > 0
               ? { barwidth, timeRemainingDaysHours }
               : null
             : null,
@@ -441,7 +448,8 @@ const MyZooAccount: React.FC = () => {
     //     }
     //     updatedData.push({ id: ind, ...token })
     //   })
-    console.log(animalData)
+    // console.log(animalData)
+    
 
     return (
       <RowLayout>
@@ -526,11 +534,11 @@ const MyZooAccount: React.FC = () => {
 
   const renderEggs = (): JSX.Element => {
     const eggData = [];
-    const now = new Date().getTime();
     Object.values(allEggsSorted).forEach((egg, index) => {
       const createdDate = egg.created
-        ? new Date(Number(egg.created)).getTime()
-        : new Date().getTime();
+      ? new Date(Number(egg.created)).getTime()
+      : new Date().getTime();
+      const now = new Date().getTime();
       const hatchTimeout = getMilliseconds(eggTimeout);
       const elapsedTime = now - createdDate;
       const timeRemaining = hatchTimeout - elapsedTime;
@@ -554,7 +562,7 @@ const MyZooAccount: React.FC = () => {
           : null,
       });
     });
-    console.log(eggData);
+    // console.log(eggData);
     empty = eggData.length === 0 && Object.keys(allEggsSorted).length !== 0;
     const basicEggURL = window.location.origin + "/static/images/basic.png";
     const hybridEggURL = window.location.origin + "/static/images/hybrid.jpeg";
