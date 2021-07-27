@@ -329,8 +329,8 @@ const MyZooAccount: React.FC = () => {
     return (
       <RowLayout>
         <Route exact path={`${path}`}>
-          {empty ? (
-            <Text textAlign="center">
+          {animals.length === 0 ? (
+            <Text textAlign="center" fontSize="16px">
               No {hybrid === "pure" ? `breedable` : `hybrid`} animals
             </Text>
           ) : (
