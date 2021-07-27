@@ -1,6 +1,7 @@
 import { MenuEntry } from './types'
 
-const config: () => MenuEntry[] = () => [
+
+let defaultConf =  [
 
   {
     label: 'Bank',
@@ -19,6 +20,16 @@ const config: () => MenuEntry[] = () => [
   },
 ]
 
+	
+if (process.env.NODE_ENV !== "production") {
+defaultConf = [].concat(defaultConf, {
+	label: 'Zoo Faucet',
+	icon: '',
+	href: '/faucet'
+});
+}
+
+let config: () => MenuEntry[] = () => defaultConf;
 
 export const MENU_HEIGHT = 64;
 export const MENU_ENTRY_HEIGHT = 48;

@@ -3,12 +3,11 @@ import asPromised from 'chai-as-promised';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { Blockchain } from '../utils/Blockchain';
 import { generatedWallets } from '../utils/generatedWallets';
-import { Market__factory } from '../types';
 import { ethers, Wallet } from 'ethers';
 import { AddressZero } from '@ethersproject/constants';
 import Decimal from '../utils/Decimal';
 import { BigNumber, BigNumberish, Bytes } from 'ethers';
-import { ZooMedia__factory } from '../types';
+import { ZooToken__factory, ZooMarket__factory, ZooMedia__factory } from '../types';
 import { ZooMedia } from '../types/ZooMedia';
 import {
   approveCurrency,
@@ -110,23 +109,31 @@ describe('ZooMedia', () => {
     sellOnShare: Decimal.new(10),
   });
 
-  let auctionAddress: string;
+  let mediaAddress: string;
+  let marketAddress: string;
   let tokenAddress: string;
 
   async function tokenAs(wallet: Wallet) {
-    return ZooMedia__factory.connect(tokenAddress, wallet);
+    return ZooMedia__factory.connect(mediaAddress, wallet);
   }
+
   async function deploy() {
-    const auction = await (
-      await new Market__factory(deployerWallet).deploy()
-    ).deployed();
-    auctionAddress = auction.address;
     const token = await (
-      await new ZooMedia__factory(deployerWallet).deploy('ANML', 'CryptoZoo', auction.address)
+      await new ZooToken__factory(deployerWallet).deploy()
     ).deployed();
     tokenAddress = token.address;
 
-    await auction.configure(tokenAddress);
+    const market = await (
+      await new ZooMarket__factory(deployerWallet).deploy()
+    ).deployed();
+    marketAddress = market.address;
+
+    const media = await (
+      await new ZooMedia__factory(deployerWallet).deploy('ANML', 'CryptoZoo', marketAddress, tokenAddress)
+    ).deployed();
+    mediaAddress = media.address;
+
+    await market.configure(mediaAddress);
   }
 
   async function mint(
@@ -199,11 +206,11 @@ describe('ZooMedia', () => {
     await mintCurrency(currencyAddr, ownerWallet.address, 10000);
     await mintCurrency(currencyAddr, bidderWallet.address, 10000);
     await mintCurrency(currencyAddr, otherWallet.address, 10000);
-    await approveCurrency(currencyAddr, auctionAddress, creatorWallet);
-    await approveCurrency(currencyAddr, auctionAddress, prevOwnerWallet);
-    await approveCurrency(currencyAddr, auctionAddress, ownerWallet);
-    await approveCurrency(currencyAddr, auctionAddress, bidderWallet);
-    await approveCurrency(currencyAddr, auctionAddress, otherWallet);
+    await approveCurrency(currencyAddr, marketAddress, creatorWallet);
+    await approveCurrency(currencyAddr, marketAddress, prevOwnerWallet);
+    await approveCurrency(currencyAddr, marketAddress, ownerWallet);
+    await approveCurrency(currencyAddr, marketAddress, bidderWallet);
+    await approveCurrency(currencyAddr, marketAddress, otherWallet);
 
     await mint(
       asCreator,
@@ -448,7 +455,7 @@ describe('ZooMedia', () => {
 
     it('should mint a token for a given creator with a valid signature', async () => {
       const token = await tokenAs(otherWallet);
-      const market = await Market__factory.connect(auctionAddress, otherWallet);
+      const market = await ZooMarket__factory.connect(marketAddress, otherWallet);
       const sig = await signMintWithSig(
         creatorWallet,
         token.address,
@@ -685,8 +692,8 @@ describe('ZooMedia', () => {
   describe('#removeAsk', () => {
     it('should remove the ask', async () => {
       const token = await tokenAs(ownerWallet);
-      const market = await Market__factory.connect(
-        auctionAddress,
+      const market = await ZooMarket__factory.connect(
+        marketAddress,
         deployerWallet
       );
       await setAsk(token, 0, defaultAsk);
@@ -699,8 +706,8 @@ describe('ZooMedia', () => {
 
     it('should emit an Ask Removed event', async () => {
       const token = await tokenAs(ownerWallet);
-      const auction = await Market__factory.connect(
-        auctionAddress,
+      const auction = await ZooMarket__factory.connect(
+        marketAddress,
         deployerWallet
       );
       await setAsk(token, 0, defaultAsk);
@@ -753,7 +760,7 @@ describe('ZooMedia', () => {
 
     it('should revert if the token bidder does not have a high enough balance for their bidding currency', async () => {
       const token = await tokenAs(bidderWallet);
-      await approveCurrency(currencyAddr, auctionAddress, bidderWallet);
+      await approveCurrency(currencyAddr, marketAddress, bidderWallet);
       await expect(
         token.setBid(0, defaultBid(currencyAddr, bidderWallet.address))
       ).rejectedWith('SafeERC20: ERC20 operation did not succeed');
@@ -761,7 +768,7 @@ describe('ZooMedia', () => {
 
     it('should set a bid', async () => {
       const token = await tokenAs(bidderWallet);
-      await approveCurrency(currencyAddr, auctionAddress, bidderWallet);
+      await approveCurrency(currencyAddr, marketAddress, bidderWallet);
       await mintCurrency(currencyAddr, bidderWallet.address, 100000);
       await expect(
         token.setBid(0, defaultBid(currencyAddr, bidderWallet.address))
@@ -883,7 +890,7 @@ describe('ZooMedia', () => {
 
     it('should accept a bid', async () => {
       const token = await tokenAs(ownerWallet);
-      const auction = await Market__factory.connect(auctionAddress, bidderWallet);
+      const auction = await ZooMarket__factory.connect(marketAddress, bidderWallet);
       const asBidder = await tokenAs(bidderWallet);
       const bid = {
         ...defaultBid(currencyAddr, bidderWallet.address, otherWallet.address),
@@ -925,7 +932,7 @@ describe('ZooMedia', () => {
     it('should emit a bid finalized event if the bid is accepted', async () => {
       const asBidder = await tokenAs(bidderWallet);
       const token = await tokenAs(ownerWallet);
-      const auction = await Market__factory.connect(auctionAddress, bidderWallet);
+      const auction = await ZooMarket__factory.connect(marketAddress, bidderWallet);
       const bid = defaultBid(currencyAddr, bidderWallet.address);
       const block = await provider.getBlockNumber();
       await setBid(asBidder, bid, 0);
@@ -948,7 +955,7 @@ describe('ZooMedia', () => {
     it('should emit a bid shares updated event if the bid is accepted', async () => {
       const asBidder = await tokenAs(bidderWallet);
       const token = await tokenAs(ownerWallet);
-      const auction = await Market__factory.connect(auctionAddress, bidderWallet);
+      const auction = await ZooMarket__factory.connect(marketAddress, bidderWallet);
       const bid = defaultBid(currencyAddr, bidderWallet.address);
       const block = await provider.getBlockNumber();
       await setBid(asBidder, bid, 0);
@@ -1013,7 +1020,7 @@ describe('ZooMedia', () => {
 
     it('should remove the ask after a transfer', async () => {
       const token = await tokenAs(ownerWallet);
-      const auction = Market__factory.connect(auctionAddress, deployerWallet);
+      const auction = ZooMarket__factory.connect(marketAddress, deployerWallet);
       await setAsk(token, 0, defaultAsk);
 
       await expect(

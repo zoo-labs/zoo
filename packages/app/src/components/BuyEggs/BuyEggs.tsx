@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Modal } from '../Modal'
 import { Label, Text } from 'components/Text'
-import BlackBorderButton from 'components/Button/BlackBorderButton'
+import BorderButton from 'components/Button/BorderButton'
 import { Egg } from "entities/zooentities";
 import { addEggs } from "state/actions";
 import { useWeb3React } from "@web3-react/core";
 import { useDispatch } from "react-redux";
+import { Flex, TextButton } from 'components'
 
 const ColumnContainer = styled.div`
   display: flex;
@@ -117,10 +118,12 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
         >
           AMOUNT
         </Text>
-        <EggInput type="number" onChange = {changed()}/>
-        <BlackBorderButton onClick={()=>handleSubmit()}>
+        <EggInput type="number" onChange={changed()} />
+        <Flex justifyContent="center" flexDirection="row" mt="16px">
+        <BorderButton scale="sm" onClick={()=>handleSubmit()}>
           Submit
-        </BlackBorderButton>
+          </BorderButton>
+          </Flex>
       </Modal>
     </ModalWrapper>
   )
