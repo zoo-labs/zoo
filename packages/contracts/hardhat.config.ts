@@ -55,7 +55,8 @@ const config: HardhatUserConfig = {
     externalArtifacts: [],
   },
   mocha: {
-    timeout: 20000000
+    timeout: 20000000,
+    parallel: true
   }
 
 }
