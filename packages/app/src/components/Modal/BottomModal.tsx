@@ -48,7 +48,7 @@ const BottomModal: React.FC<Props> = ({
                </Sheet.Content>
             </Sheet.Container>
 
-            <Sheet.Backdrop />
+            <Sheet.Backdrop onTap={onDismiss} />
          </Sheet>
       </>
    );
