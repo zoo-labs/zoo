@@ -67,7 +67,7 @@ describe("Test ZooMedia (2)", () => {
 
         auctionAddress = zooMarket.address;
 
-        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', auctionAddress)) as ZooMedia
+        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', auctionAddress, tokenAddress)) as ZooMedia
         await zooMedia.deployed();
 
         tokenAddress = zooMedia.address;
