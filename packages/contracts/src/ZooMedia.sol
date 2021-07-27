@@ -379,7 +379,7 @@ contract ZooMedia is Media, Ownable {
 
     //   @Kimani will overwrite this
     // TEMP random function
-    function unsafeRandom() private returns (uint256) {
+    function unsafeRandom() private view returns (uint256) {
         uint256 randomNumber = uint256(
             keccak256(
                 abi.encodePacked(block.number, msg.sender, block.timestamp)
