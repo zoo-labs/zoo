@@ -52,7 +52,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await zooToken.mint(faucet.address, mintAmt);
 
     for (var i = 0; i < signers.length; i++) {
-
         // The 20 signer wallets get 10K ZOO on deployment
         await faucet.buyZoo(
             signers[i].address,
