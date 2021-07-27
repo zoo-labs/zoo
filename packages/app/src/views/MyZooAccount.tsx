@@ -21,7 +21,7 @@ import {
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import { getMilliseconds, getDaysHours } from "util/timeHelpers";
-import { breedTimeouts, eggTimeout } from "constants/constants";
+import { rarityTable, breedTimeouts, eggTimeout } from "constants/constants";
 import { Animal, Egg } from "entities/zooentities";
 import { addAnimal, addEgg, burnEgg } from "state/actions";
 import { ImInsertTemplate } from "react-icons/im";
