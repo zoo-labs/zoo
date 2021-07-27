@@ -68,7 +68,8 @@ describe("integration", () => {
         s.getAddress()
       )
     );
-    const contracts = await deployZooProtocol();
+    token = await deployZooToken();
+    const contracts = await deployZooProtocol(token.address);
     const nfts = await deployOtherNFTs();
     market = contracts.market;
     media = contracts.media;
