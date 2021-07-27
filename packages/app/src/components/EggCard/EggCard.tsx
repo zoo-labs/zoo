@@ -73,9 +73,10 @@ const TimeoutDisplay = styled.span`
   z-index: 2;
 `
 const Card = styled(Existing) <{ timedOut?: boolean }>`
-
   cursor: pointer;
   width: 120px;
+  margin-top: 16px;
+  margin-left: 16px;
   backgroundColor: "#000000";
   border-radius: 8px;
   display: block;

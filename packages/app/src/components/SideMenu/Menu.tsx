@@ -9,7 +9,7 @@ import Logo from "./components/Logo";
 import Panel from "./components/Panel";
 import UserBlock from "./components/UserBlock";
 import { NavProps } from "./types";
-import logo from "media/logo.jpg";
+import logo from "media/ZooLogoWhite.png";
 import {
   MENU_HEIGHT,
   SIDEBAR_WIDTH_REDUCED,
@@ -90,7 +90,12 @@ const StyledProviderTitle = styled.div`
 `;
 
 const MaxHeightLogo = styled.img`
-  height: 100%;
+  // height: 100%;
+  // width: 30%;
+  height: ${MENU_HEIGHT / 1.6}px;
+  position: absolute;
+  top: 10px;
+  left: 60px;
 `;
 
 const Menu: React.FC<NavProps> = ({

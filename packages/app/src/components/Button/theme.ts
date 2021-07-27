@@ -18,8 +18,8 @@ export const scaleVariants = {
 
 export const styleVariants = {
   [variants.PRIMARY]: {
-    backgroundColor: "primaryPop",
-    color: "white",
+    backgroundColor: "primary",
+    color: "black",
   },
   [variants.SECONDARY]: {
     backgroundColor: "transparent",
@@ -58,16 +58,16 @@ export const styleVariants = {
     boxShadow: "none",
   },
   [variants.BUBBLEGUM]: {
-    background: "linear-gradient(140.91deg, #3480F6d1 68.36%, #0DD8D0d1 84.22%)",
-    color: "white",
+    background: "transparent",
+    color: "primaryPop",
     ":disabled": {
       backgroundColor: "disabledBubblegum",
-      color: "textDisabled"
+      color: "textSubtle"
     },
   },
   [variants.BUTTONGUM]: {
-    background: "linear-gradient(140.91deg, #0249BB 68.36%, #0DD8D1 84.22%)",
-    color: "white",
+    background: "primaryPop",
+    color: "black",
   },
   [variants.MARBLE]: {
     background: "linear-gradient(129deg,#6287bf 3.22%,#0DD8CE 96.22%)",
