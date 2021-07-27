@@ -18,7 +18,7 @@ import {
 import { FaHome } from "react-icons/fa";
 
 const Wrapper = styled.div`
-  position: relative;
+  // position: relative;
   width: 100%;
 `;
 
@@ -48,7 +48,7 @@ const StyledNav = styled.nav<{ showMenu: boolean; isPushed: boolean }>`
 `;
 
 const BodyWrapper = styled.div`
-  position: relative;
+  // position: relative;
   display: flex;
 `;
 
@@ -96,7 +96,7 @@ const MaxHeightLogo = styled.img`
   height: ${MENU_HEIGHT / 1.6}px;
   position: absolute;
   top: 10px;
-  left: 60px;
+  left: 20px;
 `;
 
 const StickyBottomMenuWrapper = styled.div`
@@ -109,8 +109,8 @@ const StickyBottomMenuWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  bottom: 0;
+  position: fixed;
+  bottom: 10px;
   right: 10px;
 
   svg {
@@ -227,12 +227,12 @@ const Menu: React.FC<NavProps> = ({
         <FaHome />
       </StickyBottomMenuWrapper>
       <StyledNav showMenu={showMenu} isPushed={isPushed}>
-        <Logo
+        {/* <Logo
           isPushed={isPushed}
           togglePush={() => setIsPushed((prevState: boolean) => !prevState)}
           isDark={isDark}
           href={homeLink?.href ?? "/feed"}
-        />
+        /> */}
         <LogoContainer>
           <MaxHeightLogo
             src={logo}
