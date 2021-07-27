@@ -2,8 +2,10 @@ import { createGlobalStyle } from 'styled-components'
 
 import { Theme } from 'theme'
 
-import MyMP16OSFFont from '../../fonts/MP16OSF.ttf'
-import ConsolasFont from '../../fonts/Consolas.ttf'
+// import MyMP16OSFFont from '../../fonts/MP16OSF.ttf'
+
+const fontFamily = 'Consolas';
+import fontFamilySrc from '../../fonts/Consolas.ttf'
 
 declare module 'styled-components' {
   export interface DefaultTheme extends Theme { }
@@ -12,11 +14,11 @@ declare module 'styled-components' {
 const GlobalStyle = createGlobalStyle`
   @font-face{
       font-family: ${fontFamily};
-      src:url('${fontFamily}') format('TrueType');
+      src:url('${fontFamilySrc}') format('TrueType');
   }
   @font-face{
-    font-family:'ConsolasFont';
-    src:url('${ConsolasFont}') format('TrueType');   
+    font-family: ${fontFamily};
+    src:url('${fontFamilySrc}') format('TrueType');
   }
   * {
     font-family: 'ConsolasFont';
