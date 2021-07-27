@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Text } from "components";
+import { FaChevronCircleLeft } from "react-icons/fa";
+import { Flex, Heading, Text } from "components";
 import Page from "components/layout/Page";
 import { ButtonMenu, ButtonMenuItem } from "components/ButtonMenu";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -29,16 +30,16 @@ const Container = styled.div<{ isMobile?: boolean }>`
 const Card = styled.div<{ url?: string }>`
   width: 100vw;
   display: flex;
-  flex-direction: column;
-  background-image: url(${({ url }) => `${url}`});
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  height: 100vh;
+  // flex-direction: column;
+  // background-image: url(${({ url }) => `${url}`});
+  // background-position: center;
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // color: white;
+  height: 80vh;
   // max-height: 773px;
   max-width: 425px;
   ${({ theme }) => theme.mediaQueries.sm} {
@@ -252,17 +253,17 @@ export default function Feed() {
   // useMoralisSubscription("Animals", q => q, [], {
   //     onUpdate: data => getAnimals(),
   //   });</ToggleContainer>
-
   return (
     <Container isMobile={isMobile}>
       <ToggleContainer>
+        <IconButton color="white"><FaChevronCircleLeft /></IconButton>
         <ButtonMenu activeIndex={activeIndex} scale="sm">
           <ButtonMenuItem
             as={Link}
             to={`${url}/myzoo`}
             onClick={() => getAnimals()}
           >
-            My Zoo
+           My Zoo
           </ButtonMenuItem>
           <ButtonMenuItem
             as={Link}
@@ -289,7 +290,7 @@ export default function Feed() {
             <></>
           );
         })}
-      </Swiper>
+        </Swiper>
     </Container>
   );
 }
