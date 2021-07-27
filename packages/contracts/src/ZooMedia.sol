@@ -158,13 +158,13 @@ contract ZooMedia {
         uint256 _eggPrice
     ) public onlyOwner returns (uint256, address) {
         _dropIDs.increment();
-        uint256 dropID = _dropIDs.current();
+        uint256 _dropID = _dropIDs.current();
 
         ZooDrop drop = new ZooDrop(_name, _totalSupply, _eggPrice);
-        drops[dropID] = address(drop);
+        drops[_dropID] = address(drop);
 
-        emit AddDrop(dropID, address(drop));
-        return (dropID, address(drop));
+        emit AddDrop(_dropID, address(drop));
+        return (_dropID, address(drop));
     }
 
     function setTokenURI(
@@ -189,18 +189,16 @@ contract ZooMedia {
     function buyEgg(uint256 _dropID) public returns (uint256) {
         ZooDrop drop = ZooDrop(drops[_dropID]);
 
-        uint256 eggPrice = drop.getEggPrice();
-
         require(
-            token.balanceOf(msg.sender) >= eggPrice,
+            token.balanceOf(msg.sender) >= drop.eggPrice(),
             "Not Enough ZOO Tokens to purchase Egg"
         );
         require(
-            drop.getCurrentSupply() > 0,
+            drop.currentSupply() > 0,
             "There are no more Eggs that can be purchased"
         );
 
-        token.transferFrom(msg.sender, address(this), eggPrice);
+        token.transferFrom(msg.sender, address(this), drop.eggPrice());
 
         (string memory _tokenURI, string memory _metadataURI) = drop.buyEgg();
         Media.MediaData memory data;
@@ -240,7 +238,7 @@ contract ZooMedia {
         return media.burn(_tokenID);
     }
 
-    function tokenURI(uint256 _tokenID) public returns (string memory) {
+    function tokenURI(uint256 _tokenID) public view returns (string memory) {
         return media.tokenURI(_tokenID);
     }
 
