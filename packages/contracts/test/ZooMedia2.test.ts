@@ -67,15 +67,15 @@ describe("Test ZooMedia (2)", () => {
 
         auctionAddress = zooMarket.address;
 
-        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', auctionAddress, zooToken.address)) as ZooMedia
+        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', auctionAddress)) as ZooMedia
         await zooMedia.deployed();
-          
+
         tokenAddress = zooMedia.address;
-      
+
         await zooMarket.configure(tokenAddress);
 
         // await addAnimals()
-        
+
 
     })
 
@@ -98,7 +98,7 @@ describe("Test ZooMedia (2)", () => {
         await zooMedia.addAnimal(1,"Kitten", 100, "Common", 5500, "test2","test2");
         await zooMedia.addAnimal(1,"Turtle", 100, "Common", 5500, "test3","test3");
 
-        await zooMedia.addAnimal(1,"Penguin", 100, "Common", 5500, "test4","test4");  
+        await zooMedia.addAnimal(1,"Penguin", 100, "Common", 5500, "test4","test4");
         await zooMedia.addAnimal(1,"Duckling", 100, "Common", 5500, "test5","test5");
         await zooMedia.addAnimal(1,"Orca", 100, "Common", 5500, "test6","test6");
         await zooMedia.addAnimal(1,"Elk", 100, "Common", 5500, "test7","test7");
@@ -107,15 +107,15 @@ describe("Test ZooMedia (2)", () => {
         await zooMedia.addAnimal(1,"Gorilla", 100, "Common", 5500, "test9","test9");
         await zooMedia.addAnimal(1,"Lion", 100, "Common", 5500, "test11","test11");
         await zooMedia.addAnimal(1,"Elephant", 100, "Common", 5500,"test12","test12");
-        
+
         await zooMedia.addAnimal(1,"Bear", 100, "Common", 5500, "test13","test13");
         await zooMedia.addAnimal(1,"Shark", 100, "Common", 5500, "test14","test14");
-        
+
         await zooMedia.addAnimal(1,"Blobfish", 100, "Common", 5500, "test15","test15");
         await zooMedia.addAnimal(1,"Naked Mole Rat", 100, "Common", 5500, "test16","test16");
     }
 
-    
+
     async function addHybrids() {
         await zooMedia.addHybrid(1,"Baby Elephant","Elephant","Elephant",100,"http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/Elephant/Baby%20Elephant.jpg","testElephant")
         await zooMedia.addHybrid(1,"Baby Elk","Elk","Elk",100,"http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/Elk/Baby%20Elk.jpg","testElk")
@@ -357,7 +357,7 @@ describe("Test ZooMedia (2)", () => {
         await zooMedia.addHybrid(1,"Turtleshark","Turtle","Shark",100,"http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/Turtle/Turtleshark.jpg","testTurtle")
         await zooMedia.addHybrid(1,"Turtleblob","Turtle","Blobfish",100,"http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/Turtle/Turtleblob.jpg","testTurtle")
         await zooMedia.addHybrid(1,"Turtlerat","Turtle","Naked Mole Rat",100,"http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/Turtle/Turtlerat.jpg","testTurtle")
-    
+
     }
 
     async function addDrop() {
@@ -369,15 +369,15 @@ describe("Test ZooMedia (2)", () => {
         await zooMedia.setMetadataURI(1, "hybridEgg", "hybridEgg.metadataURI1");
 
     }
-    
-    
+
+
     async function breedHybrid(){
 
         await zooToken.approve(zooMedia.address, 1000)
 
         const buyFirstEgg = await zooMedia.connect(owner).buyEgg(1);
         const buyFirstEggReceipt = await buyFirstEgg.wait();
-        
+
         let sender = buyFirstEggReceipt.events;
 
         let from_add
@@ -393,7 +393,7 @@ describe("Test ZooMedia (2)", () => {
 
         const buySecondEgg = await zooMedia.connect(owner).buyEgg(1);
         const buySecondEggReceipt = await buySecondEgg.wait();
-        
+
         sender = buySecondEggReceipt.events;
         let token_id_2
 
@@ -406,7 +406,7 @@ describe("Test ZooMedia (2)", () => {
 
 
         const firstHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_1);
-        const hatchFirstAnimalReceipt = await firstHatchedAnimal.wait();        
+        const hatchFirstAnimalReceipt = await firstHatchedAnimal.wait();
         sender = hatchFirstAnimalReceipt.events;
 
         let token_id_Animal_1
@@ -420,7 +420,7 @@ describe("Test ZooMedia (2)", () => {
 
         let secondHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_2);
         const secondHatchedAnimalReceipt = await secondHatchedAnimal.wait();
-        
+
         sender = secondHatchedAnimalReceipt.events;
         let token_id_Animal_2
         let token_id_hybridEgg
@@ -479,9 +479,9 @@ describe("Test ZooMedia (2)", () => {
             await zooToken.approve(zooMedia.address, 210)
 
             const buyEgg = await zooMedia.connect(owner).buyEgg(1);
-    
+
             const buyEggReceipt = await buyEgg.wait();
-            
+
             const sender = buyEggReceipt.events;
 
             let from_add
@@ -493,7 +493,7 @@ describe("Test ZooMedia (2)", () => {
                     token_id = element.args["_tokenID"]
                 }
             });
-    
+
             expect(from_add).to.equal(owner.address);
             expect(token_id.toNumber()).to.equal(0);
 
@@ -518,7 +518,7 @@ describe("Test ZooMedia (2)", () => {
     });
 
     it("Should share bidshare from buy egg to contract owner", async() => {
-        
+
     });
 
     /**
@@ -526,13 +526,13 @@ describe("Test ZooMedia (2)", () => {
      */
     it("Should hatch & burn basic egg", async() => {
         await addAnimals();
-        
+
         await zooToken.approve(zooMedia.address, 600)
 
         const buyEgg = await zooMedia.connect(owner).buyEgg(1);
 
         const buyEggReceipt = await buyEgg.wait();
-        
+
         let sender = buyEggReceipt.events;
 
         let from_add
@@ -546,7 +546,7 @@ describe("Test ZooMedia (2)", () => {
         });
 
         const hatchEgg  = await zooMedia.hatchEgg(1,0)
-        
+
         const hatchEggReceipt = await hatchEgg.wait();
 
         sender = hatchEggReceipt.events;
@@ -567,7 +567,7 @@ describe("Test ZooMedia (2)", () => {
         const newAnimal = await zooMedia.animals(1);
         expect(newAnimal.name).to.not.equal('');
     });
-    
+
     it("Should hatch & burn hybrid egg", async() => {
 
         // this.timeout(500000000000000);
@@ -576,7 +576,7 @@ describe("Test ZooMedia (2)", () => {
         const token = await breedHybrid()
 
         const hatchEgg  = await zooMedia.hatchEgg(1,4)
-        
+
         const hatchEggReceipt = await hatchEgg.wait();
 
         let sender = hatchEggReceipt.events;
@@ -604,18 +604,18 @@ describe("Test ZooMedia (2)", () => {
     it("Should revert when egg creation time restriction is not met", async() => {
 
     });
-    
+
     /**
      * BREEDING
      */
     it("Should breed a hybrid egg", async() => {
         await addAnimals();
-                
+
         await zooToken.approve(zooMedia.address, 600)
 
         const buyFirstEgg = await zooMedia.connect(owner).buyEgg(1);
         const buyFirstEggReceipt = await buyFirstEgg.wait();
-        
+
         let sender = buyFirstEggReceipt.events;
 
         let from_add
@@ -631,7 +631,7 @@ describe("Test ZooMedia (2)", () => {
 
         const buySecondEgg = await zooMedia.connect(owner).buyEgg(1);
         const buySecondEggReceipt = await buySecondEgg.wait();
-        
+
         sender = buySecondEggReceipt.events;
         let token_id_2
 
@@ -644,7 +644,7 @@ describe("Test ZooMedia (2)", () => {
 
 
         const firstHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_1);
-        const hatchFirstAnimalReceipt = await firstHatchedAnimal.wait();        
+        const hatchFirstAnimalReceipt = await firstHatchedAnimal.wait();
         sender = hatchFirstAnimalReceipt.events;
 
         let token_id_Animal_1
@@ -659,7 +659,7 @@ describe("Test ZooMedia (2)", () => {
 
         let secondHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_2);
         const secondHatchedAnimalReceipt = await secondHatchedAnimal.wait();
-        
+
         sender = secondHatchedAnimalReceipt.events;
         let token_id_Animal_2
         let token_id_hybridEgg
@@ -689,12 +689,12 @@ describe("Test ZooMedia (2)", () => {
     it("Should revert when breeding with a hybrid", async() => {
         await addAnimals();
         await addHybrids();
-                
+
         await zooToken.approve(zooMedia.address, 800)
 
         const buyFirstEgg = await zooMedia.connect(owner).buyEgg(1);
         const buyFirstEggReceipt = await buyFirstEgg.wait();
-        
+
         let sender = buyFirstEggReceipt.events;
 
         let from_add
@@ -710,7 +710,7 @@ describe("Test ZooMedia (2)", () => {
 
         const buySecondEgg = await zooMedia.connect(owner).buyEgg(1);
         const buySecondEggReceipt = await buySecondEgg.wait();
-        
+
         sender = buySecondEggReceipt.events;
         let token_id_2
 
@@ -723,7 +723,7 @@ describe("Test ZooMedia (2)", () => {
 
 
         const firstHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_1);
-        const hatchFirstAnimalReceipt = await firstHatchedAnimal.wait();        
+        const hatchFirstAnimalReceipt = await firstHatchedAnimal.wait();
         sender = hatchFirstAnimalReceipt.events;
 
         let token_id_Animal_1
@@ -738,7 +738,7 @@ describe("Test ZooMedia (2)", () => {
 
         let secondHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_2);
         const secondHatchedAnimalReceipt = await secondHatchedAnimal.wait();
-        
+
         sender = secondHatchedAnimalReceipt.events;
         let token_id_Animal_2
         let token_id_hybridEgg
@@ -761,7 +761,7 @@ describe("Test ZooMedia (2)", () => {
         // console.log("hybrid egg id: ", token_id_hybridEgg) // id is 4
 
         const firstHatchedHybridAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_hybridEgg);
-        const firstHatchedHybridAnimalReceipt = await firstHatchedHybridAnimal.wait();        
+        const firstHatchedHybridAnimalReceipt = await firstHatchedHybridAnimal.wait();
         sender = firstHatchedHybridAnimalReceipt.events;
 
         let token_id_Hybrid_Animal
@@ -790,7 +790,7 @@ describe("Test ZooMedia (2)", () => {
         } catch (e) {
             expect(e.message.includes('Hybrid animals cannot breed.')).to.be.true;
         }
- 
+
 
     });
 
@@ -799,7 +799,7 @@ describe("Test ZooMedia (2)", () => {
         await addHybrids();
         const token_1 = breedHybrid()
         const token_2 = breedHybrid()
-        
+
 
         let sender
 
@@ -833,13 +833,13 @@ describe("Test ZooMedia (2)", () => {
 
     it("Should free a basic animal", async () => {
         await addAnimals();
-        
+
         await zooToken.approve(zooMedia.address, 600)
 
-        const buyEgg = await zooMedia.connect(owner).buyEgg(1);       
-        
+        const buyEgg = await zooMedia.connect(owner).buyEgg(1);
+
         const buyEggReceipt = await buyEgg.wait();
-        
+
         let sender = buyEggReceipt.events;
 
         let from_add
@@ -853,7 +853,7 @@ describe("Test ZooMedia (2)", () => {
         });
 
         const hatchEgg  = await zooMedia.hatchEgg(1,token_id)
-        
+
         const hatchEggReceipt = await hatchEgg.wait();
 
         sender = hatchEggReceipt.events;
@@ -869,7 +869,7 @@ describe("Test ZooMedia (2)", () => {
             }
         });
 
-        // TODO increase block number 
+        // TODO increase block number
         // await ethers.provider.send("evm_setNextBlockTimestamp", [9617249934]);
 
         const freed = await zooMedia.freeAnimal(1, 1);
@@ -906,7 +906,7 @@ describe("Test ZooMedia (2)", () => {
         await breedHybrid();
 
         const hatchEgg  = await zooMedia.hatchEgg(1,4)
-        
+
         const hatchEggReceipt = await hatchEgg.wait();
 
         let sender = hatchEggReceipt.events;
@@ -924,7 +924,7 @@ describe("Test ZooMedia (2)", () => {
             }
         });
 
-        // TODO increase block number 
+        // TODO increase block number
         // await ethers.provider.send("evm_setNextBlockTimestamp", [9617249934]);
 
         const freed = await zooMedia.freeAnimal(1, 5);
@@ -943,7 +943,7 @@ describe("Test ZooMedia (2)", () => {
                 _yield = element.args["_yield"]
             }
         });
-        
+
         expect(from_add2).to.equal(owner.address);
         expect(token_id2.toNumber()).to.equal(5);
 
