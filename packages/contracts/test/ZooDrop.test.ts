@@ -104,11 +104,11 @@ describe("ZooDrop", () => {
         }
     });
 
-    it.skip("Should set metadataURI for a pug", async() => {
+    it("Should set metadataURI for a pug", async() => {
         zooDrop = zooDrop.connect(signers[0]);
         const res = await zooDrop.setMetadataURI("pug", "pug.com/meta");
         console.log('setMetadata', res);
-        const metadataURI = await zooDrop.getMetadataURI("pug.com/meta");
+        const metadataURI = await zooDrop.getMetadataURI("pug");
         console.log('getMetadataURI', metadataURI);
         expect(metadataURI).to.equal("pug.com/meta");
     });
