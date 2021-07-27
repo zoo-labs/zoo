@@ -22,11 +22,15 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "downlevelIteration": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": [
+	    "./node_modules/@types",
+	    "./src/types"
+    ]
     // "no-empty-function": "off",
     // "@typescript-eslint/no-empty-function": ["error"]
   },
-  "include": ["mdx.d.ts", "src", "scripts", "fonts.d.ts"],
+  "include": ["./src/types", "mdx.d.ts", "src", "scripts", "fonts.d.ts"],
   "exclude": ["node_modules", "dist", "**/*.stories.tsx"],
   "paths": {
     "rebass/styled-components": ["node_modules/rebass/styled-components"],

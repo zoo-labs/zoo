@@ -22,7 +22,7 @@ const ONE_DAY = 24 * 60 * 60;
 // helper function so we can parse numbers and do approximate number calculations, to avoid annoying gas calculations
 const smallify = (bn: BigNumber) => bn.div(THOUSANDTH_ZOO).toNumber();
 
-describe("integration", () => {
+describe.skip("integration", () => {
   let market: ZooMarket;
   let media: ZooMedia;
   let token: ZooToken;
@@ -68,11 +68,11 @@ describe("integration", () => {
         s.getAddress()
       )
     );
-    const contracts = await deployZooProtocol();
+    token = await deployZooToken();
+    const contracts = await deployZooProtocol(token.address);
     const nfts = await deployOtherNFTs();
     market = contracts.market;
     media = contracts.media;
-    token = await deployZooToken();
     auction = await deploy();
     otherNft = nfts.test;
     await mint(media.connect(creator));
@@ -83,9 +83,11 @@ describe("integration", () => {
       .transferFrom(creatorAddress, ownerAddress, 0);
   });
 
-  describe.only("ETH Auction with no curator", async () => {
+  describe("Auction with no curator", async () => {
     async function run() {
+      console.log('connect media')
       await media.connect(owner).approve(auction.address, 0);
+      console.log('connect auction')
       await auction
         .connect(owner)
         .createAuction(
@@ -97,6 +99,7 @@ describe("integration", () => {
           0,
           ethers.constants.AddressZero
         );
+      console.log('createbid auction')
       await auction.connect(bidderA).createBid(0, ONE_ZOO, { value: ONE_ZOO });
       await auction.connect(bidderB).createBid(0, TWO_ZOO, { value: TWO_ZOO });
       await ethers.provider.send("evm_setNextBlockTimestamp", [
@@ -137,7 +140,7 @@ describe("integration", () => {
       await run();
       const afterBalance = await ethers.provider.getBalance(ownerAddress);
 
-      // 15% creator fee -> 2ETH * 85% = 1.7 ETH
+      // 15% creator fee -> 2ZOO * 85% = 1.7 ZOO
       expect(smallify(afterBalance)).to.be.approximately(
         smallify(beforeBalance.add(TENTH_ZOO.mul(17))),
         smallify(TENTH_ZOO)
@@ -149,12 +152,12 @@ describe("integration", () => {
       await run();
       const afterBalance = await token.balanceOf(creatorAddress);
 
-      // 15% creator fee -> 2 ETH * 15% = 0.3 ZooToken
+      // 15% creator fee -> 2 ZOO * 15% = 0.3 ZooToken
       expect(afterBalance).to.eq(beforeBalance.add(THOUSANDTH_ZOO.mul(300)));
     });
   });
 
-  describe("ETH auction with curator", () => {
+  describe("ZOO auction with curator", () => {
     async function run() {
       await media.connect(owner).approve(auction.address, 0);
       await auction
@@ -210,7 +213,7 @@ describe("integration", () => {
       const afterBalance = await ethers.provider.getBalance(ownerAddress);
 
       expect(smallify(afterBalance)).to.be.approximately(
-        // 15% creator share + 20% curator fee  -> 1.7 ETH * 80% = 1.36 ETH
+        // 15% creator share + 20% curator fee  -> 1.7 ZOO * 80% = 1.36 ZOO
         smallify(beforeBalance.add(TENTH_ZOO.mul(14))),
         smallify(TENTH_ZOO)
       );
@@ -221,7 +224,7 @@ describe("integration", () => {
       await run();
       const afterBalance = await token.balanceOf(creatorAddress);
 
-      // 15% creator fee  -> 2 ETH * 15% = 0.3 ZooToken
+      // 15% creator fee  -> 2 ZOO * 15% = 0.3 ZooToken
       expect(afterBalance).to.eq(beforeBalance.add(THOUSANDTH_ZOO.mul(300)));
     });
 
@@ -287,7 +290,7 @@ describe("integration", () => {
       await run();
       const afterBalance = await token.balanceOf(ownerAddress);
 
-      // 15% creator fee -> 2 ETH * 85% = 1.7ZooToken
+      // 15% creator fee -> 2 ZOO * 85% = 1.7ZooToken
       expect(afterBalance).to.eq(TENTH_ZOO.mul(17));
     });
 
@@ -296,7 +299,7 @@ describe("integration", () => {
       await run();
       const afterBalance = await token.balanceOf(creatorAddress);
 
-      // 15% creator fee -> 2 ETH * 15% = 0.3 ZooToken
+      // 15% creator fee -> 2 ZOO * 15% = 0.3 ZooToken
       expect(afterBalance).to.eq(beforeBalance.add(THOUSANDTH_ZOO.mul(300)));
     });
   });
@@ -351,7 +354,7 @@ describe("integration", () => {
       await run();
       const afterBalance = await token.balanceOf(ownerAddress);
 
-      // 15% creator fee + 20% curator fee -> 2 ETH * 85% * 80% = 1.36ZooToken
+      // 15% creator fee + 20% curator fee -> 2 ZOO * 85% * 80% = 1.36ZooToken
       expect(afterBalance).to.eq(THOUSANDTH_ZOO.mul(1360));
     });
 
@@ -360,7 +363,7 @@ describe("integration", () => {
       await run();
       const afterBalance = await token.balanceOf(creatorAddress);
 
-      // 15% creator fee -> 2 ETH * 15% = 0.3 ZooToken
+      // 15% creator fee -> 2 ZOO * 15% = 0.3 ZooToken
       expect(afterBalance).to.eq(beforeBalance.add(THOUSANDTH_ZOO.mul(300)));
     });
 
@@ -369,7 +372,7 @@ describe("integration", () => {
       await run();
       const afterBalance = await token.balanceOf(curatorAddress);
 
-      // 15% creator fee + 20% curator fee = 2 ETH * 85% * 20% = 0.34 ZooToken
+      // 15% creator fee + 20% curator fee = 2 ZOO * 85% * 20% = 0.34 ZooToken
       expect(afterBalance).to.eq(beforeBalance.add(THOUSANDTH_ZOO.mul(340)));
     });
   });
@@ -429,7 +432,7 @@ describe("integration", () => {
       const afterBalance = await ethers.provider.getBalance(ownerAddress);
 
       expect(smallify(afterBalance)).to.be.approximately(
-        // 20% curator fee  -> 2 ETH * 80% = 1.6 ETH
+        // 20% curator fee  -> 2 ZOO * 80% = 1.6 ZOO
         smallify(beforeBalance.add(TENTH_ZOO.mul(16))),
         smallify(TENTH_ZOO)
       );

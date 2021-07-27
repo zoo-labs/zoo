@@ -24,9 +24,10 @@ const Container = styled.div`
 `
 const Button = styled.button`
     width: 200px;
-    margin: 0px auto 20px auto;
-    background-color: #030303; 
+    margin: 0px auto auto auto;
+    background-color: #030303;
     border: 2px solid #ffffff;
+    border-radius: 4px;
     padding: 10px;
     cursor: pointer;
     p {
@@ -78,13 +79,13 @@ export default function LoginMain() {
                 <p>LOGIN WITH</p>
                 <p>METAMASK</p>
             </Button>
-                <StyledFlex flexDirection="row" justifyContent="center" >
-                    
+                {/* <StyledFlex flexDirection="row" justifyContent="center" >
+
             {isMobile &&
                 <>
                     <StyledText>
                         <a href="https://cryptozoo.co" target="_blank" >
-                            Need Help 
+                            Need Help
                         </a>
                     </StyledText>
                     <a href="https://cryptozoo.co" target="_blank" >
@@ -92,7 +93,7 @@ export default function LoginMain() {
                     </a>
                 </>
                 }
-                </StyledFlex> 
+                </StyledFlex>  */}
         </Container>
     )
 }

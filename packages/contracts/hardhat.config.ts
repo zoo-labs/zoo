@@ -4,6 +4,7 @@ import { HardhatUserConfig } from 'hardhat/types'
 import 'hardhat-deploy'
 import '@typechain/hardhat'
 import '@nomiclabs/hardhat-ethers'
+import '@nomiclabs/hardhat-web3';
 
 import { utils } from 'ethers'
 const { isAddress, getAddress, formatUnits, parseUnits } = utils
@@ -34,15 +35,6 @@ const config: HardhatUserConfig = {
           },
         },
       },
-      {
-        version: '0.4.24',
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 200,
-          },
-        },
-      },
     ],
   },
 
@@ -62,6 +54,10 @@ const config: HardhatUserConfig = {
     alwaysGenerateOverloads: false,
     externalArtifacts: [],
   },
+  mocha: {
+    timeout: 20000000,
+    parallel: true
+  }
 
 }
 
