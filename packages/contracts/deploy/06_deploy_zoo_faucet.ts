@@ -8,7 +8,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deployments, getNamedAccounts } = hre
     const { deploy } = deployments
     const { deployer } = await getNamedAccounts()
-    const OWNER_ADDRESS = await getDeployerAddress(hre)
 
     let zooToken: any;
 
@@ -22,7 +21,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     // HCR (Hot Contract Replacement) in live network, proxy is disabled and
     // constructor is invoked
     await deploy('ZooFaucet', {
-        from: OWNER_ADDRESS,
+        from: deployer,
         args: [tokenAddress],
         log: true,
         // proxy: useProxy && 'postUpgrade',
