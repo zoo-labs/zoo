@@ -68,8 +68,11 @@ describe.skip("integration", () => {
         s.getAddress()
       )
     );
-    const { token, market, media } = await deployZooProtocol();
+    token = await deployZooToken();
+    const contracts = await deployZooProtocol(token.address);
     const nfts = await deployOtherNFTs();
+    market = contracts.market;
+    media = contracts.media;
     auction = await deploy();
     otherNft = nfts.test;
     await mint(media.connect(creator));

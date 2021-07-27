@@ -37,8 +37,11 @@ describe("ZooAuction", () => {
 
 
     await ethers.provider.send("hardhat_reset", []);
-    const { market, media, token } = await deployZooProtocol();
+    token = await deployZooToken();
+    const contracts = await deployZooProtocol(token.address);
     const nfts = await deployOtherNFTs();
+    market = contracts.market;
+    media = contracts.media;
     badERC721 = nfts.bad;
     testERC721 = nfts.test;
 

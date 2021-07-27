@@ -207,6 +207,7 @@ const MyZooAccount: React.FC = () => {
       const eggStruct = {
          owner: egg.owner,
       };
+
       // console.log("BURNING");
       let randIdx;
 
@@ -331,6 +332,7 @@ const MyZooAccount: React.FC = () => {
          array = temp;
          onConfirm();
       }
+
       dispatch(addAnimal(toSet));
    };
 
@@ -440,6 +442,7 @@ const MyZooAccount: React.FC = () => {
          const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
 
          animalData.push({
+
         id: index,
         ...animal,
         name: animal.name.replace(/\u0000/g, ""),

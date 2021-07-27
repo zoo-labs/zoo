@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { Modal as Existing, Text, Flex } from "components";
+import { Modal as Existing, Text, Flex, Label, Button } from "components";
 import BorderButton from "components/Button/BorderButton";
-import { useModal } from "components/Modal";
+import { useModal, BottomModal } from "components/Modal";
 import Confirmation from "./ConfirmationModal";
 import Moralis from "moralis";
 import { useWeb3React } from "@web3-react/core";
@@ -15,27 +15,22 @@ Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
 Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server";
 
 interface Props {
-   onDismiss?: () => void;
+   onDismiss?: () => null;
    item: Animal;
 }
-
-const Modal = styled(Existing)`
-   background-color: black;
-`;
 
 const BidInput = styled.input.attrs({
    type: "number",
    min: 1,
 })`
    width: 90%;
-   margin: auto;
-   font-size: 20px;
+   /* margin: auto; */
+   font-size: 23px;
 `;
 
-const Content = styled.div`
-   * {
-      margin-bottom: 4px;
-   }
+const ButtonContent = styled(Flex)`
+   justify-content: space-around;
+   margin-top: 35px;
 `;
 
 const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
@@ -109,25 +104,65 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
 
    return (
       <>
-         <Modal title={`${item.name}`} onDismiss={onDismiss}>
-            <Content>
-               <Text>{`Current Bid: ${item.currentBid}`}</Text>
-               <Text >{`Buy Now: ${item.buyNow}`}</Text>
+         <BottomModal
+            header={`${item.name}`}
+            onDismiss={onDismiss}
+            height={`370px`}>
+            <Flex
+               justifyContent="center"
+               alignContent="center"
+               flexDirection="column"
+               ml="20px"
+               mt="20px">
+               <Label fontSize="22px" color="text" fontWeight="550">
+                  Current Bid
+               </Label>
+               <Text bold ml="16px" fontSize="22px" color="#ffffff">
+                  {item.currentBid}
+               </Text>
+               <Label fontSize="22px" color="text" fontWeight="550">
+                  Buy Now
+               </Label>
+               <Text bold ml="16px" fontSize="22px" color="#ffffff">
+                  {item.buyNow}
+               </Text>
                <BidInput
                   type="number"
                   onChange={changed()}
                   defaultValue={value}
                />
-               <Flex mt="16px" justifyContent="space-evenly" flexDirection="row">
-                  <BorderButton scale="sm" onClick={() => onConfirmBuy()}>
+               <ButtonContent>
+                  <BorderButton
+                     width="140px"
+                     variant="primary"
+                     color="black"
+                     scale="md"
+                     style={{
+                        border: "0px",
+                        letterSpacing: ".1rem",
+                        boxShadow: "none",
+                        textTransform: "uppercase",
+                     }}
+                     onClick={() => onConfirmBuy()}>
                      Buy Now
                   </BorderButton>
-                  <BorderButton scale="sm" onClick={() => onConfirmBid()}>
+                  <BorderButton
+                     width="140px"
+                     variant="primary"
+                     color="black"
+                     scale="md"
+                     style={{
+                        border: "0px",
+                        letterSpacing: ".1rem",
+                        boxShadow: "none",
+                        textTransform: "uppercase",
+                     }}
+                     onClick={() => onConfirmBid()}>
                      Bid
                   </BorderButton>
-               </Flex>
-            </Content>
-         </Modal>
+               </ButtonContent>
+            </Flex>
+         </BottomModal>
       </>
    );
 };
