@@ -9,11 +9,10 @@ import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
 contract ZooDrop is Ownable {
     using Counters for Counters.Counter;
 
-    uint256 public totalSupply;
-    uint256 private _eggPrice;
-    Counters.Counter private _currentSupply;
-
     string public name;
+    uint256 public eggPrice;
+    uint256 public totalSupply;
+    Counters.Counter public _currentSupply;
 
     struct Animal {
         string name;
@@ -26,7 +25,7 @@ contract ZooDrop is Ownable {
         uint256 rarity;
     }
 
-    struct Hybrid{
+    struct Hybrid {
         string name;
         uint256 yield;
     }
@@ -43,29 +42,18 @@ contract ZooDrop is Ownable {
     // mapping of animal key to animal metadata
     mapping (string => string) public metadataURI;
 
-    constructor(string memory _name, uint256 _supply, uint256 eggPrice){
+    constructor(string memory _name, uint256 _supply, uint256 _eggPrice){
         name = _name;
-        _eggPrice = eggPrice;
+        eggPrice = _eggPrice;
         totalSupply = _supply;
         _currentSupply._value = _supply;
     }
 
     // owner can set egg cost
-    function setEggPrice(uint256 _cost) public onlyOwner {
-        require(_cost > 0, "Overflow or non positive price");
-
-        _eggPrice = _cost;
+    function setEggPrice(uint256 _price) public onlyOwner {
+        require(_price > 0, "Price must be over zero");
+        eggPrice = _price;
     }
-
-    function getEggPrice() public view returns (uint256) {
-        return _eggPrice;
-    }
-
-
-    function getCurrentSupply() public view returns (uint256) {
-        return _currentSupply.current();
-    }
-
 
     /**
         Add animal for possibility of hatching for the drop
@@ -113,9 +101,12 @@ contract ZooDrop is Ownable {
         metadataURI[_animal] = _metadataURI;
     }
 
+    function currentSupply() public view returns (uint256) {
+        return _currentSupply.current();
+    }
+
     function buyEgg() public onlyOwner returns (string memory, string memory) {
-        // require(_currentSupply > 0, "Current: decrement overflow");
-        // _currentSupply = _currentSupply - 1;
+        require(_currentSupply.current() > 0, "Current: decrement overflow");
         _currentSupply.decrement();
         return (tokenURI["basicEgg"], metadataURI["basicEgg"]);
     }
