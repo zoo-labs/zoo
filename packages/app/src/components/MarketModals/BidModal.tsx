@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { Modal as Existing, Text, Flex, Label, Button } from "components";
+import BorderButton from "components/Button/BorderButton";
 import { useModal, BottomModal } from "components/Modal";
 import Confirmation from "./ConfirmationModal";
 import Moralis from "moralis";
@@ -132,7 +133,7 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
                   defaultValue={value}
                />
                <ButtonContent>
-                  <Button
+                  <BorderButton
                      width="140px"
                      variant="primary"
                      color="black"
@@ -145,8 +146,8 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
                      }}
                      onClick={() => onConfirmBuy()}>
                      Buy Now
-                  </Button>
-                  <Button
+                  </BorderButton>
+                  <BorderButton
                      width="140px"
                      variant="primary"
                      color="black"
@@ -159,7 +160,7 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
                      }}
                      onClick={() => onConfirmBid()}>
                      Bid
-                  </Button>
+                  </BorderButton>
                </ButtonContent>
             </Flex>
          </BottomModal>
