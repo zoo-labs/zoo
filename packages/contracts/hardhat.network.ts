@@ -4,9 +4,9 @@ import fs from 'fs'
 
 const alchemyKey = 'EuD-FVgI2gMBGf0aypDghsPHYWHB9nhn'
 
-function mnemonic() {
+function mnemonic(filename = 'mnemonic') {
   try {
-    return fs.readFileSync('./mnemonic.txt').toString().trim()
+    return fs.readFileSync(`./${filename}.txt`).toString().trim()
   } catch (e) {
     console.log(
       '☢️  warning: No mnemonic file created for a deploy account. Try `yarn run generate` and then `yarn run account`.'
@@ -47,15 +47,16 @@ const networks: HardhatUserConfig['networks'] = {
     chainId: 56,
     // gasPrice: 1000000000,
     accounts: {
-      mnemonic: mnemonic(),
+      mnemonic: mnemonic('mnemonic.mainnet'),
     },
   },
   testnet: {
     url: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
     chainId: 97,
-    // gasPrice: 1000000000,
+    gasPrice: 20e9,
+    gas: 25e6,
     accounts: {
-      mnemonic: mnemonic(),
+      mnemonic: mnemonic('mnemonic.testnet'),
     },
   },
 }

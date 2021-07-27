@@ -93,7 +93,7 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
      * @notice Require that the token has not been burned and has been minted
      */
     modifier onlyExistingToken(uint256 tokenId) {
-        require(_exists(tokenId), "Media: nonexistent token");
+        require(tokenExists(tokenId), "Media: nonexistent token");
         _;
     }
 
@@ -188,6 +188,13 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
      */
 
     /**
+     * @notice Helper to check that token has not been burned or minted
+     */
+    function tokenExists(uint256 tokenId) public view returns (bool) {
+        return _exists(tokenId);
+    }
+
+    /**
      * @notice return the URI for a particular piece of media with the specified tokenId
      * @dev This function is an override of the base OZ implementation because we
      * will return the tokenURI even if the media has been burned. In addition, this
@@ -219,14 +226,6 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
     {
         return _tokenMetadataURIs[tokenId];
     }
-
-    function getRecentToken(address creator) internal view returns (uint256){
-
-        uint256 length = EnumerableSet.length(_creatorTokens[creator])-1;
-
-        return  EnumerableSet.at(_creatorTokens[creator],length);
-
-   }
 
     /* ****************
      * Public Functions
@@ -297,6 +296,16 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
         require(msg.sender == marketContract, "Media: only market contract");
         previousTokenOwners[tokenId] = ownerOf(tokenId);
         _transfer(ownerOf(tokenId), recipient, tokenId);
+    }
+
+    /**
+     * @notice see IMedia
+     */
+    function getRecentToken(address creator) public view returns (uint256){
+
+        uint256 length = EnumerableSet.length(_creatorTokens[creator])-1;
+
+        return  EnumerableSet.at(_creatorTokens[creator],length);
     }
 
     /**
