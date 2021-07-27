@@ -26,7 +26,6 @@ const BidInput = styled.input.attrs({
    width: 90%;
    /* margin: auto; */
    font-size: 23px;
-   margin-top: -20px;
 `;
 
 const ButtonContent = styled(Flex)`
@@ -118,13 +117,13 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
                <Label fontSize="22px" color="#C82064" fontWeight="550">
                   Current Bid
                </Label>
-               <Text bold ml="16px" fontSize="22px" color="background">
+               <Text bold ml="16px" fontSize="22px" color="#ffffff">
                   {item.currentBid}
                </Text>
                <Label fontSize="22px" color="#C82064" fontWeight="550">
                   Buy Now
                </Label>
-               <Text bold ml="16px" fontSize="22px" color="background">
+               <Text bold ml="16px" fontSize="22px" color="#ffffff">
                   {item.buyNow}
                </Text>
                <BidInput
