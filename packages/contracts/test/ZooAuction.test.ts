@@ -967,22 +967,29 @@ describe("ZooAuction", () => {
 
       });
 
-      // it("should cancel the auction if the winning bidder is unable to receive NFTs", async () => {
+      it.only("should cancel the auction if the winning bidder is unable to receive NFTs", async () => {
+        let badBidderFactory = await ethers.getContractFactory("BadBidder");
+        badBidder = await badBidderFactory.deploy(auctionHouse.address, token.address);
 
-      //   // await badBidder.createBid(0, TWO_ZOO, { value: TWO_ZOO });
-      //   // const endTime =
-      //   //   (await auctionHouse.auctions(0)).duration.toNumber() +
-      //   //   (await auctionHouse.auctions(0)).firstBidTime.toNumber();
-      //   // await ethers.provider.send("evm_setNextBlockTimestamp", [endTime + 1]);
+        token = token.connect(admin);
+        await token.mint(badBidder.address, TWO_ZOO);
+        await badBidder.approve(auctionHouse.address, 500);
+        let badBalance: BigNumber;
+        badBalance = (await token.balanceOf(badBidder.address))
+        await badBidder.placeBid(0, 500);
+        const endTime =
+          (await auctionHouse.auctions(0)).duration.toNumber() +
+          (await auctionHouse.auctions(0)).firstBidTime.toNumber();
+        await ethers.provider.send("evm_setNextBlockTimestamp", [endTime + 1]);
 
-      //   // await auctionHouse.endAuction(0);
+        await auctionHouse.endAuction(0);
 
-      //   // expect(await media.ownerOf(0)).to.eq(await creator.getAddress());
-      //   // expect(await ethers.provider.getBalance(badBidder.address)).to.eq(
-      //   //   TWO_ZOO
-      //   // );
+        expect(await media.ownerOf(0)).to.eq(await admin.getAddress());
+        expect(await token.balanceOf(badBidder.address)).to.eq(
+          TWO_ZOO
+        );
 
-      // });
+      });
 
       describe("ZOO auction", () => {
         beforeEach(async () => {
