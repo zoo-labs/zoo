@@ -16,6 +16,7 @@ import {
   SIDEBAR_WIDTH_FULL,
 } from "./config";
 import { FaHome } from "react-icons/fa";
+import BottomMenuIcon from "./components/BottomMenuIcon";
 
 const Wrapper = styled.div`
   // position: relative;
@@ -30,9 +31,10 @@ const LogoContainer = styled.div`
   }
 `;
 
-const StyledNav = styled.nav<{ showMenu: boolean; isPushed: boolean }>`
+const StyledNav = styled.nav<{ showMenu?: boolean; isPushed?: boolean }>`
   position: fixed;
-  top: ${({ showMenu }) => (showMenu ? 0 : `-${MENU_HEIGHT}px`)};
+  // top: ${({ showMenu }) => (showMenu ? 0 : `-${MENU_HEIGHT}px`)};
+  top: 0;
   right: 0;
   transition: top 0.2s;
   display: flex;
@@ -43,7 +45,7 @@ const StyledNav = styled.nav<{ showMenu: boolean; isPushed: boolean }>`
   width: 100%;
   height: ${MENU_HEIGHT}px;
   background-color: #000000;
-  z-index: 20;
+  z-index: 3;
   transform: translate3d(0, 0, 0);
 `;
 
@@ -72,6 +74,7 @@ const Inner = styled.div<{ isPushed: boolean; showMenu: boolean }>`
 const MobileOnlyOverlay = styled(Overlay)`
   position: fixed;
   height: 100%;
+  opacity: 0;
 
   ${({ theme }) => theme.mediaQueries.nav} {
     display: none;
@@ -99,26 +102,7 @@ const MaxHeightLogo = styled.img`
   left: 20px;
 `;
 
-const StickyBottomMenuWrapper = styled.div`
-  width: 60px;
-  height: 60px;
-  border-radius: 30px;
-  border: 2px solid black;
-  box-shadow: 0px 5px 10px #040404ba;
-  background: ${({ theme }) => theme.colors.primaryPop};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
 
-  svg {
-    width: 25px;
-    height: 25px;
-    color: #FFFFFF;
-  }
-`
 const Menu: React.FC<NavProps> = ({
   providerTitle,
   account,
@@ -220,13 +204,27 @@ const Menu: React.FC<NavProps> = ({
   const handleClick = () => {
     history.push("/feed");
   };
+  const sideMenu = ( <Panel
+          isPushed={isPushed}
+          isMobile={isMobile}
+          showMenu={showMenu}
+          isDark={isDark}
+          toggleTheme={toggleTheme}
+          pushNav={setIsPushed}
+          links={links}
+        />);
 
   return (
     <Wrapper>
-      <StickyBottomMenuWrapper>
-        <FaHome />
-      </StickyBottomMenuWrapper>
-      <StyledNav showMenu={showMenu} isPushed={isPushed}>
+       <BottomMenuIcon
+        isOpen={isPushed}
+        togglePush={() => setIsPushed((prevState: boolean) => !prevState)}
+        isDark={isDark}
+          href={homeLink?.href ?? "/feed"}
+        />
+      <StyledNav
+        // showMenu={showMenu} isPushed={isPushed}
+      >
         {/* <Logo
           isPushed={isPushed}
           togglePush={() => setIsPushed((prevState: boolean) => !prevState)}
@@ -249,15 +247,7 @@ const Menu: React.FC<NavProps> = ({
         </Flex>
       </StyledNav>
       <BodyWrapper>
-        <Panel
-          isPushed={isPushed}
-          isMobile={isMobile}
-          showMenu={showMenu}
-          isDark={isDark}
-          toggleTheme={toggleTheme}
-          pushNav={setIsPushed}
-          links={links}
-        />
+       {sideMenu}
         <Inner isPushed={isPushed} showMenu={showMenu}>
           {children}
         </Inner>
