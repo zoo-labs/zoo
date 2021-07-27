@@ -8,4 +8,5 @@ export interface CardEgg extends Egg {
 
 export type EggCardType = {
     egg: CardEgg
+    hatchEgg: (egg) => void
 }
