@@ -9,13 +9,16 @@ import "./ZooToken.sol";
 import "./ZooDrop.sol";
 import "./ERC721Burnable.sol";
 import {IMarket} from "./interfaces/IMarket.sol";
+import {IMedia} from "./interfaces/IMedia.sol";
 import {Decimal} from "./Decimal.sol";
 import "hardhat/console.sol";
 
 // a instance for every egg or animal
-contract ZooMedia is Media, Ownable {
+contract ZooMedia {
     using SafeMath for uint256;
     using Counters for Counters.Counter;
+
+    uint256 avgBlocksDaily = 28800;
 
     uint256 public hybridHatchTime = 36 hours;
 
@@ -81,14 +84,29 @@ contract ZooMedia is Media, Ownable {
 
     //Token address of the ZooToken
     ZooToken public token;
+    Media public media;
+
+    address _owner;
+
+    modifier onlyOwner {
+        require(msg.sender == _owner, "Only owner has access");
+        _;
+    }
+
+    modifier onlyExistingToken(uint256 tokenId) {
+        require(media.tokenExists(tokenId), "Media: nonexistent token");
+        _;
+    }
 
     constructor(
         string memory symbol,
         string memory name,
         address _market,
         address _token
-    ) Media(symbol, name, _market) {
+    ) {
+        _owner = msg.sender;
         token = ZooToken(_token);
+        media = new Media(symbol, name, _market);
     }
 
     function addDrop(
@@ -162,8 +180,8 @@ contract ZooMedia is Media, Ownable {
         bidShare.creator = Decimal.D256(10 * (10**18));
         bidShare.owner = Decimal.D256(90 * (10**18));
 
-        mint(data, bidShare);
-        uint256 tokenId = getRecentToken(msg.sender);
+        media.mint(data, bidShare);
+        uint256 tokenId = media.getRecentToken(msg.sender);
 
         Egg memory egg;
 
@@ -189,7 +207,7 @@ contract ZooMedia is Media, Ownable {
         //  grab egg struct
         Egg memory egg = eggs[tokenID];
         TokenType eggType = types[tokenID];
-        burn(tokenID);
+        media.burn(tokenID);
 
         //  burn the eggToken(it's hatching)
         emit Burn(msg.sender, tokenID);
@@ -262,9 +280,9 @@ contract ZooMedia is Media, Ownable {
         bidShare.creator = Decimal.D256(10 * (10**18));
         bidShare.owner = Decimal.D256(90 * (10**18));
 
-        mint(data, bidShare); // this time not an egg but an animal
+        media.mint(data, bidShare); // this time not an egg but an animal
 
-        uint256 tokenId = getRecentToken(msg.sender);
+        uint256 tokenId = media.getRecentToken(msg.sender);
 
         if (bytes(_animal.name).length > 0) {
             _animal.rarity = _rarity;
@@ -289,8 +307,8 @@ contract ZooMedia is Media, Ownable {
         uint256 _tokenIDB
     ) public onlyExistingToken(_tokenIDA) returns (uint256) {
         require(_tokenIDA != _tokenIDB);
-        uint256 delay = getBreedingDelay(); 
-        require(block.timestamp-lastTimeBred[msg.sender] > delay, "Must wait for cooldown to finish.");        
+        uint256 delay = getBreedingDelay();
+        require(block.timestamp-lastTimeBred[msg.sender] > delay, "Must wait for cooldown to finish.");
 
         ZooDrop drop = ZooDrop(drops[dropId]);
 
@@ -323,15 +341,13 @@ contract ZooMedia is Media, Ownable {
         bidShare.prevOwner = Decimal.D256(0);
         bidShare.creator = Decimal.D256(10 * (10**18));
         bidShare.owner = Decimal.D256(90 * (10**18));
-        mint(data, bidShare);
-        uint256 eggTokenID = getRecentToken(msg.sender);
+        media.mint(data, bidShare);
+        uint256 eggTokenID = media.getRecentToken(msg.sender);
 
         Egg memory hybridEgg;
         hybridEgg.parent1 = animals[_tokenIDA].name;
         hybridEgg.parent2 = animals[_tokenIDB].name;
         hybridEgg.eggCreationTime = block.timestamp;
-
-
 
         eggs[eggTokenID] = hybridEgg;
 
@@ -357,11 +373,10 @@ contract ZooMedia is Media, Ownable {
         );
 
         // burn the token
-        burn(_tokenID);
+        media.burn(_tokenID);
         emit Burn(msg.sender, _tokenID);
 
         uint256 blocks = block.number - animalDOB[_tokenID];
-        uint256 avgBlocksDaily = 28800;
         uint256 age = blocks.div(avgBlocksDaily);
         uint256 dailyYield;
         uint256 percentage;
@@ -508,9 +523,8 @@ contract ZooMedia is Media, Ownable {
         );
     }
 
-    function getBreedingDelay() public returns (uint256) {
+    function getBreedingDelay() public view returns (uint256) {
         uint256 count = breedCount[msg.sender];
-        uint256 avgBlocksDaily = 28800;
         uint256 delay;
 
         if (count == 0) {
@@ -522,7 +536,7 @@ contract ZooMedia is Media, Ownable {
         }
 
         // if (count == 1) {
-        //     delay = coolDowns30 * avgBlocksDaily;    
+        //     delay = coolDowns30 * avgBlocksDaily;
         // } else if (count == 4) {
         //     delay = 7 * avgBlocksDaily;
         // } else if (count == 3) {

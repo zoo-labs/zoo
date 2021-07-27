@@ -53,7 +53,7 @@ const StyledButton = styled.button<BaseButtonProps>`
   font-size: 16px;
   font-weight: 600;
   justify-content: center;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1em;
   line-height: 1;
   opacity: ${getOpacity};
   outline: 0;
