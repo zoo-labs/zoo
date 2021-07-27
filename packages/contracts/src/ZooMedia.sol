@@ -85,6 +85,7 @@ contract ZooMedia {
     //Token address of the ZooToken
     ZooToken public token;
     Media public media;
+    address public mediaAddress;
 
     address _owner;
 
@@ -107,6 +108,7 @@ contract ZooMedia {
         _owner = msg.sender;
         token = ZooToken(_token);
         media = new Media(symbol, name, _market);
+        mediaAddress = address(media);
     }
 
     function addDrop(
