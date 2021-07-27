@@ -4,37 +4,39 @@ import Button from "./Button";
 import { scales } from "./types";
 
 const BtnContainer = styled.div`
-   max-width: 200px;
+  justify-content: space-around;
   position: relative;
+  
     * {
      &:hover {
         transition: all 0.2s;
-        // border: ${({ theme }) => `2px solid ${theme.colors.primaryDark}`};
-        background: ${({ theme }) => theme.colors.secondary};
+        color: ${({ theme }) => theme.colors.primaryPop};
+        border: 0px;
+        background: transparent;
     }
   }
 
   button {
-     background: ${({ theme }) => theme.colors.primaryPop};
+     background: transparent;
       text-transform: uppercase;
-      border: transparent;
-      border-radius: 1px;
+      border: 0px;
+      color: white;
       transition: all 0.2s;
   }
 
 `;
 
-const BorderButton = (props): JSX.Element => {
+const TextButton = (props): JSX.Element => {
    const { isXs, isSm } = useMatchBreakpoints();
    const isMobile = isXs || isSm;
 
    return (
       <>
          <BtnContainer>
-            <Button variant="primary" scale={isMobile ? scales.XS : scales.MD} {...props} style={{fontSize: `${isMobile ? "14px" : "16px"}`}}/>
+            <Button variant="primary" scale={isMobile ? scales.XS : scales.MD} {...props} />
          </BtnContainer>
       </>
    );
 };
 
-export default BorderButton;
+export default TextButton;

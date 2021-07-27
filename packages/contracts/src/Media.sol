@@ -11,9 +11,7 @@ import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
 import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {
-    ReentrancyGuard
-} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import {Decimal} from "./Decimal.sol";
 import {IMarket} from "./interfaces/IMarket.sol";
 import "./interfaces/IMedia.sol";
@@ -159,7 +157,11 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
      * @notice On deployment, set the market contract address and register the
      * ERC721 metadata interface
      */
-    constructor(string memory name, string memory symbol, address marketAddress) ERC721(name, symbol) {
+    constructor(
+        string memory name,
+        string memory symbol,
+        address marketAddress
+    ) ERC721(name, symbol) {
         _owner = msg.sender;
         _registerInterface(_INTERFACE_ID_ERC721_METADATA);
         marketContract = marketAddress;
@@ -218,6 +220,14 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
         return _tokenMetadataURIs[tokenId];
     }
 
+    function getRecentToken(address creator) internal view returns (uint256){
+
+        uint256 length = EnumerableSet.length(_creatorTokens[creator])-1;
+
+        return  EnumerableSet.at(_creatorTokens[creator],length);
+
+   }
+
     /* ****************
      * Public Functions
      * ****************
@@ -231,7 +241,8 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
         override
         nonReentrant
     {
-        _mintForCreator(msg.sender, data, bidShares);
+        _mintForCreator(msg.sender, data, bidShares, "");
+
     }
 
     /**
@@ -250,23 +261,22 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
 
         bytes32 domainSeparator = _calculateDomainSeparator();
 
-        bytes32 digest =
-            keccak256(
-                abi.encodePacked(
-                    "\x19\x01",
-                    domainSeparator,
-                    keccak256(
-                        abi.encode(
-                            MINT_WITH_SIG_TYPEHASH,
-                            data.contentHash,
-                            data.metadataHash,
-                            bidShares.creator.value,
-                            mintWithSigNonces[creator]++,
-                            sig.deadline
-                        )
+        bytes32 digest = keccak256(
+            abi.encodePacked(
+                "\x19\x01",
+                domainSeparator,
+                keccak256(
+                    abi.encode(
+                        MINT_WITH_SIG_TYPEHASH,
+                        data.contentHash,
+                        data.metadataHash,
+                        bidShares.creator.value,
+                        mintWithSigNonces[creator]++,
+                        sig.deadline
                     )
                 )
-            );
+            )
+        );
 
         address recoveredAddress = ecrecover(digest, sig.v, sig.r, sig.s);
 
@@ -275,7 +285,18 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
             "Media: Signature invalid"
         );
 
-        _mintForCreator(recoveredAddress, data, bidShares);
+        _mintForCreator(recoveredAddress, data, bidShares,"");
+    }
+
+    /**
+     * @notice see IMedia
+     */
+    function transfer(uint256 tokenId, address recipient)
+        external
+    {
+        require(msg.sender == marketContract, "Media: only market contract");
+        previousTokenOwners[tokenId] = ownerOf(tokenId);
+        _transfer(ownerOf(tokenId), recipient, tokenId);
     }
 
     /**
@@ -438,22 +459,21 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
         require(spender != address(0), "Media: spender cannot be 0x0");
         bytes32 domainSeparator = _calculateDomainSeparator();
 
-        bytes32 digest =
-            keccak256(
-                abi.encodePacked(
-                    "\x19\x01",
-                    domainSeparator,
-                    keccak256(
-                        abi.encode(
-                            PERMIT_TYPEHASH,
-                            spender,
-                            tokenId,
-                            permitNonces[ownerOf(tokenId)][tokenId]++,
-                            sig.deadline
-                        )
+        bytes32 digest = keccak256(
+            abi.encodePacked(
+                "\x19\x01",
+                domainSeparator,
+                keccak256(
+                    abi.encode(
+                        PERMIT_TYPEHASH,
+                        spender,
+                        tokenId,
+                        permitNonces[ownerOf(tokenId)][tokenId]++,
+                        sig.deadline
                     )
                 )
-            );
+            )
+        );
 
         address recoveredAddress = ecrecover(digest, sig.v, sig.r, sig.s);
 
@@ -489,7 +509,8 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
     function _mintForCreator(
         address creator,
         MediaData memory data,
-        IMarket.BidShares memory bidShares
+        IMarket.BidShares memory bidShares,
+        bytes memory tokenType
     ) internal onlyValidURI(data.tokenURI) onlyValidURI(data.metadataURI) {
         require(data.contentHash != 0, "Media: content hash must be non-zero");
         // require(
@@ -503,7 +524,7 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
 
         uint256 tokenId = _tokenIdTracker.current();
 
-        _safeMint(creator, tokenId);
+        _safeMint(creator, tokenId, tokenType);
         _tokenIdTracker.increment();
         _setTokenContentHash(tokenId, data.contentHash);
         _setTokenMetadataHash(tokenId, data.metadataHash);

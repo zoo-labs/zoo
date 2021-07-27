@@ -32,7 +32,7 @@ const LinkLabel = styled.div<{ isPushed: boolean }>`
   text-align: right;
 
   &:hover {
-    color: ${({ isPushed, theme }) => (isPushed ? theme.colors.primaryDark : "transparent")};
+    color: ${({ isPushed, theme }) => (isPushed ? theme.colors.primaryPop : "transparent")};
   }
   
 `;
@@ -59,7 +59,7 @@ const MenuEntry = styled.div<Props>`
   }
 
   &:hover {
-    border-bottom: ${({ theme }) => `3px solid ${theme.colors.primaryDark}`};
+    border-bottom: ${({ theme }) => `3px solid ${theme.colors.accent}`};
   }
 
   // Safari fix
@@ -68,7 +68,7 @@ const MenuEntry = styled.div<Props>`
   &.rainbow {
     background-clip: text;
     animation: ${rainbowAnimation} 3s ease-in-out infinite;
-    background: ${({ theme }) => theme.colors.primaryDark};
+    background: ${({ theme }) => theme.colors.primary};
     background-size: 400% 100%;
   }
 `;
