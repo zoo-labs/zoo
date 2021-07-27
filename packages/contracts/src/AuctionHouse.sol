@@ -16,14 +16,6 @@ import {IMedia} from "./interfaces/IMedia.sol";
 import {IAuctionHouse} from "./interfaces/IAuctionHouse.sol";
 import "./console.sol";
 
-interface IWETH {
-    function deposit() external payable;
-
-    function withdraw(uint256 wad) external;
-
-    function transfer(address to, uint256 value) external returns (bool);
-}
-
 interface IMediaExtended is IMedia {
     function marketContract() external returns (address);
 }
