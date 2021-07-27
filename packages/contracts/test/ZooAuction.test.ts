@@ -533,6 +533,7 @@ describe("ZooAuction", () => {
 
         token = token.connect(auctionHouse.signer)
 
+        await token.connect(admin).mint(await auctionHouse.signer.getAddress(), 200)
         await token.approve(auctionHouse.address, 200)
 
         await auctionHouse.createBid(0, 200, {
@@ -1076,7 +1077,7 @@ describe("ZooAuction", () => {
         //   expect(logDescription.args.auctionCurrency).to.eq(token.address);
         // });
 
-        it.only("should delete the auction", async () => {
+        it("should delete the auction", async () => {
 
           await auctionHouse.endAuction(0);
 
