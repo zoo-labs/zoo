@@ -33,9 +33,7 @@ contract ZooDrop is Ownable {
 
     // mapping of animal name to available hybrid animals introduced in this drop
     mapping (string => Hybrid) public hybrids;
-    
-    // mapping of base animal pairs to possible hybrid animal pairs
-    mapping (bytes32 => Hybrid) public possiblePairs;
+
 
     // mapping of animal key to animal tokenuri
     mapping (string => string) public tokenURI;
@@ -94,6 +92,11 @@ contract ZooDrop is Ownable {
         metaDataURI[_animal] = _metaDataURI;
 
         hybrids[string(abi.encodePacked(_base, _secondary))] = newHybrid;
+        tokenURI[string(abi.encodePacked(_base, _secondary))] = _tokenURI;
+        metaDataURI[string(abi.encodePacked(_base, _secondary))] = _metaDataURI;
+
+        hybrids[_animal] = newHybrid;
+
     }
 
     function setTokenURI(string memory _animal, string memory _tokenURI) public onlyOwner {
@@ -110,6 +113,10 @@ contract ZooDrop is Ownable {
         // _currentSupply = _currentSupply - 1;
         _currentSupply.decrement();
         return (tokenURI["basicEgg"], metaDataURI["basicEgg"]);
+    }
+
+    function getHybridEgg() public onlyOwner returns (string memory, string memory) {
+        return (tokenURI["hybridEgg"], metaDataURI["hybridEgg"]);
     }
 }
 
