@@ -13,11 +13,15 @@ const FaucetWrapper = styled.div`
 `;
 
 export const Faucet: React.FC<FaucetProps> = () => {
+   const [wait, setWait] = useState(false);
    const { chainId, account } = useWeb3React();
    const web3 = useWeb3();
    const [balance, setBalance] = useState(0);
 
    const zooToken = getZooToken(web3, chainId);
+   const faucet = getZooFaucet(web3, chainId);
+
+   const faucetAmt = 50000;
 
    const getBalance = async () => {
       try {
@@ -31,9 +35,28 @@ export const Faucet: React.FC<FaucetProps> = () => {
       }
    };
 
+   const handleFaucet = () => {
+      try {
+         setWait(true);
+         faucet.methods
+            .buyZoo(account, faucetAmt)
+            .send({ from: account })
+            .then(() => {
+               setWait(false);
+               getBalance();
+            })
+            .catch((e) => {
+               console.error("ISSUE USING FAUCET \n", e);
+               setWait(false);
+            });
+      } catch (e) {
+         console.error("ISSUE USING FAUCET \n", e);
+      }
+   };
+
    useEffect(() => {
       getBalance();
-   }, [account, chainId]);
+   }, [account, chainId, wait]);
 
    useEffect(() => {
       getBalance();
@@ -43,8 +66,8 @@ export const Faucet: React.FC<FaucetProps> = () => {
       <>
          <Page>
             <FaucetWrapper>
-               <BorderButton scale="md" /*  onClick={onBuy} */>
-                  Grant Zoo
+               <BorderButton disabled={wait} scale="md" onClick={handleFaucet}>
+                  {wait ? "Processing..." : "Get Zoo"}
                </BorderButton>
                <h1>Current balance {balance}</h1>
             </FaucetWrapper>

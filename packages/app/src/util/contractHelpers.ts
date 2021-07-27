@@ -14,10 +14,10 @@ import {
 // ABIs
 import zooTokenAbi from "config/abi/zooToken.json";
 import zooAuctionAbi from "config/abi/zooAuction.json";
-import zooDropAbi from "config/abi/zooToken.json";
-import zooFaucetAbi from "config/abi/zooToken.json";
-import zooMarketAbi from "config/abi/zooToken.json";
-import zooMediaAbi from "config/abi/zooToken.json";
+import zooDropAbi from "config/abi/zooDrop.json";
+import zooFaucetAbi from "config/abi/zooFaucet.json";
+import zooMarketAbi from "config/abi/zooMarket.json";
+import zooMediaAbi from "config/abi/zooMedia.json";
 
 const getContract = (abi: any, address: string, web3?: Web3) => {
    return new web3.eth.Contract(abi as unknown as AbiItem, address);
