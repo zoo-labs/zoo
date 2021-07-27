@@ -13,13 +13,17 @@ import {Decimal} from "./Decimal.sol";
 import "hardhat/console.sol";
 
 // a instance for every egg or animal
-contract ZooMedia is Media, Ownable {
+contract ZooMedia is Media {
     using SafeMath for uint256;
     using Counters for Counters.Counter;
+
+
 
     uint256 public hybridHatchTime = 36 hours;
 
     uint256[] public coolDowns = [4 hours, 1 days, 3 days, 7 days, 30 days];
+
+    
 
     enum TokenType {
         BASE_EGG,
@@ -82,6 +86,8 @@ contract ZooMedia is Media, Ownable {
     //Token address of the ZooToken
     ZooToken public token;
 
+    address _owner;
+
     constructor(
         string memory symbol,
         string memory name,
@@ -89,6 +95,13 @@ contract ZooMedia is Media, Ownable {
         address _token
     ) Media(symbol, name, _market) {
         token = ZooToken(_token);
+        _owner = msg.sender;
+    }
+
+    
+     modifier onlyOwner {
+        require(msg.sender == _owner, "Only owner has access");
+        _;
     }
 
     function addDrop(
