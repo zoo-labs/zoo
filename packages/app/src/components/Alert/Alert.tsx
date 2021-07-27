@@ -58,6 +58,7 @@ const Details = styled.div<{ hasHandler: boolean }>`
   padding-left: 12px;
   padding-right: ${({ hasHandler }) => (hasHandler ? `${withHandlerSpacing}px` : "12px")};
   padding-top: 12px;
+  background: #090909;
 `;
 
 const CloseHandler = styled.div`

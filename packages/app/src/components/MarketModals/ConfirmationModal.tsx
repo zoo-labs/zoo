@@ -13,7 +13,7 @@ interface Props {
 }
 
 const Modal = styled(Existing)`
-    background-color: black;
+    background-color: ${({theme}) => theme.colors.background};
 `
 
 
@@ -22,7 +22,7 @@ const Confirmation: React.FC<Props> = ({onDismiss = () => null, confirmation, ac
         <Modal title="Are you Sure?" onDismiss={onDismiss}>
             <Standard>{`You want to ${action==="Buy"? "Buy" : "Bid on"} ${name} for $${submission? submission : amount}`}</Standard>
             <BorderButton onClick={()=>onDismiss()}>Cancel</BorderButton>
-            <BorderButton>Confirm</BorderButton>
+            <BorderButton onClick={()=>confirmation()}>Confirm</BorderButton>
         </Modal>
     )
 }

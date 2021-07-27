@@ -1,14 +1,18 @@
 import { Colors } from "./types";
 
 export const baseColors = {
-  failure: "#C62073",
-  primary: "#2B7EFF",
-  primaryBright: "#94BEFF",
-  primaryDark: "#024ABB",
-  secondary: "#e20092",
-  secondaryDark: "#21c5d9",
-  success: "#20DFDA",
-  warning: "#FFB237",
+  failure: "#B10058",
+  primary: "#289DFD",
+  primaryBright: "#B1DCFF",
+  primaryLight: "#B1DCFF",
+  primaryPop: "#28D7FD",
+  primaryDark: "#C82064",
+  primaryDarker: "#651133",
+  secondary: "#28FD73",
+  secondaryDark: "#607A2A",
+  accent: "#F5F775",
+  success: "#28D7FD",
+  warning: "#B10058",
   white: "#ffffff"
 };
 
@@ -21,6 +25,7 @@ export const lightColors: Colors = {
   ...brandColors,
   background: "#040404",
   backgroundDisabled: "#E9EAEB", // not yet created
+  sidebar: "#FFFFFF", // "#212226",
   contrast: "#191326",
   dropdown: "#F6F6F6",
   invertedContrast: "#282c34",
@@ -37,7 +42,7 @@ export const lightColors: Colors = {
   headerSubtitle: "#d3f5f3", // b4e5ff
   borderColor: "#FFFFFF",
   secondaryDark: "#20DFDA",
-  card: "#282c34",
+  card: "#ffffff",
   tableHeader: "#FFFFFF", // "#A7C8FB",
   cardLabel: "#314F81",
   gradients: {
@@ -62,6 +67,7 @@ export const darkColors: Colors = {
   // secondary: "#138AF2",
   background: "#040404",
   backgroundDisabled: "#A6B6CE",
+  sidebar: "#212226",
   contrast: "#FFFFFF",
   dropdown: "#1E1D20",
   invertedContrast: "#282d33",
@@ -98,3 +104,12 @@ export const darkColors: Colors = {
     borderColor: "#ffffff"
   },
 };
+
+// sidebar #FFFFFF
+// background #F9F9FA
+// primary #289DFD
+// primaryLight #B1DCFF
+// primaryDark #C82064
+// primaryPop #28D7FD
+// accentColor #F5F775
+// secondaryColor #28FD73
