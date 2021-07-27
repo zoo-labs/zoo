@@ -34,7 +34,7 @@ const BidInput = styled.input.attrs({
 
 const Content = styled.div`
    * {
-      margin-bottom: 10px;
+      margin-bottom: 4px;
    }
 `;
 
@@ -112,17 +112,17 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
          <Modal title={`${item.name}`} onDismiss={onDismiss}>
             <Content>
                <Text>{`Current Bid: ${item.currentBid}`}</Text>
-               <Text>{`Buy Now: ${item.buyNow}`}</Text>
+               <Text >{`Buy Now: ${item.buyNow}`}</Text>
                <BidInput
                   type="number"
                   onChange={changed()}
                   defaultValue={value}
                />
-               <Flex justifyContent="space-evenly" flexDirection="row">
-                  <BorderButton scale="md" onClick={() => onConfirmBuy()}>
+               <Flex mt="16px" justifyContent="space-evenly" flexDirection="row">
+                  <BorderButton scale="sm" onClick={() => onConfirmBuy()}>
                      Buy Now
                   </BorderButton>
-                  <BorderButton scale="md" onClick={() => onConfirmBid()}>
+                  <BorderButton scale="sm" onClick={() => onConfirmBid()}>
                      Bid
                   </BorderButton>
                </Flex>

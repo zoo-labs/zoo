@@ -43,11 +43,11 @@ export async function deployCurrency() {
 }
 
 export async function mintCurrency(
-  currency: string,
+  tokenAddress: string,
   to: string,
   value: number
 ) {
-  await ZooToken__factory.connect(currency, deployerWallet).mint(to, value);
+  await ZooToken__factory.connect(tokenAddress, deployerWallet).mint(to, value);
 }
 
 export async function approveCurrency(
@@ -75,13 +75,13 @@ export type EIP712Sig = {
 export async function signPermit(
   owner: Wallet,
   toAddress: string,
-  tokenAddress: string,
+  mediaAddress: string,
   tokenId: number,
   chainId: number
 ) {
   return new Promise<EIP712Sig>(async (res, reject) => {
     let nonce;
-    const mediaContract = ZooMedia__factory.connect(tokenAddress, owner);
+    const mediaContract = ZooMedia__factory.connect(mediaAddress, owner);
 
     try {
       nonce = (
@@ -144,7 +144,7 @@ export async function signPermit(
 
 export async function signMintWithSig(
   owner: Wallet,
-  tokenAddress: string,
+  mediaAddress: string,
   creator: string,
   contentHash: string,
   metadataHash: string,
@@ -153,7 +153,7 @@ export async function signMintWithSig(
 ) {
   return new Promise<EIP712Sig>(async (res, reject) => {
     let nonce;
-    const mediaContract = ZooMedia__factory.connect(tokenAddress, owner);
+    const mediaContract = ZooMedia__factory.connect(mediaAddress, owner);
 
     try {
       nonce = (await mediaContract.mintWithSigNonces(creator)).toNumber();
@@ -239,12 +239,13 @@ export const deployOtherNFTs = async () => {
 
 export const deployZooProtocol = async () => {
   const [deployer] = await ethers.getSigners();
+  const token = await (await new ZooToken__factory(deployer).deploy()).deployed();
   const market = await (await new ZooMarket__factory(deployer).deploy()).deployed();
   const media = await (
-    await new ZooMedia__factory(deployer).deploy("ANML", "ZooAnimals", market.address)
+    await new ZooMedia__factory(deployer).deploy("ANML", "ZooAnimals", market.address, token.address)
   ).deployed();
   await market.configure(media.address);
-  return { market, media };
+  return { token, market, media };
 };
 
 export const deployBidder = async (auction: string, nftContract: string) => {
