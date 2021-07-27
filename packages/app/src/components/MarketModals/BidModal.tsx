@@ -115,13 +115,13 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
                flexDirection="column"
                ml="20px"
                mt="20px">
-               <Label fontSize="22px" color="#C82064" fontWeight="550">
+               <Label fontSize="22px" color="text" fontWeight="550">
                   Current Bid
                </Label>
                <Text bold ml="16px" fontSize="22px" color="background">
                   {item.currentBid}
                </Text>
-               <Label fontSize="22px" color="#C82064" fontWeight="550">
+               <Label fontSize="22px" color="text" fontWeight="550">
                   Buy Now
                </Label>
                <Text bold ml="16px" fontSize="22px" color="background">

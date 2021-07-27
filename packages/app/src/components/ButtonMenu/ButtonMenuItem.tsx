@@ -19,7 +19,7 @@ const InactiveButton: PolymorphicComponent<InactiveButtonProps, "button"> = styl
 
 const ButtonMenuItem: PolymorphicComponent<ButtonMenuItemProps, "button"> = ({
   isActive = false,
-  variant = variants.BUBBLEGUM,
+  variant = variants.PRIMARY,
   as,
   ...props
 }: ButtonMenuItemProps) => {

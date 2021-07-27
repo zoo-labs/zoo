@@ -35,7 +35,8 @@ const BottomModal: React.FC<Props> = ({
                      textAlign="center"
                      fontSize="22px"
                      fontWeight="600"
-                     style={{ color: "rgb(195 0 168)" }}>
+                     // style={{ color: "rgb(195 0 168)" }}
+                  >
                      {header}
                   </Label>
                </Sheet.Header>
