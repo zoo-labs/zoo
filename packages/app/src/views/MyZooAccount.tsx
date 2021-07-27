@@ -106,6 +106,7 @@ const RowLayout = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+
   & > * {
     min-width: calc(100vw - 20px);
     max-width: 31.5%;
@@ -560,8 +561,8 @@ const MyZooAccount: React.FC = () => {
       <RowLayout>
         <Route exact path={`${path}`}>
           <Swiper
-            slidesPerView={3.5}
-            spaceBetween={10}
+            slidesPerView={ document.body.getBoundingClientRect().width / (140)}
+            spaceBetween={0}
             pagination={{ clickable: true }}
           >
             {eggData.map((egg) => (
