@@ -105,6 +105,10 @@ contract ZooDrop is Ownable {
         tokenURI[_animal] = _tokenURI;
     }
 
+    function getMetadataURI(string memory _animal) public view returns (string memory) {
+        return metadataURI[_animal];
+    }
+
     function setMetadataURI(string memory _animal, string memory _metadataURI) public onlyOwner {
         metadataURI[_animal] = _metadataURI;
     }
