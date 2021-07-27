@@ -62,10 +62,10 @@ const IconButton = styled.button`
         height: 40px;
         width: 40px;
         // fill: ${({ theme }) => theme.colors.primaryLight};
-        fill: ${({theme}) => theme.colors.primaryPop};
+        fill: ${({theme}) => theme.colors.text};
         stroke: #a9a9a9;
         // text-shadow: 1px 1px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black;
-        // stroke: ${({theme}) => theme.colors.primary};
+        // stroke: ${({theme}) => theme.colors.text};
         stroke-width: 15px;
     }
 `
@@ -74,9 +74,9 @@ const MainHeading = styled(Text)`
     width: 100%;
     color: ${({theme}) => theme.colors.primary};
     font-weight: 900;
-    -webkit-text-fill-color: ${({theme}) => theme.colors.accent};
+    -webkit-text-fill-color: ${({theme}) => theme.colors.text};
     -webkit-text-stroke-width: .5px;
-    -webkit-text-stroke-color: ${({theme}) => theme.colors.primaryDarker};
+    -webkit-text-stroke-color: ${({theme}) => theme.colors.text};
 `
 const Subheading = styled(Text)`
     width: 100%;
