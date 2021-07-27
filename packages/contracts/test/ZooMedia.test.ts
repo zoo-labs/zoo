@@ -116,6 +116,7 @@ describe('ZooMedia', () => {
   async function tokenAs(wallet: Wallet) {
     return ZooMedia__factory.connect(tokenAddress, wallet);
   }
+
   async function deploy() {
     const auction = await (
       await new Market__factory(deployerWallet).deploy()
