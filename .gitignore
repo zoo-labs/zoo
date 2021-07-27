@@ -44,3 +44,6 @@ yarn-error.log*
 
 yarn.lock
 .vscode
+
+packages/app/src/artifacts/
+packages/app/src/contracts.json
