@@ -490,7 +490,7 @@ const MyZooAccount: React.FC = () => {
       <RowLayout>
         <Route exact path={`${path}`}>
           <Swiper
-            slidesPerView={2.2}
+            slidesPerView={3.5}
             spaceBetween={10}
             pagination={{ clickable: true }}
           >
