@@ -27,19 +27,38 @@ contract ZooDrop is Ownable {
         uint256 yield;
     }
 
+    struct Egg {
+        // need this for hatching hybrid eggs
+        // uint256 id;
+        string parent1;
+        string parent2;
+        uint256 eggCreationTime;
+    }
+
+    // mapping of address to tokenId of eggs
+    mapping (address => uint256) public ownedEggs;
+
+    // mapping of token id to eggs
+    mapping (uint256 => Egg) public eggs;
+
+    // mapping of token id to minted base animals
+    mapping (uint256 => string) public existingAnimals;
+
+    // mapping of token id to minted hybrids animals
+    mapping (uint256 => string) public existingHybrids;
 
     // mapping of animal name to available base animals introduced in this drop
     mapping (string => Animal) public animals;
 
     // mapping of animal name to available hybrid animals introduced in this drop
     mapping (string => Hybrid) public hybrids;
-    
+
     // mapping of base animal pairs to possible hybrid animal pairs
     mapping (bytes32 => Hybrid) public possiblePairs;
 
     // mapping of animal key to animal tokenuri
     mapping (string => string) public tokenURI;
-    
+
     // mapping of animal key to animal metadata
     mapping (string => string) public metaDataURI;
 
@@ -100,7 +119,7 @@ contract ZooDrop is Ownable {
         tokenURI[_animal] = _tokenURI;
     }
 
-    
+
     function setMetadataURI(string memory _animal, string memory _metadataURI) public onlyOwner {
         metaDataURI[_animal] = _metadataURI;
     }
@@ -111,6 +130,36 @@ contract ZooDrop is Ownable {
         _currentSupply.decrement();
         return (tokenURI["basicEgg"], metaDataURI["basicEgg"]);
     }
+
+    function checkBreedDelay() public returns (uint256) {
+        uint256 count = _breedCount[msg.sender];
+        uint256 delay;
+        if (count >= 5) {
+            delay=coolDowns[coolDowns.length-1];
+        } else if (count == 4) {
+            delay=coolDowns[coolDowns.length-2];
+        } else if (count == 3) {
+            delay=coolDowns[coolDowns.length-3];
+        } else if (count == 3) {
+            delay=coolDowns[coolDowns.length-4];
+        } else if (count == 1) {
+            delay=coolDowns[coolDowns.length-5];
+        } else {
+            delay = 0;
+        }
+        return delay;
+
+    }
+
+// Callback for when ERC721 is minted using this contract
+
+function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes memory _data) public override returns(bytes4) {
+    Egg memory newEgg;
+    newEgg.eggCreationTime = block.number;
+    eggs[_tokenId] = newEgg;
+    ownedEggs[_from] = _tokenId;
+    return 0x150b7a02;
+ }
 }
 
 
