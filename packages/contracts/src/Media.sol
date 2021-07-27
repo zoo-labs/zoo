@@ -243,6 +243,7 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
     {
         _mintForCreator(msg.sender, data, bidShares, "");
 
+    }
 
     /**
      * @notice see IMedia
