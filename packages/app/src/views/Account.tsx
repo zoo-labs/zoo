@@ -1,6 +1,6 @@
 import BorderButton from "components/Button/BorderButton";
 import Page from "components/layout/Page";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AppState } from "state";
 import { useSelector } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
@@ -12,6 +12,8 @@ import Body from "components/layout/Body";
 import { useModal } from "components/Modal";
 import BuyEggs from "components/BuyEggs";
 import MyZooAccount from "views/MyZooAccount";
+import { getZooToken, getZooFaucet } from "util/contractHelpers";
+import useWeb3 from "hooks/useWeb3";
 
 const HeadingContainer = styles.div`
     width: 100%;
@@ -25,7 +27,7 @@ const MyZooContainer = styles.div`
     display: flex;
     padding: 16px;
     
-`
+`;
 
 const StyledButton = styles.button`
     cursor: pointer;
@@ -57,8 +59,11 @@ const RowWrapper = styles.div`
 `;
 
 const Account: React.FC = () => {
-   const { account } = useWeb3React();
-   const {isXl} = useMatchBreakpoints();
+   const [balance, setBalance] = useState(0.0);
+   const [wait, setWait] = useState(false);
+   const { account, chainId } = useWeb3React();
+   const web3 = useWeb3();
+   const { isXl } = useMatchBreakpoints();
    const history = useHistory();
    const [onBuyEggs] = useModal(<BuyEggs />);
    const allEggs = useSelector<AppState, AppState["zoo"]["eggs"]>(
@@ -71,6 +76,31 @@ const Account: React.FC = () => {
    const handleClick = () => {
       history.push("/bank");
    };
+
+   const zooToken = getZooToken(web3, chainId);
+   const faucet = getZooFaucet(web3, chainId);
+
+   const faucetAmt = web3.utils.toWei("50");
+
+   const getBalance = async () => {
+      try {
+         const decimals = await zooToken.methods.decimals().call();
+         const rawBalance = await zooToken.methods.balanceOf(account).call();
+         const divisor = parseFloat(Math.pow(10, decimals).toString());
+         const balance = rawBalance / divisor;
+         setBalance(balance);
+      } catch (e) {
+         console.error("ISSUE LOADING ZOO BALANCE \n", e);
+      }
+   };
+
+   useEffect(() => {
+      getBalance();
+   }, [account, chainId]);
+
+   useEffect(() => {
+      getBalance();
+   }, []);
 
    const pageHeading = (
       <HeadingContainer>
@@ -88,24 +118,66 @@ const Account: React.FC = () => {
       </HeadingContainer>
    );
 
-   const toLink = () => {
-    location.href = "https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997"
-  }
+   const handleFaucet = () => {
+      try {
+         setWait(true);
+         faucet.methods
+            .buyZoo(account, faucetAmt)
+            .send({ from: account })
+            .then(() => {
+               setWait(false);
+               getBalance();
+            })
+            .catch((e) => {
+               console.error("ISSUE USING FAUCET \n", e);
+               setWait(false);
+            });
+      } catch (e) {
+         console.error("ISSUE USING FAUCET \n", e);
+      }
+   };
+
+   const handleFunds = () => {
+      console.log(chainId);
+      switch (chainId) {
+         case 97:
+            handleFaucet();
+            break;
+         default:
+            location.href =
+               "https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997";
+      }
+   };
+
    return (
       <>
          <Page>
             {pageHeading}
-            <Body> 
+            <Body>
                <LabelWrapper>
                   <Label small>Wallet Balance</Label>
-                  <BorderButton scale="sm" minWidth={!isXl ? "140px" : "160px"}  style={{ fontSize: `${!isXl ? "14px" : "16px"}` }} onClick={toLink}>Add Funds</BorderButton>
+                  <BorderButton
+                     scale="sm"
+                     minWidth={!isXl ? "140px" : "160px"}
+                     style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}
+                     onClick={handleFunds}>
+                     {chainId !== 97
+                        ? "Add Funds"
+                        : wait
+                        ? "Processing..."
+                        : "Get Zoo"}
+                  </BorderButton>
                </LabelWrapper>
                <RowWrapper>
-                  <ValueWrapper>Balance</ValueWrapper>
+                  <ValueWrapper>Balance: {balance} ZOO</ValueWrapper>
                </RowWrapper>
                <LabelWrapper>
                   <Label small>{currentEggsOwned} Eggs Owned</Label>
-                  <BorderButton scale="sm" minWidth={!isXl ? "120px" : "140px"}  onClick={() => onBuyEggs()} style={{fontSize: `${!isXl ? "14px" : "16px"}`}}>
+                  <BorderButton
+                     scale="sm"
+                     minWidth={!isXl ? "120px" : "140px"}
+                     onClick={() => onBuyEggs()}
+                     style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}>
                      Buy Eggs
                   </BorderButton>
                </LabelWrapper>

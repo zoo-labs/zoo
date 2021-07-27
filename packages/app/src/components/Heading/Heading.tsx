@@ -29,7 +29,7 @@ const style = {
 
 const Heading = styled(Text).attrs({ bold: true })<HeadingProps>`
   font-size: ${({ size }) => style[size || sizes.MD].fontSize};
-  // color: ${({ headerColor, disabled, theme }) => disabled ? `${theme.colors.tertiary}` : headerColor || "white"};
+  color: ${({ headerColor, disabled, theme }) => disabled ? `${theme.colors.tertiary}` : headerColor || "white"};
   font-weight: 550;
   line-height: 1.5;
   letter-spacing: 3px;
