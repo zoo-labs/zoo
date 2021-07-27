@@ -13,14 +13,49 @@ import {
   Card as Existing,
   CardBody,
   EggCard,
+  VideoPlayer
 } from "components";
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import { getMilliseconds, getDaysHours } from "util/timeHelpers";
 import { breedTimeouts, eggTimeout } from "constants/constants";
 import { Animal, Egg } from "entities/zooentities";
-import { addAnimal, addEgg } from "state/actions";
+import { addAnimal, addEgg, burnEgg } from "state/actions";
+import { ImInsertTemplate } from "react-icons/im";
 import BorderButton from "components/Button/BorderButton";
+import { FaLessThanEqual } from "react-icons/fa";
+import { animalMapping } from 'util/animalMapping'
+import NewAnimalCard from 'components/NewAnimal/NewAnimalCard';
+
+// install Swiper modules
+// SwiperCore.use([Pagination]);
+
+const IconCont = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  & svg {
+    color: ${({ theme }) => theme.colors.primary};
+    animation: spin 2s ease infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+const ImageContainer = styled.div`
+  img {
+    width: 100%;
+    height: 100%;
+    minheight: 300px;
+    overflow: hidden;
+  }
+`;
 
 const InfoBlock = styled.div`
   padding: 4px;
@@ -124,6 +159,21 @@ const MyZooAccount: React.FC = () => {
   const dispatch = useDispatch();
   const { isXl, isXs } = useMatchBreakpoints();
   const chainIdSet = chainId === undefined ? "1" : String(chainId);
+  const [ eggType, setEggType ] = useState('')
+  const [ isOpen, setOpen ] = useState(false)
+  const [ hatched, setHatched ] = useState(
+    {
+      tokenId: "",
+      name: "",
+      description: "",
+      yield: "",
+      boost: "",
+      rarity: "",
+      dob: "",
+      imageUrl: "",
+      listed: false,
+  } 
+  )
 
   const allAnimals = useSelector<AppState, AppState["zoo"]["animals"]>(
     (state) => state.zoo.animals
@@ -149,6 +199,53 @@ const MyZooAccount: React.FC = () => {
     dob: "",
     listed: false,
   };
+
+
+  const hatchEgg = (egg) => {
+    setEggType(egg.basic? "basic" : "hybrid")
+    const eggStruct = {
+        owner: egg.owner
+    }
+    console.log("BURNING")
+    let randIdx;
+
+    // REPLACE WITH HATCH FUNCTION FROM CONTRACT
+    if(egg.basic){
+        randIdx = Math.floor(Math.random() * (5 - 1) + 1);
+    }
+    else {
+        randIdx = Math.floor(Math.random() * (13 - 10) + 10);
+    }
+    console.log(randIdx)
+    const aFromMap = animalMapping[randIdx]
+    console.log(aFromMap, randIdx)
+    const newAnimal: Animal = {
+        tokenId: Math.floor(Math.random() * (999999 - 0) + 0).toString(),
+        animalId: aFromMap.animalId,
+        name: aFromMap.name,
+        description: aFromMap.description,
+        yield: aFromMap.yield,
+        boost: aFromMap.boost,
+        rarity: aFromMap.rarity,
+        dob: aFromMap.dob,
+        imageUrl: aFromMap.imageUrl,
+        startBid: aFromMap.startBid,
+        currentBid: aFromMap.currentBid,
+        buyNow: aFromMap.buyNow,
+        listed: aFromMap.listed,
+        bloodline: aFromMap.bloodline,
+        owner: account,
+        CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
+        timeRemaining: 0,
+        breedCount: 0,
+        lastBred: ""
+    }
+    setHatched(newAnimal)
+    setOpen(true)
+    dispatch(burnEgg(egg))
+    dispatch(addAnimal(newAnimal))
+    // ---------------------------------------------
+  }
 
   const breed = (onDismiss) => {
     const animal1: Animal = array[0];
@@ -284,6 +381,11 @@ const MyZooAccount: React.FC = () => {
   const [onSell] = useModal(
     <SellConfirm onDismiss={() => null} breed={sell} />
   );
+
+  const onVideoEnd = () => {
+    setEggType('')
+    setTimeout(()=>{setOpen(false)}, 5000)
+  }
 
   const renderAnimals = (hybrid): JSX.Element => {
     const animalData = [];
@@ -441,13 +543,13 @@ const MyZooAccount: React.FC = () => {
       <RowLayout>
         <Route exact path={`${path}`}>
           <Swiper
-            slidesPerView={2.2}
+            slidesPerView={3.5}
             spaceBetween={10}
             pagination={{ clickable: true }}
           >
             {eggData.map((egg) => (
               <SwiperSlide key={egg.id}>
-                <EggCard egg={egg} />
+                <EggCard egg={egg} hatchEgg={hatchEgg}/>
               </SwiperSlide>
             ))}
           </Swiper>
@@ -483,17 +585,22 @@ const MyZooAccount: React.FC = () => {
     return a.timeRemaining - b.timeRemaining;
   });
 
-  return (
-    <div>
-      <Page>
-        {renderEggs()}
-        <RowTitle>Breedable Animals</RowTitle>
-        {renderAnimals("pure")}
-        <RowTitle>Hybrid Animals</RowTitle>
-        {renderAnimals("hybrid")}
-      </Page>
-    </div>
-  );
+  return (  
+  <div>
+    {eggType !== '' ? 
+      <VideoPlayer videoPath={eggType === 'basic' ? "hatch_mobile_basic.mp4": "hatch_mobile_hybrid.mp4"} onDone={() => onVideoEnd()}/> : 
+      isOpen ? <NewAnimalCard animal={hatched} isOpen={setOpen}/> :
+    <Page>
+      {/* <RowTitle>My Eggs</RowTitle> */}
+      {renderEggs()}
+      <RowTitle>Breedable Animals</RowTitle>
+      {renderAnimals("pure")}
+      <RowTitle>Hybrid Animals</RowTitle>
+      {renderAnimals("hybrid")}
+    </Page>
+  }
+  </div>
+  )
 };
 
 export default MyZooAccount;

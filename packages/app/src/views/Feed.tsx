@@ -22,6 +22,9 @@ const Container = styled.div<{ isMobile?: boolean }>`
   display: ${({ isMobile }) => (isMobile ? null : "flex")};
   flex-direction: ${({ isMobile }) => (isMobile ? `column` : "row")};
   flex-wrap: wrap;
+  & .swiper-container {
+    height: 100vh;
+  } 
 `;
 const Card = styled.div<{ url?: string }>`
   width: 100vw;
@@ -253,7 +256,7 @@ export default function Feed() {
   return (
     <Container isMobile={isMobile}>
       <ToggleContainer>
-        <ButtonMenu activeIndex={activeIndex} scale="sm" variant="subtle">
+        <ButtonMenu activeIndex={activeIndex} scale="sm">
           <ButtonMenuItem
             as={Link}
             to={`${url}/myzoo`}
@@ -271,7 +274,7 @@ export default function Feed() {
         </ButtonMenu>
       </ToggleContainer>
       <Swiper
-        spaceBetween={30}
+        // spaceBetween={30}
         slidesPerView={isMobile ? 1 : 3}
         // onSlideChange={() => console.log("slide change")}
         // onSwiper={(swiper) => console.log(swiper)}
