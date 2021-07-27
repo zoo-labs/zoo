@@ -23,7 +23,6 @@ import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import { getMilliseconds, getDaysHours } from "util/timeHelpers";
 import { rarityTable, breedTimeouts, eggTimeout } from "constants/constants";
-import MyMP16OSFFont from "../fonts/MP16OSF.ttf";
 import { Animal, Egg } from "entities/zooentities";
 import { addAnimal, addEgg } from "state/actions";
 import { ImInsertTemplate } from "react-icons/im";
