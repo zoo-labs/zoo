@@ -47,7 +47,7 @@ const networks: HardhatUserConfig['networks'] = {
     chainId: 56,
     // gasPrice: 1000000000,
     accounts: {
-      mnemonic: mnemonic(),
+      mnemonic: mnemonic('mnemonic.mainnet'),
     },
   },
   testnet: {
@@ -55,7 +55,7 @@ const networks: HardhatUserConfig['networks'] = {
     chainId: 97,
     // gasPrice: 1000000000,
     accounts: {
-      mnemonic: mnemonic(),
+      mnemonic: mnemonic('mnemonic.testnet'),
     },
   },
 }
