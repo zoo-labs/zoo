@@ -21,7 +21,7 @@ export const Faucet: React.FC<FaucetProps> = () => {
    const zooToken = getZooToken(web3, chainId);
    const faucet = getZooFaucet(web3, chainId);
 
-   const faucetAmt = 50000;
+   const faucetAmt = web3.utils.toWei("50000");
 
    const getBalance = async () => {
       try {
