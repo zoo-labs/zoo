@@ -95,7 +95,7 @@ contract ZooMedia is Media, Ownable {
         _dropIDs.increment();
         uint256 dropID = _dropIDs.current();
 
-        ZooDrop drop = new ZooDrop(_totalSupply, _eggPrice);
+        ZooDrop drop = new ZooDrop(_name, _totalSupply, _eggPrice);
         drops[dropID] = address(drop);
 
         emit AddDrop(dropID, address(drop));
@@ -191,7 +191,7 @@ contract ZooMedia is Media, Ownable {
         emit Burn(msg.sender, tokenID);
 
         // get the rarity for an animal
-        uint256 rarity = random();
+        uint256 rarity = unsafeRandom();
 
         Media.MediaData memory data;
 
