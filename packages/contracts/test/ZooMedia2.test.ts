@@ -370,11 +370,10 @@ describe("Test ZooMedia (2)", () => {
 
     }
     
+    
     async function breedHybrid(){
-        await addAnimals();
-        await addHybrids();
 
-        await zooToken.approve(zooMedia.address, 600)
+        await zooToken.approve(zooMedia.address, 1000)
 
         const buyFirstEgg = await zooMedia.connect(owner).buyEgg(1);
         const buyFirstEggReceipt = await buyFirstEgg.wait();
@@ -572,6 +571,8 @@ describe("Test ZooMedia (2)", () => {
     it("Should hatch & burn hybrid egg", async() => {
 
         // this.timeout(500000000000000);
+        await addAnimals();
+        await addHybrids();
         const token = await breedHybrid()
 
         const hatchEgg  = await zooMedia.hatchEgg(1,4)
@@ -687,6 +688,7 @@ describe("Test ZooMedia (2)", () => {
 
     it("Should revert when breeding with a hybrid", async() => {
         await addAnimals();
+        await addHybrids();
                 
         await zooToken.approve(zooMedia.address, 800)
 
@@ -756,6 +758,7 @@ describe("Test ZooMedia (2)", () => {
                 token_id_hybridEgg = element.args["_eggTokenId"]
             }
         });
+        // console.log("hybrid egg id: ", token_id_hybridEgg) // id is 4
 
         const firstHatchedHybridAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_hybridEgg);
         const firstHatchedHybridAnimalReceipt = await firstHatchedHybridAnimal.wait();        
@@ -769,8 +772,9 @@ describe("Test ZooMedia (2)", () => {
                 token_id_Hybrid_Animal = element.args["_tokenID"]
             }
         });
+        // console.log("hybrid animal id: ", token_id_Hybrid_Animal)
 
-          expect(token_id_Hybrid_Animal.toNumber()).to.equal(5);
+        expect(token_id_Hybrid_Animal.toNumber()).to.equal(5);
 
         // const breedTx2 = await zooMedia.connect(owner).breedAnimal(1, token_id_Animal_1, token_id_Hybrid_Animal);
         // console.log(breedTx2);
@@ -781,11 +785,44 @@ describe("Test ZooMedia (2)", () => {
         //         token_id_hybridEgg = element.args["_eggTokenId"]
         //     }
         // });
+        try {
+            const breedTx2 = await zooMedia.connect(owner).breedAnimal(1, token_id_Animal_1, token_id_Hybrid_Animal);
+        } catch (e) {
+            expect(e.message.includes('Hybrid animals cannot breed.')).to.be.true;
+        }
  
 
     });
 
     it("Should revert when breeding with two hybrids", async() => {
+        await addAnimals();
+        await addHybrids();
+        const token_1 = breedHybrid()
+        const token_2 = breedHybrid()
+        
+
+        let sender
+
+        let token_id_hybridEgg
+
+        try{
+            const breedTx = await zooMedia.connect(owner).breedAnimal(1, token_1, token_2);
+            const breedReceipt = await breedTx.wait();
+            sender = breedReceipt.events;
+            sender.forEach(element => {
+                if(element.event == "Breed"){
+                    token_id_hybridEgg = element.args["_eggTokenId"]
+                }
+            });
+
+        }catch(err){
+
+            expect(err).to.exist
+
+        }
+
+
+
 
     });
 
@@ -864,6 +901,8 @@ describe("Test ZooMedia (2)", () => {
     });
 
     it("Should free a hybrid animal", async () => {
+        await addAnimals();
+        await addHybrids();
         await breedHybrid();
 
         const hatchEgg  = await zooMedia.hatchEgg(1,4)

@@ -230,6 +230,12 @@ contract ZooMedia is Media, Ownable {
             _hybrid.name = name1;
             _hybrid.yield = yield1;
         }
+        
+        if (uint256(TokenType.HYBRID_EGG) == uint256(eggType)) {
+            // data.tokenURI = drop.tokenURI(hatchedAnimal);
+            // data.metadataURI = drop.metaDataURI(hatchedAnimal);
+        }
+
 
         data.tokenURI = drop.tokenURI(hatchedAnimal);
         data.metadataURI = drop.metaDataURI(hatchedAnimal);
@@ -311,7 +317,6 @@ contract ZooMedia is Media, Ownable {
         bidShare.prevOwner = Decimal.D256(0);
         bidShare.creator = Decimal.D256(10 * (10**18));
         bidShare.owner = Decimal.D256(90 * (10**18));
-
         mint(data, bidShare);
         uint256 eggTokenID = getRecentToken(msg.sender);
 
@@ -319,6 +324,8 @@ contract ZooMedia is Media, Ownable {
         hybridEgg.parent1 = animals[_tokenIDA].name;
         hybridEgg.parent2 = animals[_tokenIDB].name;
         hybridEgg.eggCreationTime = block.timestamp;
+
+
 
         eggs[eggTokenID] = hybridEgg;
 
