@@ -11,16 +11,18 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const useProxy = !hre.network.live
 
   const tokenAddress = (await deployments.get('ZooToken')).address
+  const zooMediaAddress = (await deployments.get('ZooMedia')).address
 
   await deployments.get('ZooMedia');
-  const media = await ethers.getContractAt('ZooMedia', deployer);
+  const media = (await ethers.getContractAt('ZooMedia', zooMediaAddress));
+  const mediaAddress = await media.mediaAddress();
 
   // Proxy only in non-live network (localhost and hardhat network) enabling
   // HCR (Hot Contract Replacement) in live network, proxy is disabled and
   // constructor is invoked
   await deploy('ZooAuction', {
     from: deployer,
-    args: [media.media.address, tokenAddress],
+    args: [mediaAddress, tokenAddress],
     log: true,
     // proxy: useProxy && 'postUpgrade',
   })
