@@ -108,7 +108,7 @@ describe.skip("integration", () => {
       await auction.connect(otherUser).endAuction(0);
     }
 
-    it.only(".onlyshould transfer the NFT to the winning bidder", async () => {
+    it("should transfer the NFT to the winning bidder", async () => {
       await run();
       expect(await media.ownerOf(0)).to.eq(bidderBAddress);
     });
@@ -267,7 +267,7 @@ describe.skip("integration", () => {
       await auction.connect(otherUser).endAuction(0);
     }
 
-    it.only("should transfer the NFT to the winning bidder", async () => {
+    it("should transfer the NFT to the winning bidder", async () => {
       await run();
       expect(await media.ownerOf(0)).to.eq(bidderBAddress);
     });
