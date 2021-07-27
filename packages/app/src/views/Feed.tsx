@@ -53,7 +53,8 @@ const ToggleContainer = styled.div`
     justify-content: center;
     z-index: 1000;
     position: absolute;
-    margin-top: 15px;
+    padding-top: 15px;
+    background: linear-gradient(#3d3d3d, transparent);
   }
   a {
     border: none;
