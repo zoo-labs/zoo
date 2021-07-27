@@ -994,13 +994,14 @@ describe("ZooAuction", () => {
       describe("ZOO auction", () => {
         beforeEach(async () => {
 
-          token = token.connect(auctionHouse.signer)
+          token = token.connect(auctionHouse.signer);
 
-          await token.approve(auctionHouse.address, 200)
+          token.connect(admin).mint(await bidderA.getAddress(), TWO_ZOO);
+          await token.approve(auctionHouse.address, TWO_ZOO)
 
           await auctionHouse
             .connect(bidderA)
-            .createBid(0, 200, { value: 200 });
+            .createBid(0, TWO_ZOO,);
 
           const endTime =
             (await auctionHouse.auctions(0)).duration.toNumber() +
@@ -1016,21 +1017,22 @@ describe("ZooAuction", () => {
           expect(await media.ownerOf(0)).to.eq(await bidderA.getAddress());
         });
 
-        // it("should pay the curator their curatorFee percentage", async () => {
-        //   const beforeBalance = await ethers.provider.getBalance(
-        //     await curator.getAddress()
-        //   );
-        //   await auctionHouse.endAuction(0);
+        it("should pay the curator their curatorFee percentage", async () => {
+          const beforeBalance = await token.balanceOf(
+            await creator.getAddress()
+          );
+          await auctionHouse.endAuction(0);
 
-        //   const expectedCuratorFee = "42500000000000000";
 
-        //   const curatorBalance = await ethers.provider.getBalance(
-        //     await curator.getAddress()
-        //   );
-        //   await expect(curatorBalance.sub(beforeBalance).toString()).to.eq(
-        //     expectedCuratorFee
-        //   );
-        // });
+          const expectedCuratorFee = "100000000000000000";  // 0.05 * 2000000000000000000
+
+          const curatorBalance = await token.balanceOf(
+            await creator.getAddress()
+          );
+          expect(curatorBalance.sub(beforeBalance).toString()).to.eq(
+            expectedCuratorFee
+          );
+        });
 
         it("should pay the creator the remainder of the winning bid", async () => {
           const beforeBalance = await ethers.provider.getBalance(
