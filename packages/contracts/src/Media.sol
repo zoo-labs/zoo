@@ -220,6 +220,14 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
         return _tokenMetadataURIs[tokenId];
     }
 
+    function getRecentToken(address creator) internal view returns (uint256){
+
+        uint256 length = EnumerableSet.length(_creatorTokens[creator])-1;
+
+        return  EnumerableSet.at(_creatorTokens[creator],length);
+
+   }
+
     /* ****************
      * Public Functions
      * ****************
@@ -233,7 +241,8 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
         override
         nonReentrant
     {
-        _mintForCreator(msg.sender, data, bidShares);
+        _mintForCreator(msg.sender, data, bidShares, "");
+
     }
 
     /**
@@ -276,7 +285,18 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
             "Media: Signature invalid"
         );
 
-        _mintForCreator(recoveredAddress, data, bidShares);
+        _mintForCreator(recoveredAddress, data, bidShares,"");
+    }
+
+    /**
+     * @notice see IMedia
+     */
+    function transfer(uint256 tokenId, address recipient)
+        external
+    {
+        require(msg.sender == marketContract, "Media: only market contract");
+        previousTokenOwners[tokenId] = ownerOf(tokenId);
+        _transfer(ownerOf(tokenId), recipient, tokenId);
     }
 
     /**
@@ -489,13 +509,14 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
     function _mintForCreator(
         address creator,
         MediaData memory data,
-        IMarket.BidShares memory bidShares
+        IMarket.BidShares memory bidShares,
+        bytes memory tokenType
     ) internal onlyValidURI(data.tokenURI) onlyValidURI(data.metadataURI) {
         require(data.contentHash != 0, "Media: content hash must be non-zero");
-        require(
-            _contentHashes[data.contentHash] == false,
-            "Media: a token has already been created with this content hash"
-        );
+        // require(
+        //     _contentHashes[data.contentHash] == false,
+        //     "Media: a token has already been created with this content hash"
+        // );
         require(
             data.metadataHash != 0,
             "Media: metadata hash must be non-zero"
@@ -503,7 +524,7 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
 
         uint256 tokenId = _tokenIdTracker.current();
 
-        _safeMint(creator, tokenId);
+        _safeMint(creator, tokenId, tokenType);
         _tokenIdTracker.increment();
         _setTokenContentHash(tokenId, data.contentHash);
         _setTokenMetadataHash(tokenId, data.metadataHash);
