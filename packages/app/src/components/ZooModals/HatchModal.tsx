@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TextButton, Modal, Text as Standard } from "components";
+import { Modal, Text as Standard } from "components";
 import BorderButton from "components/Button/BorderButton";
 import { Flex } from "components/Box";
 
