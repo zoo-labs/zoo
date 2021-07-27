@@ -3,15 +3,16 @@ import { MenuEntry } from './types'
 
 let defaultConf =  [
 
-  {
-    label: 'Bank',
-    icon: 'BankIcon',
-    href: '/bank',
-  },
+  
   {
     label: 'My Account',
     icon: 'HomeIcon',
     href: '/account',
+  },
+  {
+    label: 'Bank',
+    icon: 'BankIcon',
+    href: '/bank',
   },
   {
     label: 'Feed',
