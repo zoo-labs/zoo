@@ -155,7 +155,7 @@ const Menu: React.FC<NavProps> = ({
     const handleScroll = () => {
       const currentOffset = window.pageYOffset;
       const isBottomOfPage =
-        window.document.body.clientHeight ===
+        (window.document.body.clientHeight - 5) <=
         currentOffset + window.innerHeight;
       const isTopOfPage = currentOffset === 0;
       // Always show the menu when user reach the top
