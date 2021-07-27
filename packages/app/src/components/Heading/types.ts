@@ -13,13 +13,31 @@ export const sizes = {
   LG: "lg",
   XL: "xl",
   XXL: "xxl",
+}
+
+export const variants = {
+  PRIMARY: "primary",
+  SECONDARY: "secondary",
+  TERTIARY: "tertiary",
+  TEXT: "text",
+  DANGER: "danger",
+  DISABLED: "disabledBubblegum",
+  SUBTLE: "subtle",
+  SUCCESS: "success",
+  BUBBLEGUM: "bubblegum",
+  BUTTONGUM: "buttongum",
+  MARBLE: "starterAppMarble",
+  OPACITY: "opacity"
 } 
 
+export type Variant = typeof variants[keyof typeof variants];
 export type Tags = typeof tags[keyof typeof tags];
 export type Sizes = typeof sizes[keyof typeof sizes];
 
 export interface HeadingProps {
   as?: Tags;
   size?: Sizes;
+  disabled?: boolean;
+  variant?: Variant;
   headerColor?: string;
 }
