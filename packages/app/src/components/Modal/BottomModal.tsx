@@ -6,10 +6,11 @@ import Sheet from 'react-modal-sheet';
 interface Props {
     onDismiss?: () => null
     header?: string
+    height?: string
 }
 
 
-const BottomModal: React.FC<Props> = ({ children, header,  onDismiss }) => {
+const BottomModal: React.FC<Props> = ({ children, header,  onDismiss, height }) => {
     const [isOpen, setOpen] = React.useState(true);
     const theme = useTheme();
 
