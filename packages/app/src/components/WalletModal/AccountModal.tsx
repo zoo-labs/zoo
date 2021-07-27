@@ -105,7 +105,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
           <Label>
               Balance
           </Label>
-          <BorderButton onClick={toLink}>
+          <BorderButton scale="sm" height="100%" onClick={toLink}>
               Add Funds
           </BorderButton>
         </LabelWrapper>
