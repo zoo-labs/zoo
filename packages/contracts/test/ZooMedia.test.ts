@@ -74,7 +74,7 @@ type Bid = {
   sellOnShare: { value: BigNumberish };
 };
 
-describe.only('ZooMedia', () => {
+describe('ZooMedia', () => {
   let [
     deployerWallet,
     bidderWallet,
