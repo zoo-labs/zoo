@@ -88,7 +88,7 @@ contract ZooMedia is Media, Ownable {
     }
 
     function addDrop(
-        string memory name,
+        string memory _name,
         uint256 _totalSupply,
         uint256 _eggPrice
     ) public onlyOwner returns (uint256, address) {
@@ -383,7 +383,7 @@ contract ZooMedia is Media, Ownable {
 
     //   @Kimani will overwrite this
     // TEMP random function
-    function random() private returns (uint256) {
+    function unsafeRandom() private returns (uint256) {
         uint256 randomNumber = uint256(
             keccak256(
                 abi.encodePacked(block.number, msg.sender, block.timestamp)
