@@ -1043,39 +1043,39 @@ describe("ZooAuction", () => {
         //   ).to.eq(expectedProfit);
         // });
 
-        // it("should emit an AuctionEnded event", async () => {
-        //   const block = await ethers.provider.getBlockNumber();
-        //   const auctionData = await auctionHouse.auctions(0);
-        //   await auctionHouse.endAuction(0);
-        //   const events = await auctionHouse.queryFilter(
-        //     auctionHouse.filters.AuctionEnded(
-        //       null,
-        //       null,
-        //       null,
-        //       null,
-        //       null,
-        //       null,
-        //       null,
-        //       null,
-        //       null
-        //     ),
-        //     block
-        //   );
-        //   expect(events.length).eq(1);
-        //   const logDescription = auctionHouse.interface.parseLog(events[0]);
+        it("should emit an AuctionEnded event", async () => {
+          const block = await ethers.provider.getBlockNumber();
+          const auctionData = await auctionHouse.auctions(0);
+          await auctionHouse.endAuction(0);
+          const events = await auctionHouse.queryFilter(
+            auctionHouse.filters.AuctionEnded(
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ),
+            block
+          );
+          expect(events.length).eq(1);
+          const logDescription = auctionHouse.interface.parseLog(events[0]);
 
-        //   expect(logDescription.args.tokenId).to.eq(0);
-        //   expect(logDescription.args.tokenOwner).to.eq(auctionData.tokenOwner);
-        //   expect(logDescription.args.curator).to.eq(auctionData.curator);
-        //   expect(logDescription.args.winner).to.eq(auctionData.bidder);
-        //   expect(logDescription.args.amount.toString()).to.eq(
-        //     "807500000000000000"
-        //   );
-        //   expect(logDescription.args.curatorFee.toString()).to.eq(
-        //     "42500000000000000"
-        //   );
-        //   expect(logDescription.args.auctionCurrency).to.eq(token.address);
-        // });
+          expect(logDescription.args.tokenId).to.eq(0);
+          expect(logDescription.args.tokenOwner).to.eq(auctionData.tokenOwner);
+          expect(logDescription.args.curator).to.eq(auctionData.curator);
+          expect(logDescription.args.winner).to.eq(auctionData.bidder);
+          expect(logDescription.args.amount.toString()).to.eq(
+            "190"
+          );
+          expect(logDescription.args.curatorFee.toString()).to.eq(
+            "10"
+          );
+          expect(logDescription.args.auctionCurrency).to.eq(token.address);
+        });
 
         it("should delete the auction", async () => {
 
