@@ -123,7 +123,7 @@ describe('ZooMedia', () => {
     ).deployed();
     auctionAddress = auction.address;
     const token = await (
-      await new ZooMedia__factory(deployerWallet).deploy('ANML', 'CryptoZoo', auction.address)
+      await new ZooMedia__factory(deployerWallet).deploy('ANML', 'CryptoZoo', auction.address, token.address)
     ).deployed();
     tokenAddress = token.address;
 
