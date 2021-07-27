@@ -10,7 +10,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const {deployments, getNamedAccounts, getUnnamedAccounts} = hre
   const {deploy} = deployments
   const {deployer} = await getNamedAccounts()
-  const unnamed = await getUnnamedAccounts();
+  const unnamed = await getUnnamedAccounts()
 
   const useProxy = !hre.network.live
 
