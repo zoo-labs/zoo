@@ -63,6 +63,10 @@ contract ZooMedia is Media, Ownable {
         uint256 eggCreationTime;
     }
 
+   constructor(string memory symbol, string memory name, address marketAddress) Media(symbol, name, marketAddress) {
+
+   }
+
      // Mapping of token ID to NFT type
     mapping (uint256 => TokenType) public types;
 

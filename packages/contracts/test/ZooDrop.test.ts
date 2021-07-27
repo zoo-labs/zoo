@@ -112,7 +112,7 @@ describe("Test ZooDrop", () => {
     it("Should set & get egg price", async() => {
         // zooDrop = zooDrop.connect(signers[0]);
         let eggPrice = await zooDrop.getEggPrice();
-        console.log("Eggprice: ", eggPrice)
+        // console.log("Eggprice: ", eggPrice)
         // expect(eggPrice).to.equal(200) // default eggPrice
 
         await zooDrop.connect(signers[0]).setEggPrice(333); //set a new price

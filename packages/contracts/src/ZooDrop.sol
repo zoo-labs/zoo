@@ -3,6 +3,38 @@ pragma solidity 0.8.4;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
 
+import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import 'hardhat/console.sol';
+
+
+contract ZooDrop is Ownable, IERC721Receiver  {
+    using SafeMath for uint256;
+    // this should be the max eggs available for this drop
+    uint256 public _totalSupply;
+    uint256 public _currentSupply;
+    uint256 private eggPrice;
+
+    uint[] public coolDowns = [
+        4 hours,
+        1 days,
+        3 days,
+        7 days,
+        30 days
+    ];
+
+    //Types to identify what type of
+    // media was minted from the onERC721Received(...) callback
+    bytes base_egg_type = "E";
+    bytes base_animal_type = "A";
+    bytes hybrid_egg_type = "H";
+    bytes hybrid_animal_type = "G";
+
+    //Declare an Event
+    event BuyEgg(address indexed _from);
+    event Hatch(address indexed _from);
+    event Burn(address indexed _from, uint256 indexed _animalTokenId);
+    event FreeAnimal(address indexed _from, uint256 indexed _animalTokenId, uint256 indexed _yield);
+    // event Breed(address indexed _from, uint256 _animalTokenId1, uint256 _animalTokenId2, uint256 _eggTokenId);
 
 contract ZooDrop is Ownable {
     using Counters for Counters.Counter;
@@ -115,8 +147,128 @@ contract ZooDrop is Ownable {
         hybrids[string(abi.encodePacked(_base, _secondary))] = newHybrid;
     }
 
-    function setTokenURI(string memory _animal, string memory _tokenURI) public onlyOwner {
-        tokenURI[_animal] = _tokenURI;
+    /**
+        Getters for mappings
+     */
+     function getAnimal(string memory _animal) public view returns (Animal memory) {
+         return hatchableAnimals[_animal];
+     }
+
+     function getHybrid(string memory _animal) public view returns (Hybrid memory) {
+         return hybridAnimals[_animal];
+     }
+
+    function getTokenURI(string memory _animal) public view returns (string memory) {
+         return tokenURI[_animal];
+     }
+
+    /**
+        Setters for mappings
+     */
+    // possibly unnecessary
+    function setAnimal(uint256 _tokenID, string memory _animal, uint256 _dob) public onlyOwner {
+        existingAnimals[_tokenID] = _animal;
+        _animalDOB[_tokenID] = _dob;
+    }
+
+    // possibly unnecessary
+    function setHybrid(uint256 _tokenID, string memory _animal, uint256 _dob) public onlyOwner {
+        existingHybrids[_tokenID] = _animal;
+        _animalDOB[_tokenID] = _dob;
+    }
+
+    // add a tokenURI for an animal
+    function setTokenURI(string memory _name, string memory _tokenURI) public onlyOwner {
+        tokenURI[_name] = _tokenURI;
+    }
+
+    // add a metadataURI for an animal
+    function setMetaDataURI(string memory _name, string memory _metaData) public onlyOwner {
+        metaDataURI[_name] = _metaData;
+    }
+
+
+    // Accept ZOO and return Egg NFT
+    function buyEgg(ZooMedia.MediaData memory _data, IMarket.BidShares memory _bidShares) public enoughSupply enoughFunds returns (uint256) {
+
+        token.transferFrom(msg.sender, address(this), eggPrice);
+        media.mintZoo(_data, _bidShares, base_egg_type);
+        _currentSupply--;
+        emit BuyEgg(msg.sender);
+        return 0;
+    }
+
+    // Burn egg and randomly return an animal NFT
+    function hatchEgg(uint256 tokenID) public returns (bool) {
+        // need to check the hatch time delay
+        Egg memory egg = eggs[tokenID];
+        media.burn(tokenID);
+        emit Burn(msg.sender, tokenID);
+
+        // get the rarity for an animal
+        uint256 rarity = random();
+        // uint256 rarity = 1;
+        ZooMedia.MediaData memory data;
+        // if not hybrid
+        if (bytes(egg.parent1).length == 0) {
+            string memory animal = pickAnimal(rarity);
+            Animal memory hatched = hatchableAnimals[animal];
+            data.tokenURI = tokenURI[animal];
+            data.metadataURI = metaDataURI[animal];
+            data.contentHash = keccak256(abi.encodePacked(data.tokenURI));
+            data.metadataHash = keccak256(abi.encodePacked(data.metadataURI));
+        } else {
+        // if hybrid
+            require(egg.eggCreationTime > egg.eggCreationTime.add(4 hours), "Must wait 4 hours for hybrid eggs to hatch.");
+            uint256 oneOrTwo = rarity % 2;
+            Hybrid[2] memory possibleAnimals = [ hybridAnimals[concatAnimalIds(egg.parent1, egg.parent2)], hybridAnimals[concatAnimalIds(egg.parent2, egg.parent1)]];
+            string memory animal = possibleAnimals[oneOrTwo].name;
+            data.tokenURI = tokenURI[animal];
+            data.metadataURI = metaDataURI[animal];
+            data.contentHash = keccak256(abi.encodePacked(data.tokenURI));
+            data.metadataHash = keccak256(abi.encodePacked(data.metadataURI));
+        }
+
+        // mint by grabbing the animal
+        // pick an animal. create the data?? then mint using that data and the bidshare. animal data has yield info?
+
+        //grab tokenURI for the animal
+        //grab metadataURI for the animal
+        IMarket.BidShares memory bidShare;
+
+        media.mint(data, bidShare); // this time not an egg but an animal
+
+        emit Hatch(msg.sender);
+        return true;
+    }
+
+    // Take two animals and create a new hybrid egg which can hatch into a
+    // hybrid animal
+    function breedAnimal(uint256 _tokenIDA, uint256 _tokenIDB) public returns (bool) {
+        // require non hybrids
+        string memory animal1 = existingHybrids[_tokenIDA];
+        string memory animal2 = existingHybrids[_tokenIDB];
+        require(bytes(animal1).length == 0 && bytes(animal2).length == 0, "Hybrid animals cannot breed.");
+
+        // require both animals are drop animals
+        require(bytes(existingAnimals[_tokenIDA]).length != 0 && bytes(existingAnimals[_tokenIDB]).length > 0);
+
+        // need to figure out the delay
+        // require(now.sub(checkBreedDelay()) <= 0)
+        Egg memory hybridEgg;
+        hybridEgg.parent1 = animal1;
+        hybridEgg.parent2 = animal2;
+        hybridEgg.eggCreationTime = block.timestamp;
+        ZooMedia.MediaData memory data;
+        data.tokenURI = "www.example.com";
+        data.metadataURI = "www.example2.com";
+        data.contentHash = bytes32("du");
+        data.metadataHash = bytes32("dum");
+        IMarket.BidShares memory bidShare;
+        media.mint(data, bidShare);
+        _breedCount[msg.sender]++;
+
+        return true;
     }
 
 
@@ -154,10 +306,24 @@ contract ZooDrop is Ownable {
 // Callback for when ERC721 is minted using this contract
 
 function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes memory _data) public override returns(bytes4) {
-    Egg memory newEgg;
-    newEgg.eggCreationTime = block.number;
-    eggs[_tokenId] = newEgg;
-    ownedEggs[_from] = _tokenId;
+
+    if(keccak256(_data) == keccak256(base_egg_type)){
+        console.log("hello erc721 received");
+        Egg memory newEgg;
+        newEgg.eggCreationTime = block.number;
+        eggs[_tokenId] = newEgg;
+        ownedEggs[_from] = _tokenId;
+    }
+    else if(keccak256(_data) == keccak256(base_animal_type)){
+
+    }
+    else if(keccak256(_data) == keccak256(hybrid_egg_type)){
+
+    }
+    else if(keccak256(_data) == keccak256(hybrid_animal_type)){
+
+    }
+
     return 0x150b7a02;
  }
 }
