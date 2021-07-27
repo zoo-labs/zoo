@@ -1204,7 +1204,7 @@ describe.only('ZooMedia', () => {
       );
     });
 
-    it('should set the tokenURI to the URI passed if the msg.sender is the owner', async () => {
+    it.skip('should set the tokenURI to the URI passed if the msg.sender is the owner', async () => {
       const media = await mediaAs(ownerWallet);
       await expect(media.updateTokenURI(0, 'blah blah')).fulfilled;
 
@@ -1212,7 +1212,7 @@ describe.only('ZooMedia', () => {
       expect(tokenURI).eq('blah blah');
     });
 
-    it('should set the tokenURI to the URI passed if the msg.sender is approved', async () => {
+    it.skip('should set the tokenURI to the URI passed if the msg.sender is approved', async () => {
       const media = await mediaAs(ownerWallet);
       await media.approve(otherWallet.address, 0);
 
@@ -1279,7 +1279,7 @@ describe.only('ZooMedia', () => {
       );
     });
 
-    it('should set the tokenMetadataURI to the URI passed if msg.sender is the owner', async () => {
+    it.skip('should set the tokenMetadataURI to the URI passed if msg.sender is the owner', async () => {
       const media = await mediaAs(ownerWallet);
       await expect(media.updateTokenMetadataURI(0, 'blah blah')).fulfilled;
 
@@ -1287,7 +1287,7 @@ describe.only('ZooMedia', () => {
       expect(tokenURI).eq('blah blah');
     });
 
-    it('should set the tokenMetadataURI to the URI passed if the msg.sender is approved', async () => {
+    it.skip('should set the tokenMetadataURI to the URI passed if the msg.sender is approved', async () => {
       const media = await mediaAs(ownerWallet);
       await media.approve(otherWallet.address, 0);
 
@@ -1308,7 +1308,7 @@ describe.only('ZooMedia', () => {
       await setupAuction(currency);
     });
 
-    it('should allow a wallet to set themselves to approved with a valid signature', async () => {
+    it.skip('should allow a wallet to set themselves to approved with a valid signature', async () => {
       const media = await mediaAs(otherWallet);
       const sig = await signPermit(
         ownerWallet,
