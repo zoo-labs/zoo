@@ -167,6 +167,16 @@ contract ZooMedia {
         return (_dropID, address(drop));
     }
 
+    function totalSupply() public view returns (uint256) {
+        uint256 _total;
+
+        for (uint256 _i = 0; _i < _dropIDs.current(); _i++) {
+            _total = _total + ZooDrop(drops[_i]).totalSupply();
+        }
+
+        return _total;
+    }
+
     function setTokenURI(
         uint256 _dropID,
         string memory _name,
@@ -461,6 +471,7 @@ contract ZooMedia {
         return randomNumber;
     }
 
+    // Proxy to Media contract
     function setAsk(uint256 _tokenID, IMarket.Ask memory _ask) public {
         return media.setAsk(_tokenID, _ask);
     }
@@ -485,6 +496,10 @@ contract ZooMedia {
         return media.getApproved(_tokenID);
     }
 
+    function revokeApproval(uint256 _tokenID) public {
+        return media.revokeApproval(_tokenID);
+    }
+
     function tokenByIndex(uint256 _tokenID) public view returns (uint256) {
         return media.tokenByIndex(_tokenID);
     }
@@ -505,8 +520,28 @@ contract ZooMedia {
         return media.tokenContentHashes(_tokenID);
     }
 
+    function tokenMetadataHashes(uint256 _tokenID) public view returns (bytes32) {
+        return media.tokenMetadataHashes(_tokenID);
+    }
+
     function tokenMetadataURI(uint256 _tokenID) public view returns (string memory) {
         return media.tokenMetadataURI(_tokenID);
+    }
+
+    function updateTokenMetadataURI(uint256 _tokenID, string memory _metadataURI) public {
+        return media.updateTokenMetadataURI(_tokenID, _metadataURI);
+    }
+
+    function supportsInterface(bytes4 _interfaceID) public view returns (bool) {
+        return media.supportsInterface(_interfaceID);
+    }
+
+    function permit(
+        address _spender,
+        uint256 _tokenID,
+        Media.EIP712Signature memory _sig
+    ) public {
+        return media.permit(_spender, _tokenID, _sig);
     }
 
     // take two animals and returns a bytes32 string of their names
