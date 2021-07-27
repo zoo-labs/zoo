@@ -100,10 +100,8 @@ contract ZooMedia is Media, Ownable {
 
     //Token address of the ZooToken
     ZooToken public token;
-   
-   constructor(string memory symbol, string memory name, address marketAddress, address _zooToken) Media(symbol, name, marketAddress) {
-      token = ZooToken(_zooToken);
-   }
+
+    constructor(string memory symbol, string memory name, address marketAddress) Media(symbol, name, marketAddress) { }
 
     function addDrop(string memory name, uint256 _totalSupply, uint256 _eggPrice) public onlyOwner returns (uint256, address) {
         _dropIDs.increment();
@@ -138,7 +136,7 @@ contract ZooMedia is Media, Ownable {
         require(drop.getCurrentSupply() > 0, "There are no more Eggs that can be purchased");
 
         token.transferFrom(msg.sender, address(this), eggPrice);
-    
+
         (string memory _tokenURI, string memory _metadataURI) = drop.buyEgg();
         Media.MediaData memory data;
 
@@ -146,7 +144,7 @@ contract ZooMedia is Media, Ownable {
         data.metadataURI=_metadataURI;
         data.contentHash=keccak256(abi.encodePacked(_tokenURI,block.number,msg.sender));
         data.metadataHash=keccak256(abi.encodePacked(_metadataURI,block.number,msg.sender));
-        
+
         IMarket.BidShares memory bidShare;
 
         // Get confirmation
@@ -169,28 +167,28 @@ contract ZooMedia is Media, Ownable {
         return 0;
     }
 
-    // Burn egg and randomly return an animal NFT 
+    // Burn egg and randomly return an animal NFT
     function hatchEgg(uint256 dropId, uint256 tokenID) public returns (uint256) {
          ZooDrop drop = ZooDrop(drops[dropId]);
-        
+
         // need to check the hatch time delay
-    
+
         //  grab egg struct
-        Egg memory egg = eggs[tokenID];      
-        TokenType eggType = types[tokenID];      
+        Egg memory egg = eggs[tokenID];
+        TokenType eggType = types[tokenID];
         burn(tokenID);
 
         //  burn the eggToken(it's hatching)
         emit Burn(msg.sender, tokenID);
 
-        // get the rarity for an animal    
-        uint256 rarity = random(); 
+        // get the rarity for an animal
+        uint256 rarity = random();
 
         Media.MediaData memory data;
 
         ZooDrop.Animal memory _animal;
         string memory hatchedAnimal;
-    
+
         // if not hybrid
         if (uint(TokenType.BASE_EGG) == uint(eggType)) {
             hatchedAnimal = pickAnimal(rarity);
@@ -244,12 +242,12 @@ contract ZooMedia is Media, Ownable {
 
     //     // require both animals are drop animals
     //     require(bytes(existingAnimals[_tokenIDA]).length != 0 && bytes(existingAnimals[_tokenIDB]).length > 0);
-        
+
     //     // need to figure out the delay
     //     // require(now.sub(checkBreedDelay()) <= 0)
     //     Egg memory hybridEgg;
     //     hybridEgg.parent1 = animal1;
-    //     hybridEgg.parent2 = animal2; 
+    //     hybridEgg.parent2 = animal2;
     //     hybridEgg.eggCreationTime = block.timestamp;
     //     Media.MediaData memory data;
     //     data.tokenURI = "www.example.com";
@@ -269,7 +267,7 @@ contract ZooMedia is Media, Ownable {
     //         require(bytes(existingHybrids[_tokenID]).length > 0 || bytes(existingAnimals[_tokenID]).length > 0, "Non-existing animal");
 
 
-    //         //TODO: Transfer token back to the contract in order to burn it 
+    //         //TODO: Transfer token back to the contract in order to burn it
 
     //         // get the creator/owner's address of token
     //         address _owner = tokenCreators[_tokenID];
@@ -301,11 +299,11 @@ contract ZooMedia is Media, Ownable {
 
     //         delete _animalDOB[_tokenID];
     //         emit FreeAnimal(_owner, _tokenID, dailyYield);
-        
-    //     return true;
-    // }  
 
-    
+    //     return true;
+    // }
+
+
      //   @Kimani will overwrite this
     // TEMP random function
     function random() private returns (uint256) {
@@ -319,9 +317,9 @@ contract ZooMedia is Media, Ownable {
     }
 
     // Chooses animal based on random number generated from(0-999), replace strings with ENUMS / data that
-    // represents animal instead 
+    // represents animal instead
     function pickAnimal(uint256 random) public view returns(string memory) {
-        
+
         if(random < 550){
             uint choice = random % 4;
             if(choice == 0){
@@ -364,7 +362,7 @@ contract ZooMedia is Media, Ownable {
             }else if(choice == 1){
                 return "Shark";
             }
-            
+
         }else if(random > 995 && random < 1000){
             uint choice = random % 2;
             if(choice == 0){
@@ -411,7 +409,7 @@ contract ZooMedia is Media, Ownable {
     //         delay = 0;
     //     }
     //     return delay;
-        
+
     // }
 
 // Callback for when ERC721 is minted using this contract
