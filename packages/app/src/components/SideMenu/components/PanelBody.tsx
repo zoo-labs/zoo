@@ -22,20 +22,19 @@ const Container = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
-  justify-content: center;
-  padding-top: 29vh;
+  justify-content: space-evenly;
+  padding-top: 10vh;
   a {
-    padding-bottom: 20px;
+    padding-bottom: 10px;
   }
 `
 
 const IconContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  width: 16px;
-  margin-right: 8px;
+  // width: 100%;
 `
 
 const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
