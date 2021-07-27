@@ -73,14 +73,6 @@ describe("integration", () => {
     const nfts = await deployOtherNFTs();
     market = contracts.market;
     media = contracts.media;
-    token = await deployZooToken();
-    await token.mint(creator.address, 100000);
-    await token.mint(deployer.address, 100000);
-    await token.mint(owner.address, 100000);
-    await token.mint(curator.address, 100000);
-    await token.mint(bidderA.address, 100000);
-    await token.mint(bidderB.address, 100000);
-    // await token.mint(otherUser.address, 100000);
     auction = await deploy();
     otherNft = nfts.test;
     await mint(media.connect(creator));
