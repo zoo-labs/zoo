@@ -344,7 +344,6 @@ contract ZooDrop is Ownable {
     struct Rarity {
         string name;
         uint256 rarity;
-        uint256 boost;
     }
 
     struct Hybrid{
@@ -352,11 +351,15 @@ contract ZooDrop is Ownable {
         uint256 yield;
     }
 
+
     // mapping of animal name to available base animals introduced in this drop
     mapping (string => Animal) public animals;
 
     // mapping of animal name to available hybrid animals introduced in this drop
     mapping (string => Hybrid) public hybrids;
+    
+    // mapping of base animal pairs to possible hybrid animal pairs
+    mapping (bytes32 => Hybrid) public possiblePairs;
 
     // mapping of animal key to animal tokenuri
     mapping (string => string) public tokenURI;
@@ -364,9 +367,11 @@ contract ZooDrop is Ownable {
     // mapping of animal key to animal metadata
     mapping (string => string) public metaDataURI;
 
+
     constructor(uint256 _supply, uint256 eggPrice){
         _eggPrice = eggPrice;
-        _totalSupply = _supply;
+        totalSupply = _supply;
+        _currentSupply._value = _supply;
     }
 
     // owner can set egg cost
@@ -381,17 +386,17 @@ contract ZooDrop is Ownable {
     }
 
 
-    function getCurrentSupply() internal onlyOwner {
-        _currentSupply.current();
+    function getCurrentSupply() public view returns (uint256) {
+        return _currentSupply.current();
     }
 
 
     /**
         Add animal for possibility of hatching for the drop
      */
-    function addAnimal(string memory _animal, uint256 _yield, string memory _rarityName, uint256 _rarity, uint256 _boost, string memory _tokenURI, string memory _metaDataURI) public onlyOwner {
+    function addAnimal(string memory _animal, uint256 _yield, string memory _rarityName, uint256 _rarity, string memory _tokenURI, string memory _metaDataURI) public onlyOwner {
         Animal memory newAnimal;
-        Rarity memory newRarity = Rarity({name: _rarityName, rarity: _rarity, boost: _boost});
+        Rarity memory newRarity = Rarity({name: _rarityName, rarity: _rarity});
         newAnimal.name = _animal;
         newAnimal.rarity = newRarity;
         newAnimal.yield = _yield;
@@ -546,6 +551,7 @@ contract ZooDrop is Ownable {
         metaDataURI[_animal] = _metadataURI;
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     function buyEgg() public onlyOwner returns (string memory, string memory) {
         // require(_currentSupply > 0, "Current: decrement overflow");
@@ -715,6 +721,11 @@ function onERC721Received(address _operator, address _from, uint256 _tokenId, by
 >>>>>>> 4895130 (Moved ZooDrop to ZooMedia)
 =======
     function buyEgg() public onlyOwner returns (string, string) {
+=======
+    function buyEgg() public onlyOwner returns (string memory, string memory) {
+        // require(_currentSupply > 0, "Current: decrement overflow");
+        // _currentSupply = _currentSupply - 1;
+>>>>>>> 1afe902 (Testing hatchegg)
         _currentSupply.decrement();
         return (tokenURI["basicEgg"], metaDataURI["basicEgg"]);
     }
