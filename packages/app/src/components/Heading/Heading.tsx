@@ -47,7 +47,7 @@ const Heading = styled(Text).attrs({ bold: true })<HeadingProps>`
 Heading.defaultProps = {
   as: tags.H2,
   disabled: false,
-  variant: variants.SECONDARY,
+  variant: variants.PRIMARY,
 };
 
 export default Heading;
