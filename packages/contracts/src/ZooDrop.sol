@@ -13,6 +13,8 @@ contract ZooDrop is Ownable {
     uint256 private _eggPrice;
     Counters.Counter private _currentSupply;
 
+    string public name;
+
     struct Animal {
         string name;
         uint256 yield;
@@ -46,7 +48,8 @@ contract ZooDrop is Ownable {
     mapping (string => string) public metaDataURI;
 
 
-    constructor(uint256 _supply, uint256 eggPrice){
+    constructor(string memory _name, uint256 _supply, uint256 eggPrice){
+        name = _name;
         _eggPrice = eggPrice;
         totalSupply = _supply;
         _currentSupply._value = _supply;
