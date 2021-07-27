@@ -10,3 +10,23 @@ export const getAddress = (address: Address, chainID?: number): string => {
 export const getZooAddress = (chainId?: number) => {
   return getAddress(addresses.zooToken, chainId)
 }
+
+export const getZooAuctionAddress = (chainId?: number) => {
+  return getAddress(addresses.zooAuction, chainId)
+}
+
+export const getZooDropAddress = (chainId?: number) => {
+  return getAddress(addresses.zooDrop, chainId)
+}
+
+export const getZooFaucetAddress = (chainId?: number) => {
+  return getAddress(addresses.zooFaucet, chainId)
+}
+
+export const getZooMarketAddress = (chainId?: number) => {
+  return getAddress(addresses.zooMarket, chainId)
+}
+
+export const getZooMediaAddress = (chainId?: number) => {
+  return getAddress(addresses.zooMedia, chainId)
+}
