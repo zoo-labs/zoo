@@ -456,16 +456,6 @@ describe("ZooAuction", () => {
       ).to.be.revertedWith("Must send at least reservePrice")
     });
 
-    // it("should revert if the bid is invalid for share splitting", async () => {
-    //   token = token.connect(auctionHouse.signer)
-
-    //   await token.approve(auctionHouse.address, 200)
-
-    //   await expect(
-    //     auctionHouse.createBid(0, 200)
-    //   )//.to.be.revertedWith("Bid invalid for share splitting");
-    // });
-
     describe("#first bid", () => {
 
       it("should set the first bid time", async () => {
