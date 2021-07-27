@@ -10,6 +10,7 @@ import "./ZooDrop.sol";
 import "./ERC721Burnable.sol";
 import {IMarket} from "./interfaces/IMarket.sol";
 import {Decimal} from "./Decimal.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import 'hardhat/console.sol';
 
 
@@ -63,8 +64,11 @@ contract ZooMedia is Media, Ownable {
         uint256 eggCreationTime;
     }
 
-   constructor(string memory symbol, string memory name, address marketAddress) Media(symbol, name, marketAddress) {
-
+   constructor(string memory symbol, string memory name, address marketAddress, address _zooToken, uint256 _supply) Media(symbol, name, marketAddress) {
+      token = ZooToken(_zooToken);
+      _totalSupply = _supply;
+      _currentSupply = _supply;
+      eggPrice = 200;
    }
 
      // Mapping of token ID to NFT type
