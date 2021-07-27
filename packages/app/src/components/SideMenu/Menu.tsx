@@ -15,6 +15,7 @@ import {
   SIDEBAR_WIDTH_REDUCED,
   SIDEBAR_WIDTH_FULL,
 } from "./config";
+import { FaHome } from "react-icons/fa";
 
 const Wrapper = styled.div`
   position: relative;
@@ -41,7 +42,7 @@ const StyledNav = styled.nav<{ showMenu: boolean; isPushed: boolean }>`
   padding-right: 16px;
   width: 100%;
   height: ${MENU_HEIGHT}px;
-  background-color: transparent;
+  background-color: #000000;
   z-index: 20;
   transform: translate3d(0, 0, 0);
 `;
@@ -98,6 +99,26 @@ const MaxHeightLogo = styled.img`
   left: 60px;
 `;
 
+const StickyBottomMenuWrapper = styled.div`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  border: 2px solid black;
+  box-shadow: 0px 5px 10px #040404ba;
+  background: ${({ theme }) => theme.colors.primaryPop};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+
+  svg {
+    width: 25px;
+    height: 25px;
+    color: #FFFFFF;
+  }
+`
 const Menu: React.FC<NavProps> = ({
   providerTitle,
   account,
@@ -202,6 +223,9 @@ const Menu: React.FC<NavProps> = ({
 
   return (
     <Wrapper>
+      <StickyBottomMenuWrapper>
+        <FaHome />
+      </StickyBottomMenuWrapper>
       <StyledNav showMenu={showMenu} isPushed={isPushed}>
         <Logo
           isPushed={isPushed}
