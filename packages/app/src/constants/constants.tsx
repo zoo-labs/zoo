@@ -7,11 +7,11 @@ export const rarityTable = {
 
 export const breedTimeouts = {
   0: { days: 0, hours: 0 },
-  1: { days: 0, hours: 4 },
+  1: { days: 0, hours: 0.0056 }, // changed for demo, originally 4 hours
   2: { days: 0, hours: 0 },
   3: { days: 0, hours: 0 },
   4: { days: 0, hours: 0 },
   5: { days: 0, hours: 0 },
 };
 
-export const eggTimeout = { days: 1, hours: 12 };
+export const eggTimeout = { days: 0, hours: 0.0056 }; // changed for demo, originally 1 day 12 hours
