@@ -10,7 +10,7 @@ export const baseColors = {
   primaryDarker: "#651133",
   secondary: "rgb(221 224 26)", //GREEN "#28FD73",
   secondaryDark: "#607A2A", // rgb(255 59 228)rgb(118 204 204)
-  accent: "rgb(195 0 168)", //PINK  "#12ECE7", 
+  accent: "#c301a8", //  "#12ECE7", 
   accent2: 'rgb(148 200 60)', // "#C62073",
   accent3: "#F5F775",
   success: "#28D7FD",
