@@ -86,6 +86,9 @@ contract ZooMedia {
     ZooToken public token;
     Media public media;
 
+    string public name;
+    string public symbol;
+
     address _owner;
 
     modifier onlyOwner {
@@ -99,18 +102,54 @@ contract ZooMedia {
     }
 
     constructor(
-        string memory symbol,
-        string memory name,
+        string memory _symbol,
+        string memory _name,
         address _market,
         address _token
     ) {
         _owner = msg.sender;
+        name = _name;
+        symbol = _symbol;
         token = ZooToken(_token);
-        media = new Media(symbol, name, _market);
+        media = new Media(_symbol, _name, _market);
     }
+
 
     function mediaAddress() public view returns (address) {
         return address(media);
+    }
+
+    function approve(address to, uint256 _tokenID) public {
+        return media.approve(to, _tokenID);
+    }
+
+    function ownerOf(uint256 _tokenID) public view returns (address) {
+        return media.ownerOf(_tokenID);
+    }
+
+    function transferFrom(address _sender, address _recipient, uint256 _amount) public {
+        return media.transferFrom(_sender, _recipient, _amount);
+    }
+
+    function mint(Media.MediaData memory data, IMarket.BidShares memory bidShares) public {
+        return media.mint(data, bidShares);
+    }
+
+    function mintWithSig(
+        address creator,
+        Media.MediaData memory data,
+        IMarket.BidShares memory bidShares,
+        Media.EIP712Signature memory sig
+    ) public {
+        return media.mintWithSig(creator, data, bidShares, sig);
+    }
+
+    function mintWithSigNonces(address _creator) public view returns (uint256) {
+        return media.mintWithSigNonces(_creator);
+    }
+
+    function permitNonces(address _creator, uint256 _tokenID) public view returns (uint256) {
+        return media.permitNonces(_creator, _tokenID);
     }
 
     function addDrop(
@@ -119,51 +158,47 @@ contract ZooMedia {
         uint256 _eggPrice
     ) public onlyOwner returns (uint256, address) {
         _dropIDs.increment();
-        uint256 dropID = _dropIDs.current();
+        uint256 _dropID = _dropIDs.current();
 
         ZooDrop drop = new ZooDrop(_name, _totalSupply, _eggPrice);
-        drops[dropID] = address(drop);
+        drops[_dropID] = address(drop);
 
-        emit AddDrop(dropID, address(drop));
-        return (dropID, address(drop));
-    }
-
-    function setMetadataURI(
-        uint256 dropID,
-        string memory name,
-        string memory _URI
-    ) public onlyOwner {
-        ZooDrop drop = ZooDrop(drops[dropID]);
-
-        drop.setMetadataURI(name, _URI);
+        emit AddDrop(_dropID, address(drop));
+        return (_dropID, address(drop));
     }
 
     function setTokenURI(
-        uint256 dropID,
-        string memory name,
+        uint256 _dropID,
+        string memory _name,
         string memory _URI
     ) public onlyOwner {
-        ZooDrop drop = ZooDrop(drops[dropID]);
+        ZooDrop drop = ZooDrop(drops[_dropID]);
+        drop.setTokenURI(_name, _URI);
+    }
 
-        drop.setTokenURI(name, _URI);
+    function setMetadataURI(
+        uint256 _dropID,
+        string memory _name,
+        string memory _URI
+    ) public onlyOwner {
+        ZooDrop drop = ZooDrop(drops[_dropID]);
+        drop.setMetadataURI(_name, _URI);
     }
 
     // Accept ZOO and return Egg NFT
-    function buyEgg(uint256 dropId) public returns (uint256) {
-        ZooDrop drop = ZooDrop(drops[dropId]);
-
-        uint256 eggPrice = drop.getEggPrice();
+    function buyEgg(uint256 _dropID) public returns (uint256) {
+        ZooDrop drop = ZooDrop(drops[_dropID]);
 
         require(
-            token.balanceOf(msg.sender) >= eggPrice,
+            token.balanceOf(msg.sender) >= drop.eggPrice(),
             "Not Enough ZOO Tokens to purchase Egg"
         );
         require(
-            drop.getCurrentSupply() > 0,
+            drop.currentSupply() > 0,
             "There are no more Eggs that can be purchased"
         );
 
-        token.transferFrom(msg.sender, address(this), eggPrice);
+        token.transferFrom(msg.sender, address(this), drop.eggPrice());
 
         (string memory _tokenURI, string memory _metadataURI) = drop.buyEgg();
         Media.MediaData memory data;
@@ -185,18 +220,26 @@ contract ZooMedia {
         bidShare.owner = Decimal.D256(90 * (10**18));
 
         media.mint(data, bidShare);
-        uint256 tokenId = media.getRecentToken(msg.sender);
+        uint256 _tokenID = media.getRecentToken(msg.sender);
 
         Egg memory egg;
 
         egg.eggCreationTime = block.timestamp;
 
-        eggs[tokenId] = egg;
+        eggs[_tokenID] = egg;
 
-        types[tokenId] = TokenType.BASE_EGG;
+        types[_tokenID] = TokenType.BASE_EGG;
 
-        emit BuyEgg(msg.sender, tokenId);
-        return tokenId;
+        emit BuyEgg(msg.sender, _tokenID);
+        return _tokenID;
+    }
+
+    function burn(uint256 _tokenID) public {
+        return media.burn(_tokenID);
+    }
+
+    function tokenURI(uint256 _tokenID) public view returns (string memory) {
+        return media.tokenURI(_tokenID);
     }
 
     // Burn egg and randomly return an animal NFT
