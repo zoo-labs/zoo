@@ -6,7 +6,15 @@ import chai, { expect } from "chai";
 
 import { BigNumber, Bytes, BytesLike, utils } from 'ethers';
 
-let zooDrop
+let zooToken: any;
+
+let zooFaucet: any;
+
+let zooMarket: any;
+
+// let zooDrop: any;
+
+let zooMedia: any;
 
 let signers: any;
 
@@ -29,15 +37,33 @@ describe("Test ZooDrop", () => {
 
         zooDrop = await ZooDrop.deploy(16000, 210);
 
-        await zooDrop.deployed();
+        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', auctionAddress, zooToken.address, 20)) as ZooMedia
+        await zooMedia.deployed();
+
+        tokenAddress = zooMedia.address;
+
+        await zooMarket.configure(tokenAddress);
+
+        // const zooDropFactory = await ethers.getContractFactory(
+        //     "ZooDrop",
+        //     signers[0]
+        // );
+
+        // zooDrop = (await zooDropFactory.deploy(zooToken.address, zooMedia.address, BigNumber.from(10))) as ZooDrop
+        // await zooDrop.deployed();
+
     })
 
-    /**
-     * CurrentSupply
-     */
-    it("Should have current supply equal total supply", async () => {
-        let currentSupply = await zooDrop.getCurrentSupply();
-        expect(currentSupply.toNumber()).to.equal((await zooDrop.totalSupply()).toNumber());
+    /*
+    Deploy Script
+    */
+
+    it("Should get the ZooDrop owner", async () => {
+
+        const zooDropOwner: string = await zooMedia.owner();
+
+        expect(zooDropOwner).to.equal(owner.address);
+
     });
 
     /*
@@ -48,11 +74,11 @@ describe("Test ZooDrop", () => {
 
         const Animal = await zooDrop.animals("Pug");
 
-        await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
+        await zooMedia.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
 
-        const Animal = await zooDrop.getAnimal("Pug");
+        const Animal = await zooMedia.getAnimal("Pug");
 
-        const tokenURI = await zooDrop.getTokenURI(Animal.name);
+        const tokenURI = await zooMedia.getTokenURI(Animal.name);
 
         expect(Animal.name).to.equal("Pug");
         expect(tokenURI).to.equal("test");
@@ -63,11 +89,11 @@ describe("Test ZooDrop", () => {
     it("Should pick a pug", async () => {
 
 
-        await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
+        await zooMedia.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
 
-        const pick = await zooDrop.pickAnimal(20);
+        const pick = await zooMedia.pickAnimal(20);
 
-        const Animal = await zooDrop.getAnimal(pick);
+        const Animal = await zooMedia.getAnimal(pick);
 
         expect(Animal.name).to.equal("Pug");
 
@@ -77,10 +103,10 @@ describe("Test ZooDrop", () => {
     it("Should add an Hybrid", async () => {
         await zooDrop.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
 
-        await zooDrop.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
+        await zooMedia.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
 
-        const Hybrid = await zooDrop.getHybrid("PugPug");
-        const tokenURI = await zooDrop.getTokenURI("Puggy");
+        const Hybrid = await zooMedia.getHybrid("PugPug");
+        const tokenURI = await zooMedia.getTokenURI("Puggy");
 
         expect(Hybrid.name).to.equal("Puggy");
         expect(tokenURI).to.equal("test");
@@ -88,9 +114,11 @@ describe("Test ZooDrop", () => {
     });
 
     it("Should revert when adding a animal not as owner", async() => {
-        zooDrop = zooDrop.connect(signers[1]);
+
+        zooMedia = zooMedia.connect(signers[1]);
         try {
-            const tx = await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
+            const tx = await zooMedia.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
+            // console.log("tx: ", tx.wait())
         } catch (e) {
             expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
         }
@@ -98,9 +126,11 @@ describe("Test ZooDrop", () => {
     });
 
     it("Should revert when adding a hybrid animal not as owner", async() => {
-        zooDrop = zooDrop.connect(signers[1]);
+        // await expect(zooDrop.connect(signers[1]).addHybrid("Puggy", "Pug","Pug", 120 ,"test","test")).to.be.reverted
+        zooMedia = zooMedia.connect(signers[1]);
         try {
-            const tx = await zooDrop.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
+            const tx = await zooMedia.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
+            // console.log("tx: ", tx.wait())
         } catch (e) {
             expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
         }
@@ -110,24 +140,100 @@ describe("Test ZooDrop", () => {
      * EGG PRICE
      */
     it("Should set & get egg price", async() => {
-        // zooDrop = zooDrop.connect(signers[0]);
-        let eggPrice = await zooDrop.getEggPrice();
-        // console.log("Eggprice: ", eggPrice)
-        // expect(eggPrice).to.equal(200) // default eggPrice
+        zooMedia = zooMedia.connect(signers[0]);
+        let bigEggPrice = await zooMedia.getEggPrice();
+        let eggPrice = bigEggPrice.toNumber();
+        expect(eggPrice).to.equal(200); // default eggPrice
 
-        await zooDrop.connect(signers[0]).setEggPrice(333); //set a new price
+        await zooMedia.connect(signers[0]).setEggPrice(333); //set a new price
 
-        eggPrice = await zooDrop.getEggPrice();
-        expect(eggPrice).to.equal(333) // gets the new eggPrice
+        bigEggPrice = await zooMedia.getEggPrice();
+        eggPrice = bigEggPrice.toNumber();
+        expect(eggPrice).to.equal(333); // gets the new eggPrice
     });
 
     it("Should revert when setting egg price as non owner", async() => {
-        zooDrop = zooDrop.connect(signers[1]);
-        try {
-            const tx = await zooDrop.setEggPrice(333);
-        } catch (e) {
-            expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
-        }
+        // await expect(zooDrop.connect(signers[1]).addHybrid("Puggy", "Pug","Pug", 120 ,"test","test")).to.be.reverted
+    });
+
+    it("Should revert when setting egg price at negative price", async() => {
+
+    });
+
+    it("Should revert when seeting egg price at uint overflow", async() => {
+
+    });
+
+    /**
+     * BUYING EGGS
+     */
+    it("Should buy a basic egg", async() => {
+
+            await zooToken.approve(zooMedia.address, 200)
+
+            const buyEgg = await zooMedia.connect(owner).buyEgg({
+                "tokenURI": "test1",
+                "metadataURI":"test2",
+                "contentHash": utils.formatBytes32String("test3"),
+                "metadataHash":utils.formatBytes32String("test4"),
+            },
+            //Big Shares need to add up to 100 * (10^18)
+            {
+                "prevOwner": {"value": `${30*(10**18)}`} ,
+                "creator": {"value": `${40*(10**18)}`},
+                "owner": {"value": `${30*(10**18)}`},
+            });
+
+            const buyEggReceipt = await buyEgg.wait();
+
+            const sender = buyEggReceipt.events;
+
+            let from_add
+
+            sender.forEach(element => {
+                if(element.event == "BuyEgg"){
+                    from_add = element.args["_from"]
+                }
+            });
+
+            expect(from_add).to.equal(owner.address);
+
+
+    });
+
+    it("Should buy multiple basic eggs", async() => {
+
+    });
+
+    it("Should revert when totalSupply of eggs are reaching", async() => {
+
+    });
+
+    it("Should revert when not enough balance", async() => {
+
+    });
+
+    it("Should share bidshare from buy egg to contract owner", async() => {
+
+    });
+
+    /**
+     * HATCHING EGGS
+     */
+    it("Should hatch & burn basic egg", async() => {
+
+    });
+
+    it("Should hatch & burn hybrid egg", async() => {
+
+    });
+
+    it("Should revert when hatching egg with invalid tokenid", async() => {
+
+    });
+
+    it("Should revert when egg creation time restriction is not met", async() => {
+
     });
 
     /**

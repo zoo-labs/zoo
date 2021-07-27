@@ -20,7 +20,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // constructor is invoked
   await deploy('ZooMedia', {
     from: OWNER_ADDRESS,
-    args: ['CryptoZoo', 'ANML', marketAddress],
+    args: ['CryptoZoo', 'ANML', marketAddress, tokenAddress, 16000],
     log: true,
     // proxy: useProxy && 'postUpgrade',
   })
