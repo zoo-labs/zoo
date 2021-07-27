@@ -113,7 +113,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
               {zooCount} ZOO
           </ValueWrapper>
       </Flex>
-      <Flex justifyContent="space-evenly" flexDirection={moreSpace ? 'column' : 'row'}>
+      <Flex justifyContent="space-between" flexDirection={moreSpace ? 'column' : 'row'}>
         {chainId !== 56 ? (
           <BorderButton
             scale="sm"
