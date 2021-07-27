@@ -200,6 +200,11 @@ contract ZooDrop is Ownable {
 
     // Burn egg and randomly return an animal NFT
     function hatchEgg(uint256 tokenID) public returns (bool) {
+
+
+        //TODO: Transfer token back to the contract in order to burn it 
+
+
         // need to check the hatch time delay
         Egg memory egg = eggs[tokenID];
         media.burn(tokenID);
@@ -265,12 +270,64 @@ contract ZooDrop is Ownable {
         data.contentHash = bytes32("du");
         data.metadataHash = bytes32("dum");
         IMarket.BidShares memory bidShare;
-        media.mint(data, bidShare);
+        media.mintZoo(data, bidShare);
         _breedCount[msg.sender]++;
 
         return true;
     }
 
+<<<<<<< HEAD
+=======
+    // Implemented prior to issue #30
+    // Should burn animal and return yield
+    function freeAnimal(uint256 _tokenID, address _zooMaster) public returns (bool) {
+            require(bytes(existingHybrids[_tokenID]).length > 0 || bytes(existingAnimals[_tokenID]).length > 0, "Non-existing animal");
+
+
+            //TODO: Transfer token back to the contract in order to burn it 
+
+            // get the creator/owner's address of token
+            address _owner = media.tokenCreators(_tokenID);
+
+            // burn the token
+            media.burn(_tokenID);
+            emit Burn(_owner, _tokenID);
+
+            uint256 blocks = block.number - _animalDOB[_tokenID];
+            uint256 avgBlocksDaily = 28800;
+            uint256 age = blocks.div(avgBlocksDaily);
+            uint256 dailyYield;
+
+            if (bytes(existingHybrids[_tokenID]).length > 0) {
+                // calculate daily yield
+                uint256  percentage = hybridAnimals[existingHybrids[_tokenID]].yield;
+                dailyYield = age.mul(percentage.div(100));
+                // transfer yield
+                token.transferFrom(_zooMaster, _owner, dailyYield);
+                delete existingHybrids[_tokenID];
+            } else {
+                // calculate daily yield
+                uint256 percentage = hatchableAnimals[existingAnimals[_tokenID]].yield;
+                dailyYield = age.mul(percentage.div(100));
+                // transfer yield
+                token.transferFrom(_zooMaster, _owner, dailyYield);
+                delete existingAnimals[_tokenID];
+            }
+
+            delete _animalDOB[_tokenID];
+            emit FreeAnimal(_owner, _tokenID, dailyYield);
+        
+        return true;
+    }  
+
+    
+     //   @Kimani will overwrite this
+    // TEMP random function
+    function random() private returns (uint256) {
+        uint256 randomNumber = uint256(keccak256(abi.encodePacked(block.number, msg.sender, block.timestamp))) % 1000;
+        return randomNumber;
+    }
+>>>>>>> 339adce (Added todos)
 
     function setMetadataURI(string memory _animal, string memory _metadataURI) public onlyOwner {
         metaDataURI[_animal] = _metadataURI;
@@ -306,15 +363,18 @@ contract ZooDrop is Ownable {
 // Callback for when ERC721 is minted using this contract
 
 function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes memory _data) public override returns(bytes4) {
+<<<<<<< HEAD
+=======
+    
+
+        //TODO:   Transfer token to the address who bought it 
+>>>>>>> 339adce (Added todos)
 
     if(keccak256(_data) == keccak256(base_egg_type)){
-        console.log("hello erc721 received");
-        Egg memory newEgg;
-        newEgg.eggCreationTime = block.number;
-        eggs[_tokenId] = newEgg;
-        ownedEggs[_from] = _tokenId;
+        
     }
     else if(keccak256(_data) == keccak256(base_animal_type)){
+        console.log("hello animal in the making");
 
     }
     else if(keccak256(_data) == keccak256(hybrid_egg_type)){
