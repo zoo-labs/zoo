@@ -8,7 +8,7 @@ import useWeb3 from "hooks/useWeb3";
 import { useHistory } from "react-router-dom";
 import styles from "styled-components";
 import { Label, Text } from "components/Text";
-import { Heading } from "components";
+import { Flex, Heading } from "components";
 import Body from "components/layout/Body";
 import { useModal } from "components/Modal";
 import BuyEggs from "components/BuyEggs";
@@ -41,6 +41,8 @@ const ValueWrapper = styles(Text)`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    padding: 16px;
+    font-size: 18px;
 `;
 const RowWrapper = styles.div`
     width: 100%;
@@ -106,12 +108,15 @@ const Bank: React.FC = () => {
             {pageHeading}
             <Body>
                <LabelWrapper>
-                  <Label>Wallet Balance</Label>
-                  <BorderButton onClick={toLink}>Add Funds</BorderButton>
+                  <Label small>Wallet Balance</Label>
+                  <BorderButton minWidth="140px" scale="sm" onClick={toLink}>Add Funds</BorderButton>
                </LabelWrapper>
-               <ValueWrapper>{zooBalance} ZOOTOKENS</ValueWrapper>
-               <ValueWrapper>~100 USD</ValueWrapper>
-               <ValueWrapper>Total Daily Yield: 200 ZOOTOKENS</ValueWrapper>
+               <Flex width="100%" alignItems="center" justifyContent="space-around">
+                  <ValueWrapper>{zooBalance} ZOO Tokens</ValueWrapper>
+                  <ValueWrapper style={{ fontSize: "16px",  color: "rgb(221 224 26)" }}>0 USD</ValueWrapper>
+               </Flex>
+               <Label small>Total Daily Yield</Label>
+               <ValueWrapper> 200 ZOO Tokens</ValueWrapper>
             </Body>
          </Page>
       </>

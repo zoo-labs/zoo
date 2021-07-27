@@ -33,6 +33,8 @@ const useAuth = () => {
             }
         } else if (error instanceof NoEthereumProviderError || error instanceof NoBscProviderError) {
           toastError('Provider Error', 'No provider was found')
+          setTimeout(()=>location.href="https://metamask.io/download", 3000)
+          
         } else if (
           error instanceof UserRejectedRequestErrorInjected ||
           error instanceof UserRejectedRequestErrorWalletConnect

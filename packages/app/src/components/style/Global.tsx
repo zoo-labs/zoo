@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
 
 import { Theme } from 'theme'
+
 import MyMP16OSFFont from '../../fonts/MP16OSF.ttf'
 import ConsolasFont from '../../fonts/Consolas.ttf'
 
@@ -10,8 +11,8 @@ declare module 'styled-components' {
 
 const GlobalStyle = createGlobalStyle`
   @font-face{
-      font-family:'MyMP16OSFFont';
-      src:url('${MyMP16OSFFont}') format('TrueType');   
+      font-family: ${fontFamily};
+      src:url('${fontFamily}') format('TrueType');
   }
   @font-face{
     font-family:'ConsolasFont';

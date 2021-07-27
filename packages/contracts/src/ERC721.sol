@@ -550,17 +550,16 @@ contract ERC721 is
         if (!to.isContract()) {
             return true;
         }
-        bytes memory returndata =
-            to.functionCall(
-                abi.encodeWithSelector(
-                    IERC721Receiver(to).onERC721Received.selector,
-                    _msgSender(),
-                    from,
-                    tokenId,
-                    _data
-                ),
-                "ERC721: transfer to non ERC721Receiver implementer"
-            );
+        bytes memory returndata = to.functionCall(
+            abi.encodeWithSelector(
+                IERC721Receiver(to).onERC721Received.selector,
+                _msgSender(),
+                from,
+                tokenId,
+                _data
+            ),
+            "ERC721: transfer to non ERC721Receiver implementer"
+        );
         bytes4 retval = abi.decode(returndata, (bytes4));
         return (retval == _ERC721_RECEIVED);
     }
