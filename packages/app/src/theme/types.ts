@@ -48,10 +48,15 @@ export type Colors = {
   primary: string;
   primaryBright: string;
   primaryDark: string;
+  primaryDarker?: string;
+  primaryPop: string;
+  primaryLight: string;
+  accent: string;
   secondary: string;
   secondaryDark: string;
   tertiary: string;
   tertiaryLight?: string;
+  sidebar: string;
   success: string;
   failure: string;
   warning: string;
