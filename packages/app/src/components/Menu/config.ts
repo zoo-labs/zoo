@@ -1,24 +1,35 @@
 import { MenuEntry } from './types'
 
-const config: () => MenuEntry[] = () => [
+
+let defaultConf =  [
 
   {
-    label: 'My Zoo',
+    label: 'Bank',
     icon: '',
-    href: '/myzoo',
+    href: '/bank',
   },
   {
     label: 'My Account',
     icon: '',
-    href: '/myaccount',
+    href: '/account',
   },
   {
-    label: 'Marketplace',
+    label: 'Feed',
     icon: '',
-    href: '/marketplace',
+    href: '/feed',
   },
 ]
 
+	
+if (process.env.NODE_ENV !== "production") {
+defaultConf = [].concat(defaultConf, {
+	label: 'Zoo Faucet',
+	icon: '',
+	href: '/faucet'
+});
+}
+
+let config: () => MenuEntry[] = () => defaultConf;
 
 export const MENU_HEIGHT = 64;
 export const MENU_ENTRY_HEIGHT = 48;

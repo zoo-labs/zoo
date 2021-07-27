@@ -214,7 +214,6 @@ export async function signMintWithSig(
   });
 }
 
-
 export const THOUSANDTH_ZOO = ethers.utils.parseUnits(
   "0.001",
   "ether"
@@ -224,9 +223,8 @@ export const ONE_ZOO = ethers.utils.parseUnits("1", "ether") as BigNumber;
 export const TWO_ZOO = ethers.utils.parseUnits("2", "ether") as BigNumber;
 
 export const deployZooToken = async () => {
-  const [deployer] = await ethers.getSigners();
   return (await (await ethers.getContractFactory("ZooToken")).deploy()) as ZooToken;
-};
+}
 
 export const deployOtherNFTs = async () => {
   const bad = (await (
@@ -242,8 +240,9 @@ export const deployOtherNFTs = async () => {
 export const deployZooProtocol = async (tokenAddress) => {
   const [deployer] = await ethers.getSigners();
   const market = await (await new ZooMarket__factory(deployer).deploy()).deployed();
-  const media = await (
-    await new ZooMedia__factory(deployer).deploy("ZooAnimals", "ANML", market.address, tokenAddress, 16000)
+  const token  = await (await new ZooToken__factory(deployer).deploy()).deployed();
+  const media  = await (
+    await new ZooMedia__factory(deployer).deploy("ANML", "ZooAnimals", market.address, token.address)
   ).deployed();
   await market.configure(media.address);
   return { market, media };
