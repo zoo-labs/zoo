@@ -81,11 +81,8 @@ contract ZooMedia is Media, Ownable {
     constructor(
         string memory symbol,
         string memory name,
-        address marketAddress,
-        address _zooToken
-    ) Media(symbol, name, marketAddress) {
-        token = ZooToken(_zooToken);
-    }
+        address marketAddress
+    ) Media(symbol, name, marketAddress) { }
 
     function addDrop(
         string memory _name,
