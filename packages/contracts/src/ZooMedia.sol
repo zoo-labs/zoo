@@ -167,15 +167,6 @@ contract ZooMedia {
         return (dropID, address(drop));
     }
 
-    function setMetadataURI(
-        uint256 _dropID,
-        string memory _name,
-        string memory _URI
-    ) public onlyOwner {
-        ZooDrop drop = ZooDrop(drops[_dropID]);
-        drop.setMetadataURI(_name, _URI);
-    }
-
     function setTokenURI(
         uint256 _dropID,
         string memory _name,
@@ -183,6 +174,15 @@ contract ZooMedia {
     ) public onlyOwner {
         ZooDrop drop = ZooDrop(drops[_dropID]);
         drop.setTokenURI(_name, _URI);
+    }
+
+    function setMetadataURI(
+        uint256 _dropID,
+        string memory _name,
+        string memory _URI
+    ) public onlyOwner {
+        ZooDrop drop = ZooDrop(drops[_dropID]);
+        drop.setMetadataURI(_name, _URI);
     }
 
     // Accept ZOO and return Egg NFT
@@ -234,6 +234,14 @@ contract ZooMedia {
 
         emit BuyEgg(msg.sender, _tokenID);
         return _tokenID;
+    }
+
+    function burn(uint256 _tokenID) public {
+        return media.burn(_tokenID);
+    }
+
+    function tokenURI(uint256 _tokenID) public returns (string memory) {
+        return media.tokenURI(_tokenID);
     }
 
     // Burn egg and randomly return an animal NFT
