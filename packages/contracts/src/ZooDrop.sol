@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 pragma solidity 0.8.4;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -319,244 +320,102 @@ contract ZooDrop is Ownable {
             emit FreeAnimal(_owner, _tokenID, dailyYield);
 =======
 // pragma solidity 0.8.4;
+=======
+pragma solidity 0.8.4;
+>>>>>>> 94ac518 (Rearranging ZooMedia and ZooDrop contracts)
 
-// import "./ZooMedia.sol";
-// import "./ZooToken.sol";
-// // import "./Random.sol";
-// import "./interfaces/IMarket.sol";
-// import {Decimal} from "./Decimal.sol";
-// import "@openzeppelin/contracts/access/Ownable.sol";
-// import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
-// import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-
-// import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
-// import 'hardhat/console.sol';
+import "@openzeppelin/contracts/access/Ownable.sol";
+import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
 
 
-// contract ZooDrop is Ownable, IERC721Receiver  {
-//     using SafeMath for uint256;
-//     // this should be the max eggs available for this drop
-//     uint256 public _totalSupply;
-//     uint256 public _currentSupply;
-//     uint256 private eggPrice;
+contract ZooDrop is Ownable {
+    using Counters for Counters.Counter;
 
-//     uint[] public coolDowns = [
-//         4 hours,
-//         1 days,
-//         3 days,
-//         7 days,
-//         30 days
-//     ];
+    uint256 public totalSupply;
+    uint256 private _eggPrice;
+    Counters.Counter private _currentSupply;
 
-//     //Types to identify what type of 
-//     // media was minted from the onERC721Received(...) callback
-//     bytes base_egg_type = "E";
-//     bytes base_animal_type = "A";
-//     bytes hybrid_egg_type = "H";
-//     bytes hybrid_animal_type = "G";
+    struct Animal {
+        string name;
+        uint256 yield;
+        Rarity rarity;
+    }
 
-//     //Declare an Event
-//     event BuyEgg(address indexed _from);
-//     event Hatch(address indexed _from);
-//     event Burn(address indexed _from, uint256 indexed _animalTokenId);
-//     event FreeAnimal(address indexed _from, uint256 indexed _animalTokenId, uint256 indexed _yield);
-//     // event Breed(address indexed _from, uint256 _animalTokenId1, uint256 _animalTokenId2, uint256 _eggTokenId);
+    struct Rarity {
+        string name;
+        uint256 rarity;
+        uint256 boost;
+    }
 
+    struct Hybrid{
+        string name;
+        uint256 yield;
+    }
 
+    // mapping of animal name to available base animals introduced in this drop
+    mapping (string => Animal) public animals;
 
-//     struct Animal {
-//         string name;
-//         uint256 yield;
-//         Rarity rarity;
-//     }
+    // mapping of animal name to available hybrid animals introduced in this drop
+    mapping (string => Hybrid) public hybrids;
 
-//     struct Rarity {
-//         string name;
-//         uint256 rarity;
-//         uint256 boost;
-//     }
-
-//     struct Hybrid{
-//         string name;
-//         uint256 yield;
-//     }
-
-//     struct Egg {
-//         // need this for hatching hybrid eggs
-//         // uint256 id;
-//         string parent1;
-//         string parent2;
-//         uint256 eggCreationTime;
-//     }
-
-//     // mapping of address to tokenId of eggs
-//     mapping (address => uint256) public ownedEggs;
-
-//     // mapping of token id to eggs
-//     mapping (uint256 => Egg) public eggs;
-
-//     // mapping of token id to minted base animals
-//     mapping (uint256 => string) public existingAnimals;
-
-//     // mapping of token id to minted hybrids animals
-//     mapping (uint256 => string) public existingHybrids;
-
-//     // mapping of animal name to available base animals introduced in this drop
-//     mapping (string => Animal) public hatchableAnimals;
-
-//     // mapping of animal name to available hybrid animals introduced in this drop
-//     mapping (string => Hybrid) public hybridAnimals;
-
-//     // mapping of animal key to animal tokenuri
-//     mapping (string => string) public tokenURI;
+    // mapping of animal key to animal tokenuri
+    mapping (string => string) public tokenURI;
     
-//     // mapping of animal key to animal metadata
-//     mapping (string => string) public metaDataURI;
+    // mapping of animal key to animal metadata
+    mapping (string => string) public metaDataURI;
 
-//     // mapping of token id to animal date of birth : used to calculate yield for burn
-//     mapping (uint256 => uint256) public _animalDOB;
+    constructor(uint256 _supply, uint256 eggPrice){
+        _eggPrice = eggPrice;
+        _totalSupply = _supply;
+    }
 
-//     // mapping of address and number of times address has bred animals
-//     mapping (address => uint256) public _breedCount;
+    // owner can set egg cost
+    function setEggPrice(uint256 _cost) public onlyOwner {
+        require(_cost > 0, "Overflow or non positive price");
 
+        _eggPrice = _cost;
+    }
 
-//     /**
-//         MODIFIERS
-//      */
-//     // modifer to ensure the max amount of egg supply for this drop does not exceed limit
-//     modifier enoughSupply {
-//         require(_currentSupply > 0);
-//         _;
-//     }
-
-//     modifier enoughFunds{
-//         require(token.balanceOf(msg.sender) >= eggPrice);
-//         _;
-//     }
-
-//     //Token address of the ZooToken
-//     ZooToken public token;
-    
-//     ZooMedia public media;
-
-//     // Random public random;
+    function getEggPrice() public view returns (uint256) {
+        return _eggPrice;
+    }
 
 
-//     constructor(address _zooToken, address _zooMedia, uint256 _supply){
-//         //Initalize token with ZooToken address
-//         token = ZooToken(_zooToken);
-//         media = ZooMedia(_zooMedia);
-//         eggPrice = 200;
-//         _totalSupply = _supply;
-//         _currentSupply = _supply;
-
-//     }
+    function getCurrentSupply() internal onlyOwner {
+        _currentSupply.current();
+    }
 
 
-//     // owner can set egg cost
-//     function setEggPrice(uint256 _cost) public onlyOwner {
-//         require(_cost > 0, "Overflow or non positive price");
+    /**
+        Add animal for possibility of hatching for the drop
+     */
+    function addAnimal(string memory _animal, uint256 _yield, string memory _rarityName, uint256 _rarity, uint256 _boost, string memory _tokenURI, string memory _metaDataURI) public onlyOwner {
+        Animal memory newAnimal;
+        Rarity memory newRarity = Rarity({name: _rarityName, rarity: _rarity, boost: _boost});
+        newAnimal.name = _animal;
+        newAnimal.rarity = newRarity;
+        newAnimal.yield = _yield;
 
-//         eggPrice = _cost;
-//     }
+        tokenURI[_animal] = _tokenURI;
+        metaDataURI[_animal] = _metaDataURI;
+        animals[_animal] = newAnimal;
+    }
 
-//     function getEggPrice() public returns (uint256) {
-//         return eggPrice;
-//     }
+    /**
+        Add animal for possibility of hatching for the drop
+     */
+    function addHybrid(string memory _animal, string memory _base, string memory _secondary, uint256 yield, string memory _tokenURI, string memory _metaDataURI) public onlyOwner {
+        Hybrid memory newHybrid;
+        newHybrid.name = _animal;
+        newHybrid.yield = yield;
 
-//     /**
-//         Add animal for possibility of hatching for the drop
-//      */
-//     function addAnimal(string memory _animal, uint256 _yield, string memory _rarityName, uint256 _rarity, uint256 _boost, string memory _tokenURI, string memory _metaDataURI) public onlyOwner {
-//         Animal memory newAnimal;
-//         Rarity memory newRarity = Rarity({name: _rarityName, rarity: _rarity, boost: _boost});
-//         newAnimal.name = _animal;
-//         newAnimal.rarity = newRarity;
-//         newAnimal.yield = _yield;
+        tokenURI[_animal] = _tokenURI;
+        metaDataURI[_animal] = _metaDataURI;
 
-//         tokenURI[_animal] = _tokenURI;
-//         metaDataURI[_animal] = _metaDataURI;
-//         hatchableAnimals[_animal] = newAnimal;
+        hybrids[string(abi.encodePacked(_base, _secondary))] = newHybrid;
+    }
 
-//     }
-
-//         /**
-//         Add animal for possibility of hatching for the drop
-//      */
-//     function addHybrid(string memory _animal, string memory _base, string memory _secondary, uint256 yield, string memory _tokenURI, string memory _metaDataURI) public onlyOwner {
-//         Hybrid memory newHybrid;
-//         newHybrid.name = _animal;
-//         newHybrid.yield = yield;
-
-//         tokenURI[_animal] = _tokenURI;
-//         metaDataURI[_animal] = _metaDataURI;
-
-//         hybridAnimals[string(abi.encodePacked(_base, _secondary))] = newHybrid;
-//     }
-
-//     /**
-//         Getters for mappings
-//      */
-//      function getAnimal(string memory _animal) public view returns (Animal memory) {
-//          return hatchableAnimals[_animal];
-//      }
-
-//      function getHybrid(string memory _animal) public view returns (Hybrid memory) {
-//          return hybridAnimals[_animal];
-//      }
-
-//     function getTokenURI(string memory _animal) public view returns (string memory) {
-//          return tokenURI[_animal];
-//      }
-
-//     /**
-//         Setters for mappings
-//      */
-//     // possibly unnecessary
-//     function setAnimal(uint256 _tokenID, string memory _animal, uint256 _dob) public onlyOwner {
-//         existingAnimals[_tokenID] = _animal;
-//         _animalDOB[_tokenID] = _dob;
-//     }
-
-//     // possibly unnecessary
-//     function setHybrid(uint256 _tokenID, string memory _animal, uint256 _dob) public onlyOwner {
-//         existingHybrids[_tokenID] = _animal;
-//         _animalDOB[_tokenID] = _dob;
-//     }
-
-//     // add a tokenURI for an animal
-//     function setTokenURI(string memory _name, string memory _tokenURI) public onlyOwner {
-//         tokenURI[_name] = _tokenURI;
-//     }
-
-//     // add a metadataURI for an animal
-//     function setMetaDataURI(string memory _name, string memory _metaData) public onlyOwner {
-//         metaDataURI[_name] = _metaData;
-//     }
-
-
-//     // Accept ZOO and return Egg NFT
-//     function buyEgg(ZooMedia.MediaData memory _data, IMarket.BidShares memory _bidShares) public enoughSupply enoughFunds returns (uint256) {
-        
-//         token.transferFrom(msg.sender, address(this), eggPrice);
-//         media.mintZoo(_data, _bidShares, base_egg_type);
-//         _currentSupply--;
-//         emit BuyEgg(msg.sender);
-//         return 0;
-//     }
-
-//     // Burn egg and randomly return an animal NFT 
-//     function hatchEgg(uint256 tokenID) public returns (bool) {
-
-
-//         //TODO: Transfer token back to the contract in order to burn it 
-
-
-//         // need to check the hatch time delay
-//         Egg memory egg = eggs[tokenID];      
-//         media.burn(tokenID);
-//         emit Burn(msg.sender, tokenID);
-
+<<<<<<< HEAD
 //         // get the rarity for an animal    
 //         uint256 rarity = random(); 
 //         // uint256 rarity = 1;
@@ -676,10 +535,18 @@ contract ZooDrop is Ownable {
     }
 >>>>>>> 339adce (Added todos)
 
+=======
+    function setTokenURI(string memory _animal, string memory _tokenURI) public onlyOwner {
+        tokenURI[_animal] = _tokenURI;
+    }
+
+    
+>>>>>>> 94ac518 (Rearranging ZooMedia and ZooDrop contracts)
     function setMetadataURI(string memory _animal, string memory _metadataURI) public onlyOwner {
         metaDataURI[_animal] = _metadataURI;
     }
 
+<<<<<<< HEAD
     function buyEgg() public onlyOwner returns (string memory, string memory) {
         // require(_currentSupply > 0, "Current: decrement overflow");
         // _currentSupply = _currentSupply - 1;
@@ -846,6 +713,13 @@ function onERC721Received(address _operator, address _from, uint256 _tokenId, by
 
 // }
 >>>>>>> 4895130 (Moved ZooDrop to ZooMedia)
+=======
+    function buyEgg() public onlyOwner returns (string, string) {
+        _currentSupply.decrement();
+        return (tokenURI["basicEgg"], metaDataURI["basicEgg"]);
+    }
+}
+>>>>>>> 94ac518 (Rearranging ZooMedia and ZooDrop contracts)
 
 
 

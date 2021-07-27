@@ -240,9 +240,8 @@ export const deployOtherNFTs = async () => {
 export const deployZooProtocol = async (tokenAddress) => {
   const [deployer] = await ethers.getSigners();
   const market = await (await new ZooMarket__factory(deployer).deploy()).deployed();
-  const token  = await (await new ZooToken__factory(deployer).deploy()).deployed();
-  const media  = await (
-    await new ZooMedia__factory(deployer).deploy("ANML", "ZooAnimals", market.address, token.address)
+  const media = await (
+    await new ZooMedia__factory(deployer).deploy("ZooAnimals", "ANML", market.address, tokenAddress, 16000)
   ).deployed();
   await market.configure(media.address);
   return { market, media };
