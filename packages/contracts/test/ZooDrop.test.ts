@@ -27,7 +27,7 @@ describe("Test ZooDrop", () => {
 
         const ZooDrop = await ethers.getContractFactory('ZooDrop', owner);
 
-        zooDrop = await ZooDrop.deploy(16000, 210);
+        zooDrop = await ZooDrop.deploy('Gen1', 16000, 210);
 
         await zooDrop.deployed();
     })
