@@ -414,9 +414,13 @@ const MyZooAccount: React.FC = () => {
 
    const renderAnimals = (hybrid): JSX.Element => {
       const animalData = [];
+      let animalGroup = {};
       const now = new Date().getTime();
 
       Object.values(allAnimalsSorted).forEach((animal, index) => {
+         if (animal.owner !== account) {
+           return;
+         }
          const lastBred = animal.lastBred
             ? new Date(Number(animal.lastBred)).getTime()
             : new Date().getTime();
@@ -424,33 +428,37 @@ const MyZooAccount: React.FC = () => {
             animal.breedCount > 5 ? 5 : animal.breedCount || 1;
          const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
          const elapsedTime = now - lastBred;
-         const timeRemaining = breedTimeout - elapsedTime;
+         let timeRemaining = breedTimeout - elapsedTime;
          const timeRemainingDaysHours = getDaysHours(timeRemaining);
          const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
 
-         animalData.push({
-            id: index,
-            ...animal,
-            name: animal.name.replace(/\u0000/g, ""),
-            timeRemaining:
-               animal.bloodline !== "pure"
-                  ? elapsedTime < breedTimeout
-                     ? timeRemaining
-                     : 0
-                  : 0,
-            CTAOverride:
-               animal.bloodline !== "pure"
-                  ? elapsedTime < breedTimeout
-                     ? { barwidth, timeRemainingDaysHours }
-                     : null
-                  : null,
-         });
-      });
+	timeRemaining = animal.bloodline !== "pure" ? elapsedTime < breedTimeout ? timeRemaining : 0 : 0;
+
+         if (timeRemaining === 0 && animalData.find(a => a.animalId === animal.animalId && (a.timeRemaining === undefined || a.timeRemaining === timeRemaining))) {
+        console.log('asdfsdfsdfsdf')
+        console.log(animalData)
+        animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 2
+      } else {
+        animalData.push({
+          id: index,
+          ...animal,
+          name: animal.name.replace(/\u0000/g, ""),
+          timeRemaining: timeRemaining,
+          CTAOverride:
+            animal.bloodline !== "pure"
+              ? elapsedTime < breedTimeout
+                ? { barwidth, timeRemainingDaysHours }
+                : null
+              : null,
+        });
+      }
+    });
+
       empty =
          animalData.length === 0 && Object.keys(allAnimalsSorted).length !== 0;
 
       const animals = animalData.filter(
-         (item) => item.bloodline === hybrid && item.owner === account
+         (item) => item.bloodline === hybrid
       );
 
       return (
@@ -480,6 +488,19 @@ const MyZooAccount: React.FC = () => {
                                        width: "calc(100vw/2.2 - 13px)",
                                        padding: 10,
                                     }}>
+			        <TextWrapper
+			          style={{
+			            textShadow: "0px 2px 6px rgb(0, 0, 0)",
+			            fontSize: 18,
+			            letterSpacing: 0,
+			            position: "absolute",
+			            textTransform: "lowercase",
+			            right: 7,
+			            top: -5
+			          }}
+			        >
+			          {animal.timeRemaining === 0 ? animalGroup[animal.animalId] ? `x${animalGroup[animal.animalId]}` : '' : ''}
+			        </TextWrapper>
                                     <TextWrapper
                                        style={{
                                           textShadow:
