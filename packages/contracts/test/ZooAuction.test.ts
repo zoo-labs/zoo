@@ -563,7 +563,7 @@ describe("ZooAuction", () => {
       });
     });
 
-    describe("second bid", () => {
+    describe("#second bid", () => {
       beforeEach(async () => {
 
         token = token.connect(bidderA)
@@ -753,7 +753,7 @@ describe("ZooAuction", () => {
             await ethers.provider.send("evm_setNextBlockTimestamp", [
               currAuction.firstBidTime
                 .add(currAuction.duration)
-                .add(1)
+                .sub(5)
                 .toNumber(),
             ]);
           });
@@ -762,14 +762,12 @@ describe("ZooAuction", () => {
 
             token = token.connect(auctionHouse.signer)
 
+            await token.connect(admin).mint(await auctionHouse.signer.getAddress(), 300)
             await token.approve(auctionHouse.address, 300)
 
             const block = await ethers.provider.getBlockNumber();
 
-            await auctionHouse.createBid(0, 210, {
-              value: 210,
-            });
-
+            await auctionHouse.createBid(0, 210);
 
             const events = await auctionHouse.queryFilter(
               auctionHouse.filters.AuctionBid(
@@ -782,12 +780,12 @@ describe("ZooAuction", () => {
               ),
               block
             );
-            expect(events.length).eq(2);
-            const logDescription = auctionHouse.interface.parseLog(events[1]);
+            expect(events.length).eq(1);
+            const logDescription = auctionHouse.interface.parseLog(events[0]);
 
             expect(logDescription.name).to.eq("AuctionBid");
             expect(logDescription.args.sender).to.eq(await bidderB.getAddress());
-            expect(logDescription.args.value).to.eq(TWO_ZOO);
+            expect(logDescription.args.value).to.eq(210);
             expect(logDescription.args.firstBid).to.eq(false);
             expect(logDescription.args.extended).to.eq(true);
           });
@@ -926,7 +924,6 @@ describe("ZooAuction", () => {
     });
 
     describe("#endAuction", () => {
-      // let auctionHouse: ZooAuction;
       let admin: Signer;
       let creator: Signer;
       let curator: Signer;

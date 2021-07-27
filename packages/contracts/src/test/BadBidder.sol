@@ -17,7 +17,7 @@ contract BadBidder {
     }
 
     function placeBid(uint256 auctionId, uint256 amount) external payable {
-        IAuctionHouse(auction).createBid{value: amount}(auctionId, amount);
+        IAuctionHouse(auction).createBid(auctionId, amount);
     }
 
     receive() external payable {}
