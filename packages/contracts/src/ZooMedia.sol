@@ -184,7 +184,7 @@ contract ZooMedia is Media, Ownable {
         emit Burn(msg.sender, tokenID);
 
         // get the rarity for an animal
-        uint256 rarity = random();
+        uint256 rarity = unsafeRandom();
 
         Media.MediaData memory data;
 
@@ -308,7 +308,7 @@ contract ZooMedia is Media, Ownable {
 
      //   @Kimani will overwrite this
     // TEMP random function
-    function random() private returns (uint256) {
+    function unsafeRandom() private returns (uint256) {
         uint256 randomNumber = uint256(keccak256(abi.encodePacked(block.number, msg.sender, block.timestamp))) % 1000;
         return randomNumber;
     }

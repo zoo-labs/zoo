@@ -302,17 +302,6 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
     /**
      * @notice see IMedia
      */
-    function transfer(uint256 tokenId, address recipient)
-        external
-    {
-        require(msg.sender == marketContract, "Media: only market contract");
-        previousTokenOwners[tokenId] = ownerOf(tokenId);
-        _transfer(ownerOf(tokenId), recipient, tokenId);
-    }
-
-    /**
-     * @notice see IMedia
-     */
     function auctionTransfer(uint256 tokenId, address recipient)
         external
         override
