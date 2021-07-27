@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, useRouteMatch } from "react-router-dom";
 import { AppState } from "state";
 import { useDispatch, useSelector } from "react-redux";
@@ -113,7 +113,7 @@ const RowLayout = styled.div`
    }
 `;
 
-const Card = styled(Existing)<{ selected?: boolean; timedOut?: boolean }>`
+const Card = styled(Existing) <{ selected?: boolean; timedOut?: boolean }>`
    border: ${({ selected }) => (selected ? "2px solid white" : null)};
    opacity: ${({ timedOut }) => (timedOut ? "0.6" : null)};
 `;
@@ -207,7 +207,8 @@ const MyZooAccount: React.FC = () => {
       const eggStruct = {
          owner: egg.owner,
       };
-      console.log("BURNING");
+
+      // console.log("BURNING");
       let randIdx;
 
       // REPLACE WITH HATCH FUNCTION FROM CONTRACT
@@ -216,9 +217,9 @@ const MyZooAccount: React.FC = () => {
       } else {
          randIdx = Math.floor(Math.random() * (13 - 10) + 10);
       }
-      console.log(randIdx);
+      // console.log(randIdx);
       const aFromMap = animalMapping[randIdx];
-      console.log(aFromMap, randIdx);
+      // console.log(aFromMap, randIdx);
       const newAnimal: Animal = {
          tokenId: Math.floor(Math.random() * (999999 - 0) + 0).toString(),
          animalId: aFromMap.animalId,
@@ -250,16 +251,17 @@ const MyZooAccount: React.FC = () => {
    const breed = (onDismiss) => {
       const animal1: Animal = array[0];
       const animal2: Animal = array[1];
-      const now = new Date().getTime();
+      const ID = Object.keys(allAnimals).length;
       array.forEach((animal) => {
          animal.bred = true;
          animal.breedCount = animal.breedCount + 1 || 1;
-         const lastBred = animal.lastBred
-            ? new Date(Number(animal.lastBred)).getTime()
-            : new Date().getTime();
+         console.log('+++++++++++++++++')
+         console.log(animal.breedCount);
+         const now = new Date().getTime();
+         animal.lastBred = new Date().getTime();
          const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount;
          const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
-         const elapsedTime = now - lastBred;
+         const elapsedTime = now - animal.lastBred
 
          if (elapsedTime < breedTimeout) {
             const timeRemaining = breedTimeout - elapsedTime;
@@ -295,6 +297,7 @@ const MyZooAccount: React.FC = () => {
          CTAOverride: null,
       };
       if (!egg.basic) {
+         const now = new Date().getTime();
          const createdDate = egg.created
             ? new Date(Number(egg.created)).getTime()
             : new Date().getTime();
@@ -331,6 +334,7 @@ const MyZooAccount: React.FC = () => {
          array = temp;
          onConfirm();
       }
+
       dispatch(addAnimal(toSet));
    };
 
@@ -391,12 +395,14 @@ const MyZooAccount: React.FC = () => {
       return (
          <Modal title="Are you Sure?" onDismiss={onDismiss}>
             <Text>{`You want to list this ${sellAnimal.name}?`}</Text>
-            <BorderButton scale="md" onClick={() => onDismiss()}>
-               Cancel
-            </BorderButton>
-            <BorderButton scale="md" onClick={() => breed(onDismiss)}>
-               Confirm
-            </BorderButton>
+            <Flex justifyContent="space-around" flexDirection="row" mt="16px">
+               <BorderButton scale="md" onClick={() => onDismiss()}>
+                  Cancel
+               </BorderButton>
+               <BorderButton scale="md" onClick={() => breed(onDismiss)}>
+                  Confirm
+               </BorderButton>
+            </Flex>
          </Modal>
       );
    };
@@ -412,6 +418,16 @@ const MyZooAccount: React.FC = () => {
       }, 5000);
    };
 
+
+   const [timeStartOnPage, setTimeStartOnPage] = useState(new Date().getTime())
+   const [elapsedTimeOnPage, setElapsedTimeOnPage] = useState(new Date().getTime() - timeStartOnPage)
+
+   useEffect(() => {
+      setTimeout(function () {
+         setElapsedTimeOnPage(elapsedTimeOnPage + 5000);
+      }, 5000);
+   }, [elapsedTimeOnPage])
+
    const renderAnimals = (hybrid): JSX.Element => {
       const animalData = [];
       let animalGroup = {};
@@ -419,40 +435,44 @@ const MyZooAccount: React.FC = () => {
 
       Object.values(allAnimalsSorted).forEach((animal, index) => {
          if (animal.owner !== account) {
-           return;
+            return;
          }
          const lastBred = animal.lastBred
             ? new Date(Number(animal.lastBred)).getTime()
             : new Date().getTime();
+         const now = new Date().getTime();
          const breedTimeoutKey =
-            animal.breedCount > 5 ? 5 : animal.breedCount || 1;
+            animal.breedCount > 5 ? 5 : animal.breedCount || 0;
          const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
          const elapsedTime = now - lastBred;
-         let timeRemaining = breedTimeout - elapsedTime;
+         const timeRemaining = breedTimeout - elapsedTime;
          const timeRemainingDaysHours = getDaysHours(timeRemaining);
          const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
-
-	timeRemaining = animal.bloodline !== "pure" ? elapsedTime < breedTimeout ? timeRemaining : 0 : 0;
-
-         if (timeRemaining === 0 && animalData.find(a => a.animalId === animal.animalId && (a.timeRemaining === undefined || a.timeRemaining === timeRemaining))) {
-        console.log('asdfsdfsdfsdf')
-        console.log(animalData)
-        animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 2
-      } else {
-        animalData.push({
-          id: index,
-          ...animal,
-          name: animal.name.replace(/\u0000/g, ""),
-          timeRemaining: timeRemaining,
-          CTAOverride:
-            animal.bloodline !== "pure"
-              ? elapsedTime < breedTimeout
-                ? { barwidth, timeRemainingDaysHours }
-                : null
-              : null,
-        });
-      }
-    });
+         console.log('===================')
+         console.log(timeRemaining);
+         console.log('===================')
+         if (timeRemaining === 0 && animalData.find(a => a.animalId === animal.animalId && a.timeRemaining === timeRemaining)) {
+            animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 2
+         } else {
+            animalData.push({
+               id: index,
+               ...animal,
+               name: animal.name.replace(/\u0000/g, ""),
+               timeRemaining:
+                  animal.bloodline !== "pure"
+                     ? elapsedTime < breedTimeout
+                        ? timeRemaining
+                        : 0
+                     : 0,
+               CTAOverride:
+                  animal.bloodline !== "pure"
+                     ? elapsedTime < breedTimeout
+                        ? { barwidth, timeRemainingDaysHours }
+                        : null
+                     : null,
+            });
+         }
+      });
 
       empty =
          animalData.length === 0 && Object.keys(allAnimalsSorted).length !== 0;
@@ -460,6 +480,7 @@ const MyZooAccount: React.FC = () => {
       const animals = animalData.filter(
          (item) => item.bloodline === hybrid
       );
+      console.log(animalData);
 
       return (
          <RowLayout>
@@ -488,19 +509,19 @@ const MyZooAccount: React.FC = () => {
                                        width: "calc(100vw/2.2 - 13px)",
                                        padding: 10,
                                     }}>
-			        <TextWrapper
-			          style={{
-			            textShadow: "0px 2px 6px rgb(0, 0, 0)",
-			            fontSize: 18,
-			            letterSpacing: 0,
-			            position: "absolute",
-			            textTransform: "lowercase",
-			            right: 7,
-			            top: -5
-			          }}
-			        >
-			          {animal.timeRemaining === 0 ? animalGroup[animal.animalId] ? `x${animalGroup[animal.animalId]}` : '' : ''}
-			        </TextWrapper>
+                                    <TextWrapper
+                                       style={{
+                                          textShadow: "0px 2px 6px rgb(0, 0, 0)",
+                                          fontSize: 18,
+                                          letterSpacing: 0,
+                                          position: "absolute",
+                                          textTransform: "lowercase",
+                                          right: 7,
+                                          top: -5
+                                       }}
+                                    >
+                                       {animal.timeRemaining === 0 ? animalGroup[animal.animalId] ? `x${animalGroup[animal.animalId]}` : '' : ''}
+                                    </TextWrapper>
                                     <TextWrapper
                                        style={{
                                           textShadow:
@@ -555,11 +576,11 @@ const MyZooAccount: React.FC = () => {
 
    const renderEggs = (): JSX.Element => {
       const eggData = [];
-      const now = new Date().getTime();
       Object.values(allEggsSorted).forEach((egg, index) => {
          const createdDate = egg.created
             ? new Date(Number(egg.created)).getTime()
             : new Date().getTime();
+         const now = new Date().getTime();
          const hatchTimeout = getMilliseconds(eggTimeout);
          const elapsedTime = now - createdDate;
          const timeRemaining = hatchTimeout - elapsedTime;
