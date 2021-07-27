@@ -120,7 +120,7 @@ contract ZooDrop is Ownable {
         return (tokenURI["basicEgg"], metaDataURI["basicEgg"]);
     }
 
-    function getHybridEgg() public onlyOwner returns (string memory, string memory) {
+    function getHybridEgg() public view onlyOwner returns (string memory, string memory) {
         return (tokenURI["hybridEgg"], metaDataURI["hybridEgg"]);
     }
 }
