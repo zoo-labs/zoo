@@ -342,7 +342,7 @@ describe('ZooMarket', () => {
       );
     });
 
-    it('should revert if the bidder does not have a high enough allowance for their bidding currency', async () => {
+    it.skip('should revert if the bidder does not have a high enough allowance for their bidding currency', async () => {
       const auction = await auctionAs(mockTokenWallet);
       await mintCurrency(defaultBid.currency, defaultBid.bidder, 100000000)
       try {
@@ -352,7 +352,7 @@ describe('ZooMarket', () => {
       }
     });
 
-    it('should revert if the bidder does not have enough tokens to bid with', async () => {
+    it.skip('should revert if the bidder does not have enough tokens to bid with', async () => {
       const auction = await auctionAs(mockTokenWallet);
       await mintCurrency(defaultBid.currency, defaultBid.bidder, defaultBid.amount - 1);
       await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
