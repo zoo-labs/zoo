@@ -1,0 +1,410 @@
+[
+   {
+      "inputs": [
+         {
+            "internalType": "string",
+            "name": "_name",
+            "type": "string"
+         },
+         {
+            "internalType": "uint256",
+            "name": "_supply",
+            "type": "uint256"
+         },
+         {
+            "internalType": "uint256",
+            "name": "eggPrice",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+   },
+   {
+      "anonymous": false,
+      "inputs": [
+         {
+            "indexed": true,
+            "internalType": "address",
+            "name": "previousOwner",
+            "type": "address"
+         },
+         {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newOwner",
+            "type": "address"
+         }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "string",
+            "name": "_animal",
+            "type": "string"
+         },
+         {
+            "internalType": "uint256",
+            "name": "_yield",
+            "type": "uint256"
+         },
+         {
+            "internalType": "string",
+            "name": "_rarityName",
+            "type": "string"
+         },
+         {
+            "internalType": "uint256",
+            "name": "_rarity",
+            "type": "uint256"
+         },
+         {
+            "internalType": "string",
+            "name": "_tokenURI",
+            "type": "string"
+         },
+         {
+            "internalType": "string",
+            "name": "_metadataURI",
+            "type": "string"
+         }
+      ],
+      "name": "addAnimal",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "string",
+            "name": "_animal",
+            "type": "string"
+         },
+         {
+            "internalType": "string",
+            "name": "_base",
+            "type": "string"
+         },
+         {
+            "internalType": "string",
+            "name": "_secondary",
+            "type": "string"
+         },
+         {
+            "internalType": "uint256",
+            "name": "yield",
+            "type": "uint256"
+         },
+         {
+            "internalType": "string",
+            "name": "_tokenURI",
+            "type": "string"
+         },
+         {
+            "internalType": "string",
+            "name": "_metadataURI",
+            "type": "string"
+         }
+      ],
+      "name": "addHybrid",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+         }
+      ],
+      "name": "animals",
+      "outputs": [
+         {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+         },
+         {
+            "internalType": "uint256",
+            "name": "yield",
+            "type": "uint256"
+         },
+         {
+            "components": [
+               {
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+               },
+               {
+                  "internalType": "uint256",
+                  "name": "rarity",
+                  "type": "uint256"
+               }
+            ],
+            "internalType": "struct ZooDrop.Rarity",
+            "name": "rarity",
+            "type": "tuple"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "buyEgg",
+      "outputs": [
+         {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+         },
+         {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+         }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "getCurrentSupply",
+      "outputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "getEggPrice",
+      "outputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "getHybridEgg",
+      "outputs": [
+         {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+         },
+         {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "string",
+            "name": "_animal",
+            "type": "string"
+         }
+      ],
+      "name": "getMetadataURI",
+      "outputs": [
+         {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+         }
+      ],
+      "name": "hybrids",
+      "outputs": [
+         {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+         },
+         {
+            "internalType": "uint256",
+            "name": "yield",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+         }
+      ],
+      "name": "metadataURI",
+      "outputs": [
+         {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "name",
+      "outputs": [
+         {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+         {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "uint256",
+            "name": "_cost",
+            "type": "uint256"
+         }
+      ],
+      "name": "setEggPrice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "string",
+            "name": "_animal",
+            "type": "string"
+         },
+         {
+            "internalType": "string",
+            "name": "_metadataURI",
+            "type": "string"
+         }
+      ],
+      "name": "setMetadataURI",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "string",
+            "name": "_animal",
+            "type": "string"
+         },
+         {
+            "internalType": "string",
+            "name": "_tokenURI",
+            "type": "string"
+         }
+      ],
+      "name": "setTokenURI",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+         }
+      ],
+      "name": "tokenURI",
+      "outputs": [
+         {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "address",
+            "name": "newOwner",
+            "type": "address"
+         }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   }
+]
