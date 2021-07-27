@@ -23,10 +23,10 @@ import { animalMapping } from 'util/animalMapping'
 
 const InfoBlock = styled.div`
 padding: 4px;
-text-align: center; 
+text-align: center;
 position: relative;
 left: 0;
-bottom: 0; 
+bottom: 0;
 width: 100%;
 z-index: 999999;
 `;
@@ -72,7 +72,7 @@ const TimeoutDisplay = styled.span`
   z-index: 2;
 `
 const Card = styled(Existing) <{ timedOut?: boolean }>`
-  
+
   cursor: pointer;
   width: 120px;
   backgroundColor: "#000000";
@@ -93,10 +93,10 @@ export const EggCard: React.FC<EggCardType> = ({egg})  => {
     const hatchEgg = () => {
       setPlayVideo(true)
     }
-  
+
     const [onHatch] = useModal(
       <HatchModal
-  
+
           confirmation={hatchEgg}
           onDismiss={()=>null}
       />
@@ -141,7 +141,7 @@ export const EggCard: React.FC<EggCardType> = ({egg})  => {
             breedCount: 0,
             lastBred: ""
         }
-        dispatch(addAnimal(newAnimal)) 
+        dispatch(addAnimal(newAnimal))
     }
 
 
@@ -152,8 +152,8 @@ export const EggCard: React.FC<EggCardType> = ({egg})  => {
     }
     const renderCard = () => {
         return (
-            <Card onClick={() => { egg.timeRemaining > 0 ? null : onHatch()}} style={{backgroundColor: '#000000'}} timedOut={egg.timeRemaining > 0 ? true : false}>
-		    <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: 150, padding: 10}}>
+            <Card style={{backgroundColor: '#000000'}} timedOut={egg.timeRemaining > 0 ? true : false}>
+		    <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: 150, padding: 10}}>
                 <TextWrapper>{egg.name}</TextWrapper>
                 </CardBody>
                 {egg.timeRemaining > 0 ?
