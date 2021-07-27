@@ -74,15 +74,17 @@ contract ZooMedia is Media, Ownable {
     // mapping of all hatched animals DOB (as blocknumbers)
     mapping(uint256 => uint256) public animalDOB;
 
-
     //Token address of the ZooToken
     ZooToken public token;
 
     constructor(
         string memory symbol,
         string memory name,
-        address marketAddress
-    ) Media(symbol, name, marketAddress) { }
+        address _market,
+        address _token
+    ) Media(symbol, name, _market) {
+        token = ZooToken(_token);
+    }
 
     function addDrop(
         string memory _name,
