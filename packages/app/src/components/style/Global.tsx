@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
     src:url('${fontFamilyPath}') format('TrueType');
   }
   * {
-    font-family: '{$fontFamily}';
+    font-family: ${fontFamily};
     color: #FFFFF;
   }
   body {
