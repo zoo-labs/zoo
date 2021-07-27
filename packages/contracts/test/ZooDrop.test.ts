@@ -73,9 +73,9 @@ describe("Test ZooDrop", () => {
         } catch (e) {
             expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
         }
-        
+
     });
-    
+
     it("Should revert when adding a hybrid animal not as owner", async() => {
         zooDrop = zooDrop.connect(signers[1]);
         try {
@@ -93,12 +93,12 @@ describe("Test ZooDrop", () => {
         let bigEggPrice = await zooDrop.getEggPrice();
         let eggPrice = bigEggPrice.toNumber();
         expect(eggPrice).to.equal(210); // default eggPrice
-        
+
         await zooDrop.connect(signers[0]).setEggPrice(333); //set a new price
-        
+
         bigEggPrice = await zooDrop.getEggPrice();
         eggPrice = bigEggPrice.toNumber();
-        expect(eggPrice).to.equal(333); // gets the new eggPrice        
+        expect(eggPrice).to.equal(333); // gets the new eggPrice
     });
 
     it("Should revert when setting egg price as non owner", async() => {

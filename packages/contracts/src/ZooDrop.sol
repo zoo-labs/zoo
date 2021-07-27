@@ -1,4 +1,6 @@
-pragma solidity 0.8.4;
+// SPDX-License-Identifier: MIT
+
+pragma solidity >=0.8.4;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
@@ -10,6 +12,8 @@ contract ZooDrop is Ownable {
     uint256 public totalSupply;
     uint256 private _eggPrice;
     Counters.Counter private _currentSupply;
+
+    string public name;
 
     struct Animal {
         string name;
@@ -33,18 +37,19 @@ contract ZooDrop is Ownable {
 
     // mapping of animal name to available hybrid animals introduced in this drop
     mapping (string => Hybrid) public hybrids;
-    
+
     // mapping of base animal pairs to possible hybrid animal pairs
     mapping (bytes32 => Hybrid) public possiblePairs;
 
     // mapping of animal key to animal tokenuri
     mapping (string => string) public tokenURI;
-    
+
     // mapping of animal key to animal metadata
     mapping (string => string) public metaDataURI;
 
 
-    constructor(uint256 _supply, uint256 eggPrice){
+    constructor(string memory _name, uint256 _supply, uint256 eggPrice){
+        name = _name;
         _eggPrice = eggPrice;
         totalSupply = _supply;
         _currentSupply._value = _supply;
@@ -100,7 +105,7 @@ contract ZooDrop is Ownable {
         tokenURI[_animal] = _tokenURI;
     }
 
-    
+
     function setMetadataURI(string memory _animal, string memory _metadataURI) public onlyOwner {
         metaDataURI[_animal] = _metadataURI;
     }
