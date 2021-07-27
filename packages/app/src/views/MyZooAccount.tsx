@@ -258,8 +258,8 @@ const MyZooAccount: React.FC = () => {
     const animal1: Animal = array[0];
     const animal2: Animal = array[1];
     const ID = Object.keys(allAnimals).length;
-    const now = new Date().getTime();
     array.forEach((animal) => {
+      const now = new Date().getTime();
       animal.bred = true;
       animal.breedCount = animal.breedCount + 1 || 1;
       const lastBred = animal.lastBred
@@ -277,6 +277,7 @@ const MyZooAccount: React.FC = () => {
         animal.timeRemaining = timeRemaining;
         // animal.actionStringOverride = 'data-disabled'
         animal.CTAOverride = { barwidth, timeRemainingDaysHours };
+        debugger; // eslint-disable-line no-debugger
       } else {
         animal.timeRemaining = 0;
         animal.CTAOverride = {
@@ -303,6 +304,7 @@ const MyZooAccount: React.FC = () => {
       CTAOverride: null,
     };
     if (!egg.basic) {
+      const now = new Date().getTime();
       const createdDate = egg.created
         ? new Date(Number(egg.created)).getTime()
         : new Date().getTime();
@@ -415,13 +417,13 @@ const MyZooAccount: React.FC = () => {
         ...animal,
         name: animal.name.replace(/\u0000/g, ""),
         timeRemaining:
-          animal.bloodline !== "pure"
+          animal.bloodline === "pure"
             ? elapsedTime < breedTimeout
               ? timeRemaining
               : 0
             : 0,
         CTAOverride:
-          animal.bloodline !== "pure"
+          animal.bloodline === "pure"
             ? elapsedTime < breedTimeout
               ? { barwidth, timeRemainingDaysHours }
               : null
@@ -439,6 +441,7 @@ const MyZooAccount: React.FC = () => {
     //     }
     //     updatedData.push({ id: ind, ...token })
     //   })
+    console.log(animalData)
 
     return (
       <RowLayout>
