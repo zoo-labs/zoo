@@ -5,7 +5,6 @@ import { useLocation, useRouteMatch, useHistory } from "react-router-dom";
 import { Overlay } from "../Overlay";
 import Flex from "../../components/Box/Flex";
 import useMatchBreakpoints from "../../hooks/useMatchBreakpoints";
-import Logo from "./components/Logo";
 import Panel from "./components/Panel";
 import UserBlock from "./components/UserBlock";
 import { NavProps } from "./types";
@@ -15,7 +14,6 @@ import {
   SIDEBAR_WIDTH_REDUCED,
   SIDEBAR_WIDTH_FULL,
 } from "./config";
-import { FaHome } from "react-icons/fa";
 import BottomMenuIcon from "./components/BottomMenuIcon";
 
 const Wrapper = styled.div`

@@ -89,10 +89,10 @@ contract ZooMedia {
     string public name;
     string public symbol;
 
-    address _owner;
+    address __owner;
 
     modifier onlyOwner {
-        require(msg.sender == _owner, "Only owner has access");
+        require(msg.sender == __owner, "Only owner has access");
         _;
     }
 
@@ -107,7 +107,7 @@ contract ZooMedia {
         address _market,
         address _token
     ) {
-        _owner = msg.sender;
+        __owner = msg.sender;
         name = _name;
         symbol = _symbol;
         token = ZooToken(_token);
@@ -156,24 +156,25 @@ contract ZooMedia {
         string memory _name,
         uint256 _totalSupply,
         uint256 _eggPrice
-    ) public onlyOwner returns (uint256, address) {
+    ) public returns (uint256, address) {
         _dropIDs.increment();
-        uint256 dropID = _dropIDs.current();
+        uint256 _dropID = _dropIDs.current();
 
         ZooDrop drop = new ZooDrop(_name, _totalSupply, _eggPrice);
-        drops[dropID] = address(drop);
+        drops[_dropID] = address(drop);
 
-        emit AddDrop(dropID, address(drop));
-        return (dropID, address(drop));
+        emit AddDrop(_dropID, address(drop));
+        return (_dropID, address(drop));
     }
 
-    function setMetadataURI(
-        uint256 _dropID,
-        string memory _name,
-        string memory _URI
-    ) public onlyOwner {
-        ZooDrop drop = ZooDrop(drops[_dropID]);
-        drop.setMetadataURI(_name, _URI);
+    function totalSupply() public view returns (uint256) {
+        uint256 _total;
+
+        for (uint256 _i = 0; _i < _dropIDs.current(); _i++) {
+            _total = _total + ZooDrop(drops[_i]).totalSupply();
+        }
+
+        return _total;
     }
 
     function setTokenURI(
@@ -185,22 +186,29 @@ contract ZooMedia {
         drop.setTokenURI(_name, _URI);
     }
 
+    function setMetadataURI(
+        uint256 _dropID,
+        string memory _name,
+        string memory _URI
+    ) public onlyOwner {
+        ZooDrop drop = ZooDrop(drops[_dropID]);
+        drop.setMetadataURI(_name, _URI);
+    }
+
     // Accept ZOO and return Egg NFT
     function buyEgg(uint256 _dropID) public returns (uint256) {
         ZooDrop drop = ZooDrop(drops[_dropID]);
 
-        uint256 eggPrice = drop.getEggPrice();
-
         require(
-            token.balanceOf(msg.sender) >= eggPrice,
+            token.balanceOf(msg.sender) >= drop.eggPrice(),
             "Not Enough ZOO Tokens to purchase Egg"
         );
         require(
-            drop.getCurrentSupply() > 0,
+            drop.currentSupply() > 0,
             "There are no more Eggs that can be purchased"
         );
 
-        token.transferFrom(msg.sender, address(this), eggPrice);
+        token.transferFrom(msg.sender, address(this), drop.eggPrice());
 
         (string memory _tokenURI, string memory _metadataURI) = drop.buyEgg();
         Media.MediaData memory data;
@@ -234,6 +242,14 @@ contract ZooMedia {
 
         emit BuyEgg(msg.sender, _tokenID);
         return _tokenID;
+    }
+
+    function burn(uint256 _tokenID) public {
+        return media.burn(_tokenID);
+    }
+
+    function tokenURI(uint256 _tokenID) public view returns (string memory) {
+        return media.tokenURI(_tokenID);
     }
 
     // Burn egg and randomly return an animal NFT
@@ -455,6 +471,79 @@ contract ZooMedia {
         return randomNumber;
     }
 
+    // Proxy to Media contract
+    function setAsk(uint256 _tokenID, IMarket.Ask memory _ask) public {
+        return media.setAsk(_tokenID, _ask);
+    }
+
+    function setBid(uint256 _tokenID, IMarket.Bid memory _bid) public {
+        return media.setBid(_tokenID, _bid);
+    }
+
+    function acceptBid(uint256 _tokenID, IMarket.Bid memory _bid) public {
+        return media.acceptBid(_tokenID, _bid);
+    }
+
+    function removeAsk(uint256 _tokenID) public {
+        return media.removeAsk(_tokenID);
+    }
+
+    function removeBid(uint256 _tokenID) public {
+        return media.removeBid(_tokenID);
+    }
+
+    function getApproved(uint256 _tokenID) public view returns (address) {
+        return media.getApproved(_tokenID);
+    }
+
+    function revokeApproval(uint256 _tokenID) public {
+        return media.revokeApproval(_tokenID);
+    }
+
+    function tokenByIndex(uint256 _tokenID) public view returns (uint256) {
+        return media.tokenByIndex(_tokenID);
+    }
+
+    function tokenOfOwnerByIndex(address _owner, uint256 _tokenID) public view returns (uint256) {
+        return media.tokenOfOwnerByIndex(_owner, _tokenID);
+    }
+
+    function tokenCreators(uint256 _tokenID) public view returns (address) {
+        return media.tokenCreators(_tokenID);
+    }
+
+    function previousTokenOwners(uint256 _tokenID) public view returns (address) {
+        return media.previousTokenOwners(_tokenID);
+    }
+
+    function tokenContentHashes(uint256 _tokenID) public view returns (bytes32) {
+        return media.tokenContentHashes(_tokenID);
+    }
+
+    function tokenMetadataHashes(uint256 _tokenID) public view returns (bytes32) {
+        return media.tokenMetadataHashes(_tokenID);
+    }
+
+    function tokenMetadataURI(uint256 _tokenID) public view returns (string memory) {
+        return media.tokenMetadataURI(_tokenID);
+    }
+
+    function updateTokenMetadataURI(uint256 _tokenID, string memory _metadataURI) public {
+        return media.updateTokenMetadataURI(_tokenID, _metadataURI);
+    }
+
+    function supportsInterface(bytes4 _interfaceID) public view returns (bool) {
+        return media.supportsInterface(_interfaceID);
+    }
+
+    function permit(
+        address _spender,
+        uint256 _tokenID,
+        Media.EIP712Signature memory _sig
+    ) public {
+        return media.permit(_spender, _tokenID, _sig);
+    }
+
     // take two animals and returns a bytes32 string of their names
     // to be used with ZooMedia.possib;ePairs to get the two possible hybrid pairs coming from the two base animals
     function concatAnimalIds(string memory a1, string memory a2)
@@ -522,7 +611,7 @@ contract ZooMedia {
         Add animal for possibility of hatching for the drop
      */
     function addAnimal(
-        uint256 dropID,
+        uint256 _dropID,
         string memory _animal,
         uint256 _yield,
         string memory _rarityName,
@@ -530,7 +619,7 @@ contract ZooMedia {
         string memory _tokenURI,
         string memory _metadataURI
     ) public onlyOwner {
-        ZooDrop drop = ZooDrop(drops[dropID]);
+        ZooDrop drop = ZooDrop(drops[_dropID]);
         drop.addAnimal(
             _animal,
             _yield,

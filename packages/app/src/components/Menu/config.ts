@@ -5,17 +5,17 @@ let defaultConf =  [
 
   {
     label: 'Bank',
-    icon: '',
+    icon: 'BankIcon',
     href: '/bank',
   },
   {
     label: 'My Account',
-    icon: '',
+    icon: 'HomeIcon',
     href: '/account',
   },
   {
     label: 'Feed',
-    icon: '',
+    icon: 'MarketIcon',
     href: '/feed',
   },
 ]

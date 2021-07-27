@@ -87,8 +87,11 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
       }
    };
 
+
   const toLink = () => {
-    location.href = "https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997"
+    const redirectWindow = window.open('https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997', '_blank');
+    redirectWindow.location;
+    // location.href = "https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997"
   }
 
   return (
