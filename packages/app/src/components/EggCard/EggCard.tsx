@@ -24,10 +24,10 @@ import NewAnimalCard from 'components/NewAnimal/NewAnimalCard';
 
 const InfoBlock = styled.div`
 padding: 4px;
-text-align: center; 
+text-align: center;
 position: relative;
 left: 0;
-bottom: 0; 
+bottom: 0;
 width: 100%;
 z-index: 999999;
 `;
@@ -73,7 +73,7 @@ const TimeoutDisplay = styled.span`
   z-index: 2;
 `
 const Card = styled(Existing) <{ timedOut?: boolean }>`
-  
+
   cursor: pointer;
   width: 120px;
   backgroundColor: "#000000";
