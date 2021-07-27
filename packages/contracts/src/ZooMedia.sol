@@ -230,7 +230,7 @@ contract ZooMedia is Media, Ownable {
             _hybrid.name = name1;
             _hybrid.yield = yield1;
         }
-        
+
         if (uint256(TokenType.HYBRID_EGG) == uint256(eggType)) {
             // data.tokenURI = drop.tokenURI(hatchedAnimal);
             // data.metadataURI = drop.metaDataURI(hatchedAnimal);
@@ -338,11 +338,10 @@ contract ZooMedia is Media, Ownable {
 
     // Implemented prior to issue #30
     // Should burn animal and return yield
-    function freeAnimal(uint256 dropID, uint256 _tokenID)
+    function freeAnimal(uint256 _tokenID)
         public
         returns (bool)
     {
-        ZooDrop drop = ZooDrop(drops[dropID]);
         require(
             bytes(hybrids[_tokenID].name).length > 0 ||
                 bytes(animals[_tokenID].name).length > 0,
@@ -395,7 +394,7 @@ contract ZooMedia is Media, Ownable {
     // take two animals and returns a bytes32 string of their names
     // to be used with ZooMedia.possib;ePairs to get the two possible hybrid pairs coming from the two base animals
     function concatAnimalIds(string memory a1, string memory a2)
-        internal
+        internal pure
         returns (string memory)
     {
         return string(abi.encodePacked(a1, a2));
@@ -403,7 +402,7 @@ contract ZooMedia is Media, Ownable {
 
     // Chooses animal based on random number generated from(0-999), replace strings with ENUMS / data that
     // represents animal instead
-    function pickAnimal(uint256 random) public view returns (string memory) {
+    function pickAnimal(uint256 random) public pure returns (string memory) {
         if (random < 550) {
             uint256 choice = random % 4;
             if (choice == 0) {
