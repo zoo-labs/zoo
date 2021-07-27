@@ -19,14 +19,15 @@ import { EggCardType } from './types'
 import {burnEgg, addAnimal} from "state/actions"
 import { useDispatch } from 'react-redux'
 import { animalMapping } from 'util/animalMapping'
+import NewAnimalCard from 'components/NewAnimal/NewAnimalCard';
 
 
 const InfoBlock = styled.div`
 padding: 4px;
-text-align: center; 
+text-align: center;
 position: relative;
 left: 0;
-bottom: 0; 
+bottom: 0;
 width: 100%;
 z-index: 999999;
 `;
@@ -72,9 +73,9 @@ const TimeoutDisplay = styled.span`
   z-index: 2;
 `
 const Card = styled(Existing) <{ timedOut?: boolean }>`
-  
+
   cursor: pointer;
-  width: 120px;
+  // width: 120px;
   backgroundColor: "#000000";
   border-radius: 8px;
   display: block;
@@ -85,93 +86,34 @@ const Card = styled(Existing) <{ timedOut?: boolean }>`
 const basicEggURL = window.location.origin + '/static/images/basic.png'
 const hybridEggURL = window.location.origin + '/static/images/hybrid.jpeg'
 
-export const EggCard: React.FC<EggCardType> = ({egg})  => {
-  const [ playVideo, setPlayVideo ] = useState(false)
-  const dispatch = useDispatch()
-  const { account } = useWeb3React()
+export const EggCard: React.FC<EggCardType> = ({egg, hatchEgg})  => {
 
-    const hatchEgg = () => {
-      setPlayVideo(true)
-    }
-  
     const [onHatch] = useModal(
       <HatchModal
   
-          confirmation={hatchEgg}
+          confirmation={() => hatchEgg(egg)}
           onDismiss={()=>null}
       />
     )
 
-    const onVideoEnd = () => {
-        setPlayVideo(false)
-        console.log(egg)
-        const eggStruct = {
-            owner: egg.owner
-        }
-        console.log("BURNING")
-        dispatch(burnEgg(egg))
-        let randIdx;
-        if(egg.basic){
-            randIdx = Math.floor(Math.random() * (5 - 1) + 1);
-        }
-        else {
-            randIdx = Math.floor(Math.random() * (13 - 10) + 10);
-        }
-        console.log(randIdx)
-        const aFromMap = animalMapping[randIdx]
-        console.log(aFromMap, randIdx)
-        const newAnimal: Animal = {
-            tokenId: Math.floor(Math.random() * (999999 - 0) + 0).toString(),
-            animalId: aFromMap.animalId,
-            name: aFromMap.name,
-            description: aFromMap.description,
-            yield: aFromMap.yield,
-            boost: aFromMap.boost,
-            rarity: aFromMap.rarity,
-            dob: aFromMap.dob,
-            imageUrl: aFromMap.imageUrl,
-            startBid: aFromMap.startBid,
-            currentBid: aFromMap.currentBid,
-            buyNow: aFromMap.buyNow,
-            listed: aFromMap.listed,
-            bloodline: aFromMap.bloodline,
-            owner: account,
-            CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
-            timeRemaining: 0,
-            breedCount: 0,
-            lastBred: ""
-        }
-        dispatch(addAnimal(newAnimal)) 
-    }
-
-
-    const renderVideo = () => {
-        return (
-        <VideoPlayer videoPath={egg.basic ? "hatch_mobile_basic.mp4": "hatch_mobile_hybrid.mp4"} onDone={() => onVideoEnd()}/>
-        )
-    }
-    const renderCard = () => {
-        return (
-            <Card onClick={() => {onHatch()}} style={{backgroundColor: '#000000'}} timedOut={egg.timeRemaining > 0 ? true : false}>
-		    <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: 150, padding: 10}}>
-                <TextWrapper>{egg.name}</TextWrapper>
-                </CardBody>
-                {egg.timeRemaining > 0 ?
-                      <TimeoutWrapper barwidth={egg.CTAOverride ? egg.CTAOverride.barwidth : 0}>
-                        <TimeoutDisplay >
-                          {`${egg.CTAOverride.timeRemainingDaysHours.days}D ${egg.CTAOverride.timeRemainingDaysHours.hours}H`}
-                        </TimeoutDisplay>
-                      </TimeoutWrapper> :
-                      <InfoBlock style={{textAlign: 'center', boxShadow: '#000000 0px 0px 10px 1px', padding: 4}} >
-                        <TextWrapper >{`HATCH`}</TextWrapper>
-                      </InfoBlock>
-                    }
-            </Card>
-        )
-    }
-
     return (
-        playVideo ? renderVideo() : renderCard()
+      <>
+        <Card onClick={() => { egg.timeRemaining > 0 ? null : onHatch()}} style={{backgroundColor: '#000000'}} timedOut={egg.timeRemaining > 0 ? true : false}>
+         <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: 150, padding: 10}}>
+            <TextWrapper>{egg.name}</TextWrapper>
+            </CardBody>
+            {egg.timeRemaining > 0 ?
+                  <TimeoutWrapper barwidth={egg.CTAOverride ? egg.CTAOverride.barwidth : 0}>
+                    <TimeoutDisplay >
+                      {`${egg.CTAOverride.timeRemainingDaysHours.days}D ${egg.CTAOverride.timeRemainingDaysHours.hours}H`}
+                    </TimeoutDisplay>
+                  </TimeoutWrapper> :
+                  <InfoBlock style={{textAlign: 'center', boxShadow: '#000000 0px 0px 10px 1px', padding: 4}} >
+                    <TextWrapper >{`HATCH`}</TextWrapper>
+                  </InfoBlock>
+                }
+        </Card>
+        </>
     )
 }
 

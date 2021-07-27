@@ -24,7 +24,7 @@ const Container = styled.div`
 `
 const Button = styled.button`
     width: 200px;
-    margin: 0px auto 20px auto;
+    margin: 0px auto auto auto;
     background-color: #030303; 
     border: 2px solid #ffffff;
     padding: 10px;
@@ -78,7 +78,7 @@ export default function LoginMain() {
                 <p>LOGIN WITH</p>
                 <p>METAMASK</p>
             </Button>
-                <StyledFlex flexDirection="row" justifyContent="center" >
+                {/* <StyledFlex flexDirection="row" justifyContent="center" >
                     
             {isMobile &&
                 <>
@@ -92,7 +92,7 @@ export default function LoginMain() {
                     </a>
                 </>
                 }
-                </StyledFlex> 
+                </StyledFlex>  */}
         </Container>
     )
 }
