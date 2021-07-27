@@ -25,11 +25,11 @@ const LinkLabel = styled.div<{ isPushed: boolean }>`
   transition: color 0.2s;
   flex-grow: 1;
   font-weight: 600;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  line-height: 1.5;
-  margin: 8px 24px 8px 0px;
-  text-align: right;
+  line-height: 1.2;
+  // margin: 8px 24px 8px 0px;
+  text-align: center;
 
   &:hover {
     color: ${({ isPushed, theme }) => (isPushed ? theme.colors.primaryPop : "transparent")};
@@ -43,7 +43,7 @@ const MenuEntry = styled.div<Props>`
   align-items: center;
   height: ${MENU_ENTRY_HEIGHT}px;
   padding: ${({ secondary }) => (secondary ? "0 32px" : "0 16px")};
-  font-size: ${({ secondary }) => (secondary ? "16px" : "18px")};
+  font-size: ${({ secondary }) => (secondary ? "14px" : "18px")};
   font-weight: 600;
   color: ${({ theme }) => theme.colors.textSubtle};
 

@@ -3,7 +3,7 @@ import styles from 'styled-components'
 
 const BodyContainer = styles.div`
     width: 100%;
-    position: relative;
+    // position: relative;
     padding: 16px 8px;
     background: black;
 `
