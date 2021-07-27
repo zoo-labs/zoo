@@ -391,12 +391,14 @@ const MyZooAccount: React.FC = () => {
       return (
          <Modal title="Are you Sure?" onDismiss={onDismiss}>
             <Text>{`You want to list this ${sellAnimal.name}?`}</Text>
-            <BorderButton scale="md" onClick={() => onDismiss()}>
-               Cancel
-            </BorderButton>
-            <BorderButton scale="md" onClick={() => breed(onDismiss)}>
-               Confirm
-            </BorderButton>
+            <Flex justifyContent="space-around" flexDirection="row" mt="16px">
+              <BorderButton scale="md" onClick={() => onDismiss()}>
+                Cancel
+              </BorderButton>
+              <BorderButton scale="md" onClick={() => breed(onDismiss)}>
+                Confirm
+              </BorderButton>
+            </Flex>
          </Modal>
       );
    };
