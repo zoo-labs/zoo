@@ -39,14 +39,12 @@ const BottomModal: React.FC<Props> = ({
                   >
                      {header}
                   </Label>
+                  <IconButton onClick={onDismiss} style={{position: 'absolute', top: '10px', right: '10px'}}>
+                     <CloseIcon />
+                  </IconButton>
                </Sheet.Header>
                <Sheet.Content>
                   {children}
-                  <Flex width="100%" justifyContent="center" mt="20px">
-                     <IconButton onClick={onDismiss}>
-                        <CloseIcon />
-                     </IconButton>
-                  </Flex>
                </Sheet.Content>
             </Sheet.Container>
 
