@@ -12,6 +12,7 @@ import Moralis from "moralis";
 import { AppState } from "state/index";
 import FeedCard from "./FeedCard";
 import BorderButton from "components/Button/BorderButton";
+import { FaHome } from "react-icons/fa";
 
 const Container = styled.div<{ isMobile?: boolean }>`
   height: ${({ isMobile }) => (isMobile ? `100vh` : null)};
@@ -23,6 +24,28 @@ const Container = styled.div<{ isMobile?: boolean }>`
   }
 `;
 
+const StickyBottomMenuWrapper = styled.div`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  border: 2px solid black;
+  box-shadow: 0px 5px 10px #040404ba;
+  background: ${({ theme }) => theme.colors.primaryPop};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 100;
+
+  svg {
+    width: 25px;
+    height: 25px;
+    color: #FFFFFF;
+  }
+`
+
 const ToggleContainer = styled.div`
   div {
     width: 100%;
@@ -30,7 +53,8 @@ const ToggleContainer = styled.div`
     justify-content: center;
     z-index: 1000;
     position: absolute;
-    margin-top: 15px;
+    padding-top: 15px;
+    background: linear-gradient(#3d3d3d, transparent);
   }
   a {
     border: none;
@@ -125,6 +149,9 @@ export default function Feed() {
 
   return (
     <Container isMobile={isMobile}>
+      <StickyBottomMenuWrapper onClick={HomeClick}>
+        <FaHome />
+      </StickyBottomMenuWrapper>
       <ToggleContainer>
         <ButtonMenu activeIndex={activeIndex} scale="sm">
           <ButtonMenuItem

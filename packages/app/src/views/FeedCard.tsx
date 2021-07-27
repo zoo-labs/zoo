@@ -149,7 +149,7 @@ const FeedCard: React.FC<Props> =  ({ item }) => {
                 <SecondThird>
                     <IconButton onClick={()=>{onYield()}}><FaMoneyBillWave /><Text as = "span" fontSize="18px">Yield</Text></IconButton>
                     <IconButton onClick={()=>{onBid()}}><FaDollarSign /><Text as = "span" fontSize="18px">Bid</Text></IconButton>
-                    <IconButton onClick={()=>{HomeClick()}}><IoPersonCircle/><Text as = "span" fontSize="18px">Home</Text></IconButton>
+                    {/* <IconButton onClick={()=>{HomeClick()}}><IoPersonCircle/><Text as = "span" fontSize="18px">Home</Text></IconButton> */}
                 </SecondThird>
                 <FinalThird>
                     <MainHeading bold as = "p">{item.name}</MainHeading>  

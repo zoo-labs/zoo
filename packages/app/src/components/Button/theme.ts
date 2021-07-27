@@ -19,7 +19,7 @@ export const scaleVariants = {
 export const styleVariants = {
   [variants.PRIMARY]: {
     backgroundColor: "primary",
-    color: "black",
+    color: "text",
   },
   [variants.SECONDARY]: {
     backgroundColor: "transparent",
@@ -67,7 +67,7 @@ export const styleVariants = {
   },
   [variants.BUTTONGUM]: {
     background: "primaryPop",
-    color: "black",
+    color: "white",
   },
   [variants.MARBLE]: {
     background: "linear-gradient(129deg,#6287bf 3.22%,#0DD8CE 96.22%)",
