@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { Modal as Existing, Text, Flex, Label, Button } from "components";
+import BorderButton from "components/Button/BorderButton";
 import { useModal, BottomModal } from "components/Modal";
 import Confirmation from "./ConfirmationModal";
 import Moralis from "moralis";
@@ -25,7 +26,6 @@ const BidInput = styled.input.attrs({
    width: 90%;
    /* margin: auto; */
    font-size: 23px;
-   margin-top: -20px;
 `;
 
 const ButtonContent = styled(Flex)`
@@ -114,16 +114,16 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
                flexDirection="column"
                ml="20px"
                mt="20px">
-               <Label fontSize="22px" color="#C82064" fontWeight="550">
+               <Label fontSize="22px" color="text" fontWeight="550">
                   Current Bid
                </Label>
-               <Text bold ml="16px" fontSize="22px" color="background">
+               <Text bold ml="16px" fontSize="22px" color="#ffffff">
                   {item.currentBid}
                </Text>
-               <Label fontSize="22px" color="#C82064" fontWeight="550">
+               <Label fontSize="22px" color="text" fontWeight="550">
                   Buy Now
                </Label>
-               <Text bold ml="16px" fontSize="22px" color="background">
+               <Text bold ml="16px" fontSize="22px" color="#ffffff">
                   {item.buyNow}
                </Text>
                <BidInput
@@ -132,7 +132,7 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
                   defaultValue={value}
                />
                <ButtonContent>
-                  <Button
+                  <BorderButton
                      width="140px"
                      variant="primary"
                      color="black"
@@ -145,8 +145,8 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
                      }}
                      onClick={() => onConfirmBuy()}>
                      Buy Now
-                  </Button>
-                  <Button
+                  </BorderButton>
+                  <BorderButton
                      width="140px"
                      variant="primary"
                      color="black"
@@ -159,7 +159,7 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
                      }}
                      onClick={() => onConfirmBid()}>
                      Bid
-                  </Button>
+                  </BorderButton>
                </ButtonContent>
             </Flex>
          </BottomModal>
