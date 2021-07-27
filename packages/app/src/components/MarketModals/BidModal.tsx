@@ -25,18 +25,13 @@ const BidInput = styled.input.attrs({
    width: 90%;
    /* margin: auto; */
    font-size: 23px;
-`;
-
-const Content = styled.div`
-   * {
-      margin-bottom: 10px;
-   }
+   margin-top: -20px;
 `;
 
 const ButtonContent = styled(Flex)`
    justify-content: space-around;
-   margin-top: 10px;
-`
+   margin-top: 35px;
+`;
 
 const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
    const [value, setValue] = React.useState(parseInt(item.currentBid) + 1);
@@ -109,8 +104,16 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
 
    return (
       <>
-         <BottomModal header={`${item.name}`} onDismiss={onDismiss} height={`330px`}>
-            <Flex justifyContent="center" alignContent="center" flexDirection="column" ml="20px" mt="20px">
+         <BottomModal
+            header={`${item.name}`}
+            onDismiss={onDismiss}
+            height={`370px`}>
+            <Flex
+               justifyContent="center"
+               alignContent="center"
+               flexDirection="column"
+               ml="20px"
+               mt="20px">
                <Label fontSize="22px" color="#C82064" fontWeight="550">
                   Current Bid
                </Label>
@@ -129,15 +132,36 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
                   defaultValue={value}
                />
                <ButtonContent>
-               <Button width="140px" variant="primary" color="black" scale="md" style={{border: "0px", letterSpacing: ".1rem", boxShadow: "none", textTransform:"uppercase"}} onClick={() => onConfirmBuy()}>
-               Buy Now
-                     </Button>
-                     <Button width="140px" variant="primary" color="black" scale="md" style={{border: "0px", letterSpacing: ".1rem", boxShadow: "none", textTransform:"uppercase"}} onClick={() => onConfirmBid()}>
+                  <Button
+                     width="140px"
+                     variant="primary"
+                     color="black"
+                     scale="md"
+                     style={{
+                        border: "0px",
+                        letterSpacing: ".1rem",
+                        boxShadow: "none",
+                        textTransform: "uppercase",
+                     }}
+                     onClick={() => onConfirmBuy()}>
+                     Buy Now
+                  </Button>
+                  <Button
+                     width="140px"
+                     variant="primary"
+                     color="black"
+                     scale="md"
+                     style={{
+                        border: "0px",
+                        letterSpacing: ".1rem",
+                        boxShadow: "none",
+                        textTransform: "uppercase",
+                     }}
+                     onClick={() => onConfirmBid()}>
                      Bid
-                     </Button>
-                     </ButtonContent>
+                  </Button>
+               </ButtonContent>
             </Flex>
-            
          </BottomModal>
       </>
    );
