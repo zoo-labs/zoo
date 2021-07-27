@@ -6,15 +6,7 @@ import chai, { expect } from "chai";
 
 import { BigNumber, Bytes, BytesLike, utils } from 'ethers';
 
-let zooToken: any;
-
-let zooFaucet: any;
-
-let zooMarket: any;
-
-// let zooDrop: any;
-
-let zooMedia: any;
+let zooDrop
 
 let signers: any;
 
@@ -37,34 +29,8 @@ describe("Test ZooDrop", () => {
 
         zooDrop = await ZooDrop.deploy(16000, 210);
 
-        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', auctionAddress, zooToken.address, 20)) as ZooMedia
-        await zooMedia.deployed();
-
-        tokenAddress = zooMedia.address;
-
-        await zooMarket.configure(tokenAddress);
-
-        // const zooDropFactory = await ethers.getContractFactory(
-        //     "ZooDrop",
-        //     signers[0]
-        // );
-
-        // zooDrop = (await zooDropFactory.deploy(zooToken.address, zooMedia.address, BigNumber.from(10))) as ZooDrop
-        // await zooDrop.deployed();
-
+        await zooDrop.deployed();
     })
-
-    /*
-    Deploy Script
-    */
-
-    it("Should get the ZooDrop owner", async () => {
-
-        const zooDropOwner: string = await zooMedia.owner();
-
-        expect(zooDropOwner).to.equal(owner.address);
-
-    });
 
     /*
         Adding Animals
@@ -74,39 +40,18 @@ describe("Test ZooDrop", () => {
 
         const Animal = await zooDrop.animals("Pug");
 
-        await zooMedia.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
-
-        const Animal = await zooMedia.getAnimal("Pug");
-
-        const tokenURI = await zooMedia.getTokenURI(Animal.name);
+        const tokenURI = await zooDrop.tokenURI(Animal.name);
 
         expect(Animal.name).to.equal("Pug");
         expect(tokenURI).to.equal("test");
 
     });
 
-
-    it("Should pick a pug", async () => {
-
-
-        await zooMedia.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
-
-        const pick = await zooMedia.pickAnimal(20);
-
-        const Animal = await zooMedia.getAnimal(pick);
-
-        expect(Animal.name).to.equal("Pug");
-
-    });
-
-
     it("Should add an Hybrid", async () => {
         await zooDrop.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
 
-        await zooMedia.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
-
-        const Hybrid = await zooMedia.getHybrid("PugPug");
-        const tokenURI = await zooMedia.getTokenURI("Puggy");
+        const Hybrid = await zooDrop.hybrids("PugPug");
+        const tokenURI = await zooDrop.tokenURI("Puggy");
 
         expect(Hybrid.name).to.equal("Puggy");
         expect(tokenURI).to.equal("test");
@@ -114,11 +59,14 @@ describe("Test ZooDrop", () => {
     });
 
     it("Should revert when adding a animal not as owner", async() => {
+<<<<<<< HEAD
 
         zooMedia = zooMedia.connect(signers[1]);
+=======
+        zooDrop = zooDrop.connect(signers[1]);
+>>>>>>> 94ac518 (Rearranging ZooMedia and ZooDrop contracts)
         try {
-            const tx = await zooMedia.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
-            // console.log("tx: ", tx.wait())
+            const tx = await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
         } catch (e) {
             expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
         }
@@ -126,11 +74,9 @@ describe("Test ZooDrop", () => {
     });
 
     it("Should revert when adding a hybrid animal not as owner", async() => {
-        // await expect(zooDrop.connect(signers[1]).addHybrid("Puggy", "Pug","Pug", 120 ,"test","test")).to.be.reverted
-        zooMedia = zooMedia.connect(signers[1]);
+        zooDrop = zooDrop.connect(signers[1]);
         try {
-            const tx = await zooMedia.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
-            // console.log("tx: ", tx.wait())
+            const tx = await zooDrop.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
         } catch (e) {
             expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
         }
@@ -140,19 +86,28 @@ describe("Test ZooDrop", () => {
      * EGG PRICE
      */
     it("Should set & get egg price", async() => {
-        zooMedia = zooMedia.connect(signers[0]);
-        let bigEggPrice = await zooMedia.getEggPrice();
+        zooDrop = zooDrop.connect(signers[0]);
+        let bigEggPrice = await zooDrop.getEggPrice();
         let eggPrice = bigEggPrice.toNumber();
+<<<<<<< HEAD
         expect(eggPrice).to.equal(200); // default eggPrice
 
         await zooMedia.connect(signers[0]).setEggPrice(333); //set a new price
 
         bigEggPrice = await zooMedia.getEggPrice();
+=======
+        expect(eggPrice).to.equal(210); // default eggPrice
+
+        await zooDrop.connect(signers[0]).setEggPrice(333); //set a new price
+
+        bigEggPrice = await zooDrop.getEggPrice();
+>>>>>>> 94ac518 (Rearranging ZooMedia and ZooDrop contracts)
         eggPrice = bigEggPrice.toNumber();
         expect(eggPrice).to.equal(333); // gets the new eggPrice
     });
 
     it("Should revert when setting egg price as non owner", async() => {
+<<<<<<< HEAD
         // await expect(zooDrop.connect(signers[1]).addHybrid("Puggy", "Pug","Pug", 120 ,"test","test")).to.be.reverted
     });
 
@@ -234,6 +189,14 @@ describe("Test ZooDrop", () => {
 
     it("Should revert when egg creation time restriction is not met", async() => {
 
+=======
+        zooDrop = zooDrop.connect(signers[1]);
+        try {
+            const tx = await zooDrop.setEggPrice(333);
+        } catch (e) {
+            expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
+        }
+>>>>>>> 94ac518 (Rearranging ZooMedia and ZooDrop contracts)
     });
 
     /**
@@ -249,7 +212,11 @@ describe("Test ZooDrop", () => {
     it("Should revert when setting tokenURI as non owner", async() => {
         zooDrop = zooDrop.connect(signers[1]);
         try {
+<<<<<<< HEAD
             const tx = await zooDrop.setTokenURI("pug", "TEST");
+=======
+            const tx = await zooDrop.settokenURI("pug", "TEST");
+>>>>>>> 94ac518 (Rearranging ZooMedia and ZooDrop contracts)
         } catch (e) {
             expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
         }
@@ -273,4 +240,8 @@ describe("Test ZooDrop", () => {
             expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
         }
     });
+<<<<<<< HEAD
 })
+=======
+})
+>>>>>>> 94ac518 (Rearranging ZooMedia and ZooDrop contracts)
