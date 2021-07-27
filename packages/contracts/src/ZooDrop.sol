@@ -31,20 +31,17 @@ contract ZooDrop is Ownable {
         uint256 yield;
     }
 
-
     // mapping of animal name to available base animals introduced in this drop
     mapping (string => Animal) public animals;
 
     // mapping of animal name to available hybrid animals introduced in this drop
     mapping (string => Hybrid) public hybrids;
 
-
     // mapping of animal key to animal tokenuri
     mapping (string => string) public tokenURI;
 
     // mapping of animal key to animal metadata
-    mapping (string => string) public metaDataURI;
-
+    mapping (string => string) public metadataURI;
 
     constructor(string memory _name, uint256 _supply, uint256 eggPrice){
         name = _name;
@@ -73,7 +70,7 @@ contract ZooDrop is Ownable {
     /**
         Add animal for possibility of hatching for the drop
      */
-    function addAnimal(string memory _animal, uint256 _yield, string memory _rarityName, uint256 _rarity, string memory _tokenURI, string memory _metaDataURI) public onlyOwner {
+    function addAnimal(string memory _animal, uint256 _yield, string memory _rarityName, uint256 _rarity, string memory _tokenURI, string memory _metadataURI) public onlyOwner {
         Animal memory newAnimal;
         Rarity memory newRarity = Rarity({name: _rarityName, rarity: _rarity});
         newAnimal.name = _animal;
@@ -81,24 +78,24 @@ contract ZooDrop is Ownable {
         newAnimal.yield = _yield;
 
         tokenURI[_animal] = _tokenURI;
-        metaDataURI[_animal] = _metaDataURI;
+        metadataURI[_animal] = _metadataURI;
         animals[_animal] = newAnimal;
     }
 
     /**
         Add animal for possibility of hatching for the drop
      */
-    function addHybrid(string memory _animal, string memory _base, string memory _secondary, uint256 yield, string memory _tokenURI, string memory _metaDataURI) public onlyOwner {
+    function addHybrid(string memory _animal, string memory _base, string memory _secondary, uint256 yield, string memory _tokenURI, string memory _metadataURI) public onlyOwner {
         Hybrid memory newHybrid;
         newHybrid.name = _animal;
         newHybrid.yield = yield;
 
         tokenURI[_animal] = _tokenURI;
-        metaDataURI[_animal] = _metaDataURI;
+        metadataURI[_animal] = _metadataURI;
 
         hybrids[string(abi.encodePacked(_base, _secondary))] = newHybrid;
         tokenURI[string(abi.encodePacked(_base, _secondary))] = _tokenURI;
-        metaDataURI[string(abi.encodePacked(_base, _secondary))] = _metaDataURI;
+        metadataURI[string(abi.encodePacked(_base, _secondary))] = _metadataURI;
 
         hybrids[_animal] = newHybrid;
 
@@ -108,20 +105,23 @@ contract ZooDrop is Ownable {
         tokenURI[_animal] = _tokenURI;
     }
 
+    function getMetadataURI(string memory _animal) public view returns (string memory) {
+        return metadataURI[_animal];
+    }
 
     function setMetadataURI(string memory _animal, string memory _metadataURI) public onlyOwner {
-        metaDataURI[_animal] = _metadataURI;
+        metadataURI[_animal] = _metadataURI;
     }
 
     function buyEgg() public onlyOwner returns (string memory, string memory) {
         // require(_currentSupply > 0, "Current: decrement overflow");
         // _currentSupply = _currentSupply - 1;
         _currentSupply.decrement();
-        return (tokenURI["basicEgg"], metaDataURI["basicEgg"]);
+        return (tokenURI["basicEgg"], metadataURI["basicEgg"]);
     }
 
     function getHybridEgg() public view onlyOwner returns (string memory, string memory) {
-        return (tokenURI["hybridEgg"], metaDataURI["hybridEgg"]);
+        return (tokenURI["hybridEgg"], metadataURI["hybridEgg"]);
     }
 }
 
