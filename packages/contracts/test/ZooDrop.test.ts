@@ -13,7 +13,7 @@ let tokenAddress: string;
 const TOKEN_URI = "idx.zoolabs.io/token/"
 const META_URI = "idx.zoolabs.io/meta/"
 
-describe("ZooDrop", () => {
+describe.only("ZooDrop", () => {
     beforeEach(async () => {
         signers = await ethers.getSigners();
         owner = signers[0]

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, useRouteMatch } from "react-router-dom";
 import { AppState } from "state";
 import { useDispatch, useSelector } from "react-redux";
@@ -207,7 +207,8 @@ const MyZooAccount: React.FC = () => {
       const eggStruct = {
          owner: egg.owner,
       };
-      console.log("BURNING");
+
+      // console.log("BURNING");
       let randIdx;
 
       // REPLACE WITH HATCH FUNCTION FROM CONTRACT
@@ -216,9 +217,9 @@ const MyZooAccount: React.FC = () => {
       } else {
          randIdx = Math.floor(Math.random() * (13 - 10) + 10);
       }
-      console.log(randIdx);
+      // console.log(randIdx);
       const aFromMap = animalMapping[randIdx];
-      console.log(aFromMap, randIdx);
+      // console.log(aFromMap, randIdx);
       const newAnimal: Animal = {
          tokenId: Math.floor(Math.random() * (999999 - 0) + 0).toString(),
          animalId: aFromMap.animalId,
@@ -250,16 +251,15 @@ const MyZooAccount: React.FC = () => {
    const breed = (onDismiss) => {
       const animal1: Animal = array[0];
       const animal2: Animal = array[1];
-      const now = new Date().getTime();
+      const ID = Object.keys(allAnimals).length;
       array.forEach((animal) => {
-         animal.bred = true;
-         animal.breedCount = animal.breedCount + 1 || 1;
-         const lastBred = animal.lastBred
-            ? new Date(Number(animal.lastBred)).getTime()
-            : new Date().getTime();
-         const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount;
-         const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
-         const elapsedTime = now - lastBred;
+        animal.bred = true;
+        animal.breedCount = animal.breedCount + 1 || 1;
+        const now = new Date().getTime();
+        animal.lastBred = new Date().getTime();
+      const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount;
+      const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
+      const elapsedTime = now - animal.lastBred
 
          if (elapsedTime < breedTimeout) {
             const timeRemaining = breedTimeout - elapsedTime;
@@ -295,6 +295,7 @@ const MyZooAccount: React.FC = () => {
          CTAOverride: null,
       };
       if (!egg.basic) {
+        const now = new Date().getTime();
          const createdDate = egg.created
             ? new Date(Number(egg.created)).getTime()
             : new Date().getTime();
@@ -331,6 +332,7 @@ const MyZooAccount: React.FC = () => {
          array = temp;
          onConfirm();
       }
+
       dispatch(addAnimal(toSet));
    };
 
@@ -391,12 +393,14 @@ const MyZooAccount: React.FC = () => {
       return (
          <Modal title="Are you Sure?" onDismiss={onDismiss}>
             <Text>{`You want to list this ${sellAnimal.name}?`}</Text>
-            <BorderButton scale="md" onClick={() => onDismiss()}>
-               Cancel
-            </BorderButton>
-            <BorderButton scale="md" onClick={() => breed(onDismiss)}>
-               Confirm
-            </BorderButton>
+            <Flex justifyContent="space-around" flexDirection="row" mt="16px">
+              <BorderButton scale="md" onClick={() => onDismiss()}>
+                Cancel
+              </BorderButton>
+              <BorderButton scale="md" onClick={() => breed(onDismiss)}>
+                Confirm
+              </BorderButton>
+            </Flex>
          </Modal>
       );
    };
@@ -412,6 +416,16 @@ const MyZooAccount: React.FC = () => {
       }, 5000);
    };
 
+
+  const [timeStartOnPage, setTimeStartOnPage] = useState(new Date().getTime())
+  const [elapsedTimeOnPage, setElapsedTimeOnPage] = useState(new Date().getTime() - timeStartOnPage)
+  
+  useEffect(() => {
+    setTimeout(function () {
+      setElapsedTimeOnPage(elapsedTimeOnPage + 5000);
+    }, 5000);
+  },[elapsedTimeOnPage])
+
    const renderAnimals = (hybrid): JSX.Element => {
       const animalData = [];
       const now = new Date().getTime();
@@ -420,6 +434,7 @@ const MyZooAccount: React.FC = () => {
          const lastBred = animal.lastBred
             ? new Date(Number(animal.lastBred)).getTime()
             : new Date().getTime();
+            const now = new Date().getTime();
          const breedTimeoutKey =
             animal.breedCount > 5 ? 5 : animal.breedCount || 1;
          const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
@@ -429,22 +444,23 @@ const MyZooAccount: React.FC = () => {
          const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
 
          animalData.push({
-            id: index,
-            ...animal,
-            name: animal.name.replace(/\u0000/g, ""),
-            timeRemaining:
-               animal.bloodline !== "pure"
-                  ? elapsedTime < breedTimeout
-                     ? timeRemaining
-                     : 0
-                  : 0,
-            CTAOverride:
-               animal.bloodline !== "pure"
-                  ? elapsedTime < breedTimeout
-                     ? { barwidth, timeRemainingDaysHours }
-                     : null
-                  : null,
-         });
+
+        id: index,
+        ...animal,
+        name: animal.name.replace(/\u0000/g, ""),
+        timeRemaining:
+          animal.bloodline === "pure"
+            ? animal.breedCount > 0
+              ? timeRemaining
+              : 0
+            : 0,
+        CTAOverride:
+          animal.bloodline === "pure"
+            ? animal.breedCount > 0
+              ? { barwidth, timeRemainingDaysHours }
+              : null
+            : null,
+      });
       });
       empty =
          animalData.length === 0 && Object.keys(allAnimalsSorted).length !== 0;
@@ -534,11 +550,11 @@ const MyZooAccount: React.FC = () => {
 
    const renderEggs = (): JSX.Element => {
       const eggData = [];
-      const now = new Date().getTime();
       Object.values(allEggsSorted).forEach((egg, index) => {
-         const createdDate = egg.created
-            ? new Date(Number(egg.created)).getTime()
-            : new Date().getTime();
+        const createdDate = egg.created
+        ? new Date(Number(egg.created)).getTime()
+        : new Date().getTime();
+        const now = new Date().getTime();
          const hatchTimeout = getMilliseconds(eggTimeout);
          const elapsedTime = now - createdDate;
          const timeRemaining = hatchTimeout - elapsedTime;
