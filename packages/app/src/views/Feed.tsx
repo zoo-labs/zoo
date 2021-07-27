@@ -26,6 +26,7 @@ const Container = styled.div<{ isMobile?: boolean }>`
 const ToggleContainer = styled.div`
   div {
     width: 100%;
+    border-radius: 0;
     justify-content: center;
     z-index: 1000;
     position: absolute;
@@ -33,7 +34,7 @@ const ToggleContainer = styled.div`
   }
   a {
     border: none;
-    background-color: transparent;
+    
     font-size: 20px;
     box-shadow: none;
     cursor: pointer;
@@ -131,7 +132,7 @@ export default function Feed() {
             to={`${url}/myzoo`}
             onClick={() => getAnimals()}
           >
-            My Zoo
+           My Zoo
           </ButtonMenuItem>
           <ButtonMenuItem
             as={Link}

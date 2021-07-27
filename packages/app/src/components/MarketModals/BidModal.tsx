@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { Modal as Existing, Text, Flex, Label, Button } from "components";
+import BorderButton from "components/Button/BorderButton";
 import { useModal, BottomModal } from "components/Modal";
 import Confirmation from "./ConfirmationModal";
 import Moralis from "moralis";
@@ -27,16 +28,10 @@ const BidInput = styled.input.attrs({
    font-size: 23px;
 `;
 
-const Content = styled.div`
-   * {
-      margin-bottom: 10px;
-   }
-`;
-
 const ButtonContent = styled(Flex)`
    justify-content: space-around;
-   margin-top: 10px;
-`
+   margin-top: 35px;
+`;
 
 const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
    const [value, setValue] = React.useState(parseInt(item.currentBid) + 1);
@@ -109,18 +104,26 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
 
    return (
       <>
-         <BottomModal header={`${item.name}`} onDismiss={onDismiss} height={`330px`}>
-            <Flex justifyContent="center" alignContent="center" flexDirection="column" ml="20px" mt="20px">
-               <Label fontSize="22px" color="#C82064" fontWeight="550">
+         <BottomModal
+            header={`${item.name}`}
+            onDismiss={onDismiss}
+            height={`370px`}>
+            <Flex
+               justifyContent="center"
+               alignContent="center"
+               flexDirection="column"
+               ml="20px"
+               mt="20px">
+               <Label fontSize="22px" color="text" fontWeight="550">
                   Current Bid
                </Label>
-               <Text bold ml="16px" fontSize="22px" color="background">
+               <Text bold ml="16px" fontSize="22px" color="#ffffff">
                   {item.currentBid}
                </Text>
-               <Label fontSize="22px" color="#C82064" fontWeight="550">
+               <Label fontSize="22px" color="text" fontWeight="550">
                   Buy Now
                </Label>
-               <Text bold ml="16px" fontSize="22px" color="background">
+               <Text bold ml="16px" fontSize="22px" color="#ffffff">
                   {item.buyNow}
                </Text>
                <BidInput
@@ -129,15 +132,36 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
                   defaultValue={value}
                />
                <ButtonContent>
-               <Button width="140px" variant="primary" color="black" scale="md" style={{border: "0px", letterSpacing: ".1rem", boxShadow: "none", textTransform:"uppercase"}} onClick={() => onConfirmBuy()}>
-               Buy Now
-                     </Button>
-                     <Button width="140px" variant="primary" color="black" scale="md" style={{border: "0px", letterSpacing: ".1rem", boxShadow: "none", textTransform:"uppercase"}} onClick={() => onConfirmBid()}>
+                  <BorderButton
+                     width="140px"
+                     variant="primary"
+                     color="black"
+                     scale="md"
+                     style={{
+                        border: "0px",
+                        letterSpacing: ".1rem",
+                        boxShadow: "none",
+                        textTransform: "uppercase",
+                     }}
+                     onClick={() => onConfirmBuy()}>
+                     Buy Now
+                  </BorderButton>
+                  <BorderButton
+                     width="140px"
+                     variant="primary"
+                     color="black"
+                     scale="md"
+                     style={{
+                        border: "0px",
+                        letterSpacing: ".1rem",
+                        boxShadow: "none",
+                        textTransform: "uppercase",
+                     }}
+                     onClick={() => onConfirmBid()}>
                      Bid
-                     </Button>
-                     </ButtonContent>
+                  </BorderButton>
+               </ButtonContent>
             </Flex>
-            
          </BottomModal>
       </>
    );
