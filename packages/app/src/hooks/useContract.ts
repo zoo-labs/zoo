@@ -2,8 +2,8 @@ import { useEffect, useState, useRef } from 'react';
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from 'ethers';
 
-	const CONTRACTS_JSON = require('../contracts.json');
-	const CONTRACTS = CONTRACTS_JSON['31337']['hardhat'].contracts;
+/* 	const CONTRACTS_JSON = require('../contracts.json');
+	const CONTRACTS = CONTRACTS_JSON['31337']['hardhat'].contracts; */
 interface ContractType {
 	contract: any;
 	senderContract: any;
@@ -16,7 +16,7 @@ interface ContractMap {
 /**
  * Can only be used in an useEffect() call
  */
-const useContract = () => {
+/* const useContract = () => {
 	const [contractMap, setContractMap]= useState({});
 
 	const getProvider = () => new ethers.providers.Web3Provider((window as any).ethereum);
@@ -60,4 +60,4 @@ const useContract = () => {
 
 }
 
-export default useContract;
+export default useContract; */
