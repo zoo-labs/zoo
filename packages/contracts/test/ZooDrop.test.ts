@@ -48,18 +48,39 @@ describe("Test ZooDrop", () => {
 
         const Animal = await zooDrop.animals("Pug");
 
-        const tokenURI = await zooDrop.tokenURI(Animal.name);
+        await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
+
+        const Animal = await zooDrop.getAnimal("Pug");
+
+        const tokenURI = await zooDrop.getTokenURI(Animal.name);
 
         expect(Animal.name).to.equal("Pug");
         expect(tokenURI).to.equal("test");
 
     });
 
+
+    it("Should pick a pug", async () => {
+
+
+        await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
+
+        const pick = await zooDrop.pickAnimal(20);
+
+        const Animal = await zooDrop.getAnimal(pick);
+
+        expect(Animal.name).to.equal("Pug");
+
+    });
+
+
     it("Should add an Hybrid", async () => {
         await zooDrop.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
 
-        const Hybrid = await zooDrop.hybrids("PugPug");
-        const tokenURI = await zooDrop.tokenURI("Puggy");
+        await zooDrop.addHybrid("Puggy", "Pug","Pug", 120 ,"test","test");
+
+        const Hybrid = await zooDrop.getHybrid("PugPug");
+        const tokenURI = await zooDrop.getTokenURI("Puggy");
 
         expect(Hybrid.name).to.equal("Puggy");
         expect(tokenURI).to.equal("test");
@@ -73,9 +94,9 @@ describe("Test ZooDrop", () => {
         } catch (e) {
             expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
         }
-        
+
     });
-    
+
     it("Should revert when adding a hybrid animal not as owner", async() => {
         zooDrop = zooDrop.connect(signers[1]);
         try {
@@ -89,16 +110,15 @@ describe("Test ZooDrop", () => {
      * EGG PRICE
      */
     it("Should set & get egg price", async() => {
-        zooDrop = zooDrop.connect(signers[0]);
-        let bigEggPrice = await zooDrop.getEggPrice();
-        let eggPrice = bigEggPrice.toNumber();
-        expect(eggPrice).to.equal(210); // default eggPrice
-        
+        // zooDrop = zooDrop.connect(signers[0]);
+        let eggPrice = await zooDrop.getEggPrice();
+        console.log("Eggprice: ", eggPrice)
+        // expect(eggPrice).to.equal(200) // default eggPrice
+
         await zooDrop.connect(signers[0]).setEggPrice(333); //set a new price
-        
-        bigEggPrice = await zooDrop.getEggPrice();
-        eggPrice = bigEggPrice.toNumber();
-        expect(eggPrice).to.equal(333); // gets the new eggPrice        
+
+        eggPrice = await zooDrop.getEggPrice();
+        expect(eggPrice).to.equal(333) // gets the new eggPrice
     });
 
     it("Should revert when setting egg price as non owner", async() => {
