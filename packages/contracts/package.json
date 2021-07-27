@@ -50,13 +50,14 @@
     "console": "hardhat console --network hardhat",
     "compile": "hardhat compile",
     "deploy": "mkdir -p deployments && hardhat deploy --network hardhat",
-    "export": "mkdir -p deployments && hardhat deploy --network hardhat --export-all ../app/src/contracts.json && cp -R ./artifacts ../app/src/artifacts",
+    "export": "yarn export:contracts && yarn export:web3",
+    "export:contracts": "mkdir -p deployments && hardhat deploy --network hardhat --export-all ../app/src/contracts.json && cp -R ./artifacts ../app/src/artifacts",
+    "export:web3": "typechain --target=web3-v1 --out-dir=types/web3",
     "fork": "hardhat node --fork https://mainnet.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad",
     "generate": "hardhat generate",
     "postdeploy": "hardhat run scripts/publish.js",
     "send": "hardhat send",
     "test": "hardhat test --network hardhat",
-    "types": "typechain --target=web3-v1 --out-dir=types/web3",
     "verify": "hardhat etherscan-verify --api-key B4DWQYJ2WXADKY172FJTAH9736VRYMKIC9",
     "watch": "node scripts/watch.js"
   }
