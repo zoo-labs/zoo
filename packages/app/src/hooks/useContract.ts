@@ -28,7 +28,7 @@ interface ContractMap {
 	}
 
 	
-	const ContractDef = require(`contracts/artifacts/src/${contractName}.sol/${contractName}.json`);
+	const ContractDef = require(`../../../contracts/artifacts/src/${contractName}.sol/${contractName}.json`);
 	// TODO: tie this to web3
 	const provider = getProvider();
 	const inst = new ethers.Contract(CONTRACTS[contractName].address,ContractDef.abi, provider); 
