@@ -1028,19 +1028,25 @@ describe("ZooAuction", () => {
         //   );
         // });
 
-        it.only("should pay the creator the remainder of the winning bid", async () => {
+        it("should pay the creator the remainder of the winning bid", async () => {
           const beforeBalance = await ethers.provider.getBalance(
             await creator.getAddress()
           );
+
           await auctionHouse.endAuction(0);
-          const expectedProfit = "957500000000000000";
+
+          const expectedProfit = "10000000010";
+
           const creatorBalance = await ethers.provider.getBalance(
             await creator.getAddress()
           );
+
           const tokenBalance = await token.balanceOf(await creator.getAddress());
+
           await expect(
             creatorBalance.sub(beforeBalance).add(tokenBalance).toString()
           ).to.eq(expectedProfit);
+
         });
 
         it("should emit an AuctionEnded event", async () => {
