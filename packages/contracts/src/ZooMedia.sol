@@ -101,15 +101,13 @@ contract ZooMedia is Media, Ownable {
     //Token address of the ZooToken
     ZooToken public token;
 
-   constructor(string memory symbol, string memory name, address marketAddress, address _zooToken) Media(symbol, name, marketAddress) {
-      token = ZooToken(_zooToken);
-   }
+   constructor(string memory symbol, string memory name, address marketAddress) Media(symbol, name, marketAddress) { }
 
-    function addDrop(string memory name, uint256 _totalSupply, uint256 _eggPrice) public onlyOwner returns (uint256, address) {
+    function addDrop(string memory _name, uint256 _totalSupply, uint256 _eggPrice) public onlyOwner returns (uint256, address) {
         _dropIDs.increment();
         uint256 dropID = _dropIDs.current();
 
-        ZooDrop drop = new ZooDrop(_totalSupply, _eggPrice);
+        ZooDrop drop = new ZooDrop(_name, _totalSupply, _eggPrice);
         drops[dropID] = address(drop);
 
         emit AddDrop(dropID, address(drop));
@@ -188,7 +186,6 @@ contract ZooMedia is Media, Ownable {
 
         Media.MediaData memory data;
 
-        ZooDrop.Animal memory _animal;
         string memory hatchedAnimal;
 
         // if not hybrid
@@ -308,21 +305,21 @@ contract ZooMedia is Media, Ownable {
 
      //   @Kimani will overwrite this
     // TEMP random function
-    function unsafeRandom() private returns (uint256) {
+    function unsafeRandom() private view returns (uint256) {
         uint256 randomNumber = uint256(keccak256(abi.encodePacked(block.number, msg.sender, block.timestamp))) % 1000;
         return randomNumber;
     }
     // take two animals and returns a bytes32 string of their names
     // to be used with ZooMedia.possib;ePairs to get the two possible hybrid pairs coming from the two base animals
-    function concatAnimalIds(string memory a1, string memory a2) internal returns (string memory) {
+    function concatAnimalIds(string memory a1, string memory a2) internal pure returns (string memory) {
         return string(abi.encodePacked(a1, a2));
     }
 
     // Chooses animal based on random number generated from(0-999), replace strings with ENUMS / data that
     // represents animal instead
-    function pickAnimal(uint256 random) public view returns(string memory) {
+    function pickAnimal(uint256 random) public pure returns (string memory) {
 
-        if(random < 550){
+        if(random < 550) {
             uint choice = random % 4;
             if(choice == 0){
                 return "Pug";
