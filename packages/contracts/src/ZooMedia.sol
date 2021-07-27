@@ -360,16 +360,16 @@ contract ZooMedia is Media, Ownable {
         if (bytes(hybrids[_tokenID].name).length > 0) {
             // calculate daily yield
             percentage = hybrids[_tokenID].yield;
-            dailyYield = age.mul(percentage);
+            dailyYield = age.mul(percentage) + percentage;
             // transfer yield
-            token.transferFrom(address(this), msg.sender, dailyYield);
+            token.transfer(msg.sender, dailyYield);
             delete hybrids[_tokenID];
         } else {
             // calculate daily yield
             percentage = animals[_tokenID].yield;
-            dailyYield = age.mul(percentage);
+            dailyYield = age.mul(percentage) + percentage;
             // transfer yield
-            token.transferFrom(address(this), msg.sender, dailyYield);
+            token.transfer(msg.sender, dailyYield);
             delete animals[_tokenID];
         }
 

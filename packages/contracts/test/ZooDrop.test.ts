@@ -44,7 +44,7 @@ describe("Test ZooDrop", () => {
         Adding Animals
     */
     it("Should add an Animal", async () => {
-        await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
+        await zooDrop.addAnimal("Pug", 100, "Common", 5500, "test","test");
 
         const Animal = await zooDrop.animals("Pug");
 
@@ -69,7 +69,7 @@ describe("Test ZooDrop", () => {
     it("Should revert when adding a animal not as owner", async() => {
         zooDrop = zooDrop.connect(signers[1]);
         try {
-            const tx = await zooDrop.addAnimal("Pug", 100, "Common", 5500, 1, "test","test");
+            const tx = await zooDrop.addAnimal("Pug", 100, "Common", 5500, "test","test");
         } catch (e) {
             expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
         }
