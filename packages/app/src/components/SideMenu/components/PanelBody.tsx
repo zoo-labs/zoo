@@ -23,7 +23,7 @@ const Container = styled.div`
   overflow-x: hidden;
   height: 100%;
   justify-content: center;
-  padding-bottom: 29vh;
+  padding-top: 29vh;
   a {
     padding-bottom: 20px;
   }
@@ -90,12 +90,12 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
                     <MenuEntry key={item.href} secondary isActive={false} onClick={handleClick}>
                       <MenuLink href={item.href} key={item.href}>
                         {subIconElement}
-                        <LinkLabel isPushed={isPushed}>{item.label}</LinkLabel>
+                        {/* <LinkLabel isPushed={isPushed}>{item.label}</LinkLabel>
                         {item.status && (
                           <LinkStatus color={item.status.color} fontSize="14px">
                             {item.status.text}
                           </LinkStatus>
-                        )}
+                        )} */}
                       </MenuLink>
                     </MenuEntry>
                   )
@@ -109,7 +109,7 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
               {entry.icon.length > 0 && iconElement}
               <LinkLabel isPushed={isPushed}>{entry.label}</LinkLabel>
               {entry.status && (
-                <LinkStatus color={entry.status.color} fontSize="14px">
+                <LinkStatus color={entry.status.color} fontSize="10px">
                   {entry.status.text}
                 </LinkStatus>
               )}

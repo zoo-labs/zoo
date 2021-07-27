@@ -80,11 +80,10 @@ const App: React.FC = () => {
 
   return (
     <Suspense fallback={null}>
+    
       <Router history={history}>
         <ResetCSS />
         <GlobalStyle />
-        
-       
             <Switch>
               {/* Zswap Routes  */}
               {/* <Route path="/marketplace" exact>
