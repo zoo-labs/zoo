@@ -1,41 +1,24 @@
 import { ethers } from 'hardhat';
-
 import { ZooMedia } from '../types/ZooMedia';
-
 import { ZooMedia__factory } from '../types';
-
 import { Market__factory } from '../types';
-
 import { ZooToken } from '../types/ZooToken';
-
 import { ZooFaucet } from '../types/ZooFaucet';
-
 import { ZooMarket } from '../types/ZooMarket';
-
 import chai, { expect } from "chai";
-
 import { BigNumber, Bytes, BytesLike, utils } from 'ethers';
 
 let zooToken: any;
-
 let zooFaucet: any;
-
 let zooMarket: any;
-
 let zooMedia: any;
-
 let signers: any;
-
 let mintAmt = 100000000;
-
 let owner;
-
-let auctionAddress: string;
-
+let marketAddress: string;
 let tokenAddress: string;
 
-describe("Test ZooMedia (2)", () => {
-
+describe("ZooMedia (game logic)", () => {
     beforeEach(async () => {
 
         signers = await ethers.getSigners();
@@ -59,24 +42,18 @@ describe("Test ZooMedia (2)", () => {
         owner = signers[0]
 
         await zooToken.mint(zooFaucet.address, 1000000);
-
         await zooFaucet.buyZoo(owner.address,1000);
 
         zooMarket =  (await new Market__factory(owner).deploy()) as ZooMarket;
         await zooMarket.deployed();
+        marketAddress = zooMarket.address;
 
-        auctionAddress = zooMarket.address;
-
-        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', auctionAddress, zooToken.address)) as ZooMedia
+        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', marketAddress, zooToken.address)) as ZooMedia
         await zooMedia.deployed();
 
         tokenAddress = zooMedia.address;
 
         await zooMarket.configure(tokenAddress);
-
-        // await addAnimals()
-
-
     })
 
     async function addAnimals(){
@@ -91,7 +68,6 @@ describe("Test ZooMedia (2)", () => {
         await zooMedia.setMetadataURI(1, "basicEgg", "basicEgg.metadataURI1");
         await zooMedia.setTokenURI(1, "hybridEgg", "hybridEgg.tokenURI1");
         await zooMedia.setMetadataURI(1, "hybridEgg", "hybridEgg.metadataURI1");
-
 
         await zooMedia.addAnimal(1,"Pug", 100, "Common", 5500, "test","test");
         await zooMedia.addAnimal(1,"Butterfly", 100, "Common", 5500, "test1","test1");
@@ -114,7 +90,6 @@ describe("Test ZooMedia (2)", () => {
         await zooMedia.addAnimal(1,"Blobfish", 100, "Common", 5500, "test15","test15");
         await zooMedia.addAnimal(1,"Naked Mole Rat", 100, "Common", 5500, "test16","test16");
     }
-
 
     async function addHybrids() {
         await zooMedia.addHybrid(1,"Baby Elephant","Elephant","Elephant",100,"http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/Elephant/Baby%20Elephant.jpg","testElephant")
@@ -357,7 +332,6 @@ describe("Test ZooMedia (2)", () => {
         await zooMedia.addHybrid(1,"Turtleshark","Turtle","Shark",100,"http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/Turtle/Turtleshark.jpg","testTurtle")
         await zooMedia.addHybrid(1,"Turtleblob","Turtle","Blobfish",100,"http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/Turtle/Turtleblob.jpg","testTurtle")
         await zooMedia.addHybrid(1,"Turtlerat","Turtle","Naked Mole Rat",100,"http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/Turtle/Turtlerat.jpg","testTurtle")
-
     }
 
     async function addDrop() {
@@ -367,12 +341,9 @@ describe("Test ZooMedia (2)", () => {
         await zooMedia.setMetadataURI(1, "basicEgg", "basicEgg.metadataURI1");
         await zooMedia.setTokenURI(1, "hybridEgg", "hybridEgg.tokenURI1");
         await zooMedia.setMetadataURI(1, "hybridEgg", "hybridEgg.metadataURI1");
-
     }
 
-
     async function breedHybrid(){
-
         await zooToken.approve(zooMedia.address, 2000)
 
         const buyFirstEgg = await zooMedia.connect(owner).buyEgg(1);
@@ -390,7 +361,6 @@ describe("Test ZooMedia (2)", () => {
             }
         });
 
-
         const buySecondEgg = await zooMedia.connect(owner).buyEgg(1);
         const buySecondEggReceipt = await buySecondEgg.wait();
 
@@ -403,7 +373,6 @@ describe("Test ZooMedia (2)", () => {
                 token_id_2 = element.args["_tokenID"]
             }
         });
-
 
         const firstHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_1);
         const hatchFirstAnimalReceipt = await firstHatchedAnimal.wait();
@@ -447,7 +416,6 @@ describe("Test ZooMedia (2)", () => {
     /*
     Deploy Script
     */
-
     it("Should get the ZooDrop owner", async () => {
 
         const zooDropOwner: string = await zooMedia.owner();
