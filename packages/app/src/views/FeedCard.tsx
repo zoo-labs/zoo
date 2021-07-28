@@ -150,6 +150,8 @@ const FeedCard: React.FC<Props> = ({ item }) => {
                 {item.rarity}
               </Subheading>
               <Subheading bold as="p">{`Born: ${StringDate}`}</Subheading>
+              <Subheading bold as="p">{`Current Bid: ${item.currentBid}`}</Subheading>
+              
               
             </Flex>
             <Flex flexDirection="column" width="75px">
