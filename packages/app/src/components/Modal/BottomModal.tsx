@@ -2,7 +2,7 @@ import { CloseIcon, Flex, Heading, IconButton, Label } from "components";
 import useTheme from "hooks/useTheme";
 import React from "react";
 import Sheet from "react-modal-sheet";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 interface Props {
    onDismiss?: () => null;
@@ -18,6 +18,35 @@ const HeaderOutline = styled.div`
    margin-bottom: 16px;
 `
 
+const animatebottom = keyframes`
+   from {
+     bottom: -300px;
+     opacity: 0;
+   }
+
+   to {
+     bottom: 0;
+     opacity: 1;
+   }
+`
+
+const animateup = keyframes`
+   from {
+      bottom: 0;
+      opacity: 1;
+   }
+
+   to {
+     bottom: -300px;
+     opacity: 0;
+   }
+`
+
+const CustomSheet = styled(Sheet)`
+   position: relative;
+   animation: ${(props) => (props.isOpen ? animatebottom :  animateup)} 0.4s;
+`
+
 const BottomModal: React.FC<Props> = ({
    children,
    header,
@@ -26,10 +55,15 @@ const BottomModal: React.FC<Props> = ({
 }) => {
    const [isOpen, setOpen] = React.useState(true);
    const theme = useTheme();
+   
+   const onClose = () => {
+      setOpen(false);
+      setTimeout(onDismiss, 300);
+   }
 
    return (
       <>
-         <Sheet isOpen={isOpen} onClose={onDismiss}>
+         <CustomSheet isOpen={isOpen} onClose={onClose}>
             <Sheet.Container
                style={{
                   height: height ? height : "300px",
@@ -49,7 +83,7 @@ const BottomModal: React.FC<Props> = ({
                      {header}
                      </Label>
                      </HeaderOutline>
-                  <IconButton onClick={onDismiss} style={{position: 'absolute', background: "transparent", top: '10px', right: '10px'}}>
+                  <IconButton onClick={onClose} style={{position: 'absolute', background: "transparent", top: '10px', right: '10px'}}>
                      <CloseIcon />
                   </IconButton>
                </Sheet.Header>
@@ -58,8 +92,8 @@ const BottomModal: React.FC<Props> = ({
                </Sheet.Content>
             </Sheet.Container>
 
-            <Sheet.Backdrop onTap={onDismiss} />
-         </Sheet>
+            <Sheet.Backdrop onTap={onClose} />
+         </CustomSheet>
       </>
    );
 };
