@@ -156,7 +156,7 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
      * @notice On deployment, set the market contract address and register the
      * ERC721 metadata interface
      */
-    constructor(
+    Buctor(
         string memory name,
         string memory symbol,
         address marketAddress
