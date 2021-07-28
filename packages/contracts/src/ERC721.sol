@@ -224,7 +224,7 @@ contract ERC721 is
     function approve(address to, uint256 tokenId) public virtual override {
         address owner = ownerOf(tokenId);
 
-        console.log(owner);
+        console.log("The owner", owner);
         require(to != owner, "ERC721: approval to current owner");
 
         console.log(msg.sender);
@@ -374,7 +374,7 @@ contract ERC721 is
      * - `tokenId` must exist.
      */
     function _isApprovedOrOwner(address spender, uint256 tokenId)
-        internal
+        external
         view
         returns (bool)
     {
