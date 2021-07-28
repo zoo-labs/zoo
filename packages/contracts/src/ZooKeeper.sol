@@ -2,14 +2,14 @@
 
 pragma solidity >=0.8.4;
 
-import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
-import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import { ZooDrop } from "./ZooDrop.sol";
-import { ZooMedia } from "./ZooMedia.sol";
-import { ZooToken } from "./ZooToken.sol";
-import { IMarket } from "./interfaces/IMarket.sol";
-import { Decimal } from "./Decimal.sol";
+import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
+import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {ZooDrop} from "./ZooDrop.sol";
+import {ZooMedia} from "./ZooMedia.sol";
+import {ZooToken} from "./ZooToken.sol";
+import {IMarket} from "./interfaces/IMarket.sol";
+import {Decimal} from "./Decimal.sol";
 
 import "./console.sol";
 
@@ -20,8 +20,6 @@ contract ZooKeeper {
     uint256 avgBlocksDaily = 28800;
 
     uint256 public hybridHatchTime = 36 hours;
-
-    uint256 public namePrice = 300;
 
     uint256[] public coolDowns = [4 hours, 1 days, 3 days, 7 days, 30 days];
 
@@ -34,7 +32,7 @@ contract ZooKeeper {
 
     Counters.Counter private _dropIDs;
 
-    //Declare an Event
+    // Declare an Event
     event AddDrop(uint256 indexed _dropID, address indexed _dropAddress);
     event BuyEgg(address indexed _from, uint256 indexed _tokenID);
     event Hatch(address indexed _from, uint256 indexed _tokenID);
@@ -83,14 +81,11 @@ contract ZooKeeper {
 
     mapping(address => uint256) public lastTimeBred;
 
-    // mapping of token ID to animal name;
-    mapping(uint256 => string) public names;
-
     ZooMedia public media;
     IERC20 public token;
     address public owner;
 
-    modifier onlyOwner {
+    modifier onlyOwner() {
         require(msg.sender == owner, "Only owner has access");
         _;
     }
@@ -100,10 +95,7 @@ contract ZooKeeper {
         _;
     }
 
-    constructor(
-        address _media,
-        address _token
-    ) {
+    constructor(address _media, address _token) {
         owner = msg.sender;
         media = ZooMedia(_media);
         token = IERC20(_token);
@@ -121,11 +113,18 @@ contract ZooKeeper {
         return media.ownerOf(_tokenID);
     }
 
-    function transferFrom(address _sender, address _recipient, uint256 _amount) public {
+    function transferFrom(
+        address _sender,
+        address _recipient,
+        uint256 _amount
+    ) public {
         return media.transferFrom(_sender, _recipient, _amount);
     }
 
-    function mint(ZooMedia.MediaData memory data, IMarket.BidShares memory bidShares) public {
+    function mint(
+        ZooMedia.MediaData memory data,
+        IMarket.BidShares memory bidShares
+    ) public {
         return media.mint(data, bidShares);
     }
 
@@ -154,14 +153,6 @@ contract ZooKeeper {
         return _total;
     }
 
-    function setName(uint256 _tokenID, string memory _name) public onlyOwner {
-        names[_tokenID] = _name;
-    }
-
-    function setNamePrice(uint256 _price) public onlyOwner {
-        namePrice = _price;
-    }
-
     function setTokenURI(
         uint256 _dropID,
         string memory _name,
@@ -180,42 +171,23 @@ contract ZooKeeper {
         drop.setMetadataURI(_name, _URI);
     }
 
-    // Add a name for given NFT
-    function buyName(uint256 _tokenID, string memory _name) public {
-        require(
-            token.balanceOf(msg.sender) >= namePrice,
-            "Not Enough ZOO Tokens to purchase Name"
-        );
-
-        console.log("Transfer ZOO from sender to this contract");
-        token.transferFrom(msg.sender, address(this), namePrice);
-        names[_tokenID] = _name;
-    }
-
     // Accept ZOO and return Egg NFT
     function buyEgg(uint256 _dropID) public returns (uint256) {
-        console.log("buyEgg:this", address(this));
-        console.log("buyEgg:msg.sender", address(msg.sender));
-
-        console.log("Get drop instance");
         ZooDrop drop = ZooDrop(drops[_dropID]);
 
-        console.log("Ensure ZOO to purchase egg");
         require(
             token.balanceOf(msg.sender) >= drop.eggPrice(),
             "Not Enough ZOO Tokens to purchase Egg"
         );
 
-        console.log("Ensure eggs can be purchased");
         require(
             drop.currentSupply() > 0,
             "There are no more Eggs that can be purchased"
         );
 
-        console.log("Transfer ZOO from sender to this contract");
         token.transferFrom(msg.sender, address(this), drop.eggPrice());
+        console.log("TEST THIS");
 
-        console.log("get tokenURI and metadataURI");
         (string memory _tokenURI, string memory _metadataURI) = drop.buyEgg();
         ZooMedia.MediaData memory data;
 
@@ -259,22 +231,21 @@ contract ZooKeeper {
     }
 
     // Burn egg and randomly return an animal NFT
-    function hatchEgg(uint256 _dropID, uint256 _tokenID) public returns (uint256) {
-        console.log("hatchEgg:dropID", _dropID);
-        ZooDrop drop = ZooDrop(drops[_dropID]);
+    function hatchEgg(uint256 dropId, uint256 tokenID)
+        public
+        returns (uint256)
+    {
+        ZooDrop drop = ZooDrop(drops[dropId]);
 
         // need to check the hatch time delay
 
         //  grab egg struct
-        Egg memory egg = eggs[_tokenID];
-        TokenType eggType = types[_tokenID];
-
-        console.log("hatchEgg: burning", _tokenID);
-        media.burn(_tokenID);
-        console.log("hatchEgg: burned", _tokenID);
+        Egg memory egg = eggs[tokenID];
+        TokenType eggType = types[tokenID];
+        media.burn(tokenID);
 
         //  burn the eggToken(it's hatching)
-        emit Burn(msg.sender, _tokenID);
+        emit Burn(msg.sender, tokenID);
 
         // get the rarity for an animal
         uint256 rarity = unsafeRandom();
@@ -291,14 +262,12 @@ contract ZooKeeper {
 
         // if not hybrid
         if (uint256(TokenType.BASE_EGG) == uint256(eggType)) {
-            console.log("hatchEgg: not hybrid");
             hatchedAnimal = pickAnimal(rarity);
             (_animal.name, _animal.yield, _rarity) = drop.animals(
                 hatchedAnimal
             );
             // _animal.rarity = ZooDrop.Rarity(_rarityName, _rarity);
         } else if (uint256(TokenType.HYBRID_EGG) == uint256(eggType)) {
-            console.log("hatchEgg: hybrid");
             // if hybrid
             // require(egg.eggCreationTime > egg.eggCreationTime.add(4 hours), "Must wait 4 hours for hybrid eggs to hatch.");
             // pick array index 0 or 1 depending on the rarity
@@ -320,8 +289,6 @@ contract ZooKeeper {
         }
 
         if (uint256(TokenType.HYBRID_EGG) == uint256(eggType)) {
-            console.log("hatchEgg: hybridEgg");
-            // if hybrid
             // data.tokenURI = drop.tokenURI(hatchedAnimal);
             // data.metadataURI = drop.metadataURI(hatchedAnimal);
         }
@@ -348,27 +315,24 @@ contract ZooKeeper {
         bidShare.creator = Decimal.D256(10 * (10**18));
         bidShare.owner = Decimal.D256(90 * (10**18));
 
-        console.log("hatchEgg: minting");
         media.mint(data, bidShare); // this time not an egg but an animal
-        console.log("hatchEgg: finished mint");
 
-        uint256 _newID = media.getRecentToken(msg.sender);
+        uint256 tokenId = media.getRecentToken(msg.sender);
 
         if (bytes(_animal.name).length > 0) {
             _animal.rarity = _rarity;
-            animals[_newID] = _animal;
-            types[_newID] = TokenType.BASE_ANIMAL;
+            animals[tokenId] = _animal;
+            types[tokenId] = TokenType.BASE_ANIMAL;
         } else {
-            hybrids[_newID] = _hybrid;
-            types[_newID] = TokenType.HYBRID_ANIMAL;
+            hybrids[tokenId] = _hybrid;
+            types[tokenId] = TokenType.HYBRID_ANIMAL;
         }
 
         // animal DOB
-        animalDOB[_newID] = block.number;
-
+        animalDOB[tokenId] = block.number;
         // type of NFT
-        emit Hatch(msg.sender, _newID);
-        return _newID;
+        emit Hatch(msg.sender, tokenId);
+        return tokenId;
     }
 
     // Breed two animals and create a hybrid egg
@@ -379,7 +343,10 @@ contract ZooKeeper {
     ) public onlyExistingToken(_tokenIDA) returns (uint256) {
         require(_tokenIDA != _tokenIDB);
         uint256 delay = getBreedingDelay();
-        require(block.timestamp-lastTimeBred[msg.sender] > delay, "Must wait for cooldown to finish.");
+        require(
+            block.timestamp - lastTimeBred[msg.sender] > delay,
+            "Must wait for cooldown to finish."
+        );
 
         ZooDrop drop = ZooDrop(drops[dropId]);
 
@@ -395,7 +362,7 @@ contract ZooKeeper {
         // require(now.sub(checkBreedDelay()) <= 0)
 
         (string memory _tokenURI, string memory _metadataURI) = drop
-        .getHybridEgg();
+            .getHybridEgg();
         ZooMedia.MediaData memory data;
         data.tokenURI = _tokenURI;
         data.metadataURI = _metadataURI;
@@ -433,10 +400,7 @@ contract ZooKeeper {
 
     // Implemented prior to issue #30
     // Should burn animal and return yield
-    function freeAnimal(uint256 _tokenID)
-        public
-        returns (bool)
-    {
+    function freeAnimal(uint256 _tokenID) public returns (bool) {
         require(
             bytes(hybrids[_tokenID].name).length > 0 ||
                 bytes(animals[_tokenID].name).length > 0,
@@ -490,7 +454,11 @@ contract ZooKeeper {
         return media.tokenByIndex(_tokenID);
     }
 
-    function tokenOfOwnerByIndex(address _owner, uint256 _tokenID) public view returns (uint256) {
+    function tokenOfOwnerByIndex(address _owner, uint256 _tokenID)
+        public
+        view
+        returns (uint256)
+    {
         return media.tokenOfOwnerByIndex(_owner, _tokenID);
     }
 
@@ -498,23 +466,42 @@ contract ZooKeeper {
         return media.tokenCreators(_tokenID);
     }
 
-    function previousTokenOwners(uint256 _tokenID) public view returns (address) {
+    function previousTokenOwners(uint256 _tokenID)
+        public
+        view
+        returns (address)
+    {
         return media.previousTokenOwners(_tokenID);
     }
 
-    function tokenContentHashes(uint256 _tokenID) public view returns (bytes32) {
+    function tokenContentHashes(uint256 _tokenID)
+        public
+        view
+        returns (bytes32)
+    {
         return media.tokenContentHashes(_tokenID);
     }
 
-    function tokenMetadataHashes(uint256 _tokenID) public view returns (bytes32) {
+    function tokenMetadataHashes(uint256 _tokenID)
+        public
+        view
+        returns (bytes32)
+    {
         return media.tokenMetadataHashes(_tokenID);
     }
 
-    function tokenMetadataURI(uint256 _tokenID) public view returns (string memory) {
+    function tokenMetadataURI(uint256 _tokenID)
+        public
+        view
+        returns (string memory)
+    {
         return media.tokenMetadataURI(_tokenID);
     }
 
-    function updateTokenMetadataURI(uint256 _tokenID, string memory _metadataURI) public {
+    function updateTokenMetadataURI(
+        uint256 _tokenID,
+        string memory _metadataURI
+    ) public {
         return media.updateTokenMetadataURI(_tokenID, _metadataURI);
     }
 
@@ -529,7 +516,8 @@ contract ZooKeeper {
     // take two animals and returns a bytes32 string of their names
     // to be used with ZooMedia.possib;ePairs to get the two possible hybrid pairs coming from the two base animals
     function concatAnimalIds(string memory a1, string memory a2)
-        internal pure
+        internal
+        pure
         returns (string memory)
     {
         return string(abi.encodePacked(a1, a2));
@@ -642,9 +630,9 @@ contract ZooKeeper {
         if (count == 0) {
             delay = 0;
         } else if (count >= 5) {
-            delay = coolDowns[coolDowns.length-1];
+            delay = coolDowns[coolDowns.length - 1];
         } else {
-            delay = coolDowns[count+1];
+            delay = coolDowns[count + 1];
         }
 
         // if (count == 1) {
@@ -661,6 +649,5 @@ contract ZooKeeper {
         //     delay = 0;
         // }
         return delay;
-
     }
 }

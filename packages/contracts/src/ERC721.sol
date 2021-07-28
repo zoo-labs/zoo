@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity >=0.8.4;
+import "./console.sol";
 
 /**
  * NOTE: This file is a clone of the OpenZeppelin ERC721.sol contract. It was forked from https://github.com/OpenZeppelin/openzeppelin-contracts
@@ -222,8 +223,11 @@ contract ERC721 is
      */
     function approve(address to, uint256 tokenId) public virtual override {
         address owner = ownerOf(tokenId);
+
+        console.log("The owner", owner);
         require(to != owner, "ERC721: approval to current owner");
 
+        console.log(msg.sender);
         require(
             _msgSender() == owner || isApprovedForAll(owner, _msgSender()),
             "ERC721: approve caller is not owner nor approved for all"
@@ -370,7 +374,7 @@ contract ERC721 is
      * - `tokenId` must exist.
      */
     function _isApprovedOrOwner(address spender, uint256 tokenId)
-        internal
+        external
         view
         returns (bool)
     {
