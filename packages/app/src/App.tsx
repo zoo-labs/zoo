@@ -19,7 +19,6 @@ const Account = lazy(() => import('./views/Account'))
 const Login = lazy(() => import('./views/Login'))
 const Bank = lazy(() => import('./views/Bank'))
 const Feed = lazy(() => import('./views/Feed'))
-const Faucet = lazy(() => import('./views/Faucet'))
 // const Splash = lazy(() => import('./views/Splash'))
 
 // This config is required for number formating
@@ -113,20 +112,6 @@ const App: React.FC = () => {
                   <Route exact path="/bank">
                     {signedIn? <Menu><Bank /></Menu> : <Redirect to="/login" />}
                   </Route>
-		    <Route exact path="/faucet">
-                    {signedIn? <Menu><Faucet /></Menu> : <Redirect to="/login" />}
-                  </Route>
-
-                  <Route  path="/">
-                    {signedIn? <Redirect to="/account" />: <Redirect to="/login" />}
-                  </Route>
-                  {/* <Route exact path="/login" component={Login} />
-                  <Route exact path="/account" component={signedIn? Account : <Redirect to="/docs/overview" />} />
-                  <Route exact path="/market" component={signedIn? Marketplace : <Redirect to="/docs/overview" />} />
-                  <Route exact path="/" component={signedIn? Account : <Redirect to="/docs/overview" />} /> */}
-                  {/* <PrivateRoute path="/marketplace" component={Marketplace} />
-                  <PrivateRoute path="/account" component={Account} />
-                  <PrivateRoute path="/" component={Account} /> */}
                 </SuspenseWithChunkError>
               {/* <Route component={NotFound} /> */}
             </Switch>

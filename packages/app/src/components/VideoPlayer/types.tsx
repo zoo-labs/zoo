@@ -3,5 +3,4 @@ import { SpaceProps } from "styled-system";
 
 export type VideoPlayerTheme = {
     videoPath: string
-    onDone: () => void
 }
