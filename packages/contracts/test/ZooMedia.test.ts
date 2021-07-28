@@ -884,10 +884,17 @@ describe('ZooMedia', () => {
 
     it('should revert if the mediaId has not yet ben created', async () => {
       const media = await mediaAs(bidderWallet);
-
-      await expect(removeBid(media, 100)).rejectedWith(
-        'Media: media with that id does not exist'
-      );
+      let passed = false
+      try {
+        await removeBid(media, 100)
+        passed = true;
+      } catch (error) {
+        expect(
+          error.error.body
+        ).to.contain('ZooMedia: token with that id does not exist'); 
+        passed = true;
+      }
+      expect(passed, "The previous transaction was not reverted").to.be.true
     });
 
     it('should remove a bid and refund the bidder', async () => {
@@ -979,7 +986,7 @@ describe('ZooMedia', () => {
       expect(toNumWei(bidShares[1].value)).eq(10 * 10 ** 18);
     });
 
-    it('should emit a bid finalized event if the bid is accepted', async () => {
+    it.only('should emit a bid finalized event if the bid is accepted', async () => {
       const asBidder = await mediaAs(bidderWallet);
       const media = await mediaAs(ownerWallet);
       const auction = await ZooMarket__factory.connect(marketAddress, bidderWallet);
