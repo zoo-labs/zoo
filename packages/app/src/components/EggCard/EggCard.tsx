@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import {
   Flex,
@@ -16,7 +16,7 @@ import { useWeb3React } from '@web3-react/core'
 import HatchModal from "components/ZooModals/HatchModal"
 import { Animal } from 'entities/zooentities'
 import { EggCardType } from './types'
-import {burnEgg, addAnimal} from "state/actions"
+import { burnEgg, addAnimal } from "state/actions"
 import { useDispatch } from 'react-redux'
 import { animalMapping } from 'util/animalMapping'
 import NewAnimalCard from 'components/NewAnimal/NewAnimalCard';
@@ -87,35 +87,50 @@ const Card = styled(Existing) <{ timedOut?: boolean }>`
 const basicEggURL = window.location.origin + '/static/images/basic.png'
 const hybridEggURL = window.location.origin + '/static/images/hybrid.jpeg'
 
-export const EggCard: React.FC<EggCardType> = ({egg, hatchEgg})  => {
+export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, eggGroup }) => {
 
-    const [onHatch] = useModal(
-      <HatchModal
-  
-          confirmation={() => hatchEgg(egg)}
-          onDismiss={()=>null}
-      />
-    )
+  const [onHatch] = useModal(
+    <HatchModal
 
-    return (
-      <>
-        <Card onClick={() => { egg.timeRemaining > 0 ? null : onHatch()}} style={{backgroundColor: '#000000'}} timedOut={egg.timeRemaining > 0 ? true : false}>
-         <CardBody style={{backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: 150, padding: 10}}>
-            <TextWrapper>{egg.name}</TextWrapper>
-            </CardBody>
-            {egg.timeRemaining > 0 ?
-                  <TimeoutWrapper barwidth={egg.CTAOverride ? egg.CTAOverride.barwidth : 0}>
-                    <TimeoutDisplay >
-                      {`${egg.CTAOverride.timeRemainingDaysHours.days}D ${egg.CTAOverride.timeRemainingDaysHours.hours}H`}
-                    </TimeoutDisplay>
-                  </TimeoutWrapper> :
-                  <InfoBlock style={{textAlign: 'center', boxShadow: '#000000 0px 0px 10px 1px', padding: 4}} >
-                    <TextWrapper >{`HATCH`}</TextWrapper>
-                  </InfoBlock>
-                }
-        </Card>
-        </>
-    )
+      confirmation={() => hatchEgg(egg)}
+      onDismiss={() => null}
+    />
+  )
+  const eggType = egg.basic ? "BASIC" : "HYBRID";
+
+  return (
+    <>
+      <Card onClick={() => { egg.timeRemaining > 0 ? null : onHatch() }} style={{ backgroundColor: '#000000' }} timedOut={egg.timeRemaining > 0 ? true : false}>
+        <CardBody style={{ backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: 150, padding: 10 }}>
+
+          <TextWrapper
+            style={{
+              textShadow: "0px 2px 6px rgb(0, 0, 0)",
+              fontSize: 18,
+              letterSpacing: 0,
+              position: "absolute",
+              textTransform: "lowercase",
+              right: 7,
+              top: -4
+            }}
+          >
+            {egg.timeRemaining === 0 ? eggGroup[eggType] > 1 ? `x${eggGroup[eggType]}` : '' : ''}
+          </TextWrapper>
+          <TextWrapper>{egg.name}</TextWrapper>
+        </CardBody>
+        {egg.timeRemaining > 0 ?
+          <TimeoutWrapper barwidth={egg.CTAOverride ? egg.CTAOverride.barwidth : 0}>
+            <TimeoutDisplay >
+              {`${egg.CTAOverride.timeRemainingDaysHours.days}D ${egg.CTAOverride.timeRemainingDaysHours.hours}H`}
+            </TimeoutDisplay>
+          </TimeoutWrapper> :
+          <InfoBlock style={{ textAlign: 'center', boxShadow: '#000000 0px 0px 10px 1px', padding: 4 }} >
+            <TextWrapper >{`HATCH`}</TextWrapper>
+          </InfoBlock>
+        }
+      </Card>
+    </>
+  )
 }
 
 export default EggCard
