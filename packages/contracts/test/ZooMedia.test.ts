@@ -136,13 +136,11 @@ describe('ZooMedia', () => {
       await new ZooMedia__factory(deployerWallet).deploy('ANML', 'CryptoZoo', marketAddress)
     ).deployed();
     mediaAddress = media.address;
-    console.log(mediaAddress)
 
     const keeper = await (
       await new ZooKeeper__factory(deployerWallet).deploy(mediaAddress, tokenAddress)
     ).deployed();
     keeperAddress = keeper.address;
-    console.log(keeperAddress)
 
     await market.configure(mediaAddress, keeper.address);
   }
@@ -711,7 +709,7 @@ describe('ZooMedia', () => {
   describe('#removeAsk', () => {
     let media: ZooMedia
     beforeEach(async () => {
-      media = await mediaAs(creatorWallet)
+      media = await (await mediaAs(creatorWallet)).deployed()
       await mint(
           media,
           metadataURI,
@@ -760,13 +758,15 @@ describe('ZooMedia', () => {
     });
 
     it('should not be callable by anyone that is not owner or approved', async () => {
-      const media = await mediaAs(ownerWallet);
-      const asOther = await mediaAs(otherWallet);
       await setAsk(media, 0, defaultAsk);
-
-      expect(removeAsk(asOther, 0)).rejectedWith(
-        'Media: Only approved or owner'
-      );
+      let passed = true
+      try {
+        await media.connect(otherWallet).removeAsk(0);
+      } catch (error) {
+        expect(error.error.body).to.contain('ZooMedia: Only approved or owner')
+        passed = false
+      }
+      expect(passed, "Previous tx should have reverted").to.be.false
     });
   });
 
