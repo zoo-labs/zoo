@@ -10,7 +10,10 @@ import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import { Decimal } from "./Decimal.sol";
 import { ZooMedia } from "./ZooMedia.sol";
+import { ZooKeeper } from "./ZooKeeper.sol";
 import { IMarket } from "./interfaces/IMarket.sol";
+
+import "./console.sol";
 
 /**
  * @title A Market for pieces of media
@@ -25,7 +28,8 @@ contract ZooMarket is IMarket {
      * *******
      */
     // Address of the media contract that can call this market
-    address public mediaContract;
+    address public media;
+    address public zookeeper;
 
     // Deployment Address
     address private _owner;
@@ -47,8 +51,15 @@ contract ZooMarket is IMarket {
     /**
      * @notice require that the msg.sender is the configured media contract
      */
-    modifier onlyMediaCaller() {
-        require(mediaContract == msg.sender, "Market: Only media contract");
+    modifier onlyZoo() {
+        console.log("onlyZoo:this", address(this));
+        console.log("onlyZoo:msg.sender", msg.sender);
+        require(zookeeper == msg.sender || media == msg.sender, "ZooMarket: Only Zoo contracts can call this method");
+        _;
+    }
+
+    modifier onlyOwner {
+        require(_owner == msg.sender, "ZooMarket: Only owner has access");
         _;
     }
 
@@ -98,7 +109,7 @@ contract ZooMarket is IMarket {
         BidShares memory bidShares = bidSharesForToken(tokenId);
         require(
             isValidBidShares(bidShares),
-            "Market: Invalid bid shares for token"
+            "ZooMarket: Invalid bid shares for token"
         );
         return
             bidAmount != 0 &&
@@ -149,15 +160,20 @@ contract ZooMarket is IMarket {
      * @notice Sets the media contract address. This address is the only permitted address that
      * can call the mutable functions. This method can only be called once.
      */
-    function configure(address mediaAddress) external override {
-        require(msg.sender == _owner, "Market: Only owner");
-        require(mediaContract == address(0), "Market: Already configured");
+    function configure(address _media, address _zookeeper) external override onlyOwner {
+        require(media == address(0), "ZooMarket: Already configured");
+        require(zookeeper == address(0), "ZooMarket: Already configured");
         require(
-            mediaAddress != address(0),
-            "Market: cannot set media contract as zero address"
+            _media != address(0),
+            "ZooMarket: cannot set Media contract as zero address"
+        );
+        require(
+            _zookeeper != address(0),
+            "ZooMarket: cannot set Zookeeper contract as zero address"
         );
 
-        mediaContract = mediaAddress;
+        media = _media;
+        zookeeper = _zookeeper;
     }
 
     /**
@@ -167,11 +183,11 @@ contract ZooMarket is IMarket {
     function setBidShares(uint256 tokenId, BidShares memory bidShares)
         public
         override
-        onlyMediaCaller
+        onlyZoo
     {
         require(
             isValidBidShares(bidShares),
-            "Market: Invalid bid shares, must sum to 100"
+            "ZooMarket: Invalid bid shares, must sum to 100"
         );
         _bidShares[tokenId] = bidShares;
         emit BidShareUpdated(tokenId, bidShares);
@@ -184,11 +200,11 @@ contract ZooMarket is IMarket {
     function setAsk(uint256 tokenId, Ask memory ask)
         public
         override
-        onlyMediaCaller
+        onlyZoo
     {
         require(
             isValidBid(tokenId, ask.amount),
-            "Market: Ask invalid for share splitting"
+            "ZooMarket: Ask invalid for share splitting"
         );
 
         _tokenAsks[tokenId] = ask;
@@ -198,7 +214,7 @@ contract ZooMarket is IMarket {
     /**
      * @notice removes an ask for a token and emits an AskRemoved event
      */
-    function removeAsk(uint256 tokenId) external override onlyMediaCaller {
+    function removeAsk(uint256 tokenId) external override onlyZoo {
         emit AskRemoved(tokenId, _tokenAsks[tokenId]);
         delete _tokenAsks[tokenId];
     }
@@ -212,22 +228,22 @@ contract ZooMarket is IMarket {
         uint256 tokenId,
         Bid memory bid,
         address spender
-    ) public override onlyMediaCaller {
+    ) public override onlyZoo {
         BidShares memory bidShares = _bidShares[tokenId];
         require(
             bidShares.creator.value.add(bid.sellOnShare.value) <=
                 uint256(100).mul(Decimal.BASE),
-            "Market: Sell on fee invalid for share splitting"
+            "ZooMarket: Sell on fee invalid for share splitting"
         );
-        require(bid.bidder != address(0), "Market: bidder cannot be 0 address");
-        require(bid.amount != 0, "Market: cannot bid amount of 0");
+        require(bid.bidder != address(0), "ZooMarket: bidder cannot be 0 address");
+        require(bid.amount != 0, "ZooMarket: cannot bid amount of 0");
         require(
             bid.currency != address(0),
-            "Market: bid currency cannot be 0 address"
+            "ZooMarket: bid currency cannot be 0 address"
         );
         require(
             bid.recipient != address(0),
-            "Market: bid recipient cannot be 0 address"
+            "ZooMarket: bid recipient cannot be 0 address"
         );
 
         Bid storage existingBid = _tokenBidders[tokenId][bid.bidder];
@@ -273,13 +289,13 @@ contract ZooMarket is IMarket {
     function removeBid(uint256 tokenId, address bidder)
         public
         override
-        onlyMediaCaller
+        onlyZoo
     {
         Bid storage bid = _tokenBidders[tokenId][bidder];
         uint256 bidAmount = bid.amount;
         address bidCurrency = bid.currency;
 
-        require(bid.amount > 0, "Market: cannot remove bid amount of 0");
+        require(bid.amount > 0, "ZooMarket: cannot remove bid amount of 0");
 
         IERC20 token = IERC20(bidCurrency);
 
@@ -300,20 +316,20 @@ contract ZooMarket is IMarket {
     function acceptBid(uint256 tokenId, Bid calldata expectedBid)
         external
         override
-        onlyMediaCaller
+        onlyZoo
     {
         Bid memory bid = _tokenBidders[tokenId][expectedBid.bidder];
-        require(bid.amount > 0, "Market: cannot accept bid of 0");
+        require(bid.amount > 0, "ZooMarket: cannot accept bid of 0");
         require(
             bid.amount == expectedBid.amount &&
                 bid.currency == expectedBid.currency &&
                 bid.sellOnShare.value == expectedBid.sellOnShare.value &&
                 bid.recipient == expectedBid.recipient,
-            "Market: Unexpected bid found."
+            "ZooMarket: Unexpected bid found."
         );
         require(
             isValidBid(tokenId, bid.amount),
-            "Market: Bid invalid for share splitting"
+            "ZooMarket: Bid invalid for share splitting"
         );
 
         _finalizeNFTTransfer(tokenId, bid.bidder);
@@ -332,22 +348,22 @@ contract ZooMarket is IMarket {
 
         // Transfer bid share to owner of media
         token.safeTransfer(
-            IERC721(mediaContract).ownerOf(tokenId),
+            IERC721(media).ownerOf(tokenId),
             splitShare(bidShares.owner, bid.amount)
         );
         // Transfer bid share to creator of media
         token.safeTransfer(
-            ZooMedia(mediaContract).tokenCreators(tokenId),
+            ZooMedia(media).tokenCreators(tokenId),
             splitShare(bidShares.creator, bid.amount)
         );
         // Transfer bid share to previous owner of media (if applicable)
         token.safeTransfer(
-            ZooMedia(mediaContract).previousTokenOwners(tokenId),
+            ZooMedia(media).previousTokenOwners(tokenId),
             splitShare(bidShares.prevOwner, bid.amount)
         );
 
         // Transfer media to bid recipient
-        ZooMedia(mediaContract).auctionTransfer(tokenId, bid.recipient);
+        ZooMedia(media).auctionTransfer(tokenId, bid.recipient);
 
         // Calculate the bid share for the new owner,
         // equal to 100 - creatorShare - sellOnShare

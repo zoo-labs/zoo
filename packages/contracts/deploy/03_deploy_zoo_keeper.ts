@@ -11,12 +11,12 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const useProxy = !hre.network.live
 
   const tokenAddress = (await deployments.get('ZooToken')).address
-  const marketAddress = (await deployments.get('ZooMarket')).address
   const mediaAddress = (await deployments.get('ZooMedia')).address
+  // const marketAddress = (await deployments.get('ZooMarket')).address
 
   const deployment = await deploy('ZooKeeper', {
     from: deployer,
-    args: ['Zoo', 'ANML', marketAddress, tokenAddress],
+    args: ['Zoo', 'ANML', mediaAddress, tokenAddress],
     log: true,
   })
 

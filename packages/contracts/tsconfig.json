@@ -27,7 +27,7 @@
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
     "isolatedModules": true,
-    "jsx": "react-jsx"
+    "jsx": "react"
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"],
