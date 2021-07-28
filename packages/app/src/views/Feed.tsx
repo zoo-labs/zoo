@@ -28,7 +28,6 @@ const StickyBottomMenuWrapper = styled.div`
   width: 60px;
   height: 60px;
   border-radius: 30px;
-  border: 2px solid black;
   box-shadow: 0px 5px 10px #040404ba;
   background: ${({ theme }) => theme.colors.primaryPop};
   display: flex;

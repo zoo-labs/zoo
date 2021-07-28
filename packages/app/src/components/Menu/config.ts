@@ -3,19 +3,20 @@ import { MenuEntry } from './types'
 
 let defaultConf =  [
 
-  {
-    label: 'Bank',
-    icon: '',
-    href: '/bank',
-  },
+  
   {
     label: 'My Account',
-    icon: '',
+    icon: 'HomeIcon',
     href: '/account',
   },
   {
+    label: 'Bank',
+    icon: 'BankIcon',
+    href: '/bank',
+  },
+  {
     label: 'Feed',
-    icon: '',
+    icon: 'MarketIcon',
     href: '/feed',
   },
 ]
