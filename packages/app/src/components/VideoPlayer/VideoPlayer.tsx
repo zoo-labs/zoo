@@ -11,38 +11,48 @@ const getColor = ({ color, theme }: ThemedProps) => {
 };
  */
 
+const VidContainer = styled.div`
+    position: fixed;
+    top: 48%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 100000;
+    height: 101vh;
+    width: auto;
+`
+function fade(element) {
+    var op = 1;
+    var timer = setInterval(function() {
+        if (op <= 0) clearInterval(timer);
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op -= op * 0.1 || 0.1;
+    }, 70);
+}
 
-const VideoPlayer: React.FC<VideoPlayerTheme> = ({videoPath, onDone}:VideoPlayerTheme) => {
+const VideoPlayer: React.FC<VideoPlayerTheme> = ({videoPath}:VideoPlayerTheme) => {
     const videoEl = useRef()
 
     useEffect(() => {
         const el = videoEl.current as any
-        el.classList.add('-fade-out')
-        if(el.requestFullscreen) el.requestFullscreen()
-        else if (el.msRequestFullscreen) el.msRequestFullscreen()
-        else if (el.mozRequestFullScreen) el.mozRequestFullScreen()
-        else if (el.webkitRequestFullScreen) el.webkitRequestFullScreen()
-        el.addEventListener("ended", function () {
-            onDone()
-        }, false);
-        console.log("player", el)
-        el.classList.remove('-fade-out')
+        setTimeout(function() {
+            fade(el);
+        }, 5500);
     }, [])
 
     return (
-        <VideoPlayerWrapper autoPlay ref={videoEl} controls={false}>
-            <source src={videoPath} />
-        </VideoPlayerWrapper>
+        <VidContainer >
+            <VideoPlayerWrapper autoPlay ref={videoEl} controls={false}>
+                <source src={videoPath} />
+            </VideoPlayerWrapper>
+        </VidContainer>
     )
 }
 
 export const VideoPlayerWrapper = styled.video`
-    display: flex;
-    flex: 1;
-    & .-fade-out: {
-        opacit: 0;
-        transition: opacity 2s;
-    }
+    height: 105vh;
+    width: auto;
 `;
 
 VideoPlayer.defaultProps = {

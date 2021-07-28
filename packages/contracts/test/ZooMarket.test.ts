@@ -13,9 +13,7 @@ import { Blockchain } from '../utils/Blockchain';
 import { generatedWallets } from '../utils/generatedWallets';
 
 import { ZooMarket } from '../types/ZooMarket';
-import { ZooMarket__factory } from '../types';
-import { ZooToken__factory } from '../types';
-import { ZooToken } from '../types';
+import { ZooToken, ZooMedia__factory, ZooMarket__factory, ZooToken__factory, ZooKeeper__factory } from '../types'
 
 let provider = new JsonRpcProvider();
 let blockchain = new Blockchain(provider);
@@ -62,7 +60,10 @@ describe('ZooMarket', () => {
     sellOnShare: Decimal.new(0),
   };
 
-  let auctionAddress: string;
+  let marketAddress: string;
+  let mediaAddress: string;
+  let tokenAddress: string;
+  let zookeeperAddress: string;
 
   function toNumWei(val: BigNumber) {
     return parseFloat(formatUnits(val, 'wei'));
@@ -72,40 +73,55 @@ describe('ZooMarket', () => {
     return parseFloat(formatUnits(val, 'ether'));
   }
 
-  async function auctionAs(wallet: Wallet) {
-    return ZooMarket__factory.connect(auctionAddress, wallet);
+  async function maketAs(wallet: Wallet) {
+    return ZooMarket__factory.connect(marketAddress, wallet);
   }
 
   async function deploy() {
-    const auction = await (
+    const token = await (
+      await new ZooToken__factory(deployerWallet).deploy()
+    ).deployed();
+    tokenAddress = token.address;
+
+    const market = await (
       await new ZooMarket__factory(deployerWallet).deploy()
     ).deployed();
-    auctionAddress = auction.address;
+    marketAddress = market.address;
+
+    const media = await (
+      await new ZooMedia__factory(deployerWallet).deploy('ZooAnimals', 'ANML', marketAddress)
+    ).deployed();
+    mediaAddress = media.address;
+
+    const zookeeper = await (
+      await new ZooKeeper__factory(deployerWallet).deploy(mediaAddress, tokenAddress)
+    ).deployed();
+    zookeeperAddress = zookeeper.address;
   }
 
   async function configure() {
-    return ZooMarket__factory.connect(auctionAddress, deployerWallet).configure(
-      mockTokenWallet.address
+    return ZooMarket__factory.connect(marketAddress, deployerWallet).configure(
+      mediaAddress, zookeeperAddress
     );
   }
 
-  async function readMediaContract() {
+  async function readMedia() {
     return ZooMarket__factory.connect(
-      auctionAddress,
+      marketAddress,
       deployerWallet
-    ).mediaContract();
+    ).media();
   }
 
   async function setBidShares(
-    auction: ZooMarket,
+    maket: ZooMarket,
     tokenId: number,
     bidShares?: BidShares
   ) {
-    return auction.setBidShares(tokenId, bidShares);
+    return maket.setBidShares(tokenId, bidShares);
   }
 
-  async function setAsk(auction: ZooMarket, tokenId: number, ask?: Ask) {
-    return auction.setAsk(tokenId, ask);
+  async function setAsk(maket: ZooMarket, tokenId: number, ask?: Ask) {
+    return maket.setAsk(tokenId, ask);
   }
 
   async function deployCurrency() {
@@ -134,12 +150,12 @@ describe('ZooMarket', () => {
     return ZooToken__factory.connect(currency, deployerWallet).balanceOf(owner);
   }
   async function setBid(
-    auction: ZooMarket,
+    maket: ZooMarket,
     bid: Bid,
     tokenId: number,
     spender?: string
   ) {
-    await auction.setBid(tokenId, bid, spender || bid.bidder,
+    await maket.setBid(tokenId, bid, spender || bid.bidder,
       { gasLimit: 3500000 });
   }
 
@@ -160,15 +176,15 @@ describe('ZooMarket', () => {
 
     it('should revert if not called by the owner', async () => {
       await expect(
-        ZooMarket__factory.connect(auctionAddress, otherWallet).configure(
-          mockTokenWallet.address
+        ZooMarket__factory.connect(marketAddress, otherWallet).configure(
+          mediaAddress, zookeeperAddress
         )
       ).eventually.rejectedWith('Market: Only owner');
     });
 
     it('should be callable by the owner', async () => {
       await expect(configure()).eventually.fulfilled;
-      const tokenContractAddress = await readMediaContract();
+      const tokenContractAddress = await readMedia();
 
       expect(tokenContractAddress).eq(mockTokenWallet.address);
     });
@@ -189,21 +205,21 @@ describe('ZooMarket', () => {
     });
 
     it('should reject if not called by the media address', async () => {
-      const auction = await auctionAs(otherWallet);
+      const maket = await maketAs(otherWallet);
 
       await expect(
-        setBidShares(auction, defaultTokenId, defaultBidShares)
+        setBidShares(maket, defaultTokenId, defaultBidShares)
       ).rejectedWith('Market: Only media contract');
     });
 
     it('should set the bid shares if called by the media address', async () => {
-      const auction = await auctionAs(mockTokenWallet);
+      const maket = await maketAs(mockTokenWallet);
 
-      await expect(setBidShares(auction, defaultTokenId, defaultBidShares))
+      await expect(setBidShares(maket, defaultTokenId, defaultBidShares))
         .eventually.fulfilled;
 
       const tokenBidShares = Object.values(
-        await auction.bidSharesForToken(defaultTokenId)
+        await maket.bidSharesForToken(defaultTokenId)
       ).map((s) => parseInt(formatUnits(s.value, 'ether')));
 
       expect(tokenBidShares[0]).eq(
@@ -214,16 +230,16 @@ describe('ZooMarket', () => {
     });
 
     it('should emit an event when bid shares are updated', async () => {
-      const auction = await auctionAs(mockTokenWallet);
+      const maket = await maketAs(mockTokenWallet);
 
       const block = await provider.getBlockNumber();
-      await setBidShares(auction, defaultTokenId, defaultBidShares);
-      const events = await auction.queryFilter(
-        auction.filters.BidShareUpdated(null, null),
+      await setBidShares(maket, defaultTokenId, defaultBidShares);
+      const events = await maket.queryFilter(
+        maket.filters.BidShareUpdated(null, null),
         block
       );
       expect(events.length).eq(1);
-      const logDescription = auction.interface.parseLog(events[0]);
+      const logDescription = maket.interface.parseLog(events[0]);
       expect(toNumWei(logDescription.args.tokenId)).to.eq(defaultTokenId);
       expect(toNumWei(logDescription.args.bidShares.prevOwner.value)).to.eq(
         toNumWei(defaultBidShares.prevOwner.value)
@@ -237,7 +253,7 @@ describe('ZooMarket', () => {
     });
 
     it('should reject if the bid shares are invalid', async () => {
-      const auction = await auctionAs(mockTokenWallet);
+      const maket = await maketAs(mockTokenWallet);
       const invalidBidShares = {
         prevOwner: Decimal.new(0),
         owner: Decimal.new(0),
@@ -245,7 +261,7 @@ describe('ZooMarket', () => {
       };
 
       await expect(
-        setBidShares(auction, defaultTokenId, invalidBidShares)
+        setBidShares(maket, defaultTokenId, invalidBidShares)
       ).rejectedWith('Market: Invalid bid shares, must sum to 100');
     });
   });
@@ -257,50 +273,50 @@ describe('ZooMarket', () => {
     });
 
     it('should reject if not called by the media address', async () => {
-      const auction = await auctionAs(otherWallet);
+      const maket = await maketAs(otherWallet);
 
-      await expect(setAsk(auction, defaultTokenId, defaultAsk)).rejectedWith(
+      await expect(setAsk(maket, defaultTokenId, defaultAsk)).rejectedWith(
         'Market: Only media contract'
       );
     });
 
     it('should set the ask if called by the media address', async () => {
-      const auction = await auctionAs(mockTokenWallet);
-      await setBidShares(auction, defaultTokenId, defaultBidShares);
+      const maket = await maketAs(mockTokenWallet);
+      await setBidShares(maket, defaultTokenId, defaultBidShares);
 
-      await expect(setAsk(auction, defaultTokenId, defaultAsk)).eventually
+      await expect(setAsk(maket, defaultTokenId, defaultAsk)).eventually
         .fulfilled;
 
-      const ask = await auction.currentAskForToken(defaultTokenId);
+      const ask = await maket.currentAskForToken(defaultTokenId);
 
       expect(toNumWei(ask.amount)).to.eq(defaultAsk.amount);
       expect(ask.currency).to.eq(defaultAsk.currency);
     });
 
     it('should emit an event if the ask is updated', async () => {
-      const auction = await auctionAs(mockTokenWallet);
-      await setBidShares(auction, defaultTokenId, defaultBidShares);
+      const maket = await maketAs(mockTokenWallet);
+      await setBidShares(maket, defaultTokenId, defaultBidShares);
 
       const block = await provider.getBlockNumber();
-      await setAsk(auction, defaultTokenId, defaultAsk);
-      const events = await auction.queryFilter(
-        auction.filters.AskCreated(null, null),
+      await setAsk(maket, defaultTokenId, defaultAsk);
+      const events = await maket.queryFilter(
+        maket.filters.AskCreated(null, null),
         block
       );
 
       expect(events.length).eq(1);
-      const logDescription = auction.interface.parseLog(events[0]);
+      const logDescription = maket.interface.parseLog(events[0]);
       expect(toNumWei(logDescription.args.tokenId)).to.eq(defaultTokenId);
       expect(toNumWei(logDescription.args.ask.amount)).to.eq(defaultAsk.amount);
       expect(logDescription.args.ask.currency).to.eq(defaultAsk.currency);
     });
 
     it('should reject if the ask is too low', async () => {
-      const auction = await auctionAs(mockTokenWallet);
-      await setBidShares(auction, defaultTokenId, defaultBidShares);
+      const maket = await maketAs(mockTokenWallet);
+      await setBidShares(maket, defaultTokenId, defaultBidShares);
 
       await expect(
-        setAsk(auction, defaultTokenId, {
+        setAsk(maket, defaultTokenId, {
           amount: 1,
           currency: AddressZero,
         })
@@ -308,8 +324,8 @@ describe('ZooMarket', () => {
     });
 
     it("should reject if the bid shares haven't been set yet", async () => {
-      const auction = await auctionAs(mockTokenWallet);
-      await expect(setAsk(auction, defaultTokenId, defaultAsk)).rejectedWith(
+      const maket = await maketAs(mockTokenWallet);
+      await expect(setAsk(maket, defaultTokenId, defaultAsk)).rejectedWith(
         'Market: Invalid bid shares for token'
       );
     });
@@ -336,43 +352,43 @@ describe('ZooMarket', () => {
     });
 
     it('should revert if not called by the media contract', async () => {
-      const auction = await auctionAs(otherWallet);
-      await expect(setBid(auction, defaultBid, defaultTokenId)).rejectedWith(
+      const maket = await maketAs(otherWallet);
+      await expect(setBid(maket, defaultBid, defaultTokenId)).rejectedWith(
         'Market: Only media contract'
       );
     });
 
     it.skip('should revert if the bidder does not have a high enough allowance for their bidding currency', async () => {
-      const auction = await auctionAs(mockTokenWallet);
+      const maket = await maketAs(mockTokenWallet);
       await mintCurrency(defaultBid.currency, defaultBid.bidder, 100000000)
       try {
-        await setBid(auction, defaultBid as Bid, defaultTokenId);
+        await setBid(maket, defaultBid as Bid, defaultTokenId);
       } catch (error) {
         expect(error.body).to.be.equal('{"jsonrpc":"2.0","id":508,"error":{"code":-32603,"message":"Error: VM Exception while processing transaction: revert ERC20: transfer amount exceeds allowance"}}')
       }
     });
 
     it.skip('should revert if the bidder does not have enough tokens to bid with', async () => {
-      const auction = await auctionAs(mockTokenWallet);
+      const maket = await maketAs(mockTokenWallet);
       await mintCurrency(defaultBid.currency, defaultBid.bidder, defaultBid.amount - 1);
-      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
+      await approveCurrency(defaultBid.currency, maket.address, bidderWallet);
 
       try {
-        await setBid(auction, defaultBid as Bid, defaultTokenId)
+        await setBid(maket, defaultBid as Bid, defaultTokenId)
       } catch (error) {
         expect(error.body).to.be.equal('{"jsonrpc":"2.0","id":563,"error":{"code":-32603,"message":"Error: VM Exception while processing transaction: revert ERC20: transfer amount exceeds balance"}}')
       }
     });
 
     it('should revert if the bid currency is 0 address', async () => {
-      const auction = await auctionAs(mockTokenWallet);
-      await setBidShares(auction, defaultTokenId, defaultBidShares as BidShares);
+      const maket = await maketAs(mockTokenWallet);
+      await setBidShares(maket, defaultTokenId, defaultBidShares as BidShares);
       await mintCurrency(defaultBid.currency, defaultBid.bidder, defaultBid.amount);
-      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
+      await approveCurrency(defaultBid.currency, maket.address, bidderWallet);
 
       await expect(
         setBid(
-          auction,
+          maket,
           { ...defaultBid, currency: AddressZero },
           defaultTokenId
         )
@@ -380,14 +396,14 @@ describe('ZooMarket', () => {
     });
 
     it('should revert if the bid recipient is 0 address', async () => {
-      const auction = await auctionAs(mockTokenWallet);
-      await setBidShares(auction, defaultTokenId, defaultBidShares);
+      const maket = await maketAs(mockTokenWallet);
+      await setBidShares(maket, defaultTokenId, defaultBidShares);
       await mintCurrency(defaultBid.currency, defaultBid.bidder, defaultBid.amount);
-      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
+      await approveCurrency(defaultBid.currency, maket.address, bidderWallet);
 
       await expect(
         setBid(
-          auction,
+          maket,
           { ...defaultBid, recipient: AddressZero },
           defaultTokenId
         )
@@ -395,32 +411,32 @@ describe('ZooMarket', () => {
     });
 
     it('should revert if the bidder bids 0 tokens', async () => {
-      const auction = await auctionAs(mockTokenWallet);
-      await setBidShares(auction, defaultTokenId, defaultBidShares);
+      const maket = await maketAs(mockTokenWallet);
+      await setBidShares(maket, defaultTokenId, defaultBidShares);
       await mintCurrency(defaultBid.currency, defaultBid.bidder, defaultBid.amount);
-      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
+      await approveCurrency(defaultBid.currency, maket.address, bidderWallet);
 
       await expect(
-        setBid(auction, { ...defaultBid, amount: 0 }, defaultTokenId)
+        setBid(maket, { ...defaultBid, amount: 0 }, defaultTokenId)
       ).rejectedWith('Market: cannot bid amount of 0');
     });
 
     it('should accept a valid bid', async () => {
-      const auction = await auctionAs(mockTokenWallet);
-      await setBidShares(auction, defaultTokenId, defaultBidShares);
+      const maket = await maketAs(mockTokenWallet);
+      await setBidShares(maket, defaultTokenId, defaultBidShares);
       await mintCurrency(defaultBid.currency, defaultBid.bidder, defaultBid.amount);
-      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
+      await approveCurrency(defaultBid.currency, maket.address, bidderWallet);
 
       const beforeBalance = toNumWei(
         await getBalance(defaultBid.currency, defaultBid.bidder)
       );
 
-      await expect(setBid(auction, defaultBid, defaultTokenId)).fulfilled;
+      await expect(setBid(maket, defaultBid, defaultTokenId)).fulfilled;
 
       const afterBalance = toNumWei(
         await getBalance(defaultBid.currency, defaultBid.bidder)
       );
-      const bid = await auction.bidForTokenBidder(1, bidderWallet.address);
+      const bid = await maket.bidForTokenBidder(1, bidderWallet.address);
       expect(bid.currency).eq(defaultBid.currency);
       expect(toNumWei(bid.amount)).eq(defaultBid.amount);
       expect(bid.bidder).eq(defaultBid.bidder);
@@ -428,8 +444,8 @@ describe('ZooMarket', () => {
     });
 
     it('should accept a valid bid larger than the min bid', async () => {
-      const auction = await auctionAs(mockTokenWallet);
-      await setBidShares(auction, defaultTokenId, defaultBidShares);
+      const maket = await maketAs(mockTokenWallet);
+      await setBidShares(maket, defaultTokenId, defaultBidShares);
 
       const largerValidBid = {
         amount: 130000000,
@@ -445,18 +461,18 @@ describe('ZooMarket', () => {
         largerValidBid.bidder,
         largerValidBid.amount
       );
-      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
+      await approveCurrency(defaultBid.currency, maket.address, bidderWallet);
 
       const beforeBalance = toNumWei(
         await getBalance(defaultBid.currency, defaultBid.bidder)
       );
 
-      await expect(setBid(auction, largerValidBid, defaultTokenId)).fulfilled;
+      await expect(setBid(maket, largerValidBid, defaultTokenId)).fulfilled;
 
       const afterBalance = toNumWei(
         await getBalance(defaultBid.currency, largerValidBid.bidder)
       );
-      const bid = await auction.bidForTokenBidder(1, bidderWallet.address);
+      const bid = await maket.bidForTokenBidder(1, bidderWallet.address);
       expect(bid.currency).eq(defaultBid.currency);
       expect(toNumWei(bid.amount)).eq(largerValidBid.amount);
       expect(bid.bidder).eq(largerValidBid.bidder);
@@ -464,10 +480,10 @@ describe('ZooMarket', () => {
     });
 
     it('should refund the original bid if the bidder bids again', async () => {
-      const auction = await auctionAs(mockTokenWallet);
-      await setBidShares(auction, defaultTokenId, defaultBidShares);
+      const maket = await maketAs(mockTokenWallet);
+      await setBidShares(maket, defaultTokenId, defaultBidShares);
       await mintCurrency(defaultBid.currency, defaultBid.bidder, 5000);
-      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
+      await approveCurrency(defaultBid.currency, maket.address, bidderWallet);
 
       const bidderBalance = toNumWei(
         await ZooToken__factory.connect(defaultBid.currency, bidderWallet).balanceOf(
@@ -475,10 +491,10 @@ describe('ZooMarket', () => {
         )
       );
 
-      await setBid(auction, defaultBid, defaultTokenId);
+      await setBid(maket, defaultBid, defaultTokenId);
       await expect(
         setBid(
-          auction,
+          maket,
           { ...defaultBid, amount: defaultBid.amount * 2 },
           defaultTokenId
         )
@@ -493,20 +509,20 @@ describe('ZooMarket', () => {
     });
 
     it('should emit a bid event', async () => {
-      const auction = await auctionAs(mockTokenWallet);
-      await setBidShares(auction, defaultTokenId, defaultBidShares);
+      const maket = await maketAs(mockTokenWallet);
+      await setBidShares(maket, defaultTokenId, defaultBidShares);
       await mintCurrency(defaultBid.currency, defaultBid.bidder, 5000);
-      await approveCurrency(defaultBid.currency, auction.address, bidderWallet);
+      await approveCurrency(defaultBid.currency, maket.address, bidderWallet);
 
       const block = await provider.getBlockNumber();
-      await setBid(auction, defaultBid, defaultTokenId);
-      const events = await auction.queryFilter(
-        auction.filters.BidCreated(null, null),
+      await setBid(maket, defaultBid, defaultTokenId);
+      const events = await maket.queryFilter(
+        maket.filters.BidCreated(null, null),
         block
       );
 
       expect(events.length).eq(1);
-      const logDescription = auction.interface.parseLog(events[0]);
+      const logDescription = maket.interface.parseLog(events[0]);
       expect(toNumWei(logDescription.args.tokenId)).to.eq(defaultTokenId);
       expect(toNumWei(logDescription.args.bid.amount)).to.eq(defaultBid.amount);
       expect(logDescription.args.bid.currency).to.eq(defaultBid.currency);

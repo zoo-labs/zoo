@@ -1,5 +1,5 @@
 import { ethers } from 'hardhat';
-import { ZooKeeper__factory, ZooMedia__factory, ZooMarket__factory } from '../types';
+import { ZooKeeper__factory, ZooMedia__factory, ZooMarket__factory, Token } from '../types';
 import { ZooMedia } from '../types/ZooMedia';
 import { ZooToken } from '../types/ZooToken';
 import { ZooFaucet } from '../types/ZooFaucet';
@@ -8,9 +8,14 @@ import { ZooKeeper } from '../types/ZooKeeper';
 import chai, { expect } from "chai";
 import { BigNumber, Bytes, BytesLike, utils } from 'ethers';
 
+import { solidity } from "ethereum-waffle";
+
+chai.use(solidity);
+
 let zooToken: any;
 let zooFaucet: any;
 let zooMarket: any;
+let zooKeeper: any;
 let zooMedia: any;
 let signers: any;
 let mintAmt = 100000000;
@@ -18,7 +23,7 @@ let owner;
 let mediaAddress: string;
 let marketAddress: string;
 
-describe.only("ZooKeeper", () => {
+describe("ZooKeeper", () => {
     beforeEach(async () => {
         signers = await ethers.getSigners();
 
@@ -27,51 +32,43 @@ describe.only("ZooKeeper", () => {
             signers[0]
         );
 
+        // Deploy Token
         zooToken = (await zooTokenFactory.deploy()) as ZooToken;
         await zooToken.deployed();
 
+        // Deploy Faucet
         const zooFaucetFactory = await ethers.getContractFactory(
             "ZooFaucet",
             signers[0]
         );
-
         zooFaucet = (await zooFaucetFactory.deploy(zooToken.address)) as ZooFaucet;
         await zooFaucet.deployed();
 
+        // Mint some ZOO
         owner = signers[0]
-
         await zooToken.mint(zooFaucet.address, 1000000);
         await zooFaucet.buyZoo(owner.address, 1000);
 
+        // Deploy Market
         zooMarket = (await new ZooMarket__factory(owner).deploy()) as ZooMarket;
         await zooMarket.deployed();
         marketAddress = zooMarket.address;
 
+        // Deploy Media
         zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', marketAddress)) as ZooMedia
         await zooMedia.deployed();
         mediaAddress = zooMedia.address;
 
-        await zooMarket.configure(mediaAddress);
-
-        zooKeeper = (await new ZooKeeper__factory(owner).deploy('Zoo', 'ANML', mediaAddress, zooToken.address)) as ZooKeeper
+        // Launch ZooKeeper
+        zooKeeper = (await new ZooKeeper__factory(owner).deploy(zooMedia.address, zooToken.address)) as ZooKeeper
         await zooKeeper.deployed();
-        const zooKeeperFactory = await ethers.getContractFactory("ZooKeeper", signers[0]);
 
-        zooKeeper = (await zooKeeperFactory.deploy(
-            "TEST_ZOO",
-            "TZ",
-            zooMarket.address,
-            zooToken.address
+        // Reconfigure Market to point to Media
+        await zooMarket.configure(mediaAddress, zooKeeper.address);
 
-        )) as ZooKeeper;
     })
 
     async function addAnimals() {
-
-        // let results = await zooMedia.connect(owner).callStatic.addDrop("test", 16000, 210);
-
-        // let dropId = results[0]
-
         await zooKeeper.connect(owner).addDrop("test", 16000, 210);
 
         await zooKeeper.setTokenURI(1, "basicEgg", "basicEgg.tokenURI1");
@@ -354,8 +351,8 @@ describe.only("ZooKeeper", () => {
     }
 
     async function breedHybrid() {
-        await zooToken.approve(zooMedia.address, 2000)
-        const buyFirstEgg = await zooMedia.connect(owner).buyEgg(1);
+        await zooToken.approve(zooKeeper.address, 2000)
+        const buyFirstEgg = await zooKeeper.connect(owner).buyEgg(1);
         const buyFirstEggReceipt = await buyFirstEgg.wait();
         let sender = buyFirstEggReceipt.events;
         let from_add
@@ -368,7 +365,7 @@ describe.only("ZooKeeper", () => {
             }
         });
 
-        const buySecondEgg = await zooMedia.connect(owner).buyEgg(1);
+        const buySecondEgg = await zooKeeper.connect(owner).buyEgg(1);
         const buySecondEggReceipt = await buySecondEgg.wait();
 
         sender = buySecondEggReceipt.events;
@@ -381,7 +378,7 @@ describe.only("ZooKeeper", () => {
             }
         });
 
-        const firstHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_1);
+        const firstHatchedAnimal = await zooKeeper.connect(owner).hatchEgg(1, token_id_1);
         const hatchFirstAnimalReceipt = await firstHatchedAnimal.wait();
         sender = hatchFirstAnimalReceipt.events;
 
@@ -394,7 +391,7 @@ describe.only("ZooKeeper", () => {
             }
         });
 
-        let secondHatchedAnimal = await zooMedia.connect(owner).hatchEgg(1, token_id_2);
+        let secondHatchedAnimal = await zooKeeper.connect(owner).hatchEgg(1, token_id_2);
         const secondHatchedAnimalReceipt = await secondHatchedAnimal.wait();
 
         sender = secondHatchedAnimalReceipt.events;
@@ -408,7 +405,7 @@ describe.only("ZooKeeper", () => {
             }
         });
 
-        const breedTx = await zooMedia.connect(owner).breedAnimal(1, token_id_Animal_1, token_id_Animal_2);
+        const breedTx = await zooKeeper.connect(owner).breedAnimal(1, token_id_Animal_1, token_id_Animal_2);
         const breedReceipt = await breedTx.wait();
         sender = breedReceipt.events;
         sender.forEach(element => {
@@ -432,7 +429,6 @@ describe.only("ZooKeeper", () => {
      * DROP
      */
     it("Should create a new ZooKeeper contract with AddDrop event", async () => {
-
         const block = await ethers.provider.getBlockNumber();
         let dropID = await zooKeeper.connect(signers[0]).addDrop("test1", 16000, 210);
         let events = await zooKeeper.queryFilter(zooKeeper.filters.AddDrop(null, null), block);
@@ -446,11 +442,14 @@ describe.only("ZooKeeper", () => {
     /**
      * BUYING EGGS
      */
-    it("Should buy a basic egg", async () => {
+    it.only("Should buy a basic egg", async () => {
+
         await addDrop();
+
         await zooToken.approve(zooKeeper.address, 210)
 
         const buyEgg = await zooKeeper.connect(owner).buyEgg(1);
+
         const buyEggReceipt = await buyEgg.wait();
 
         const sender = buyEggReceipt.events;
@@ -472,18 +471,30 @@ describe.only("ZooKeeper", () => {
 
         // check eggs mapping for new egg
         let egg = await zooKeeper.eggs(token_id.toNumber());
+
         expect(egg.eggCreationTime.toNumber()).to.greaterThan(0);
     });
 
     it("Should buy multiple basic eggs", async () => {
 
+
     });
 
     it("Should revert when totalSupply of eggs are reaching", async () => {
 
+
+
     });
 
-    it("Should revert when not enough balance", async () => {
+    it.only("Should revert when not enough balance", async () => {
+
+        await addDrop();
+
+        await zooToken.approve(zooKeeper.address, 210)
+
+        await expect(zooKeeper.connect(signers[1]).buyEgg(1)).to.be.revertedWith(
+            "Not Enough ZOO Tokens to purchase Egg"
+        )
 
     });
 
@@ -496,12 +507,10 @@ describe.only("ZooKeeper", () => {
      */
     it("Should hatch & burn basic egg", async () => {
         await addAnimals();
-
         await zooToken.approve(zooKeeper.address, 600)
-
         const buyEgg = await zooKeeper.connect(owner).buyEgg(1);
-
         const buyEggReceipt = await buyEgg.wait();
+        console.log('OWNER', owner)
 
         let sender = buyEggReceipt.events;
 
@@ -516,9 +525,7 @@ describe.only("ZooKeeper", () => {
         });
 
         const hatchEgg = await zooKeeper.hatchEgg(1, 0)
-
         const hatchEggReceipt = await hatchEgg.wait();
-
         sender = hatchEggReceipt.events;
 
         let from_add2
@@ -546,9 +553,7 @@ describe.only("ZooKeeper", () => {
         const token = await breedHybrid()
 
         const hatchEgg = await zooKeeper.hatchEgg(1, 4)
-
         const hatchEggReceipt = await hatchEgg.wait();
-
         let sender = hatchEggReceipt.events;
 
         let from_add2
@@ -978,7 +983,6 @@ describe.only("ZooKeeper", () => {
         // await ethers.provider.send("evm_setNextBlockTimestamp", [9617249934]);
 
         const freed = await zooKeeper.freeAnimal(5);
-
         const freedReceipt = await freed.wait();
 
         sender = freedReceipt.events;

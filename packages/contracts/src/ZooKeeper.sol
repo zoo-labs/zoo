@@ -4,11 +4,13 @@ pragma solidity >=0.8.4;
 
 import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
 import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {ZooDrop} from "./ZooDrop.sol";
 import {ZooMedia} from "./ZooMedia.sol";
 import {ZooToken} from "./ZooToken.sol";
 import {IMarket} from "./interfaces/IMarket.sol";
 import {Decimal} from "./Decimal.sol";
+
 import "./console.sol";
 
 contract ZooKeeper {
@@ -79,11 +81,8 @@ contract ZooKeeper {
 
     mapping(address => uint256) public lastTimeBred;
 
-    ZooToken public token;
     ZooMedia public media;
-
-    string public name;
-    string public symbol;
+    IERC20 public token;
     address public owner;
 
     modifier onlyOwner() {
@@ -96,17 +95,10 @@ contract ZooKeeper {
         _;
     }
 
-    constructor(
-        string memory _name,
-        string memory _symbol,
-        address _media,
-        address _token
-    ) {
+    constructor(address _media, address _token) {
         owner = msg.sender;
-        name = _name;
-        symbol = _symbol;
         media = ZooMedia(_media);
-        token = ZooToken(_token);
+        token = IERC20(_token);
     }
 
     function mediaAddress() public view returns (address) {
@@ -187,13 +179,13 @@ contract ZooKeeper {
             token.balanceOf(msg.sender) >= drop.eggPrice(),
             "Not Enough ZOO Tokens to purchase Egg"
         );
+
         require(
             drop.currentSupply() > 0,
             "There are no more Eggs that can be purchased"
         );
 
         token.transferFrom(msg.sender, address(this), drop.eggPrice());
-        console.log("TEST THIS");
 
         (string memory _tokenURI, string memory _metadataURI) = drop.buyEgg();
         ZooMedia.MediaData memory data;
@@ -214,8 +206,11 @@ contract ZooKeeper {
         bidShare.creator = Decimal.D256(10 * (10**18));
         bidShare.owner = Decimal.D256(90 * (10**18));
 
-        media.mint(data, bidShare);
+        console.log("mint");
+        media.mintFor(msg.sender, data, bidShare);
+        console.log("minted");
         uint256 _tokenID = media.getRecentToken(msg.sender);
+        console.log("tokenID", _tokenID);
 
         Egg memory egg;
         egg.eggCreationTime = block.timestamp;
