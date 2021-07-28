@@ -83,31 +83,30 @@ contract ZooKeeper {
 
     string public name;
     string public symbol;
-    address __owner;
+    address public owner;
 
     modifier onlyOwner {
-        require(msg.sender == __owner, "Only owner has access");
+        require(msg.sender == owner, "Only owner has access");
         _;
     }
 
     modifier onlyExistingToken(uint256 tokenId) {
-        require(media.tokenExists(tokenId), "Media: nonexistent token");
+        require(media.tokenExists(tokenId), "ZooKeeper: nonexistent token");
         _;
     }
 
     constructor(
         string memory _name,
         string memory _symbol,
-        address _market,
+        address _media,
         address _token
     ) {
-        __owner = msg.sender;
+        owner = msg.sender;
         name = _name;
         symbol = _symbol;
+        media = ZooMedia(_media);
         token = ZooToken(_token);
-        media = new ZooMedia(_symbol, _name, _market);
     }
-
 
     function mediaAddress() public view returns (address) {
         return address(media);
@@ -210,11 +209,8 @@ contract ZooKeeper {
         uint256 _tokenID = media.getRecentToken(msg.sender);
 
         Egg memory egg;
-
         egg.eggCreationTime = block.timestamp;
-
         eggs[_tokenID] = egg;
-
         types[_tokenID] = TokenType.BASE_EGG;
 
         emit BuyEgg(msg.sender, _tokenID);
