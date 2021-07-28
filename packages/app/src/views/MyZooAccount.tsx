@@ -460,7 +460,6 @@ const MyZooAccount: React.FC = () => {
             const multipleAvailable = 
                Object.values(allAnimals)
                .filter((item) => item.animalId === animal.animalId && item.timeRemaining === 0)
-            console.log(allAnimals)
             const temp = [{...multipleAvailable[0]}, {...multipleAvailable[1]}]
             array = temp;
             onConfirm();
