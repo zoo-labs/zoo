@@ -5,7 +5,7 @@
       "chainId": "97",
       "contracts": {
         "ZooKeeper": {
-          "address": "0x1D8A3bF24Fe919c90Af60fd1c722BB69B85a562e",
+          "address": "0x247124065114a03Cf51898b21F20C6C1Cf50679A",
           "abi": [
             {
               "inputs": [
@@ -806,7 +806,7 @@
           ]
         },
         "ZooMarket": {
-          "address": "0xb3C26aAFa12DeBE5EcFd5dA4D71E9910586dDAF7",
+          "address": "0x535bd37CC396a16Fcd027E9a7a359cd646cB84E3",
           "abi": [
             {
               "inputs": [],
@@ -1622,7 +1622,7 @@
           ]
         },
         "ZooMedia": {
-          "address": "0x351DcE5B0972f4E9b369e5Fc726295E37360ce19",
+          "address": "0x742C77Bc991BD99CE846EADcf84b7E504aacc341",
           "abi": [
             {
               "inputs": [
@@ -2941,7 +2941,7 @@
           ]
         },
         "ZooToken": {
-          "address": "0xaF16f94DEAe27a46F6A157CBd1b3C85F14CF0Cb8",
+          "address": "0xE5355bd4f87Fb825A79E712D93d171f60Ef0C3e0",
           "abi": [
             {
               "inputs": [],
@@ -3330,7 +3330,7 @@
       "chainId": "31337",
       "contracts": {
         "ZooAuction": {
-          "address": "0x9CC8B5379C40E24F374cd55973c138fff83ed214",
+          "address": "0x0Dd99d9f56A14E9D53b2DdC62D9f0bAbe806647A",
           "abi": [
             {
               "inputs": [
@@ -3909,7 +3909,7 @@
           ]
         },
         "ZooFaucet": {
-          "address": "0xd3b893cd083f07Fe371c1a87393576e7B01C52C6",
+          "address": "0xeAd789bd8Ce8b9E94F5D0FCa99F8787c7e758817",
           "abi": [
             {
               "inputs": [
@@ -10667,7 +10667,7 @@
           ]
         },
         "ZooAuction": {
-          "address": "0xeAd789bd8Ce8b9E94F5D0FCa99F8787c7e758817",
+          "address": "0x0Dd99d9f56A14E9D53b2DdC62D9f0bAbe806647A",
           "abi": [
             {
               "inputs": [
@@ -11246,7 +11246,7 @@
           ]
         },
         "ZooFaucet": {
-          "address": "0x95775fD3Afb1F4072794CA4ddA27F2444BCf8Ac3",
+          "address": "0xeAd789bd8Ce8b9E94F5D0FCa99F8787c7e758817",
           "abi": [
             {
               "inputs": [
