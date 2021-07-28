@@ -11,7 +11,7 @@ let owner;
 const TOKEN_URI = "idx.zoolabs.io/token/"
 const META_URI = "idx.zoolabs.io/meta/"
 
-describe.only("ZooDrop", () => {
+describe("ZooDrop", () => {
     beforeEach(async () => {
         signers = await ethers.getSigners();
         owner = signers[0]
