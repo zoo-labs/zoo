@@ -3,6 +3,7 @@ import useTheme from "hooks/useTheme";
 import React from "react";
 import Sheet from "react-modal-sheet";
 import styled, { keyframes } from "styled-components";
+import { height } from "styled-system";
 
 interface Props {
    onDismiss?: () => null;
@@ -18,9 +19,9 @@ const HeaderOutline = styled.div`
    margin-bottom: 16px;
 `
 
-const animatebottom = keyframes`
+const animatebottom = (height) => keyframes`
    from {
-     bottom: -300px;
+     bottom: -${height};
      opacity: 0;
    }
 
@@ -30,21 +31,21 @@ const animatebottom = keyframes`
    }
 `
 
-const animateup = keyframes`
+const animateup = (height) => keyframes`
    from {
       bottom: 0;
-     opacity: 1;
+      opacity: 1;
    }
 
    to {
-      bottom: -300px;
-     opacity: 0;
+      bottom: -${height};
+      opacity: 0;
    }
 `
 
-const CustomSheet = styled(Sheet)<{ ismodalopen? : boolean}>`
+const CustomSheet = styled(Sheet)<{ ismodalopen? : boolean, height : string}>`
    position: relative;
-   animation: ${(props) => (props.ismodalopen ? animatebottom :  animateup)} 0.4s;
+   animation: ${(props) => (props.ismodalopen ? animatebottom(props.height) :  animateup(props.height))} 0.5s;
 `
 
 const BottomModal: React.FC<Props> = ({
@@ -62,12 +63,12 @@ const BottomModal: React.FC<Props> = ({
       setTimeout(function(){
          setOpen(false);
          onDismiss();
-      }, 300);
+      }, 400);
    }
 
    return (
       <>
-         <CustomSheet isOpen={isOpen} onClose={onClose} ismodalopen={ismodalopen}>
+         <CustomSheet isOpen={isOpen} onClose={onClose} ismodalopen={ismodalopen} height={height}>
             <Sheet.Container
                style={{
                   height: height ? height : "300px",
