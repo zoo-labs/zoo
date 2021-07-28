@@ -1,4 +1,5 @@
 import BorderButton from "components/Button/BorderButton";
+import StickyBottomMenu from "components/Button/StickyBottomMenu"
 import Page from "components/layout/Page";
 import React, { useState, useEffect } from "react";
 import { AppState } from "state";
@@ -12,7 +13,9 @@ import { Flex, Heading } from "components";
 import Body from "components/layout/Body";
 import { useModal } from "components/Modal";
 import BuyEggs from "components/BuyEggs";
-import { getZooToken } from "util/contractHelpers";
+import { getZooToken, getZooFaucet } from "util/contractHelpers";
+import { useMatchBreakpoints } from 'components';
+import { FaHome } from "react-icons/fa";
 
 const HeadingContainer = styles.div`
     width: 100%;
@@ -56,12 +59,17 @@ const Bank: React.FC = () => {
    const { account, chainId } = useWeb3React();
    const web3 = useWeb3();
    const history = useHistory();
+   const { isXl } = useMatchBreakpoints();
+   const [wait, setWait] = useState(false);
 
    const zooToken = getZooToken(web3, chainId);
 
    const handleClick = () => {
       history.push("/account");
    };
+
+   const faucet = getZooFaucet(web3, chainId);
+   const faucetAmt = web3.utils.toWei("50");
 
    const getBalance = async () => {
       try {
@@ -82,6 +90,37 @@ const Bank: React.FC = () => {
    useEffect(() => {
       getBalance();
    }, []);
+
+   const handleFaucet = () => {
+      try {
+         setWait(true);
+         faucet.methods
+            .buyZoo(account, faucetAmt)
+            .send({ from: account })
+            .then(() => {
+               setWait(false);
+               getBalance();
+            })
+            .catch((e) => {
+               console.error("ISSUE USING FAUCET \n", e);
+               setWait(false);
+            });
+      } catch (e) {
+         console.error("ISSUE USING FAUCET \n", e);
+      }
+   };
+
+   const handleFunds = () => {
+      console.log(chainId);
+      switch (chainId) {
+         case 97:
+            handleFaucet();
+            break;
+         default:
+            location.href =
+               "https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997";
+      }
+   };
 
    const pageHeading = (
       <HeadingContainer>
@@ -109,17 +148,31 @@ const Bank: React.FC = () => {
          <Page>
             {pageHeading}
             <Body>
+               <StickyBottomMenu onClick={handleClick}>
+               <FaHome />
+               </StickyBottomMenu>
                <LabelWrapper>
                   <Label small>Wallet Balance</Label>
-                  <BorderButton minWidth="140px" scale="sm" onClick={toLink}>Add Funds</BorderButton>
+                  
+                  <BorderButton
+                     scale="sm"
+                     minWidth={!isXl ? "120px" : "140px"}
+                     style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}
+                     onClick={handleFunds}>
+                     {chainId !== 97
+                        ? "Add Funds"
+                        : wait
+                        ? "Processing..."
+                        : "Get Zoo"}
+                  </BorderButton>
                </LabelWrapper>
                <Flex width="100%" alignItems="center" justifyContent="space-around">
-                  <ValueWrapper>{zooBalance} ZOO Tokens</ValueWrapper>
+                  <ValueWrapper>{zooBalance} ZOO </ValueWrapper>
                   {/* Commented out since there is to ZOO to USD conversion yet */}
                   {/* <ValueWrapper style={{ fontSize: "16px",  color: "rgb(221 224 26)" }}>0 USD</ValueWrapper> */} 
                </Flex>
                <Label small>Total Daily Yield</Label>
-               <ValueWrapper> 200 ZOO Tokens</ValueWrapper>
+               <ValueWrapper> 200 ZOO </ValueWrapper>
             </Body>
          </Page>
       </>

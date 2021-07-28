@@ -29,6 +29,9 @@ import BorderButton from "components/Button/BorderButton";
 import { FaLessThanEqual } from "react-icons/fa";
 import { animalMapping } from "util/animalMapping";
 import NewAnimalCard from "components/NewAnimal/NewAnimalCard";
+import { FaShoppingCart } from "react-icons/fa";
+import StickyBottomMenu from "components/Button/StickyBottomMenu"
+import { useHistory } from 'react-router-dom'
 
 // install Swiper modules
 // SwiperCore.use([Pagination]);
@@ -165,6 +168,7 @@ const MyZooAccount: React.FC = () => {
    const chainIdSet = chainId === undefined ? "1" : String(chainId);
    const [eggType, setEggType] = useState("");
    const [isOpen, setOpen] = useState(false);
+   const history = useHistory();
    const [hatched, setHatched] = useState({
       tokenId: "",
       name: "",
@@ -201,9 +205,16 @@ const MyZooAccount: React.FC = () => {
       dob: "",
       listed: false,
    };
+   
+   const handleRedirect = () => {
+      history.push('/feed')
+   }
+
+
 
    const hatchEgg = (egg) => {
       setEggType(egg.basic ? "basic" : "hybrid");
+      setOpen(true)
       const eggStruct = {
          owner: egg.owner,
       };
@@ -242,10 +253,11 @@ const MyZooAccount: React.FC = () => {
          lastBred: "",
       };
       setHatched(newAnimal);
-      setOpen(true);
       dispatch(burnEgg(egg));
       dispatch(addAnimal(newAnimal));
       // ---------------------------------------------
+      setTimeout(() => 
+      setOpen(true), 1000)
    };
 
    const breed = (onDismiss) => {
@@ -408,13 +420,6 @@ const MyZooAccount: React.FC = () => {
    const [onSell] = useModal(
       <SellConfirm onDismiss={() => null} breed={sell} />
    );
-
-   const onVideoEnd = () => {
-      setEggType("");
-      setTimeout(() => {
-         setOpen(false);
-      }, 5000);
-   };
 
 
   const [timeStartOnPage, setTimeStartOnPage] = useState(new Date().getTime())
@@ -630,25 +635,26 @@ const MyZooAccount: React.FC = () => {
    return (
       <div>
          {eggType !== "" ? (
+            <>
             <VideoPlayer
                videoPath={
                   eggType === "basic"
                      ? "hatch_mobile_basic.mp4"
                      : "hatch_mobile_hybrid.mp4"
                }
-               onDone={() => onVideoEnd()}
-            />
-         ) : isOpen ? (
-            <NewAnimalCard animal={hatched} isOpen={setOpen} />
+            /> 
+            { isOpen && <NewAnimalCard animal={hatched} isOpen={setOpen} /> }
+            </>
          ) : (
-            <Page>
+         <>
+                 
                {/* <RowTitle>My Eggs</RowTitle> */}
                {renderEggs()}
                <RowTitle>Breedable Animals</RowTitle>
                {renderAnimals("pure")}
                <RowTitle>Hybrid Animals</RowTitle>
                {renderAnimals("hybrid")}
-            </Page>
+         </>
          )}
       </div>
    );
