@@ -19,7 +19,7 @@ const Card = styled.div<{url?: string, isMobile?: boolean}>`
     justify-content: space-between;
     align-items: space-between;
     position: fixed;
-    top: 0;
+    top: -64px;
     left: 0;
     z-index: 100;
 `
