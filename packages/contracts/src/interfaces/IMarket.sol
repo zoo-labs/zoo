@@ -77,7 +77,7 @@ interface IMarket {
         pure
         returns (uint256);
 
-    function configure(address mediaContractAddress) external;
+    function configure(address _media, address _zookeeper) external;
 
     function setBidShares(uint256 tokenId, BidShares calldata bidShares)
         external;
