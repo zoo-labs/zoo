@@ -5,6 +5,7 @@ import { useLocation, useRouteMatch, useHistory } from "react-router-dom";
 import { Overlay } from "../Overlay";
 import Flex from "../../components/Box/Flex";
 import useMatchBreakpoints from "../../hooks/useMatchBreakpoints";
+import Logo from "./components/Logo";
 import Panel from "./components/Panel";
 import UserBlock from "./components/UserBlock";
 import { NavProps } from "./types";
@@ -14,10 +15,9 @@ import {
   SIDEBAR_WIDTH_REDUCED,
   SIDEBAR_WIDTH_FULL,
 } from "./config";
-import BottomMenuIcon from "./components/BottomMenuIcon";
 
 const Wrapper = styled.div`
-  // position: relative;
+  position: relative;
   width: 100%;
 `;
 
@@ -29,27 +29,25 @@ const LogoContainer = styled.div`
   }
 `;
 
-const StyledNav = styled.nav<{ showMenu?: boolean; isPushed?: boolean }>`
-  box-shadow: 0px -2px 30px #28d7fd;
+const StyledNav = styled.nav<{ showMenu: boolean; isPushed: boolean }>`
   position: fixed;
   // top: ${({ showMenu }) => (showMenu ? 0 : `-${MENU_HEIGHT}px`)};
-  top: 0;
   right: 0;
-  transition: top 0.2s;
+  transition: background-color 0.2s ease;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-left: 8px;
-  padding-right: 24px;
+  padding-right: 16px;
   width: 100%;
   height: ${MENU_HEIGHT}px;
-  background-color: #000000;
-  z-index: 3;
+  background-color: ${({ showMenu }) => (showMenu ? 'transparent' : `black`)};
+  z-index: 20;
   transform: translate3d(0, 0, 0);
 `;
 
 const BodyWrapper = styled.div`
-  // position: relative;
+  position: relative;
   display: flex;
 `;
 
@@ -57,6 +55,7 @@ const Inner = styled.div<{ isPushed: boolean; showMenu: boolean }>`
   flex-grow: 1;
   margin-top: 64px;
   transition: margin-top 0.2s;
+  transform: translate3d(0, 0, 0);
   max-width: 100%;
 
   ${({ theme }) => theme.mediaQueries.nav} {
@@ -72,7 +71,6 @@ const Inner = styled.div<{ isPushed: boolean; showMenu: boolean }>`
 const MobileOnlyOverlay = styled(Overlay)`
   position: fixed;
   height: 100%;
-  opacity: 0;
 
   ${({ theme }) => theme.mediaQueries.nav} {
     display: none;
@@ -97,9 +95,8 @@ const MaxHeightLogo = styled.img`
   height: ${MENU_HEIGHT / 1.6}px;
   position: absolute;
   top: 10px;
-  left: 20px;
+  left: 60px;
 `;
-
 
 const Menu: React.FC<NavProps> = ({
   providerTitle,
@@ -159,43 +156,30 @@ const Menu: React.FC<NavProps> = ({
     }
   }, [pathname, account, chainId, isSm, isXs]);
 
-  // useEffect(() => {
-  //   let mounted = true
-  //   const handleScroll = () => {
-  //     const currentOffset = window.pageYOffset;
-  //     const isBottomOfPage =
-  //       (window.document.body.clientHeight - 5) <=
-  //       currentOffset + window.innerHeight;
-  //     const isTopOfPage = currentOffset === 0;
-  //     // Always show the menu when user reach the top
-  //     if (isTopOfPage) {
-  //       setShowMenu(true);
-  //     }
-  //     // Avoid triggering anything at the bottom because of layout shift
-  //     else if (!isBottomOfPage) {
-  //       if (currentOffset < refPrevOffset.current) {
-  //         // Has scroll up
-  //         setShowMenu(true);
-  //       } else {
-  //         // Has scroll down
-  //         setShowMenu(false);
-  //       }
-  //     }
-  //     refPrevOffset.current = currentOffset;
-  //   };
-  //   const throttledHandleScroll = throttle(handleScroll, 200);
-  //   if(mounted){
-  //     window.addEventListener("scroll", throttledHandleScroll);
-  //     document.addEventListener("click", handleClickOutside, true);
-  //   }
-  //   return () => {
-  //     mounted = false
-  //     throttledHandleScroll.cancel()
-  //     console.log("canceled")
-  //     window.removeEventListener("scroll", throttledHandleScroll);
-  //     document.removeEventListener("click", handleClickOutside, true);
-  //   };
-  // }, [isPushed]);
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentOffset = window.pageYOffset;
+      const isBottomOfPage =
+        (window.document.body.clientHeight - 5) <=
+        currentOffset + window.innerHeight;
+      const isTopOfPage = currentOffset === 0;
+      // Always show the menu when user reach the top
+      if (currentOffset > 30) {
+        setShowMenu(false)
+      } else{
+        setShowMenu(true)
+      }
+      refPrevOffset.current = currentOffset;
+    };
+    const throttledHandleScroll = throttle(handleScroll, 200);
+
+    window.addEventListener("scroll", throttledHandleScroll);
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      window.removeEventListener("scroll", throttledHandleScroll);
+      document.addEventListener("click", handleClickOutside, true);
+    };
+  }, [isPushed]);
 
   // useEffect(() => {
   //    window.addEventListener("click", handleClickOutside, true);
@@ -207,33 +191,16 @@ const Menu: React.FC<NavProps> = ({
   const handleClick = () => {
     history.push("/feed");
   };
-  const sideMenu = ( <Panel
-          isPushed={isPushed}
-          isMobile={isMobile}
-          showMenu={showMenu}
-          isDark={isDark}
-          toggleTheme={toggleTheme}
-          pushNav={setIsPushed}
-          links={links}
-        />);
 
   return (
-    <Wrapper>{/* 
-       <BottomMenuIcon
-        isOpen={isPushed}
-        togglePush={() => setIsPushed((prevState: boolean) => !prevState)}
-        isDark={isDark}
-          href={homeLink?.href ?? "/feed"}
-        /> */}
-      <StyledNav
-        // showMenu={showMenu} isPushed={isPushed}
-      >
-        {/* <Logo
+    <Wrapper>
+      <StyledNav showMenu={showMenu} isPushed={isPushed}>
+        <Logo
           isPushed={isPushed}
           togglePush={() => setIsPushed((prevState: boolean) => !prevState)}
           isDark={isDark}
           href={homeLink?.href ?? "/feed"}
-        /> */}
+        />
         <LogoContainer>
           <MaxHeightLogo
             src={logo}
@@ -250,7 +217,15 @@ const Menu: React.FC<NavProps> = ({
         </Flex>
       </StyledNav>
       <BodyWrapper>
-       {/* {sideMenu} */}
+        <Panel
+          isPushed={isPushed}
+          isMobile={isMobile}
+          showMenu={showMenu}
+          isDark={isDark}
+          toggleTheme={toggleTheme}
+          pushNav={setIsPushed}
+          links={links}
+        />
         <Inner isPushed={isPushed} showMenu={showMenu}>
           {children}
         </Inner>

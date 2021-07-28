@@ -12,14 +12,21 @@ const getColor = ({ color, theme }: ThemedProps) => {
  */
 
 const VidContainer = styled.div`
-    position: fixed;
-    top: 48%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    z-index: 100000;
-    height: 101vh;
+    height: 100vh;
     width: auto;
+    // max-width: 425px;
+    // min-width: 325px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: -64px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    transform: translateX(-50%);
+    z-index: 102;
 `
 function fade(element) {
     var op = 1;
@@ -51,7 +58,7 @@ const VideoPlayer: React.FC<VideoPlayerTheme> = ({videoPath}:VideoPlayerTheme) =
 }
 
 export const VideoPlayerWrapper = styled.video`
-    height: 105vh;
+    height: 100%;
     width: auto;
 `;
 

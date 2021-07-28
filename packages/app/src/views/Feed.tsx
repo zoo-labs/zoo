@@ -12,8 +12,7 @@ import Moralis from "moralis";
 import { AppState } from "state/index";
 import FeedCard from "./FeedCard";
 import BorderButton from "components/Button/BorderButton";
-import { FaHome } from "react-icons/fa";
-import StickyBottomMenu from 'components/Button/StickyBottomMenu'
+import { ChevronLeftIcon } from 'components/Svg'
 
 const Container = styled.div<{ isMobile?: boolean }>`
   height: ${({ isMobile }) => (isMobile ? `100vh` : null)};
@@ -24,6 +23,23 @@ const Container = styled.div<{ isMobile?: boolean }>`
     height: 100vh;
   }
 `;
+
+const StyledChevron = styled(ChevronLeftIcon)`
+  height: 40px;
+  width: 40px;
+  z-index: 101;
+`
+
+const StyledMenuButton = styled.button`
+position: relative;
+top: -8px;
+left: -12px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: transparant;
+
+`
 
 
 const ToggleContainer = styled.div`
@@ -127,14 +143,14 @@ export default function Feed() {
       : !isZoo;
   });
 
+
   return (
     <Container isMobile={isMobile}>
-      
-      <StickyBottomMenu onClick={HomeClick}>
-        <FaHome/>
-      </StickyBottomMenu>
       <ToggleContainer>
-        <ButtonMenu activeIndex={activeIndex} scale="sm">
+        <ButtonMenu activeIndex={activeIndex + 1} scale="sm">
+          <StyledMenuButton onClick={()=> console.log('asda')}>
+            <StyledChevron onClick={HomeClick}/>
+          </StyledMenuButton>
           <ButtonMenuItem
             as={Link}
             to={`${url}/myzoo`}
@@ -170,7 +186,7 @@ export default function Feed() {
       ) : (
         <EmptyZoo>
           <Text textAlign="center">You do not currently own any animals</Text>
-          <BorderButton scale="md" onClick={HomeClick}>
+          <BorderButton scale="md" onClick={() => HomeClick}>
             Home
           </BorderButton>
         </EmptyZoo>
