@@ -152,6 +152,16 @@ const TimeoutWrapper = styled.div<{ barwidth?: string }>`
     background: grey;
   }
 `;
+
+const BidPriceInput = styled.input.attrs({
+   type: 'number',
+   min: 1
+})`
+   width: 100%;
+   line-height: 1.5rem;
+   margin-left: 15px;
+`;
+
 const TimeoutDisplay = styled.span`
   position: relative;
   z-index: 2;
@@ -391,7 +401,21 @@ const MyZooAccount: React.FC = () => {
   const SellConfirm: React.FC<Props> = ({ onDismiss = () => null, breed }) => {
     return (
       <Modal title="Confirm Listing" onDismiss={onDismiss}>
-        <Text>{`Do you want to list ${sellAnimal.name}?`}</Text>
+        <Text style={{textAlign: "center"}}>{`Do you want to list ${sellAnimal.name}?`}</Text>
+        <Flex 
+         width="100%"
+          alignItems="center"
+          justifyContent="space-evenly"
+          flexDirection="row"
+          mt="16px">
+            <Text
+               fontSize="20px"
+               style={{ whiteSpace: 'nowrap', marginTop: '5px'}}
+               >
+               BID PRICE
+            </Text>
+            <BidPriceInput type="number" />
+        </Flex>
         <Flex
           width="100%"
           alignItems="center"
