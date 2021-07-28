@@ -186,7 +186,7 @@ export default function Feed() {
       ) : (
         <EmptyZoo>
           <Text textAlign="center">You do not currently own any animals</Text>
-          <BorderButton scale="md" onClick={() => HomeClick}>
+          <BorderButton scale="md" onClick={() => HomeClick()}>
             Home
           </BorderButton>
         </EmptyZoo>
