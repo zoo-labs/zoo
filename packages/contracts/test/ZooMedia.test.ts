@@ -136,13 +136,11 @@ describe('ZooMedia', () => {
       await new ZooMedia__factory(deployerWallet).deploy('ANML', 'CryptoZoo', marketAddress)
     ).deployed();
     mediaAddress = media.address;
-    console.log(mediaAddress)
 
     const keeper = await (
       await new ZooKeeper__factory(deployerWallet).deploy(mediaAddress, tokenAddress)
     ).deployed();
     keeperAddress = keeper.address;
-    console.log(keeperAddress)
 
     await market.configure(mediaAddress, keeper.address);
   }
@@ -366,7 +364,7 @@ describe('ZooMedia', () => {
           }
         )
       ).fulfilled;
-      
+
       let passed = true
       try {
         await
@@ -382,15 +380,15 @@ describe('ZooMedia', () => {
               owner: Decimal.new(0),
             }
           );
-          passed = false
-        } catch (error) {
-          expect(error.error.body).to.contain(
-            'ZooMedia: a token has already been created with this content hash',
-            "This error body should have the correct revert error")
-          }
-          passed = true
-        expect(passed, "The previous tx was not reverted").to.be.true
-        });
+        passed = false
+      } catch (error) {
+        expect(error.error.body).to.contain(
+          'ZooMedia: a token has already been created with this content hash',
+          "This error body should have the correct revert error")
+      }
+      passed = true
+      expect(passed, "The previous tx was not reverted").to.be.true
+    });
 
     it('should revert if the metadataHash is empty', async () => {
       const media = await mediaAs(creatorWallet);
@@ -711,19 +709,19 @@ describe('ZooMedia', () => {
   describe('#removeAsk', () => {
     let media: ZooMedia
     beforeEach(async () => {
-      media = await mediaAs(creatorWallet)
+      media = await (await mediaAs(creatorWallet)).deployed()
       await mint(
-          media,
-          metadataURI,
-          tokenURI,
-          contentHashBytes,
-          metadataHashBytes,
-          {
-            prevOwner: Decimal.new(10),
-            creator: Decimal.new(90),
-            owner: Decimal.new(0),
-          }
-        )
+        media,
+        metadataURI,
+        tokenURI,
+        contentHashBytes,
+        metadataHashBytes,
+        {
+          prevOwner: Decimal.new(10),
+          creator: Decimal.new(90),
+          owner: Decimal.new(0),
+        }
+      )
     });
     it('should remove the ask', async () => {
       const market = await ZooMarket__factory.connect(
@@ -746,11 +744,11 @@ describe('ZooMedia', () => {
       await setAsk(media, 0, defaultAsk);
       const block = await provider.getBlockNumber();
       const tx = await removeAsk(media, 0);
-      
+
       const events = await auction.queryFilter(
         auction.filters.AskRemoved(0, null),
         block
-        );
+      );
       expect(events.length).eq(1);
       let logDescription: LogDescription;
       logDescription = auction.interface.parseLog(events[0]);
@@ -760,13 +758,15 @@ describe('ZooMedia', () => {
     });
 
     it('should not be callable by anyone that is not owner or approved', async () => {
-      const media = await mediaAs(ownerWallet);
-      const asOther = await mediaAs(otherWallet);
       await setAsk(media, 0, defaultAsk);
-
-      expect(removeAsk(asOther, 0)).rejectedWith(
-        'Media: Only approved or owner'
-      );
+      let passed = true
+      try {
+        await media.connect(otherWallet).removeAsk(0);
+      } catch (error) {
+        expect(error.error.body).to.contain('ZooMedia: Only approved or owner')
+        passed = false
+      }
+      expect(passed, "Previous tx should have reverted").to.be.false
     });
   });
 
@@ -787,17 +787,33 @@ describe('ZooMedia', () => {
 
     it('should revert if the media bidder does not have a high enough allowance for their bidding currency', async () => {
       const media = await mediaAs(bidderWallet);
-      await expect(
+      let passed = false
+      try {
         media.setBid(0, defaultBid(currencyAddr, bidderWallet.address))
-      ).rejectedWith('SafeERC20: ERC20 operation did not succeed');
+        passed = true;
+      } catch (error) {
+        expect(
+          error
+        ).to.contain('SafeERC20: ERC20 operation did not succeed');
+        passed = true;
+      }
+      expect(passed, "The previous transaction was not reverted").to.be.true
     });
 
     it('should revert if the media bidder does not have a high enough balance for their bidding currency', async () => {
       const media = await mediaAs(bidderWallet);
       await approveCurrency(currencyAddr, marketAddress, bidderWallet);
-      await expect(
+      let passed = false
+      try {
         media.setBid(0, defaultBid(currencyAddr, bidderWallet.address))
-      ).rejectedWith('SafeERC20: ERC20 operation did not succeed');
+        passed = true;
+      } catch (error) {
+        expect(
+          error
+        ).to.contain('SafeERC20: ERC20 operation did not succeed');
+        passed = true;
+      }
+      expect(passed, "The previous transaction was not reverted").to.be.true
     });
 
     it('should set a bid', async () => {
@@ -868,10 +884,17 @@ describe('ZooMedia', () => {
 
     it('should revert if the mediaId has not yet ben created', async () => {
       const media = await mediaAs(bidderWallet);
-
-      await expect(removeBid(media, 100)).rejectedWith(
-        'Media: media with that id does not exist'
-      );
+      let passed = false
+      try {
+        await removeBid(media, 100)
+        passed = true;
+      } catch (error) {
+        expect(
+          error.error.body
+        ).to.contain('ZooMedia: token with that id does not exist');
+        passed = true;
+      }
+      expect(passed, "The previous transaction was not reverted").to.be.true
     });
 
     it('should remove a bid and refund the bidder', async () => {
@@ -976,8 +999,8 @@ describe('ZooMedia', () => {
         block
       );
       expect(events.length).eq(1);
-      const logDescription = auction.interface.parseLog(events[0]);
-      expect(toNumWei(logDescription.args.mediaId)).to.eq(0);
+      const logDescription: LogDescription = auction.interface.parseLog(events[0]);
+      expect(toNumWei(logDescription.args.tokenId)).to.eq(0);
       expect(toNumWei(logDescription.args.bid.amount)).to.eq(bid.amount);
       expect(logDescription.args.bid.currency).to.eq(bid.currency);
       expect(toNumWei(logDescription.args.bid.sellOnShare.value)).to.eq(
@@ -999,8 +1022,8 @@ describe('ZooMedia', () => {
         block
       );
       expect(events.length).eq(1);
-      const logDescription = auction.interface.parseLog(events[0]);
-      expect(toNumWei(logDescription.args.mediaId)).to.eq(0);
+      const logDescription: LogDescription = auction.interface.parseLog(events[0]);
+      expect(toNumWei(logDescription.args.tokenId)).to.eq(0);
       expect(toNumWei(logDescription.args.bidShares.prevOwner.value)).to.eq(
         10000000000000000000
       );
