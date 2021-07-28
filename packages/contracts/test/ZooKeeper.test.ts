@@ -447,7 +447,7 @@ describe.only("ZooKeeper", () => {
   it.only("Should buy a basic egg", async () => {
     await addDrop();
     await zooToken.approve(zooKeeper.address, 210)
-    console.log('OWNER', owner)
+    console.log('owner.address', owner.address)
     const buyEgg = await zooKeeper.connect(owner).buyEgg(1);
     const buyEggReceipt = await buyEgg.wait();
     const sender = buyEggReceipt.events;
@@ -492,12 +492,12 @@ describe.only("ZooKeeper", () => {
   /**
    * HATCHING EGGS
    */
-  it("Should hatch & burn basic egg", async () => {
+  it.only("Should hatch & burn basic egg", async () => {
     await addAnimals();
     await zooToken.approve(zooKeeper.address, 600)
     const buyEgg = await zooKeeper.connect(owner).buyEgg(1);
     const buyEggReceipt = await buyEgg.wait();
-    console.log('OWNER', owner)
+    console.log('OWNER', owner.address)
 
     let sender = buyEggReceipt.events;
 
