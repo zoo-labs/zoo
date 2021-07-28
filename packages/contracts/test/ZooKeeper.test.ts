@@ -484,9 +484,6 @@ describe.only("ZooKeeper", () => {
 
   it("Should revert when totalSupply of eggs are reaching", async () => {
 
-  });
-
-  it("Should revert when not enough balance", async () => {
 
   });
 
@@ -561,11 +558,9 @@ describe.only("ZooKeeper", () => {
     expect(from_add2).to.equal(owner.address);
     expect(token_id2.toNumber()).to.equal(5);
 
-
   });
 
   it("Should revert when hatching egg with invalid tokenid", async () => {
-
   });
 
   it("Should revert when egg creation time restriction is not met", async () => {
