@@ -42,7 +42,6 @@ yarn-error.log*
 # Local Netlify folder
 .netlify
 
-yarn.lock
 .vscode
 
 packages/app/src/artifacts/
