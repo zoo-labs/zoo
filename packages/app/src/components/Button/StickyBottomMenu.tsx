@@ -10,8 +10,8 @@ const StickyBottomMenuWrapper = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  top: calc(100vh - 136px);
+  position: fixed;
+  top: calc(100vh - 74px);
   right: 12px;
   z-index: 100;
   transition: all 0.2s;

@@ -12,18 +12,14 @@ const getColor = ({ color, theme }: ThemedProps) => {
  */
 
 const VidContainer = styled.div`
-    width: 100vw;
-    // max-width: 425px;
-    // min-width: 325px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: space-between;
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 48%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     z-index: 100000;
-    height: auto;
+    height: 101vh;
+    width: auto;
 `
 function fade(element) {
     var op = 1;
@@ -55,8 +51,8 @@ const VideoPlayer: React.FC<VideoPlayerTheme> = ({videoPath}:VideoPlayerTheme) =
 }
 
 export const VideoPlayerWrapper = styled.video`
-    width: 100%;
-    height: 100%;
+    height: 105vh;
+    width: auto;
 `;
 
 VideoPlayer.defaultProps = {

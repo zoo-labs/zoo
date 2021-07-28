@@ -168,6 +168,7 @@ const MyZooAccount: React.FC = () => {
   const [eggType, setEggType] = useState("");
   const [isOpen, setOpen] = useState(false);
   const history = useHistory()
+  const [showBoth, setShowBoth] = useState(false);
   const [hatched, setHatched] = useState({
     tokenId: "",
     name: "",
@@ -209,6 +210,7 @@ const MyZooAccount: React.FC = () => {
   };
 
   const hatchEgg = (egg) => {
+   setShowBoth(true);
     setEggType(egg.basic ? "basic" : "hybrid");
 
     let randIdx: number;
@@ -244,11 +246,14 @@ const MyZooAccount: React.FC = () => {
       lastBred: "",
     };
     setHatched(newAnimal);
-    setOpen(true);
+    
     dispatch(burnEgg(egg));
     dispatch(addAnimal(newAnimal));
     // ---------------------------------------------
+    setTimeout(() => setOpen(true), 5450)
+    setTimeout(() => setEggType(""), 7000)
   };
+
 
   const breed = (onDismiss) => {
     const animal1: Animal = array[0];
@@ -494,7 +499,7 @@ const MyZooAccount: React.FC = () => {
                ) : (
                   <Swiper slidesPerView={2.2} spaceBetween={10}>
                      {animals.map((animal) => (
-                        <SwiperSlide>
+                        <SwiperSlide style={{padding: '3px'}}>
                            <CardWrapper>
                               <Card
                                  style={{
@@ -669,26 +674,20 @@ const MyZooAccount: React.FC = () => {
 
    return (
       <div>
-         {eggType !== "" ? (
-            <>
+         {eggType !== "" && 
             <VideoPlayer
                videoPath={
                   eggType === "basic"
                      ? "hatch_mobile_basic.mp4"
                      : "hatch_mobile_hybrid.mp4"
                }
-            /> 
-            { isOpen && <NewAnimalCard animal={hatched} isOpen={setOpen} /> }
-            </>
-         ) : (
+            /> }
+            { isOpen ? <NewAnimalCard animal={hatched} isOpen={setOpen} /> :
          <>
-                 
-               {/* <RowTitle>My Eggs</RowTitle> */}
-               {renderEggs()}
-               {renderAnimals("pure")}
-               {renderAnimals("hybrid")}
-         </>
-         )}
+               {eggType === "" && renderEggs()}
+               {eggType === "" && renderAnimals("pure")}
+               {eggType === "" && renderAnimals("hybrid")}
+         </> }
       </div>
    );
 };

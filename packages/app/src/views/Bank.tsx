@@ -149,7 +149,7 @@ const Bank: React.FC = () => {
             {pageHeading}
             <Body>
                <StickyBottomMenu onClick={handleClick}>
-               <FaHome />
+               <FaHome color={"black"} /* style={{marginLeft: '-2px', marginTop: '2px' }} *//>
                </StickyBottomMenu>
                <LabelWrapper>
                   <Label small>Wallet Balance</Label>
