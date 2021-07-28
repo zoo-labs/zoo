@@ -623,12 +623,14 @@ describe("ZooKeeper", () => {
     /**
      * BREEDING
      */
-    it("Should breed a hybrid egg", async () => {
+    it.only("Should breed a hybrid egg", async () => {
+
         await addAnimals();
 
         await zooToken.approve(zooKeeper.address, 600)
 
         const buyFirstEgg = await zooKeeper.connect(owner).buyEgg(1);
+
         const buyFirstEggReceipt = await buyFirstEgg.wait();
 
         let sender = buyFirstEggReceipt.events;
