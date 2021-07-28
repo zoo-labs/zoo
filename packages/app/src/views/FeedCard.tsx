@@ -122,7 +122,7 @@ const ActionButonContainer = styled.div`
  
 `
 
-const FeedCard: React.FC<Props> = ({ item }) => {
+const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
   const history = useHistory();
   const ypd = {};
   const date = new Date(Number(item.dob) * 1000);
@@ -149,6 +149,7 @@ const FeedCard: React.FC<Props> = ({ item }) => {
         <FinalThird>
           <Flex flexDirection="row">
             <Flex flexDirection="column" width="calc(100% - 75px)"
+              pt="30px"
                   style={{textShadow: "2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000"}}>
               <MainHeading
                 bold
