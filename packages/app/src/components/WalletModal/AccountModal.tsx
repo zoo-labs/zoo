@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { connectorLocalStorageKey, useMatchBreakpoints } from 'components'
@@ -14,6 +14,9 @@ import { Label, Text } from '../../components/Text'
 import Flex from '../../components/Box/Flex'
 import { Modal } from '../Modal'
 import CopyToClipboard from './CopyToClipboard'
+import { FaExchangeAlt } from 'react-icons/fa'
+import useWeb3 from "hooks/useWeb3";
+import { getZooFaucet, getZooToken } from 'util/contractHelpers'
 // import LinkExternal from '../../components/Link/LinkExternal'
 
 interface Props {
@@ -69,11 +72,16 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
   const bscType = chainId === 97 || chainId === 56
   const { activate } = useWeb3React()
   const { isSm, isXs } = useMatchBreakpoints()
+  const [wait, setWait] = useState(false);
+  const [balance, setBalance] = useState(0.0);
+  const web3 = useWeb3();
   const mobile = isSm || isXs
   const moreSpace = mobile && !bscType
+  const zooToken = getZooToken(web3, chainId);
+  const faucet = getZooFaucet(web3, chainId);
+  const faucetAmt = web3.utils.toWei("50");
 
-  // PLACEHOLDER DATA
-  const zooCount = 99999999999999999
+ 
   // const { authenticate, isAuthenticated } = useMoralis();
 
    const bscSwith = async (network) => {
@@ -87,10 +95,61 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
       }
    };
 
-  const toLink = () => {
-    location.href = "https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997"
-  }
+   const getBalance = async () => {
+      try {
+        const decimals = await zooToken.methods.decimals().call();
+        const rawBalance = await zooToken.methods.balanceOf(account).call();
+        const divisor = parseFloat(Math.pow(10, decimals).toString());
+        const balance = rawBalance / divisor;
+        setBalance(balance);
+      } catch (e) {
+        console.error("ISSUE LOADING ZOO BALANCE \n", e);
+      }
+    };
 
+      useEffect(() => {
+          getBalance();
+      }, [account, chainId]);
+
+      useEffect(() => {
+          getBalance();
+      }, []);
+    
+
+   const handleFaucet = () => {
+      try {
+         setWait(true);
+         faucet.methods
+            .buyZoo(account, faucetAmt)
+            .send({ from: account })
+            .then(() => {
+               setWait(false);
+               getBalance();
+            })
+            .catch((e) => {
+               console.error("ISSUE USING FAUCET \n", e);
+               setWait(false);
+            });
+      } catch (e) {
+         console.error("ISSUE USING FAUCET \n", e);
+      }
+   };
+
+   const handleFunds = () => {
+      console.log(chainId);
+      switch (chainId) {
+         case 97:
+            handleFaucet();
+            break;
+         default:
+            const redirectWindow = window.open('https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997', '_blank');
+            redirectWindow.location;
+      }
+   };
+
+
+
+  const switchIcon = (<FaExchangeAlt size="18px" style={{ margin: "0px 8px 0px 0px" }} />);
   return (
     <Modal title="Your wallet" onDismiss={onDismiss} styles={{ minHeight: '250px', justifyContent: 'space-between' }}>
       <Label>
@@ -105,15 +164,15 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
           <Label>
               Balance
           </Label>
-          <BorderButton scale="xs" height="35px" onClick={toLink}>
+          <BorderButton scale="xs" height="25px" onClick={handleFunds} width="130px">
               Add Funds
           </BorderButton>
         </LabelWrapper>
           <ValueWrapper>
-              {zooCount} ZOO
+              {balance} ZOO
           </ValueWrapper>
       </Flex>
-      <Flex justifyContent="space-between" flexDirection={moreSpace ? 'column' : 'row'}>
+      <Flex width="100%" alignItems="center" justifyContent="space-between" flexDirection={moreSpace ? 'column' : 'row'}>
         {chainId !== 56 ? (
           <BorderButton
             scale="sm"
@@ -122,7 +181,8 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
               bscSwith('bsc')
             }}
           >
-            Switch to BSC
+            {switchIcon}
+             to BSC
           </BorderButton>
         ) : null}
         {chainId !== 97 ? (
@@ -134,7 +194,8 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
             }}
             width={mobile ? "auto" : "250px"}
           >
-            Switch to BSC-Test
+            {switchIcon}
+            to BSC-Test
           </BorderButton>
         ) : null}
         <BorderButton

@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import { variant } from "styled-system";
 import Text from "../Text/Text";
-import { tags, sizes, HeadingProps } from "./types";
+import { styleVariants } from "./theme";
+import { tags, sizes, HeadingProps, variants } from "./types";
 
 const style = {
   [sizes.SM]: {
@@ -27,7 +29,7 @@ const style = {
 
 const Heading = styled(Text).attrs({ bold: true })<HeadingProps>`
   font-size: ${({ size }) => style[size || sizes.MD].fontSize};
-  color: ${({ headerColor }) => headerColor || "white"};
+  color: ${({ headerColor, disabled, theme }) => disabled ? `${theme.colors.tertiary}` : headerColor || "white"};
   font-weight: 550;
   line-height: 1.5;
   letter-spacing: 3px;
@@ -36,10 +38,16 @@ const Heading = styled(Text).attrs({ bold: true })<HeadingProps>`
   ${({ theme }) => theme.mediaQueries.lg} {
     font-size: ${({ size }) => style[size || sizes.MD].fontSizeLg};
   }
+
+  ${variant({
+    variants: styleVariants,
+  })}
 `;
 
 Heading.defaultProps = {
   as: tags.H2,
+  disabled: false,
+  variant: variants.PRIMARY,
 };
 
 export default Heading;
