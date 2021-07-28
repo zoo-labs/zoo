@@ -477,6 +477,13 @@ describe("ZooKeeper", () => {
      */
     it.only("Should buy a basic egg", async () => {
 
+        // await addDrop();
+
+        await zooKeeper.connect(signers[0]).addDrop("test1", 16000, 210);
+
+        const buyEgg = await zooKeeper.buyEgg(1);
+
+        // const buyEggReceipt = await buyEgg.wait();
     });
 
     it("Should buy multiple basic eggs", async () => {
