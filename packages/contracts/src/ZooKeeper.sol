@@ -21,6 +21,8 @@ contract ZooKeeper {
 
     uint256 public hybridHatchTime = 36 hours;
 
+    uint256 public namePrice = 300;
+
     uint256[] public coolDowns = [4 hours, 1 days, 3 days, 7 days, 30 days];
 
     enum TokenType {
@@ -80,6 +82,9 @@ contract ZooKeeper {
     mapping(uint256 => uint256) public animalDOB;
 
     mapping(address => uint256) public lastTimeBred;
+
+    // mapping of token ID to animal name;
+    mapping(uint256 => string) public names;
 
     ZooMedia public media;
     IERC20 public token;
@@ -149,6 +154,14 @@ contract ZooKeeper {
         return _total;
     }
 
+    function setName(uint256 _tokenID, string memory _name) public onlyOwner {
+        names[_tokenID] = _name;
+    }
+
+    function setNamePrice(uint256 _price) public onlyOwner {
+        namePrice = _price;
+    }
+
     function setTokenURI(
         uint256 _dropID,
         string memory _name,
@@ -165,6 +178,18 @@ contract ZooKeeper {
     ) public onlyOwner {
         ZooDrop drop = ZooDrop(drops[_dropID]);
         drop.setMetadataURI(_name, _URI);
+    }
+
+    // Add a name for given NFT
+    function buyName(uint256 _tokenID, string memory _name) public {
+        require(
+            token.balanceOf(msg.sender) >= namePrice,
+            "Not Enough ZOO Tokens to purchase Name"
+        );
+
+        console.log("Transfer ZOO from sender to this contract");
+        token.transferFrom(msg.sender, address(this), namePrice);
+        names[_tokenID] = _name;
     }
 
     // Accept ZOO and return Egg NFT
