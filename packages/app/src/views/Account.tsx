@@ -119,7 +119,7 @@ const Account: React.FC = () => {
    const pageHeading = (
       <HeadingContainer>
          <Heading>My Account</Heading>
-         <StyledButton
+         {/* <StyledButton
             style={{
                background: "transparent",
                border: "none",
@@ -128,7 +128,7 @@ const Account: React.FC = () => {
             }}
             onClick={() => handleClick()}>
             View Bank
-         </StyledButton>
+         </StyledButton> */}
       </HeadingContainer>
    );
 
@@ -172,9 +172,6 @@ const Account: React.FC = () => {
          <Page>
             {pageHeading}
             <Body>
-               <StickyBottomMenu onClick={handleRedirect}>
-                  <FaShoppingCart color={"black"} style={{marginLeft: '-2px', marginTop: '2px' }}/>
-               </StickyBottomMenu>
                <LabelWrapper>
                   <Label small>Wallet Balance</Label>
                   <BorderButton
