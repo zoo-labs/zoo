@@ -246,7 +246,7 @@ export const deployZooProtocol = async (tokenAddress) => {
     await new ZooMedia__factory(deployer).deploy("ANML", "ZooAnimals", market.address)
   ).deployed();
   const zookeeper = await (
-    await new ZooKeeper__factory(deployer).deploy(media.address, token.address)
+    await new ZooKeeper__factory(deployer).deploy(market.address, media.address, token.address)
   ).deployed();
   await market.configure(media.address, zookeeper.address);
   return { market, media };
