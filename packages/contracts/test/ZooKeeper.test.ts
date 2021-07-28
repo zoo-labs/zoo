@@ -10,7 +10,6 @@ import { BigNumber, Bytes, BytesLike, utils } from 'ethers';
 
 let zooToken: any;
 let zooFaucet: any;
-let zooKeeper: any;
 let zooMarket: any;
 let zooMedia: any;
 let signers: any;
@@ -48,7 +47,7 @@ describe.only("ZooKeeper", () => {
         await zooMarket.deployed();
         marketAddress = zooMarket.address;
 
-        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', auctionAddress)) as ZooMedia
+        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', marketAddress)) as ZooMedia
         await zooMedia.deployed();
         mediaAddress = zooMedia.address;
 
