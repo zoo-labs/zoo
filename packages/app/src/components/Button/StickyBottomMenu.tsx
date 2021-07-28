@@ -39,9 +39,9 @@ const StickyBottomMenuWrapper = styled.button`
       -webkit-box-shadow: 0px 0px 0px #136071, 0px 1px 6px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
       -moz-box-shadow: 0px 0px 0px #136071, 0px 1px 6px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
       box-shadow: 0px 0px 0px #136071, 0px 1px 6px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
-     /*  -webkit-transform: translate(0, 3px);
+      -webkit-transform: translate(0, 3px);
       -moz-transform: translate(0, 3px);
-      transform: translate(0, 3px); */
+      transform: translate(0, 3px);
    }
 `;
 
