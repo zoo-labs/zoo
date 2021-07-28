@@ -14,6 +14,7 @@ import { Label, Text } from '../../components/Text'
 import Flex from '../../components/Box/Flex'
 import { Modal } from '../Modal'
 import CopyToClipboard from './CopyToClipboard'
+import { FaExchangeAlt } from 'react-icons/fa'
 // import LinkExternal from '../../components/Link/LinkExternal'
 
 interface Props {
@@ -93,7 +94,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
     redirectWindow.location;
     // location.href = "https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997"
   }
-
+  const switchIcon = (<FaExchangeAlt size="18px" style={{ margin: "0px 8px 0px 0px" }} />);
   return (
     <Modal title="Your wallet" onDismiss={onDismiss} styles={{ minHeight: '250px', justifyContent: 'space-between' }}>
       <Label>
@@ -116,7 +117,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
               {zooCount} ZOO
           </ValueWrapper>
       </Flex>
-      <Flex justifyContent="space-between" flexDirection={moreSpace ? 'column' : 'row'}>
+      <Flex width="100%" alignItems="center" justifyContent="space-between" flexDirection={moreSpace ? 'column' : 'row'}>
         {chainId !== 56 ? (
           <BorderButton
             scale="sm"
@@ -125,7 +126,8 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
               bscSwith('bsc')
             }}
           >
-            Switch to BSC
+            {switchIcon}
+             to BSC
           </BorderButton>
         ) : null}
         {chainId !== 97 ? (
@@ -137,7 +139,8 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
             }}
             width={mobile ? "auto" : "250px"}
           >
-            Switch to BSC-Test
+            {switchIcon}
+            to BSC-Test
           </BorderButton>
         ) : null}
         <BorderButton
