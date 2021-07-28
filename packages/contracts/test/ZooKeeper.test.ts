@@ -43,9 +43,11 @@ describe("ZooKeeper", () => {
 
         owner = signers[0]
 
-        await zooToken.mint(zooFaucet.address, 1000000);
+        for (var i = 0; i < signers.length; i++) {
 
-        await zooFaucet.buyZoo(owner.address, 1000);
+            await zooToken.mint(signers[i].address, 10000);
+
+        }
 
         zooMarket = (await new ZooMarket__factory(owner).deploy()) as ZooMarket;
         await zooMarket.deployed();
@@ -68,6 +70,8 @@ describe("ZooKeeper", () => {
             zooToken.address
 
         )) as ZooKeeper;
+
+        await zooKeeper.deployed()
     })
 
     async function addAnimals() {
@@ -352,12 +356,13 @@ describe("ZooKeeper", () => {
     }
 
     async function addDrop() {
-        await zooMedia.connect(owner).addDrop("test", 16000, 210);
 
-        await zooMedia.setTokenURI(1, "basicEgg", "basicEgg.tokenURI1");
-        await zooMedia.setMetadataURI(1, "basicEgg", "basicEgg.metadataURI1");
-        await zooMedia.setTokenURI(1, "hybridEgg", "hybridEgg.tokenURI1");
-        await zooMedia.setMetadataURI(1, "hybridEgg", "hybridEgg.metadataURI1");
+        await zooKeeper.connect(owner).addDrop("test", 16000, 210);
+
+        await zooKeeper.setTokenURI(1, "basicEgg", "basicEgg.tokenURI1");
+        await zooKeeper.setMetadataURI(1, "basicEgg", "basicEgg.metadataURI1");
+        await zooKeeper.setTokenURI(1, "hybridEgg", "hybridEgg.tokenURI1");
+        await zooKeeper.setMetadataURI(1, "hybridEgg", "hybridEgg.metadataURI1");
 
     }
 
@@ -470,36 +475,8 @@ describe("ZooKeeper", () => {
     /**
      * BUYING EGGS
      */
-    it("Should buy a basic egg", async () => {
-        await addDrop();
+    it.only("Should buy a basic egg", async () => {
 
-        await zooToken.approve(zooMedia.address, 210)
-
-        const buyEgg = await zooMedia.connect(owner).buyEgg(1);
-
-        const buyEggReceipt = await buyEgg.wait();
-
-        const sender = buyEggReceipt.events;
-
-        let from_add
-        let token_id
-
-        sender.forEach(element => {
-            if (element.event == "BuyEgg") {
-                from_add = element.args["_from"]
-                token_id = element.args["_tokenID"]
-            }
-        });
-
-        expect(from_add).to.equal(owner.address);
-        expect(token_id.toNumber()).to.equal(0);
-
-        // add check for types mapping
-        expect(await zooMedia.types(token_id.toNumber())).to.equal(token_id.toNumber());
-
-        // check eggs mapping for new egg
-        let egg = await zooMedia.eggs(token_id.toNumber());
-        expect(egg.eggCreationTime.toNumber()).to.greaterThan(0);
     });
 
     it("Should buy multiple basic eggs", async () => {
