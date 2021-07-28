@@ -70,6 +70,7 @@ const IconButton = styled.button`
 const MainHeading = styled(Text)`
   font-size: 32px;
   width: 100%;
+  line-height: 1;
   color: ${({ theme }) => theme.colors.primary};
   font-weight: 900;
   -webkit-text-fill-color: ${({ theme }) => theme.colors.text};
@@ -149,14 +150,14 @@ const FeedCard: React.FC<Props> = ({ item }) => {
           <MainHeading
             bold
             as="p"
-            style={{
-              WebkitTextFillColor: rarityColor,
-              WebkitTextStrokeColor: rarityColor,
-            }}
           >
             {item.name}
           </MainHeading>
-          <Subheading bold as="p">
+          <Subheading bold as="p"
+            style={{
+              WebkitTextFillColor: rarityColor,
+              WebkitTextStrokeColor: rarityColor,
+            }}>
             {item.rarity}
           </Subheading>
           <Subheading bold as="p">{`Born: ${StringDate}`}</Subheading>
