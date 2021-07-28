@@ -23,7 +23,7 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
                   Daily Yield
                </Label>
                <Text  bold ml="16px" mt="4px" mb="16px" fontSize="22px" color="text">
-                  {`${multiplier} x ${Number(item.yield)} = ${multiplier * Number(item.yield)}`}
+                  {multiplier ? `${multiplier} x ${Number(item.yield)} = ${multiplier * Number(item.yield)}` : `${Number(item.yield)}`}
                </Text>
                <Label fontSize="22px" color="text" fontWeight="550">
                   Accumulated Yield
