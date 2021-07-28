@@ -129,7 +129,7 @@ describe('ZooMedia', () => {
     marketAddress = market.address;
 
     const media = await (
-      await new ZooMedia__factory(deployerWallet).deploy('ANML', 'CryptoZoo', marketAddress, tokenAddress)
+      await new ZooMedia__factory(deployerWallet).deploy('ANML', 'CryptoZoo', marketAddress)
     ).deployed();
     mediaAddress = media.address;
 
