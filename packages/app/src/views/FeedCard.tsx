@@ -114,7 +114,7 @@ const CardOverlay = styled.div`
       rgba(0, 0, 0, 0.8)
    );
    * {
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+      text-shadow: 2px 0 0 #0000006e, 0 -2px 0 #0000006e, 0 2px 0 #000, -2px 0 0 #0000006e;
    }
 `;
 
