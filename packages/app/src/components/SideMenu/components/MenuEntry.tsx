@@ -30,7 +30,7 @@ const LinkLabel = styled.div<{ isPushed: boolean }>`
   line-height: 1.2;
   margin: 0px 24px;
   text-align: center;
-  font-size: 10px;
+  font-size: 9px;
 
   &:hover {
     color: ${({ isPushed, theme }) => (isPushed ? theme.colors.primaryPop : theme.colors.text)};
