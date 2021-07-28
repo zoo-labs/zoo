@@ -129,7 +129,7 @@ describe('ZooMedia', () => {
     marketAddress = market.address;
 
     const media = await (
-      await new ZooMedia__factory(deployerWallet).deploy('ANML', 'CryptoZoo', marketAddress, tokenAddress)
+      await new ZooMedia__factory(deployerWallet).deploy('ANML', 'CryptoZoo', marketAddress)
     ).deployed();
     mediaAddress = media.address;
 
@@ -298,8 +298,8 @@ describe('ZooMedia', () => {
         )
       ).fulfilled;
 
-      const t = await media.mediaByIndex(0);
-      const ownerT = await media.mediaOfOwnerByIndex(creatorWallet.address, 0);
+      const t = await media.tokenByIndex(0);
+      const ownerT = await media.tokenOfOwnerByIndex(creatorWallet.address, 0);
       const ownerOf = await media.ownerOf(0);
       const creator = await media.tokenCreators(0);
       const prevOwner = await media.previousTokenOwners(0);
@@ -699,7 +699,7 @@ describe('ZooMedia', () => {
       await setAsk(media, 0, defaultAsk);
 
       await expect(removeAsk(media, 0)).fulfilled;
-      const ask = await market.currentAskFormedia(0);
+      const ask = await market.currentAskForToken(0);
       expect(toNumWei(ask.amount)).eq(0);
       expect(ask.currency).eq(AddressZero);
     });
@@ -918,7 +918,7 @@ describe('ZooMedia', () => {
       const afterCreatorBalance = toNumWei(
         await getBalance(currencyAddr, creatorWallet.address)
       );
-      const bidShares = await auction.bidSharesFormedia(0);
+      const bidShares = await auction.bidSharesForToken(0);
 
       expect(afterOwnerBalance).eq(beforeOwnerBalance + 80);
       expect(afterPrevOwnerBalance).eq(beforePrevOwnerBalance + 10);
@@ -1026,7 +1026,7 @@ describe('ZooMedia', () => {
       await expect(
         media.transferFrom(ownerWallet.address, otherWallet.address, 0)
       ).fulfilled;
-      const ask = await auction.currentAskFormedia(0);
+      const ask = await auction.currentAskForToken(0);
       await expect(toNumWei(ask.amount)).eq(0);
       await expect(ask.currency).eq(AddressZero);
     });
