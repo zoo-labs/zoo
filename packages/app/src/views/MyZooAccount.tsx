@@ -25,7 +25,40 @@ import { addAnimal, addEgg, burnEgg } from "state/actions";
 import BorderButton from "components/Button/BorderButton";
 import { animalMapping } from "util/animalMapping";
 import NewAnimalCard from "components/NewAnimal/NewAnimalCard";
+import { FaShoppingCart } from "react-icons/fa";
+import StickyBottomMenu from "components/Button/StickyBottomMenu"
+import { useHistory } from 'react-router-dom'
 import { RarityColor } from "enums/rarity-color";
+
+// install Swiper modules
+// SwiperCore.use([Pagination]);
+
+const IconCont = styled.div`
+   display: flex;
+   justify-content: center;
+   margin-top: 20px;
+   & svg {
+      color: ${({ theme }) => theme.colors.primary};
+      animation: spin 2s ease infinite;
+   }
+
+   @keyframes spin {
+      0% {
+         transform: rotate(0deg);
+      }
+      100% {
+         transform: rotate(360deg);
+      }
+   }
+`;
+const ImageContainer = styled.div`
+   img {
+      width: 100%;
+      height: 100%;
+      minheight: 300px;
+      overflow: hidden;
+   }
+`;
 
 const InfoBlock = styled.div`
   padding: 4px;
@@ -64,6 +97,8 @@ const RowTitle = styled.div`
   font-size: 20px;
   margin-t: 15px;
   margin-bottom: 15px;
+  margin-left: 10px;
+  font-weight: 600;
 `;
 
 const RowLayout = styled.div`
@@ -132,6 +167,8 @@ const MyZooAccount: React.FC = () => {
   const chainIdSet = chainId === undefined ? "1" : String(chainId);
   const [eggType, setEggType] = useState("");
   const [isOpen, setOpen] = useState(false);
+  const history = useHistory()
+  const [showBoth, setShowBoth] = useState(false);
   const [hatched, setHatched] = useState({
     tokenId: "",
     name: "",
@@ -143,6 +180,9 @@ const MyZooAccount: React.FC = () => {
     imageUrl: "",
     listed: false,
   });
+  const handleRedirect = () => {
+     history.push('/feed')
+  }
 
   const allAnimals = useSelector<AppState, AppState["zoo"]["animals"]>(
     (state) => state.zoo.animals
@@ -170,6 +210,7 @@ const MyZooAccount: React.FC = () => {
   };
 
   const hatchEgg = (egg) => {
+   setShowBoth(true);
     setEggType(egg.basic ? "basic" : "hybrid");
 
     let randIdx: number;
@@ -205,11 +246,14 @@ const MyZooAccount: React.FC = () => {
       lastBred: "",
     };
     setHatched(newAnimal);
-    setOpen(true);
+    
     dispatch(burnEgg(egg));
     dispatch(addAnimal(newAnimal));
     // ---------------------------------------------
+    setTimeout(() => setOpen(true), 5450)
+    setTimeout(() => setEggType(""), 7000)
   };
+
 
   const breed = (onDismiss) => {
     const animal1: Animal = array[0];
@@ -378,13 +422,6 @@ const MyZooAccount: React.FC = () => {
     <SellConfirm onDismiss={() => null} breed={sell} />
   );
 
-  const onVideoEnd = () => {
-    setEggType("");
-    setTimeout(() => {
-      setOpen(false);
-    }, 5000);
-  };
-
   const [timeStartOnPage, setTimeStartOnPage] = useState(new Date().getTime());
   const [elapsedTimeOnPage, setElapsedTimeOnPage] = useState(
     new Date().getTime() - timeStartOnPage
@@ -462,7 +499,7 @@ const MyZooAccount: React.FC = () => {
                ) : (
                   <Swiper slidesPerView={2.2} spaceBetween={10}>
                      {animals.map((animal) => (
-                        <SwiperSlide>
+                        <SwiperSlide style={{padding: '3px'}}>
                            <CardWrapper>
                               <Card
                                  style={{
@@ -637,25 +674,20 @@ const MyZooAccount: React.FC = () => {
 
    return (
       <div>
-         {eggType !== "" ? (
+         {eggType !== "" && 
             <VideoPlayer
                videoPath={
                   eggType === "basic"
                      ? "hatch_mobile_basic.mp4"
                      : "hatch_mobile_hybrid.mp4"
                }
-               onDone={() => onVideoEnd()}
-            />
-         ) : isOpen ? (
-            <NewAnimalCard animal={hatched} isOpen={setOpen} />
-         ) : (
-            <Page>
-               {/* <RowTitle>My Eggs</RowTitle> */}
-               {renderEggs()}
-               {renderAnimals("pure")}
-               {renderAnimals("hybrid")}
-            </Page>
-         )}
+            /> }
+            { isOpen ? <NewAnimalCard animal={hatched} isOpen={setOpen} /> :
+         <>
+               {eggType === "" && renderEggs()}
+               {eggType === "" && renderAnimals("pure")}
+               {eggType === "" && renderAnimals("hybrid")}
+         </> }
       </div>
    );
 };
