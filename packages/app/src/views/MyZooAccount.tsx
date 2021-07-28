@@ -38,7 +38,7 @@ const IconCont = styled.div`
    justify-content: center;
    margin-top: 20px;
    & svg {
-      color: ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.primaryPop};
       animation: spin 2s ease infinite;
    }
 
@@ -67,7 +67,7 @@ const InfoBlock = styled.div`
    left: 0;
    bottom: 0;
    width: 100%;
-   background-color: rgba(0, 0, 0, 0.6);
+   background-color:${({ theme }) => theme.colors.background};
    z-index: 999999;
    // border-radius: 0px 0px 8px 8px;
 `;
@@ -75,7 +75,7 @@ const InfoBlock = styled.div`
 const TextWrapper = styled.div`
    text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
    font-size: 14px;
-   color: #ffffff;
+   color: ${({ theme }) => theme.colors.text};
    font-weight: 550;
    line-height: 1.5;
    letter-spacing: 3px;
@@ -85,7 +85,7 @@ const TextWrapper = styled.div`
 const BreedWrapper = styled.div<{ cols?: number }>`
    text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
    font-size: 18px;
-   color: #ffffff;
+   color: ${({ theme }) => theme.colors.text};
    font-weight: 550;
    line-height: 1.5;
    letter-spacing: 3px;
@@ -93,7 +93,7 @@ const BreedWrapper = styled.div<{ cols?: number }>`
 `;
 
 const RowTitle = styled.div`
-   color: white;
+   color: ${({ theme }) => theme.colors.text};
    font-size: 20px;
    margin-t: 15px;
    margin-bottom: 15px;
@@ -123,7 +123,7 @@ const CardWrapper = styled.div`
       border-radius: 8px;
    }
 `;
-
+//  #a7565e;
 const TimeoutWrapper = styled.div<{ barwidth?: string }>`
    position: absolute;
    bottom: 0;
@@ -132,11 +132,11 @@ const TimeoutWrapper = styled.div<{ barwidth?: string }>`
    line-height: 1.8;
    // background: white;
    text-align: center;
-   color: white;
+   color: ${({ theme }) => theme.colors.text};
    padding: 4px;
    text-align: center;
    width: 100%;
-   background-color: #a7565e;
+   background-color: ${({ theme }) => theme.colors.background};
    z-index: 999999;
    ::before {
       content: "";
@@ -343,30 +343,29 @@ const MyZooAccount: React.FC = () => {
       const animal1 = array[0];
       const animal2 = array[1];
       return (
-         <CustomModal onDismiss={onDismiss}>
+         <Modal title="Confirm Breed" onDismiss={onDismiss}>
             <Text
-               color="textSubtle"
-               style={{
-                  color: "black",
-               }}>{`You want to breed this ${animal1.name} with this ${animal2.name}?`}</Text>
-            <Flex style={{ marginTop: 15 }}>
-               <Button onClick={() => breed(onDismiss)}>YES</Button>
-               <Button onClick={() => onDismiss()}>NO</Button>
+               color="text"
+            >
+               {`Do you want to breed ${animal1.name} with ${animal2.name}?`}</Text>
+            <Flex style={{ marginTop: 15 }} width="100%" alignItems="center" justifyContent="space-around">
+               <BorderButton scale="sm" onClick={() => breed(onDismiss)}>YES</BorderButton>
+               <BorderButton scale="sm" onClick={() => onDismiss()}>NO</BorderButton>
             </Flex>
-         </CustomModal>
+         </Modal>
       );
    };
 
    const EggCreatedNotify: React.FC<any> = ({ onDismiss = () => null }) => {
       return (
-         <CustomModal style={{ width: "230px" }} onDismiss={onDismiss}>
-            <Text color="textSubtle" style={{ color: "black" }}>
+         <Modal title="Success" style={{ width: "230px" }} onDismiss={onDismiss}>
+            <Text color="text" >
                Hybrid egg created successfully
             </Text>
             <Flex style={{ marginTop: 15 }}>
-               <Button onClick={() => onDismiss()}>OK</Button>
+               <BorderButton scale="sm" onClick={() => onDismiss()}>OK</BorderButton>
             </Flex>
-         </CustomModal>
+         </Modal>
       );
    };
 
@@ -391,14 +390,14 @@ const MyZooAccount: React.FC = () => {
 
    const SellConfirm: React.FC<Props> = ({ onDismiss = () => null, breed }) => {
       return (
-         <Modal title="Are you Sure?" onDismiss={onDismiss}>
-            <Text>{`You want to list this ${sellAnimal.name}?`}</Text>
-            <Flex justifyContent="space-around" flexDirection="row" mt="16px">
-              <BorderButton scale="md" onClick={() => onDismiss()}>
-                Cancel
-              </BorderButton>
+         <Modal title="Confirm Listing" onDismiss={onDismiss}>
+            <Text>{`Do you want to list ${sellAnimal.name}?`}</Text>
+            <Flex width="100%" alignItems="center" justifyContent="space-evenly" flexDirection="row" mt="16px">
               <BorderButton scale="md" onClick={() => breed(onDismiss)}>
                 Confirm
+               </BorderButton>
+                 <BorderButton scale="md" onClick={() => onDismiss()}>
+                Cancel
               </BorderButton>
             </Flex>
          </Modal>
