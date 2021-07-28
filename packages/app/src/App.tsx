@@ -111,9 +111,6 @@ const App: React.FC = () => {
                         <Redirect to="/login" />
                      )}
                   </Route>
-                  <Route path="/feed/myzoo/:key">
-                     {signedIn ? <Feed /> : <Redirect to="/login" />}
-                  </Route>
                   <Route path="/feed">
                      {signedIn ? <Feed /> : <Redirect to="/login" />}
                   </Route>

@@ -86,7 +86,7 @@ const Card = styled(Existing) <{ timedOut?: boolean }>`
 const basicEggURL = window.location.origin + '/static/images/basic.png'
 const hybridEggURL = window.location.origin + '/static/images/hybrid.jpeg'
 
-export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, eggGroup }) => {
+export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg }) => {
 
   const [onHatch] = useModal(
     <HatchModal
@@ -95,26 +95,12 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, eggGroup }) => {
       onDismiss={() => null}
     />
   )
-  const eggType = egg.basic ? "BASIC" : "HYBRID";
+  // const eggType = egg.basic ? "BASIC" : "HYBRID";
 
   return (
     <>
       <Card onClick={() => { egg.timeRemaining > 0 ? null : onHatch() }} style={{ backgroundColor: '#000000' }} timedOut={egg.timeRemaining > 0 ? true : false}>
         <CardBody style={{ backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: 150, padding: 10 }}>
-
-          <TextWrapper
-            style={{
-              textShadow: "0px 2px 6px rgb(0, 0, 0)",
-              fontSize: 18,
-              letterSpacing: 0,
-              position: "absolute",
-              textTransform: "lowercase",
-              right: 7,
-              top: -4
-            }}
-          >
-            {egg.timeRemaining === 0 ? eggGroup[eggType] > 1 ? `x${eggGroup[eggType]}` : '' : ''}
-          </TextWrapper>
           <TextWrapper style={{width: '100%', textAlign: 'center', paddingLeft: '7px'}}>{egg.name}</TextWrapper>
         </CardBody>
         {egg.timeRemaining > 0 ?

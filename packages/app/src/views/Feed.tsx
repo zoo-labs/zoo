@@ -93,7 +93,8 @@ function Feed<FeedPagePops>({ match }) {
    const { isXl } = useMatchBreakpoints();
    const isMobile = !isXl;
    const history = useHistory();
-   const { account } = useWeb3React();
+  const { account } = useWeb3React();
+  
    let animals = Object.values(animalsState);
    const { pathname } = useLocation();
 
@@ -129,23 +130,38 @@ function Feed<FeedPagePops>({ match }) {
    }
 
    //  Filter if in the Zoo or Market
-   const isZoo = filter === "myZoo";
+   const isMyZoo = filter === "myZoo";
    let animalsFiltered = animals.filter((animal) => {
       return animal.owner
-         ? isZoo
+         ? isMyZoo
             ? animal.owner.toLowerCase() === account.toLowerCase()
             : animal.owner.toLowerCase() !== account.toLowerCase()
-         : !isZoo;
+         : !isMyZoo;
    });
 
-   if (toFind && isZoo) {
+   if (toFind && isMyZoo) {
       const ogIndex = animalsFiltered.findIndex((a) => a.tokenId === toFind);
       const toMove = animalsFiltered[0];
       animalsFiltered[0] = animalsFiltered[ogIndex];
       animalsFiltered[ogIndex] = toMove;
    }
 
-   console.log(toFind, animalsFiltered);
+  console.log(toFind, animalsFiltered);
+  
+  const animalGroup = {}
+  let animalData = []
+  if (isMyZoo) {
+    animalsFiltered.forEach(animal => { // AF[1,2,3,2,1] //AD[1,2,3]
+      if (animalData.find(a => a.animalId === animal.animalId)) {
+        animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 2
+      } else {
+        animalData.push(animal)
+      }
+        // return animalGroup[animal.animalId] === 1 ? true : false
+    })
+  } else {
+    animalData = animalsFiltered
+  }
 
    return (
       <Container isMobile={isMobile}>
@@ -162,7 +178,7 @@ function Feed<FeedPagePops>({ match }) {
                </ButtonMenuItem>
             </ButtonMenu>
          </ToggleContainer>
-         {!isZoo || animalsFiltered.length ? (
+         {animalsFiltered.length ? (
             <Swiper
                spaceBetween={30}
                slidesPerView={1}
@@ -170,7 +186,7 @@ function Feed<FeedPagePops>({ match }) {
                {animalsFiltered.map((data) => {
                   return data.listed ? (
                      <SwiperSlide key={data.tokenId + "slide"}>
-                        <FeedCard item={data} key={data.tokenId + "card"} />
+                        <FeedCard item={data} key={data.tokenId + "card"} animalGroup={animalGroup}/>
                      </SwiperSlide>
                   ) : (
                      <></>
