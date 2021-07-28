@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, useRouteMatch } from "react-router-dom";
+import { Route, useRouteMatch, Link } from "react-router-dom";
 import { AppState } from "state";
 import { useDispatch, useSelector } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
@@ -138,7 +138,7 @@ const TimeoutWrapper = styled.div<{ barwidth?: string }>`
   padding: 4px;
   text-align: center;
   width: 100%;
-  background-color: #A7565E;
+  background-color: #a7565e;
   z-index: 999999;
   ::before {
     content: "";
@@ -324,23 +324,16 @@ const MyZooAccount: React.FC = () => {
     // onDismiss();
   };
 
-  const breedClick = (animal) => {
-    const selected = Object.values(allAnimals).filter((item) => item.selected);
-    const toSet: Animal = { ...animal };
-    toSet.selected = animal.selected ? false : true;
-
-    if (!animal.selected && selected.length === 1) {
-      const temp = [{ ...selected[0] }, { ...animal }];
-      array = temp;
-      onConfirm();
-    }
-
-    dispatch(addAnimal(toSet));
-  };
-
   const Confirmation: React.FC<Props> = ({ onDismiss = () => null, breed }) => {
     const animal1 = array[0];
     const animal2 = array[1];
+    const cancel = () => {
+      animal1.selected = false;
+      animal2.selected = false;
+      dispatch(addAnimal(animal1));
+      dispatch(addAnimal(animal2));
+      onDismiss();
+    };
     return (
       <Modal title="Confirm Breed" onDismiss={onDismiss}>
         <Text color="text">
@@ -443,6 +436,33 @@ const MyZooAccount: React.FC = () => {
     const animalData = [];
     const now = new Date().getTime();
 
+    const breedClick = (animal) => {
+      const selected = Object.values(allAnimals).filter(
+        (item) => item.selected
+      );
+      const toSet: Animal = { ...animal };
+      if (
+        animal.selected &&
+        selected.length === 1 &&
+        animalGroup[animal.animalId] > 1
+      ) {
+        const multipleAvailable = Object.values(allAnimals).filter(
+          (item) =>
+            item.animalId === animal.animalId && item.timeRemaining === 0
+        );
+        const temp = [{ ...multipleAvailable[0] }, { ...multipleAvailable[1] }];
+        array = temp;
+        onConfirm();
+      }
+      toSet.selected = animal.selected ? false : true;
+      if (!animal.selected && selected.length === 1) {
+        const temp = [{ ...selected[0] }, { ...animal }];
+        array = temp;
+        onConfirm();
+      }
+      dispatch(addAnimal(toSet));
+    };
+
     Object.values(allAnimals).forEach((animal, index) => {
       if (animal.owner !== account) {
         return;
@@ -535,33 +555,40 @@ const MyZooAccount: React.FC = () => {
                             padding: 10,
                           }}
                         >
-                          <TextWrapper
-                            style={{
-                              textShadow: "0px 2px 6px rgb(0, 0, 0)",
-                              fontSize: 18,
-                              letterSpacing: 0,
-                              position: "absolute",
-                              textTransform: "lowercase",
-                              right: 11,
-                              top: -2,
-                            }}
-                          >
-                            {animal.timeRemaining === 0
-                              ? animalGroup[animal.animalId]
-                                ? `x${animalGroup[animal.animalId]}`
-                                : ""
-                              : ""}
-                          </TextWrapper>
-                          <TextWrapper
-                            style={{
-                              textShadow: "0px 2px 6px rgb(0, 0, 0)",
-                              textAlign: "center",
-                              fontSize: 16,
-                              letterSpacing: 0,
-                            }}
-                          >
-                            {animal.name}
-                          </TextWrapper>
+                          <Link
+                            to={`/feed/myzoo/${animal.tokenId}`}>
+                            <TextWrapper
+                                style={{
+                                  textShadow:
+                                      "0px 2px 6px rgb(0, 0, 0)",
+                                  fontSize: 18,
+                                  letterSpacing: 0,
+                                  position: "absolute",
+                                  textTransform: "lowercase",
+                                  right: 11,
+                                  top: 9,
+                                }}>
+                                {animal.timeRemaining === 0
+                                  ? animalGroup[animal.animalId]
+                                      ? `x${
+                                          animalGroup[animal.animalId]
+                                        }`
+                                      : ""
+                                  : ""}
+                            </TextWrapper>
+                            <TextWrapper
+                                style={{
+                                  textShadow:
+                                      "0px 2px 6px rgb(0, 0, 0)",
+                                  textAlign: "center",
+                                  fontSize: 16,
+                                  letterSpacing: 0,
+                                height: "100%",
+                                  paddingRight: animalGroup[animal.animalId] ? '26px' : null
+                                }} >
+                                {animal.name}
+                            </TextWrapper>
+                          </Link>
                           {animal.timeRemaining > 0 ? (
                             <TimeoutWrapper
                               barwidth={
