@@ -59,7 +59,7 @@ describe.only("ZooKeeper", () => {
         await zooMarket.configure(mediaAddress);
 
         // Launch ZooKeeper
-        zooKeeper = (await new ZooKeeper__factory(owner).deploy('Zoo', 'ANML', mediaAddress, zooToken.address)) as ZooKeeper
+        zooKeeper = (await new ZooKeeper__factory(owner).deploy('Zoo', 'ANML', marketAddress, zooToken.address)) as ZooKeeper
         await zooKeeper.deployed();
         const zooKeeperFactory = await ethers.getContractFactory("ZooKeeper", signers[0]);
         zooKeeper = (await zooKeeperFactory.deploy(
@@ -444,11 +444,10 @@ describe.only("ZooKeeper", () => {
     /**
      * BUYING EGGS
      */
-    it.only("Should buy a basic egg", async () => {
+    it("Should buy a basic egg", async () => {
         await addDrop();
-
         await zooToken.approve(zooKeeper.address, 210)
-
+        console.log('OWNER', owner)
         const buyEgg = await zooKeeper.connect(owner).buyEgg(1);
         const buyEggReceipt = await buyEgg.wait();
         const sender = buyEggReceipt.events;
@@ -456,6 +455,7 @@ describe.only("ZooKeeper", () => {
         let from_add
         let token_id
 
+        console.log('sender stuff')
         sender.forEach(element => {
             if (element.event == "BuyEgg"){
                 from_add = element.args["_from"]
@@ -494,12 +494,10 @@ describe.only("ZooKeeper", () => {
      */
     it("Should hatch & burn basic egg", async () => {
         await addAnimals();
-
         await zooToken.approve(zooKeeper.address, 600)
-
         const buyEgg = await zooKeeper.connect(owner).buyEgg(1);
-
         const buyEggReceipt = await buyEgg.wait();
+        console.log('OWNER', owner)
 
         let sender = buyEggReceipt.events;
 
