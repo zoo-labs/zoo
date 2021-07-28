@@ -48,7 +48,7 @@ describe.only("ZooKeeper", () => {
         await zooMarket.deployed();
         marketAddress = zooMarket.address;
 
-        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', marketAddress)) as ZooMedia
+        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', auctionAddress)) as ZooMedia
         await zooMedia.deployed();
         mediaAddress = zooMedia.address;
 
@@ -79,7 +79,6 @@ describe.only("ZooKeeper", () => {
         await zooKeeper.setMetadataURI(1, "basicEgg", "basicEgg.metadataURI1");
         await zooKeeper.setTokenURI(1, "hybridEgg", "hybridEgg.tokenURI1");
         await zooKeeper.setMetadataURI(1, "hybridEgg", "hybridEgg.metadataURI1");
-
 
         await zooKeeper.addAnimal(1, "Pug", 100, "Common", 5500, "test", "test");
         await zooKeeper.addAnimal(1, "Butterfly", 100, "Common", 5500, "test1", "test1");
@@ -442,7 +441,6 @@ describe.only("ZooKeeper", () => {
 
         const log = zooKeeper.interface.parseLog(events[0]);
         expect(log.name).to.equal("AddDrop");
-
         expect(log.args._dropID.toNumber()).to.equal(1);
     });
 
@@ -549,6 +547,7 @@ describe.only("ZooKeeper", () => {
         const token = await breedHybrid()
 
         const hatchEgg = await zooKeeper.hatchEgg(1, 4)
+
         const hatchEggReceipt = await hatchEgg.wait();
 
         let sender = hatchEggReceipt.events;
