@@ -302,8 +302,8 @@ describe('ZooMedia', () => {
         )
       ).fulfilled;
 
-      // const t = await media.mediaByIndex(0);
-      // const ownerT = await media.mediaOfOwnerByIndex(creatorWallet.address, 0);
+      const t = await media.tokenByIndex(0);
+      const ownerT = await media.tokenOfOwnerByIndex(creatorWallet.address, 0);
       const ownerOf = await media.ownerOf(0);
       const creator = await media.tokenCreators(0);
       const prevOwner = await media.previousTokenOwners(0);
