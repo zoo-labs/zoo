@@ -134,7 +134,8 @@ const FeedCard: React.FC<Props> = ({ item }) => {
         </SecondThird>
         <FinalThird>
           <Flex flexDirection="row">
-            <Flex flexDirection="column" width="calc(100% - 75px)">
+            <Flex flexDirection="column" width="calc(100% - 75px)"
+                  style={{textShadow: "2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000"}}>
               <MainHeading
                 bold
                 as="p"
