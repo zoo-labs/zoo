@@ -115,34 +115,43 @@ export default function Feed() {
   switch (true) {
     case pathname.includes("myzoo"):
       activeIndex = 0;
+      filter = "myZoo";
       break;
     case pathname.includes("marketplace"):
       activeIndex = 1;
-      break;
-    default:
-      activeIndex = 1;
-      break;
-  }
-  switch (true) {
-    case subUrl.includes("myzoo"):
-      filter = "myZoo";
-      break;
-    case subUrl.includes("marketplace"):
       filter = "marketplace";
       break;
     default:
+      activeIndex = 1;
       filter = "";
       break;
   }
-  const isZoo = filter === "myZoo";
+  
+  const isMyZoo = filter === "myZoo";
   const animalsFiltered = animals.filter((animal) => {
     return animal.owner
-      ? isZoo
+      ? isMyZoo
         ? animal.owner.toLowerCase() === account.toLowerCase()
         : animal.owner.toLowerCase() !== account.toLowerCase()
-      : !isZoo;
+      : !isMyZoo;
   });
 
+  const animalGroup = {}
+  let animalData = []
+  if (isMyZoo) {
+    animalsFiltered.forEach(animal => { // AF[1,2,3,2,1] //AD[1,2,3]
+      if (animalData.find(a => a.animalId === animal.animalId)) {
+        animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 2
+      } else {
+        animalData.push(animal)
+      }
+        // return animalGroup[animal.animalId] === 1 ? true : false
+    })
+  } else {
+    animalData = animalsFiltered
+  }
+
+  console.log(animalData)
 
   return (
     <Container isMobile={isMobile}>
@@ -167,16 +176,16 @@ export default function Feed() {
           </ButtonMenuItem>
         </ButtonMenu>
       </ToggleContainer>
-      {!isZoo || animalsFiltered.length ? (
+      {animalData.length ? (
         <Swiper
           spaceBetween={30}
           slidesPerView={isMobile ? 1 : 3}
           direction={isMobile ? "vertical" : "horizontal"}
         >
-          {animalsFiltered.map((data) => {
+          {animalData.map((data) => {
             return data.listed ? (
               <SwiperSlide key={data.tokenId + "slide"}>
-                <FeedCard item={data} key={data.tokenId + "card"}/>
+                <FeedCard item={data} key={data.tokenId + "card"} animalGroup={animalGroup}/>
               </SwiperSlide>
             ) : (
               <></>

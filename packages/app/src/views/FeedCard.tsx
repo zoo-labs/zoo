@@ -14,6 +14,7 @@ import { ChevronLeftIcon } from 'components/Svg'
 interface Props {
   item: Animal;
   url?: string;
+  animalGroup?: { [key: string]: number };
 }
 
 const FirstThird = styled.div`
@@ -109,13 +110,13 @@ const StyledChevron = styled(ChevronLeftIcon)`
   height: 40px;
 `
 
-const FeedCard: React.FC<Props> = ({ item }) => {
+const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
   const history = useHistory();
   const ypd = {};
   const date = new Date(Number(item.dob) * 1000);
   const StringDate = date.toLocaleDateString("en-US");
 
-  const [onYield] = useModal(<YieldModal item={item} onDismiss={() => null} />);
+  const [onYield] = useModal(<YieldModal item={item} animalGroup={animalGroup} onDismiss={() => null} />);
 
   const [onBid] = useModal(<BidModal item={item} onDismiss={() => null} />);
 
@@ -124,6 +125,7 @@ const FeedCard: React.FC<Props> = ({ item }) => {
   };
 
   const rarityColor = RarityColor[item.rarity.toLowerCase()] || "white";
+  const multiplier = animalGroup[item.animalId] > 1 ? `x${animalGroup[item.animalId]}` : "";
 
   return (
     <>
@@ -139,7 +141,7 @@ const FeedCard: React.FC<Props> = ({ item }) => {
                 bold
                 as="p"
               >
-                {item.name}
+                {`${item.name} ${multiplier}`}
               </MainHeading>
               <Subheading bold as="p"
                 style={{

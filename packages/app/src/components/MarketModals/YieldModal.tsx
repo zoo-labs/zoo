@@ -4,10 +4,12 @@ import { BottomModal } from "components/Modal";
 
 interface Props {
    onDismiss?: () => null;
-   item?: any;
+  item?: any;
+  animalGroup?: { [key: string]: number };
 }
 // rgb(254 29 135) Darker PINK
-const YieldModal: React.FC<Props> = ({ item, onDismiss }) => {
+const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
+  const multiplier = animalGroup[item.animalId]
    return (
       <>
          <BottomModal header="Yield Info" height="300px" onDismiss={onDismiss}>
@@ -21,7 +23,7 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss }) => {
                   Daily Yield
                </Label>
                <Text  bold ml="16px" mt="4px" mb="16px" fontSize="22px" color="text">
-                  {item.yield}
+                  {`${multiplier} x ${Number(item.yield)} = ${multiplier * Number(item.yield)}`}
                </Text>
                <Label fontSize="22px" color="text" fontWeight="550">
                   Accumulated Yield
