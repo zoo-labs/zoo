@@ -156,7 +156,7 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
      * @notice On deployment, set the market contract address and register the
      * ERC721 metadata interface
      */
-    Buctor(
+    constructor(
         string memory name,
         string memory symbol,
         address marketAddress
@@ -240,7 +240,6 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         nonReentrant
     {
         _mintForCreator(msg.sender, data, bidShares, "");
-
     }
 
     /**
@@ -283,15 +282,13 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
             "Media: Signature invalid"
         );
 
-        _mintForCreator(recoveredAddress, data, bidShares,"");
+        _mintForCreator(recoveredAddress, data, bidShares, "");
     }
 
     /**
      * @notice see IMedia
      */
-    function transfer(uint256 tokenId, address recipient)
-        external
-    {
+    function transfer(uint256 tokenId, address recipient) external {
         require(msg.sender == marketContract, "Media: only market contract");
         previousTokenOwners[tokenId] = ownerOf(tokenId);
         _transfer(ownerOf(tokenId), recipient, tokenId);
@@ -300,11 +297,10 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
     /**
      * @notice see IMedia
      */
-    function getRecentToken(address creator) public view returns (uint256){
+    function getRecentToken(address creator) public view returns (uint256) {
+        uint256 length = EnumerableSet.length(_creatorTokens[creator]) - 1;
 
-        uint256 length = EnumerableSet.length(_creatorTokens[creator])-1;
-
-        return  EnumerableSet.at(_creatorTokens[creator],length);
+        return EnumerableSet.at(_creatorTokens[creator], length);
     }
 
     /**
