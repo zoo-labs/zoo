@@ -374,7 +374,7 @@ contract ERC721 is
      * - `tokenId` must exist.
      */
     function _isApprovedOrOwner(address spender, uint256 tokenId)
-        external
+        internal
         view
         returns (bool)
     {
@@ -386,6 +386,17 @@ contract ERC721 is
         return (spender == owner ||
             getApproved(tokenId) == spender ||
             isApprovedForAll(owner, spender));
+    }
+
+    /**
+     * @dev Public method which returns whether `spender` is allowed to manage `tokenId`.
+     *
+     * Requirements:
+     *
+     * - `tokenId` must exist.
+     */
+    function isApprovedOrOwner(address spender, uint256 tokenId) public view returns (bool) {
+        return _isApprovedOrOwner(spender, tokenId);
     }
 
     /**
