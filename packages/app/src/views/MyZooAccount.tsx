@@ -426,47 +426,56 @@ const MyZooAccount: React.FC = () => {
   },[elapsedTimeOnPage])
 
    const renderAnimals = (hybrid): JSX.Element => {
+      let animalGroup = {};
       const animalData = [];
       const now = new Date().getTime();
 
-      Object.values(allAnimalsSorted).forEach((animal, index) => {
+      Object.values(allAnimals).forEach((animal, index) => {
+         if (animal.owner !== account) {
+            return;
+         }
          const lastBred = animal.lastBred
             ? new Date(Number(animal.lastBred)).getTime()
             : new Date().getTime();
             const now = new Date().getTime();
          const breedTimeoutKey =
-            animal.breedCount > 5 ? 5 : animal.breedCount || 1;
+            animal.breedCount > 5 ? 5 : animal.breedCount || 0;
          const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
          const elapsedTime = now - lastBred;
          const timeRemaining = breedTimeout - elapsedTime;
          const timeRemainingDaysHours = getDaysHours(timeRemaining);
          const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
 
-         animalData.push({
+         if (timeRemaining <= 0 && animalData.find(a => a.animalId === animal.animalId && a.timeRemaining <= 0)) {
+            animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 2
+         } else {
+            animalData.push({
+               id: index,
+               ...animal,
+               name: animal.name.replace(/\u0000/g, ""),
+               timeRemaining:
+                  animal.bloodline === "pure"
+                     ? elapsedTime < breedTimeout
+                        ? timeRemaining
+                        : 0
+                     : 0,
+               CTAOverride:
+                  animal.bloodline === "pure"
+                     ? elapsedTime < breedTimeout
+                        ? { barwidth, timeRemainingDaysHours }
+                        : null
+                     : null,
+            });
+         }
+      });
 
-        id: index,
-        ...animal,
-        name: animal.name.replace(/\u0000/g, ""),
-        timeRemaining:
-          animal.bloodline === "pure"
-            ? animal.breedCount > 0
-              ? timeRemaining
-              : 0
-            : 0,
-        CTAOverride:
-          animal.bloodline === "pure"
-            ? animal.breedCount > 0
-              ? { barwidth, timeRemainingDaysHours }
-              : null
-            : null,
-      });
-      });
       empty =
-         animalData.length === 0 && Object.keys(allAnimalsSorted).length !== 0;
+         animalData.length === 0 && Object.keys(animalData).length !== 0;
 
-      const animals = animalData.filter(
-         (item) => item.bloodline === hybrid && item.owner === account
+      let animals = animalData.filter(
+         (item) => item.bloodline === hybrid
       );
+      animals = sortData(animals, "bloodline");
 
       return (
          <RowLayout>
@@ -495,6 +504,19 @@ const MyZooAccount: React.FC = () => {
                                        width: "calc(100vw/2.2 - 13px)",
                                        padding: 10,
                                     }}>
+                                    <TextWrapper
+                                       style={{
+                                          textShadow: "0px 2px 6px rgb(0, 0, 0)",
+                                          fontSize: 18,
+                                          letterSpacing: 0,
+                                          position: "absolute",
+                                          textTransform: "lowercase",
+                                          right: 11,
+                                          top: -2
+                                       }}
+                                    >
+                                       {animal.timeRemaining === 0 ? animalGroup[animal.animalId] ? `x${animalGroup[animal.animalId]}` : '' : ''}
+                                    </TextWrapper>
                                     <TextWrapper
                                        style={{
                                           textShadow:
@@ -548,36 +570,46 @@ const MyZooAccount: React.FC = () => {
    };
 
    const renderEggs = (): JSX.Element => {
-      const eggData = [];
-      Object.values(allEggsSorted).forEach((egg, index) => {
-        const createdDate = egg.created
-        ? new Date(Number(egg.created)).getTime()
-        : new Date().getTime();
-        const now = new Date().getTime();
-         const hatchTimeout = getMilliseconds(eggTimeout);
+      let eggData = [];
+      let eggGroup = {
+         BASIC: 1,
+         HYBRID: 1
+      };
+
+      Object.values(allEggs).forEach((egg, index) => {
+         const eggType = egg.basic ? "BASIC" : "HYBRID";
+         const createdDate = egg.created
+            ? new Date(Number(egg.created)).getTime()
+            : new Date().getTime();
+         const now = new Date().getTime();
+         const hatchTimeout = egg.basic ? 0 : getMilliseconds(eggTimeout);
          const elapsedTime = now - createdDate;
          const timeRemaining = hatchTimeout - elapsedTime;
          const timeRemainingDaysHours = getDaysHours(timeRemaining);
          const barwidth = [100 * (elapsedTime / hatchTimeout), "%"].join("");
 
-         eggData.push({
-            id: index,
-            ...egg,
-            name: egg.basic ? "BASIC" : "HYBRID",
-            timeRemaining: !egg.basic
-               ? elapsedTime < hatchTimeout
-                  ? timeRemaining
-                  : 0
-               : 0,
-            CTAOverride: !egg.basic
-               ? elapsedTime < hatchTimeout
-                  ? { barwidth, timeRemainingDaysHours }
-                  : null
-               : null,
-         });
+         if (timeRemaining <= 0 && eggData.find(a => a.basic === egg.basic && a.timeRemaining <= 0)) {
+            eggGroup[eggType] = eggGroup[eggType] + 1
+         } else {
+            eggData.push({
+               id: index,
+               ...egg,
+               name: eggType,
+               timeRemaining: !egg.basic
+                  ? elapsedTime < hatchTimeout
+                     ? timeRemaining
+                     : 0
+                  : 0,
+               CTAOverride: !egg.basic
+                  ? elapsedTime < hatchTimeout
+                     ? { barwidth, timeRemainingDaysHours }
+                     : null
+                  : null,
+            });
+         }
       });
-      console.log(eggData);
-      empty = eggData.length === 0 && Object.keys(allEggsSorted).length !== 0;
+      empty = eggData.length === 0 && Object.keys(eggData).length !== 0;
+      eggData = sortData(eggData, "basic");
 
       return (
          <RowLayout>
@@ -590,7 +622,7 @@ const MyZooAccount: React.FC = () => {
                   pagination={{ clickable: true }}>
                   {eggData.map((egg) => (
                      <SwiperSlide key={egg.id}>
-                        <EggCard egg={egg} hatchEgg={hatchEgg} />
+                        <EggCard egg={egg} hatchEgg={hatchEgg} eggGroup={eggGroup} />
                      </SwiperSlide>
                   ))}
                </Swiper>
@@ -603,28 +635,20 @@ const MyZooAccount: React.FC = () => {
          </RowLayout>
       );
    };
-   const allAnimalsSorted = Object.values(allAnimals).sort((a, b) => {
-      if (a.timeRemaining === b.timeRemaining) {
-         if (a.bloodline) {
-            if (b.bloodline) return 0;
-            return -1;
+
+   const sortData = (data: Array<any>, byType: string) => {
+      return data.sort((a, b) => {
+         if (a.timeRemaining === b.timeRemaining) {
+            if (a[byType]) {
+               if (b[byType]) return 0;
+               return -1;
+            }
+            if (b[byType]) return 1;
+            return 0;
          }
-         if (b.bloodline) return 1;
-         return 0;
-      }
-      return a.timeRemaining - b.timeRemaining;
-   });
-   const allEggsSorted = Object.values(allEggs).sort((a, b) => {
-      if (a.timeRemaining === b.timeRemaining) {
-         if (a.basic) {
-            if (b.basic) return 0;
-            return -1;
-         }
-         if (b.basic) return 1;
-         return 0;
-      }
-      return a.timeRemaining - b.timeRemaining;
-   });
+         return a.timeRemaining - b.timeRemaining;
+      });
+   }
 
    return (
       <div>
