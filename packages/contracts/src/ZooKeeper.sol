@@ -2,14 +2,14 @@
 
 pragma solidity >=0.8.4;
 
-import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
-import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import { ZooDrop } from "./ZooDrop.sol";
-import { ZooMedia } from "./ZooMedia.sol";
-import { ZooToken } from "./ZooToken.sol";
-import { IMarket } from "./interfaces/IMarket.sol";
-import { Decimal } from "./Decimal.sol";
+import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
+import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {ZooDrop} from "./ZooDrop.sol";
+import {ZooMedia} from "./ZooMedia.sol";
+import {ZooToken} from "./ZooToken.sol";
+import {IMarket} from "./interfaces/IMarket.sol";
+import {Decimal} from "./Decimal.sol";
 
 import "./console.sol";
 
@@ -85,7 +85,7 @@ contract ZooKeeper {
     IERC20 public token;
     address public owner;
 
-    modifier onlyOwner {
+    modifier onlyOwner() {
         require(msg.sender == owner, "Only owner has access");
         _;
     }
@@ -95,10 +95,7 @@ contract ZooKeeper {
         _;
     }
 
-    constructor(
-        address _media,
-        address _token
-    ) {
+    constructor(address _media, address _token) {
         owner = msg.sender;
         media = ZooMedia(_media);
         token = IERC20(_token);
@@ -176,29 +173,21 @@ contract ZooKeeper {
 
     // Accept ZOO and return Egg NFT
     function buyEgg(uint256 _dropID) public returns (uint256) {
-        console.log("buyEgg:this", address(this));
-        console.log("buyEgg:msg.sender", address(msg.sender));
-
-        console.log("Get drop instance");
         ZooDrop drop = ZooDrop(drops[_dropID]);
 
-        console.log("Ensure ZOO to purchase egg");
         require(
             token.balanceOf(msg.sender) >= drop.eggPrice(),
             "Not Enough ZOO Tokens to purchase Egg"
         );
 
-        console.log("Ensure eggs can be purchased");
         require(
             drop.currentSupply() > 0,
             "There are no more Eggs that can be purchased"
         );
 
-        console.log("Transfer ZOO from sender to this contract");
         token.transferFrom(msg.sender, address(this), drop.eggPrice());
         console.log("TEST THIS");
 
-        console.log("get tokenURI and metadataURI");
         (string memory _tokenURI, string memory _metadataURI) = drop.buyEgg();
         ZooMedia.MediaData memory data;
 
