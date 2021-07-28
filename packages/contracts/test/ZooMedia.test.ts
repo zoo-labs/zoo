@@ -381,6 +381,8 @@ describe('ZooMedia', () => {
               owner: Decimal.new(0),
             }
           );
+          const passed = false
+          expect(passed, "The previous tx was not reverted").to.be.true
       } catch (error) {
         expect(error.error.body).to.contain(
           'ZooMedia: a token has already been created with this content hash',
@@ -734,7 +736,7 @@ describe('ZooMedia', () => {
       expect(ask.currency).eq(AddressZero);
     });
 
-    it.only('should emit an Ask Removed event', async () => {
+    it('should emit an Ask Removed event', async () => {
       const auction = await ZooMarket__factory.connect(
         marketAddress,
         deployerWallet
