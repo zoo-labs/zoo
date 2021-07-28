@@ -21,7 +21,7 @@ const StyledPanel = styled.div<{ isPushed: boolean; showMenu: boolean; isMobile:
   flex-shrink: 0;
   background-color: transparent;
   width: ${({ isPushed, isMobile }) => (isPushed ? (!isMobile ? `80px` : `100px`) : 0)};
-  height:  ${({ isPushed, isMobile }) => (isPushed ? (!isMobile ? "250px" : "350px") : 0)};
+  height:  ${({ isPushed, isMobile }) => (isPushed ? (!isMobile ? "280px" : "350px") : 0)};
   transition: padding-bottom 0.2s, height 0.2s;
   // border-right: 2px solid #FFFFFF;
   z-index: 90;

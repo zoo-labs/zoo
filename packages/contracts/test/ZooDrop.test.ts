@@ -3,17 +3,15 @@ import { ZooDrop } from '../types/ZooDrop';
 import chai, { expect } from "chai";
 import { BigNumber, Bytes, BytesLike, utils } from 'ethers';
 
-let zooDrop
+let zooDrop : any;
 let signers: any;
 let mintAmt = 100000000;
 let owner;
-let auctionAddress: string;
-let tokenAddress: string;
 
 const TOKEN_URI = "idx.zoolabs.io/token/"
 const META_URI = "idx.zoolabs.io/meta/"
 
-describe.only("ZooDrop", () => {
+describe("ZooDrop", () => {
     beforeEach(async () => {
         signers = await ethers.getSigners();
         owner = signers[0]
@@ -23,7 +21,7 @@ describe.only("ZooDrop", () => {
     })
 
     it("Should have current supply equal total supply", async () => {
-        let currentSupply = await zooDrop.getCurrentSupply();
+        let currentSupply = await zooDrop.currentSupply();
         expect(currentSupply.toNumber()).to.equal((await zooDrop.totalSupply()).toNumber());
     });
 
@@ -68,15 +66,13 @@ describe.only("ZooDrop", () => {
 
     it("Should set & get egg price", async() => {
         zooDrop = zooDrop.connect(signers[0]);
-        let bigEggPrice = await zooDrop.getEggPrice();
-        let eggPrice = bigEggPrice.toNumber();
+        const eggPrice = (await zooDrop.eggPrice()).toNumber();
         expect(eggPrice).to.equal(210); // default eggPrice
 
         await zooDrop.connect(signers[0]).setEggPrice(333); //set a new price
 
-        bigEggPrice = await zooDrop.getEggPrice();
-        eggPrice = bigEggPrice.toNumber();
-        expect(eggPrice).to.equal(333); // gets the new eggPrice
+        const newPrice = (await zooDrop.eggPrice()).toNumber();
+        expect(newPrice).to.equal(333); // gets the new eggPrice
     });
 
     it("Should revert when setting egg price as non owner", async() => {
@@ -107,9 +103,7 @@ describe.only("ZooDrop", () => {
     it("Should set metadataURI for a pug", async() => {
         zooDrop = zooDrop.connect(signers[0]);
         const res = await zooDrop.setMetadataURI("pug", "pug.com/meta");
-        console.log('setMetadata', res);
         const metadataURI = await zooDrop.getMetadataURI("pug");
-        console.log('getMetadataURI', metadataURI);
         expect(metadataURI).to.equal("pug.com/meta");
     });
 
