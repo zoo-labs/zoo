@@ -97,11 +97,23 @@ const Account: React.FC = () => {
    };
 
    useEffect(() => {
-      getBalance();
+      let mounted = true
+      if(mounted){
+         getBalance();
+      }
+      return () => {
+         mounted = false
+      }
    }, [account, chainId]);
 
    useEffect(() => {
-      getBalance();
+      let mounted = true
+      if(mounted){
+         getBalance();
+      }
+      return () => {
+         mounted = false
+      }
    }, []);
 
    const pageHeading = (
