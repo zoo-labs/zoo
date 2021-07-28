@@ -800,7 +800,7 @@ describe('ZooMedia', () => {
       expect(passed, "The previous transaction was not reverted").to.be.true
     });
 
-    it.only('should revert if the media bidder does not have a high enough balance for their bidding currency', async () => {
+    it('should revert if the media bidder does not have a high enough balance for their bidding currency', async () => {
       const media = await mediaAs(bidderWallet);
       await approveCurrency(currencyAddr, marketAddress, bidderWallet);
       let passed = false
