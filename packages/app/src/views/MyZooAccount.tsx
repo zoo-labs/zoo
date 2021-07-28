@@ -508,11 +508,6 @@ const MyZooAccount: React.FC = () => {
                         <SwiperSlide style={{padding: '3px'}} key={animal.tokenId}>
                            <CardWrapper>
                               <Card
-                                 onClick={() =>
-                                             hybrid === "pure"
-                                                ? breedClick(animal)
-                                                : list(animal)
-                                          }
                                  style={{
                                     boxShadow: `0px 0px 13px -2px ${animal.rarityColor}`,
                                  }}
@@ -565,7 +560,12 @@ const MyZooAccount: React.FC = () => {
                                           </TimeoutDisplay>
                                        </TimeoutWrapper>
                                     ) : (
-                                       <InfoBlock
+                                          <InfoBlock
+                                             onClick={() =>
+                                             hybrid === "pure"
+                                                ? breedClick(animal)
+                                                : list(animal)
+                                          }
                                           >
                                           <BreedWrapper>
                                              {hybrid === "pure"
