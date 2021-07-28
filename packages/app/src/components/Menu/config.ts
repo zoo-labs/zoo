@@ -3,19 +3,20 @@ import { MenuEntry } from './types'
 
 let defaultConf =  [
 
-  {
-    label: 'Bank',
-    icon: '',
-    href: '/bank',
-  },
+  
   {
     label: 'My Account',
-    icon: '',
+    icon: 'AccountIcon',
     href: '/account',
   },
   {
+    label: 'Bank',
+    icon: 'BankIcon',
+    href: '/bank',
+  },
+  {
     label: 'Feed',
-    icon: '',
+    icon: 'MarketIcon',
     href: '/feed',
   },
 ]
@@ -24,7 +25,7 @@ let defaultConf =  [
 if (process.env.NODE_ENV !== "production") {
 defaultConf = [].concat(defaultConf, {
 	label: 'Zoo Faucet',
-	icon: '',
+	icon: 'FaucetIcon',
 	href: '/faucet'
 });
 }

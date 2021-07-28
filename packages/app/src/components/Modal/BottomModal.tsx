@@ -2,12 +2,21 @@ import { CloseIcon, Flex, Heading, IconButton, Label } from "components";
 import useTheme from "hooks/useTheme";
 import React from "react";
 import Sheet from "react-modal-sheet";
+import styled from "styled-components";
 
 interface Props {
    onDismiss?: () => null;
    header?: string;
    height?: string;
 }
+
+const HeaderOutline = styled.div`
+   width: 100%;
+   justify-content: center;
+   display: flex;
+   border-bottom: ${({ theme }) => `1px solid ${theme.colors.borderColor}`};
+   margin-bottom: 16px;
+`
 
 const BottomModal: React.FC<Props> = ({
    children,
@@ -28,18 +37,19 @@ const BottomModal: React.FC<Props> = ({
                }}>
                {/* <Sheet.Header /> */}
                <Sheet.Header>
+                  <HeaderOutline>
                   <Label
-                     mt="24px"
-                     mb="4px"
+                     mt="16px"
+                     mb="8px"
                      textTransform="uppercase"
                      textAlign="center"
                      fontSize="22px"
                      fontWeight="600"
-                     // style={{ color: "rgb(195 0 168)" }}
                   >
                      {header}
-                  </Label>
-                  <IconButton onClick={onDismiss} style={{position: 'absolute', top: '10px', right: '10px'}}>
+                     </Label>
+                     </HeaderOutline>
+                  <IconButton onClick={onDismiss} style={{position: 'absolute', background: "transparent", top: '10px', right: '10px'}}>
                      <CloseIcon />
                   </IconButton>
                </Sheet.Header>

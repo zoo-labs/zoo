@@ -28,11 +28,12 @@ const LinkLabel = styled.div<{ isPushed: boolean }>`
   letter-spacing: 1px;
   text-transform: uppercase;
   line-height: 1.2;
-  // margin: 8px 24px 8px 0px;
+  margin: 0px 24px;
   text-align: center;
+  font-size: 9px;
 
   &:hover {
-    color: ${({ isPushed, theme }) => (isPushed ? theme.colors.primaryPop : "transparent")};
+    color: ${({ isPushed, theme }) => (isPushed ? theme.colors.primaryPop : theme.colors.text)};
   }
   
 `;

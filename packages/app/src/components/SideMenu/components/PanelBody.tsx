@@ -22,20 +22,32 @@ const Container = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
-  justify-content: center;
-  padding-top: 29vh;
+  width: 100%;
+  align-items: flex-end;
+  margin-right: 10px;
+  justify-content: space-evenly;
+  
   a {
-    padding-bottom: 20px;
+    display: grid;
+    width: 100%;
+    align-items: center;
+    flex-direction: inherit;
+    border-radius: 60px;
+    justify-content: space-around;
+    width: 62px;
+    height: 62px;
+    background: ${({ theme }) => theme.colors.accent};
+    padding-bottom: 10px;
   }
 `
 
 const IconContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  width: 16px;
-  margin-right: 8px;
+  color: white;
+  // width: 100%;
 `
 
 const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {

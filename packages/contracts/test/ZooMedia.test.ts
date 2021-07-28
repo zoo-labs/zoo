@@ -301,18 +301,18 @@ describe('ZooMedia', () => {
       const t = await media.mediaByIndex(0);
       const ownerT = await media.mediaOfOwnerByIndex(creatorWallet.address, 0);
       const ownerOf = await media.ownerOf(0);
-      const creator = await media.mediaCreators(0);
-      const prevOwner = await media.previousmediaOwners(0);
-      const mediaContentHash = await media.mediaContentHashes(0);
-      const metadataContentHash = await media.mediaMetadataHashes(0);
+      const creator = await media.tokenCreators(0);
+      const prevOwner = await media.previousTokenOwners(0);
+      const tokenContentHash = await media.tokenContentHashes(0);
+      const metadataContentHash = await media.tokenMetadataHashes(0);
       const savedtokenURI = await media.tokenURI(0);
-      const savedMetadataURI = await media.mediaMetadataURI(0);
+      const savedMetadataURI = await media.tokenMetadataURI(0);
 
       expect(toNumWei(t)).eq(toNumWei(ownerT));
       expect(ownerOf).eq(creatorWallet.address);
       expect(creator).eq(creatorWallet.address);
       expect(prevOwner).eq(creatorWallet.address);
-      expect(mediaContentHash).eq(contentHash);
+      expect(tokenContentHash).eq(contentHash);
       expect(metadataContentHash).eq(metadataHash);
       expect(savedtokenURI).eq(tokenURI);
       expect(savedMetadataURI).eq(metadataURI);
@@ -484,13 +484,13 @@ describe('ZooMedia', () => {
         )
       ).fulfilled;
 
-      const recovered = await media.mediaCreators(0);
+      const recovered = await media.tokenCreators(0);
       const recoveredtokenURI = await media.tokenURI(0);
-      const recoveredMetadataURI = await media.mediaMetadataURI(0);
-      const recoveredContentHash = await media.mediaContentHashes(0);
-      const recoveredMetadataHash = await media.mediaMetadataHashes(0);
+      const recoveredMetadataURI = await media.tokenMetadataURI(0);
+      const recoveredContentHash = await media.tokenContentHashes(0);
+      const recoveredMetadataHash = await media.tokenMetadataHashes(0);
       const recoveredCreatorBidShare = formatUnits(
-        (await market.bidSharesFormedia(0)).creator.value,
+        (await market.bidSharesForToken(0)).creator.value,
         'ether'
       );
       const afterNonce = await media.mintWithSigNonces(creatorWallet.address);
@@ -1111,10 +1111,10 @@ describe('ZooMedia', () => {
       const tokenURI = await media.tokenURI(0);
       expect(tokenURI).eq('www.example.com');
 
-      const contentHash = await media.mediaContentHashes(0);
+      const contentHash = await media.tokenContentHashes(0);
       expect(contentHash).eq(contentHash);
 
-      const previousOwner = await media.previousmediaOwners(0);
+      const previousOwner = await media.previousTokenOwners(0);
       expect(previousOwner).eq(AddressZero);
     });
 
@@ -1140,10 +1140,10 @@ describe('ZooMedia', () => {
       const tokenURI = await media.tokenURI(0);
       expect(tokenURI).eq('www.example.com');
 
-      const contentHash = await media.mediaContentHashes(0);
+      const contentHash = await media.tokenContentHashes(0);
       expect(contentHash).eq(contentHash);
 
-      const previousOwner = await media.previousmediaOwners(0);
+      const previousOwner = await media.previousTokenOwners(0);
       expect(previousOwner).eq(AddressZero);
     });
   });
@@ -1223,7 +1223,7 @@ describe('ZooMedia', () => {
     });
   });
 
-  describe('#updateMetadataURI', async () => {
+  describe('#updateTokenMetadataURI', async () => {
     let currencyAddr: string;
 
     beforeEach(async () => {
@@ -1235,7 +1235,7 @@ describe('ZooMedia', () => {
     it('should revert if the media does not exist', async () => {
       const media = await mediaAs(creatorWallet);
 
-      await expect(media.updateMetadataURI(1, 'blah blah')).rejectedWith(
+      await expect(media.updateTokenMetadataURI(1, 'blah blah')).rejectedWith(
         'ERC721: operator query for nonexistent media'
       );
     });
@@ -1243,14 +1243,14 @@ describe('ZooMedia', () => {
     it('should revert if the caller is not the owner of the media or approved', async () => {
       const media = await mediaAs(otherWallet);
 
-      await expect(media.updateMetadataURI(0, 'blah blah')).rejectedWith(
+      await expect(media.updateTokenMetadataURI(0, 'blah blah')).rejectedWith(
         'Media: Only approved or owner'
       );
     });
 
     it('should revert if the uri is empty string', async () => {
       const media = await mediaAs(ownerWallet);
-      await expect(media.updateMetadataURI(0, '')).rejectedWith(
+      await expect(media.updateTokenMetadataURI(0, '')).rejectedWith(
         'Media: specified uri must be non-empty'
       );
     });
@@ -1273,27 +1273,27 @@ describe('ZooMedia', () => {
 
       await expect(media.burn(1)).fulfilled;
 
-      await expect(media.updateMetadataURI(1, 'blah')).rejectedWith(
+      await expect(media.updateTokenMetadataURI(1, 'blah')).rejectedWith(
         'ERC721: operator query for nonexistent media'
       );
     });
 
-    it('should set the mediaMetadataURI to the URI passed if msg.sender is the owner', async () => {
+    it('should set the tokenMetadataURI to the URI passed if msg.sender is the owner', async () => {
       const media = await mediaAs(ownerWallet);
-      await expect(media.updateMetadataURI(0, 'blah blah')).fulfilled;
+      await expect(media.updateTokenMetadataURI(0, 'blah blah')).fulfilled;
 
-      const tokenURI = await media.mediaMetadataURI(0);
+      const tokenURI = await media.tokenMetadataURI(0);
       expect(tokenURI).eq('blah blah');
     });
 
-    it('should set the mediaMetadataURI to the URI passed if the msg.sender is approved', async () => {
+    it('should set the tokenMetadataURI to the URI passed if the msg.sender is approved', async () => {
       const media = await mediaAs(ownerWallet);
       await media.approve(otherWallet.address, 0);
 
       const otherToken = await mediaAs(otherWallet);
-      await expect(otherToken.updateMetadataURI(0, 'blah blah')).fulfilled;
+      await expect(otherToken.updateTokenMetadataURI(0, 'blah blah')).fulfilled;
 
-      const tokenURI = await media.mediaMetadataURI(0);
+      const tokenURI = await media.tokenMetadataURI(0);
       expect(tokenURI).eq('blah blah');
     });
   });

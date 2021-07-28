@@ -30,7 +30,7 @@ const IconButton = styled(Icon)`
 `
 
 const Span = styled.span`
-    color: ${({theme}) => theme.colors.primaryDark};
+    color: ${({theme}) => theme.colors.text};
     font-size: 24px;
     width: 100%;
     font-weight: 900;
@@ -45,7 +45,7 @@ const NewAnimalCard: React.FC<NewAnimalCardType> = ({animal, isOpen}) => {
     const ModalCloseButton: React.FC = () => {
         return (
           <IconButton variant="text" onClick={()=>isOpen(false)} aria-label="Close the dialog">
-            <CloseIcon color="tertiary" />
+            <CloseIcon color="text" />
           </IconButton>
         );
       };
