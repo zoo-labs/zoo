@@ -596,12 +596,23 @@ describe("ZooKeeper", () => {
         });
 
         expect(from_add2).to.equal(owner.address);
+
         expect(token_id2.toNumber()).to.equal(5);
 
 
     });
 
     it("Should revert when hatching egg with invalid tokenid", async () => {
+
+        await addAnimals();
+
+        await zooToken.approve(zooKeeper.address, 600);
+
+        await zooKeeper.connect(owner).buyEgg(1);
+
+        await expect(zooKeeper.connect(signers[0]).hatchEgg(1, 525600)).to.be.revertedWith(
+            "ZooMedia: nonexistent token"
+        );
 
     });
 
