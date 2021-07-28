@@ -631,6 +631,60 @@ describe.only("ZooKeeper", () => {
         from_add = element.args["_from"]
         token_id_Animal_2 = element.args["_tokenID"]
       }
+
+    /**
+     * HATCHING EGGS
+     */
+    it.only("Should hatch & burn basic egg", async () => {
+
+        // await addAnimals();
+
+        await addDrop();
+
+        await zooToken.approve(zooKeeper.address, 600)
+
+        const buyEgg = await zooKeeper.connect(owner).buyEgg(1);
+
+        const buyEggReceipt = await buyEgg.wait();
+
+        let sender = buyEggReceipt.events;
+
+        let from_add
+        let token_id
+
+        sender.forEach(element => {
+            if (element.event == "Hatch") {
+                from_add = element.args["_from"]
+                token_id = element.args["_tokenID"]
+            }
+        });
+
+        console.log("Keeper", zooKeeper.address)
+        console.log("Media", zooMedia.address)
+        console.log("Markey", zooMarket.address)
+
+
+        await zooKeeper.connect(signers[0]).approve(signers[1].address, 0);
+
+        // const hatchEgg = await zooKeeper.connect(signers[1]).hatchEgg(1, 0);
+        // const hatchEggReceipt = await hatchEgg.wait();
+        // sender = hatchEggReceipt.events;
+
+        // let from_add2
+        // let token_id2
+
+        // sender.forEach(element => {
+        //     if (element.event == "Hatch") {
+        //         from_add2 = element.args["_from"]
+        //         token_id2 = element.args["_tokenID"]
+        //     }
+        // });
+
+        // expect(from_add2).to.equal(owner.address);
+        // expect(token_id2.toNumber()).to.equal(1);
+
+        // const newAnimal = await zooKeeper.animals(1);
+        // expect(newAnimal.name).to.not.equal('');
     });
 
     const breedTx = await zooKeeper.connect(owner).breedAnimal(1, token_id_Animal_1, token_id_Animal_2);
