@@ -255,7 +255,7 @@ const MyZooAccount: React.FC = () => {
   };
 
 
-  const breed = (onDismiss) => {
+  const breed = () => {
     const animal1: Animal = array[0];
     const animal2: Animal = array[1];
     array.forEach((animal) => {
@@ -325,25 +325,33 @@ const MyZooAccount: React.FC = () => {
     // onDismiss();
   };
 
-  const breedClick = (animal) => {
-    const selected = Object.values(allAnimals).filter((item) => item.selected);
-    const toSet: Animal = { ...animal };
-    toSet.selected = animal.selected ? false : true;
+//   const breedClick = (animal) => {
+//     const selected = Object.values(allAnimals).filter((item) => item.selected);
+//     const toSet: Animal = { ...animal };
+//     console.log("animalGroup", animalGroup[animal.animalId])
+//     toSet.selected = animal.selected ? false : true;
 
-    if (!animal.selected && selected.length === 1) {
-      const temp = [{ ...selected[0] }, { ...animal }];
-      array = temp;
-      onConfirm();
-    }
+//     if (!animal.selected && selected.length === 1) {
+//       const temp = [{ ...selected[0] }, { ...animal }];
+//       array = temp;
+//       onConfirm();
+//     }
 
-    dispatch(addAnimal(toSet));
-  };
+//     dispatch(addAnimal(toSet));
+//   };
 
   const Confirmation: React.FC<Props> = ({ onDismiss = () => null, breed }) => {
     const animal1 = array[0];
     const animal2 = array[1];
+    const cancel = () => {
+      animal1.selected = false;
+      animal2.selected = false;
+      dispatch(addAnimal(animal1));
+      dispatch(addAnimal(animal2));
+      onDismiss()
+    }
     return (
-      <Modal title="Confirm Breed" onDismiss={onDismiss}>
+      <Modal title="Confirm Breed" onDismiss={cancel}>
         <Text color="text">
           {`Do you want to breed ${animal1.name} with ${animal2.name}?`}
         </Text>
@@ -356,7 +364,7 @@ const MyZooAccount: React.FC = () => {
           <BorderButton scale="sm" onClick={() => breed(onDismiss)}>
             YES
           </BorderButton>
-          <BorderButton scale="sm" onClick={() => onDismiss()}>
+          <BorderButton scale="sm" onClick={() => cancel()}>
             NO
           </BorderButton>
         </Flex>
@@ -380,6 +388,7 @@ const MyZooAccount: React.FC = () => {
   const [onConfirm] = useModal(
     <Confirmation onDismiss={() => null} breed={breed} />
   );
+
 
   const [onEggCreated] = useModal(<EggCreatedNotify onDismiss={() => null} />);
 
@@ -443,6 +452,27 @@ const MyZooAccount: React.FC = () => {
       let animalGroup = {};
       const animalData = [];
       const now = new Date().getTime();
+
+      const breedClick = (animal) => {
+         const selected = Object.values(allAnimals).filter((item) => item.selected);
+         const toSet: Animal = { ...animal };
+         if (animal.selected && selected.length === 1 && animalGroup[animal.animalId] > 1){
+            const multipleAvailable = 
+               Object.values(allAnimals)
+               .filter((item) => item.animalId === animal.animalId && item.timeRemaining === 0)
+            console.log(allAnimals)
+            const temp = [{...multipleAvailable[0]}, {...multipleAvailable[1]}]
+            array = temp;
+            onConfirm();
+         }
+         toSet.selected = animal.selected ? false : true;
+         if (!animal.selected && selected.length === 1) {
+            const temp = [{ ...selected[0] }, { ...animal }];
+            array = temp;
+            onConfirm();
+         }
+         dispatch(addAnimal(toSet));
+       };
 
       Object.values(allAnimals).forEach((animal, index) => {
          if (animal.owner !== account) {

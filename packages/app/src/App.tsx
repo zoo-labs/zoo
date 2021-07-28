@@ -112,6 +112,9 @@ const App: React.FC = () => {
                   <Route exact path="/bank">
                     {signedIn? <Menu><Bank /></Menu> : <Redirect to="/login" />}
                   </Route>
+                  <Route exact path="/">
+                    {signedIn? <Redirect to="/account" /> : <Redirect to="/login" />}
+                  </Route>
                 </SuspenseWithChunkError>
               {/* <Route component={NotFound} /> */}
             </Switch>
