@@ -58,13 +58,14 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
     isMobile ? () => pushNav(false) : undefined
   }
 
+
   return (
     <Container>
       {links.map((entry) => {
         const Icon = entry.icon.length > 0 ? Icons[entry.icon] : null
         const iconElement =
           entry.icon.length > 0 ? (
-            <IconContainer>
+            <IconContainer key = {Math.floor(Math.random() * (999999 - 0) + 0).toString()}>
               <Icon width="24px" />
             </IconContainer>
           ) : (
@@ -89,10 +90,11 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
             >
               {isPushed &&
                 entry.items.map((item, idx) => {
+                  console.log("item", item)
                   const SubIcon = entry.icon.length > 0 ? Icons[entry.items[idx].icon] : null
                   const subIconElement =
                     entry.icon.length > 0 ? (
-                    <IconContainer>
+                    <IconContainer key = {Math.floor(Math.random() * (999999 - 0) + 0).toString()}>
                       <SubIcon width="20px" />
                     </IconContainer>
                   ) : (
@@ -100,7 +102,7 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
                   )
                   return (
                     <MenuEntry key={item.href} secondary isActive={false} onClick={handleClick}>
-                      <MenuLink href={item.href} key={item.href}>
+                      <MenuLink href={item.href} key={Math.floor(Math.random() * (999999 - 0) + 0).toString()}>
                         {subIconElement}
                         {/* <LinkLabel isPushed={isPushed}>{item.label}</LinkLabel>
                         {item.status && (
@@ -117,7 +119,7 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
         }
         return (
           // <MenuEntry key={entry.label} isActive={location.pathname.includes(entry.href)} className={calloutClass}>
-            <MenuLink href={entry.href} onClick={handleClick}>
+            <MenuLink href={entry.href} onClick={handleClick} key={Math.floor(Math.random() * (999999 - 0) + 0).toString()}>
               {entry.icon.length > 0 && iconElement}
               <LinkLabel isPushed={isPushed}>{entry.label}</LinkLabel>
               {entry.status && (

@@ -391,9 +391,15 @@ const MyZooAccount: React.FC = () => {
   );
 
   useEffect(() => {
-    setTimeout(function () {
-      setElapsedTimeOnPage(elapsedTimeOnPage + 5000);
-    }, 5000);
+   let mounted = true
+   if (mounted) {
+      setTimeout(function () {
+         setElapsedTimeOnPage(elapsedTimeOnPage + 5000);
+       }, 5000);
+   }
+   return () => {
+      mounted = false
+    }
   }, [elapsedTimeOnPage]);
 
    const renderAnimals = (hybrid): JSX.Element => {
@@ -462,7 +468,7 @@ const MyZooAccount: React.FC = () => {
                ) : (
                   <Swiper slidesPerView={2.2} spaceBetween={10}>
                      {animals.map((animal) => (
-                        <SwiperSlide>
+                        <SwiperSlide key={animal.tokenId}>
                            <CardWrapper>
                               <Card
                                  style={{
