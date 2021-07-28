@@ -10,6 +10,8 @@ import { ZooToken } from "./ZooToken.sol";
 import { IMarket } from "./interfaces/IMarket.sol";
 import { Decimal } from "./Decimal.sol";
 
+import "./console.sol";
+
 contract ZooKeeper {
     using SafeMath for uint256;
     using Counters for Counters.Counter;
@@ -98,13 +100,13 @@ contract ZooKeeper {
     constructor(
         string memory _name,
         string memory _symbol,
-        address _media,
+        address _market,
         address _token
     ) {
         owner = msg.sender;
         name = _name;
         symbol = _symbol;
-        media = ZooMedia(_media);
+        media = new ZooMedia(_name, _symbol, _market);
         token = ZooToken(_token);
     }
 
@@ -173,19 +175,25 @@ contract ZooKeeper {
 
     // Accept ZOO and return Egg NFT
     function buyEgg(uint256 _dropID) public returns (uint256) {
+        console.log("Get drop instance");
         ZooDrop drop = ZooDrop(drops[_dropID]);
 
+        console.log("Ensure ZOO to purchase egg");
         require(
             token.balanceOf(msg.sender) >= drop.eggPrice(),
             "Not Enough ZOO Tokens to purchase Egg"
         );
+
+        console.log("Ensure eggs can be purchased");
         require(
             drop.currentSupply() > 0,
             "There are no more Eggs that can be purchased"
         );
 
+        console.log("Transfer ZOO from sender to this contract");
         token.transferFrom(msg.sender, address(this), drop.eggPrice());
 
+        console.log("get tokenURI and metadataURI");
         (string memory _tokenURI, string memory _metadataURI) = drop.buyEgg();
         ZooMedia.MediaData memory data;
 
@@ -205,8 +213,11 @@ contract ZooKeeper {
         bidShare.creator = Decimal.D256(10 * (10**18));
         bidShare.owner = Decimal.D256(90 * (10**18));
 
-        media.mint(data, bidShare);
+        console.log("mint");
+        media.mintFor(msg.sender, data, bidShare);
+        console.log("minted");
         uint256 _tokenID = media.getRecentToken(msg.sender);
+        console.log("tokenID", _tokenID);
 
         Egg memory egg;
         egg.eggCreationTime = block.timestamp;
