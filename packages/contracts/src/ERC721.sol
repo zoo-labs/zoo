@@ -374,7 +374,7 @@ contract ERC721 is
      * - `tokenId` must exist.
      */
     function _isApprovedOrOwner(address spender, uint256 tokenId)
-        external
+        internal
         view
         returns (bool)
     {
