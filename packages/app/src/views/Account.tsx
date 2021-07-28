@@ -161,7 +161,7 @@ const Account: React.FC = () => {
             {pageHeading}
             <Body>
                <StickyBottomMenu onClick={handleRedirect}>
-                  <FaShoppingCart />
+                  <FaShoppingCart color={"black"} style={{marginLeft: '-2px', marginTop: '2px' }}/>
                </StickyBottomMenu>
                <LabelWrapper>
                   <Label small>Wallet Balance</Label>
