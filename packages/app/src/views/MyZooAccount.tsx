@@ -450,6 +450,9 @@ const MyZooAccount: React.FC = () => {
       animals = sortData(animals, "bloodline");
 
       return (
+         <>
+         {hybrid === "pure" ? <RowTitle>{animals.length} {animals.length!=1 ? 'Breedable Animals' : 'Breedable Animal'}</RowTitle> : 
+               <RowTitle>{animals.length} {animals.length!=1 ? 'Hybrid Animals' : 'Hybrid Animal'}</RowTitle>}
          <RowLayout>
             <Route exact path={`${path}`}>
                {animals.length === 0 ? (
@@ -463,7 +466,7 @@ const MyZooAccount: React.FC = () => {
                            <CardWrapper>
                               <Card
                                  style={{
-                                    boxShadow: `1px 0px 6px 0px ${animal.rarityColor}`,
+                                    boxShadow: `0px 0px 6px 0px ${animal.rarityColor}`,
                                  }}
                                  key={animal.id}
                                  selected={animal.selected ? true : false}
@@ -541,6 +544,7 @@ const MyZooAccount: React.FC = () => {
                ))}
             </Route>
          </RowLayout>
+         </>
       );
    };
 
@@ -589,6 +593,11 @@ const MyZooAccount: React.FC = () => {
       return (
          <RowLayout>
             <Route exact path={`${path}`}>
+            {eggData.length === 0 ? (
+                  <Text textAlign="center" fontSize="16px">
+                     No eggs
+                  </Text>
+               ) : (
                <Swiper
                   slidesPerView={
                      document.body.getBoundingClientRect().width / 140
@@ -601,6 +610,7 @@ const MyZooAccount: React.FC = () => {
                      </SwiperSlide>
                   ))}
                </Swiper>
+            )}
             </Route>
             <Route exact path={`${path}/history`}>
                {eggData.map((egg) => (
@@ -642,9 +652,7 @@ const MyZooAccount: React.FC = () => {
             <Page>
                {/* <RowTitle>My Eggs</RowTitle> */}
                {renderEggs()}
-               <RowTitle>Breedable Animals</RowTitle>
                {renderAnimals("pure")}
-               <RowTitle>Hybrid Animals</RowTitle>
                {renderAnimals("hybrid")}
             </Page>
          )}
