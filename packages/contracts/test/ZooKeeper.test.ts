@@ -10,6 +10,7 @@ import { BigNumber, Bytes, BytesLike, utils } from 'ethers';
 
 let zooToken: any;
 let zooFaucet: any;
+let zooKeeper: any;
 let zooMarket: any;
 let zooMedia: any;
 let zooKeeper: any;
@@ -46,17 +47,25 @@ describe.only("ZooKeeper", () => {
 
         zooMarket = (await new ZooMarket__factory(owner).deploy()) as ZooMarket;
         await zooMarket.deployed();
-
         marketAddress = zooMarket.address;
+
         zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', marketAddress)) as ZooMedia
         await zooMedia.deployed();
-
         mediaAddress = zooMedia.address;
+
         await zooMarket.configure(mediaAddress);
 
         zooKeeper = (await new ZooKeeper__factory(owner).deploy('Zoo', 'ANML', mediaAddress, zooToken.address)) as ZooKeeper
         await zooKeeper.deployed();
+        const zooKeeperFactory = await ethers.getContractFactory("ZooKeeper", signers[0]);
 
+        zooKeeper = (await zooKeeperFactory.deploy(
+            "TEST_ZOO",
+            "TZ",
+            zooMarket.address,
+            zooToken.address
+
+        )) as ZooKeeper;
     })
 
     async function addAnimals() {
@@ -425,7 +434,8 @@ describe.only("ZooKeeper", () => {
     /**
      * DROP
      */
-    it("Should create a new ZooDrop contract with AddDrop event", async () => {
+    it.only("Should create a new ZooKeeper contract with AddDrop event", async () => {
+
         const block = await ethers.provider.getBlockNumber();
         let dropID = await zooKeeper.connect(signers[0]).addDrop("test1", 16000, 210);
         let events = await zooKeeper.queryFilter(zooKeeper.filters.AddDrop(null,null), block);
@@ -433,6 +443,7 @@ describe.only("ZooKeeper", () => {
 
         const log = zooKeeper.interface.parseLog(events[0]);
         expect(log.name).to.equal("AddDrop");
+
         expect(log.args._dropID.toNumber()).to.equal(1);
     });
 
