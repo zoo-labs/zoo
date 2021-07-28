@@ -27,4 +27,11 @@ export {
 } from 'react-icons/fa'
 export { default as NewTokenIcon } from './NewToken'
 export { default as DiscordIcon } from './Discord'
-export { ImBook as DocsIcon } from 'react-icons/im'
+export {
+  RiExchangeFill as FaucetIcon,
+  RiAccountPinCircleFill as AccountIcon
+} from 'react-icons/ri'
+export {
+  ImBook as DocsIcon,
+  // ImHome3 as HomeIcon,
+} from 'react-icons/im'
