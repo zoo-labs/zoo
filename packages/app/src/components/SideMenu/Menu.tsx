@@ -33,7 +33,7 @@ const StyledNav = styled.nav<{ showMenu: boolean; isPushed: boolean }>`
   position: fixed;
   // top: ${({ showMenu }) => (showMenu ? 0 : `-${MENU_HEIGHT}px`)};
   right: 0;
-  transition: top 0.2s;
+  transition: background-color 0.2s ease;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -41,7 +41,7 @@ const StyledNav = styled.nav<{ showMenu: boolean; isPushed: boolean }>`
   padding-right: 16px;
   width: 100%;
   height: ${MENU_HEIGHT}px;
-  background-color: transparent;
+  background-color: ${({ showMenu }) => (showMenu ? 'transparent' : `black`)};
   z-index: 20;
   transform: translate3d(0, 0, 0);
 `;
@@ -164,18 +164,10 @@ const Menu: React.FC<NavProps> = ({
         currentOffset + window.innerHeight;
       const isTopOfPage = currentOffset === 0;
       // Always show the menu when user reach the top
-      if (isTopOfPage) {
-        setShowMenu(true);
-      }
-      // Avoid triggering anything at the bottom because of layout shift
-      else if (!isBottomOfPage) {
-        if (currentOffset < refPrevOffset.current) {
-          // Has scroll up
-          setShowMenu(true);
-        } else {
-          // Has scroll down
-          setShowMenu(false);
-        }
+      if (currentOffset > 30) {
+        setShowMenu(false)
+      } else{
+        setShowMenu(true)
       }
       refPrevOffset.current = currentOffset;
     };

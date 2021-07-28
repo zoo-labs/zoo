@@ -509,7 +509,7 @@ const MyZooAccount: React.FC = () => {
                            <CardWrapper>
                               <Card
                                  style={{
-                                    boxShadow: `0px 0px 6px 0px ${animal.rarityColor}`,
+                                    boxShadow: `0px 0px 13px -2px ${animal.rarityColor}`,
                                  }}
                                  key={animal.id}
                                  selected={animal.selected ? true : false}
@@ -543,7 +543,7 @@ const MyZooAccount: React.FC = () => {
                                           textShadow:
                                              "0px 2px 6px rgb(0, 0, 0)",
                                           textAlign: "center",
-                                          fontSize: 20,
+                                          fontSize: 16,
                                           letterSpacing: 0,
                                        }}>
                                        {animal.name}
