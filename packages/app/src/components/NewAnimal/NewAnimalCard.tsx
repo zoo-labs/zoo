@@ -1,8 +1,9 @@
-import { CloseIcon } from 'components'
+import { CloseIcon, Flex } from 'components'
 import { IconButton as Icon } from 'components/Button'
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import {NewAnimalCardType} from './types'
+import { RarityColor } from "enums/rarity-color";
+import { NewAnimalCardType } from './types'
 
 const Card = styled.div<{url?: string, isMobile?: boolean}>`
     background-image: url(${({ url }) => `${url}`});
@@ -10,6 +11,7 @@ const Card = styled.div<{url?: string, isMobile?: boolean}>`
     background-repeat: no-repeat;
     background-size: cover;
     width: 100vw;
+    height: 100vh;
     // max-width: 425px;
     // min-width: 325px;
     display: flex;
@@ -17,8 +19,9 @@ const Card = styled.div<{url?: string, isMobile?: boolean}>`
     justify-content: space-between;
     align-items: space-between;
     position: fixed;
-    top: 0;
+    top: -64px;
     left: 0;
+    z-index: 100;
 `
 const IconButton = styled(Icon)`
     align-self: flex-end;
@@ -30,7 +33,7 @@ const IconButton = styled(Icon)`
 `
 
 const Span = styled.span`
-    color: ${({theme}) => theme.colors.primaryDark};
+    color: ${({theme}) => theme.colors.text};
     font-size: 24px;
     width: 100%;
     font-weight: 900;
@@ -42,21 +45,34 @@ const Span = styled.span`
 
 const NewAnimalCard: React.FC<NewAnimalCardType> = ({animal, isOpen}) => {
 
-    const ModalCloseButton: React.FC = () => {
-        return (
-          <IconButton variant="text" onClick={()=>isOpen(false)} aria-label="Close the dialog">
-            <CloseIcon color="tertiary" />
-          </IconButton>
-        );
-      };
 
       console.log(window.innerHeight)
 
+      const rarityColor = RarityColor[animal.rarity.toLowerCase()] || "white";
+
+      const rarity = () => {
+          return (
+              <Span style={{
+                color: rarityColor,
+              }}>
+                  {animal.rarity}
+              </Span>
+          )
+      }
     return (
         <>
-        <Card url={animal.imageUrl} style={{height: "calc(100vh - 64px)"}}>
-            <ModalCloseButton />
-            <Span>{animal.bloodline === "pure" ? `${animal.name} - ${animal.rarity}` : `${animal.name}`} </Span>
+        <Card url={animal.imageUrl} onClick = {()=>isOpen(false)} >
+            <div>
+                
+            </div>
+            <Flex flexDirection="column" justifyContent="center">
+                <Span> {animal.name} </Span>
+                <Span style={{
+                    color: rarityColor,
+                }}>
+                    {animal.rarity}
+                </Span>
+            </Flex>
         </Card>
         </>
     )

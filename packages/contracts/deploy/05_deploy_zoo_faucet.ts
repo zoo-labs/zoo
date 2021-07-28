@@ -1,4 +1,4 @@
-// deploy/06_deploy_zoo_faucet.ts
+// deploy/05_deploy_zoo_faucet.ts
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { getDeployerAddress } from '../lib/deploy_helper'
@@ -8,7 +8,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deployments, getNamedAccounts } = hre
     const { deploy } = deployments
     const { deployer } = await getNamedAccounts()
-    const OWNER_ADDRESS = await getDeployerAddress(hre)
 
     let zooToken: any;
 
@@ -22,7 +21,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     // HCR (Hot Contract Replacement) in live network, proxy is disabled and
     // constructor is invoked
     await deploy('ZooFaucet', {
-        from: OWNER_ADDRESS,
+        from: deployer,
         args: [tokenAddress],
         log: true,
         // proxy: useProxy && 'postUpgrade',
@@ -53,7 +52,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await zooToken.mint(faucet.address, mintAmt);
 
     for (var i = 0; i < signers.length; i++) {
-
         // The 20 signer wallets get 10K ZOO on deployment
         await faucet.buyZoo(
             signers[i].address,
