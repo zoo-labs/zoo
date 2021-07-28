@@ -137,38 +137,6 @@ const Bank: React.FC = () => {
          </StyledButton>
       </HeadingContainer>
    );
-   const faucet = getZooFaucet(web3, chainId);
-   const faucetAmt = web3.utils.toWei("50");
-   const handleFaucet = () => {
-      try {
-         setWait(true);
-         faucet.methods
-            .buyZoo(account, faucetAmt)
-            .send({ from: account })
-            .then(() => {
-               setWait(false);
-               getBalance();
-            })
-            .catch((e) => {
-               console.error("ISSUE USING FAUCET \n", e);
-               setWait(false);
-            });
-      } catch (e) {
-         console.error("ISSUE USING FAUCET \n", e);
-      }
-   };
-
-   const handleFunds = () => {
-      console.log(chainId);
-      switch (chainId) {
-         case 97:
-            handleFaucet();
-            break;
-         default:
-            const redirectWindow = window.open('https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997', '_blank');
-            redirectWindow.location;
-      }
-   };
 
 
    return (
