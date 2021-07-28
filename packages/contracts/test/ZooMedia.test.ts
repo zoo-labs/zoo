@@ -364,7 +364,7 @@ describe('ZooMedia', () => {
           }
         )
       ).fulfilled;
-      
+
       let passed = true
       try {
         await
@@ -380,15 +380,15 @@ describe('ZooMedia', () => {
               owner: Decimal.new(0),
             }
           );
-          passed = false
-        } catch (error) {
-          expect(error.error.body).to.contain(
-            'ZooMedia: a token has already been created with this content hash',
-            "This error body should have the correct revert error")
-          }
-          passed = true
-        expect(passed, "The previous tx was not reverted").to.be.true
-        });
+        passed = false
+      } catch (error) {
+        expect(error.error.body).to.contain(
+          'ZooMedia: a token has already been created with this content hash',
+          "This error body should have the correct revert error")
+      }
+      passed = true
+      expect(passed, "The previous tx was not reverted").to.be.true
+    });
 
     it('should revert if the metadataHash is empty', async () => {
       const media = await mediaAs(creatorWallet);
@@ -711,17 +711,17 @@ describe('ZooMedia', () => {
     beforeEach(async () => {
       media = await (await mediaAs(creatorWallet)).deployed()
       await mint(
-          media,
-          metadataURI,
-          tokenURI,
-          contentHashBytes,
-          metadataHashBytes,
-          {
-            prevOwner: Decimal.new(10),
-            creator: Decimal.new(90),
-            owner: Decimal.new(0),
-          }
-        )
+        media,
+        metadataURI,
+        tokenURI,
+        contentHashBytes,
+        metadataHashBytes,
+        {
+          prevOwner: Decimal.new(10),
+          creator: Decimal.new(90),
+          owner: Decimal.new(0),
+        }
+      )
     });
     it('should remove the ask', async () => {
       const market = await ZooMarket__factory.connect(
@@ -744,11 +744,11 @@ describe('ZooMedia', () => {
       await setAsk(media, 0, defaultAsk);
       const block = await provider.getBlockNumber();
       const tx = await removeAsk(media, 0);
-      
+
       const events = await auction.queryFilter(
         auction.filters.AskRemoved(0, null),
         block
-        );
+      );
       expect(events.length).eq(1);
       let logDescription: LogDescription;
       logDescription = auction.interface.parseLog(events[0]);
@@ -794,7 +794,7 @@ describe('ZooMedia', () => {
       } catch (error) {
         expect(
           error
-        ).to.contain('SafeERC20: ERC20 operation did not succeed'); 
+        ).to.contain('SafeERC20: ERC20 operation did not succeed');
         passed = true;
       }
       expect(passed, "The previous transaction was not reverted").to.be.true
@@ -810,7 +810,7 @@ describe('ZooMedia', () => {
       } catch (error) {
         expect(
           error
-        ).to.contain('SafeERC20: ERC20 operation did not succeed'); 
+        ).to.contain('SafeERC20: ERC20 operation did not succeed');
         passed = true;
       }
       expect(passed, "The previous transaction was not reverted").to.be.true
@@ -891,7 +891,7 @@ describe('ZooMedia', () => {
       } catch (error) {
         expect(
           error.error.body
-        ).to.contain('ZooMedia: token with that id does not exist'); 
+        ).to.contain('ZooMedia: token with that id does not exist');
         passed = true;
       }
       expect(passed, "The previous transaction was not reverted").to.be.true
