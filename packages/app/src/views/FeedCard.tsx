@@ -12,8 +12,9 @@ import { RarityColor } from "enums/rarity-color";
 import { ChevronLeftIcon } from "components/Svg";
 
 interface Props {
-   item: Animal;
-   url?: string;
+  item: Animal;
+  url?: string;
+  animalGroup?: { [key: string]: number };
 }
 
 const FirstThird = styled.div`
@@ -122,15 +123,13 @@ const StyledChevron = styled(ChevronLeftIcon)`
    height: 40px;
 `;
 
-const FeedCard: React.FC<Props> = ({ item }) => {
-   const history = useHistory();
-   const ypd = {};
-   const date = new Date(Number(item.dob) * 1000);
-   const StringDate = date.toLocaleDateString("en-US");
+const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
+  const history = useHistory();
+  const ypd = {};
+  const date = new Date(Number(item.dob) * 1000);
+  const StringDate = date.toLocaleDateString("en-US");
 
-   const [onYield] = useModal(
-      <YieldModal item={item} onDismiss={() => null} />
-   );
+  const [onYield] = useModal(<YieldModal item={item} animalGroup={animalGroup} onDismiss={() => null} />);
 
    const [onBid] = useModal(<BidModal item={item} onDismiss={() => null} />);
 
@@ -138,62 +137,67 @@ const FeedCard: React.FC<Props> = ({ item }) => {
       onBid();
    };
 
-   const rarityColor = RarityColor[item.rarity.toLowerCase()] || "white";
+  const rarityColor = RarityColor[item.rarity.toLowerCase()] || "white";
+  const multiplier = animalGroup[item.animalId] > 1 ? `x${animalGroup[item.animalId]}` : "";
 
-   return (
-      <>
-         <Card url={item.imageUrl}>
-            <CardOverlay>
-               <FirstThird />
-               <SecondThird></SecondThird>
-               <FinalThird>
-                  <Flex flexDirection="row">
-                     <Flex flexDirection="column" width="calc(100% - 75px)">
-                        <MainHeading bold as="p">
-                           {item.name}
-                        </MainHeading>
-                        <Subheading
-                           bold
-                           as="p"
-                           style={{
-                              WebkitTextFillColor: rarityColor,
-                              WebkitTextStrokeColor: rarityColor,
-                           }}>
-                           {item.rarity}
-                        </Subheading>
-                        <Subheading
-                           bold
-                           as="p">{`Born: ${StringDate}`}</Subheading>
-                        <Subheading
-                           bold
-                           as="p">{`Current Bid: ${item.currentBid}`}</Subheading>
-                     </Flex>
-                     <Flex flexDirection="column" width="75px">
-                        <IconButton
-                           onClick={() => {
-                              onYield();
-                           }}>
-                           <FaMoneyBillWave />
-                           <Text as="span" fontSize="18px">
-                              Yield
-                           </Text>
-                        </IconButton>
-                        <IconButton
-                           onClick={() => {
-                              onBid();
-                           }}>
-                           <FaDollarSign />
-                           <Text as="span" fontSize="18px">
-                              Bid
-                           </Text>
-                        </IconButton>
-                     </Flex>
-                  </Flex>
-               </FinalThird>
-            </CardOverlay>
-         </Card>
-      </>
-   );
+  return (
+    <>
+      <Card url={item.imageUrl}>
+        <CardOverlay>
+        <FirstThird />
+        <SecondThird>
+          
+        </SecondThird>
+        <FinalThird>
+          <Flex flexDirection="row">
+            <Flex flexDirection="column" width="calc(100% - 75px)"
+                  style={{textShadow: "2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000"}}>
+              <MainHeading
+                bold
+                as="p"
+              >
+                {`${item.name} ${multiplier}`}
+              </MainHeading>
+              <Subheading bold as="p"
+                style={{
+                  WebkitTextFillColor: rarityColor,
+                  WebkitTextStrokeColor: rarityColor,
+                }}>
+                {item.rarity}
+              </Subheading>
+              <Subheading bold as="p">{`Born: ${StringDate}`}</Subheading>
+              <Subheading bold as="p">{`Current Bid: ${item.currentBid}`}</Subheading>
+              
+              
+            </Flex>
+            <Flex flexDirection="column" width="75px">
+              <IconButton
+                onClick={() => {
+                  onYield();
+                }}
+              >
+                <FaMoneyBillWave />
+                <Text as="span" fontSize="18px">
+                  Yield
+                </Text>
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  onBid();
+                }}
+              >
+                <FaDollarSign />
+                <Text as="span" fontSize="18px">
+                  Bid
+                </Text>
+              </IconButton>
+            </Flex>
+          </Flex>
+        </FinalThird>
+        </CardOverlay>
+      </Card>
+    </>
+  );
 };
 
 export default FeedCard;
