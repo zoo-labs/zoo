@@ -92,56 +92,36 @@ function Feed<FeedPagePops>({ match }) {
    );
    const { isXl } = useMatchBreakpoints();
    const isMobile = !isXl;
-   const [subUrl, setSubUrl] = React.useState("");
    const history = useHistory();
    const { account } = useWeb3React();
    let animals = Object.values(animalsState);
    const { pathname } = useLocation();
 
+   // Get URL param
    let toFind = match.params.key;
    const inMyZoo = useRouteMatch("/feed/myzoo/:key");
-
    if (!toFind && inMyZoo && inMyZoo.params) {
       const param = Object.values(inMyZoo.params);
       toFind = param[0];
    }
 
-   useEffect(() => {
-      return history.listen((location) => {
-         setSubUrl(location.pathname);
-      });
-   }, [history]);
-
-   useEffect(() => {
-      return history.listen((location) => {
-         setSubUrl(location.pathname);
-      });
-   }, []);
-
+   //  Rerout to home
    const HomeClick = () => {
       history.push("/account");
    };
 
-   const getAnimals = () => {
-      let toSet = Object.values(animalsState);
-      if (pathname.includes("myzoo") && toFind) {
-         let found = animalsState[toFind];
-         console.log(inMyZoo);
-         toSet = [found, ...toSet];
-      }
-   };
-
+   //  Settings for Zoo vs Market
    let activeIndex = 0;
    let filter = "";
    switch (true) {
-      case subUrl.includes("myzoo"):
+      case pathname.includes("myzoo"):
          activeIndex = 0;
          filter = "myZoo";
          if (toFind) {
             animals = [animalsState[toFind], ...animals];
          }
          break;
-      case subUrl.includes("marketplace"):
+      case pathname.includes("marketplace"):
          filter = "marketplace";
          activeIndex = 1;
          break;
@@ -151,6 +131,7 @@ function Feed<FeedPagePops>({ match }) {
          break;
    }
 
+   //  Filter if in the Zoo or Market
    const isZoo = filter === "myZoo";
    const animalsFiltered = animals.filter((animal) => {
       return animal.owner
@@ -169,16 +150,10 @@ function Feed<FeedPagePops>({ match }) {
                <StyledMenuButton onClick={() => console.log("asda")}>
                   <StyledChevron onClick={HomeClick} />
                </StyledMenuButton>
-               <ButtonMenuItem
-                  as={Link}
-                  to={`/feed/myzoo`}
-                  onClick={() => getAnimals()}>
+               <ButtonMenuItem as={Link} to={`/feed/myzoo`}>
                   My Zoo
                </ButtonMenuItem>
-               <ButtonMenuItem
-                  as={Link}
-                  to={`/feed/marketplace`}
-                  onClick={() => getAnimals()}>
+               <ButtonMenuItem as={Link} to={`/feed/marketplace`}>
                   Marketplace
                </ButtonMenuItem>
             </ButtonMenu>
