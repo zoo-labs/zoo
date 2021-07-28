@@ -43,7 +43,7 @@ const VideoPlayer: React.FC<VideoPlayerTheme> = ({videoPath}:VideoPlayerTheme) =
 
     return (
         <VidContainer >
-            <VideoPlayerWrapper autoPlay ref={videoEl} controls={false}>
+            <VideoPlayerWrapper autoPlay ref={videoEl} controls={false} playsInline>
                 <source src={videoPath} />
             </VideoPlayerWrapper>
         </VidContainer>
