@@ -7,7 +7,7 @@ import { ethers, Wallet } from 'ethers';
 import { AddressZero } from '@ethersproject/constants';
 import Decimal from '../utils/Decimal';
 import { BigNumber, BigNumberish, Bytes } from 'ethers';
-import { ZooToken__factory, ZooMarket__factory, ZooMedia__factory, ZooMarket } from '../types';
+import { ZooToken__factory, ZooMarket__factory, ZooMedia__factory, ZooKeeper__factory, ZooMarket } from '../types';
 import { ZooMedia } from '../types/ZooMedia';
 import {
   approveCurrency,
@@ -114,6 +114,7 @@ describe('ZooMedia', () => {
   let mediaAddress: string;
   let marketAddress: string;
   let tokenAddress: string;
+  let keeperAddress: string;
 
   async function mediaAs(wallet: Wallet) {
     return ZooMedia__factory.connect(mediaAddress, wallet);
@@ -136,7 +137,13 @@ describe('ZooMedia', () => {
     mediaAddress = media.address;
     console.log(mediaAddress)
 
-    await market.configure(mediaAddress);
+    const keeper = await (
+      await new ZooKeeper__factory(deployerWallet).deploy(mediaAddress, tokenAddress)
+    ).deployed();
+    keeperAddress = keeper.address;
+    console.log(keeperAddress)
+
+    await market.configure(mediaAddress, keeper.address);
   }
 
   async function mint(

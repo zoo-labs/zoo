@@ -7,6 +7,7 @@ import {
   ZooMarket__factory,
   ZooMedia__factory,
   ZooToken__factory,
+  ZooKeeper__factory,
   BadBidder,
   BadERC721,
   TestERC721,
@@ -240,11 +241,14 @@ export const deployOtherNFTs = async () => {
 export const deployZooProtocol = async (tokenAddress) => {
   const [deployer] = await ethers.getSigners();
   const market = await (await new ZooMarket__factory(deployer).deploy()).deployed();
-  // const token = await (await new ZooToken__factory(deployer).deploy()).deployed();
+  const token = await (await new ZooToken__factory(deployer).deploy()).deployed();
   const media = await (
     await new ZooMedia__factory(deployer).deploy("ANML", "ZooAnimals", market.address)
   ).deployed();
-  await market.configure(media.address);
+  const zookeeper = await (
+    await new ZooKeeper__factory(deployer).deploy(media.address, token.address)
+  ).deployed();
+  await market.configure(media.address, zookeeper.address);
   return { market, media };
 };
 

@@ -40,7 +40,7 @@ const StyledNav = styled.nav<{ showMenu?: boolean; isPushed?: boolean }>`
   justify-content: space-between;
   align-items: center;
   padding-left: 8px;
-  padding-right: 16px;
+  padding-right: 24px;
   width: 100%;
   height: ${MENU_HEIGHT}px;
   background-color: #000000;
@@ -55,9 +55,8 @@ const BodyWrapper = styled.div`
 
 const Inner = styled.div<{ isPushed: boolean; showMenu: boolean }>`
   flex-grow: 1;
-  margin-top: ${({ showMenu }) => (showMenu ? `${MENU_HEIGHT}px` : 0)};
+  margin-top: 64px;
   transition: margin-top 0.2s;
-  transform: translate3d(0, 0, 0);
   max-width: 100%;
 
   ${({ theme }) => theme.mediaQueries.nav} {
@@ -219,13 +218,13 @@ const Menu: React.FC<NavProps> = ({
         />);
 
   return (
-    <Wrapper>
+    <Wrapper>{/* 
        <BottomMenuIcon
         isOpen={isPushed}
         togglePush={() => setIsPushed((prevState: boolean) => !prevState)}
         isDark={isDark}
           href={homeLink?.href ?? "/feed"}
-        />
+        /> */}
       <StyledNav
         // showMenu={showMenu} isPushed={isPushed}
       >
@@ -251,7 +250,7 @@ const Menu: React.FC<NavProps> = ({
         </Flex>
       </StyledNav>
       <BodyWrapper>
-       {sideMenu}
+       {/* {sideMenu} */}
         <Inner isPushed={isPushed} showMenu={showMenu}>
           {children}
         </Inner>

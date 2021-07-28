@@ -1,4 +1,5 @@
 import BorderButton from "components/Button/BorderButton";
+import StickyBottomMenu from "components/Button/StickyBottomMenu"
 import Page from "components/layout/Page";
 import React, { useState, useEffect } from "react";
 import { AppState } from "state";
@@ -14,6 +15,7 @@ import BuyEggs from "components/BuyEggs";
 import MyZooAccount from "views/MyZooAccount";
 import { getZooToken, getZooFaucet } from "util/contractHelpers";
 import useWeb3 from "hooks/useWeb3";
+import { FaShoppingCart } from "react-icons/fa";
 
 const HeadingContainer = styles.div`
     width: 100%;
@@ -132,7 +134,7 @@ const Account: React.FC = () => {
 
    const handleFaucet = () => {
       try {
-         setWait(true);
+          (true);
          faucet.methods
             .buyZoo(account, faucetAmt)
             .send({ from: account })
@@ -161,16 +163,23 @@ const Account: React.FC = () => {
       }
    };
 
+   const handleRedirect = () => {
+      history.push('/feed')
+   }
+
    return (
       <>
          <Page>
             {pageHeading}
             <Body>
+               <StickyBottomMenu onClick={handleRedirect}>
+                  <FaShoppingCart color={"black"} style={{marginLeft: '-2px', marginTop: '2px' }}/>
+               </StickyBottomMenu>
                <LabelWrapper>
                   <Label small>Wallet Balance</Label>
                   <BorderButton
                      scale="sm"
-                     minWidth={!isXl ? "140px" : "160px"}
+                     minWidth={!isXl ? "120px" : "140px"}
                      style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}
                      onClick={handleFunds}>
                      {chainId !== 97
@@ -181,7 +190,7 @@ const Account: React.FC = () => {
                   </BorderButton>
                </LabelWrapper>
                <RowWrapper>
-                  <ValueWrapper>Balance: {balance} ZOO</ValueWrapper>
+                  <ValueWrapper>{balance} ZOO</ValueWrapper>
                </RowWrapper>
                <LabelWrapper>
                   <Label small>{currentEggsOwned} Eggs Owned</Label>
