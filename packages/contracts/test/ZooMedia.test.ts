@@ -986,7 +986,7 @@ describe('ZooMedia', () => {
       expect(toNumWei(bidShares[1].value)).eq(10 * 10 ** 18);
     });
 
-    it.only('should emit a bid finalized event if the bid is accepted', async () => {
+    it('should emit a bid finalized event if the bid is accepted', async () => {
       const asBidder = await mediaAs(bidderWallet);
       const media = await mediaAs(ownerWallet);
       const auction = await ZooMarket__factory.connect(marketAddress, bidderWallet);
