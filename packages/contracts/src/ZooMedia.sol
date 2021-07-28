@@ -1,684 +1,627 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPL-3.0
+// Forked from https://github.com/ourzora/core @ 450cd154bfbb70f62e94050cc3f1560d58e0506a
 
-pragma solidity 0.8.4;
+pragma solidity >=0.8.4;
+pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
-import {Media} from "./Media.sol";
-import "./ZooToken.sol";
-import "./ZooDrop.sol";
 import "./ERC721Burnable.sol";
-import {IMarket} from "./interfaces/IMarket.sol";
-import {IMedia} from "./interfaces/IMedia.sol";
+
+import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
+import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import {Decimal} from "./Decimal.sol";
-import "hardhat/console.sol";
+import {IMarket} from "./interfaces/IMarket.sol";
+import "./interfaces/IMedia.sol";
 
-// a instance for every egg or animal
-contract ZooMedia {
-    using SafeMath for uint256;
+/**
+ * @title A media value system, with perpetual equity to creators
+ * @notice This contract provides an interface to mint media with a market
+ */
+contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
     using Counters for Counters.Counter;
+    using SafeMath for uint256;
+    using EnumerableSet for EnumerableSet.UintSet;
 
-    uint256 avgBlocksDaily = 28800;
+    /* *******
+     * Globals
+     * *******
+     */
 
-    uint256 public hybridHatchTime = 36 hours;
+    // Deployment Address
+    address private _owner;
 
-    uint256[] public coolDowns = [4 hours, 1 days, 3 days, 7 days, 30 days];
+    // Address for the market
+    address public marketContract;
 
-    enum TokenType {
-        BASE_EGG,
-        BASE_ANIMAL,
-        HYBRID_EGG,
-        HYBRID_ANIMAL
-    }
+    // Mapping from token to previous owner of the token
+    mapping(uint256 => address) public previousTokenOwners;
 
-    Counters.Counter private _dropIDs;
+    // Mapping from token id to creator address
+    mapping(uint256 => address) public tokenCreators;
 
-    //Declare an Event
-    event AddDrop(uint256 indexed _dropID, address indexed _dropAddress);
-    event BuyEgg(address indexed _from, uint256 indexed _tokenID);
-    event Hatch(address indexed _from, uint256 indexed _tokenID);
-    event Burn(address indexed _from, uint256 indexed _tokenID);
-    event FreeAnimal(
-        address indexed _from,
-        uint256 indexed _tokenID,
-        uint256 indexed _yield
-    );
-    event Breed(
-        address indexed _from,
-        uint256 _animalTokenId1,
-        uint256 _animalTokenId2,
-        uint256 _eggTokenId
-    );
+    // Mapping from creator address to their (enumerable) set of created tokens
+    mapping(address => EnumerableSet.UintSet) private _creatorTokens;
 
-    struct Egg {
-        string parent1;
-        string parent2;
-        uint256 eggCreationTime;
-    }
+    // Mapping from token id to sha256 hash of content
+    mapping(uint256 => bytes32) public tokenContentHashes;
 
-    // Mapping of breed count for each address
-    mapping(address => uint256) public breedCount;
+    // Mapping from token id to sha256 hash of metadata
+    mapping(uint256 => bytes32) public tokenMetadataHashes;
 
-    // Mapping of token ID to NFT type
-    mapping(uint256 => TokenType) public types;
+    // Mapping from token id to metadataURI
+    mapping(uint256 => string) private _tokenMetadataURIs;
 
-    // Mapping of token ID to Egg
-    mapping(uint256 => Egg) public eggs;
+    // Mapping from contentHash to bool
+    mapping(bytes32 => bool) private _contentHashes;
 
-    // Mapping of token ID to Animal
-    mapping(uint256 => ZooDrop.Animal) public animals;
+    //keccak256("Permit(address spender,uint256 tokenId,uint256 nonce,uint256 deadline)");
+    bytes32 public constant PERMIT_TYPEHASH =
+        0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad;
 
-    // Mapping of token ID to Hybrids
-    mapping(uint256 => ZooDrop.Hybrid) public hybrids;
+    //keccak256("MintWithSig(bytes32 contentHash,bytes32 metadataHash,uint256 creatorShare,uint256 nonce,uint256 deadline)");
+    bytes32 public constant MINT_WITH_SIG_TYPEHASH =
+        0x2952e482b8e2b192305f87374d7af45dc2eafafe4f50d26a0c02e90f2fdbe14b;
 
-    // Mapping of token ID to Hybrid Eggs
-    // mapping (uint256 => HybridEgg) public hybridEggs;
+    // Mapping from address to token id to permit nonce
+    mapping(address => mapping(uint256 => uint256)) public permitNonces;
 
-    // Mapping of drop id to ZooDrop address
-    mapping(uint256 => address) public drops;
+    // Mapping from address to mint with sig nonce
+    mapping(address => uint256) public mintWithSigNonces;
 
-    // mapping of all hatched animals DOB (as blocknumbers)
-    mapping(uint256 => uint256) public animalDOB;
+    /*
+     *     bytes4(keccak256('name()')) == 0x06fdde03
+     *     bytes4(keccak256('symbol()')) == 0x95d89b41
+     *     bytes4(keccak256('tokenURI(uint256)')) == 0xc87b56dd
+     *     bytes4(keccak256('tokenMetadataURI(uint256)')) == 0x157c3df9
+     *
+     *     => 0x06fdde03 ^ 0x95d89b41 ^ 0xc87b56dd ^ 0x157c3df9 == 0x4e222e66
+     */
+    bytes4 private constant _INTERFACE_ID_ERC721_METADATA = 0x4e222e66;
 
-    mapping(address => uint256) public lastTimeBred;
+    Counters.Counter private _tokenIdTracker;
 
-    //Token address of the ZooToken
-    ZooToken public token;
-    Media public media;
+    /* *********
+     * Modifiers
+     * *********
+     */
 
-    string public name;
-    string public symbol;
-
-    address __owner;
-
-    modifier onlyOwner {
-        require(msg.sender == __owner, "Only owner has access");
-        _;
-    }
-
+    /**
+     * @notice Require that the token has not been burned and has been minted
+     */
     modifier onlyExistingToken(uint256 tokenId) {
-        require(media.tokenExists(tokenId), "Media: nonexistent token");
+        require(tokenExists(tokenId), "Media: nonexistent token");
         _;
     }
 
+    /**
+     * @notice Require that the token has had a content hash set
+     */
+    modifier onlyTokenWithContentHash(uint256 tokenId) {
+        require(
+            tokenContentHashes[tokenId] != 0,
+            "Media: token does not have hash of created content"
+        );
+        _;
+    }
+
+    /**
+     * @notice Require that the token has had a metadata hash set
+     */
+    modifier onlyTokenWithMetadataHash(uint256 tokenId) {
+        require(
+            tokenMetadataHashes[tokenId] != 0,
+            "Media: token does not have hash of its metadata"
+        );
+        _;
+    }
+
+    /**
+     * @notice Ensure that the provided spender is the approved or the owner of
+     * the media for the specified tokenId
+     */
+    modifier onlyApprovedOrOwner(address spender, uint256 tokenId) {
+        require(
+            _isApprovedOrOwner(spender, tokenId),
+            "Media: Only approved or owner"
+        );
+        _;
+    }
+
+    /**
+     * @notice Ensure the token has been created (even if it has been burned)
+     */
+    modifier onlyTokenCreated(uint256 tokenId) {
+        require(
+            _tokenIdTracker.current() > tokenId,
+            "Media: token with that id does not exist"
+        );
+        _;
+    }
+
+    /**
+     * @notice Ensure that the provided URI is not empty
+     */
+    modifier onlyValidURI(string memory uri) {
+        require(
+            bytes(uri).length != 0,
+            "Media: specified uri must be non-empty"
+        );
+        _;
+    }
+
+    /**
+     * @notice On deployment, set the market contract address and register the
+     * ERC721 metadata interface
+     */
     constructor(
-        string memory _symbol,
-        string memory _name,
-        address _market,
-        address _token
-    ) {
-        __owner = msg.sender;
-        name = _name;
-        symbol = _symbol;
-        token = ZooToken(_token);
-        media = new Media(_symbol, _name, _market);
+        string memory name,
+        string memory symbol,
+        address marketAddress
+    ) ERC721(name, symbol) {
+        _owner = msg.sender;
+        _registerInterface(_INTERFACE_ID_ERC721_METADATA);
+        marketContract = marketAddress;
     }
 
-
-    function mediaAddress() public view returns (address) {
-        return address(media);
-    }
-
-    function approve(address to, uint256 _tokenID) public {
-        return media.approve(to, _tokenID);
-    }
-
-    function ownerOf(uint256 _tokenID) public view returns (address) {
-        return media.ownerOf(_tokenID);
-    }
-
-    function transferFrom(address _sender, address _recipient, uint256 _amount) public {
-        return media.transferFrom(_sender, _recipient, _amount);
-    }
-
-    function mint(Media.MediaData memory data, IMarket.BidShares memory bidShares) public {
-        return media.mint(data, bidShares);
-    }
-
-    function mintWithSig(
-        address creator,
-        Media.MediaData memory data,
-        IMarket.BidShares memory bidShares,
-        Media.EIP712Signature memory sig
-    ) public {
-        return media.mintWithSig(creator, data, bidShares, sig);
-    }
-
-    function mintWithSigNonces(address _creator) public view returns (uint256) {
-        return media.mintWithSigNonces(_creator);
-    }
-
-    function permitNonces(address _creator, uint256 _tokenID) public view returns (uint256) {
-        return media.permitNonces(_creator, _tokenID);
-    }
-
-    function addDrop(
-        string memory _name,
-        uint256 _totalSupply,
-        uint256 _eggPrice
-    ) public returns (uint256, address) {
-        _dropIDs.increment();
-        uint256 _dropID = _dropIDs.current();
-
-        ZooDrop drop = new ZooDrop(_name, _totalSupply, _eggPrice);
-        drops[_dropID] = address(drop);
-
-        emit AddDrop(_dropID, address(drop));
-        return (_dropID, address(drop));
-    }
-
-    function totalSupply() public view returns (uint256) {
-        uint256 _total;
-
-        for (uint256 _i = 0; _i < _dropIDs.current(); _i++) {
-            _total = _total + ZooDrop(drops[_i]).totalSupply();
-        }
-
-        return _total;
-    }
-
-    function setTokenURI(
-        uint256 _dropID,
-        string memory _name,
-        string memory _URI
-    ) public onlyOwner {
-        ZooDrop drop = ZooDrop(drops[_dropID]);
-        drop.setTokenURI(_name, _URI);
-    }
-
-    function setMetadataURI(
-        uint256 _dropID,
-        string memory _name,
-        string memory _URI
-    ) public onlyOwner {
-        ZooDrop drop = ZooDrop(drops[_dropID]);
-        drop.setMetadataURI(_name, _URI);
-    }
-
-    // Accept ZOO and return Egg NFT
-    function buyEgg(uint256 _dropID) public returns (uint256) {
-        ZooDrop drop = ZooDrop(drops[_dropID]);
-
+    /**
+     * @notice Sets the media contract address. This address is the only permitted address that
+     * can call the mutable functions. This method can only be called once.
+     */
+    function configure(address marketContractAddress) external {
+        require(msg.sender == _owner, "Media: Only owner");
+        require(marketContract == address(0), "Media: Already configured");
         require(
-            token.balanceOf(msg.sender) >= drop.eggPrice(),
-            "Not Enough ZOO Tokens to purchase Egg"
-        );
-        require(
-            drop.currentSupply() > 0,
-            "There are no more Eggs that can be purchased"
+            marketContract != address(0),
+            "Market: cannot set media contract as zero address"
         );
 
-        token.transferFrom(msg.sender, address(this), drop.eggPrice());
-
-        (string memory _tokenURI, string memory _metadataURI) = drop.buyEgg();
-        Media.MediaData memory data;
-
-        data.tokenURI = _tokenURI;
-        data.metadataURI = _metadataURI;
-        data.contentHash = keccak256(
-            abi.encodePacked(_tokenURI, block.number, msg.sender)
-        );
-        data.metadataHash = keccak256(
-            abi.encodePacked(_metadataURI, block.number, msg.sender)
-        );
-
-        IMarket.BidShares memory bidShare;
-
-        // Get confirmation
-        bidShare.prevOwner = Decimal.D256(0);
-        bidShare.creator = Decimal.D256(10 * (10**18));
-        bidShare.owner = Decimal.D256(90 * (10**18));
-
-        media.mint(data, bidShare);
-        uint256 _tokenID = media.getRecentToken(msg.sender);
-
-        Egg memory egg;
-
-        egg.eggCreationTime = block.timestamp;
-
-        eggs[_tokenID] = egg;
-
-        types[_tokenID] = TokenType.BASE_EGG;
-
-        emit BuyEgg(msg.sender, _tokenID);
-        return _tokenID;
+        marketContract = marketContractAddress;
     }
 
-    function burn(uint256 _tokenID) public {
-        return media.burn(_tokenID);
+    /* **************
+     * View Functions
+     * **************
+     */
+
+    /**
+     * @notice Helper to check that token has not been burned or minted
+     */
+    function tokenExists(uint256 tokenId) public view returns (bool) {
+        return _exists(tokenId);
     }
 
-    function tokenURI(uint256 _tokenID) public view returns (string memory) {
-        return media.tokenURI(_tokenID);
-    }
-
-    // Burn egg and randomly return an animal NFT
-    function hatchEgg(uint256 dropId, uint256 tokenID)
+    /**
+     * @notice return the URI for a particular piece of media with the specified tokenId
+     * @dev This function is an override of the base OZ implementation because we
+     * will return the tokenURI even if the media has been burned. In addition, this
+     * protocol does not support a base URI, so relevant conditionals are removed.
+     * @return the URI for a token
+     */
+    function tokenURI(uint256 tokenId)
         public
-        returns (uint256)
-    {
-        ZooDrop drop = ZooDrop(drops[dropId]);
-
-        // need to check the hatch time delay
-
-        //  grab egg struct
-        Egg memory egg = eggs[tokenID];
-        TokenType eggType = types[tokenID];
-        media.burn(tokenID);
-
-        //  burn the eggToken(it's hatching)
-        emit Burn(msg.sender, tokenID);
-
-        // get the rarity for an animal
-        uint256 rarity = unsafeRandom();
-
-        Media.MediaData memory data;
-
-        ZooDrop.Animal memory _animal;
-        ZooDrop.Hybrid memory _hybrid;
-        ZooDrop.Rarity memory _rarity;
-
-        string memory hatchedAnimal;
-        string memory name1;
-        uint256 yield1;
-
-        // if not hybrid
-        if (uint256(TokenType.BASE_EGG) == uint256(eggType)) {
-            hatchedAnimal = pickAnimal(rarity);
-            (_animal.name, _animal.yield, _rarity) = drop.animals(
-                hatchedAnimal
-            );
-            // _animal.rarity = ZooDrop.Rarity(_rarityName, _rarity);
-        } else if (uint256(TokenType.HYBRID_EGG) == uint256(eggType)) {
-            // if hybrid
-            // require(egg.eggCreationTime > egg.eggCreationTime.add(4 hours), "Must wait 4 hours for hybrid eggs to hatch.");
-            // pick array index 0 or 1 depending on the rarity
-            (name1, yield1) = drop.hybrids(
-                concatAnimalIds(egg.parent1, egg.parent2)
-            );
-            (string memory name2, uint256 yield2) = drop.hybrids(
-                concatAnimalIds(egg.parent2, egg.parent1)
-            );
-
-            ZooDrop.Hybrid[2] memory possibleHybrids = [
-                ZooDrop.Hybrid(name1, yield1),
-                ZooDrop.Hybrid(name2, yield2)
-            ];
-            hatchedAnimal = possibleHybrids[rarity % 2].name;
-            (name1, yield1) = drop.hybrids(hatchedAnimal);
-            _hybrid.name = name1;
-            _hybrid.yield = yield1;
-        }
-
-        if (uint256(TokenType.HYBRID_EGG) == uint256(eggType)) {
-            // data.tokenURI = drop.tokenURI(hatchedAnimal);
-            // data.metadataURI = drop.metadataURI(hatchedAnimal);
-        }
-
-        data.tokenURI = drop.tokenURI(hatchedAnimal);
-        data.metadataURI = drop.metadataURI(hatchedAnimal);
-        data.contentHash = keccak256(
-            abi.encodePacked(
-                drop.tokenURI(hatchedAnimal),
-                block.number,
-                msg.sender
-            )
-        );
-        data.metadataHash = keccak256(
-            abi.encodePacked(
-                drop.metadataURI(hatchedAnimal),
-                block.number,
-                msg.sender
-            )
-        );
-
-        IMarket.BidShares memory bidShare;
-        bidShare.prevOwner = Decimal.D256(0);
-        bidShare.creator = Decimal.D256(10 * (10**18));
-        bidShare.owner = Decimal.D256(90 * (10**18));
-
-        media.mint(data, bidShare); // this time not an egg but an animal
-
-        uint256 tokenId = media.getRecentToken(msg.sender);
-
-        if (bytes(_animal.name).length > 0) {
-            _animal.rarity = _rarity;
-            animals[tokenId] = _animal;
-            types[tokenId] = TokenType.BASE_ANIMAL;
-        } else {
-            hybrids[tokenId] = _hybrid;
-            types[tokenId] = TokenType.HYBRID_ANIMAL;
-        }
-
-        // animal DOB
-        animalDOB[tokenId] = block.number;
-        // type of NFT
-        emit Hatch(msg.sender, tokenId);
-        return tokenId;
-    }
-
-    // Breed two animals and create a hybrid egg
-    function breedAnimal(
-        uint256 dropId,
-        uint256 _tokenIDA,
-        uint256 _tokenIDB
-    ) public onlyExistingToken(_tokenIDA) returns (uint256) {
-        require(_tokenIDA != _tokenIDB);
-        uint256 delay = getBreedingDelay();
-        require(block.timestamp-lastTimeBred[msg.sender] > delay, "Must wait for cooldown to finish.");
-
-        ZooDrop drop = ZooDrop(drops[dropId]);
-
-        // require non hybrids
-        TokenType animalTypeA = types[_tokenIDA];
-        TokenType animalTypeB = types[_tokenIDB];
-        require(
-            uint256(animalTypeA) == 1 && uint256(animalTypeB) == 1,
-            "Hybrid animals cannot breed."
-        );
-
-        // need to figure out the delay
-        // require(now.sub(checkBreedDelay()) <= 0)
-
-        (string memory _tokenURI, string memory _metadataURI) = drop
-        .getHybridEgg();
-        Media.MediaData memory data;
-        data.tokenURI = _tokenURI;
-        data.metadataURI = _metadataURI;
-        data.contentHash = keccak256(
-            abi.encodePacked(_tokenURI, block.number, msg.sender)
-        );
-        data.metadataHash = keccak256(
-            abi.encodePacked(_metadataURI, block.number, msg.sender)
-        );
-
-        IMarket.BidShares memory bidShare;
-
-        // Get confirmation
-        bidShare.prevOwner = Decimal.D256(0);
-        bidShare.creator = Decimal.D256(10 * (10**18));
-        bidShare.owner = Decimal.D256(90 * (10**18));
-        media.mint(data, bidShare);
-        uint256 eggTokenID = media.getRecentToken(msg.sender);
-
-        Egg memory hybridEgg;
-        hybridEgg.parent1 = animals[_tokenIDA].name;
-        hybridEgg.parent2 = animals[_tokenIDB].name;
-        hybridEgg.eggCreationTime = block.timestamp;
-
-        eggs[eggTokenID] = hybridEgg;
-
-        types[eggTokenID] = TokenType.HYBRID_EGG;
-        lastTimeBred[msg.sender] = block.timestamp;
-        breedCount[msg.sender]++;
-
-        emit Breed(msg.sender, _tokenIDA, _tokenIDB, eggTokenID);
-
-        return eggTokenID;
-    }
-
-    // Implemented prior to issue #30
-    // Should burn animal and return yield
-    function freeAnimal(uint256 _tokenID)
-        public
-        returns (bool)
-    {
-        require(
-            bytes(hybrids[_tokenID].name).length > 0 ||
-                bytes(animals[_tokenID].name).length > 0,
-            "Non-existing animal"
-        );
-
-        // burn the token
-        media.burn(_tokenID);
-        emit Burn(msg.sender, _tokenID);
-
-        uint256 blocks = block.number - animalDOB[_tokenID];
-        uint256 age = blocks.div(avgBlocksDaily);
-        uint256 dailyYield;
-        uint256 percentage;
-
-        if (bytes(hybrids[_tokenID].name).length > 0) {
-            // calculate daily yield
-            percentage = hybrids[_tokenID].yield;
-            dailyYield = age.mul(percentage) + percentage;
-            // transfer yield
-            token.transfer(msg.sender, dailyYield);
-            delete hybrids[_tokenID];
-        } else {
-            // calculate daily yield
-            percentage = animals[_tokenID].yield;
-            dailyYield = age.mul(percentage) + percentage;
-            // transfer yield
-            token.transfer(msg.sender, dailyYield);
-            delete animals[_tokenID];
-        }
-
-        delete animalDOB[_tokenID];
-        emit FreeAnimal(msg.sender, _tokenID, dailyYield);
-
-        return true;
-    }
-
-    //   @Kimani will overwrite this
-    // TEMP random function
-    function unsafeRandom() private view returns (uint256) {
-        uint256 randomNumber = uint256(
-            keccak256(
-                abi.encodePacked(block.number, msg.sender, block.timestamp)
-            )
-        ) % 1000;
-        return randomNumber;
-    }
-
-    // Proxy to Media contract
-    function setAsk(uint256 _tokenID, IMarket.Ask memory _ask) public {
-        return media.setAsk(_tokenID, _ask);
-    }
-
-    function setBid(uint256 _tokenID, IMarket.Bid memory _bid) public {
-        return media.setBid(_tokenID, _bid);
-    }
-
-    function acceptBid(uint256 _tokenID, IMarket.Bid memory _bid) public {
-        return media.acceptBid(_tokenID, _bid);
-    }
-
-    function removeAsk(uint256 _tokenID) public {
-        return media.removeAsk(_tokenID);
-    }
-
-    function removeBid(uint256 _tokenID) public {
-        return media.removeBid(_tokenID);
-    }
-
-    function getApproved(uint256 _tokenID) public view returns (address) {
-        return media.getApproved(_tokenID);
-    }
-
-    function revokeApproval(uint256 _tokenID) public {
-        return media.revokeApproval(_tokenID);
-    }
-
-    function tokenByIndex(uint256 _tokenID) public view returns (uint256) {
-        return media.tokenByIndex(_tokenID);
-    }
-
-    function tokenOfOwnerByIndex(address _owner, uint256 _tokenID) public view returns (uint256) {
-        return media.tokenOfOwnerByIndex(_owner, _tokenID);
-    }
-
-    function tokenCreators(uint256 _tokenID) public view returns (address) {
-        return media.tokenCreators(_tokenID);
-    }
-
-    function previousTokenOwners(uint256 _tokenID) public view returns (address) {
-        return media.previousTokenOwners(_tokenID);
-    }
-
-    function tokenContentHashes(uint256 _tokenID) public view returns (bytes32) {
-        return media.tokenContentHashes(_tokenID);
-    }
-
-    function tokenMetadataHashes(uint256 _tokenID) public view returns (bytes32) {
-        return media.tokenMetadataHashes(_tokenID);
-    }
-
-    function tokenMetadataURI(uint256 _tokenID) public view returns (string memory) {
-        return media.tokenMetadataURI(_tokenID);
-    }
-
-    function updateTokenMetadataURI(uint256 _tokenID, string memory _metadataURI) public {
-        return media.updateTokenMetadataURI(_tokenID, _metadataURI);
-    }
-
-    function supportsInterface(bytes4 _interfaceID) public view returns (bool) {
-        return media.supportsInterface(_interfaceID);
-    }
-
-    function permit(
-        address _spender,
-        uint256 _tokenID,
-        Media.EIP712Signature memory _sig
-    ) public {
-        return media.permit(_spender, _tokenID, _sig);
-    }
-
-    // take two animals and returns a bytes32 string of their names
-    // to be used with ZooMedia.possib;ePairs to get the two possible hybrid pairs coming from the two base animals
-    function concatAnimalIds(string memory a1, string memory a2)
-        internal pure
+        view
+        override
+        onlyTokenCreated(tokenId)
         returns (string memory)
     {
-        return string(abi.encodePacked(a1, a2));
-    }
+        string memory _tokenURI = _tokenURIs[tokenId];
 
-    // Chooses animal based on random number generated from(0-999), replace strings with ENUMS / data that
-    // represents animal instead
-    function pickAnimal(uint256 random) public pure returns (string memory) {
-        if (random < 550) {
-            uint256 choice = random % 4;
-            if (choice == 0) {
-                return "Pug";
-            } else if (choice == 1) {
-                return "Butterfly";
-            } else if (choice == 2) {
-                return "Kitten";
-            } else if (choice == 3) {
-                return "Turtle";
-            }
-        } else if (random > 550 && random < 860) {
-            uint256 choice = random % 4;
-            if (choice == 0) {
-                return "Penguin";
-            } else if (choice == 1) {
-                return "Duckling";
-            } else if (choice == 2) {
-                return "Orca";
-            } else if (choice == 3) {
-                return "Elk";
-            }
-        } else if (random > 860 && random < 985) {
-            uint256 choice = random % 4;
-            if (choice == 0) {
-                return "Panda";
-            } else if (choice == 1) {
-                return "Gorilla";
-            } else if (choice == 2) {
-                return "Elephant";
-            } else if (choice == 3) {
-                return "Lion";
-            }
-        } else if (random > 985 && random < 995) {
-            uint256 choice = random % 2;
-            if (choice == 0) {
-                return "Bear";
-            } else if (choice == 1) {
-                return "Shark";
-            }
-        } else if (random > 995 && random < 1000) {
-            uint256 choice = random % 2;
-            if (choice == 0) {
-                return "Blobfish";
-            } else if (choice == 1) {
-                return "Naked Mole Rat";
-            }
-        }
-        return "Pug";
+        return _tokenURI;
     }
 
     /**
-        Add animal for possibility of hatching for the drop
+     * @notice Return the metadata URI for a piece of media given the token URI
+     * @return the metadata URI for the token
      */
-    function addAnimal(
-        uint256 _dropID,
-        string memory _animal,
-        uint256 _yield,
-        string memory _rarityName,
-        uint256 _rarity,
-        string memory _tokenURI,
-        string memory _metadataURI
-    ) public onlyOwner {
-        ZooDrop drop = ZooDrop(drops[_dropID]);
-        drop.addAnimal(
-            _animal,
-            _yield,
-            _rarityName,
-            _rarity,
-            _tokenURI,
-            _metadataURI
-        );
+    function tokenMetadataURI(uint256 tokenId)
+        external
+        view
+        override
+        onlyTokenCreated(tokenId)
+        returns (string memory)
+    {
+        return _tokenMetadataURIs[tokenId];
+    }
+
+    /* ****************
+     * Public Functions
+     * ****************
+     */
+
+    /**
+     * @notice see IMedia
+     */
+    function mint(MediaData memory data, IMarket.BidShares memory bidShares)
+        public
+        override
+        nonReentrant
+    {
+        _mintForCreator(msg.sender, data, bidShares, "");
+
     }
 
     /**
-        Add animal for possibility of hatching for the drop
+     * @notice see IMedia
      */
-    function addHybrid(
-        uint256 dropID,
-        string memory _animal,
-        string memory _base,
-        string memory _secondary,
-        uint256 yield,
-        string memory _tokenURI,
-        string memory _metadataURI
-    ) public onlyOwner {
-        ZooDrop drop = ZooDrop(drops[dropID]);
-        drop.addHybrid(
-            _animal,
-            _base,
-            _secondary,
-            yield,
-            _tokenURI,
-            _metadataURI
+    function mintWithSig(
+        address creator,
+        MediaData memory data,
+        IMarket.BidShares memory bidShares,
+        EIP712Signature memory sig
+    ) public override nonReentrant {
+        require(
+            sig.deadline == 0 || sig.deadline >= block.timestamp,
+            "Media: mintWithSig expired"
         );
+
+        bytes32 domainSeparator = _calculateDomainSeparator();
+
+        bytes32 digest = keccak256(
+            abi.encodePacked(
+                "\x19\x01",
+                domainSeparator,
+                keccak256(
+                    abi.encode(
+                        MINT_WITH_SIG_TYPEHASH,
+                        data.contentHash,
+                        data.metadataHash,
+                        bidShares.creator.value,
+                        mintWithSigNonces[creator]++,
+                        sig.deadline
+                    )
+                )
+            )
+        );
+
+        address recoveredAddress = ecrecover(digest, sig.v, sig.r, sig.s);
+
+        require(
+            recoveredAddress != address(0) && creator == recoveredAddress,
+            "Media: Signature invalid"
+        );
+
+        _mintForCreator(recoveredAddress, data, bidShares,"");
     }
 
-    function getBreedingDelay() public view returns (uint256) {
-        uint256 count = breedCount[msg.sender];
-        uint256 delay;
+    /**
+     * @notice see IMedia
+     */
+    function transfer(uint256 tokenId, address recipient)
+        external
+    {
+        require(msg.sender == marketContract, "Media: only market contract");
+        previousTokenOwners[tokenId] = ownerOf(tokenId);
+        _transfer(ownerOf(tokenId), recipient, tokenId);
+    }
 
-        if (count == 0) {
-            delay = 0;
-        } else if (count >= 5) {
-            delay = coolDowns[coolDowns.length-1];
-        } else {
-            delay = coolDowns[count+1];
+    /**
+     * @notice see IMedia
+     */
+    function getRecentToken(address creator) public view returns (uint256){
+
+        uint256 length = EnumerableSet.length(_creatorTokens[creator])-1;
+
+        return  EnumerableSet.at(_creatorTokens[creator],length);
+    }
+
+    /**
+     * @notice see IMedia
+     */
+    function auctionTransfer(uint256 tokenId, address recipient)
+        external
+        override
+    {
+        require(msg.sender == marketContract, "Media: only market contract");
+        previousTokenOwners[tokenId] = ownerOf(tokenId);
+        _safeTransfer(ownerOf(tokenId), recipient, tokenId, "");
+    }
+
+    /**
+     * @notice see IMedia
+     */
+    function setAsk(uint256 tokenId, IMarket.Ask memory ask)
+        public
+        override
+        nonReentrant
+        onlyApprovedOrOwner(msg.sender, tokenId)
+    {
+        IMarket(marketContract).setAsk(tokenId, ask);
+    }
+
+    /**
+     * @notice see IMedia
+     */
+    function removeAsk(uint256 tokenId)
+        external
+        override
+        nonReentrant
+        onlyApprovedOrOwner(msg.sender, tokenId)
+    {
+        IMarket(marketContract).removeAsk(tokenId);
+    }
+
+    /**
+     * @notice see IMedia
+     */
+    function setBid(uint256 tokenId, IMarket.Bid memory bid)
+        public
+        override
+        nonReentrant
+        onlyExistingToken(tokenId)
+    {
+        require(msg.sender == bid.bidder, "Market: Bidder must be msg sender");
+        IMarket(marketContract).setBid(tokenId, bid, msg.sender);
+    }
+
+    /**
+     * @notice see IMedia
+     */
+    function removeBid(uint256 tokenId)
+        external
+        override
+        nonReentrant
+        onlyTokenCreated(tokenId)
+    {
+        IMarket(marketContract).removeBid(tokenId, msg.sender);
+    }
+
+    /**
+     * @notice see IMedia
+     */
+    function acceptBid(uint256 tokenId, IMarket.Bid memory bid)
+        public
+        override
+        nonReentrant
+        onlyApprovedOrOwner(msg.sender, tokenId)
+    {
+        IMarket(marketContract).acceptBid(tokenId, bid);
+    }
+
+    /**
+     * @notice Burn a token.
+     * @dev Only callable if the media owner is also the creator.
+     */
+    function burn(uint256 tokenId)
+        public
+        override
+        nonReentrant
+        onlyExistingToken(tokenId)
+        onlyApprovedOrOwner(msg.sender, tokenId)
+    {
+        address owner = ownerOf(tokenId);
+
+        require(
+            tokenCreators[tokenId] == owner,
+            "Media: owner is not creator of media"
+        );
+
+        _burn(tokenId);
+    }
+
+    /**
+     * @notice Revoke the approvals for a token. The provided `approve` function is not sufficient
+     * for this protocol, as it does not allow an approved address to revoke it's own approval.
+     * In instances where a 3rd party is interacting on a user's behalf via `permit`, they should
+     * revoke their approval once their task is complete as a best practice.
+     */
+    function revokeApproval(uint256 tokenId) external override nonReentrant {
+        require(
+            msg.sender == getApproved(tokenId),
+            "Media: caller not approved address"
+        );
+        _approve(address(0), tokenId);
+    }
+
+    /**
+     * @notice see IMedia
+     * @dev only callable by approved or owner
+     */
+    function updateTokenURI(uint256 tokenId, string calldata _tokenURI)
+        external
+        override
+        nonReentrant
+        onlyApprovedOrOwner(msg.sender, tokenId)
+        onlyTokenWithContentHash(tokenId)
+        onlyValidURI(_tokenURI)
+    {
+        _setTokenURI(tokenId, _tokenURI);
+        emit TokenURIUpdated(tokenId, msg.sender, _tokenURI);
+    }
+
+    /**
+     * @notice see IMedia
+     * @dev only callable by approved or owner
+     */
+    function updateTokenMetadataURI(
+        uint256 tokenId,
+        string calldata metadataURI
+    )
+        external
+        override
+        nonReentrant
+        onlyApprovedOrOwner(msg.sender, tokenId)
+        onlyTokenWithMetadataHash(tokenId)
+        onlyValidURI(metadataURI)
+    {
+        _setTokenMetadataURI(tokenId, metadataURI);
+        emit TokenMetadataURIUpdated(tokenId, msg.sender, metadataURI);
+    }
+
+    /**
+     * @notice See IMedia
+     * @dev This method is loosely based on the permit for ERC-20 tokens in  EIP-2612, but modified
+     * for ERC-721.
+     */
+    function permit(
+        address spender,
+        uint256 tokenId,
+        EIP712Signature memory sig
+    ) public override nonReentrant onlyExistingToken(tokenId) {
+        require(
+            sig.deadline == 0 || sig.deadline >= block.timestamp,
+            "Media: Permit expired"
+        );
+        require(spender != address(0), "Media: spender cannot be 0x0");
+        bytes32 domainSeparator = _calculateDomainSeparator();
+
+        bytes32 digest = keccak256(
+            abi.encodePacked(
+                "\x19\x01",
+                domainSeparator,
+                keccak256(
+                    abi.encode(
+                        PERMIT_TYPEHASH,
+                        spender,
+                        tokenId,
+                        permitNonces[ownerOf(tokenId)][tokenId]++,
+                        sig.deadline
+                    )
+                )
+            )
+        );
+
+        address recoveredAddress = ecrecover(digest, sig.v, sig.r, sig.s);
+
+        require(
+            recoveredAddress != address(0) &&
+                ownerOf(tokenId) == recoveredAddress,
+            "Media: Signature invalid"
+        );
+
+        _approve(spender, tokenId);
+    }
+
+    /* *****************
+     * Private Functions
+     * *****************
+     */
+
+    /**
+     * @notice Creates a new token for `creator`. Its token ID will be automatically
+     * assigned (and available on the emitted {IERC721-Transfer} event), and the token
+     * URI autogenerated based on the base URI passed at construction.
+     *
+     * See {ERC721-_safeMint}.
+     *
+     * On mint, also set the sha256 hashes of the content and its metadata for integrity
+     * checks, along with the initial URIs to point to the content and metadata. Attribute
+     * the token ID to the creator, mark the content hash as used, and set the bid shares for
+     * the media's market.
+     *
+     * Note that although the content hash must be unique for future mints to prevent duplicate media,
+     * metadata has no such requirement.
+     */
+    function _mintForCreator(
+        address creator,
+        MediaData memory data,
+        IMarket.BidShares memory bidShares,
+        bytes memory tokenType
+    ) internal onlyValidURI(data.tokenURI) onlyValidURI(data.metadataURI) {
+        require(data.contentHash != 0, "Media: content hash must be non-zero");
+        // require(
+        //     _contentHashes[data.contentHash] == false,
+        //     "Media: a token has already been created with this content hash"
+        // );
+        require(
+            data.metadataHash != 0,
+            "Media: metadata hash must be non-zero"
+        );
+
+        uint256 tokenId = _tokenIdTracker.current();
+
+        _safeMint(creator, tokenId, tokenType);
+        _tokenIdTracker.increment();
+        _setTokenContentHash(tokenId, data.contentHash);
+        _setTokenMetadataHash(tokenId, data.metadataHash);
+        _setTokenMetadataURI(tokenId, data.metadataURI);
+        _setTokenURI(tokenId, data.tokenURI);
+        _creatorTokens[creator].add(tokenId);
+        _contentHashes[data.contentHash] = true;
+
+        tokenCreators[tokenId] = creator;
+        previousTokenOwners[tokenId] = creator;
+        IMarket(marketContract).setBidShares(tokenId, bidShares);
+    }
+
+    function _setTokenContentHash(uint256 tokenId, bytes32 contentHash)
+        internal
+        virtual
+        onlyExistingToken(tokenId)
+    {
+        tokenContentHashes[tokenId] = contentHash;
+    }
+
+    function _setTokenMetadataHash(uint256 tokenId, bytes32 metadataHash)
+        internal
+        virtual
+        onlyExistingToken(tokenId)
+    {
+        tokenMetadataHashes[tokenId] = metadataHash;
+    }
+
+    function _setTokenMetadataURI(uint256 tokenId, string memory metadataURI)
+        internal
+        virtual
+        onlyExistingToken(tokenId)
+    {
+        _tokenMetadataURIs[tokenId] = metadataURI;
+    }
+
+    /**
+     * @notice Destroys `tokenId`.
+     * @dev We modify the OZ _burn implementation to
+     * maintain metadata and to remove the
+     * previous token owner from the piece
+     */
+    function _burn(uint256 tokenId) internal override {
+        string memory _tokenURI = _tokenURIs[tokenId];
+
+        super._burn(tokenId);
+
+        if (bytes(_tokenURI).length != 0) {
+            _tokenURIs[tokenId] = _tokenURI;
         }
 
-        // if (count == 1) {
-        //     delay = coolDowns30 * avgBlocksDaily;
-        // } else if (count == 4) {
-        //     delay = 7 * avgBlocksDaily;
-        // } else if (count == 3) {
-        //     delay = 3 * avgBlocksDaily;
-        // } else if (count == 3) {
-        //     delay = avgBlocksDaily;
-        // } else if (count == 1) {
-        //     delay = avgBlocksDaily / 6;
-        // } else {
-        //     delay = 0;
-        // }
-        return delay;
+        delete previousTokenOwners[tokenId];
+    }
 
+    /**
+     * @notice transfer a token and remove the ask for it.
+     */
+    function _transfer(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal override {
+        IMarket(marketContract).removeAsk(tokenId);
+
+        super._transfer(from, to, tokenId);
+    }
+
+    /**
+     * @dev Calculates EIP712 DOMAIN_SEPARATOR based on the current contract and chain ID.
+     */
+    function _calculateDomainSeparator() internal view returns (bytes32) {
+        uint256 chainID;
+        /* solium-disable-next-line */
+        assembly {
+            chainID := chainid()
+        }
+
+        return
+            keccak256(
+                abi.encode(
+                    keccak256(
+                        "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"
+                    ),
+                    keccak256(bytes("CryptoZoo")),
+                    keccak256(bytes("1")),
+                    chainID,
+                    address(this)
+                )
+            );
     }
 }
