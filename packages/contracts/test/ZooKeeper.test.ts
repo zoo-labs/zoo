@@ -47,7 +47,7 @@ describe("ZooKeeper", () => {
         // Mint some ZOO
         owner = signers[0]
         await zooToken.mint(zooFaucet.address, 1000000);
-        await zooFaucet.buyZoo(owner.address, 1000);
+        await zooFaucet.buyZoo(owner.address, 2);
 
         // Deploy Market
         zooMarket = (await new ZooMarket__factory(owner).deploy()) as ZooMarket;
@@ -421,7 +421,9 @@ describe("ZooKeeper", () => {
     Deploy Script
     */
     it("Should get the ZooDrop owner", async () => {
+
         const zooDropOwner: string = await zooKeeper.owner();
+
         expect(zooDropOwner).to.equal(owner.address);
     });
 
@@ -429,20 +431,26 @@ describe("ZooKeeper", () => {
      * DROP
      */
     it("Should create a new ZooKeeper contract with AddDrop event", async () => {
+
         const block = await ethers.provider.getBlockNumber();
-        let dropID = await zooKeeper.connect(signers[0]).addDrop("test1", 16000, 210);
+
+        await zooKeeper.connect(signers[0]).addDrop("test1", 16000, 210);
+
         let events = await zooKeeper.queryFilter(zooKeeper.filters.AddDrop(null, null), block);
+
         expect(events.length).eq(1);
 
         const log = zooKeeper.interface.parseLog(events[0]);
+
         expect(log.name).to.equal("AddDrop");
+
         expect(log.args._dropID.toNumber()).to.equal(1);
     });
 
     /**
      * BUYING EGGS
      */
-    it.only("Should buy a basic egg", async () => {
+    it("Should buy a basic egg", async () => {
 
         await addDrop();
 
@@ -455,6 +463,7 @@ describe("ZooKeeper", () => {
         const sender = buyEggReceipt.events;
 
         let from_add
+
         let token_id
 
         sender.forEach(element => {
@@ -463,7 +472,9 @@ describe("ZooKeeper", () => {
                 token_id = element.args["_tokenID"]
             }
         });
+
         expect(from_add).to.equal(owner.address);
+
         expect(token_id.toNumber()).to.equal(0);
 
         // add check for types mapping
@@ -475,8 +486,25 @@ describe("ZooKeeper", () => {
         expect(egg.eggCreationTime.toNumber()).to.greaterThan(0);
     });
 
-    it("Should buy multiple basic eggs", async () => {
+    it.only("Should buy multiple basic eggs", async () => {
 
+        await zooToken.approve(zooKeeper.address, 2000);
+
+        await addDrop();
+
+        let initialBal = await zooToken.balanceOf(owner.address);
+
+        let counter = parseInt(initialBal._hex);
+
+        do {
+
+            await zooKeeper.connect(owner).buyEgg(1);
+
+            counter -= 210;
+
+        }
+
+        while (counter > 210);
 
     });
 
@@ -486,15 +514,15 @@ describe("ZooKeeper", () => {
 
     });
 
-    it.only("Should revert when not enough balance", async () => {
+    it("Should revert when not enough balance", async () => {
 
         await addDrop();
 
-        await zooToken.approve(zooKeeper.address, 210)
+        await zooToken.approve(zooKeeper.address, 210);
 
         await expect(zooKeeper.connect(signers[1]).buyEgg(1)).to.be.revertedWith(
             "Not Enough ZOO Tokens to purchase Egg"
-        )
+        );
 
     });
 
