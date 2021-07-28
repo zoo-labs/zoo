@@ -15,6 +15,7 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.
 import {Decimal} from "./Decimal.sol";
 import {IMarket} from "./interfaces/IMarket.sol";
 import "./interfaces/IMedia.sol";
+import "./console.sol";
 
 /**
  * @title A media value system, with perpetual equity to creators
@@ -247,6 +248,8 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         public
         nonReentrant
     {
+        console.log("mintFor:this", address(this));
+        console.log("mintFor:msg.sender", address(msg.sender));
         _mintForCreator(owner, data, bidShares, "");
     }
 
@@ -524,6 +527,9 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         IMarket.BidShares memory bidShares,
         bytes memory tokenType
     ) internal onlyValidURI(data.tokenURI) onlyValidURI(data.metadataURI) {
+        console.log("_mintForCreator:this", address(this));
+        console.log("_mintForCreator:msg.sender", address(msg.sender));
+
         require(data.contentHash != 0, "ZooMedia: content hash must be non-zero");
         require(
             _contentHashes[data.contentHash] == false,

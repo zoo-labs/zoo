@@ -4,6 +4,7 @@ pragma solidity >=0.8.4;
 
 import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
 import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { ZooDrop } from "./ZooDrop.sol";
 import { ZooMedia } from "./ZooMedia.sol";
 import { ZooToken } from "./ZooToken.sol";
@@ -80,11 +81,8 @@ contract ZooKeeper {
 
     mapping(address => uint256) public lastTimeBred;
 
-    ZooToken public token;
     ZooMedia public media;
-
-    string public name;
-    string public symbol;
+    IERC20 public token;
     address public owner;
 
     modifier onlyOwner {
@@ -98,16 +96,12 @@ contract ZooKeeper {
     }
 
     constructor(
-        string memory _name,
-        string memory _symbol,
-        address _market,
+        address _media,
         address _token
     ) {
         owner = msg.sender;
-        name = _name;
-        symbol = _symbol;
-        media = new ZooMedia(_name, _symbol, _market);
-        token = ZooToken(_token);
+        media = ZooMedia(_media);
+        token = IERC20(_token);
     }
 
     function mediaAddress() public view returns (address) {
@@ -175,6 +169,9 @@ contract ZooKeeper {
 
     // Accept ZOO and return Egg NFT
     function buyEgg(uint256 _dropID) public returns (uint256) {
+        console.log("buyEgg:this", address(this));
+        console.log("buyEgg:msg.sender", address(msg.sender));
+
         console.log("Get drop instance");
         ZooDrop drop = ZooDrop(drops[_dropID]);
 

@@ -10,6 +10,7 @@ import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import { Decimal } from "./Decimal.sol";
 import { ZooMedia } from "./ZooMedia.sol";
+import { ZooKeeper } from "./ZooKeeper.sol";
 import { IMarket } from "./interfaces/IMarket.sol";
 
 import "./console.sol";
@@ -27,7 +28,8 @@ contract ZooMarket is IMarket {
      * *******
      */
     // Address of the media contract that can call this market
-    address public mediaContract;
+    address public media;
+    address public zookeeper;
 
     // Deployment Address
     address private _owner;
@@ -49,9 +51,10 @@ contract ZooMarket is IMarket {
     /**
      * @notice require that the msg.sender is the configured media contract
      */
-    modifier onlyMediaCaller() {
-        console.log("onlyMediaCaller", msg.sender);
-        require(mediaContract == msg.sender, "ZooMarket: Only media contract");
+    modifier onlyZoo() {
+        console.log("onlyZoo:this", address(this));
+        console.log("onlyZoo:msg.sender", msg.sender);
+        require(zookeeper == msg.sender || media == msg.sender, "ZooMarket: Only Zoo contracts can call this method");
         _;
     }
 
@@ -157,15 +160,20 @@ contract ZooMarket is IMarket {
      * @notice Sets the media contract address. This address is the only permitted address that
      * can call the mutable functions. This method can only be called once.
      */
-    function configure(address mediaAddress) external override {
-        require(msg.sender == _owner, "ZooMarket: Only owner");
-        require(mediaContract == address(0), "ZooMarket: Already configured");
+    function configure(address _media, address _zookeeper) external override onlyOwner {
+        require(media == address(0), "ZooMarket: Already configured");
+        require(zookeeper == address(0), "ZooMarket: Already configured");
         require(
-            mediaAddress != address(0),
-            "ZooMarket: cannot set media contract as zero address"
+            _media != address(0),
+            "ZooMarket: cannot set Media contract as zero address"
+        );
+        require(
+            _zookeeper != address(0),
+            "ZooMarket: cannot set Zookeeper contract as zero address"
         );
 
-        mediaContract = mediaAddress;
+        media = _media;
+        zookeeper = _zookeeper;
     }
 
     /**
@@ -175,7 +183,7 @@ contract ZooMarket is IMarket {
     function setBidShares(uint256 tokenId, BidShares memory bidShares)
         public
         override
-        onlyMediaCaller
+        onlyZoo
     {
         require(
             isValidBidShares(bidShares),
@@ -192,7 +200,7 @@ contract ZooMarket is IMarket {
     function setAsk(uint256 tokenId, Ask memory ask)
         public
         override
-        onlyMediaCaller
+        onlyZoo
     {
         require(
             isValidBid(tokenId, ask.amount),
@@ -206,7 +214,7 @@ contract ZooMarket is IMarket {
     /**
      * @notice removes an ask for a token and emits an AskRemoved event
      */
-    function removeAsk(uint256 tokenId) external override onlyMediaCaller {
+    function removeAsk(uint256 tokenId) external override onlyZoo {
         emit AskRemoved(tokenId, _tokenAsks[tokenId]);
         delete _tokenAsks[tokenId];
     }
@@ -220,7 +228,7 @@ contract ZooMarket is IMarket {
         uint256 tokenId,
         Bid memory bid,
         address spender
-    ) public override onlyMediaCaller {
+    ) public override onlyZoo {
         BidShares memory bidShares = _bidShares[tokenId];
         require(
             bidShares.creator.value.add(bid.sellOnShare.value) <=
@@ -281,7 +289,7 @@ contract ZooMarket is IMarket {
     function removeBid(uint256 tokenId, address bidder)
         public
         override
-        onlyMediaCaller
+        onlyZoo
     {
         Bid storage bid = _tokenBidders[tokenId][bidder];
         uint256 bidAmount = bid.amount;
@@ -308,7 +316,7 @@ contract ZooMarket is IMarket {
     function acceptBid(uint256 tokenId, Bid calldata expectedBid)
         external
         override
-        onlyMediaCaller
+        onlyZoo
     {
         Bid memory bid = _tokenBidders[tokenId][expectedBid.bidder];
         require(bid.amount > 0, "ZooMarket: cannot accept bid of 0");
@@ -340,22 +348,22 @@ contract ZooMarket is IMarket {
 
         // Transfer bid share to owner of media
         token.safeTransfer(
-            IERC721(mediaContract).ownerOf(tokenId),
+            IERC721(media).ownerOf(tokenId),
             splitShare(bidShares.owner, bid.amount)
         );
         // Transfer bid share to creator of media
         token.safeTransfer(
-            ZooMedia(mediaContract).tokenCreators(tokenId),
+            ZooMedia(media).tokenCreators(tokenId),
             splitShare(bidShares.creator, bid.amount)
         );
         // Transfer bid share to previous owner of media (if applicable)
         token.safeTransfer(
-            ZooMedia(mediaContract).previousTokenOwners(tokenId),
+            ZooMedia(media).previousTokenOwners(tokenId),
             splitShare(bidShares.prevOwner, bid.amount)
         );
 
         // Transfer media to bid recipient
-        ZooMedia(mediaContract).auctionTransfer(tokenId, bid.recipient);
+        ZooMedia(media).auctionTransfer(tokenId, bid.recipient);
 
         // Calculate the bid share for the new owner,
         // equal to 100 - creatorShare - sellOnShare
