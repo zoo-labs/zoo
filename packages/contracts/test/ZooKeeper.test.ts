@@ -623,7 +623,7 @@ describe("ZooKeeper", () => {
     /**
      * BREEDING
      */
-    it.only("Should breed a hybrid egg", async () => {
+    it("Should breed a hybrid egg", async () => {
 
         await addAnimals();
 
