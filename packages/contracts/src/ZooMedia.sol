@@ -130,7 +130,7 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         console.log("Token Id", tokenId);
 
         require(
-            _isApprovedOrOwner(spender, tokenId),
+            _isZooKeeper(msg.sender) || _isApprovedOrOwner(spender, tokenId),
             "ZooMedia: Only approved or owner"
         );
         _;
@@ -172,13 +172,15 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         marketAddress = _marketAddress;
     }
 
+    function _isZooKeeper(address _address) internal view returns (bool) {
+        return _address == keeperAddress;
+    }
+
     /**
      * @notice Sets the media contract address. This address is the only permitted address that
      * can call the mutable functions. This method can only be called once.
      */
-    function configure(address _marketAddress, address _keeperAddress)
-        external
-    {
+    function configure(address _marketAddress, address _keeperAddress) external {
         require(msg.sender == _owner, "ZooMedia: Only owner");
         // require(
         //     marketAddress == address(0),
@@ -578,7 +580,10 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
 
         tokenCreators[tokenId] = creator;
         previousTokenOwners[tokenId] = creator;
-        IMarket(marketAddress).setBidShares(tokenId, bidShares);
+
+        // ZK now responsible for setting bid shares externally
+        // IMarket(marketAddress).setBidShares(tokenId, bidShares);
+        console.log("market needs to be updated", bidShares.creator.value);
     }
 
     function _setTokenContentHash(uint256 tokenId, bytes32 contentHash)

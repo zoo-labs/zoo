@@ -185,6 +185,7 @@ contract ZooMarket is IMarket {
         override
         onlyZoo
     {
+        console.log("market.setBidShares", tokenId);
         require(
             isValidBidShares(bidShares),
             "ZooMarket: Invalid bid shares, must sum to 100"

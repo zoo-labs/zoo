@@ -389,6 +389,17 @@ contract ERC721 is
     }
 
     /**
+     * @dev Public method which returns whether `spender` is allowed to manage `tokenId`.
+     *
+     * Requirements:
+     *
+     * - `tokenId` must exist.
+     */
+    function isApprovedOrOwner(address spender, uint256 tokenId) public view returns (bool) {
+        return _isApprovedOrOwner(spender, tokenId);
+    }
+
+    /**
      * @dev Safely mints `tokenId` and transfers it to `to`.
      *
      * Requirements:
