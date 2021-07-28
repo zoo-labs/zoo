@@ -366,7 +366,8 @@ describe('ZooMedia', () => {
           }
         )
       ).fulfilled;
-
+      
+      let passed = true
       try {
         await
           mint(
@@ -381,14 +382,15 @@ describe('ZooMedia', () => {
               owner: Decimal.new(0),
             }
           );
-          const passed = false
-          expect(passed, "The previous tx was not reverted").to.be.true
-      } catch (error) {
-        expect(error.error.body).to.contain(
-          'ZooMedia: a token has already been created with this content hash',
-          "This error body should have the correct revert error")
-      }
-    });
+          passed = false
+        } catch (error) {
+          expect(error.error.body).to.contain(
+            'ZooMedia: a token has already been created with this content hash',
+            "This error body should have the correct revert error")
+          }
+          passed = true
+        expect(passed, "The previous tx was not reverted").to.be.true
+        });
 
     it('should revert if the metadataHash is empty', async () => {
       const media = await mediaAs(creatorWallet);
