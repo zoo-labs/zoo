@@ -2,14 +2,14 @@
 
 pragma solidity >=0.8.4;
 
-import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
-import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import { ZooDrop } from "./ZooDrop.sol";
-import { ZooMedia } from "./ZooMedia.sol";
-import { ZooToken } from "./ZooToken.sol";
-import { IMarket } from "./interfaces/IMarket.sol";
-import { Decimal } from "./Decimal.sol";
+import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
+import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import {ZooDrop} from "./ZooDrop.sol";
+import {ZooMedia} from "./ZooMedia.sol";
+import {ZooToken} from "./ZooToken.sol";
+import {IMarket} from "./interfaces/IMarket.sol";
+import {Decimal} from "./Decimal.sol";
+import "./console.sol";
 
 import "./console.sol";
 
@@ -121,11 +121,18 @@ contract ZooKeeper {
         return media.ownerOf(_tokenID);
     }
 
-    function transferFrom(address _sender, address _recipient, uint256 _amount) public {
+    function transferFrom(
+        address _sender,
+        address _recipient,
+        uint256 _amount
+    ) public {
         return media.transferFrom(_sender, _recipient, _amount);
     }
 
-    function mint(ZooMedia.MediaData memory data, IMarket.BidShares memory bidShares) public {
+    function mint(
+        ZooMedia.MediaData memory data,
+        IMarket.BidShares memory bidShares
+    ) public {
         return media.mint(data, bidShares);
     }
 
@@ -214,6 +221,7 @@ contract ZooKeeper {
 
         console.log("Transfer ZOO from sender to this contract");
         token.transferFrom(msg.sender, address(this), drop.eggPrice());
+        console.log("TEST THIS");
 
         console.log("get tokenURI and metadataURI");
         (string memory _tokenURI, string memory _metadataURI) = drop.buyEgg();
@@ -379,7 +387,10 @@ contract ZooKeeper {
     ) public onlyExistingToken(_tokenIDA) returns (uint256) {
         require(_tokenIDA != _tokenIDB);
         uint256 delay = getBreedingDelay();
-        require(block.timestamp-lastTimeBred[msg.sender] > delay, "Must wait for cooldown to finish.");
+        require(
+            block.timestamp - lastTimeBred[msg.sender] > delay,
+            "Must wait for cooldown to finish."
+        );
 
         ZooDrop drop = ZooDrop(drops[dropId]);
 
@@ -395,7 +406,7 @@ contract ZooKeeper {
         // require(now.sub(checkBreedDelay()) <= 0)
 
         (string memory _tokenURI, string memory _metadataURI) = drop
-        .getHybridEgg();
+            .getHybridEgg();
         ZooMedia.MediaData memory data;
         data.tokenURI = _tokenURI;
         data.metadataURI = _metadataURI;
@@ -433,10 +444,7 @@ contract ZooKeeper {
 
     // Implemented prior to issue #30
     // Should burn animal and return yield
-    function freeAnimal(uint256 _tokenID)
-        public
-        returns (bool)
-    {
+    function freeAnimal(uint256 _tokenID) public returns (bool) {
         require(
             bytes(hybrids[_tokenID].name).length > 0 ||
                 bytes(animals[_tokenID].name).length > 0,
@@ -490,7 +498,11 @@ contract ZooKeeper {
         return media.tokenByIndex(_tokenID);
     }
 
-    function tokenOfOwnerByIndex(address _owner, uint256 _tokenID) public view returns (uint256) {
+    function tokenOfOwnerByIndex(address _owner, uint256 _tokenID)
+        public
+        view
+        returns (uint256)
+    {
         return media.tokenOfOwnerByIndex(_owner, _tokenID);
     }
 
@@ -498,23 +510,42 @@ contract ZooKeeper {
         return media.tokenCreators(_tokenID);
     }
 
-    function previousTokenOwners(uint256 _tokenID) public view returns (address) {
+    function previousTokenOwners(uint256 _tokenID)
+        public
+        view
+        returns (address)
+    {
         return media.previousTokenOwners(_tokenID);
     }
 
-    function tokenContentHashes(uint256 _tokenID) public view returns (bytes32) {
+    function tokenContentHashes(uint256 _tokenID)
+        public
+        view
+        returns (bytes32)
+    {
         return media.tokenContentHashes(_tokenID);
     }
 
-    function tokenMetadataHashes(uint256 _tokenID) public view returns (bytes32) {
+    function tokenMetadataHashes(uint256 _tokenID)
+        public
+        view
+        returns (bytes32)
+    {
         return media.tokenMetadataHashes(_tokenID);
     }
 
-    function tokenMetadataURI(uint256 _tokenID) public view returns (string memory) {
+    function tokenMetadataURI(uint256 _tokenID)
+        public
+        view
+        returns (string memory)
+    {
         return media.tokenMetadataURI(_tokenID);
     }
 
-    function updateTokenMetadataURI(uint256 _tokenID, string memory _metadataURI) public {
+    function updateTokenMetadataURI(
+        uint256 _tokenID,
+        string memory _metadataURI
+    ) public {
         return media.updateTokenMetadataURI(_tokenID, _metadataURI);
     }
 
@@ -529,7 +560,8 @@ contract ZooKeeper {
     // take two animals and returns a bytes32 string of their names
     // to be used with ZooMedia.possib;ePairs to get the two possible hybrid pairs coming from the two base animals
     function concatAnimalIds(string memory a1, string memory a2)
-        internal pure
+        internal
+        pure
         returns (string memory)
     {
         return string(abi.encodePacked(a1, a2));
@@ -642,9 +674,9 @@ contract ZooKeeper {
         if (count == 0) {
             delay = 0;
         } else if (count >= 5) {
-            delay = coolDowns[coolDowns.length-1];
+            delay = coolDowns[coolDowns.length - 1];
         } else {
-            delay = coolDowns[count+1];
+            delay = coolDowns[count + 1];
         }
 
         // if (count == 1) {
@@ -661,6 +693,5 @@ contract ZooKeeper {
         //     delay = 0;
         // }
         return delay;
-
     }
 }
