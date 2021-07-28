@@ -202,10 +202,8 @@ contract ZooKeeper {
             "There are no more Eggs that can be purchased"
         );
 
-        console.log("Transferring tokens from user");
         token.transferFrom(msg.sender, address(this), drop.eggPrice());
 
-        console.log("Buying Egg from drop");
         (string memory _tokenURI, string memory _metadataURI) = drop.buyEgg();
         ZooMedia.MediaData memory data;
 
@@ -226,17 +224,12 @@ contract ZooKeeper {
         bidShares.owner = Decimal.D256(90 * (10**18));
 
         // Mint token
-        console.log("mint");
         media.mintFor(msg.sender, data, bidShares);
-        console.log("minted");
 
         uint256 _tokenID = media.getRecentToken(msg.sender);
-        console.log("tokenID", _tokenID);
 
         // Update bidshares
-        console.log("Set bidshares for", _tokenID);
         market.setBidShares(_tokenID, bidShares);
-        console.log("Bid shares updated");
 
         // Save egg state
         Egg memory egg;
@@ -263,7 +256,6 @@ contract ZooKeeper {
             "Not Enough ZOO Tokens to purchase Name"
         );
 
-        console.log("Transfer ZOO from sender to this contract");
         token.transferFrom(msg.sender, address(this), namePrice);
         names[_tokenID] = _name;
     }
@@ -273,8 +265,6 @@ contract ZooKeeper {
         public
         returns (uint256)
     {
-        console.log("hatchEgg:this", address(this));
-        console.log("hatchEgg:msg.sender", msg.sender);
         ZooDrop drop = ZooDrop(drops[dropId]);
 
         // need to check the hatch time delay
@@ -333,8 +323,6 @@ contract ZooKeeper {
             // data.metadataURI = drop.metadataURI(hatchedAnimal);
         }
 
-        console.log("hatchedAnimal:", hatchedAnimal);
-
         data.tokenURI = drop.tokenURI(hatchedAnimal);
         data.metadataURI = drop.metadataURI(hatchedAnimal);
         data.contentHash = keccak256(
@@ -357,13 +345,10 @@ contract ZooKeeper {
         bidShares.creator = Decimal.D256(10 * (10**18));
         bidShares.owner = Decimal.D256(90 * (10**18));
 
-        console.log("Mint new NFT, tokenURI:", data.tokenURI, data.metadataURI);
         media.mintFor(msg.sender, data, bidShares); // this time not an egg but an animal
 
         uint256 _tokenID = media.getRecentToken(msg.sender);
-        console.log("TokenID", _tokenID);
 
-        console.log("Set bid shares");
         market.setBidShares(_tokenID, bidShares);
 
         if (bytes(_animal.name).length > 0) {

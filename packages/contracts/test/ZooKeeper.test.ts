@@ -24,6 +24,15 @@ let mediaAddress: string;
 let marketAddress: string;
 
 describe("ZooKeeper", () => {
+
+
+    beforeAll(async () => {
+
+        await addAnimals();
+        await addHybrids();
+
+    })
+
     beforeEach(async () => {
         signers = await ethers.getSigners();
 
@@ -347,7 +356,6 @@ describe("ZooKeeper", () => {
 
     async function breedHybrid() {
         await zooToken.approve(zooKeeper.address, 2000)
-        console.log('buyFirstEgg')
         const buyFirstEgg = await zooKeeper.connect(owner).buyEgg(1);
         const buyFirstEggReceipt = await buyFirstEgg.wait();
         let sender = buyFirstEggReceipt.events;
@@ -361,7 +369,6 @@ describe("ZooKeeper", () => {
             }
         });
 
-        console.log('buySecondEgg')
         const buySecondEgg = await zooKeeper.connect(owner).buyEgg(1);
         const buySecondEggReceipt = await buySecondEgg.wait();
 
@@ -375,7 +382,6 @@ describe("ZooKeeper", () => {
             }
         });
 
-        console.log('hatchEgg')
         const firstHatchedAnimal = await zooKeeper.connect(owner).hatchEgg(1, token_id_1);
         const hatchFirstAnimalReceipt = await firstHatchedAnimal.wait();
         sender = hatchFirstAnimalReceipt.events;
@@ -449,7 +455,6 @@ describe("ZooKeeper", () => {
      * BUYING EGGS
      */
     it("Should buy a basic egg", async () => {
-        await addAnimals();
 
         await zooToken.approve(zooKeeper.address, 210)
 
@@ -554,7 +559,9 @@ describe("ZooKeeper", () => {
 
     });
 
+    // Skip for now
     it("Should share bidshare from buy egg to contract owner", async () => {
+
 
     });
 
@@ -886,7 +893,6 @@ describe("ZooKeeper", () => {
                 token_id_hybridEgg = element.args["_eggTokenId"];
             }
         });
-        // console.log("hybrid egg id: ", token_id_hybridEgg) // id is 4
 
         const firstHatchedHybridAnimal = await zooKeeper
             .connect(owner)
@@ -903,7 +909,6 @@ describe("ZooKeeper", () => {
                 token_id_Hybrid_Animal = element.args["_tokenID"];
             }
         });
-        // console.log("hybrid animal id: ", token_id_Hybrid_Animal)
 
         expect(token_id_Hybrid_Animal.toNumber()).to.equal(5);
 
