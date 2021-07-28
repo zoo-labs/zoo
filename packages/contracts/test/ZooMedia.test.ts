@@ -348,7 +348,7 @@ describe('ZooMedia', () => {
       ).rejectedWith('Media: content hash must be non-zero');
     });
 
-    it.only('should revert if the content hash already exists for a created media', async () => {
+    it('should revert if the content hash already exists for a created media', async () => {
       const media = await mediaAs(creatorWallet);
 
       await expect(
@@ -704,12 +704,27 @@ describe('ZooMedia', () => {
   });
 
   describe('#removeAsk', () => {
+    let media: ZooMedia
+    beforeEach(async () => {
+      media = await mediaAs(creatorWallet)
+      await mint(
+          media,
+          metadataURI,
+          tokenURI,
+          contentHashBytes,
+          metadataHashBytes,
+          {
+            prevOwner: Decimal.new(10),
+            creator: Decimal.new(90),
+            owner: Decimal.new(0),
+          }
+        )
+    });
     it('should remove the ask', async () => {
-      const media = await mediaAs(ownerWallet);
       const market = await ZooMarket__factory.connect(
         marketAddress,
         deployerWallet
-      );
+      ).deployed();
       await setAsk(media, 0, defaultAsk);
 
       await expect(removeAsk(media, 0)).fulfilled;
@@ -719,7 +734,7 @@ describe('ZooMedia', () => {
     });
 
     it('should emit an Ask Removed event', async () => {
-      const media = await mediaAs(ownerWallet);
+      media = await mediaAs(ownerWallet);
       const auction = await ZooMarket__factory.connect(
         marketAddress,
         deployerWallet
