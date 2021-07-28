@@ -117,9 +117,6 @@ function Feed<FeedPagePops>({ match }) {
       case pathname.includes("myzoo"):
          activeIndex = 0;
          filter = "myZoo";
-         if (toFind) {
-            animals = [animalsState[toFind], ...animals];
-         }
          break;
       case pathname.includes("marketplace"):
          filter = "marketplace";
@@ -133,13 +130,20 @@ function Feed<FeedPagePops>({ match }) {
 
    //  Filter if in the Zoo or Market
    const isZoo = filter === "myZoo";
-   const animalsFiltered = animals.filter((animal) => {
+   let animalsFiltered = animals.filter((animal) => {
       return animal.owner
          ? isZoo
             ? animal.owner.toLowerCase() === account.toLowerCase()
             : animal.owner.toLowerCase() !== account.toLowerCase()
          : !isZoo;
    });
+
+   if (toFind && isZoo) {
+      const ogIndex = animalsFiltered.findIndex((a) => a.tokenId === toFind);
+      const toMove = animalsFiltered[0];
+      animalsFiltered[0] = animalsFiltered[ogIndex];
+      animalsFiltered[ogIndex] = toMove;
+   }
 
    console.log(toFind, animalsFiltered);
 
