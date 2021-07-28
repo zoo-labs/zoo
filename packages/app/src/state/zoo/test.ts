@@ -15,6 +15,7 @@ export const test = {
       currentBid: "500",
       buyNow: "1000",
       listed: true,
+      owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
       bloodline: "pure",
     },
     21234214: {
@@ -31,6 +32,7 @@ export const test = {
       currentBid: "800",
       buyNow: "900",
       listed: true,
+      owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
       bloodline: "pure",
     },
     99999923: {
@@ -66,7 +68,7 @@ export const test = {
       currentBid: "201",
       buyNow: "300",
       listed: false,
-      owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
+      owner: "0x61227A0C1CcdCA101bFFc467805bae8B99197772",
       bloodline: "pure",
     },
     101311: {
@@ -84,8 +86,9 @@ export const test = {
       currentBid: "201",
       buyNow: "300",
       listed: false,
-      owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
+      owner: "0x61227A0C1CcdCA101bFFc467805bae8B99197772",
       bloodline: "hybrid",
+      timeRemaining: 3
     },
   },
   eggs: {
