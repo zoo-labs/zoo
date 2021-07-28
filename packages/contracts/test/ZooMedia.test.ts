@@ -127,7 +127,7 @@ describe('ZooMedia', () => {
     ).deployed();
     tokenAddress = token.address;
 
-    market = await (
+    const market = await (
       await new ZooMarket__factory(deployerWallet).deploy()
     ).deployed();
     marketAddress = market.address;
@@ -138,7 +138,7 @@ describe('ZooMedia', () => {
     mediaAddress = media.address;
 
     const keeper = await (
-      await new ZooKeeper__factory(deployerWallet).deploy(mediaAddress, tokenAddress)
+      await new ZooKeeper__factory(deployerWallet).deploy(marketAddress, mediaAddress, tokenAddress)
     ).deployed();
     keeperAddress = keeper.address;
 

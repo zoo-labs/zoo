@@ -47,3 +47,4 @@ yarn.lock
 
 packages/app/src/artifacts/
 packages/app/src/contracts.json
+packages/dev/src/contracts.json
