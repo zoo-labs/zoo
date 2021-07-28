@@ -348,7 +348,7 @@ describe('ZooMedia', () => {
       ).rejectedWith('Media: content hash must be non-zero');
     });
 
-    it('should revert if the content hash already exists for a created media', async () => {
+    it.only('should revert if the content hash already exists for a created media', async () => {
       const media = await mediaAs(creatorWallet);
 
       await expect(
@@ -366,22 +366,25 @@ describe('ZooMedia', () => {
         )
       ).fulfilled;
 
-      await expect(
-        mint(
-          media,
-          metadataURI,
-          tokenURI,
-          contentHashBytes,
-          metadataHashBytes,
-          {
-            prevOwner: Decimal.new(10),
-            creator: Decimal.new(90),
-            owner: Decimal.new(0),
-          }
-        )
-      ).rejectedWith(
-        'Media: a media has already been created with this content hash'
-      );
+      try {
+        await
+          mint(
+            media,
+            metadataURI,
+            tokenURI,
+            contentHashBytes,
+            metadataHashBytes,
+            {
+              prevOwner: Decimal.new(10),
+              creator: Decimal.new(90),
+              owner: Decimal.new(0),
+            }
+          );
+      } catch (error) {
+        expect(error.error.body).to.contain(
+          'ZooMedia: a token has already been created with this content hash',
+          "This error body should have the correct revert error")
+      }
     });
 
     it('should revert if the metadataHash is empty', async () => {
