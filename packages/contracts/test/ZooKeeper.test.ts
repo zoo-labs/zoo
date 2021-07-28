@@ -66,6 +66,9 @@ describe("ZooKeeper", () => {
         // Reconfigure Market to point to Media
         await zooMarket.configure(mediaAddress, zooKeeper.address);
 
+        // Reconfigure Media to point to Media
+        await zooMedia.configure(mediaAddress, zooKeeper.address);
+
     })
 
     async function addAnimals() {
@@ -557,14 +560,13 @@ describe("ZooKeeper", () => {
             }
         });
 
-        console.log("Keeper", zooKeeper.address)
-        console.log("Media", zooMedia.address)
-        console.log("Markey", zooMarket.address)
+        // await zooKeeper.connect(signers[0]).approve(zooKeeper.address, 0);
+        console.log("ZooKeeper Address", zooKeeper.address)
 
 
-        await zooKeeper.connect(signers[0]).approve(signers[1].address, 0);
+        // await zooMedia.approve(signers[1].address, 0)
 
-        // const hatchEgg = await zooKeeper.connect(signers[1]).hatchEgg(1, 0);
+        const hatchEgg = await zooKeeper.connect(signers[0]).hatchEgg(1, 0);
         // const hatchEggReceipt = await hatchEgg.wait();
         // sender = hatchEggReceipt.events;
 
