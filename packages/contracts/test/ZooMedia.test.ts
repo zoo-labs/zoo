@@ -4,6 +4,7 @@ import { JsonRpcProvider } from '@ethersproject/providers';
 import { Blockchain } from '../utils/Blockchain';
 import { generatedWallets } from '../utils/generatedWallets';
 import { ethers, Wallet } from 'ethers';
+import { LogDescription } from '@ethersproject/abi';
 import { AddressZero } from '@ethersproject/constants';
 import Decimal from '../utils/Decimal';
 import { BigNumber, BigNumberish, Bytes } from 'ethers';
@@ -733,23 +734,23 @@ describe('ZooMedia', () => {
       expect(ask.currency).eq(AddressZero);
     });
 
-    it('should emit an Ask Removed event', async () => {
-      media = await mediaAs(ownerWallet);
+    it.only('should emit an Ask Removed event', async () => {
       const auction = await ZooMarket__factory.connect(
         marketAddress,
         deployerWallet
-      );
+      ).deployed();
       await setAsk(media, 0, defaultAsk);
       const block = await provider.getBlockNumber();
       const tx = await removeAsk(media, 0);
-
+      
       const events = await auction.queryFilter(
         auction.filters.AskRemoved(0, null),
         block
-      );
+        );
       expect(events.length).eq(1);
-      const logDescription = auction.interface.parseLog(events[0]);
-      expect(toNumWei(logDescription.args.mediaId)).to.eq(0);
+      let logDescription: LogDescription;
+      logDescription = auction.interface.parseLog(events[0]);
+      expect(toNumWei(logDescription.args.tokenId)).to.eq(0);
       expect(toNumWei(logDescription.args.ask.amount)).to.eq(defaultAsk.amount);
       expect(logDescription.args.ask.currency).to.eq(defaultAsk.currency);
     });
