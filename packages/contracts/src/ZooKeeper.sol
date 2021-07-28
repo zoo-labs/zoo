@@ -10,7 +10,6 @@ import { ZooMedia } from "./ZooMedia.sol";
 import { ZooToken } from "./ZooToken.sol";
 import { IMarket } from "./interfaces/IMarket.sol";
 import { Decimal } from "./Decimal.sol";
-import "./console.sol";
 
 import "./console.sol";
 
