@@ -22,30 +22,26 @@ const HeaderOutline = styled.div`
 const animatebottom = (height) => keyframes`
    from {
      bottom: -${height};
-     opacity: 0;
    }
 
    to {
      bottom: 0;
-     opacity: 1;
    }
 `
 
 const animateup = (height) => keyframes`
    from {
       bottom: 0;
-      opacity: 1;
    }
 
    to {
       bottom: -${height};
-      opacity: 0;
    }
 `
 
 const CustomSheet = styled(Sheet)<{ ismodalopen? : boolean, height : string}>`
    position: relative;
-   animation: ${(props) => (props.ismodalopen ? animatebottom(props.height) :  animateup(props.height))} 0.5s;
+   animation: ${(props) => (props.ismodalopen ? animatebottom(props.height) :  animateup(props.height))} 0.45s;
 `
 
 const BottomModal: React.FC<Props> = ({
