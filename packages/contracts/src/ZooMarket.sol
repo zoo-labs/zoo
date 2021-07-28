@@ -12,6 +12,8 @@ import { Decimal } from "./Decimal.sol";
 import { ZooMedia } from "./ZooMedia.sol";
 import { IMarket } from "./interfaces/IMarket.sol";
 
+import "./console.sol";
+
 /**
  * @title A Market for pieces of media
  * @notice This contract contains all of the market logic for ZooMedia
@@ -48,7 +50,13 @@ contract ZooMarket is IMarket {
      * @notice require that the msg.sender is the configured media contract
      */
     modifier onlyMediaCaller() {
-        require(mediaContract == msg.sender, "Market: Only media contract");
+        console.log("onlyMediaCaller", msg.sender);
+        require(mediaContract == msg.sender, "ZooMarket: Only media contract");
+        _;
+    }
+
+    modifier onlyOwner {
+        require(_owner == msg.sender, "ZooMarket: Only owner has access");
         _;
     }
 
@@ -98,7 +106,7 @@ contract ZooMarket is IMarket {
         BidShares memory bidShares = bidSharesForToken(tokenId);
         require(
             isValidBidShares(bidShares),
-            "Market: Invalid bid shares for token"
+            "ZooMarket: Invalid bid shares for token"
         );
         return
             bidAmount != 0 &&
@@ -150,11 +158,11 @@ contract ZooMarket is IMarket {
      * can call the mutable functions. This method can only be called once.
      */
     function configure(address mediaAddress) external override {
-        require(msg.sender == _owner, "Market: Only owner");
-        require(mediaContract == address(0), "Market: Already configured");
+        require(msg.sender == _owner, "ZooMarket: Only owner");
+        require(mediaContract == address(0), "ZooMarket: Already configured");
         require(
             mediaAddress != address(0),
-            "Market: cannot set media contract as zero address"
+            "ZooMarket: cannot set media contract as zero address"
         );
 
         mediaContract = mediaAddress;
@@ -171,7 +179,7 @@ contract ZooMarket is IMarket {
     {
         require(
             isValidBidShares(bidShares),
-            "Market: Invalid bid shares, must sum to 100"
+            "ZooMarket: Invalid bid shares, must sum to 100"
         );
         _bidShares[tokenId] = bidShares;
         emit BidShareUpdated(tokenId, bidShares);
@@ -188,7 +196,7 @@ contract ZooMarket is IMarket {
     {
         require(
             isValidBid(tokenId, ask.amount),
-            "Market: Ask invalid for share splitting"
+            "ZooMarket: Ask invalid for share splitting"
         );
 
         _tokenAsks[tokenId] = ask;
@@ -217,17 +225,17 @@ contract ZooMarket is IMarket {
         require(
             bidShares.creator.value.add(bid.sellOnShare.value) <=
                 uint256(100).mul(Decimal.BASE),
-            "Market: Sell on fee invalid for share splitting"
+            "ZooMarket: Sell on fee invalid for share splitting"
         );
-        require(bid.bidder != address(0), "Market: bidder cannot be 0 address");
-        require(bid.amount != 0, "Market: cannot bid amount of 0");
+        require(bid.bidder != address(0), "ZooMarket: bidder cannot be 0 address");
+        require(bid.amount != 0, "ZooMarket: cannot bid amount of 0");
         require(
             bid.currency != address(0),
-            "Market: bid currency cannot be 0 address"
+            "ZooMarket: bid currency cannot be 0 address"
         );
         require(
             bid.recipient != address(0),
-            "Market: bid recipient cannot be 0 address"
+            "ZooMarket: bid recipient cannot be 0 address"
         );
 
         Bid storage existingBid = _tokenBidders[tokenId][bid.bidder];
@@ -279,7 +287,7 @@ contract ZooMarket is IMarket {
         uint256 bidAmount = bid.amount;
         address bidCurrency = bid.currency;
 
-        require(bid.amount > 0, "Market: cannot remove bid amount of 0");
+        require(bid.amount > 0, "ZooMarket: cannot remove bid amount of 0");
 
         IERC20 token = IERC20(bidCurrency);
 
@@ -303,17 +311,17 @@ contract ZooMarket is IMarket {
         onlyMediaCaller
     {
         Bid memory bid = _tokenBidders[tokenId][expectedBid.bidder];
-        require(bid.amount > 0, "Market: cannot accept bid of 0");
+        require(bid.amount > 0, "ZooMarket: cannot accept bid of 0");
         require(
             bid.amount == expectedBid.amount &&
                 bid.currency == expectedBid.currency &&
                 bid.sellOnShare.value == expectedBid.sellOnShare.value &&
                 bid.recipient == expectedBid.recipient,
-            "Market: Unexpected bid found."
+            "ZooMarket: Unexpected bid found."
         );
         require(
             isValidBid(tokenId, bid.amount),
-            "Market: Bid invalid for share splitting"
+            "ZooMarket: Bid invalid for share splitting"
         );
 
         _finalizeNFTTransfer(tokenId, bid.bidder);
