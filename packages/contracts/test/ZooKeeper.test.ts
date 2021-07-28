@@ -1,6 +1,6 @@
 import { ethers } from 'hardhat';
 import { ZooMedia } from '../types/ZooMedia';
-import { ZooMedia__factory } from '../types';
+import { ZooKeeper, ZooMedia__factory } from '../types';
 import { ZooMarket__factory } from '../types';
 import { ZooToken } from '../types/ZooToken';
 import { ZooFaucet } from '../types/ZooFaucet';
@@ -10,6 +10,7 @@ import { BigNumber, Bytes, BytesLike, utils } from 'ethers';
 
 let zooToken: any;
 let zooFaucet: any;
+let zooKeeper: any;
 let zooMarket: any;
 let zooMedia: any;
 let signers: any;
@@ -54,10 +55,19 @@ describe("ZooKeeper", () => {
         zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', auctionAddress)) as ZooMedia
         await zooMedia.deployed();
 
-        // tokenAddress = zooMedia.address;
+        tokenAddress = zooMedia.address;
 
-        // await zooMarket.configure(tokenAddress);
+        await zooMarket.configure(tokenAddress);
 
+        const zooKeeperFactory = await ethers.getContractFactory("ZooKeeper", signers[0]);
+
+        zooKeeper = (await zooKeeperFactory.deploy(
+            "TEST_ZOO",
+            "TZ",
+            zooMarket.address,
+            zooToken.address
+
+        )) as ZooKeeper;
     })
 
     async function addAnimals() {
@@ -429,25 +439,31 @@ describe("ZooKeeper", () => {
     Deploy Script
     */
 
-    it.only("Should get the ZooDrop owner", async () => {
+    it("Should get the ZooDrop owner", async () => {
 
-        // const zooDropOwner: string = await zooMedia.owner();
+        const zooDropOwner: string = await zooMedia.owner();
 
-        // expect(zooDropOwner).to.equal(owner.address);
+        expect(zooDropOwner).to.equal(owner.address);
 
     });
 
     /**
      * DROP
      */
-    it("Should create a new ZooDrop contract with AddDrop event", async () => {
+    it.only("Should create a new ZooKeeper contract with AddDrop event", async () => {
+
         const block = await ethers.provider.getBlockNumber();
-        let dropID = await zooMedia.connect(signers[0]).addDrop("test1", 16000, 210);
-        let events = await zooMedia.queryFilter(zooMedia.filters.AddDrop(null, null), block);
+
+        let dropID = await zooKeeper.connect(signers[0]).addDrop("test1", 16000, 210);
+
+        let events = await zooKeeper.queryFilter(zooKeeper.filters.AddDrop(null, null), block);
+
         expect(events.length).eq(1);
 
-        const log = zooMedia.interface.parseLog(events[0]);
+        const log = zooKeeper.interface.parseLog(events[0]);
+
         expect(log.name).to.equal("AddDrop");
+
         expect(log.args._dropID.toNumber()).to.equal(1);
     });
 
