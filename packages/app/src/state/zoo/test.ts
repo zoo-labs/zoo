@@ -17,6 +17,7 @@ export const test = {
       listed: true,
       owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
       bloodline: "pure",
+      timeRemaining: 0
     },
     21234214: {
       tokenId: "21234214",
@@ -34,6 +35,7 @@ export const test = {
       listed: true,
       owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
       bloodline: "pure",
+      timeRemaining: 0
     },
     99999923: {
       tokenId: "99999923",
@@ -52,6 +54,7 @@ export const test = {
       listed: true,
       owner: "0x40Fc963A729c542424cD800349a7E4Ecc4896624",
       bloodline: "pure",
+      timeRemaining: 0
     },
     411313: {
       tokenId: "411313",
@@ -67,9 +70,10 @@ export const test = {
       startBid: "200",
       currentBid: "201",
       buyNow: "300",
-      listed: false,
+      listed: true,
       owner: "0x61227A0C1CcdCA101bFFc467805bae8B99197772",
       bloodline: "pure",
+      timeRemaining: 0
     },
     101311: {
       tokenId: "101311",
