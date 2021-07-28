@@ -992,8 +992,8 @@ describe('ZooMedia', () => {
         block
       );
       expect(events.length).eq(1);
-      const logDescription = auction.interface.parseLog(events[0]);
-      expect(toNumWei(logDescription.args.mediaId)).to.eq(0);
+      const logDescription: LogDescription = auction.interface.parseLog(events[0]);
+      expect(toNumWei(logDescription.args.tokenId)).to.eq(0);
       expect(toNumWei(logDescription.args.bid.amount)).to.eq(bid.amount);
       expect(logDescription.args.bid.currency).to.eq(bid.currency);
       expect(toNumWei(logDescription.args.bid.sellOnShare.value)).to.eq(
