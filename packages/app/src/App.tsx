@@ -126,11 +126,11 @@ const App: React.FC = () => {
                         <Redirect to="/login" />
                      )}
                   </Route>
-                  <Route path="/">
-                     <Redirect to="/feed" />
+                  <Route exact path="/">
+                    {signedIn? <Redirect to="/account" /> : <Redirect to="/login" />}
                   </Route>
-               </SuspenseWithChunkError>
-               {/* <Route component={NotFound} /> */}
+                </SuspenseWithChunkError>
+              {/* <Route component={NotFound} /> */}
             </Switch>
 
             <ToastListener />
