@@ -560,12 +560,13 @@ const MyZooAccount: React.FC = () => {
                                           </TimeoutDisplay>
                                        </TimeoutWrapper>
                                     ) : (
-                                       <InfoBlock
-                                          onClick={() =>
+                                          <InfoBlock
+                                             onClick={() =>
                                              hybrid === "pure"
                                                 ? breedClick(animal)
                                                 : list(animal)
-                                          }>
+                                          }
+                                          >
                                           <BreedWrapper>
                                              {hybrid === "pure"
                                                 ? `BREED`
