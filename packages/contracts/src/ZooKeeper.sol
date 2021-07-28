@@ -21,6 +21,8 @@ contract ZooKeeper {
 
     uint256 public hybridHatchTime = 36 hours;
 
+    uint256 public namePrice = 300;
+
     uint256[] public coolDowns = [4 hours, 1 days, 3 days, 7 days, 30 days];
 
     enum TokenType {
@@ -80,6 +82,9 @@ contract ZooKeeper {
     mapping(uint256 => uint256) public animalDOB;
 
     mapping(address => uint256) public lastTimeBred;
+
+    // mapping of token ID to animal name;
+    mapping(uint256 => string) public names;
 
     ZooMedia public media;
     IERC20 public token;
@@ -153,6 +158,14 @@ contract ZooKeeper {
         return _total;
     }
 
+    function setName(uint256 _tokenID, string memory _name) public onlyOwner {
+        names[_tokenID] = _name;
+    }
+
+    function setNamePrice(uint256 _price) public onlyOwner {
+        namePrice = _price;
+    }
+
     function setTokenURI(
         uint256 _dropID,
         string memory _name,
@@ -169,6 +182,18 @@ contract ZooKeeper {
     ) public onlyOwner {
         ZooDrop drop = ZooDrop(drops[_dropID]);
         drop.setMetadataURI(_name, _URI);
+    }
+
+    // Add a name for given NFT
+    function buyName(uint256 _tokenID, string memory _name) public {
+        require(
+            token.balanceOf(msg.sender) >= namePrice,
+            "Not Enough ZOO Tokens to purchase Name"
+        );
+
+        console.log("Transfer ZOO from sender to this contract");
+        token.transferFrom(msg.sender, address(this), namePrice);
+        names[_tokenID] = _name;
     }
 
     // Accept ZOO and return Egg NFT
@@ -230,21 +255,22 @@ contract ZooKeeper {
     }
 
     // Burn egg and randomly return an animal NFT
-    function hatchEgg(uint256 dropId, uint256 tokenID)
-        public
-        returns (uint256)
-    {
-        ZooDrop drop = ZooDrop(drops[dropId]);
+    function hatchEgg(uint256 _dropID, uint256 _tokenID) public returns (uint256) {
+        console.log("hatchEgg:dropID", _dropID);
+        ZooDrop drop = ZooDrop(drops[_dropID]);
 
         // need to check the hatch time delay
 
         //  grab egg struct
-        Egg memory egg = eggs[tokenID];
-        TokenType eggType = types[tokenID];
-        media.burn(tokenID);
+        Egg memory egg = eggs[_tokenID];
+        TokenType eggType = types[_tokenID];
+
+        console.log("hatchEgg: burning", _tokenID);
+        media.burn(_tokenID);
+        console.log("hatchEgg: burned", _tokenID);
 
         //  burn the eggToken(it's hatching)
-        emit Burn(msg.sender, tokenID);
+        emit Burn(msg.sender, _tokenID);
 
         // get the rarity for an animal
         uint256 rarity = unsafeRandom();
@@ -261,12 +287,14 @@ contract ZooKeeper {
 
         // if not hybrid
         if (uint256(TokenType.BASE_EGG) == uint256(eggType)) {
+            console.log("hatchEgg: not hybrid");
             hatchedAnimal = pickAnimal(rarity);
             (_animal.name, _animal.yield, _rarity) = drop.animals(
                 hatchedAnimal
             );
             // _animal.rarity = ZooDrop.Rarity(_rarityName, _rarity);
         } else if (uint256(TokenType.HYBRID_EGG) == uint256(eggType)) {
+            console.log("hatchEgg: hybrid");
             // if hybrid
             // require(egg.eggCreationTime > egg.eggCreationTime.add(4 hours), "Must wait 4 hours for hybrid eggs to hatch.");
             // pick array index 0 or 1 depending on the rarity
@@ -288,6 +316,8 @@ contract ZooKeeper {
         }
 
         if (uint256(TokenType.HYBRID_EGG) == uint256(eggType)) {
+            console.log("hatchEgg: hybridEgg");
+            // if hybrid
             // data.tokenURI = drop.tokenURI(hatchedAnimal);
             // data.metadataURI = drop.metadataURI(hatchedAnimal);
         }
@@ -314,24 +344,27 @@ contract ZooKeeper {
         bidShare.creator = Decimal.D256(10 * (10**18));
         bidShare.owner = Decimal.D256(90 * (10**18));
 
+        console.log("hatchEgg: minting");
         media.mint(data, bidShare); // this time not an egg but an animal
+        console.log("hatchEgg: finished mint");
 
-        uint256 tokenId = media.getRecentToken(msg.sender);
+        uint256 _newID = media.getRecentToken(msg.sender);
 
         if (bytes(_animal.name).length > 0) {
             _animal.rarity = _rarity;
-            animals[tokenId] = _animal;
-            types[tokenId] = TokenType.BASE_ANIMAL;
+            animals[_newID] = _animal;
+            types[_newID] = TokenType.BASE_ANIMAL;
         } else {
-            hybrids[tokenId] = _hybrid;
-            types[tokenId] = TokenType.HYBRID_ANIMAL;
+            hybrids[_newID] = _hybrid;
+            types[_newID] = TokenType.HYBRID_ANIMAL;
         }
 
         // animal DOB
-        animalDOB[tokenId] = block.number;
+        animalDOB[_newID] = block.number;
+
         // type of NFT
-        emit Hatch(msg.sender, tokenId);
-        return tokenId;
+        emit Hatch(msg.sender, _newID);
+        return _newID;
     }
 
     // Breed two animals and create a hybrid egg
