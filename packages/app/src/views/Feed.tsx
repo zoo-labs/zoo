@@ -1,9 +1,16 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Text } from "components";
 import { ButtonMenu, ButtonMenuItem } from "components/ButtonMenu";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useRouteMatch, Link, useLocation, useHistory } from "react-router-dom";
+import {
+   useRouteMatch,
+   Link,
+   useLocation,
+   useHistory,
+   RouteComponentProps,
+   withRouter,
+} from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import "swiper/swiper.min.css";
 import { useSelector } from "react-redux";
@@ -77,24 +84,27 @@ Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
 
 Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server";
 
-export default function Feed() {
+export interface FeedPagePops extends RouteComponentProps<{ key?: string }> {}
+
+function Feed<FeedPagePops>({ match }) {
    const animalsState = useSelector<AppState, AppState["zoo"]["animals"]>(
       (state) => state.zoo.animals
    );
    const { isXl } = useMatchBreakpoints();
    const isMobile = !isXl;
-   const [animals, setAnimals] = React.useState([]);
    const [subUrl, setSubUrl] = React.useState("");
-   let filter = "";
-
    const history = useHistory();
    const { account } = useWeb3React();
-   const { url } = useRouteMatch();
+   let animals = Object.values(animalsState);
    const { pathname } = useLocation();
 
-   useEffect(() => {
-      getAnimals();
-   }, [animalsState]);
+   let toFind = match.params.key;
+   const inMyZoo = useRouteMatch("/feed/myzoo/:key");
+
+   if (!toFind && inMyZoo && inMyZoo.params) {
+      const param = Object.values(inMyZoo.params);
+      toFind = param[0];
+   }
 
    useEffect(() => {
       return history.listen((location) => {
@@ -102,37 +112,45 @@ export default function Feed() {
       });
    }, [history]);
 
+   useEffect(() => {
+      return history.listen((location) => {
+         setSubUrl(location.pathname);
+      });
+   }, []);
+
    const HomeClick = () => {
       history.push("/account");
    };
 
    const getAnimals = () => {
-      setAnimals(Object.values(animalsState));
+      let toSet = Object.values(animalsState);
+      if (pathname.includes("myzoo") && toFind) {
+         let found = animalsState[toFind];
+         console.log(inMyZoo);
+         toSet = [found, ...toSet];
+      }
    };
 
    let activeIndex = 0;
-   switch (true) {
-      case pathname.includes("myzoo"):
-         activeIndex = 0;
-         break;
-      case pathname.includes("marketplace"):
-         activeIndex = 1;
-         break;
-      default:
-         activeIndex = 1;
-         break;
-   }
+   let filter = "";
    switch (true) {
       case subUrl.includes("myzoo"):
+         activeIndex = 0;
          filter = "myZoo";
+         if (toFind) {
+            animals = [animalsState[toFind], ...animals];
+         }
          break;
       case subUrl.includes("marketplace"):
          filter = "marketplace";
+         activeIndex = 1;
          break;
       default:
          filter = "";
+         activeIndex = 1;
          break;
    }
+
    const isZoo = filter === "myZoo";
    const animalsFiltered = animals.filter((animal) => {
       return animal.owner
@@ -141,6 +159,8 @@ export default function Feed() {
             : animal.owner.toLowerCase() !== account.toLowerCase()
          : !isZoo;
    });
+
+   console.log(toFind, animalsFiltered);
 
    return (
       <Container isMobile={isMobile}>
@@ -151,13 +171,13 @@ export default function Feed() {
                </StyledMenuButton>
                <ButtonMenuItem
                   as={Link}
-                  to={`${url}/myzoo`}
+                  to={`/feed/myzoo`}
                   onClick={() => getAnimals()}>
                   My Zoo
                </ButtonMenuItem>
                <ButtonMenuItem
                   as={Link}
-                  to={`${url}/marketplace`}
+                  to={`/feed/marketplace`}
                   onClick={() => getAnimals()}>
                   Marketplace
                </ButtonMenuItem>
@@ -166,7 +186,7 @@ export default function Feed() {
          {!isZoo || animalsFiltered.length ? (
             <Swiper
                spaceBetween={30}
-               slidesPerView={isMobile ? 1 : 3}
+               slidesPerView={1}
                direction={isMobile ? "vertical" : "horizontal"}>
                {animalsFiltered.map((data) => {
                   return data.listed ? (
@@ -191,3 +211,5 @@ export default function Feed() {
       </Container>
    );
 }
+
+export default withRouter(Feed);

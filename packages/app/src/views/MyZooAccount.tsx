@@ -546,7 +546,8 @@ const MyZooAccount: React.FC = () => {
                                           width: "calc(100vw/2.2 - 13px)",
                                           padding: 10,
                                        }}>
-                                       <Link to={`/feed/myzoo/${animal.tokenId}`}>
+                                       <Link
+                                          to={`/feed/myzoo/${animal.tokenId}`}>
                                           <TextWrapper
                                              style={{
                                                 textShadow:
@@ -575,6 +576,7 @@ const MyZooAccount: React.FC = () => {
                                                 textAlign: "center",
                                                 fontSize: 16,
                                                 letterSpacing: 0,
+                                                height: "100%",
                                              }}>
                                              {animal.name}
                                           </TextWrapper>
