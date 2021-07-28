@@ -16,7 +16,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const deployment = await deploy('ZooKeeper', {
     from: deployer,
-    args: ['Zoo', 'ANML', mediaAddress, tokenAddress],
+    args: [mediaAddress, tokenAddress],
     log: true,
   })
 
