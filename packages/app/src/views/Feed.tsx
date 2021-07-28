@@ -41,9 +41,9 @@ const StickyBottomMenuWrapper = styled.div`
   svg {
     width: 25px;
     height: 25px;
-    color: #FFFFFF;
+    color: #ffffff;
   }
-`
+`;
 
 const ToggleContainer = styled.div`
   div {
@@ -57,7 +57,7 @@ const ToggleContainer = styled.div`
   }
   a {
     border: none;
-    
+
     font-size: 20px;
     box-shadow: none;
     cursor: pointer;
@@ -158,7 +158,7 @@ export default function Feed() {
             to={`${url}/myzoo`}
             onClick={() => getAnimals()}
           >
-           My Zoo
+            My Zoo
           </ButtonMenuItem>
           <ButtonMenuItem
             as={Link}

@@ -16,11 +16,12 @@ const ModalWrapper = styled.div`
 `
 
 const ModalContainer = styled.div`
-    background: white;
+    background: ${({ theme }) => theme.colors.background};
     max-width: 300px;
-    border-radius: 2px;
+    border-radius: 8px;
     padding: 15px;
     z-index: 20;
+   
 `
 const ModalHeader = styled.div`
     display: flex;
@@ -28,6 +29,7 @@ const ModalHeader = styled.div`
 const ModalBody = styled.div`
     display: flex;
     flex-direction: column;
+    
 `
 const ModalCloseButton: React.FC<any> = ({ onDismiss }) => {
     return (
