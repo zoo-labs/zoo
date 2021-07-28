@@ -70,7 +70,7 @@ export const test = {
       startBid: "200",
       currentBid: "201",
       buyNow: "300",
-      listed: false,
+      listed: true,
       owner: "0x61227A0C1CcdCA101bFFc467805bae8B99197772",
       bloodline: "pure",
       timeRemaining: 0
