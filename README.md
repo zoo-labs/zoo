@@ -1,6 +1,6 @@
-# cryptozoo
+# Cryptozoo
 
-> breeding crypto animals has never been this fun! 🚀
+> An autonomous ecosystem where ZOO owners breed, collect, and trade exotic hybrid animals via NFTs.
 
 # 🏄‍♂️ Quick Start
 
