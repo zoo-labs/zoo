@@ -15,6 +15,7 @@ import ZooHomeButton from "components/SideMenu/components/ZooHomeButton";
 interface Props {
   item: Animal;
   url?: string;
+  animalGroup?: { [key: string]: number };
 }
 
 const FirstThird = styled.div`
@@ -127,7 +128,7 @@ const FeedCard: React.FC<Props> = ({ item }) => {
   const date = new Date(Number(item.dob) * 1000);
   const StringDate = date.toLocaleDateString("en-US");
 
-  const [onYield] = useModal(<YieldModal item={item} onDismiss={() => null} />);
+  const [onYield] = useModal(<YieldModal item={item} animalGroup={animalGroup} onDismiss={() => null} />);
 
   const [onBid] = useModal(<BidModal item={item} onDismiss={() => null} />);
 
@@ -136,6 +137,7 @@ const FeedCard: React.FC<Props> = ({ item }) => {
   };
 
   const rarityColor = RarityColor[item.rarity.toLowerCase()] || "white";
+  const multiplier = animalGroup[item.animalId] > 1 ? `x${animalGroup[item.animalId]}` : "";
 
   return (
     <>
@@ -145,13 +147,14 @@ const FeedCard: React.FC<Props> = ({ item }) => {
           
         </SecondThird>
         <FinalThird>
-          <Flex flexDirection="row" >
-            <Flex flexDirection="column" width="calc(100% - 75px)" pt="30px">
+          <Flex flexDirection="row">
+            <Flex flexDirection="column" width="calc(100% - 75px)"
+                  style={{textShadow: "2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000"}}>
               <MainHeading
                 bold
                 as="p"
               >
-                {item.name}
+                {`${item.name} ${multiplier}`}
               </MainHeading>
               <Subheading bold as="p"
                 style={{

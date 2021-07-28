@@ -323,6 +323,28 @@ function App(props) {
             </Link>
           </Menu.Item>
 
+          <Menu.Item key="/zookeeper">
+            <Link
+              onClick={() => {
+                setRoute("/zookeeper");
+              }}
+              to="/zookeeper"
+            >
+              ZooKeeper
+            </Link>
+          </Menu.Item>
+
+          <Menu.Item key="/zoodrop">
+            <Link
+              onClick={() => {
+                setRoute("/zoodrop");
+              }}
+              to="/zoodrop"
+            >
+              ZooDrop
+            </Link>
+          </Menu.Item>
+
           <Menu.Item key="/zoomarket">
             <Link
               onClick={() => {
@@ -356,17 +378,6 @@ function App(props) {
             </Link>
           </Menu.Item>
 
-          <Menu.Item key="/zoodrop">
-            <Link
-              onClick={() => {
-                setRoute("/zoodrop");
-              }}
-              to="/zoodrop"
-            >
-              ZooDrop
-            </Link>
-          </Menu.Item>
-
           <Menu.Item key="/subgraph">
             <Link
               onClick={() => {
@@ -383,6 +394,22 @@ function App(props) {
           <Route exact path="/">
             <Contract
               name="ZooToken"
+              signer={userSigner}
+              provider={localProvider}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+          <Route exact path="/zookeeper">
+            <Contract
+              name="ZooKeeper"
+              signer={userSigner}
+              provider={localProvider}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+          <Route exact path="/zoodrop">
+            <Contract
+              name="ZooDrop"
               signer={userSigner}
               provider={localProvider}
               blockExplorer={blockExplorer}
@@ -407,14 +434,6 @@ function App(props) {
           <Route exact path="/zooauction">
             <Contract
               name="ZooAuction"
-              signer={userSigner}
-              provider={localProvider}
-              blockExplorer={blockExplorer}
-            />
-          </Route>
-          <Route exact path="/zoodrop">
-            <Contract
-              name="ZooDrop"
               signer={userSigner}
               provider={localProvider}
               blockExplorer={blockExplorer}
