@@ -159,8 +159,8 @@ export default function Feed() {
         >
           {animalsFiltered.map((data) => {
             return data.listed ? (
-              <SwiperSlide key={data.tokenId}>
-                <FeedCard item={data} />
+              <SwiperSlide key={data.tokenId + "slide"}>
+                <FeedCard item={data} key={data.tokenId + "card"}/>
               </SwiperSlide>
             ) : (
               <></>
