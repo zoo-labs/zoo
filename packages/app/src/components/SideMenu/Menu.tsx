@@ -54,9 +54,8 @@ const BodyWrapper = styled.div`
 
 const Inner = styled.div<{ isPushed: boolean; showMenu: boolean }>`
   flex-grow: 1;
-  margin-top: ${({ showMenu }) => (showMenu ? `${MENU_HEIGHT}px` : 0)};
+  margin-top: 64px;
   transition: margin-top 0.2s;
-  transform: translate3d(0, 0, 0);
   max-width: 100%;
 
   ${({ theme }) => theme.mediaQueries.nav} {
