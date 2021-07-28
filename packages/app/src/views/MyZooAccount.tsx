@@ -511,8 +511,8 @@ const MyZooAccount: React.FC = () => {
                                           letterSpacing: 0,
                                           position: "absolute",
                                           textTransform: "lowercase",
-                                          right: 7,
-                                          top: -5
+                                          right: 11,
+                                          top: -2
                                        }}
                                     >
                                        {animal.timeRemaining === 0 ? animalGroup[animal.animalId] ? `x${animalGroup[animal.animalId]}` : '' : ''}
