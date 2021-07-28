@@ -42,9 +42,9 @@ describe.only("ZooKeeper", () => {
         owner = signers[0]
 
         await zooToken.mint(zooFaucet.address, 1000000);
-        await zooFaucet.buyZoo(owner.address,1000);
+        await zooFaucet.buyZoo(owner.address, 1000);
 
-        zooMarket =  (await new ZooMarket__factory(owner).deploy()) as ZooMarket;
+        zooMarket = (await new ZooMarket__factory(owner).deploy()) as ZooMarket;
         await zooMarket.deployed();
 
         marketAddress = zooMarket.address;
@@ -59,7 +59,7 @@ describe.only("ZooKeeper", () => {
 
     })
 
-    async function addAnimals(){
+    async function addAnimals() {
 
         // let results = await zooMedia.connect(owner).callStatic.addDrop("test", 16000, 210);
 
@@ -337,7 +337,6 @@ describe.only("ZooKeeper", () => {
         await zooKeeper.addHybrid(1,"Turtleshark","Turtle","Shark",100,"http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/Turtle/Turtleshark.jpg","testTurtle")
         await zooKeeper.addHybrid(1,"Turtleblob","Turtle","Blobfish",100,"http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/Turtle/Turtleblob.jpg","testTurtle")
         await zooKeeper.addHybrid(1,"Turtlerat","Turtle","Naked Mole Rat",100,"http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/Turtle/Turtlerat.jpg","testTurtle")
-
     }
 
     async function addDrop() {
@@ -348,7 +347,7 @@ describe.only("ZooKeeper", () => {
         await zooKeeper.setMetadataURI(1, "hybridEgg", "hybridEgg.metadataURI1");
     }
 
-    async function breedHybrid(){
+    async function breedHybrid() {
         await zooToken.approve(zooMedia.address, 2000)
         const buyFirstEgg = await zooMedia.connect(owner).buyEgg(1);
         const buyFirstEggReceipt = await buyFirstEgg.wait();
@@ -357,7 +356,7 @@ describe.only("ZooKeeper", () => {
         let token_id_1
 
         sender.forEach(element => {
-            if(element.event == "BuyEgg"){
+            if (element.event == "BuyEgg") {
                 from_add = element.args["_from"]
                 token_id_1 = element.args["_tokenID"]
             }
@@ -370,7 +369,7 @@ describe.only("ZooKeeper", () => {
         let token_id_2
 
         sender.forEach(element => {
-            if(element.event == "BuyEgg"){
+            if (element.event == "BuyEgg") {
                 from_add = element.args["_from"]
                 token_id_2 = element.args["_tokenID"]
             }
@@ -383,7 +382,7 @@ describe.only("ZooKeeper", () => {
         let token_id_Animal_1
 
         sender.forEach(element => {
-            if(element.event == "Hatch"){
+            if (element.event == "Hatch") {
                 from_add = element.args["_from"]
                 token_id_Animal_1 = element.args["_tokenID"]
             }
@@ -397,7 +396,7 @@ describe.only("ZooKeeper", () => {
         let token_id_hybridEgg
 
         sender.forEach(element => {
-            if(element.event == "Hatch"){
+            if (element.event == "Hatch") {
                 from_add = element.args["_from"]
                 token_id_Animal_2 = element.args["_tokenID"]
             }
@@ -407,7 +406,7 @@ describe.only("ZooKeeper", () => {
         const breedReceipt = await breedTx.wait();
         sender = breedReceipt.events;
         sender.forEach(element => {
-            if(element.event == "Breed"){
+            if (element.event == "Breed") {
                 token_id_hybridEgg = element.args["_eggTokenId"]
             }
         });
@@ -447,10 +446,10 @@ describe.only("ZooKeeper", () => {
             const buyEgg = await zooKeeper.connect(owner).buyEgg(1);
             const buyEggReceipt = await buyEgg.wait();
 
-            const sender = buyEggReceipt.events;
+        const sender = buyEggReceipt.events;
 
-            let from_add
-            let token_id
+        let from_add
+        let token_id
 
             sender.forEach(element => {
                 if (element.event == "BuyEgg"){
@@ -458,38 +457,37 @@ describe.only("ZooKeeper", () => {
                     token_id = element.args["_tokenID"]
                 }
             });
+        expect(from_add).to.equal(owner.address);
+        expect(token_id.toNumber()).to.equal(0);
 
-            expect(from_add).to.equal(owner.address);
-            expect(token_id.toNumber()).to.equal(0);
+        // add check for types mapping
+        expect(await zooKeeper.types(token_id.toNumber())).to.equal(token_id.toNumber());
 
-            // add check for types mapping
-            expect(await zooKeeper.types(token_id.toNumber())).to.equal(token_id.toNumber());
-
-            // check eggs mapping for new egg
-            let egg = await zooKeeper.eggs(token_id.toNumber());
-            expect(egg.eggCreationTime.toNumber()).to.greaterThan(0);
+        // check eggs mapping for new egg
+        let egg = await zooKeeper.eggs(token_id.toNumber());
+        expect(egg.eggCreationTime.toNumber()).to.greaterThan(0);
     });
 
-    it("Should buy multiple basic eggs", async() => {
-
-    });
-
-    it("Should revert when totalSupply of eggs are reaching", async() => {
+    it("Should buy multiple basic eggs", async () => {
 
     });
 
-    it("Should revert when not enough balance", async() => {
+    it("Should revert when totalSupply of eggs are reaching", async () => {
 
     });
 
-    it("Should share bidshare from buy egg to contract owner", async() => {
+    it("Should revert when not enough balance", async () => {
+
+    });
+
+    it("Should share bidshare from buy egg to contract owner", async () => {
 
     });
 
     /**
      * HATCHING EGGS
      */
-    it("Should hatch & burn basic egg", async() => {
+    it("Should hatch & burn basic egg", async () => {
         await addAnimals();
 
         await zooToken.approve(zooKeeper.address, 600)
@@ -504,7 +502,7 @@ describe.only("ZooKeeper", () => {
         let token_id
 
         sender.forEach(element => {
-            if(element.event == "Hatch"){
+            if (element.event == "Hatch") {
                 from_add = element.args["_from"]
                 token_id = element.args["_tokenID"]
             }
@@ -520,7 +518,7 @@ describe.only("ZooKeeper", () => {
         let token_id2
 
         sender.forEach(element => {
-            if(element.event == "Hatch"){
+            if (element.event == "Hatch") {
                 from_add2 = element.args["_from"]
                 token_id2 = element.args["_tokenID"]
             }
@@ -533,7 +531,7 @@ describe.only("ZooKeeper", () => {
         expect(newAnimal.name).to.not.equal('');
     });
 
-    it("Should hatch & burn hybrid egg", async() => {
+    it("Should hatch & burn hybrid egg", async () => {
 
         // this.timeout(500000000000000);
         await addAnimals();
@@ -541,7 +539,6 @@ describe.only("ZooKeeper", () => {
         const token = await breedHybrid()
 
         const hatchEgg  = await zooKeeper.hatchEgg(1,4)
-
         const hatchEggReceipt = await hatchEgg.wait();
 
         let sender = hatchEggReceipt.events;
@@ -550,7 +547,7 @@ describe.only("ZooKeeper", () => {
         let token_id2
 
         sender.forEach(element => {
-            if(element.event == "Hatch"){
+            if (element.event == "Hatch") {
                 from_add2 = element.args["_from"]
                 token_id2 = element.args["_tokenID"]
             }
@@ -562,18 +559,18 @@ describe.only("ZooKeeper", () => {
 
     });
 
-    it("Should revert when hatching egg with invalid tokenid", async() => {
+    it("Should revert when hatching egg with invalid tokenid", async () => {
 
     });
 
-    it("Should revert when egg creation time restriction is not met", async() => {
+    it("Should revert when egg creation time restriction is not met", async () => {
 
     });
 
     /**
      * BREEDING
      */
-    it("Should breed a hybrid egg", async() => {
+    it("Should breed a hybrid egg", async () => {
         await addAnimals();
 
         await zooToken.approve(zooKeeper.address, 600)
@@ -587,7 +584,7 @@ describe.only("ZooKeeper", () => {
         let token_id_1
 
         sender.forEach(element => {
-            if(element.event == "BuyEgg"){
+            if (element.event == "BuyEgg") {
                 from_add = element.args["_from"]
                 token_id_1 = element.args["_tokenID"]
             }
@@ -601,7 +598,7 @@ describe.only("ZooKeeper", () => {
         let token_id_2
 
         sender.forEach(element => {
-            if(element.event == "BuyEgg"){
+            if (element.event == "BuyEgg") {
                 from_add = element.args["_from"]
                 token_id_2 = element.args["_tokenID"]
             }
@@ -615,7 +612,7 @@ describe.only("ZooKeeper", () => {
         let token_id_Animal_1
 
         sender.forEach(element => {
-            if(element.event == "Hatch"){
+            if (element.event == "Hatch") {
                 from_add = element.args["_from"]
                 token_id_Animal_1 = element.args["_tokenID"]
             }
@@ -630,7 +627,7 @@ describe.only("ZooKeeper", () => {
         let token_id_hybridEgg
 
         sender.forEach(element => {
-            if(element.event == "Hatch"){
+            if (element.event == "Hatch") {
                 from_add = element.args["_from"]
                 token_id_Animal_2 = element.args["_tokenID"]
             }
@@ -640,7 +637,7 @@ describe.only("ZooKeeper", () => {
         const breedReceipt = await breedTx.wait();
         sender = breedReceipt.events;
         sender.forEach(element => {
-            if(element.event == "Breed"){
+            if (element.event == "Breed") {
                 token_id_hybridEgg = element.args["_eggTokenId"]
             }
         });
@@ -650,7 +647,7 @@ describe.only("ZooKeeper", () => {
         const eggType = await zooKeeper.connect(owner).types(token_id_hybridEgg);
         expect(eggType).to.equal(2);
     });
-    it("Should revert when there is breedCooldown", async() => {
+    it("Should revert when there is breedCooldown", async () => {
         await addAnimals();
 
         await zooToken.approve(zooKeeper.address, 600);
@@ -837,7 +834,7 @@ describe.only("ZooKeeper", () => {
         }
     });
 
-    it("Should revert when breeding with two hybrids", async() => {
+    it("Should revert when breeding with two hybrids", async () => {
         await addAnimals();
         await addHybrids();
         const token_1 = breedHybrid()
@@ -848,17 +845,17 @@ describe.only("ZooKeeper", () => {
 
         let token_id_hybridEgg
 
-        try{
+        try {
             const breedTx = await zooKeeper.connect(owner).breedAnimal(1, token_1, token_2);
             const breedReceipt = await breedTx.wait();
             sender = breedReceipt.events;
             sender.forEach(element => {
-                if(element.event == "Breed"){
+                if (element.event == "Breed") {
                     token_id_hybridEgg = element.args["_eggTokenId"]
                 }
             });
 
-        }catch(err){
+        } catch (err) {
 
             expect(err).to.exist
 
@@ -885,14 +882,13 @@ describe.only("ZooKeeper", () => {
         let token_id
 
         sender.forEach(element => {
-            if(element.event == "BuyEgg"){
+            if (element.event == "BuyEgg") {
                 from_add = element.args["_from"]
                 token_id = element.args["_tokenID"]
             }
         });
 
         const hatchEgg  = await zooKeeper.hatchEgg(1,token_id)
-
         const hatchEggReceipt = await hatchEgg.wait();
 
         sender = hatchEggReceipt.events;
@@ -902,7 +898,7 @@ describe.only("ZooKeeper", () => {
         let _yield
 
         sender.forEach(element => {
-            if(element.event == "Hatch"){
+            if (element.event == "Hatch") {
                 from_add2 = element.args["_from"]
                 token_id2 = element.args["_tokenID"]
             }
@@ -920,10 +916,10 @@ describe.only("ZooKeeper", () => {
         sender = freedReceipt.events;
 
         sender.forEach(element => {
-            if(element.event == "Burn"){
+            if (element.event == "Burn") {
                 from_add2 = element.args["_from"]
                 token_id2 = element.args["_tokenID"]
-            } else if (element.event == "FreeAnimal"){
+            } else if (element.event == "FreeAnimal") {
                 from_add = element.args["_from"]
                 token_id = element.args["_tokenID"]
                 _yield = element.args["_yield"]
@@ -962,7 +958,7 @@ describe.only("ZooKeeper", () => {
         let _yield
 
         sender.forEach(element => {
-            if(element.event == "Hatch"){
+            if (element.event == "Hatch") {
                 from_add2 = element.args["_from"]
                 token_id2 = element.args["_tokenID"]
             }
@@ -980,10 +976,10 @@ describe.only("ZooKeeper", () => {
         sender = freedReceipt.events;
 
         sender.forEach(element => {
-            if(element.event == "Burn"){
+            if (element.event == "Burn") {
                 from_add2 = element.args["_from"]
                 token_id2 = element.args["_tokenID"]
-            } else if (element.event == "FreeAnimal"){
+            } else if (element.event == "FreeAnimal") {
                 from_add = element.args["_from"]
                 token_id = element.args["_tokenID"]
                 _yield = element.args["_yield"]
