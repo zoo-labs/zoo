@@ -12,11 +12,11 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const tokenAddress = (await deployments.get('ZooToken')).address
   const mediaAddress = (await deployments.get('ZooMedia')).address
-  // const marketAddress = (await deployments.get('ZooMarket')).address
+  const marketAddress = (await deployments.get('ZooMarket')).address
 
   const deployment = await deploy('ZooKeeper', {
     from: deployer,
-    args: [mediaAddress, tokenAddress],
+    args: [marketAddress, mediaAddress, tokenAddress],
     log: true,
   })
 
