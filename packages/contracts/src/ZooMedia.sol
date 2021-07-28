@@ -398,6 +398,8 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         onlyExistingToken(tokenId)
         onlyApprovedOrOwner(msg.sender, tokenId)
     {
+        console.log("burn:this", address(this));
+        console.log("burn:msg.sender", msg.sender);
         address owner = ownerOf(tokenId);
 
         require(
