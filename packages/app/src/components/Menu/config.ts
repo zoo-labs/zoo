@@ -6,7 +6,7 @@ let defaultConf =  [
   
   {
     label: 'My Account',
-    icon: 'HomeIcon',
+    icon: 'AccountIcon',
     href: '/account',
   },
   {
@@ -25,7 +25,7 @@ let defaultConf =  [
 if (process.env.NODE_ENV !== "production") {
 defaultConf = [].concat(defaultConf, {
 	label: 'Zoo Faucet',
-	icon: '',
+	icon: 'FaucetIcon',
 	href: '/faucet'
 });
 }
