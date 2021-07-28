@@ -787,17 +787,33 @@ describe('ZooMedia', () => {
 
     it('should revert if the media bidder does not have a high enough allowance for their bidding currency', async () => {
       const media = await mediaAs(bidderWallet);
-      await expect(
+      let passed = false
+      try {
         media.setBid(0, defaultBid(currencyAddr, bidderWallet.address))
-      ).rejectedWith('SafeERC20: ERC20 operation did not succeed');
+        passed = true;
+      } catch (error) {
+        expect(
+          error
+        ).to.contain('SafeERC20: ERC20 operation did not succeed'); 
+        passed = true;
+      }
+      expect(passed, "The previous transaction was not reverted").to.be.true
     });
 
-    it('should revert if the media bidder does not have a high enough balance for their bidding currency', async () => {
+    it.only('should revert if the media bidder does not have a high enough balance for their bidding currency', async () => {
       const media = await mediaAs(bidderWallet);
       await approveCurrency(currencyAddr, marketAddress, bidderWallet);
-      await expect(
+      let passed = false
+      try {
         media.setBid(0, defaultBid(currencyAddr, bidderWallet.address))
-      ).rejectedWith('SafeERC20: ERC20 operation did not succeed');
+        passed = true;
+      } catch (error) {
+        expect(
+          error
+        ).to.contain('SafeERC20: ERC20 operation did not succeed'); 
+        passed = true;
+      }
+      expect(passed, "The previous transaction was not reverted").to.be.true
     });
 
     it('should set a bid', async () => {
