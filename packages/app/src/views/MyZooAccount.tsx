@@ -396,238 +396,260 @@ const MyZooAccount: React.FC = () => {
     }, 5000);
   }, [elapsedTimeOnPage]);
 
-  const renderAnimals = (hybrid): JSX.Element => {
-    const animalData = [];
-    const now = new Date().getTime();
-
-    Object.values(allAnimalsSorted).forEach((animal, index) => {
-      const lastBred = animal.lastBred
-        ? new Date(Number(animal.lastBred)).getTime()
-        : new Date().getTime();
+   const renderAnimals = (hybrid): JSX.Element => {
+      let animalGroup = {};
+      const animalData = [];
       const now = new Date().getTime();
-      const breedTimeoutKey =
-        animal.breedCount > 5 ? 5 : animal.breedCount || 1;
-      const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
-      const elapsedTime = now - lastBred;
-      const timeRemaining = breedTimeout - elapsedTime;
-      const timeRemainingDaysHours = getDaysHours(timeRemaining);
-      const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
 
-      animalData.push({
-        id: index,
-        ...animal,
-        name: animal.name.replace(/\u0000/g, ""),
-        timeRemaining:
-          animal.bloodline === "pure"
-            ? animal.breedCount > 0
-              ? timeRemaining
-              : 0
-            : 0,
-        CTAOverride:
-          animal.bloodline === "pure"
-            ? animal.breedCount > 0
-              ? { barwidth, timeRemainingDaysHours }
-              : null
-            : null,
-        rarityColor: RarityColor[animal.rarity.toLowerCase()] || "white",
+      Object.values(allAnimals).forEach((animal, index) => {
+         if (animal.owner !== account) {
+            return;
+         }
+         const lastBred = animal.lastBred
+            ? new Date(Number(animal.lastBred)).getTime()
+            : new Date().getTime();
+            const now = new Date().getTime();
+         const breedTimeoutKey =
+            animal.breedCount > 5 ? 5 : animal.breedCount || 0;
+         const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
+         const elapsedTime = now - lastBred;
+         const timeRemaining = breedTimeout - elapsedTime;
+         const timeRemainingDaysHours = getDaysHours(timeRemaining);
+         const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
+
+         if (timeRemaining <= 0 && animalData.find(a => a.animalId === animal.animalId && a.timeRemaining <= 0)) {
+            animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 2
+         } else {
+            animalData.push({
+               id: index,
+               ...animal,
+               name: animal.name.replace(/\u0000/g, ""),
+               timeRemaining:
+                  animal.bloodline === "pure"
+                     ? elapsedTime < breedTimeout
+                        ? timeRemaining
+                        : 0
+                     : 0,
+               CTAOverride:
+                  animal.bloodline === "pure"
+                     ? elapsedTime < breedTimeout
+                        ? { barwidth, timeRemainingDaysHours }
+                        : null
+                     : null,
+               rarityColor: RarityColor[animal.rarity.toLowerCase()] || "white",
+            });
+         }
       });
-    });
-    empty =
-      animalData.length === 0 && Object.keys(allAnimalsSorted).length !== 0;
 
-    const animals = animalData.filter(
-      (item) => item.bloodline === hybrid && item.owner === account
-    );
+      empty =
+         animalData.length === 0 && Object.keys(animalData).length !== 0;
 
-    return (
-      <RowLayout>
-        <Route exact path={`${path}`}>
-          {animals.length === 0 ? (
-            <Text textAlign="center" fontSize="16px">
-              No {hybrid === "pure" ? `breedable` : `hybrid`} animals
-            </Text>
-          ) : (
-            <Swiper
-              slidesPerView={2.2}
-              spaceBetween={10}
-              style={{ padding: "12px 2px" }}
-            >
-              {animals.map((animal) => (
-                <SwiperSlide>
-                  <CardWrapper>
-                    <Card
-                      style={{
-                        boxShadow: `1px 0px 6px 0px ${animal.rarityColor}`,
-                      }}
-                      key={animal.id}
-                      selected={animal.selected ? true : false}
-                      timedOut={animal.timeRemaining > 0 ? true : false}
-                    >
-                      <CardBody
-                        style={{
-                          backgroundImage: `url("${animal.imageUrl}")`,
-                          backgroundSize: "cover",
-                          backgroundPosition: "center",
-                          height: 250,
-                          width: "calc(100vw/2.2 - 13px)",
-                          padding: 10,
-                        }}
-                      >
-                        <TextWrapper
-                          style={{
-                            textShadow: "0px 2px 6px rgb(0, 0, 0)",
-                            textAlign: "center",
-                            fontSize: 20,
-                            letterSpacing: 0,
-                          }}
-                        >
-                          {animal.name}
-                        </TextWrapper>
-                        {animal.timeRemaining > 0 ? (
-                          <TimeoutWrapper
-                            barwidth={
-                              animal.CTAOverride
-                                ? animal.CTAOverride.barwidth
-                                : 0
-                            }
-                          >
-                            <TimeoutDisplay>
-                              {`${animal.CTAOverride.timeRemainingDaysHours.days}D ${animal.CTAOverride.timeRemainingDaysHours.hours}H`}
-                            </TimeoutDisplay>
-                          </TimeoutWrapper>
-                        ) : (
-                          <InfoBlock
-                            onClick={() =>
-                              hybrid === "pure"
-                                ? breedClick(animal)
-                                : list(animal)
-                            }
-                          >
-                            <BreedWrapper>
-                              {hybrid === "pure" ? `BREED` : `SELL`}
-                            </BreedWrapper>
-                          </InfoBlock>
-                        )}
-                      </CardBody>
-                    </Card>
-                  </CardWrapper>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          )}
-        </Route>
-        <Route exact path={`${path}/history`}>
-          {animalData.map((animal) => (
-            <Card key={animal.id} />
-          ))}
-        </Route>
-      </RowLayout>
-    );
-  };
+      let animals = animalData.filter(
+         (item) => item.bloodline === hybrid
+      );
+      animals = sortData(animals, "bloodline");
 
-  const renderEggs = (): JSX.Element => {
-    const eggData = [];
-    Object.values(allEggsSorted).forEach((egg, index) => {
-      const createdDate = egg.created
-        ? new Date(Number(egg.created)).getTime()
-        : new Date().getTime();
-      const now = new Date().getTime();
-      const hatchTimeout = getMilliseconds(eggTimeout);
-      const elapsedTime = now - createdDate;
-      const timeRemaining = hatchTimeout - elapsedTime;
-      const timeRemainingDaysHours = getDaysHours(timeRemaining);
-      const barwidth = [100 * (elapsedTime / hatchTimeout), "%"].join("");
+      return (
+         <RowLayout>
+            <Route exact path={`${path}`}>
+               {animals.length === 0 ? (
+                  <Text textAlign="center" fontSize="16px">
+                     No {hybrid === "pure" ? `breedable` : `hybrid`} animals
+                  </Text>
+               ) : (
+                  <Swiper slidesPerView={2.2} spaceBetween={10}>
+                     {animals.map((animal) => (
+                        <SwiperSlide>
+                           <CardWrapper>
+                              <Card
+                                 style={{
+                                    boxShadow: `1px 0px 6px 0px ${animal.rarityColor}`,
+                                 }}
+                                 key={animal.id}
+                                 selected={animal.selected ? true : false}
+                                 timedOut={
+                                    animal.timeRemaining > 0 ? true : false
+                                 }>
+                                 <CardBody
+                                    style={{
+                                       backgroundImage: `url("${animal.imageUrl}")`,
+                                       backgroundSize: "cover",
+                                       backgroundPosition: "center",
+                                       height: 250,
+                                       width: "calc(100vw/2.2 - 13px)",
+                                       padding: 10,
+                                    }}>
+                                    <TextWrapper
+                                       style={{
+                                          textShadow: "0px 2px 6px rgb(0, 0, 0)",
+                                          fontSize: 18,
+                                          letterSpacing: 0,
+                                          position: "absolute",
+                                          textTransform: "lowercase",
+                                          right: 11,
+                                          top: -2
+                                       }}
+                                    >
+                                       {animal.timeRemaining === 0 ? animalGroup[animal.animalId] ? `x${animalGroup[animal.animalId]}` : '' : ''}
+                                    </TextWrapper>
+                                    <TextWrapper
+                                       style={{
+                                          textShadow:
+                                             "0px 2px 6px rgb(0, 0, 0)",
+                                          textAlign: "center",
+                                          fontSize: 20,
+                                          letterSpacing: 0,
+                                       }}>
+                                       {animal.name}
+                                    </TextWrapper>
+                                    {animal.timeRemaining > 0 ? (
+                                       <TimeoutWrapper
+                                          barwidth={
+                                             animal.CTAOverride
+                                                ? animal.CTAOverride.barwidth
+                                                : 0
+                                          }>
+                                          <TimeoutDisplay>
+                                             {`${animal.CTAOverride.timeRemainingDaysHours.days}D ${animal.CTAOverride.timeRemainingDaysHours.hours}H`}
+                                          </TimeoutDisplay>
+                                       </TimeoutWrapper>
+                                    ) : (
+                                       <InfoBlock
+                                          onClick={() =>
+                                             hybrid === "pure"
+                                                ? breedClick(animal)
+                                                : list(animal)
+                                          }>
+                                          <BreedWrapper>
+                                             {hybrid === "pure"
+                                                ? `BREED`
+                                                : `SELL`}
+                                          </BreedWrapper>
+                                       </InfoBlock>
+                                    )}
+                                 </CardBody>
+                              </Card>
+                           </CardWrapper>
+                        </SwiperSlide>
+                     ))}
+                  </Swiper>
+               )}
+            </Route>
+            <Route exact path={`${path}/history`}>
+               {animalData.map((animal) => (
+                  <Card key={animal.id} />
+               ))}
+            </Route>
+         </RowLayout>
+      );
+   };
 
-      eggData.push({
-        id: index,
-        ...egg,
-        name: egg.basic ? "BASIC" : "HYBRID",
-        timeRemaining: !egg.basic
-          ? elapsedTime < hatchTimeout
-            ? timeRemaining
-            : 0
-          : 0,
-        CTAOverride: !egg.basic
-          ? elapsedTime < hatchTimeout
-            ? { barwidth, timeRemainingDaysHours }
-            : null
-          : null,
+   const renderEggs = (): JSX.Element => {
+      let eggData = [];
+      let eggGroup = {
+         BASIC: 1,
+         HYBRID: 1
+      };
+
+      Object.values(allEggs).forEach((egg, index) => {
+         const eggType = egg.basic ? "BASIC" : "HYBRID";
+         const createdDate = egg.created
+            ? new Date(Number(egg.created)).getTime()
+            : new Date().getTime();
+         const now = new Date().getTime();
+         const hatchTimeout = egg.basic ? 0 : getMilliseconds(eggTimeout);
+         const elapsedTime = now - createdDate;
+         const timeRemaining = hatchTimeout - elapsedTime;
+         const timeRemainingDaysHours = getDaysHours(timeRemaining);
+         const barwidth = [100 * (elapsedTime / hatchTimeout), "%"].join("");
+
+         if (timeRemaining <= 0 && eggData.find(a => a.basic === egg.basic && a.timeRemaining <= 0)) {
+            eggGroup[eggType] = eggGroup[eggType] + 1
+         } else {
+            eggData.push({
+               id: index,
+               ...egg,
+               name: eggType,
+               timeRemaining: !egg.basic
+                  ? elapsedTime < hatchTimeout
+                     ? timeRemaining
+                     : 0
+                  : 0,
+               CTAOverride: !egg.basic
+                  ? elapsedTime < hatchTimeout
+                     ? { barwidth, timeRemainingDaysHours }
+                     : null
+                  : null,
+            });
+         }
       });
-    });
-    console.log(eggData);
-    empty = eggData.length === 0 && Object.keys(allEggsSorted).length !== 0;
+      empty = eggData.length === 0 && Object.keys(eggData).length !== 0;
+      eggData = sortData(eggData, "basic");
 
-    return (
-      <RowLayout>
-        <Route exact path={`${path}`}>
-          <Swiper
-            slidesPerView={document.body.getBoundingClientRect().width / 140}
-            spaceBetween={0}
-            pagination={{ clickable: true }}
-          >
-            {eggData.map((egg) => (
-              <SwiperSlide key={egg.id}>
-                <EggCard egg={egg} hatchEgg={hatchEgg} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </Route>
-        <Route exact path={`${path}/history`}>
-          {eggData.map((egg) => (
-            <Card key={egg.id} />
-          ))}
-        </Route>
-      </RowLayout>
-    );
-  };
-  const allAnimalsSorted = Object.values(allAnimals).sort((a, b) => {
-    if (a.timeRemaining === b.timeRemaining) {
-      if (a.bloodline) {
-        if (b.bloodline) return 0;
-        return -1;
-      }
-      if (b.bloodline) return 1;
-      return 0;
-    }
-    return a.timeRemaining - b.timeRemaining;
-  });
-  const allEggsSorted = Object.values(allEggs).sort((a, b) => {
-    if (a.timeRemaining === b.timeRemaining) {
-      if (a.basic) {
-        if (b.basic) return 0;
-        return -1;
-      }
-      if (b.basic) return 1;
-      return 0;
-    }
-    return a.timeRemaining - b.timeRemaining;
-  });
+      return (
+         <RowLayout>
+            <Route exact path={`${path}`}>
+               <Swiper
+                  slidesPerView={
+                     document.body.getBoundingClientRect().width / 140
+                  }
+                  spaceBetween={0}
+                  pagination={{ clickable: true }}>
+                  {eggData.map((egg) => (
+                     <SwiperSlide key={egg.id}>
+                        <EggCard egg={egg} hatchEgg={hatchEgg} eggGroup={eggGroup} />
+                     </SwiperSlide>
+                  ))}
+               </Swiper>
+            </Route>
+            <Route exact path={`${path}/history`}>
+               {eggData.map((egg) => (
+                  <Card key={egg.id} />
+               ))}
+            </Route>
+         </RowLayout>
+      );
+   };
 
-  return (
-    <div>
-      {eggType !== "" ? (
-        <VideoPlayer
-          videoPath={
-            eggType === "basic"
-              ? "hatch_mobile_basic.mp4"
-              : "hatch_mobile_hybrid.mp4"
-          }
-          onDone={() => onVideoEnd()}
-        />
-      ) : isOpen ? (
-        <NewAnimalCard animal={hatched} isOpen={setOpen} />
-      ) : (
-        <Page>
-          {/* <RowTitle>My Eggs</RowTitle> */}
-          {renderEggs()}
-          <RowTitle>Breedable Animals</RowTitle>
-          {renderAnimals("pure")}
-          <RowTitle>Hybrid Animals</RowTitle>
-          {renderAnimals("hybrid")}
-        </Page>
-      )}
-    </div>
-  );
+   const sortData = (data: Array<any>, byType: string) => {
+      return data.sort((a, b) => {
+         if (a.timeRemaining === b.timeRemaining) {
+            if (a[byType]) {
+               if (b[byType]) return 0;
+               return -1;
+            }
+            if (b[byType]) return 1;
+            return 0;
+         }
+         return a.timeRemaining - b.timeRemaining;
+      });
+   }
+
+   return (
+      <div>
+         {eggType !== "" ? (
+            <VideoPlayer
+               videoPath={
+                  eggType === "basic"
+                     ? "hatch_mobile_basic.mp4"
+                     : "hatch_mobile_hybrid.mp4"
+               }
+               onDone={() => onVideoEnd()}
+            />
+         ) : isOpen ? (
+            <NewAnimalCard animal={hatched} isOpen={setOpen} />
+         ) : (
+            <Page>
+               {/* <RowTitle>My Eggs</RowTitle> */}
+               {renderEggs()}
+               <RowTitle>Breedable Animals</RowTitle>
+               {renderAnimals("pure")}
+               <RowTitle>Hybrid Animals</RowTitle>
+               {renderAnimals("hybrid")}
+            </Page>
+         )}
+      </div>
+   );
 };
 
 export default MyZooAccount;

@@ -49,7 +49,6 @@ contract ZooDrop is Ownable {
         _currentSupply._value = _supply;
     }
 
-    // owner can set egg cost
     function setEggPrice(uint256 _price) public onlyOwner {
         require(_price > 0, "Price must be over zero");
         eggPrice = _price;
