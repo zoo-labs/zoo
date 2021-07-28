@@ -109,21 +109,23 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
             onDismiss={onDismiss}
             height={`370px`}>
             <Flex
+               width="100%"
                justifyContent="center"
                alignContent="center"
                flexDirection="column"
-               ml="20px"
-               mt="20px">
+               pl="20px"
+               pr="20px"
+            >
                <Label fontSize="22px" color="text" fontWeight="550">
                   Current Bid
                </Label>
-               <Text bold ml="16px" fontSize="22px" color="#ffffff">
+               <Text bold ml="16px" mt="4px" mb="16px" fontSize="22px" color="text">
                   {item.currentBid}
                </Text>
                <Label fontSize="22px" color="text" fontWeight="550">
                   Buy Now
                </Label>
-               <Text bold ml="16px" fontSize="22px" color="#ffffff">
+               <Text bold ml="16px"  mt="4px" mb="16px" fontSize="22px" color="text">
                   {item.buyNow}
                </Text>
                <BidInput
@@ -133,30 +135,14 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
                />
                <ButtonContent>
                   <BorderButton
-                     width="140px"
-                     variant="primary"
-                     color="black"
                      scale="md"
-                     style={{
-                        border: "0px",
-                        letterSpacing: ".1rem",
-                        boxShadow: "none",
-                        textTransform: "uppercase",
-                     }}
+                     width="120px"
                      onClick={() => onConfirmBuy()}>
                      Buy Now
                   </BorderButton>
                   <BorderButton
-                     width="140px"
-                     variant="primary"
-                     color="black"
                      scale="md"
-                     style={{
-                        border: "0px",
-                        letterSpacing: ".1rem",
-                        boxShadow: "none",
-                        textTransform: "uppercase",
-                     }}
+                     width="120px"
                      onClick={() => onConfirmBid()}>
                      Bid
                   </BorderButton>

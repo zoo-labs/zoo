@@ -1,13 +1,12 @@
 import React from 'react'
-import styled from 'styled-components'
 import {Modal as Existing, Text as Standard} from 'components'
 import BorderButton from 'components/Button/BorderButton'
 import CustomModal from "components/CustomizedModal";
 
 import {
   Flex,
-  Text
 } from "components";
+import { Modal } from 'components/Modal';
 
 interface Props {
     onDismiss?: () => void
@@ -18,24 +17,16 @@ interface Props {
     submission?: number
 }
 
-const Button = styled.div`
-  padding: 6px 12px;
-  min-width: 100px;
-  background: black;
-  text-align: center;
-  color: white;
-  margin: auto;
-`
 
 const Confirmation: React.FC<Props> = ({onDismiss = () => null, confirmation, action, amount, submission, name}) => {
     return (
-        <CustomModal onDismiss={onDismiss}>
-            <Standard color="black">{`You want to ${action==="Buy"? "Buy" : "Bid on"} ${name} for $${submission? submission : amount}`}</Standard>
-            <Flex style={{marginTop: 15}}>
-                <Button onClick={()=>confirmation()}>YES</Button>
-                <Button onClick={()=>onDismiss()}>NO</Button>
+        <Modal title={`Confirm ${action}`} onDismiss={onDismiss}>
+            <Standard color="text">{`Do you want to ${action==="Buy"? "Buy" : "Bid on"} ${name} for $${submission? submission : amount}`}</Standard>
+            <Flex mt="16px" mb="16px" width="100%" justifyContent="space-between">
+                <BorderButton mr="16px" scale="sm" onClick={() => confirmation()}>YES</BorderButton>
+                <BorderButton ml="16px" scale="sm" onClick={() => onDismiss()}>NO</BorderButton>
             </Flex>
-        </CustomModal>
+        </Modal>
     )
 }
 
