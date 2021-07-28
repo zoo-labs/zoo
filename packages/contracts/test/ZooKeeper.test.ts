@@ -418,7 +418,7 @@ describe("ZooKeeper", () => {
     /*
     Deploy Script
     */
-    it.only("Should get the ZooDrop owner", async () => {
+    it("Should get the ZooDrop owner", async () => {
 
         const zooDropOwner: string = await zooKeeper.owner();
 
@@ -428,7 +428,7 @@ describe("ZooKeeper", () => {
     /**
      * DROP
      */
-    it.only("Should create a new ZooKeeper contract with AddDrop event", async () => {
+    it("Should create a new ZooKeeper contract with AddDrop event", async () => {
 
         const block = await ethers.provider.getBlockNumber();
 
@@ -448,7 +448,7 @@ describe("ZooKeeper", () => {
     /**
      * BUYING EGGS
      */
-    it.only("Should buy a basic egg", async () => {
+    it("Should buy a basic egg", async () => {
         await addAnimals();
 
         await zooToken.approve(zooKeeper.address, 210)
@@ -483,7 +483,7 @@ describe("ZooKeeper", () => {
         expect(egg.eggCreationTime.toNumber()).to.greaterThan(0);
     });
 
-    it.only("Should buy multiple basic eggs", async () => {
+    it("Should buy multiple basic eggs", async () => {
 
         await zooToken.approve(zooKeeper.address, 2000);
 
@@ -511,7 +511,7 @@ describe("ZooKeeper", () => {
 
     });
 
-    it.only("Should revert when not enough balance", async () => {
+    it("Should revert when not enough balance", async () => {
 
         await addAnimals();
 
@@ -530,7 +530,7 @@ describe("ZooKeeper", () => {
     /**
      * HATCHING EGGS
      */
-    it.only("Should hatch & burn basic egg", async () => {
+    it("Should hatch & burn basic egg", async () => {
         await addAnimals();
 
         await zooToken.approve(zooKeeper.address, 600)
