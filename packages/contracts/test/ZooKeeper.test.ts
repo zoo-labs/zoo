@@ -548,31 +548,27 @@ describe("ZooKeeper", () => {
             }
         });
 
-        // await zooKeeper.connect(signers[0]).approve(zooKeeper.address, 0);
-        console.log("ZooKeeper Address", zooKeeper.address)
-
-
-        // await zooMedia.approve(signers[1].address, 0)
-
         const hatchEgg = await zooKeeper.connect(signers[0]).hatchEgg(1, 0);
-        // const hatchEggReceipt = await hatchEgg.wait();
-        // sender = hatchEggReceipt.events;
 
-        // let from_add2
-        // let token_id2
+        const hatchEggReceipt = await hatchEgg.wait();
 
-        // sender.forEach(element => {
-        //     if (element.event == "Hatch") {
-        //         from_add2 = element.args["_from"]
-        //         token_id2 = element.args["_tokenID"]
-        //     }
-        // });
+        sender = hatchEggReceipt.events;
 
-        // expect(from_add2).to.equal(owner.address);
-        // expect(token_id2.toNumber()).to.equal(1);
+        let from_add2
+        let token_id2
 
-        // const newAnimal = await zooKeeper.animals(1);
-        // expect(newAnimal.name).to.not.equal('');
+        sender.forEach(element => {
+            if (element.event == "Hatch") {
+                from_add2 = element.args["_from"]
+                token_id2 = element.args["_tokenID"]
+            }
+        });
+
+        expect(from_add2).to.equal(owner.address);
+        expect(token_id2.toNumber()).to.equal(1);
+
+        const newAnimal = await zooKeeper.animals(1);
+        expect(newAnimal.name).to.not.equal('');
     });
 
     it("Should hatch & burn hybrid egg", async () => {
