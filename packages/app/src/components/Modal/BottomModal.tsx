@@ -33,18 +33,18 @@ const animatebottom = keyframes`
 const animateup = keyframes`
    from {
       bottom: 0;
-      opacity: 1;
+     opacity: 1;
    }
 
    to {
-     bottom: -300px;
+      bottom: -300px;
      opacity: 0;
    }
 `
 
-const CustomSheet = styled(Sheet)`
+const CustomSheet = styled(Sheet)<{ ismodalopen? : boolean}>`
    position: relative;
-   animation: ${(props) => (props.isOpen ? animatebottom :  animateup)} 0.4s;
+   animation: ${(props) => (props.ismodalopen ? animatebottom :  animateup)} 0.4s;
 `
 
 const BottomModal: React.FC<Props> = ({
@@ -54,16 +54,20 @@ const BottomModal: React.FC<Props> = ({
    height,
 }) => {
    const [isOpen, setOpen] = React.useState(true);
+   const [ismodalopen, setIsModalOpen] = React.useState(true);
    const theme = useTheme();
    
    const onClose = () => {
-      setOpen(false);
-      setTimeout(onDismiss, 300);
+      setIsModalOpen(false);
+      setTimeout(function(){
+         setOpen(false);
+         onDismiss();
+      }, 300);
    }
 
    return (
       <>
-         <CustomSheet isOpen={isOpen} onClose={onClose}>
+         <CustomSheet isOpen={isOpen} onClose={onClose} ismodalopen={ismodalopen}>
             <Sheet.Container
                style={{
                   height: height ? height : "300px",
