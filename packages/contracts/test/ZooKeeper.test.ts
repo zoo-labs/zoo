@@ -379,6 +379,11 @@ describe.only("ZooKeeper", () => {
         token_id_2 = element.args["_tokenID"]
       }
     });
+    for (var i = 0; i < signers.length; i++) {
+
+        await zooToken.mint(signers[i].address, 10000);
+
+    }
 
     const firstHatchedAnimal = await zooKeeper.connect(owner).hatchEgg(1, token_id_1);
     const hatchFirstAnimalReceipt = await firstHatchedAnimal.wait();
