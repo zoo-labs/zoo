@@ -32,7 +32,7 @@ contract ZooKeeper {
 
     Counters.Counter private _dropIDs;
 
-    //Declare an Event
+    // Declare an Event
     event AddDrop(uint256 indexed _dropID, address indexed _dropAddress);
     event BuyEgg(address indexed _from, uint256 indexed _tokenID);
     event Hatch(address indexed _from, uint256 indexed _tokenID);
@@ -186,6 +186,7 @@ contract ZooKeeper {
         );
 
         token.transferFrom(msg.sender, address(this), drop.eggPrice());
+        console.log("TEST THIS");
 
         (string memory _tokenURI, string memory _metadataURI) = drop.buyEgg();
         ZooMedia.MediaData memory data;
