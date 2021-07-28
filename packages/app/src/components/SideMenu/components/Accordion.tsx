@@ -17,6 +17,7 @@ interface Props extends PushedProps {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  
   // Safari fix
   flex-shrink: 0;
 `;

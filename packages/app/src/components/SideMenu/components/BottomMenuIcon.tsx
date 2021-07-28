@@ -6,7 +6,6 @@ const StickyBottomMenuWrapper = styled.button`
   width: 60px;
   height: 60px;
   border-radius: 30px;
-  border: 2px solid black;
   box-shadow: 0px 5px 10px #040404ba;
   background: ${({ theme }) => theme.colors.primaryPop};
   display: flex;
@@ -15,6 +14,7 @@ const StickyBottomMenuWrapper = styled.button`
   position: fixed;
   bottom: 10px;
   right: 10px;
+  z-index: 100;
 
   svg {
     width: 25px;
