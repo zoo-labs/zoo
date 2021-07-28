@@ -23,7 +23,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const keeper = await hre.ethers.getContractAt('ZooKeeper', deployment.address);
 
   // Add first drop
-  const [dropID, dropAddress] = await keeper.addDrop('Gen 0', 16000, 210);
+  const [dropID, dropAddress] = await keeper.callStatic.addDrop('Gen 0', 16000, 210);
+  await keeper.addDrop('Gen 0', 16000, 210)
   console.log('ZooDrop', dropID, dropAddress);
 
   await keeper.setTokenURI(dropID, "basicEgg", "basicEgg.tokenURI1");
