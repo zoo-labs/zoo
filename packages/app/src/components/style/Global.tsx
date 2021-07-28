@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
     src:url('${fontFamilySrc}') format('TrueType');
   }
   * {
-    font-family: 'ConsolasFont';
+    font-family: ${fontFamily};
     color: #FFFFF;
   }
   body {

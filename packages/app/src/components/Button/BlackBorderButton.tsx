@@ -7,7 +7,7 @@ import { scales, variants } from './types'
 const BtnContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   
     * {
     background: black;
@@ -22,15 +22,13 @@ const BtnContainer = styled.div`
 
   button {
       text-transform: uppercase;
-      border: 2px solid #FFFFFF;
+    //   border: 2px solid #FFFFFF;
       border-radius: 0px;
       height: 100%;
-      padding: revert;
+    //   padding: revert;
       letter-spacing: 3px;
       align-items: center;
-      line-height: 1.5;
       transition: all 0.2s;
-      position: relative;
       background: black;
       margin-top: 1rem;
   }

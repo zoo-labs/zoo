@@ -2,24 +2,26 @@ import { scales, variants } from "./types";
 
 export const scaleVariants = {
   [scales.MD]: {
-    height: "48px",
-    padding: "0 24px",
-  },
-  [scales.SM]: {
     height: "32px",
     padding: "0 16px",
   },
+  [scales.SM]: {
+    height: "28px",
+    padding: "0 8px",
+    minWidth: "60px",
+  },
   [scales.XS]: {
     height: "20px",
-    fontSize: "12px",
-    padding: "0 8px",
+    fontSize: "16px",
+    padding: "4px",
   },
 };
 
 export const styleVariants = {
   [variants.PRIMARY]: {
-    backgroundColor: "primary",
-    color: "black",
+    backgroundColor: "primaryPop",
+    border: "0",
+    color: "text",
   },
   [variants.SECONDARY]: {
     backgroundColor: "transparent",
@@ -67,7 +69,7 @@ export const styleVariants = {
   },
   [variants.BUTTONGUM]: {
     background: "primaryPop",
-    color: "black",
+    color: "white",
   },
   [variants.MARBLE]: {
     background: "linear-gradient(129deg,#6287bf 3.22%,#0DD8CE 96.22%)",

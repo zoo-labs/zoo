@@ -18,15 +18,13 @@ const HatchModal: React.FC<Props> = ({
       onDismiss();
    }
    return (
-      <Modal title="Are you Sure?" onDismiss={onDismiss}>
-         <Standard>{`You want to hatch this egg?`}</Standard>
-
+      <Modal title="Confirm Egg Hatch" onDismiss={onDismiss}>
+         <Standard>{`Do you want to hatch this egg?`}</Standard>
          <Flex justifyContent="space-around" flexDirection="row" mt="16px">
-
             <BorderButton scale="sm" onClick={() => onConfirm()} >
                YES
             </BorderButton>
-            <BorderButton scale="sm" onClick={() => onDismiss()}>
+             <BorderButton scale="sm" onClick={() => onDismiss()}>
                No
             </BorderButton>
          </Flex>

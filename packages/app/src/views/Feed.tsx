@@ -12,6 +12,7 @@ import Moralis from "moralis";
 import { AppState } from "state/index";
 import FeedCard from "./FeedCard";
 import BorderButton from "components/Button/BorderButton";
+import { ChevronLeftIcon } from 'components/Svg'
 
 const Container = styled.div<{ isMobile?: boolean }>`
   height: ${({ isMobile }) => (isMobile ? `100vh` : null)};
@@ -23,17 +24,37 @@ const Container = styled.div<{ isMobile?: boolean }>`
   }
 `;
 
+const StyledChevron = styled(ChevronLeftIcon)`
+  height: 40px;
+  width: 40px;
+  z-index: 101;
+`
+
+const StyledMenuButton = styled.button`
+position: relative;
+top: -8px;
+left: -12px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: transparant;
+
+`
+
+
 const ToggleContainer = styled.div`
   div {
     width: 100%;
+    border-radius: 0;
     justify-content: center;
     z-index: 1000;
     position: absolute;
-    margin-top: 15px;
+    padding-top: 15px;
+    background: linear-gradient(#3d3d3d, transparent);
   }
   a {
     border: none;
-    background-color: transparent;
+
     font-size: 20px;
     box-shadow: none;
     cursor: pointer;
@@ -122,10 +143,14 @@ export default function Feed() {
       : !isZoo;
   });
 
+
   return (
     <Container isMobile={isMobile}>
       <ToggleContainer>
-        <ButtonMenu activeIndex={activeIndex} scale="sm">
+        <ButtonMenu activeIndex={activeIndex + 1} scale="sm">
+          <StyledMenuButton onClick={()=> console.log('asda')}>
+            <StyledChevron onClick={HomeClick}/>
+          </StyledMenuButton>
           <ButtonMenuItem
             as={Link}
             to={`${url}/myzoo`}
@@ -150,8 +175,8 @@ export default function Feed() {
         >
           {animalsFiltered.map((data) => {
             return data.listed ? (
-              <SwiperSlide key={data.tokenId}>
-                <FeedCard item={data} />
+              <SwiperSlide key={data.tokenId + "slide"}>
+                <FeedCard item={data} key={data.tokenId + "card"}/>
               </SwiperSlide>
             ) : (
               <></>
@@ -161,7 +186,7 @@ export default function Feed() {
       ) : (
         <EmptyZoo>
           <Text textAlign="center">You do not currently own any animals</Text>
-          <BorderButton scale="md" onClick={HomeClick}>
+          <BorderButton scale="md" onClick={() => HomeClick}>
             Home
           </BorderButton>
         </EmptyZoo>

@@ -11,38 +11,55 @@ const getColor = ({ color, theme }: ThemedProps) => {
 };
  */
 
+const VidContainer = styled.div`
+    height: 100vh;
+    width: auto;
+    // max-width: 425px;
+    // min-width: 325px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: -64px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    transform: translateX(-50%);
+    z-index: 102;
+`
+function fade(element) {
+    var op = 1;
+    var timer = setInterval(function() {
+        if (op <= 0) clearInterval(timer);
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op -= op * 0.1 || 0.1;
+    }, 70);
+}
 
-const VideoPlayer: React.FC<VideoPlayerTheme> = ({videoPath, onDone}:VideoPlayerTheme) => {
+const VideoPlayer: React.FC<VideoPlayerTheme> = ({videoPath}:VideoPlayerTheme) => {
     const videoEl = useRef()
 
     useEffect(() => {
         const el = videoEl.current as any
-        el.classList.add('-fade-out')
-        if(el.requestFullscreen) el.requestFullscreen()
-        else if (el.msRequestFullscreen) el.msRequestFullscreen()
-        else if (el.mozRequestFullScreen) el.mozRequestFullScreen()
-        else if (el.webkitRequestFullScreen) el.webkitRequestFullScreen()
-        el.addEventListener("ended", function () {
-            onDone()
-        }, false);
-        console.log("player", el)
-        el.classList.remove('-fade-out')
+        setTimeout(function() {
+            fade(el);
+        }, 5500);
     }, [])
 
     return (
-        <VideoPlayerWrapper autoPlay ref={videoEl} controls={false}>
-            <source src={videoPath} />
-        </VideoPlayerWrapper>
+        <VidContainer >
+            <VideoPlayerWrapper autoPlay ref={videoEl} controls={false} playsInline>
+                <source src={videoPath} />
+            </VideoPlayerWrapper>
+        </VidContainer>
     )
 }
 
 export const VideoPlayerWrapper = styled.video`
-    display: flex;
-    flex: 1;
-    & .-fade-out: {
-        opacit: 0;
-        transition: opacity 2s;
-    }
+    height: 100%;
+    width: auto;
 `;
 
 VideoPlayer.defaultProps = {

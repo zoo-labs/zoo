@@ -4,21 +4,20 @@ import { DeployFunction } from 'hardhat-deploy/types'
 import { getDeployerAddress } from '../lib/deploy_helper'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts } = hre
+  const { deployments, ethers, getNamedAccounts } = hre
   const { deploy } = deployments
-  const {deployer} = await getNamedAccounts()
-  const OWNER_ADDRESS = await getDeployerAddress(hre)
+  const { deployer } = await getNamedAccounts()
 
   const useProxy = !hre.network.live
 
-  const mediaAddress = (await deployments.get('ZooMedia')).address
   const tokenAddress = (await deployments.get('ZooToken')).address
+  const mediaAddress = (await deployments.get('ZooMedia')).address
 
   // Proxy only in non-live network (localhost and hardhat network) enabling
   // HCR (Hot Contract Replacement) in live network, proxy is disabled and
   // constructor is invoked
   await deploy('ZooAuction', {
-    from: OWNER_ADDRESS,
+    from: deployer,
     args: [mediaAddress, tokenAddress],
     log: true,
     // proxy: useProxy && 'postUpgrade',
