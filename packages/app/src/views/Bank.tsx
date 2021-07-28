@@ -12,7 +12,7 @@ import { Flex, Heading } from "components";
 import Body from "components/layout/Body";
 import { useModal } from "components/Modal";
 import BuyEggs from "components/BuyEggs";
-import { getZooToken } from "util/contractHelpers";
+import { getZooFaucet, getZooToken } from "util/contractHelpers";
 
 const HeadingContainer = styles.div`
     width: 100%;
@@ -56,6 +56,7 @@ const Bank: React.FC = () => {
    const { account, chainId } = useWeb3React();
    const web3 = useWeb3();
    const history = useHistory();
+   const [wait, setWait] = useState(false);
 
    const zooToken = getZooToken(web3, chainId);
 
@@ -98,11 +99,39 @@ const Bank: React.FC = () => {
          </StyledButton>
       </HeadingContainer>
    );
-  const toLink = () => {
-    const redirectWindow = window.open('https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997', '_blank');
-    redirectWindow.location;
-    // location.href = "https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997"
-  }
+   const faucet = getZooFaucet(web3, chainId);
+   const faucetAmt = web3.utils.toWei("50");
+   const handleFaucet = () => {
+      try {
+         setWait(true);
+         faucet.methods
+            .buyZoo(account, faucetAmt)
+            .send({ from: account })
+            .then(() => {
+               setWait(false);
+               getBalance();
+            })
+            .catch((e) => {
+               console.error("ISSUE USING FAUCET \n", e);
+               setWait(false);
+            });
+      } catch (e) {
+         console.error("ISSUE USING FAUCET \n", e);
+      }
+   };
+
+   const handleFunds = () => {
+      console.log(chainId);
+      switch (chainId) {
+         case 97:
+            handleFaucet();
+            break;
+         default:
+            const redirectWindow = window.open('https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997', '_blank');
+            redirectWindow.location;
+      }
+   };
+
 
    return (
       <>
@@ -111,7 +140,11 @@ const Bank: React.FC = () => {
             <Body>
                <LabelWrapper>
                   <Label small>Wallet Balance</Label>
-                  <BorderButton minWidth="140px" scale="sm" onClick={toLink}>Add Funds</BorderButton>
+                  <BorderButton minWidth="140px" scale="sm" onClick={handleFunds}>{chainId !== 97
+                        ? "Add Funds"
+                        : wait
+                        ? "Processing..."
+                        : "Get Zoo"}</BorderButton>
                </LabelWrapper>
                <Flex width="100%" alignItems="center" justifyContent="space-around">
                   <ValueWrapper>{zooBalance} ZOO Tokens</ValueWrapper>
