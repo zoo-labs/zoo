@@ -22,9 +22,9 @@ const Confirmation: React.FC<Props> = ({onDismiss = () => null, confirmation, ac
     return (
         <Modal title={`Confirm ${action}`} onDismiss={onDismiss}>
             <Standard color="text">{`Do you want to ${action==="Buy"? "Buy" : "Bid on"} ${name} for $${submission? submission : amount}`}</Standard>
-            <Flex mt="16px" mb="16px" width="100%" justifyContent="center">
-                <BorderButton mr="16px" scale="sm" onClick={()=>confirmation()}>YES</BorderButton>
-                <BorderButton ml="16px" scale="sm" onClick={()=>onDismiss()}>NO</BorderButton>
+            <Flex mt="16px" mb="16px" width="100%" justifyContent="space-between">
+                <BorderButton mr="16px" scale="sm" onClick={() => confirmation()}>YES</BorderButton>
+                <BorderButton ml="16px" scale="sm" onClick={() => onDismiss()}>NO</BorderButton>
             </Flex>
         </Modal>
     )
