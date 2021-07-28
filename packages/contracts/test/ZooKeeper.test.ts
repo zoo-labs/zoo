@@ -10,7 +10,6 @@ import { BigNumber, Bytes, BytesLike, utils } from 'ethers';
 
 let zooToken: any;
 let zooFaucet: any;
-let zooKeeper: any;
 let zooMarket: any;
 let zooMedia: any;
 let zooKeeper: any;
@@ -80,7 +79,6 @@ describe.only("ZooKeeper", () => {
         await zooKeeper.setMetadataURI(1, "basicEgg", "basicEgg.metadataURI1");
         await zooKeeper.setTokenURI(1, "hybridEgg", "hybridEgg.tokenURI1");
         await zooKeeper.setMetadataURI(1, "hybridEgg", "hybridEgg.metadataURI1");
-
 
         await zooKeeper.addAnimal(1,"Pug", 100, "Common", 5500, "test","test");
         await zooKeeper.addAnimal(1,"Butterfly", 100, "Common", 5500, "test1","test1");
@@ -438,36 +436,37 @@ describe.only("ZooKeeper", () => {
 
         const block = await ethers.provider.getBlockNumber();
         let dropID = await zooKeeper.connect(signers[0]).addDrop("test1", 16000, 210);
-        let events = await zooKeeper.queryFilter(zooKeeper.filters.AddDrop(null,null), block);
+        let events = await zooKeeper.queryFilter(zooKeeper.filters.AddDrop(null, null), block);
         expect(events.length).eq(1);
 
         const log = zooKeeper.interface.parseLog(events[0]);
         expect(log.name).to.equal("AddDrop");
-
         expect(log.args._dropID.toNumber()).to.equal(1);
     });
 
     /**
      * BUYING EGGS
      */
-    it("Should buy a basic egg", async() => {
-            await addDrop();
-            await zooToken.approve(zooKeeper.address, 210)
+    it("Should buy a basic egg", async () => {
+        await addDrop();
 
-            const buyEgg = await zooKeeper.connect(owner).buyEgg(1);
-            const buyEggReceipt = await buyEgg.wait();
+        await zooToken.approve(zooMedia.address, 210)
+
+        const buyEgg = await zooMedia.connect(owner).buyEgg(1);
+
+        const buyEggReceipt = await buyEgg.wait();
 
         const sender = buyEggReceipt.events;
 
         let from_add
         let token_id
 
-            sender.forEach(element => {
-                if (element.event == "BuyEgg"){
-                    from_add = element.args["_from"]
-                    token_id = element.args["_tokenID"]
-                }
-            });
+        sender.forEach(element => {
+            if (element.event == "BuyEgg"){
+                from_add = element.args["_from"]
+                token_id = element.args["_tokenID"]
+            }
+        });
         expect(from_add).to.equal(owner.address);
         expect(token_id.toNumber()).to.equal(0);
 
@@ -550,6 +549,7 @@ describe.only("ZooKeeper", () => {
         const token = await breedHybrid()
 
         const hatchEgg  = await zooKeeper.hatchEgg(1,4)
+
         const hatchEggReceipt = await hatchEgg.wait();
 
         let sender = hatchEggReceipt.events;
