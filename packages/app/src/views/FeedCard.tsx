@@ -10,6 +10,7 @@ import { Animal } from "entities/zooentities";
 import YieldModal from "components/MarketModals/YieldModal";
 import { RarityColor } from "enums/rarity-color";
 import { ChevronLeftIcon } from 'components/Svg'
+import ZooHomeButton from "components/SideMenu/components/ZooHomeButton";
 
 interface Props {
   item: Animal;
@@ -33,6 +34,7 @@ const FinalThird = styled.div`
   height: 35vh;
   width: 100%;
   padding-left: 15px;
+   padding-bottom: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -109,6 +111,16 @@ const StyledChevron = styled(ChevronLeftIcon)`
   height: 40px;
 `
 
+const ActionButonContainer = styled.div`
+  width: 40%;
+  display: inline-flex;
+  flex-direction: column;
+  height: 200px:
+  align-items: center;
+  justify-content: space-between;
+ 
+`
+
 const FeedCard: React.FC<Props> = ({ item }) => {
   const history = useHistory();
   const ypd = {};
@@ -133,8 +145,8 @@ const FeedCard: React.FC<Props> = ({ item }) => {
           
         </SecondThird>
         <FinalThird>
-          <Flex flexDirection="row">
-            <Flex flexDirection="column" width="calc(100% - 75px)">
+          <Flex flexDirection="row" >
+            <Flex flexDirection="column" width="calc(100% - 75px)" pt="30px">
               <MainHeading
                 bold
                 as="p"
@@ -153,29 +165,35 @@ const FeedCard: React.FC<Props> = ({ item }) => {
               
               
             </Flex>
-            <Flex flexDirection="column" width="75px">
+            <Flex width="100%" height="100%" maxWidth="60px">
+          <ActionButonContainer> 
+              
               <IconButton
                 onClick={() => {
                   onYield();
-                }}
+                  }}
+                  style={{padding: "10px 0px"}}
               >
                 <FaMoneyBillWave />
-                <Text as="span" fontSize="18px">
+                {/* <Text as="span" fontSize="18px">
                   Yield
-                </Text>
+                </Text> */}
               </IconButton>
               <IconButton
                 onClick={() => {
                   onBid();
-                }}
+                  }}
+                    style={{padding: "10px 0px"}}
               >
                 <FaDollarSign />
-                <Text as="span" fontSize="18px">
+                {/* <Text as="span" fontSize="18px" pb="5px">
                   Bid
-                </Text>
+                </Text> */}
               </IconButton>
-            </Flex>
-          </Flex>
+                <ZooHomeButton width="50px" />
+              </ActionButonContainer>
+              </Flex>
+          </Flex> 
         </FinalThird>
       </Card>
     </>
