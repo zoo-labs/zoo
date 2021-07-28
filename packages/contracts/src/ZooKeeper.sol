@@ -101,7 +101,11 @@ contract ZooKeeper {
         _;
     }
 
-    constructor(address _market, address _media, address _token) {
+    constructor(
+        address _market,
+        address _media,
+        address _token
+    ) {
         owner = msg.sender;
         market = ZooMarket(_market);
         media = ZooMedia(_media);
@@ -120,6 +124,7 @@ contract ZooKeeper {
         drops[_dropID] = address(drop);
 
         emit AddDrop(_dropID, address(drop));
+
         return (_dropID, address(drop));
     }
 
@@ -268,8 +273,8 @@ contract ZooKeeper {
         public
         returns (uint256)
     {
-        console.log('hatchEgg:this', address(this));
-        console.log('hatchEgg:msg.sender', msg.sender);
+        console.log("hatchEgg:this", address(this));
+        console.log("hatchEgg:msg.sender", msg.sender);
         ZooDrop drop = ZooDrop(drops[dropId]);
 
         // need to check the hatch time delay

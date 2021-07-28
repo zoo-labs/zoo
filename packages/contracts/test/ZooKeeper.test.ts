@@ -1,5 +1,5 @@
 import { ethers } from 'hardhat';
-import { ZooKeeper__factory, ZooMedia__factory, ZooMarket__factory, Token } from '../types';
+import { ZooKeeper__factory, ZooMedia__factory, ZooMarket__factory, Token, ZooDrop } from '../types';
 import { ZooMedia } from '../types/ZooMedia';
 import { ZooToken } from '../types/ZooToken';
 import { ZooFaucet } from '../types/ZooFaucet';
@@ -507,9 +507,40 @@ describe("ZooKeeper", () => {
 
     it("Should revert when totalSupply of eggs are reaching", async () => {
 
+        await zooKeeper.connect(owner).addDrop("test", 1, 210);
 
+        await zooKeeper.setTokenURI(1, "basicEgg", "basicEgg.tokenURI1");
+        await zooKeeper.setMetadataURI(1, "basicEgg", "basicEgg.metadataURI1");
+        await zooKeeper.setTokenURI(1, "hybridEgg", "hybridEgg.tokenURI1");
+        await zooKeeper.setMetadataURI(1, "hybridEgg", "hybridEgg.metadataURI1");
 
-    });
+        const dropAddress = await zooKeeper.drops(1)
+
+        const drop = await ethers.getContractAt("ZooDrop", dropAddress);
+
+        await zooToken.approve(zooKeeper.address, 210);
+
+        const preBal = await zooToken.balanceOf(owner.address);
+
+        await zooKeeper.connect(signers[0]).buyEgg(1);
+
+        const postBal = await zooToken.balanceOf(owner.address);
+
+        const totalSupply = await drop.totalSupply();
+
+        const currentSupply = await drop.currentSupply();
+
+        await expect(zooKeeper.connect(signers[0]).buyEgg(1)).to.be.revertedWith(
+            "There are no more Eggs that can be purchased"
+        );
+
+        expect(parseInt(postBal._hex)).to.equal(parseInt(preBal._hex) - 210);
+
+        expect(parseInt(totalSupply._hex)).to.equal(1);
+
+        expect(parseInt(currentSupply._hex)).to.equal(0);
+
+    })
 
     it("Should revert when not enough balance", async () => {
 
@@ -623,7 +654,7 @@ describe("ZooKeeper", () => {
     /**
      * BREEDING
      */
-    it.only("Should breed a hybrid egg", async () => {
+    it("Should breed a hybrid egg", async () => {
 
         await addAnimals();
 
