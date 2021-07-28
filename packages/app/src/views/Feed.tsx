@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Text } from "components";
+import { Flex, Text } from "components";
 import { ButtonMenu, ButtonMenuItem } from "components/ButtonMenu";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
@@ -20,6 +20,7 @@ import { AppState } from "state/index";
 import FeedCard from "./FeedCard";
 import BorderButton from "components/Button/BorderButton";
 import { ChevronLeftIcon } from "components/Svg";
+import logo from "media/ZooLogoWhite.png";
 
 const Container = styled.div<{ isMobile?: boolean }>`
    height: ${({ isMobile }) => (isMobile ? `100vh` : null)};
@@ -78,6 +79,22 @@ const EmptyZoo = styled.div`
    button {
       margin-top: 24px;
    }
+`;
+
+const MaxHeightLogo = styled.img`
+  height: ${32 / 1.6}px;
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+  z-index: 100;
+`;
+
+const LogoContainer = styled.div`
+  height: 100%;
+  ${({ theme }) =>
+    theme.mediaQueries.md || theme.mediaQueries.lg || theme.mediaQueries.xl} {
+    left: 50%;
+  }
 `;
 
 Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
@@ -150,18 +167,19 @@ function Feed<FeedPagePops>({ match }) {
    return (
       <Container isMobile={isMobile}>
          <ToggleContainer>
-            <ButtonMenu activeIndex={activeIndex + 1} scale="sm">
-               <StyledMenuButton onClick={() => console.log("asda")}>
-                  <StyledChevron onClick={HomeClick} />
-               </StyledMenuButton>
-               <ButtonMenuItem as={Link} to={`/feed/myzoo`}>
-                  My Zoo
-               </ButtonMenuItem>
-               <ButtonMenuItem as={Link} to={`/feed/marketplace`}>
-                  Marketplace
-               </ButtonMenuItem>
-            </ButtonMenu>
-         </ToggleContainer>
+         <ButtonMenu activeIndex={activeIndex + 1} scale="sm">
+            <StyledMenuButton onClick={() => console.log("asda")}>
+               <StyledChevron onClick={HomeClick} />
+            </StyledMenuButton>
+            <ButtonMenuItem as={Link} to={`/feed/myzoo`}>
+               My Zoo
+            </ButtonMenuItem>
+            <ButtonMenuItem as={Link} to={`/feed/marketplace`}>
+               Marketplace
+            </ButtonMenuItem>
+         </ButtonMenu>
+      </ToggleContainer>
+         
          {!isZoo || animalsFiltered.length ? (
             <Swiper
                spaceBetween={30}
