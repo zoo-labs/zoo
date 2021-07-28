@@ -1,5 +1,5 @@
 import { ethers } from 'hardhat';
-import { ZooKeeper__factory, ZooMedia__factory, ZooMarket__factory, Token } from '../types';
+import { ZooKeeper__factory, ZooMedia__factory, ZooMarket__factory, Token, ZooDrop } from '../types';
 import { ZooMedia } from '../types/ZooMedia';
 import { ZooToken } from '../types/ZooToken';
 import { ZooFaucet } from '../types/ZooFaucet';
@@ -572,6 +572,12 @@ describe("ZooKeeper", () => {
 
         const newAnimal = await zooKeeper.animals(1);
         expect(newAnimal.name).to.not.equal('');
+        
+        let dropAddress = await zooKeeper.drops(1);
+        const zooDrop = new ethers.Contract(dropAddress, require("../artifacts/src/ZooDrop.sol/ZooDrop.json").abi, owner) as ZooDrop;
+
+        const metadata = await zooDrop.getMetadataURI(newAnimal.name);
+        expect(metadata).to.contain("test")
     });
 
     it("Should hatch & burn hybrid egg", async () => {
