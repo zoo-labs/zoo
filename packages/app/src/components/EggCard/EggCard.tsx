@@ -75,8 +75,7 @@ const TimeoutDisplay = styled.span`
 const Card = styled(Existing) <{ timedOut?: boolean }>`
   cursor: pointer;
   width: 120px;
-  margin-top: 16px;
-  margin-left: 16px;
+  margin: 0px 8px 8px; 
   backgroundColor: "#000000";
   border-radius: 8px;
   display: block;
@@ -116,7 +115,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, eggGroup }) => {
           >
             {egg.timeRemaining === 0 ? eggGroup[eggType] > 1 ? `x${eggGroup[eggType]}` : '' : ''}
           </TextWrapper>
-          <TextWrapper>{egg.name}</TextWrapper>
+          <TextWrapper style={{width: '100%', textAlign: 'center', paddingLeft: '7px'}}>{egg.name}</TextWrapper>
         </CardBody>
         {egg.timeRemaining > 0 ?
           <TimeoutWrapper barwidth={egg.CTAOverride ? egg.CTAOverride.barwidth : 0}>
@@ -124,7 +123,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, eggGroup }) => {
               {`${egg.CTAOverride.timeRemainingDaysHours.days}D ${egg.CTAOverride.timeRemainingDaysHours.hours}H`}
             </TimeoutDisplay>
           </TimeoutWrapper> :
-          <InfoBlock style={{ textAlign: 'center', boxShadow: '#000000 0px 0px 10px 1px', padding: 4 }} >
+          <InfoBlock style={{ textAlign: 'center', boxShadow: '#000000 0px 0px 10px 1px', padding: 4 , paddingLeft: '7px'}} >
             <TextWrapper >{`HATCH`}</TextWrapper>
           </InfoBlock>
         }
