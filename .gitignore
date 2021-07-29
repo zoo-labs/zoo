@@ -42,8 +42,8 @@ yarn-error.log*
 # Local Netlify folder
 .netlify
 
-yarn.lock
 .vscode
 
 packages/app/src/artifacts/
 packages/app/src/contracts.json
+packages/dev/src/contracts.json

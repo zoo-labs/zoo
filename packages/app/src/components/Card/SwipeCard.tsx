@@ -15,7 +15,7 @@ import { useModal } from "components/Modal";
 import { useWeb3React } from '@web3-react/core'
 import HatchModal from "components/ZooModals/HatchModal"
 import { Animal } from 'entities/zooentities'
-import { EggCardType } from './types'
+// import { EggCardType } from './types'
 import { burnEgg, addAnimal } from "state/actions"
 import { useDispatch } from 'react-redux'
 import { animalMapping } from 'util/animalMapping'
@@ -82,40 +82,58 @@ const Card = styled(Existing) <{ timedOut?: boolean }>`
   opacity: ${({ timedOut }) => (timedOut ? "0.6" : null)};
 `;
 
+export interface SwiperCardProps {
+    imageURL?: string;
+    onCardClick?: () => void;
+    onInfoClick?: () => void;
+    isTimedOut?: boolean;
 
+}
 const basicEggURL = window.location.origin + '/static/images/basic.png'
 const hybridEggURL = window.location.origin + '/static/images/hybrid.jpeg'
 
-export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg }) => {
-
-  const [onHatch] = useModal(
-    <HatchModal
-
-      confirmation={() => hatchEgg(egg)}
-      onDismiss={() => null}
-    />
-  )
-  // const eggType = egg.basic ? "BASIC" : "HYBRID";
-
+// export const SwiperCard: React.FC<SwiperCardProps> = ({ imageURL, onCardClick, onInfoClick, egg, hatchEgg, eggGroup }) => {
+export const SwiperCard: React.FC<SwiperCardProps> = ({ imageURL, isTimedOut, onCardClick, onInfoClick}) => {
   return (
     <>
-      <Card onClick={() => { egg.timeRemaining > 0 ? null : onHatch() }} style={{ backgroundColor: '#000000' }} timedOut={egg.timeRemaining > 0 ? true : false}>
-        <CardBody style={{ backgroundImage: `url("${egg.basic ? basicEggURL : hybridEggURL}")`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: 150, padding: 10 }}>
-          <TextWrapper style={{width: '100%', textAlign: 'center', paddingLeft: '7px'}}>{egg.name}</TextWrapper>
+          <Card onClick={onCardClick}
+              timedOut={isTimedOut}
+          >
+              <CardBody style={{
+                  backgroundImage: `${imageURL}`,
+                //   backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: 150, padding: 10
+              }}>
+
+          <TextWrapper
+            style={{
+              textShadow: "0px 2px 6px rgb(0, 0, 0)",
+              fontSize: 18,
+              letterSpacing: 0,
+              position: "absolute",
+              textTransform: "lowercase",
+              right: 7,
+              top: -4
+            }}
+          >
+            {/* {egg.timeRemaining === 0 ? eggGroup[eggType] > 1 ? `x${eggGroup[eggType]}` : '' : ''} */}
+          </TextWrapper>
+                  <TextWrapper style={{ width: '100%', textAlign: 'center', paddingLeft: '7px' }}>
+                      {/* {egg.name} */}
+                  </TextWrapper>
         </CardBody>
-        {egg.timeRemaining > 0 ?
-          <TimeoutWrapper barwidth={egg.CTAOverride ? egg.CTAOverride.barwidth : 0}>
+        {/* {egg.timeRemaining > 0 ? */}
+          {/* <TimeoutWrapper barwidth={egg.CTAOverride ? egg.CTAOverride.barwidth : 0}>
             <TimeoutDisplay >
               {`${egg.CTAOverride.timeRemainingDaysHours.days}D ${egg.CTAOverride.timeRemainingDaysHours.hours}H`}
             </TimeoutDisplay>
           </TimeoutWrapper> :
-          <InfoBlock style={{ textAlign: 'center', boxShadow: '#000000 0px 0px 10px 1px', padding: 4 , paddingLeft: '7px'}} >
+                  <InfoBlock onClick={onInfoClick} style={{ textAlign: 'center', boxShadow: '#000000 0px 0px 10px 1px', padding: 4 , paddingLeft: '7px'}} >
             <TextWrapper >{`HATCH`}</TextWrapper>
-          </InfoBlock>
-        }
+          </InfoBlock> */}
+        {/* } */}
       </Card>
     </>
   )
 }
 
-export default EggCard
+export default SwiperCard
