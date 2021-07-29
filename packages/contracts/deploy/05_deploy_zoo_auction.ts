@@ -1,4 +1,4 @@
-// deploy/04_deploy_zoo_auction.ts
+// deploy/05_deploy_zoo_auction.ts
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { getDeployerAddress } from '../lib/deploy_helper'

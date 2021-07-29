@@ -29,6 +29,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import StickyBottomMenu from "components/Button/StickyBottomMenu";
 import { useHistory } from "react-router-dom";
 import { RarityColor } from "enums/rarity-color";
+import SwiperCard from "components/Card/SwipeCard";
 
 // install Swiper modules
 // SwiperCore.use([Pagination]);
@@ -107,8 +108,8 @@ const RowLayout = styled.div`
   flex-wrap: wrap;
 
   & > * {
-    min-width: calc(100vw - 20px);
-    max-width: 31.5%;
+    // min-width: calc(100vw - 20px);
+    // max-width: 31.5%;
     width: 100%;
     margin: 0 8px;
     margin-bottom: 32px;
@@ -165,7 +166,14 @@ const BidPriceInput = styled.input.attrs({
 const TimeoutDisplay = styled.span`
   position: relative;
   z-index: 2;
+  display: flex;
 `;
+
+const SwiperContainer = styled.div`
+  * {
+    background: ${({ theme }) => theme.colors.background}
+  }
+`
 
 const MyZooAccount: React.FC = () => {
   let empty;
@@ -218,6 +226,7 @@ const MyZooAccount: React.FC = () => {
     dob: "",
     listed: false,
   };
+
 
   const hatchEgg = (egg) => {
     setShowBoth(true);
@@ -402,7 +411,7 @@ const MyZooAccount: React.FC = () => {
     return (
       <Modal title="Confirm Listing" onDismiss={onDismiss}>
         <Text style={{textAlign: "center"}}>{`Do you want to list ${sellAnimal.name}?`}</Text>
-        <Flex 
+        <Flex
          width="100%"
           alignItems="center"
           justifyContent="space-evenly"
@@ -454,6 +463,7 @@ const MyZooAccount: React.FC = () => {
       mounted = false;
     };
   }, [elapsedTimeOnPage]);
+
 
   const renderAnimals = (hybrid): JSX.Element => {
     let animalGroup = {};
@@ -559,9 +569,17 @@ const MyZooAccount: React.FC = () => {
             ) : (
               <Swiper slidesPerView={2.2} spaceBetween={10}>
                 {animals.map((animal) => (
-                  <SwiperSlide style={{ padding: "3px" }} key={animal.tokenId}>
-                    <CardWrapper>
-                      <Card
+                  <SwiperSlide style={{ padding: "3px",  width:"auto", display:"flex"}} key={animal.tokenId}>
+                      {/* <CardWrapper> */}
+                         <SwiperCard animal={animal}
+                            group={animalGroup}
+                            imageURL={`url("${animal.imageUrl}")`}
+                            onInfoClick={() =>
+                                hybrid === "pure"
+                                  ? breedClick(animal)
+                                  : list(animal)}
+                         />
+                      {/* <Card
                         style={{
                           boxShadow: `0px 0px 13px -2px ${animal.rarityColor}`,
                         }}
@@ -571,13 +589,11 @@ const MyZooAccount: React.FC = () => {
                       >
                         <CardBody
                           style={{
-                            backgroundImage: `url("${animal.imageUrl}")`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                            height: 250,
-                            width: "calc(100vw/2.2 - 13px)",
-                            padding: 10,
+                            boxShadow: `0px 0px 13px -2px ${animal.rarityColor}`,
                           }}
+                          key={animal.id}
+                          selected={animal.selected ? true : false}
+                          timedOut={animal.timeRemaining > 0 ? true : false}
                         >
                           <Link
                             to={`/feed/myzoo/${animal.tokenId}`}>
@@ -639,8 +655,8 @@ const MyZooAccount: React.FC = () => {
                             </InfoBlock>
                           )}
                         </CardBody>
-                      </Card>
-                    </CardWrapper>
+                      </Card> */}
+                    {/* </CardWrapper> */}
                   </SwiperSlide>
                 ))}
               </Swiper>

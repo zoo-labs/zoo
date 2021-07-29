@@ -12,7 +12,7 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 contract ZooToken is ERC20, ERC20Burnable, Ownable {
     using SafeERC20 for IERC20;
 
-    constructor () ERC20("ZooToken", "ZOO") { }
+    constructor () ERC20("Zoo", "ZOO") { }
 
     function mint(address to, uint256 value) public onlyOwner {
         super._mint(to, value);

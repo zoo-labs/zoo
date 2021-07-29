@@ -10,35 +10,35 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const useProxy = !hre.network.live
 
-  const marketAddress = (await deployments.get('ZooMarket')).address
-  const mediaAddress = (await deployments.get('ZooMedia')).address
-  const tokenAddress = (await deployments.get('ZooToken')).address
-
-  const deployResult = await deploy('ZooKeeper', {
+  const deployResult = await deploy('ZooDrop', {
     from: deployer,
-    args: [marketAddress, mediaAddress, tokenAddress],
+    args: ['Gen 0', 16000, 210],
     log: true,
   })
+
+  const dropAddress = deployResult.address;
 
   // Bail out if we've added all the animals before
   if (!deployResult.newlyDeployed) {
     return
   }
 
-  // Get instance of keeper
-  const keeper = await hre.ethers.getContractAt('ZooKeeper', deployResult.address);
+  const keeperAddress = (await deployments.get('ZooKeeper')).address
 
-  // Deploy first Drop
-  const [id, address] = await keeper.callStatic.addDrop('Gen 0', 16000, 210)
+  // Get instance of keeper
+  const keeper = await hre.ethers.getContractAt('ZooKeeper', keeperAddress);
+
+  // Add first Drop
+  const [id, address] = await keeper.callStatic.addDrop('Gen 0', 16000, 210, )
   console.log('ZooDrop', id.toNumber(), address);
 
-  const drop = await hre.ethers.getContractAt('ZooDrop', address);
+  const drop = await hre.ethers.getContractAt('ZooDrop', dropAddress);
 
   console.log('Configure drop')
   await drop.setTokenURI("basicEgg", "basicEgg.tokenURI1");
-  await drop.setMetadataURI("basicEgg", "basicEgg.metadataURI1");
+  await drop.setMetadataURI("basicEgg", "https://meta.zoolabs.io/egg");
   await drop.setTokenURI("hybridEgg", "hybridEgg.tokenURI1");
-  await drop.setMetadataURI("hybridEgg", "hybridEgg.metadataURI1");
+  await drop.setMetadataURI("hybridEgg", "https://meta.zoolabs.io/hybridEgg");
 
   console.log('Adding Common animals')
   await drop.addAnimal("Pug", 100, "Common", 5500, "test","test");
@@ -46,21 +46,21 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   await drop.addAnimal("Kitten", 100, "Common", 5500, "test2","test2");
   await drop.addAnimal("Turtle", 100, "Common", 5500, "test3","test3");
 
-  await drop.addAnimal("Penguin", 100, "Common", 5500, "test4","test4");
-  await drop.addAnimal("Duckling", 100, "Common", 5500, "test5","test5");
-  await drop.addAnimal("Orca", 100, "Common", 5500, "test6","test6");
-  await drop.addAnimal("Elk", 100, "Common", 5500, "test7","test7");
+  await drop.addAnimal("Penguin", 200, "Common", 3100, "test4","test4");
+  await drop.addAnimal("Duckling", 200, "Common", 3100, "test5","test5");
+  await drop.addAnimal("Orca", 200, "Common", 3100, "test6","test6");
+  await drop.addAnimal("Elk", 200, "Common", 3100, "test7","test7");
 
-  await drop.addAnimal("Panda", 100, "Common", 5500, "test8","test8");
-  await drop.addAnimal("Gorilla", 100, "Common", 5500, "test9","test9");
-  await drop.addAnimal("Lion", 100, "Common", 5500, "test11","test11");
-  await drop.addAnimal("Elephant", 100, "Common", 5500,"test12","test12");
+  await drop.addAnimal("Panda", 500, "Common", 1250, "test8","test8");
+  await drop.addAnimal("Gorilla", 500, "Common", 1250, "test9","test9");
+  await drop.addAnimal("Lion", 500, "Common", 1250, "test11","test11");
+  await drop.addAnimal("Elephant", 500, "Common", 1250,"test12","test12");
 
-  await drop.addAnimal("Bear", 100, "Common", 5500, "test13","test13");
-  await drop.addAnimal("Shark", 100, "Common", 5500, "test14","test14");
+  await drop.addAnimal("Bear", 1000, "Common", 100, "test13","test13");
+  await drop.addAnimal("Shark", 1500, "Common", 100, "test14","test14");
 
-  await drop.addAnimal("Blobfish", 100, "Common", 5500, "test15","test15");
-  await drop.addAnimal("Naked Mole Rat", 100, "Common", 5500, "test16","test16");
+  await drop.addAnimal("Blobfish", 100, "Common", 50, "test15","test15");
+  await drop.addAnimal("Naked Mole Rat", 100, "Common", 50, "test16","test16");
 
   console.log('Adding Hybrid Animals')
   await drop.addHybrid("Baby Elephant", "Elephant", "Elephant", 100, "http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/Elephant/Baby%20Elephant.jpg", "testElephant")
@@ -310,4 +310,3 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 export default func
 func.id = 'deploy_zoo_keeper' // ID required to prevent reexecution
 func.tags = ['ZooKeeper']
-func.dependencies = ['ZooMedia', 'ZooMarket']
