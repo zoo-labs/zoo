@@ -174,10 +174,10 @@ const Menu: React.FC<NavProps> = ({
     const throttledHandleScroll = throttle(handleScroll, 200);
 
     window.addEventListener("scroll", throttledHandleScroll);
-    document.addEventListener("click", handleClickOutside, true);
+    // document.addEventListener("click", handleClickOutside, true);
     return () => {
       window.removeEventListener("scroll", throttledHandleScroll);
-      document.addEventListener("click", handleClickOutside, true);
+      // document.addEventListener("click", handleClickOutside, true);
     };
   }, [isPushed]);
 
