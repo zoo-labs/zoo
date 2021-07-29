@@ -124,11 +124,11 @@ contract ZooKeeper {
         address dropAddress;
 
         // Use address if passed in otherwise instantiate a new drop contract
-        if address(_address) =! address(0) {
-            dropAddress = _address;
-        } else {
+        if (_address == address(0)) {
             ZooDrop drop = new ZooDrop(_name, _totalSupply, _eggPrice);
-            dropAddress = drop.address;
+            dropAddress = address(drop);
+        } else {
+            dropAddress = _address;
         }
 
         drops[id] = dropAddress;
