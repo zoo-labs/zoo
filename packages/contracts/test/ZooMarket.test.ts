@@ -115,10 +115,9 @@ describe('ZooMarket', () => {
   async function setBidShares(
     maket: ZooMarket,
     tokenId: number,
-    bidShares?: BidShares,
-
+    bidShares?: BidShares
   ) {
-    return maket.setBidShares(tokenId, bidShares, { gasLimit: 22000 });
+    return maket.setBidShares(tokenId, bidShares);
   }
 
   async function setAsk(maket: ZooMarket, tokenId: number, ask?: Ask) {
@@ -165,7 +164,7 @@ describe('ZooMarket', () => {
   });
 
   describe('#constructor', () => {
-    it.only('should be able to deploy', async () => {
+    it('should be able to deploy', async () => {
       await expect(deploy()).eventually.fulfilled;
     });
   });
@@ -175,7 +174,7 @@ describe('ZooMarket', () => {
       await deploy();
     });
 
-    it.only('should revert if not called by the owner', async () => {
+    it('should revert if not called by the owner', async () => {
       await expect(
         ZooMarket__factory.connect(marketAddress, otherWallet).configure(
           mediaAddress, zookeeperAddress
@@ -183,19 +182,14 @@ describe('ZooMarket', () => {
       ).eventually.rejectedWith('Market: Only owner');
     });
 
-    it.only('should be callable by the owner', async () => {
-
+    it('should be callable by the owner', async () => {
       await expect(configure()).eventually.fulfilled;
       const tokenContractAddress = await readMedia();
 
-      console.log(tokenContractAddress);
-      console.log(mockTokenWallet.address)
-
-
-      // expect(tokenContractAddress).eq(mockTokenWallet.address);
+      expect(tokenContractAddress).eq(mockTokenWallet.address);
     });
 
-    it.only('should reject if called twice', async () => {
+    it('should reject if called twice', async () => {
       await configure();
 
       await expect(configure()).eventually.rejectedWith(
@@ -210,16 +204,15 @@ describe('ZooMarket', () => {
       await configure();
     });
 
-    it.only('should reject if not called by the media address', async () => {
-
+    it('should reject if not called by the media address', async () => {
       const maket = await maketAs(otherWallet);
 
       await expect(
         setBidShares(maket, defaultTokenId, defaultBidShares)
-      )//.rejectedWith('Market: Only media contract');
+      ).rejectedWith('Market: Only media contract');
     });
 
-    it.only('should set the bid shares if called by the media address', async () => {
+    it('should set the bid shares if called by the media address', async () => {
       const maket = await maketAs(mockTokenWallet);
 
       await expect(setBidShares(maket, defaultTokenId, defaultBidShares))
