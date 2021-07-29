@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Route, useRouteMatch, Link } from "react-router-dom";
 import { AppState } from "state";
 import { useDispatch, useSelector } from "react-redux";
@@ -56,7 +56,7 @@ const ImageContainer = styled.div`
   img {
     width: 100%;
     height: 100%;
-    minheight: 300px;
+    min-height: 300px;
     overflow: hidden;
   }
 `;
@@ -111,7 +111,7 @@ const RowLayout = styled.div`
     // min-width: calc(100vw - 20px);
     // max-width: 31.5%;
     width: 100%;
-    margin: 0 8px;
+    margin: 8px;
     margin-bottom: 32px;
   }
 `;
@@ -187,6 +187,7 @@ const MyZooAccount: React.FC = () => {
   const [isOpen, setOpen] = useState(false);
   const history = useHistory();
   const [showBoth, setShowBoth] = useState(false);
+  const videoTimeout = [];
   const [hatched, setHatched] = useState({
     tokenId: "",
     name: "",
@@ -269,9 +270,27 @@ const MyZooAccount: React.FC = () => {
     dispatch(burnEgg(egg));
     dispatch(addAnimal(newAnimal));
     // ---------------------------------------------
-    setTimeout(() => setOpen(true), 5450);
-    setTimeout(() => setEggType(""), 7000);
+    startAnimaionTimer();
   };
+
+  const startAnimaionTimer = useCallback(() => {
+    videoTimeout.push(setTimeout(() => setOpen(true), 5450));
+    videoTimeout.push(setTimeout(() => setEggType(""), 7000));
+  },[]);
+
+  const closeAnimation = useCallback(async (e) => {
+    setEggType("")
+    videoTimeout.forEach((i)=>{
+      clearTimeout(i)
+    })
+  },[]);
+
+  useEffect(() => {
+      document.addEventListener("keydown", closeAnimation , false)
+      return () => {
+        document.removeEventListener("keydown", closeAnimation, false);
+      }
+  },[]);
 
   const breed = (onDismiss) => {
     const animal1: Animal = array[0];
@@ -567,9 +586,9 @@ const MyZooAccount: React.FC = () => {
                 No {hybrid === "pure" ? `breedable` : `hybrid`} animals
               </Text>
             ) : (
-              <Swiper slidesPerView={2.2} spaceBetween={10}>
+              <Swiper slidesPerView={window.innerWidth / 200} spaceBetween={10}>
                 {animals.map((animal) => (
-                  <SwiperSlide style={{ padding: "3px",  width:"auto", display:"flex"}} key={animal.tokenId}>
+                  <SwiperSlide style={{ padding: "3px", }} key={animal.tokenId}>
                       {/* <CardWrapper> */}
                          <SwiperCard animal={animal}
                             group={animalGroup}
@@ -724,7 +743,7 @@ const MyZooAccount: React.FC = () => {
           ) : (
             <Swiper
               slidesPerView={document.body.getBoundingClientRect().width / 140}
-              spaceBetween={0}
+              spaceBetween={1}
               pagination={{ clickable: true }}
             >
               {eggData.map((egg) => (
