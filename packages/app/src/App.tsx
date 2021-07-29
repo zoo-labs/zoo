@@ -13,6 +13,8 @@ import history from "./routerHistory";
 import { PrivateRoute } from "components/PrivateRoute";
 import { useWeb3React } from "@web3-react/core";
 import { MoralisProvider } from "react-moralis";
+import { useDispatch } from "react-redux";
+import { clearZoo } from "state/zoo";
 
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page
@@ -66,15 +68,19 @@ const Marginer = styled.div`
 `;
 
 const App: React.FC = () => {
+   useEagerConnect();
+   const { chainId } = useWeb3React();
+   const dispatch = useDispatch();
+
    // Monkey patch warn() because of web3 flood
    // To be removed when web3 1.3.5 is released
-
    useEffect(() => {
       console.warn = () => null;
    }, []);
 
-   useEagerConnect();
-   const { chainId } = useWeb3React();
+   useEffect(() => {
+      dispatch(clearZoo());
+   }, [chainId]);
 
    const signedIn = chainId && window.localStorage.getItem("connectorId");
 
