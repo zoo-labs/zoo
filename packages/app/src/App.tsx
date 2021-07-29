@@ -12,6 +12,9 @@ import PageLoader from "./components/Svg/Icons/LoadingLogo";
 import history from "./routerHistory";
 import { PrivateRoute } from "components/PrivateRoute";
 import { useWeb3React } from "@web3-react/core";
+import { MoralisProvider } from "react-moralis";
+import { useDispatch } from "react-redux";
+import { clearZoo } from "state/zoo";
 
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page
@@ -65,26 +68,40 @@ const Marginer = styled.div`
 `;
 
 const App: React.FC = () => {
+   useEagerConnect();
+   const { chainId } = useWeb3React();
+   const dispatch = useDispatch();
+
    // Monkey patch warn() because of web3 flood
    // To be removed when web3 1.3.5 is released
-
    useEffect(() => {
       console.warn = () => null;
    }, []);
 
-   useEagerConnect();
-   const { chainId } = useWeb3React();
+   useEffect(() => {
+      dispatch(clearZoo());
+   }, [chainId]);
 
    const signedIn = chainId && window.localStorage.getItem("connectorId");
 
+   const moralisId =
+      chainId === 97
+         ? "16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy"
+         : "cIGUkzL7pyhM8aC8gIcDiH46QGpsEutO5SAQzTgy";
+   const moralisUrl =
+      chainId === 97
+         ? "https://dblpeaqbqk32.usemoralis.com:2053/server"
+         : "https://j0ixlvmwc1kz.usemoralis.com:2053/server";
+
    return (
-      <Suspense fallback={null}>
-         <Router history={history}>
-            <ResetCSS />
-            <GlobalStyle />
-            <Switch>
-               {/* Zswap Routes  */}
-               {/* <Route path="/marketplace" exact>
+      <MoralisProvider appId={moralisId} serverUrl={moralisUrl}>
+         <Suspense fallback={null}>
+            <Router history={history}>
+               <ResetCSS />
+               <GlobalStyle />
+               <Switch>
+                  {/* Zswap Routes  */}
+                  {/* <Route path="/marketplace" exact>
 
                 <Marketplace />
               </Route>
@@ -97,42 +114,45 @@ const App: React.FC = () => {
                 <Account />
               </Route> */}
 
-               <Route exact path="/login">
-                  {signedIn ? <Redirect to="/account" /> : <Login />}
-               </Route>
+                  <Route exact path="/login">
+                     {signedIn ? <Redirect to="/account" /> : <Login />}
+                  </Route>
 
-               <SuspenseWithChunkError fallback={<></>}>
-                  <Route exact path="/account">
-                     {signedIn ? (
-                        <Menu>
-                           <Account />
-                        </Menu>
-                     ) : (
-                        <Redirect to="/login" />
-                     )}
-                  </Route>
-                  <Route path="/feed">
-                     {signedIn ? <Feed /> : <Redirect to="/login" />}
-                  </Route>
-                  <Route exact path="/bank">
-                     {signedIn ? (
-                        <Menu>
-                           <Bank />
-                        </Menu>
-                     ) : (
-                        <Redirect to="/login" />
-                     )}
-                  </Route>
-                  <Route exact path="/">
-                    {signedIn? <Redirect to="/account" /> : <Redirect to="/login" />}
-                  </Route>
-                </SuspenseWithChunkError>
-              {/* <Route component={NotFound} /> */}
-            </Switch>
-
-            <ToastListener />
-         </Router>
-      </Suspense>
+                  <SuspenseWithChunkError fallback={<></>}>
+                     <Route exact path="/account">
+                        {signedIn ? (
+                           <Menu>
+                              <Account />
+                           </Menu>
+                        ) : (
+                           <Redirect to="/login" />
+                        )}
+                     </Route>
+                     <Route path="/feed">
+                        {signedIn ? <Feed /> : <Redirect to="/login" />}
+                     </Route>
+                     <Route exact path="/bank">
+                        {signedIn ? (
+                           <Menu>
+                              <Bank />
+                           </Menu>
+                        ) : (
+                           <Redirect to="/login" />
+                        )}
+                     </Route>
+                     <Route exact path="/">
+                        {signedIn ? (
+                           <Redirect to="/account" />
+                        ) : (
+                           <Redirect to="/login" />
+                        )}
+                     </Route>
+                  </SuspenseWithChunkError>
+               </Switch>
+               <ToastListener />
+            </Router>
+         </Suspense>
+      </MoralisProvider>
    );
 };
 
