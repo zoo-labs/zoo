@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Text } from "components";
 import { FaMoneyBillWave, FaDollarSign } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
+import { useMatchBreakpoints } from "hooks";
 import { useModal } from "components/Modal";
 import { Card as Existing, Flex } from "components";
 import BidModal from "components/MarketModals/BidModal";
@@ -103,7 +104,7 @@ const Card = styled(Existing)<{ url?: string; isMobile?: boolean }>`
    background-size: cover;
    // max-height: 773px;
    max-width: 425px;
-   min-width: 325px;
+   min-width: ${({ isMobile }) => (isMobile ? `325px` : `490px`)};
    display: block;
 `;
 
@@ -112,7 +113,8 @@ const CardOverlay = styled.div`
    width: 100%;
    background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.8),
+      rgba(0, 0, 0, 0) 10%,
       rgba(0, 0, 0, 0) 60%,
       rgba(0, 0, 0, 0.8)
    );
@@ -143,6 +145,8 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
   const ypd = {};
   const date = new Date(Number(item.dob) * 1000);
   const StringDate = date.toLocaleDateString("en-US");
+  const { isXl } = useMatchBreakpoints();
+  const isMobile = !isXl;
 
   const [onYield] = useModal(<YieldModal item={item} animalGroup={animalGroup} onDismiss={() => null} />);
 
@@ -157,7 +161,7 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
 
   return (
     <>
-      <Card url={item.imageUrl}>
+      <Card url={item.imageUrl} isMobile={isMobile}>
         <CardOverlay>
         <FirstThird />
         <SecondThird>
