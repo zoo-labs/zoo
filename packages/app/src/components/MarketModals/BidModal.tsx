@@ -10,10 +10,6 @@ import { useWeb3React } from "@web3-react/core";
 import { Animal } from "entities/zooentities";
 import { addAnimal } from "state/actions";
 
-Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
-
-Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server";
-
 interface Props {
    onDismiss?: () => null;
    item: Animal;
@@ -23,9 +19,70 @@ const BidInput = styled.input.attrs({
    type: "number",
    min: 1,
 })`
-   width: 90%;
+   width: 80%;
    /* margin: auto; */
    font-size: 23px;
+   align-items: center;
+   background: ${({ theme }) => theme.colors.modalBackground};
+   text-transform: uppercase;
+   border-radius: 4px;
+   transition: all 0.2s;
+   display: inline-block;
+   text-shadow: x-offset y-offset blur color;
+   text-decoration: none;
+   border: 1px solid #230616;
+   -webkit-box-shadow: inset 0px 1px 0px 0px #461e34;
+   -moz-box-shadow: inset 0px 1px 0px 0px #461e34;
+   box-shadow: inset 0px 1px 0px 0px #461e34;
+   -moz-appearance: textfield;
+   ::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+   }
+   ::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+   }
+   padding-left: 4px;
+`;
+
+const ArrowBottom = styled.div`
+   width: 0;
+   height: 0;
+   border-left: calc(0.9rem - 2px) solid transparent;
+   border-right: calc(0.9rem - 2px) solid transparent;
+   border-top: calc(0.9rem - 2px) solid #925677;
+   font-size: 0;
+   line-height: 0;
+   position: absolute;
+   right: calc(15% - 2px);
+   margin-top: calc(0.9rem + 5px);
+   &:hover {
+      cursor: pointer;
+   }
+   box-shadow: 0px -1px 0px #461e34;
+`;
+
+const ArrowUp = styled.div`
+   width: 0;
+   height: 0;
+   border-left: calc(0.9rem - 2px) solid transparent;
+   border-right: calc(0.9rem - 2px) solid transparent;
+   border-bottom: calc(0.9rem - 2px) solid #925677;
+   font-size: 0;
+   line-height: 0;
+   position: absolute;
+   margin-top: -1px;
+   right: calc(15% - 2px);
+   &:hover {
+      cursor: pointer;
+   }
+   box-shadow: 0px 1px 0px #461e34;
+`;
+
+const StyledRow = styled.div`
+   display: flex;
+   flex-direction: row;
 `;
 
 const ButtonContent = styled(Flex)`
@@ -35,9 +92,18 @@ const ButtonContent = styled(Flex)`
 
 const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
    const [value, setValue] = React.useState(parseInt(item.currentBid) + 1);
-   const { account } = useWeb3React();
+   const { account, chainId } = useWeb3React();
    const dispatch = useDispatch();
-   console.log(item);
+
+   Moralis.initialize(
+      chainId === 97
+         ? "16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy"
+         : "cIGUkzL7pyhM8aC8gIcDiH46QGpsEutO5SAQzTgy"
+   );
+   Moralis.serverURL =
+      chainId === 97
+         ? "https://dblpeaqbqk32.usemoralis.com:2053/server"
+         : "https://j0ixlvmwc1kz.usemoralis.com:2053/server";
 
    const confirmBuy = async () => {
       const toSet: Animal = { ...item };
@@ -102,6 +168,17 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
       }
    };
 
+   const increaseEgg = () => {
+      setValue(value + 100);
+   };
+
+   const decreaseEgg = () => {
+      if (value <= 100) {
+         return;
+      }
+      setValue(value - 100);
+   };
+
    return (
       <>
          <BottomModal
@@ -114,25 +191,36 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
                alignContent="center"
                flexDirection="column"
                pl="20px"
-               pr="20px"
-            >
+               pr="20px">
                <Label fontSize="22px" color="text" fontWeight="550">
                   Current Bid
                </Label>
-               <Text bold ml="16px" mt="4px" mb="16px" fontSize="22px" color="text">
+               <Text
+                  bold
+                  ml="16px"
+                  mt="4px"
+                  mb="16px"
+                  fontSize="22px"
+                  color="text">
                   {item.currentBid}
                </Text>
                <Label fontSize="22px" color="text" fontWeight="550">
                   Buy Now
                </Label>
-               <Text bold ml="16px"  mt="4px" mb="16px" fontSize="22px" color="text">
+               <Text
+                  bold
+                  ml="16px"
+                  mt="4px"
+                  mb="16px"
+                  fontSize="22px"
+                  color="text">
                   {item.buyNow}
                </Text>
-               <BidInput
-                  type="number"
-                  onChange={changed()}
-                  defaultValue={value}
-               />
+               <StyledRow>
+                  <BidInput type="number" onChange={changed()} value={value} />
+                  <ArrowBottom onClick={decreaseEgg} />
+                  <ArrowUp onClick={increaseEgg} />
+               </StyledRow>
                <ButtonContent>
                   <BorderButton
                      scale="md"

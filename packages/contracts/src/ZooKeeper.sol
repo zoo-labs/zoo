@@ -105,7 +105,6 @@ contract ZooKeeper is Ownable {
             "There are no more Eggs that can be purchased"
         );
 
-        console.log("Transferring tokens from user");
         token.transferFrom(msg.sender, address(this), drop.eggPrice());
 
         console.log("Buying Egg from drop");
@@ -129,9 +128,7 @@ contract ZooKeeper is Ownable {
         bidShares.owner = Decimal.D256(90 * (10**18));
 
         // Mint token
-        console.log("mint");
         media.mintFor(msg.sender, data, bidShares);
-        console.log("minted");
 
         uint256 tokenID = media.getRecentToken(msg.sender);
         console.log("tokenID", tokenID);

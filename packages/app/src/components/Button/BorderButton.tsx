@@ -17,7 +17,7 @@ const BtnContainer = styled.div`
   button {
      margin-top: -2px;
      align-items: center;
-    background: #925677;
+    background: #DF4C97;
     text-transform: uppercase;
     border-radius: 8px;
     transition: all 0.2s;

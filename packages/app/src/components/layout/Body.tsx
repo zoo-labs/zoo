@@ -5,7 +5,7 @@ const BodyContainer = styles.div`
     width: 100%;
     // position: relative;
     padding: 16px 8px;
-    background: #040404;
+    // background: ${({ theme }) => theme.colors.card};;
 `
 
 const Body: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children }) => {

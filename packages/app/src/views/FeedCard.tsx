@@ -35,7 +35,7 @@ const FinalThird = styled.div`
   height: 35vh;
   width: 100%;
   padding-left: 15px;
-   padding-bottom: 20px;
+   padding-bottom: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -55,8 +55,8 @@ const IconButton = styled.button`
       text-align: center;
       font-weight: bold;
       width: 100%;
-      color: ${({ theme }) => theme.colors.text};
-      -webkit-text-fill-color: ${({ theme }) => theme.colors.text};
+      color: ${({ theme }) => theme.colors.modal.borderColor};
+      -webkit-text-fill-color: ${({ theme }) => theme.colors.modal.borderColor};
       -webkit-text-stroke-width: 0.2px;
       -webkit-text-stroke-color: #a9a9a9;
    }
@@ -64,10 +64,10 @@ const IconButton = styled.button`
       height: 40px;
       width: 40px;
       // fill: ${({ theme }) => theme.colors.primaryLight};
-      fill: ${({ theme }) => theme.colors.text};
+      fill: ${({ theme }) => theme.colors.modal.borderColor};
       stroke: #a9a9a9;
       // text-shadow: 1px 1px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black;
-      // stroke: ${({ theme }) => theme.colors.text};
+      // stroke: ${({ theme }) => theme.colors.modal.borderColor};
       stroke-width: 15px;
    }
 `;
@@ -76,17 +76,18 @@ const MainHeading = styled(Text)`
    width: 100%;
    line-height: 1;
    color: ${({ theme }) => theme.colors.primary};
-   font-weight: 900;
+   font-weight: 400;
+   font-family: 'Permanent Marker', cursive;
    -webkit-text-fill-color: ${({ theme }) => theme.colors.text};
    -webkit-text-stroke-width: 0.5px;
-   -webkit-text-stroke-color: ${({ theme }) => theme.colors.text};
+   -webkit-text-stroke-color: ${({ theme }) => theme.colors.modal.borderColor};
 `;
 const Subheading = styled(Text)`
    width: 100%;
    color: black;
    font-weight: 500;
    font-size: 24px;
-   -webkit-text-fill-color: ${({ theme }) => theme.colors.text};
+   -webkit-text-fill-color: ${({ theme }) => theme.colors.modal.borderColor};
    -webkit-text-stroke-width: 0.2px;
    -webkit-text-stroke-color: #a9a9a9;
    :nth-child(3) {
@@ -126,12 +127,14 @@ const StyledChevron = styled(ChevronLeftIcon)`
 `;
 
 const ActionButonContainer = styled.div`
-  width: 40%;
-  display: inline-flex;
-  flex-direction: column;
-  height: 200px:
-  align-items: center;
-  justify-content: space-between;
+  width: 80px;
+  display: flex;
+  position: absolute;
+  right: 0;
+  bottom: 40px;
+  flex-direction: row;
+  // align-items: end;
+  justify-content: flex-end;
  
 `
 
@@ -163,7 +166,6 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
         <FinalThird>
           <Flex flexDirection="row">
             <Flex flexDirection="column" width="calc(100% - 75px)"
-              pt="30px"
                   style={{textShadow: "2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000"}}>
               <MainHeading
                 bold
@@ -171,21 +173,23 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
               >
                 {`${item.name} ${multiplier}`}
               </MainHeading>
-              <Subheading bold as="p"
+              {/* <Subheading bold as="p"
                 style={{
                   WebkitTextFillColor: rarityColor,
                   WebkitTextStrokeColor: rarityColor,
-                }}>
+                }}> */}
+              <Subheading bold as="p">
                 {item.rarity}
               </Subheading>
               <Subheading bold as="p">{`Born: ${StringDate}`}</Subheading>
               <Subheading bold as="p">{`Current Bid: ${item.currentBid}`}</Subheading>
-              
-              
             </Flex>
-            <Flex width="100%" height="100%" maxWidth="60px">
           <ActionButonContainer> 
-              
+              <Flex width="100%"
+                  height="100%"
+                // maxWidth="60px"
+                  flexDirection="column"
+              >
               <IconButton
                 onClick={() => {
                   onYield();
@@ -208,9 +212,8 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
                   Bid
                 </Text> */}
               </IconButton>
-                <ZooHomeButton width="50px" />
+                <ZooHomeButton /> </Flex>
               </ActionButonContainer>
-              </Flex>
           </Flex> 
         </FinalThird>
         </CardOverlay>

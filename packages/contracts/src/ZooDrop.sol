@@ -8,7 +8,6 @@ import { Animal, Egg, Hybrid, Rarity, Type } from "./ZooTypes.sol";
 
 import "./console.sol";
 
-
 contract ZooDrop is Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _eggSupply;

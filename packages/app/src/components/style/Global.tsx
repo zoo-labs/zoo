@@ -11,6 +11,7 @@ declare module 'styled-components' {
   export interface DefaultTheme extends Theme { }
 }
 
+
 const GlobalStyle = createGlobalStyle`
   @font-face{
       font-family: ${fontFamily};
@@ -22,10 +23,10 @@ const GlobalStyle = createGlobalStyle`
   }
   * {
     font-family: ${fontFamily};
-    color: #FFFFF;
+    color: #FFFFFF;
   }
   body {
-    background-color: #040404;
+    background-color: ${({ theme }) => theme.isDark ? "#040404" : "#FFFFFF"};
     overflow-x: hidden;
     position: relative;
     img {
