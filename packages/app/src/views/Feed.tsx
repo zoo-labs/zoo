@@ -56,7 +56,7 @@ const ToggleContainer = styled.div`
       z-index: 1000;
       position: absolute;
       padding-top: 15px;
-      background: linear-gradient(#3d3d3d, transparent);
+      // background: linear-gradient(#3d3d3d, transparent);
    }
    a {
       border: none;
@@ -207,7 +207,7 @@ function Feed<FeedPagePops>({ match }) {
             <Swiper
                spaceBetween={30}
                slidesPerView={1}
-               direction={isMobile ? "vertical" : "horizontal"}>
+               direction="vertical">
                {animalData.map((data) => {
                   return data.listed ? (
                      <SwiperSlide key={data.tokenId + "slide"}>
