@@ -376,6 +376,7 @@ contract ZooKeeper {
     ) public onlyExistingToken(_tokenIDA) returns (uint256) {
         require(_tokenIDA != _tokenIDB);
         uint256 delay = getBreedingDelay();
+
         require(
             block.timestamp - lastTimeBred[msg.sender] > delay,
             "Must wait for cooldown to finish."
@@ -555,7 +556,7 @@ contract ZooKeeper {
         } else if (count >= 5) {
             delay = coolDowns[coolDowns.length - 1];
         } else {
-            delay = coolDowns[count + 1];
+            delay = coolDowns[count];
         }
 
         // if (count == 1) {
