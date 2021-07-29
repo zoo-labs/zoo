@@ -112,15 +112,24 @@ contract ZooKeeper {
         string memory _name,
         uint256 _totalSupply,
         uint256 _eggPrice
+        address _address,
     ) public returns (uint256, address) {
         _dropIDs.increment();
-        uint256 _dropID = _dropIDs.current();
+        uint256 id = _dropIDs.current();
 
-        ZooDrop drop = new ZooDrop(_name, _totalSupply, _eggPrice);
-        drops[_dropID] = address(drop);
+        address dropAddress;
 
-        emit AddDrop(_dropID, address(drop));
-        return (_dropID, address(drop));
+        // Use address if passed in otherwise instantiate a new drop contract
+        if address(_address) =! address(0) {
+            dropAddress = _address;
+        } else {
+            ZooDrop drop = new ZooDrop(_name, _totalSupply, _eggPrice);
+            dropAddress = drop.address;
+        }
+
+        drops[id] = dropAddress;
+        emit AddDrop(id, dropAddress);
+        return (id, dropAddress);
     }
 
     // Helper to add Animals
