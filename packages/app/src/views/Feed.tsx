@@ -21,6 +21,7 @@ import FeedCard from "./FeedCard";
 import BorderButton from "components/Button/BorderButton";
 import { ChevronLeftIcon } from "components/Svg";
 import logo from "media/ZooLogoWhite.png";
+import "./styles.css";
 
 const Container = styled.div<{ isMobile?: boolean }>`
    height: ${({ isMobile }) => (isMobile ? `100vh` : null)};
@@ -213,7 +214,8 @@ function Feed<FeedPagePops>({ match }) {
          </ToggleContainer>
          <Swiper
             onSwiper={setSwiperRef}
-            onActiveIndexChange={handleIndexChange}
+            onActiveIndexChange={handleIndexChange} 
+            centeredSlides={isMobile ? true : false}
             spaceBetween={30}
             slidesPerView={1}
             direction="horizontal">
