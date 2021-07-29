@@ -56,8 +56,8 @@ const IconButton = styled.button`
       text-align: center;
       font-weight: bold;
       width: 100%;
-      color: ${({ theme }) => theme.colors.text};
-      -webkit-text-fill-color: ${({ theme }) => theme.colors.text};
+      color: ${({ theme }) => theme.colors.modal.borderColor};
+      -webkit-text-fill-color: ${({ theme }) => theme.colors.modal.borderColor};
       -webkit-text-stroke-width: 0.2px;
       -webkit-text-stroke-color: #a9a9a9;
    }
@@ -65,10 +65,10 @@ const IconButton = styled.button`
       height: 40px;
       width: 40px;
       // fill: ${({ theme }) => theme.colors.primaryLight};
-      fill: ${({ theme }) => theme.colors.text};
+      fill: ${({ theme }) => theme.colors.modal.borderColor};
       stroke: #a9a9a9;
       // text-shadow: 1px 1px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black;
-      // stroke: ${({ theme }) => theme.colors.text};
+      // stroke: ${({ theme }) => theme.colors.modal.borderColor};
       stroke-width: 15px;
    }
 `;
@@ -81,14 +81,14 @@ const MainHeading = styled(Text)`
    font-family: 'Permanent Marker', cursive;
    -webkit-text-fill-color: ${({ theme }) => theme.colors.text};
    -webkit-text-stroke-width: 0.5px;
-   -webkit-text-stroke-color: ${({ theme }) => theme.colors.text};
+   -webkit-text-stroke-color: ${({ theme }) => theme.colors.modal.borderColor};
 `;
 const Subheading = styled(Text)`
    width: 100%;
    color: black;
    font-weight: 500;
    font-size: 24px;
-   -webkit-text-fill-color: ${({ theme }) => theme.colors.text};
+   -webkit-text-fill-color: ${({ theme }) => theme.colors.modal.borderColor};
    -webkit-text-stroke-width: 0.2px;
    -webkit-text-stroke-color: #a9a9a9;
    :nth-child(3) {

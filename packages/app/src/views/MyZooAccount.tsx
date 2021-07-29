@@ -169,6 +169,12 @@ const TimeoutDisplay = styled.span`
   display: flex;
 `;
 
+const SwiperContainer = styled.div`
+  * {
+    background: ${({ theme }) => theme.colors.background}
+  }
+`
+
 const MyZooAccount: React.FC = () => {
   let empty;
   const { account } = useWeb3React();
@@ -220,8 +226,8 @@ const MyZooAccount: React.FC = () => {
     dob: "",
     listed: false,
   };
-   
-  
+
+
   const hatchEgg = (egg) => {
     setShowBoth(true);
     setEggType(egg.basic ? "basic" : "hybrid");
@@ -405,7 +411,7 @@ const MyZooAccount: React.FC = () => {
     return (
       <Modal title="Confirm Listing" onDismiss={onDismiss}>
         <Text style={{textAlign: "center"}}>{`Do you want to list ${sellAnimal.name}?`}</Text>
-        <Flex 
+        <Flex
          width="100%"
           alignItems="center"
           justifyContent="space-evenly"
@@ -457,7 +463,7 @@ const MyZooAccount: React.FC = () => {
       mounted = false;
     };
   }, [elapsedTimeOnPage]);
-   
+
 
   const renderAnimals = (hybrid): JSX.Element => {
     let animalGroup = {};
@@ -583,13 +589,11 @@ const MyZooAccount: React.FC = () => {
                       >
                         <CardBody
                           style={{
-                            backgroundImage: `url("${animal.imageUrl}")`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                            height: 250,
-                            width: "calc(100vw/2.2 - 13px)",
-                            padding: 10,
+                            boxShadow: `0px 0px 13px -2px ${animal.rarityColor}`,
                           }}
+                          key={animal.id}
+                          selected={animal.selected ? true : false}
+                          timedOut={animal.timeRemaining > 0 ? true : false}
                         >
                           <Link
                             to={`/feed/myzoo/${animal.tokenId}`}>
