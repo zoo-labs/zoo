@@ -167,6 +167,12 @@ const TimeoutDisplay = styled.span`
   z-index: 2;
 `;
 
+const SwiperContainer = styled.div`
+  * {
+    background: ${({ theme }) => theme.colors.background}
+  }
+`
+
 const MyZooAccount: React.FC = () => {
   let empty;
   const { account } = useWeb3React();
@@ -557,93 +563,95 @@ const MyZooAccount: React.FC = () => {
                 No {hybrid === "pure" ? `breedable` : `hybrid`} animals
               </Text>
             ) : (
-              <Swiper slidesPerView={2.2} spaceBetween={10}>
-                {animals.map((animal) => (
-                  <SwiperSlide style={{ padding: "3px" }} key={animal.tokenId}>
-                    <CardWrapper>
-                      <Card
-                        style={{
-                          boxShadow: `0px 0px 13px -2px ${animal.rarityColor}`,
-                        }}
-                        key={animal.id}
-                        selected={animal.selected ? true : false}
-                        timedOut={animal.timeRemaining > 0 ? true : false}
-                      >
-                        <CardBody
+              <SwiperContainer>
+                <Swiper slidesPerView={2.2} spaceBetween={10}>
+                  {animals.map((animal) => (
+                    <SwiperSlide style={{ padding: "3px" }} key={animal.tokenId}>
+                      <CardWrapper>
+                        <Card
                           style={{
-                            backgroundImage: `url("${animal.imageUrl}")`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                            height: 250,
-                            width: "calc(100vw/2.2 - 13px)",
-                            padding: 10,
+                            boxShadow: `0px 0px 13px -2px ${animal.rarityColor}`,
                           }}
+                          key={animal.id}
+                          selected={animal.selected ? true : false}
+                          timedOut={animal.timeRemaining > 0 ? true : false}
                         >
-                          <Link
-                            to={`/feed/myzoo/${animal.tokenId}`}>
-                            <TextWrapper
-                                style={{
-                                  textShadow:
-                                      "0px 2px 6px rgb(0, 0, 0)",
-                                  fontSize: 18,
-                                  letterSpacing: 0,
-                                  position: "absolute",
-                                  textTransform: "lowercase",
-                                  right: 11,
-                                  top: 9,
-                                }}>
-                                {animal.timeRemaining === 0
-                                  ? animalGroup[animal.animalId]
-                                      ? `x${
-                                          animalGroup[animal.animalId]
-                                        }`
-                                      : ""
-                                  : ""}
-                            </TextWrapper>
-                            <TextWrapper
-                                style={{
-                                  textShadow:
-                                      "0px 2px 6px rgb(0, 0, 0)",
-                                  textAlign: "center",
-                                  fontSize: 16,
-                                  letterSpacing: 0,
-                                height: "100%",
-                                  paddingRight: animalGroup[animal.animalId] ? '26px' : null
-                                }} >
-                                {animal.name}
-                            </TextWrapper>
-                          </Link>
-                          {animal.timeRemaining > 0 ? (
-                            <TimeoutWrapper
-                              barwidth={
-                                animal.CTAOverride
-                                  ? animal.CTAOverride.barwidth
-                                  : 0
-                              }
-                            >
-                              <TimeoutDisplay>
-                                {`${animal.CTAOverride.timeRemainingDaysHours.days}D ${animal.CTAOverride.timeRemainingDaysHours.hours}H`}
-                              </TimeoutDisplay>
-                            </TimeoutWrapper>
-                          ) : (
-                            <InfoBlock
-                              onClick={() =>
-                                hybrid === "pure"
-                                  ? breedClick(animal)
-                                  : list(animal)
-                              }
-                            >
-                              <BreedWrapper>
-                                {hybrid === "pure" ? `BREED` : `SELL`}
-                              </BreedWrapper>
-                            </InfoBlock>
-                          )}
-                        </CardBody>
-                      </Card>
-                    </CardWrapper>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+                          <CardBody
+                            style={{
+                              backgroundImage: `url("${animal.imageUrl}")`,
+                              backgroundSize: "cover",
+                              backgroundPosition: "center",
+                              height: 250,
+                              width: "calc(100vw/2.2 - 13px)",
+                              padding: 10,
+                            }}
+                          >
+                            <Link
+                              to={`/feed/myzoo/${animal.tokenId}`}>
+                              <TextWrapper
+                                  style={{
+                                    textShadow:
+                                        "0px 2px 6px rgb(0, 0, 0)",
+                                    fontSize: 18,
+                                    letterSpacing: 0,
+                                    position: "absolute",
+                                    textTransform: "lowercase",
+                                    right: 11,
+                                    top: 9,
+                                  }}>
+                                  {animal.timeRemaining === 0
+                                    ? animalGroup[animal.animalId]
+                                        ? `x${
+                                            animalGroup[animal.animalId]
+                                          }`
+                                        : ""
+                                    : ""}
+                              </TextWrapper>
+                              <TextWrapper
+                                  style={{
+                                    textShadow:
+                                        "0px 2px 6px rgb(0, 0, 0)",
+                                    textAlign: "center",
+                                    fontSize: 16,
+                                    letterSpacing: 0,
+                                  height: "100%",
+                                    paddingRight: animalGroup[animal.animalId] ? '26px' : null
+                                  }} >
+                                  {animal.name}
+                              </TextWrapper>
+                            </Link>
+                            {animal.timeRemaining > 0 ? (
+                              <TimeoutWrapper
+                                barwidth={
+                                  animal.CTAOverride
+                                    ? animal.CTAOverride.barwidth
+                                    : 0
+                                }
+                              >
+                                <TimeoutDisplay>
+                                  {`${animal.CTAOverride.timeRemainingDaysHours.days}D ${animal.CTAOverride.timeRemainingDaysHours.hours}H`}
+                                </TimeoutDisplay>
+                              </TimeoutWrapper>
+                            ) : (
+                              <InfoBlock
+                                onClick={() =>
+                                  hybrid === "pure"
+                                    ? breedClick(animal)
+                                    : list(animal)
+                                }
+                              >
+                                <BreedWrapper>
+                                  {hybrid === "pure" ? `BREED` : `SELL`}
+                                </BreedWrapper>
+                              </InfoBlock>
+                            )}
+                          </CardBody>
+                        </Card>
+                      </CardWrapper>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </SwiperContainer>
             )}
           </Route>
           <Route exact path={`${path}/history`}>

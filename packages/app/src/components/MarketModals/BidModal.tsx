@@ -27,7 +27,7 @@ const BidInput = styled.input.attrs({
    /* margin: auto; */
    font-size: 23px;
    align-items: center;
-   background: #CDB7C3;
+   background: ${({ theme }) => theme.colors.modalBackground};
    text-transform: uppercase;
    border-radius: 4px;
    transition: all 0.2s;
