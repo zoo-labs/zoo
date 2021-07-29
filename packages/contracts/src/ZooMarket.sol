@@ -4,14 +4,14 @@
 pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
-import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import { Decimal } from "./Decimal.sol";
-import { ZooMedia } from "./ZooMedia.sol";
-import { ZooKeeper } from "./ZooKeeper.sol";
-import { IMarket } from "./interfaces/IMarket.sol";
+import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {Decimal} from "./Decimal.sol";
+import {ZooMedia} from "./ZooMedia.sol";
+import {ZooKeeper} from "./ZooKeeper.sol";
+import {IMarket} from "./interfaces/IMarket.sol";
 
 import "./console.sol";
 
@@ -52,13 +52,14 @@ contract ZooMarket is IMarket {
      * @notice require that the msg.sender is the configured media contract
      */
     modifier onlyZoo() {
-        console.log("onlyZoo:this", address(this));
-        console.log("onlyZoo:msg.sender", msg.sender);
-        require(zookeeper == msg.sender || media == msg.sender, "ZooMarket: Only Zoo contracts can call this method");
+        require(
+            zookeeper == msg.sender || media == msg.sender,
+            "ZooMarket: Only Zoo contracts can call this method"
+        );
         _;
     }
 
-    modifier onlyOwner {
+    modifier onlyOwner() {
         require(_owner == msg.sender, "ZooMarket: Only owner has access");
         _;
     }
@@ -160,7 +161,11 @@ contract ZooMarket is IMarket {
      * @notice Sets the media contract address. This address is the only permitted address that
      * can call the mutable functions. This method can only be called once.
      */
-    function configure(address _media, address _zookeeper) external override onlyOwner {
+    function configure(address _media, address _zookeeper)
+        external
+        override
+        onlyOwner
+    {
         require(media == address(0), "ZooMarket: Already configured");
         require(zookeeper == address(0), "ZooMarket: Already configured");
         require(
@@ -185,7 +190,6 @@ contract ZooMarket is IMarket {
         override
         onlyZoo
     {
-        console.log("market.setBidShares", tokenId);
         require(
             isValidBidShares(bidShares),
             "ZooMarket: Invalid bid shares, must sum to 100"
@@ -198,11 +202,7 @@ contract ZooMarket is IMarket {
      * @notice Sets the ask on a particular media. If the ask cannot be evenly split into the media's
      * bid shares, this reverts.
      */
-    function setAsk(uint256 tokenId, Ask memory ask)
-        public
-        override
-        onlyZoo
-    {
+    function setAsk(uint256 tokenId, Ask memory ask) public override onlyZoo {
         require(
             isValidBid(tokenId, ask.amount),
             "ZooMarket: Ask invalid for share splitting"
@@ -236,7 +236,10 @@ contract ZooMarket is IMarket {
                 uint256(100).mul(Decimal.BASE),
             "ZooMarket: Sell on fee invalid for share splitting"
         );
-        require(bid.bidder != address(0), "ZooMarket: bidder cannot be 0 address");
+        require(
+            bid.bidder != address(0),
+            "ZooMarket: bidder cannot be 0 address"
+        );
         require(bid.amount != 0, "ZooMarket: cannot bid amount of 0");
         require(
             bid.currency != address(0),
