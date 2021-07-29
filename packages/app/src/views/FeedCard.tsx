@@ -98,6 +98,7 @@ const Subheading = styled(Text)`
 `;
 
 const Card = styled(Existing)<{ url?: string; isMobile?: boolean }>`
+   width: 100%;
    background-image: url(${({ url }) => `${url}`});
    background-position: center;
    background-repeat: no-repeat;
