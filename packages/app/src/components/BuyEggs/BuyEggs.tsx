@@ -40,8 +40,65 @@ const EggInput = styled.input.attrs({
   min: 1,
   defaultValue: 1
 })`
-  width: 100%;
+  width: 80%;
   line-height: 1.5rem;
+  margin-top: -2px;
+  align-items: center;
+  background: #CDB7C3;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: inline-block;
+  text-shadow: x-offset y-offset blur color;
+  text-decoration: none;
+  border: 1px solid #230616;
+  -webkit-box-shadow: inset 0px 1px 0px 0px #925677;
+  -moz-box-shadow: inset 0px 1px 0px 0px #925677;
+  box-shadow: inset 0px 1px 0px 0px #925677;
+  -moz-appearance: textfield;
+  ::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  ::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  padding-left: 4px;
+`
+const ArrowBottom = styled.div`
+  width: 0;
+  height: 0;
+  border-left: calc(0.9rem - 2px) solid transparent;
+  border-right: calc(0.9rem - 2px) solid transparent;
+  border-top: calc(0.9rem - 2px) solid #DF4C97;
+  border-radius: 1px;
+  font-size: 0;
+  line-height: 0;
+  position: absolute;
+  right: 40px;
+  margin-top: calc(0.9rem + 3px);
+  box-shadow: 0px -1px 0px #461e34;
+  &:hover {
+    cursor: pointer;
+  }
+`
+
+const ArrowUp = styled.div`
+  width: 0;
+  height: 0;
+  border-left: calc(0.9rem - 2px) solid transparent;
+  border-right: calc(0.9rem - 2px) solid transparent;
+  border-bottom: calc(0.9rem - 2px) solid #DF4C97;
+  font-size: 0;
+  line-height: 0;
+  position: absolute;
+  box-shadow: 0px 1px 0px #461e34;
+  right: 40px;
+  margin-top: -2px;
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const SubmitBtn = styled.input.attrs({ 
@@ -66,14 +123,27 @@ type EggModalProps = {
   headerColor?: string
 }
 
-
-
+const StyledRow = styled.div`
+  display: flex;
+  flex-direction: row;
+`
 
 const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
   const dispatch = useDispatch()
   const [value, setValue] = useState(1)
   const {account} = useWeb3React()
   
+  const increaseEgg = () => {
+    setValue(value + 1);
+  }
+
+  const decreaseEgg = () => {
+    if(value <= 1) {
+      return;
+    }
+    setValue(value - 1);
+  }
+
   const changed = () => (e) => {
     const newVal = e.target.value;
     
@@ -118,7 +188,11 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
         >
           AMOUNT
         </Text>
-        <EggInput type="number" onChange={changed()} />
+        <StyledRow>
+          <EggInput value={value} onChange={changed()} />
+          <ArrowBottom onClick={decreaseEgg} />
+          <ArrowUp onClick={increaseEgg} />
+        </StyledRow>
         <Flex justifyContent="center" flexDirection="row" mt="16px">
         <BorderButton scale="sm" onClick={()=>handleSubmit()}>
           Submit
