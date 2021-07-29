@@ -108,8 +108,8 @@ const RowLayout = styled.div`
   flex-wrap: wrap;
 
   & > * {
-    min-width: calc(100vw - 20px);
-    max-width: 31.5%;
+    // min-width: calc(100vw - 20px);
+    // max-width: 31.5%;
     width: 100%;
     margin: 0 8px;
     margin-bottom: 32px;
