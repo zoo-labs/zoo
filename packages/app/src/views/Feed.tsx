@@ -169,9 +169,12 @@ function Feed<FeedPagePops>({ match }) {
   let animalData = []
   if (isMyZoo) {
     animalsFiltered.forEach(animal => { // AF[1,2,3,2,1] //AD[1,2,3]
+      debugger; // eslint-disable-line no-debugger
       if (animalData.find(a => a.animalId === animal.animalId)) {
         animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 2
       } else {
+        debugger; // eslint-disable-line no-debugger
+
         animalData.push(animal)
       }
         // return animalGroup[animal.animalId] === 1 ? true : false
@@ -179,6 +182,8 @@ function Feed<FeedPagePops>({ match }) {
   } else {
     animalData = animalsFiltered
   }
+  debugger; // eslint-disable-line no-debugger
+
 
    return (
       <Container isMobile={isMobile}>
@@ -195,12 +200,12 @@ function Feed<FeedPagePops>({ match }) {
                </ButtonMenuItem>
             </ButtonMenu>
          </ToggleContainer>
-         {animalsFiltered.length ? (
+         {animalData.length ? (
             <Swiper
                spaceBetween={30}
                slidesPerView={1}
                direction={isMobile ? "vertical" : "horizontal"}>
-               {animalsFiltered.map((data) => {
+               {animalData.map((data) => {
                   return data.listed ? (
                      <SwiperSlide key={data.tokenId + "slide"}>
                         <FeedCard item={data} key={data.tokenId + "card"} animalGroup={animalGroup}/>
