@@ -36,7 +36,7 @@ const ModalWrapper = styled.div`
 `
 
 const EggInput = styled.input.attrs({ 
-  type: 'number',
+  type: 'string',
   min: 1,
   defaultValue: 1
 })`
@@ -71,7 +71,7 @@ const ArrowBottom = styled.div`
   height: 0;
   border-left: calc(0.9rem - 2px) solid transparent;
   border-right: calc(0.9rem - 2px) solid transparent;
-  border-top: calc(0.9rem - 2px) solid #925677;
+  border-top: calc(0.9rem - 2px) solid #DF4C97;
   border-radius: 1px;
   font-size: 0;
   line-height: 0;
@@ -89,7 +89,7 @@ const ArrowUp = styled.div`
   height: 0;
   border-left: calc(0.9rem - 2px) solid transparent;
   border-right: calc(0.9rem - 2px) solid transparent;
-  border-bottom: calc(0.9rem - 2px) solid #925677;
+  border-bottom: calc(0.9rem - 2px) solid #DF4C97;
   font-size: 0;
   line-height: 0;
   position: absolute;
@@ -145,8 +145,7 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
   }
 
   const changed = () => (e) => {
-    const newVal = e.target.value;
-    
+    const newVal = e.target.value
     newVal === "" ? setValue(0) : setValue(parseInt(newVal))
   };
 
