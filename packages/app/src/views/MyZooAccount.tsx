@@ -111,7 +111,7 @@ const RowLayout = styled.div`
     // min-width: calc(100vw - 20px);
     // max-width: 31.5%;
     width: 100%;
-    margin: 0 8px;
+    margin: 8px;
     margin-bottom: 32px;
   }
 `;
@@ -586,9 +586,9 @@ const MyZooAccount: React.FC = () => {
                 No {hybrid === "pure" ? `breedable` : `hybrid`} animals
               </Text>
             ) : (
-              <Swiper slidesPerView={2.2} spaceBetween={10}>
+              <Swiper slidesPerView={window.innerWidth / 200} spaceBetween={10}>
                 {animals.map((animal) => (
-                  <SwiperSlide style={{ padding: "3px",  width:"auto", display:"flex"}} key={animal.tokenId}>
+                  <SwiperSlide style={{ padding: "3px", }} key={animal.tokenId}>
                       {/* <CardWrapper> */}
                          <SwiperCard animal={animal}
                             group={animalGroup}
