@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Text } from "components";
 import { FaMoneyBillWave, FaDollarSign } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
+import { useMatchBreakpoints } from "hooks";
 import { useModal } from "components/Modal";
 import { Card as Existing, Flex } from "components";
 import BidModal from "components/MarketModals/BidModal";
@@ -76,7 +77,8 @@ const MainHeading = styled(Text)`
    width: 100%;
    line-height: 1;
    color: ${({ theme }) => theme.colors.primary};
-   font-weight: 900;
+   font-weight: 400;
+   font-family: 'Permanent Marker', cursive;
    -webkit-text-fill-color: ${({ theme }) => theme.colors.text};
    -webkit-text-stroke-width: 0.5px;
    -webkit-text-stroke-color: ${({ theme }) => theme.colors.text};
@@ -102,7 +104,7 @@ const Card = styled(Existing)<{ url?: string; isMobile?: boolean }>`
    background-size: cover;
    // max-height: 773px;
    max-width: 425px;
-   min-width: 325px;
+   min-width: ${({ isMobile }) => (isMobile ? `325px` : `490px`)};
    display: block;
 `;
 
@@ -111,7 +113,8 @@ const CardOverlay = styled.div`
    width: 100%;
    background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.8),
+      rgba(0, 0, 0, 0) 10%,
       rgba(0, 0, 0, 0) 60%,
       rgba(0, 0, 0, 0.8)
    );
@@ -128,9 +131,9 @@ const StyledChevron = styled(ChevronLeftIcon)`
 const ActionButonContainer = styled.div`
   width: 80px;
   display: flex;
-  position: fixed;
+  position: absolute;
   right: 0;
-  bottom: 20px;
+  bottom: 40px;
   flex-direction: row;
   // align-items: end;
   justify-content: flex-end;
@@ -142,6 +145,8 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
   const ypd = {};
   const date = new Date(Number(item.dob) * 1000);
   const StringDate = date.toLocaleDateString("en-US");
+  const { isXl } = useMatchBreakpoints();
+  const isMobile = !isXl;
 
   const [onYield] = useModal(<YieldModal item={item} animalGroup={animalGroup} onDismiss={() => null} />);
 
@@ -156,7 +161,7 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
 
   return (
     <>
-      <Card url={item.imageUrl}>
+      <Card url={item.imageUrl} isMobile={isMobile}>
         <CardOverlay>
         <FirstThird />
         <SecondThird>
@@ -172,11 +177,12 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
               >
                 {`${item.name} ${multiplier}`}
               </MainHeading>
-              <Subheading bold as="p"
+              {/* <Subheading bold as="p"
                 style={{
                   WebkitTextFillColor: rarityColor,
                   WebkitTextStrokeColor: rarityColor,
-                }}>
+                }}> */}
+              <Subheading bold as="p">
                 {item.rarity}
               </Subheading>
               <Subheading bold as="p">{`Born: ${StringDate}`}</Subheading>

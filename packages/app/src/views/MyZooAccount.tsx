@@ -166,6 +166,7 @@ const BidPriceInput = styled.input.attrs({
 const TimeoutDisplay = styled.span`
   position: relative;
   z-index: 2;
+  display: flex;
 `;
 
 const MyZooAccount: React.FC = () => {
@@ -562,8 +563,8 @@ const MyZooAccount: React.FC = () => {
             ) : (
               <Swiper slidesPerView={2.2} spaceBetween={10}>
                 {animals.map((animal) => (
-                  <SwiperSlide style={{ padding: "3px" }} key={animal.tokenId}>
-                      <CardWrapper>
+                  <SwiperSlide style={{ padding: "3px",  width:"auto", display:"flex"}} key={animal.tokenId}>
+                      {/* <CardWrapper> */}
                          <SwiperCard animal={animal}
                             group={animalGroup}
                             imageURL={`url("${animal.imageUrl}")`}
@@ -651,7 +652,7 @@ const MyZooAccount: React.FC = () => {
                           )}
                         </CardBody>
                       </Card> */}
-                    </CardWrapper>
+                    {/* </CardWrapper> */}
                   </SwiperSlide>
                 ))}
               </Swiper>

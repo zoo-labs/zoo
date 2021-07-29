@@ -56,7 +56,7 @@ const ToggleContainer = styled.div`
       z-index: 1000;
       position: absolute;
       padding-top: 15px;
-      background: linear-gradient(#3d3d3d, transparent);
+      // background: linear-gradient(#3d3d3d, transparent);
    }
    a {
       border: none;
@@ -82,24 +82,20 @@ const EmptyZoo = styled.div`
 `;
 
 const MaxHeightLogo = styled.img`
-  height: ${32 / 1.6}px;
-  position: absolute;
-  bottom: 20px;
-  right: 10px;
-  z-index: 100;
+   height: ${32 / 1.6}px;
+   position: absolute;
+   bottom: 20px;
+   right: 10px;
+   z-index: 100;
 `;
 
 const LogoContainer = styled.div`
-  height: 100%;
-  ${({ theme }) =>
-    theme.mediaQueries.md || theme.mediaQueries.lg || theme.mediaQueries.xl} {
-    left: 50%;
-  }
+   height: 100%;
+   ${({ theme }) =>
+      theme.mediaQueries.md || theme.mediaQueries.lg || theme.mediaQueries.xl} {
+      left: 50%;
+   }
 `;
-
-Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
-
-Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server";
 
 export interface FeedPagePops extends RouteComponentProps<{ key?: string }> {}
 
@@ -110,8 +106,18 @@ function Feed<FeedPagePops>({ match }) {
    const { isXl } = useMatchBreakpoints();
    const isMobile = !isXl;
    const history = useHistory();
-  const { account } = useWeb3React();
-  
+   const { account, chainId } = useWeb3React();
+
+   Moralis.initialize(
+      chainId === 97
+         ? "16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy"
+         : "cIGUkzL7pyhM8aC8gIcDiH46QGpsEutO5SAQzTgy"
+   );
+   Moralis.serverURL =
+      chainId === 97
+         ? "https://dblpeaqbqk32.usemoralis.com:2053/server"
+         : "https://j0ixlvmwc1kz.usemoralis.com:2053/server";
+
    let animals = Object.values(animalsState);
    const { pathname } = useLocation();
 
@@ -163,22 +169,24 @@ function Feed<FeedPagePops>({ match }) {
       animalsFiltered[ogIndex] = toMove;
    }
 
-  console.log(toFind, animalsFiltered);
-  
-  const animalGroup = {}
-  let animalData = []
-  if (isMyZoo) {
-    animalsFiltered.forEach(animal => { // AF[1,2,3,2,1] //AD[1,2,3]
-      if (animalData.find(a => a.animalId === animal.animalId)) {
-        animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 2
-      } else {
-        animalData.push(animal)
-      }
-        // return animalGroup[animal.animalId] === 1 ? true : false
-    })
-  } else {
-    animalData = animalsFiltered
-  }
+   console.log(toFind, animalsFiltered);
+
+   const animalGroup = {};
+   let animalData = [];
+   if (isMyZoo) {
+      animalsFiltered.forEach((animal) => {
+         // AF[1,2,3,2,1] //AD[1,2,3]
+         if (animalData.find((a) => a.animalId === animal.animalId)) {
+            animalGroup[animal.animalId] =
+               animalGroup[animal.animalId] + 1 || 2;
+         } else {
+            animalData.push(animal);
+         }
+         // return animalGroup[animal.animalId] === 1 ? true : false
+      });
+   } else {
+      animalData = animalsFiltered;
+   }
 
    return (
       <Container isMobile={isMobile}>
@@ -195,15 +203,19 @@ function Feed<FeedPagePops>({ match }) {
                </ButtonMenuItem>
             </ButtonMenu>
          </ToggleContainer>
-         {animalsFiltered.length ? (
+         {animalData.length ? (
             <Swiper
                spaceBetween={30}
                slidesPerView={1}
-               direction={isMobile ? "vertical" : "horizontal"}>
-               {animalsFiltered.map((data) => {
+               direction="vertical">
+               {animalData.map((data) => {
                   return data.listed ? (
                      <SwiperSlide key={data.tokenId + "slide"}>
-                        <FeedCard item={data} key={data.tokenId + "card"} animalGroup={animalGroup}/>
+                        <FeedCard
+                           item={data}
+                           key={data.tokenId + "card"}
+                           animalGroup={animalGroup}
+                        />
                      </SwiperSlide>
                   ) : (
                      <></>
