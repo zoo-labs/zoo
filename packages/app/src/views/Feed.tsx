@@ -224,7 +224,7 @@ function Feed<FeedPagePops>({ match }) {
                   slidesPerView={1}
                   direction="vertical">
                   {myZooAnimalData.map((data) => {
-                     return data.listed ? (
+                     return (
                         <SwiperSlide key={data.tokenId + "slide"}>
                            <FeedCard
                               item={data}
@@ -232,9 +232,7 @@ function Feed<FeedPagePops>({ match }) {
                               animalGroup={animalGroup}
                            />
                         </SwiperSlide>
-                     ) : (
-                        <></>
-                     );
+                     ) 
                   })}
                </Swiper>
             ) : (
