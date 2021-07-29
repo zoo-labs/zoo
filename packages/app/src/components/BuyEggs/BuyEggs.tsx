@@ -36,7 +36,7 @@ const ModalWrapper = styled.div`
 `
 
 const EggInput = styled.input.attrs({ 
-  type: 'number',
+  type: 'string',
   min: 1,
   defaultValue: 1
 })`
@@ -145,8 +145,7 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
   }
 
   const changed = () => (e) => {
-    const newVal = e.target.value;
-    
+    const newVal = e.target.value
     newVal === "" ? setValue(0) : setValue(parseInt(newVal))
   };
 
