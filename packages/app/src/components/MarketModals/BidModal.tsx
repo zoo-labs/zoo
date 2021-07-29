@@ -53,14 +53,14 @@ const BidInput = styled.input.attrs({
 const ArrowBottom = styled.div`
   width: 0;
   height: 0;
-  border-left: calc(0.75rem - 2px) solid transparent;
-  border-right: calc(0.75rem - 2px) solid transparent;
-  border-top: calc(0.75rem - 2px) solid #925677;
+  border-left: calc(0.9rem - 2px) solid transparent;
+  border-right: calc(0.9rem - 2px) solid transparent;
+  border-top: calc(0.9rem - 2px) solid #925677;
   font-size: 0;
   line-height: 0;
   position: absolute;
-  right: 16%;
-  margin-top: calc(0.75rem + 4px);
+  right: calc(15% - 2px);
+  margin-top: calc(0.9rem + 5px);
   &:hover {
     cursor: pointer;
   }
@@ -70,14 +70,14 @@ const ArrowBottom = styled.div`
 const ArrowUp = styled.div`
   width: 0;
   height: 0;
-  border-left: calc(0.75rem - 2px) solid transparent;
-  border-right: calc(0.75rem - 2px) solid transparent;
-  border-bottom: calc(0.75rem - 2px) solid #925677;
+  border-left: calc(0.9rem - 2px) solid transparent;
+  border-right: calc(0.9rem - 2px) solid transparent;
+  border-bottom: calc(0.9rem - 2px) solid #925677;
   font-size: 0;
   line-height: 0;
   position: absolute;
-  margin-top: 2px;
-  right: 16%;
+  margin-top: -1px;
+  right: calc(15% - 2px);
   &:hover {
     cursor: pointer;
   }
