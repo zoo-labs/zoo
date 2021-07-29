@@ -87,15 +87,14 @@ const BreedWrapper = styled.div<{ cols?: number }>`
 
 const Card = styled(Existing) <{ selected?: boolean, timedOut?: boolean, rarityColor: string }>`
   cursor: pointer;
-  width: 100%;
   margin: 0px 8px 8px;
   box-shadow: ${(props) => `0px 0px 13px -2px ${props.rarityColor}`};
   backgroundColor: "#000000";
-  display: block;
-  max-width: calc(100vw/2.2 - 13px);
+//   display: block;
   border-radius: 8px;
    border: ${({ selected }) => (selected ? "2px solid white" : null)};
   opacity: ${({ timedOut }) => (timedOut ? "0.6" : null)};
+
 `;
 
  export interface AnimalCardStats {
@@ -126,7 +125,6 @@ export interface SwiperCardProps {
 
 // export const SwiperCard: React.FC<SwiperCardProps> = ({ imageURL, onCardClick, onInfoClick, egg, hatchEgg, eggGroup }) => {
 export const SwiperCard: React.FC<SwiperCardProps> = ({ egg, animal, group, eggType, onCardClick, onInfoClick }) => {
- 
   return (
     <>
           <Card
@@ -138,11 +136,11 @@ export const SwiperCard: React.FC<SwiperCardProps> = ({ egg, animal, group, eggT
           >
               <CardBody style={{
                   backgroundImage:`url("${animal.imageUrl}")`,
-                backgroundSize: "cover",
+                  backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
                             backgroundPosition: "center",
                             height: 250,
-                            width: "calc(100vw/2.2 - 13px)",
-                            // padding: 10,
+                            // width: `calc(100vw/1.6 - 13px )`,
               }}>
                    <Link
                             to={`/feed/myzoo/${animal.tokenId}`}>
