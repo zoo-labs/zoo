@@ -16,13 +16,18 @@ contract ZooDrop is Ownable {
     string public name;
     uint256 public eggPrice;
     uint256 public eggSupply;
-    []string public raritySorted;
 
     // mapping of Rarity name to Rarity
     mapping (string => Rarity) public rarities;
 
+    // Rarity sorted by most rare -> least rare
+    []Rarity public raritySorted;
+
     // mapping of Animal name to Animal
     mapping (string => Animal) public animals;
+
+    // mapping of Rarity name to []Animal
+    mapping (string => []Animal) public animalsByRarity;
 
     // mapping of animal name to Hybrid
     mapping (string => Hybrid) public hybrids;
@@ -64,19 +69,20 @@ contract ZooDrop is Ownable {
         // Save rarity
         rarities[rarity.name] = rarity;
 
-        // Assume we add in descending rarity
-        raritySorted.push(rarity.name);
+        // To ensure rarities are sorted properly, add most rare to least rare
+        raritySorted.push(rarity);
 
         return true;
     }
 
+    // Add Animal to rarity set if it has not been seen before
     function addAnimal(string memory rarity, string memory _name) returns ([]Animal) {
         []Animal memory animals = animalsByRarity[rarity];
 
         // Check if animal has been added to this rarity before
         for (i = 0; i < animals.length; i++) {
-            string memory n = animals[i];
-            if (n == _name) {
+            string memory known = animals[i];
+            if (known == _name) {
                 return animals;
             }
         }
@@ -118,23 +124,6 @@ contract ZooDrop is Ownable {
         });
         hybrids[_name] = hybrid;
         hybridParents[parentsKey(parentA, parentB)] = hybrid;
-    }
-
-    function animalExists(string memory _name) public view returns (bool) {
-        Animal memory animal = animals[_name];
-        Hybrid memory hybrid = hybrids[_name];
-
-        // Is either an animal or hybrid
-        if (animal.enabled || hybrid.enabled) {
-            return true;
-        }
-
-        return false;
-    }
-    // Get next timestamp token can be bred
-    function breedNext(uint256 tokenID) public view returns (uint256) {
-        Token memory token = tokens[tokenID];
-        return token.breedTimestamp + (token.breedCount * 1 days);
     }
 
     // Chooses animal based on random number generated from(0-999)
@@ -184,6 +173,18 @@ contract ZooDrop is Ownable {
 
     function getHybridByParents(string memory parentA, string memory parentB) public view returns (Hybrid memory) {
         return hybridParents[parentsKey(parentA, parentB)];
+    }
+
+    function animalExists(string memory _name) public view returns (bool) {
+        Animal memory animal = animals[_name];
+        Hybrid memory hybrid = hybrids[_name];
+
+        // Is either an animal or hybrid
+        if (animal.enabled || hybrid.enabled) {
+            return true;
+        }
+
+        return false;
     }
 
     function newEgg() public onlyOwner returns (Egg) {
