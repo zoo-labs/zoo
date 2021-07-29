@@ -129,9 +129,9 @@ const StyledChevron = styled(ChevronLeftIcon)`
 const ActionButonContainer = styled.div`
   width: 80px;
   display: flex;
-  position: fixed;
+  position: absolute;
   right: 0;
-  bottom: 20px;
+  bottom: 40px;
   flex-direction: row;
   // align-items: end;
   justify-content: flex-end;
