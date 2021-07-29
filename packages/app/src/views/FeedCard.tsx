@@ -173,11 +173,12 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
               >
                 {`${item.name} ${multiplier}`}
               </MainHeading>
-              <Subheading bold as="p"
+              {/* <Subheading bold as="p"
                 style={{
                   WebkitTextFillColor: rarityColor,
                   WebkitTextStrokeColor: rarityColor,
-                }}>
+                }}> */}
+              <Subheading bold as="p">
                 {item.rarity}
               </Subheading>
               <Subheading bold as="p">{`Born: ${StringDate}`}</Subheading>
