@@ -213,7 +213,7 @@ function Feed<FeedPagePops>({ match }) {
          ) : (
             <EmptyZoo>
                <Text textAlign="center">
-                  You do not currently own any animals
+                  There are currently no animals up for auction
                </Text>
                <BorderButton scale="md" onClick={() => HomeClick}>
                   Home
