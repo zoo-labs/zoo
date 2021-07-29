@@ -25,7 +25,7 @@ export const brandColors = {
 export const lightColors: Colors = {
   ...baseColors,
   ...brandColors,
-  background: "#040404",
+  background: "#FFFFFF",
   backgroundDisabled: "#E9EAEB", // not yet created
   sidebar: "#FFFFFF", // "#212226",
   contrast: "#191326",
@@ -33,9 +33,9 @@ export const lightColors: Colors = {
   invertedContrast: "#282c34",
   input: "#EFE9F4",
   inputSecondary: "#d6e5ff",
-  tertiary: "#EFF4F5",
+  tertiary: "#000000",
   tertiaryLight: "#EFF4F5",
-  text: "#FFFFFF",
+  text: "#0F0F0F",
   textDisabled: "#748db7",
   textSubtle: "#314F81",
   label: "#525563", // "#314F81",
@@ -47,6 +47,7 @@ export const lightColors: Colors = {
   card: "#ffffff",
   tableHeader: "#FFFFFF", // "#A7C8FB",
   cardLabel: "#314F81",
+  modalBackground: "#FFFFFF",
   gradients: {
     bubblegum: "linear-gradient(119.91deg, #3480F6 36.36%, #0DD8D0 84.22%)",
     buttongum: "linear-gradient(121deg,#3480F6 36.22%,#0DD8D0 90.22%)",
@@ -96,6 +97,7 @@ export const darkColors: Colors = {
   card: "#040404",
   tableHeader: "#191b21",
   cardLabel: "#20DFDA",
+  modalBackground: "#CDB7C3",
   gradients: {
     bubblegum: "linear-gradient(119.91deg,#024ABBd1 36.36%,#0dd8d0d1 84.22%)",  // "linear-gradient(119.91deg,#024ABBd1 36.36%,#0dd8d0d1 84.22%)",
     buttongum: "linear-gradient(140.91deg,#024abbf5 61.36%,#0DD8D0d1 93.22%)", // "linear-gradient(140.91deg, #024ABBd1 68.36%, #0DD8D0d1 84.22%)",

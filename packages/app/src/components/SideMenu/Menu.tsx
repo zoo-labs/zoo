@@ -30,20 +30,20 @@ const LogoContainer = styled.div`
 `;
 
 const StyledNav = styled.nav<{ showMenu: boolean; isPushed: boolean }>`
-   position: fixed;
-   // top: ${({ showMenu }) => (showMenu ? 0 : `-${MENU_HEIGHT}px`)};
-   right: 0;
-   transition: background-color 0.2s ease;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   padding-left: 8px;
-   padding-right: 16px;
-   width: 100%;
-   height: ${MENU_HEIGHT}px;
-   background-color: ${({ showMenu }) => (showMenu ? "transparent" : `black`)};
-   z-index: 20;
-   transform: translate3d(0, 0, 0);
+  position: fixed;
+  // top: ${({ showMenu }) => (showMenu ? 0 : `-${MENU_HEIGHT}px`)};
+  right: 0;
+  transition: background-color 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 8px;
+  padding-right: 16px;
+  width: 100%;
+  height: ${MENU_HEIGHT}px;
+  background-color: ${({ showMenu, theme }) => (showMenu ? theme.isDark ? 'transparent' : `black` : `black`)};
+  z-index: 20;
+  transform: translate3d(0, 0, 0);
 `;
 
 const BodyWrapper = styled.div`
