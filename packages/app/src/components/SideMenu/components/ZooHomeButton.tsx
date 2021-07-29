@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import logo from "media/ZooEggLogoWhite.png";
 
 const LogoContainer = styled.button<{ width?: string }>`
+cursor: pointer;
   border-radius: 30px;
   background: transparent;
   border: none;

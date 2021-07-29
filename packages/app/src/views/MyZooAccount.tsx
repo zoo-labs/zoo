@@ -29,6 +29,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import StickyBottomMenu from "components/Button/StickyBottomMenu";
 import { useHistory } from "react-router-dom";
 import { RarityColor } from "enums/rarity-color";
+import SwiperCard from "components/Card/SwipeCard";
 
 // install Swiper modules
 // SwiperCore.use([Pagination]);
@@ -218,7 +219,8 @@ const MyZooAccount: React.FC = () => {
     dob: "",
     listed: false,
   };
-
+   
+  
   const hatchEgg = (egg) => {
     setShowBoth(true);
     setEggType(egg.basic ? "basic" : "hybrid");
@@ -454,6 +456,7 @@ const MyZooAccount: React.FC = () => {
       mounted = false;
     };
   }, [elapsedTimeOnPage]);
+   
 
   const renderAnimals = (hybrid): JSX.Element => {
     let animalGroup = {};
@@ -560,8 +563,16 @@ const MyZooAccount: React.FC = () => {
               <Swiper slidesPerView={2.2} spaceBetween={10}>
                 {animals.map((animal) => (
                   <SwiperSlide style={{ padding: "3px" }} key={animal.tokenId}>
-                    <CardWrapper>
-                      <Card
+                      <CardWrapper>
+                         <SwiperCard animal={animal}
+                            group={animalGroup}
+                            imageURL={`url("${animal.imageUrl}")`}
+                            onInfoClick={() =>
+                                hybrid === "pure"
+                                  ? breedClick(animal)
+                                  : list(animal)}
+                         />
+                      {/* <Card
                         style={{
                           boxShadow: `0px 0px 13px -2px ${animal.rarityColor}`,
                         }}
@@ -639,7 +650,7 @@ const MyZooAccount: React.FC = () => {
                             </InfoBlock>
                           )}
                         </CardBody>
-                      </Card>
+                      </Card> */}
                     </CardWrapper>
                   </SwiperSlide>
                 ))}
