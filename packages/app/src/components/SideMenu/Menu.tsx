@@ -184,11 +184,6 @@ const Menu: React.FC<NavProps> = ({
       };
    }, [isPushed]);
 
-   // useEffect(() => {
-   //    window.addEventListener("click", handleClickOutside, true);
-
-   // }, [])
-
    // Find the home link if provided
    const homeLink = links.find((link) => link.label === "Token Raise");
    const handleClick = () => {
