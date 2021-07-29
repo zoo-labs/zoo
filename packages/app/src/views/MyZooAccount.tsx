@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Route, useRouteMatch, Link } from "react-router-dom";
 import { AppState } from "state";
 import { useDispatch, useSelector } from "react-redux";
@@ -187,6 +187,7 @@ const MyZooAccount: React.FC = () => {
   const [isOpen, setOpen] = useState(false);
   const history = useHistory();
   const [showBoth, setShowBoth] = useState(false);
+  const videoTimeout = [];
   const [hatched, setHatched] = useState({
     tokenId: "",
     name: "",
@@ -269,9 +270,27 @@ const MyZooAccount: React.FC = () => {
     dispatch(burnEgg(egg));
     dispatch(addAnimal(newAnimal));
     // ---------------------------------------------
-    setTimeout(() => setOpen(true), 5450);
-    setTimeout(() => setEggType(""), 7000);
+    startAnimaionTimer();
   };
+
+  const startAnimaionTimer = useCallback(() => {
+    videoTimeout.push(setTimeout(() => setOpen(true), 5450));
+    videoTimeout.push(setTimeout(() => setEggType(""), 7000));
+  },[]);
+
+  const closeAnimation = useCallback(async (e) => {
+    setEggType("")
+    videoTimeout.forEach((i)=>{
+      clearTimeout(i)
+    })
+  },[]);
+
+  useEffect(() => {
+      document.addEventListener("keydown", closeAnimation , false)
+      return () => {
+        document.removeEventListener("keydown", closeAnimation, false);
+      }
+  },[]);
 
   const breed = (onDismiss) => {
     const animal1: Animal = array[0];
