@@ -45,7 +45,7 @@ const LabelWrapper = styled.div`
 
 const ValueWrapper = styled(Text)`
     font-size: 18px;
-    color: white;
+    color: ${({ theme }) => theme.colors.text}
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
