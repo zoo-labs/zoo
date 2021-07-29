@@ -76,7 +76,8 @@ const MainHeading = styled(Text)`
    width: 100%;
    line-height: 1;
    color: ${({ theme }) => theme.colors.primary};
-   font-weight: 900;
+   font-weight: 400;
+   font-family: 'Permanent Marker', cursive;
    -webkit-text-fill-color: ${({ theme }) => theme.colors.text};
    -webkit-text-stroke-width: 0.5px;
    -webkit-text-stroke-color: ${({ theme }) => theme.colors.text};
@@ -172,11 +173,12 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
               >
                 {`${item.name} ${multiplier}`}
               </MainHeading>
-              <Subheading bold as="p"
+              {/* <Subheading bold as="p"
                 style={{
                   WebkitTextFillColor: rarityColor,
                   WebkitTextStrokeColor: rarityColor,
-                }}>
+                }}> */}
+              <Subheading bold as="p">
                 {item.rarity}
               </Subheading>
               <Subheading bold as="p">{`Born: ${StringDate}`}</Subheading>
