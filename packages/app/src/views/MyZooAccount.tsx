@@ -56,7 +56,7 @@ const ImageContainer = styled.div`
   img {
     width: 100%;
     height: 100%;
-    minheight: 300px;
+    min-height: 300px;
     overflow: hidden;
   }
 `;
@@ -720,7 +720,7 @@ const MyZooAccount: React.FC = () => {
           ) : (
             <Swiper
               slidesPerView={document.body.getBoundingClientRect().width / 140}
-              spaceBetween={0}
+              spaceBetween={1}
               pagination={{ clickable: true }}
             >
               {eggData.map((egg) => (
