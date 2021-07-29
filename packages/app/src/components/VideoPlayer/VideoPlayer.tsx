@@ -12,16 +12,16 @@ const getColor = ({ color, theme }: ThemedProps) => {
  */
 
 const VidContainer = styled.div`
-    height: 100vh;
-    width: auto;
+    position: fixed;
+    height: 110vh;
+    width: 100vw;
     // max-width: 425px;
     // min-width: 325px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: fixed;
-    top: -64px;
+    top: -50%;
     left: 50%;
     -webkit-transform: translateX(-50%);
     -moz-transform: translateX(-50%);
@@ -51,7 +51,7 @@ const VideoPlayer: React.FC<VideoPlayerTheme> = ({videoPath}:VideoPlayerTheme) =
     return (
         <VidContainer >
             <VideoPlayerWrapper autoPlay ref={videoEl} controls={false} playsInline>
-                <source src={videoPath} />
+                <source src={videoPath}/>
             </VideoPlayerWrapper>
         </VidContainer>
     )
