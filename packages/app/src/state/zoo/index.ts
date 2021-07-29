@@ -5,7 +5,7 @@ import { ZooState } from "../types";
 import { Animal, Egg } from "entities/zooentities";
 import { test } from "./test";
 
-const initialState: ZooState = test
+const initialState: ZooState = test;
 
 // const initialState: ZooState = {
 //    animals: {},
@@ -25,7 +25,7 @@ export const ZooSlice = createSlice({
          state.animals[toAdd.tokenId] = toAdd;
       },
       addEggs: (state: ZooState, action) => {
-        const toAdd: Egg[] = action.payload;
+         const toAdd: Egg[] = action.payload;
          for (let i = 0; i < toAdd.length; i += 1) {
             const curr = toAdd[i];
             state.eggs[curr.tokenId] = curr;
@@ -40,25 +40,32 @@ export const ZooSlice = createSlice({
       },
       burnEgg: (state: ZooState, action) => {
          const toRemove: Egg = action.payload;
-         console.log(toRemove)
+         console.log(toRemove);
          const newState = state;
-         delete newState.eggs[toRemove.tokenId]
-         state = newState
+         delete newState.eggs[toRemove.tokenId];
+         state = newState;
       },
       burnAnimal: (state: ZooState, action) => {
          const toRemove: Animal = action.payload;
-         const newState = state
-         delete newState.animals[toRemove.tokenId]
-         state = newState
+         const newState = state;
+         delete newState.animals[toRemove.tokenId];
+         state = newState;
       },
-      clearZoo: (state: ZooState, action) => {
-         state = initialState;
+      clearZoo: () => {
+         return initialState
       },
    },
 });
 
 // Actions
-export const { addEgg, addAnimal, addEggs, addAnimals, burnEgg, burnAnimal } =
-   ZooSlice.actions;
+export const {
+   addEgg,
+   addAnimal,
+   addEggs,
+   addAnimals,
+   burnEgg,
+   burnAnimal,
+   clearZoo,
+} = ZooSlice.actions;
 
 export default ZooSlice.reducer;
