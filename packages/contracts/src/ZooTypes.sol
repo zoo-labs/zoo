@@ -31,20 +31,30 @@ struct Token {
 }
 
 struct Rarity {
+    uint256 id;
     string  name;
     uint256 probability;
     uint256 yield;
     uint256 boost;
-    bool enabled;
 }
 
 struct Egg {
+    string  name;
+    string  tokenURI;
+    string  metadataURI;
+    uint256 timestamp;    // time created
+    uint256 birthday;     // birth block
+}
+
+struct HybridEgg {
     Rarity  rarity;
     string  name;
     string  tokenURI;
     string  metadataURI;
-    bool enabled;
-    IMarket.BidShares bidShares;
+    uint256 timestamp;    // time created
+    uint256 birthday;     // birth block
+    uint256 parentA;      // parentA ID
+    uint256 parentB;      // parentB ID
 }
 
 struct Animal {

@@ -177,31 +177,18 @@ contract ZooKeeper is Ownable {
         string memory tokenURI;
         string memory metadataURI;
 
-        // Randomly select a new animal or hybrid
-        uint256 randomNumber = unsafeRandom();
-
         Token memory token;
 
         if (Type.BASE_EGG == eggType) {
             // Normal egg
             token._type = Type.BASE_ANIMAL;
-            name = pickAnimal(randomNumber);
-            animal = drop.getAnimal(name);
+            Animal memory animal = drop.getRandomAnimal(randomNumber);
             data.tokenURI = animal.tokenURI;
             data.metadataURI = animal.metadataURI;
         } else {
             // Hybrid egg
             token._type = Type.HYBRID_ANIMAL;
-            // require(egg.timestamp > egg.timestamp.add(4 hours), "Must wait 4 hours for hybrid eggs to hatch.");
-
-            Hybrid[2] memory possible = [
-                drop.getHybridByParents(egg.parentA, egg.parentB),
-                drop.getHybridByParents(egg.parentB, egg.parentA)
-            ];
-
-            // pick array index 0 or 1 depending on the rarity
-            name = possible[randomNumber % 2].name;
-            hybrid = drop.getHybrid(name);
+            Hybrid memory hybrid = drop.getRandomHybrid(randomNumber, egg.parentA.name, egg.parntB.name);
             data.tokenURI = hybrid.tokenURI;
             data.metadataURI = hybrid.metadataURI;
         }
@@ -306,19 +293,29 @@ contract ZooKeeper is Ownable {
         media.mintFor(msg.sender, data, bidShares);
         uint256 eggID = media.getRecentToken(msg.sender);
 
-        // Save new egg
-        Egg memory egg;
-        egg.parentA = animalA.name;
-        egg.parentB = animalB.name;
-        egg.timestamp = block.timestamp;
-        eggs[eggID] = egg;
-        types[eggID] = Type.HYBRID_EGG;
+        // Save new Egg Token
+        Token memory token;
+        token.kind = Type.HYBRID_EGG;
+        token.id = eggID;
+        token.parentA = animalA.name;
+        token.parentB = animalB.name;
+        token.parentIDA = animalA.id;
+        token.parentIDB = animalB.id;
+        token.name = drop.getHybridEgg();
+        token.rarity = highestRarity(animalA, animalB);
+        token.birthday = block.number;
+        token.timestamp = block.timestamp;
+
+        tokens[eggID] = token;
 
         // Update breeding state
-        breedCount[tokenIDA]++;
-        breedCount[tokenIDB]++;
-        breedTimestamp[tokenIDA] = block.timestamp;
-        breedTimestamp[tokenIDB] = block.timestamp;
+        animalA.breedCount++;
+        animalA.breedTimestamp = block.timestamp;
+        tokens[animalA.id] = animalA;
+
+        animalB.breedCount++;
+        animalB.breedTimestamp = block.timestamp;
+        tokens[animalB.id] = animalB;
 
         emit Breed(msg.sender, tokenIDA, tokenIDB, eggID);
         return eggID;
@@ -374,61 +371,6 @@ contract ZooKeeper is Ownable {
             )
         ) % 1000;
         return randomNumber;
-    }
-
-    // Chooses animal based on random number generated from(0-999)
-    // TODO: Use Drop data
-    function pickAnimal(uint256 random) public pure returns (string memory) {
-        if (random < 550) {
-            uint256 choice = random % 4;
-            if (choice == 0) {
-                return "Pug";
-            } else if (choice == 1) {
-                return "Butterfly";
-            } else if (choice == 2) {
-                return "Kitten";
-            } else if (choice == 3) {
-                return "Turtle";
-            }
-        } else if (random > 550 && random < 860) {
-            uint256 choice = random % 4;
-            if (choice == 0) {
-                return "Penguin";
-            } else if (choice == 1) {
-                return "Duckling";
-            } else if (choice == 2) {
-                return "Orca";
-            } else if (choice == 3) {
-                return "Elk";
-            }
-        } else if (random > 860 && random < 985) {
-            uint256 choice = random % 4;
-            if (choice == 0) {
-                return "Panda";
-            } else if (choice == 1) {
-                return "Gorilla";
-            } else if (choice == 2) {
-                return "Elephant";
-            } else if (choice == 3) {
-                return "Lion";
-            }
-        } else if (random > 985 && random < 995) {
-            uint256 choice = random % 2;
-            if (choice == 0) {
-                return "Bear";
-            } else if (choice == 1) {
-                return "Shark";
-            }
-        } else if (random > 995 && random < 1000) {
-            uint256 choice = random % 2;
-            if (choice == 0) {
-                return "Blobfish";
-            } else if (choice == 1) {
-                return "Naked Mole Rat";
-            }
-        }
-
-        return "";
     }
 
     // Get next timestamp token can be bred
