@@ -76,7 +76,7 @@ const Card = styled(Existing) <{ timedOut?: boolean }>`
   cursor: pointer;
   width: 120px;
   margin: 0px 8px 8px; 
-  backgroundColor: "#000000";
+  backgroundColor: ${({ theme }) => theme.colors.background};
   border-radius: 8px;
   display: block;
   opacity: ${({ timedOut }) => (timedOut ? "0.6" : null)};
