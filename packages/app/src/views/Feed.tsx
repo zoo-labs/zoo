@@ -169,11 +169,9 @@ function Feed<FeedPagePops>({ match }) {
   let animalData = []
   if (isMyZoo) {
     animalsFiltered.forEach(animal => { // AF[1,2,3,2,1] //AD[1,2,3]
-      debugger; // eslint-disable-line no-debugger
       if (animalData.find(a => a.animalId === animal.animalId)) {
         animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 2
       } else {
-        debugger; // eslint-disable-line no-debugger
 
         animalData.push(animal)
       }
@@ -182,7 +180,6 @@ function Feed<FeedPagePops>({ match }) {
   } else {
     animalData = animalsFiltered
   }
-  debugger; // eslint-disable-line no-debugger
 
 
    return (
