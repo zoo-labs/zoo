@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react'
 import styled from 'styled-components'
-import { useMatchBreakpoints, Text } from 'toolkitUI'
+import { useMatchBreakpoints } from 'hooks'
+import { Text } from 'components'
 
 const HeaderOutline = styled.tr<{ fromTop: string, current: boolean }>`
     transition: opacity 0.2s ease-in;
