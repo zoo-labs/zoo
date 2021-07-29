@@ -68,7 +68,7 @@ const BottomModal: React.FC<Props> = ({
             <Sheet.Container
                style={{
                   height: height ? height : "300px",
-                  background: theme.isDark ? "#CDB7C3" : "#FFFFFF",
+                  background: theme.isDark ? "#000000" : "#FFFFFF",
                }}>
                {/* <Sheet.Header /> */}
                <Sheet.Header>
