@@ -11,7 +11,7 @@ import { ZooMarket } from "./ZooMarket.sol";
 import { ZooToken } from "./ZooToken.sol";
 import { IMarket } from "./interfaces/IMarket.sol";
 import { Decimal } from "./Decimal.sol";
-import { Animal, Hybrid, Egg, Type, Token } from "./ZooTypes.sol";
+import { Animal, Hybrid, Egg, Rarity, Type, Token } from "./ZooTypes.sol";
 
 import "./console.sol";
 
@@ -92,7 +92,7 @@ contract ZooKeeper is Ownable {
     }
 
     // Accept ZOO and return Egg NFT
-    function buyEgg(uint256 dropID) public returns (uint256) {
+    function buyEgg(uint256 dropID) public returns (Token) {
         ZooDrop drop = ZooDrop(drops[dropID]);
 
         require(
@@ -105,217 +105,105 @@ contract ZooKeeper is Ownable {
             "There are no more Eggs that can be purchased"
         );
 
+        // Transfer funds
         token.transferFrom(msg.sender, address(this), drop.eggPrice());
 
-        console.log("Buying Egg from drop");
-        (string memory tokenURI, string memory metadataURI) = drop.buyEgg();
-        ZooMedia.MediaData memory data;
+        // Instantiate a new token for Egg
+        Token egg = drop.newEgg();
 
-        // Token metadata
-        data.tokenURI = tokenURI;
-        data.metadataURI = metadataURI;
-        data.contentHash = keccak256(
-            abi.encodePacked(tokenURI, block.number, msg.sender)
-        );
-        data.metadataHash = keccak256(
-            abi.encodePacked(metadataURI, block.number, msg.sender)
-        );
-
-        // Bid Shares for profit sharing
-        IMarket.BidShares memory bidShares;
-        bidShares.prevOwner = Decimal.D256(0);
-        bidShares.creator = Decimal.D256(10 * (10**18));
-        bidShares.owner = Decimal.D256(90 * (10**18));
-
-        // Mint token
-        media.mintFor(msg.sender, data, bidShares);
-
-        uint256 tokenID = media.getRecentToken(msg.sender);
-        console.log("tokenID", tokenID);
+        // Mint Egg Token
+        media.mintToken(msg.sender, egg);
 
         // Update bidshares
-        console.log("Set bidshares for", tokenID);
-        market.setBidShares(tokenID, bidShares);
-        console.log("Bid shares updated");
+        market.setBidShares(egg.id, egg.bidShares);
 
-        // Save egg state
-        Egg memory egg;
-        egg.timestamp = block.timestamp;
-        eggs[tokenID] = egg;
-        types[tokenID] = Type.BASE_EGG;
+        // Save Egg
+        tokens[egg.id] = egg;
 
-        emit BuyEgg(msg.sender, tokenID);
-        return tokenID;
+        emit BuyEgg(msg.sender, egg.id);
+
+        return egg;
     }
 
     // Burn egg and randomly return an animal NFT
-    function hatchEgg(uint256 dropID, uint256 eggID)
-        public
-        returns (uint256)
-    {
-        console.log('hatchEgg:this', address(this));
-        console.log('hatchEgg:msg.sender', msg.sender);
+    function hatchEgg(uint256 dropID, uint256 eggID) public returns (Token) {
         ZooDrop drop = ZooDrop(drops[dropID]);
 
         // need to check the hatch time delay
 
         //  grab egg struct
-        Egg memory egg = eggs[eggID];
-        Type eggType = types[eggID];
+        Token memory egg = tokens[eggID];
 
-        // Burn egg (it's hatching)
+        // A new animal is born!
+        Token memory token;
+        token.birthday = block.number;
+        token.timestamp = block.timestamp;
+
+        // Get random animal or hybrid from drop
+        if (egg.kind == Type.BASE_EGG) {
+            Animal memory animal = drop.getRandomAnimal(unsafeRandom());
+        } else {
+            Hybrid memory hybrid = drop.getRandomHybrid(unsafeRandom(), egg.parentA.name, egg.parntB.name);
+            token.parentA = egg.parentA;
+            token.parentB = egg.parentB;
+            token.parentIDA = egg.parentIDA;
+            token.parentIDB = egg.parentIDB;
+        }
+
+        // Burn egg aka it's hatching...
         media.burn(eggID);
         emit Burn(msg.sender, eggID);
 
-        // A new animal is born!
-        ZooMedia.MediaData memory data;
-        Type _type;
-        string memory name;
-        string memory tokenURI;
-        string memory metadataURI;
-
-        Token memory token;
-
-        if (Type.BASE_EGG == eggType) {
-            // Normal egg
-            token._type = Type.BASE_ANIMAL;
-            Animal memory animal = drop.getRandomAnimal(randomNumber);
-            data.tokenURI = animal.tokenURI;
-            data.metadataURI = animal.metadataURI;
-        } else {
-            // Hybrid egg
-            token._type = Type.HYBRID_ANIMAL;
-            Hybrid memory hybrid = drop.getRandomHybrid(randomNumber, egg.parentA.name, egg.parntB.name);
-            data.tokenURI = hybrid.tokenURI;
-            data.metadataURI = hybrid.metadataURI;
-        }
-
-        console.log("hatched:", name);
-
-        // Save hash of token and metadata
-        data.contentHash = keccak256(
-            abi.encodePacked(
-                data.tokenURI,
-                block.number,
-                msg.sender
-            )
-        );
-        data.metadataHash = keccak256(
-            abi.encodePacked(
-                data.metadataURI,
-                block.number,
-                msg.sender
-            )
-        );
-
-        // Zoo takes 10%
-        IMarket.BidShares memory bidShares;
-        bidShares.prevOwner = Decimal.D256(0);
-        bidShares.creator = Decimal.D256(10 * (10**18));
-        bidShares.owner = Decimal.D256(90 * (10**18));
-
         // Mint token
-        console.log("Mintend NFT, tokenURI: ", data.tokenURI, data.metadataURI);
-        media.mintFor(msg.sender, data, bidShares); // this time not an egg but an animal
-
-        uint256 tokenID = media.getRecentToken(msg.sender);
-        console.log("TokenID", tokenID);
+        uint256 id = media.mintToken(msg.sender, token);
 
         // Save NFT state
-        animalDOB[tokenID] = block.number;
-        types[tokenID] = _type;
+        tokens[tokenID] = token;
 
-        if (_type == Type.BASE_ANIMAL) {
-            animals[tokenID] = animal;
-        } else {
-            hybrids[tokenID] = hybrid;
-        }
+        // Update bidshares
+        market.setBidShares(token.id, token.bidShares);
 
-        // Set profit sharing
-        console.log("Set bid shares");
-        market.setBidShares(tokenID, bidShares);
-
-        // type of NFT
         emit Hatch(msg.sender, tokenID);
-        return tokenID;
+
+        return token;
     }
 
     // Breed two animals and create a hybrid egg
     function breedAnimal(
         uint256 dropID,
-        uint256 tokenIDA,
-        uint256 tokenIDB
-    ) public onlyExistingToken(tokenIDA) onlyExistingToken(tokenIDB) returns (uint256) {
-        require(tokenIDA != tokenIDB);
+        uint256 parentA,
+        uint256 parentB
+    ) public onlyExistingToken(parentA) onlyExistingToken(parentB) returns (Token) {
+        require(parentA != parentB);
         require(
-            breedReady(tokenIDA) && breedReady(tokenIDB),
+            breedReady(parentA) && breedReady(parentB),
             "Must wait for cooldown to finish."
         );
 
-        // Get drop
+        // Get drop and animals
         ZooDrop drop = ZooDrop(drops[dropID]);
+        Token memory animalA = tokens[parentA];
+        Token memory animalB = tokens[parentB];
 
-        // require non hybrids
-        Type animalTypeA = types[tokenIDA];
-        Type animalTypeB = types[tokenIDB];
+        // Require non hybrids
         require(
-            animalTypeA == Type.BASE_ANIMAL && animalTypeB == Type.BASE_ANIMAL,
+            (animalA.kind == Type.BASE_ANIMAL) && (animalB.kind == Type.BASE_ANIMAL),
             "Hybrid animals cannot breed."
         );
 
-        Animal memory animalA = animals[tokenIDA];
-        Animal memory animalB = animals[tokenIDB];
-
-        // need to figure out the delay
-        // require(now.sub(checkBreedDelay()) <= 0)
-
-        ZooMedia.MediaData memory data;
-        (string memory tokenURI, string memory metadataURI) = drop.getHybridEgg();
-        data.tokenURI = tokenURI;
-        data.metadataURI = metadataURI;
-        data.contentHash = keccak256(
-            abi.encodePacked(tokenURI, block.number, msg.sender)
-        );
-        data.metadataHash = keccak256(
-            abi.encodePacked(metadataURI, block.number, msg.sender)
-        );
-
-        // Setup profit sharing
-        IMarket.BidShares memory bidShares;
-        bidShares.prevOwner = Decimal.D256(0);
-        bidShares.creator = Decimal.D256(10 * (10**18));
-        bidShares.owner = Decimal.D256(90 * (10**18));
+        // New Hybrid Egg
+        Token memory egg = drop.newHybridEgg(parentA, parentB);
 
         // Mint egg
-        media.mintFor(msg.sender, data, bidShares);
-        uint256 eggID = media.getRecentToken(msg.sender);
+        media.mintToken(msg.sender, egg);
+        tokens[egg.id] = egg;
 
-        // Save new Egg Token
-        Token memory token;
-        token.kind = Type.HYBRID_EGG;
-        token.id = eggID;
-        token.parentA = animalA.name;
-        token.parentB = animalB.name;
-        token.parentIDA = animalA.id;
-        token.parentIDB = animalB.id;
-        token.name = drop.getHybridEgg();
-        token.rarity = highestRarity(animalA, animalB);
-        token.birthday = block.number;
-        token.timestamp = block.timestamp;
+        // Update breeding delay for each parent
+        updateBreedDelays(animalA, animalB);
 
-        tokens[eggID] = token;
+        emit Breed(msg.sender, animalA.id, animalB.id, egg.id);
 
-        // Update breeding state
-        animalA.breedCount++;
-        animalA.breedTimestamp = block.timestamp;
-        tokens[animalA.id] = animalA;
-
-        animalB.breedCount++;
-        animalB.breedTimestamp = block.timestamp;
-        tokens[animalB.id] = animalB;
-
-        emit Breed(msg.sender, tokenIDA, tokenIDB, eggID);
-        return eggID;
+        return egg;
     }
 
     // Freeing an animal burns the animal NFT and returns the ZOO to the owner
@@ -348,6 +236,15 @@ contract ZooKeeper is Ownable {
         namePrice = price;
     }
 
+    // Return the highest of two rarities
+    function highestRarity(Rarity rarityA, Rarity rarityB) returns (Rarity) {
+        if (rarityA.probability < rarityB.probability) {
+            return rarityA;
+        }
+
+        return rarityB;
+    }
+
     // Add a name for given NFT
     function buyName(uint256 tokenID, string memory _name) public {
         require(
@@ -368,6 +265,17 @@ contract ZooKeeper is Ownable {
             )
         ) % 1000;
         return randomNumber;
+    }
+
+    // Update breed delays
+    function updateBreedDelays(Token animalA, Token animalB) private {
+        animalA.breedCount++;
+        animalA.breedTimestamp = block.timestamp;
+        tokens[animalA.id] = animalA
+
+        animalB.breedCount++;
+        animalB.breedTimestamp = block.timestamp;
+        tokens[animalB.id] = animalB
     }
 
     // Get next timestamp token can be bred

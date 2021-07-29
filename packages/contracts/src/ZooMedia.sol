@@ -4,17 +4,18 @@
 pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
-import "./ERC721Burnable.sol";
-
 import { EnumerableSet } from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
 import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import { Math } from "@openzeppelin/contracts/utils/math/Math.sol";
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { ReentrancyGuard } from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import { ERC721, ERC721Burnable } from "./ERC721Burnable.sol";
 import { Decimal } from "./Decimal.sol";
 import { IMarket } from "./interfaces/IMarket.sol";
-import "./interfaces/IMedia.sol";
+import { IMedia } from "./interfaces/IMedia.sol";
+import { Token } from "./ZooTypes.sol";
+
 import "./console.sol";
 
 /**
@@ -130,6 +131,15 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
             _isZooKeeper(msg.sender) || _isApprovedOrOwner(spender, tokenId),
             "ZooMedia: Only approved or owner"
         );
+        _;
+    }
+
+    /**
+     * @notice Ensure that the provided spender is the approved or the owner of
+     * the media for the specified tokenId
+     */
+    modifier onlyZooKeeper {
+        require(_isZooKeeper(msg.sender), "ZooMedia: Only ZooKeeper");
         _;
     }
 
@@ -263,13 +273,28 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         _mintForCreator(msg.sender, data, bidShares, "");
     }
 
-    // Helper that lets us delegate to a specific owner
-    function mintFor(
-        address owner,
-        MediaData memory data,
-        IMarket.BidShares memory bidShares
-    ) public nonReentrant {
-        _mintForCreator(owner, data, bidShares, "");
+
+    /**
+     * @dev Update mediaData hash on token
+     */
+    function _hashToken(Token token) private {
+        token.data.contentHash = keccak256(
+            abi.encodePacked(token.data.tokenURI, block.number, msg.sender)
+        );
+        token.data.metadataHash = keccak256(
+            abi.encodePacked(token.data.metadataURI, block.number, msg.sender)
+        );
+    }
+
+    /**
+     * @dev Mints from a Token struct
+     */
+    function mintToken(address owner, Token token) public onlyZooKeeper nonReentrant returns (Token) {
+        _hashToken(token);
+        _mintForCreator(owner, token.data, token.bidShares, token.kind);
+        uint256 id = getRecentToken(owner);
+        token.id = id;
+        return token;
     }
 
     /**

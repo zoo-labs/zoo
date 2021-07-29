@@ -3,6 +3,7 @@
 pragma solidity >=0.8.4;
 
 import { IMarket } from "./interfaces/IMarket.sol";
+import { IMedia } from "./interfaces/IMedia.sol";
 
 enum Type {
     BASE_EGG,
@@ -46,24 +47,14 @@ struct Egg {
     uint256 birthday;     // birth block
 }
 
-struct HybridEgg {
-    Rarity  rarity;
-    string  name;
-    string  tokenURI;
-    string  metadataURI;
-    uint256 timestamp;    // time created
-    uint256 birthday;     // birth block
-    uint256 parentA;      // parentA ID
-    uint256 parentB;      // parentB ID
-}
-
 struct Animal {
     Rarity rarity;
     string name;
     string tokenURI;
     string metadataURI;
-    bool enabled;
     IMarket.BidShares bidShares;
+    IMedia.MediaData mediaData;
+    bool enabled;
 }
 
 struct Hybrid {
@@ -73,6 +64,7 @@ struct Hybrid {
     string parentB;
     string tokenURI;
     string metadataURI;
-    bool enabled;
     IMarket.BidShares bidShares;
+    IMedia.MediaData mediaData;
+    bool enabled;
 }
