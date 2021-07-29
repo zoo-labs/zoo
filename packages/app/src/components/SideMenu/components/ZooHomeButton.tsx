@@ -4,18 +4,15 @@ import styled from 'styled-components';
 import logo from "media/ZooEggLogoWhite.png";
 
 const LogoContainer = styled.button<{ width?: string }>`
-  width: ${(props) => props.width === null ? `50px` : `${props.width}`};
-  justify-content: inherit;
-  display: flex;
   border-radius: 30px;
   background: transparent;
-  padding: 10px 0px;
+  border: none;
+  width: 100%;
 `;
 
 const MaxHeightLogo = styled.img`
-    width: 100%;
-    margin-left: 15px;
-    // padding-bottom: 50px;
+    width: 60px;
+    height: 60px;
     z-index: 100;
 `;
 
