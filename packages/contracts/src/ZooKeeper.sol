@@ -115,8 +115,8 @@ contract ZooKeeper {
     function addDrop(
         string memory _name,
         uint256 _totalSupply,
-        uint256 _eggPrice
-        address _address,
+        uint256 _eggPrice,
+        address _address
     ) public returns (uint256, address) {
         _dropIDs.increment();
         uint256 id = _dropIDs.current();
