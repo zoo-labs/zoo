@@ -23,10 +23,68 @@ const BidInput = styled.input.attrs({
    type: "number",
    min: 1,
 })`
-   width: 90%;
+   width: 80%;
    /* margin: auto; */
    font-size: 23px;
+   align-items: center;
+   background: #925677;
+   text-transform: uppercase;
+   border-radius: 8px;
+   transition: all 0.2s;
+   display: inline-block;
+   text-shadow: x-offset y-offset blur color;
+   text-decoration: none;
+   border: 1px solid #230616;
+   -webkit-box-shadow: 0px 2px 0px #461e34, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+   -moz-box-shadow: 0px 2px 0px #461e34, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+   box-shadow: 0px 2px 0px #461e34, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+   -moz-appearance: textfield;
+   ::-webkit-inner-spin-button{
+      -webkit-appearance: none;
+      margin: 0;
+   }
+   ::-webkit-outer-spin-button{
+      -webkit-appearance: none;
+      margin: 0;
+   }
 `;
+
+const ArrowBottom = styled.div`
+  width: 0;
+  height: 0;
+  border-left: calc(0.75rem - 1px) solid transparent;
+  border-right: calc(0.75rem - 1px) solid transparent;
+  border-top: calc(0.75rem - 1px) solid #925677;
+  font-size: 0;
+  line-height: 0;
+  position: absolute;
+  right: 15%;
+  margin-top: calc(0.75rem + 3px);
+  &:hover {
+    cursor: pointer;
+  }
+`
+
+const ArrowUp = styled.div`
+  width: 0;
+  height: 0;
+  border-left: calc(0.75rem - 1px) solid transparent;
+  border-right: calc(0.75rem - 1px) solid transparent;
+  border-bottom: calc(0.75rem - 1px) solid #925677;
+  font-size: 0;
+  line-height: 0;
+  position: absolute;
+  margin-top: 2px;
+  right: 15%;
+  &:hover {
+    cursor: pointer;
+  }
+`
+
+const StyledRow = styled.div`
+  display: flex;
+  flex-direction: row;
+`
 
 const ButtonContent = styled(Flex)`
    justify-content: space-around;
@@ -102,6 +160,17 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
       }
    };
 
+   const increaseEgg = () => {
+      setValue(value + 100);
+    }
+  
+    const decreaseEgg = () => {
+      if(value <= 100) {
+        return;
+      }
+      setValue(value - 100);
+    }
+
    return (
       <>
          <BottomModal
@@ -128,11 +197,15 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
                <Text bold ml="16px"  mt="4px" mb="16px" fontSize="22px" color="text">
                   {item.buyNow}
                </Text>
-               <BidInput
-                  type="number"
-                  onChange={changed()}
-                  defaultValue={value}
-               />
+               <StyledRow>
+                  <BidInput
+                     type="number"
+                     onChange={changed()}
+                     value={value}
+                  />
+                  <ArrowBottom onClick={decreaseEgg} />
+                  <ArrowUp onClick={increaseEgg} />
+               </StyledRow>
                <ButtonContent>
                   <BorderButton
                      scale="md"
