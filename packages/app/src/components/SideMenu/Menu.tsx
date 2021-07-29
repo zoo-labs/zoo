@@ -41,7 +41,7 @@ const StyledNav = styled.nav<{ showMenu: boolean; isPushed: boolean }>`
   padding-right: 16px;
   width: 100%;
   height: ${MENU_HEIGHT}px;
-  background-color: ${({ showMenu }) => (showMenu ? 'transparent' : `black`)};
+  background-color: ${({ showMenu, theme }) => (showMenu ? theme.isDark ? 'transparent' : `black` : `black`)};
   z-index: 20;
   transform: translate3d(0, 0, 0);
 `;
