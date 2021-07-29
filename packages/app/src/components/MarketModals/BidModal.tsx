@@ -27,17 +27,17 @@ const BidInput = styled.input.attrs({
    /* margin: auto; */
    font-size: 23px;
    align-items: center;
-   background: #925677;
+   background: #CDB7C3;
    text-transform: uppercase;
-   border-radius: 8px;
+   border-radius: 4px;
    transition: all 0.2s;
    display: inline-block;
    text-shadow: x-offset y-offset blur color;
    text-decoration: none;
    border: 1px solid #230616;
-   -webkit-box-shadow: 0px 2px 0px #461e34, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
-   -moz-box-shadow: 0px 2px 0px #461e34, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
-   box-shadow: 0px 2px 0px #461e34, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+   -webkit-box-shadow: inset 0px 1px 0px 0px #461e34;
+   -moz-box-shadow: inset 0px 1px 0px 0px #461e34;
+   box-shadow: inset 0px 1px 0px 0px #461e34;
    -moz-appearance: textfield;
    ::-webkit-inner-spin-button{
       -webkit-appearance: none;
@@ -47,38 +47,41 @@ const BidInput = styled.input.attrs({
       -webkit-appearance: none;
       margin: 0;
    }
+   padding-left: 4px;
 `;
 
 const ArrowBottom = styled.div`
   width: 0;
   height: 0;
-  border-left: calc(0.75rem - 1px) solid transparent;
-  border-right: calc(0.75rem - 1px) solid transparent;
-  border-top: calc(0.75rem - 1px) solid #925677;
+  border-left: calc(0.75rem - 2px) solid transparent;
+  border-right: calc(0.75rem - 2px) solid transparent;
+  border-top: calc(0.75rem - 2px) solid #925677;
   font-size: 0;
   line-height: 0;
   position: absolute;
-  right: 15%;
-  margin-top: calc(0.75rem + 3px);
+  right: 16%;
+  margin-top: calc(0.75rem + 4px);
   &:hover {
     cursor: pointer;
   }
+  box-shadow: 0px -1px 0px #461e34;
 `
 
 const ArrowUp = styled.div`
   width: 0;
   height: 0;
-  border-left: calc(0.75rem - 1px) solid transparent;
-  border-right: calc(0.75rem - 1px) solid transparent;
-  border-bottom: calc(0.75rem - 1px) solid #925677;
+  border-left: calc(0.75rem - 2px) solid transparent;
+  border-right: calc(0.75rem - 2px) solid transparent;
+  border-bottom: calc(0.75rem - 2px) solid #925677;
   font-size: 0;
   line-height: 0;
   position: absolute;
   margin-top: 2px;
-  right: 15%;
+  right: 16%;
   &:hover {
     cursor: pointer;
   }
+  box-shadow: 0px 1px 0px #461e34;
 `
 
 const StyledRow = styled.div`
