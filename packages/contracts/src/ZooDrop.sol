@@ -5,14 +5,13 @@ pragma solidity >=0.8.4;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
 
-
 contract ZooDrop is Ownable {
     using Counters for Counters.Counter;
 
     string public name;
     uint256 public eggPrice;
     uint256 public totalSupply;
-    Counters.Counter public _currentSupply;
+    Counters.Counter private _currentSupply;
 
     struct Animal {
         string name;
@@ -31,18 +30,22 @@ contract ZooDrop is Ownable {
     }
 
     // mapping of animal name to available base animals introduced in this drop
-    mapping (string => Animal) public animals;
+    mapping(string => Animal) public animals;
 
     // mapping of animal name to available hybrid animals introduced in this drop
-    mapping (string => Hybrid) public hybrids;
+    mapping(string => Hybrid) public hybrids;
 
     // mapping of animal key to animal tokenuri
-    mapping (string => string) public tokenURI;
+    mapping(string => string) public tokenURI;
 
     // mapping of animal key to animal metadata
-    mapping (string => string) public metadataURI;
+    mapping(string => string) public metadataURI;
 
-    constructor(string memory _name, uint256 _supply, uint256 _eggPrice){
+    constructor(
+        string memory _name,
+        uint256 _supply,
+        uint256 _eggPrice
+    ) {
         name = _name;
         eggPrice = _eggPrice;
         totalSupply = _supply;
@@ -57,7 +60,14 @@ contract ZooDrop is Ownable {
     /**
         Add animal for possibility of hatching for the drop
      */
-    function addAnimal(string memory _animal, uint256 _yield, string memory _rarityName, uint256 _rarity, string memory _tokenURI, string memory _metadataURI) public onlyOwner {
+    function addAnimal(
+        string memory _animal,
+        uint256 _yield,
+        string memory _rarityName,
+        uint256 _rarity,
+        string memory _tokenURI,
+        string memory _metadataURI
+    ) public onlyOwner {
         Animal memory newAnimal;
         Rarity memory newRarity = Rarity({name: _rarityName, rarity: _rarity});
         newAnimal.name = _animal;
@@ -72,7 +82,14 @@ contract ZooDrop is Ownable {
     /**
         Add animal for possibility of hatching for the drop
      */
-    function addHybrid(string memory _animal, string memory _base, string memory _secondary, uint256 yield, string memory _tokenURI, string memory _metadataURI) public onlyOwner {
+    function addHybrid(
+        string memory _animal,
+        string memory _base,
+        string memory _secondary,
+        uint256 yield,
+        string memory _tokenURI,
+        string memory _metadataURI
+    ) public onlyOwner {
         Hybrid memory newHybrid;
         newHybrid.name = _animal;
         newHybrid.yield = yield;
@@ -85,18 +102,27 @@ contract ZooDrop is Ownable {
         metadataURI[string(abi.encodePacked(_base, _secondary))] = _metadataURI;
 
         hybrids[_animal] = newHybrid;
-
     }
 
-    function setTokenURI(string memory _animal, string memory _tokenURI) public onlyOwner {
+    function setTokenURI(string memory _animal, string memory _tokenURI)
+        public
+        onlyOwner
+    {
         tokenURI[_animal] = _tokenURI;
     }
 
-    function getMetadataURI(string memory _animal) public view returns (string memory) {
+    function getMetadataURI(string memory _animal)
+        public
+        view
+        returns (string memory)
+    {
         return metadataURI[_animal];
     }
 
-    function setMetadataURI(string memory _animal, string memory _metadataURI) public onlyOwner {
+    function setMetadataURI(string memory _animal, string memory _metadataURI)
+        public
+        onlyOwner
+    {
         metadataURI[_animal] = _metadataURI;
     }
 
@@ -110,11 +136,12 @@ contract ZooDrop is Ownable {
         return (tokenURI["basicEgg"], metadataURI["basicEgg"]);
     }
 
-    function getHybridEgg() public view onlyOwner returns (string memory, string memory) {
+    function getHybridEgg()
+        public
+        view
+        onlyOwner
+        returns (string memory, string memory)
+    {
         return (tokenURI["hybridEgg"], metadataURI["hybridEgg"]);
     }
 }
-
-
-
-

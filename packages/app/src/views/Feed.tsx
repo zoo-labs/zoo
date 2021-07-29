@@ -203,12 +203,12 @@ function Feed<FeedPagePops>({ match }) {
                </ButtonMenuItem>
             </ButtonMenu>
          </ToggleContainer>
-         {animalsFiltered.length ? (
+         {animalData.length ? (
             <Swiper
                spaceBetween={30}
                slidesPerView={1}
                direction={isMobile ? "vertical" : "horizontal"}>
-               {animalsFiltered.map((data) => {
+               {animalData.map((data) => {
                   return data.listed ? (
                      <SwiperSlide key={data.tokenId + "slide"}>
                         <FeedCard
