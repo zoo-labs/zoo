@@ -4,7 +4,6 @@ pragma solidity >=0.8.4;
 
 abstract contract Token {
     function transfer(address to, uint256 amount) public virtual returns (bool);
-
     function balanceOf(address addr) public view virtual returns (uint256);
 }
 

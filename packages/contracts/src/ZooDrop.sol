@@ -2,33 +2,23 @@
 
 pragma solidity >=0.8.4;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
+import { Animal, Egg, Hybrid, Rarity, Type } from "./ZooTypes.sol";
+
+import "./console.sol";
 
 
 contract ZooDrop is Ownable {
     using Counters for Counters.Counter;
+    Counters.Counter private _eggSupply;
 
     string public name;
     uint256 public eggPrice;
-    uint256 public totalSupply;
-    Counters.Counter public _currentSupply;
+    uint256 public eggSupply;
 
-    struct Animal {
-        string name;
-        uint256 yield;
-        Rarity rarity;
-    }
-
-    struct Rarity {
-        string name;
-        uint256 rarity;
-    }
-
-    struct Hybrid {
-        string name;
-        uint256 yield;
-    }
+    // mapping of rarities to animal rarity
+    mapping (string => Rarity) public rarities;
 
     // mapping of animal name to available base animals introduced in this drop
     mapping (string => Animal) public animals;
@@ -36,85 +26,124 @@ contract ZooDrop is Ownable {
     // mapping of animal name to available hybrid animals introduced in this drop
     mapping (string => Hybrid) public hybrids;
 
+    // mapping of parent + parent to hybrid animal
+    mapping (string => Hybrid) public hybridParents;
+
     // mapping of animal key to animal tokenuri
-    mapping (string => string) public tokenURI;
+    mapping (string => string) public tokenURIs;
 
     // mapping of animal key to animal metadata
-    mapping (string => string) public metadataURI;
+    mapping (string => string) public metadataURIs;
 
-    constructor(string memory _name, uint256 _supply, uint256 _eggPrice){
+    constructor(string memory _name, uint256 supply, uint256 price){
         name = _name;
-        eggPrice = _eggPrice;
-        totalSupply = _supply;
-        _currentSupply._value = _supply;
+        eggPrice = price;
+        eggSupply = supply;
+        _eggSupply._value = supply;
     }
 
-    function setEggPrice(uint256 _price) public onlyOwner {
-        require(_price > 0, "Price must be over zero");
-        eggPrice = _price;
-    }
-
-    /**
-        Add animal for possibility of hatching for the drop
-     */
-    function addAnimal(string memory _animal, uint256 _yield, string memory _rarityName, uint256 _rarity, string memory _tokenURI, string memory _metadataURI) public onlyOwner {
-        Animal memory newAnimal;
-        Rarity memory newRarity = Rarity({name: _rarityName, rarity: _rarity});
-        newAnimal.name = _animal;
-        newAnimal.rarity = newRarity;
-        newAnimal.yield = _yield;
-
-        tokenURI[_animal] = _tokenURI;
-        metadataURI[_animal] = _metadataURI;
-        animals[_animal] = newAnimal;
-    }
-
-    /**
-        Add animal for possibility of hatching for the drop
-     */
-    function addHybrid(string memory _animal, string memory _base, string memory _secondary, uint256 yield, string memory _tokenURI, string memory _metadataURI) public onlyOwner {
-        Hybrid memory newHybrid;
-        newHybrid.name = _animal;
-        newHybrid.yield = yield;
-
-        tokenURI[_animal] = _tokenURI;
-        metadataURI[_animal] = _metadataURI;
-
-        hybrids[string(abi.encodePacked(_base, _secondary))] = newHybrid;
-        tokenURI[string(abi.encodePacked(_base, _secondary))] = _tokenURI;
-        metadataURI[string(abi.encodePacked(_base, _secondary))] = _metadataURI;
-
-        hybrids[_animal] = newHybrid;
-
-    }
-
-    function setTokenURI(string memory _animal, string memory _tokenURI) public onlyOwner {
-        tokenURI[_animal] = _tokenURI;
-    }
-
-    function getMetadataURI(string memory _animal) public view returns (string memory) {
-        return metadataURI[_animal];
-    }
-
-    function setMetadataURI(string memory _animal, string memory _metadataURI) public onlyOwner {
-        metadataURI[_animal] = _metadataURI;
-    }
-
+    // Return currently available supply of Eggs
     function currentSupply() public view returns (uint256) {
-        return _currentSupply.current();
+        return _eggSupply.current();
     }
 
-    function buyEgg() public onlyOwner returns (string memory, string memory) {
-        require(_currentSupply.current() > 0, "Current: decrement overflow");
-        _currentSupply.decrement();
-        return (tokenURI["basicEgg"], metadataURI["basicEgg"]);
+    // Control Egg / Name pricing
+    function setEggPrice(uint256 price) public onlyOwner {
+        require(price > 0, "Price must be over zero");
+        eggPrice = price;
+    }
+
+    // Add or configure a given rarity
+    function setRarity(string memory _name, uint256 probability, uint256 yield, uint256 boost, bool enabled) public onlyOwner {
+        require(probability > 0, "Rarity must be over zero");
+        Rarity memory rarity = Rarity({
+            name: _name,
+            probability: probability,
+            yield: yield,
+            boost: boost,
+            enabled: enabled
+        });
+        rarities[_name] = rarity;
+    }
+
+    // Add or configure a given animal
+    function setAnimal(string memory _name, string memory rarity, string memory tokenURI, string memory metadataURI, bool enabled) public onlyOwner {
+        Animal memory animal = Animal({
+            rarity: getRarity(rarity),
+            name: _name,
+            tokenURI: tokenURI,
+            metadataURI: metadataURI,
+            enabled: enabled
+        });
+        tokenURIs[_name] = tokenURI;
+        metadataURIs[_name] = metadataURI;
+        animals[_name] = animal;
+    }
+
+    // Add or configure a given animal pairing and hybrid animal
+    function setHybrid(string memory _name, string memory rarity, string memory parentA, string memory parentB, string memory tokenURI, string memory metadataURI, bool enabled) public onlyOwner {
+        Hybrid memory hybrid = Hybrid({
+            rarity: getRarity(rarity),
+            name: _name,
+            parentA: parentA,
+            parentB: parentB,
+            tokenURI: tokenURI,
+            metadataURI: metadataURI,
+            enabled: enabled
+        });
+        tokenURIs[_name] = tokenURI;
+        metadataURIs[_name] = metadataURI;
+        hybrids[_name] = hybrid;
+        hybridParents[parentsKey(parentA, parentB)] = hybrid;
+    }
+
+    function animalExists(string memory _name) public view returns (bool) {
+        Animal memory animal = animals[_name];
+        Hybrid memory hybrid = hybrids[_name];
+
+        // Is either an animal or hybrid
+        if (animal.enabled || hybrid.enabled) {
+            return true;
+        }
+
+        return false;
+    }
+
+    function setTokenURI(string memory _name, string memory tokenURI) public onlyOwner {
+        tokenURIs[_name] = tokenURI;
+    }
+
+    function setMetadataURI(string memory _name, string memory metadataURI) public onlyOwner {
+        metadataURIs[_name] = metadataURI;
+    }
+
+    function getRarity(string memory name) public view returns (Rarity memory) {
+        return rarities[name];
+    }
+
+    function getAnimal(string memory name) public view returns (Animal memory) {
+        return animals[name];
+    }
+
+    function getHybrid(string memory name) public view returns (Hybrid memory) {
+        return hybrids[name];
+    }
+
+    function parentsKey(string memory parentA, string memory parentB) public pure returns (string memory) {
+        return string(abi.encodePacked(parentA, parentB));
+    }
+
+    function getHybridByParents(string memory parentA, string memory parentB) public view returns (Hybrid memory) {
+        return hybridParents[parentsKey(parentA, parentB)];
     }
 
     function getHybridEgg() public view onlyOwner returns (string memory, string memory) {
-        return (tokenURI["hybridEgg"], metadataURI["hybridEgg"]);
+        return (tokenURIs["hybridEgg"], metadataURIs["hybridEgg"]);
+    }
+
+    function buyEgg() public onlyOwner returns (string memory, string memory) {
+        require(currentSupply() > 0, "Out of eggs");
+        _eggSupply.decrement();
+        return (tokenURIs["baseEgg"], metadataURIs["baseEgg"]);
     }
 }
-
-
-
-
