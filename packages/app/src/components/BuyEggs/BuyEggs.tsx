@@ -69,15 +69,15 @@ const EggInput = styled.input.attrs({
 const ArrowBottom = styled.div`
   width: 0;
   height: 0;
-  border-left: calc(0.75rem - 2px) solid transparent;
-  border-right: calc(0.75rem - 2px) solid transparent;
-  border-top: calc(0.75rem - 2px) solid #925677;
+  border-left: calc(0.9rem - 2px) solid transparent;
+  border-right: calc(0.9rem - 2px) solid transparent;
+  border-top: calc(0.9rem - 2px) solid #925677;
   border-radius: 1px;
   font-size: 0;
   line-height: 0;
   position: absolute;
   right: 40px;
-  margin-top: calc(0.75rem + 2.5px);
+  margin-top: calc(0.9rem + 3px);
   box-shadow: 0px -1px 0px #461e34;
   &:hover {
     cursor: pointer;
@@ -87,14 +87,15 @@ const ArrowBottom = styled.div`
 const ArrowUp = styled.div`
   width: 0;
   height: 0;
-  border-left: calc(0.75rem - 2px) solid transparent;
-  border-right: calc(0.75rem - 2px) solid transparent;
-  border-bottom: calc(0.75rem - 2px) solid #925677;
+  border-left: calc(0.9rem - 2px) solid transparent;
+  border-right: calc(0.9rem - 2px) solid transparent;
+  border-bottom: calc(0.9rem - 2px) solid #925677;
   font-size: 0;
   line-height: 0;
   position: absolute;
   box-shadow: 0px 1px 0px #461e34;
   right: 40px;
+  margin-top: -2px;
   &:hover {
     cursor: pointer;
   }
