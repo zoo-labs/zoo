@@ -35,7 +35,7 @@ const FinalThird = styled.div`
   height: 35vh;
   width: 100%;
   padding-left: 15px;
-   padding-bottom: 20px;
+   padding-bottom: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -126,12 +126,14 @@ const StyledChevron = styled(ChevronLeftIcon)`
 `;
 
 const ActionButonContainer = styled.div`
-  width: 40%;
-  display: inline-flex;
-  flex-direction: column;
-  height: 200px:
-  align-items: center;
-  justify-content: space-between;
+  width: 80px;
+  display: flex;
+  position: fixed;
+  right: 0;
+  bottom: 20px;
+  flex-direction: row;
+  // align-items: end;
+  justify-content: flex-end;
  
 `
 
@@ -163,7 +165,6 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
         <FinalThird>
           <Flex flexDirection="row">
             <Flex flexDirection="column" width="calc(100% - 75px)"
-              pt="30px"
                   style={{textShadow: "2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000"}}>
               <MainHeading
                 bold
@@ -180,12 +181,13 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
               </Subheading>
               <Subheading bold as="p">{`Born: ${StringDate}`}</Subheading>
               <Subheading bold as="p">{`Current Bid: ${item.currentBid}`}</Subheading>
-              
-              
             </Flex>
-            <Flex width="100%" height="100%" maxWidth="60px">
           <ActionButonContainer> 
-              
+              <Flex width="100%"
+                  height="100%"
+                // maxWidth="60px"
+                  flexDirection="column"
+              >
               <IconButton
                 onClick={() => {
                   onYield();
@@ -208,9 +210,8 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
                   Bid
                 </Text> */}
               </IconButton>
-                <ZooHomeButton width="50px" />
+                <ZooHomeButton /> </Flex>
               </ActionButonContainer>
-              </Flex>
           </Flex> 
         </FinalThird>
         </CardOverlay>
