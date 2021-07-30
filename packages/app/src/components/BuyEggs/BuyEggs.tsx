@@ -8,6 +8,11 @@ import { addEggs } from "state/actions";
 import { useWeb3React } from "@web3-react/core";
 import { useDispatch } from "react-redux";
 import { Flex, TextButton } from 'components'
+import Moralis from "moralis";
+
+Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
+
+Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server";
 
 const ColumnContainer = styled.div`
   display: flex;
@@ -163,19 +168,43 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
       basic: true
     }
   
-  const handleSubmit = async () => {
-    const testEggs = []
-    console.log("value", value)
-    for (let i = 0; i < value; i++) {
-      const toSet: Egg = { ...emptyEgg }
-      toSet.tokenId = String(Math.floor(Math.random()*100000000)+1) //to be changed
-      toSet.animalId = String(Math.floor(Math.random()*4)+1)
-      testEggs.push(toSet)
-    }
-    console.log(testEggs)
-    dispatch(addEggs(testEggs))
-    onDismiss()
-    }
+    const handleSubmit = async () => {
+      const testEggs = [];
+      console.log("value", value);
+      for (let i = 0; i < value; i++) {
+         const toSet: Egg = { ...emptyEgg };
+         const tokenId = Math.floor(Math.random() * 100000000) + 1;
+         const animalId = String(Math.floor(Math.random() * 4) + 1);
+         toSet.tokenId = String(tokenId); //to be changed
+         toSet.animalId = animalId;
+         const EggObject = Moralis.Object.extend("FinalEggs");
+         const current = new EggObject();
+
+         // EggID Owner Burned Type MetaURI TokenURI Parent1 Parent2
+         current.set("EggID", tokenId);
+         current.set("Owner", account);
+         current.set("Burned", false);
+         current.set("MetaURI", "");
+         current.set("TokenURI", "");
+         current.set("AnimalTypeID", animalId);
+         current.set("Type", "basic");
+         await current.save();
+
+         testEggs.push(toSet);
+         console.log(toSet);
+
+         const TransOb = Moralis.Object.extend("Transactions")
+         const newTrans = new TransOb
+
+         newTrans.set("From", account)
+         newTrans.set("Action", "Bought Egg")
+         newTrans.set("TokenID", tokenId)
+         newTrans.save()
+      }
+      // console.log(testEggs)
+      // dispatch(addEggs(testEggs))
+      onDismiss();
+   };
 
   return (
     <ModalWrapper>
