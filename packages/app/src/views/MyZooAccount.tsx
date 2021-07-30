@@ -779,6 +779,9 @@ const MyZooAccount: React.FC = () => {
 
     Object.values(allEggs).forEach((egg, index) => {
       const eggType = egg.basic ? "BASIC" : "HYBRID";
+      if (egg.owner !== account) {
+         return;
+       }
       const createdDate = egg.created
         ? new Date(Number(egg.created)).getTime()
         : new Date().getTime();
@@ -810,7 +813,7 @@ const MyZooAccount: React.FC = () => {
       //  }
     });
     empty = eggData.length === 0 && Object.keys(eggData).length !== 0;
-    eggData = sortData(eggData, "basic");
+    eggData = sortData(eggData, "hybrid");
 
     return (
       <RowLayout>
