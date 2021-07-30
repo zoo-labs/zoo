@@ -33,6 +33,9 @@ const ModalWrapper = styled.div`
   justify-content: center;
   align-items: center;
   z-index: ${({ theme }) => theme.zIndices.modal - 1};
+  * {
+    color: ${({ theme }) => theme.colors.text};
+  }
 `
 
 const EggInput = styled.input.attrs({ 
@@ -52,6 +55,7 @@ const EggInput = styled.input.attrs({
   text-shadow: x-offset y-offset blur color;
   text-decoration: none;
   border: 1px solid #230616;
+  color: black;
   -webkit-box-shadow: inset 0px 1px 0px 0px #925677;
   -moz-box-shadow: inset 0px 1px 0px 0px #925677;
   box-shadow: inset 0px 1px 0px 0px #925677;
@@ -78,7 +82,7 @@ const ArrowBottom = styled.div`
   position: absolute;
   right: 40px;
   margin-top: calc(0.9rem + 3px);
-  box-shadow: 0px -1px 0px #461e34;
+  box-shadow: ${({ theme }) => theme.colors.boxShadow};
   &:hover {
     cursor: pointer;
   }
@@ -93,7 +97,7 @@ const ArrowUp = styled.div`
   font-size: 0;
   line-height: 0;
   position: absolute;
-  box-shadow: 0px 1px 0px #461e34;
+  box-shadow: ${({ theme }) => theme.colors.boxShadow};
   right: 40px;
   margin-top: -2px;
   &:hover {
