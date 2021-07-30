@@ -33,4 +33,5 @@ export interface Egg {
   timeRemaining?: number;
   CTAOverride?: any;
   created?: string;
+  burned?:boolean
 }
