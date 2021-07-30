@@ -45,8 +45,7 @@ const ModalWrapper = styled.div`
 
 const EggInput = styled.input.attrs({ 
   type: 'string',
-  min: 1,
-  defaultValue: 1
+  min: 1
 })`
   width: 80%;
   line-height: 1.5rem;

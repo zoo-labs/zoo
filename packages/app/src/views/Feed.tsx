@@ -261,7 +261,7 @@ function Feed<FeedPagePops>({ match }) {
                   spaceBetween={30}
                   slidesPerView={1}
                   direction="vertical">
-                  {totalAnimalData.map((data) => {
+                  {totalAnimalData.map((data, index) => {
                      return data.listed ? (
                         <SwiperSlide key={data.tokenId + "slide"}>
                            <FeedCard
@@ -271,7 +271,7 @@ function Feed<FeedPagePops>({ match }) {
                            />
                         </SwiperSlide>
                      ) : (
-                        <></>
+                        <div key={index}></div>
                      );
                   })}
                </Swiper>
