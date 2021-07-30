@@ -118,13 +118,12 @@ contract ZooDrop is Ownable {
     }
 
     // Add or configure a given animal
-    function setAnimal(string memory name, string memory rarity, string memory tokenURI, string memory metadataURI, bool enabled) public onlyOwner returns (bool) {
+    function setAnimal(string memory name, string memory rarity, string memory tokenURI, string memory metadataURI) public onlyOwner returns (bool) {
         Animal memory animal = Animal({
             name: name,
             rarity: getRarity(rarity),
             data: getMediaData(tokenURI, metadataURI),
-            bidShares: getBidShares(),
-            enabled: enabled
+            bidShares: getBidShares()
         });
 
         // Save animal by name
@@ -137,15 +136,14 @@ contract ZooDrop is Ownable {
     }
 
     // Add or configure a given hybrid
-    function setHybrid(string memory name, string memory rarity, string memory parentA, string memory parentB, string memory tokenURI, string memory metadataURI, bool enabled) public onlyOwner returns (bool) {
+    function setHybrid(string memory name, string memory rarity, string memory parentA, string memory parentB, string memory tokenURI, string memory metadataURI) public onlyOwner returns (bool) {
         Hybrid memory hybrid = Hybrid({
             name: name,
             rarity: getRarity(rarity),
             parentA: parentA,
             parentB: parentB,
             data: getMediaData(tokenURI, metadataURI),
-            bidShares: getBidShares(),
-            enabled: enabled
+            bidShares: getBidShares()
         });
 
         hybrids[name] = hybrid;
@@ -223,14 +221,14 @@ contract ZooDrop is Ownable {
         return token;
     }
 
-
-    function parentsKey(string memory parentA, string memory parentB) public pure returns (string memory) {
-        return string(abi.encodePacked(parentA, parentB));
+    // Get key for two parents
+    function parentsKey(Pair memory parents) public pure returns (string memory) {
+        return string(abi.encodePacked(parents.animalA, parents.animalB));
     }
 
     // Get Hybrid from Parents
-    function parentsToHybrid(string memory parentA, string memory parentB) public view returns (Hybrid memory) {
-        return hybridParents[parentsKey(parentA, parentB)];
+    function parentsToHybrid(Pair memory parents) public view returns (Hybrid memory) {
+        return hybridParents[parentsKey(parents.animalA, parents.animalB)];
     }
 
     // Return a current eggPrice for BASE_EGG Token

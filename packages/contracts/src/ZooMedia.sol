@@ -189,21 +189,21 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         external
     {
         require(msg.sender == _owner, "ZooMedia: Only owner");
-        // require(
-        //     marketAddress == address(0),
-        //     "ZooMedia: Already configured market"
-        // );
-        // require(
-        //     keeperAddress == address(0),
-        //     "ZooMedia: Already configured keeper"
-        // );
+        require(
+            marketAddress == address(0),
+            "ZooMedia: Already configured market"
+        );
+        require(
+            keeperAddress == address(0),
+            "ZooMedia: Already configured keeper"
+        );
         require(
             _marketAddress != address(0),
-            "Market: cannot set market contract as zero address"
+            "ZooMedia: cannot set market contract as zero address"
         );
         require(
             _keeperAddress != address(0),
-            "Market: cannot set keeper contract as zero address"
+            "ZooMedia: cannot set keeper contract as zero address"
         );
 
         marketAddress = _marketAddress;
@@ -275,7 +275,7 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
     /**
      * @dev Update mediaData hash on token
      */
-    function _hashToken(Token memory token) private {
+    function _hashToken(Token memory token) private view {
         token.data.contentHash = keccak256(
             abi.encodePacked(token.data.tokenURI, block.number, msg.sender)
         );
@@ -427,6 +427,18 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         onlyApprovedOrOwner(msg.sender, tokenId)
     {
         IMarket(marketAddress).acceptBid(tokenId, bid);
+    }
+
+    /**
+     * @notice Burn a Token struct
+     */
+    function burnToken(address owner, string memory tokenID) public nonReentrant onlyZooKeeper {
+        require(
+            tokenCreators[tokenID] == owner,
+            "ZooMedia: owner is not creator of media"
+        );
+
+        _burn(tokenId);
     }
 
     /**

@@ -8,7 +8,7 @@ import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { ZooDrop } from "./ZooDrop.sol";
 import { ZooMedia } from "./ZooMedia.sol";
 import { ZooMarket } from "./ZooMarket.sol";
-import { Pair, Type, Token } from "./ZooTypes.sol";
+import { Parents, Type, Token } from "./ZooTypes.sol";
 
 
 contract ZooKeeper is Ownable {
@@ -24,12 +24,9 @@ contract ZooKeeper is Ownable {
     event AddDrop(address indexed dropAddress, uint256 indexed dropID, string title, uint256 eggSupply);
     event BuyEgg(address indexed from, uint256 indexed tokenID);
     event Hatch(address indexed from, uint256 indexed tokenID);
+    event Mint(address indexed from, uint256 indexed tokenID);
     event Burn(address indexed from, uint256 indexed tokenID);
-    event FreeAnimal(
-        address indexed from,
-        uint256 indexed tokenID,
-        uint256 indexed yield
-    );
+    event Free(address indexed from, uint256 indexed tokenID, uint256 indexed yield);
     event Breed(address indexed from, uint256 indexed eggID);
 
     // Mapping of ID to Drop
@@ -86,13 +83,24 @@ contract ZooKeeper is Ownable {
         Token memory egg = drop.newEgg();
 
         // Mint Egg Token
-        media.mintToken(msg.sender, egg);
-        market.setBidShares(egg.id, egg.bidShares);
-        tokens[egg.id] = egg;
+        mint(msg.sender, egg);
 
         emit BuyEgg(msg.sender, egg.id);
 
         return egg;
+    }
+
+    function mint(address owner, Token memory token) private {
+        media.mintToken(owner, token);
+        market.setBidShares(token.id, token.bidShares);
+        tokens[token.id] = token;
+        emit Mint(owner, token.id);
+    }
+
+    function burn(address owner, string memory tokenID) private {
+        media.burnToken(owner, tokenID);
+        delete tokens[tokenID];
+        emit Burn(msg.sender, tokenID);
     }
 
     // Burn egg and randomly return an animal NFT
@@ -115,26 +123,19 @@ contract ZooKeeper is Ownable {
         }
 
         // Burn egg aka it's hatching...
-        media.burn(eggID);
-        delete tokens[eggID];
-        emit Burn(msg.sender, eggID);
+        burn(eggID);
 
         // Mint Animal or Hybrid Token
-        media.mintToken(msg.sender, token);
-        market.setBidShares(token.id, token.bidShares);
-        tokens[token.id] = token;
-
+        mint(msg.sender, token);
         emit Hatch(msg.sender, token.id);
 
         return token;
     }
 
-    modifier validParents(Pair memory parents) {
-        require(media.tokenExists(parents.tokenA) && media.tokenExists(parents.tokenB), "ZK: nonexistent token");
-        require(media.tokenExists(parents.tokenB), "ZK: nonexistent token");
-        require(parents.tokenA != parents.tokenB, "ZK: need two animals to breed");
-        require(breedReady(parents.tokenA) && breedReady(parents.tokenB), "ZK: Wait for cooldown to finish.");
-        require(breedReady(parents.tokenB), "ZK: Wait for cooldown to finish.");
+    modifier canBreed(Pair memory pair) {
+        require(media.tokenExists(pair.tokenA) && media.tokenExists(pair.tokenB), "ZK: nonexistent token");
+        require(pair.animalA != pair.animalB, "ZK: need two animals to breed");
+        require(breedReady(parents), "ZK: Wait for cooldown to finish.");
 
         // Require non hybrids
         // require(
@@ -147,8 +148,8 @@ contract ZooKeeper is Ownable {
 
     // Breed two animals and create a hybrid egg
     function breedAnimals(
-        uint256 dropID, Pair memory parents
-    ) public validParents(parents) returns (Token memory) {
+        uint256 dropID, Pair memory pair
+    ) public canBreed(parents) returns (Token memory) {
         ZooDrop drop = ZooDrop(drops[dropID]);
 
         // Update breeding delay for each parent
@@ -187,7 +188,7 @@ contract ZooKeeper is Ownable {
         // Transfer yield
         zoo.transfer(msg.sender, yield);
 
-        emit FreeAnimal(msg.sender, tokenID, yield);
+        emit Free(msg.sender, tokenID, yield);
     }
 
     // Set price for buying a name
@@ -221,10 +222,16 @@ contract ZooKeeper is Ownable {
 
     // Update breed delays
     function updateBreedDelays(Pair memory parents) private {
-        tokens[parents.tokenA].breedCount++;
-        tokens[parents.tokenB].breedCount++;
-        tokens[parents.tokenA].breedTimestamp = block.timestamp;
-        tokens[parents.tokenB].breedTimestamp = block.timestamp;
+        Token memory animal;
+        animal = Token(parents.animalA);
+        animal.breedCount++;
+        animal.breedTimestamp = block.timestamp;
+        tokens[animal.id] = animal;
+
+        animal = Token(parents.animalB);
+        animal.breedCount++;
+        animal.breedTimestamp = block.timestamp;
+        tokens[animal.id] = animal;
     }
 
     // Get next timestamp token can be bred

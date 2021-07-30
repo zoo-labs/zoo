@@ -39,14 +39,14 @@ struct Egg {
     uint256 price;
     uint256 timestamp;    // time created
     uint256 birthday;     // birth block
-    Pair    parents;
+    Parents parents;
     IMedia.MediaData data;
     IMarket.BidShares bidShares;
 }
 
-struct Pair {
-    string  animalA;
-    string  animalB;
+struct Parents {
+    string  nameA;
+    string  nameB;
     uint256 tokenA;
     uint256 tokenB;
 }
@@ -63,7 +63,7 @@ struct Token {
     uint256 breedCount;     // optional
     uint256 breedTimestamp; // optional
     string  customName;     // optional, paid feature
-    Pair    parents;
+    Parents parents;
     IMedia.MediaData data;
     IMarket.BidShares bidShares;
 }
@@ -73,15 +73,12 @@ struct Animal {
     string name;
     IMedia.MediaData data;
     IMarket.BidShares bidShares;
-    bool enabled;
 }
 
 struct Hybrid {
     Rarity rarity;
     string name;
-    string parentA;
-    string parentB;
+    Parents parents;
     IMedia.MediaData data;
     IMarket.BidShares bidShares;
-    bool enabled;
 }
