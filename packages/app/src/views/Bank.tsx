@@ -147,7 +147,7 @@ const Bank: React.FC = () => {
             <Body>
                <LabelWrapper>
                   <Label small>Wallet Balance</Label>
-                  
+
                   <BorderButton
                      scale="sm"
                      minWidth={!isXl ? "120px" : "140px"}
@@ -156,18 +156,40 @@ const Bank: React.FC = () => {
                      {chainId !== 97
                         ? "Add Funds"
                         : wait
-                        ? "Processing..."
-                        : "Get Zoo"}
+                           ? "Processing..."
+                           : "Get Zoo"}
                   </BorderButton>
                </LabelWrapper>
                <Flex width="100%" alignItems="center" justifyContent="space-around">
                   <ValueWrapper>{zooBalance} ZOO </ValueWrapper>
                   {/* Commented out since there is to ZOO to USD conversion yet */}
-                  {/* <ValueWrapper style={{ fontSize: "16px",  color: "rgb(221 224 26)" }}>0 USD</ValueWrapper> */} 
+                  {/* <ValueWrapper style={{ fontSize: "16px",  color: "rgb(221 224 26)" }}>0 USD</ValueWrapper> */}
                </Flex>
                <Label small>Total Daily Yield</Label>
                <ValueWrapper> 200 ZOO </ValueWrapper>
-               <Table data={[]} columns={"block"}/>
+               <Table
+                  data={
+                     [
+                        {
+                           txHash: { txHash: 'abc' },
+                           status: { status: 'success' },
+                           block: { block: 1232 },
+                           txAction: { txAction: 'txAction' },
+                           from: { from: 'original Place' },
+                           to: { to: 'destination Place' }
+                        }
+                     ]
+                  }
+                  columns={
+                     [
+                        { name: 'txHash', label: 'txHash' },
+                        { name: 'status', label: 'status' },
+                        { name: 'block', label: 'block' },
+                        { name: 'txAction', label: 'txAction' },
+                        { name: 'from', label: 'from' },
+                        { name: 'to', label: 'to' },
+                     ]
+                  } />
             </Body>
          </Page>
       </>
