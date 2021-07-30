@@ -1,4 +1,5 @@
 import BorderButton from "components/Button/BorderButton";
+import styled from 'styled-components';
 import StickyBottomMenu from "components/Button/StickyBottomMenu"
 import Page from "components/layout/Page";
 import React, { useState, useEffect } from "react";
@@ -48,12 +49,60 @@ const ValueWrapper = styles(Text)`
     padding: 16px;
     font-size: 18px;
 `;
-const RowWrapper = styles.div`
-    width: 100%;
-    display: flex;
+const Container = styled.div`
+  filter: ${({ theme }) => theme.card.dropShadow};
+  width: 100%;
+  background: ${({ theme }) => theme.card.background};
+  border-radius: 16px;
+  min-width: 280px;
+`
+
+const TableWrapper = styled.div`
+  flex-direction: row;
+  flex: 1 1 auto;
+  
+  -webkit-box-pack: start;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`
+
+const StyledTable = styled.table`
+  display: flex;
+  border-collapse: collapse;
+  font-size: 14px;
+  border-radius: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  position: relative;
+  overflow: scroll;
+`
+
+const TableBody = styled.tbody`
+width: fit-content;
+  & tr {
+     display: flex;
+     flex-direction: row;
     justify-content: space-around;
-    margin: 16px;
-`;
+    td {
+      font-size: 16px;
+      vertical-align: left;
+    }
+    th {
+      vertical-align: left;
+    }
+  }
+`
+
+const TableRow = styled.tr`
+  color: white;
+`
+
+const TableContainer = styled.div`
+  position: relative;
+`
 
 const Bank: React.FC = () => {
    const [zooBalance, setBalance] = useState(0.0);
@@ -139,6 +188,33 @@ const Bank: React.FC = () => {
       </HeadingContainer>
    );
 
+   const dummyData = [
+      [
+         { txHash: 'abc' ,
+          status: 'success' ,
+          block: 1232 ,
+          txAction: 'txAction' ,
+          from: 'original Place' ,
+          to: 'destination Place' }
+      ],
+      [
+         { txHash: 'abc' ,
+          status: 'success' ,
+          block: 1232 ,
+          txAction: 'txAction' ,
+          from: 'original Place' ,
+          to: 'destination Place' }
+      ],
+      [
+         { txHash: 'abc' ,
+          status: 'success' ,
+          block: 1232 ,
+          txAction: 'txAction' ,
+          from: 'original Place' ,
+          to: 'destination Place' }
+      ],
+   ]
+
 
    return (
       <>
@@ -167,7 +243,7 @@ const Bank: React.FC = () => {
                </Flex>
                <Label small>Total Daily Yield</Label>
                <ValueWrapper> 200 ZOO </ValueWrapper>
-               <Table
+               {/* <Table
                   data={
                      [
                         {
@@ -189,7 +265,38 @@ const Bank: React.FC = () => {
                         { name: 'from', label: 'from' },
                         { name: 'to', label: 'to' },
                      ]
-                  } />
+                  } /> */}
+               <Label small>Total Daily Yield</Label>
+               <Container>
+                  <TableContainer>
+                     <TableWrapper>
+                        <StyledTable>
+                           <TableBody>
+                              <TableRow>
+                                 <td>txHash</td>
+                                 <td>status</td>
+                                 <td>block</td>
+                                 <td>txAction</td>
+                                 <td>from</td>
+                                 <td>to</td>
+                              </TableRow>
+                              {dummyData.map((d) => {
+                                 return (
+                                    <TableRow>
+                                       <td>{d[0].txHash}</td>
+                                       <td>{d[0].status}</td>
+                                       <td>{d[0].block}</td>
+                                       <td>{d[0].txAction}</td>
+                                       <td>{d[0].from}</td>
+                                       <td>{d[0].to}</td>
+                                    </TableRow>
+                                 )
+                              })}
+                           </TableBody>
+                        </StyledTable>
+                     </TableWrapper>
+                  </TableContainer>
+               </Container>
             </Body>
          </Page>
       </>
