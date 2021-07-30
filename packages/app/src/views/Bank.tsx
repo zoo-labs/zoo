@@ -17,7 +17,8 @@ import BuyEggs from "components/BuyEggs";
 import { getZooToken, getZooFaucet } from "util/contractHelpers";
 import { useMatchBreakpoints } from 'components';
 import { FaHome } from "react-icons/fa";
-import Table from 'components/Table/Table'
+import Moralis from 'moralis'
+import { resourceLimits } from "worker_threads";
 
 const HeadingContainer = styles.div`
     width: 100%;
@@ -77,7 +78,18 @@ const StyledTable = styled.table`
   margin-right: auto;
   width: 100%;
   position: relative;
-  overflow: scroll;
+  overflow-x: scroll;
+   &::-webkit-scrollbar-track {
+   box-shadow: inset 0 0 5px ${({ theme }) => theme.colors.primaryPop};
+   border-radius: 10px;
+   }
+   &::-webkit-scrollbar-thumb {
+   background-color: ${({ theme }) => theme.colors.primaryPop};
+   }
+   &::-webkit-scrollbar {
+
+      height: 7px;
+   }
 `
 
 const TableBody = styled.tbody`
@@ -104,6 +116,27 @@ const TableContainer = styled.div`
   position: relative;
 `
 
+const TableData = styled.td`
+  width: 100px;
+  margin: 5px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`
+
+const TableHeader = styled.th`
+   width: 100px;
+   margin: 15px 0px;
+   font-weight: 700;
+   text-align: left;
+   font-size: 18px;
+`
+
+
+Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
+
+Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server";
+
+
 const Bank: React.FC = () => {
    const [zooBalance, setBalance] = useState(0.0);
    const { account, chainId } = useWeb3React();
@@ -111,6 +144,7 @@ const Bank: React.FC = () => {
    const history = useHistory();
    const { isXl } = useMatchBreakpoints();
    const [wait, setWait] = useState(false);
+   const [Transactions, setTransactions] = useState([]);
 
    const zooToken = getZooToken(web3, chainId);
 
@@ -135,6 +169,7 @@ const Bank: React.FC = () => {
 
    useEffect(() => {
       getBalance();
+      getTransactions();
    }, [account, chainId]);
 
    useEffect(() => {
@@ -172,6 +207,40 @@ const Bank: React.FC = () => {
       }
    };
 
+   const getTransactions = async() => {
+      console.log("GETTING TRANSACTIONS")
+      try {
+         let tempTransactions = [];
+         const MoralisObject = Moralis.Object.extend("Transactions");
+         const query = new Moralis.Query(MoralisObject);
+         query.limit(1000);
+         query.equalTo("From", '0x40Fc963A729c542424cD800349a7E4Ecc4896624');
+         const results = await query.find();
+         console.log(results)
+         for (let i = 0; i < results.length; i++) {
+            const transaction = results[i];
+            let string = String(transaction.get("createdAt"));
+            const replacedString = string.replace("at ", "");
+            const date = new Date(replacedString);
+            const newDate = date.toLocaleDateString("en-US");
+            console.log(newDate)
+            const tempTx: any = {
+               txHash: '' ,// transaction.get(""),
+               txAction: transaction.get("Action"),
+               from: transaction.get("From"),
+               date: newDate,
+               to: '',
+            };
+            tempTransactions.push(tempTx);
+            
+         }
+         console.log(tempTransactions)
+         setTransactions(tempTransactions);
+      } catch (e) {
+         console.error("ISSUE GETTING TRANSACTIONS \n", e);
+      }
+   }
+
    const pageHeading = (
       <HeadingContainer>
          <Heading>My Bank</Heading>
@@ -187,34 +256,6 @@ const Bank: React.FC = () => {
          </StyledButton>
       </HeadingContainer>
    );
-
-   const dummyData = [
-      [
-         { txHash: 'abc' ,
-          status: 'success' ,
-          block: 1232 ,
-          txAction: 'txAction' ,
-          from: 'original Place' ,
-          to: 'destination Place' }
-      ],
-      [
-         { txHash: 'abc' ,
-          status: 'success' ,
-          block: 1232 ,
-          txAction: 'txAction' ,
-          from: 'original Place' ,
-          to: 'destination Place' }
-      ],
-      [
-         { txHash: 'abc' ,
-          status: 'success' ,
-          block: 1232 ,
-          txAction: 'txAction' ,
-          from: 'original Place' ,
-          to: 'destination Place' }
-      ],
-   ]
-
 
    return (
       <>
@@ -243,52 +284,27 @@ const Bank: React.FC = () => {
                </Flex>
                <Label small>Total Daily Yield</Label>
                <ValueWrapper> 200 ZOO </ValueWrapper>
-               {/* <Table
-                  data={
-                     [
-                        {
-                           txHash: { txHash: 'abc' },
-                           status: { status: 'success' },
-                           block: { block: 1232 },
-                           txAction: { txAction: 'txAction' },
-                           from: { from: 'original Place' },
-                           to: { to: 'destination Place' }
-                        }
-                     ]
-                  }
-                  columns={
-                     [
-                        { name: 'txHash', label: 'txHash' },
-                        { name: 'status', label: 'status' },
-                        { name: 'block', label: 'block' },
-                        { name: 'txAction', label: 'txAction' },
-                        { name: 'from', label: 'from' },
-                        { name: 'to', label: 'to' },
-                     ]
-                  } /> */}
-               <Label small>Total Daily Yield</Label>
+               <Label small>Recent Tansactions</Label>
                <Container>
                   <TableContainer>
                      <TableWrapper>
                         <StyledTable>
                            <TableBody>
                               <TableRow>
-                                 <td>txHash</td>
-                                 <td>status</td>
-                                 <td>block</td>
-                                 <td>txAction</td>
-                                 <td>from</td>
-                                 <td>to</td>
+                                 <TableHeader>TxHash</TableHeader>
+                                 <TableHeader>Action</TableHeader>
+                                 <TableHeader>From</TableHeader>
+                                 <TableHeader>To</TableHeader>
+                                 <TableHeader>Date</TableHeader>
                               </TableRow>
-                              {dummyData.map((d) => {
+                              {Transactions.map((transaction) => {
                                  return (
                                     <TableRow>
-                                       <td>{d[0].txHash}</td>
-                                       <td>{d[0].status}</td>
-                                       <td>{d[0].block}</td>
-                                       <td>{d[0].txAction}</td>
-                                       <td>{d[0].from}</td>
-                                       <td>{d[0].to}</td>
+                                       <TableData>{transaction.txHash}</TableData>
+                                       <TableData>{transaction.txAction}</TableData>
+                                       <TableData>{transaction.from}</TableData>
+                                       <TableData>{transaction.to}</TableData>
+                                       <TableData>{transaction.date}</TableData>
                                     </TableRow>
                                  )
                               })}
