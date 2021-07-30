@@ -1,4 +1,4 @@
-// deploy/04_deploy_zoo_keeper.ts
+// deploy/03_deploy_zoo_keeper.ts
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { getDeployerAddress } from '../lib/deploy_helper'
@@ -10,6 +10,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const useProxy = !hre.network.live
 
+  console.log('hi')
   const marketAddress = (await deployments.get('ZooMarket')).address
   const mediaAddress = (await deployments.get('ZooMedia')).address
   const tokenAddress = (await deployments.get('ZooToken')).address
@@ -19,6 +20,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     args: [marketAddress, mediaAddress, tokenAddress],
     log: true,
   })
+
+  return;
 
   // Bail out if we've added all the animals before
   if (!deployResult.newlyDeployed) {
