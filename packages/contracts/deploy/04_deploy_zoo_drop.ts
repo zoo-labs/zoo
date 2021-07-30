@@ -1,4 +1,4 @@
-// deploy/04_deploy_zoo_keeper.ts
+// deploy/04_deploy_zoo_drop.ts
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { getDeployerAddress } from '../lib/deploy_helper'
@@ -15,6 +15,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     args: ['Gen 0', 16000, 210],
     log: true,
   })
+
+  return;
 
   const dropAddress = deployResult.address;
 
@@ -308,5 +310,5 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 }
 
 export default func
-func.id = 'deploy_zoo_keeper' // ID required to prevent reexecution
-func.tags = ['ZooKeeper']
+func.id = 'deploy_zoo_drop' // ID required to prevent reexecution
+func.tags = ['ZooDrop']
