@@ -199,8 +199,9 @@ const Account: React.FC = () => {
                      Buy Eggs
                   </BorderButton>
                </LabelWrapper>
-            </Body>
-            <MyZooAccount />
+          
+               <MyZooAccount />
+                 </Body>
          </Page>
       </>
    );
