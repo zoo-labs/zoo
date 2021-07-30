@@ -4,7 +4,7 @@ import styles from 'styled-components'
 const BodyContainer = styles.div`
     width: 100%;
     // position: relative;
-    padding: 16px 8px;
+    padding: 16px;
     // background: ${({ theme }) => theme.colors.card};;
 `
 
