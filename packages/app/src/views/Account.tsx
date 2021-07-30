@@ -13,7 +13,7 @@ import Body from "components/layout/Body";
 import { useModal } from "components/Modal";
 import BuyEggs from "components/BuyEggs";
 import MyZooAccount from "views/MyZooAccount";
-import { getZooToken, getZooFaucet, getZooKeeper } from "util/contractHelpers";
+import { getZooToken, getZooFaucet } from "util/contractHelpers";
 import useWeb3 from "hooks/useWeb3";
 import { FaShoppingCart } from "react-icons/fa";
 
