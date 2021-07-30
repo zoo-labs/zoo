@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity >=0.8.4;
+pragma experimental ABIEncoderV2;
 
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
@@ -39,9 +40,9 @@ contract ZooDrop is Ownable {
     // mapping of (parent + parent) to Hybrid
     mapping (string => Hybrid) public hybridParents;
 
-    constructor(string memory dropTitle, uint256 dropSupply) {
-        title = dropTitle;
-        eggSupply = dropSupply;
+    constructor(string memory _title, uint256 _supply) {
+        title = _title;
+        eggSupply = _supply;
         _eggSupply._value = eggSupply;
     }
 
@@ -140,8 +141,12 @@ contract ZooDrop is Ownable {
         Hybrid memory hybrid = Hybrid({
             name: name,
             rarity: getRarity(rarity),
-            parentA: parentA,
-            parentB: parentB,
+            parents: Pair({
+                nameA: parentA,
+                nameB: parentB,
+                tokenA: 0,
+                tokenB: 0
+            }),
             data: getMediaData(tokenURI, metadataURI),
             bidShares: getBidShares()
         });
@@ -203,8 +208,8 @@ contract ZooDrop is Ownable {
         Token memory token;
 
         Hybrid[2] memory possible = [
-            parentsToHybrid(parents.animalA, parents.animalB),
-            parentsToHybrid(parents.animalB, parents.animalA)
+            parentsToHybrid(parents),
+            parentsToHybrid(parents)
         ];
 
         // pick array index 0 or 1 depending on the rarity
@@ -222,13 +227,13 @@ contract ZooDrop is Ownable {
     }
 
     // Get key for two parents
-    function parentsKey(Pair memory parents) public pure returns (string memory) {
-        return string(abi.encodePacked(parents.animalA, parents.animalB));
+    function parentsKey(string memory animalA, string memory animalB) public pure returns (string memory) {
+        return string(abi.encodePacked(animalA, animalB));
     }
 
     // Get Hybrid from Parents
     function parentsToHybrid(Pair memory parents) public view returns (Hybrid memory) {
-        return hybridParents[parentsKey(parents.animalA, parents.animalB)];
+        return hybridParents[parentsKey(parents.nameA, parents.nameB)];
     }
 
     // Return a current eggPrice for BASE_EGG Token

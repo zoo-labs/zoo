@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity >=0.8.4;
+pragma experimental ABIEncoderV2;
 
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
@@ -8,7 +10,7 @@ import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { ZooDrop } from "./ZooDrop.sol";
 import { ZooMedia } from "./ZooMedia.sol";
 import { ZooMarket } from "./ZooMarket.sol";
-import { Parents, Type, Token } from "./ZooTypes.sol";
+import { Pair, Type, Token } from "./ZooTypes.sol";
 
 
 contract ZooKeeper is Ownable {
@@ -17,17 +19,14 @@ contract ZooKeeper is Ownable {
 
     Counters.Counter private dropIDs;
 
-    uint256 blocksPerDay = 28800;
-    uint256 public hybridHatchTime = 36 hours;
-
     // Declare an Event
-    event AddDrop(address indexed dropAddress, uint256 indexed dropID, string title, uint256 eggSupply);
-    event BuyEgg(address indexed from, uint256 indexed tokenID);
-    event Hatch(address indexed from, uint256 indexed tokenID);
+    event AddDrop(address indexed dropAddress, string title, uint256 eggSupply);
+    event BuyEgg(address indexed from, uint256 indexed eggID);
+    event Hatch(address indexed from, uint256 indexed eggID);
+    event Breed(address indexed from, uint256 indexed eggID);
     event Mint(address indexed from, uint256 indexed tokenID);
     event Burn(address indexed from, uint256 indexed tokenID);
     event Free(address indexed from, uint256 indexed tokenID, uint256 indexed yield);
-    event Breed(address indexed from, uint256 indexed eggID);
 
     // Mapping of ID to Drop
     mapping(uint256 => ZooDrop) public drops;
@@ -49,47 +48,24 @@ contract ZooKeeper is Ownable {
         zoo = IERC20(_zoo);
     }
 
-    // Add a new Drop, optionally specifying previously deployed contract to
-    // add to ZooKeeper.
-    function addDrop(string memory title, uint256 eggSupply, address dropAddress) public returns (uint256, address) {
-        ZooDrop drop;
-
-        // Add pre-existing contract or create new ZooDrop
-        if (dropAddress == address(0)) {
-            drop = new ZooDrop(title, eggSupply); // new Drop
-        } else {
-            drop = ZooDrop(dropAddress); // Pre-launched
-        }
-
-        // Save new drop
+    // Save new drop
+    function setDrop(ZooDrop drop) private {
         dropIDs.increment();
         uint256 dropID = dropIDs.current();
         drops[dropID] = drop;
-        emit AddDrop(address(drop), dropID, title, eggSupply);
-        return (dropID, address(drop));
+        emit AddDrop(address(drop), drop.title(), drop.eggSupply());
     }
 
-    // Accept ZOO and return Egg NFT
-    function buyEgg(uint256 dropID) public returns (Token memory) {
-        ZooDrop drop = ZooDrop(drops[dropID]);
-
-        require(zoo.balanceOf(msg.sender) >= drop.eggPrice(), "ZK: Not Enough ZOO to purchase Egg");
-        require(drop.currentSupply() > 0, "ZK: There are no more Eggs that can be purchased");
-
-        // Transfer funds
-        zoo.transferFrom(msg.sender, address(this), drop.eggPrice());
-
-        // Instantiate a new token for Egg
-        Token memory egg = drop.newEgg();
-
-        // Mint Egg Token
-        mint(msg.sender, egg);
-
-        emit BuyEgg(msg.sender, egg.id);
-
-        return egg;
+    // Add pre-existing contract or create new ZooDrop.
+    function addDrop(string memory title, uint256 eggSupply, address dropAddress) public returns (uint256, address) {
+        if (dropAddress == address(0)) {
+            setDrop(new ZooDrop(title, eggSupply)); // new Drop
+        } else {
+            setDrop(ZooDrop(dropAddress)); // Pre-launched
+        }
     }
 
+    // Issue a new token to owner
     function mint(address owner, Token memory token) private {
         media.mintToken(owner, token);
         market.setBidShares(token.id, token.bidShares);
@@ -97,45 +73,65 @@ contract ZooKeeper is Ownable {
         emit Mint(owner, token.id);
     }
 
-    function burn(address owner, string memory tokenID) private {
+    // Burn token owned by owner
+    function burn(address owner, uint256 tokenID) private {
         media.burnToken(owner, tokenID);
         delete tokens[tokenID];
         emit Burn(msg.sender, tokenID);
     }
 
-    // Burn egg and randomly return an animal NFT
-    function hatchEgg(uint256 dropID, uint256 eggID) public returns (Token memory) {
+    // Accept ZOO and return Egg NFT
+    function buyEgg(uint256 dropID) public {
         ZooDrop drop = ZooDrop(drops[dropID]);
+        require(zoo.balanceOf(msg.sender) >= drop.eggPrice(), "ZK: Not Enough ZOO to purchase Egg");
+        require(drop.currentSupply() > 0, "ZK: There are no more Eggs that can be purchased");
 
-        // need to check the hatch time delay
+        {
+            // Transfer funds
+            zoo.transferFrom(msg.sender, address(this), drop.eggPrice());
 
-        //  Grab egg
-        Token memory egg = tokens[eggID];
+            // Instantiate a new token for Egg
+            Token memory egg = drop.newEgg();
 
-        // A new animal is born!
-        Token memory token;
-
-        // Get random animal or hybrid from drop
-        if (egg.kind == Type.BASE_EGG) {
-            token = drop.getRandomAnimal(unsafeRandom());
-        } else {
-            token = drop.getRandomHybrid(unsafeRandom(), egg.parents);
+            // Mint Egg Token
+            mint(msg.sender, egg);
+            emit BuyEgg(msg.sender, egg.id);
         }
+    }
 
-        // Burn egg aka it's hatching...
-        burn(eggID);
+    // Burn egg and randomly return an animal NFT
+    function hatchEgg(uint256 dropID, uint256 eggID) public {
 
-        // Mint Animal or Hybrid Token
-        mint(msg.sender, token);
-        emit Hatch(msg.sender, token.id);
+        {
+            //  Grab egg
+            Token memory egg = tokens[eggID];
+            ZooDrop drop = ZooDrop(drops[dropID]);
 
-        return token;
+            // A new animal is born!
+            Token memory token;
+
+            // Get random animal or hybrid from drop
+            if (egg.kind == Type.BASE_EGG) {
+                token = drop.getRandomAnimal(unsafeRandom());
+            } else {
+                token = drop.getRandomHybrid(unsafeRandom(), egg.parents);
+            }
+
+            // Burn egg aka it's hatching...
+            burn(msg.sender, eggID);
+
+            // Mint Animal or Hybrid Token
+            mint(msg.sender, token);
+
+            emit Hatch(msg.sender, token.id);
+        }
     }
 
     modifier canBreed(Pair memory pair) {
-        require(media.tokenExists(pair.tokenA) && media.tokenExists(pair.tokenB), "ZK: nonexistent token");
-        require(pair.animalA != pair.animalB, "ZK: need two animals to breed");
-        require(breedReady(parents), "ZK: Wait for cooldown to finish.");
+        // require(media.tokenExists(pair.tokenA) && media.tokenExists(pair.tokenB), "ZK: nonexistent token");
+        // require(keccak256(abi.encode(pair.tokenA)) != keccak256(abi.encode(pair.tokenB)));
+        // require(breedReady(pair.tokenA), "ZK: Wait for cooldown to finish.");
+        // require(breedReady(pair.tokenB), "ZK: Wait for cooldown to finish.");
 
         // Require non hybrids
         // require(
@@ -147,9 +143,7 @@ contract ZooKeeper is Ownable {
     }
 
     // Breed two animals and create a hybrid egg
-    function breedAnimals(
-        uint256 dropID, Pair memory pair
-    ) public canBreed(parents) returns (Token memory) {
+    function breedAnimals(uint256 dropID, Pair memory parents) public canBreed(parents) returns (Token memory) {
         ZooDrop drop = ZooDrop(drops[dropID]);
 
         // Update breeding delay for each parent
@@ -157,37 +151,27 @@ contract ZooKeeper is Ownable {
 
         // New Hybrid Egg
         Token memory egg = drop.newHybridEgg(parents);
-
-        // Mint token and update bidShares
-        media.mintToken(msg.sender, egg);
-        market.setBidShares(egg.id, egg.bidShares);
-        tokens[egg.id] = egg;
-
+        mint(msg.sender, egg);
         emit Breed(msg.sender, egg.id);
-
         return egg;
     }
 
     // Freeing an animal burns the animal NFT and returns the ZOO to the owner
     function freeAnimal(uint256 tokenID) public returns (uint256 yield) {
         Token memory token = tokens[tokenID];
-        ZooDrop drop = drops[token.dropID];
 
         // Burn the token
-        media.burn(token.id);
-        delete tokens[token.id];
-        emit Burn(msg.sender, token.id);
+        burn(msg.sender, tokenID);
 
         // How long did we HODL?
         uint256 blockAge = block.number - token.birthday;
-        uint256 daysOld = blockAge.div(blocksPerDay);
+        uint256 daysOld = blockAge.div(28800);
 
         // Calculate yield
         yield = daysOld.mul(token.rarity.yield);
 
         // Transfer yield
         zoo.transfer(msg.sender, yield);
-
         emit Free(msg.sender, tokenID, yield);
     }
 
@@ -222,16 +206,10 @@ contract ZooKeeper is Ownable {
 
     // Update breed delays
     function updateBreedDelays(Pair memory parents) private {
-        Token memory animal;
-        animal = Token(parents.animalA);
-        animal.breedCount++;
-        animal.breedTimestamp = block.timestamp;
-        tokens[animal.id] = animal;
-
-        animal = Token(parents.animalB);
-        animal.breedCount++;
-        animal.breedTimestamp = block.timestamp;
-        tokens[animal.id] = animal;
+        tokens[parents.tokenA].breedCount++;
+        tokens[parents.tokenB].breedCount++;
+        tokens[parents.tokenA].timestamp = block.timestamp;
+        tokens[parents.tokenB].timestamp = block.timestamp;
     }
 
     // Get next timestamp token can be bred
