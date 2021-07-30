@@ -30,6 +30,7 @@ import StickyBottomMenu from "components/Button/StickyBottomMenu";
 import { useHistory } from "react-router-dom";
 import { RarityColor } from "enums/rarity-color";
 import SwiperCard from "components/Card/SwipeCard";
+import Moralis from "moralis";
 
 // install Swiper modules
 // SwiperCore.use([Pagination]);
@@ -192,6 +193,7 @@ const MyZooAccount: React.FC = () => {
   const history = useHistory();
   const [showBoth, setShowBoth] = useState(false);
   const videoTimeout = [];
+  const bid = React.useRef(100);
   const [hatched, setHatched] = useState({
     tokenId: "",
     name: "",
@@ -233,7 +235,7 @@ const MyZooAccount: React.FC = () => {
   };
 
 
-  const hatchEgg = (egg) => {
+  const hatchEgg = async(egg) => {
     setShowBoth(true);
     setEggType(egg.basic ? "basic" : "hybrid");
 
@@ -245,8 +247,50 @@ const MyZooAccount: React.FC = () => {
     } else {
       randIdx = Math.floor(Math.random() * (13 - 10) + 10);
     }
+    const eggID = parseInt(egg.tokenId);
+    const tokenID = Math.floor(Math.random() * (999999 - 0) + 0);
+
+    const mObject = Moralis.Object.extend("FinalEggs");
+    const query = new Moralis.Query(mObject);
+    query.equalTo("EggID", eggID);
+    const eggM = await query.find();
+    const eggRes = eggM[0];
+
+
+    
+    setTimeout(() => setOpen(true), 5450);
+    setTimeout(() => setEggType(""), 7000);
+    console.log(eggRes)
+    eggRes.set("Burned", true);
+    eggRes.destroy();
+
     // console.log(randIdx);
     const aFromMap = animalMapping[randIdx];
+
+    const mAnimal = Moralis.Object.extend("FinalAnimals");
+      const newAnimalM = new mAnimal();
+      // AnimalID Owner TokenURI MetaURI BlockNumber Rarirty Yield Boost AnimalTypeID Name
+      newAnimalM.set("AnimalID", tokenID);
+      newAnimalM.set("Owner", account);
+      newAnimalM.set("TokenURI", aFromMap.imageUrl);
+      newAnimalM.set("MetaURI", "META URI");
+      newAnimalM.set(
+         "BlockNumber",
+         Math.floor(Math.random() * (999999 - 0) + 0)
+      );
+      newAnimalM.set("Rarity", aFromMap.rarity);
+      newAnimalM.set("Yield", aFromMap.yield);
+      newAnimalM.set("Boost", aFromMap.boost);
+      newAnimalM.set("Name", aFromMap.name);
+      newAnimalM.set("AnimalTypeID", aFromMap.animalId);
+      newAnimalM.set("StartBid", aFromMap.startBid);
+      newAnimalM.set("CurrentBid", aFromMap.currentBid);
+      newAnimalM.set("Listed", false);
+      newAnimalM.set("Bloodline", aFromMap.bloodline);
+      newAnimalM.set("TimeRemaining", 0);
+      newAnimalM.set("BreedCount", 0);
+      newAnimalM.set("lastBred", "");
+      await newAnimalM.save();
     // console.log(aFromMap, randIdx);
     const newAnimal: Animal = {
       tokenId: Math.floor(Math.random() * (999999 - 0) + 0).toString(),
@@ -270,6 +314,16 @@ const MyZooAccount: React.FC = () => {
       lastBred: "",
     };
     setHatched(newAnimal);
+
+    const TransOb = Moralis.Object.extend("Transactions")
+    const newTrans = new TransOb
+
+    newTrans.set("From", account)
+    newTrans.set("Action", "Hatched Egg")
+    newTrans.set("TokenID", eggID)
+    newTrans.set("AnimalName", aFromMap.name)
+    newTrans.set("AnimalTokenID", tokenID)
+    newTrans.save()
 
     dispatch(burnEgg(egg));
     dispatch(addAnimal(newAnimal));
@@ -296,7 +350,52 @@ const MyZooAccount: React.FC = () => {
       }
   },[]);
 
-  const breed = (onDismiss) => {
+  const breed = async (onDismiss) => {
+
+    const an1 = parseInt(array[0].tokenId);
+      const an2 = parseInt(array[1].tokenId);
+      const anOb = Moralis.Object.extend("FinalAnimals");
+      const anQ1 = new Moralis.Query(anOb);
+      const anQ2 = new Moralis.Query(anOb);
+      anQ1.equalTo("AnimalID", an1);
+      anQ2.equalTo("AnimalID", an2);
+      const res1 = await anQ1.find();
+      const res2 = await anQ2.find();
+      const aniM1 = res1[0];
+      const aniM2 = res2[0];
+      const mArray = [aniM1, aniM2];
+
+      // lastBred TimeRemaining BreedCount
+      mArray.forEach(async (animal) => {
+         const count = animal.get("BreedCount");
+         animal.set("BreedCount", count + 1 || 1);
+         animal.breedCount = animal.breedCount + 1 || 1;
+         const now = new Date().getTime();
+         const time = new Date().getTime();
+         animal.set("lastBred", time.toString());
+         const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount;
+         const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
+         const elapsedTime = now - animal.lastBred;
+
+         if (elapsedTime < breedTimeout) {
+            const timeRemaining = breedTimeout - elapsedTime;
+            const timeRemainingDaysHours = getDaysHours(timeRemaining);
+            const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
+
+            animal.set("TimeRemaining", timeRemaining);
+            animal.set("CTAOverride", { barwidth, timeRemainingDaysHours });
+         } else {
+            animal.set("TimeRemaining", 0);
+            animal.set("CTAOverride", {
+               barwidth: null,
+               timeRemainingDaysHours: null,
+            });
+         }
+         animal.set("Selected", false);
+         animal.save();
+      });
+
+      //@dev Redux Logic to be Removed
     const animal1: Animal = array[0];
     const animal2: Animal = array[1];
     array.forEach((animal) => {
@@ -326,8 +425,8 @@ const MyZooAccount: React.FC = () => {
     });
 
     array = [];
-    dispatch(addAnimal(animal1));
-    dispatch(addAnimal(animal2));
+    // dispatch(addAnimal(animal1));
+    // dispatch(addAnimal(animal2));
 
     const egg: Egg = {
       owner: account,
@@ -340,7 +439,7 @@ const MyZooAccount: React.FC = () => {
       timeRemaining: 0,
       CTAOverride: null,
     };
-    if (!egg.basic) {
+ 
       const now = new Date().getTime();
       const createdDate = egg.created
         ? new Date(Number(egg.created)).getTime()
@@ -358,11 +457,34 @@ const MyZooAccount: React.FC = () => {
       } else {
         egg.timeRemaining = 0;
       }
-    } else {
-      egg.timeRemaining = 0;
-    }
-    dispatch(addEgg(egg));
+
+      const mObject = Moralis.Object.extend("FinalEggs");
+      const mEgg = new mObject();
+      mEgg.set("EggID", parseInt(egg.tokenId));
+      mEgg.set("Parent1", parseInt(egg.parent1));
+      mEgg.set("MetaURI", "META URI");
+      mEgg.set("Parent2", parseInt(egg.parent2));
+      mEgg.set("Burned", false);
+      mEgg.set("AnimalTypeId", egg.animalId);
+      mEgg.set("TokenURI");
+      mEgg.set("Owner", account);
+      mEgg.set("BlockNumber");
+      mEgg.set("Type", "hybrid");
+      await mEgg.save();
+    
+    // dispatch(addEgg(egg));
     onEggCreated();
+
+    const TransOb = Moralis.Object.extend("Transactions")
+    const newTrans = new TransOb
+
+    newTrans.set("From", account)
+    newTrans.set("Action", "Bred Animals")
+    newTrans.set("TokenID", parseInt(egg.tokenId))
+    newTrans.set("Parent1", aniM1.attributes.Name)
+    newTrans.set("Parent2", aniM2.attributes.Name)
+    newTrans.save()
+
     // onDismiss();
   };
 
@@ -423,12 +545,37 @@ const MyZooAccount: React.FC = () => {
     onSell();
   };
 
-  const sell = (onDismiss) => {
+  const sell = async (onDismiss) => {
     const animal: Animal = sellAnimal;
-    animal.listed = true;
-    dispatch(addAnimal(animal));
+    const animalObject = Moralis.Object.extend("FinalAnimals");
+    const query = new Moralis.Query(animalObject);
+    query.equalTo("AnimalID", parseInt(animal.tokenId));
+    const results = await query.find();
+    const animalM = results[0];
+    animalM.set("Listed", true);
+    animalM.set("StartBid", String(bid.current));
+    animalM.set("CurrentBid", String(bid.current - 1));
+    animalM.set("BuyNow", String(bid.current + 100));
+    await animalM.save();
+    // animal.listed = true;
+    // dispatch(addAnimal(animal));
+    const TransOb = Moralis.Object.extend("Transactions")
+       const newTrans = new TransOb
+
+       newTrans.set("From", account)
+       newTrans.set("Action", "Listed Animal")
+       newTrans.set("TokenID", parseInt(animal.tokenId))
+       newTrans.set("StartingBid", String(bid.current))
+       newTrans.set("AnimalName", animalM.attributes.Name)
+       newTrans.save()
+    bid.current = 100;
+
     onDismiss();
   };
+
+  const changed = () => (e) => {
+    bid.current = e.target.value;
+ };
 
   const SellConfirm: React.FC<Props> = ({ onDismiss = () => null, breed }) => {
     return (
@@ -542,7 +689,7 @@ const MyZooAccount: React.FC = () => {
           (a) => a.animalId === animal.animalId && a.timeRemaining <= 0
         )
       ) {
-        animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 2;
+        animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 1;
       } else {
         animalData.push({
           id: index,
@@ -599,11 +746,14 @@ const MyZooAccount: React.FC = () => {
                   <SwiperSlide style={{width: "220px", display: "flex"}} key={animal.tokenId}>
                       {/* <CardWrapper> */}
                          <SwiperCard animal={animal}
+                            eggType={animal.bloodline}
                             group={animalGroup}
                             onInfoClick={() =>
                                 hybrid === "pure"
-                                  ? breedClick(animal)
-                                  : list(animal)}
+                                ? breedClick(animal)
+                                : !animal.listed
+                                ? list(animal)
+                                : null}
                          />
                   </SwiperSlide>
                 ))}
@@ -629,6 +779,9 @@ const MyZooAccount: React.FC = () => {
 
     Object.values(allEggs).forEach((egg, index) => {
       const eggType = egg.basic ? "BASIC" : "HYBRID";
+      if (egg.owner !== account) {
+         return;
+       }
       const createdDate = egg.created
         ? new Date(Number(egg.created)).getTime()
         : new Date().getTime();
@@ -642,25 +795,27 @@ const MyZooAccount: React.FC = () => {
       //  if (timeRemaining <= 0 && eggData.find(a => a.basic === egg.basic && a.timeRemaining <= 0)) {
       //     eggGroup[eggType] = eggGroup[eggType] + 1
       //  } else {
-      eggData.push({
-        id: index,
-        ...egg,
-        name: eggType,
-        timeRemaining: !egg.basic
-          ? elapsedTime < hatchTimeout
-            ? timeRemaining
-            : 0
-          : 0,
-        CTAOverride: !egg.basic
-          ? elapsedTime < hatchTimeout
-            ? { barwidth, timeRemainingDaysHours }
-            : null
-          : null,
-      });
+        if (egg.owner === account && !egg.burned) {
+          eggData.push({
+             id: index,
+             ...egg,
+             name: eggType,
+             timeRemaining: !egg.basic
+                ? elapsedTime < hatchTimeout
+                   ? timeRemaining
+                   : 0
+                : 0,
+             CTAOverride: !egg.basic
+                ? elapsedTime < hatchTimeout
+                   ? { barwidth, timeRemainingDaysHours }
+                   : null
+                : null,
+          });
+       }
       //  }
     });
     empty = eggData.length === 0 && Object.keys(eggData).length !== 0;
-    eggData = sortData(eggData, "basic");
+    eggData = sortData(eggData, "hybrid");
 
     return (
       <RowLayout>

@@ -9,6 +9,7 @@ import {
    getZooFaucetAddress,
    getZooMarketAddress,
    getZooMediaAddress,
+   getZooKeeperAddress
 } from "util/addressHelpers";
 
 // ABIs
@@ -18,6 +19,7 @@ import zooDropAbi from "config/abi/zooDrop.json";
 import zooFaucetAbi from "config/abi/zooFaucet.json";
 import zooMarketAbi from "config/abi/zooMarket.json";
 import zooMediaAbi from "config/abi/zooMedia.json";
+import zooKeeperAbi from "config/abi/zooKeeper.json";
 
 const getContract = (abi: any, address: string, web3?: Web3) => {
    return new web3.eth.Contract(abi as unknown as AbiItem, address);
@@ -45,4 +47,8 @@ export const getZooMarket = (web3?: Web3, chainID?: number) => {
 
 export const getZooMedia = (web3?: Web3, chainID?: number) => {
    return getContract(zooMediaAbi, getZooMediaAddress(chainID), web3);
+};
+
+export const getZooKeeper = (web3?: Web3, chainID?: number) => {
+   return getContract(zooKeeperAbi, getZooKeeperAddress(chainID), web3);
 };
