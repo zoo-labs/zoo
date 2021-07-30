@@ -13,7 +13,7 @@ import Body from "components/layout/Body";
 import { useModal } from "components/Modal";
 import BuyEggs from "components/BuyEggs";
 import MyZooAccount from "views/MyZooAccount";
-import { getZooToken, getZooFaucet } from "util/contractHelpers";
+import { getZooToken, getZooFaucet, getZooKeeper } from "util/contractHelpers";
 import useWeb3 from "hooks/useWeb3";
 import { FaShoppingCart } from "react-icons/fa";
 
@@ -64,6 +64,8 @@ const Account: React.FC = () => {
    const [balance, setBalance] = useState(0.0);
    const [wait, setWait] = useState(false);
    const { account, chainId } = useWeb3React();
+   const [allowance, setAllowance] = useState(false);
+   const [disable, setDisable] = useState(false);
    const web3 = useWeb3();
    const { isXl } = useMatchBreakpoints();
    const history = useHistory();
@@ -79,10 +81,12 @@ const Account: React.FC = () => {
       history.push("/bank");
    };
 
+   const keeperAdd = "0x247124065114a03Cf51898b21F20C6C1Cf50679A"
    const zooToken = getZooToken(web3, chainId);
    const faucet = getZooFaucet(web3, chainId);
 
    const faucetAmt = web3.utils.toWei("50");
+   const defaultAmt = web3.utils.toWei('1000000000', 'ether')
 
    const getBalance = async () => {
       try {
@@ -94,7 +98,28 @@ const Account: React.FC = () => {
       } catch (e) {
          console.error("ISSUE LOADING ZOO BALANCE \n", e);
       }
+      try {
+         const allowance = await zooToken.methods.allowance(account, keeperAdd).call()
+         if(allowance > 0) setAllowance(true)
+      } catch (error) {
+         console.log(error)
+      }
    };
+
+   const approve = () => {
+      setDisable(true)
+      console.log("approval")
+      const tsx = zooToken.methods.approve(keeperAdd, defaultAmt).send({ from: account })
+         tsx
+         .then(() => {
+           setAllowance(true)
+           setDisable(false)
+         })
+         .catch((e) => {
+           console.error('APPROVE ERROR', e)
+           setDisable(false)
+         })
+   }
 
    useEffect(() => {
       let mounted = true
@@ -163,6 +188,25 @@ const Account: React.FC = () => {
       }
    };
 
+   const testContract = async () => {
+      // setDisable(true)
+      // const drops = await zooKeeper.methods.drops(0).call()
+      // console.log(drops)
+      // try {
+      //    // buyEgg(uint256 _dropID) public returns (uint256)
+      //    const buyEgg = zooKeeper.methods.buyEgg(1).send({ from: account })
+      //    .then((res) => {
+      //       console.log(res)
+      //       setDisable(false)
+      //     })
+      //  } catch (error) {
+      //     setDisable(false)
+      //    console.log(error)
+      //  }
+
+      onBuyEggs()
+   }
+
    const handleRedirect = () => {
       history.push('/feed')
    }
@@ -194,9 +238,9 @@ const Account: React.FC = () => {
                   <BorderButton
                      scale="sm"
                      minWidth={!isXl ? "120px" : "140px"}
-                     onClick={() => onBuyEggs()}
+                     onClick={allowance? testContract() : approve()}
                      style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}>
-                     Buy Eggs
+                     {allowance? "BUY EGGS" : disable? "APPROVING": "APPROVE"}
                   </BorderButton>
                </LabelWrapper>
           
