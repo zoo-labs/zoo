@@ -131,6 +131,13 @@ const TableHeader = styled.th`
    font-size: 18px;
 `
 
+const TableText = styled(Text)`
+  width: 100%;
+  text-align: center;
+  margin: 20px 0px;
+  font-size: 16px;
+`
+
 
 Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
 
@@ -145,6 +152,7 @@ const Bank: React.FC = () => {
    const { isXl } = useMatchBreakpoints();
    const [wait, setWait] = useState(false);
    const [Transactions, setTransactions] = useState([]);
+   const [waitTx, setWaitTx] = useState(true)
 
    const zooToken = getZooToken(web3, chainId);
 
@@ -214,7 +222,7 @@ const Bank: React.FC = () => {
          const MoralisObject = Moralis.Object.extend("Transactions");
          const query = new Moralis.Query(MoralisObject);
          query.limit(1000);
-         query.equalTo("From", '0x40Fc963A729c542424cD800349a7E4Ecc4896624');
+         query.equalTo("From", account);
          const results = await query.find();
          console.log(results)
          for (let i = 0; i < results.length; i++) {
@@ -236,6 +244,7 @@ const Bank: React.FC = () => {
          }
          console.log(tempTransactions)
          setTransactions(tempTransactions);
+         setWaitTx(false);
       } catch (e) {
          console.error("ISSUE GETTING TRANSACTIONS \n", e);
       }
@@ -285,6 +294,8 @@ const Bank: React.FC = () => {
                <Label small>Total Daily Yield</Label>
                <ValueWrapper> 200 ZOO </ValueWrapper>
                <Label small>Recent Tansactions</Label>
+               {waitTx ? <TableText> Loading Transactions... </TableText> :
+               Transactions.length === 0 ? <TableText> No Transaction Data </TableText> :
                <Container>
                   <TableContainer>
                      <TableWrapper>
@@ -312,7 +323,7 @@ const Bank: React.FC = () => {
                         </StyledTable>
                      </TableWrapper>
                   </TableContainer>
-               </Container>
+               </Container>}
             </Body>
          </Page>
       </>
