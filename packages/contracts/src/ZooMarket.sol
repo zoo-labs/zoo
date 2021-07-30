@@ -13,8 +13,6 @@ import {ZooMedia} from "./ZooMedia.sol";
 import {ZooKeeper} from "./ZooKeeper.sol";
 import {IMarket} from "./interfaces/IMarket.sol";
 
-import "./console.sol";
-
 /**
  * @title A Market for pieces of media
  * @notice This contract contains all of the market logic for ZooMedia

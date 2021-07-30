@@ -21,6 +21,8 @@ function getTypeByValue(Type t) pure returns (string memory) {
     if (Type.BASE_ANIMAL == t) return "ANIMAL";
     if (Type.HYBRID_EGG == t) return "HYBRID_EGG";
     if (Type.HYBRID_ANIMAL == t) return "HYBRID_ANIMAL";
+
+    return "";
 }
 
 struct Rarity {

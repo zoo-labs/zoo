@@ -14,7 +14,6 @@ import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
 import { IMarket, Decimal } from "./interfaces/IMarket.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 import { IAuctionHouse } from "./interfaces/IAuctionHouse.sol";
-import "./console.sol";
 
 interface IMediaExtended is IMedia {
     function marketContract() external returns (address);

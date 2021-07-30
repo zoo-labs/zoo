@@ -16,8 +16,6 @@ import { IMarket } from "./interfaces/IMarket.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 import { getTypeByValue, Token } from "./ZooTypes.sol";
 
-import "./console.sol";
-
 /**
  * @title A media value system, with perpetual equity to creators
  * @notice This contract provides an interface to mint media with a market
@@ -571,8 +569,6 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         IMarket.BidShares memory bidShares,
         bytes memory tokenType
     ) internal onlyValidURI(data.tokenURI) onlyValidURI(data.metadataURI) {
-        console.log(bidShares.creator.value);
-
         require(
             data.contentHash != 0,
             "ZooMedia: content hash must be non-zero"

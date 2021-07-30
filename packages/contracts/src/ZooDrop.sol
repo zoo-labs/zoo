@@ -9,7 +9,6 @@ import { IMarket } from "./interfaces/IMarket.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 import { Animal, Egg, Hybrid, Pair, Rarity, Type, Token } from "./ZooTypes.sol";
 
-import "./console.sol";
 
 contract ZooDrop is Ownable {
     using Counters for Counters.Counter;
