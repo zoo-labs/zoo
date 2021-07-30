@@ -48,6 +48,7 @@ export const lightColors: Colors = {
   tableHeader: "#FFFFFF", // "#A7C8FB",
   cardLabel: "#314F81",
   modalBackground: "#FFFFFF",
+  boxShadow: "0px -1px 0px #ffffff",
   gradients: {
     bubblegum: "linear-gradient(119.91deg, #3480F6 36.36%, #0DD8D0 84.22%)",
     buttongum: "linear-gradient(121deg,#3480F6 36.22%,#0DD8D0 90.22%)",
@@ -98,6 +99,7 @@ export const darkColors: Colors = {
   tableHeader: "#191b21",
   cardLabel: "#20DFDA",
   modalBackground: "#CDB7C3",
+  boxShadow: "0px -1px 0px #461e34",
   gradients: {
     bubblegum: "linear-gradient(119.91deg,#024ABBd1 36.36%,#0dd8d0d1 84.22%)",  // "linear-gradient(119.91deg,#024ABBd1 36.36%,#0dd8d0d1 84.22%)",
     buttongum: "linear-gradient(140.91deg,#024abbf5 61.36%,#0DD8D0d1 93.22%)", // "linear-gradient(140.91deg, #024ABBd1 68.36%, #0DD8D0d1 84.22%)",
