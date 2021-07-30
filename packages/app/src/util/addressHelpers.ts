@@ -30,3 +30,7 @@ export const getZooMarketAddress = (chainId?: number) => {
 export const getZooMediaAddress = (chainId?: number) => {
   return getAddress(addresses.zooMedia, chainId)
 }
+
+export const getZooKeeperAddress = (chainId?: number) => {
+  return getAddress(addresses.zooKeeper, chainId)
+}

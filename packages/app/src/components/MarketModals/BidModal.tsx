@@ -108,37 +108,62 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
 
    const confirmBuy = async () => {
       const toSet: Animal = { ...item };
-      toSet.listed = true;
-      toSet.owner = account;
-      dispatch(addAnimal(toSet));
-      // const queryObject = Moralis.Object.extend("Animals")
-      // const query = new Moralis.Query(queryObject)
-      // query.limit(1000)
-      // query.equalTo("TokenId", item.AnimalId)
-      // const results = await query.find()
-      // const currentObject = results[0]
-      // currentObject.set("Listed", false)
-      // currentObject.set
-      // currentObject.set("OwnerAccount", account)
-      // currentObject.save()
+      // toSet.listed = true;
+      // toSet.owner = account;
+      // dispatch(addAnimal(toSet));
+      const animalId = parseInt(item.tokenId)
+      console.log(animalId)
+      const queryObject = Moralis.Object.extend("FinalAnimals")
+      const query = new Moralis.Query(queryObject)
+      query.limit(1000)
+      query.equalTo("AnimalID", animalId)
+      const results = await query.find()
+      const currentObject = results[0]
+      console.log(currentObject.attributes)
+      currentObject.set("Listed", false)
+      currentObject.set("Owner", account)
+      await currentObject.save()
+
+      const TransOb = Moralis.Object.extend("Transactions")
+      const newTrans = new TransOb
+
+      newTrans.set("From", account)
+      newTrans.set("Action", "Bought")
+      newTrans.set("AnimalTokenID", currentObject.attributes.AnimalID)
+      newTrans.set("AnimalName", currentObject.attributes.Name)
+      newTrans.set("BuyAmount", currentObject.attributes.BuyNow)
+      newTrans.save()
+      onDismiss();
 
       onDismiss();
    };
    const confirmBid = async () => {
-      console.log(value);
-      // const queryObject = Moralis.Object.extend("Animals")
-      // const query = new Moralis.Query(queryObject)
-      // query.limit(1000)
-      // query.equalTo("TokenId", item.AnimalId)
-      // const results = await query.find()
-      // const currentObject = results[0]
-      // currentObject.set("CurrentBid", value)
-      // currentObject.set("BuyNow", value + 100)
-      // currentObject.save()
-      const toSet: Animal = { ...item };
-      toSet.currentBid = value.toString();
-      toSet.buyNow = (value + 100).toString();
-      dispatch(addAnimal(toSet));
+      const queryObject = Moralis.Object.extend("FinalAnimals")
+      const query = new Moralis.Query(queryObject)
+      query.limit(1000)
+      console.log(item)
+      query.equalTo("AnimalID", parseInt(item.tokenId))
+      const results = await query.find()
+      const currentObject = results[0]
+      console.log(currentObject)
+      currentObject.set("CurrentBid", String(value))
+      currentObject.set("BuyNow", String(value + 100))
+      currentObject.save()
+
+      const TransOb = Moralis.Object.extend("Transactions")
+      const newTrans = new TransOb
+
+      newTrans.set("From", account)
+      newTrans.set("Action", "Bid")
+      newTrans.set("AnimalTokenID", currentObject.attributes.AnimalID)
+      newTrans.set("AnimalName", currentObject.attributes.Name)
+      newTrans.set("BidAmount", currentObject.attributes.CurrentBid)
+      newTrans.save()
+      onDismiss();
+      // const toSet: Animal = { ...item };
+      // toSet.currentBid = value.toString();
+      // toSet.buyNow = (value + 100).toString();
+      // dispatch(addAnimal(toSet));
       onDismiss();
    };
 

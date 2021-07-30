@@ -7,21 +7,31 @@ import { getLibrary } from "util/web3React";
 // import { LanguageContextProvider } from 'contexts/Localisation/languageContext'
 import { ThemeContextProvider } from "contexts/ThemeContext";
 import { RefreshContextProvider } from "contexts/RefreshContext";
+import { MoralisProvider } from "react-moralis";
 import store from "state";
+import MoralisProviderCustom from "./moralisprovider"
 
 const Providers: React.FC = ({ children }) => {
    return (
-         <Web3ReactProvider getLibrary={getLibrary}>
+      <Web3ReactProvider getLibrary={getLibrary}>
+         <MoralisProvider appId="16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy" serverUrl="https://dblpeaqbqk32.usemoralis.com:2053/server">
+            {/* <MoralisProviderCustom> */}
             <Provider store={store}>
                <HelmetProvider>
                   <ThemeContextProvider>
                      <RefreshContextProvider>
-                        <ModalProvider>{children}</ModalProvider>
+                        <ModalProvider>
+
+                           {children}
+
+                        </ModalProvider>
                      </RefreshContextProvider>
                   </ThemeContextProvider>
                </HelmetProvider>
             </Provider>
-         </Web3ReactProvider>
+            {/* </MoralisProviderCustom> */}
+         </MoralisProvider>
+      </Web3ReactProvider>
    );
 };
 
