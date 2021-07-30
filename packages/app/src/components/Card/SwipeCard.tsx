@@ -26,11 +26,12 @@ import { Link } from 'react-router-dom';
 const InfoBlock = styled.div`
 padding: 4px;
 text-align: center;
-position: relative;
+position: absolute;
 left: 0;
 bottom: 0;
 width: 100%;
 z-index: 999999;
+background: ${({ theme }) => theme.colors.background};
 `;
 
 const TextWrapper = styled.div`
@@ -59,14 +60,14 @@ const TimeoutWrapper = styled.div < { barwidth?: string }>`
   z-index: 999999;
     ::before {
       content: '';
-    //   display: block;
-    //   position: absolute;
-    //   z-index: 1;
-    //   top: 0;
-    //   left: 0;
+      display: block;
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      width: ${({ barwidth }) => barwidth};
+    //   width: ${({ barwidth }) => barwidth};
       background: grey;
     }
 `
@@ -88,24 +89,16 @@ const BreedWrapper = styled.div<{ cols?: number }>`
 
 const Card = styled(Existing) <{ selected?: boolean, timedOut?: boolean, rarityColor: string }>`
   cursor: pointer;
-    width: 100%;
-  margin: 0px 8px 8px;
+  width: 100%;
+  margin: 8px;
   box-shadow: ${(props) => `0px 0px 13px -2px ${props.rarityColor}`};
   backgroundColor: "#000000";
-  display: flex;
+  display: inline-block;
   border-radius: 8px;
    border: ${({ selected }) => (selected ? "2px solid white" : null)};
   opacity: ${({ timedOut }) => (timedOut ? "0.6" : null)};
 
 `;
-
- export interface AnimalCardStats {
-      id: string;
-      name: string;
-      timeRemaining: number;
-      CTAOverride: number;
-      rarityColor: string
-   }
 
 
 export interface SwiperCardProps {
@@ -114,8 +107,7 @@ export interface SwiperCardProps {
     group?;
     egg?;
     eggType?: string;
-    imageURL?: string;
-    onCardClick?: () => void;
+    onCardClick?: (...args: any[]) => void;
     onInfoClick?: () => void;
     isTimedOut?: boolean;
 
@@ -133,8 +125,8 @@ export const SwiperCard: React.FC<SwiperCardProps> = ({ egg, animal, group, eggT
               rarityColor={animal.rarityColor}
               onClick={onCardClick}
               key={animal.id}
-                        selected={animal.selected ? true : false}
-                timedOut={animal.timeRemaining > 0 ? true : false}
+            selected={animal.selected ? true : false}
+              timedOut={animal.timeRemaining > 0 ? true : false}
           >
               <CardBody style={{
                   backgroundImage:`url("${animal.imageUrl}")`,
@@ -142,8 +134,8 @@ export const SwiperCard: React.FC<SwiperCardProps> = ({ egg, animal, group, eggT
                 backgroundRepeat: "no-repeat",
                             backgroundPosition: "center",
                             height: 280,
-                            width: 160,
-                            // width: `calc(100vw/1.6 - 13px )`,
+                            // width: `calc(100vw/2.2 - 13px )`,
+                            width: "100%"
               }}>
                    <Link
                             to={`/feed/myzoo/${animal.tokenId}`}>
@@ -180,14 +172,6 @@ export const SwiperCard: React.FC<SwiperCardProps> = ({ egg, animal, group, eggT
                                 {animal.name}
                             </TextWrapper>
                           </Link>
-              
-                  <InfoBlock onClick={onInfoClick} style={{
-                      textAlign: 'center',
-                    //   boxShadow: '#000000 0px 0px 10px 1px',
-                      padding: 4, paddingLeft: '7px'
-                  }} >
-            <TextWrapper >{`HATCH`}</TextWrapper>
-          </InfoBlock>
                   {animal.timeRemaining > 0 ? (
                       <TimeoutWrapper
                           barwidth={
@@ -202,7 +186,7 @@ export const SwiperCard: React.FC<SwiperCardProps> = ({ egg, animal, group, eggT
                       </TimeoutWrapper>
                   ) : (
                       <InfoBlock
-                          onClick={onInfoClick}
+                              onClick={onInfoClick}
                             >
                               <BreedWrapper>
                                 {eggType === "pure" ? `BREED` : `SELL`}
