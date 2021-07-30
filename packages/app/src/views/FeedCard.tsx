@@ -76,12 +76,12 @@ const MainHeading = styled(Text)`
    font-size: 32px;
    width: 100%;
    line-height: 1;
-   color: ${({ theme }) => theme.colors.primary};
+   color: white;
    font-weight: 400;
    font-family: 'Permanent Marker', cursive;
-   -webkit-text-fill-color: ${({ theme }) => theme.colors.text};
+   -webkit-text-fill-color: white;
    -webkit-text-stroke-width: 0.5px;
-   -webkit-text-stroke-color: ${({ theme }) => theme.colors.modal.borderColor};
+   -webkit-text-stroke-color: #040404;
 `;
 const Subheading = styled(Text)`
    width: 100%;
