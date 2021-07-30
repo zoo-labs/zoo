@@ -31,6 +31,10 @@ const StyledButton = styles.button`
     cursor: pointer;
     text-decoration: underline;
     text-transform: uppercase;
+    color: ${({ theme }) => theme.colors.text};
+    background: transparent;
+    border: none;
+    margin-left: 8px;
 `;
 
 const LabelWrapper = styles.div`
@@ -38,10 +42,11 @@ const LabelWrapper = styles.div`
     width: 100%;
     justify-content: space-evenly;
     align-items: center;
+    color: ${({ theme }) => theme.colors.text};
 `;
 
 const ValueWrapper = styles(Text)`
-    color: white;
+    color: ${({ theme }) => theme.colors.text};
     width: 100%;
     display: flex;
     white-space: nowrap;
@@ -61,9 +66,7 @@ const Container = styled.div`
 const TableWrapper = styled.div`
   flex-direction: row;
   flex: 1 1 auto;
-  
   -webkit-box-pack: start;
-
   &::-webkit-scrollbar {
     display: none;
   }
@@ -136,6 +139,14 @@ const TableText = styled(Text)`
   text-align: center;
   margin: 20px 0px;
   font-size: 16px;
+`
+
+const StyledHeading = styled(Heading)`
+   color: ${({ theme }) => theme.colors.text};
+`
+
+const StyledText = styled(Text)`
+   color: ${({ theme }) => theme.colors.text};
 `
 
 
@@ -252,14 +263,8 @@ const Bank: React.FC = () => {
 
    const pageHeading = (
       <HeadingContainer>
-         <Heading>My Bank</Heading>
+         <StyledHeading>My Bank</StyledHeading>
          <StyledButton
-            style={{
-               background: "transparent",
-               border: "none",
-               color: "white",
-               marginLeft: "8px",
-            }}
             onClick={() => handleClick()}>
             View Account
          </StyledButton>
