@@ -689,7 +689,7 @@ const MyZooAccount: React.FC = () => {
           (a) => a.animalId === animal.animalId && a.timeRemaining <= 0
         )
       ) {
-        animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 2;
+        animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 1;
       } else {
         animalData.push({
           id: index,
@@ -792,21 +792,23 @@ const MyZooAccount: React.FC = () => {
       //  if (timeRemaining <= 0 && eggData.find(a => a.basic === egg.basic && a.timeRemaining <= 0)) {
       //     eggGroup[eggType] = eggGroup[eggType] + 1
       //  } else {
-      eggData.push({
-        id: index,
-        ...egg,
-        name: eggType,
-        timeRemaining: !egg.basic
-          ? elapsedTime < hatchTimeout
-            ? timeRemaining
-            : 0
-          : 0,
-        CTAOverride: !egg.basic
-          ? elapsedTime < hatchTimeout
-            ? { barwidth, timeRemainingDaysHours }
-            : null
-          : null,
-      });
+        if (egg.owner === account && !egg.burned) {
+          eggData.push({
+             id: index,
+             ...egg,
+             name: eggType,
+             timeRemaining: !egg.basic
+                ? elapsedTime < hatchTimeout
+                   ? timeRemaining
+                   : 0
+                : 0,
+             CTAOverride: !egg.basic
+                ? elapsedTime < hatchTimeout
+                   ? { barwidth, timeRemainingDaysHours }
+                   : null
+                : null,
+          });
+       }
       //  }
     });
     empty = eggData.length === 0 && Object.keys(eggData).length !== 0;
