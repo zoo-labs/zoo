@@ -23,8 +23,11 @@ contract ZooDrop is Ownable {
     // mapping of Rarity name to Rarity
     mapping (string => Rarity) public rarities;
 
+    // mapping of Rarity name to []string of Animal names
+    mapping (string => string[]) public rarityAnimals;
+
     // Rarity sorted by most rare -> least rare
-    Rarity[] public raritySorted;
+    string[] public raritySorted;
 
     // mapping of Egg name to Egg
     mapping (string => Egg) public eggs;
@@ -32,16 +35,13 @@ contract ZooDrop is Ownable {
     // mapping of Animal name to Animal
     mapping (string => Animal) public animals;
 
-    // mapping of Rarity name to []Animal
-    mapping (string => Animal[]) public animalsByRarity;
-
     // mapping of animal name to Hybrid
     mapping (string => Hybrid) public hybrids;
 
     // mapping of (parent + parent) to Hybrid
     mapping (string => Hybrid) public hybridParents;
 
-    constructor(string memory _name, uint256 supply, uint256 price){
+    constructor(string memory _name, uint256 supply) {
         name = _name;
         eggPrice = price;
         eggSupply = supply;
@@ -53,20 +53,14 @@ contract ZooDrop is Ownable {
         return _eggSupply.current();
     }
 
-    // Control Egg / Name pricing
-    function setEggPrice(uint256 price) public onlyOwner returns (bool) {
-        require(price > 0, "Price must be over zero");
-        eggPrice = price;
-        return true;
-    }
-
-
     // Add or configure a given kind of egg
-    function setEgg(string memory _name, string memory tokenURI, string memory metadataURI) returns (Egg) {
+    function setEgg(string memory _name, uint256 supply, uint256 price, memory tokenURI, string memory metadataURI) returns (Egg memory) {
         Egg memory egg;
         egg.name = _name;
         egg.tokenURI = tokenURI;
         egg.metadataURI = metadataURI;
+        egg.price = price;
+        egg.supply = supply;
         eggs[name] = egg;
         return egg;
     }
@@ -85,37 +79,39 @@ contract ZooDrop is Ownable {
 
         // Save rarity
         rarities[rarity.name] = rarity;
+        raritySorted.push(rarity.name);
 
-        // To ensure rarities are sorted properly, add most rare to least rare
-        raritySorted.push(rarity);
         return true;
     }
 
     // Add Animal to rarity set if it has not been seen before
-    function addAnimal(string memory rarity, string memory _name) returns (Animal[]) {
-        Animal[] memory animals = animalsByRarity[rarity];
+    function addAnimal(string memory rarity, string memory _name) {
+        string[] storage animals = rarityAnimals[rarity];
 
         // Check if animal has been added to this rarity before
         for (uint256 i = 0; i < animals.length; i++) {
             string memory known = animals[i];
-            if (known == _name) {
-                return animals;
+            if (_name == known) {
+                // Not a new Animal
+                return;
             }
         }
 
         // New animal lets add to rarity list
         animals.push(_name);
-        return animals;
+
+        // Ensure stored
+        rarityAnimals[rarity] = animals;
     }
 
-    function getMediaData(string memory tokenURI, string memory metadataURI) returns (IMedia.MediaData) {
+    function getMediaData(string memory tokenURI, string memory metadataURI) returns (IMedia.MediaData memory) {
         return IMedia.MediaData({
             tokenURI: tokenURI,
             metadataURI: metadataURI
         });
     }
 
-    function getBidShares() returns (IMarket.BidShares) {
+    function getBidShares() returns (IMarket.BidShares memory) {
         return IMedia.MediaData({
             creator: Decimal.D256(10),
             owner: Decimal.D256(90),
@@ -180,19 +176,20 @@ contract ZooDrop is Ownable {
     }
 
     // Chooses animal based on random number generated from(0-999)
-    function getRandomAnimal(uint256 random) public view returns (Token) {
+    function getRandomAnimal(uint256 random) public view returns (Token memory) {
+        Animal memory animal;
         Token memory token;
 
-        // Find rarest animal choices
-        Animal memory animal;
+        // Find rarest animal choices first
         for (uint256 i = 0; i < raritySorted.length; i++) {
             string memory name = raritySorted[i];
             Rarity memory rarity = rarities[name];
 
             // Choose random animal from choices
-            if (random > rarity.probability) {
-                string[] choices = rarity.animals;
-                animal = choices[random % rarity.animals.length];
+            if (rarity.probability > random) {
+                string[] memory choices = rarityAnimals[name];
+                name = choices[choices.length % random];
+                animal = getAnimal(name);
             }
         }
 
@@ -206,7 +203,7 @@ contract ZooDrop is Ownable {
         return token;
     }
 
-    function getRandomHybrid(uint256 random, string memory parentA, string memory parentB) public view returns (Token) {
+    function getRandomHybrid(uint256 random, string memory parentA, string memory parentB) public view returns (Token memory) {
         Token memory token;
 
         Hybrid[2] memory possible = [
@@ -215,7 +212,7 @@ contract ZooDrop is Ownable {
         ];
 
         // pick array index 0 or 1 depending on the rarity
-        Hybrid hybrid = possible[random % 2];
+        Hybrid memory hybrid = possible[random % 2];
 
         // Return Token
         token.kind = Type.HYBRID_ANIMAL;
@@ -253,7 +250,7 @@ contract ZooDrop is Ownable {
     }
 
     // Return a new Egg Token
-    function newEgg() public onlyOwner returns (Token) {
+    function newEgg() public onlyOwner returns (Token memory) {
         require(currentSupply() > 0, "Out of eggs");
         _eggSupply.decrement();
 
@@ -271,7 +268,7 @@ contract ZooDrop is Ownable {
     }
 
     // Return a new Hybrid Egg Token
-    function newHybridEgg(uint256 parentA, uint256 parentB) public onlyOwner returns (Token) {
+    function newHybridEgg(uint256 parentA, uint256 parentB) public onlyOwner returns (Token memory) {
         _hybridSupply.increment();
 
         Egg memory egg = getEgg("hybridEgg");

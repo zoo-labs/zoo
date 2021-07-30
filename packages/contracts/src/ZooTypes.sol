@@ -12,14 +12,32 @@ enum Type {
     HYBRID_ANIMAL
 }
 
+struct Rarity {
+    string  name;
+    uint256 probability;
+    uint256 yield;
+    uint256 boost;
+}
+
+struct Egg {
+    Type    kind;
+    string  name;
+    uint256 supply;
+    uint256 price;
+    string  tokenURI;
+    string  metadataURI;
+    uint256 timestamp;    // time created
+    uint256 birthday;     // birth block
+    IMedia.MediaData data;
+    IMarket.BidShares bidShares;
+}
+
 struct Token {
     Rarity  rarity;
     Type    kind;
     uint256 id;
     uint256 dropID;
     string  name;
-    string  tokenURI;
-    string  metadataURI;
     uint256 timestamp;      // time created
     uint256 birthday;       // birth block
     uint256 eggID;          // optional
@@ -29,22 +47,8 @@ struct Token {
     uint256 parentIDB;      // optional
     uint256 breedCount;     // optional
     uint256 breedTimestamp; // optional
-}
-
-struct Rarity {
-    uint256 id;
-    string  name;
-    uint256 probability;
-    uint256 yield;
-    uint256 boost;
-}
-
-struct Egg {
-    string  name;
-    string  tokenURI;
-    string  metadataURI;
-    uint256 timestamp;    // time created
-    uint256 birthday;     // birth block
+    IMedia.MediaData data;
+    IMarket.BidShares bidShares;
 }
 
 struct Animal {
@@ -52,8 +56,8 @@ struct Animal {
     string name;
     string tokenURI;
     string metadataURI;
+    IMedia.MediaData data;
     IMarket.BidShares bidShares;
-    IMedia.MediaData mediaData;
     bool enabled;
 }
 
@@ -64,7 +68,7 @@ struct Hybrid {
     string parentB;
     string tokenURI;
     string metadataURI;
+    IMedia.MediaData data;
     IMarket.BidShares bidShares;
-    IMedia.MediaData mediaData;
     bool enabled;
 }

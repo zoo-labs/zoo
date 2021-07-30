@@ -72,7 +72,7 @@ contract ZooKeeper is Ownable {
 
     // Add a new Drop
     function addDrop(address _address, string memory _name, uint256 totalSupply, uint256 eggPrice) public returns (uint256, address) {
-        ZooDrop memory drop;
+        ZooDrop drop;
 
         // Add pre-existing contract or create new ZooDrop
         if (_address == address(0)) {
@@ -92,7 +92,7 @@ contract ZooKeeper is Ownable {
     }
 
     // Accept ZOO and return Egg NFT
-    function buyEgg(uint256 dropID) public returns (Token) {
+    function buyEgg(uint256 dropID) public returns (Token memory) {
         ZooDrop drop = ZooDrop(drops[dropID]);
 
         require(
@@ -109,15 +109,11 @@ contract ZooKeeper is Ownable {
         token.transferFrom(msg.sender, address(this), drop.eggPrice());
 
         // Instantiate a new token for Egg
-        Token egg = drop.newEgg();
+        Token memory egg = drop.newEgg();
 
         // Mint Egg Token
         media.mintToken(msg.sender, egg);
-
-        // Update bidshares
         market.setBidShares(egg.id, egg.bidShares);
-
-        // Save Egg
         tokens[egg.id] = egg;
 
         emit BuyEgg(msg.sender, egg.id);
@@ -126,7 +122,7 @@ contract ZooKeeper is Ownable {
     }
 
     // Burn egg and randomly return an animal NFT
-    function hatchEgg(uint256 dropID, uint256 eggID) public returns (Token) {
+    function hatchEgg(uint256 dropID, uint256 eggID) public returns (Token memory) {
         ZooDrop drop = ZooDrop(drops[dropID]);
 
         // need to check the hatch time delay
@@ -136,34 +132,25 @@ contract ZooKeeper is Ownable {
 
         // A new animal is born!
         Token memory token;
-        token.birthday = block.number;
-        token.timestamp = block.timestamp;
 
         // Get random animal or hybrid from drop
         if (egg.kind == Type.BASE_EGG) {
-            Animal memory animal = drop.getRandomAnimal(unsafeRandom());
+            token = drop.getRandomAnimal(unsafeRandom());
         } else {
-            Hybrid memory hybrid = drop.getRandomHybrid(unsafeRandom(), egg.parentA.name, egg.parntB.name);
-            token.parentA = egg.parentA;
-            token.parentB = egg.parentB;
-            token.parentIDA = egg.parentIDA;
-            token.parentIDB = egg.parentIDB;
+            token = drop.getRandomHybrid(unsafeRandom(), egg.parentA.name, egg.parentB.name);
         }
 
         // Burn egg aka it's hatching...
         media.burn(eggID);
+        delete tokens[eggID];
         emit Burn(msg.sender, eggID);
 
-        // Mint token
-        uint256 id = media.mintToken(msg.sender, token);
-
-        // Save NFT state
-        tokens[tokenID] = token;
-
-        // Update bidshares
+        // Mint Animal or Hybrid Token
+        media.mintToken(msg.sender, token);
         market.setBidShares(token.id, token.bidShares);
+        tokens[token.id] = token;
 
-        emit Hatch(msg.sender, tokenID);
+        emit Hatch(msg.sender, token.id);
 
         return token;
     }
@@ -173,7 +160,7 @@ contract ZooKeeper is Ownable {
         uint256 dropID,
         uint256 parentA,
         uint256 parentB
-    ) public onlyExistingToken(parentA) onlyExistingToken(parentB) returns (Token) {
+    ) public onlyExistingToken(parentA) onlyExistingToken(parentB) returns (Token memory) {
         require(parentA != parentB);
         require(
             breedReady(parentA) && breedReady(parentB),
@@ -191,15 +178,16 @@ contract ZooKeeper is Ownable {
             "Hybrid animals cannot breed."
         );
 
+        // Update breeding delay for each parent
+        updateBreedDelays(animalA, animalB);
+
         // New Hybrid Egg
         Token memory egg = drop.newHybridEgg(parentA, parentB);
 
-        // Mint egg
+        // Mint token and update bidShares
         media.mintToken(msg.sender, egg);
+        market.setBidShares(egg.id, egg.bidShares);
         tokens[egg.id] = egg;
-
-        // Update breeding delay for each parent
-        updateBreedDelays(animalA, animalB);
 
         emit Breed(msg.sender, animalA.id, animalB.id, egg.id);
 
@@ -211,11 +199,9 @@ contract ZooKeeper is Ownable {
         Token memory token = tokens[tokenID];
         ZooDrop drop = drops[token.dropID];
 
-        require(drop.animalExists(token.name), "Non-existing animal");
-
         // Burn the token
-        media.burn(token.ID);
-        delete tokens[token.ID];
+        media.burn(token.id);
+        delete tokens[token.id];
         emit Burn(msg.sender, token);
 
         // How long we HODLing?
@@ -236,15 +222,6 @@ contract ZooKeeper is Ownable {
         namePrice = price;
     }
 
-    // Return the highest of two rarities
-    function highestRarity(Rarity rarityA, Rarity rarityB) returns (Rarity) {
-        if (rarityA.probability < rarityB.probability) {
-            return rarityA;
-        }
-
-        return rarityB;
-    }
-
     // Add a name for given NFT
     function buyName(uint256 tokenID, string memory _name) public {
         require(
@@ -255,6 +232,14 @@ contract ZooKeeper is Ownable {
         console.log("Transfer ZOO from sender to this contract");
         token.transferFrom(msg.sender, address(this), namePrice);
         names[tokenID] = _name;
+    }
+
+    // Return the highest of two rarities
+    function highestRarity(Rarity memory rarityA, Rarity memory rarityB) returns (Rarity memory) {
+        if (rarityA.probability < rarityB.probability) {
+            return rarityA;
+        }
+        return rarityB;
     }
 
     // Temporary random function
@@ -268,14 +253,14 @@ contract ZooKeeper is Ownable {
     }
 
     // Update breed delays
-    function updateBreedDelays(Token animalA, Token animalB) private {
+    function updateBreedDelays(Token memory animalA, Token memory animalB) private {
         animalA.breedCount++;
         animalA.breedTimestamp = block.timestamp;
-        tokens[animalA.id] = animalA
+        tokens[animalA.id] = animalA;
 
         animalB.breedCount++;
         animalB.breedTimestamp = block.timestamp;
-        tokens[animalB.id] = animalB
+        tokens[animalB.id] = animalB;
     }
 
     // Get next timestamp token can be bred

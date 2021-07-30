@@ -277,7 +277,7 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
     /**
      * @dev Update mediaData hash on token
      */
-    function _hashToken(Token token) private {
+    function _hashToken(Token memory token) private {
         token.data.contentHash = keccak256(
             abi.encodePacked(token.data.tokenURI, block.number, msg.sender)
         );
@@ -289,7 +289,7 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
     /**
      * @dev Mints from a Token struct
      */
-    function mintToken(address owner, Token token) public onlyZooKeeper nonReentrant returns (Token) {
+    function mintToken(address owner, Token memory token) public onlyZooKeeper nonReentrant returns (Token memory) {
         _hashToken(token);
         _mintForCreator(owner, token.data, token.bidShares, token.kind);
         uint256 id = getRecentToken(owner);
