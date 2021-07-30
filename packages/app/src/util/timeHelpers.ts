@@ -10,3 +10,4 @@ export const getDaysHours = (milliseconds) => {
 
   return { days, hours };
 };
+

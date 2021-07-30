@@ -1,4 +1,4 @@
-// deploy/05_deploy_zoo_faucet.ts
+// deploy/06_deploy_zoo_faucet.ts
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { getDeployerAddress } from '../lib/deploy_helper'

@@ -41,7 +41,7 @@ const StyledNav = styled.nav<{ showMenu: boolean; isPushed: boolean }>`
   padding-right: 16px;
   width: 100%;
   height: ${MENU_HEIGHT}px;
-  background-color: ${({ showMenu }) => (showMenu ? 'transparent' : `black`)};
+  background-color: ${({ showMenu, theme }) => (showMenu ? theme.isDark ? 'transparent' : `black` : `black`)};
   z-index: 20;
   transform: translate3d(0, 0, 0);
 `;
@@ -159,32 +159,31 @@ const Menu: React.FC<NavProps> = ({
   useEffect(() => {
     const handleScroll = () => {
       const currentOffset = window.pageYOffset;
-      const isBottomOfPage =
-        (window.document.body.clientHeight - 5) <=
-        currentOffset + window.innerHeight;
+      const isBottomOfPage = window.document.body.clientHeight === currentOffset + window.innerHeight;
       const isTopOfPage = currentOffset === 0;
       // Always show the menu when user reach the top
-      if (currentOffset > 30) {
-        setShowMenu(false)
-      } else{
-        setShowMenu(true)
+      if (isTopOfPage) {
+        setShowMenu(true);
+      }
+      // Avoid triggering anything at the bottom because of layout shift
+      else if (!isBottomOfPage) {
+        if (currentOffset < refPrevOffset.current) {
+          // Has scroll up
+          setShowMenu(true);
+        } else {
+          // Has scroll down
+          setShowMenu(false);
+        }
       }
       refPrevOffset.current = currentOffset;
     };
     const throttledHandleScroll = throttle(handleScroll, 200);
 
     window.addEventListener("scroll", throttledHandleScroll);
-    document.addEventListener("click", handleClickOutside, true);
     return () => {
       window.removeEventListener("scroll", throttledHandleScroll);
-      document.addEventListener("click", handleClickOutside, true);
     };
-  }, [isPushed]);
-
-  // useEffect(() => {
-  //    window.addEventListener("click", handleClickOutside, true);
-
-  // }, [])
+  }, []);
 
   // Find the home link if provided
   const homeLink = links.find((link) => link.label === "Token Raise");

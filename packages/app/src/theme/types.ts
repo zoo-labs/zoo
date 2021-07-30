@@ -83,6 +83,8 @@ export type Colors = {
   tableHeader: string;
   disabledBubblegum: string;
   textSecondary: string;
+  modalBackground: string;
+  boxShadow: string;
 
   // Gradients
   gradients: Gradients;

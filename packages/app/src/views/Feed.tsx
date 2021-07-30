@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Text } from "components";
-import { ButtonMenu, ButtonMenuItem } from "components/ButtonMenu";
+import { Flex, Text } from "components";
+import { ButtonMenu, ButtonMenuItem, ButtonMenuItemProps } from "components/ButtonMenu";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
    useRouteMatch,
@@ -20,6 +20,11 @@ import { AppState } from "state/index";
 import FeedCard from "./FeedCard";
 import BorderButton from "components/Button/BorderButton";
 import { ChevronLeftIcon } from "components/Svg";
+import logo from "media/ZooLogoWhite.png";
+import "./styles.css";
+interface ButtonProp extends ButtonMenuItemProps {
+   activeIndex: number
+}
 
 const Container = styled.div<{ isMobile?: boolean }>`
    height: ${({ isMobile }) => (isMobile ? `100vh` : null)};
@@ -35,6 +40,7 @@ const StyledChevron = styled(ChevronLeftIcon)`
    height: 40px;
    width: 40px;
    z-index: 101;
+   fill: white;
 `;
 
 const StyledMenuButton = styled.button`
@@ -55,7 +61,7 @@ const ToggleContainer = styled.div`
       z-index: 1000;
       position: absolute;
       padding-top: 15px;
-      background: linear-gradient(#3d3d3d, transparent);
+      // background: linear-gradient(#3d3d3d, transparent);
    }
    a {
       border: none;
@@ -74,15 +80,31 @@ const EmptyZoo = styled.div`
    padding: 80px 0;
    width: 100%;
    height: 100%;
+   background: ${({ theme }) => theme.colors.background};
 
    button {
       margin-top: 24px;
    }
+   * {
+    color: ${({ theme }) => theme.colors.text};
+   }
 `;
 
-Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
+const MaxHeightLogo = styled.img`
+   height: ${32 / 1.6}px;
+   position: absolute;
+   bottom: 20px;
+   right: 10px;
+   z-index: 100;
+`;
 
-Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server";
+const LogoContainer = styled.div`
+   height: 100%;
+   ${({ theme }) =>
+      theme.mediaQueries.md || theme.mediaQueries.lg || theme.mediaQueries.xl} {
+      left: 50%;
+   }
+`;
 
 export interface FeedPagePops extends RouteComponentProps<{ key?: string }> {}
 
@@ -93,7 +115,20 @@ function Feed<FeedPagePops>({ match }) {
    const { isXl } = useMatchBreakpoints();
    const isMobile = !isXl;
    const history = useHistory();
-   const { account } = useWeb3React();
+   const { account, chainId } = useWeb3React();
+   const [swiperRef, setSwiperRef] = useState(null);
+   const [activeIndex, setActiveIndex] = useState(1);
+
+   Moralis.initialize(
+      chainId === 97
+         ? "16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy"
+         : "cIGUkzL7pyhM8aC8gIcDiH46QGpsEutO5SAQzTgy"
+   );
+   Moralis.serverURL =
+      chainId === 97
+         ? "https://dblpeaqbqk32.usemoralis.com:2053/server"
+         : "https://j0ixlvmwc1kz.usemoralis.com:2053/server";
+
    let animals = Object.values(animalsState);
    const { pathname } = useLocation();
 
@@ -110,83 +145,138 @@ function Feed<FeedPagePops>({ match }) {
       history.push("/account");
    };
 
+   const handleClick = (newIndex) => {
+      setActiveIndex(newIndex);
+      swiperRef.slideTo(newIndex - 1, 200);
+   }
+
+   const handleIndexChange = (obj) => {
+      setActiveIndex(obj.activeIndex+1);
+   }
+
    //  Settings for Zoo vs Market
-   let activeIndex = 0;
    let filter = "";
    switch (true) {
       case pathname.includes("myzoo"):
-         activeIndex = 0;
          filter = "myZoo";
          break;
       case pathname.includes("marketplace"):
          filter = "marketplace";
-         activeIndex = 1;
          break;
       default:
          filter = "";
-         activeIndex = 1;
          break;
    }
 
    //  Filter if in the Zoo or Market
-   const isZoo = filter === "myZoo";
-   let animalsFiltered = animals.filter((animal) => {
-      return animal.owner
-         ? isZoo
-            ? animal.owner.toLowerCase() === account.toLowerCase()
-            : animal.owner.toLowerCase() !== account.toLowerCase()
-         : !isZoo;
+   const isMyZoo = filter === "myZoo";
+   let totalAnimalsFiltered = animals.filter((animal) => {
+      return animal.owner && animal.owner.toLowerCase() !== account.toLowerCase()
+   });
+   let myZooAnimalsFiltered = animals.filter((animal) => {
+      return animal.owner && animal.owner.toLowerCase() === account.toLowerCase()
    });
 
-   if (toFind && isZoo) {
-      const ogIndex = animalsFiltered.findIndex((a) => a.tokenId === toFind);
-      const toMove = animalsFiltered[0];
-      animalsFiltered[0] = animalsFiltered[ogIndex];
-      animalsFiltered[ogIndex] = toMove;
+   if (toFind && isMyZoo) {
+      const ogIndex = myZooAnimalsFiltered.findIndex((a) => a.tokenId === toFind);
+      const toMove = myZooAnimalsFiltered[0];
+      myZooAnimalsFiltered[0] = myZooAnimalsFiltered[ogIndex];
+      myZooAnimalsFiltered[ogIndex] = toMove;
    }
 
-   console.log(toFind, animalsFiltered);
+   console.log("Key: ", toFind);
+   console.log("Animals: ", myZooAnimalsFiltered);
+
+   const animalGroup = {};
+   let myZooAnimalData = [];
+   let totalAnimalData = [];
+   // if (isMyZoo) {
+      myZooAnimalsFiltered.forEach((animal) => {
+         // AF[1,2,3,2,1] //AD[1,2,3]
+         if (myZooAnimalData.find((a) => a.animalId === animal.animalId)) {
+            animalGroup[animal.animalId] =
+               animalGroup[animal.animalId] + 1 || 2;
+         } else {
+            myZooAnimalData.push(animal);
+         }
+         // return animalGroup[animal.animalId] === 1 ? true : false
+      });
+   // } else {
+      totalAnimalData = totalAnimalsFiltered;
+   // }
 
    return (
       <Container isMobile={isMobile}>
          <ToggleContainer>
-            <ButtonMenu activeIndex={activeIndex + 1} scale="sm">
-               <StyledMenuButton onClick={() => console.log("asda")}>
+            <ButtonMenu activeIndex={activeIndex} onItemClick={handleClick} scale="sm">
+               <StyledMenuButton>
                   <StyledChevron onClick={HomeClick} />
                </StyledMenuButton>
-               <ButtonMenuItem as={Link} to={`/feed/myzoo`}>
+               <ButtonMenuItem as="a">
                   My Zoo
                </ButtonMenuItem>
-               <ButtonMenuItem as={Link} to={`/feed/marketplace`}>
+               <ButtonMenuItem as="a">
                   Marketplace
                </ButtonMenuItem>
             </ButtonMenu>
          </ToggleContainer>
-         {!isZoo || animalsFiltered.length ? (
-            <Swiper
-               spaceBetween={30}
-               slidesPerView={1}
-               direction={isMobile ? "vertical" : "horizontal"}>
-               {animalsFiltered.map((data) => {
-                  return data.listed ? (
-                     <SwiperSlide key={data.tokenId + "slide"}>
-                        <FeedCard item={data} key={data.tokenId + "card"} />
-                     </SwiperSlide>
-                  ) : (
-                     <></>
-                  );
-               })}
-            </Swiper>
-         ) : (
-            <EmptyZoo>
-               <Text textAlign="center">
-                  You do not currently own any animals
-               </Text>
-               <BorderButton scale="md" onClick={() => HomeClick}>
-                  Home
-               </BorderButton>
-            </EmptyZoo>
-         )}
+         <Swiper
+            onSwiper={setSwiperRef}
+            onActiveIndexChange={handleIndexChange} 
+            centeredSlides={isMobile ? true : false}
+            spaceBetween={30}
+            slidesPerView={1}
+            direction="horizontal">
+            <SwiperSlide key={1}>
+            {myZooAnimalData.length ? (
+               <Swiper
+                  spaceBetween={30}
+                  slidesPerView={1}
+                  direction="vertical">
+                  {myZooAnimalData.map((data) => {
+                     return (
+                        <SwiperSlide key={data.tokenId + "slide"}>
+                           <FeedCard
+                              item={data}
+                              key={data.tokenId + "card"}
+                              animalGroup={animalGroup}
+                           />
+                        </SwiperSlide>
+                     ) 
+                  })}
+               </Swiper>
+            ) : (
+               <EmptyZoo>
+                  <Text textAlign="center">
+                     There are currently no animals up for auction
+                  </Text>
+                  <BorderButton scale="md" onClick={HomeClick}>
+                     Home
+                  </BorderButton>
+               </EmptyZoo>
+            )}
+            </SwiperSlide>
+            <SwiperSlide key={2}>
+               <Swiper
+                  spaceBetween={30}
+                  slidesPerView={1}
+                  direction="vertical">
+                  {totalAnimalData.map((data, index) => {
+                     return data.listed ? (
+                        <SwiperSlide key={data.tokenId + "slide"}>
+                           <FeedCard
+                              item={data}
+                              key={data.tokenId + "card"}
+                              animalGroup={animalGroup}
+                           />
+                        </SwiperSlide>
+                     ) : (
+                        <div key={index}></div>
+                     );
+                  })}
+               </Swiper>
+            </SwiperSlide>
+         </Swiper>
       </Container>
    );
 }

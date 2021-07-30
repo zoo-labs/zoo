@@ -9,7 +9,7 @@ import { ModalProps } from "./types";
 export const ModalHeader = styled.div<{ background?: string }>`
    align-items: center;
    background: ${({ background }) => background || "transparent"};
-   border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
+   border-bottom: 1px solid ${({ theme }) => theme.colors.contrast};
    display: flex;
    padding: 12px 24px;
 `;
@@ -46,6 +46,7 @@ export const ModalContainer = styled(Box)<{ minWidth: string, borderRadius: stri
   border-radius: 8px;
   width: 100%;
   z-index: ${({ theme }) => theme.zIndices.modal};
+  position: relative;
 
    ${({ theme }) => theme.mediaQueries.xs} {
       width: auto;

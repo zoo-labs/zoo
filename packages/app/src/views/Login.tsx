@@ -20,7 +20,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     background-color: #030303;
-    height: calc(100vh - 64px);
+    height: 100vh;
 `
 const Button = styled.button`
     width: 200px;
@@ -30,7 +30,7 @@ const Button = styled.button`
     border-radius: 4px;
     padding: 10px;
     cursor: pointer;
-    background: #925677;
+    background: #DF4C97;
     text-transform: uppercase;
     border-radius: 8px;
     transition: all 0.2s;
