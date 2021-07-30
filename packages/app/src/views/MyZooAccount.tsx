@@ -623,15 +623,12 @@ const MyZooAccount: React.FC = () => {
   );
 
   useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      setTimeout(function () {
-        setElapsedTimeOnPage(elapsedTimeOnPage + 5000);
-      }, 5000);
-    }
+    const timeout = setTimeout(() => {
+      setElapsedTimeOnPage(elapsedTimeOnPage + 5000);
+    }, 5000);
     return () => {
-      mounted = false;
-    };
+        clearTimeout(timeout);
+    }
   }, [elapsedTimeOnPage]);
 
 
