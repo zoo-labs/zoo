@@ -45,7 +45,7 @@ const LabelWrapper = styles.div`
 `;
 
 const ValueWrapper = styles(Text)`
-    color: white;
+    color: ${({ theme }) => theme.colors.text};  
     width: 100%;
     display: flex;
     white-space: nowrap;
@@ -59,6 +59,10 @@ const RowWrapper = styles.div`
     justify-content: space-around;
     margin: 16px;
 `;
+
+const StyledHeading = styles(Heading)`
+   color: ${({ theme }) => theme.colors.text};
+`
 
 const Account: React.FC = () => {
    const [balance, setBalance] = useState(0.0);
@@ -118,7 +122,7 @@ const Account: React.FC = () => {
 
    const pageHeading = (
       <HeadingContainer>
-         <Heading>My Account</Heading>
+         <StyledHeading>My Account</StyledHeading>
          {/* <StyledButton
             style={{
                background: "transparent",
