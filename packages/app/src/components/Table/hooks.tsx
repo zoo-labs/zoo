@@ -14,7 +14,7 @@ import {
   HeaderRenderType,
   ColumnStateType,
 } from "./types";
-import { byTextAscending, byTextDescending } from "./utils";
+import { byTextAscending, byTextDescending } from "util/byOrder";
 
 const sortByColumn = <T extends DataType>(
   data: RowType<T>[],
@@ -276,9 +276,7 @@ const createReducer = <T extends DataType>() => (state: TableState<T>, action: T
 };
 
 const sortDataInOrder = <T extends DataType>(data: T[], columns: ColumnType<T>[]): T[] => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return data.map((row: any) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newRow: any = {};
     columns.forEach((column) => {
       if (!(column.name in row)) {
@@ -293,7 +291,6 @@ const sortDataInOrder = <T extends DataType>(data: T[], columns: ColumnType<T>[]
 export const makeRender = <T extends DataType>(
   // eslint-disable-next-line
   value: any,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   render: (({ value: val, row }: { value: any; row: T }) => ReactNode) | undefined,
   row: T
 ): (() => React.ReactNode) => {
@@ -368,9 +365,7 @@ export const useTable = <T extends DataType>(
       perPage: 10,
       canNext: true,
       canPrev: false,
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
       nextPage: noop,
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
       prevPage: noop,
     },
   });

@@ -16,6 +16,7 @@ import BuyEggs from "components/BuyEggs";
 import { getZooToken, getZooFaucet } from "util/contractHelpers";
 import { useMatchBreakpoints } from 'components';
 import { FaHome } from "react-icons/fa";
+import Table from 'components/Table/Table'
 
 const HeadingContainer = styles.div`
     width: 100%;
@@ -166,6 +167,7 @@ const Bank: React.FC = () => {
                </Flex>
                <Label small>Total Daily Yield</Label>
                <ValueWrapper> 200 ZOO </ValueWrapper>
+               <Table data={[]} columns={"block"}/>
             </Body>
          </Page>
       </>
