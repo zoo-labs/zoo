@@ -34,6 +34,10 @@ import SwiperCard from "components/Card/SwipeCard";
 // install Swiper modules
 // SwiperCore.use([Pagination]);
 
+const StyledText = styled(Text)`
+   color: ${({ theme }) => theme.colors.text};
+`
+
 const IconCont = styled.div`
   display: flex;
   justify-content: center;
@@ -374,9 +378,9 @@ const MyZooAccount: React.FC = () => {
     };
     return (
       <Modal title="Confirm Breed" onDismiss={onDismiss}>
-        <Text color="text">
+        <StyledText color="text">
           {`Do you want to breed ${animal1.name} with ${animal2.name}?`}
-        </Text>
+        </StyledText>
         <Flex
           style={{ marginTop: 15 }}
           width="100%"
@@ -397,7 +401,7 @@ const MyZooAccount: React.FC = () => {
   const EggCreatedNotify: React.FC<any> = ({ onDismiss = () => null }) => {
     return (
       <Modal title="Success" style={{ width: "230px" }} onDismiss={onDismiss}>
-        <Text color="text">Hybrid egg created successfully</Text>
+        <StyledText color="text">Hybrid egg created successfully</StyledText>
         <Flex style={{ marginTop: 15 }}>
           <BorderButton scale="sm" onClick={() => onDismiss()}>
             OK
@@ -429,19 +433,19 @@ const MyZooAccount: React.FC = () => {
   const SellConfirm: React.FC<Props> = ({ onDismiss = () => null, breed }) => {
     return (
       <Modal title="Confirm Listing" onDismiss={onDismiss}>
-        <Text style={{textAlign: "center"}}>{`Do you want to list ${sellAnimal.name}?`}</Text>
+        <StyledText style={{textAlign: "center"}}>{`Do you want to list ${sellAnimal.name}?`}</StyledText>
         <Flex
          width="100%"
           alignItems="center"
           justifyContent="space-evenly"
           flexDirection="row"
           mt="16px">
-            <Text
+            <StyledText
                fontSize="20px"
                style={{ whiteSpace: 'nowrap', marginTop: '5px'}}
                >
                BID PRICE
-            </Text>
+            </StyledText>
             <BidPriceInput type="number" />
         </Flex>
         <Flex
@@ -582,9 +586,9 @@ const MyZooAccount: React.FC = () => {
         <RowLayout>
           <Route exact path={`${path}`}>
             {animals.length === 0 ? (
-              <Text textAlign="center" fontSize="16px">
+              <StyledText textAlign="center" fontSize="16px">
                 No {hybrid === "pure" ? `breedable` : `hybrid`} animals
-              </Text>
+              </StyledText>
             ) : (
                       <Swiper
                          slidesPerView={document.body.getBoundingClientRect().width / 220}
@@ -662,9 +666,9 @@ const MyZooAccount: React.FC = () => {
       <RowLayout>
         <Route exact path={`${path}`}>
           {eggData.length === 0 ? (
-            <Text textAlign="center" fontSize="16px">
+            <StyledText textAlign="center" fontSize="16px">
               No eggs
-            </Text>
+            </StyledText>
           ) : (
             <Swiper
               slidesPerView={document.body.getBoundingClientRect().width / 180}
