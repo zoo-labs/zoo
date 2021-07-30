@@ -144,7 +144,7 @@ const ActionButonContainer = styled.div`
 const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
   const history = useHistory();
   const ypd = {};
-  const date = new Date(Number(item.dob) * 1000);
+  const date = new Date(Number(item.dob));
   const StringDate = date.toLocaleDateString("en-US");
   const { isXl } = useMatchBreakpoints();
   const isMobile = !isXl;
