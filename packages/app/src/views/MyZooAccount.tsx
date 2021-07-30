@@ -586,96 +586,21 @@ const MyZooAccount: React.FC = () => {
                 No {hybrid === "pure" ? `breedable` : `hybrid`} animals
               </Text>
             ) : (
-              <Swiper slidesPerView={window.innerWidth / 200} spaceBetween={10}>
+                      <Swiper
+                         slidesPerView={document.body.getBoundingClientRect().width / 220}
+                        spaceBetween={8}
+                        pagination={{ clickable: true }}
+                      >
                 {animals.map((animal) => (
-                  <SwiperSlide style={{ padding: "3px", }} key={animal.tokenId}>
+                  <SwiperSlide style={{width: "220px", display: "flex"}} key={animal.tokenId}>
                       {/* <CardWrapper> */}
                          <SwiperCard animal={animal}
                             group={animalGroup}
-                            imageURL={`url("${animal.imageUrl}")`}
                             onInfoClick={() =>
                                 hybrid === "pure"
                                   ? breedClick(animal)
                                   : list(animal)}
                          />
-                      {/* <Card
-                        style={{
-                          boxShadow: `0px 0px 13px -2px ${animal.rarityColor}`,
-                        }}
-                        key={animal.id}
-                        selected={animal.selected ? true : false}
-                        timedOut={animal.timeRemaining > 0 ? true : false}
-                      >
-                        <CardBody
-                          style={{
-                            boxShadow: `0px 0px 13px -2px ${animal.rarityColor}`,
-                          }}
-                          key={animal.id}
-                          selected={animal.selected ? true : false}
-                          timedOut={animal.timeRemaining > 0 ? true : false}
-                        >
-                          <Link
-                            to={`/feed/myzoo/${animal.tokenId}`}>
-                            <TextWrapper
-                                style={{
-                                  textShadow:
-                                      "0px 2px 6px rgb(0, 0, 0)",
-                                  fontSize: 18,
-                                  letterSpacing: 0,
-                                  position: "absolute",
-                                  textTransform: "lowercase",
-                                  right: 11,
-                                  top: 9,
-                                }}>
-                                {animal.timeRemaining === 0
-                                  ? animalGroup[animal.animalId]
-                                      ? `x${
-                                          animalGroup[animal.animalId]
-                                        }`
-                                      : ""
-                                  : ""}
-                            </TextWrapper>
-                            <TextWrapper
-                                style={{
-                                  textShadow:
-                                      "0px 2px 6px rgb(0, 0, 0)",
-                                  textAlign: "center",
-                                  fontSize: 16,
-                                  letterSpacing: 0,
-                                height: "100%",
-                                  paddingRight: animalGroup[animal.animalId] ? '26px' : null
-                                }} >
-                                {animal.name}
-                            </TextWrapper>
-                          </Link>
-                          {animal.timeRemaining > 0 ? (
-                            <TimeoutWrapper
-                              barwidth={
-                                animal.CTAOverride
-                                  ? animal.CTAOverride.barwidth
-                                  : 0
-                              }
-                            >
-                              <TimeoutDisplay>
-                                {`${animal.CTAOverride.timeRemainingDaysHours.days}D ${animal.CTAOverride.timeRemainingDaysHours.hours}H`}
-                              </TimeoutDisplay>
-                            </TimeoutWrapper>
-                          ) : (
-                            <InfoBlock
-                              onClick={() =>
-                                hybrid === "pure"
-                                  ? breedClick(animal)
-                                  : list(animal)
-                              }
-                            >
-                              <BreedWrapper>
-                                {hybrid === "pure" ? `BREED` : `SELL`}
-                              </BreedWrapper>
-                            </InfoBlock>
-                          )}
-                        </CardBody>
-                      </Card> */}
-                    {/* </CardWrapper> */}
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -742,13 +667,14 @@ const MyZooAccount: React.FC = () => {
             </Text>
           ) : (
             <Swiper
-              slidesPerView={document.body.getBoundingClientRect().width / 140}
-              spaceBetween={1}
+              slidesPerView={document.body.getBoundingClientRect().width / 180}
+              spaceBetween={8}
               pagination={{ clickable: true }}
-            >
-              {eggData.map((egg) => (
-                <SwiperSlide key={egg.id}>
-                  <EggCard egg={egg} hatchEgg={hatchEgg} />
+                   >
+                      {eggData.map((egg) => (
+                             <SwiperSlide style={{ padding: "3px", width: "180", display: "flex"}} key={egg.tokenId}>
+                      {/* <CardWrapper> */}
+                            <EggCard egg={egg} hatchEgg={hatchEgg} />
                 </SwiperSlide>
               ))}
             </Swiper>
