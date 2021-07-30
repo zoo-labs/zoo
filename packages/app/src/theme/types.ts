@@ -84,6 +84,7 @@ export type Colors = {
   disabledBubblegum: string;
   textSecondary: string;
   modalBackground: string;
+  boxShadow: string;
 
   // Gradients
   gradients: Gradients;
