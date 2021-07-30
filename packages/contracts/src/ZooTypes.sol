@@ -12,6 +12,17 @@ enum Type {
     HYBRID_ANIMAL
 }
 
+function getTypeByValue(Type t) pure returns (string memory) {
+    // Error handling for input
+    require(uint8(t) <= 4);
+
+    // Loop through possible options
+    if (Type.BASE_EGG == t) return "EGG";
+    if (Type.BASE_ANIMAL == t) return "ANIMAL";
+    if (Type.HYBRID_EGG == t) return "HYBRID_EGG";
+    if (Type.HYBRID_ANIMAL == t) return "HYBRID_ANIMAL";
+}
+
 struct Rarity {
     string  name;
     uint256 probability;
@@ -24,12 +35,18 @@ struct Egg {
     string  name;
     uint256 supply;
     uint256 price;
-    string  tokenURI;
-    string  metadataURI;
     uint256 timestamp;    // time created
     uint256 birthday;     // birth block
+    Pair    parents;
     IMedia.MediaData data;
     IMarket.BidShares bidShares;
+}
+
+struct Pair {
+    string  animalA;
+    string  animalB;
+    uint256 tokenA;
+    uint256 tokenB;
 }
 
 struct Token {
@@ -41,12 +58,10 @@ struct Token {
     uint256 timestamp;      // time created
     uint256 birthday;       // birth block
     uint256 eggID;          // optional
-    string  parentA;        // optional
-    string  parentB;        // optional
-    uint256 parentIDA;      // optional
-    uint256 parentIDB;      // optional
     uint256 breedCount;     // optional
     uint256 breedTimestamp; // optional
+    string  customName;     // optional, paid feature
+    Pair    parents;
     IMedia.MediaData data;
     IMarket.BidShares bidShares;
 }
@@ -54,8 +69,6 @@ struct Token {
 struct Animal {
     Rarity rarity;
     string name;
-    string tokenURI;
-    string metadataURI;
     IMedia.MediaData data;
     IMarket.BidShares bidShares;
     bool enabled;
@@ -66,8 +79,6 @@ struct Hybrid {
     string name;
     string parentA;
     string parentB;
-    string tokenURI;
-    string metadataURI;
     IMedia.MediaData data;
     IMarket.BidShares bidShares;
     bool enabled;

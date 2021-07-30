@@ -48,8 +48,8 @@
     "accounts": "hardhat accounts",
     "balance": "hardhat balance",
     "chain": "hardhat node --network hardhat",
-    "console": "hardhat console --network hardhat",
-    "compile": "hardhat compile",
+    "console": "hardhat console --show-stack-traces --network hardhat",
+    "compile": "hardhat compile --show-stack-traces",
     "deploy": "mkdirp deployments && hardhat deploy --network hardhat",
     "deploy:testnet": "mkdirp deployments && hardhat deploy --network testnet",
     "deploy:mainnet": "mkdirp deployments && hardhat deploy --network mainnet",
@@ -60,7 +60,7 @@
     "generate": "hardhat generate",
     "postdeploy": "hardhat run scripts/publish.js",
     "send": "hardhat send",
-    "test": "hardhat test --network hardhat",
+    "test": "hardhat test --network hardhat --show-traces",
     "verify": "hardhat etherscan-verify --api-key B4DWQYJ2WXADKY172FJTAH9736VRYMKIC9",
     "watch": "node scripts/watch.js"
   }

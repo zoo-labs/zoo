@@ -7,17 +7,16 @@ import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
 import { Decimal } from "./Decimal.sol";
 import { IMarket } from "./interfaces/IMarket.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
-import { Animal, Egg, Hybrid, Rarity, Type, Token } from "./ZooTypes.sol";
+import { Animal, Egg, Hybrid, Pair, Rarity, Type, Token } from "./ZooTypes.sol";
 
 import "./console.sol";
 
 contract ZooDrop is Ownable {
     using Counters for Counters.Counter;
-    Counters.Counter private _eggSupply;
-    Counters.Counter private _hybridSupply;
 
-    string public name;
-    uint256 public eggPrice;
+    Counters.Counter private _eggSupply;
+
+    string public title;
     uint256 public eggSupply;
 
     // mapping of Rarity name to Rarity
@@ -41,11 +40,10 @@ contract ZooDrop is Ownable {
     // mapping of (parent + parent) to Hybrid
     mapping (string => Hybrid) public hybridParents;
 
-    constructor(string memory _name, uint256 supply) {
-        name = _name;
-        eggPrice = price;
-        eggSupply = supply;
-        _eggSupply._value = supply;
+    constructor(string memory dropTitle, uint256 dropSupply) {
+        title = dropTitle;
+        eggSupply = dropSupply;
+        _eggSupply._value = eggSupply;
     }
 
     // Return currently available supply of Eggs
@@ -54,11 +52,11 @@ contract ZooDrop is Ownable {
     }
 
     // Add or configure a given kind of egg
-    function setEgg(string memory _name, uint256 supply, uint256 price, memory tokenURI, string memory metadataURI) returns (Egg memory) {
+    function setEgg(string memory name, uint256 price, uint256 supply, string memory tokenURI, string memory metadataURI) public onlyOwner returns (Egg memory) {
         Egg memory egg;
-        egg.name = _name;
-        egg.tokenURI = tokenURI;
-        egg.metadataURI = metadataURI;
+        egg.name = name;
+        egg.data = getMediaData(tokenURI, metadataURI);
+        egg.bidShares = getBidShares();
         egg.price = price;
         egg.supply = supply;
         eggs[name] = egg;
@@ -66,15 +64,14 @@ contract ZooDrop is Ownable {
     }
 
     // Add or configure a given rarity
-    function setRarity(string memory _name, uint256 probability, uint256 yield, uint256 boost, bool enabled) public onlyOwner returns (bool) {
+    function setRarity(string memory name, uint256 probability, uint256 yield, uint256 boost) public onlyOwner returns (bool) {
         require(probability > 0, "Rarity must be over zero");
 
         Rarity memory rarity = Rarity({
-            name: _name,
+            name: name,
             probability: probability,
             yield: yield,
-            boost: boost,
-            enabled: enabled
+            boost: boost
         });
 
         // Save rarity
@@ -85,34 +82,36 @@ contract ZooDrop is Ownable {
     }
 
     // Add Animal to rarity set if it has not been seen before
-    function addAnimal(string memory rarity, string memory _name) {
-        string[] storage animals = rarityAnimals[rarity];
+    function _addAnimal(string memory rarity, string memory name) private {
+        string[] storage _animals = rarityAnimals[rarity];
 
         // Check if animal has been added to this rarity before
-        for (uint256 i = 0; i < animals.length; i++) {
-            string memory known = animals[i];
-            if (_name == known) {
+        for (uint256 i = 0; i < _animals.length; i++) {
+            string memory known = _animals[i];
+            if (keccak256(bytes(name)) == keccak256(bytes(known))) {
                 // Not a new Animal
                 return;
             }
         }
 
         // New animal lets add to rarity list
-        animals.push(_name);
+        _animals.push(name);
 
         // Ensure stored
-        rarityAnimals[rarity] = animals;
+        rarityAnimals[rarity] = _animals;
     }
 
-    function getMediaData(string memory tokenURI, string memory metadataURI) returns (IMedia.MediaData memory) {
+    function getMediaData(string memory tokenURI, string memory metadataURI) public pure returns (IMedia.MediaData memory) {
         return IMedia.MediaData({
             tokenURI: tokenURI,
-            metadataURI: metadataURI
+            metadataURI: metadataURI,
+            contentHash: bytes32(0),
+            metadataHash: bytes32(0)
         });
     }
 
-    function getBidShares() returns (IMarket.BidShares memory) {
-        return IMedia.MediaData({
+    function getBidShares() public pure returns (IMarket.BidShares memory) {
+        return IMarket.BidShares({
             creator: Decimal.D256(10),
             owner: Decimal.D256(90),
             prevOwner: Decimal.D256(0)
@@ -120,9 +119,9 @@ contract ZooDrop is Ownable {
     }
 
     // Add or configure a given animal
-    function setAnimal(string memory _name, string memory rarity, string memory tokenURI, string memory metadataURI, bool enabled) public onlyOwner returns (bool) {
+    function setAnimal(string memory name, string memory rarity, string memory tokenURI, string memory metadataURI, bool enabled) public onlyOwner returns (bool) {
         Animal memory animal = Animal({
-            name: _name,
+            name: name,
             rarity: getRarity(rarity),
             data: getMediaData(tokenURI, metadataURI),
             bidShares: getBidShares(),
@@ -130,18 +129,18 @@ contract ZooDrop is Ownable {
         });
 
         // Save animal by name
-        animals[_name] = animal;
+        animals[name] = animal;
 
         // Try to add animal to rarity
-        addAnimal(animal.rarity.name, animal.name);
+        _addAnimal(animal.rarity.name, animal.name);
 
         return true;
     }
 
     // Add or configure a given hybrid
-    function setHybrid(string memory _name, string memory rarity, string memory parentA, string memory parentB, string memory tokenURI, string memory metadataURI, bool enabled) public onlyOwner returns (bool) {
+    function setHybrid(string memory name, string memory rarity, string memory parentA, string memory parentB, string memory tokenURI, string memory metadataURI, bool enabled) public onlyOwner returns (bool) {
         Hybrid memory hybrid = Hybrid({
-            name: _name,
+            name: name,
             rarity: getRarity(rarity),
             parentA: parentA,
             parentB: parentB,
@@ -150,7 +149,7 @@ contract ZooDrop is Ownable {
             enabled: enabled
         });
 
-        hybrids[_name] = hybrid;
+        hybrids[name] = hybrid;
         hybridParents[parentsKey(parentA, parentB)] = hybrid;
         return true;
     }
@@ -203,12 +202,12 @@ contract ZooDrop is Ownable {
         return token;
     }
 
-    function getRandomHybrid(uint256 random, string memory parentA, string memory parentB) public view returns (Token memory) {
+    function getRandomHybrid(uint256 random, Pair memory parents) public view returns (Token memory) {
         Token memory token;
 
         Hybrid[2] memory possible = [
-            parentsToHybrid(parentA, parentB),
-            parentsToHybrid(parentB, parentA)
+            parentsToHybrid(parents.animalA, parents.animalB),
+            parentsToHybrid(parents.animalB, parents.animalA)
         ];
 
         // pick array index 0 or 1 depending on the rarity
@@ -221,8 +220,7 @@ contract ZooDrop is Ownable {
         token.bidShares = hybrid.bidShares;
         token.timestamp = block.timestamp;
         token.birthday = block.number;
-        token.parentA = parentA;
-        token.parentB = parentB;
+        token.parents = parents;
         return token;
     }
 
@@ -236,17 +234,9 @@ contract ZooDrop is Ownable {
         return hybridParents[parentsKey(parentA, parentB)];
     }
 
-    // Return true if name matches a real animal or hybrid
-    function animalExists(string memory _name) public view returns (bool) {
-        Animal memory animal = animals[_name];
-        Hybrid memory hybrid = hybrids[_name];
-
-        // Is either an animal or hybrid
-        if (animal.enabled || hybrid.enabled) {
-            return true;
-        }
-
-        return false;
+    // Return a current eggPrice for BASE_EGG Token
+    function eggPrice() public view onlyOwner returns (uint256) {
+        return getEgg("baseEgg").price;
     }
 
     // Return a new Egg Token
@@ -268,9 +258,7 @@ contract ZooDrop is Ownable {
     }
 
     // Return a new Hybrid Egg Token
-    function newHybridEgg(uint256 parentA, uint256 parentB) public onlyOwner returns (Token memory) {
-        _hybridSupply.increment();
-
+    function newHybridEgg(Pair memory parents) public view onlyOwner returns (Token memory) {
         Egg memory egg = getEgg("hybridEgg");
 
         // Convert egg into a token
@@ -281,8 +269,16 @@ contract ZooDrop is Ownable {
         token.bidShares = egg.bidShares;
         token.timestamp = block.timestamp;
         token.birthday = block.number;
-        token.parentA = parentA;
-        token.parentB = parentB;
+        token.parents = parents;
         return token;
+    }
+
+    // Return the higher of two rarities
+    // highest of two rarities
+    function higher(Rarity memory rarityA, Rarity memory rarityB) public pure returns (Rarity memory) {
+        if (rarityA.probability < rarityB.probability) {
+            return rarityA;
+        }
+        return rarityB;
     }
 }

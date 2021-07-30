@@ -14,7 +14,7 @@ import { ERC721, ERC721Burnable } from "./ERC721Burnable.sol";
 import { Decimal } from "./Decimal.sol";
 import { IMarket } from "./interfaces/IMarket.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
-import { Token } from "./ZooTypes.sol";
+import { getTypeByValue, Token } from "./ZooTypes.sol";
 
 import "./console.sol";
 
@@ -291,7 +291,7 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
      */
     function mintToken(address owner, Token memory token) public onlyZooKeeper nonReentrant returns (Token memory) {
         _hashToken(token);
-        _mintForCreator(owner, token.data, token.bidShares, token.kind);
+        _mintForCreator(owner, token.data, token.bidShares, bytes(getTypeByValue(token.kind)));
         uint256 id = getRecentToken(owner);
         token.id = id;
         return token;
