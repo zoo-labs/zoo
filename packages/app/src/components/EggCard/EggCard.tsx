@@ -83,8 +83,8 @@ const Card = styled(Existing) <{ timedOut?: boolean }>`
 `;
 
 
-const basicEggURL = window.location.origin + '/static/images/basic.png'
-const hybridEggURL = window.location.origin + '/static/images/hybrid.jpeg'
+const basicEggURL = window.location.origin + '/static/images/basic.jpg'
+const hybridEggURL = window.location.origin + '/static/images/hybrid.jpg'
 
 export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg }) => {
 

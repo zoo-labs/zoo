@@ -20,7 +20,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     background-color: #030303;
-    height: calc(100vh - 64px);
+    height: 100vh;
 `
 const Button = styled.button`
     width: 200px;
