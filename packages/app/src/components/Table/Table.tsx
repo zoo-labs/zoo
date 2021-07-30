@@ -71,7 +71,7 @@ const Table: React.FC<ITableProps> = (props) => {
 
   const { rows } = useTable(columns, data, { sortable: true, sortColumn: 'timestampDescending' })
   const labels = columns.map((name) => name.label)
-
+  console.log( rows)
   return (
     <>
       <Container>
