@@ -238,7 +238,7 @@ const Account: React.FC = () => {
                   <BorderButton
                      scale="sm"
                      minWidth={!isXl ? "120px" : "140px"}
-                     onClick={allowance? testContract() : approve()}
+                     onClick={()=> allowance? testContract() : approve()}
                      style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}>
                      {allowance? "BUY EGGS" : disable? "APPROVING": "APPROVE"}
                   </BorderButton>
