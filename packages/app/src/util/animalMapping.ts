@@ -94,7 +94,7 @@ export const animalMapping = {
      bloodline: "hybrid"
   },
   12: {
-    animalId: "11",
+    animalId: "12",
      name: "Elepenguin",
      description: "",
      yield: "23",

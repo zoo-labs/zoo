@@ -46,7 +46,7 @@ const Logo: React.FC<Props> = ({ isPushed, togglePush, isDark, href }) => {
         {isPushed ? (
             <CloseIcon width="24px" color="card" />
         ) : (
-              <HamburgerIcon width="24px" color={`${isDark ? "white" : "white"}`} />
+              <HamburgerIcon width="24px" fill={`${isDark ? "white" : "white"}`} />
         )}
       </MenuButton>
       {/* {isAbsoluteUrl ? (
