@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Flex, Text } from "components";
-import { ButtonMenu, ButtonMenuItem } from "components/ButtonMenu";
+import { ButtonMenu, ButtonMenuItem, ButtonMenuItemProps } from "components/ButtonMenu";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
    useRouteMatch,
@@ -22,6 +22,9 @@ import BorderButton from "components/Button/BorderButton";
 import { ChevronLeftIcon } from "components/Svg";
 import logo from "media/ZooLogoWhite.png";
 import "./styles.css";
+interface ButtonProp extends ButtonMenuItemProps {
+   activeIndex: number
+}
 
 const Container = styled.div<{ isMobile?: boolean }>`
    height: ${({ isMobile }) => (isMobile ? `100vh` : null)};
@@ -247,7 +250,7 @@ function Feed<FeedPagePops>({ match }) {
                   <Text textAlign="center">
                      There are currently no animals up for auction
                   </Text>
-                  <BorderButton scale="md" onClick={() => HomeClick}>
+                  <BorderButton scale="md" onClick={HomeClick}>
                      Home
                   </BorderButton>
                </EmptyZoo>
