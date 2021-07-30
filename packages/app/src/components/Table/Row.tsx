@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useMatchBreakpoints } from 'hooks'
+import { Text } from 'components';
 import TxHash, { TxHashProps } from './TxHash'
 import Farm, { FarmProps } from './Farm'
 import Status, { StatusProps } from './Status'
@@ -133,17 +134,20 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const columnNames = tableSchema.map((column) => column.name)
   
   const handleRenderRow = () => {
-    
+    // {React.createElement(cells[key], props[key])}
     // if (!isXs) {
       return (
         <StyledTr isLastIndex={isLastIndex} onClick={toggleActionPanel}>
           {Object.keys(props).map((key) => {
+            const value = props[key][key] ? props[key][key] : props[key];
+            console.log(value)
+            console.log("props key:", props[key])
             const columnIndex = columnNames.indexOf(key)
             if (columnIndex === -1) {
               return null
             }
 
-            switch (key) {
+            /* switch (key) {
               case 'details':
                 return (
                   <ValueContainer style={{width: "50%", paddingRight: `${isMobile ? "16px" : "32px"}`}} key={tableSchema[columnIndex].label}>
@@ -158,14 +162,17 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                         <TxHash {...props.txHash} />
                   </ValueContainer>
                 )
-              default:
+              default: */
                 return (
                   <ValueContainer align="left" style={{width: "100%", display: "flex", overflow: "hidden",
    textOverflow: "ellipsis", alignItems: "center"}} key={tableSchema[columnIndex].label}>
-                        {React.createElement(cells[key], props[key])}
+                    <Text>
+                      {value}
+                    </Text>
+                        
                   </ValueContainer>
                 )
-            }
+            // }
           })}
         </StyledTr>
       )
