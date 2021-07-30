@@ -8,13 +8,13 @@ const Container = styled.div`
   padding-right: 16px;
 
   ${({ theme }) => theme.mediaQueries.sm} {
-    padding-left: 200px;
-    padding-right: 200px;
+    padding-left: 32px;
+    padding-right: 32px;
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
-    padding-left: 150px;
-    padding-right: 150px;
+    padding-left: 48px;
+    padding-right: 48px;
   }
 `
 
