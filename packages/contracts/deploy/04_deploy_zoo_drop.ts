@@ -12,7 +12,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const deployResult = await deploy('ZooDrop', {
     from: deployer,
-    args: ['Gen 0', 16000, 210],
+    args: ['Gen 0', 16000],
     log: true,
   })
 
@@ -25,19 +25,18 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     return
   }
 
-  const keeperAddress = (await deployments.get('ZooKeeper')).address
-
   // Get instance of keeper
+  const keeperAddress = (await deployments.get('ZooKeeper')).address
   const keeper = await hre.ethers.getContractAt('ZooKeeper', keeperAddress);
 
   // Add first Drop
-  const [id, address] = await keeper.callStatic.addDrop('Gen 0', 16000, 210, )
+  const [id, address] = await keeper.callStatic.setDrop(dropAddress, 'Gen 0')
   console.log('ZooDrop', id.toNumber(), address);
 
   const drop = await hre.ethers.getContractAt('ZooDrop', dropAddress);
 
   console.log('Configure drop')
-  await drop.setTokenURI("basicEgg", "basicEgg.tokenURI1");
+  await drop.setEgg("BASE_EGG", 210, 16000, "httpsbasicEgg.tokenURI1");
   await drop.setMetadataURI("basicEgg", "https://meta.zoolabs.io/egg");
   await drop.setTokenURI("hybridEgg", "hybridEgg.tokenURI1");
   await drop.setMetadataURI("hybridEgg", "https://meta.zoolabs.io/hybridEgg");
