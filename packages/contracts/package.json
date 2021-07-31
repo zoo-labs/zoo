@@ -39,6 +39,7 @@
     "bip39": "^3.0.4",
     "ethereum-waffle": "^3.4.0",
     "ethereumjs-wallet": "^1.0.1",
+    "googleapis": "39",
     "hardhat-deploy-ethers": "^0.3.0-beta.10",
     "qrcode-terminal": "^0.12.0",
     "ramda": "^0.27.1"

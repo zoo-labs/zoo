@@ -1,14 +1,12 @@
 // deploy/04_deploy_zoo_drop.ts
+
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
-import { getDeployerAddress } from '../lib/deploy_helper'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, ethers, getNamedAccounts } = hre
   const { deploy } = deployments
   const { deployer } = await getNamedAccounts()
-
-  const useProxy = !hre.network.live
 
   const deployResult = await deploy('ZooDrop', {
     from: deployer,
@@ -28,20 +26,16 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const keeper = await hre.ethers.getContractAt('ZooKeeper', keeperAddress);
 
   // Add first Drop
-  console.log('Find drop')
+  console.log('Add Gen 0 drop')
   const id = await keeper.callStatic.setDrop(dropAddress, 'Gen 0', 16000)
 
   const drop = await hre.ethers.getContractAt('ZooDrop', dropAddress);
 
-  console.log('Configure drop')
-  await drop.setEgg("BASE_EGG", 210, 16000, "https://db.zoolabs/egg.jpg", "https://db.zoolabs.org/egg.json");
-  await drop.setEgg("HYBRID_EGG", 210, 16000, "https://db.zoolabs/hybridegg.jpg", "https://db.zoolabs.org/hybridegg.json");
+  console.log('Configure Gen 0 drop')
+  await drop.setEgg("egg", 210, 16000, "https://db.zoolabs/egg.jpg", "https://db.zoolabs.org/egg.json");
+  await drop.setEgg("hybridEgg", 0, 0, "https://db.zoolabs/hybridegg.jpg", "https://db.zoolabs.org/hybridEgg.json");
 
-  // await drop.setMetadataURI("BASE_EGG", "https://meta.zoolabs.io/egg");
-  // await drop.setTokenURI("HYBRID_EGG", "hybridEgg.tokenURI1");
-  // await drop.setMetadataURI("HYBRID_EGG", "https://db.zoolabs.io/hybridEgg");
-
-  // console.log('Adding Common animals')
+  console.log('Adding Common animals')
   // await drop.addAnimal("Pug", 100, "Common", 5500, "test","test");
   // await drop.addAnimal("Butterfly", 100, "Common", 5500, "test1","test1");
   // await drop.addAnimal("Kitten", 100, "Common", 5500, "test2","test2");
@@ -305,9 +299,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // await drop.addHybrid("Turtleblob", "Turtle", "Blobfish", 100, "http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/Turtle/Turtleblob.jpg", "testTurtle")
   // await drop.addHybrid("Turtlerat", "Turtle", "Naked Mole Rat", 100, "http://res.cloudinary.com/htcif1pyx/image/upload/w_600/v1/CryptoZoo/9:16%20Aspect%20Ratio/Turtle/Turtlerat.jpg", "testTurtle")
 
-  return !useProxy // When live network, record the script as executed to prevent rexecution
+  return hre.network.live;
 }
 
 export default func
-func.id = 'deploy_zoo_drop' // ID required to prevent reexecution
+func.id = 'deploy_zoo_drop'
 func.tags = ['ZooDrop']
+func.dependencies = ['ZooKeeper']
