@@ -204,27 +204,27 @@ contract ZooDrop is Ownable {
     }
 
     // Get Egg by name
-    function getEgg(string memory name) public view returns (Egg memory) {
+    function getEgg(string memory name) private view returns (Egg memory) {
         return eggs[name];
     }
 
     // Get Rarity by name
-    function getRarity(string memory name) public view returns (Rarity memory) {
+    function getRarity(string memory name) private view returns (Rarity memory) {
         return rarities[name];
     }
 
     // Get Animal by name
-    function getAnimal(string memory name) public view returns (Animal memory) {
+    function getAnimal(string memory name) private view returns (Animal memory) {
         return animals[name];
     }
 
     // Get Hybrid by name
-    function getHybrid(string memory name) public view returns (Animal memory) {
+    function getHybrid(string memory name) private view returns (Animal memory) {
         return hybrids[name];
     }
 
     // Chooses animal based on random number generated from(0-999)
-    function getRandomAnimal(uint256 random) public view returns (IZoo.Token memory) {
+    function getRandomAnimal(uint256 random) external view returns (IZoo.Token memory) {
         Animal memory animal;
         IZoo.Token memory token;
 
@@ -251,7 +251,7 @@ contract ZooDrop is Ownable {
         return token;
     }
 
-    function getRandomHybrid(uint256 random, IZoo.Parents memory parents) public view returns (IZoo.Token memory) {
+    function getRandomHybrid(uint256 random, IZoo.Parents memory parents) external view returns (IZoo.Token memory) {
         IZoo.Token memory token;
 
         Animal[2] memory possible = [
@@ -272,18 +272,7 @@ contract ZooDrop is Ownable {
         return token;
     }
 
-    // Get key for two parents
-    function parentsKey(string memory animalA, string memory animalB) public pure returns (string memory) {
-        return string(abi.encodePacked(animalA, animalB));
-    }
-
-    // Get Hybrid from Parents
-    function parentsToHybrid(string memory nameA, string memory nameB) public view returns (Animal memory) {
-        return hybridParents[parentsKey(nameA, nameB)];
-    }
-
-    // Return a current eggPrice for BASE_EGG Token
-    function eggPrice() public view onlyOwner returns (uint256) {
+    function eggPrice() public view returns (uint256) {
         return getEgg("baseEgg").price;
     }
 
@@ -321,8 +310,17 @@ contract ZooDrop is Ownable {
         return token;
     }
 
+    // Get key for two parents
+    function parentsKey(string memory animalA, string memory animalB) private pure returns (string memory) {
+        return string(abi.encodePacked(animalA, animalB));
+    }
+
+    // Get Hybrid from Parents
+    function parentsToHybrid(string memory nameA, string memory nameB) private view returns (Animal memory) {
+        return hybridParents[parentsKey(nameA, nameB)];
+    }
+
     // Return the higher of two rarities
-    // highest of two rarities
     function higher(Rarity memory rarityA, Rarity memory rarityB) public pure returns (Rarity memory) {
         if (rarityA.probability < rarityB.probability) {
             return rarityA;
