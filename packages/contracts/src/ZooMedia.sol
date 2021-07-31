@@ -15,6 +15,7 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.
 import {Decimal} from "./Decimal.sol";
 import {IMarket} from "./interfaces/IMarket.sol";
 import "./interfaces/IMedia.sol";
+import "./interfaces/IZoo.sol";
 import "./console.sol";
 
 /**
@@ -210,7 +211,7 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
     /**
      * @notice Helper to check that token has not been burned or minted
      */
-    function tokenExists(uint256 tokenId) public view returns (bool) {
+    function tokenExists(uint256 tokenId) public override view returns (bool) {
         return _exists(tokenId);
     }
 
@@ -263,13 +264,30 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         _mintForCreator(msg.sender, data, bidShares, "");
     }
 
-    // Helper that lets us delegate to a specific owner
-    function mintFor(
-        address owner,
-        MediaData memory data,
-        IMarket.BidShares memory bidShares
-    ) public nonReentrant {
-        _mintForCreator(owner, data, bidShares, "");
+
+    function _hashToken(IZoo.Token memory token) private view {
+        token.data.contentHash = keccak256(
+            abi.encodePacked(token.data.tokenURI, block.number, msg.sender)
+        );
+        token.data.metadataHash = keccak256(
+            abi.encodePacked(token.data.metadataURI, block.number, msg.sender)
+        );
+    }
+
+    function mintToken(address owner, IZoo.Token memory token) external override nonReentrant returns (IZoo.Token memory) {
+        _hashToken(token);
+        _mintForCreator(owner, token.data, token.bidShares, "");
+        uint256 id = getRecentToken(owner);
+        token.id = id;
+        return token;
+    }
+
+    function burnToken(address owner, uint256 tokenID)
+        external override
+        nonReentrant
+        onlyExistingToken(tokenID)
+        onlyApprovedOrOwner(owner, tokenID) {
+        _burn(tokenID);
     }
 
     /**
