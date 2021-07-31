@@ -22,19 +22,6 @@ contract ZooDrop is Ownable {
         HYBRID_ANIMAL
     }
 
-    function getType(IZoo.Type t) private pure returns (string memory) {
-        // Error handling for input
-        require(uint8(t) <= 4);
-
-        // Loop through possible options
-        if (IZoo.Type.BASE_EGG == t) return "E";
-        if (IZoo.Type.BASE_ANIMAL == t) return "A";
-        if (IZoo.Type.HYBRID_EGG == t) return "HE";
-        if (IZoo.Type.HYBRID_ANIMAL == t) return "HA";
-
-        return "";
-    }
-
     struct Rarity {
         string  name;
         uint256 probability;
@@ -129,7 +116,7 @@ contract ZooDrop is Ownable {
     }
 
     // Add Animal to rarity set if it has not been seen before
-    function _addAnimal(string memory rarity, string memory name) private {
+    function addAnimalToRarity(string memory rarity, string memory name) private {
         string[] storage _animals = rarityAnimals[rarity];
 
         // Check if animal has been added to this rarity before
@@ -148,23 +135,6 @@ contract ZooDrop is Ownable {
         rarityAnimals[rarity] = _animals;
     }
 
-    function getMediaData(string memory tokenURI, string memory metadataURI) public pure returns (IMedia.MediaData memory) {
-        return IMedia.MediaData({
-            tokenURI: tokenURI,
-            metadataURI: metadataURI,
-            contentHash: bytes32(0),
-            metadataHash: bytes32(0)
-        });
-    }
-
-    function getBidShares() public pure returns (IMarket.BidShares memory) {
-        return IMarket.BidShares({
-            creator: Decimal.D256(10),
-            owner: Decimal.D256(90),
-            prevOwner: Decimal.D256(0)
-        });
-    }
-
     // Add or configure a given animal
     function setAnimal(string memory name, string memory rarity, string memory tokenURI, string memory metadataURI) public onlyOwner returns (bool) {
         Animal memory animal = Animal({
@@ -181,7 +151,7 @@ contract ZooDrop is Ownable {
         animals[name] = animal;
 
         // Try to add animal to rarity
-        _addAnimal(animal.rarity.name, animal.name);
+        addAnimalToRarity(animal.rarity.name, animal.name);
 
         return true;
     }
@@ -202,6 +172,52 @@ contract ZooDrop is Ownable {
         hybridParents[parentsKey(parentA, parentB)] = hybrid;
         return true;
     }
+
+    // Return price for current EggDrop
+    function eggPrice() public view returns (uint256) {
+        return getEgg("baseEgg").price;
+    }
+
+    // Return a new Egg Token
+    function newEgg() public onlyOwner returns (IZoo.Token memory token) {
+        require(currentSupply() > 0, "Out of eggs");
+        _eggSupply.decrement();
+
+        Egg memory egg = getEgg("baseEgg");
+
+        // Convert egg into a token
+        token.kind = egg.kind;
+        token.name = egg.name;
+        token.data = egg.data;
+        token.bidShares = egg.bidShares;
+        token.birthday = block.number;
+        token.timestamp = block.timestamp;
+        return token;
+    }
+
+    // Return a new Hybrid Egg Token
+    function newHybridEgg(IZoo.Parents memory parents) public view onlyOwner returns (IZoo.Token memory token) {
+        Egg memory egg = getEgg("hybridEgg");
+        token.kind = IZoo.Type.HYBRID_EGG;
+        token.name = egg.name;
+        token.data = egg.data;
+        token.bidShares = egg.bidShares;
+        token.timestamp = block.timestamp;
+        token.birthday = block.number;
+        token.parents = parents;
+        return token;
+    }
+
+    // Helper to construct IMedia.MediaData struct
+    function getMediaData(string memory tokenURI, string memory metadataURI) public pure returns (IMedia.MediaData memory) {
+        return IMedia.MediaData({
+            tokenURI: tokenURI,
+            metadataURI: metadataURI,
+            contentHash: bytes32(0),
+            metadataHash: bytes32(0)
+        });
+    }
+
 
     // Get Egg by name
     function getEgg(string memory name) private view returns (Egg memory) {
@@ -224,9 +240,8 @@ contract ZooDrop is Ownable {
     }
 
     // Chooses animal based on random number generated from(0-999)
-    function getRandomAnimal(uint256 random) external view returns (IZoo.Token memory) {
+    function getRandomAnimal(uint256 random) external view returns (IZoo.Token memory token) {
         Animal memory animal;
-        IZoo.Token memory token;
 
         // Find rarest animal choices first
         for (uint256 i = 0; i < raritySorted.length; i++) {
@@ -251,9 +266,20 @@ contract ZooDrop is Ownable {
         return token;
     }
 
-    function getRandomHybrid(uint256 random, IZoo.Parents memory parents) external view returns (IZoo.Token memory) {
-        IZoo.Token memory token;
+    function getType(IZoo.Type t) private pure returns (string memory) {
+        // Error handling for input
+        require(uint8(t) <= 4);
 
+        // Loop through possible options
+        if (IZoo.Type.BASE_EGG == t) return "BASE_EGG";
+        if (IZoo.Type.BASE_ANIMAL == t) return "BASE_ANIMAL";
+        if (IZoo.Type.HYBRID_EGG == t) return "HYBRID_EGG";
+        if (IZoo.Type.HYBRID_ANIMAL == t) return "HYBRID_ANIMAL";
+
+        return "";
+    }
+
+    function getRandomHybrid(uint256 random, IZoo.Parents memory parents) external view returns (IZoo.Token memory token) {
         Animal[2] memory possible = [
             parentsToHybrid(parents.animalA, parents.animalB),
             parentsToHybrid(parents.animalB, parents.animalA)
@@ -272,42 +298,13 @@ contract ZooDrop is Ownable {
         return token;
     }
 
-    function eggPrice() public view returns (uint256) {
-        return getEgg("baseEgg").price;
-    }
-
-    // Return a new Egg Token
-    function newEgg() public onlyOwner returns (IZoo.Token memory) {
-        require(currentSupply() > 0, "Out of eggs");
-        _eggSupply.decrement();
-
-        Egg memory egg = getEgg("baseEgg");
-
-        // Convert egg into a token
-        IZoo.Token memory token;
-        token.kind = egg.kind;
-        token.name = egg.name;
-        token.data = egg.data;
-        token.bidShares = egg.bidShares;
-        token.birthday = block.number;
-        token.timestamp = block.timestamp;
-        return token;
-    }
-
-    // Return a new Hybrid Egg Token
-    function newHybridEgg(IZoo.Parents memory parents) public view onlyOwner returns (IZoo.Token memory) {
-        Egg memory egg = getEgg("hybridEgg");
-
-        // Convert egg into a token
-        IZoo.Token memory token;
-        token.kind = IZoo.Type.HYBRID_EGG;
-        token.name = egg.name;
-        token.data = egg.data;
-        token.bidShares = egg.bidShares;
-        token.timestamp = block.timestamp;
-        token.birthday = block.number;
-        token.parents = parents;
-        return token;
+    // Helper to construct IMarket.BidShares struct
+    function getBidShares() public pure returns (IMarket.BidShares memory) {
+        return IMarket.BidShares({
+            creator: Decimal.D256(10),
+            owner: Decimal.D256(90),
+            prevOwner: Decimal.D256(0)
+        });
     }
 
     // Get key for two parents
