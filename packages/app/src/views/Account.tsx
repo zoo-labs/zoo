@@ -65,59 +65,63 @@ const StyledHeading = styles(Heading)`
 `
 
 const Account: React.FC = () => {
-   const [balance, setBalance] = useState(0.0);
-   const [wait, setWait] = useState(false);
-   const { account, chainId } = useWeb3React();
-   const [allowance, setAllowance] = useState(false);
-   const [disable, setDisable] = useState(false);
-   const web3 = useWeb3();
-   const { isXl } = useMatchBreakpoints();
-   const history = useHistory();
-   const [onBuyEggs] = useModal(<BuyEggs />);
-   const allEggs = useSelector<AppState, AppState["zoo"]["eggs"]>(
-      (state) => state.zoo.eggs
-   );
-   const currentEggsOwned = Object.values(allEggs).filter(
-      (egg) => egg.owner === account
-   ).length;
-   // setEggsOwned(currentEggsOwned)
-   const handleClick = () => {
-      history.push("/bank");
-   };
+  const [balance, setBalance] = useState(0.0);
+  const [wait, setWait] = useState(false);
+  const { account, chainId } = useWeb3React();
+  const [allowance, setAllowance] = useState(false);
+  const [disable, setDisable] = useState(false);
+  const web3 = useWeb3();
+  const { isXl } = useMatchBreakpoints();
+  const history = useHistory();
+  const [onBuyEggs] = useModal(<BuyEggs />);
+  const allEggs = useSelector<AppState, AppState["zoo"]["eggs"]>(
+    (state) => state.zoo.eggs
+  );
+  const currentEggsOwned = Object.values(allEggs).filter(
+    (egg) => egg.owner === account
+  ).length;
+  // setEggsOwned(currentEggsOwned)
+  const handleClick = () => {
+    history.push("/bank");
+  };
 
-   const zooToken = getZooToken(web3, chainId);
-   const faucet = getZooFaucet(web3, chainId);
-   const zooMedia = getZooMedia(web3, chainId);
-   const zooKeeper = getZooKeeper(web3, chainId);
-   const zooDrop = getZooDrop(web3, chainId);
-   const keeperAdd = zooKeeper.options.address;
-   const faucetAmt = web3.utils.toWei("50");
+  const zooToken = getZooToken(web3, chainId);
+  const faucet = getZooFaucet(web3, chainId);
+  const zooMedia = getZooMedia(web3, chainId);
+  const zooKeeper = getZooKeeper(web3, chainId);
+  const zooDrop = getZooDrop(web3, chainId);
+  const keeperAdd = zooKeeper.options.address;
+  const faucetAmt = web3.utils.toWei("50");
 
-   const getBalance = async () => {
-      try {
-         const tokenBalance = await zooMedia.methods.balanceOf(account).call();
-         console.log('tokenBalance', tokenBalance);
-         const tokenID = await zooMedia.methods.tokenOfOwnerByIndex(account, 1).call();
-         console.log('tokenID', tokenID);
-         const tokenURI = await zooMedia.methods.tokenURI(tokenID).call();
-         console.log('tokenURI', tokenURI);
-         const token = await zooKeeper.methods.tokens(tokenID).call();
-         console.log('token', token);
-         const decimals = await zooToken.methods.decimals().call();
-         const rawBalance = await zooToken.methods.balanceOf(account).call();
-         const divisor = parseFloat(Math.pow(10, decimals).toString());
-         const balance = rawBalance / divisor;
-         setBalance(balance);
-      } catch (e) {
-         console.error("ISSUE LOADING ZOO BALANCE \n", e);
+  const getBalance = async () => {
+    try {
+      const tokenBalance = await zooMedia.methods.balanceOf(account).call();
+      console.log('tokenBalance', tokenBalance);
+
+      if (tokenBalance > 0) {
+        const tokenID = await zooMedia.methods.tokenOfOwnerByIndex(account, 1).call();
+        console.log('tokenID', tokenID);
+        const tokenURI = await zooMedia.methods.tokenURI(tokenID).call();
+        console.log('tokenURI', tokenURI);
+        const token = await zooKeeper.methods.tokens(tokenID).call();
+        console.log('token', token);
       }
-      try {
-         const allowance = await zooToken.methods.allowance(account, keeperAdd).call()
-         if (allowance > 0) setAllowance(true)
-      } catch (error) {
-         console.log(error)
-      }
-   };
+
+      const decimals = await zooToken.methods.decimals().call();
+      const rawBalance = await zooToken.methods.balanceOf(account).call();
+      const divisor = parseFloat(Math.pow(10, decimals).toString());
+      const balance = rawBalance / divisor;
+      setBalance(balance);
+    } catch (e) {
+      console.error("ISSUE LOADING ZOO BALANCE \n", e);
+    }
+    try {
+      const allowance = await zooToken.methods.allowance(account, keeperAdd).call()
+      if (allowance > 0) setAllowance(true)
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
    const approve = async () => {
       setDisable(true)
