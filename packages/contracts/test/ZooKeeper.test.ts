@@ -599,19 +599,8 @@ describe("ZooKeeper", () => {
         expect(token_id2.toNumber()).to.equal(6);
 
         const newAnimal = await zooKeeper.animals(1);
-<<<<<<< HEAD
-        expect(newAnimal.name).to.not.equal('');
-
-        let dropAddress = await zooKeeper.drops(1);
-        const zooDrop = new ethers.Contract(dropAddress, require("../artifacts/src/ZooDrop.sol/ZooDrop.json").abi, owner) as ZooDrop;
-
-        const metadata = await zooDrop.getMetadataURI(newAnimal.name);
-        expect(metadata).to.contain("test")
-=======
 
         expect(newAnimal[0].name).to.not.equal('');
-
->>>>>>> develop
     });
 
     it("Should hatch & burn hybrid egg", async () => {
