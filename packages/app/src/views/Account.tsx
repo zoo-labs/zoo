@@ -13,7 +13,7 @@ import Body from "components/layout/Body";
 import { useModal } from "components/Modal";
 import BuyEggs from "components/BuyEggs";
 import MyZooAccount from "views/MyZooAccount";
-import { getZooToken, getZooFaucet } from "util/contractHelpers";
+import { getZooToken, getZooKeeper, getZooDrop, getZooFaucet } from "util/contractHelpers";
 import useWeb3 from "hooks/useWeb3";
 import { FaShoppingCart } from "react-icons/fa";
 
@@ -28,7 +28,7 @@ const MyZooContainer = styles.div`
     width: 100%;
     display: flex;
     padding: 16px;
-    
+
 `;
 
 const StyledButton = styles.button`
@@ -45,7 +45,7 @@ const LabelWrapper = styles.div`
 `;
 
 const ValueWrapper = styles(Text)`
-    color: ${({ theme }) => theme.colors.text};  
+    color: ${({ theme }) => theme.colors.text};
     width: 100%;
     display: flex;
     white-space: nowrap;
@@ -85,12 +85,13 @@ const Account: React.FC = () => {
       history.push("/bank");
    };
 
-   const keeperAdd = "0x247124065114a03Cf51898b21F20C6C1Cf50679A"
    const zooToken = getZooToken(web3, chainId);
    const faucet = getZooFaucet(web3, chainId);
 
+   const zooKeeper = getZooKeeper(web3, chainId);
+   const zooDrop = getZooDrop(web3, chainId);
+   const keeperAdd = zooKeeper.options.address;
    const faucetAmt = web3.utils.toWei("50");
-   const defaultAmt = web3.utils.toWei('1000000000', 'ether')
 
    const getBalance = async () => {
       try {
@@ -104,16 +105,17 @@ const Account: React.FC = () => {
       }
       try {
          const allowance = await zooToken.methods.allowance(account, keeperAdd).call()
-         if(allowance > 0) setAllowance(true)
+         if (allowance > 0) setAllowance(true)
       } catch (error) {
          console.log(error)
       }
    };
 
-   const approve = () => {
+   const approve = async () => {
       setDisable(true)
-      console.log("approval")
-      const tsx = zooToken.methods.approve(keeperAdd, defaultAmt).send({ from: account })
+
+      const eggPrice = await zooDrop.methods.eggPrice().call();
+      const tsx = zooToken.methods.approve(keeperAdd, eggPrice).send({ from: account })
          tsx
          .then(() => {
            setAllowance(true)
@@ -192,23 +194,25 @@ const Account: React.FC = () => {
       }
    };
 
-   const testContract = async () => {
-      // setDisable(true)
-      // const drops = await zooKeeper.methods.drops(0).call()
-      // console.log(drops)
-      // try {
-      //    // buyEgg(uint256 _dropID) public returns (uint256)
-      //    const buyEgg = zooKeeper.methods.buyEgg(1).send({ from: account })
-      //    .then((res) => {
-      //       console.log(res)
-      //       setDisable(false)
-      //     })
-      //  } catch (error) {
-      //     setDisable(false)
-      //    console.log(error)
-      //  }
+   const buyEgg = async () => {
+      setDisable(true)
 
-      onBuyEggs()
+      const drop = await zooKeeper.methods.drops(0).call()
+      console.log('Drop:', drop)
+
+      try {
+         // buyEgg(uint256 _dropID) public returns (uint256)
+         const buyEgg = zooKeeper.methods.buyEgg(1).send({ from: account })
+         .then((res) => {
+            console.log(res)
+            setDisable(false)
+          })
+       } catch (error) {
+          setDisable(false)
+         console.log(error)
+       }
+
+      // onBuyEggs()
    }
 
    const handleRedirect = () => {
@@ -227,7 +231,7 @@ const Account: React.FC = () => {
                      minWidth={!isXl ? "120px" : "140px"}
                      style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}
                      onClick={handleFunds}>
-                     {chainId !== 97
+                     {(chainId !== 97 && chainId !== 31337)
                         ? "Add Funds"
                         : wait
                         ? "Processing..."
@@ -242,12 +246,12 @@ const Account: React.FC = () => {
                   <BorderButton
                      scale="sm"
                      minWidth={!isXl ? "120px" : "140px"}
-                     onClick={allowance? () => testContract() : () => approve()}
+                     onClick={allowance? () => buyEgg() : () => approve()}
                      style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}>
                      {allowance? "BUY EGGS" : disable? "APPROVING": "APPROVE"}
                   </BorderButton>
                </LabelWrapper>
-          
+
                <MyZooAccount />
                  </Body>
          </Page>

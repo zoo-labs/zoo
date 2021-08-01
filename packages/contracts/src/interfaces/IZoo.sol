@@ -40,10 +40,10 @@ interface IZoo {
     struct Token {
         Rarity  rarity;
         Type  kind;
+        string  name;
         uint256 id;             // unique ID
         uint256 timestamp;      // time created
         uint256 birthday;       // birth block
-        string  name;
         string  customName;     // optional, paid feature
         Parents parents;
         Breed   breed;

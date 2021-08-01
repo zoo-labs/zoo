@@ -4,14 +4,14 @@
 pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
-import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import {Decimal} from "./Decimal.sol";
-import {ZooMedia} from "./ZooMedia.sol";
-import {ZooKeeper} from "./ZooKeeper.sol";
-import {IMarket} from "./interfaces/IMarket.sol";
+import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import { Decimal } from "./Decimal.sol";
+import { ZooKeeper } from "./ZooKeeper.sol";
+import { ZooMedia } from "./ZooMedia.sol";
+import { IMarket } from "./interfaces/IMarket.sol";
 
 import "./console.sol";
 
@@ -27,12 +27,15 @@ contract ZooMarket is IMarket {
      * Globals
      * *******
      */
-    // Address of the media contract that can call this market
-    address public media;
-    address public zookeeper;
 
     // Deployment Address
     address private _owner;
+
+    // Address of the keeper contract that can call this market
+    address public keeperAddress;
+
+    // Address of the media contract that can call this market
+    address public mediaAddress;
 
     // Mapping from token to mapping from bidder to bid
     mapping(uint256 => mapping(address => Bid)) private _tokenBidders;
@@ -53,7 +56,7 @@ contract ZooMarket is IMarket {
      */
     modifier onlyZoo() {
         require(
-            zookeeper == msg.sender || media == msg.sender,
+            keeperAddress == msg.sender || mediaAddress == msg.sender,
             "ZooMarket: Only Zoo contracts can call this method"
         );
         _;
@@ -108,10 +111,13 @@ contract ZooMarket is IMarket {
         returns (bool)
     {
         BidShares memory bidShares = bidSharesForToken(tokenId);
-        require(
-            isValidBidShares(bidShares),
-            "ZooMarket: Invalid bid shares for token"
-        );
+
+        console.log("bidamount", bidAmount);
+
+        // require(
+        //     isValidBidShares(bidShares),
+        //     "ZooMarket: Invalid bid shares for token"
+        // );
         return
             bidAmount != 0 &&
             (bidAmount ==
@@ -161,24 +167,23 @@ contract ZooMarket is IMarket {
      * @notice Sets the media contract address. This address is the only permitted address that
      * can call the mutable functions. This method can only be called once.
      */
-    function configure(address _media, address _zookeeper)
+    function configure(address _keeperAddress, address _mediaAddress)
         external
-        override
         onlyOwner
     {
-        require(media == address(0), "ZooMarket: Already configured");
-        require(zookeeper == address(0), "ZooMarket: Already configured");
+        require(mediaAddress == address(0), "ZooMarket: Already configured");
+        require(keeperAddress == address(0), "ZooMarket: Already configured");
         require(
-            _media != address(0),
+            _mediaAddress != address(0),
             "ZooMarket: cannot set Media contract as zero address"
         );
         require(
-            _zookeeper != address(0),
-            "ZooMarket: cannot set Zookeeper contract as zero address"
+            _keeperAddress != address(0),
+            "ZooMarket: cannot set Keeper contract as zero address"
         );
 
-        media = _media;
-        zookeeper = _zookeeper;
+        keeperAddress = _keeperAddress;
+        mediaAddress = _mediaAddress;
     }
 
     /**
@@ -190,10 +195,10 @@ contract ZooMarket is IMarket {
         override
         onlyZoo
     {
-        require(
-            isValidBidShares(bidShares),
-            "ZooMarket: Invalid bid shares, must sum to 100"
-        );
+        // require(
+        //     isValidBidShares(bidShares),
+        //     "ZooMarket: Invalid bid shares, must sum to 100"
+        // );
         _bidShares[tokenId] = bidShares;
         emit BidShareUpdated(tokenId, bidShares);
     }
@@ -352,22 +357,22 @@ contract ZooMarket is IMarket {
 
         // Transfer bid share to owner of media
         token.safeTransfer(
-            IERC721(media).ownerOf(tokenId),
+            IERC721(mediaAddress).ownerOf(tokenId),
             splitShare(bidShares.owner, bid.amount)
         );
         // Transfer bid share to creator of media
         token.safeTransfer(
-            ZooMedia(media).tokenCreators(tokenId),
+            ZooMedia(mediaAddress).tokenCreators(tokenId),
             splitShare(bidShares.creator, bid.amount)
         );
         // Transfer bid share to previous owner of media (if applicable)
         token.safeTransfer(
-            ZooMedia(media).previousTokenOwners(tokenId),
+            ZooMedia(mediaAddress).previousTokenOwners(tokenId),
             splitShare(bidShares.prevOwner, bid.amount)
         );
 
         // Transfer media to bid recipient
-        ZooMedia(media).auctionTransfer(tokenId, bid.recipient);
+        ZooMedia(mediaAddress).auctionTransfer(tokenId, bid.recipient);
 
         // Calculate the bid share for the new owner,
         // equal to 100 - creatorShare - sellOnShare

@@ -20,19 +20,22 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const dropAddress = deployResult.address;
 
+  const keeperAddress = (await deployments.get('ZooKeeper')).address
+  const keeper = await hre.ethers.getContractAt('ZooKeeper', keeperAddress);
+  const drop = await hre.ethers.getContractAt('ZooDrop', dropAddress);
+
+  console.log('ZOOKEEPER', keeperAddress)
+  console.log('ZOODROP', dropAddress)
+
+  // Add Drop to ZooKeeper
+  await keeper.setDrop(dropAddress)
+
   // Bail out if we've added all the animals before
   if (!deployResult.newlyDeployed) {
     return
   }
 
-  // Add Drop to ZooKeeper
-  const keeperAddress = (await deployments.get('ZooKeeper')).address
-  const keeper = await hre.ethers.getContractAt('ZooKeeper', keeperAddress);
-  const id = await keeper.callStatic.setDrop(dropAddress)
-
   // Configure drop
-  const drop = await hre.ethers.getContractAt('ZooDrop', dropAddress);
-
   const eggs = [
     {
       name: "Base Egg",
@@ -66,6 +69,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     console.log('Add Hybrid:', v.name)
     drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
   }))
+
+  // Pledge allegiance
+  await drop.transferOwnership(keeperAddress, {from: deployer});
 
   return hre.network.live;
 }
