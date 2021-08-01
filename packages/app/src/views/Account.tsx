@@ -28,7 +28,7 @@ const MyZooContainer = styles.div`
     width: 100%;
     display: flex;
     padding: 16px;
-    
+
 `;
 
 const StyledButton = styles.button`
@@ -45,7 +45,7 @@ const LabelWrapper = styles.div`
 `;
 
 const ValueWrapper = styles(Text)`
-    color: ${({ theme }) => theme.colors.text};  
+    color: ${({ theme }) => theme.colors.text};
     width: 100%;
     display: flex;
     white-space: nowrap;
@@ -227,7 +227,7 @@ const Account: React.FC = () => {
                      minWidth={!isXl ? "120px" : "140px"}
                      style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}
                      onClick={handleFunds}>
-                     {chainId !== 97
+                     {(chainId !== 97 && chainId !== 31337)
                         ? "Add Funds"
                         : wait
                         ? "Processing..."
@@ -247,7 +247,7 @@ const Account: React.FC = () => {
                      {allowance? "BUY EGGS" : disable? "APPROVING": "APPROVE"}
                   </BorderButton>
                </LabelWrapper>
-          
+
                <MyZooAccount />
                  </Body>
          </Page>
