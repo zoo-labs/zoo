@@ -18,22 +18,18 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     log: true,
   })
 
-  const dropAddress = deployResult.address;
-
-  const keeperAddress = (await deployments.get('ZooKeeper')).address
-  const keeper = await hre.ethers.getContractAt('ZooKeeper', keeperAddress);
-  const drop = await hre.ethers.getContractAt('ZooDrop', dropAddress);
-
-  console.log('ZOOKEEPER', keeperAddress)
-  console.log('ZOODROP', dropAddress)
-
-  // Add Drop to ZooKeeper
-  await keeper.setDrop(dropAddress)
-
   // Bail out if we've added all the animals before
   if (!deployResult.newlyDeployed) {
     return
   }
+
+  const dropAddress = deployResult.address;
+  const keeperAddress = (await deployments.get('ZooKeeper')).address
+  const keeper = await hre.ethers.getContractAt('ZooKeeper', keeperAddress);
+  const drop = await hre.ethers.getContractAt('ZooDrop', dropAddress);
+
+  // Add Drop to ZooKeeper
+  await keeper.setDrop(dropAddress)
 
   // Configure drop
   const eggs = [
@@ -53,16 +49,16 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     }
   ]
 
-  await Promise.all(eggs.map((v) => {
+  await Promise.all(eggs.map(async (v) => {
     console.log('Add Egg:', v.name)
-    drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
+    await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
   }))
 
   await drop.configureEggs("Base Egg", "Hybrid Egg")
 
-  await Promise.all(animals.map((v) => {
+  await Promise.all(animals.map(async (v) => {
     console.log('Add Animal:', v.name)
-    drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
+    await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
   }))
 
   await Promise.all(hybrids.map((v) => {
