@@ -1,6 +1,6 @@
 import contracts from "contracts.json";
 
-const hardhat = contracts['31337']['localhost']['contracts'];
+const hardhat = contracts['31337']['hardhat']['contracts'];
 const testnet = hardhat;
 const mainnet = hardhat;
 // const testnet = contracts[97]['testnet']['contracts'];
