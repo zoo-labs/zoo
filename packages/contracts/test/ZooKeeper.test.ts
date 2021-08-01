@@ -601,7 +601,6 @@ describe("ZooKeeper", () => {
         const newAnimal = await zooKeeper.animals(1);
 
         expect(newAnimal[0].name).to.not.equal('');
-
     });
 
     it("Should hatch & burn hybrid egg", async () => {

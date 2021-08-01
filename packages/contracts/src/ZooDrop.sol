@@ -51,8 +51,12 @@ contract ZooDrop is Ownable {
         IMarket.BidShares bidShares;
     }
 
+    // Title of drop
     string public title;
-    uint256 public eggSupply;
+
+    // Names of configured base / hybrid eggs
+    string public baseEgg;
+    string public hybridEgg;
 
     // mapping of Rarity name to Rarity
     mapping (string => Rarity) public rarities;
@@ -75,14 +79,12 @@ contract ZooDrop is Ownable {
     // mapping of (parent + parent) to Hybrid
     mapping (string => Animal) public hybridParents;
 
-    constructor(string memory _title, uint256 _supply) {
+    constructor(string memory _title) {
         title = _title;
-        eggSupply = _supply;
-        _eggSupply._value = eggSupply;
     }
 
-    // Return currently available supply of Eggs
-    function currentSupply() public view returns (uint256) {
+    // Return total number of eggs issued
+    function totalSupply() public view returns (uint256) {
         return _eggSupply.current();
     }
 
@@ -96,6 +98,12 @@ contract ZooDrop is Ownable {
         egg.supply = supply;
         eggs[name] = egg;
         return egg;
+    }
+
+    // Set current base and hybrid egg
+    function configureEggs(string memory _baseEgg, string memory _hybridEgg) public onlyOwner {
+        baseEgg = _baseEgg;
+        hybridEgg = _hybridEgg;
     }
 
     // Add or configure a given rarity
@@ -178,12 +186,16 @@ contract ZooDrop is Ownable {
 
     // Return price for current EggDrop
     function eggPrice() public view returns (uint256) {
-        return getEgg("baseEgg").price;
+        return getEgg(baseEgg).price;
+    }
+
+    function eggSupply() public view returns (uint256) {
+        return getEgg(baseEgg).supply - totalSupply();
     }
 
     // Return a new Egg Token
     function newEgg() public onlyOwner returns (IZoo.Token memory token) {
-        require(currentSupply() > 0, "Out of eggs");
+        require(eggSupply() > 0, "Out of eggs");
         _eggSupply.decrement();
 
         Egg memory egg = getEgg("baseEgg");
