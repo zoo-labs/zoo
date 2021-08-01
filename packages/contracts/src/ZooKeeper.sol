@@ -53,12 +53,12 @@ contract ZooKeeper is Ownable {
         zoo = IERC20(_zoo);
     }
 
-    function setDrop(address dropAddress, string memory title, uint256 eggSupply) public returns (uint256) {
+    function setDrop(address dropAddress) public returns (uint256) {
         IDrop drop = IDrop(dropAddress);
         dropIDs.increment();
         uint256 dropID = dropIDs.current();
         drops[dropID] = drop;
-        emit AddDrop(dropAddress, title, eggSupply);
+        emit AddDrop(dropAddress, drop.title(), drop.eggSupply());
         return dropID;
     }
 
@@ -81,7 +81,7 @@ contract ZooKeeper is Ownable {
     function buyEgg(uint256 dropID) public {
         IDrop drop = IDrop(drops[dropID]);
         require(zoo.balanceOf(msg.sender) >= drop.eggPrice(), "ZK: Not Enough ZOO to purchase Egg");
-        require(drop.currentSupply() > 0, "ZK: There are no more Eggs that can be purchased");
+        require(drop.eggSupply() > 0, "ZK: There are no Eggs that can be purchased");
 
         {
             // Transfer funds

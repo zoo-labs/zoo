@@ -15,8 +15,42 @@ describe("ZooDrop", () => {
     beforeEach(async () => {
         signers = await ethers.getSigners();
         owner = signers[0]
+
+        // Deploy zoodrop
         const ZooDrop = await ethers.getContractFactory('ZooDrop', owner);
-        zooDrop = await ZooDrop.deploy('Gen1', 16000, 210);
+        zooDrop = await ZooDrop.deploy('Gen1');
+
+        // Set default eggs on ZooDrop
+        const eggs = [
+          {
+            name: "baseEgg",
+            price: 210,
+            supply: 16000,
+            tokenURI: "https://db.zoolabs/egg.jpg",
+            metadataURI: "https://db.zoolabs.org/egg.json"
+          },
+          {
+            name: "hybridEgg",
+            price: 0,
+            supply: 0,
+            tokenURI: "https://db.zoolabs/hybrid.jpg",
+            metadataURI: "https://db.zoolabs.org/hybrid.json"
+          }
+        ]
+
+        await Promise.all(eggs.map((v) => {
+          zooDrop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
+        }))
+
+        // configure our eggs to be base / hybrid egg
+        zooDrop.configureEggs("baseEgg", "hybridEgg")
+
+  await Promise.all(eggs.map((v) => {
+    console.log('Add Egg:', v.name)
+    drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
+  }))
+
+        zooDrop.setEgg("baseEgg")
         await zooDrop.deployed();
     })
 
