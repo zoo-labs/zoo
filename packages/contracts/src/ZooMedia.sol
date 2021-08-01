@@ -35,10 +35,11 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
     // Deployment Address
     address private _owner;
 
-    // Address for the market
-    address public marketAddress;
-
+    // Address of ZooKeeper
     address public keeperAddress;
+
+    // Address of ZooMarket
+    address public marketAddress;
 
     // Mapping from token to previous owner of the token
     mapping(uint256 => address) public previousTokenOwners;
@@ -92,9 +93,23 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
      * *********
      */
 
+    modifier onlyZoo() {
+        require(
+            keeperAddress == msg.sender || marketAddress == msg.sender,
+            "ZooMarket: Only Zoo contracts can call this method"
+        );
+        _;
+    }
+
+    modifier onlyOwner() {
+        require(_owner == msg.sender, "ZooMarket: Only owner has access");
+        _;
+    }
+
     /**
      * @notice Require that the token has not been burned and has been minted
      */
+
     modifier onlyExistingToken(uint256 tokenId) {
         require(tokenExists(tokenId), "ZooMedia: nonexistent token");
         _;
@@ -128,7 +143,7 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
      */
     modifier onlyApprovedOrOwner(address spender, uint256 tokenId) {
         require(
-            _isZooKeeper(msg.sender) || _isApprovedOrOwner(spender, tokenId),
+            _isKeeper(msg.sender) || _isApprovedOrOwner(spender, tokenId),
             "ZooMedia: Only approved or owner"
         );
         _;
@@ -162,45 +177,43 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
      */
     constructor(
         string memory name,
-        string memory symbol,
-        address _marketAddress
+        string memory symbol
     ) ERC721(name, symbol) {
         _owner = msg.sender;
         _registerInterface(_INTERFACE_ID_ERC721_METADATA);
-        marketAddress = _marketAddress;
     }
 
-    function _isZooKeeper(address _address) internal view returns (bool) {
-        return _address == keeperAddress;
+    function _isKeeper(address _address) internal view returns (bool) {
+        return keeperAddress == _address;
     }
 
     /**
      * @notice Sets the media contract address. This address is the only permitted address that
      * can call the mutable functions. This method can only be called once.
      */
-    function configure(address _marketAddress, address _keeperAddress)
+    function configure(address _keeperAddress, address _marketAddress)
         external
+        onlyOwner
     {
-        require(msg.sender == _owner, "ZooMedia: Only owner");
-        // require(
-        //     marketAddress == address(0),
-        //     "ZooMedia: Already configured market"
-        // );
         // require(
         //     keeperAddress == address(0),
         //     "ZooMedia: Already configured keeper"
         // );
-        require(
-            _marketAddress != address(0),
-            "Market: cannot set market contract as zero address"
-        );
+        // require(
+        //     marketAddress == address(0),
+        //     "ZooMedia: Already configured market"
+        // );
         require(
             _keeperAddress != address(0),
             "Market: cannot set keeper contract as zero address"
         );
+        require(
+            _marketAddress != address(0),
+            "Market: cannot set market contract as zero address"
+        );
 
-        marketAddress = _marketAddress;
         keeperAddress = _keeperAddress;
+        marketAddress = _marketAddress;
     }
 
     /* **************

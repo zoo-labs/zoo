@@ -8,12 +8,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deploy } = deployments
   const { deployer } = await getNamedAccounts()
 
-  const marketAddress = (await deployments.get('ZooMarket')).address
-  const tokenAddress = (await deployments.get("ZooToken")).address
-
   await deploy('ZooMedia', {
     from: deployer,
-    args: ['CryptoZoo', 'ANML', marketAddress],
+    args: ['CryptoZoo', 'ANML'],
     log: true,
   })
 
@@ -23,4 +20,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 export default func
 func.id = 'deploy_zoo_media' // ID required to prevent reexecution
 func.tags = ['ZooMedia']
-func.dependencies = ['ZooMarket']; // this ensure the Token script above is executed first, so `deployments.get('Token')` succeeds
+func.dependencies = [];
