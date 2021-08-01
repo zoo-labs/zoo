@@ -43,8 +43,16 @@ contract ZooDrop is Ownable {
     struct Animal {
         IZoo.Type kind;
         Rarity rarity;
-        uint256 yield;
         string name;
+        IMedia.MediaData data;
+        IMarket.BidShares bidShares;
+    }
+
+    struct Hybrid {
+        IZoo.Type kind;
+        Rarity rarity;
+        string name;
+        uint256 yield;
         string parentA;
         string parentB;
         IMedia.MediaData data;
@@ -54,8 +62,10 @@ contract ZooDrop is Ownable {
     // Title of drop
     string public title;
 
-    // Names of configured base / hybrid eggs
+    // Name of default base egg
     string public baseEgg;
+
+    // Name of configured hybrid egg
     string public hybridEgg;
 
     // mapping of Rarity name to Rarity
@@ -74,10 +84,10 @@ contract ZooDrop is Ownable {
     mapping (string => Animal) public animals;
 
     // mapping of animal name to Hybrid
-    mapping (string => Animal) public hybrids;
+    mapping (string => Hybrid) public hybrids;
 
     // mapping of (parent + parent) to Hybrid
-    mapping (string => Animal) public hybridParents;
+    mapping (string => Hybrid) public hybridParents;
 
     constructor(string memory _title) {
         title = _title;
@@ -149,10 +159,7 @@ contract ZooDrop is Ownable {
         Animal memory animal = Animal({
             kind: IZoo.Type.BASE_ANIMAL,
             rarity: getRarity(rarity),
-            yield: 0, // use rarity
             name: name,
-            parentA: "",
-            parentB: "",
             data: getMediaData(tokenURI, metadataURI),
             bidShares: getBidShares()
         });
@@ -168,7 +175,7 @@ contract ZooDrop is Ownable {
 
     // Add or configure a given hybrid
     function setHybrid(string memory name, string memory rarity, uint256 yield, string memory parentA, string memory parentB, string memory tokenURI, string memory metadataURI) public onlyOwner returns (bool) {
-        Animal memory hybrid = Animal({
+        Hybrid memory hybrid = Hybrid({
             kind: IZoo.Type.HYBRID_ANIMAL,
             name: name,
             rarity: getRarity(rarity),
@@ -250,7 +257,7 @@ contract ZooDrop is Ownable {
     }
 
     // Get Hybrid by name
-    function getHybrid(string memory name) private view returns (Animal memory) {
+    function getHybrid(string memory name) private view returns (Hybrid memory) {
         return hybrids[name];
     }
 
@@ -295,13 +302,13 @@ contract ZooDrop is Ownable {
     }
 
     function getRandomHybrid(uint256 random, IZoo.Parents memory parents) external view returns (IZoo.Token memory token) {
-        Animal[2] memory possible = [
+        Hybrid[2] memory possible = [
             parentsToHybrid(parents.animalA, parents.animalB),
             parentsToHybrid(parents.animalB, parents.animalA)
         ];
 
         // pick array index 0 or 1 depending on the rarity
-        Animal memory hybrid = possible[random % 2];
+        Hybrid memory hybrid = possible[random % 2];
 
         // Return Token
         token.kind = IZoo.Type.HYBRID_ANIMAL;
@@ -328,7 +335,7 @@ contract ZooDrop is Ownable {
     }
 
     // Get Hybrid from Parents
-    function parentsToHybrid(string memory nameA, string memory nameB) private view returns (Animal memory) {
+    function parentsToHybrid(string memory nameA, string memory nameB) private view returns (Hybrid memory) {
         return hybridParents[parentsKey(nameA, nameB)];
     }
 
