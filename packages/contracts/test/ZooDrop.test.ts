@@ -3,7 +3,7 @@ import { ZooDrop } from '../types/ZooDrop';
 import chai, { expect } from "chai";
 import { BigNumber, Bytes, BytesLike, utils } from 'ethers';
 
-let zooDrop : any;
+let drop : any;
 let signers: any;
 let mintAmt = 100000000;
 let owner;
@@ -18,7 +18,7 @@ describe("ZooDrop", () => {
 
         // Deploy zoodrop
         const ZooDrop = await ethers.getContractFactory('ZooDrop', owner);
-        zooDrop = await ZooDrop.deploy('Gen1');
+        drop = await ZooDrop.deploy('Gen1');
 
         // Set default eggs on ZooDrop
         const eggs = [
@@ -39,50 +39,50 @@ describe("ZooDrop", () => {
         ]
 
         await Promise.all(eggs.map((v) => {
-          zooDrop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
+          drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
         }))
 
         // configure our eggs to be base / hybrid egg
-        zooDrop.configureEggs("baseEgg", "hybridEgg")
+        drop.configureEggs("baseEgg", "hybridEgg")
 
   await Promise.all(eggs.map((v) => {
     console.log('Add Egg:', v.name)
     drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
   }))
 
-        zooDrop.setEgg("baseEgg")
-        await zooDrop.deployed();
+        drop.setEgg("baseEgg")
+        await drop.deployed();
     })
 
     it("Should have current supply equal total supply", async () => {
-        let currentSupply = await zooDrop.currentSupply();
-        expect(currentSupply.toNumber()).to.equal((await zooDrop.totalSupply()).toNumber());
+        let currentSupply = await drop.currentSupply();
+        expect(currentSupply.toNumber()).to.equal((await drop.totalSupply()).toNumber());
     });
 
     it("Should add Animal", async () => {
-        await zooDrop.addAnimal("Pug", 100, "Common", 5500, TOKEN_URI, META_URI);
+        await drop.addAnimal("Pug", 100, "Common", 5500, TOKEN_URI, META_URI);
 
-        const Animal = await zooDrop.animals("Pug");
-        const tokenURI = await zooDrop.tokenURI(Animal.name);
+        const Animal = await drop.animals("Pug");
+        const tokenURI = await drop.tokenURI(Animal.name);
 
         expect(Animal.name).to.equal("Pug");
         expect(tokenURI).to.equal(TOKEN_URI);
     });
 
     it("Should add an Hybrid", async () => {
-        await zooDrop.addHybrid("Puggy", "Pug","Pug", 120, TOKEN_URI, META_URI);
+        await drop.addHybrid("Puggy", "Pug","Pug", 120, TOKEN_URI, META_URI);
 
-        const Hybrid = await zooDrop.hybrids("PugPug");
-        const tokenURI = await zooDrop.tokenURI("Puggy");
+        const Hybrid = await drop.hybrids("PugPug");
+        const tokenURI = await drop.tokenURI("Puggy");
 
         expect(Hybrid.name).to.equal("Puggy");
         expect(tokenURI).to.equal(TOKEN_URI);
     });
 
     it("Should revert when adding a animal not as owner", async() => {
-        zooDrop = zooDrop.connect(signers[1]);
+        drop = drop.connect(signers[1]);
         try {
-            const tx = await zooDrop.addAnimal("Pug", 100, "Common", 5500, TOKEN_URI, META_URI);
+            const tx = await drop.addAnimal("Pug", 100, "Common", 5500, TOKEN_URI, META_URI);
         } catch (e) {
             expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
         }
@@ -90,61 +90,61 @@ describe("ZooDrop", () => {
     });
 
     it("Should revert when adding a hybrid animal not as owner", async() => {
-        zooDrop = zooDrop.connect(signers[1]);
+        drop = drop.connect(signers[1]);
         try {
-            const tx = await zooDrop.addHybrid("Puggy", "Pug","Pug", 120, TOKEN_URI, META_URI);
+            const tx = await drop.addHybrid("Puggy", "Pug","Pug", 120, TOKEN_URI, META_URI);
         } catch (e) {
             expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
         }
      });
 
     it("Should set & get egg price", async() => {
-        zooDrop = zooDrop.connect(signers[0]);
-        const eggPrice = (await zooDrop.eggPrice()).toNumber();
+        drop = drop.connect(signers[0]);
+        const eggPrice = (await drop.eggPrice()).toNumber();
         expect(eggPrice).to.equal(210); // default eggPrice
 
-        await zooDrop.connect(signers[0]).setEggPrice(333); //set a new price
+        await drop.connect(signers[0]).setEggPrice(333); //set a new price
 
-        const newPrice = (await zooDrop.eggPrice()).toNumber();
+        const newPrice = (await drop.eggPrice()).toNumber();
         expect(newPrice).to.equal(333); // gets the new eggPrice
     });
 
     it("Should revert when setting egg price as non owner", async() => {
-        zooDrop = zooDrop.connect(signers[1]);
+        drop = drop.connect(signers[1]);
         try {
-            const tx = await zooDrop.setEggPrice(333);
+            const tx = await drop.setEggPrice(333);
         } catch (e) {
             expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
         }
     });
 
     it("Should set tokenURI for Animal", async() => {
-        zooDrop = zooDrop.connect(signers[0]);
-        await zooDrop.setTokenURI("pug", "pug.com");
-        let tokenURI = await zooDrop.tokenURI("pug");
+        drop = drop.connect(signers[0]);
+        await drop.setTokenURI("pug", "pug.com");
+        let tokenURI = await drop.tokenURI("pug");
         expect(tokenURI).to.equal("pug.com");
     });
 
     it("Should revert when setting tokenURI as non owner", async() => {
-        zooDrop = zooDrop.connect(signers[1]);
+        drop = drop.connect(signers[1]);
         try {
-            const tx = await zooDrop.setTokenURI("pug", "pug.com");
+            const tx = await drop.setTokenURI("pug", "pug.com");
         } catch (e) {
             expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
         }
     });
 
     it("Should set metadataURI for a pug", async() => {
-        zooDrop = zooDrop.connect(signers[0]);
-        const res = await zooDrop.setMetadataURI("pug", "pug.com/meta");
-        const metadataURI = await zooDrop.getMetadataURI("pug");
+        drop = drop.connect(signers[0]);
+        const res = await drop.setMetadataURI("pug", "pug.com/meta");
+        const metadataURI = await drop.getMetadataURI("pug");
         expect(metadataURI).to.equal("pug.com/meta");
     });
 
     it("Should revert when setting tokenURI as non owner", async() => {
-      zooDrop = zooDrop.connect(signers[1]);
+      drop = drop.connect(signers[1]);
       try {
-          const tx = await zooDrop.setMetadataURI("pug", "pug.com");
+          const tx = await drop.setMetadataURI("pug", "pug.com");
       } catch (e) {
           expect(e.message.includes('Ownable: caller is not the owner')).to.be.true;
       }
