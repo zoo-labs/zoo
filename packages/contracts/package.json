@@ -48,7 +48,7 @@
     "account": "hardhat account",
     "accounts": "hardhat accounts",
     "balance": "hardhat balance",
-    "chain": "hardhat node --network hardhat",
+    "chain": "hardhat node --network hardhat --show-stack-traces",
     "console": "hardhat console --network hardhat",
     "compile": "hardhat compile",
     "matrix": "ts-node utils/yieldMatrix.ts",
