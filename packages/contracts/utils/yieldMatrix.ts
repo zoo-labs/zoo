@@ -47,7 +47,7 @@ import credentials from '../credentials.json';
     const slug = v.name.replaceAll(' ', '').toLowerCase();
     animals[i].tokenURI = `https://db.zoolabs.io/${slug}.jpg`;
     animals[i].metadataURI = `https://db.zoolabs.io/${slug}.json`;
-    animals[i].yield = Math.round(animals[i]);
+    animals[i].yield = Math.round(animals[i].yield);
   })
   fs.writeFileSync(__dirname + '/animals.json', JSON.stringify(animals))
 
@@ -203,7 +203,7 @@ import credentials from '../credentials.json';
     const slug = v.name.replaceAll(' ', '').toLowerCase();
     hybrids[i].tokenURI = `https://db.zoolabs.io/${slug}.jpg`;
     hybrids[i].metadataURI = `https://db.zoolabs.io/${slug}.json`;
-    hybrids[i].yield = Math.round(hybrids[i]);
+    hybrids[i].yield = Math.round(hybrids[i].yield);
   })
   fs.writeFileSync(__dirname + '/hybrids.json', JSON.stringify(hybrids))
 

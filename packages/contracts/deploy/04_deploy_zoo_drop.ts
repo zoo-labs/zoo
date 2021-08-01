@@ -30,23 +30,41 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const keeper = await hre.ethers.getContractAt('ZooKeeper', keeperAddress);
 
   // Add first Drop
-  console.log('Add Gen 0 drop')
   const id = await keeper.callStatic.setDrop(dropAddress, 'Gen 0', 16000)
+  console.log('ZK: Added Gen 0 drop')
 
   const drop = await hre.ethers.getContractAt('ZooDrop', dropAddress);
 
-  console.log('Configure Gen 0 drop')
-  await drop.setEgg("egg", 210, 16000, "https://db.zoolabs/egg.jpg", "https://db.zoolabs.org/egg.json");
-  await drop.setEgg("hybridEgg", 0, 0, "https://db.zoolabs/hybridegg.jpg", "https://db.zoolabs.org/hybridEgg.json");
+  const eggs = [
+    {
+      name: "egg",
+      price: 210,
+      supply: 16000,
+      tokenURI: "https://db.zoolabs/egg.jpg",
+      metadataURI: "https://db.zoolabs.org/egg.json"
+    },
+    {
+      name: "hybrid",
+      price: 0,
+      supply: 0,
+      tokenURI: "https://db.zoolabs/hybrid.jpg",
+      metadataURI: "https://db.zoolabs.org/hybrid.json"
+    }
+  ]
 
-  console.log('Adding Common animals')
+  await Promise.all(eggs.map((v) => {
+    console.log('Add Egg:', v.name)
+    drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
+  }))
+
   await Promise.all(animals.map((v) => {
+    console.log('Add Animal:', v.name)
     drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
   }))
 
-  console.log('Adding Hybrid animals')
   await Promise.all(hybrids.map((v) => {
-    drop.setHybrid(v.name, v.rarity, Math.round(v.yield), v.parentA, v.parentB, v.tokenURI, v.metadataURI)
+    console.log('Add Hybrid:', v.name)
+    drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
   }))
 
   return hre.network.live;
