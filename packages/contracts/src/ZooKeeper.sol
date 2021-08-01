@@ -12,6 +12,8 @@ import { IDrop } from "./interfaces/IDrop.sol";
 import { IMarket } from "./interfaces/IMarket.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 
+import "./console.sol";
+
 
 contract ZooKeeper is Ownable {
     using SafeMath for uint256;
@@ -36,6 +38,9 @@ contract ZooKeeper is Ownable {
 
     // Mapping of ID to NFT
     mapping(uint256 => IZoo.Token) public tokens;
+
+    // Mapping of ID to NFT
+    mapping(uint256 => uint256) public eggsMinted;
 
     // Price to set name of Token
     uint256 public namePrice;
@@ -88,19 +93,20 @@ contract ZooKeeper is Ownable {
     function buyEgg(uint256 dropID) public {
         IDrop drop = IDrop(drops[dropID]);
         require(zoo.balanceOf(msg.sender) >= drop.eggPrice(), "ZK: Not Enough ZOO to purchase Egg");
-        require(drop.eggSupply() > 0, "ZK: There are no Eggs that can be purchased");
 
-        {
-            // Transfer funds
-            zoo.transferFrom(msg.sender, address(this), drop.eggPrice());
+        // Transfer funds
+        zoo.transferFrom(msg.sender, address(this), drop.eggPrice());
 
-            // Instantiate a new token for Egg
-            IZoo.Token memory egg = drop.newEgg();
+        console.log("drop.eggPrice()", drop.eggPrice());
 
-            // Mint Egg Token
-            mint(msg.sender, egg);
-            emit BuyEgg(msg.sender, egg.id);
-        }
+        // Get Egg from this drop
+        IZoo.Token memory egg = drop.newEgg();
+
+        // Mint Egg Token
+        mint(msg.sender, egg);
+
+        // Broadcast success
+        emit BuyEgg(msg.sender, egg.id);
     }
 
     function getAnimal(uint256 dropID, uint256 eggID) private view returns (IZoo.Token memory) {
