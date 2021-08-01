@@ -119,7 +119,6 @@ export interface SwiperCardProps {
 
 // export const SwiperCard: React.FC<SwiperCardProps> = ({ imageURL, onCardClick, onInfoClick, egg, hatchEgg, eggGroup }) => {
 export const SwiperCard: React.FC<SwiperCardProps> = ({ egg, animal, group, eggType, onCardClick, onInfoClick }) => {
-  console.log("group", animal, group)
   return (
     <>
       <Card

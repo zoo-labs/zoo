@@ -13,7 +13,7 @@ import Body from "components/layout/Body";
 import { useModal } from "components/Modal";
 import BuyEggs from "components/BuyEggs";
 import MyZooAccount from "views/MyZooAccount";
-import { getZooToken, getZooKeeper, getZooDrop, getZooFaucet } from "util/contractHelpers";
+import { getZooToken, getZooDrop, getZooFaucet, getZooMedia, getZooKeeper } from "util/contractHelpers";
 import useWeb3 from "hooks/useWeb3";
 import { FaShoppingCart } from "react-icons/fa";
 
@@ -87,7 +87,7 @@ const Account: React.FC = () => {
 
    const zooToken = getZooToken(web3, chainId);
    const faucet = getZooFaucet(web3, chainId);
-
+   const zooMedia = getZooMedia(web3, chainId);
    const zooKeeper = getZooKeeper(web3, chainId);
    const zooDrop = getZooDrop(web3, chainId);
    const keeperAdd = zooKeeper.options.address;
@@ -95,6 +95,14 @@ const Account: React.FC = () => {
 
    const getBalance = async () => {
       try {
+         const tokenBalance = await zooMedia.methods.balanceOf(account).call();
+         console.log('tokenBalance', tokenBalance);
+         const tokenID = await zooMedia.methods.tokenOfOwnerByIndex(account, 1).call();
+         console.log('tokenID', tokenID);
+         const tokenURI = await zooMedia.methods.tokenURI(tokenID).call();
+         console.log('tokenURI', tokenURI);
+         const token = await zooKeeper.methods.tokens(tokenID).call();
+         console.log('token', token);
          const decimals = await zooToken.methods.decimals().call();
          const rawBalance = await zooToken.methods.balanceOf(account).call();
          const divisor = parseFloat(Math.pow(10, decimals).toString());
