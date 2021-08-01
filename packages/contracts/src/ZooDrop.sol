@@ -43,6 +43,7 @@ contract ZooDrop is Ownable {
     struct Animal {
         IZoo.Type kind;
         Rarity rarity;
+        uint256 yield;
         string name;
         string parentA;
         string parentB;
@@ -140,6 +141,7 @@ contract ZooDrop is Ownable {
         Animal memory animal = Animal({
             kind: IZoo.Type.BASE_ANIMAL,
             rarity: getRarity(rarity),
+            yield: 0, // use rarity
             name: name,
             parentA: "",
             parentB: "",
@@ -157,11 +159,12 @@ contract ZooDrop is Ownable {
     }
 
     // Add or configure a given hybrid
-    function setHybrid(string memory name, string memory rarity, string memory parentA, string memory parentB, string memory tokenURI, string memory metadataURI) public onlyOwner returns (bool) {
+    function setHybrid(string memory name, string memory rarity, uint256 yield, string memory parentA, string memory parentB, string memory tokenURI, string memory metadataURI) public onlyOwner returns (bool) {
         Animal memory hybrid = Animal({
             kind: IZoo.Type.HYBRID_ANIMAL,
             name: name,
             rarity: getRarity(rarity),
+            yield: yield,
             parentA: parentA,
             parentB: parentB,
             data: getMediaData(tokenURI, metadataURI),
