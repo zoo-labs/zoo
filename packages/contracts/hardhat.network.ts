@@ -19,16 +19,16 @@ function mnemonic() {
 // Select the network you want to deploy to here:
 //
 const networks: HardhatUserConfig['networks'] = {
-  localhost: {
-    chainId: 1337,
-    url: 'http://127.0.0.1:8545',
-    allowUnlimitedContractSize: true,
-    accounts: {
-      mnemonic: mnemonic(),
-      accountsBalance: '10000000000000000000000',
-      count: 20
-    }
-  },
+  // localhost: {
+  //   chainId: 1337,
+  //   url: 'http://127.0.0.1:8545',
+  //   allowUnlimitedContractSize: true,
+  //   accounts: {
+  //     mnemonic: mnemonic(),
+  //     accountsBalance: '10000000000000000000000',
+  //     count: 20
+  //   }
+  // },
   hardhat: {
     allowUnlimitedContractSize: true,
     accounts: {
