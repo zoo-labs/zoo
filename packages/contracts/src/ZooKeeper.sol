@@ -28,8 +28,11 @@ contract ZooKeeper is Ownable {
     event Burn(address indexed from, uint256 indexed tokenID);
     event Free(address indexed from, uint256 indexed tokenID, uint256 indexed yield);
 
-    // Mapping of ID to Drop
-    mapping(uint256 => IDrop) public drops;
+    // Mapping of Address to Drop ID
+    mapping(uint256 => address) public drops;
+
+    // Mapping of ID to Address
+    mapping(address=> uint256) public dropAddresses;
 
     // Mapping of ID to NFT
     mapping(uint256 => IZoo.Token) public tokens;
@@ -54,10 +57,14 @@ contract ZooKeeper is Ownable {
     }
 
     function setDrop(address dropAddress) public returns (uint256) {
+        require(dropAddresses[dropAddress] == 0, "Drop already added");
+
         IDrop drop = IDrop(dropAddress);
+
         dropIDs.increment();
         uint256 dropID = dropIDs.current();
-        drops[dropID] = drop;
+        drops[dropID] = dropAddress;
+        dropAddresses[dropAddress] = dropID;
         emit AddDrop(dropAddress, drop.title(), drop.eggSupply());
         return dropID;
     }
