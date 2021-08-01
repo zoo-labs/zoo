@@ -94,8 +94,12 @@ contract ZooDrop is Ownable {
     }
 
     // Return total number of eggs issued
-    function totalSupply() public view returns (uint256) {
+    function currentSupply() public view returns (uint256) {
         return _eggSupply.current();
+    }
+
+    function totalSupply() public view returns (uint256) {
+        return getEgg(baseEgg).supply;
     }
 
     // Add or configure a given kind of egg
@@ -197,15 +201,15 @@ contract ZooDrop is Ownable {
     }
 
     function eggSupply() public view returns (uint256) {
-        return getEgg(baseEgg).supply - totalSupply();
+        return getEgg(baseEgg).supply - currentSupply();
     }
 
     // Return a new Egg Token
     function newEgg() public onlyOwner returns (IZoo.Token memory token) {
-        require(eggSupply() > 0, "Out of eggs");
-        _eggSupply.decrement();
+        require(getEgg(baseEgg).supply > currentSupply(), "Out of eggs");
+        _eggSupply.increment();
 
-        Egg memory egg = getEgg("baseEgg");
+        Egg memory egg = getEgg(baseEgg);
 
         // Convert egg into a token
         token.kind = egg.kind;
