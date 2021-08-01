@@ -12,14 +12,17 @@ import {
    getZooKeeperAddress
 } from "util/addressHelpers";
 
-// ABIs
-import zooTokenAbi from "config/abi/zooToken.json";
-import zooAuctionAbi from "config/abi/zooAuction.json";
-import zooDropAbi from "config/abi/zooDrop.json";
-import zooFaucetAbi from "config/abi/zooFaucet.json";
-import zooMarketAbi from "config/abi/zooMarket.json";
-import zooMediaAbi from "config/abi/zooMedia.json";
-import zooKeeperAbi from "config/abi/zooKeeper.json";
+// Import ABIs from contracts.json. All ABIs should be identical.
+import ZooContracts from "contracts.json";
+const contracts = ZooContracts[31337]['localhost']['contracts'];
+
+const zooTokenAbi   = contracts["ZooToken"].abi;
+const zooAuctionAbi = contracts["ZooAuction"].abi;
+const zooDropAbi    = contracts["ZooDrop"].abi;
+const zooFaucetAbi  = contracts["ZooFaucet"].abi;
+const zooMarketAbi  = contracts["ZooMarket"].abi;
+const zooMediaAbi   = contracts["ZooMedia"].abi;
+const zooKeeperAbi  = contracts["ZooKeeper"].abi;
 
 const getContract = (abi: any, address: string, web3?: Web3) => {
    return new web3.eth.Contract(abi as unknown as AbiItem, address);

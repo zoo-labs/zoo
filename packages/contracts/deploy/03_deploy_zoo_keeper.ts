@@ -18,6 +18,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     log: true,
   })
 
+  const keeperAddress = deployResult.address;
+
+  const market = await hre.ethers.getContractAt('ZooMarket', marketAddress);
+  const media = await hre.ethers.getContractAt('ZooMedia', mediaAddress);
+
+  market.configure(keeperAddress, mediaAddress)
+  media.configure(keeperAddress, marketAddress)
+
   return hre.network.live;
 }
 
