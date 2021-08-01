@@ -1,5 +1,5 @@
-import addresses from 'config/constants/contracts'
-import { Address } from 'config/constants/types'
+import addresses from 'constants/contracts'
+import { Address } from 'constants/types'
 
 export const getAddress = (address: Address, chainID?: number): string => {
   const mainNetChainId = 1

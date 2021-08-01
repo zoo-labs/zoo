@@ -8,7 +8,6 @@ import { connectorsByName } from '../../connectors'
 // import { useMoralis } from "react-moralis"
 // import Moralis from 'moralis'
 import { ethers } from "ethers";
-// import starterAppContract from 'config/abi/starterApp.json'
 import Button from '../../components/Button/Button'
 import { Label, Text } from '../../components/Text'
 import Flex from '../../components/Box/Flex'
@@ -81,7 +80,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
   const faucet = getZooFaucet(web3, chainId);
   const faucetAmt = web3.utils.toWei("50");
 
- 
+
   // const { authenticate, isAuthenticated } = useMoralis();
 
    const bscSwith = async (network) => {
@@ -114,7 +113,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
       useEffect(() => {
           getBalance();
       }, []);
-    
+
 
    const handleFaucet = () => {
       try {

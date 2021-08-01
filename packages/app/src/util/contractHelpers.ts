@@ -14,7 +14,7 @@ import {
 
 // Import ABIs from contracts.json. All ABIs should be identical.
 import ZooContracts from "contracts.json";
-const contracts = ZooContracts[31337].hardhat;
+const contracts = ZooContracts[31337]['localhost']['contracts'];
 
 const zooTokenAbi   = contracts["ZooToken"].abi;
 const zooAuctionAbi = contracts["ZooAuction"].abi;
