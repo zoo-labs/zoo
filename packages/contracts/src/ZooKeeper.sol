@@ -153,18 +153,15 @@ contract ZooKeeper is Ownable {
         emit Hatch(msg.sender, animal.id);
     }
 
+    function isBaseAnimal(uint256 tokenID) private returns (bool) {
+        return tokens[tokenID].kind == IZoo.Type.BASE_ANIMAL;
+    }
+
     modifier canBreed(uint256 parentA, uint256 parentB) {
-        require(media.tokenExists(parentA) && media.tokenExists(parentB), "ZK: nonexistent token");
-        require(keccak256(abi.encode(parentA)) != keccak256(abi.encode(parentB)));
-        require(breedReady(parentA), "ZK: Wait for cooldown to finish.");
-        require(breedReady(parentB), "ZK: Wait for cooldown to finish.");
-
-        // Require non hybrids
-        // require(
-        //     (parents.tokenA.kind == Type.BASE_ANIMAL) && (parents.tokenB.kind == Type.BASE_ANIMAL),
-        //     "Hybrid animals cannot breed."
-        // );
-
+        require(media.tokenExists(parentA) && media.tokenExists(parentB), "Non-existent token");
+        require(keccak256(abi.encode(parentA)) != keccak256(abi.encode(parentB)),"Not able to breed with self" );
+        require(breedReady(parentA) && breedReady(parentB), "Wait for cooldown to finish.");
+        require(isBaseAnimal(parentA) && isBaseAnimal(parentB), "Only BASE_ANIMAL can breed.");
         _;
     }
 

@@ -17,41 +17,48 @@ async function main() {
   // Add Drop to ZooKeeper
   await keeper.setDrop(dropAddress)
 
-  // Configure drop
-  const eggs = [
-    {
-      name: "Base Egg",
-      price: 210,
-      supply: 16000,
-      tokenURI: "https://db.zoolabs/egg.jpg",
-      metadataURI: "https://db.zoolabs.org/egg.json"
-    },
-    {
-      name: "Hybrid Egg",
-      price: 0,
-      supply: 0,
-      tokenURI: "https://db.zoolabs/hybrid.jpg",
-      metadataURI: "https://db.zoolabs.org/hybrid.json"
-    }
-  ]
+  // Configure Drop
+  await drop.configureKeeper(keeperAddress);
 
+  // const eggs = [
+  //   {
+  //     name: "Base Egg",
+  //     price: 210,
+  //     supply: 16000,
+  //     tokenURI: "https://db.zoolabs/egg.jpg",
+  //     metadataURI: "https://db.zoolabs.org/egg.json"
+  //   },
+  //   {
+  //     name: "Hybrid Egg",
+  //     price: 0,
+  //     supply: 0,
+  //     tokenURI: "https://db.zoolabs/hybrid.jpg",
+  //     metadataURI: "https://db.zoolabs.org/hybrid.json"
+  //   }
+  // ]
+
+  // // Add Eggs
   // eggs.map(async (v) => {
   //   console.log('Add Egg:', v.name)
   //   await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
   // })
 
-  let v = eggs[0]
-  await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
-  v = eggs[1]
-  await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
+  // await drop.configureEggs('Base Egg', 'Hybrid Egg')
 
-  await drop.configureEggs("Base Egg", "Hybrid Egg")
+  // Add Rarities
+  rarities.sort(function(a, b) { return a.probability - b.probability });
+  rarities.map(async (v) => {
+    console.log('Add Rarity:', v.name, v.probability, v.yield, v.boost)
+    await drop.setRarity(v.name, v.probability, v.yield, v.boost)
+  })
 
+  // Add Animals
   animals.map(async (v) => {
     console.log('Add Animal:', v.name)
     await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
   })
 
+  // Add Hybrids
   hybrids.map(async (v) => {
     console.log('Add Hybrid:', v.name)
     await drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
