@@ -166,7 +166,7 @@ export const SwiperCard: React.FC<SwiperCardProps> = ({ egg, animal, group, eggT
                 fontSize: 16,
                 letterSpacing: 0,
                 height: "100%",
-                paddingRight: group[animal.animalId] ? '26px' : null
+                // paddingRight: group[animal.animalId] ? '26px' : null
               }} >
               {animal.name}
             </TextWrapper>
