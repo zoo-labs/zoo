@@ -19,9 +19,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   })
 
   // Bail out if we've already transfered ownership
-  if (!deployResult.newlyDeployed) {
-    return
-  }
+  // if (!deployResult.newlyDeployed) {
+  //   return
+  // }
 
   const dropAddress = deployResult.address;
   const keeperAddress = (await deployments.get('ZooKeeper')).address
@@ -64,9 +64,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
   })
 
-  hybrids.map((v) => {
+  hybrids.map(async (v) => {
     console.log('Add Hybrid:', v.name)
-    drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
+    await drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
   })
 
   return hre.network.live;
