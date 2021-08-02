@@ -79,18 +79,24 @@ const Account: React.FC = () => {
    const [keepApprove, setKeepApprove] = useState(true);
    const web3 = useWeb3();
    const { isXl } = useMatchBreakpoints();
-   const { toastSuccess, toastError, toastInfo } = useToast();
+   const { toastSuccess, toastError, toastInfo, clear } = useToast();
    const history = useHistory();
    const [onBuyEggs] = useModal(<BuyEggs />);
    const allEggs = useSelector<AppState, AppState["zoo"]["eggs"]>(
       (state) => state.zoo.eggs
    );
+
+   const toastClear = () => {
+      clear();
+   };
+
    const currentEggsOwned = Object.values(allEggs).filter(
       (egg) => egg.owner === account
    ).length;
    // setEggsOwned(currentEggsOwned)
    const handleClick = () => {
       history.push("/bank");
+      toastClear();
    };
 
    const zooToken = getZooToken(web3, chainId);
@@ -124,6 +130,8 @@ const Account: React.FC = () => {
          setBalance(balance);
       } catch (e) {
          console.error("ISSUE LOADING ZOO BALANCE \n", e);
+         toastClear();
+         toastError('Failed to load ZOO balance');
       }
       try {
          const allowance = await zooToken.methods
@@ -132,9 +140,11 @@ const Account: React.FC = () => {
          if (allowance > 0) {
             setAllowance(true);
             setKeepApprove(false);
+            toastClear();
             toastSuccess("Wallet connected");
          } else {
             setKeepApprove(true);
+            toastClear();
             toastInfo('Trying to approve account...');
          }
       } catch (error) {
@@ -143,7 +153,9 @@ const Account: React.FC = () => {
    };
 
    const approve = async () => {
+      toastClear();
       setDisable(true);
+      toastInfo('Processing approval...');
 
       const eggPrice = await zooDrop.methods.eggPrice().call();
       const tsx = zooToken.methods
@@ -152,10 +164,12 @@ const Account: React.FC = () => {
       tsx.then(() => {
          setAllowance(true);
          setDisable(false);
-         toastSuccess("Wallet approved");
+         toastClear();
+         toastSuccess("Approval success!");
       }).catch((e) => {
          console.error("APPROVE ERROR", e);
          setDisable(false);
+         toastClear();
          toastError('Failed to approve account');
       });
    };
@@ -235,6 +249,8 @@ const Account: React.FC = () => {
 
    const buyEgg = async () => {
       setDisable(true);
+      toastClear();
+      toastInfo('Processing transaction...');
 
       const drop = await zooKeeper.methods.drops(0).call();
       console.log("Drop:", drop);
