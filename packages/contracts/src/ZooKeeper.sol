@@ -90,6 +90,13 @@ contract ZooKeeper is Ownable {
     }
 
     // Accept ZOO and return Egg NFT
+    function buyEggs(uint256 dropID, uint256 quantity) public {
+        for (uint8 i=0; i<quantity; i++) {
+            buyEgg(dropID);
+        }
+    }
+
+    // Accept ZOO and return Egg NFT
     function buyEgg(uint256 dropID) public {
         IDrop drop = IDrop(drops[dropID]);
         require(zoo.balanceOf(msg.sender) >= drop.eggPrice(), "ZK: Not Enough ZOO to purchase Egg");
