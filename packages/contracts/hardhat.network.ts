@@ -4,9 +4,9 @@ import fs from 'fs'
 
 const alchemyKey = 'EuD-FVgI2gMBGf0aypDghsPHYWHB9nhn'
 
-function mnemonic(filename = 'mnemonic') {
+function mnemonic() {
   try {
-    return fs.readFileSync(`./${filename}.txt`).toString().trim()
+    return fs.readFileSync(`./mnemonic.txt`).toString().trim()
   } catch (e) {
     console.log(
       '☢️  warning: No mnemonic file created for a deploy account. Try `yarn run generate` and then `yarn run account`.'
@@ -19,17 +19,8 @@ function mnemonic(filename = 'mnemonic') {
 // Select the network you want to deploy to here:
 //
 const networks: HardhatUserConfig['networks'] = {
-  localhost: {
-    chainId: 1337,
-    url: 'http://127.0.0.1:8545',
-    allowUnlimitedContractSize: true,
-    accounts: {
-      mnemonic: mnemonic(),
-      accountsBalance: '10000000000000000000000',
-      count: 20
-    }
-  },
   hardhat: {
+    chainId: 31337,
     allowUnlimitedContractSize: true,
     accounts: {
       mnemonic: mnemonic(),
@@ -47,16 +38,16 @@ const networks: HardhatUserConfig['networks'] = {
     chainId: 56,
     // gasPrice: 1000000000,
     accounts: {
-      mnemonic: mnemonic('mnemonic.mainnet'),
+      mnemonic: mnemonic(),
     },
   },
   testnet: {
     url: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
     chainId: 97,
     gasPrice: 20e9,
-    gas: 25e6,
+    gas: 20e6,
     accounts: {
-      mnemonic: mnemonic('mnemonic.testnet'),
+      mnemonic: mnemonic(),
     },
   },
 }

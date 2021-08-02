@@ -4,8 +4,8 @@ import styles from 'styled-components'
 const BodyContainer = styles.div`
     width: 100%;
     // position: relative;
-    padding: 16px 8px;
-    background: #040404;
+    padding: 16px;
+    // background: ${({ theme }) => theme.colors.card};;
 `
 
 const Body: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children }) => {
