@@ -178,7 +178,7 @@ const SwiperContainer = styled.div`
   * {
     background: ${({ theme }) => theme.colors.background}
   }
-`
+`;
 
 const MyZooAccount: React.FC = () => {
   let empty;
@@ -366,7 +366,7 @@ const MyZooAccount: React.FC = () => {
       const mArray = [aniM1, aniM2];
 
       // lastBred TimeRemaining BreedCount
-      mArray.forEach((animal) => {
+    mArray.forEach((animal) => {
          const count = animal.get("BreedCount");
          animal.set("BreedCount", count + 1 || 1);
          animal.breedCount = animal.breedCount + 1 || 1;

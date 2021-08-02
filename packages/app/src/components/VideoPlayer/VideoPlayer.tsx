@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react'
+import React, {useEffect, useRef} from 'react';
 import styled, { DefaultTheme } from "styled-components";
 import { space, typography } from "styled-system";
 import getThemeValue from "../../util/getThemeValue";
@@ -27,7 +27,8 @@ const VidContainer = styled.div`
     -moz-transform: translateX(-50%);
     transform: translateX(-50%);
     z-index: 102;
-`
+`;
+
 function fade(element) {
     var op = 1;
     var timer = setInterval(function() {
