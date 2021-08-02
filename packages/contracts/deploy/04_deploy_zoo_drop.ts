@@ -26,10 +26,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // Add Drop to ZooKeeper
   await keeper.setDrop(dropAddress)
 
-  // Configur Drop to use ZooKeeper
+  // Configure Drop
   await drop.configureKeeper(keeperAddress);
 
-  // Configure drop
+  // Add eggs
   const eggs = [
     {
       name: "Base Egg",
@@ -47,14 +47,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     }
   ]
 
-
-  // Add rarities by rarest
-  rarities.sort(function(a, b) { return a.probability - b.probability });
-  rarities.map(async (v) => {
-    console.log('Add Rarity:', v.name, v.probability, v.yield, v.boost)
-    await drop.setRarity(v.name, v.probability, v.yield, v.boost)
-  })
-
   eggs.map(async (v) => {
     console.log('Add Egg:', v.name)
     await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
@@ -62,11 +54,20 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   await drop.configureEggs('Base Egg', 'Hybrid Egg')
 
+  // Add rarities
+  rarities.sort(function(a, b) { return a.probability - b.probability });
+  rarities.map(async (v) => {
+    console.log('Add Rarity:', v.name, v.probability, v.yield, v.boost)
+    await drop.setRarity(v.name, v.probability, v.yield, v.boost)
+  })
+
+  // Add animals
   animals.map(async (v) => {
     console.log('Add Animal:', v.name)
     await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
   })
 
+  // Add hybrids
   hybrids.map(async (v) => {
     console.log('Add Hybrid:', v.name)
     await drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
