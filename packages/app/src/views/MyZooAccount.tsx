@@ -178,7 +178,7 @@ const SwiperContainer = styled.div`
   * {
     background: ${({ theme }) => theme.colors.background}
   }
-`
+`;
 
 const MyZooAccount: React.FC = () => {
   let empty;
@@ -258,7 +258,7 @@ const MyZooAccount: React.FC = () => {
 
 
     
-    setTimeout(() => setOpen(true), 5450);
+    setTimeout(() => setOpen(true), 3850);
     setTimeout(() => setEggType(""), 7000);
     console.log(eggRes)
     eggRes.set("Burned", true);
@@ -328,10 +328,10 @@ const MyZooAccount: React.FC = () => {
     dispatch(burnEgg(egg));
     dispatch(addAnimal(newAnimal));
     // ---------------------------------------------
-    startAnimaionTimer();
+    startAnimationTimer();
   };
 
-  const startAnimaionTimer = useCallback(() => {
+  const startAnimationTimer = useCallback(() => {
     videoTimeout.push(setTimeout(() => setOpen(true), 5450));
     videoTimeout.push(setTimeout(() => setEggType(""), 7000));
   },[]);
@@ -366,7 +366,7 @@ const MyZooAccount: React.FC = () => {
       const mArray = [aniM1, aniM2];
 
       // lastBred TimeRemaining BreedCount
-      mArray.forEach(async (animal) => {
+    mArray.forEach((animal) => {
          const count = animal.get("BreedCount");
          animal.set("BreedCount", count + 1 || 1);
          animal.breedCount = animal.breedCount + 1 || 1;
@@ -512,7 +512,7 @@ const MyZooAccount: React.FC = () => {
           <BorderButton scale="sm" onClick={() => breed(onDismiss)}>
             YES
           </BorderButton>
-          <BorderButton scale="sm" onClick={() => onDismiss()}>
+          <BorderButton scale="sm" onClick={cancel}>
             NO
           </BorderButton>
         </Flex>
