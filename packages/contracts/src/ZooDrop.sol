@@ -8,8 +8,6 @@ import { IMarket } from "./interfaces/IMarket.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 import { IZoo } from "./interfaces/IZoo.sol";
 
-import "./console.sol";
-
 
 contract ZooDrop is Ownable {
 
