@@ -247,6 +247,7 @@ function Feed<FeedPagePops>({ match }) {
                                  item={data}
                                  key={data.tokenId + "card"}
                                  animalGroup={animalGroup}
+                                 hideBid={activeIndex===1}
                               />
                            </SwiperSlide>
                         );
@@ -270,9 +271,8 @@ function Feed<FeedPagePops>({ match }) {
                         <SwiperSlide key={data.tokenId + "slide"}>
                            <FeedCard
                               item={data}
-                              key={data.tokenId + "card" + activeIndex}
+                              key={data.tokenId + "card"}
                               animalGroup={animalGroup}
-                              hideBid={activeIndex}
                            />
                         </SwiperSlide>
                      ) : (

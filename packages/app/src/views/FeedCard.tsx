@@ -17,7 +17,7 @@ interface Props {
    item: Animal;
    url?: string;
    animalGroup?: { [key: string]: number };
-   hideBid?: number;
+   hideBid?: boolean;
 }
 
 const FirstThird = styled.div`
@@ -143,7 +143,7 @@ const ActionButonContainer = styled.div`
 `;
 
 const FeedCard: React.FC<Props> = ({ item, animalGroup, hideBid }) => {
-   const notShowBid = hideBid ? hideBid : 2;
+   const notShowBid = hideBid ? hideBid : false;
 
    useEffect(() => {
       console.log("IN CARD", notShowBid);
@@ -168,18 +168,17 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup, hideBid }) => {
    const multiplier =
       animalGroup[item.animalId] > 1 ? `x${animalGroup[item.animalId]}` : "";
 
-   const buyButton =
-      notShowBid === 1 ? (
-         <></>
-      ) : (
-         <IconButton onClick={onBid} style={{ padding: "10px 0px" }}>
-            <FaDollarSign />
-         </IconButton>
-      );
+   const buyButton = notShowBid ? (
+      <></>
+   ) : (
+      <IconButton onClick={onBid} style={{ padding: "10px 0px" }}>
+         <FaDollarSign />
+      </IconButton>
+   );
 
    return (
       <>
-         <Card key={notShowBid} url={item.imageUrl} isMobile={isMobile}>
+         <Card url={item.imageUrl} isMobile={isMobile}>
             <CardOverlay>
                <FirstThird />
                <SecondThird></SecondThird>
