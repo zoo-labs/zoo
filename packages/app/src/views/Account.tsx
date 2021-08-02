@@ -104,7 +104,7 @@ const Account: React.FC = () => {
          const tokenBalance = await zooMedia.methods.balanceOf(account).call();
          console.log("tokenBalance", tokenBalance);
 
-         if (tokenBalance > 0) {
+         if (tokenBalance > 1) {
             const tokenID = await zooMedia.methods
                .tokenOfOwnerByIndex(account, 1)
                .call();
@@ -113,6 +113,10 @@ const Account: React.FC = () => {
             console.log("tokenURI", tokenURI);
             const token = await zooKeeper.methods.tokens(tokenID).call();
             console.log("token", token);
+
+            const hatch = await zooKeeper.methods.hatchEgg(1).call();
+            console.log(hatch)
+
          }
 
          const decimals = await zooToken.methods.decimals().call();
