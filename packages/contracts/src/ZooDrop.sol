@@ -8,6 +8,8 @@ import { IMarket } from "./interfaces/IMarket.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 import { IZoo } from "./interfaces/IZoo.sol";
 
+import "./console.sol";
+
 
 contract ZooDrop is Ownable {
 
@@ -101,18 +103,6 @@ contract ZooDrop is Ownable {
         keeperAddress = zooKeeper;
     }
 
-    // Add or configure a given kind of egg
-    function setEgg(string memory name, uint256 price, uint256 supply, string memory tokenURI, string memory metadataURI) public onlyOwner returns (Egg memory) {
-        Egg memory egg;
-        egg.name = name;
-        egg.data = getMediaData(tokenURI, metadataURI);
-        egg.bidShares = getBidShares();
-        egg.price = price;
-        egg.supply = supply;
-        eggs[name] = egg;
-        return egg;
-    }
-
     // Add or configure a given rarity
     function setRarity(string memory name, uint256 probability, uint256 yield, uint256 boost) public onlyOwner returns (bool) {
         require(probability > 0, "Rarity must be over zero");
@@ -131,24 +121,16 @@ contract ZooDrop is Ownable {
         return true;
     }
 
-    // Add Animal to rarity set if it has not been seen before
-    function addAnimalToRarity(string memory rarity, string memory name) private {
-        string[] storage _animals = rarityAnimals[rarity];
-
-        // Check if animal has been added to this rarity before
-        for (uint256 i = 0; i < _animals.length; i++) {
-            string memory known = _animals[i];
-            if (keccak256(bytes(name)) == keccak256(bytes(known))) {
-                // Not a new Animal
-                return;
-            }
-        }
-
-        // New animal lets add to rarity list
-        _animals.push(name);
-
-        // Ensure stored
-        rarityAnimals[rarity] = _animals;
+    // Add or configure a given kind of egg
+    function setEgg(string memory name, uint256 price, uint256 supply, string memory tokenURI, string memory metadataURI) public onlyOwner returns (Egg memory) {
+        Egg memory egg;
+        egg.name = name;
+        egg.data = getMediaData(tokenURI, metadataURI);
+        egg.bidShares = getBidShares();
+        egg.price = price;
+        egg.supply = supply;
+        eggs[name] = egg;
+        return egg;
     }
 
     // Add or configure a given animal
@@ -186,6 +168,26 @@ contract ZooDrop is Ownable {
         hybrids[name] = hybrid;
         hybridParents[parentsKey(parentA, parentB)] = hybrid;
         return true;
+    }
+
+    // Add Animal to rarity set if it has not been seen before
+    function addAnimalToRarity(string memory rarity, string memory name) private {
+        string[] storage _animals = rarityAnimals[rarity];
+
+        // Check if animal has been added to this rarity before
+        for (uint256 i = 0; i < _animals.length; i++) {
+            string memory known = _animals[i];
+            if (keccak256(bytes(name)) == keccak256(bytes(known))) {
+                // Not a new Animal
+                return;
+            }
+        }
+
+        // New animal lets add to rarity list
+        _animals.push(name);
+
+        // Ensure stored
+        rarityAnimals[rarity] = _animals;
     }
 
     // Return price for current EggDrop
@@ -276,16 +278,26 @@ contract ZooDrop is Ownable {
     function getRandomAnimal(uint256 random) external view returns (IZoo.Token memory token) {
         Animal memory animal;
 
+        console.log('getRandomAnimal', random);
+        console.log('raritySorted.length', raritySorted.length);
+
         // Find rarest animal choices first
         for (uint256 i = 0; i < raritySorted.length; i++) {
             string memory name = raritySorted[i];
             IZoo.Rarity memory rarity = rarities[name];
 
+            console.log('rarity.name', name);
+            console.log('rarity.probability', rarity.probability);
+            console.log('rarityAnimals', rarityAnimals[name][0], rarityAnimals[name][1]);
+
             // Choose random animal from choices
             if (rarity.probability > random) {
                 string[] memory choices = rarityAnimals[name];
-                name = choices[choices.length % random];
+                name = choices[random % choices.length];
+                console.log('animal name', name);
                 animal = getAnimal(name);
+                console.log('animal', animal.name);
+                break;
             }
         }
 
