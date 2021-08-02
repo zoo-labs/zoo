@@ -85,7 +85,7 @@ contract ZooKeeper is Ownable {
     function burn(address owner, uint256 tokenID) private {
         media.burnToken(owner, tokenID);
         delete tokens[tokenID];
-        emit Burn(msg.sender, tokenID);
+        emit Burn(owner, tokenID);
     }
 
     // Accept ZOO and return Egg NFT
