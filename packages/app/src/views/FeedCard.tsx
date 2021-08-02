@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Text } from "components";
 import { FaMoneyBillWave, FaDollarSign } from "react-icons/fa";
@@ -10,13 +10,14 @@ import BidModal from "components/MarketModals/BidModal";
 import { Animal } from "entities/zooentities";
 import YieldModal from "components/MarketModals/YieldModal";
 import { RarityColor } from "enums/rarity-color";
-import { ChevronLeftIcon } from 'components/Svg'
+import { ChevronLeftIcon } from "components/Svg";
 import ZooHomeButton from "components/SideMenu/components/ZooHomeButton";
 
 interface Props {
-  item: Animal;
-  url?: string;
-  animalGroup?: { [key: string]: number };
+   item: Animal;
+   url?: string;
+   animalGroup?: { [key: string]: number };
+   hideBid?: boolean;
 }
 
 const FirstThird = styled.div`
@@ -33,14 +34,14 @@ const SecondThird = styled.div`
    // max-height: 256px;
 `;
 const FinalThird = styled.div`
-  height: 35vh;
-  width: 100%;
-  padding-left: 15px;
+   height: 35vh;
+   width: 100%;
+   padding-left: 15px;
    padding-bottom: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-height: 256px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   max-height: 256px;
 `;
 const IconButton = styled.button`
    display: flex;
@@ -78,7 +79,7 @@ const MainHeading = styled(Text)`
    line-height: 1;
    color: white;
    font-weight: 400;
-   font-family: 'Permanent Marker', cursive;
+   font-family: "Permanent Marker", cursive;
    -webkit-text-fill-color: white;
    -webkit-text-stroke-width: 0.5px;
    -webkit-text-stroke-color: #040404;
@@ -120,7 +121,8 @@ const CardOverlay = styled.div`
       rgba(0, 0, 0, 0.8)
    );
    * {
-      text-shadow: 2px 0 0 #0000006e, 0 -2px 0 #0000006e, 0 2px 0 #000, -2px 0 0 #0000006e;
+      text-shadow: 2px 0 0 #0000006e, 0 -2px 0 #0000006e, 0 2px 0 #000,
+         -2px 0 0 #0000006e;
    }
 `;
 
@@ -130,101 +132,96 @@ const StyledChevron = styled(ChevronLeftIcon)`
 `;
 
 const ActionButonContainer = styled.div`
-  width: 80px;
-  display: flex;
-  position: absolute;
-  right: 0;
-  bottom: 40px;
-  flex-direction: row;
-  // align-items: end;
-  justify-content: flex-end;
- 
-`
+   width: 80px;
+   display: flex;
+   position: absolute;
+   right: 0;
+   bottom: 40px;
+   flex-direction: row;
+   // align-items: end;
+   justify-content: flex-end;
+`;
 
-const FeedCard: React.FC<Props> = ({ item, animalGroup }) => {
-  const history = useHistory();
-  const ypd = {};
-  const date = new Date(Number(item.dob));
-  const StringDate = date.toLocaleDateString("en-US");
-  const { isXl } = useMatchBreakpoints();
-  const isMobile = !isXl;
+const FeedCard: React.FC<Props> = ({ item, animalGroup, hideBid }) => {
+   const notShowBid = hideBid ? hideBid : false;
 
-  const [onYield] = useModal(<YieldModal item={item} animalGroup={animalGroup} onDismiss={() => null} />);
+   useEffect(() => {
+      return null;
+   }, [hideBid]);
+
+   const date = new Date(Number(item.dob));
+   const StringDate = date.toLocaleDateString("en-US");
+   const { isXl } = useMatchBreakpoints();
+   const isMobile = !isXl;
+
+   const [onYield] = useModal(
+      <YieldModal
+         item={item}
+         animalGroup={animalGroup}
+         onDismiss={() => null}
+      />
+   );
 
    const [onBid] = useModal(<BidModal item={item} onDismiss={() => null} />);
 
-   const onBidInfo = () => {
-      onBid();
-   };
+   const rarityColor = RarityColor[item.rarity.toLowerCase()] || "white";
+   const multiplier =
+      animalGroup[item.animalId] > 1 ? `x${animalGroup[item.animalId]}` : "";
 
-  const rarityColor = RarityColor[item.rarity.toLowerCase()] || "white";
-  const multiplier = animalGroup[item.animalId] > 1 ? `x${animalGroup[item.animalId]}` : "";
+   const buyButton = notShowBid ? (
+      <></>
+   ) : (
+      <IconButton onClick={onBid} style={{ padding: "10px 0px" }}>
+         <FaDollarSign />
+      </IconButton>
+   );
 
-  return (
-    <>
-      <Card url={item.imageUrl} isMobile={isMobile}>
-        <CardOverlay>
-        <FirstThird />
-        <SecondThird>
-          
-        </SecondThird>
-        <FinalThird>
-          <Flex flexDirection="row">
-            <Flex flexDirection="column" width="calc(100% - 75px)"
-                  style={{textShadow: "2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000"}}>
-              <MainHeading
-                bold
-                as="p"
-              >
-                {`${item.name} ${multiplier}`}
-              </MainHeading>
-              {/* <Subheading bold as="p"
-                style={{
-                  WebkitTextFillColor: rarityColor,
-                  WebkitTextStrokeColor: rarityColor,
-                }}> */}
-              <Subheading bold as="p">
-                {item.rarity}
-              </Subheading>
-              <Subheading bold as="p">{`Born: ${StringDate}`}</Subheading>
-              <Subheading bold as="p">{`Current Bid: ${item.currentBid}`}</Subheading>
-            </Flex>
-          <ActionButonContainer> 
-              <Flex width="100%"
-                  height="100%"
-                // maxWidth="60px"
-                  flexDirection="column"
-              >
-              <IconButton
-                onClick={() => {
-                  onYield();
-                  }}
-                  style={{padding: "10px 0px"}}
-              >
-                <FaMoneyBillWave />
-                {/* <Text as="span" fontSize="18px">
-                  Yield
-                </Text> */}
-              </IconButton>
-              <IconButton
-                onClick={() => {
-                  onBid();
-                  }}
-                    style={{padding: "10px 0px"}}
-              >
-                <FaDollarSign />
-                {/* <Text as="span" fontSize="18px" pb="5px">
-                  Bid
-                </Text> */}
-              </IconButton>
-                <ZooHomeButton /> </Flex>
-              </ActionButonContainer>
-          </Flex> 
-        </FinalThird>
-        </CardOverlay>
-      </Card>
-    </>
-  );
+   return (
+      <>
+         <Card url={item.imageUrl} isMobile={isMobile}>
+            <CardOverlay>
+               <FirstThird />
+               <SecondThird></SecondThird>
+               <FinalThird>
+                  <Flex flexDirection="row">
+                     <Flex
+                        flexDirection="column"
+                        width="calc(100% - 75px)"
+                        style={{
+                           textShadow:
+                              "2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000",
+                        }}>
+                        <MainHeading bold as="p">
+                           {`${item.name} ${multiplier}`}
+                        </MainHeading>
+
+                        <Subheading bold as="p">
+                           {item.rarity}
+                        </Subheading>
+                        <Subheading
+                           bold
+                           as="p">{`Born: ${StringDate}`}</Subheading>
+                        <Subheading
+                           bold
+                           as="p">{`Current Bid: ${item.currentBid}`}</Subheading>
+                     </Flex>
+                     <ActionButonContainer>
+                        <Flex width="100%" height="100%" flexDirection="column">
+                           <IconButton
+                              onClick={onYield}
+                              style={{ padding: "10px 0px" }}>
+                              <FaMoneyBillWave />
+                           </IconButton>
+                           {buyButton}
+                           <ZooHomeButton />
+                        </Flex>
+                     </ActionButonContainer>
+                  </Flex>
+               </FinalThird>
+            </CardOverlay>
+         </Card>
+      </>
+   );
 };
 
 export default FeedCard;
