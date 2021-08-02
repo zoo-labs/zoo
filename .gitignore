@@ -37,13 +37,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# IDEs
 .idea
+.vscode
 
 # Local Netlify folder
 .netlify
-
-.vscode
-
-packages/app/src/artifacts/
-packages/app/src/contracts.json
-packages/dev/src/contracts.json
