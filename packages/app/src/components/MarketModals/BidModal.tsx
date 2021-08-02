@@ -8,7 +8,6 @@ import Confirmation from "./ConfirmationModal";
 import Moralis from "moralis";
 import { useWeb3React } from "@web3-react/core";
 import { Animal } from "entities/zooentities";
-import { addAnimal } from "state/actions";
 
 interface Props {
    onDismiss?: () => null;
