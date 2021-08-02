@@ -1,6 +1,6 @@
 import { CloseIcon, Flex } from "components";
 import { IconButton as Icon } from "components/Button";
-import React, { useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 import { RarityColor } from "enums/rarity-color";
 import { NewAnimalCardType } from "./types";
@@ -22,7 +22,11 @@ const Card = styled.div<{ url?: string; isMobile?: boolean }>`
    top: -64px;
    left: 0;
    z-index: 100;
+   
+   opacity: 1;
+   transition: all ease 1s;
 `;
+
 const IconButton = styled(Icon)`
    align-self: flex-end;
    margin: 10px;
@@ -51,6 +55,9 @@ const CardOverlay = styled.div`
       rgba(0, 0, 0, 0) 60%,
       rgba(0, 0, 0, 0.8)
    );
+   opacity: 1;
+   transition: all ease 1s;
+   
    * {
       text-shadow: 2px 0 0 #0000006e, 0 -2px 0 #0000006e, 0 2px 0 #000,
          -2px 0 0 #0000006e;
@@ -75,7 +82,7 @@ const NewAnimalCard: React.FC<NewAnimalCardType> = ({ animal, isOpen }) => {
    return (
       <>
          <Card url={animal.imageUrl} onClick={() => isOpen(false)}>
-            <CardOverlay>
+             <CardOverlay>
                <Flex
                   height={"100vh"}
                   flexDirection="column"
