@@ -71,6 +71,7 @@ const StyledHeading = styles(Heading)`
 `;
 
 const Account: React.FC = () => {
+   const [isInitial, setIsInitial] = useState(true);
    const [balance, setBalance] = useState(0.0);
    const [wait, setWait] = useState(false);
    const { account, chainId } = useWeb3React();
@@ -140,8 +141,10 @@ const Account: React.FC = () => {
          if (allowance > 0) {
             setAllowance(true);
             setKeepApprove(false);
-            toastClear();
-            toastSuccess("Wallet connected");
+            if (isInitial) {
+               toastClear();
+               toastSuccess("Wallet connected");
+            }
          } else {
             setKeepApprove(true);
             toastClear();
@@ -150,6 +153,7 @@ const Account: React.FC = () => {
       } catch (error) {
          console.log(error);
       }
+      setIsInitial(false);
    };
 
    const approve = async () => {
@@ -212,22 +216,27 @@ const Account: React.FC = () => {
 
    const handleFaucet = () => {
       try {
-         true;
+         setWait(true);
+         toastClear();
+         toastInfo('Processing ZOO purchase...');
          faucet.methods
             .buyZoo(account, faucetAmt)
             .send({ from: account })
             .then(() => {
                setWait(false);
                getBalance();
+               toastClear();
                toastSuccess('Successfully purchased ZOO!');
             })
             .catch((e) => {
                console.error("ISSUE USING FAUCET \n", e);
                setWait(false);
-               toastError('Unable to process transaction. Try again later.');
+               toastClear();
+               toastInfo('ZOO purchase canceled.');
             });
       } catch (e) {
          console.error("ISSUE USING FAUCET \n", e);
+         toastClear();
          toastError('Unable to process transaction. Try again later.');
       }
    };
@@ -263,11 +272,13 @@ const Account: React.FC = () => {
             .then((res) => {
                console.log(res);
                setDisable(false);
+               toastClear();
                toastSuccess('Successfully purchased eggs!');
             });
       } catch (error) {
          setDisable(false);
          console.log(error);
+         toastClear();
          toastError('Unable to purchase eggs. Try again later.');
       }
 
