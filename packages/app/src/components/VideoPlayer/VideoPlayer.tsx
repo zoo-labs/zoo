@@ -14,7 +14,7 @@ const getColor = ({ color, theme }: ThemedProps) => {
 const VidContainer = styled.div`
     position: fixed;
     height: 110vh;
-    width: 100vw;
+    width: 100%;
     // max-width: 425px;
     // min-width: 325px;
     display: flex;
@@ -28,6 +28,7 @@ const VidContainer = styled.div`
     transform: translateX(-50%);
     z-index: 102;
 `;
+
 
 function fade(element) {
     var op = 1;
