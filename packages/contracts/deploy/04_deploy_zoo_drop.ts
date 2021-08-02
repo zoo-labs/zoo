@@ -18,6 +18,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     log: true,
   })
 
+  return; // Use deploy script
+
   const dropAddress = deployResult.address;
   const keeperAddress = (await deployments.get('ZooKeeper')).address
   const keeper = await hre.ethers.getContractAt('ZooKeeper', keeperAddress);
@@ -28,6 +30,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   // Configure Drop
   await drop.configureKeeper(keeperAddress);
+
 
   // Add eggs
   const eggs = [
