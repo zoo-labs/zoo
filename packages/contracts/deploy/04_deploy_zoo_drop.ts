@@ -3,7 +3,7 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
 
-import rarities from '../utils/animals.json';
+import rarities from '../utils/rarities.json';
 import animals from '../utils/animals.json';
 import hybrids from '../utils/hybrids.json';
 
@@ -17,11 +17,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     args: ['Gen 0'],
     log: true,
   })
-
-  // Bail out if we've already transfered ownership
-  // if (!deployResult.newlyDeployed) {
-  //   return
-  // }
 
   const dropAddress = deployResult.address;
   const keeperAddress = (await deployments.get('ZooKeeper')).address
@@ -52,12 +47,20 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     }
   ]
 
+
+  // Add rarities by rarest
+  rarities.sort(function(a, b) { return a.probability - b.probability });
+  rarities.map(async (v) => {
+    console.log('Add Rarity:', v.name, v.probability, v.yield, v.boost)
+    await drop.setRarity(v.name, v.probability, v.yield, v.boost)
+  })
+
   eggs.map(async (v) => {
     console.log('Add Egg:', v.name)
     await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
   })
 
-  await drop.configureEggs("Base Egg", "Hybrid Egg")
+  await drop.configureEggs('Base Egg', 'Hybrid Egg')
 
   animals.map(async (v) => {
     console.log('Add Animal:', v.name)
