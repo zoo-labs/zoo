@@ -203,7 +203,6 @@ const App: React.FC = () => {
    const createdUpdateEgg = async (data) => {
       console.log("UPDATING EGG");
       try {
-         console.log(data);
          const singleResult = data;
          let string = String(singleResult.get("createdAt"));
          const replacedString = string.replace("at ", "");
