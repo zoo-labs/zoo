@@ -258,7 +258,7 @@ const MyZooAccount: React.FC = () => {
 
 
     
-    setTimeout(() => setOpen(true), 5450);
+    setTimeout(() => setOpen(true), 3850);
     setTimeout(() => setEggType(""), 7000);
     console.log(eggRes)
     eggRes.set("Burned", true);
