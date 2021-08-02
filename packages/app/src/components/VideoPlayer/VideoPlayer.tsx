@@ -14,6 +14,7 @@ const getColor = ({ color, theme }: ThemedProps) => {
 const VidContainer = styled.div`
     position: fixed;
     height: 110vh;
+    background: black;
     width: 100%;
     // max-width: 425px;
     // min-width: 325px;
