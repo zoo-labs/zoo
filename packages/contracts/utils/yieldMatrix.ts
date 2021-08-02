@@ -19,11 +19,10 @@ import credentials from '../credentials.json';
   // Get all Rarities
   const rarities = []
   await sheet.loadCells('C15:G30');
-  [15,19,17,23,26,27,29].map((x) => {
+  [15,19,23,27,29].map((x) => {
     rarities.push({
       probability: sheet.getCellByA1(`C${x}`).value * 10000,
       name: sheet.getCellByA1(`D${x}`).value,
-      rarity: sheet.getCellByA1(`D${x}`).value,
       yield: sheet.getCellByA1(`F${x}`).value,
       boost: sheet.getCellByA1(`G${x}`).value * 10000,
     })
