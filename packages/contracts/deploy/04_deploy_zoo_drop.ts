@@ -19,9 +19,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   })
 
   // Bail out if we've already transfered ownership
-  if (!deployResult.newlyDeployed) {
-    return
-  }
+  // if (!deployResult.newlyDeployed) {
+  //   return
+  // }
 
   const dropAddress = deployResult.address;
   const keeperAddress = (await deployments.get('ZooKeeper')).address
@@ -30,6 +30,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   // Add Drop to ZooKeeper
   await keeper.setDrop(dropAddress)
+
+  // Configur Drop to use ZooKeeper
+  await drop.configureKeeper(keeperAddress);
 
   // Configure drop
   const eggs = [
@@ -61,13 +64,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
   })
 
-  hybrids.map((v) => {
+  hybrids.map(async (v) => {
     console.log('Add Hybrid:', v.name)
-    drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
+    await drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
   })
-
-  // Pledge allegiance
-  await drop.transferOwnership(keeperAddress, {from: deployer});
 
   return hre.network.live;
 }

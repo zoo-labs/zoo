@@ -8,8 +8,6 @@ import { IMarket } from "./interfaces/IMarket.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 import { IZoo } from "./interfaces/IZoo.sol";
 
-import "./console.sol";
-
 
 contract ZooDrop is Ownable {
 
@@ -53,6 +51,9 @@ contract ZooDrop is Ownable {
     // Name of configured hybrid egg
     string public hybridEgg;
 
+    // Address of ZooKeeper contract
+    address public keeperAddress;
+
     // mapping of Rarity name to Rarity
     mapping (string => IZoo.Rarity) public rarities;
 
@@ -78,8 +79,26 @@ contract ZooDrop is Ownable {
         title = _title;
     }
 
+    modifier onlyZoo() {
+        require(
+            keeperAddress == msg.sender, "ZooDrop: Only ZooKeeper can call this method"
+        );
+        _;
+    }
+
     function totalSupply() public view returns (uint256) {
         return getEgg(baseEgg).minted;
+    }
+
+    // Set current base and hybrid egg
+    function configureEggs(string memory _baseEgg, string memory _hybridEgg) public onlyOwner {
+        baseEgg = _baseEgg;
+        hybridEgg = _hybridEgg;
+    }
+
+    // Configure current ZooKeeper
+    function configureKeeper(address zooKeeper) public onlyOwner {
+        keeperAddress = zooKeeper;
     }
 
     // Add or configure a given kind of egg
@@ -92,12 +111,6 @@ contract ZooDrop is Ownable {
         egg.supply = supply;
         eggs[name] = egg;
         return egg;
-    }
-
-    // Set current base and hybrid egg
-    function configureEggs(string memory _baseEgg, string memory _hybridEgg) public onlyOwner {
-        baseEgg = _baseEgg;
-        hybridEgg = _hybridEgg;
     }
 
     // Add or configure a given rarity
@@ -189,7 +202,7 @@ contract ZooDrop is Ownable {
     }
 
     // Return a new Egg Token
-    function newEgg() external onlyOwner returns (IZoo.Token memory) {
+    function newEgg() external onlyZoo returns (IZoo.Token memory) {
         Egg memory egg = getEgg(baseEgg);
         require(eggSupply() == 0 || egg.minted < eggSupply(), "Out of eggs");
 
@@ -216,7 +229,7 @@ contract ZooDrop is Ownable {
     }
 
     // Return a new Hybrid Egg Token
-    function newHybridEgg(IZoo.Parents memory parents) external view onlyOwner returns (IZoo.Token memory) {
+    function newHybridEgg(IZoo.Parents memory parents) external view onlyZoo returns (IZoo.Token memory) {
         Egg memory egg = getEgg(hybridEgg);
         require(hybridSupply() == 0 || egg.minted < hybridSupply(), "Out of hybrid eggs");
 
@@ -238,17 +251,6 @@ contract ZooDrop is Ownable {
             meta: IZoo.Meta(0, 0)
         });
     }
-
-    // Helper to construct IMedia.MediaData struct
-    function getMediaData(string memory tokenURI, string memory metadataURI) public pure returns (IMedia.MediaData memory) {
-        return IMedia.MediaData({
-            tokenURI: tokenURI,
-            metadataURI: metadataURI,
-            contentHash: bytes32(0),
-            metadataHash: bytes32(0)
-        });
-    }
-
 
     // Get Egg by name
     function getEgg(string memory name) private view returns (Egg memory) {
@@ -317,11 +319,21 @@ contract ZooDrop is Ownable {
     }
 
     // Helper to construct IMarket.BidShares struct
-    function getBidShares() public pure returns (IMarket.BidShares memory) {
+    function getBidShares() private pure returns (IMarket.BidShares memory) {
         return IMarket.BidShares({
             creator: Decimal.D256(10),
             owner: Decimal.D256(80),
             prevOwner: Decimal.D256(10)
+        });
+    }
+
+    // Helper to construct IMedia.MediaData struct
+    function getMediaData(string memory tokenURI, string memory metadataURI) private pure returns (IMedia.MediaData memory) {
+        return IMedia.MediaData({
+            tokenURI: tokenURI,
+            metadataURI: metadataURI,
+            contentHash: bytes32(0),
+            metadataHash: bytes32(0)
         });
     }
 
@@ -336,7 +348,7 @@ contract ZooDrop is Ownable {
     }
 
     // Return the higher of two rarities
-    function higher(IZoo.Rarity memory rarityA, IZoo.Rarity memory rarityB) public pure returns (IZoo.Rarity memory) {
+    function higher(IZoo.Rarity memory rarityA, IZoo.Rarity memory rarityB) private pure returns (IZoo.Rarity memory) {
         if (rarityA.probability < rarityB.probability) {
             return rarityA;
         }

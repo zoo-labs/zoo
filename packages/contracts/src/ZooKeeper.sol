@@ -12,8 +12,6 @@ import { IDrop } from "./interfaces/IDrop.sol";
 import { IMarket } from "./interfaces/IMarket.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 
-import "./console.sol";
-
 
 contract ZooKeeper is Ownable {
     using SafeMath for uint256;
@@ -23,9 +21,9 @@ contract ZooKeeper is Ownable {
 
     // Declare an Event
     event AddDrop(address indexed dropAddress, string title, uint256 eggSupply);
-    event BuyEgg(address indexed from, uint256 indexed eggID);
-    event Hatch(address indexed from, uint256 indexed eggID);
-    event Breed(address indexed from, uint256 indexed eggID);
+    event BuyEgg(address indexed from, uint256 indexed tokenID);
+    event Hatch(address indexed from, uint256 indexed tokenID);
+    event Breed(address indexed from, uint256 indexed tokenID);
     event Mint(address indexed from, uint256 indexed tokenID);
     event Burn(address indexed from, uint256 indexed tokenID);
     event Free(address indexed from, uint256 indexed tokenID, uint256 indexed yield);
@@ -75,11 +73,12 @@ contract ZooKeeper is Ownable {
     }
 
     // Issue a new token to owner
-    function mint(address owner, IZoo.Token memory token) private {
-        media.mintToken(owner, token);
+    function mint(address owner, IZoo.Token memory token) private returns (IZoo.Token memory) {
+        token = media.mintToken(owner, token);
         market.setBidShares(token.id, token.bidShares);
         tokens[token.id] = token;
         emit Mint(owner, token.id);
+        return token;
     }
 
     // Burn token owned by owner
@@ -104,13 +103,11 @@ contract ZooKeeper is Ownable {
         // Transfer funds
         zoo.transferFrom(msg.sender, address(this), drop.eggPrice());
 
-        console.log("drop.eggPrice()", drop.eggPrice());
-
         // Get Egg from this drop
         IZoo.Token memory egg = drop.newEgg();
 
         // Mint Egg Token
-        mint(msg.sender, egg);
+        egg = mint(msg.sender, egg);
 
         // Broadcast success
         emit BuyEgg(msg.sender, egg.id);
@@ -137,7 +134,7 @@ contract ZooKeeper is Ownable {
         burn(msg.sender, eggID);
 
         // Mint new token
-        mint(msg.sender, animal);
+        animal = mint(msg.sender, animal);
 
         emit Hatch(msg.sender, animal.id);
     }
@@ -171,7 +168,7 @@ contract ZooKeeper is Ownable {
         // Update breeding delay for each parent
         updateBreedDelays(tokenA, tokenB);
 
-        mint(msg.sender, egg);
+        egg = mint(msg.sender, egg);
         emit Breed(msg.sender, egg.id);
         return egg.id;
     }
