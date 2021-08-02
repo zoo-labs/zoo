@@ -22,32 +22,20 @@ const Container = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
-  width: 100%;
-  align-items: flex-end;
-  margin-right: 10px;
-  justify-content: space-evenly;
-  
+  justify-content: center;
+  padding-bottom: 29vh;
   a {
-    display: grid;
-    width: 100%;
-    align-items: center;
-    flex-direction: inherit;
-    border-radius: 60px;
-    justify-content: space-around;
-    width: 62px;
-    height: 62px;
-    background: ${({ theme }) => theme.colors.accent};
-    padding-bottom: 10px;
+    padding-bottom: 20px;
   }
 `
 
 const IconContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  color: white;
-  // width: 100%;
+  width: 16px;
+  margin-right: 8px;
 `
 
 const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
@@ -58,19 +46,18 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
     isMobile ? () => pushNav(false) : undefined
   }
 
-
   return (
     <Container>
       {links.map((entry) => {
         const Icon = entry.icon.length > 0 ? Icons[entry.icon] : null
-        const iconElement =
+        const iconElement = <> </> /* 
           entry.icon.length > 0 ? (
-            <IconContainer key = {Math.floor(Math.random() * (999999 - 0) + 0).toString()}>
+            <IconContainer>
               <Icon width="24px" />
             </IconContainer>
           ) : (
             <></>
-          )
+          ) */
 
         const calloutClass = entry.calloutClass ? entry.calloutClass : undefined
 
@@ -90,11 +77,10 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
             >
               {isPushed &&
                 entry.items.map((item, idx) => {
-                  console.log("item", item)
                   const SubIcon = entry.icon.length > 0 ? Icons[entry.items[idx].icon] : null
                   const subIconElement =
                     entry.icon.length > 0 ? (
-                    <IconContainer key = {Math.floor(Math.random() * (999999 - 0) + 0).toString()}>
+                    <IconContainer>
                       <SubIcon width="20px" />
                     </IconContainer>
                   ) : (
@@ -102,14 +88,14 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
                   )
                   return (
                     <MenuEntry key={item.href} secondary isActive={false} onClick={handleClick}>
-                      <MenuLink href={item.href} key={Math.floor(Math.random() * (999999 - 0) + 0).toString()}>
+                      <MenuLink href={item.href} key={item.href}>
                         {subIconElement}
-                        {/* <LinkLabel isPushed={isPushed}>{item.label}</LinkLabel>
+                        <LinkLabel isPushed={isPushed}>{item.label}</LinkLabel>
                         {item.status && (
-                          <LinkStatus color={item.status.color} fontSize="14px">
+                          <LinkStatus color={item.status.color} fontSize="18px">
                             {item.status.text}
                           </LinkStatus>
-                        )} */}
+                        )}
                       </MenuLink>
                     </MenuEntry>
                   )
@@ -119,11 +105,11 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
         }
         return (
           // <MenuEntry key={entry.label} isActive={location.pathname.includes(entry.href)} className={calloutClass}>
-            <MenuLink href={entry.href} onClick={handleClick} key={Math.floor(Math.random() * (999999 - 0) + 0).toString()}>
+            <MenuLink key={entry.href} href={entry.href} onClick={handleClick}>
               {entry.icon.length > 0 && iconElement}
               <LinkLabel isPushed={isPushed}>{entry.label}</LinkLabel>
               {entry.status && (
-                <LinkStatus color={entry.status.color} fontSize="10px">
+                <LinkStatus color={entry.status.color} fontSize="14px">
                   {entry.status.text}
                 </LinkStatus>
               )}

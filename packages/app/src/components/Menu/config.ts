@@ -21,14 +21,6 @@ let defaultConf =  [
   },
 ]
 
-	
-if (process.env.NODE_ENV !== "production") {
-defaultConf = [].concat(defaultConf, {
-	label: 'Zoo Faucet',
-	icon: 'FaucetIcon',
-	href: '/faucet'
-});
-}
 
 let config: () => MenuEntry[] = () => defaultConf;
 

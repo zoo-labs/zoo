@@ -1,5 +1,5 @@
 {
-  "name": "@zoolabs/cryptozoo",
+  "name": "@zoolabs/zoo",
   "version": "1.0.0",
   "author": "Zoo Labs Limited <hi@zoolabs.io> (https://cryptozoo.co)",
   "license": "MIT",
@@ -27,6 +27,8 @@
     "dev": "yarn workspace @zoolabs/dev start",
     "compile": "yarn workspace @zoolabs/contracts compile",
     "deploy": "yarn workspace @zoolabs/contracts deploy",
+    "deploy:testnet": "yarn workspace @zoolabs/contracts deploy:testnet",
+    "deploy:mainnet": "yarn workspace @zoolabs/contracts deploy:mainnet",
     "export": "yarn workspace @zoolabs/contracts export",
     "watch": "yarn workspace @zoolabs/contracts watch",
     "accounts": "yarn workspace @zoolabs/contracts accounts",

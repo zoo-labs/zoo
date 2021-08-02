@@ -24,7 +24,7 @@ const useAuth = () => {
     if (connector) {
       activate(connector, async (error: Error) => {
         if (error instanceof UnsupportedChainIdError) {
-          const hasSetup = await setupNetwork("bsc")
+          const hasSetup = await setupNetwork("test")
             if (hasSetup) {
               activate(connector)
             }

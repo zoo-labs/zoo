@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Route, useRouteMatch } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
+import { Route, useRouteMatch, Link } from "react-router-dom";
 import { AppState } from "state";
 import { useDispatch, useSelector } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
@@ -26,38 +26,44 @@ import BorderButton from "components/Button/BorderButton";
 import { animalMapping } from "util/animalMapping";
 import NewAnimalCard from "components/NewAnimal/NewAnimalCard";
 import { FaShoppingCart } from "react-icons/fa";
-import StickyBottomMenu from "components/Button/StickyBottomMenu"
-import { useHistory } from 'react-router-dom'
+import StickyBottomMenu from "components/Button/StickyBottomMenu";
+import { useHistory } from "react-router-dom";
 import { RarityColor } from "enums/rarity-color";
+import SwiperCard from "components/Card/SwipeCard";
+import Moralis from "moralis";
 
 // install Swiper modules
 // SwiperCore.use([Pagination]);
 
-const IconCont = styled.div`
-   display: flex;
-   justify-content: center;
-   margin-top: 20px;
-   & svg {
-      color: ${({ theme }) => theme.colors.primary};
-      animation: spin 2s ease infinite;
-   }
+const StyledText = styled(Text)`
+   color: ${({ theme }) => theme.colors.text};
+`
 
-   @keyframes spin {
-      0% {
-         transform: rotate(0deg);
-      }
-      100% {
-         transform: rotate(360deg);
-      }
-   }
+const IconCont = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  & svg {
+    color: ${({ theme }) => theme.colors.primary};
+    animation: spin 2s ease infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 const ImageContainer = styled.div`
-   img {
-      width: 100%;
-      height: 100%;
-      minheight: 300px;
-      overflow: hidden;
-   }
+  img {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    overflow: hidden;
+  }
 `;
 
 const InfoBlock = styled.div`
@@ -107,10 +113,10 @@ const RowLayout = styled.div`
   flex-wrap: wrap;
 
   & > * {
-    min-width: calc(100vw - 20px);
-    max-width: 31.5%;
+    // min-width: calc(100vw - 20px);
+    // max-width: 31.5%;
     width: 100%;
-    margin: 0 8px;
+    margin: 8px;
     margin-bottom: 32px;
   }
 `;
@@ -138,7 +144,7 @@ const TimeoutWrapper = styled.div<{ barwidth?: string }>`
   padding: 4px;
   text-align: center;
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: #a7565e;
   z-index: 999999;
   ::before {
     content: "";
@@ -152,9 +158,26 @@ const TimeoutWrapper = styled.div<{ barwidth?: string }>`
     background: grey;
   }
 `;
+
+const BidPriceInput = styled.input.attrs({
+   type: 'number',
+   min: 1
+})`
+   width: 100%;
+   line-height: 1.5rem;
+   margin-left: 15px;
+`;
+
 const TimeoutDisplay = styled.span`
   position: relative;
   z-index: 2;
+  display: flex;
+`;
+
+const SwiperContainer = styled.div`
+  * {
+    background: ${({ theme }) => theme.colors.background}
+  }
 `;
 
 const MyZooAccount: React.FC = () => {
@@ -167,8 +190,10 @@ const MyZooAccount: React.FC = () => {
   const chainIdSet = chainId === undefined ? "1" : String(chainId);
   const [eggType, setEggType] = useState("");
   const [isOpen, setOpen] = useState(false);
-  const history = useHistory()
+  const history = useHistory();
   const [showBoth, setShowBoth] = useState(false);
+  const videoTimeout = [];
+  const bid = React.useRef(100);
   const [hatched, setHatched] = useState({
     tokenId: "",
     name: "",
@@ -181,8 +206,8 @@ const MyZooAccount: React.FC = () => {
     listed: false,
   });
   const handleRedirect = () => {
-     history.push('/feed')
-  }
+    history.push("/feed");
+  };
 
   const allAnimals = useSelector<AppState, AppState["zoo"]["animals"]>(
     (state) => state.zoo.animals
@@ -209,8 +234,9 @@ const MyZooAccount: React.FC = () => {
     listed: false,
   };
 
-  const hatchEgg = (egg) => {
-   setShowBoth(true);
+
+  const hatchEgg = async(egg) => {
+    setShowBoth(true);
     setEggType(egg.basic ? "basic" : "hybrid");
 
     let randIdx: number;
@@ -221,8 +247,50 @@ const MyZooAccount: React.FC = () => {
     } else {
       randIdx = Math.floor(Math.random() * (13 - 10) + 10);
     }
+    const eggID = parseInt(egg.tokenId);
+    const tokenID = Math.floor(Math.random() * (999999 - 0) + 0);
+
+    const mObject = Moralis.Object.extend("FinalEggs");
+    const query = new Moralis.Query(mObject);
+    query.equalTo("EggID", eggID);
+    const eggM = await query.find();
+    const eggRes = eggM[0];
+
+
+    
+    setTimeout(() => setOpen(true), 3850);
+    setTimeout(() => setEggType(""), 7000);
+    console.log(eggRes)
+    eggRes.set("Burned", true);
+    eggRes.destroy();
+
     // console.log(randIdx);
     const aFromMap = animalMapping[randIdx];
+
+    const mAnimal = Moralis.Object.extend("FinalAnimals");
+      const newAnimalM = new mAnimal();
+      // AnimalID Owner TokenURI MetaURI BlockNumber Rarirty Yield Boost AnimalTypeID Name
+      newAnimalM.set("AnimalID", tokenID);
+      newAnimalM.set("Owner", account);
+      newAnimalM.set("TokenURI", aFromMap.imageUrl);
+      newAnimalM.set("MetaURI", "META URI");
+      newAnimalM.set(
+         "BlockNumber",
+         Math.floor(Math.random() * (999999 - 0) + 0)
+      );
+      newAnimalM.set("Rarity", aFromMap.rarity);
+      newAnimalM.set("Yield", aFromMap.yield);
+      newAnimalM.set("Boost", aFromMap.boost);
+      newAnimalM.set("Name", aFromMap.name);
+      newAnimalM.set("AnimalTypeID", aFromMap.animalId);
+      newAnimalM.set("StartBid", aFromMap.startBid);
+      newAnimalM.set("CurrentBid", aFromMap.currentBid);
+      newAnimalM.set("Listed", false);
+      newAnimalM.set("Bloodline", aFromMap.bloodline);
+      newAnimalM.set("TimeRemaining", 0);
+      newAnimalM.set("BreedCount", 0);
+      newAnimalM.set("lastBred", "");
+      await newAnimalM.save();
     // console.log(aFromMap, randIdx);
     const newAnimal: Animal = {
       tokenId: Math.floor(Math.random() * (999999 - 0) + 0).toString(),
@@ -246,16 +314,88 @@ const MyZooAccount: React.FC = () => {
       lastBred: "",
     };
     setHatched(newAnimal);
-    
+
+    const TransOb = Moralis.Object.extend("Transactions")
+    const newTrans = new TransOb
+
+    newTrans.set("From", account)
+    newTrans.set("Action", "Hatched Egg")
+    newTrans.set("TokenID", eggID)
+    newTrans.set("AnimalName", aFromMap.name)
+    newTrans.set("AnimalTokenID", tokenID)
+    newTrans.save()
+
     dispatch(burnEgg(egg));
     dispatch(addAnimal(newAnimal));
     // ---------------------------------------------
-    setTimeout(() => setOpen(true), 5450)
-    setTimeout(() => setEggType(""), 7000)
+    startAnimationTimer();
   };
 
+  const startAnimationTimer = useCallback(() => {
+    videoTimeout.push(setTimeout(() => setOpen(true), 5450));
+    videoTimeout.push(setTimeout(() => setEggType(""), 7000));
+  },[]);
 
-  const breed = (onDismiss) => {
+  const closeAnimation = useCallback(async (e) => {
+    setEggType("")
+    videoTimeout.forEach((i)=>{
+      clearTimeout(i)
+    })
+  },[]);
+
+  useEffect(() => {
+      document.addEventListener("keydown", closeAnimation , false)
+      return () => {
+        document.removeEventListener("keydown", closeAnimation, false);
+      }
+  },[]);
+
+  const breed = async (onDismiss) => {
+
+    const an1 = parseInt(array[0].tokenId);
+      const an2 = parseInt(array[1].tokenId);
+      const anOb = Moralis.Object.extend("FinalAnimals");
+      const anQ1 = new Moralis.Query(anOb);
+      const anQ2 = new Moralis.Query(anOb);
+      anQ1.equalTo("AnimalID", an1);
+      anQ2.equalTo("AnimalID", an2);
+      const res1 = await anQ1.find();
+      const res2 = await anQ2.find();
+      const aniM1 = res1[0];
+      const aniM2 = res2[0];
+      const mArray = [aniM1, aniM2];
+
+      // lastBred TimeRemaining BreedCount
+    mArray.forEach((animal) => {
+         const count = animal.get("BreedCount");
+         animal.set("BreedCount", count + 1 || 1);
+         animal.breedCount = animal.breedCount + 1 || 1;
+         const now = new Date().getTime();
+         const time = new Date().getTime();
+         animal.set("lastBred", time.toString());
+         const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount;
+         const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
+         const elapsedTime = now - animal.lastBred;
+
+         if (elapsedTime < breedTimeout) {
+            const timeRemaining = breedTimeout - elapsedTime;
+            const timeRemainingDaysHours = getDaysHours(timeRemaining);
+            const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
+
+            animal.set("TimeRemaining", timeRemaining);
+            animal.set("CTAOverride", { barwidth, timeRemainingDaysHours });
+         } else {
+            animal.set("TimeRemaining", 0);
+            animal.set("CTAOverride", {
+               barwidth: null,
+               timeRemainingDaysHours: null,
+            });
+         }
+         animal.set("Selected", false);
+         animal.save();
+      });
+
+      //@dev Redux Logic to be Removed
     const animal1: Animal = array[0];
     const animal2: Animal = array[1];
     array.forEach((animal) => {
@@ -285,8 +425,8 @@ const MyZooAccount: React.FC = () => {
     });
 
     array = [];
-    dispatch(addAnimal(animal1));
-    dispatch(addAnimal(animal2));
+    // dispatch(addAnimal(animal1));
+    // dispatch(addAnimal(animal2));
 
     const egg: Egg = {
       owner: account,
@@ -299,7 +439,7 @@ const MyZooAccount: React.FC = () => {
       timeRemaining: 0,
       CTAOverride: null,
     };
-    if (!egg.basic) {
+ 
       const now = new Date().getTime();
       const createdDate = egg.created
         ? new Date(Number(egg.created)).getTime()
@@ -317,36 +457,52 @@ const MyZooAccount: React.FC = () => {
       } else {
         egg.timeRemaining = 0;
       }
-    } else {
-      egg.timeRemaining = 0;
-    }
-    dispatch(addEgg(egg));
+
+      const mObject = Moralis.Object.extend("FinalEggs");
+      const mEgg = new mObject();
+      mEgg.set("EggID", parseInt(egg.tokenId));
+      mEgg.set("Parent1", parseInt(egg.parent1));
+      mEgg.set("MetaURI", "META URI");
+      mEgg.set("Parent2", parseInt(egg.parent2));
+      mEgg.set("Burned", false);
+      mEgg.set("AnimalTypeId", egg.animalId);
+      mEgg.set("TokenURI");
+      mEgg.set("Owner", account);
+      mEgg.set("BlockNumber");
+      mEgg.set("Type", "hybrid");
+      await mEgg.save();
+    
+    // dispatch(addEgg(egg));
     onEggCreated();
+
+    const TransOb = Moralis.Object.extend("Transactions")
+    const newTrans = new TransOb
+
+    newTrans.set("From", account)
+    newTrans.set("Action", "Bred Animals")
+    newTrans.set("TokenID", parseInt(egg.tokenId))
+    newTrans.set("Parent1", aniM1.attributes.Name)
+    newTrans.set("Parent2", aniM2.attributes.Name)
+    newTrans.save()
+
     // onDismiss();
-  };
-
-  const breedClick = (animal) => {
-    const selected = Object.values(allAnimals).filter((item) => item.selected);
-    const toSet: Animal = { ...animal };
-    toSet.selected = animal.selected ? false : true;
-
-    if (!animal.selected && selected.length === 1) {
-      const temp = [{ ...selected[0] }, { ...animal }];
-      array = temp;
-      onConfirm();
-    }
-
-    dispatch(addAnimal(toSet));
   };
 
   const Confirmation: React.FC<Props> = ({ onDismiss = () => null, breed }) => {
     const animal1 = array[0];
     const animal2 = array[1];
+    const cancel = () => {
+      animal1.selected = false;
+      animal2.selected = false;
+      dispatch(addAnimal(animal1));
+      dispatch(addAnimal(animal2));
+      onDismiss();
+    };
     return (
       <Modal title="Confirm Breed" onDismiss={onDismiss}>
-        <Text color="text">
+        <StyledText color="text">
           {`Do you want to breed ${animal1.name} with ${animal2.name}?`}
-        </Text>
+        </StyledText>
         <Flex
           style={{ marginTop: 15 }}
           width="100%"
@@ -356,7 +512,7 @@ const MyZooAccount: React.FC = () => {
           <BorderButton scale="sm" onClick={() => breed(onDismiss)}>
             YES
           </BorderButton>
-          <BorderButton scale="sm" onClick={() => onDismiss()}>
+          <BorderButton scale="sm" onClick={cancel}>
             NO
           </BorderButton>
         </Flex>
@@ -367,7 +523,7 @@ const MyZooAccount: React.FC = () => {
   const EggCreatedNotify: React.FC<any> = ({ onDismiss = () => null }) => {
     return (
       <Modal title="Success" style={{ width: "230px" }} onDismiss={onDismiss}>
-        <Text color="text">Hybrid egg created successfully</Text>
+        <StyledText color="text">Hybrid egg created successfully</StyledText>
         <Flex style={{ marginTop: 15 }}>
           <BorderButton scale="sm" onClick={() => onDismiss()}>
             OK
@@ -389,17 +545,56 @@ const MyZooAccount: React.FC = () => {
     onSell();
   };
 
-  const sell = (onDismiss) => {
+  const sell = async (onDismiss) => {
     const animal: Animal = sellAnimal;
-    animal.listed = true;
-    dispatch(addAnimal(animal));
+    const animalObject = Moralis.Object.extend("FinalAnimals");
+    const query = new Moralis.Query(animalObject);
+    query.equalTo("AnimalID", parseInt(animal.tokenId));
+    const results = await query.find();
+    const animalM = results[0];
+    animalM.set("Listed", true);
+    animalM.set("StartBid", String(bid.current));
+    animalM.set("CurrentBid", String(bid.current - 1));
+    animalM.set("BuyNow", String(bid.current + 100));
+    await animalM.save();
+    // animal.listed = true;
+    // dispatch(addAnimal(animal));
+    const TransOb = Moralis.Object.extend("Transactions")
+       const newTrans = new TransOb
+
+       newTrans.set("From", account)
+       newTrans.set("Action", "Listed Animal")
+       newTrans.set("TokenID", parseInt(animal.tokenId))
+       newTrans.set("StartingBid", String(bid.current))
+       newTrans.set("AnimalName", animalM.attributes.Name)
+       newTrans.save()
+    bid.current = 100;
+
     onDismiss();
   };
+
+  const changed = () => (e) => {
+    bid.current = e.target.value;
+ };
 
   const SellConfirm: React.FC<Props> = ({ onDismiss = () => null, breed }) => {
     return (
       <Modal title="Confirm Listing" onDismiss={onDismiss}>
-        <Text>{`Do you want to list ${sellAnimal.name}?`}</Text>
+        <StyledText style={{textAlign: "center"}}>{`Do you want to list ${sellAnimal.name}?`}</StyledText>
+        <Flex
+         width="100%"
+          alignItems="center"
+          justifyContent="space-evenly"
+          flexDirection="row"
+          mt="16px">
+            <StyledText
+               fontSize="20px"
+               style={{ whiteSpace: 'nowrap', marginTop: '5px'}}
+               >
+               BID PRICE
+            </StyledText>
+            <BidPriceInput type="number" />
+        </Flex>
         <Flex
           width="100%"
           alignItems="center"
@@ -428,274 +623,264 @@ const MyZooAccount: React.FC = () => {
   );
 
   useEffect(() => {
-   let mounted = true
-   if (mounted) {
-      setTimeout(function () {
-         setElapsedTimeOnPage(elapsedTimeOnPage + 5000);
-       }, 5000);
-   }
-   return () => {
-      mounted = false
+    const timeout = setTimeout(() => {
+      setElapsedTimeOnPage(elapsedTimeOnPage + 5000);
+    }, 5000);
+    return () => {
+        clearTimeout(timeout);
     }
   }, [elapsedTimeOnPage]);
 
-   const renderAnimals = (hybrid): JSX.Element => {
-      let animalGroup = {};
-      const animalData = [];
+
+  const renderAnimals = (hybrid): JSX.Element => {
+    let animalGroup = {};
+    const animalData = [];
+    const now = new Date().getTime();
+
+    const breedClick = (animal) => {
+      const selected = Object.values(allAnimals).filter(
+        (item) => item.selected
+      );
+      const toSet: Animal = { ...animal };
+      if (
+        animal.selected &&
+        selected.length === 1 &&
+        animalGroup[animal.animalId] > 1
+      ) {
+        const multipleAvailable = Object.values(allAnimals).filter(
+          (item) =>
+            item.animalId === animal.animalId && item.timeRemaining === 0
+        );
+        const temp = [{ ...multipleAvailable[0] }, { ...multipleAvailable[1] }];
+        array = temp;
+        onConfirm();
+      }
+      toSet.selected = animal.selected ? false : true;
+      if (!animal.selected && selected.length === 1) {
+        const temp = [{ ...selected[0] }, { ...animal }];
+        array = temp;
+        onConfirm();
+      }
+      dispatch(addAnimal(toSet));
+    };
+
+    Object.values(allAnimals).forEach((animal, index) => {
+      if (animal.owner !== account) {
+        return;
+      }
+      const lastBred = animal.lastBred
+        ? new Date(Number(animal.lastBred)).getTime()
+        : new Date().getTime();
       const now = new Date().getTime();
+      const breedTimeoutKey =
+        animal.breedCount > 5 ? 5 : animal.breedCount || 0;
+      const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
+      const elapsedTime = now - lastBred;
+      const timeRemaining = breedTimeout - elapsedTime;
+      const timeRemainingDaysHours = getDaysHours(timeRemaining);
+      const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
 
-      Object.values(allAnimals).forEach((animal, index) => {
-         if (animal.owner !== account) {
-            return;
-         }
-         const lastBred = animal.lastBred
-            ? new Date(Number(animal.lastBred)).getTime()
-            : new Date().getTime();
-            const now = new Date().getTime();
-         const breedTimeoutKey =
-            animal.breedCount > 5 ? 5 : animal.breedCount || 0;
-         const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
-         const elapsedTime = now - lastBred;
-         const timeRemaining = breedTimeout - elapsedTime;
-         const timeRemainingDaysHours = getDaysHours(timeRemaining);
-         const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
+      if (
+        timeRemaining <= 0 &&
+        animalData.find(
+          (a) => a.animalId === animal.animalId && a.timeRemaining <= 0
+        )
+      ) {
+        animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 1;
+      } else {
+        animalData.push({
+          id: index,
+          ...animal,
+          name: animal.name.replace(/\u0000/g, ""),
+          timeRemaining:
+            animal.bloodline === "pure"
+              ? elapsedTime < breedTimeout
+                ? timeRemaining
+                : 0
+              : 0,
+          CTAOverride:
+            animal.bloodline === "pure"
+              ? elapsedTime < breedTimeout
+                ? { barwidth, timeRemainingDaysHours }
+                : null
+              : null,
+          rarityColor: RarityColor[animal.rarity.toLowerCase()] || "white",
+        });
+      }
+    });
 
-         if (timeRemaining <= 0 && animalData.find(a => a.animalId === animal.animalId && a.timeRemaining <= 0)) {
-            animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 2
-         } else {
-            animalData.push({
-               id: index,
-               ...animal,
-               name: animal.name.replace(/\u0000/g, ""),
-               timeRemaining:
-                  animal.bloodline === "pure"
-                     ? elapsedTime < breedTimeout
-                        ? timeRemaining
-                        : 0
-                     : 0,
-               CTAOverride:
-                  animal.bloodline === "pure"
-                     ? elapsedTime < breedTimeout
-                        ? { barwidth, timeRemainingDaysHours }
-                        : null
-                     : null,
-               rarityColor: RarityColor[animal.rarity.toLowerCase()] || "white",
-            });
-         }
-      });
+    empty = animalData.length === 0 && Object.keys(animalData).length !== 0;
 
-      empty =
-         animalData.length === 0 && Object.keys(animalData).length !== 0;
+    let animals = animalData.filter((item) => item.bloodline === hybrid);
+    animals = sortData(animals, "bloodline");
 
-      let animals = animalData.filter(
-         (item) => item.bloodline === hybrid
-      );
-      animals = sortData(animals, "bloodline");
-
-      return (
-         <>
-         {hybrid === "pure" ? <RowTitle>{animals.length} {animals.length!=1 ? 'Breedable Animals' : 'Breedable Animal'}</RowTitle> : 
-               <RowTitle>{animals.length} {animals.length!=1 ? 'Hybrid Animals' : 'Hybrid Animal'}</RowTitle>}
-         <RowLayout>
-            <Route exact path={`${path}`}>
-               {animals.length === 0 ? (
-                  <Text textAlign="center" fontSize="16px">
-                     No {hybrid === "pure" ? `breedable` : `hybrid`} animals
-                  </Text>
-               ) : (
-                  <Swiper slidesPerView={2.2} spaceBetween={10}>
-                     {animals.map((animal) => (
-                        <SwiperSlide style={{padding: '3px'}} key={animal.tokenId}>
-                           <CardWrapper>
-                              <Card
-                                 style={{
-                                    boxShadow: `0px 0px 6px 0px ${animal.rarityColor}`,
-                                 }}
-                                 key={animal.id}
-                                 selected={animal.selected ? true : false}
-                                 timedOut={
-                                    animal.timeRemaining > 0 ? true : false
-                                 }>
-                                 <CardBody
-                                    style={{
-                                       backgroundImage: `url("${animal.imageUrl}")`,
-                                       backgroundSize: "cover",
-                                       backgroundPosition: "center",
-                                       height: 250,
-                                       width: "calc(100vw/2.2 - 13px)",
-                                       padding: 10,
-                                    }}>
-                                    <TextWrapper
-                                       style={{
-                                          textShadow: "0px 2px 6px rgb(0, 0, 0)",
-                                          fontSize: 18,
-                                          letterSpacing: 0,
-                                          position: "absolute",
-                                          textTransform: "lowercase",
-                                          right: 11,
-                                          top: -2
-                                       }}
-                                    >
-                                       {animal.timeRemaining === 0 ? animalGroup[animal.animalId] ? `x${animalGroup[animal.animalId]}` : '' : ''}
-                                    </TextWrapper>
-                                    <TextWrapper
-                                       style={{
-                                          textShadow:
-                                             "0px 2px 6px rgb(0, 0, 0)",
-                                          textAlign: "center",
-                                          fontSize: 20,
-                                          letterSpacing: 0,
-                                       }}>
-                                       {animal.name}
-                                    </TextWrapper>
-                                    {animal.timeRemaining > 0 ? (
-                                       <TimeoutWrapper
-                                          barwidth={
-                                             animal.CTAOverride
-                                                ? animal.CTAOverride.barwidth
-                                                : 0
-                                          }>
-                                          <TimeoutDisplay>
-                                             {`${animal.CTAOverride.timeRemainingDaysHours.days}D ${animal.CTAOverride.timeRemainingDaysHours.hours}H`}
-                                          </TimeoutDisplay>
-                                       </TimeoutWrapper>
-                                    ) : (
-                                       <InfoBlock
-                                          onClick={() =>
-                                             hybrid === "pure"
-                                                ? breedClick(animal)
-                                                : list(animal)
-                                          }>
-                                          <BreedWrapper>
-                                             {hybrid === "pure"
-                                                ? `BREED`
-                                                : `SELL`}
-                                          </BreedWrapper>
-                                       </InfoBlock>
-                                    )}
-                                 </CardBody>
-                              </Card>
-                           </CardWrapper>
-                        </SwiperSlide>
-                     ))}
-                  </Swiper>
-               )}
-            </Route>
-            <Route exact path={`${path}/history`}>
-               {animalData.map((animal) => (
-                  <Card key={animal.id} />
-               ))}
-            </Route>
-         </RowLayout>
-         </>
-      );
-   };
-
-   const renderEggs = (): JSX.Element => {
-      let eggData = [];
-      let eggGroup = {
-         BASIC: 1,
-         HYBRID: 1
-      };
-
-      Object.values(allEggs).forEach((egg, index) => {
-         const eggType = egg.basic ? "BASIC" : "HYBRID";
-         const createdDate = egg.created
-            ? new Date(Number(egg.created)).getTime()
-            : new Date().getTime();
-         const now = new Date().getTime();
-         const hatchTimeout = egg.basic ? 0 : getMilliseconds(eggTimeout);
-         const elapsedTime = now - createdDate;
-         const timeRemaining = hatchTimeout - elapsedTime;
-         const timeRemainingDaysHours = getDaysHours(timeRemaining);
-         const barwidth = [100 * (elapsedTime / hatchTimeout), "%"].join("");
-
-         if (timeRemaining <= 0 && eggData.find(a => a.basic === egg.basic && a.timeRemaining <= 0)) {
-            eggGroup[eggType] = eggGroup[eggType] + 1
-         } else {
-            eggData.push({
-               id: index,
-               ...egg,
-               name: eggType,
-               timeRemaining: !egg.basic
-                  ? elapsedTime < hatchTimeout
-                     ? timeRemaining
-                     : 0
-                  : 0,
-               CTAOverride: !egg.basic
-                  ? elapsedTime < hatchTimeout
-                     ? { barwidth, timeRemainingDaysHours }
-                     : null
-                  : null,
-            });
-         }
-      });
-      empty = eggData.length === 0 && Object.keys(eggData).length !== 0;
-      eggData = sortData(eggData, "basic");
-
-      return (
-         <RowLayout>
-            <Route exact path={`${path}`}>
-            {eggData.length === 0 ? (
-                  <Text textAlign="center" fontSize="16px">
-                     No eggs
-                  </Text>
-               ) : (
-               <Swiper
-                  slidesPerView={
-                     document.body.getBoundingClientRect().width / 140
-                  }
-                  spaceBetween={0}
-                  pagination={{ clickable: true }}>
-                  {eggData.map((egg) => (
-                     <SwiperSlide key={egg.id}>
-                        <EggCard egg={egg} hatchEgg={hatchEgg} eggGroup={eggGroup} />
-                     </SwiperSlide>
-                  ))}
-               </Swiper>
+    return (
+      <>
+        {hybrid === "pure" ? (
+          <RowTitle>
+            {animals.length}{" "}
+            {animals.length != 1 ? "Breedable Animals" : "Breedable Animal"}
+          </RowTitle>
+        ) : (
+          <RowTitle>
+            {animals.length}{" "}
+            {animals.length != 1 ? "Hybrid Animals" : "Hybrid Animal"}
+          </RowTitle>
+        )}
+        <RowLayout>
+          <Route exact path={`${path}`}>
+            {animals.length === 0 ? (
+              <StyledText textAlign="center" fontSize="16px">
+                No {hybrid === "pure" ? `breedable` : `hybrid`} animals
+              </StyledText>
+            ) : (
+                      <Swiper
+                         slidesPerView={document.body.getBoundingClientRect().width / 220}
+                        spaceBetween={8}
+                        pagination={{ clickable: true }}
+                      >
+                {animals.map((animal) => (
+                  <SwiperSlide style={{width: "220px", display: "flex"}} key={animal.tokenId}>
+                      {/* <CardWrapper> */}
+                         <SwiperCard animal={animal}
+                            eggType={animal.bloodline}
+                            group={animalGroup}
+                            onInfoClick={() =>
+                                hybrid === "pure"
+                                ? breedClick(animal)
+                                : !animal.listed
+                                ? list(animal)
+                                : null}
+                         />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             )}
-            </Route>
-            <Route exact path={`${path}/history`}>
-               {eggData.map((egg) => (
-                  <Card key={egg.id} />
-               ))}
-            </Route>
-         </RowLayout>
-      );
-   };
+          </Route>
+          <Route exact path={`${path}/history`}>
+            {animalData.map((animal) => (
+              <Card key={animal.id} />
+            ))}
+          </Route>
+        </RowLayout>
+      </>
+    );
+  };
 
-   const sortData = (data: Array<any>, byType: string) => {
-      return data.sort((a, b) => {
-         if (a.timeRemaining === b.timeRemaining) {
-            if (a[byType]) {
-               if (b[byType]) return 0;
-               return -1;
-            }
-            if (b[byType]) return 1;
-            return 0;
-         }
-         return a.timeRemaining - b.timeRemaining;
-      });
-   }
+  const renderEggs = (): JSX.Element => {
+    let eggData = [];
+    // let eggGroup = {
+    //    BASIC: 1,
+    //    HYBRID: 1
+    // };
 
-   return (
-      <div>
-         {eggType !== "" && 
-            <VideoPlayer
-               videoPath={
-                  eggType === "basic"
-                     ? "hatch_mobile_basic.mp4"
-                     : "hatch_mobile_hybrid.mp4"
-               }
-            /> }
-            { isOpen ? <NewAnimalCard animal={hatched} isOpen={setOpen} /> :
-         <>
-               {eggType === "" && renderEggs()}
-               {eggType === "" && renderAnimals("pure")}
-               {eggType === "" && renderAnimals("hybrid")}
-         </> }
-      </div>
-   );
+    Object.values(allEggs).forEach((egg, index) => {
+      const eggType = egg.basic ? "BASIC" : "HYBRID";
+      if (egg.owner !== account) {
+         return;
+       }
+      const createdDate = egg.created
+        ? new Date(Number(egg.created)).getTime()
+        : new Date().getTime();
+      const now = new Date().getTime();
+      const hatchTimeout = egg.basic ? 0 : getMilliseconds(eggTimeout);
+      const elapsedTime = now - createdDate;
+      const timeRemaining = hatchTimeout - elapsedTime;
+      const timeRemainingDaysHours = getDaysHours(timeRemaining);
+      const barwidth = [100 * (elapsedTime / hatchTimeout), "%"].join("");
+
+      //  if (timeRemaining <= 0 && eggData.find(a => a.basic === egg.basic && a.timeRemaining <= 0)) {
+      //     eggGroup[eggType] = eggGroup[eggType] + 1
+      //  } else {
+        if (egg.owner === account && !egg.burned) {
+          eggData.push({
+             id: index,
+             ...egg,
+             name: eggType,
+             timeRemaining: !egg.basic
+                ? elapsedTime < hatchTimeout
+                   ? timeRemaining
+                   : 0
+                : 0,
+             CTAOverride: !egg.basic
+                ? elapsedTime < hatchTimeout
+                   ? { barwidth, timeRemainingDaysHours }
+                   : null
+                : null,
+          });
+       }
+      //  }
+    });
+    empty = eggData.length === 0 && Object.keys(eggData).length !== 0;
+    eggData = sortData(eggData, "hybrid");
+
+    return (
+      <RowLayout>
+        <Route exact path={`${path}`}>
+          {eggData.length === 0 ? (
+            <StyledText textAlign="center" fontSize="16px">
+              No eggs
+            </StyledText>
+          ) : (
+            <Swiper
+              slidesPerView={document.body.getBoundingClientRect().width / 180}
+              spaceBetween={8}
+              pagination={{ clickable: true }}
+                   >
+                      {eggData.map((egg) => (
+                             <SwiperSlide style={{ padding: "3px", width: "180", display: "flex"}} key={egg.tokenId}>
+                      {/* <CardWrapper> */}
+                            <EggCard egg={egg} hatchEgg={hatchEgg} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
+        </Route>
+        <Route exact path={`${path}/history`}>
+          {eggData.map((egg) => (
+            <Card key={egg.id} />
+          ))}
+        </Route>
+      </RowLayout>
+    );
+  };
+
+  const sortData = (data: Array<any>, byType: string) => {
+    return data.sort((a, b) => {
+      if (a.timeRemaining === b.timeRemaining) {
+        if (a[byType]) {
+          if (b[byType]) return 0;
+          return -1;
+        }
+        if (b[byType]) return 1;
+        return 0;
+      }
+      return a.timeRemaining - b.timeRemaining;
+    });
+  };
+
+  return (
+    <div>
+      {eggType !== "" && (
+        <VideoPlayer
+          videoPath={
+            eggType === "basic"
+              ? "hatch_mobile_basic.mp4"
+              : "hatch_mobile_hybrid.mp4"
+          }
+        />
+      )}
+      {isOpen ? (
+        <NewAnimalCard animal={hatched} isOpen={setOpen} />
+      ) : (
+        <>
+          {eggType === "" && renderEggs()}
+          {eggType === "" && renderAnimals("pure")}
+          {eggType === "" && renderAnimals("hybrid")}
+        </>
+      )}
+    </div>
+  );
 };
 
 export default MyZooAccount;

@@ -16,7 +16,7 @@ describe('ZooToken', function () {
 
   it('should have correct name and symbol and decimal', async () => {
     const [signer] = await ethers.getSigners()
-    const ZooToken = await ethers.getContractFactory('ZooToken')
+    const ZooToken = await ethers.getContractFactory('Zoo')
     token = await ZooToken.deploy()
     const name = await token.name()
     const symbol = await token.symbol()
