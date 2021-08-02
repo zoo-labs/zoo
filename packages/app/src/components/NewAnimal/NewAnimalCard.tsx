@@ -21,7 +21,7 @@ const Card = styled.div<{ url?: string; isMobile?: boolean }>`
    position: fixed;
    top: -64px;
    left: 0;
-   z-index: 100;
+   z-index: 103;
    
    -webkit-animation: fadein 2s linear forwards;
     animation: fadein 2s linear forwards;
