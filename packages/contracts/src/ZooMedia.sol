@@ -16,6 +16,7 @@ import {Decimal} from "./Decimal.sol";
 import {IMarket} from "./interfaces/IMarket.sol";
 import "./interfaces/IMedia.sol";
 import "./interfaces/IZoo.sol";
+
 import "./console.sol";
 
 /**
@@ -577,7 +578,7 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         IMarket.BidShares memory bidShares,
         bytes memory tokenType
     ) internal onlyValidURI(data.tokenURI) onlyValidURI(data.metadataURI) {
-        console.log(bidShares.creator.value);
+        console.log("_mintForCreator", bidShares.creator.value);
 
         require(
             data.contentHash != 0,
