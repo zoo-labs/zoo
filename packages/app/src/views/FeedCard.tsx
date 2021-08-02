@@ -146,7 +146,7 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup, hideBid }) => {
    const notShowBid = hideBid ? hideBid : false;
 
    useEffect(() => {
-      console.log("IN CARD", notShowBid);
+      return null;
    }, [hideBid]);
 
    const date = new Date(Number(item.dob));

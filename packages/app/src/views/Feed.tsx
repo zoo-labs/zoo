@@ -194,8 +194,6 @@ function Feed<FeedPagePops>({ match }) {
       myZooAnimalsFiltered[ogIndex] = toMove;
    }
 
-   console.log("Animals: ", myZooAnimalsFiltered);
-
    const animalGroup = {};
    let myZooAnimalData = [];
    let totalAnimalData = [];
