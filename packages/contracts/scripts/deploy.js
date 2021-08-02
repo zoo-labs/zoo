@@ -8,8 +8,9 @@ const hybrids  = require('../utils/hybrids.json');
 async function main() {
   const [signer] = await ethers.getSigners()
 
-  const dropAddress = '0x0994282110F389553D5f7bCD09a5fdf89AA7B5f4';
-  const keeperAddress = '0x42adad34a80FBC488CF963A61eCCaa932736AeDb';
+  const dropAddress = '0x7E66108C67cAA4921b1DF371291cdE6dB8dc1945';
+  const keeperAddress = '0x219ea7dBf37D592761b9B5220976c5A13370cB6c';
+
   const keeper = await ethers.getContractAt('ZooKeeper', keeperAddress);
   const drop = await ethers.getContractAt('ZooDrop', dropAddress);
 
@@ -39,7 +40,12 @@ async function main() {
   //   await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
   // })
 
-  // await drop.configureEggs("Base Egg", "Hybrid Egg")
+  let v = eggs[0]
+  await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
+  v = eggs[1]
+  await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
+
+  await drop.configureEggs("Base Egg", "Hybrid Egg")
 
   animals.map(async (v) => {
     console.log('Add Animal:', v.name)
