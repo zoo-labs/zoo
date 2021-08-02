@@ -1,10 +1,8 @@
 import contracts from "contracts.json";
 
 const hardhat = contracts['31337']['hardhat']['contracts'];
-const testnet = hardhat;
-const mainnet = hardhat;
-// const testnet = contracts[97]['testnet']['contracts'];
-// const mainnet = contracts[56]['mainnet']['contracts'];
+const testnet = contracts['97']['testnet']['contracts'];
+const mainnet = testnet; // does not work yet
 
 export default {
    zooToken: {
