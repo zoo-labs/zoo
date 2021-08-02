@@ -4,20 +4,21 @@ import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 import { RarityColor } from "enums/rarity-color";
 import { NewAnimalCardType } from "./types";
+import {useMatchBreakpoints} from "../../hooks";
 
 const Card = styled.div<{ url?: string; isMobile?: boolean }>`
    background-image: url(${({ url }) => `${url}`});
    background-position: center;
    background-repeat: no-repeat;
-   background-size: cover;
-   width: 100vw;
-   height: 100vh;
+   background-size: ${(props) => props.isMobile ? "cover" : "contain"};
+   width: 100%;
+   height: 110vh;
    // max-width: 425px;
    // min-width: 325px;
    display: flex;
    flex-direction: column;
-   justify-content: space-between;
-   align-items: space-between;
+   justify-content: center;
+   align-items: center;
    position: fixed;
    top: -64px;
    left: 0;
@@ -73,6 +74,7 @@ const CardOverlay = styled.div`
 `;
 
 const NewAnimalCard: React.FC<NewAnimalCardType> = ({ animal, isOpen }) => {
+    const { isXs, isXl } = useMatchBreakpoints();
    console.log(window.innerHeight);
 
    const rarityColor = RarityColor[animal.rarity.toLowerCase()] || "white";
@@ -89,7 +91,7 @@ const NewAnimalCard: React.FC<NewAnimalCardType> = ({ animal, isOpen }) => {
    };
    return (
       <>
-         <Card url={animal.imageUrl} onClick={() => isOpen(false)}>
+         <Card url={animal.imageUrl} isMobile={isXs} onClick={() => isOpen(false)}>
              <CardOverlay>
                <Flex
                   height={"100vh"}
