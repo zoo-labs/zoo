@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react'
+import React, {useEffect, useRef} from 'react';
 import styled, { DefaultTheme } from "styled-components";
 import { space, typography } from "styled-system";
 import getThemeValue from "../../util/getThemeValue";
@@ -13,14 +13,23 @@ const getColor = ({ color, theme }: ThemedProps) => {
 
 const VidContainer = styled.div`
     position: fixed;
-    top: 48%;
+    height: 110vh;
+    width: 100%;
+    // max-width: 425px;
+    // min-width: 325px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: -50%;
     left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    z-index: 100000;
-    height: 101vh;
-    width: auto;
-`
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    transform: translateX(-50%);
+    z-index: 102;
+`;
+
+
 function fade(element) {
     var op = 1;
     var timer = setInterval(function() {
@@ -43,15 +52,15 @@ const VideoPlayer: React.FC<VideoPlayerTheme> = ({videoPath}:VideoPlayerTheme) =
 
     return (
         <VidContainer >
-            <VideoPlayerWrapper autoPlay ref={videoEl} controls={false}>
-                <source src={videoPath} />
+            <VideoPlayerWrapper autoPlay ref={videoEl} controls={false} playsInline>
+                <source src={videoPath}/>
             </VideoPlayerWrapper>
         </VidContainer>
     )
 }
 
 export const VideoPlayerWrapper = styled.video`
-    height: 105vh;
+    height: 100%;
     width: auto;
 `;
 

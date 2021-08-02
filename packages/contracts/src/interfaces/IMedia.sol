@@ -5,6 +5,7 @@ pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
 import {IMarket} from "./IMarket.sol";
+import {IZoo} from "./IZoo.sol";
 
 /**
  * @title Interface for Zoo Protocol's Media
@@ -114,4 +115,9 @@ interface IMedia {
         uint256 tokenId,
         EIP712Signature calldata sig
     ) external;
+
+    // Added for Zoo
+    function mintToken(address owner, IZoo.Token memory tokenID) external returns (IZoo.Token memory);
+    function burnToken(address owner, uint256 tokenID) external;
+    function tokenExists(uint256 tokenID) external returns (bool);
 }

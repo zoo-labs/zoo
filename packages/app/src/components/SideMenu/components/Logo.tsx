@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from 'styled-components'
 // import { Link } from "react-router-dom";
 import { CloseIcon, LogoIcon } from "../../../components/Svg";
 import Flex from "../../../components/Box/Flex";
@@ -46,7 +46,7 @@ const Logo: React.FC<Props> = ({ isPushed, togglePush, isDark, href }) => {
         {isPushed ? (
             <CloseIcon width="24px" color="card" />
         ) : (
-              <HamburgerIcon width="24px" color="card" />
+              <HamburgerIcon width="24px" fill={`${isDark ? "white" : "white"}`} />
         )}
       </MenuButton>
       {/* {isAbsoluteUrl ? (
