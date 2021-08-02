@@ -23,8 +23,21 @@ const Card = styled.div<{ url?: string; isMobile?: boolean }>`
    left: 0;
    z-index: 100;
    
-   opacity: 1;
-   transition: all ease 1s;
+   -webkit-animation: fadein 3s linear forwards;
+    animation: fadein 3s linear forwards;
+    
+    @-webkit-keyframes fadein {
+  0%,100% { opacity: 0; }
+  50%,100% { opacity: 1; }
+}
+
+@keyframes fadein {
+  0%,100% { opacity: 0; }
+ 50%,100% { opacity: 1; }
+}
+   
+   // opacity: 1;
+   // transition: all ease 2s;
 `;
 
 const IconButton = styled(Icon)`
@@ -55,9 +68,9 @@ const CardOverlay = styled.div`
       rgba(0, 0, 0, 0) 60%,
       rgba(0, 0, 0, 0.8)
    );
-   opacity: 1;
-   transition: all ease 1s;
-   
+   // opacity: 1;
+   // transition: all ease 2s;
+   //
    * {
       text-shadow: 2px 0 0 #0000006e, 0 -2px 0 #0000006e, 0 2px 0 #000,
          -2px 0 0 #0000006e;
