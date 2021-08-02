@@ -18,11 +18,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     log: true,
   })
 
-  // Bail out if we've added all the animals before
-  if (!deployResult.newlyDeployed) {
-    return
-  }
-
   const dropAddress = deployResult.address;
   const keeperAddress = (await deployments.get('ZooKeeper')).address
   const keeper = await hre.ethers.getContractAt('ZooKeeper', keeperAddress);
@@ -66,8 +61,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
   }))
 
+  // Bail out if we've already transfered ownership
+  // if (!deployResult.newlyDeployed) {
+  //   return
+  // }
+
   // Pledge allegiance
-  await drop.transferOwnership(keeperAddress, {from: deployer});
+  // await drop.transferOwnership(keeperAddress, {from: deployer});
 
   return hre.network.live;
 }
