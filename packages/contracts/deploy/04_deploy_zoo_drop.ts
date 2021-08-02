@@ -49,22 +49,22 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     }
   ]
 
-  await Promise.all(eggs.map(async (v) => {
+  eggs.map(async (v) => {
     console.log('Add Egg:', v.name)
     await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
-  }))
+  })
 
   await drop.configureEggs("Base Egg", "Hybrid Egg")
 
-  await Promise.all(animals.map(async (v) => {
+  animals.map(async (v) => {
     console.log('Add Animal:', v.name)
     await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
-  }))
+  })
 
-  await Promise.all(hybrids.map((v) => {
+  hybrids.map((v) => {
     console.log('Add Hybrid:', v.name)
     drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
-  }))
+  })
 
   // Pledge allegiance
   await drop.transferOwnership(keeperAddress, {from: deployer});
