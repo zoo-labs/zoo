@@ -1,6 +1,6 @@
 import { CloseIcon, Flex } from "components";
-import { IconButton as Icon } from "components/Button";
-import React, {useEffect, useRef, useState} from "react";
+import { IconButton as Icon, Text } from "components";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { RarityColor } from "enums/rarity-color";
 import { NewAnimalCardType } from "./types";
@@ -23,19 +23,31 @@ const Card = styled.div<{ url?: string; isMobile?: boolean }>`
    top: -64px;
    left: 0;
    z-index: 103;
-   
-   -webkit-animation: fadein 2s linear forwards;
-    animation: fadein 2s linear forwards;
-    
-    @-webkit-keyframes fadein {
-      0%,100% { opacity: 0; }
-      50%,100% { opacity: 1; }
-    }
 
-    @keyframes fadein {
-      0%,100% { opacity: 0; }
-     50%,100% { opacity: 1; }
-    }
+   -webkit-animation: fadein 2s linear forwards;
+   animation: fadein 2s linear forwards;
+
+   @-webkit-keyframes fadein {
+      0%,
+      100% {
+         opacity: 0;
+      }
+      50%,
+      100% {
+         opacity: 1;
+      }
+   }
+
+   @keyframes fadein {
+      0%,
+      100% {
+         opacity: 0;
+      }
+      50%,
+      100% {
+         opacity: 1;
+      }
+   }
 `;
 
 const IconButton = styled(Icon)`
@@ -66,7 +78,7 @@ const CardOverlay = styled.div`
       rgba(0, 0, 0, 0) 60%,
       rgba(0, 0, 0, 0.8)
    );
-  
+
    * {
       text-shadow: 2px 0 0 #0000006e, 0 -2px 0 #0000006e, 0 2px 0 #000,
          -2px 0 0 #0000006e;
@@ -97,7 +109,12 @@ const NewAnimalCard: React.FC<NewAnimalCardType> = ({ animal, isOpen }) => {
                   height={"100vh"}
                   flexDirection="column"
                   justifyContent="flex-end">
-                  <Span> {animal.name} </Span>
+                  <Span
+                     style={{
+                        color: "#FFFFFF",
+                     }}>
+                     {animal.name}
+                  </Span>
                   <Span
                      style={{
                         color: rarityColor,
