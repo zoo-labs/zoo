@@ -153,11 +153,12 @@ contract ZooKeeper is Ownable {
         emit Hatch(msg.sender, animal.id);
     }
 
-    function isBaseAnimal(uint256 tokenID) private returns (bool) {
+    function isBaseAnimal(uint256 tokenID) private view returns (bool) {
         return tokens[tokenID].kind == IZoo.Type.BASE_ANIMAL;
     }
 
     modifier canBreed(uint256 parentA, uint256 parentB) {
+        console.log("canBreed", parentA, parentB);
         require(media.tokenExists(parentA) && media.tokenExists(parentB), "Non-existent token");
         require(keccak256(abi.encode(parentA)) != keccak256(abi.encode(parentB)),"Not able to breed with self" );
         require(breedReady(parentA) && breedReady(parentB), "Wait for cooldown to finish.");
@@ -224,6 +225,7 @@ contract ZooKeeper is Ownable {
 
     // Temporary random function
     function unsafeRandom() private view returns (uint256) {
+        console.log(block.number, msg.sender, block.timestamp);
         uint256 randomNumber = uint256(
             keccak256(
                 abi.encodePacked(block.number, msg.sender, block.timestamp)

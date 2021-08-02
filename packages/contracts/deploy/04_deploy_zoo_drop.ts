@@ -18,7 +18,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     log: true,
   })
 
-  return; // Use deploy script
+  // Better to use deploy script for these bits, for local dev it deploys fine.
+  // return;
 
   const dropAddress = deployResult.address;
   const keeperAddress = (await deployments.get('ZooKeeper')).address
