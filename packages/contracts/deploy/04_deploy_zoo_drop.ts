@@ -31,6 +31,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // Add Drop to ZooKeeper
   await keeper.setDrop(dropAddress)
 
+  // Configur Drop to use ZooKeeper
+  await drop.configureKeeper(keeperAddress);
+
   // Configure drop
   const eggs = [
     {
@@ -65,9 +68,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     console.log('Add Hybrid:', v.name)
     drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
   })
-
-  // Pledge allegiance
-  await drop.transferOwnership(keeperAddress, {from: deployer});
 
   return hre.network.live;
 }
