@@ -21,6 +21,7 @@ import {
    getZooKeeper,
 } from "util/contractHelpers";
 import useWeb3 from "hooks/useWeb3";
+import useToast from "../hooks/useToast";
 
 const HeadingContainer = styles.div`
     width: 100%;
@@ -78,6 +79,7 @@ const Account: React.FC = () => {
    const [keepApprove, setKeepApprove] = useState(true);
    const web3 = useWeb3();
    const { isXl } = useMatchBreakpoints();
+   const { toastSuccess, toastError, toastInfo } = useToast();
    const history = useHistory();
    const [onBuyEggs] = useModal(<BuyEggs />);
    const allEggs = useSelector<AppState, AppState["zoo"]["eggs"]>(
@@ -130,8 +132,10 @@ const Account: React.FC = () => {
          if (allowance > 0) {
             setAllowance(true);
             setKeepApprove(false);
+            toastSuccess("Wallet connected");
          } else {
             setKeepApprove(true);
+            toastInfo('Trying to approve account...');
          }
       } catch (error) {
          console.log(error);
@@ -148,9 +152,11 @@ const Account: React.FC = () => {
       tsx.then(() => {
          setAllowance(true);
          setDisable(false);
+         toastSuccess("Wallet approved");
       }).catch((e) => {
          console.error("APPROVE ERROR", e);
          setDisable(false);
+         toastError('Failed to approve account');
       });
    };
 
@@ -199,13 +205,16 @@ const Account: React.FC = () => {
             .then(() => {
                setWait(false);
                getBalance();
+               toastSuccess('Successfully purchased ZOO!');
             })
             .catch((e) => {
                console.error("ISSUE USING FAUCET \n", e);
                setWait(false);
+               toastError('Unable to process transaction. Try again later.');
             });
       } catch (e) {
          console.error("ISSUE USING FAUCET \n", e);
+         toastError('Unable to process transaction. Try again later.');
       }
    };
 
@@ -238,10 +247,12 @@ const Account: React.FC = () => {
             .then((res) => {
                console.log(res);
                setDisable(false);
+               toastSuccess('Successfully purchased eggs!');
             });
       } catch (error) {
          setDisable(false);
          console.log(error);
+         toastError('Unable to purchase eggs. Try again later.');
       }
 
       // onBuyEggs()
@@ -259,6 +270,7 @@ const Account: React.FC = () => {
                <LabelWrapper>
                   <Label small>Wallet Balance</Label>
                   <BorderButton
+                      disabled={wait}
                      scale="sm"
                      minWidth={!isXl ? "120px" : "140px"}
                      style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}
