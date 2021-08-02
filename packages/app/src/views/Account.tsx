@@ -313,8 +313,9 @@ const Account: React.FC = () => {
                   </Flex>
                </LabelWrapper>
 
-               <MyZooAccount />
+
             </Body>
+            <MyZooAccount />
          </Page>
       </>
    );
