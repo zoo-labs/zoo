@@ -224,7 +224,7 @@ const Account: React.FC = () => {
          console.log(error)
        }
 
-      // onBuyEggs()
+      onBuyEggs()
    }
 
    const handleRedirect = () => {

@@ -38,7 +38,7 @@ const Span = styled.span`
    width: 100%;
    font-weight: 900;
    text-align: center;
-   postion: relative;
+   position: relative;
    margin-bottom: 15px; ;
 `;
 
