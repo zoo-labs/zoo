@@ -18,7 +18,6 @@ import { Animal } from 'entities/zooentities'
 // import { EggCardType } from './types'
 import { burnEgg, addAnimal } from "state/actions"
 import { useDispatch } from 'react-redux'
-import { animalMapping } from 'util/animalMapping'
 import NewAnimalCard from 'components/NewAnimal/NewAnimalCard';
 import { Link } from 'react-router-dom';
 
