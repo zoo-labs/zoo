@@ -743,7 +743,7 @@ const MyZooAccount: React.FC = () => {
          const timeRemaining = hatchTimeout - elapsedTime;
          const timeRemainingDaysHours = getDaysHours(timeRemaining);
          const barwidth = [100 * (elapsedTime / hatchTimeout), "%"].join("");
-         console.log(egg, index);
+
          //  if (timeRemaining <= 0 && eggData.find(a => a.basic === egg.basic && a.timeRemaining <= 0)) {
          //     eggGroup[eggType] = eggGroup[eggType] + 1
          //  } else {
