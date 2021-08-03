@@ -6213,7 +6213,7 @@
       "chainId": "31337",
       "contracts": {
         "ZooAuction": {
-          "address": "0x247124065114a03Cf51898b21F20C6C1Cf50679A",
+          "address": "0x792de6045d65D7ad660a8cFB7cF4eB06EEaFBcDe",
           "abi": [
             {
               "inputs": [
@@ -6792,7 +6792,7 @@
           ]
         },
         "ZooDrop": {
-          "address": "0xE5355bd4f87Fb825A79E712D93d171f60Ef0C3e0",
+          "address": "0x535bd37CC396a16Fcd027E9a7a359cd646cB84E3",
           "abi": [
             {
               "inputs": [
@@ -8726,7 +8726,7 @@
           ]
         },
         "ZooFaucet": {
-          "address": "0xB853218B55bcB28DA3b2450EdDE52d0222AF52ee",
+          "address": "0xF15b45b18Cf0989072903Ed04Ff18E28E870A18c",
           "abi": [
             {
               "inputs": [
@@ -8846,27 +8846,6 @@
         "ZooKeeper": {
           "address": "0xb3C26aAFa12DeBE5EcFd5dA4D71E9910586dDAF7",
           "abi": [
-            {
-              "inputs": [
-                {
-                  "internalType": "address",
-                  "name": "_market",
-                  "type": "address"
-                },
-                {
-                  "internalType": "address",
-                  "name": "_media",
-                  "type": "address"
-                },
-                {
-                  "internalType": "address",
-                  "name": "_zoo",
-                  "type": "address"
-                }
-              ],
-              "stateMutability": "nonpayable",
-              "type": "constructor"
-            },
             {
               "anonymous": false,
               "inputs": [
@@ -9143,6 +9122,29 @@
                 }
               ],
               "name": "buyName",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_market",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_media",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_zoo",
+                  "type": "address"
+                }
+              ],
+              "name": "configure",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
@@ -9548,6 +9550,30 @@
               "type": "function"
             },
             {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "receiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "amount",
+                  "type": "uint256"
+                }
+              ],
+              "name": "withdrawZoo",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
               "inputs": [],
               "name": "zoo",
               "outputs": [
@@ -9555,6 +9581,19 @@
                   "internalType": "contract IERC20",
                   "name": "",
                   "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "zooSupply",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
                 }
               ],
               "stateMutability": "view",
@@ -15272,27 +15311,6 @@
           "address": "0xb3C26aAFa12DeBE5EcFd5dA4D71E9910586dDAF7",
           "abi": [
             {
-              "inputs": [
-                {
-                  "internalType": "address",
-                  "name": "_market",
-                  "type": "address"
-                },
-                {
-                  "internalType": "address",
-                  "name": "_media",
-                  "type": "address"
-                },
-                {
-                  "internalType": "address",
-                  "name": "_zoo",
-                  "type": "address"
-                }
-              ],
-              "stateMutability": "nonpayable",
-              "type": "constructor"
-            },
-            {
               "anonymous": false,
               "inputs": [
                 {
@@ -15568,6 +15586,29 @@
                 }
               ],
               "name": "buyName",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_market",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_media",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_zoo",
+                  "type": "address"
+                }
+              ],
+              "name": "configure",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
@@ -15973,6 +16014,30 @@
               "type": "function"
             },
             {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "receiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "amount",
+                  "type": "uint256"
+                }
+              ],
+              "name": "withdrawZoo",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
               "inputs": [],
               "name": "zoo",
               "outputs": [
@@ -15984,11 +16049,24 @@
               ],
               "stateMutability": "view",
               "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "zooSupply",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
             }
           ]
         },
         "ZooDrop": {
-          "address": "0xE5355bd4f87Fb825A79E712D93d171f60Ef0C3e0",
+          "address": "0x535bd37CC396a16Fcd027E9a7a359cd646cB84E3",
           "abi": [
             {
               "inputs": [
@@ -17922,7 +18000,7 @@
           ]
         },
         "ZooAuction": {
-          "address": "0x247124065114a03Cf51898b21F20C6C1Cf50679A",
+          "address": "0x792de6045d65D7ad660a8cFB7cF4eB06EEaFBcDe",
           "abi": [
             {
               "inputs": [
@@ -18501,7 +18579,7 @@
           ]
         },
         "ZooFaucet": {
-          "address": "0xB853218B55bcB28DA3b2450EdDE52d0222AF52ee",
+          "address": "0xF15b45b18Cf0989072903Ed04Ff18E28E870A18c",
           "abi": [
             {
               "inputs": [
