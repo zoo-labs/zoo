@@ -57,9 +57,8 @@ describe("ZooAuction", () => {
 
   async function deploy(): Promise<ZooAuction> {
     const ZooAuction = await ethers.getContractFactory("ZooAuction");
-
-    const auctionHouse = await ZooAuction.deploy(media.address, token.address);
-
+    const auctionHouse = await ZooAuction.deploy();
+    auctionHouse.configure(media.address, token.address);
     return auctionHouse as ZooAuction;
   }
 
