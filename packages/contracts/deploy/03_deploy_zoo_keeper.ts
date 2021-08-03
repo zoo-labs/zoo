@@ -33,11 +33,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // Mint ZOO to keeper for yield
   token.mint(keeperAddress, 1000000000000);
 
-  return false;
-  // return hre.network.live;
+  return hre.network.live;
 }
 
 export default func
-// func.id = 'deploy_zoo_keeper'
+func.id = 'deploy_zoo_keeper'
 func.tags = ['ZooKeeper']
 func.dependencies = ['ZooMedia', 'ZooMarket']
