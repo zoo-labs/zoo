@@ -39,6 +39,9 @@ async function main() {
   ]
 
   for (const v of eggs) {
+    const existing = await drop.eggs(v.name)
+    if (existing.name != "") { continue }
+
     console.log('setEgg', v)
     const tx = await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
     await tx.wait();
@@ -50,6 +53,9 @@ async function main() {
   rarities.sort(function(a, b) { return a.probability - b.probability });
 
   for (const v of rarities) {
+    const existing = await drop.rarities(v.name)
+    if (existing.name != "") { continue }
+
     console.log('setRarity', v)
     const tx = await drop.setRarity(v.name, v.probability, v.yield, v.boost)
     await tx.wait()
@@ -57,16 +63,21 @@ async function main() {
 
   // Add animals
   for (const v of animals) {
+    const existing = await drop.animals(v.name)
+    if (existing.name != "") { continue }
+
     console.log('setAnimal', v)
     const tx = await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
     await tx.wait()
-  }
+  // }
 
   // Add hybrids
   for (const v of hybrids) {
+    const existing = await drop.hybrids(v.name)
+    if (existing.name != "") { continue }
+
     console.log('setHybrid', v)
     const tx = await drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
-    await tx.wait()
   }
 }
 
