@@ -318,8 +318,6 @@ const Account: React.FC = () => {
       console.log("Drop:", drop);
 
       try {
-        console.log('try to buy egg')
-         // buyEgg(uint256 _dropID) public returns (uint256)
         await zooKeeper.methods
             .buyEgg(1)
             .send({ from: account })
