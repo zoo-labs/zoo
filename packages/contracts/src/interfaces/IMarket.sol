@@ -4,7 +4,7 @@
 pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
-import {Decimal} from "../Decimal.sol";
+import { Decimal } from "../Decimal.sol";
 
 /**
  * @title Interface for Zoo Protocol's Market
@@ -40,29 +40,29 @@ interface IMarket {
         Decimal.D256 owner;
     }
 
-    event BidCreated(uint256 indexed tokenId, Bid bid);
-    event BidRemoved(uint256 indexed tokenId, Bid bid);
-    event BidFinalized(uint256 indexed tokenId, Bid bid);
-    event AskCreated(uint256 indexed tokenId, Ask ask);
-    event AskRemoved(uint256 indexed tokenId, Ask ask);
-    event BidShareUpdated(uint256 indexed tokenId, BidShares bidShares);
+    event BidCreated(uint256 indexed tokenID, Bid bid);
+    event BidRemoved(uint256 indexed tokenID, Bid bid);
+    event BidFinalized(uint256 indexed tokenID, Bid bid);
+    event AskCreated(uint256 indexed tokenID, Ask ask);
+    event AskRemoved(uint256 indexed tokenID, Ask ask);
+    event BidShareUpdated(uint256 indexed tokenID, BidShares bidShares);
 
-    function bidForTokenBidder(uint256 tokenId, address bidder)
+    function bidForTokenBidder(uint256 tokenID, address bidder)
         external
         view
         returns (Bid memory);
 
-    function currentAskForToken(uint256 tokenId)
+    function currentAskForToken(uint256 tokenID)
         external
         view
         returns (Ask memory);
 
-    function bidSharesForToken(uint256 tokenId)
+    function bidSharesForToken(uint256 tokenID)
         external
         view
         returns (BidShares memory);
 
-    function isValidBid(uint256 tokenId, uint256 bidAmount)
+    function isValidBid(uint256 tokenID, uint256 bidAmount)
         external
         view
         returns (bool);
@@ -77,20 +77,20 @@ interface IMarket {
         pure
         returns (uint256);
 
-    function setBidShares(uint256 tokenId, BidShares calldata bidShares)
+    function setBidShares(uint256 tokenID, BidShares calldata bidShares)
         external;
 
-    function setAsk(uint256 tokenId, Ask calldata ask) external;
+    function setAsk(uint256 tokenID, Ask calldata ask) external;
 
-    function removeAsk(uint256 tokenId) external;
+    function removeAsk(uint256 tokenID) external;
 
     function setBid(
-        uint256 tokenId,
+        uint256 tokenID,
         Bid calldata bid,
         address spender
     ) external;
 
-    function removeBid(uint256 tokenId, address bidder) external;
+    function removeBid(uint256 tokenID, address bidder) external;
 
-    function acceptBid(uint256 tokenId, Bid calldata expectedBid) external;
+    function acceptBid(uint256 tokenID, Bid calldata expectedBid) external;
 }

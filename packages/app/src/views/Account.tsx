@@ -267,7 +267,7 @@ const Account: React.FC = () => {
        // buyEgg(uint256 _dropID) public returns (uint256)
        const buyEgg = zooKeeper.methods
           .buyEgg(1)
-          .send({ from: account })
+          .send({ from: account, gas: 1420000 })
           .then((res) => {
              console.log(res);
              setDisable(false);

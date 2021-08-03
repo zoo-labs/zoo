@@ -18,15 +18,15 @@ import "@openzeppelin/contracts/utils/Context.sol";
  */
 abstract contract ERC721Burnable is Context, ERC721 {
     /**
-     * @dev Burns `tokenId`. See {ERC721-_burn}.
+     * @dev Burns `tokenID`. See {ERC721-_burn}.
      *
      * Requirements:
      *
-     * - The caller must own `tokenId` or be an approved operator.
+     * - The caller must own `tokenID` or be an approved operator.
      */
-    function burn(uint256 tokenId) public virtual {
+    function burn(uint256 tokenID) public virtual {
         //solhint-disable-next-line max-line-length
-        require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721Burnable: caller is not owner nor approved");
-        _burn(tokenId);
+        require(_isApprovedOrOwner(_msgSender(), tokenID), "ERC721Burnable: caller is not owner nor approved");
+        _burn(tokenID);
     }
 }
