@@ -14,7 +14,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const deployResult = await deploy('ZooKeeper', {
     from: deployer,
-    args: [marketAddress, mediaAddress, tokenAddress],
+    args: [],
     log: true,
   })
 
@@ -22,9 +22,11 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const market = await hre.ethers.getContractAt('ZooMarket', marketAddress);
   const media = await hre.ethers.getContractAt('ZooMedia', mediaAddress);
+  const keeper = await hre.ethers.getContractAt('ZooKeeper', keeperAddress);
 
   market.configure(keeperAddress, mediaAddress)
   media.configure(keeperAddress, marketAddress)
+  keeper.configure(marketAddress, mediaAddress, tokenAddress)
 
   return hre.network.live;
 }

@@ -89,12 +89,12 @@ describe('ZooMarket', () => {
     marketAddress = market.address;
 
     const media = await (
-      await new ZooMedia__factory(deployerWallet).deploy('ZooAnimals', 'ANML', marketAddress)
+      await new ZooMedia__factory(deployerWallet).deploy('ZooAnimals', 'ANML')
     ).deployed();
     mediaAddress = media.address;
 
     const zookeeper = await (
-      await new ZooKeeper__factory(deployerWallet).deploy(marketAddress, mediaAddress, tokenAddress)
+      await new ZooKeeper__factory(deployerWallet).deploy()
     ).deployed();
     zookeeperAddress = zookeeper.address;
   }
@@ -109,7 +109,7 @@ describe('ZooMarket', () => {
     return ZooMarket__factory.connect(
       marketAddress,
       deployerWallet
-    ).media();
+    ).mediaAddress();
   }
 
   async function setBidShares(
