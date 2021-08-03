@@ -50,7 +50,7 @@ contract ZooKeeper is Ownable {
     IMedia public media;
     IERC20 public zoo;
 
-    constructor(address _market, address _media, address _zoo) {
+    function configure(address _market, address _media, address _zoo) public onlyOwner {
         market = IMarket(_market);
         media = IMedia(_media);
         zoo = IERC20(_zoo);
