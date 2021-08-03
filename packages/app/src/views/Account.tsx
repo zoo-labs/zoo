@@ -21,7 +21,7 @@ import {
    getZooKeeper,
 } from "util/contractHelpers";
 import useWeb3 from "hooks/useWeb3";
-import useToast from "../hooks/useToast";
+import useToast from "hooks/useToast";
 
 const HeadingContainer = styles.div`
     width: 100%;
