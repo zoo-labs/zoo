@@ -171,8 +171,8 @@ contract ZooMarket is IMarket {
         external
         onlyOwner
     {
-        require(mediaAddress == address(0), "ZooMarket: Already configured");
-        require(keeperAddress == address(0), "ZooMarket: Already configured");
+        // require(mediaAddress == address(0), "ZooMarket: Already configured");
+        // require(keeperAddress == address(0), "ZooMarket: Already configured");
         require(
             _mediaAddress != address(0),
             "ZooMarket: cannot set Media contract as zero address"
