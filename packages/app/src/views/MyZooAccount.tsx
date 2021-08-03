@@ -89,19 +89,56 @@ const MyZooAccount: React.FC = () => {
     console.log(zooKeeper)
       try {
         // const token = await zooKeeper.methods.tokens(parseInt(egg.tokenId)).call()
-        const hatching = await zooKeeper.methods.hatchEgg(1, parseInt(egg.tokenId)).send({ from: account })
-        .then((res) => {
-           console.log(res)
-           setShowBoth(true);
-           setEggType(egg.basic ? "basic" : "hybrid");
-         })
+        const hatching = await zooKeeper.methods
+        .hatchEgg(1, parseInt(egg.tokenId))
+            .send({ from: account })
+            .then(async () => {
+               zooKeeper
+                  .getPastEvents("Hatch", {
+                     fromBlock: 0,
+                     toBlock: "latest",
+                     filter: {
+                        from: account,
+                     },
+                  })
+                  .then(async (events) => {
+                     const latest = events[events.length - 1];
+                     const newTknId = latest.returnValues.tokenID;
+                     const token = await zooKeeper.methods.tokens(newTknId).call()
+                     setShowBoth(true);
+                     setEggType(egg.basic ? "basic" : "hybrid");
+                     const newAnimal: Animal = {
+                        tokenId: String(newTknId),
+                        animalId: token.kind,
+                        name: token.name,
+                        description: "",
+                        yield: token.rarity.yield,
+                        boost: token.rarity.boost,
+                        rarity: token.rarity.name,
+                        dob: token.birthdate,
+                        imageUrl: token.data.tokenURI,
+                        startBid: "0",
+                        currentBid: "0",
+                        buyNow: "0",
+                        listed: false,
+                        bloodline: token.kind ==="1"? "pure" : "hybrid",
+                        owner: account,
+                        CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
+                        timeRemaining: 0,
+                        breedCount: 0,
+                        lastBred: "",
+                      };
+                      setHatched(newAnimal);
+                     
+                    //  dispatch(burnEgg(egg));
+                     // dispatch(addAnimal(newAnimal));
+                     startAnimationTimer();
+                  });
+                })
       } catch (error) {
         console.log(error)
       }
 
-    let randIdx: number;
-
-    console.log(egg)
 
     // REPLACE WITH HATCH FUNCTION FROM CONTRACT
     // if (egg.basic) {
@@ -185,7 +222,7 @@ const MyZooAccount: React.FC = () => {
     // dispatch(burnEgg(egg));
     // dispatch(addAnimal(newAnimal));
     // ---------------------------------------------
-    startAnimationTimer();
+    // startAnimationTimer();
   };
 
   const startAnimationTimer = useCallback(() => {

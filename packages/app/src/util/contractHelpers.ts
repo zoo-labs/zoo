@@ -1,5 +1,6 @@
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
+import Keeper from './abi/Keeper.json'
 
 // Addresses
 import {
@@ -23,6 +24,7 @@ const zooFaucetAbi  = contracts["ZooFaucet"].abi;
 const zooMarketAbi  = contracts["ZooMarket"].abi;
 const zooMediaAbi   = contracts["ZooMedia"].abi;
 const zooKeeperAbi  = contracts["ZooKeeper"].abi;
+// const zooKeeperAbi  = Keeper;
 
 const getContract = (abi: any, address: string, web3?: Web3) => {
    return new web3.eth.Contract(abi as unknown as AbiItem, address);

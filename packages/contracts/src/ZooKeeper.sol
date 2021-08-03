@@ -268,7 +268,6 @@ contract ZooKeeper is Ownable {
         if (tokens[tokenID].breed.count == 0) {
             return true;
         }
-
         // If current timestamp is greater than the next breed time, lets go
         if (block.timestamp > breedNext(tokenID)) {
             return true;
