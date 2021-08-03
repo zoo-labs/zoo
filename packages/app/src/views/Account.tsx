@@ -115,11 +115,11 @@ const Account: React.FC = () => {
             console.log("token", token);
 
             // console.log('hatching')
-            // const hatch = await zooKeeper.methods.hatchEgg(1, 3).call();
+            // const hatch = await zooKeeper.methods.hatchEgg(1, 1).call();
             // console.log(hatch)
 
             // console.log('breeding')
-            // const tokenURI1 = await zooMedia.methods.tokenURI(1).call();
+            // const tokenURI1 = await zooMedia.methods.tokenURI(3).call();
             // console.log("tokenURI1", tokenURI1);
             // const tokenURI2 = await zooMedia.methods.tokenURI(2).call();
             // console.log("tokenURI2", tokenURI2);
