@@ -646,8 +646,7 @@ const MyZooAccount: React.FC = () => {
             animalGroup[animal.name] > 1
          ) {
             const multipleAvailable = Object.values(allAnimals).filter(
-               (item) =>
-                  item.name === animal.name && item.timeRemaining === 0
+               (item) => item.name === animal.name && item.timeRemaining === 0
             );
             const temp = [
                { ...multipleAvailable[0] },
@@ -669,7 +668,6 @@ const MyZooAccount: React.FC = () => {
          if (animal.owner !== account) {
             return;
          }
-         console.log("YES");
          const lastBred = animal.lastBred
             ? new Date(Number(animal.lastBred)).getTime()
             : new Date().getTime();
@@ -688,8 +686,7 @@ const MyZooAccount: React.FC = () => {
                (a) => a.name === animal.name && a.timeRemaining <= 0
             )
          ) {
-            animalGroup[animal.name] =
-               animalGroup[animal.name] + 1 || 1;
+            animalGroup[animal.name] = animalGroup[animal.name] + 1 || 1;
          } else {
             animalData.push({
                id: index,
@@ -710,7 +707,6 @@ const MyZooAccount: React.FC = () => {
                rarityColor: RarityColor[animal.rarity.toLowerCase()] || "white",
             });
          }
-         console.log(animalData);
       });
 
       empty = animalData.length === 0 && Object.keys(animalData).length !== 0;
@@ -801,11 +797,11 @@ const MyZooAccount: React.FC = () => {
          const timeRemaining = hatchTimeout - elapsedTime;
          const timeRemainingDaysHours = getDaysHours(timeRemaining);
          const barwidth = [100 * (elapsedTime / hatchTimeout), "%"].join("");
-
+         console.log(egg, index);
          //  if (timeRemaining <= 0 && eggData.find(a => a.basic === egg.basic && a.timeRemaining <= 0)) {
          //     eggGroup[eggType] = eggGroup[eggType] + 1
          //  } else {
-         if (egg.owner === account && !egg.burned) {
+         if (!egg.burned) {
             eggData.push({
                id: index,
                ...egg,
