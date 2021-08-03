@@ -205,6 +205,7 @@ const MyZooAccount: React.FC = () => {
     imageUrl: "",
     listed: false,
   });
+
   const handleRedirect = () => {
     history.push("/feed");
   };
@@ -260,7 +261,7 @@ const MyZooAccount: React.FC = () => {
     
     setTimeout(() => setOpen(true), 3850);
     setTimeout(() => setEggType(""), 7000);
-    console.log(eggRes)
+    console.log('egg result',eggRes)
     eggRes.set("Burned", true);
     eggRes.destroy();
 
