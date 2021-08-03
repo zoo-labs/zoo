@@ -122,6 +122,9 @@ export const AnimalCard = ({
   const dispatch = useDispatch();
   const bid = useRef(100);
   let array = [];
+  const web3 = useWeb3();
+  const {chainId} = useWeb3React()
+  const zooKeeper = getZooKeeper(web3, chainId);
   let sellAnimal: Animal = {
     tokenId: "",
     name: "",
@@ -246,9 +249,6 @@ export const AnimalCard = ({
   const [onEggCreated] = useModal(<EggCreatedNotify onDismiss={() => null} />);
 
   const breed = async (onDismiss) => {
-    const web3 = useWeb3();
-    const {chainId} = useWeb3React()
-    const zooKeeper = getZooKeeper(web3, chainId);
     const an1 = parseInt(array[0].tokenId);
     const an2 = parseInt(array[1].tokenId);
     const anOb = Moralis.Object.extend("FinalAnimals");
@@ -279,6 +279,7 @@ export const AnimalCard = ({
               newTrans.save();
               dispatch(addAnimal({...array[0], selected: false}));
               dispatch(addAnimal({...array[1], selected: false}));
+              onDismiss()
        })
     } catch (error) {
       console.log(error)
@@ -502,8 +503,8 @@ export const AnimalCard = ({
             }}
           >
             {animal.timeRemaining === 0
-              ? animalGroup[animal.animalId]
-                ? `x${animalGroup[animal.animalId]}`
+              ? animalGroup[animal.name]
+                ? `x${animalGroup[animal.name]}`
                 : ""
               : ""}
           </TextWrapper>
