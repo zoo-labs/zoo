@@ -58,12 +58,12 @@ describe("ZooKeeper", () => {
         marketAddress = zooMarket.address;
 
         // Deploy Media
-        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo', marketAddress)) as ZooMedia
+        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo')) as ZooMedia
         await zooMedia.deployed();
         mediaAddress = zooMedia.address;
 
         // Launch ZooKeeper
-        zooKeeper = (await new ZooKeeper__factory(owner).deploy(zooMarket.address, zooMedia.address, zooToken.address)) as ZooKeeper
+        zooKeeper = (await new ZooKeeper__factory(owner).deploy()) as ZooKeeper
         await zooKeeper.deployed();
 
         // Reconfigure Market to point to Media
