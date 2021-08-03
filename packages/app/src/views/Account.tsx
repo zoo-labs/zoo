@@ -70,7 +70,6 @@ const StyledHeading = styles(Heading)`
    color: ${({ theme }) => theme.colors.text};
 `;
 
-let runTests = true;
 
 const Account: React.FC = () => {
    const [isInitial, setIsInitial] = useState(true);
@@ -114,47 +113,6 @@ const Account: React.FC = () => {
       try {
          const tokenBalance = await zooMedia.methods.balanceOf(account).call();
          console.log("tokenBalance", tokenBalance);
-
-         // Manual test helpers
-         // runTests = false;
-
-         // // Increase allowance so we can buy 100 eggs for testing
-         // const eggPrice = await zooDrop.methods.eggPrice().call();
-         // const tsx = zooToken.methods
-         //    .approve(keeperAdd, eggPrice*100)
-         //    .send({ from: account })
-
-         // // Buy initial two eggs
-         // await zooKeeper.methods.buyEgg(1).send({ from: account }).then((res) => {
-         //     console.log('buyEgg', res)
-         //  })
-         // await zooKeeper.methods.buyEgg(1).send({ from: account }).then((res) => {
-         //     console.log('buyEgg', res)
-         //  })
-
-         // // Hatch eggs into animals
-         // await zooKeeper.methods.hatchEgg(1, 1).send({ from: account }).then((res) => {
-         //   console.log('hatchEgg', res);
-         // })
-
-         // await zooKeeper.methods.hatchEgg(1, 2).send({ from: account }).then((res) => {
-         //   console.log('hatchEgg', res);
-         // })
-
-         // Breed animals into hybrid egg
-         // await zooKeeper.methods.breedAnimals(1, 3, 4).send({ from: account }).then((res) => {
-         //   console.log('breedAnimals', res)
-         // })
-
-         // Hatch hybrid egg into hybrid animal
-         // await zooKeeper.methods.hatchEgg(1, 5).send({ from: account }).then((res) => {
-         //   console.log('hatchEgg', res);
-         // })
-
-         // Free animal and collect yield
-         // await zooKeeper.methods.freeAnimal(6).send({ from: account }).then((res) => {
-         //     console.log('freeAnimal', res);
-         //  })
 
          if (tokenBalance > 1) {
             const tokenID = await zooMedia.methods
