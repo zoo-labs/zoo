@@ -200,8 +200,8 @@ function Feed<FeedPagePops>({ match }) {
    // if (isMyZoo) {
    myZooAnimalsFiltered.forEach((animal) => {
       // AF[1,2,3,2,1] //AD[1,2,3]
-      if (myZooAnimalData.find((a) => a.animalId === animal.animalId)) {
-         animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 2;
+      if (myZooAnimalData.find((a) => a.name === animal.name)) {
+         animalGroup[animal.name] = animalGroup[animal.name] + 1 || 2;
       } else {
          myZooAnimalData.push(animal);
       }

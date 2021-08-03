@@ -12,9 +12,9 @@ import "swiper/components/pagination/pagination.min.css";
 import { Text, Card as Existing, EggCard, VideoPlayer } from "components";
 import { getMilliseconds, getDaysHours } from "util/timeHelpers";
 import { breedTimeouts, eggTimeout } from "constants/constants";
-import { Animal } from "entities/zooentities";
-import { addAnimal, burnEgg } from "state/actions";
-import { animalMapping } from "util/animalMapping";
+// import { Animal } from "entities/zooentities";
+// import { addAnimal, burnEgg } from "state/actions";
+// import { animalMapping } from "util/animalMapping";
 import NewAnimalCard from "components/NewAnimal/NewAnimalCard";
 import { RarityColor } from "enums/rarity-color";
 import { AnimalCard } from "components/AnimalCard";
@@ -41,7 +41,6 @@ const RowLayout = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-
   & > * {
     // min-width: calc(100vw - 20px);
     // max-width: 31.5%;
@@ -89,56 +88,19 @@ const MyZooAccount: React.FC = () => {
     console.log(zooKeeper)
       try {
         // const token = await zooKeeper.methods.tokens(parseInt(egg.tokenId)).call()
-        const hatching = await zooKeeper.methods
-        .hatchEgg(1, parseInt(egg.tokenId))
-            .send({ from: account })
-            .then(async () => {
-               zooKeeper
-                  .getPastEvents("Hatch", {
-                     fromBlock: 0,
-                     toBlock: "latest",
-                     filter: {
-                        from: account,
-                     },
-                  })
-                  .then(async (events) => {
-                     const latest = events[events.length - 1];
-                     const newTknId = latest.returnValues.tokenID;
-                     const token = await zooKeeper.methods.tokens(newTknId).call()
-                     setShowBoth(true);
-                     setEggType(egg.basic ? "basic" : "hybrid");
-                     const newAnimal: Animal = {
-                        tokenId: String(newTknId),
-                        animalId: token.kind,
-                        name: token.name,
-                        description: "",
-                        yield: token.rarity.yield,
-                        boost: token.rarity.boost,
-                        rarity: token.rarity.name,
-                        dob: token.birthdate,
-                        imageUrl: token.data.tokenURI,
-                        startBid: "0",
-                        currentBid: "0",
-                        buyNow: "0",
-                        listed: false,
-                        bloodline: token.kind ==="1"? "pure" : "hybrid",
-                        owner: account,
-                        CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
-                        timeRemaining: 0,
-                        breedCount: 0,
-                        lastBred: "",
-                      };
-                      setHatched(newAnimal);
-                     
-                    //  dispatch(burnEgg(egg));
-                     // dispatch(addAnimal(newAnimal));
-                     startAnimationTimer();
-                  });
-                })
+        const hatching = await zooKeeper.methods.hatchEgg(1, parseInt(egg.tokenId)).send({ from: account })
+        .then((res) => {
+           console.log(res)
+           setShowBoth(true);
+           setEggType(egg.basic ? "basic" : "hybrid");
+         })
       } catch (error) {
         console.log(error)
       }
 
+    let randIdx: number;
+
+    console.log(egg)
 
     // REPLACE WITH HATCH FUNCTION FROM CONTRACT
     // if (egg.basic) {
@@ -222,7 +184,7 @@ const MyZooAccount: React.FC = () => {
     // dispatch(burnEgg(egg));
     // dispatch(addAnimal(newAnimal));
     // ---------------------------------------------
-    // startAnimationTimer();
+    startAnimationTimer();
   };
 
   const startAnimationTimer = useCallback(() => {
@@ -285,9 +247,7 @@ const MyZooAccount: React.FC = () => {
         )
       ) {
         animalGroup[animal.name] = animalGroup[animal.name] + 1 || 1;
-        console.log("in group", animal)
       } else {
-        console.log("animal", animal)
         animalData.push({
           id: index,
           ...animal,
@@ -313,7 +273,6 @@ const MyZooAccount: React.FC = () => {
       animalData.filter((item) => item.bloodline === hybrid),
       "bloodline"
     );
-
 
     return (
       <>
@@ -375,6 +334,7 @@ const MyZooAccount: React.FC = () => {
     Object.values(allEggs).forEach((egg, index) => {
       const eggType = egg.basic ? "BASIC" : "HYBRID";
       if ((egg.owner).toLowerCase() !== (account).toLowerCase()) {
+        console.log(account, egg)
         return;
       }
       const createdDate = egg.created
