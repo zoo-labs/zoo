@@ -191,7 +191,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
             onClick={() => {
               bscSwith('chapel')
             }}
-            width={mobile ? "auto" : "250px"}
+            width={mobile ? "auto" : "170px"}
           >
             {switchIcon}
             to BSC-Test
