@@ -168,6 +168,8 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup, hideBid }) => {
    const multiplier =
       animalGroup[item.animalId] > 1 ? `x${animalGroup[item.animalId]}` : "";
 
+   console.log("animalGroups: ", animalGroup)
+
    const buyButton = notShowBid ? (
       <></>
    ) : (
