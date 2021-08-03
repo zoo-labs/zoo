@@ -161,14 +161,13 @@ const Account: React.FC = () => {
          console.log("tokenBalance", tokenBalance);
 
          if (tokenBalance > 1) {
-            const tokenID = await zooMedia.methods
-               .tokenOfOwnerByIndex(account, 1)
-               .call();
-            console.log("tokenID", tokenID);
-            const tokenURI = await zooMedia.methods.tokenURI(tokenID).call();
-            console.log("tokenURI", tokenURI);
-            const token = await zooKeeper.methods.tokens(tokenID).call();
-            console.log("token", token);
+            // const tokenID = await zooMedia.methods
+            //    .tokenOfOwnerByIndex(account, 1)
+            //    .call();
+            // const tokenURI = await zooMedia.methods.tokenURI(tokenID).call();
+            // console.log("tokenURI", tokenURI);
+            // const token = await zooKeeper.methods.tokens(tokenID).call();
+            // console.log("token", token);
          }
 
          const decimals = await zooToken.methods.decimals().call();
@@ -348,7 +347,7 @@ const Account: React.FC = () => {
                      scale="sm"
                      minWidth={!isXl ? "120px" : "140px"}
                      style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}
-                     onClick={handleFunds}>
+                     onClick={()=>handleFunds()}>
                      {chainId !== 97 && chainId !== 31337
                         ? "Add Funds"
                         : wait
@@ -375,7 +374,7 @@ const Account: React.FC = () => {
                         disabled={disable || !allowance}
                         scale="sm"
                         minWidth={!isXl ? "120px" : "140px"}
-                        onClick={buyEgg}
+                        onClick={()=>buyEgg()}
                         style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}>
                         {disable ? "TSX PROCESSING" : "BUY EGGS"}
                      </BorderButton>
@@ -385,7 +384,7 @@ const Account: React.FC = () => {
                            disabled={disable || allowance}
                            scale="sm"
                            minWidth={!isXl ? "120px" : "140px"}
-                           onClick={approve}
+                           onClick={()=>approve()}
                            style={{
                               fontSize: `${!isXl ? "14px" : "16px"}`,
                            }}>

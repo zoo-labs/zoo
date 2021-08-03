@@ -83,7 +83,7 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
                </Text>
                {canFree && (
                   <Flex flexDirection="row" justifyContent="space-around">
-                     <BorderButton onClick={callFreeAnimal} scale="md">
+                     <BorderButton onClick={()=>callFreeAnimal()} scale="md">
                         Free Animal
                      </BorderButton>
                   </Flex>

@@ -226,7 +226,7 @@ const MyZooAccount: React.FC = () => {
     const animalData = [];
 
     Object.values(allAnimals).forEach((animal, index) => {
-      if (animal.owner !== account) {
+      if (animal.owner.toLowerCase() !== account.toLowerCase()) {
         return;
       }
       const lastBred = animal.lastBred
@@ -244,11 +244,13 @@ const MyZooAccount: React.FC = () => {
       if (
         timeRemaining <= 0 &&
         animalData.find(
-          (a) => a.animalId === animal.animalId && a.timeRemaining <= 0
+          (a) => a.name === animal.name && a.timeRemaining <= 0
         )
       ) {
-        animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 1;
+        animalGroup[animal.name] = animalGroup[animal.name] + 1 || 1;
+        console.log("in group", animal)
       } else {
+        console.log("animal", animal)
         animalData.push({
           id: index,
           ...animal,
@@ -274,6 +276,7 @@ const MyZooAccount: React.FC = () => {
       animalData.filter((item) => item.bloodline === hybrid),
       "bloodline"
     );
+
 
     return (
       <>
@@ -335,7 +338,6 @@ const MyZooAccount: React.FC = () => {
     Object.values(allEggs).forEach((egg, index) => {
       const eggType = egg.basic ? "BASIC" : "HYBRID";
       if ((egg.owner).toLowerCase() !== (account).toLowerCase()) {
-        console.log(account, egg)
         return;
       }
       const createdDate = egg.created
