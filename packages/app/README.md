@@ -1,6 +1,6 @@
-# Whitelabeled Components
+# Zoo
 
-whitelabeled starter app with metamask login and base components
+React + Redux app that powers the Zoo game frontend.
 
 ## Start the app
 
@@ -10,7 +10,7 @@ yarn start
 ```
 
 
-## See the components in Storybook 
+## See the components in Storybook
 
 ```
 yarn install
