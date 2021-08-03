@@ -174,11 +174,17 @@ contract ZooKeeper is Ownable {
         uint256 blockAge = block.number - token.birthday;
         uint256 daysOld = blockAge.div(28800);
 
+        console.log('blockAge', blockAge, 'daysOld', daysOld);
+
         // Calculate yield
         yield = daysOld.mul(token.rarity.yield);
 
+        console.log('yield', yield);
+
         // Transfer yield
+        console.log('transfer', msg.sender, yield);
         zoo.transfer(msg.sender, yield);
+
         emit Free(msg.sender, tokenID, yield);
     }
 
@@ -233,6 +239,8 @@ contract ZooKeeper is Ownable {
 
         // Get Egg
         IZoo.Token memory egg = tokens[eggID];
+
+        console.log("egg", uint256(egg.kind));
 
         // Get random animal or hybrid from Drop
         if (egg.kind == IZoo.Type.BASE_EGG) {
