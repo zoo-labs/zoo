@@ -77,15 +77,16 @@ contract ZooDrop is Ownable {
     // mapping of (parent + parent) to Hybrid
     mapping (string => Hybrid) public hybridParents;
 
-    constructor(string memory _title) {
-        title = _title;
-    }
-
+    // Ensure only ZK can call method
     modifier onlyZoo() {
         require(
             keeperAddress == msg.sender, "ZooDrop: Only ZooKeeper can call this method"
         );
         _;
+    }
+
+    constructor(string memory _title) {
+        title = _title;
     }
 
     function totalSupply() public view returns (uint256) {
