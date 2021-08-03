@@ -151,9 +151,9 @@ const Account: React.FC = () => {
        // })
 
        // Free animal and collect yield
-       await zooKeeper.methods.freeAnimal(17).send({ from: account }).then((res) => {
-           console.log('freeAnimal', res);
-        })
+      //  await zooKeeper.methods.freeAnimal(17).send({ from: account }).then((res) => {
+      //      console.log('freeAnimal', res);
+      //   })
      }
 
       try {
@@ -208,8 +208,9 @@ const Account: React.FC = () => {
       toastInfo('Processing approval...');
 
       const eggPrice = await zooDrop.methods.eggPrice().call();
+      console.log("price", eggPrice)
       const tsx = zooToken.methods
-         .approve(keeperAdd, eggPrice)
+         .approve(keeperAdd, web3.utils.toWei('1000000000', 'ether'))
          .send({ from: account });
       tsx.then(() => {
          setAllowance(true);
@@ -307,11 +308,12 @@ const Account: React.FC = () => {
       toastClear();
       toastInfo('Processing transaction...');
 
-      const drop = await zooKeeper.methods.drops(0).call();
+      const drop = await zooKeeper.methods.drops(1).call();
       console.log("Drop:", drop);
 
       try {
          // buyEgg(uint256 _dropID) public returns (uint256)
+         
          const buyEgg = zooKeeper.methods
             .buyEgg(1)
             .send({ from: account })

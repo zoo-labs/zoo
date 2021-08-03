@@ -140,9 +140,6 @@ export const AnimalCard = ({
   }) => {
     const animal1 = array[0];
     const animal2 = array[1];
-    const web3 = useWeb3();
-    const {chainId} = useWeb3React()
-    const zooKeeper = getZooKeeper(web3, chainId);
     const cancel = () => {
       animal1.selected = false;
       animal2.selected = false;
@@ -249,6 +246,9 @@ export const AnimalCard = ({
   const [onEggCreated] = useModal(<EggCreatedNotify onDismiss={() => null} />);
 
   const breed = async (onDismiss) => {
+    const web3 = useWeb3();
+    const {chainId} = useWeb3React()
+    const zooKeeper = getZooKeeper(web3, chainId);
     const an1 = parseInt(array[0].tokenId);
     const an2 = parseInt(array[1].tokenId);
     const anOb = Moralis.Object.extend("FinalAnimals");
@@ -262,6 +262,59 @@ export const AnimalCard = ({
     const aniM2 = res2[0];
     const mArray = [aniM1, aniM2];
     console.log("Breeding", mArray)
+    try {
+    // const token = await zooKeeper.methods.tokens(11).call();
+    //   console.log('token', token);
+      const hatching = await zooKeeper.methods.breedAnimals(1, an1, an2).send({ from: account })
+      .then((res) => {
+              console.log(res)
+              const TransOb = Moralis.Object.extend("Transactions");
+              const newTrans = new TransOb();
+
+              newTrans.set("From", account);
+              newTrans.set("Action", "Bred Animals");
+              // newTrans.set("TokenID", parseInt(egg.tokenId));
+              newTrans.set("Parent1", aniM1.attributes.Name);
+              newTrans.set("Parent2", aniM2.attributes.Name);
+              newTrans.save();
+              dispatch(addAnimal({...array[0], selected: false}));
+              dispatch(addAnimal({...array[1], selected: false}));
+       })
+    } catch (error) {
+      console.log(error)
+    }
+    
+        // const animal1: Animal = array[0];
+    // const animal2: Animal = array[1];
+    // array.forEach((animal) => {
+    //   animal.bred = true;
+    //   animal.breedCount = animal.breedCount + 1 || 1;
+    //   const now = new Date().getTime();
+    //   animal.lastBred = new Date().getTime();
+    //   const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount;
+    //   const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
+    //   const elapsedTime = now - animal.lastBred;
+
+    //   if (elapsedTime < breedTimeout) {
+    //     const timeRemaining = breedTimeout - elapsedTime;
+    //     const timeRemainingDaysHours = getDaysHours(timeRemaining);
+    //     const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
+
+    //     animal.timeRemaining = timeRemaining;
+    //     animal.CTAOverride = { barwidth, timeRemainingDaysHours };
+    //   } else {
+    //     animal.timeRemaining = 0;
+    //     animal.CTAOverride = {
+    //       barwidth: null,
+    //       timeRemainingDaysHours: null,
+    //     };
+    //   }
+    //   animal.selected = false;
+    // });
+
+    // array = [];
+    // // dispatch(addAnimal(animal1));
+    // // dispatch(addAnimal(animal2));
     // lastBred TimeRemaining BreedCount
     // mArray.forEach((animal) => {
     //   const count = animal.get("BreedCount");
