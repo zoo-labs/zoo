@@ -82,10 +82,9 @@ contract ZooKeeper is Ownable {
 
     // Burn token owned by owner
     function burn(address owner, uint256 tokenID) private {
-        console.log("burn", owner, tokenID);
         media.burnToken(owner, tokenID);
-        delete tokens[tokenID];
         console.log("burn", owner, tokenID);
+        delete tokens[tokenID];
         emit Burn(owner, tokenID);
     }
 
@@ -114,55 +113,32 @@ contract ZooKeeper is Ownable {
 
         // Mint Egg Token
         egg = mint(msg.sender, egg);
+        console.log('minted', egg.id);
+
         emit BuyEgg(msg.sender, egg.id);
-    }
-
-    function getAnimal(uint256 dropID, uint256 eggID) private view returns (IZoo.Token memory) {
-        console.log('getAnimal', dropID, eggID);
-
-        // Get Egg
-        IZoo.Token memory egg = tokens[eggID];
-
-        // Get random animal or hybrid from Drop
-        if (egg.kind == IZoo.Type.BASE_EGG) {
-            console.log("getRandomAnimal", dropID, eggID);
-            return IDrop(drops[dropID]).getRandomAnimal(unsafeRandom());
-        } else {
-            console.log("getRandomHybrid", dropID, eggID);
-            return IDrop(drops[dropID]).getRandomHybrid(unsafeRandom(), egg.parents);
-        }
     }
 
     // Burn egg and randomly return an animal NFT
     function hatchEgg(uint256 dropID, uint256 eggID) public {
-        console.log('hatchEgg', dropID, eggID);
+        console.log("hatchEgg", dropID, eggID);
+
+        require(media.tokenExists(eggID), "Egg is burned or does not exist");
 
         // Get animal for given Egg
         IZoo.Token memory animal = getAnimal(dropID, eggID);
-        console.log("after getAnimal", animal.name);
+        console.log("animal", animal.name);
 
         // ...it's hatching!
         animal = mint(msg.sender, animal);
+        console.log('minted', animal.id, eggID);
 
-        // burn egg
+        // bye egg
         burn(msg.sender, eggID);
+        console.log('burned', eggID);
 
         emit Hatch(msg.sender, animal.id);
     }
 
-    function isBaseAnimal(uint256 tokenID) private view returns (bool) {
-        return tokens[tokenID].kind == IZoo.Type.BASE_ANIMAL;
-    }
-
-    modifier canBreed(uint256 parentA, uint256 parentB) {
-        console.log("canBreed", parentA, parentB);
-
-        require(media.tokenExists(parentA) && media.tokenExists(parentB), "Non-existent token");
-        require(keccak256(abi.encode(parentA)) != keccak256(abi.encode(parentB)),"Not able to breed with self" );
-        require(breedReady(parentA) && breedReady(parentB), "Wait for cooldown to finish.");
-        require(isBaseAnimal(parentA) && isBaseAnimal(parentB), "Only BASE_ANIMAL can breed.");
-        _;
-    }
 
     // Breed two animals and create a hybrid egg
     function breedAnimals(uint256 dropID, uint256 tokenA, uint256 tokenB) public canBreed(tokenA, tokenB) returns (uint256) {
@@ -233,6 +209,39 @@ contract ZooKeeper is Ownable {
             )
         ) % 1000;
         return randomNumber;
+    }
+
+    // Ensure base animal
+    function isBaseAnimal(uint256 tokenID) private view returns (bool) {
+        return tokens[tokenID].kind == IZoo.Type.BASE_ANIMAL;
+    }
+
+    // Ensure animals can breed
+    modifier canBreed(uint256 parentA, uint256 parentB) {
+        console.log("canBreed", parentA, parentB);
+
+        require(media.tokenExists(parentA) && media.tokenExists(parentB), "Non-existent token");
+        require(keccak256(abi.encode(parentA)) != keccak256(abi.encode(parentB)),"Not able to breed with self" );
+        require(breedReady(parentA) && breedReady(parentB), "Wait for cooldown to finish.");
+        require(isBaseAnimal(parentA) && isBaseAnimal(parentB), "Only BASE_ANIMAL can breed.");
+        _;
+    }
+
+    // Get a random base or hybrid animal based on a given egg
+    function getAnimal(uint256 dropID, uint256 eggID) private view returns (IZoo.Token memory) {
+        console.log('getAnimal', dropID, eggID);
+
+        // Get Egg
+        IZoo.Token memory egg = tokens[eggID];
+
+        // Get random animal or hybrid from Drop
+        if (egg.kind == IZoo.Type.BASE_EGG) {
+            console.log("getRandomAnimal", dropID, eggID);
+            return IDrop(drops[dropID]).getRandomAnimal(unsafeRandom());
+        } else {
+            console.log("getRandomHybrid", dropID, eggID);
+            return IDrop(drops[dropID]).getRandomHybrid(unsafeRandom(), egg.parents);
+        }
     }
 
     // Update breed delays

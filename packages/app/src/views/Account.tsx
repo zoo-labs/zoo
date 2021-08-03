@@ -105,17 +105,17 @@ const Account: React.FC = () => {
          console.log("tokenBalance", tokenBalance);
 
          if (tokenBalance > 1) {
-            const tokenID = await zooMedia.methods
-               .tokenOfOwnerByIndex(account, 1)
-               .call();
-            console.log("tokenID", tokenID);
-            const tokenURI = await zooMedia.methods.tokenURI(tokenID).call();
-            console.log("tokenURI", tokenURI);
-            const token = await zooKeeper.methods.tokens(tokenID).call();
-            console.log("token", token);
+            // const tokenID = await zooMedia.methods
+            //    .tokenOfOwnerByIndex(account, 1)
+            //    .call();
+            // console.log("tokenID", tokenID);
+            // const tokenURI = await zooMedia.methods.tokenURI(tokenID).call();
+            // console.log("tokenURI", tokenURI);
+            // const token = await zooKeeper.methods.tokens(tokenID).call();
+            // console.log("token", token);
 
             // console.log('hatching')
-            // const hatch = await zooKeeper.methods.hatchEgg(1, 1).call();
+            // const hatch = await zooKeeper.methods.hatchEgg(1, 4).call();
             // console.log(hatch)
 
             // console.log('breeding')
@@ -125,7 +125,6 @@ const Account: React.FC = () => {
             // console.log("tokenURI2", tokenURI2);
             // const animal = await zooKeeper.methods.breedAnimals(1, 1, 2).call();
             // console.log(animal)
-
          }
 
          const decimals = await zooToken.methods.decimals().call();
