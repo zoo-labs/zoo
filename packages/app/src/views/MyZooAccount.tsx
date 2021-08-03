@@ -257,6 +257,7 @@ const MyZooAccount: React.FC = () => {
                   })
                   .then((events) => {
                      const latest = events[events.length - 1];
+                     const newTknId = latest.returnValues.tokenID;
                      setShowBoth(true);
                      setEggType(egg.basic ? "basic" : "hybrid");
                      dispatch(burnEgg(egg));
