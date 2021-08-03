@@ -214,7 +214,8 @@ contract ZooDrop is Ownable {
         // Convert egg into a token
         return IZoo.Token({
             rarity: getRarity('Common'),
-            kind: egg.kind,
+            kind: IZoo.Type.BASE_EGG,
+
             name: egg.name,
             birthday: block.number,
             timestamp: block.timestamp,
@@ -238,7 +239,7 @@ contract ZooDrop is Ownable {
         // Convert egg into a token
         return IZoo.Token({
             rarity: getRarity('Common'),
-            kind: egg.kind,
+            kind: IZoo.Type.HYBRID_EGG,
             name: egg.name,
             birthday: block.number,
             timestamp: block.timestamp,

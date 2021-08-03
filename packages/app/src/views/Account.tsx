@@ -69,6 +69,8 @@ const StyledHeading = styles(Heading)`
    color: ${({ theme }) => theme.colors.text};
 `;
 
+let runTests = true;
+
 const Account: React.FC = () => {
   const [balance, setBalance] = useState(0.0);
   const [wait, setWait] = useState(false);
@@ -104,33 +106,46 @@ const Account: React.FC = () => {
       const tokenBalance = await zooMedia.methods.balanceOf(account).call();
       console.log("tokenBalance", tokenBalance);
 
-      // if (tokenBalance > 0) {
-        // const tokenID = await zooMedia.methods
-        //    .tokenOfOwnerByIndex(account, 1)
-        //    .call();
-        // console.log("tokenID", tokenID);
-        // const tokenURI = await zooMedia.methods.tokenURI(tokenID).call();
-        // console.log("tokenURI", tokenURI);
-        // const token = await zooKeeper.methods.tokens(tokenID).call();
-        // console.log("token", token);
-        //
-        // await zooKeeper.methods.buyEgg(1).send({ from: account }).then((res) => {
-        //     console.log('buyEgg', res);
-        //  });
+      // Manual test helpers
+      // runTests = false;
 
-        // await zooKeeper.methods.hatchEgg(1, 16).send({ from: account }).then((res) => {
-        //   console.log('hatchEgg', res);
-        // })
+      // // Increase allowance so we can buy 100 eggs for testing
+      // const eggPrice = await zooDrop.methods.eggPrice().call();
+      // const tsx = zooToken.methods
+      //    .approve(keeperAdd, eggPrice*100)
+      //    .send({ from: account })
 
-        // console.log('breeding')
-        // const tokenURI1 = await zooMedia.methods.tokenURI(3).call();
-        // console.log("tokenURI1", tokenURI1);
-        // const tokenURI2 = await zooMedia.methods.tokenURI(2).call();
-        // console.log("tokenURI2", tokenURI2);
-        // await zooKeeper.methods.breedAnimals(1, 14, 15).send({ from: account }).then((res) => {
-        //   console.log('breedAnimals', res)
-        // });
-      // }
+      // // Buy initial two eggs
+      // await zooKeeper.methods.buyEgg(1).send({ from: account }).then((res) => {
+      //     console.log('buyEgg', res)
+      //  })
+      // await zooKeeper.methods.buyEgg(1).send({ from: account }).then((res) => {
+      //     console.log('buyEgg', res)
+      //  })
+
+      // // Hatch eggs into animals
+      // await zooKeeper.methods.hatchEgg(1, 1).send({ from: account }).then((res) => {
+      //   console.log('hatchEgg', res);
+      // })
+
+      // await zooKeeper.methods.hatchEgg(1, 2).send({ from: account }).then((res) => {
+      //   console.log('hatchEgg', res);
+      // })
+
+      // Breed animals into hybrid egg
+      // await zooKeeper.methods.breedAnimals(1, 3, 4).send({ from: account }).then((res) => {
+      //   console.log('breedAnimals', res)
+      // })
+
+      // Hatch hybrid egg into hybrid animal
+      // await zooKeeper.methods.hatchEgg(1, 5).send({ from: account }).then((res) => {
+      //   console.log('hatchEgg', res);
+      // })
+
+      // Free animal and collect yield
+      // await zooKeeper.methods.freeAnimal(6).send({ from: account }).then((res) => {
+      //     console.log('freeAnimal', res);
+      //  })
 
       const decimals = await zooToken.methods.decimals().call();
       const rawBalance = await zooToken.methods.balanceOf(account).call();
