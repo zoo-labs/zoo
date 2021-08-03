@@ -19,7 +19,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   })
 
   const zooAuction = (await deployments.get('ZooAuction'))
-  zooAuction.conigure(mediaAddress, tokenAddress)
+  zooAuction.configure(mediaAddress, tokenAddress)
 
   return hre.network.live;
 }
