@@ -174,15 +174,11 @@ contract ZooKeeper is Ownable {
         uint256 blockAge = block.number - token.birthday;
         uint256 daysOld = blockAge.div(28800);
 
-        console.log('blockAge', blockAge, 'daysOld', daysOld);
-
         // Calculate yield
         yield = daysOld.mul(token.rarity.yield);
-
-        console.log('yield', yield);
+        console.log(block.number, token.birthday, yield);
 
         // Transfer yield
-        console.log('transfer', msg.sender, yield);
         zoo.transfer(msg.sender, yield);
 
         emit Free(msg.sender, tokenID, yield);
@@ -280,5 +276,15 @@ contract ZooKeeper is Ownable {
 
         // Not ready
         return false;
+    }
+
+    // Return total amount of ZOO in contract
+    function zooSupply() public view onlyOwner returns (uint256) {
+        return zoo.balanceOf(address(this));
+    }
+
+    // Enable owner to withdraw ZOO if necessary
+    function zooWithdraw(address receiver, uint256 amount) public onlyOwner returns (bool) {
+        return zoo.transferFrom(address(this), receiver, amount);
     }
 }
