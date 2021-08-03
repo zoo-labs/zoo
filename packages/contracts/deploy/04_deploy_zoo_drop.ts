@@ -31,13 +31,11 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // Configure Drop
   await drop.configureKeeper(keeperAddress);
 
-  return;
-
   // Add eggs
   const eggs = [
     {
       name: "Base Egg",
-      price: 15405200, // about $210 / egg
+      price: 15405200*18, // about $210 / egg
       supply: 16000,
       tokenURI: "https://db.zoolabs/egg.jpg",
       metadataURI: "https://db.zoolabs.org/egg.json"
