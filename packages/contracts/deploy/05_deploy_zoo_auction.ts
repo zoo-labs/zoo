@@ -12,16 +12,18 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const tokenAddress = (await deployments.get('ZooToken')).address
   const mediaAddress = (await deployments.get('ZooMedia')).address
 
-  await deploy('ZooAuction', {
+  const deployResult = await deploy('ZooAuction', {
     from: deployer,
     args: [],
     log: true,
   })
 
-  const zooAuction = (await deployments.get('ZooAuction'))
-  zooAuction.configure(mediaAddress, tokenAddress)
+  const auctionAddress = deployResult.address;
+  const auction = await hre.ethers.getContractAt('ZooAuction', auctionAddress);
+  auction.configure(mediaAddress, tokenAddress)
 
-  return hre.network.live;
+  return false;
+  hre.network.live;
 }
 
 export default func
