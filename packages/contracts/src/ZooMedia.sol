@@ -277,32 +277,27 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         _mintForCreator(msg.sender, data, bidShares, "");
     }
 
-    function _hashToken(IZoo.Token memory token) private view returns (IZoo.Token memory) {
+    function _hashToken(address owner, IZoo.Token memory token) private view returns (IZoo.Token memory) {
         console.log('_hashToken', token.data.tokenURI, token.data.metadataURI);
         token.data.contentHash = keccak256(
-            abi.encodePacked(token.data.tokenURI, block.number, msg.sender)
+            abi.encodePacked(token.data.tokenURI, block.number, owner)
         );
         token.data.metadataHash = keccak256(
-            abi.encodePacked(token.data.metadataURI, block.number, msg.sender)
+            abi.encodePacked(token.data.metadataURI, block.number, owner)
         );
         return token;
     }
 
     function mintToken(address owner, IZoo.Token memory token) external override nonReentrant returns (IZoo.Token memory) {
         console.log('mintToken', owner, token.name);
-        token = _hashToken(token);
+        token = _hashToken(owner, token);
         _mintForCreator(owner, token.data, token.bidShares, "");
         uint256 id = getRecentToken(owner);
         token.id = id;
         return token;
     }
 
-    function burnToken(address owner, uint256 tokenID)
-        external override
-        nonReentrant
-        onlyExistingToken(tokenID)
-        onlyApprovedOrOwner(owner, tokenID) {
-        require(tokenExists(tokenID), "ZooMedia: nonexistent token");
+    function burnToken(address owner, uint256 tokenID) external override nonReentrant onlyExistingToken(tokenID) onlyApprovedOrOwner(owner, tokenID) {
         _burn(tokenID);
     }
 

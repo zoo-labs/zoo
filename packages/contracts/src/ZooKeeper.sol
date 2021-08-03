@@ -82,8 +82,8 @@ contract ZooKeeper is Ownable {
 
     // Burn token owned by owner
     function burn(address owner, uint256 tokenID) private {
-        media.burnToken(owner, tokenID);
         console.log("burn", owner, tokenID);
+        media.burnToken(owner, tokenID);
         delete tokens[tokenID];
         emit Burn(owner, tokenID);
     }
