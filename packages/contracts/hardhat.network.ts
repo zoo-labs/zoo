@@ -22,6 +22,10 @@ const networks: HardhatUserConfig['networks'] = {
   hardhat: {
     chainId: 31337,
     allowUnlimitedContractSize: true,
+    mining: {
+      auto: true,
+      interval: 3000
+    },
     accounts: {
       mnemonic: mnemonic(),
       accountsBalance: '10000000000000000000000',

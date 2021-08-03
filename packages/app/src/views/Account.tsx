@@ -91,11 +91,11 @@ const Account: React.FC = () => {
       history.push("/bank");
    };
 
-   const zooToken = getZooToken(web3, chainId);
-   const faucet = getZooFaucet(web3, chainId);
-   const zooMedia = getZooMedia(web3, chainId);
+   const zooToken  = getZooToken(web3, chainId);
+   const faucet    = getZooFaucet(web3, chainId);
+   const zooMedia  = getZooMedia(web3, chainId);
    const zooKeeper = getZooKeeper(web3, chainId);
-   const zooDrop = getZooDrop(web3, chainId);
+   const zooDrop   = getZooDrop(web3, chainId);
    const keeperAdd = zooKeeper.options.address;
    const faucetAmt = web3.utils.toWei("50");
 
@@ -115,7 +115,7 @@ const Account: React.FC = () => {
             console.log("token", token);
 
             // console.log('hatching')
-            // const hatch = await zooKeeper.methods.hatchEgg(1, 1).call();
+            // const hatch = await zooKeeper.methods.hatchEgg(1, 3).call();
             // console.log(hatch)
 
             // console.log('breeding')
