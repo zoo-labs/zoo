@@ -70,6 +70,7 @@ const StyledHeading = styles(Heading)`
    color: ${({ theme }) => theme.colors.text};
 `;
 
+let manualTest = true
 
 const Account: React.FC = () => {
    const [isInitial, setIsInitial] = useState(true);
@@ -110,6 +111,51 @@ const Account: React.FC = () => {
    const faucetAmt = web3.utils.toWei("50");
 
    const getBalance = async () => {
+     if (manualTest) {
+       manualTest = false;
+
+       // // Increase allowance so we can buy 100 eggs for testing
+       // const eggPrice = await zooDrop.methods.eggPrice().call();
+       // const tsx = zooToken.methods
+       //    .approve(keeperAdd, eggPrice*100)
+       //    .send({ from: account })
+
+       // // Buy initial two eggs
+       // await zooKeeper.methods.buyEgg(1).send({ from: account }).then((res) => {
+       //     console.log('buyEgg', res)
+       //  })
+       // await zooKeeper.methods.buyEgg(1).send({ from: account }).then((res) => {
+       //     console.log('buyEgg', res)
+       //  })
+
+       // Hatch eggs into animals
+       // await zooKeeper.methods.hatchEgg(1, 14).send({ from: account }).then((res) => {
+       //   console.log('hatchEgg', res);
+       // })
+       // await zooKeeper.methods.hatchEgg(1, 15).send({ from: account }).then((res) => {
+       //   console.log('hatchEgg', res);
+       // })
+
+       // await zooKeeper.methods.hatchEgg(1, 4).send({ from: account }).then((res) => {
+       //   console.log('hatchEgg', res);
+       // })
+
+       // // Breed animals into hybrid egg
+       // await zooKeeper.methods.breedAnimals(1, 14, 15).send({ from: account }).then((res) => {
+       //   console.log('breedAnimals', res)
+       // })
+
+       // Hatch hybrid egg into hybrid animal
+       // await zooKeeper.methods.hatchEgg(1, 16).send({ from: account }).then((res) => {
+       //   console.log('hatchEgg', res);
+       // })
+
+       // Free animal and collect yield
+       await zooKeeper.methods.freeAnimal(17).send({ from: account }).then((res) => {
+           console.log('freeAnimal', res);
+        })
+     }
+
       try {
          const tokenBalance = await zooMedia.methods.balanceOf(account).call();
          console.log("tokenBalance", tokenBalance);
