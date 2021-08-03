@@ -63,9 +63,9 @@ const Details = styled.div<{ hasHandler: boolean }>`
 
 const CloseHandler = styled.div`
   border-radius: 0 16px 16px 0;
-  right: 8px;
+  right: 4px;
   position: absolute;
-  top: 8px;
+  top: 12px;
 `;
 
 const StyledAlert = styled(Flex)`
