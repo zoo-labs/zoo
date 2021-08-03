@@ -29,14 +29,14 @@ let mintAmt = 100000000;
 let owner;
 let mediaAddress: string;
 let marketAddress: string;
-
+let eggPrice: any;
 
 
 const setupTest = deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
 
     const contracts = await deployments.fixture(); // ensure you start from a fresh deployments
 
-    const signers = await ethers.getSigners();
+    signers = await ethers.getSigners();
 
     zooToken = await ethers.getContractAt("ZooToken", contracts.ZooToken.address, signers[0]);
 
@@ -55,6 +55,8 @@ const setupTest = deployments.createFixture(async ({ deployments, getNamedAccoun
     const getDeployer = await getNamedAccounts();
 
     owner = getDeployer.deployer
+
+    eggPrice = await zooDrop.eggPrice();
 
     return true
 })
@@ -230,11 +232,7 @@ describe("ZooKeeper", () => {
         //     .approve(keeperAdd, eggPrice*100)
         //     .send({ from: account })
 
-        const getEggPrice = await zooDrop.eggPrice();
-
-        const eggPrice = parseInt(getEggPrice._hex);
-
-        const approve = await zooToken.approve(zooKeeper.address, eggPrice * 100);
+        const approve = await zooToken.approve(zooKeeper.address, parseInt(eggPrice) * 100);
 
 
         // // Buy initial two eggs
@@ -372,17 +370,19 @@ describe("ZooKeeper", () => {
 
     it.only("Should buy multiple basic eggs", async () => {
 
+        const preEggSupply = await zooDrop.eggSupply()
+
         for (var i = 0; i < 3; i++) {
 
             await zooKeeper.buyEgg(1);
 
         }
 
-        const getTotalSupply = await zooDrop.totalSupply();
+        const totalSupply = await zooDrop.totalSupply();
 
-        const totalSupply = parseInt(getTotalSupply)
+        const postEggSupply = await zooDrop.eggSupply()
 
-        expect(totalSupply).to.equal(6);
+        // expect(parseInt(postEggSupply)).to.be.equal(parseInt(preEggSupply) - parseInt(totalSupply))
 
     });
 
@@ -423,13 +423,18 @@ describe("ZooKeeper", () => {
 
     })
 
-    it("Should revert when not enough balance", async () => {
+    it.only("Should revert when not enough balance", async () => {
 
-        await zooToken.approve(zooKeeper.address, 210);
+        await zooToken.connect(signers[1]).approve(signers[2].address, BigInt(1e30));
+
+        await zooToken.connect(signers[1]).transfer(signers[2].address, BigInt(1e22));
+
+        await zooToken.connect(signers[1]).approve(zooKeeper.address, parseInt(eggPrice));
 
         await expect(zooKeeper.connect(signers[1]).buyEgg(1)).to.be.revertedWith(
-            "Not Enough ZOO Tokens to purchase Egg"
+            "ZK: Not Enough ZOO to purchase Egg"
         );
+
 
     });
 
