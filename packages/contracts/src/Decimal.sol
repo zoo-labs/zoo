@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
-pragma solidity 0.8.4;
+pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
 // Copyright 2019 dYdX Trading Inc.
@@ -22,8 +22,8 @@ pragma experimental ABIEncoderV2;
  * It has not been modified other than to use a newer solidity in the pragma to match the rest of the contract suite of this project
  */
 
-import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import {Math} from "./Math.sol";
+import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import { Math } from "./Math.sol";
 
 /**
  * @title Decimal

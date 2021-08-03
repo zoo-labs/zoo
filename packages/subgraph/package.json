@@ -1,7 +1,7 @@
 {
-  "name": "@cryptozoo/subgraph",
-  "license": "UNLICENSED",
+  "name": "@zoolabs/subgraph",
   "version": "1.0.0",
+  "license": "MIT",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",

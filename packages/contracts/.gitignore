@@ -4,3 +4,6 @@ cache/
 cache/
 types/
 artifacts/
+mnemonic.mainnet.txt
+mnemonic.testnet.txt
+credentials.json

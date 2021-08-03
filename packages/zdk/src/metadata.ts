@@ -5,8 +5,8 @@ import {
   validateVersion,
   supportedVersions,
   supportedVersionsTypeMapping,
-} from '@cryptozoo/media-metadata-schemas/dist/src'
-import * as MetadataTypes from '@cryptozoo/media-metadata-schemas/dist/types/types'
+} from '@zoolabs/media-metadata-schemas/dist/src'
+import * as MetadataTypes from '@zoolabs/media-metadata-schemas/dist/types/types'
 
 export { MetadataTypes }
 export { validateVersion, supportedVersions, supportedVersionsTypeMapping }

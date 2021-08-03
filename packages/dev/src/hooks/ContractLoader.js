@@ -74,7 +74,7 @@ export default function useContractLoader(providerOrSigner, config = {}) {
             console.log(e);
           }
           try {
-            externalContractList = config.externalContracts || require("../contracts/external_contracts.js");
+            externalContractList = config.externalContracts || require("../externalContracts.js");
           } catch (e) {
             console.log(e);
           }

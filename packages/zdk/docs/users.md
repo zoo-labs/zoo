@@ -3,7 +3,8 @@
 See the below example usage of `getZooProfiles`, which queries the Zoo profile information of a batch of ETH addresses (up to 100).
 
 ```typescript
-import { getZooProfiles } from '@cryptozoo/zdk'
+import { getZooProfiles } from '@zoolabs/zdk'
+
 ;(async () => {
   const addresses = [
     '0xBE7eb2a7A9C949322F6CCAA1c857FC227fB14CEd',

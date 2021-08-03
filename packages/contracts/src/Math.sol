@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
-pragma solidity 0.8.4;
+pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
-import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 /// @title Math
 /// Library for non-standard Math functions

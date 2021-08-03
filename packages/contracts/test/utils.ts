@@ -1,28 +1,26 @@
 // @ts-ignore
 import { ethers } from "hardhat";
 import {
-  MarketFactory,
-  Media,
-  MediaFactory,
-} from "../types';
-import {
+  ZooAuction,
+  ZooMarket,
+  ZooMedia,
+  ZooMarket__factory,
+  ZooMedia__factory,
+  ZooToken__factory,
+  ZooKeeper__factory,
   BadBidder,
-  AuctionHouse,
-  WETH,
   BadERC721,
   TestERC721,
+  ZooToken,
 } from "../types";
 import { sha256 } from "ethers/lib/utils";
 import Decimal from "../utils/Decimal";
-import { BigNumber } from "ethers";
-
-
-import { ZooToken__factory, Media__factory } from '../types';
-import { BigNumber, BigNumberish, Bytes, Wallet } from 'ethers';
+import { BigNumber, BigNumberish } from "ethers";
 import { MaxUint256, AddressZero } from '@ethersproject/constants';
 import { generatedWallets } from '../utils/generatedWallets';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { formatUnits } from '@ethersproject/units';
+import { Wallet } from '@ethersproject/wallet';
 import {
   recoverTypedMessage,
   recoverTypedSignature,
@@ -64,9 +62,6 @@ export async function getBalance(currency: string, owner: string) {
   return ZooToken__factory.connect(currency, deployerWallet).balanceOf(owner);
 }
 
-function revert(message: string) {
-  return `VM Exception while processing transaction: revert ${message}`;
-}
 export function toNumWei(val: BigNumber) {
   return parseFloat(formatUnits(val, 'wei'));
 }
@@ -87,7 +82,7 @@ export async function signPermit(
 ) {
   return new Promise<EIP712Sig>(async (res, reject) => {
     let nonce;
-    const mediaContract = Media__factory.connect(tokenAddress, owner);
+    const mediaContract = ZooMedia__factory.connect(tokenAddress, owner);
 
     try {
       nonce = (
@@ -159,7 +154,7 @@ export async function signMintWithSig(
 ) {
   return new Promise<EIP712Sig>(async (res, reject) => {
     let nonce;
-    const mediaContract = Media__factory.connect(tokenAddress, owner);
+    const mediaContract = ZooMedia__factory.connect(tokenAddress, owner);
 
     try {
       nonce = (await mediaContract.mintWithSigNonces(creator)).toNumber();
@@ -220,19 +215,17 @@ export async function signMintWithSig(
   });
 }
 
-
-export const THOUSANDTH_ETH = ethers.utils.parseUnits(
+export const THOUSANDTH_ZOO = ethers.utils.parseUnits(
   "0.001",
   "ether"
 ) as BigNumber;
-export const TENTH_ETH = ethers.utils.parseUnits("0.1", "ether") as BigNumber;
-export const ONE_ETH = ethers.utils.parseUnits("1", "ether") as BigNumber;
-export const TWO_ETH = ethers.utils.parseUnits("2", "ether") as BigNumber;
+export const TENTH_ZOO = ethers.utils.parseUnits("0.1", "ether") as BigNumber;
+export const ONE_ZOO = ethers.utils.parseUnits("1", "ether") as BigNumber;
+export const TWO_ZOO = ethers.utils.parseUnits("2", "ether") as BigNumber;
 
-export const deployWETH = async () => {
-  const [deployer] = await ethers.getSigners();
-  return (await (await ethers.getContractFactory("WETH")).deploy()) as WETH;
-};
+export const deployZooToken = async () => {
+  return (await (await ethers.getContractFactory("ZooToken")).deploy()) as ZooToken;
+}
 
 export const deployOtherNFTs = async () => {
   const bad = (await (
@@ -245,13 +238,17 @@ export const deployOtherNFTs = async () => {
   return { bad, test };
 };
 
-export const deployZoraProtocol = async () => {
+export const deployZooProtocol = async (tokenAddress) => {
   const [deployer] = await ethers.getSigners();
-  const market = await (await new MarketFactory(deployer).deploy()).deployed();
+  const market = await (await new ZooMarket__factory(deployer).deploy()).deployed();
+  const token = await (await new ZooToken__factory(deployer).deploy()).deployed();
   const media = await (
-    await new MediaFactory(deployer).deploy(market.address)
+    await new ZooMedia__factory(deployer).deploy("ANML", "ZooAnimals", market.address)
   ).deployed();
-  await market.configure(media.address);
+  const zookeeper = await (
+    await new ZooKeeper__factory(deployer).deploy(market.address, media.address, token.address)
+  ).deployed();
+  await market.configure(media.address, zookeeper.address);
   return { market, media };
 };
 
@@ -264,14 +261,14 @@ export const deployBidder = async (auction: string, nftContract: string) => {
   ).deployed()) as BadBidder;
 };
 
-export const mint = async (media: Media) => {
+export const mint = async (media: ZooMedia) => {
   const metadataHex = ethers.utils.formatBytes32String("{}");
   const metadataHash = await sha256(metadataHex);
   const hash = ethers.utils.arrayify(metadataHash);
   await media.mint(
     {
-      tokenURI: "zora.co",
-      metadataURI: "zora.co",
+      tokenURI: "cryptozoo.co",
+      metadataURI: "cryptozoo.co",
       contentHash: hash,
       metadataHash: hash,
     },
@@ -284,8 +281,8 @@ export const mint = async (media: Media) => {
 };
 
 export const approveAuction = async (
-  media: Media,
-  auctionHouse: AuctionHouse
+  media: ZooMedia,
+  auctionHouse: ZooAuction
 ) => {
   await media.approve(auctionHouse.address, 0);
 };
