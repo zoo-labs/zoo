@@ -1,19 +1,26 @@
-import { ethers } from 'hardhat';
-import { ZooKeeper__factory, ZooMedia__factory, ZooMarket__factory, Token, ZooDrop } from '../types';
-import { ZooMedia } from '../types/ZooMedia';
-import { ZooToken } from '../types/ZooToken';
-import { ZooFaucet } from '../types/ZooFaucet';
-import { ZooMarket } from '../types/ZooMarket';
-import { ZooKeeper } from '../types/ZooKeeper';
+import { deployments, ethers, getNamedAccounts, } from 'hardhat';
+
+// import { ZooKeeper__factory, ZooMedia__factory, ZooMarket__factory, Token, ZooDrop } from '../types';
+
+
+// import { ZooMedia } from '../types/ZooMedia';
+// import { ZooToken } from '../types/ZooToken';
+// import { ZooFaucet } from '../types/ZooFaucet';
+// import { ZooMarket } from '../types/ZooMarket';
+// import { ZooKeeper } from '../types/ZooKeeper';
 import chai, { expect } from "chai";
+// import configureGame from '../utils/configureGame';
 import { BigNumber, Bytes, BytesLike, utils } from 'ethers';
 
 import { solidity } from "ethereum-waffle";
+import "@nomiclabs/hardhat-ethers";
+import { hex } from 'chalk';
+
 
 chai.use(solidity);
 
 let zooToken: any;
-let zooFaucet: any;
+let zooDrop: any
 let zooMarket: any;
 let zooKeeper: any;
 let zooMedia: any;
@@ -23,58 +30,117 @@ let owner;
 let mediaAddress: string;
 let marketAddress: string;
 
+
+
+const setupTest = deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
+
+    const contracts = await deployments.fixture(); // ensure you start from a fresh deployments
+
+    const signers = await ethers.getSigners();
+
+    zooToken = await ethers.getContractAt("ZooToken", contracts.ZooToken.address, signers[0]);
+
+    zooMarket = await ethers.getContractAt("ZooMarket", contracts.ZooMarket.address, signers[0]);
+
+    zooMedia = await ethers.getContractAt("ZooMedia", contracts.ZooMedia.address, signers[0]);
+
+    zooKeeper = await ethers.getContractAt("ZooKeeper", contracts.ZooKeeper.address, signers[0]);
+
+    zooDrop = await ethers.getContractAt("ZooDrop", contracts.ZooDrop.address, signers[0]);
+
+
+    // this mint is executed once and then createFixture will ensure it is snapshotted
+    // await zooToken.mint(tokenOwner.deployer, 100000).then(tx => tx.wait());
+
+    const getDeployer = await getNamedAccounts();
+
+    owner = getDeployer.deployer
+
+    return true
+})
+
+describe("ZooToken", () => {
+
+    it.only("testing 1 2 3", async function () {
+        // const { tokenOwner } = await setupTest()
+
+        await setupTest()
+
+        // console.log(zooToken)
+
+
+        // console.log(tokenOwner)
+        // await tokenOwner.TokenContract.mint(2);
+    });
+
+
+});
+
 describe("ZooKeeper", () => {
 
     before(async () => {
 
+        // await deployments.all()
 
-        signers = await ethers.getSigners();
+        // const { owner } = await getNamedAccounts();
 
-        const zooTokenFactory = await ethers.getContractFactory(
-            "ZooToken",
-            signers[0]
-        );
+        // const zooKeeper = await ethers.getContract("ZooKeeper", owner);
 
-        // Deploy Token
-        zooToken = (await zooTokenFactory.deploy()) as ZooToken;
-        await zooToken.deployed();
-
-        // Deploy Faucet
-        const zooFaucetFactory = await ethers.getContractFactory(
-            "ZooFaucet",
-            signers[0]
-        );
-        zooFaucet = (await zooFaucetFactory.deploy(zooToken.address)) as ZooFaucet;
-        await zooFaucet.deployed();
-
-        // Mint some ZOO
-        owner = signers[0]
-        await zooToken.mint(zooFaucet.address, 1000000);
-        await zooFaucet.buyZoo(owner.address, 100);
-
-        // Deploy Market
-        zooMarket = (await new ZooMarket__factory(owner).deploy()) as ZooMarket;
-        await zooMarket.deployed();
-        marketAddress = zooMarket.address;
-
-        // Deploy Media
-        zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo')) as ZooMedia
-        await zooMedia.deployed();
-        mediaAddress = zooMedia.address;
-
-        // Launch ZooKeeper
-        zooKeeper = (await new ZooKeeper__factory(owner).deploy()) as ZooKeeper
-        await zooKeeper.deployed();
-
-        // Reconfigure Market to point to Media
-        await zooMarket.configure(mediaAddress, zooKeeper.address);
-
-        // Reconfigure Media to point to Media
-        await zooMedia.configure(mediaAddress, zooKeeper.address);
+        // zooKeeper.configure() // etc
 
 
-        await addAnimals();
-        await addHybrids();
+        // const zooTokenFactory = await ethers.getContractFactory(
+        //     "ZooToken",
+        //     signers[0]
+        // );
+
+        // // Deploy Token
+        // zooToken = (await zooTokenFactory.deploy()) as ZooToken;
+        // await zooToken.deployed();
+
+        // // Deploy Faucet
+        // const zooFaucetFactory = await ethers.getContractFactory(
+        //     "ZooFaucet",
+        //     signers[0]
+        // );
+        // zooFaucet = (await zooFaucetFactory.deploy(zooToken.address)) as ZooFaucet;
+        // await zooFaucet.deployed();
+
+        // // Mint some ZOO
+        // owner = signers[0]
+        // await zooToken.mint(zooFaucet.address, 1000000);
+        // await zooFaucet.buyZoo(owner.address, 100);
+
+        // // Deploy Market
+        // zooMarket = (await new ZooMarket__factory(owner).deploy()) as ZooMarket;
+        // await zooMarket.deployed();
+        // marketAddress = zooMarket.address;
+
+        // // Deploy Media
+        // zooMedia = (await new ZooMedia__factory(owner).deploy('ANML', 'CryptoZoo')) as ZooMedia
+        // await zooMedia.deployed();
+        // mediaAddress = zooMedia.address;
+
+        // // Launch ZooKeeper
+        // zooKeeper = (await new ZooKeeper__factory(owner).deploy()) as ZooKeeper
+        // await zooKeeper.deployed();
+
+        // // Reconfigure Market to point to Media
+        // await zooMarket.configure(mediaAddress, zooKeeper.address);
+
+        // // Reconfigure Media to point to Media
+        // await zooMedia.configure(mediaAddress, zooKeeper.address);
+
+        // const zooDropFactory = await ethers.getContractFactory('ZooDrop');
+
+        // zooDrop = (await zooDropFactory.deploy("TEST DROP")) as ZooDrop
+
+        // await zooDrop.deployed()
+
+        // await configureGame(zooKeeper, zooDrop);
+
+        // await addAnimals();
+        // await addHybrids();
 
     })
 
@@ -158,64 +224,90 @@ describe("ZooKeeper", () => {
 
     it.only("Should configure a playable game", async () => {
 
-         // // Increase allowance so we can buy 100 eggs for testing
-         // const eggPrice = await zooDrop.methods.eggPrice().call();
-         // const tsx = zooToken.methods
-         //    .approve(keeperAdd, eggPrice*100)
-         //    .send({ from: account })
+        // Increase allowance so we can buy 100 eggs for testing
+        //  const eggPrice = await zooDrop.methods.eggPrice().call();
+        //  const tsx = zooToken.methods
+        //     .approve(keeperAdd, eggPrice*100)
+        //     .send({ from: account })
 
-         // // Buy initial two eggs
-         // await zooKeeper.methods.buyEgg(1).send({ from: account }).then((res) => {
-         //     console.log('buyEgg', res)
-         //  })
-         // await zooKeeper.methods.buyEgg(1).send({ from: account }).then((res) => {
-         //     console.log('buyEgg', res)
-         //  })
+        const getEggPrice = await zooDrop.eggPrice();
 
-         // // Hatch eggs into animals
-         // await zooKeeper.methods.hatchEgg(1, 1).send({ from: account }).then((res) => {
-         //   console.log('hatchEgg', res);
-         // })
+        const eggPrice = parseInt(getEggPrice._hex);
 
-         // await zooKeeper.methods.hatchEgg(1, 2).send({ from: account }).then((res) => {
-         //   console.log('hatchEgg', res);
-         // })
+        const approve = await zooToken.approve(zooKeeper.address, eggPrice * 100);
 
-         // Breed animals into hybrid egg
-         // await zooKeeper.methods.breedAnimals(1, 3, 4).send({ from: account }).then((res) => {
-         //   console.log('breedAnimals', res)
-         // })
 
-         // Hatch hybrid egg into hybrid animal
-         // await zooKeeper.methods.hatchEgg(1, 5).send({ from: account }).then((res) => {
-         //   console.log('hatchEgg', res);
-         // })
+        // // Buy initial two eggs
+        // await zooKeeper.methods.buyEgg(1).send({ from: account }).then((res) => {
+        //     console.log('buyEgg', res)
+        //  })
 
-         // Free animal and collect yield
-         // await zooKeeper.methods.freeAnimal(6).send({ from: account }).then((res) => {
-         //     console.log('freeAnimal', res);
-         //  })
+        // await zooKeeper.methods.buyEgg(1).send({ from: account }).then((res) => {
+        //     console.log('buyEgg', res)
+        //  })
 
-         // if (tokenBalance > 1) {
-         //    const tokenID = await zooMedia.methods
-         //       .tokenOfOwnerByIndex(account, 1)
-         //       .call();
-         //    console.log("tokenID", tokenID);
-         //    const tokenURI = await zooMedia.methods.tokenURI(tokenID).call();
-         //    console.log("tokenURI", tokenURI);
-         //    const token = await zooKeeper.methods.tokens(tokenID).call();
-         //    console.log("token", token);
-         // }
+        await zooKeeper.buyEgg(1);
+
+        await zooKeeper.buyEgg(1);
+
+        // // Hatch eggs into animals
+        // await zooKeeper.methods.hatchEgg(1, 1).send({ from: account }).then((res) => {
+        //   console.log('hatchEgg', res);
+        // })
+
+        // await zooKeeper.methods.hatchEgg(1, 2).send({ from: account }).then((res) => {
+        //   console.log('hatchEgg', res);
+        // })
+
+        await zooKeeper.hatchEgg(1, 1);
+
+        await zooKeeper.hatchEgg(1, 2)
+
+
+        // Breed animals into hybrid egg
+        // await zooKeeper.methods.breedAnimals(1, 3, 4).send({ from: account }).then((res) => {
+        //   console.log('breedAnimals', res)
+        // })
+
+        await zooKeeper.breedAnimals(1, 3, 4);
+
+        // Hatch hybrid egg into hybrid animal
+        // await zooKeeper.methods.hatchEgg(1, 5).send({ from: account }).then((res) => {
+        //   console.log('hatchEgg', res);
+        // })
+
+        await zooKeeper.hatchEgg(1, 5);
+
+        // Free animal and collect yield
+        // await zooKeeper.methods.freeAnimal(6).send({ from: account }).then((res) => {
+        //     console.log('freeAnimal', res);
+        //  })
+
+        await zooKeeper.freeAnimal(6);
+
+        // if (tokenBalance > 1) {
+        //    const tokenID = await zooMedia.methods
+        //       .tokenOfOwnerByIndex(account, 1)
+        //       .call();
+        //    console.log("tokenID", tokenID);
+        //    const tokenURI = await zooMedia.methods.tokenURI(tokenID).call();
+        //    console.log("tokenURI", tokenURI);
+        //    const token = await zooKeeper.methods.tokens(tokenID).call();
+        //    console.log("token", token);
+        // }
+
+
     })
+
 
     /*
     Deploy Script
     */
-    it("Should get the ZooDrop owner", async () => {
+    it.only("Should get the ZooDrop owner", async () => {
 
         const zooDropOwner: string = await zooKeeper.owner();
 
-        expect(zooDropOwner).to.equal(owner.address);
+        expect(zooDropOwner).to.equal(owner);
     });
 
     /**
@@ -241,49 +333,56 @@ describe("ZooKeeper", () => {
     /**
      * BUYING EGGS
      */
-    it("Should buy a basic egg", async () => {
+    it.only("Should buy a basic egg", async () => {
 
-        await zooToken.approve(zooKeeper.address, 210)
-
-        const buyEgg = await zooKeeper.connect(owner).buyEgg(1);
+        const buyEgg = await zooKeeper.buyEgg(1);
 
         const buyEggReceipt = await buyEgg.wait();
 
         const sender = buyEggReceipt.events;
 
-        let from_add
+        let from_add: any;
 
-        let token_id
+        let token_id: any
 
-        sender.forEach(element => {
-            if (element.event == "BuyEgg") {
-                from_add = element.args["_from"]
-                token_id = element.args["_tokenID"]
+        for (var i = 0; i < sender.length; i++) {
+
+            if (sender[i].event === "BuyEgg") {
+
+                from_add = sender[i].args['from'];
+
+                token_id = sender[i].args['tokenID'];
             }
-        });
+        }
 
-        expect(from_add).to.equal(owner.address);
+        expect(from_add).to.equal(owner);
 
-        expect(token_id.toNumber()).to.equal(0);
+        expect(parseInt(token_id._hex)).to.equal(7);
 
         // add check for types mapping
-        expect(await zooKeeper.types(token_id.toNumber())).to.equal(token_id.toNumber());
+        // expect(await zooKeeper.types(parseInt(token_id._hex))).to.equal(parseInt(token_id._hex));
 
-        // check eggs mapping for new egg
-        let egg = await zooKeeper.eggs(token_id.toNumber());
+        // // check eggs mapping for new egg
+        // let egg = await zooKeeper.eggs(parseInt(token_id._hex));
 
-        expect(egg.eggCreationTime.toNumber()).to.greaterThan(0);
+        // console.log(egg.eggCreationTime)
+
+        // expect(egg.eggCreationTime.toNumber()).to.greaterThan(0);
     });
 
-    it("Should buy multiple basic eggs", async () => {
-
-        await zooToken.approve(zooKeeper.address, 2000);
+    it.only("Should buy multiple basic eggs", async () => {
 
         for (var i = 0; i < 3; i++) {
 
-            await zooKeeper.connect(owner).buyEgg(1);
+            await zooKeeper.buyEgg(1);
 
         }
+
+        const getTotalSupply = await zooDrop.totalSupply();
+
+        const totalSupply = parseInt(getTotalSupply)
+
+        expect(totalSupply).to.equal(6);
 
     });
 
