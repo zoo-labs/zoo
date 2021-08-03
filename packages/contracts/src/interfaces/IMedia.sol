@@ -4,8 +4,8 @@
 pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
-import {IMarket} from "./IMarket.sol";
-import {IZoo} from "./IZoo.sol";
+import { IMarket } from "./IMarket.sol";
+import { IZoo } from "./IZoo.sol";
 
 /**
  * @title Interface for Zoo Protocol's Media
@@ -29,9 +29,9 @@ interface IMedia {
         bytes32 metadataHash;
     }
 
-    event TokenURIUpdated(uint256 indexed _tokenId, address owner, string _uri);
+    event TokenURIUpdated(uint256 indexed _tokenID, address owner, string _uri);
     event TokenMetadataURIUpdated(
-        uint256 indexed _tokenId,
+        uint256 indexed _tokenID,
         address owner,
         string _uri
     );
@@ -39,7 +39,7 @@ interface IMedia {
     /**
      * @notice Return the metadata URI for a piece of media given the token URI
      */
-    function tokenMetadataURI(uint256 tokenId)
+    function tokenMetadataURI(uint256 tokenID)
         external
         view
         returns (string memory);
@@ -65,45 +65,45 @@ interface IMedia {
      * Save the previous owner before the transfer, in case there is a sell-on fee.
      * @dev This can only be called by the auction contract specified at deployment
      */
-    function auctionTransfer(uint256 tokenId, address recipient) external;
+    function auctionTransfer(uint256 tokenID, address recipient) external;
 
     /**
      * @notice Set the ask on a piece of media
      */
-    function setAsk(uint256 tokenId, IMarket.Ask calldata ask) external;
+    function setAsk(uint256 tokenID, IMarket.Ask calldata ask) external;
 
     /**
      * @notice Remove the ask on a piece of media
      */
-    function removeAsk(uint256 tokenId) external;
+    function removeAsk(uint256 tokenID) external;
 
     /**
      * @notice Set the bid on a piece of media
      */
-    function setBid(uint256 tokenId, IMarket.Bid calldata bid) external;
+    function setBid(uint256 tokenID, IMarket.Bid calldata bid) external;
 
     /**
      * @notice Remove the bid on a piece of media
      */
-    function removeBid(uint256 tokenId) external;
+    function removeBid(uint256 tokenID) external;
 
-    function acceptBid(uint256 tokenId, IMarket.Bid calldata bid) external;
+    function acceptBid(uint256 tokenID, IMarket.Bid calldata bid) external;
 
     /**
      * @notice Revoke approval for a piece of media
      */
-    function revokeApproval(uint256 tokenId) external;
+    function revokeApproval(uint256 tokenID) external;
 
     /**
      * @notice Update the token URI
      */
-    function updateTokenURI(uint256 tokenId, string calldata tokenURI) external;
+    function updateTokenURI(uint256 tokenID, string calldata tokenURI) external;
 
     /**
      * @notice Update the token metadata uri
      */
     function updateTokenMetadataURI(
-        uint256 tokenId,
+        uint256 tokenID,
         string calldata metadataURI
     ) external;
 
@@ -112,7 +112,7 @@ interface IMedia {
      */
     function permit(
         address spender,
-        uint256 tokenId,
+        uint256 tokenID,
         EIP712Signature calldata sig
     ) external;
 

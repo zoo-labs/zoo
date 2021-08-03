@@ -19,7 +19,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   })
 
   // Better to use deploy script for these bits, for local dev it deploys fine.
-  // return;
 
   const dropAddress = deployResult.address;
   const keeperAddress = (await deployments.get('ZooKeeper')).address
@@ -32,12 +31,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // Configure Drop
   await drop.configureKeeper(keeperAddress);
 
+  return;
 
   // Add eggs
   const eggs = [
     {
       name: "Base Egg",
-      price: 210,
+      price: 15405200, // about $210 / egg
       supply: 16000,
       tokenURI: "https://db.zoolabs/egg.jpg",
       metadataURI: "https://db.zoolabs.org/egg.json"

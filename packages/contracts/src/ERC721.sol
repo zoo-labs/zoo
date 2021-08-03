@@ -125,10 +125,10 @@ contract ERC721 is
     /**
      * @dev See {IERC721-ownerOf}.
      */
-    function ownerOf(uint256 tokenId) public view override returns (address) {
+    function ownerOf(uint256 tokenID) public view override returns (address) {
         return
             _tokenOwners.get(
-                tokenId,
+                tokenID,
                 "ERC721: owner query for nonexistent token"
             );
     }
@@ -150,7 +150,7 @@ contract ERC721 is
     /**
      * @dev See {IERC721Metadata-tokenURI}.
      */
-    function tokenURI(uint256 tokenId)
+    function tokenURI(uint256 tokenID)
         public
         view
         virtual
@@ -158,11 +158,11 @@ contract ERC721 is
         returns (string memory)
     {
         require(
-            _exists(tokenId),
+            _exists(tokenID),
             "ERC721Metadata: URI query for nonexistent token"
         );
 
-        string memory _tokenURI = _tokenURIs[tokenId];
+        string memory _tokenURI = _tokenURIs[tokenID];
 
         // If there is no base URI, return the token URI.
         if (bytes(_baseURI).length == 0) {
@@ -173,7 +173,7 @@ contract ERC721 is
             return string(abi.encodePacked(_baseURI, _tokenURI));
         }
         // If there is a baseURI but no tokenURI, concatenate the tokenID to the baseURI.
-        return string(abi.encodePacked(_baseURI, tokenId.toString()));
+        return string(abi.encodePacked(_baseURI, tokenID.toString()));
     }
 
     /**
@@ -201,7 +201,7 @@ contract ERC721 is
      * @dev See {IERC721Enumerable-totalSupply}.
      */
     function totalSupply() public view override returns (uint256) {
-        // _tokenOwners are indexed by tokenIds, so .length() returns the number of tokenIds
+        // _tokenOwners are indexed by tokenIDs, so .length() returns the number of tokenIDs
         return _tokenOwners.length();
     }
 
@@ -214,15 +214,15 @@ contract ERC721 is
         override
         returns (uint256)
     {
-        (uint256 tokenId, ) = _tokenOwners.at(index);
-        return tokenId;
+        (uint256 tokenID, ) = _tokenOwners.at(index);
+        return tokenID;
     }
 
     /**
      * @dev See {IERC721-approve}.
      */
-    function approve(address to, uint256 tokenId) public virtual override {
-        address owner = ownerOf(tokenId);
+    function approve(address to, uint256 tokenID) public virtual override {
+        address owner = ownerOf(tokenID);
 
         console.log("The owner", owner);
         require(to != owner, "ERC721: approval to current owner");
@@ -233,24 +233,24 @@ contract ERC721 is
             "ERC721: approve caller is not owner nor approved for all"
         );
 
-        _approve(to, tokenId);
+        _approve(to, tokenID);
     }
 
     /**
      * @dev See {IERC721-getApproved}.
      */
-    function getApproved(uint256 tokenId)
+    function getApproved(uint256 tokenID)
         public
         view
         override
         returns (address)
     {
         require(
-            _exists(tokenId),
+            _exists(tokenID),
             "ERC721: approved query for nonexistent token"
         );
 
-        return _tokenApprovals[tokenId];
+        return _tokenApprovals[tokenID];
     }
 
     /**
@@ -285,15 +285,15 @@ contract ERC721 is
     function transferFrom(
         address from,
         address to,
-        uint256 tokenId
+        uint256 tokenID
     ) public virtual override {
         //solhint-disable-next-line max-line-length
         require(
-            _isApprovedOrOwner(_msgSender(), tokenId),
+            _isApprovedOrOwner(_msgSender(), tokenID),
             "ERC721: transfer caller is not owner nor approved"
         );
 
-        _transfer(from, to, tokenId);
+        _transfer(from, to, tokenID);
     }
 
     /**
@@ -302,9 +302,9 @@ contract ERC721 is
     function safeTransferFrom(
         address from,
         address to,
-        uint256 tokenId
+        uint256 tokenID
     ) public virtual override {
-        safeTransferFrom(from, to, tokenId, "");
+        safeTransferFrom(from, to, tokenID, "");
     }
 
     /**
@@ -313,18 +313,18 @@ contract ERC721 is
     function safeTransferFrom(
         address from,
         address to,
-        uint256 tokenId,
+        uint256 tokenID,
         bytes memory _data
     ) public virtual override {
         require(
-            _isApprovedOrOwner(_msgSender(), tokenId),
+            _isApprovedOrOwner(_msgSender(), tokenID),
             "ERC721: transfer caller is not owner nor approved"
         );
-        _safeTransfer(from, to, tokenId, _data);
+        _safeTransfer(from, to, tokenID, _data);
     }
 
     /**
-     * @dev Safely transfers `tokenId` token from `from` to `to`, checking first that contract recipients
+     * @dev Safely transfers `tokenID` token from `from` to `to`, checking first that contract recipients
      * are aware of the ERC721 protocol to prevent tokens from being forever locked.
      *
      * `_data` is additional data, it has no specified format and it is sent in call to `to`.
@@ -336,7 +336,7 @@ contract ERC721 is
      *
      * - `from` cannot be the zero address.
      * - `to` cannot be the zero address.
-     * - `tokenId` token must exist and be owned by `from`.
+     * - `tokenID` token must exist and be owned by `from`.
      * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.
      *
      * Emits a {Transfer} event.
@@ -344,73 +344,73 @@ contract ERC721 is
     function _safeTransfer(
         address from,
         address to,
-        uint256 tokenId,
+        uint256 tokenID,
         bytes memory _data
     ) internal virtual {
-        _transfer(from, to, tokenId);
+        _transfer(from, to, tokenID);
         require(
-            _checkOnERC721Received(from, to, tokenId, _data),
+            _checkOnERC721Received(from, to, tokenID, _data),
             "ERC721: transfer to non ERC721Receiver implementer"
         );
     }
 
     /**
-     * @dev Returns whether `tokenId` exists.
+     * @dev Returns whether `tokenID` exists.
      *
      * Tokens can be managed by their owner or approved accounts via {approve} or {setApprovalForAll}.
      *
      * Tokens start existing when they are minted (`_mint`),
      * and stop existing when they are burned (`_burn`).
      */
-    function _exists(uint256 tokenId) internal view returns (bool) {
-        return _tokenOwners.contains(tokenId);
+    function _exists(uint256 tokenID) internal view returns (bool) {
+        return _tokenOwners.contains(tokenID);
     }
 
     /**
-     * @dev Returns whether `spender` is allowed to manage `tokenId`.
+     * @dev Returns whether `spender` is allowed to manage `tokenID`.
      *
      * Requirements:
      *
-     * - `tokenId` must exist.
+     * - `tokenID` must exist.
      */
-    function _isApprovedOrOwner(address spender, uint256 tokenId)
+    function _isApprovedOrOwner(address spender, uint256 tokenID)
         internal
         view
         returns (bool)
     {
         require(
-            _exists(tokenId),
+            _exists(tokenID),
             "ERC721: operator query for nonexistent token"
         );
-        address owner = ownerOf(tokenId);
+        address owner = ownerOf(tokenID);
         return (spender == owner ||
-            getApproved(tokenId) == spender ||
+            getApproved(tokenID) == spender ||
             isApprovedForAll(owner, spender));
     }
 
     /**
-     * @dev Public method which returns whether `spender` is allowed to manage `tokenId`.
+     * @dev Public method which returns whether `spender` is allowed to manage `tokenID`.
      *
      * Requirements:
      *
-     * - `tokenId` must exist.
+     * - `tokenID` must exist.
      */
-    function isApprovedOrOwner(address spender, uint256 tokenId) public view returns (bool) {
-        return _isApprovedOrOwner(spender, tokenId);
+    function isApprovedOrOwner(address spender, uint256 tokenID) public view returns (bool) {
+        return _isApprovedOrOwner(spender, tokenID);
     }
 
     /**
-     * @dev Safely mints `tokenId` and transfers it to `to`.
+     * @dev Safely mints `tokenID` and transfers it to `to`.
      *
      * Requirements:
      d*
-     * - `tokenId` must not exist.
+     * - `tokenID` must not exist.
      * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.
      *
      * Emits a {Transfer} event.
      */
-    function _safeMint(address to, uint256 tokenId) internal virtual {
-        _safeMint(to, tokenId, "");
+    function _safeMint(address to, uint256 tokenID) internal virtual {
+        _safeMint(to, tokenID, "");
     }
 
     /**
@@ -419,122 +419,122 @@ contract ERC721 is
      */
     function _safeMint(
         address to,
-        uint256 tokenId,
+        uint256 tokenID,
         bytes memory _data
     ) internal virtual {
-        _mint(to, tokenId);
+        _mint(to, tokenID);
         require(
-            _checkOnERC721Received(address(0), to, tokenId, _data),
+            _checkOnERC721Received(address(0), to, tokenID, _data),
             "ERC721: transfer to non ERC721Receiver implementer"
         );
     }
 
     /**
-     * @dev Mints `tokenId` and transfers it to `to`.
+     * @dev Mints `tokenID` and transfers it to `to`.
      *
      * WARNING: Usage of this method is discouraged, use {_safeMint} whenever possible
      *
      * Requirements:
      *
-     * - `tokenId` must not exist.
+     * - `tokenID` must not exist.
      * - `to` cannot be the zero address.
      *
      * Emits a {Transfer} event.
      */
-    function _mint(address to, uint256 tokenId) internal virtual {
+    function _mint(address to, uint256 tokenID) internal virtual {
         require(to != address(0), "ERC721: mint to the zero address");
-        require(!_exists(tokenId), "ERC721: token already minted");
+        require(!_exists(tokenID), "ERC721: token already minted");
 
-        _beforeTokenTransfer(address(0), to, tokenId);
+        _beforeTokenTransfer(address(0), to, tokenID);
 
-        _holderTokens[to].add(tokenId);
+        _holderTokens[to].add(tokenID);
 
-        _tokenOwners.set(tokenId, to);
+        _tokenOwners.set(tokenID, to);
 
-        emit Transfer(address(0), to, tokenId);
+        emit Transfer(address(0), to, tokenID);
     }
 
     /**
-     * @dev Destroys `tokenId`.
+     * @dev Destroys `tokenID`.
      * The approval is cleared when the token is burned.
      *
      * Requirements:
      *
-     * - `tokenId` must exist.
+     * - `tokenID` must exist.
      *
      * Emits a {Transfer} event.
      */
-    function _burn(uint256 tokenId) internal virtual {
-        address owner = ownerOf(tokenId);
+    function _burn(uint256 tokenID) internal virtual {
+        address owner = ownerOf(tokenID);
 
-        _beforeTokenTransfer(owner, address(0), tokenId);
+        _beforeTokenTransfer(owner, address(0), tokenID);
 
         // Clear approvals
-        _approve(address(0), tokenId);
+        _approve(address(0), tokenID);
 
         // Clear metadata (if any)
-        if (bytes(_tokenURIs[tokenId]).length != 0) {
-            delete _tokenURIs[tokenId];
+        if (bytes(_tokenURIs[tokenID]).length != 0) {
+            delete _tokenURIs[tokenID];
         }
 
-        _holderTokens[owner].remove(tokenId);
+        _holderTokens[owner].remove(tokenID);
 
-        _tokenOwners.remove(tokenId);
+        _tokenOwners.remove(tokenID);
 
-        emit Transfer(owner, address(0), tokenId);
+        emit Transfer(owner, address(0), tokenID);
     }
 
     /**
-     * @dev Transfers `tokenId` from `from` to `to`.
+     * @dev Transfers `tokenID` from `from` to `to`.
      *  As opposed to {transferFrom}, this imposes no restrictions on msg.sender.
      *
      * Requirements:
      *
      * - `to` cannot be the zero address.
-     * - `tokenId` token must be owned by `from`.
+     * - `tokenID` token must be owned by `from`.
      *
      * Emits a {Transfer} event.
      */
     function _transfer(
         address from,
         address to,
-        uint256 tokenId
+        uint256 tokenID
     ) internal virtual {
         require(
-            ownerOf(tokenId) == from,
+            ownerOf(tokenID) == from,
             "ERC721: transfer of token that is not own"
         );
         require(to != address(0), "ERC721: transfer to the zero address");
 
-        _beforeTokenTransfer(from, to, tokenId);
+        _beforeTokenTransfer(from, to, tokenID);
 
         // Clear approvals from the previous owner
-        _approve(address(0), tokenId);
+        _approve(address(0), tokenID);
 
-        _holderTokens[from].remove(tokenId);
-        _holderTokens[to].add(tokenId);
+        _holderTokens[from].remove(tokenID);
+        _holderTokens[to].add(tokenID);
 
-        _tokenOwners.set(tokenId, to);
+        _tokenOwners.set(tokenID, to);
 
-        emit Transfer(from, to, tokenId);
+        emit Transfer(from, to, tokenID);
     }
 
     /**
-     * @dev Sets `_tokenURI` as the tokenURI of `tokenId`.
+     * @dev Sets `_tokenURI` as the tokenURI of `tokenID`.
      *
      * Requirements:
      *
-     * - `tokenId` must exist.
+     * - `tokenID` must exist.
      */
-    function _setTokenURI(uint256 tokenId, string memory _tokenURI)
+    function _setTokenURI(uint256 tokenID, string memory _tokenURI)
         internal
         virtual
     {
         require(
-            _exists(tokenId),
+            _exists(tokenID),
             "ERC721Metadata: URI set of nonexistent token"
         );
-        _tokenURIs[tokenId] = _tokenURI;
+        _tokenURIs[tokenID] = _tokenURI;
     }
 
     /**
@@ -552,14 +552,14 @@ contract ERC721 is
      *
      * @param from address representing the previous owner of the given token ID
      * @param to target address that will receive the tokens
-     * @param tokenId uint256 ID of the token to be transferred
+     * @param tokenID uint256 ID of the token to be transferred
      * @param _data bytes optional data to send along with the call
      * @return bool whether the call correctly returned the expected magic value
      */
     function _checkOnERC721Received(
         address from,
         address to,
-        uint256 tokenId,
+        uint256 tokenID,
         bytes memory _data
     ) private returns (bool) {
         if (!to.isContract()) {
@@ -570,7 +570,7 @@ contract ERC721 is
                 IERC721Receiver(to).onERC721Received.selector,
                 _msgSender(),
                 from,
-                tokenId,
+                tokenID,
                 _data
             ),
             "ERC721: transfer to non ERC721Receiver implementer"
@@ -579,9 +579,9 @@ contract ERC721 is
         return (retval == _ERC721_RECEIVED);
     }
 
-    function _approve(address to, uint256 tokenId) internal {
-        _tokenApprovals[tokenId] = to;
-        emit Approval(ownerOf(tokenId), to, tokenId);
+    function _approve(address to, uint256 tokenID) internal {
+        _tokenApprovals[tokenID] = to;
+        emit Approval(ownerOf(tokenID), to, tokenID);
     }
 
     /**
@@ -590,10 +590,10 @@ contract ERC721 is
      *
      * Calling conditions:
      *
-     * - When `from` and `to` are both non-zero, ``from``'s `tokenId` will be
+     * - When `from` and `to` are both non-zero, ``from``'s `tokenID` will be
      * transferred to `to`.
-     * - When `from` is zero, `tokenId` will be minted for `to`.
-     * - When `to` is zero, ``from``'s `tokenId` will be burned.
+     * - When `from` is zero, `tokenID` will be minted for `to`.
+     * - When `to` is zero, ``from``'s `tokenID` will be burned.
      * - `from` cannot be the zero address.
      * - `to` cannot be the zero address.
      *
@@ -602,6 +602,6 @@ contract ERC721 is
     function _beforeTokenTransfer(
         address from,
         address to,
-        uint256 tokenId
+        uint256 tokenID
     ) internal virtual {}
 }
