@@ -331,7 +331,7 @@ const Account: React.FC = () => {
                         minWidth={!isXl ? "120px" : "140px"}
                         onClick={buyEgg}
                         style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}>
-                        {disable ? "TSX PROCESSING" : "BUY EGGS"}
+                        {disable ? "TSX PROCESSING" : "BUY EGG"}
                      </BorderButton>
 
                      {(keepApprove || !allowance) && (
