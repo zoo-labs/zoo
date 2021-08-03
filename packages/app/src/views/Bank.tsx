@@ -55,6 +55,22 @@ const ValueWrapper = styles(Text)`
     padding: 16px;
     font-size: 18px;
 `;
+
+const EarnerValueWrapper = styles(Text)`
+   color: ${({ theme }) => theme.colors.text};
+   width: 100%;
+   flex-direction: column;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   padding: 12px 16px;
+`;
+
+const EarnerValue = styles(Text)`
+   color: ${({ theme }) => theme.colors.text};
+   font-size: 18px;
+   line-height: 1.8;
+`;
+
 const Container = styled.div`
   filter: ${({ theme }) => theme.card.dropShadow};
   width: 100%;
@@ -156,6 +172,9 @@ Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server";
 
 
 const Bank: React.FC = () => {
+   const animalsState = useSelector<AppState, AppState["zoo"]["animals"]>(
+      (state) => state.zoo.animals
+   );
    const [zooBalance, setBalance] = useState(0.0);
    const { account, chainId } = useWeb3React();
    const web3 = useWeb3();
@@ -173,6 +192,9 @@ const Bank: React.FC = () => {
 
    const faucet = getZooFaucet(web3, chainId);
    const faucetAmt = web3.utils.toWei("50");
+   const accountAnimals = Object.values(animalsState).filter((animal) => {
+      return (animal.owner && animal.owner.toLowerCase() === account.toLowerCase());
+   });
 
    const getBalance = async () => {
       try {
@@ -226,7 +248,7 @@ const Bank: React.FC = () => {
       }
    };
 
-   const getTransactions = async() => {
+   const getTransactions = async () => {
       console.log("GETTING TRANSACTIONS")
       try {
          let tempTransactions = [];
@@ -244,14 +266,14 @@ const Bank: React.FC = () => {
             const newDate = date.toLocaleDateString("en-US");
             console.log(newDate)
             const tempTx: any = {
-               txHash: '' ,// transaction.get(""),
+               txHash: '',// transaction.get(""),
                txAction: transaction.get("Action"),
                from: transaction.get("From"),
                date: newDate,
                to: '',
             };
             tempTransactions.push(tempTx);
-            
+
          }
          console.log(tempTransactions)
          setTransactions(tempTransactions);
@@ -260,6 +282,10 @@ const Bank: React.FC = () => {
          console.error("ISSUE GETTING TRANSACTIONS \n", e);
       }
    }
+
+   // Get top ten animals
+   const topTenAnimals = accountAnimals.sort((a, b) => Number(b.yield) - Number(a.yield)).slice(0, 10);
+   console.log(topTenAnimals)
 
    const pageHeading = (
       <HeadingContainer>
@@ -298,37 +324,52 @@ const Bank: React.FC = () => {
                </Flex>
                <Label small>Total Daily Yield</Label>
                <ValueWrapper> 200 ZOO </ValueWrapper>
+               <Label small>Top Earners</Label>
+               {
+                  topTenAnimals.length === 0 ? <ValueWrapper style={{ justifyContent: 'center' }}> No animals </ValueWrapper> :
+                     <EarnerValueWrapper>
+                        {
+                           topTenAnimals.map((animal) => {
+                              return (
+                                 <EarnerValue key={animal.tokenId + "_earner_"}>
+                                    {animal.name} - {Number(animal.yield) * (1 - (Number(animal.boost) / 100))}/day
+                                 </EarnerValue>
+                              );
+                           })
+                        }
+                     </EarnerValueWrapper>
+               }
                <Label small>Recent Tansactions</Label>
                {waitTx ? <TableText> Loading Transactions... </TableText> :
-               Transactions.length === 0 ? <TableText> No Transaction Data </TableText> :
-               <Container>
-                  <TableContainer>
-                     <TableWrapper>
-                        <StyledTable>
-                           <TableBody>
-                              <TableRow>
-                                 <TableHeader>TxHash</TableHeader>
-                                 <TableHeader>Action</TableHeader>
-                                 <TableHeader>From</TableHeader>
-                                 <TableHeader>To</TableHeader>
-                                 <TableHeader>Date</TableHeader>
-                              </TableRow>
-                              {Transactions.map((transaction) => {
-                                 return (
+                  Transactions.length === 0 ? <TableText> No Transaction Data </TableText> :
+                     <Container>
+                        <TableContainer>
+                           <TableWrapper>
+                              <StyledTable>
+                                 <TableBody>
                                     <TableRow>
-                                       <TableData>{transaction.txHash}</TableData>
-                                       <TableData>{transaction.txAction}</TableData>
-                                       <TableData>{transaction.from}</TableData>
-                                       <TableData>{transaction.to}</TableData>
-                                       <TableData>{transaction.date}</TableData>
+                                       <TableHeader>TxHash</TableHeader>
+                                       <TableHeader>Action</TableHeader>
+                                       <TableHeader>From</TableHeader>
+                                       <TableHeader>To</TableHeader>
+                                       <TableHeader>Date</TableHeader>
                                     </TableRow>
-                                 )
-                              })}
-                           </TableBody>
-                        </StyledTable>
-                     </TableWrapper>
-                  </TableContainer>
-               </Container>}
+                                    {Transactions.map((transaction) => {
+                                       return (
+                                          <TableRow>
+                                             <TableData>{transaction.txHash}</TableData>
+                                             <TableData>{transaction.txAction}</TableData>
+                                             <TableData>{transaction.from}</TableData>
+                                             <TableData>{transaction.to}</TableData>
+                                             <TableData>{transaction.date}</TableData>
+                                          </TableRow>
+                                       )
+                                    })}
+                                 </TableBody>
+                              </StyledTable>
+                           </TableWrapper>
+                        </TableContainer>
+                     </Container>}
             </Body>
          </Page>
       </>
