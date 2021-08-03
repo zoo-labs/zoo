@@ -6213,7 +6213,7 @@
       "chainId": "31337",
       "contracts": {
         "ZooAuction": {
-          "address": "0x5CC37eCEf41193d15232C93CE75cf62F807BBa1a",
+          "address": "0x247124065114a03Cf51898b21F20C6C1Cf50679A",
           "abi": [
             {
               "inputs": [
