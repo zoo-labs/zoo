@@ -196,6 +196,8 @@ const Bank: React.FC = () => {
       return (animal.owner && animal.owner.toLowerCase() === account.toLowerCase());
    });
 
+   console.log(accountAnimals)
+
    const getBalance = async () => {
       try {
          const decimals = await zooToken.methods.decimals().call();
@@ -284,7 +286,7 @@ const Bank: React.FC = () => {
    }
 
    // Get top ten animals
-   const topTenAnimals = accountAnimals.sort((a, b) => Number(b.yield) - Number(a.yield)).slice(0, 10);
+   const topTenAnimals = accountAnimals.sort((a, b) => ((Number(b.yield)* (1 + Number(b.boost)/100)) - (Number(a.yield)* (1 + Number(a.boost)/100)))).slice(0, 10);
    console.log(topTenAnimals)
 
    const pageHeading = (
@@ -332,7 +334,7 @@ const Bank: React.FC = () => {
                            topTenAnimals.map((animal) => {
                               return (
                                  <EarnerValue key={animal.tokenId + "_earner_"}>
-                                    {animal.name} - {Number(animal.yield) * (1 - (Number(animal.boost) / 100))}/day
+                                    {animal.name} - {Number(animal.yield) * (1 + (Number(animal.boost) / 100))}/day
                                  </EarnerValue>
                               );
                            })
@@ -356,7 +358,7 @@ const Bank: React.FC = () => {
                                     </TableRow>
                                     {Transactions.map((transaction) => {
                                        return (
-                                          <TableRow>
+                                          <TableRow key={transaction.txHash}>
                                              <TableData>{transaction.txHash}</TableData>
                                              <TableData>{transaction.txAction}</TableData>
                                              <TableData>{transaction.from}</TableData>
