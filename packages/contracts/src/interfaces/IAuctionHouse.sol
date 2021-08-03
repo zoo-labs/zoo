@@ -10,7 +10,7 @@ pragma experimental ABIEncoderV2;
 interface IAuctionHouse {
     struct Auction {
         // ID for the ERC721 token
-        uint256 tokenId;
+        uint256 tokenID;
         // Address for the ERC721 contract
         address tokenContract;
         // Whether or not the auction curator has approved the auction to start
@@ -38,8 +38,8 @@ interface IAuctionHouse {
     }
 
     event AuctionCreated(
-        uint256 indexed auctionId,
-        uint256 indexed tokenId,
+        uint256 indexed auctionID,
+        uint256 indexed tokenID,
         address indexed tokenContract,
         uint256 duration,
         uint256 reservePrice,
@@ -50,22 +50,22 @@ interface IAuctionHouse {
     );
 
     event AuctionApprovalUpdated(
-        uint256 indexed auctionId,
-        uint256 indexed tokenId,
+        uint256 indexed auctionID,
+        uint256 indexed tokenID,
         address indexed tokenContract,
         bool approved
     );
 
     event AuctionReservePriceUpdated(
-        uint256 indexed auctionId,
-        uint256 indexed tokenId,
+        uint256 indexed auctionID,
+        uint256 indexed tokenID,
         address indexed tokenContract,
         uint256 reservePrice
     );
 
     event AuctionBid(
-        uint256 indexed auctionId,
-        uint256 indexed tokenId,
+        uint256 indexed auctionID,
+        uint256 indexed tokenID,
         address indexed tokenContract,
         address sender,
         uint256 value,
@@ -74,15 +74,15 @@ interface IAuctionHouse {
     );
 
     event AuctionDurationExtended(
-        uint256 indexed auctionId,
-        uint256 indexed tokenId,
+        uint256 indexed auctionID,
+        uint256 indexed tokenID,
         address indexed tokenContract,
         uint256 duration
     );
 
     event AuctionEnded(
-        uint256 indexed auctionId,
-        uint256 indexed tokenId,
+        uint256 indexed auctionID,
+        uint256 indexed tokenID,
         address indexed tokenContract,
         address tokenOwner,
         address curator,
@@ -93,14 +93,14 @@ interface IAuctionHouse {
     );
 
     event AuctionCanceled(
-        uint256 indexed auctionId,
-        uint256 indexed tokenId,
+        uint256 indexed auctionID,
+        uint256 indexed tokenID,
         address indexed tokenContract,
         address tokenOwner
     );
 
     function createAuction(
-        uint256 tokenId,
+        uint256 tokenID,
         address tokenContract,
         uint256 duration,
         uint256 reservePrice,
@@ -109,13 +109,13 @@ interface IAuctionHouse {
         address auctionCurrency
     ) external returns (uint256);
 
-    function setAuctionApproval(uint256 auctionId, bool approved) external;
+    function setAuctionApproval(uint256 auctionID, bool approved) external;
 
-    function setAuctionReservePrice(uint256 auctionId, uint256 reservePrice) external;
+    function setAuctionReservePrice(uint256 auctionID, uint256 reservePrice) external;
 
-    function createBid(uint256 auctionId, uint256 amount) external payable;
+    function createBid(uint256 auctionID, uint256 amount) external payable;
 
-    function endAuction(uint256 auctionId) external;
+    function endAuction(uint256 auctionID) external;
 
-    function cancelAuction(uint256 auctionId) external;
+    function cancelAuction(uint256 auctionID) external;
 }
