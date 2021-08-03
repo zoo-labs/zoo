@@ -182,7 +182,7 @@ const App: React.FC = () => {
                currentBid: animal.get("CurrentBid"),
                imageUrl: animal.get("TokenURI"),
                listed: animal.get("Listed"),
-               bloodline: animal.get("Bloodline"),
+               bloodline: animal.get("AnimalTypeID") === "1" ? "pure" : "hybrid",
                selected: false,
                bred: false,
                breedCount: animal.get("BreedCount"),
