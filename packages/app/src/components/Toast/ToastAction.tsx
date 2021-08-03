@@ -19,7 +19,7 @@ const ToastAction: React.FC<ToastActionProps> = ({ action }) => {
 
   return (
     // <Button as={Link} scale="sm" to={action.url}>
-    <Button scale="sm">
+    <Button scale="sm" >
       {action.text}
     </Button>
   );
