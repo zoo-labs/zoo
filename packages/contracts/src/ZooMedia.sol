@@ -278,21 +278,24 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         _mintForCreator(msg.sender, data, bidShares, "");
     }
 
-
-    function _hashToken(IZoo.Token memory token) private view {
+    function _hashToken(IZoo.Token memory token) private view returns (IZoo.Token memory) {
+        console.log('_hashToken', token.data.tokenURI, token.data.metadataURI);
         token.data.contentHash = keccak256(
             abi.encodePacked(token.data.tokenURI, block.number, msg.sender)
         );
         token.data.metadataHash = keccak256(
             abi.encodePacked(token.data.metadataURI, block.number, msg.sender)
         );
+        return token;
     }
 
     function mintToken(address owner, IZoo.Token memory token) external override nonReentrant returns (IZoo.Token memory) {
-        _hashToken(token);
+        console.log('mintToken', owner, token.name);
+        token = _hashToken(token);
         _mintForCreator(owner, token.data, token.bidShares, "");
         uint256 id = getRecentToken(owner);
         token.id = id;
+        console.log("minted token", token.id);
         return token;
     }
 
@@ -578,7 +581,7 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         IMarket.BidShares memory bidShares,
         bytes memory tokenType
     ) internal onlyValidURI(data.tokenURI) onlyValidURI(data.metadataURI) {
-        console.log("_mintForCreator", bidShares.creator.value);
+        console.log("_mintForCreator", data.tokenURI, data.metadataURI, bidShares.creator.value);
 
         require(
             data.contentHash != 0,
@@ -595,8 +598,10 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
 
         uint256 tokenId = _tokenIdTracker.current();
 
+        console.log("_safeMint", creator, tokenId);
         _safeMint(creator, tokenId, tokenType);
         _tokenIdTracker.increment();
+        console.log("_tokenIdTracker.increment()", _tokenIdTracker.current());
         _setTokenContentHash(tokenId, data.contentHash);
         _setTokenMetadataHash(tokenId, data.metadataHash);
         _setTokenMetadataURI(tokenId, data.metadataURI);
@@ -606,6 +611,8 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
 
         tokenCreators[tokenId] = creator;
         previousTokenOwners[tokenId] = creator;
+
+        console.log("_creatorTokens[creator].add(tokenId)", creator, tokenId);
 
         // ZK now responsible for setting bid shares externally
         // IMarket(marketAddress).setBidShares(tokenId, bidShares);
