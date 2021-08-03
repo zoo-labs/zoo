@@ -634,7 +634,6 @@ const MyZooAccount: React.FC = () => {
    const renderAnimals = (isBreedable: boolean): JSX.Element => {
       let animalGroup = {};
       const animalData = [];
-      const now = new Date().getTime();
 
       const breedClick = (animal) => {
          const selected = Object.values(allAnimals).filter(
@@ -644,11 +643,11 @@ const MyZooAccount: React.FC = () => {
          if (
             animal.selected &&
             selected.length === 1 &&
-            animalGroup[animal.animalId] > 1
+            animalGroup[animal.name] > 1
          ) {
             const multipleAvailable = Object.values(allAnimals).filter(
                (item) =>
-                  item.animalId === animal.animalId && item.timeRemaining === 0
+                  item.name === animal.name && item.timeRemaining === 0
             );
             const temp = [
                { ...multipleAvailable[0] },
@@ -686,11 +685,11 @@ const MyZooAccount: React.FC = () => {
          if (
             timeRemaining <= 0 &&
             animalData.find(
-               (a) => a.animalId === animal.animalId && a.timeRemaining <= 0
+               (a) => a.name === animal.name && a.timeRemaining <= 0
             )
          ) {
-            animalGroup[animal.animalId] =
-               animalGroup[animal.animalId] + 1 || 1;
+            animalGroup[animal.name] =
+               animalGroup[animal.name] + 1 || 1;
          } else {
             animalData.push({
                id: index,
