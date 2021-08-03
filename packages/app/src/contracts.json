@@ -5,7 +5,7 @@
       "chainId": "97",
       "contracts": {
         "ZooAuction": {
-          "address": "0xaa2d34A585b224B122b8E71d266428Fd23768506",
+          "address": "0x97230576B43aa733c3e3712ecf2Ccc7aB9cA7e41",
           "abi": [
             {
               "inputs": [
@@ -584,7 +584,7 @@
           ]
         },
         "ZooDrop": {
-          "address": "0x66069BB0eF5fBe3064F7f63e6c238a66D6953E3b",
+          "address": "0x1BC52195BAbbaFBAfaF943b26fA551aD6d078393",
           "abi": [
             {
               "inputs": [
@@ -2518,7 +2518,7 @@
           ]
         },
         "ZooFaucet": {
-          "address": "0xbD4ABCdF3219C2848c8A248346D82F5c6Da95d69",
+          "address": "0x83B4f90B3f81B249503e5F2c2A0a477F44D5d5E3",
           "abi": [
             {
               "inputs": [
@@ -2636,29 +2636,8 @@
           ]
         },
         "ZooKeeper": {
-          "address": "0x4F0477B2a5E46f0097b191A7A5C52ad48147f2Ae",
+          "address": "0x794389aac8e53502bd4794158c39eaA999b5Cc9a",
           "abi": [
-            {
-              "inputs": [
-                {
-                  "internalType": "address",
-                  "name": "_market",
-                  "type": "address"
-                },
-                {
-                  "internalType": "address",
-                  "name": "_media",
-                  "type": "address"
-                },
-                {
-                  "internalType": "address",
-                  "name": "_zoo",
-                  "type": "address"
-                }
-              ],
-              "stateMutability": "nonpayable",
-              "type": "constructor"
-            },
             {
               "anonymous": false,
               "inputs": [
@@ -2935,6 +2914,29 @@
                 }
               ],
               "name": "buyName",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_market",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_media",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_zoo",
+                  "type": "address"
+                }
+              ],
+              "name": "configure",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
@@ -3351,11 +3353,48 @@
               ],
               "stateMutability": "view",
               "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "zooSupply",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "receiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "amount",
+                  "type": "uint256"
+                }
+              ],
+              "name": "zooWithdraw",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
             }
           ]
         },
         "ZooMarket": {
-          "address": "0x0f1fCDDB99732540E746a8273dEEfEbED3ee5A90",
+          "address": "0x35A11D24361e3A7179BC53034Afb2E1F6B199c7e",
           "abi": [
             {
               "inputs": [],
@@ -4171,7 +4210,7 @@
           ]
         },
         "ZooMedia": {
-          "address": "0x75263ADeF471CBc247a3BFCcEA5a70851Ad30cAB",
+          "address": "0x904f1315319871B865e68133eE5807d1867C5a89",
           "abi": [
             {
               "inputs": [
@@ -5824,7 +5863,7 @@
           ]
         },
         "ZooToken": {
-          "address": "0xE3F2482412033DD5bF3BE7e018fe776fcFa010AB",
+          "address": "0x6C3e8A3d8B6971c4ADfFBD0613219aFD7aa640B5",
           "abi": [
             {
               "inputs": [],
