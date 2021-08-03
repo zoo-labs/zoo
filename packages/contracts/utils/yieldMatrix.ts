@@ -38,7 +38,7 @@ import credentials from '../credentials.json';
       name: sheet.getCellByA1(`E${x}`).value,
       rarity: sheet.getCellByA1(`D${x}`).value,
       yield: sheet.getCellByA1(`F${x}`).value,
-      boost: sheet.getCellByA1(`G${x}`).value,
+      boost: sheet.getCellByA1(`G${x}`).value * 10000,
     })
   })
 
