@@ -19,6 +19,8 @@ import { addEggs, addAnimals, addEgg, addAnimal, burnEgg } from "state/actions";
 import Moralis from "moralis";
 import { useMoralisSubscription, useMoralis } from "react-moralis";
 import { Egg, Animal } from "entities/zooentities";
+import { getZooKeeper } from "util/contractHelpers";
+import useWeb3 from "hooks/useWeb3";
 
 Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
 
@@ -78,14 +80,23 @@ const Marginer = styled.div`
 const App: React.FC = () => {
    useEagerConnect();
    const { chainId } = useWeb3React();
+   const web3 = useWeb3();
    const dispatch = useDispatch();
 
-   // const { Moralis: moralisGeneric } = useMoralis();
+   // const getEvents = async () => {
+   //    const burn = await zooKeeper.getPastEvents("Burn", {
+   //       fromBlock: 0,
+   //       toBlock: "latest",
+   //    });
+   //    console.log("ALL BURN\n", burn);
+   //    const hatch = await zooKeeper.getPastEvents("Hatch", {
+   //       fromBlock: 0,
+   //       toBlock: "latest",
+   //    });
+   //    console.log("ALL HATCH\n", hatch);
+   // };
 
-   // console.log("IN APP", moralisGeneric);
-
-   // Monkey patch warn() because of web3 flood
-   // To be removed when web3 1.3.5 is released
+   // if (chainId) getEvents();
 
    useMoralisSubscription("FinalEggs", (q) => q, [], {
       onCreate: (data) => createdUpdateEgg(data),
@@ -182,7 +193,11 @@ const App: React.FC = () => {
                currentBid: animal.get("CurrentBid"),
                imageUrl: animal.get("TokenURI"),
                listed: animal.get("Listed"),
-               bloodline: animal.get("Bloodline"),
+               bloodline: animal.get("Bloodline")
+                  ? animal.get("Bloodline")
+                  : animal.get("AnimalTypeID") === "1"
+                  ? "pure"
+                  : "hybrid",
                selected: false,
                bred: false,
                breedCount: animal.get("BreedCount"),

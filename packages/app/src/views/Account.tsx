@@ -70,7 +70,7 @@ const StyledHeading = styles(Heading)`
    color: ${({ theme }) => theme.colors.text};
 `;
 
-let manualTest = true
+let manualTest = true;
 
 const Account: React.FC = () => {
    const [isInitial, setIsInitial] = useState(true);
@@ -96,7 +96,7 @@ const Account: React.FC = () => {
    const currentEggsOwned = Object.values(allEggs).filter(
       (egg) => egg.owner === account
    ).length;
-   // setEggsOwned(currentEggsOwned)
+
    const handleClick = () => {
       history.push("/bank");
       toastClear();
@@ -111,66 +111,68 @@ const Account: React.FC = () => {
    const faucetAmt = web3.utils.toWei("50");
 
    const getBalance = async () => {
-     if (manualTest) {
-       manualTest = false;
+      if (manualTest) {
+         manualTest = false;
 
-       // // Increase allowance so we can buy 100 eggs for testing
-       // const eggPrice = await zooDrop.methods.eggPrice().call();
-       // const tsx = zooToken.methods
-       //    .approve(keeperAdd, eggPrice*100)
-       //    .send({ from: account })
+         // // Increase allowance so we can buy 100 eggs for testing
+         // const eggPrice = await zooDrop.methods.eggPrice().call();
+         // const tsx = zooToken.methods
+         //    .approve(keeperAdd, eggPrice*100)
+         //    .send({ from: account })
 
-       // // Buy initial two eggs
-       // await zooKeeper.methods.buyEgg(1).send({ from: account }).then((res) => {
-       //     console.log('buyEgg', res)
-       //  })
-       // await zooKeeper.methods.buyEgg(1).send({ from: account }).then((res) => {
-       //     console.log('buyEgg', res)
-       //  })
+         // // Buy initial two eggs
+         // await zooKeeper.methods.buyEgg(1).send({ from: account }).then((res) => {
+         //     console.log('buyEgg', res)
+         //  })
+         // await zooKeeper.methods.buyEgg(1).send({ from: account }).then((res) => {
+         //     console.log('buyEgg', res)
+         //  })
 
-       // Hatch eggs into animals
-       // await zooKeeper.methods.hatchEgg(1, 14).send({ from: account }).then((res) => {
-       //   console.log('hatchEgg', res);
-       // })
-       // await zooKeeper.methods.hatchEgg(1, 15).send({ from: account }).then((res) => {
-       //   console.log('hatchEgg', res);
-       // })
+         // Hatch eggs into animals
+         // await zooKeeper.methods.hatchEgg(1, 14).send({ from: account }).then((res) => {
+         //   console.log('hatchEgg', res);
+         // })
+         // await zooKeeper.methods.hatchEgg(1, 15).send({ from: account }).then((res) => {
+         //   console.log('hatchEgg', res);
+         // })
 
-       // await zooKeeper.methods.hatchEgg(1, 4).send({ from: account }).then((res) => {
-       //   console.log('hatchEgg', res);
-       // })
+         // await zooKeeper.methods.hatchEgg(1, 4).send({ from: account }).then((res) => {
+         //   console.log('hatchEgg', res);
+         // })
 
-       // // Breed animals into hybrid egg
-       // await zooKeeper.methods.breedAnimals(1, 14, 15).send({ from: account }).then((res) => {
-       //   console.log('breedAnimals', res)
-       // })
+         // // Breed animals into hybrid egg
+         // await zooKeeper.methods.breedAnimals(1, 14, 15).send({ from: account }).then((res) => {
+         //   console.log('breedAnimals', res)
+         // })
 
-       // Hatch hybrid egg into hybrid animal
-       // await zooKeeper.methods.hatchEgg(1, 16).send({ from: account }).then((res) => {
-       //   console.log('hatchEgg', res);
-       // })
+         // Hatch hybrid egg into hybrid animal
+         // await zooKeeper.methods.hatchEgg(1, 16).send({ from: account }).then((res) => {
+         //   console.log('hatchEgg', res);
+         // })
 
-       // Free animal and collect yield
-       await zooKeeper.methods.freeAnimal(17).send({ from: account }).then((res) => {
-           console.log('freeAnimal', res);
-        })
-     }
+         // Free animal and collect yield
+         // await zooKeeper.methods
+         //    .freeAnimal(17)
+         //    .send({ from: account })
+         //    .then((res) => {
+         //       console.log("freeAnimal", res);
+         //    });
+
+         // Get Tokens
+         // const tokenBalance = await zooMedia.methods.balanceOf(account).call();
+         // if (tokenBalance > 1) {
+         //    const tokenID = await zooMedia.methods
+         //       .tokenOfOwnerByIndex(account, 1)
+         //       .call();
+         //    console.log("tokenID", tokenID);
+         //    const tokenURI = await zooMedia.methods.tokenURI(tokenID).call();
+         //    console.log("tokenURI", tokenURI);
+         //    const token = await zooKeeper.methods.tokens(tokenID).call();
+         //    console.log("token", token);
+         // }
+      }
 
       try {
-         const tokenBalance = await zooMedia.methods.balanceOf(account).call();
-         console.log("tokenBalance", tokenBalance);
-
-         if (tokenBalance > 1) {
-            const tokenID = await zooMedia.methods
-               .tokenOfOwnerByIndex(account, 1)
-               .call();
-            console.log("tokenID", tokenID);
-            const tokenURI = await zooMedia.methods.tokenURI(tokenID).call();
-            console.log("tokenURI", tokenURI);
-            const token = await zooKeeper.methods.tokens(tokenID).call();
-            console.log("token", token);
-         }
-
          const decimals = await zooToken.methods.decimals().call();
          const rawBalance = await zooToken.methods.balanceOf(account).call();
          const divisor = parseFloat(Math.pow(10, decimals).toString());
@@ -179,12 +181,13 @@ const Account: React.FC = () => {
       } catch (e) {
          console.error("ISSUE LOADING ZOO BALANCE \n", e);
          toastClear();
-         toastError('Failed to load ZOO balance');
+         toastError("Failed to load ZOO balance");
       }
       try {
          const allowance = await zooToken.methods
             .allowance(account, keeperAdd)
             .call();
+
          if (allowance > 0) {
             setAllowance(true);
             setKeepApprove(false);
@@ -195,7 +198,7 @@ const Account: React.FC = () => {
          } else {
             setKeepApprove(true);
             toastClear();
-            toastInfo('Trying to approve account...');
+            toastInfo("Trying to approve account...");
          }
       } catch (error) {
          console.log(error);
@@ -203,14 +206,14 @@ const Account: React.FC = () => {
       setIsInitial(false);
    };
 
-   const approve = async () => {
+   const callApprove = async () => {
       toastClear();
       setDisable(true);
-      toastInfo('Processing approval...');
+      toastInfo("Processing approval...");
 
-      const eggPrice = await zooDrop.methods.eggPrice().call();
+      const defaultAmt = web3.utils.toWei("1000000000000000000", "ether");
       const tsx = zooToken.methods
-         .approve(keeperAdd, eggPrice)
+         .approve(keeperAdd, defaultAmt)
          .send({ from: account });
       tsx.then(() => {
          setAllowance(true);
@@ -221,7 +224,7 @@ const Account: React.FC = () => {
          console.error("APPROVE ERROR", e);
          setDisable(false);
          toastClear();
-         toastError('Failed to approve account');
+         toastError("Failed to approve account");
       });
    };
 
@@ -265,7 +268,7 @@ const Account: React.FC = () => {
       try {
          setWait(true);
          toastClear();
-         toastInfo('Processing ZOO purchase...');
+         toastInfo("Processing ZOO purchase...");
          faucet.methods
             .buyZoo(account, faucetAmt)
             .send({ from: account })
@@ -273,18 +276,18 @@ const Account: React.FC = () => {
                setWait(false);
                getBalance();
                toastClear();
-               toastSuccess('Successfully purchased ZOO!');
+               toastSuccess("Successfully purchased ZOO!");
             })
             .catch((e) => {
                console.error("ISSUE USING FAUCET \n", e);
                setWait(false);
                toastClear();
-               toastInfo('ZOO purchase canceled.');
+               toastInfo("ZOO purchase canceled.");
             });
       } catch (e) {
          console.error("ISSUE USING FAUCET \n", e);
          toastClear();
-         toastError('Unable to process transaction. Try again later.');
+         toastError("Unable to process transaction. Try again later.");
       }
    };
 
@@ -306,7 +309,7 @@ const Account: React.FC = () => {
    const buyEgg = async () => {
       setDisable(true);
       toastClear();
-      toastInfo('Processing transaction...');
+      toastInfo("Processing transaction...");
 
       const drop = await zooKeeper.methods.drops(0).call();
       console.log("Drop:", drop);
@@ -320,13 +323,13 @@ const Account: React.FC = () => {
                console.log(res);
                setDisable(false);
                toastClear();
-               toastSuccess('Successfully purchased eggs!');
+               toastSuccess("Successfully purchased eggs!");
             });
       } catch (error) {
          setDisable(false);
          console.log(error);
          toastClear();
-         toastError('Unable to purchase eggs. Try again later.');
+         toastError("Unable to purchase eggs. Try again later.");
       }
 
       // onBuyEggs()
@@ -344,7 +347,7 @@ const Account: React.FC = () => {
                <LabelWrapper>
                   <Label small>Wallet Balance</Label>
                   <BorderButton
-                      disabled={wait}
+                     disabled={wait}
                      scale="sm"
                      minWidth={!isXl ? "120px" : "140px"}
                      style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}
@@ -360,46 +363,21 @@ const Account: React.FC = () => {
                   <ValueWrapper>{balance} ZOO</ValueWrapper>
                </RowWrapper>
                <LabelWrapper>
-                  <Flex
-                     alignItems="flex-start"
-                     flexDirection="column"
-                     flexGrow={2}
-                     height={allowance && !keepApprove ? "100%" : "65px"}>
-                     <Label small>{currentEggsOwned} Eggs Owned</Label>
-                  </Flex>
-                  <Flex
-                     flexDirection="column"
-                     height={allowance && !keepApprove ? "100%" : "65px"}
-                     justifyContent="space-between">
-                     <BorderButton
-                        disabled={disable || !allowance}
-                        scale="sm"
-                        minWidth={!isXl ? "120px" : "140px"}
-                        onClick={buyEgg}
-                        style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}>
-                        {disable ? "TSX PROCESSING" : "BUY EGGS"}
-                     </BorderButton>
+                  <Label small>{currentEggsOwned} Eggs Owned</Label>
 
-                     {(keepApprove || !allowance) && (
-                        <BorderButton
-                           disabled={disable || allowance}
-                           scale="sm"
-                           minWidth={!isXl ? "120px" : "140px"}
-                           onClick={approve}
-                           style={{
-                              fontSize: `${!isXl ? "14px" : "16px"}`,
-                           }}>
-                           {allowance
-                              ? "APPROVED ZOO"
-                              : disable
-                              ? "TSX PROCESSING"
-                              : "APPROVE ZOO"}
-                        </BorderButton>
-                     )}
-                  </Flex>
+                  <BorderButton
+                     disabled={disable}
+                     scale="sm"
+                     minWidth={!isXl ? "120px" : "140px"}
+                     onClick={!allowance ? callApprove : buyEgg}
+                     style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}>
+                     {disable
+                        ? "TSX PROCESSING"
+                        : !allowance
+                        ? "APPROVE ZOO"
+                        : "BUY EGG"}
+                  </BorderButton>
                </LabelWrapper>
-
-
             </Body>
             <MyZooAccount />
          </Page>
