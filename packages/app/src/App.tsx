@@ -82,7 +82,6 @@ const App: React.FC = () => {
    const { chainId } = useWeb3React();
    const web3 = useWeb3();
    const dispatch = useDispatch();
-   const zooKeeper = getZooKeeper(web3, chainId);
 
    // const getEvents = async () => {
    //    const burn = await zooKeeper.getPastEvents("Burn", {

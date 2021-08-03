@@ -233,19 +233,40 @@ const MyZooAccount: React.FC = () => {
       listed: false,
    };
 
-   const hatchEgg = (egg) => {
-      setShowBoth(true);
-      setEggType(egg.basic ? "basic" : "hybrid");
-
+   const hatchEgg = async (egg) => {
       try {
-         zooKeeper.methods.hatchEgg().send({ from: account });
+         // const allEvents = await zooKeeper.getPastEvents("Hatch", {
+         //    fromBlock: 0,
+         //    toBlock: "latest",
+         //    filter: {
+         //       from: account,
+         //    },
+         // });
+         // console.log("EVENTS", allEvents);
+         zooKeeper.methods
+            .hatchEgg(1, egg.tokenId)
+            .send({ from: account })
+            .then(async () => {
+               zooKeeper
+                  .getPastEvents("Hatch", {
+                     fromBlock: 0,
+                     toBlock: "latest",
+                     filter: {
+                        from: account,
+                     },
+                  })
+                  .then((events) => {
+                     const latest = events[events.length - 1];
+                     setShowBoth(true);
+                     setEggType(egg.basic ? "basic" : "hybrid");
+                     dispatch(burnEgg(egg));
+                     // dispatch(addAnimal(newAnimal));
+                     startAnimationTimer();
+                  });
+            });
       } catch (e) {
          console.error("ISSUE WITH HATCHING THE EGG \n", e);
       }
-
-      dispatch(burnEgg(egg));
-      // dispatch(addAnimal(newAnimal));
-      startAnimationTimer();
    };
 
    const startAnimationTimer = useCallback(() => {
