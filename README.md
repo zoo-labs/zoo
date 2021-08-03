@@ -1,4 +1,4 @@
-# Cryptozoo
+# Zoo
 
 > An autonomous ecosystem where ZOO owners breed, collect, and trade exotic hybrid animals via NFTs.
 
