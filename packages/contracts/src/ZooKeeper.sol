@@ -236,8 +236,6 @@ contract ZooKeeper is Ownable {
         // Get Egg
         IZoo.Token memory egg = tokens[eggID];
 
-        console.log("egg", uint256(egg.kind));
-
         // Get random animal or hybrid from Drop
         if (egg.kind == IZoo.Type.BASE_EGG) {
             console.log("getRandomAnimal", dropID, eggID);
@@ -250,6 +248,8 @@ contract ZooKeeper is Ownable {
 
     // Update breed delays
     function updateBreedDelays(uint256 parentA, uint256 parentB) private {
+        console.log('updateBreedDelays', parentA, parentB);
+
         tokens[parentA].breed.count++;
         tokens[parentB].breed.count++;
         tokens[parentA].breed.timestamp = block.timestamp;
