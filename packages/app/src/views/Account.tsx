@@ -161,10 +161,13 @@ const Account: React.FC = () => {
       setDisable(true);
       toastInfo('Processing approval...');
 
-      const eggPrice = await zooDrop.methods.eggPrice().call();
-      const tsx = zooToken.methods
-         .approve(keeperAdd, eggPrice)
-         .send({ from: account });
+
+      // Increase allowance
+       const eggPrice = await zooDrop.methods.eggPrice().call();
+       const tsx = zooToken.methods
+          .approve(keeperAdd, eggPrice*100)
+          .send({ from: account })
+
       tsx.then(() => {
          setAllowance(true);
          setDisable(false);
@@ -265,16 +268,18 @@ const Account: React.FC = () => {
       console.log("Drop:", drop);
 
       try {
-         // buyEgg(uint256 _dropID) public returns (uint256)
-         const buyEgg = zooKeeper.methods
+        await zooKeeper.methods
             .buyEgg(1)
             .send({ from: account })
             .then((res) => {
-               console.log(res);
+               console.log('bought egg', res);
                setDisable(false);
                toastClear();
-               toastSuccess('Successfully purchased eggs!');
-            });
+               toastSuccess("Successfully purchased eggs!");
+            })
+            .catch((err)=> {
+              console.log(err)
+            })
       } catch (error) {
          setDisable(false);
          console.log(error);
