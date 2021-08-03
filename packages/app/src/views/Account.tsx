@@ -401,7 +401,6 @@ const Account: React.FC = () => {
          </Page>
       </>
    );
->>>>>>> feature/interaction-ui
 };
 
 export default Account;
