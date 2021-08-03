@@ -5,20 +5,20 @@ const rarities = require('../utils/rarities.json')
 const animals  = require('../utils/animals.json')
 const hybrids  = require('../utils/hybrids.json')
 
+const ZooDrop  = require('../deployments/testnet/ZooDrop.json')
+const ZooKeeper  = require('../deployments/testnet/ZooKeeper.json')
+
 async function main() {
   const [signer] = await ethers.getSigners()
 
-  const dropAddress = '0x7E66108C67cAA4921b1DF371291cdE6dB8dc1945'
-  const keeperAddress = '0x219ea7dBf37D592761b9B5220976c5A13370cB6c'
-
-  const keeper = await (await ethers.getContractAt('ZooKeeper', keeperAddress)).connect(signer)
-  const drop = await (await ethers.getContractAt('ZooDrop', dropAddress)).connect(signer)
+  const keeper = await (await ethers.getContractAt('ZooKeeper', ZooKeeper.address)).connect(signer)
+  const drop = await (await ethers.getContractAt('ZooDrop', ZooDrop.address)).connect(signer)
 
   // Configure game for our Gen 0 drop
-  await keeper.setDrop(dropAddress)
+  await keeper.setDrop(ZooDrop.address)
 
   // Configure Drop
-  await drop.configureKeeper(keeperAddress);
+  await drop.configureKeeper(ZooKeeper.address);
 
   // Add eggs
   const eggs = [
@@ -61,7 +61,6 @@ async function main() {
     const tx = await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
     await tx.wait()
   }
-
 
   // Add hybrids
   for (const v of hybrids) {
