@@ -26,6 +26,8 @@ import { useHistory } from "react-router-dom";
 import { RarityColor } from "enums/rarity-color";
 import SwiperCard from "components/Card/SwipeCard";
 import Moralis from "moralis";
+import { getZooKeeper } from "util/contractHelpers";
+import useWeb3 from "hooks/useWeb3";
 
 // install Swiper modules
 // SwiperCore.use([Pagination]);
@@ -177,9 +179,9 @@ const SwiperContainer = styled.div`
 
 const MyZooAccount: React.FC = () => {
    let empty;
-   const { account } = useWeb3React();
+   const { account, chainId } = useWeb3React();
    const { path } = useRouteMatch();
-   const { chainId } = useWeb3React();
+   const web3 = useWeb3();
    const dispatch = useDispatch();
    const { isXl, isXs } = useMatchBreakpoints();
    const chainIdSet = chainId === undefined ? "1" : String(chainId);
@@ -200,6 +202,7 @@ const MyZooAccount: React.FC = () => {
       imageUrl: "",
       listed: false,
    });
+   const zooKeeper = getZooKeeper(web3, chainId);
 
    const handleRedirect = () => {
       history.push("/feed");
@@ -230,97 +233,18 @@ const MyZooAccount: React.FC = () => {
       listed: false,
    };
 
-   const hatchEgg = async (egg) => {
+   const hatchEgg = (egg) => {
       setShowBoth(true);
       setEggType(egg.basic ? "basic" : "hybrid");
 
-      let randIdx: number;
-
-      // REPLACE WITH HATCH FUNCTION FROM CONTRACT
-      if (egg.basic) {
-         randIdx = Math.floor(Math.random() * (5 - 1) + 1);
-      } else {
-         randIdx = Math.floor(Math.random() * (13 - 10) + 10);
+      try {
+         zooKeeper.methods.hatchEgg().send({ from: account });
+      } catch (e) {
+         console.error("ISSUE WITH HATCHING THE EGG \n", e);
       }
-      const eggID = parseInt(egg.tokenId);
-      const tokenID = Math.floor(Math.random() * (999999 - 0) + 0);
-
-      const mObject = Moralis.Object.extend("FinalEggs");
-      const query = new Moralis.Query(mObject);
-      query.equalTo("EggID", eggID);
-      const eggM = await query.find();
-      const eggRes = eggM[0];
-
-      setTimeout(() => setOpen(true), 3850);
-      setTimeout(() => setEggType(""), 7000);
-      console.log("egg result", eggRes);
-      eggRes.set("Burned", true);
-      eggRes.destroy();
-
-      // console.log(randIdx);
-      const aFromMap = allAnimals[randIdx];
-
-      const mAnimal = Moralis.Object.extend("FinalAnimals");
-      const newAnimalM = new mAnimal();
-      // AnimalID Owner TokenURI MetaURI BlockNumber Rarirty Yield Boost AnimalTypeID Name
-      newAnimalM.set("AnimalID", tokenID);
-      newAnimalM.set("Owner", account);
-      newAnimalM.set("TokenURI", aFromMap.imageUrl);
-      newAnimalM.set("MetaURI", "META URI");
-      newAnimalM.set(
-         "BlockNumber",
-         Math.floor(Math.random() * (999999 - 0) + 0)
-      );
-      newAnimalM.set("Rarity", aFromMap.rarity);
-      newAnimalM.set("Yield", aFromMap.yield);
-      newAnimalM.set("Boost", aFromMap.boost);
-      newAnimalM.set("Name", aFromMap.name);
-      newAnimalM.set("AnimalTypeID", aFromMap.animalId);
-      newAnimalM.set("StartBid", aFromMap.startBid);
-      newAnimalM.set("CurrentBid", aFromMap.currentBid);
-      newAnimalM.set("Listed", false);
-      newAnimalM.set("Bloodline", aFromMap.bloodline);
-      newAnimalM.set("TimeRemaining", 0);
-      newAnimalM.set("BreedCount", 0);
-      newAnimalM.set("lastBred", "");
-      await newAnimalM.save();
-      // console.log(aFromMap, randIdx);
-      const newAnimal: Animal = {
-         tokenId: Math.floor(Math.random() * (999999 - 0) + 0).toString(),
-         animalId: aFromMap.animalId,
-         name: aFromMap.name,
-         description: aFromMap.description,
-         yield: aFromMap.yield,
-         boost: aFromMap.boost,
-         rarity: aFromMap.rarity,
-         dob: aFromMap.dob,
-         imageUrl: aFromMap.imageUrl,
-         startBid: aFromMap.startBid,
-         currentBid: aFromMap.currentBid,
-         buyNow: aFromMap.buyNow,
-         listed: aFromMap.listed,
-         bloodline: aFromMap.bloodline,
-         owner: account,
-         CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
-         timeRemaining: 0,
-         breedCount: 0,
-         lastBred: "",
-      };
-      setHatched(newAnimal);
-
-      const TransOb = Moralis.Object.extend("Transactions");
-      const newTrans = new TransOb();
-
-      newTrans.set("From", account);
-      newTrans.set("Action", "Hatched Egg");
-      newTrans.set("TokenID", eggID);
-      newTrans.set("AnimalName", aFromMap.name);
-      newTrans.set("AnimalTokenID", tokenID);
-      newTrans.save();
 
       dispatch(burnEgg(egg));
-      dispatch(addAnimal(newAnimal));
-      // ---------------------------------------------
+      // dispatch(addAnimal(newAnimal));
       startAnimationTimer();
    };
 
