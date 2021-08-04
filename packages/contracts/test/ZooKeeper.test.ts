@@ -862,31 +862,15 @@ describe("ZooKeeper", () => {
 
     })
 
-    it("Should revert when breeding with two hybrids", async () => {
+    it.only("Should revert when breeding with two hybrids", async () => {
 
-        //     const token_1 = breedHybrid()
-        //     const token_2 = breedHybrid()
+        const token_1 = breedHybrid();
 
+        const token_2 = breedHybrid();
 
-        //     let sender
-
-        //     let token_id_hybridEgg
-
-        //     try {
-        //         const breedTx = await zooKeeper.connect(owner).breedAnimal(1, token_1, token_2);
-        //         const breedReceipt = await breedTx.wait();
-        //         sender = breedReceipt.events;
-        //         sender.forEach(element => {
-        //             if (element.event == "Breed") {
-        //                 token_id_hybridEgg = element.args["_eggTokenId"]
-        //             }
-        //         });
-
-        //     } catch (err) {
-
-        //         expect(err).to.exist
-
-        //     }
+        await expect(zooKeeper.breedAnimals(1, token_1, token_2)).to.be.revertedWith(
+            "Only BASE_ANIMAL can breed."
+        )
     });
 
     // // /**
