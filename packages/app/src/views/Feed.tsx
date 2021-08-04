@@ -270,7 +270,7 @@ function Feed<FeedPagePops>({ match }) {
                            <FeedCard
                               item={data}
                               key={data.tokenId + "card"}
-                              animalGroup={animalGroup}
+                              animalGroup={{}}
                            />
                         </SwiperSlide>
                      ) : (
