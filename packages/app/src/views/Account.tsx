@@ -110,20 +110,6 @@ const Account: React.FC = () => {
 
    const getBalance = async () => {
       try {
-         const tokenBalance = await zooMedia.methods.balanceOf(account).call();
-         console.log("tokenBalance", tokenBalance);
-
-         if (tokenBalance > 1) {
-            const tokenID = await zooMedia.methods
-               .tokenOfOwnerByIndex(account, 1)
-               .call();
-            console.log("tokenID", tokenID);
-            const tokenURI = await zooMedia.methods.tokenURI(tokenID).call();
-            console.log("tokenURI", tokenURI);
-            const token = await zooKeeper.methods.tokens(tokenID).call();
-            console.log("token", token);
-         }
-
          const decimals = await zooToken.methods.decimals().call();
          const rawBalance = await zooToken.methods.balanceOf(account).call();
          const divisor = parseFloat(Math.pow(10, decimals).toString());
@@ -247,6 +233,9 @@ const Account: React.FC = () => {
    const handleFunds = () => {
       console.log(chainId);
       switch (chainId) {
+         case 31337:
+            handleFaucet();
+            break;
          case 97:
             handleFaucet();
             break;
