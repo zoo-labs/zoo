@@ -96,70 +96,111 @@ describe("ZooKeeper", () => {
     }
 
     async function breedHybrid() {
-        await zooToken.approve(zooKeeper.address, 2000)
-        const buyFirstEgg = await zooKeeper.connect(owner).buyEgg(1);
+
+        await zooToken.approve(zooKeeper.address, eggPrice * 100)
+
+        const buyFirstEgg = await zooKeeper.buyEgg(1);
+
         const buyFirstEggReceipt = await buyFirstEgg.wait();
+
         let sender = buyFirstEggReceipt.events;
+
         let from_add
+
         let token_id_1
 
-        sender.forEach(element => {
-            if (element.event == "BuyEgg") {
-                from_add = element.args["_from"]
-                token_id_1 = element.args["_tokenID"]
-            }
-        });
+        for (var i = 0; i < sender.length; i++) {
 
-        const buySecondEgg = await zooKeeper.connect(owner).buyEgg(1);
+            if (sender[i].event === "BuyEgg") {
+
+                from_add = sender[i].args['from'];
+
+                token_id_1 = sender[i].args['tokenID'];
+            }
+        }
+
+        const buySecondEgg = await zooKeeper.buyEgg(1);
+
         const buySecondEggReceipt = await buySecondEgg.wait();
 
         sender = buySecondEggReceipt.events;
+
         let token_id_2
 
-        sender.forEach(element => {
-            if (element.event == "BuyEgg") {
-                from_add = element.args["_from"]
-                token_id_2 = element.args["_tokenID"]
-            }
-        });
+        for (var i = 0; i < sender.length; i++) {
 
-        const firstHatchedAnimal = await zooKeeper.connect(owner).hatchEgg(1, token_id_1);
+            if (sender[i].event === "BuyEgg") {
+
+                from_add = sender[i].args['from'];
+
+                token_id_2 = sender[i].args['tokenID'];
+            }
+        }
+
+        const firstHatchedAnimal = await zooKeeper.hatchEgg(1, token_id_1);
+
         const hatchFirstAnimalReceipt = await firstHatchedAnimal.wait();
+
         sender = hatchFirstAnimalReceipt.events;
 
         let token_id_Animal_1
 
-        sender.forEach(element => {
-            if (element.event == "Hatch") {
-                from_add = element.args["_from"]
-                token_id_Animal_1 = element.args["_tokenID"]
-            }
-        });
+        for (var i = 0; i < sender.length; i++) {
 
-        let secondHatchedAnimal = await zooKeeper.connect(owner).hatchEgg(1, token_id_2);
+            if (sender[i].event === "Hatch") {
+
+                from_add = sender[i].args['from'];
+
+                token_id_Animal_1 = sender[i].args['tokenID'];
+
+            }
+        }
+
+        let secondHatchedAnimal = await zooKeeper.hatchEgg(1, token_id_2);
+
         const secondHatchedAnimalReceipt = await secondHatchedAnimal.wait();
 
         sender = secondHatchedAnimalReceipt.events;
+
         let token_id_Animal_2
+
         let token_id_hybridEgg
 
-        sender.forEach(element => {
-            if (element.event == "Hatch") {
-                from_add = element.args["_from"]
-                token_id_Animal_2 = element.args["_tokenID"]
-            }
-        });
+        for (var i = 0; i < sender.length; i++) {
 
-        const breedTx = await zooKeeper.connect(owner).breedAnimal(1, token_id_Animal_1, token_id_Animal_2);
+            if (sender[i].event === "Hatch") {
+
+                from_add = sender[i].args['from'];
+
+                token_id_Animal_2 = sender[i].args['tokenID'];
+
+            }
+        }
+
+        const breedTx = await zooKeeper.breedAnimals(1,
+            parseInt(token_id_Animal_1),
+            parseInt(token_id_Animal_2)
+        );
+
         const breedReceipt = await breedTx.wait();
-        sender = breedReceipt.events;
-        sender.forEach(element => {
-            if (element.event == "Breed") {
-                token_id_hybridEgg = element.args["_eggTokenId"]
-            }
-        });
 
-        return token_id_hybridEgg
+        sender = breedReceipt.events;
+
+        // sender.forEach(element => {
+        //     if (element.event == "Breed") {
+        //         token_id_hybridEgg = element.args["_eggTokenId"]
+        //     }
+        // });
+
+        for (var i = 0; i < sender.length; i++) {
+
+            if (sender[i].event === "Breed") {
+
+                token_id_hybridEgg = sender[i].args['tokenID'];
+            }
+        }
+
+        return parseInt(token_id_hybridEgg);
     }
 
     it.only("Should configure a playable game", async () => {
@@ -443,30 +484,34 @@ describe("ZooKeeper", () => {
         expect(newAnimal[0].name).to.not.equal('');
     });
 
-    it("Should hatch & burn hybrid egg", async () => {
-
-        // this.timeout(500000000000000);
+    it.only("Should hatch & burn hybrid egg", async () => {
 
         const token = await breedHybrid()
 
-        const hatchEgg = await zooKeeper.hatchEgg(1, 4)
+        const hatchEgg = await zooKeeper.hatchEgg(1, token)
+
         const hatchEggReceipt = await hatchEgg.wait();
+
         let sender = hatchEggReceipt.events;
 
         let from_add2
+
         let token_id2
 
-        sender.forEach(element => {
-            if (element.event == "Hatch") {
-                from_add2 = element.args["_from"]
-                token_id2 = element.args["_tokenID"]
+        for (var i = 0; i < sender.length; i++) {
+
+            if (sender[i].event === "Hatch") {
+
+                from_add2 = sender[i].args['from'];
+
+                token_id2 = sender[i].args['tokenID'];
+
             }
-        });
+        }
 
-        expect(from_add2).to.equal(owner.address);
+        expect(from_add2).to.equal(owner);
 
-        expect(token_id2.toNumber()).to.equal(12);
-
+        expect(parseInt(token_id2)).to.equal(18);
 
     });
 
