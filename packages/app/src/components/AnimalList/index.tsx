@@ -209,7 +209,8 @@ export const AnimalList = ({ bloodline, allAnimals, account }: Props) => {
     const reselect = [...selectedAnimals];
 
     if (index > -1) {
-      setSelectedAnimals(reselect.splice(index, 1));
+      reselect.splice(index, 1);
+      setSelectedAnimals(reselect);
     } else {
       reselect.push(animal);
       setSelectedAnimals(reselect);
