@@ -196,14 +196,9 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
         external
         onlyOwner
     {
-        // require(
-        //     keeperAddress == address(0),
-        //     "ZooMedia: Already configured keeper"
-        // );
-        // require(
-        //     marketAddress == address(0),
-        //     "ZooMedia: Already configured market"
-        // );
+
+        // require(marketAddress == address(0), "ZooMedia: Already configured");
+        // require(keeperAddress == address(0), "ZooMedia: Already configured");
         require(
             _keeperAddress != address(0),
             "Market: cannot set keeper contract as zero address"
