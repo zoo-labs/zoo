@@ -11,16 +11,15 @@ export interface AnimalCardProps {
   animalGroup: {
     [key: string]: number;
   };
-  hybrid: string;
-  allAnimals: {
-    [key: string]: Animal;
-  };
-  account: string;
+  selectedAnimals: Animal[];
+  onBreedClick: (animal: Animal) => void;
+  onList: (animal: Animal) => void;
+  onAction?: () => void;
 }
 
 export interface SubAnimalCommonProps {
   onDismiss?: () => void;
-  breed: any;
+  breed?: any;
 }
 
 export interface SellConfirmProps extends SubAnimalCommonProps {

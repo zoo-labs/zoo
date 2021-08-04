@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Route, useRouteMatch } from "react-router-dom";
 import { AppState } from "state";
-import { useDispatch, useSelector } from "react-redux";
-import Moralis from "moralis";
+import { useSelector } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,31 +10,14 @@ import "swiper/components/pagination/pagination.min.css";
 
 import { Text, Card as Existing, EggCard, VideoPlayer } from "components";
 import { getMilliseconds, getDaysHours } from "util/timeHelpers";
-import { breedTimeouts, eggTimeout } from "constants/constants";
-// import { Animal } from "entities/zooentities";
-// import { addAnimal, burnEgg } from "state/actions";
-// import { animalMapping } from "util/animalMapping";
+import { eggTimeout } from "constants/constants";
 import NewAnimalCard from "components/NewAnimal/NewAnimalCard";
-import { RarityColor } from "enums/rarity-color";
-import { AnimalCard } from "components/AnimalCard";
 import useWeb3 from "hooks/useWeb3";
-import {
-  getZooKeeper,
-} from "util/contractHelpers";
-import { Animal } from "entities/zooentities";
-
+import { getZooKeeper } from "util/contractHelpers";
+import { AnimalList } from "components/AnimalList";
 
 const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.text};
-`;
-
-const RowTitle = styled.div`
-  color: ${({ theme }) => theme.colors.text};
-  font-size: 20px;
-  margin-t: 15px;
-  margin-bottom: 15px;
-  margin-left: 10px;
-  font-weight: 600;
 `;
 
 const RowLayout = styled.div`
@@ -59,7 +41,6 @@ const Card = styled(Existing)<{ selected?: boolean; timedOut?: boolean }>`
 const MyZooAccount: React.FC = () => {
   const { account, chainId } = useWeb3React();
   const { path } = useRouteMatch();
-  const dispatch = useDispatch();
   const [eggType, setEggType] = useState("");
   const [isOpen, setOpen] = useState(false);
   const [_, setShowBoth] = useState(false);
@@ -86,86 +67,14 @@ const MyZooAccount: React.FC = () => {
   );
 
   const hatchEgg = async (egg) => {
-    console.log(zooKeeper)
-      try {
-        // const token = await zooKeeper.methods.tokens(parseInt(egg.tokenId)).call()
-        const hatching = await zooKeeper.methods
-        .hatchEgg(1, parseInt(egg.tokenId))
-            .send({ from: account })
-            .then(async (res) => {
-              setShowBoth(true);
-              setEggType(egg.basic ? "basic" : "hybrid");
-              const newAnimal: Animal = {
-                 tokenId: res.data.tokenId,
-                 animalId: res.data.kind,
-                 name: res.data.name,
-                 description: "",
-                 yield: res.data.rarity.yield,
-                 boost: res.data.rarity.boost,
-                 rarity: res.data.rarity.name,
-                 dob: res.data.birthdate,
-                 imageUrl: res.data.data.tokenURI,
-                 startBid: "0",
-                 currentBid: "0",
-                 buyNow: "0",
-                 listed: false,
-                 bloodline: res.data.kind ==="1"? "pure" : "hybrid",
-                 owner: account,
-                 CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
-                 timeRemaining: 0,
-                 breedCount: 0,
-                 lastBred: "",
-               };
-               setHatched(newAnimal);
-               zooKeeper
-                  .getPastEvents("Hatch", {
-                     fromBlock: 0,
-                     toBlock: "latest",
-                     filter: {
-                        from: account,
-                     },
-                  })
-                  .then(async (events) => {
-                     const latest = events[events.length - 1];
-                     const newTknId = latest.returnValues.tokenID;
-                     const token = await zooKeeper.methods.tokens(newTknId).call()
-                    //  setShowBoth(true);
-                    //  setEggType(egg.basic ? "basic" : "hybrid");
-                    //  const newAnimal: Animal = {
-                    //     tokenId: String(newTknId),
-                    //     animalId: token.kind,
-                    //     name: token.name,
-                    //     description: "",
-                    //     yield: token.rarity.yield,
-                    //     boost: token.rarity.boost,
-                    //     rarity: token.rarity.name,
-                    //     dob: token.birthdate,
-                    //     imageUrl: token.data.tokenURI,
-                    //     startBid: "0",
-                    //     currentBid: "0",
-                    //     buyNow: "0",
-                    //     listed: false,
-                    //     bloodline: token.kind ==="1"? "pure" : "hybrid",
-                    //     owner: account,
-                    //     CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
-                    //     timeRemaining: 0,
-                    //     breedCount: 0,
-                    //     lastBred: "",
-                    //   };
-                    //   setHatched(newAnimal);
+    console.log(zooKeeper);
+    try {
+      // const token = await zooKeeper.methods.tokens(parseInt(egg.tokenId)).call()
+    } catch (error) {
+      console.log(error);
+    }
 
-                    //  dispatch(burnEgg(egg));
-                     // dispatch(addAnimal(newAnimal));
-                     startAnimationTimer();
-                  });
-                })
-      } catch (error) {
-        console.log(error)
-      }
-
-    let randIdx: number;
-
-    console.log(egg)
+    console.log(egg);
 
     // REPLACE WITH HATCH FUNCTION FROM CONTRACT
     // if (egg.basic) {
@@ -257,7 +166,7 @@ const MyZooAccount: React.FC = () => {
     videoTimeout.push(setTimeout(() => setEggType(""), 7000));
   }, []);
 
-  const closeAnimation = useCallback(async (e) => {
+  const closeAnimation = useCallback(async () => {
     setEggType("");
     videoTimeout.forEach((i) => {
       clearTimeout(i);
@@ -285,109 +194,107 @@ const MyZooAccount: React.FC = () => {
     };
   }, [elapsedTimeOnPage]);
 
-  const renderAnimals = (hybrid): JSX.Element => {
-    const animalGroup = {};
-    const animalData = [];
+  // const renderAnimals = (hybrid): JSX.Element => {
+  //   const animalGroup = {};
+  //   const animalData = [];
 
-    Object.values(allAnimals).forEach((animal, index) => {
-      if (animal.owner.toLowerCase() !== account.toLowerCase()) {
-        return;
-      }
-      const lastBred = animal.lastBred
-        ? new Date(Number(animal.lastBred)).getTime()
-        : new Date().getTime();
-      const now = new Date().getTime();
-      const breedTimeoutKey =
-        animal.breedCount > 5 ? 5 : animal.breedCount || 0;
-      const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
-      const elapsedTime = now - lastBred;
-      const timeRemaining = breedTimeout - elapsedTime;
-      const timeRemainingDaysHours = getDaysHours(timeRemaining);
-      const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
+  //   Object.values(allAnimals).forEach((animal, index) => {
+  //     if (animal.owner.toLowerCase() !== account.toLowerCase()) {
+  //       return;
+  //     }
+  //     const lastBred = animal.lastBred
+  //       ? new Date(Number(animal.lastBred)).getTime()
+  //       : new Date().getTime();
+  //     const now = new Date().getTime();
+  //     const breedTimeoutKey =
+  //       animal.breedCount > 5 ? 5 : animal.breedCount || 0;
+  //     const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
+  //     const elapsedTime = now - lastBred;
+  //     const timeRemaining = breedTimeout - elapsedTime;
+  //     const timeRemainingDaysHours = getDaysHours(timeRemaining);
+  //     const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
 
-      if (
-        timeRemaining <= 0 &&
-        animalData.find(
-          (a) => a.name === animal.name && a.timeRemaining <= 0
-        )
-      ) {
-        animalGroup[animal.name] = animalGroup[animal.name] + 1 || 1;
-      } else {
-        animalData.push({
-          id: index,
-          ...animal,
-          name: animal.name.replace(/\u0000/g, ""),
-          timeRemaining:
-            animal.bloodline === "pure"
-              ? elapsedTime < breedTimeout
-                ? timeRemaining
-                : 0
-              : 0,
-          CTAOverride:
-            animal.bloodline === "pure"
-              ? elapsedTime < breedTimeout
-                ? { barwidth, timeRemainingDaysHours }
-                : null
-              : null,
-          rarityColor: RarityColor[animal.rarity.toLowerCase()] || "white",
-        });
-      }
-    });
+  //     if (
+  //       timeRemaining <= 0 &&
+  //       animalData.find((a) => a.name === animal.name && a.timeRemaining <= 0)
+  //     ) {
+  //       animalGroup[animal.name] = animalGroup[animal.name] + 1 || 1;
+  //     } else {
+  //       animalData.push({
+  //         id: index,
+  //         ...animal,
+  //         name: animal.name.replace(/\u0000/g, ""),
+  //         timeRemaining:
+  //           animal.bloodline === "pure"
+  //             ? elapsedTime < breedTimeout
+  //               ? timeRemaining
+  //               : 0
+  //             : 0,
+  //         CTAOverride:
+  //           animal.bloodline === "pure"
+  //             ? elapsedTime < breedTimeout
+  //               ? { barwidth, timeRemainingDaysHours }
+  //               : null
+  //             : null,
+  //         rarityColor: RarityColor[animal.rarity.toLowerCase()] || "white",
+  //       });
+  //     }
+  //   });
 
-    const animals = sortData(
-      animalData.filter((item) => item.bloodline === hybrid),
-      "bloodline"
-    );
+  //   const animals = sortData(
+  //     animalData.filter((item) => item.bloodline === hybrid),
+  //     "bloodline"
+  //   );
 
-    return (
-      <>
-        {hybrid === "pure" ? (
-          <RowTitle>
-            {animals.length}{" "}
-            {animals.length != 1 ? "Breedable Animals" : "Breedable Animal"}
-          </RowTitle>
-        ) : (
-          <RowTitle>
-            {animals.length}{" "}
-            {animals.length != 1 ? "Hybrid Animals" : "Hybrid Animal"}
-          </RowTitle>
-        )}
-        <RowLayout>
-          <Route exact path={`${path}`}>
-            {animals.length === 0 ? (
-              <StyledText textAlign="center" fontSize="16px">
-                No {hybrid === "pure" ? `breedable` : `hybrid`} animals
-              </StyledText>
-            ) : (
-              <Swiper
-                slidesPerView={
-                  document.body.getBoundingClientRect().width / 220
-                }
-                spaceBetween={8}
-                pagination={{ clickable: true }}
-              >
-                {animals.map((animal) => (
-                  <SwiperSlide
-                    style={{ width: "220px", display: "flex" }}
-                    key={animal.tokenId}
-                  >
-                    <AnimalCard
-                      {...{ animal, account, animalGroup, hybrid, allAnimals }}
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            )}
-          </Route>
-          <Route exact path={`${path}/history`}>
-            {animalData.map((animal) => (
-              <Card key={animal.id} />
-            ))}
-          </Route>
-        </RowLayout>
-      </>
-    );
-  };
+  //   return (
+  //     <>
+  //       {hybrid === "pure" ? (
+  //         <RowTitle>
+  //           {animals.length}{" "}
+  //           {animals.length != 1 ? "Breedable Animals" : "Breedable Animal"}
+  //         </RowTitle>
+  //       ) : (
+  //         <RowTitle>
+  //           {animals.length}{" "}
+  //           {animals.length != 1 ? "Hybrid Animals" : "Hybrid Animal"}
+  //         </RowTitle>
+  //       )}
+  //       <RowLayout>
+  //         <Route exact path={`${path}`}>
+  //           {animals.length === 0 ? (
+  //             <StyledText textAlign="center" fontSize="16px">
+  //               No {hybrid === "pure" ? `breedable` : `hybrid`} animals
+  //             </StyledText>
+  //           ) : (
+  //             <Swiper
+  //               slidesPerView={
+  //                 document.body.getBoundingClientRect().width / 220
+  //               }
+  //               spaceBetween={8}
+  //               pagination={{ clickable: true }}
+  //             >
+  //               {animals.map((animal) => (
+  //                 <SwiperSlide
+  //                   style={{ width: "220px", display: "flex" }}
+  //                   key={animal.tokenId}
+  //                 >
+  //                   <AnimalCard
+  //                     {...{ animal, account, animalGroup, hybrid, allAnimals }}
+  //                   />
+  //                 </SwiperSlide>
+  //               ))}
+  //             </Swiper>
+  //           )}
+  //         </Route>
+  //         <Route exact path={`${path}/history`}>
+  //           {animalData.map((animal) => (
+  //             <Card key={animal.id} />
+  //           ))}
+  //         </Route>
+  //       </RowLayout>
+  //     </>
+  //   );
+  // };
 
   const renderEggs = (): JSX.Element => {
     let eggData = [];
@@ -398,8 +305,8 @@ const MyZooAccount: React.FC = () => {
 
     Object.values(allEggs).forEach((egg, index) => {
       const eggType = egg.basic ? "BASIC" : "HYBRID";
-      if ((egg.owner).toLowerCase() !== (account).toLowerCase()) {
-        console.log(account, egg)
+      if (egg.owner.toLowerCase() !== account.toLowerCase()) {
+        console.log(account, egg);
         return;
       }
       const createdDate = egg.created
@@ -500,8 +407,20 @@ const MyZooAccount: React.FC = () => {
       ) : (
         <>
           {eggType === "" && renderEggs()}
-          {eggType === "" && renderAnimals("pure")}
-          {eggType === "" && renderAnimals("hybrid")}
+          {eggType === "" && (
+            <AnimalList
+              bloodline="pure"
+              allAnimals={allAnimals}
+              account={account}
+            />
+          )}
+          {eggType === "" && (
+            <AnimalList
+              bloodline="hybrid"
+              allAnimals={allAnimals}
+              account={account}
+            />
+          )}
         </>
       )}
     </div>

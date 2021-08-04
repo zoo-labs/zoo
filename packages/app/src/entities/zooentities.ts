@@ -1,26 +1,28 @@
 export interface Animal {
-   owner?: string;
-   tokenId: string;
-   name: string;
-   description: string;
-   yield: string;
-   boost: string;
-   rarity: string;
-   dob: string;
-   startBid?: string;
-   currentBid?: string;
-   buyNow?: string;
-   imageUrl: string;
-   listed: boolean;
-   bloodline?: string
-   selected?:boolean
-   bred?:boolean
-   breedCount?:number
-   animalId?: string;
-   timeRemaining?: number;
-   CTAOverride?: any;
-   lastBred?: string;
-   
+  owner?: string;
+  tokenId: string;
+  name: string;
+  description: string;
+  yield: string;
+  boost: string;
+  rarity: string;
+  dob: string;
+  startBid?: string;
+  currentBid?: string;
+  buyNow?: string;
+  imageUrl: string;
+  listed: boolean;
+  bloodline?: string;
+  selected?: boolean;
+  bred?: boolean;
+  breedCount?: number;
+  animalId?: string;
+  timeRemaining?: number;
+  CTAOverride?: any;
+  lastBred?: string;
+  // only used in the MyZooAccount - generated for temp use
+  rarityColor?: string;
+  id?: number;
 }
 
 export interface Egg {
@@ -33,5 +35,5 @@ export interface Egg {
   timeRemaining?: number;
   CTAOverride?: any;
   created?: string;
-  burned?:boolean
+  burned?: boolean;
 }
