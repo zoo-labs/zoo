@@ -30,8 +30,8 @@ jobs:
     - name: Install dependencies
       run: yarn install
 
-    # - name: Export contracts
-    #   run: yarn export
+    - name: Export contracts
+      run: yarn export
 
     - name: Build production react app
       run: yarn build
