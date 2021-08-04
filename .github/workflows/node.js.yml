@@ -13,7 +13,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -29,16 +28,16 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install dependencies
-      - run: yarn install
+      run: yarn install
 
-    - name: Export contracts
-      - run: yarn export
+    # - name: Export contracts
+    #   run: yarn export
 
     - name: Build production react app
-      - run: yarn build
+      run: yarn build
 
-    - name: Run chain for tests
-      - run: yarn chain &
+    # - name: Run chain for tests
+    #   run: yarn chain &
 
     - name: Run tests
-      - run: yarn test
+      run: yarn test
