@@ -12,12 +12,18 @@ import "swiper/components/pagination/pagination.min.css";
 import { Text, Card as Existing, EggCard, VideoPlayer } from "components";
 import { getMilliseconds, getDaysHours } from "util/timeHelpers";
 import { breedTimeouts, eggTimeout } from "constants/constants";
-import { Animal } from "entities/zooentities";
-import { addAnimal, burnEgg } from "state/actions";
-import { animalMapping } from "util/animalMapping";
+// import { Animal } from "entities/zooentities";
+// import { addAnimal, burnEgg } from "state/actions";
+// import { animalMapping } from "util/animalMapping";
 import NewAnimalCard from "components/NewAnimal/NewAnimalCard";
 import { RarityColor } from "enums/rarity-color";
 import { AnimalCard } from "components/AnimalCard";
+import useWeb3 from "hooks/useWeb3";
+import {
+  getZooKeeper,
+} from "util/contractHelpers";
+import { Animal } from "entities/zooentities";
+
 
 const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.text};
@@ -36,7 +42,6 @@ const RowLayout = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-
   & > * {
     // min-width: calc(100vw - 20px);
     // max-width: 31.5%;
@@ -52,12 +57,14 @@ const Card = styled(Existing)<{ selected?: boolean; timedOut?: boolean }>`
 `;
 
 const MyZooAccount: React.FC = () => {
-  const { account } = useWeb3React();
+  const { account, chainId } = useWeb3React();
   const { path } = useRouteMatch();
   const dispatch = useDispatch();
   const [eggType, setEggType] = useState("");
   const [isOpen, setOpen] = useState(false);
   const [_, setShowBoth] = useState(false);
+  const web3 = useWeb3();
+  const zooKeeper = getZooKeeper(web3, chainId);
   const videoTimeout = [];
   const [hatched, setHatched] = useState({
     tokenId: "",
@@ -79,92 +86,168 @@ const MyZooAccount: React.FC = () => {
   );
 
   const hatchEgg = async (egg) => {
-    setShowBoth(true);
-    setEggType(egg.basic ? "basic" : "hybrid");
+    console.log(zooKeeper)
+      try {
+        // const token = await zooKeeper.methods.tokens(parseInt(egg.tokenId)).call()
+        const hatching = await zooKeeper.methods
+        .hatchEgg(1, parseInt(egg.tokenId))
+            .send({ from: account })
+            .then(async (res) => {
+              setShowBoth(true);
+              setEggType(egg.basic ? "basic" : "hybrid");
+              const newAnimal: Animal = {
+                 tokenId: res.data.tokenId,
+                 animalId: res.data.kind,
+                 name: res.data.name,
+                 description: "",
+                 yield: res.data.rarity.yield,
+                 boost: res.data.rarity.boost,
+                 rarity: res.data.rarity.name,
+                 dob: res.data.birthdate,
+                 imageUrl: res.data.data.tokenURI,
+                 startBid: "0",
+                 currentBid: "0",
+                 buyNow: "0",
+                 listed: false,
+                 bloodline: res.data.kind ==="1"? "pure" : "hybrid",
+                 owner: account,
+                 CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
+                 timeRemaining: 0,
+                 breedCount: 0,
+                 lastBred: "",
+               };
+               setHatched(newAnimal);
+               zooKeeper
+                  .getPastEvents("Hatch", {
+                     fromBlock: 0,
+                     toBlock: "latest",
+                     filter: {
+                        from: account,
+                     },
+                  })
+                  .then(async (events) => {
+                     const latest = events[events.length - 1];
+                     const newTknId = latest.returnValues.tokenID;
+                     const token = await zooKeeper.methods.tokens(newTknId).call()
+                    //  setShowBoth(true);
+                    //  setEggType(egg.basic ? "basic" : "hybrid");
+                    //  const newAnimal: Animal = {
+                    //     tokenId: String(newTknId),
+                    //     animalId: token.kind,
+                    //     name: token.name,
+                    //     description: "",
+                    //     yield: token.rarity.yield,
+                    //     boost: token.rarity.boost,
+                    //     rarity: token.rarity.name,
+                    //     dob: token.birthdate,
+                    //     imageUrl: token.data.tokenURI,
+                    //     startBid: "0",
+                    //     currentBid: "0",
+                    //     buyNow: "0",
+                    //     listed: false,
+                    //     bloodline: token.kind ==="1"? "pure" : "hybrid",
+                    //     owner: account,
+                    //     CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
+                    //     timeRemaining: 0,
+                    //     breedCount: 0,
+                    //     lastBred: "",
+                    //   };
+                    //   setHatched(newAnimal);
+
+                    //  dispatch(burnEgg(egg));
+                     // dispatch(addAnimal(newAnimal));
+                     startAnimationTimer();
+                  });
+                })
+      } catch (error) {
+        console.log(error)
+      }
 
     let randIdx: number;
 
+    console.log(egg)
+
     // REPLACE WITH HATCH FUNCTION FROM CONTRACT
-    if (egg.basic) {
-      randIdx = Math.floor(Math.random() * (5 - 1) + 1);
-    } else {
-      randIdx = Math.floor(Math.random() * (13 - 10) + 10);
-    }
-    const eggID = parseInt(egg.tokenId);
-    const tokenID = Math.floor(Math.random() * (999999 - 0) + 0);
+    // if (egg.basic) {
+    //   randIdx = Math.floor(Math.random() * (5 - 1) + 1);
+    // } else {
+    //   randIdx = Math.floor(Math.random() * (13 - 10) + 10);
+    // }
+    // const eggID = parseInt(egg.tokenId);
+    // const tokenID = Math.floor(Math.random() * (999999 - 0) + 0);
 
-    const mObject = Moralis.Object.extend("FinalEggs");
-    const query = new Moralis.Query(mObject);
-    query.equalTo("EggID", eggID);
-    const eggM = await query.find();
-    const eggRes = eggM[0];
+    // const mObject = Moralis.Object.extend("FinalEggs");
+    // const query = new Moralis.Query(mObject);
+    // query.equalTo("EggID", eggID);
+    // const eggM = await query.find();
+    // const eggRes = eggM[0];
 
-    setTimeout(() => setOpen(true), 3850);
-    setTimeout(() => setEggType(""), 7000);
-    console.log("egg result", eggRes);
-    eggRes.set("Burned", true);
-    eggRes.destroy();
+    // setTimeout(() => setOpen(true), 3850);
+    // setTimeout(() => setEggType(""), 7000);
+    // console.log("egg result", eggRes);
+    // eggRes.set("Burned", true);
+    // eggRes.destroy();
 
-    // console.log(randIdx);
-    const aFromMap = animalMapping[randIdx];
+    // // console.log(randIdx);
+    // const aFromMap = animalMapping[randIdx];
 
-    const mAnimal = Moralis.Object.extend("FinalAnimals");
-    const newAnimalM = new mAnimal();
-    // AnimalID Owner TokenURI MetaURI BlockNumber Rarirty Yield Boost AnimalTypeID Name
-    newAnimalM.set("AnimalID", tokenID);
-    newAnimalM.set("Owner", account);
-    newAnimalM.set("TokenURI", aFromMap.imageUrl);
-    newAnimalM.set("MetaURI", "META URI");
-    newAnimalM.set("BlockNumber", Math.floor(Math.random() * (999999 - 0) + 0));
-    newAnimalM.set("Rarity", aFromMap.rarity);
-    newAnimalM.set("Yield", aFromMap.yield);
-    newAnimalM.set("Boost", aFromMap.boost);
-    newAnimalM.set("Name", aFromMap.name);
-    newAnimalM.set("AnimalTypeID", aFromMap.animalId);
-    newAnimalM.set("StartBid", aFromMap.startBid);
-    newAnimalM.set("CurrentBid", aFromMap.currentBid);
-    newAnimalM.set("Listed", false);
-    newAnimalM.set("Bloodline", aFromMap.bloodline);
-    newAnimalM.set("TimeRemaining", 0);
-    newAnimalM.set("BreedCount", 0);
-    newAnimalM.set("lastBred", "");
-    await newAnimalM.save();
-    // console.log(aFromMap, randIdx);
-    const newAnimal: Animal = {
-      tokenId: Math.floor(Math.random() * (999999 - 0) + 0).toString(),
-      animalId: aFromMap.animalId,
-      name: aFromMap.name,
-      description: aFromMap.description,
-      yield: aFromMap.yield,
-      boost: aFromMap.boost,
-      rarity: aFromMap.rarity,
-      dob: aFromMap.dob,
-      imageUrl: aFromMap.imageUrl,
-      startBid: aFromMap.startBid,
-      currentBid: aFromMap.currentBid,
-      buyNow: aFromMap.buyNow,
-      listed: aFromMap.listed,
-      bloodline: aFromMap.bloodline,
-      owner: account,
-      CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
-      timeRemaining: 0,
-      breedCount: 0,
-      lastBred: "",
-    };
-    setHatched(newAnimal);
+    // const mAnimal = Moralis.Object.extend("FinalAnimals");
+    // const newAnimalM = new mAnimal();
+    // // AnimalID Owner TokenURI MetaURI BlockNumber Rarirty Yield Boost AnimalTypeID Name
+    // newAnimalM.set("AnimalID", tokenID);
+    // newAnimalM.set("Owner", account);
+    // newAnimalM.set("TokenURI", aFromMap.imageUrl);
+    // newAnimalM.set("MetaURI", "META URI");
+    // newAnimalM.set("BlockNumber", Math.floor(Math.random() * (999999 - 0) + 0));
+    // newAnimalM.set("Rarity", aFromMap.rarity);
+    // newAnimalM.set("Yield", aFromMap.yield);
+    // newAnimalM.set("Boost", aFromMap.boost);
+    // newAnimalM.set("Name", aFromMap.name);
+    // newAnimalM.set("AnimalTypeID", aFromMap.animalId);
+    // newAnimalM.set("StartBid", aFromMap.startBid);
+    // newAnimalM.set("CurrentBid", aFromMap.currentBid);
+    // newAnimalM.set("Listed", false);
+    // newAnimalM.set("Bloodline", aFromMap.bloodline);
+    // newAnimalM.set("TimeRemaining", 0);
+    // newAnimalM.set("BreedCount", 0);
+    // newAnimalM.set("lastBred", "");
+    // await newAnimalM.save();
+    // // console.log(aFromMap, randIdx);
+    // const newAnimal: Animal = {
+    //   tokenId: Math.floor(Math.random() * (999999 - 0) + 0).toString(),
+    //   animalId: aFromMap.animalId,
+    //   name: aFromMap.name,
+    //   description: aFromMap.description,
+    //   yield: aFromMap.yield,
+    //   boost: aFromMap.boost,
+    //   rarity: aFromMap.rarity,
+    //   dob: aFromMap.dob,
+    //   imageUrl: aFromMap.imageUrl,
+    //   startBid: aFromMap.startBid,
+    //   currentBid: aFromMap.currentBid,
+    //   buyNow: aFromMap.buyNow,
+    //   listed: aFromMap.listed,
+    //   bloodline: aFromMap.bloodline,
+    //   owner: account,
+    //   CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
+    //   timeRemaining: 0,
+    //   breedCount: 0,
+    //   lastBred: "",
+    // };
+    // setHatched(newAnimal);
 
-    const TransOb = Moralis.Object.extend("Transactions");
-    const newTrans = new TransOb();
+    // const TransOb = Moralis.Object.extend("Transactions");
+    // const newTrans = new TransOb();
 
-    newTrans.set("From", account);
-    newTrans.set("Action", "Hatched Egg");
-    newTrans.set("TokenID", eggID);
-    newTrans.set("AnimalName", aFromMap.name);
-    newTrans.set("AnimalTokenID", tokenID);
-    newTrans.save();
+    // newTrans.set("From", account);
+    // newTrans.set("Action", "Hatched Egg");
+    // newTrans.set("TokenID", eggID);
+    // newTrans.set("AnimalName", aFromMap.name);
+    // newTrans.set("AnimalTokenID", tokenID);
+    // newTrans.save();
 
-    dispatch(burnEgg(egg));
-    dispatch(addAnimal(newAnimal));
+    // dispatch(burnEgg(egg));
+    // dispatch(addAnimal(newAnimal));
     // ---------------------------------------------
     startAnimationTimer();
   };
@@ -207,7 +290,7 @@ const MyZooAccount: React.FC = () => {
     const animalData = [];
 
     Object.values(allAnimals).forEach((animal, index) => {
-      if (animal.owner !== account) {
+      if (animal.owner.toLowerCase() !== account.toLowerCase()) {
         return;
       }
       const lastBred = animal.lastBred
@@ -225,10 +308,10 @@ const MyZooAccount: React.FC = () => {
       if (
         timeRemaining <= 0 &&
         animalData.find(
-          (a) => a.animalId === animal.animalId && a.timeRemaining <= 0
+          (a) => a.name === animal.name && a.timeRemaining <= 0
         )
       ) {
-        animalGroup[animal.animalId] = animalGroup[animal.animalId] + 1 || 1;
+        animalGroup[animal.name] = animalGroup[animal.name] + 1 || 1;
       } else {
         animalData.push({
           id: index,
@@ -315,7 +398,8 @@ const MyZooAccount: React.FC = () => {
 
     Object.values(allEggs).forEach((egg, index) => {
       const eggType = egg.basic ? "BASIC" : "HYBRID";
-      if (egg.owner !== account) {
+      if ((egg.owner).toLowerCase() !== (account).toLowerCase()) {
+        console.log(account, egg)
         return;
       }
       const createdDate = egg.created
@@ -331,7 +415,7 @@ const MyZooAccount: React.FC = () => {
       //  if (timeRemaining <= 0 && eggData.find(a => a.basic === egg.basic && a.timeRemaining <= 0)) {
       //     eggGroup[eggType] = eggGroup[eggType] + 1
       //  } else {
-      if (egg.owner === account && !egg.burned) {
+      if (egg.owner.toLowerCase() === account.toLowerCase() && !egg.burned) {
         eggData.push({
           id: index,
           ...egg,

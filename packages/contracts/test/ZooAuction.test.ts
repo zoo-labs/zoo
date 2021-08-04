@@ -57,9 +57,8 @@ describe("ZooAuction", () => {
 
   async function deploy(): Promise<ZooAuction> {
     const ZooAuction = await ethers.getContractFactory("ZooAuction");
-
-    const auctionHouse = await ZooAuction.deploy(media.address, token.address);
-
+    const auctionHouse = await ZooAuction.deploy();
+    auctionHouse.configure(media.address, token.address);
     return auctionHouse as ZooAuction;
   }
 
@@ -86,7 +85,8 @@ describe("ZooAuction", () => {
   describe("#constructor", () => {
     it("should be able to deploy", async () => {
       const ZooAuction = await ethers.getContractFactory("ZooAuction");
-      const auctionHouse = await ZooAuction.deploy(
+      const auctionHouse = await ZooAuction.deploy();
+      await auctionHouse.configure(
         media.address,
         token.address
       );
@@ -107,8 +107,9 @@ describe("ZooAuction", () => {
 
     it("should not allow a configuration address that is not the Zora Media Protocol", async () => {
       const ZooAuction = await ethers.getContractFactory("ZooAuction");
+      const zooAuction = await ZooAuction.deploy()
       await expect(
-        ZooAuction.deploy("0x0000000000000000000000000000000000000000", token.address)
+        zooAuction.configure("0x0000000000000000000000000000000000000000", token.address)
       ).to.be.reverted
     })
   });
