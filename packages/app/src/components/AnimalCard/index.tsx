@@ -262,9 +262,22 @@ export const AnimalCard = ({
     const aniM2 = res2[0];
     const mArray = [aniM1, aniM2];
     console.log("Breeding", mArray)
+    const egg: Egg = {
+      owner: account,
+      tokenId: String(Math.floor(Math.random() * 100000000) + 1),
+      animalId: "3123",
+      parent1: "123",
+      parent2: "1231",
+      basic: false,
+      created: String(new Date().getTime()),
+      timeRemaining: 15000,
+      CTAOverride: null,
+    };
+    dispatch(addEgg(egg));
     try {
     // const token = await zooKeeper.methods.tokens(11).call();
     //   console.log('token', token);
+      
       const hatching = await zooKeeper.methods.breedAnimals(1, an1, an2).send({ from: account })
       .then((res) => {
               console.log(res)
