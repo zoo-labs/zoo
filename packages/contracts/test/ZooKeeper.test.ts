@@ -515,14 +515,14 @@ describe("ZooKeeper", () => {
 
     });
 
-    it("Should revert when hatching egg with invalid tokenid", async () => {
+    it.only("Should revert when hatching egg with invalid tokenid", async () => {
 
-        await zooToken.approve(zooKeeper.address, 600);
+        await zooToken.approve(zooKeeper.address, eggPrice);
 
-        await zooKeeper.connect(owner).buyEgg(1);
+        await zooKeeper.buyEgg(1);
 
-        await expect(zooKeeper.connect(signers[0]).hatchEgg(1, 525600)).to.be.revertedWith(
-            "ZooMedia: nonexistent token"
+        await expect(zooKeeper.hatchEgg(1, 525600)).to.be.revertedWith(
+            "Egg is burned or does not exist"
         );
 
     });
