@@ -97,7 +97,7 @@ contract ZooKeeper is Ownable {
     }
 
     // Accept ZOO and return Egg NFT
-    function buyEgg(uint256 dropID) public {
+    function buyEgg(uint256 dropID) public returns (IZoo.Token memory) {
         console.log('buyEgg', dropID);
 
         // Check egg price
@@ -116,10 +116,12 @@ contract ZooKeeper is Ownable {
         console.log('minted', egg.id);
 
         emit BuyEgg(msg.sender, egg.id);
+
+        return egg;
     }
 
     // Burn egg and randomly return an animal NFT
-    function hatchEgg(uint256 dropID, uint256 eggID) public {
+    function hatchEgg(uint256 dropID, uint256 eggID) public returns (IZoo.Token memory) {
         console.log("hatchEgg", dropID, eggID);
 
         require(media.tokenExists(eggID), "Egg is burned or does not exist");
@@ -137,11 +139,12 @@ contract ZooKeeper is Ownable {
         console.log('burned', eggID);
 
         emit Hatch(msg.sender, animal.id);
+        return animal;
     }
 
 
     // Breed two animals and create a hybrid egg
-    function breedAnimals(uint256 dropID, uint256 tokenA, uint256 tokenB) public canBreed(tokenA, tokenB) returns (uint256) {
+    function breedAnimals(uint256 dropID, uint256 tokenA, uint256 tokenB) public canBreed(tokenA, tokenB) returns (IZoo.Token memory) {
         console.log('breedAnimals', dropID, tokenA, tokenB);
 
         IZoo.Token memory egg = IDrop(drops[dropID]).newHybridEgg(
@@ -158,7 +161,7 @@ contract ZooKeeper is Ownable {
 
         egg = mint(msg.sender, egg);
         emit Breed(msg.sender, egg.id);
-        return egg.id;
+        return egg;
     }
 
     // Freeing an animal burns the animal NFT and returns the ZOO to the owner
@@ -268,7 +271,6 @@ contract ZooKeeper is Ownable {
         if (tokens[tokenID].breed.count == 0) {
             return true;
         }
-
         // If current timestamp is greater than the next breed time, lets go
         if (block.timestamp > breedNext(tokenID)) {
             return true;
