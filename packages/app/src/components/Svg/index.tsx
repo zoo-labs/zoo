@@ -39,7 +39,6 @@ export { default as ListViewIcon } from "./Icons/ListView";
 export { default as LogoIcon } from "./Icons/Logo";
 export { default as LogoRound } from "./Icons/LogoRound";
 export { default as TestIcon } from "./Icons/TestIcon";
-export { default as LoadingCoin } from "./Icons/LoadingCoin";
 export { default as LogoRoundIcon } from "./Icons/LogoRound";
 export { default as MetamaskIcon } from "./Icons/Metamask";
 export { default as MinusIcon } from "./Icons/Minus";
