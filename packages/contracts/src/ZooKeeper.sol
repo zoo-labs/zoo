@@ -127,6 +127,8 @@ contract ZooKeeper is Ownable {
 
         // Get animal for given Egg
         IZoo.Token memory animal = getAnimal(dropID, eggID);
+        animal.meta.eggID = eggID;
+        animal.meta.dropID = dropID;
         console.log("animal", animal.name);
 
         // ...it's hatching!
