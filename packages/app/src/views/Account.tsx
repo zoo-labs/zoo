@@ -153,12 +153,13 @@ const Account: React.FC = () => {
       setDisable(true);
       toastInfo('Processing approval...');
 
+      const gasPrice = BigInt(await web3.eth.getGasPrice()) * BigInt(1.3);
 
       // Increase allowance
        const eggPrice = await zooDrop.methods.eggPrice().call();
        const tsx = zooToken.methods
           .approve(keeperAdd, eggPrice*100)
-          .send({ from: account })
+          .send({ gasPrice: gasPrice, from: account })
 
       tsx.then(() => {
          setAllowance(true);
@@ -258,7 +259,7 @@ const Account: React.FC = () => {
       setDisable(true);``
       toastClear();
       toastInfo('Processing transaction...');
-      
+
       const drop = await zooKeeper.methods.drops(0).call();
       console.log("Drop:", drop);
       const token = await zooKeeper.methods.buyEgg(1).call({ from: account })
