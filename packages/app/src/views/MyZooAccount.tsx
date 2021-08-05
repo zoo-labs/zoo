@@ -13,7 +13,7 @@ import { Text, Card as Existing, EggCard, VideoPlayer } from "components";
 import { getMilliseconds, getDaysHours } from "util/timeHelpers";
 import { breedTimeouts, eggTimeout } from "constants/constants";
 // import { Animal } from "entities/zooentities";
-// import { addAnimal, burnEgg } from "state/actions";
+import { addAnimal, burnEgg } from "state/actions";
 // import { animalMapping } from "util/animalMapping";
 import NewAnimalCard from "components/NewAnimal/NewAnimalCard";
 import { RarityColor } from "enums/rarity-color";
@@ -66,6 +66,7 @@ const MyZooAccount: React.FC = () => {
   const web3 = useWeb3();
   const zooKeeper = getZooKeeper(web3, chainId);
   const videoTimeout = [];
+  const [newEgg, setNewEgg] = useState("")
   const [hatched, setHatched] = useState({
     tokenId: "",
     name: "",
@@ -89,34 +90,36 @@ const MyZooAccount: React.FC = () => {
     console.log(zooKeeper)
       try {
         // const token = await zooKeeper.methods.tokens(parseInt(egg.tokenId)).call()
+        setNewEgg(egg.tokenId)
         const hatching = await zooKeeper.methods
         .hatchEgg(1, parseInt(egg.tokenId))
             .send({ from: account })
             .then(async (res) => {
-              setShowBoth(true);
-              setEggType(egg.basic ? "basic" : "hybrid");
-              const newAnimal: Animal = {
-                 tokenId: res.data.tokenId,
-                 animalId: res.data.kind,
-                 name: res.data.name,
-                 description: "",
-                 yield: res.data.rarity.yield,
-                 boost: res.data.rarity.boost,
-                 rarity: res.data.rarity.name,
-                 dob: res.data.birthdate,
-                 imageUrl: res.data.data.tokenURI,
-                 startBid: "0",
-                 currentBid: "0",
-                 buyNow: "0",
-                 listed: false,
-                 bloodline: res.data.kind ==="1"? "pure" : "hybrid",
-                 owner: account,
-                 CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
-                 timeRemaining: 0,
-                 breedCount: 0,
-                 lastBred: "",
-               };
-               setHatched(newAnimal);
+              // console.log(res)
+              // setShowBoth(true);
+              // setEggType(egg.basic ? "basic" : "hybrid");
+              // const newAnimal: Animal = {
+              //    tokenId: res.data.tokenId,
+              //    animalId: res.data.kind,
+              //    name: res.data.name,
+              //    description: "",
+              //    yield: res.data.rarity.yield,
+              //    boost: res.data.rarity.boost,
+              //    rarity: res.data.rarity.name,
+              //    dob: res.data.birthdate,
+              //    imageUrl: res.data.data.tokenURI,
+              //    startBid: "0",
+              //    currentBid: "0",
+              //    buyNow: "0",
+              //    listed: false,
+              //    bloodline: res.data.kind ==="1"? "pure" : "hybrid",
+              //    owner: account,
+              //    CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
+              //    timeRemaining: 0,
+              //    breedCount: 0,
+              //    lastBred: "",
+              //  };
+              //  setHatched(newAnimal);
                zooKeeper
                   .getPastEvents("Hatch", {
                      fromBlock: 0,
@@ -129,33 +132,32 @@ const MyZooAccount: React.FC = () => {
                      const latest = events[events.length - 1];
                      const newTknId = latest.returnValues.tokenID;
                      const token = await zooKeeper.methods.tokens(newTknId).call()
-                    //  setShowBoth(true);
-                    //  setEggType(egg.basic ? "basic" : "hybrid");
-                    //  const newAnimal: Animal = {
-                    //     tokenId: String(newTknId),
-                    //     animalId: token.kind,
-                    //     name: token.name,
-                    //     description: "",
-                    //     yield: token.rarity.yield,
-                    //     boost: token.rarity.boost,
-                    //     rarity: token.rarity.name,
-                    //     dob: token.birthdate,
-                    //     imageUrl: token.data.tokenURI,
-                    //     startBid: "0",
-                    //     currentBid: "0",
-                    //     buyNow: "0",
-                    //     listed: false,
-                    //     bloodline: token.kind ==="1"? "pure" : "hybrid",
-                    //     owner: account,
-                    //     CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
-                    //     timeRemaining: 0,
-                    //     breedCount: 0,
-                    //     lastBred: "",
-                    //   };
-                    //   setHatched(newAnimal);
-
+                     setShowBoth(true);
+                     setEggType(egg.basic ? "basic" : "hybrid");
+                     const newAnimal: Animal = {
+                        tokenId: String(newTknId),
+                        animalId: token.kind,
+                        name: token.name,
+                        description: "",
+                        yield: token.rarity.yield,
+                        boost: token.rarity.boost,
+                        rarity: token.rarity.name,
+                        dob: token.birthdate,
+                        imageUrl: token.data.tokenURI,
+                        startBid: "0",
+                        currentBid: "0",
+                        buyNow: "0",
+                        listed: false,
+                        bloodline: token.kind ==="1"? "pure" : "hybrid",
+                        owner: account,
+                        CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
+                        timeRemaining: 0,
+                        breedCount: 0,
+                        lastBred: "",
+                      };
+                      setHatched(newAnimal);
                     //  dispatch(burnEgg(egg));
-                     // dispatch(addAnimal(newAnimal));
+                     dispatch(addAnimal(newAnimal));
                      startAnimationTimer();
                   });
                 })
@@ -249,11 +251,11 @@ const MyZooAccount: React.FC = () => {
     // dispatch(burnEgg(egg));
     // dispatch(addAnimal(newAnimal));
     // ---------------------------------------------
-    startAnimationTimer();
+    // startAnimationTimer();
   };
 
   const startAnimationTimer = useCallback(() => {
-    videoTimeout.push(setTimeout(() => setOpen(true), 5450));
+    videoTimeout.push(setTimeout(() => { setOpen(true); setNewEgg("")}, 5450));
     videoTimeout.push(setTimeout(() => setEggType(""), 7000));
   }, []);
 
@@ -293,6 +295,7 @@ const MyZooAccount: React.FC = () => {
       if (animal.owner.toLowerCase() !== account.toLowerCase()) {
         return;
       }
+      // console.log(animal)
       const lastBred = animal.lastBred
         ? new Date(Number(animal.lastBred)).getTime()
         : new Date().getTime();
@@ -311,7 +314,7 @@ const MyZooAccount: React.FC = () => {
           (a) => a.name === animal.name && a.timeRemaining <= 0
         )
       ) {
-        animalGroup[animal.name] = animalGroup[animal.name] + 1 || 1;
+        animalGroup[animal.name] = animalGroup[animal.name] + 1 || 2;
       } else {
         animalData.push({
           id: index,
@@ -399,7 +402,7 @@ const MyZooAccount: React.FC = () => {
     Object.values(allEggs).forEach((egg, index) => {
       const eggType = egg.basic ? "BASIC" : "HYBRID";
       if ((egg.owner).toLowerCase() !== (account).toLowerCase()) {
-        console.log(account, egg)
+        //console.log(account, egg)
         return;
       }
       const createdDate = egg.created
@@ -434,6 +437,21 @@ const MyZooAccount: React.FC = () => {
       }
       //  }
     });
+    /* if(newEgg !== ""){
+      const createdDate = new Date().getTime();
+      const now = new Date().getTime();
+      const hatchTimeout = getMilliseconds(eggTimeout);
+      const elapsedTime = now - createdDate;
+      const timeRemaining = hatchTimeout - elapsedTime;
+      const timeRemainingDaysHours = getDaysHours(timeRemaining);
+      const barwidth = [100 * (elapsedTime / hatchTimeout), "%"].join("");
+      eggData.push({
+        id: eggData.length + 1,
+        name: newEgg === "Base Egg" ? "BASIC" : "HYBRID",
+        timeRemaining: timeRemaining,
+        CTAOverride: { barwidth, timeRemainingDaysHours },
+      });
+    } */
     eggData = sortData(eggData, "hybrid");
 
     return (
@@ -455,7 +473,7 @@ const MyZooAccount: React.FC = () => {
                   key={egg.tokenId}
                 >
                   {/* <CardWrapper> */}
-                  <EggCard egg={egg} hatchEgg={hatchEgg} />
+                  <EggCard egg={egg} hatchEgg={hatchEgg} hatching={newEgg===egg.tokenId}/>
                 </SwiperSlide>
               ))}
             </Swiper>
