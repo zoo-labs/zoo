@@ -1,7 +1,6 @@
 # ZOO
 ![App CI](https://github.com/zoo-labs/zoo/actions/workflows/app.yml/badge.svg)
 ![Contracts CI](https://github.com/zoo-labs/zoo/actions/workflows/contracts.yml/badge.svg)
->>>>>>> develop
 
 > An autonomous ecosystem where ZOO owners breed, collect, and trade exotic hybrid animals via NFTs.
 
@@ -9,7 +8,7 @@
 
 Prerequisites: [Node](https://nodejs.org/dist/latest-v12.x/) plus [Yarn](https://classic.yarnpkg.com/en/docs/install/) and [Git](https://git-scm.com/downloads)
 
-> clone/fork 🏗 cryptozoo:
+> clone/fork 🏗 ZOO:
 
 ```bash
 git clone https://github.com/zoo-labs/zoo.git
