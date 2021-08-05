@@ -1,4 +1,7 @@
-# Zoo
+# ZOO
+![App CI](https://github.com/zoo-labs/zoo/actions/workflows/app.yml/badge.svg)
+![Contracts CI](https://github.com/zoo-labs/zoo/actions/workflows/contracts.yml/badge.svg)
+>>>>>>> develop
 
 > An autonomous ecosystem where ZOO owners breed, collect, and trade exotic hybrid animals via NFTs.
 
