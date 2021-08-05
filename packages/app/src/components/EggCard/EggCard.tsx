@@ -1,9 +1,24 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import { Card as Existing, CardBody } from "components";
 import { useModal } from "components/Modal";
 import HatchModal from "components/ZooModals/HatchModal";
 import { EggCardType } from "./types";
+
+const rotate = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  50% {
+     transform: rotate(0deg);
+  }
+  75% {
+   transform: rotate(-5deg);
+}
+`;
 
 const InfoBlock = styled.div`
    padding: 4px;
@@ -55,11 +70,12 @@ const TimeoutDisplay = styled.span`
    position: relative;
    z-index: 2;
 `;
-const Card = styled(Existing)<{ timedOut?: boolean }>`
+const Card = styled(Existing)<{ timedOut?: boolean, hatching?: boolean }>`
    cursor: pointer;
    width: 120px;
    margin: 0px 8px 8px;
    backgroundcolor: ${({ theme }) => theme.colors.background};
+   animation: ${({hatching}) => hatching ? css`${rotate} 2s linear infinite` : ''};
    border-radius: 8px;
    display: block;
    opacity: ${({ timedOut }) => (timedOut ? "0.6" : null)};
@@ -68,11 +84,11 @@ const Card = styled(Existing)<{ timedOut?: boolean }>`
 const basicEggURL = window.location.origin + "/static/images/basic.jpg";
 const hybridEggURL = window.location.origin + "/static/images/hybrid.jpg";
 
-export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg }) => {
+export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatching }) => {
    const [onHatch] = useModal(
       <HatchModal confirmation={() => hatchEgg(egg)} onDismiss={() => null} />
    );
-
+      console.log(hatching)
    return (
       <>
          <Card
@@ -84,7 +100,9 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg }) => {
                     }
             }
             style={{ backgroundColor: "#000000" }}
-            timedOut={egg.timeRemaining > 0 ? true : false}>
+            timedOut={egg.timeRemaining > 0 ? true : false}
+            hatching={hatching}
+            >
             <CardBody
                style={{
                   backgroundImage: `url("${

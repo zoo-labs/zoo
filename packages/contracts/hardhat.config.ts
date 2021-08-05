@@ -1,9 +1,9 @@
 import { task } from 'hardhat/config'
 import { HardhatUserConfig } from 'hardhat/types'
 
+import "@nomiclabs/hardhat-ethers";
 import 'hardhat-deploy'
 import '@typechain/hardhat'
-import '@nomiclabs/hardhat-ethers'
 import '@nomiclabs/hardhat-web3';
 
 import { utils } from 'ethers'
