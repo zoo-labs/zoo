@@ -19,8 +19,9 @@ interface Props {
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    background-color: #030303;
+    background: linear-gradient(#4eff9d,#22d4a3,#28c3ff);
     height: 100vh;
+    overflow: hidden;
 `
 const Button = styled.button`
     width: 200px;
@@ -92,8 +93,9 @@ export default function LoginMain() {
 
     return (
         <Container>
-            <img alt="CryptoZoo Logo" src="CryptoZooLogoFull.jpg" style={{width: '300px', margin: 'auto auto 30px auto'}}/>
-            <Button onClick={metamaskLogin}>
+            <img alt="CryptoZoo Logo" src="bearshark-halftone.png" style={{ top: '50%', transform: 'translateY(-50%)', left: '1%', position: 'absolute', width: '98%', margin: 'auto'}}/>
+            <img alt="CryptoZoo Logo" src="cryptozoo-logo-white.png" style={{ top: '50%', transform: 'translateY(-50%)', left: '29vw', position: 'absolute', width: '42vw', margin: 'auto'}}/>
+            <Button onClick={metamaskLogin} style={{ position: 'absolute', left: '35%', bottom: '10%', width: '30%'}}>
                 <p>LOGIN WITH</p>
                 <p>METAMASK</p>
             </Button>
