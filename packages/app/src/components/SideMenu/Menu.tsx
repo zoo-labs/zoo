@@ -92,7 +92,7 @@ const StyledProviderTitle = styled.div`
 const MaxHeightLogo = styled.img`
   // height: 100%;
   // width: 30%;
-  height: ${MENU_HEIGHT / 1.6}px;
+  height: ${MENU_HEIGHT / 1.4}px;
   position: absolute;
   top: 10px;
   left: 60px;
