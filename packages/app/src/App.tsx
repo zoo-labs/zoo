@@ -300,7 +300,7 @@ const App: React.FC = () => {
    };
 
    return (
-      <MoralisProvider appId={moralisId} serverUrl={moralisUrl}>
+      // <MoralisProvider appId={moralisId} serverUrl={moralisUrl}>
          <Suspense fallback={null}>
             <Router history={history}>
                <ResetCSS />
@@ -358,7 +358,7 @@ const App: React.FC = () => {
                <ToastListener />
             </Router>
          </Suspense>
-      </MoralisProvider>
+      // </MoralisProvider>
    );
 };
 
