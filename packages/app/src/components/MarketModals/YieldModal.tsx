@@ -18,7 +18,7 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
    const web3 = useWeb3();
    const zooKeeper = getZooKeeper(web3, chainId);
    const multiplier = animalGroup[item.name];
-   const canFree = item.owner === account;
+   const canFree = item.owner.toLowerCase() === account.toLowerCase();
 
    useEffect(() => {
       return null;
