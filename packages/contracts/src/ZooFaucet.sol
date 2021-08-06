@@ -3,9 +3,9 @@
 pragma solidity >=0.8.4;
 
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
-contract ZooFaucet {
-    address payable public owner;
+contract ZooFaucet is Ownable {
     uint256 public rate = 1000;
 
     IERC20 token;
@@ -15,13 +15,7 @@ contract ZooFaucet {
         uint256 indexed _amount
     );
 
-    modifier onlyOwner {
-        require(msg.sender == owner);
-        _;
-    }
-
     constructor(address zooAddress) {
-        owner = payable(msg.sender);
         token = IERC20(zooAddress);
     }
 
@@ -35,6 +29,6 @@ contract ZooFaucet {
     }
 
     function withdraw() public onlyOwner {
-        token.transfer(owner, token.balanceOf(address(this)));
+        token.transfer(owner(), token.balanceOf(address(this)));
     }
 }
