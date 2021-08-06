@@ -15,8 +15,8 @@
     "generate:config": "ts-node --compiler-options '{\"module\":\"commonjs\"}' scripts/generateConfig",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "moralis:contracts": "moralis-admin-cli add-contract --moralisSubdomain dblpeaqbqk32.usemoralis.com --abiPath ../contracts/artifacts/src/ZooKeeper.sol/ZooKeeper.json",
-    "moralis:functions": "moralis-admin-cli watch-cloud-file --moralisSubdomain dblpeaqbqk32.usemoralis.com --moralisCloudFile src/moralis/functions.js"
+    "moralis:contracts": "node node_modules/.bin/moralis-admin-cli add-contract --moralisSubdomain dblpeaqbqk32.usemoralis.com --abiPath ../contracts/artifacts/src/ZooKeeper.sol/ZooKeeper.json",
+    "moralis:functions": "node node_modules/.bin/moralis-admin-cli watch-cloud-file --moralisSubdomain dblpeaqbqk32.usemoralis.com --moralisCloudFile src/moralis/functions.js"
   },
   "dependencies": {
     "@binance-chain/bsc-connector": "^1.0.0",
