@@ -272,10 +272,10 @@ const Account: React.FC = () => {
       const barwidth = [100 * (elapsedTime / hatchTimeout), "%"].join("");
       const egg: Egg = {
          owner: account,
-         tokenId: token[2],
-         animalId: "3123",
-         parent1: "123",
-         parent2: "1231",
+         tokenID: token[2],
+         kind: "0",
+         parentA: "",
+         parentB: "",
          basic: true,
          created: String(new Date().getTime()),
          timeRemaining: 15000,

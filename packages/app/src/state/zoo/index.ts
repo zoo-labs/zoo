@@ -18,37 +18,37 @@ export const ZooSlice = createSlice({
    reducers: {
       addEgg: (state: ZooState, action) => {
          const toAdd: Egg = action.payload;
-         state.eggs[toAdd.tokenId] = toAdd;
+         state.eggs[toAdd.tokenID] = toAdd;
       },
       addAnimal: (state: ZooState, action) => {
          const toAdd: Animal = action.payload;
-         state.animals[toAdd.tokenId] = toAdd;
+         state.animals[toAdd.tokenID] = toAdd;
       },
       addEggs: (state: ZooState, action) => {
          const toAdd: Egg[] = action.payload;
          for (let i = 0; i < toAdd.length; i += 1) {
             const curr = toAdd[i];
-            state.eggs[curr.tokenId] = curr;
+            state.eggs[curr.tokenID] = curr;
          }
       },
       addAnimals: (state: ZooState, action) => {
          const toAdd: Animal[] = action.payload;
          for (let i = 0; i < toAdd.length; i += 1) {
             const curr = toAdd[i];
-            state.animals[curr.tokenId] = curr;
+            state.animals[curr.tokenID] = curr;
          }
       },
       burnEgg: (state: ZooState, action) => {
          const toRemove: Egg = action.payload;
          console.log(toRemove);
          const newState = state;
-         delete newState.eggs[toRemove.tokenId];
+         delete newState.eggs[toRemove.tokenID];
          state = newState;
       },
       burnAnimal: (state: ZooState, action) => {
          const toRemove: Animal = action.payload;
          const newState = state;
-         delete newState.animals[toRemove.tokenId];
+         delete newState.animals[toRemove.tokenID];
          state = newState;
       },
       clearZoo: () => {

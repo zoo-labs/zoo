@@ -1,8 +1,8 @@
 export const test = {
   animals: {
     143141: {
-      tokenId: "143141",
-      animalId: "1",
+      tokenID: "143141",
+      kind: "1",
       name: "Panda Cub",
       description: "Mystery",
       yield: "543",
@@ -20,8 +20,8 @@ export const test = {
       timeRemaining: 0
     },
     21234214: {
-      tokenId: "21234214",
-      animalId: "2",
+      tokenID: "21234214",
+      kind: "2",
       name: "Gorilla",
       description: "LOL",
       yield: "4223",
@@ -38,8 +38,8 @@ export const test = {
       timeRemaining: 0
     },
     99999923: {
-      tokenId: "99999923",
-      animalId: "3",
+      tokenID: "99999923",
+      kind: "3",
       name: "Baby Turtle",
       description: "WOOF wO0F",
       yield: "321",
@@ -57,8 +57,8 @@ export const test = {
       timeRemaining: 0
     },
     411313: {
-      tokenId: "411313",
-      animalId: "4",
+      tokenID: "411313",
+      kind: "4",
       name: "Baby Shark",
       description: "BARK",
       yield: "31",
@@ -76,8 +76,8 @@ export const test = {
       timeRemaining: 0
     },
     101311: {
-      tokenId: "101311",
-      animalId: "10",
+      tokenID: "101311",
+      kind: "10",
       name: "Butterrat",
       description: "Meow",
       yield: "23",
@@ -97,17 +97,17 @@ export const test = {
   },
   eggs: {
     // 54141: {
-    //   tokenId: "54141",
-    //   animalId: "10",
-    //   parent1: "1",
-    //   parent2: "2",
+    //   tokenID: "54141",
+    //   kind: "10",
+    //   parentA: "1",
+    //   parentB: "2",
     //   basic: false,
     // },
     // 6222: {
-    //   tokenId: "622",
-    //   animalId: "11",
-    //   parent1: "3",
-    //   parent2: "4",
+    //   tokenID: "622",
+    //   kind: "11",
+    //   parentA: "3",
+    //   parentB: "4",
     //   basic: false,
     // },
   },
