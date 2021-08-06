@@ -39,4 +39,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 export default func
 func.id = 'deploy_zoo_keeper'
 func.tags = ['ZooKeeper']
-func.dependencies = ['ZooMedia', 'ZooMarket']
+// func.dependencies = ['ZooMedia', 'ZooMarket']

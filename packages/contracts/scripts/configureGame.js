@@ -4,9 +4,10 @@ const ethers = hre.ethers
 const rarities = require('../utils/rarities.json')
 const animals  = require('../utils/animals.json')
 const hybrids  = require('../utils/hybrids.json')
+const hybrids  = require('../utils/hybrids.json')
 
-const ZooDrop  = require('../deployments/testnet/ZooDrop.json')
-const ZooKeeper  = require('../deployments/testnet/ZooKeeper.json')
+const ZooDrop   = require('../deployments/testnet/ZooDrop.json')
+const ZooKeeper = require('../deployments/testnet/ZooKeeper.json')
 
 async function main() {
   const [signer] = await ethers.getSigners()
@@ -19,6 +20,9 @@ async function main() {
 
   // Configure Drop
   await drop.configureKeeper(ZooKeeper.address);
+
+  // Configure Name price
+  await keeper.setNamePrice(1540520*18) // about $20 / price
 
   // Add eggs
   const eggs = [
@@ -69,7 +73,7 @@ async function main() {
     console.log('setAnimal', v)
     const tx = await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
     await tx.wait()
-  // }
+  }
 
   // Add hybrids
   for (const v of hybrids) {
@@ -78,6 +82,7 @@ async function main() {
 
     console.log('setHybrid', v)
     const tx = await drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
+    await tx.wait()
   }
 }
 
