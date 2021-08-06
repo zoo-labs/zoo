@@ -9,8 +9,11 @@ export default async function configureGame(keeper: any, drop: any) {
   // Add Drop to ZooKeeper
   await keeper.setDrop(drop.address)
 
+  // Set name price
+  await keeper.setNamePrice(1540520*18) // about $21 / name
+
   // Configure Drop
-  await drop.configureKeeper(keeper.address);
+  await drop.configureKeeper(keeper.address)
 
   // Add eggs
   const eggs = [
