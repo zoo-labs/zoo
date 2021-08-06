@@ -223,7 +223,7 @@ const Bank: React.FC = () => {
       try {
          setWait(true);
          faucet.methods
-            .buyZoo(account, faucetAmt)
+            .getZoo(account, faucetAmt)
             .send({ from: account })
             .then(() => {
                setWait(false);
@@ -241,6 +241,9 @@ const Bank: React.FC = () => {
    const handleFunds = () => {
       console.log(chainId);
       switch (chainId) {
+         case 31337:
+            handleFaucet();
+            break;
          case 97:
             handleFaucet();
             break;
