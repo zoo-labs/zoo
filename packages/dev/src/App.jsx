@@ -379,6 +379,17 @@ function App(props) {
             </Link>
           </Menu.Item>
 
+          <Menu.Item key="/zoofaucet">
+            <Link
+              onClick={() => {
+                setRoute("/zoofaucet");
+              }}
+              to="/zoofaucet"
+            >
+              ZooFaucet
+            </Link>
+          </Menu.Item>
+
           <Menu.Item key="/subgraph">
             <Link
               onClick={() => {
@@ -435,6 +446,14 @@ function App(props) {
           <Route exact path="/zooauction">
             <Contract
               name="ZooAuction"
+              signer={userSigner}
+              provider={localProvider}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+          <Route exact path="/zoofaucet">
+            <Contract
+              name="ZooFaucet"
               signer={userSigner}
               provider={localProvider}
               blockExplorer={blockExplorer}
