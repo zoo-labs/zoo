@@ -36,7 +36,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   for (var i = 0; i < signers.length; i++) {
     // The 20 signer wallets get 10K ZOO on deployment
-    await faucet.sendZoo(
+    await faucet.getZoo(
       signers[i].address,
       signerAmount
     );
