@@ -126,6 +126,7 @@ const Account: React.FC = () => {
          toastClear();
          toastError('Failed to load ZOO balance');
       }
+
       try {
          const allowance = await zooToken.methods
             .allowance(account, keeperAdd)
@@ -153,15 +154,13 @@ const Account: React.FC = () => {
       setDisable(true);
       toastInfo('Processing approval...');
 
-      const gasPrice = BigInt(await web3.eth.getGasPrice()) * BigInt(1.3);
-
       // Increase allowance
        const eggPrice = await zooDrop.methods.eggPrice().call();
-       const tsx = zooToken.methods
+       const tx = zooToken.methods
           .approve(keeperAdd, eggPrice*100)
-          .send({ gasPrice: gasPrice, from: account })
+          .send({ from: account })
 
-      tsx.then(() => {
+      tx.then(() => {
          setAllowance(true);
          setDisable(false);
          toastClear();
@@ -351,7 +350,7 @@ const Account: React.FC = () => {
                         minWidth={!isXl ? "120px" : "140px"}
                         onClick={buyEgg}
                         style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}>
-                        {disable ? "TSX PROCESSING" : "BUY EGGS"}
+                        {disable ? "TX PROCESSING" : "BUY EGGS"}
                      </BorderButton>
 
                      {(keepApprove || !allowance) && (
@@ -366,7 +365,7 @@ const Account: React.FC = () => {
                            {allowance
                               ? "APPROVED ZOO"
                               : disable
-                              ? "TSX PROCESSING"
+                              ? "TX PROCESSING"
                               : "APPROVE ZOO"}
                         </BorderButton>
                      )}
