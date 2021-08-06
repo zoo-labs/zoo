@@ -24,8 +24,8 @@ contract ZooKeeper is Ownable {
     // Declare an Event
     event AddDrop(address indexed dropAddress, string title, uint256 eggSupply);
     event BuyEgg(address indexed from, uint256 indexed tokenID);
-    event Hatch(address indexed from, uint256 indexed tokenID);
-    event Breed(address indexed from, uint256 indexed tokenID);
+    event Hatch(address indexed from, uint256 eggID, string indexed name, uint256 indexed tokenID);
+    event Breed(address indexed from, uint256 parentA, uint256 parentB, uint256 indexed tokenID);
     event Mint(address indexed from, uint256 indexed tokenID);
     event Burn(address indexed from, uint256 indexed tokenID);
     event Free(address indexed from, uint256 indexed tokenID, uint256 indexed yield);
@@ -76,7 +76,6 @@ contract ZooKeeper is Ownable {
         market.setBidShares(token.id, token.bidShares);
         tokens[token.id] = token;
         emit Mint(owner, token.id);
-        console.log("mint", owner, token.name, token.id);
         return token;
     }
 
@@ -84,7 +83,7 @@ contract ZooKeeper is Ownable {
     function burn(address owner, uint256 tokenID) private {
         console.log("burn", owner, tokenID);
         media.burnToken(owner, tokenID);
-        delete tokens[tokenID];
+        // delete tokens[tokenID];
         emit Burn(owner, tokenID);
     }
 
@@ -113,7 +112,7 @@ contract ZooKeeper is Ownable {
 
         // Mint Egg Token
         egg = mint(msg.sender, egg);
-        console.log('minted', egg.id);
+        console.log('minted egg', egg.id);
 
         emit BuyEgg(msg.sender, egg.id);
 
@@ -128,17 +127,19 @@ contract ZooKeeper is Ownable {
 
         // Get animal for given Egg
         IZoo.Token memory animal = getAnimal(dropID, eggID);
+        animal.meta.eggID = eggID;
+        animal.meta.dropID = dropID;
         console.log("animal", animal.name);
 
         // ...it's hatching!
         animal = mint(msg.sender, animal);
-        console.log('minted', animal.id, eggID);
+        console.log('minted animal', animal.id, eggID);
 
         // bye egg
         burn(msg.sender, eggID);
         console.log('burned', eggID);
 
-        emit Hatch(msg.sender, animal.id);
+        emit Hatch(msg.sender, eggID, animal.name, animal.id);
         return animal;
     }
 
@@ -160,7 +161,7 @@ contract ZooKeeper is Ownable {
         updateBreedDelays(tokenA, tokenB);
 
         egg = mint(msg.sender, egg);
-        emit Breed(msg.sender, egg.id);
+        emit Breed(msg.sender, tokenA, tokenB, egg.id);
         return egg;
     }
 

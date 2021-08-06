@@ -304,9 +304,12 @@ contract ZooDrop is Ownable {
         token.kind = IZoo.Type.BASE_ANIMAL;
         token.name = animal.name;
         token.data = animal.data;
+        token.rarity = animal.rarity;
         token.bidShares = animal.bidShares;
         token.timestamp = block.timestamp;
         token.birthday = block.number;
+
+        console.log('randomAnimal', animal.name, animal.rarity.name, animal.rarity.yield);
         return token;
     }
 
@@ -323,9 +326,11 @@ contract ZooDrop is Ownable {
         token.kind = IZoo.Type.HYBRID_ANIMAL;
         token.name = hybrid.name;
         token.data = hybrid.data;
+        token.rarity = hybrid.rarity;
         token.bidShares = hybrid.bidShares;
         token.timestamp = block.timestamp;
         token.birthday = block.number;
+        token.parents = parents;
         return token;
     }
 

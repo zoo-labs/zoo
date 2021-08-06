@@ -8,25 +8,22 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deploy } = deployments
   const { deployer } = await getNamedAccounts()
 
-
-  const tokenAddress = (await deployments.get('ZooToken')).address
-  const mediaAddress = (await deployments.get('ZooMedia')).address
-
   const deployResult = await deploy('ZooAuction', {
     from: deployer,
     args: [],
     log: true,
   })
 
-  const auctionAddress = deployResult.address;
-  const auction = await hre.ethers.getContractAt('ZooAuction', auctionAddress);
+  const tokenAddress = (await deployments.get('ZooToken')).address
+  const mediaAddress = (await deployments.get('ZooMedia')).address
+
+  const auction = await ethers.getContractAt('ZooAuction', deployResult.address);
   auction.configure(mediaAddress, tokenAddress)
 
-  return false;
-  hre.network.live;
+  return hre.network.live;
 }
 
 export default func
 func.id = 'deploy_zoo_auction'
 func.tags = ['ZooAuction']
-func.dependencies = ['ZooMedia', 'ZooMarket']
+// func.dependencies = ['ZooMedia', 'ZooMarket']
