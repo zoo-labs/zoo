@@ -216,19 +216,19 @@ const Account: React.FC = () => {
          toastClear();
          toastInfo('Processing ZOO purchase...');
          faucet.methods
-            .buyZoo(account, faucetAmt)
+            .getZoo(account, faucetAmt)
             .send({ from: account })
             .then(() => {
                setWait(false);
                getBalance();
                toastClear();
-               toastSuccess('Successfully purchased ZOO!');
+               toastSuccess('Sent ZOO!');
             })
             .catch((e) => {
                console.error("ISSUE USING FAUCET \n", e);
                setWait(false);
                toastClear();
-               toastInfo('ZOO purchase canceled.');
+               toastInfo('Canceled request for ZOO.');
             });
       } catch (e) {
          console.error("ISSUE USING FAUCET \n", e);

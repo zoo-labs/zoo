@@ -213,7 +213,7 @@ contract ZooKeeper is Ownable {
             keccak256(
                 abi.encodePacked(block.number, msg.sender, block.timestamp)
             )
-        ) % 1000;
+        ) % 10000;
         return randomNumber;
     }
 

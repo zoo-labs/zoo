@@ -18,8 +18,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     log: true,
   })
 
-  const auctionAddress = deployResult.address;
-  const auction = await hre.ethers.getContractAt('ZooAuction', auctionAddress);
+  const auction = await ethers.getContractAt('ZooAuction', deployResult.address);
   auction.configure(mediaAddress, tokenAddress)
 
   return false;
