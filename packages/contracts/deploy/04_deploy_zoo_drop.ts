@@ -16,9 +16,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     log: true,
   })
 
+  const drop = await ethers.getContractAt('ZooDrop', deployResult.address);
   const keeperAddress = (await deployments.get('ZooKeeper')).address
   const keeper = await ethers.getContractAt('ZooKeeper', keeperAddress);
-  const drop = await ethers.getContractAt('ZooDrop', deployResult.address);
 
   // Configure game executes a very long series of transactions which set the
   // initial state for our Gen 0 drop. Do not expect this to work during
