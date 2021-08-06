@@ -39,9 +39,6 @@ contract ZooKeeper is Ownable {
     // Mapping of ID to NFT
     mapping(uint256 => IZoo.Token) public tokens;
 
-    // Mapping of ID to NFT
-    mapping(uint256 => uint256) public eggsMinted;
-
     // Price to set name of Token
     uint256 public namePrice;
 
