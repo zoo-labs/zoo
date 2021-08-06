@@ -2,49 +2,39 @@
 
 pragma solidity >=0.8.4;
 
-abstract contract Token {
-    function transfer(address to, uint256 amount) public virtual returns (bool);
-
-    function balanceOf(address addr) public view virtual returns (uint256);
-}
+import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract ZooFaucet {
-    Token zooToken;
     address payable public owner;
-    uint256 public rate = 1000; // 1 ETH = 1000 ZAP
-    event BUYZOO(
-        address indexed _buyer,
-        uint256 indexed _amount,
-        uint256 indexed _rate
+    uint256 public rate = 1000;
+
+    IERC20 token;
+
+    event ZooSent(
+        address indexed _to,
+        uint256 indexed _amount
     );
 
-    // 1: 1000 ratio
-
-    modifier ownerOnly {
+    modifier onlyOwner {
         require(msg.sender == owner);
         _;
     }
 
-    constructor(address _zooToken) {
+    constructor(address zooAddress) {
         owner = payable(msg.sender);
-        zooToken = Token(_zooToken);
+        token = IERC20(zooAddress);
     }
 
-    event Log(uint256 n1, uint256 n2);
-
-    function buyZoo(address to, uint256 amt) public payable {
-        require(amt > 0);
-        amt = amt * rate;
-        require(amt <= zooToken.balanceOf(address(this)));
-        zooToken.transfer(to, amt);
-        emit BUYZOO(msg.sender, amt, rate);
+    function getZoo(address to, uint256 amount) public returns (uint256) {
+        require(amount > 0);
+        amount = amount * rate;
+        require(amount <= token.balanceOf(address(this)));
+        token.transfer(to, amount);
+        emit ZooSent(msg.sender, amount);
+        return amount;
     }
 
-    function withdrawTok() public ownerOnly {
-        zooToken.transfer(owner, zooToken.balanceOf(address(this)));
-    }
-
-    function withdrawEther() public ownerOnly {
-        owner.transfer(address(this).balance);
+    function withdraw() public onlyOwner {
+        token.transfer(owner, token.balanceOf(address(this)));
     }
 }
