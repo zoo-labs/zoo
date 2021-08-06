@@ -166,7 +166,7 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup, hideBid }) => {
 
    const rarityColor = RarityColor[item.rarity.toLowerCase()] || "white";
    const multiplier =
-      animalGroup[item.animalId] > 1 ? `x${animalGroup[item.animalId]}` : "";
+      animalGroup[item.kind] > 1 ? `x${animalGroup[item.kind]}` : "";
 
    console.log("animalGroups: ", animalGroup)
 

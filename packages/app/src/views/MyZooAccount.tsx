@@ -68,7 +68,7 @@ const MyZooAccount: React.FC = () => {
   const videoTimeout = [];
   const [newEgg, setNewEgg] = useState("")
   const [hatched, setHatched] = useState({
-    tokenId: "",
+    tokenID: "",
     name: "",
     description: "",
     yield: "",
@@ -89,18 +89,20 @@ const MyZooAccount: React.FC = () => {
   const hatchEgg = async (egg) => {
     console.log(zooKeeper)
       try {
-        // const token = await zooKeeper.methods.tokens(parseInt(egg.tokenId)).call()
-        setNewEgg(egg.tokenId)
+        // const token = await zooKeeper.methods.tokens(parseInt(egg.tokenID)).call()
+        console.log('setNewEgg', egg.tokenID)
+        setNewEgg(egg.tokenID)
+        console.log('hatching', egg.tokenID)
         const hatching = await zooKeeper.methods
-        .hatchEgg(1, parseInt(egg.tokenId))
+        .hatchEgg(1, parseInt(egg.tokenID))
             .send({ from: account })
             .then(async (res) => {
               // console.log(res)
               // setShowBoth(true);
               // setEggType(egg.basic ? "basic" : "hybrid");
               // const newAnimal: Animal = {
-              //    tokenId: res.data.tokenId,
-              //    animalId: res.data.kind,
+              //    tokenID: res.data.tokenID,
+              //    kind: res.data.kind,
               //    name: res.data.name,
               //    description: "",
               //    yield: res.data.rarity.yield,
@@ -120,6 +122,8 @@ const MyZooAccount: React.FC = () => {
               //    lastBred: "",
               //  };
               //  setHatched(newAnimal);
+              //
+               console.log('get past events')
                zooKeeper
                   .getPastEvents("Hatch", {
                      fromBlock: 0,
@@ -129,14 +133,17 @@ const MyZooAccount: React.FC = () => {
                      },
                   })
                   .then(async (events) => {
+                     console.log('Hatch Events then', egg)
                      const latest = events[events.length - 1];
-                     const newTknId = latest.returnValues.tokenID;
-                     const token = await zooKeeper.methods.tokens(newTknId).call()
+                     const tokenID = latest.returnValues.tokenID;
+                     console.log('get token')
+                     const token = await zooKeeper.methods.tokens(tokenID).call()
+                     console.log('tokens', tokenID, token)
                      setShowBoth(true);
                      setEggType(egg.basic ? "basic" : "hybrid");
                      const newAnimal: Animal = {
-                        tokenId: String(newTknId),
-                        animalId: token.kind,
+                        tokenID: String(tokenID),
+                        kind: token.kind,
                         name: token.name,
                         description: "",
                         yield: token.rarity.yield,
@@ -167,7 +174,7 @@ const MyZooAccount: React.FC = () => {
 
     let randIdx: number;
 
-    console.log(egg)
+    console.log('egg', egg)
 
     // REPLACE WITH HATCH FUNCTION FROM CONTRACT
     // if (egg.basic) {
@@ -175,7 +182,7 @@ const MyZooAccount: React.FC = () => {
     // } else {
     //   randIdx = Math.floor(Math.random() * (13 - 10) + 10);
     // }
-    // const eggID = parseInt(egg.tokenId);
+    // const eggID = parseInt(egg.tokenID);
     // const tokenID = Math.floor(Math.random() * (999999 - 0) + 0);
 
     // const mObject = Moralis.Object.extend("FinalEggs");
@@ -205,7 +212,7 @@ const MyZooAccount: React.FC = () => {
     // newAnimalM.set("Yield", aFromMap.yield);
     // newAnimalM.set("Boost", aFromMap.boost);
     // newAnimalM.set("Name", aFromMap.name);
-    // newAnimalM.set("AnimalTypeID", aFromMap.animalId);
+    // newAnimalM.set("AnimalTypeID", aFromMap.kind);
     // newAnimalM.set("StartBid", aFromMap.startBid);
     // newAnimalM.set("CurrentBid", aFromMap.currentBid);
     // newAnimalM.set("Listed", false);
@@ -216,8 +223,8 @@ const MyZooAccount: React.FC = () => {
     // await newAnimalM.save();
     // // console.log(aFromMap, randIdx);
     // const newAnimal: Animal = {
-    //   tokenId: Math.floor(Math.random() * (999999 - 0) + 0).toString(),
-    //   animalId: aFromMap.animalId,
+    //   tokenID: Math.floor(Math.random() * (999999 - 0) + 0).toString(),
+    //   kind: aFromMap.kind,
     //   name: aFromMap.name,
     //   description: aFromMap.description,
     //   yield: aFromMap.yield,
@@ -372,7 +379,7 @@ const MyZooAccount: React.FC = () => {
                 {animals.map((animal) => (
                   <SwiperSlide
                     style={{ width: "220px", display: "flex" }}
-                    key={animal.tokenId}
+                    key={animal.tokenID}
                   >
                     <AnimalCard
                       {...{ animal, account, animalGroup, hybrid, allAnimals }}
@@ -470,10 +477,10 @@ const MyZooAccount: React.FC = () => {
               {eggData.map((egg) => (
                 <SwiperSlide
                   style={{ padding: "3px", width: "180", display: "flex" }}
-                  key={egg.tokenId}
+                  key={egg.tokenID}
                 >
                   {/* <CardWrapper> */}
-                  <EggCard egg={egg} hatchEgg={hatchEgg} hatching={newEgg===egg.tokenId}/>
+                  <EggCard egg={egg} hatchEgg={hatchEgg} hatching={newEgg===egg.tokenID}/>
                 </SwiperSlide>
               ))}
             </Swiper>

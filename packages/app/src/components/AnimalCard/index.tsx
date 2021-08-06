@@ -126,7 +126,7 @@ export const AnimalCard = ({
   const {chainId} = useWeb3React()
   const zooKeeper = getZooKeeper(web3, chainId);
   let sellAnimal: Animal = {
-    tokenId: "",
+    tokenID: "",
     name: "",
     description: "",
     boost: "",
@@ -176,7 +176,7 @@ export const AnimalCard = ({
     const animal: Animal = sellAnimal;
     const animalObject = Moralis.Object.extend("FinalAnimals");
     const query = new Moralis.Query(animalObject);
-    query.equalTo("AnimalID", parseInt(animal.tokenId));
+    query.equalTo("AnimalID", parseInt(animal.tokenID));
     const results = await query.find();
     const animalM = results[0];
     animalM.set("Listed", true);
@@ -191,7 +191,7 @@ export const AnimalCard = ({
 
     newTrans.set("From", account);
     newTrans.set("Action", "Listed Animal");
-    newTrans.set("TokenID", parseInt(animal.tokenId));
+    newTrans.set("TokenID", parseInt(animal.tokenID));
     newTrans.set("StartingBid", String(bid.current));
     newTrans.set("AnimalName", animalM.attributes.Name);
     newTrans.save();
@@ -249,8 +249,8 @@ export const AnimalCard = ({
   const [onEggCreated] = useModal(<EggCreatedNotify onDismiss={() => null} />);
 
   const breed = async (onDismiss) => {
-    const an1 = parseInt(array[0].tokenId);
-    const an2 = parseInt(array[1].tokenId);
+    const an1 = parseInt(array[0].tokenID);
+    const an2 = parseInt(array[1].tokenID);
     const anOb = Moralis.Object.extend("FinalAnimals");
     const anQ1 = new Moralis.Query(anOb);
     const anQ2 = new Moralis.Query(anOb);
@@ -264,10 +264,10 @@ export const AnimalCard = ({
     console.log("Breeding", mArray)
     const egg: Egg = {
       owner: account,
-      tokenId: String(Math.floor(Math.random() * 100000000) + 1),
-      animalId: "3123",
-      parent1: "123",
-      parent2: "1231",
+      tokenID: String(Math.floor(Math.random() * 100000000) + 1),
+      kind: "3123",
+      parentA: "123",
+      parentB: "1231",
       basic: false,
       created: String(new Date().getTime()),
       timeRemaining: 15000,
@@ -286,9 +286,9 @@ export const AnimalCard = ({
 
               newTrans.set("From", account);
               newTrans.set("Action", "Bred Animals");
-              // newTrans.set("TokenID", parseInt(egg.tokenId));
-              newTrans.set("Parent1", aniM1.attributes.Name);
-              newTrans.set("Parent2", aniM2.attributes.Name);
+              // newTrans.set("TokenID", parseInt(egg.tokenID));
+              newTrans.set("ParentA", aniM1.attributes.Name);
+              newTrans.set("ParentB", aniM2.attributes.Name);
               newTrans.save();
               dispatch(addAnimal({...array[0], selected: false}));
               dispatch(addAnimal({...array[1], selected: false}));
@@ -394,10 +394,10 @@ export const AnimalCard = ({
 
     // const egg: Egg = {
     //   owner: account,
-    //   tokenId: String(Math.floor(Math.random() * 100000000) + 1),
-    //   animalId: "3123",
-    //   parent1: "123",
-    //   parent2: "1231",
+    //   tokenID: String(Math.floor(Math.random() * 100000000) + 1),
+    //   kind: "3123",
+    //   parentA: "123",
+    //   parentB: "1231",
     //   basic: false,
     //   created: String(new Date().getTime()),
     //   timeRemaining: 0,
@@ -424,12 +424,12 @@ export const AnimalCard = ({
 
     // const mObject = Moralis.Object.extend("FinalEggs");
     // const mEgg = new mObject();
-    // mEgg.set("EggID", parseInt(egg.tokenId));
-    // mEgg.set("Parent1", parseInt(egg.parent1));
+    // mEgg.set("EggID", parseInt(egg.tokenID));
+    // mEgg.set("ParentA", parseInt(egg.parentA));
     // mEgg.set("MetaURI", "META URI");
-    // mEgg.set("Parent2", parseInt(egg.parent2));
+    // mEgg.set("ParentB", parseInt(egg.parentB));
     // mEgg.set("Burned", false);
-    // mEgg.set("AnimalTypeId", egg.animalId);
+    // mEgg.set("AnimalTypeId", egg.kind);
     // mEgg.set("TokenURI");
     // mEgg.set("Owner", account);
     // mEgg.set("BlockNumber");
@@ -444,9 +444,9 @@ export const AnimalCard = ({
 
     // newTrans.set("From", account);
     // newTrans.set("Action", "Bred Animals");
-    // newTrans.set("TokenID", parseInt(egg.tokenId));
-    // newTrans.set("Parent1", aniM1.attributes.Name);
-    // newTrans.set("Parent2", aniM2.attributes.Name);
+    // newTrans.set("TokenID", parseInt(egg.tokenID));
+    // newTrans.set("ParentA", aniM1.attributes.Name);
+    // newTrans.set("ParentB", aniM2.attributes.Name);
     // newTrans.save();
   };
 
@@ -456,10 +456,10 @@ export const AnimalCard = ({
     if (
       animal.selected &&
       selected.length === 1 &&
-      animalGroup[animal.animalId] > 1
+      animalGroup[animal.kind] > 1
     ) {
       const multipleAvailable = Object.values(allAnimals).filter(
-        (item) => item.animalId === animal.animalId && item.timeRemaining === 0
+        (item) => item.kind === animal.kind && item.timeRemaining === 0
       );
       const temp = [{ ...multipleAvailable[0] }, { ...multipleAvailable[1] }];
       array = temp;
@@ -503,7 +503,7 @@ export const AnimalCard = ({
           width: "100%",
         }}
       >
-        <Link to={`/feed/myzoo/${animal.tokenId}`}>
+        <Link to={`/feed/myzoo/${animal.tokenID}`}>
           <TextWrapper
             style={{
               textShadow: "0px 2px 6px rgb(0, 0, 0)",
