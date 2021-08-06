@@ -187,7 +187,7 @@ function Feed<FeedPagePops>({ match }) {
 
    if (toFind && isMyZoo) {
       const ogIndex = myZooAnimalsFiltered.findIndex(
-         (a) => a.tokenId === toFind
+         (a) => a.tokenID === toFind
       );
       const toMove = myZooAnimalsFiltered[0];
       myZooAnimalsFiltered[0] = myZooAnimalsFiltered[ogIndex];
@@ -205,7 +205,7 @@ function Feed<FeedPagePops>({ match }) {
       } else {
          myZooAnimalData.push(animal);
       }
-      // return animalGroup[animal.animalId] === 1 ? true : false
+      // return animalGroup[animal.kind] === 1 ? true : false
    });
    // } else {
    totalAnimalData = totalAnimalsFiltered;
@@ -240,10 +240,10 @@ function Feed<FeedPagePops>({ match }) {
                      direction="vertical">
                      {myZooAnimalData.map((data) => {
                         return (
-                           <SwiperSlide key={data.tokenId + "slide"}>
+                           <SwiperSlide key={data.tokenID + "slide"}>
                               <FeedCard
                                  item={data}
-                                 key={data.tokenId + "card"}
+                                 key={data.tokenID + "card"}
                                  animalGroup={animalGroup}
                                  hideBid={activeIndex===1}
                               />
@@ -266,10 +266,10 @@ function Feed<FeedPagePops>({ match }) {
                <Swiper spaceBetween={30} slidesPerView={1} direction="vertical">
                   {totalAnimalData.map((data, index) => {
                      return data.listed ? (
-                        <SwiperSlide key={data.tokenId + "slide"}>
+                        <SwiperSlide key={data.tokenID + "slide"}>
                            <FeedCard
                               item={data}
-                              key={data.tokenId + "card"}
+                              key={data.tokenID + "card"}
                               animalGroup={{}}
                            />
                         </SwiperSlide>

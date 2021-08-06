@@ -1,6 +1,7 @@
 export interface Animal {
    owner?: string;
-   tokenId: string;
+   kind?: string;
+   tokenID: string;
    name: string;
    description: string;
    yield: string;
@@ -16,19 +17,17 @@ export interface Animal {
    selected?:boolean
    bred?:boolean
    breedCount?:number
-   animalId?: string;
    timeRemaining?: number;
    CTAOverride?: any;
    lastBred?: string;
-   
 }
 
 export interface Egg {
   owner: string; // wallet address of the owner
-  tokenId: string;
-  animalId?: string;
-  parent1: string;
-  parent2: string;
+  tokenID: string;
+  kind?: string;
+  parentA: string;
+  parentB: string;
   basic: boolean;
   timeRemaining?: number;
   CTAOverride?: any;

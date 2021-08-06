@@ -27,7 +27,7 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
    const callFreeAnimal = () => {
       try {
          setPending(true);
-         const tknId = web3.utils.toBN(item.tokenId);
+         const tknId = web3.utils.toBN(item.tokenID);
          zooKeeper.methods
             .freeAnimal(tknId)
             .send({ from: account })
