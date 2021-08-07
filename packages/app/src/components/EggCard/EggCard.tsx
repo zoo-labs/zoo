@@ -70,38 +70,51 @@ const TimeoutDisplay = styled.span`
    position: relative;
    z-index: 2;
 `;
-const Card = styled(Existing)<{ timedOut?: boolean, hatching?: boolean }>`
+const Card = styled(Existing)<{ timedOut?: boolean, interactable?: boolean, incubating?: boolean }>`
    cursor: pointer;
    width: 120px;
    margin: 0px 8px 8px;
    backgroundcolor: ${({ theme }) => theme.colors.background};
-   animation: ${({hatching}) => hatching ? css`${rotate} 2s linear infinite` : ''};
    border-radius: 8px;
    display: block;
    opacity: ${({ timedOut }) => (timedOut ? "0.6" : null)};
+   opacity: ${({ interactable }) => (!interactable ? "0.5" : null)};
+   box-shadow: ${({ incubating }) => (incubating ? "3px 4px 10px #9d4c0a" : null)};
 `;
 
 const basicEggURL = window.location.origin + "/static/images/basic.jpg";
 const hybridEggURL = window.location.origin + "/static/images/hybrid.jpg";
 
-export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatching }) => {
+
+
+export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady, hatching }) => {
    const [onHatch] = useModal(
-      <HatchModal confirmation={() => hatchEgg(egg)} onDismiss={() => null} />
+      <HatchModal action ="hatch" confirmation={() => hatchEggReady(egg)} onDismiss={() => null} />
    );
-      console.log(hatching)
+   const [onIncubate] = useModal(
+      <HatchModal action = "incubate" confirmation={() => hatchEgg(egg)} onDismiss={() => null} />
+   );
+
+   const buttonActions = () => {
+      if(egg.timeRemaining > 0) return null
+      if(!egg.interactable) return null
+      if(egg.hatched) return onHatch()
+      if(!egg.hatched) return onIncubate()
+   }
+
+   const incubating = !egg.interactable && egg.hatched
+
    return (
       <>
          <Card
             onClick={
-               egg.timeRemaining > 0
-                  ? null
-                  : () => {
-                       onHatch();
-                    }
+               () => buttonActions()
             }
             style={{ backgroundColor: "#000000" }}
             timedOut={egg.timeRemaining > 0 ? true : false}
-            hatching={hatching}
+            interactable = {egg.interactable}
+            incubating={incubating}
+            // hatching={hatching}
             >
             <CardBody
                style={{
@@ -138,7 +151,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatching }) => {
                      padding: 4,
                      paddingLeft: "7px",
                   }}>
-                  <TextWrapper>{`HATCH`}</TextWrapper>
+                  <TextWrapper>{egg.hatched && egg.interactable? `HATCH` : incubating? 'INCUBATING' : 'INCUBATE' }</TextWrapper>
                </InfoBlock>
             )}
          </Card>

@@ -110,12 +110,12 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
       // toSet.listed = true;
       // toSet.owner = account;
       // dispatch(addAnimal(toSet));
-      const animalId = parseInt(item.tokenId)
-      console.log(animalId)
+      const kind = parseInt(item.tokenID)
+      console.log(kind)
       const queryObject = Moralis.Object.extend("FinalAnimals")
       const query = new Moralis.Query(queryObject)
       query.limit(1000)
-      query.equalTo("AnimalID", animalId)
+      query.equalTo("kind", kind)
       const results = await query.find()
       const currentObject = results[0]
       console.log(currentObject.attributes)
@@ -141,7 +141,7 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
       const query = new Moralis.Query(queryObject)
       query.limit(1000)
       console.log(item)
-      query.equalTo("AnimalID", parseInt(item.tokenId))
+      query.equalTo("AnimalID", parseInt(item.tokenID))
       const results = await query.find()
       const currentObject = results[0]
       console.log(currentObject)

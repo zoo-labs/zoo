@@ -336,7 +336,7 @@ const Bank: React.FC = () => {
                         {
                            topTenAnimals.map((animal) => {
                               return (
-                                 <EarnerValue key={animal.tokenId + "_earner_"}>
+                                 <EarnerValue key={animal.tokenID + "_earner_"}>
                                     {animal.name} - {Number(animal.yield) * (1 + (Number(animal.boost) / 100))}/day
                                  </EarnerValue>
                               );

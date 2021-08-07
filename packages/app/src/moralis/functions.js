@@ -1,9 +1,9 @@
-Moralis.Cloud.afterSave("BoughtEgg", async (request) => {
+Moralis.Cloud.afterSave("BuyEgg", async (request) => {
 	const confirmed = request.object.get("confirmed");
   	const web3 = Moralis.web3ByChain("0x61"); // testnet
   	const logger = Moralis.Cloud.getLogger();
   	if (confirmed) {
-      const tokenID = request.object.get("eggID")
+      const tokenID = request.object.get("tokenID")
       const currentClass = Moralis.Object.extend("FinalEggs");
       const query1 = new Moralis.Query(currentClass);
       query1.equalTo("EggID", tokenID)
@@ -11,12 +11,12 @@ Moralis.Cloud.afterSave("BoughtEgg", async (request) => {
       const current = results1[0];
       const ABI = Moralis.Object.extend("ABIs");
       const query = new Moralis.Query(ABI)
-      query.equalTo("Name", "Keeper")
+      query.equalTo("Name", "ZooKeeper")
       const resultArray = await query.find()
       const abiObj = resultArray[0].get("Abi")
       const abi = abiObj.abi
-      const zooMedia = new web3.eth.Contract(abi, "0xbd66aabA27f5b09501355Cc2B28a3Bebb130d9D5")
-      const eggInfo = await zooMedia.methods.tokens(tokenID).call()
+      const zooKeeper = new web3.eth.Contract(abi, "0x5eb16EA9e6e855061F0EC306CF18c78d2C43e20d")
+      const eggInfo = await zooKeeper.methods.tokens(tokenID).call()
       current.set("EggID", parseInt(tokenID))
       current.set("Owner", request.object.get("from"))
       current.set("BlockNumber", request.object.get("block_number"))
@@ -30,7 +30,7 @@ Moralis.Cloud.afterSave("BoughtEgg", async (request) => {
     	logger.info("Egg Bought pending confirmation")
       	const TestClass = Moralis.Object.extend("FinalEggs");
         const currentTest = new TestClass();
-        currentTest.set("EggID", parseInt(request.object.get("eggID")));
+        currentTest.set("EggID", parseInt(request.object.get("tokenID")));
         currentTest.set("Owner", request.object.get("from"))
         currentTest.set("BlockNumber", request.object.get("block_number"))
         currentTest.set("Type", "basic")
@@ -40,7 +40,7 @@ Moralis.Cloud.afterSave("BoughtEgg", async (request) => {
     };
 });
 
-Moralis.Cloud.afterSave("HatchedEggs", async (request) => {
+Moralis.Cloud.afterSave("Burn", async (request) => {
 	const confirmed = request.object.get("confirmed");
   	const web3 = Moralis.web3ByChain("0x61"); // testnet
   	const logger = Moralis.Cloud.getLogger();
@@ -54,11 +54,11 @@ Moralis.Cloud.afterSave("HatchedEggs", async (request) => {
       egg.set("Burned", true)
       egg.save()
     } else {
-    	logger.info("Egg Hatched pending confirmation")
+    	logger.info("Egg Burn pending confirmation")
     }
 });
 
-Moralis.Cloud.afterSave("HatchedAnimals", async (request) => {
+Moralis.Cloud.afterSave("Hatch", async (request) => {
 	const confirmed = request.object.get("confirmed");
   	const web3 = Moralis.web3ByChain("0x61"); // testnet
   	const logger = Moralis.Cloud.getLogger();
@@ -69,7 +69,7 @@ Moralis.Cloud.afterSave("HatchedAnimals", async (request) => {
       const tokenID = object.get("tokenID")
       const ABI = Moralis.Object.extend("ABIs");
       const query = new Moralis.Query(ABI)
-      query.equalTo("Name", "Keeper")
+      query.equalTo("Name", "ZooKeeper")
       const resultArray = await query.find()
       const abiObj = resultArray[0].get("Abi")
       const abi = abiObj.abi
@@ -93,7 +93,7 @@ Moralis.Cloud.afterSave("HatchedAnimals", async (request) => {
 });
 
 
-Moralis.Cloud.afterSave("BreedAnimals", async (request) => {
+Moralis.Cloud.afterSave("Breed", async (request) => {
 	const confirmed = request.object.get("confirmed");
   	const web3 = Moralis.web3ByChain("0x61"); // testnet
   	const logger = Moralis.Cloud.getLogger();
@@ -120,18 +120,19 @@ Moralis.Cloud.afterSave("BreedAnimals", async (request) => {
       */
       const ABI = Moralis.Object.extend("ABIs");
       const query = new Moralis.Query(ABI)
-      query.equalTo("Name", "Keeper")
+      query.equalTo("Name", "ZooKeeper")
       const resultArray = await query.find()
       const abiObj = resultArray[0].get("Abi")
       const abi = abiObj.abi
-      const zooMedia = new web3.eth.Contract(abi, "0xbd66aabA27f5b09501355Cc2B28a3Bebb130d9D5")
+      const eggInfo = await zooKeeper.methods.tokens(tokenID).call()
+      const zooKeeper = new web3.eth.Contract(abi, "0x5eb16EA9e6e855061F0EC306CF18c78d2C43e20d")
       const ClassCurrent = Moralis.Object.extend("FinalEggs");
       const current = new ClassCurrent();
       const tokenID = object.get("tokenID")
-      const eggInfo = await zooMedia.methods.tokens(tokenID).call()
+      const eggInfo = await zooKeeper.methods.tokens(tokenID).call()
       current.set("EggID", parseInt(tokenID))
-      current.set("Parent1", parseInt(eggInfo.parents.tokenA))
-      current.set("Parent2", parseInt(eggInfo.parents.tokenB))
+      current.set("ParentA", parseInt(eggInfo.parents.tokenA))
+      current.set("ParentB", parseInt(eggInfo.parents.tokenB))
       current.set("Owner", object.get("from"))
       current.set("BlockNumber", object.get("block_number"))
       current.set("Type", "hybrid")
@@ -143,7 +144,7 @@ Moralis.Cloud.afterSave("BreedAnimals", async (request) => {
     }
 });
 
-Moralis.Cloud.afterSave("FreedAnimals", async (request) => {
+Moralis.Cloud.afterSave("Free", async (request) => {
   	const confirmed = request.object.get("confirmed");
   	const web3 = Moralis.web3ByChain("0x61");
   	const logger = Moralis.Cloud.getLogger();
