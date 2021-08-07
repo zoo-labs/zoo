@@ -160,10 +160,10 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
   const emptyEgg:Egg =
     {
       owner: account,
-      tokenId: "",
-      animalId: "",
-      parent1: "",
-      parent2: "",
+      tokenID: "",
+      kind: "",
+      parentA: "",
+      parentB: "",
       basic: true
     }
   
@@ -172,20 +172,20 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
       console.log("value", value);
       for (let i = 0; i < value; i++) {
          const toSet: Egg = { ...emptyEgg };
-         const tokenId = Math.floor(Math.random() * 100000000) + 1;
-         const animalId = String(Math.floor(Math.random() * 4) + 1);
-         toSet.tokenId = String(tokenId); //to be changed
-         toSet.animalId = animalId;
+         const tokenID = Math.floor(Math.random() * 100000000) + 1;
+         const kind = String(Math.floor(Math.random() * 4) + 1);
+         toSet.tokenID = String(tokenID); //to be changed
+         toSet.kind = kind;
          const EggObject = Moralis.Object.extend("FinalEggs");
          const current = new EggObject();
 
-         // EggID Owner Burned Type MetaURI TokenURI Parent1 Parent2
-         current.set("EggID", tokenId);
+         // EggID Owner Burned Type MetaURI TokenURI ParentA ParentB
+         current.set("EggID", tokenID);
          current.set("Owner", account);
          current.set("Burned", false);
          current.set("MetaURI", "");
          current.set("TokenURI", "");
-         current.set("AnimalTypeID", animalId);
+         current.set("AnimalTypeID", kind);
          current.set("Type", "basic");
          await current.save();
 
@@ -197,7 +197,7 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
 
          newTrans.set("From", account)
          newTrans.set("Action", "Bought Egg")
-         newTrans.set("TokenID", tokenId)
+         newTrans.set("TokenID", tokenID)
          newTrans.save()
       }
       // console.log(testEggs)

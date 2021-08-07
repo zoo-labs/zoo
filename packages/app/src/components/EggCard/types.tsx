@@ -9,6 +9,7 @@ export interface CardEgg extends Egg {
 export type EggCardType = {
     egg: CardEgg
     hatchEgg: (egg) => void
+    hatchEggReady: (egg) => void
     hatching?: boolean
     // eggGroup: {BASIC: number, HYBRID: number}
 }

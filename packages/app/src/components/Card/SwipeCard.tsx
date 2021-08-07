@@ -137,7 +137,7 @@ export const SwiperCard: React.FC<SwiperCardProps> = ({ egg, animal, group, eggT
           width: "100%"
         }}>
           <Link
-            to={`/feed/myzoo/${animal.tokenId}`}>
+            to={`/feed/myzoo/${animal.tokenID}`}>
             <TextWrapper
               style={{
                 textShadow:
@@ -150,8 +150,8 @@ export const SwiperCard: React.FC<SwiperCardProps> = ({ egg, animal, group, eggT
                 top: 9,
               }}>
               {animal.timeRemaining === 0
-                ? group[animal.animalId] > 1
-                  ? `x${group[animal.animalId]
+                ? group[animal.kind] > 1
+                  ? `x${group[animal.kind]
                   }`
                   : ""
                 : ""}
@@ -165,7 +165,7 @@ export const SwiperCard: React.FC<SwiperCardProps> = ({ egg, animal, group, eggT
                 fontSize: 16,
                 letterSpacing: 0,
                 height: "100%",
-                // paddingRight: group[animal.animalId] ? '26px' : null
+                // paddingRight: group[animal.kind] ? '26px' : null
               }} >
               {animal.name}
             </TextWrapper>

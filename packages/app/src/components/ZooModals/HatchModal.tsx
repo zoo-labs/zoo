@@ -7,19 +7,21 @@ import { Flex } from "components/Box";
 interface Props {
    onDismiss?: () => void;
    confirmation: any;
+   action?: string
 }
 
 const HatchModal: React.FC<Props> = ({
    onDismiss = () => null,
    confirmation,
+   action
 }) => {
    function onConfirm() {
       confirmation();
       onDismiss();
    }
    return (
-      <Modal title="Confirm Egg Hatch" onDismiss={onDismiss}>
-         <Standard>{`Do you want to hatch this egg?`}</Standard>
+      <Modal title={action === "hatch"? "Confirm Egg Hatch" : "Confirm Egg Incubation"} onDismiss={onDismiss}>
+         <Standard>{action === "hatch"? `Do you want to hatch this egg?` : `Do you want to incubate this egg?`}</Standard>
          <Flex justifyContent="space-around" flexDirection="row" mt="16px">
             <BorderButton scale="sm" onClick={() => onConfirm()} >
                YES

@@ -148,15 +148,18 @@ const App: React.FC = () => {
             const date = new Date(replacedString);
             const tempEgg: Egg = {
                owner: singleResult.get("Owner"),
-               tokenId: String(singleResult.get("EggID")),
-               animalId: singleResult.get("AnimalTypeID"),
-               parent1: String(singleResult.get("Parent1")),
-               parent2: String(singleResult.get("Parent2")),
+               tokenID: String(singleResult.get("EggID")),
+               kind: singleResult.get("AnimalTypeID"),
+               parentA: String(singleResult.get("ParentA")),
+               parentB: String(singleResult.get("ParentB")),
                basic: singleResult.get("Type") === "basic",
                timeRemaining: singleResult.get("TimeRemaining"),
                CTAOverride: singleResult.get("CTAOverride"),
                created: String(date.getTime()),
                burned: singleResult.get("Burn"),
+               interactable: singleResult.get("Interactable"),
+               hatched: singleResult.get("Hatched"),
+               animalID: singleResult.get("AnimalID"),
             };
             Eggs.push(tempEgg);
          }
@@ -183,7 +186,7 @@ const App: React.FC = () => {
             const date = new Date(replacedString);
             const tempAnimal: Animal = {
                owner: String(animal.get("Owner")),
-               tokenId: String(animal.get("AnimalID")),
+               tokenID: String(animal.get("AnimalID")),
                name: animal.get("Name"),
                description: animal.get("NA"),
                yield: animal.get("Yield"),
@@ -198,11 +201,13 @@ const App: React.FC = () => {
                selected: false,
                bred: false,
                breedCount: animal.get("BreedCount"),
-               animalId: animal.get("AnimalTypeID"),
+               kind: animal.get("AnimalTypeID"),
                timeRemaining: animal.get("TimeRemaining"),
                CTAOverride: animal.get("CTAOverride"),
                lastBred: animal.get("lastBred"),
                buyNow: animal.get("BuyNow"),
+               revealed: animal.get("Revealed"),
+               freed: animal.get("Freed")
             };
             Animals.push(tempAnimal);
          }
@@ -221,15 +226,18 @@ const App: React.FC = () => {
          const date = new Date(replacedString);
          const tempEgg: Egg = {
             owner: singleResult.get("Owner"),
-            tokenId: String(singleResult.get("EggID")),
-            animalId: singleResult.get("AnimalTypeID"),
-            parent1: String(singleResult.get("Parent1")),
-            parent2: String(singleResult.get("Parent2")),
+            tokenID: String(singleResult.get("EggID")),
+            kind: singleResult.get("AnimalTypeID"),
+            parentA: String(singleResult.get("ParentA")),
+            parentB: String(singleResult.get("ParentB")),
             basic: singleResult.get("Type") === "basic",
             timeRemaining: singleResult.get("TimeRemaining"),
             CTAOverride: singleResult.get("CTAOverride"),
             created: String(date.getTime()),
             burned: singleResult.get("Burn"),
+            interactable: singleResult.get("Interactable"),
+            hatched: singleResult.get("Hatched"),
+            animalID: singleResult.get("AnimalID"),
          };
          dispatch(addEgg(tempEgg));
       } catch (e) {
@@ -248,7 +256,7 @@ const App: React.FC = () => {
          const date = new Date(replacedString);
          const tempAnimal: Animal = {
             owner: String(animal.get("Owner")),
-            tokenId: String(animal.get("AnimalID")),
+            tokenID: String(animal.get("AnimalID")),
             name: animal.get("Name"),
             description: animal.get("NA"),
             yield: animal.get("Yield"),
@@ -263,10 +271,12 @@ const App: React.FC = () => {
             selected: false,
             bred: false,
             breedCount: animal.get("BreedCount"),
-            animalId: animal.get("AnimalTypeID"),
+            kind: animal.get("AnimalTypeID"),
             timeRemaining: animal.get("TimeRemaining"),
             CTAOverride: animal.get("CTAOverride"),
             lastBred: animal.get("lastBred"),
+            revealed: animal.get("Revealed"),
+            freed: animal.get("Freed")
          };
          dispatch(addAnimal(tempAnimal));
       } catch (e) {
@@ -284,15 +294,18 @@ const App: React.FC = () => {
          const date = new Date(replacedString);
          const tempEgg: Egg = {
             owner: singleResult.get("Owner"),
-            tokenId: String(singleResult.get("EggID")),
-            animalId: singleResult.get("AnimalTypeID"),
-            parent1: String(singleResult.get("Parent1")),
-            parent2: String(singleResult.get("Parent2")),
+            tokenID: String(singleResult.get("EggID")),
+            kind: singleResult.get("AnimalTypeID"),
+            parentA: String(singleResult.get("ParentA")),
+            parentB: String(singleResult.get("ParentB")),
             basic: singleResult.get("Type") === "basic",
             timeRemaining: singleResult.get("TimeRemaining"),
             CTAOverride: singleResult.get("CTAOverride"),
             created: String(date.getTime()),
             burned: singleResult.get("Burn"),
+            interactable: singleResult.get("Interactable"),
+            hatched: singleResult.get("Hatched"),
+            animalID: singleResult.get("AnimalID"),
          };
          dispatch(burnEgg(tempEgg));
       } catch (e) {

@@ -68,7 +68,7 @@ const MyZooAccount: React.FC = () => {
   const videoTimeout = [];
   const [newEgg, setNewEgg] = useState("")
   const [hatched, setHatched] = useState({
-    tokenId: "",
+    tokenID: "",
     name: "",
     description: "",
     yield: "",
@@ -86,11 +86,69 @@ const MyZooAccount: React.FC = () => {
     (state) => state.zoo.eggs
   );
 
+  const hatchEggReady = async (egg) => {
+    const eggNum = parseInt(egg.tokenID)
+    const eggObject = Moralis.Object.extend("FinalEggs")
+    const eggQuery = new Moralis.Query(eggObject)
+    eggQuery.equalTo("EggID", eggNum)
+    const eggResults = await eggQuery.find()
+    const foundEgg = eggResults[0]
+
+    foundEgg.set("Burn", true)
+    foundEgg.save()
+
+    setShowBoth(true);
+    setEggType(egg.basic ? "basic" : "hybrid");
+
+    const animalObject = Moralis.Object.extend("FinalAnimals")
+    const animalQuery = new Moralis.Query(animalObject)
+    animalQuery.equalTo("AnimalID", egg.animalID)
+    const animalResults = await animalQuery.find()
+    const foundAnimal = animalResults[0]
+
+
+   
+
+    let string = String(foundAnimal.get("createdAt"));
+    const replacedString = string.replace("at ", "");
+    const date = new Date(replacedString);
+
+    const newAnimal: Animal = {
+        owner: String(foundAnimal.get("Owner")),
+        tokenID: String(foundAnimal.get("AnimalID")),
+        name: foundAnimal.get("Name"),
+        description: foundAnimal.get("NA"),
+        yield: foundAnimal.get("Yield"),
+        boost: foundAnimal.get("Boost"),
+        rarity: foundAnimal.get("Rarity"),
+        dob: String(date.getTime()),
+        startBid: foundAnimal.get("StartBid"),
+        currentBid: foundAnimal.get("CurrentBid"),
+        imageUrl: foundAnimal.get("TokenURI"),
+        listed: foundAnimal.get("Listed"),
+        bloodline: foundAnimal.get("AnimalTypeID") === "1" ? "pure" : "hybrid",
+        selected: false,
+        bred: false,
+        breedCount: foundAnimal.get("BreedCount"),
+        kind: foundAnimal.get("AnimalTypeID"),
+        timeRemaining: foundAnimal.get("TimeRemaining"),
+        CTAOverride: foundAnimal.get("CTAOverride"),
+        lastBred: foundAnimal.get("lastBred"),
+        buyNow: foundAnimal.get("BuyNow"),
+        revealed: foundAnimal.get("Revealed"),
+        freed: foundAnimal.get("Freed")
+      };
+    setHatched(newAnimal);
+    foundAnimal.set("Revealed", true)
+    foundAnimal.save()
+    startAnimationTimer();
+  }
+
   const hatchEgg = async (egg) => {
       try {
         // const token = await zooKeeper.methods.tokens(parseInt(egg.tokenId)).call()
         // setNewEgg(egg.tokenId)
-        const numEggID = parseInt(egg.tokenId)
+        const numEggID = parseInt(egg.tokenID)
         const gasPrice = await web3.eth.getGasPrice()
         const gasEstimate = await zooKeeper.methods
         .hatchEgg(1, numEggID)
@@ -103,162 +161,10 @@ const MyZooAccount: React.FC = () => {
               gasPrice: gasPrice,
               gas: gasEstimate + 10000000,
              })
-        //     .then(async (res) => {
-        //       // console.log(res)
-        //       // setShowBoth(true);
-        //       // setEggType(egg.basic ? "basic" : "hybrid");
-        //       // const newAnimal: Animal = {
-        //       //    tokenId: res.data.tokenId,
-        //       //    animalId: res.data.kind,
-        //       //    name: res.data.name,
-        //       //    description: "",
-        //       //    yield: res.data.rarity.yield,
-        //       //    boost: res.data.rarity.boost,
-        //       //    rarity: res.data.rarity.name,
-        //       //    dob: res.data.birthdate,
-        //       //    imageUrl: res.data.data.tokenURI,
-        //       //    startBid: "0",
-        //       //    currentBid: "0",
-        //       //    buyNow: "0",
-        //       //    listed: false,
-        //       //    bloodline: res.data.kind ==="1"? "pure" : "hybrid",
-        //       //    owner: account,
-        //       //    CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
-        //       //    timeRemaining: 0,
-        //       //    breedCount: 0,
-        //       //    lastBred: "",
-        //       //  };
-        //       //  setHatched(newAnimal);
-        //        zooKeeper
-        //           .getPastEvents("Hatch", {
-        //              fromBlock: 0,
-        //              toBlock: "latest",
-        //              filter: {
-        //                 from: account,
-        //              },
-        //           })
-        //           .then(async (events) => {
-        //              const latest = events[events.length - 1];
-        //              const newTknId = latest.returnValues.tokenID;
-        //              const token = await zooKeeper.methods.tokens(newTknId).call()
-        //              setShowBoth(true);
-        //              setEggType(egg.basic ? "basic" : "hybrid");
-        //              const newAnimal: Animal = {
-        //                 tokenId: String(newTknId),
-        //                 animalId: token.kind,
-        //                 name: token.name,
-        //                 description: "",
-        //                 yield: token.rarity.yield,
-        //                 boost: token.rarity.boost,
-        //                 rarity: token.rarity.name,
-        //                 dob: token.birthdate,
-        //                 imageUrl: token.data.tokenURI,
-        //                 startBid: "0",
-        //                 currentBid: "0",
-        //                 buyNow: "0",
-        //                 listed: false,
-        //                 bloodline: token.kind ==="1"? "pure" : "hybrid",
-        //                 owner: account,
-        //                 CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
-        //                 timeRemaining: 0,
-        //                 breedCount: 0,
-        //                 lastBred: "",
-        //               };
-        //               setHatched(newAnimal);
-        //             //  dispatch(burnEgg(egg));
-        //              dispatch(addAnimal(newAnimal));
-        //              startAnimationTimer();
-        //           });
-        //         })
         console.log(hatching)
       } catch (error) {
         console.log(error)
       }
-
-
-    // REPLACE WITH HATCH FUNCTION FROM CONTRACT
-    // if (egg.basic) {
-    //   randIdx = Math.floor(Math.random() * (5 - 1) + 1);
-    // } else {
-    //   randIdx = Math.floor(Math.random() * (13 - 10) + 10);
-    // }
-    // const eggID = parseInt(egg.tokenId);
-    // const tokenID = Math.floor(Math.random() * (999999 - 0) + 0);
-
-    // const mObject = Moralis.Object.extend("FinalEggs");
-    // const query = new Moralis.Query(mObject);
-    // query.equalTo("EggID", eggID);
-    // const eggM = await query.find();
-    // const eggRes = eggM[0];
-
-    // setTimeout(() => setOpen(true), 3850);
-    // setTimeout(() => setEggType(""), 7000);
-    // console.log("egg result", eggRes);
-    // eggRes.set("Burned", true);
-    // eggRes.destroy();
-
-    // // console.log(randIdx);
-    // const aFromMap = animalMapping[randIdx];
-
-    // const mAnimal = Moralis.Object.extend("FinalAnimals");
-    // const newAnimalM = new mAnimal();
-    // // AnimalID Owner TokenURI MetaURI BlockNumber Rarirty Yield Boost AnimalTypeID Name
-    // newAnimalM.set("AnimalID", tokenID);
-    // newAnimalM.set("Owner", account);
-    // newAnimalM.set("TokenURI", aFromMap.imageUrl);
-    // newAnimalM.set("MetaURI", "META URI");
-    // newAnimalM.set("BlockNumber", Math.floor(Math.random() * (999999 - 0) + 0));
-    // newAnimalM.set("Rarity", aFromMap.rarity);
-    // newAnimalM.set("Yield", aFromMap.yield);
-    // newAnimalM.set("Boost", aFromMap.boost);
-    // newAnimalM.set("Name", aFromMap.name);
-    // newAnimalM.set("AnimalTypeID", aFromMap.animalId);
-    // newAnimalM.set("StartBid", aFromMap.startBid);
-    // newAnimalM.set("CurrentBid", aFromMap.currentBid);
-    // newAnimalM.set("Listed", false);
-    // newAnimalM.set("Bloodline", aFromMap.bloodline);
-    // newAnimalM.set("TimeRemaining", 0);
-    // newAnimalM.set("BreedCount", 0);
-    // newAnimalM.set("lastBred", "");
-    // await newAnimalM.save();
-    // // console.log(aFromMap, randIdx);
-    // const newAnimal: Animal = {
-    //   tokenId: Math.floor(Math.random() * (999999 - 0) + 0).toString(),
-    //   animalId: aFromMap.animalId,
-    //   name: aFromMap.name,
-    //   description: aFromMap.description,
-    //   yield: aFromMap.yield,
-    //   boost: aFromMap.boost,
-    //   rarity: aFromMap.rarity,
-    //   dob: aFromMap.dob,
-    //   imageUrl: aFromMap.imageUrl,
-    //   startBid: aFromMap.startBid,
-    //   currentBid: aFromMap.currentBid,
-    //   buyNow: aFromMap.buyNow,
-    //   listed: aFromMap.listed,
-    //   bloodline: aFromMap.bloodline,
-    //   owner: account,
-    //   CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
-    //   timeRemaining: 0,
-    //   breedCount: 0,
-    //   lastBred: "",
-    // };
-    // setHatched(newAnimal);
-
-    // const TransOb = Moralis.Object.extend("Transactions");
-    // const newTrans = new TransOb();
-
-    // newTrans.set("From", account);
-    // newTrans.set("Action", "Hatched Egg");
-    // newTrans.set("TokenID", eggID);
-    // newTrans.set("AnimalName", aFromMap.name);
-    // newTrans.set("AnimalTokenID", tokenID);
-    // newTrans.save();
-
-    // dispatch(burnEgg(egg));
-    // dispatch(addAnimal(newAnimal));
-    // ---------------------------------------------
-    // startAnimationTimer();
   };
 
   const startAnimationTimer = useCallback(() => {
@@ -299,7 +205,7 @@ const MyZooAccount: React.FC = () => {
     const animalData = [];
 
     Object.values(allAnimals).forEach((animal, index) => {
-      if (animal.owner.toLowerCase() !== account.toLowerCase()) {
+      if (animal.owner.toLowerCase() !== account.toLowerCase() || animal.freed || !animal.revealed) {
         return;
       }
       // console.log(animal)
@@ -323,6 +229,7 @@ const MyZooAccount: React.FC = () => {
       ) {
         animalGroup[animal.name] = animalGroup[animal.name] + 1 || 2;
       } else {
+        console.log("before push", animal)
         animalData.push({
           id: index,
           ...animal,
@@ -379,7 +286,7 @@ const MyZooAccount: React.FC = () => {
                 {animals.map((animal) => (
                   <SwiperSlide
                     style={{ width: "220px", display: "flex" }}
-                    key={animal.tokenId}
+                    key={animal.tokenID}
                   >
                     <AnimalCard
                       {...{ animal, account, animalGroup, hybrid, allAnimals }}
@@ -426,7 +333,6 @@ const MyZooAccount: React.FC = () => {
       //     eggGroup[eggType] = eggGroup[eggType] + 1
       //  } else {
       if (egg.owner.toLowerCase() === account.toLowerCase() && !egg.burned) {
-        console.log("Egg", egg)
         eggData.push({
           id: index,
           ...egg,
@@ -478,10 +384,10 @@ const MyZooAccount: React.FC = () => {
               {eggData.map((egg) => (
                 <SwiperSlide
                   style={{ padding: "3px", width: "180", display: "flex" }}
-                  key={egg.tokenId}
+                  key={egg.tokenID}
                 >
                   {/* <CardWrapper> */}
-                  <EggCard egg={egg} hatchEgg={hatchEgg} hatching={newEgg===egg.tokenId}/>
+                  <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady}/>
                 </SwiperSlide>
               ))}
             </Swiper>
