@@ -156,7 +156,7 @@ const App: React.FC = () => {
                timeRemaining: singleResult.get("TimeRemaining"),
                CTAOverride: singleResult.get("CTAOverride"),
                created: String(date.getTime()),
-               burned: singleResult.get("Burned"),
+               burned: singleResult.get("Burn"),
             };
             Eggs.push(tempEgg);
          }
@@ -168,6 +168,7 @@ const App: React.FC = () => {
 
    const getAnimals = async () => {
       console.log("GETTING ANIMALS");
+
       try {
          const Animals = [];
          const MoralisObject = Moralis.Object.extend("FinalAnimals");
@@ -228,7 +229,7 @@ const App: React.FC = () => {
             timeRemaining: singleResult.get("TimeRemaining"),
             CTAOverride: singleResult.get("CTAOverride"),
             created: String(date.getTime()),
-            burned: singleResult.get("Burned"),
+            burned: singleResult.get("Burn"),
          };
          dispatch(addEgg(tempEgg));
       } catch (e) {
@@ -291,7 +292,7 @@ const App: React.FC = () => {
             timeRemaining: singleResult.get("TimeRemaining"),
             CTAOverride: singleResult.get("CTAOverride"),
             created: String(date.getTime()),
-            burned: singleResult.get("Burned"),
+            burned: singleResult.get("Burn"),
          };
          dispatch(burnEgg(tempEgg));
       } catch (e) {
