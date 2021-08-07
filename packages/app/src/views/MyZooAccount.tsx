@@ -87,87 +87,94 @@ const MyZooAccount: React.FC = () => {
   );
 
   const hatchEgg = async (egg) => {
-    console.log(zooKeeper)
       try {
         // const token = await zooKeeper.methods.tokens(parseInt(egg.tokenId)).call()
-        setNewEgg(egg.tokenId)
+        // setNewEgg(egg.tokenId)
+        const numEggID = parseInt(egg.tokenId)
+        const gasPrice = await web3.eth.getGasPrice()
+        const gasEstimate = await zooKeeper.methods
+        .hatchEgg(1, numEggID)
+            .estimateGas({ from: account })
+        console.log(gasEstimate)
         const hatching = await zooKeeper.methods
-        .hatchEgg(1, parseInt(egg.tokenId))
-            .send({ from: account })
-            .then(async (res) => {
-              // console.log(res)
-              // setShowBoth(true);
-              // setEggType(egg.basic ? "basic" : "hybrid");
-              // const newAnimal: Animal = {
-              //    tokenId: res.data.tokenId,
-              //    animalId: res.data.kind,
-              //    name: res.data.name,
-              //    description: "",
-              //    yield: res.data.rarity.yield,
-              //    boost: res.data.rarity.boost,
-              //    rarity: res.data.rarity.name,
-              //    dob: res.data.birthdate,
-              //    imageUrl: res.data.data.tokenURI,
-              //    startBid: "0",
-              //    currentBid: "0",
-              //    buyNow: "0",
-              //    listed: false,
-              //    bloodline: res.data.kind ==="1"? "pure" : "hybrid",
-              //    owner: account,
-              //    CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
-              //    timeRemaining: 0,
-              //    breedCount: 0,
-              //    lastBred: "",
-              //  };
-              //  setHatched(newAnimal);
-               zooKeeper
-                  .getPastEvents("Hatch", {
-                     fromBlock: 0,
-                     toBlock: "latest",
-                     filter: {
-                        from: account,
-                     },
-                  })
-                  .then(async (events) => {
-                     const latest = events[events.length - 1];
-                     const newTknId = latest.returnValues.tokenID;
-                     const token = await zooKeeper.methods.tokens(newTknId).call()
-                     setShowBoth(true);
-                     setEggType(egg.basic ? "basic" : "hybrid");
-                     const newAnimal: Animal = {
-                        tokenId: String(newTknId),
-                        animalId: token.kind,
-                        name: token.name,
-                        description: "",
-                        yield: token.rarity.yield,
-                        boost: token.rarity.boost,
-                        rarity: token.rarity.name,
-                        dob: token.birthdate,
-                        imageUrl: token.data.tokenURI,
-                        startBid: "0",
-                        currentBid: "0",
-                        buyNow: "0",
-                        listed: false,
-                        bloodline: token.kind ==="1"? "pure" : "hybrid",
-                        owner: account,
-                        CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
-                        timeRemaining: 0,
-                        breedCount: 0,
-                        lastBred: "",
-                      };
-                      setHatched(newAnimal);
-                    //  dispatch(burnEgg(egg));
-                     dispatch(addAnimal(newAnimal));
-                     startAnimationTimer();
-                  });
-                })
+        .hatchEgg(1, numEggID)
+            .send({ 
+              from: account,
+              gasPrice: gasPrice,
+              gas: gasEstimate + 10000000,
+             })
+        //     .then(async (res) => {
+        //       // console.log(res)
+        //       // setShowBoth(true);
+        //       // setEggType(egg.basic ? "basic" : "hybrid");
+        //       // const newAnimal: Animal = {
+        //       //    tokenId: res.data.tokenId,
+        //       //    animalId: res.data.kind,
+        //       //    name: res.data.name,
+        //       //    description: "",
+        //       //    yield: res.data.rarity.yield,
+        //       //    boost: res.data.rarity.boost,
+        //       //    rarity: res.data.rarity.name,
+        //       //    dob: res.data.birthdate,
+        //       //    imageUrl: res.data.data.tokenURI,
+        //       //    startBid: "0",
+        //       //    currentBid: "0",
+        //       //    buyNow: "0",
+        //       //    listed: false,
+        //       //    bloodline: res.data.kind ==="1"? "pure" : "hybrid",
+        //       //    owner: account,
+        //       //    CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
+        //       //    timeRemaining: 0,
+        //       //    breedCount: 0,
+        //       //    lastBred: "",
+        //       //  };
+        //       //  setHatched(newAnimal);
+        //        zooKeeper
+        //           .getPastEvents("Hatch", {
+        //              fromBlock: 0,
+        //              toBlock: "latest",
+        //              filter: {
+        //                 from: account,
+        //              },
+        //           })
+        //           .then(async (events) => {
+        //              const latest = events[events.length - 1];
+        //              const newTknId = latest.returnValues.tokenID;
+        //              const token = await zooKeeper.methods.tokens(newTknId).call()
+        //              setShowBoth(true);
+        //              setEggType(egg.basic ? "basic" : "hybrid");
+        //              const newAnimal: Animal = {
+        //                 tokenId: String(newTknId),
+        //                 animalId: token.kind,
+        //                 name: token.name,
+        //                 description: "",
+        //                 yield: token.rarity.yield,
+        //                 boost: token.rarity.boost,
+        //                 rarity: token.rarity.name,
+        //                 dob: token.birthdate,
+        //                 imageUrl: token.data.tokenURI,
+        //                 startBid: "0",
+        //                 currentBid: "0",
+        //                 buyNow: "0",
+        //                 listed: false,
+        //                 bloodline: token.kind ==="1"? "pure" : "hybrid",
+        //                 owner: account,
+        //                 CTAOverride: { barwidth: null, timeRemainingDaysHours: null },
+        //                 timeRemaining: 0,
+        //                 breedCount: 0,
+        //                 lastBred: "",
+        //               };
+        //               setHatched(newAnimal);
+        //             //  dispatch(burnEgg(egg));
+        //              dispatch(addAnimal(newAnimal));
+        //              startAnimationTimer();
+        //           });
+        //         })
+        console.log(hatching)
       } catch (error) {
         console.log(error)
       }
 
-    let randIdx: number;
-
-    console.log(egg)
 
     // REPLACE WITH HATCH FUNCTION FROM CONTRACT
     // if (egg.basic) {
@@ -419,6 +426,7 @@ const MyZooAccount: React.FC = () => {
       //     eggGroup[eggType] = eggGroup[eggType] + 1
       //  } else {
       if (egg.owner.toLowerCase() === account.toLowerCase() && !egg.burned) {
+        console.log("Egg", egg)
         eggData.push({
           id: index,
           ...egg,
