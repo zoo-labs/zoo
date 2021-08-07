@@ -13,7 +13,7 @@ import { Text, Card as Existing, EggCard, VideoPlayer } from "components";
 import { getMilliseconds, getDaysHours } from "util/timeHelpers";
 import { breedTimeouts, eggTimeout } from "constants/constants";
 // import { Animal } from "entities/zooentities";
-import { addAnimal, burnEgg } from "state/actions";
+import { addAnimal, addEgg, burnEgg } from "state/actions";
 // import { animalMapping } from "util/animalMapping";
 import NewAnimalCard from "components/NewAnimal/NewAnimalCard";
 import { RarityColor } from "enums/rarity-color";
@@ -22,7 +22,7 @@ import useWeb3 from "hooks/useWeb3";
 import {
   getZooKeeper,
 } from "util/contractHelpers";
-import { Animal } from "entities/zooentities";
+import { Animal, Egg } from "entities/zooentities";
 
 
 const StyledText = styled(Text)`
@@ -145,6 +145,22 @@ const MyZooAccount: React.FC = () => {
   }
 
   const hatchEgg = async (egg) => {
+      let tempEgg: Egg = {
+        owner: egg.owner,
+        tokenID: egg.tokenID,
+        kind: egg.kind,
+        parentA: egg.parentA,
+        parentB: egg.parentB,
+        basic: egg.basic,
+        timeRemaining: egg.timeRemaining,
+        CTAOverride: egg.CTAOverride,
+        created: egg.created,
+        burned: egg.burned,
+        interactable: false,
+        hatched: true,
+        animalID: egg.animalID,
+     };
+      dispatch(addEgg(tempEgg));
       try {
         // const token = await zooKeeper.methods.tokens(parseInt(egg.tokenId)).call()
         // setNewEgg(egg.tokenId)
@@ -163,6 +179,22 @@ const MyZooAccount: React.FC = () => {
              })
         console.log(hatching)
       } catch (error) {
+        let tempEgg1: Egg = {
+          owner: egg.owner,
+          tokenID: egg.tokenID,
+          kind: egg.kind,
+          parentA: egg.parentA,
+          parentB: egg.parentB,
+          basic: egg.basic,
+          timeRemaining: egg.timeRemaining,
+          CTAOverride: egg.CTAOverride,
+          created: egg.created,
+          burned: egg.burned,
+          interactable: true,
+          hatched: false,
+          animalID: egg.animalID,
+       };
+        dispatch(addEgg(tempEgg1));
         console.log(error)
       }
   };

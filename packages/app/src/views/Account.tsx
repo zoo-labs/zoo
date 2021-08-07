@@ -98,7 +98,7 @@ const Account: React.FC = () => {
    };
 
    const currentEggsOwned = Object.values(allEggs).filter(
-      (egg) => egg.owner.toLowerCase() === account.toLowerCase()
+      (egg) => egg.owner.toLowerCase() === account.toLowerCase() && !egg.burned
    ).length;
    // setEggsOwned(currentEggsOwned)
    const handleClick = () => {
