@@ -89,17 +89,15 @@ const hybridEggURL = window.location.origin + "/static/images/hybrid.jpg";
 
 export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady, hatching }) => {
    const [onHatch] = useModal(
-      <HatchModal action ="hatch" confirmation={() => hatchEggReady(egg)} onDismiss={() => null} />
+      <HatchModal action ="hatch" confirmation={() => hatchEgg(egg)} onDismiss={() => null} />
    );
-   const [onIncubate] = useModal(
-      <HatchModal action = "incubate" confirmation={() => hatchEgg(egg)} onDismiss={() => null} />
-   );
+   const onReveal = () => hatchEggReady(egg)
 
    const buttonActions = () => {
       if(egg.timeRemaining > 0) return null
       if(!egg.interactable) return null
-      if(egg.hatched) return onHatch()
-      if(!egg.hatched) return onIncubate()
+      if(egg.hatched) return onReveal()
+      if(!egg.hatched) return onHatch()
    }
 
    const incubating = !egg.interactable && egg.hatched
@@ -151,7 +149,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady, h
                      padding: 4,
                      paddingLeft: "7px",
                   }}>
-                  <TextWrapper>{egg.hatched && egg.interactable? `HATCH` : incubating? 'INCUBATING' : 'INCUBATE' }</TextWrapper>
+                  <TextWrapper>{egg.hatched && egg.interactable? `REVEAL` : incubating? 'HATCHING' : 'HATCH' }</TextWrapper>
                </InfoBlock>
             )}
          </Card>
