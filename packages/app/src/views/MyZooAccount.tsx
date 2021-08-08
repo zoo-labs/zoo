@@ -107,7 +107,7 @@ const MyZooAccount: React.FC = () => {
     const foundAnimal = animalResults[0]
 
 
-   
+
 
     let string = String(foundAnimal.get("createdAt"));
     const replacedString = string.replace("at ", "");
@@ -172,7 +172,7 @@ const MyZooAccount: React.FC = () => {
         console.log(gasEstimate)
         const hatching = await zooKeeper.methods
         .hatchEgg(1, numEggID)
-            .send({ 
+            .send({
               from: account,
               gasPrice: gasPrice,
               gas: gasEstimate + 10000000,
@@ -240,7 +240,6 @@ const MyZooAccount: React.FC = () => {
       if (animal.owner.toLowerCase() !== account.toLowerCase() || animal.freed || !animal.revealed) {
         return;
       }
-      // console.log(animal)
       const lastBred = animal.lastBred
         ? new Date(Number(animal.lastBred)).getTime()
         : new Date().getTime();
@@ -261,7 +260,6 @@ const MyZooAccount: React.FC = () => {
       ) {
         animalGroup[animal.name] = animalGroup[animal.name] + 1 || 2;
       } else {
-        console.log("before push", animal)
         animalData.push({
           id: index,
           ...animal,
