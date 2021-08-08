@@ -256,8 +256,6 @@ const Account: React.FC = () => {
 
    const buyEgg = async () => {
       setDisable(true);``
-      toastClear();
-      toastInfo('Processing transaction...');
 
       const drop = await zooKeeper.methods.drops(0).call();
       console.log("Drop:", drop);
@@ -287,9 +285,10 @@ const Account: React.FC = () => {
             .buyEgg(1)
             .send({ from: account })
             .then((res) => {
-               console.log('bought egg', res);
-               setDisable(false);
-               toastClear();
+              toastClear();
+              toastInfo('Transaction submitted.');
+              console.log('bought egg', res);
+              setDisable(false);
             })
             .catch((err)=> {
               console.log(err)
