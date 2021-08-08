@@ -102,6 +102,15 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady, h
 
    const incubating = !egg.interactable && egg.hatched
 
+  const buttonLabel = (egg) => {
+    if (!egg.hatched && !egg.interactable) return 'CONFIRMING'
+    if (!egg.hatched && egg.interactable) return 'HATCH'
+    if (egg.hatched && !egg.interactable) return 'HATCHING'
+    if (egg.hatched && egg.interactable) return 'REVEAL'
+
+    return ''
+  }
+
    return (
       <>
          <Card
@@ -149,7 +158,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady, h
                      padding: 4,
                      paddingLeft: "7px",
                   }}>
-                  <TextWrapper>{egg.hatched && egg.interactable? `REVEAL` : incubating? 'HATCHING' : 'HATCH' }</TextWrapper>
+                  <TextWrapper>{buttonLabel(egg)}</TextWrapper>
                </InfoBlock>
             )}
          </Card>
