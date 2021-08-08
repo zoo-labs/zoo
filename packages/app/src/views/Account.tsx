@@ -290,7 +290,6 @@ const Account: React.FC = () => {
                console.log('bought egg', res);
                setDisable(false);
                toastClear();
-               toastSuccess("Successfully purchased eggs!");
             })
             .catch((err)=> {
               console.log(err)
