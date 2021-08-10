@@ -21,8 +21,7 @@ import { Egg, Animal } from 'types/zoo';
 import { getZooKeeper } from 'util/contractHelpers';
 import useWeb3 from 'hooks/useWeb3';
 
-import { mapEgg, mapAnimal } from 'moralis/mapping';
-import { queryEggs, queryAnimals } from 'moralis/helpers';
+import { mapEgg, mapAnimal, queryEggs, queryAnimals } from 'util/moralis';
 
 const Account = lazy(() => import('./views/Account'));
 const Login = lazy(() => import('./views/Login'));

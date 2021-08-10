@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Moralis from 'moralis'
 import { MoralisProvider as MProvider } from 'react-moralis'
-import { moralisConfig } from '../constants/moralis'
+import { moralisConfig } from 'constants/moralis'
 import { useWeb3React } from '@web3-react/core'
 
 export const MoralisProvider: React.FC = ({ children }) => {
