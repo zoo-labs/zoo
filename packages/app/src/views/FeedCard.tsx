@@ -178,6 +178,8 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup, hideBid }) => {
       </IconButton>
    );
 
+  const currentBid = <Subheading bold as="p">{`Current Bid: ${item.currentBid}`}</Subheading>
+
    return (
       <>
          <Card url={item.imageUrl} isMobile={isMobile}>
@@ -203,9 +205,7 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup, hideBid }) => {
                         <Subheading
                            bold
                            as="p">{`Born: ${StringDate}`}</Subheading>
-                        <Subheading
-                           bold
-                           as="p">{`Current Bid: ${item.currentBid}`}</Subheading>
+                        {item.currentBid && currentBid}
                      </Flex>
                      <ActionButonContainer>
                         <Flex width="100%" height="100%" flexDirection="column">
