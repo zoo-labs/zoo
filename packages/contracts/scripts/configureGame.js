@@ -66,24 +66,12 @@ async function main() {
   }
 
   // Add animals
-  for (const v of animals) {
-    const existing = await drop.animals(v.name)
-    if (existing.name != "") { continue }
-
-    console.log('setAnimal', v)
-    const tx = await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
-    await tx.wait()
-  }
+  const tx = await drop.setAnimals(animals)
+  await tx.wait()
 
   // Add hybrids
-  for (const v of hybrids) {
-    const existing = await drop.hybrids(v.name)
-    if (existing.name != "") { continue }
-
-    console.log('setHybrid', v)
-    const tx = await drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
-    await tx.wait()
-  }
+  const tx = await drop.setHybrids(hybrids)
+  await tx.wait()
 }
 
 main()

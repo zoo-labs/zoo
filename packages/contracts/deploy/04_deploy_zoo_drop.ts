@@ -16,6 +16,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     log: true,
   })
 
+  if (!deployResult.newlyDeployed) return false
+
   const drop = await ethers.getContractAt('ZooDrop', deployResult.address);
   const keeperAddress = (await deployments.get('ZooKeeper')).address
   const keeper = await ethers.getContractAt('ZooKeeper', keeperAddress);

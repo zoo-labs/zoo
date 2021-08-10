@@ -171,6 +171,41 @@ contract ZooDrop is Ownable {
         return true;
     }
 
+    struct _Animal {
+        string rarity;
+        string name;
+        string tokenURI;
+        string metadataURI;
+    }
+
+    // Helper to set many Animal at once
+    function setAnimals(_Animal[] calldata _animals) public onlyOwner {
+        for (uint256 i = 0; i < _animals.length; i++) {
+            _Animal calldata animal = _animals[i];
+            setAnimal(animal.name, animal.rarity, animal.tokenURI, animal.metadataURI);
+        }
+    }
+
+    struct _Hybrid {
+        string rarity;
+        string name;
+        uint256 yield;
+        string parentA;
+        string parentB;
+        string tokenURI;
+        string metadataURI;
+    }
+
+
+    // Helper to set many Animal at once
+    function setHybrids(_Hybrid[] calldata _hybrids) public onlyOwner {
+        for (uint256 i = 0; i < _hybrids.length; i++) {
+            _Hybrid calldata hybrid = _hybrids[i];
+            setHybrid(hybrid.name, hybrid.rarity, hybrid.yield, hybrid.parentA, hybrid.parentB, hybrid.tokenURI, hybrid.metadataURI);
+        }
+    }
+
+
     // Add Animal to rarity set if it has not been seen before
     function addAnimalToRarity(string memory rarity, string memory name) private {
         string[] storage _animals = rarityAnimals[rarity];
