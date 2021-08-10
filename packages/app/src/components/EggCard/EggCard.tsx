@@ -90,11 +90,6 @@ const Card = styled(Existing)<{ timedOut?: boolean, interactive?: boolean, hatch
    transition: box-shadow 1s ease-in-out;
 `;
 
-const basicEggURL       = window.location.origin + "/static/images/basic.jpg";
-const hybridEggURL      = window.location.origin + "/static/images/hybrid.jpg";
-const transparentEggURL = window.location.origin + "/static/images/transparent.jpg";
-
-
 export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady }) => {
    const [onHatch] = useModal(
       <HatchModal action ="hatch" confirmation={() => hatchEgg(egg)} onDismiss={() => null} />
@@ -116,11 +111,13 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
     if (!egg.hatched && egg.interactive) return 'HATCH'
     if (egg.hatched && !egg.interactive) return 'HATCHING'
     if (egg.hatched && egg.interactive) return 'REVEAL'
-
     return ''
   }
 
-  const backgroundImage = (!egg.interactive && !hatching) ? transparentEggURL : (egg.basic ? basicEggURL : hybridEggURL)
+  const basicEggURL       = window.location.origin + '/static/images/basic.jpg';
+  const hybridEggURL      = window.location.origin + '/static/images/hybrid.jpg';
+  const transparentEggURL = window.location.origin + '/static/images/transparent.jpg';
+  const backgroundImage   = (!egg.interactive && !hatching) ? transparentEggURL : (egg.basic ? basicEggURL : hybridEggURL)
 
    return (
       <>
@@ -130,19 +127,19 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             }
             style={{ backgroundColor: "#000000" }}
             timedOut={egg.timeRemaining > 0 ? true : false}
-            interactive = {egg.interactive}
+            interactive={egg.interactive}
             hatching={hatching}
             hatched={hatched}
             >
             <CardBody
                style={{
-                  backgroundImage: `url("${backgroundImage}")`,
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
+                  backgroundImage: `url('${backgroundImage}')`,
+                  backgroundSize: 'cover',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center',
                   height: 150,
                   padding: 10,
-                  transition: 'background-image 1s ease-in-out',
+                  transition: 'background-image 1000ms linear',
                }}>
                <TextWrapper
                   style={{
