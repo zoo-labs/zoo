@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Modal } from '../Modal'
 import { Label, Text } from 'components/Text'
 import BorderButton from 'components/Button/BorderButton'
-import { Egg } from "entities/zooentities";
+import { Egg } from "types/zoo";
 import { addEggs } from "state/actions";
 import { useWeb3React } from "@web3-react/core";
 import { useDispatch } from "react-redux";
@@ -156,11 +156,11 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
   const emptyEgg:Egg =
     {
       owner: account,
-      tokenID: "",
-      kind: "",
-      parentA: "",
-      parentB: "",
-      basic: true
+      tokenID: 0,
+      kind:    0,
+      parentA: 0,
+      parentB: 0,
+      basic:   true
     }
 
     const handleSubmit = async () => {
@@ -168,33 +168,25 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
       console.log("value", value);
       for (let i = 0; i < value; i++) {
          const toSet: Egg = { ...emptyEgg };
-         const tokenID = Math.floor(Math.random() * 100000000) + 1;
-         const kind = String(Math.floor(Math.random() * 4) + 1);
-         toSet.tokenID = String(tokenID); //to be changed
+         const tokenID = Math.floor(Math.random() * 100000000) + 1
+         const kind = Math.floor(Math.random() * 4)
+         toSet.tokenID = tokenID; //to be changed
          toSet.kind = kind;
-         const EggObject = Moralis.Object.extend("FinalEggs");
+         const EggObject = Moralis.Object.extend("Eggs");
          const current = new EggObject();
 
          // EggID Owner Burned Type MetaURI TokenURI ParentA ParentB
-         current.set("EggID", tokenID);
-         current.set("Owner", account);
-         current.set("Burned", false);
-         current.set("MetaURI", "");
-         current.set("TokenURI", "");
-         current.set("AnimalTypeID", kind);
-         current.set("Type", "basic");
+         current.set("eggID", tokenID);
+         current.set("owner", account);
+         current.set("burned", false);
+         current.set("metadataURI", "");
+         current.set("tokenURI", "");
+         current.set("kind", kind);
+         current.set("type", "basic");
          await current.save();
 
          testEggs.push(toSet);
          console.log(toSet);
-
-         const TransOb = Moralis.Object.extend("Transactions")
-         const newTrans = new TransOb
-
-         newTrans.set("From", account)
-         newTrans.set("Action", "Bought Egg")
-         newTrans.set("TokenID", tokenID)
-         newTrans.save()
       }
       // console.log(testEggs)
       // dispatch(addEggs(testEggs))

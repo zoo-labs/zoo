@@ -7,7 +7,7 @@ import { useMatchBreakpoints } from "hooks";
 import { useModal } from "components/Modal";
 import { Card as Existing, Flex } from "components";
 import BidModal from "components/MarketModals/BidModal";
-import { Animal } from "entities/zooentities";
+import { Animal } from "types/zoo";
 import YieldModal from "components/MarketModals/YieldModal";
 import { RarityColor } from "enums/rarity-color";
 import { ChevronLeftIcon } from "components/Svg";

@@ -1,7 +1,7 @@
 import { Toast } from "components";
 import BigNumber from "bignumber.js";
 import { Token } from "constants/types";
-import { Animal, Egg } from "entities/zooentities";
+import { Animal, Egg } from "types/zoo";
 
 export type TranslatableText =
    | string

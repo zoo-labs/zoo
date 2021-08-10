@@ -254,7 +254,7 @@ const Bank: React.FC = () => {
          const MoralisObject = Moralis.Object.extend("Transactions");
          const query = new Moralis.Query(MoralisObject);
          query.limit(1000);
-         query.equalTo("From", account);
+         query.equalTo("from", account);
          const results = await query.find();
          console.log(results)
          for (let i = 0; i < results.length; i++) {
@@ -264,14 +264,14 @@ const Bank: React.FC = () => {
             const date = new Date(replacedString);
             const newDate = date.toLocaleDateString("en-US");
             console.log(newDate)
-            const tempTx: any = {
-               txHash: '',// transaction.get(""),
-               txAction: transaction.get("Action"),
-               from: transaction.get("From"),
+            const tx: any = {
+               txHash: transaction.get("txHash"),
+               action: transaction.get("action"),
+               from: transaction.get("from"),
                date: newDate,
                to: '',
-            };
-            tempTransactions.push(tempTx);
+            }
+            tempTransactions.push(tx);
 
          }
          console.log(tempTransactions)
