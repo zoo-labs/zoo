@@ -26,20 +26,18 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const faucet = await ethers.getContractAt('ZooFaucet', deployResult.address);
 
   // Amount to fund the faucet with
-  const faucetAmount = BigInt(500000000 * 1e18);
+  const exp = ethers.BigNumber.from('10').pow(18)
+  const faucetAmount = ethers.BigNumber.from('15000000000').mul(exp)
 
   // Amount to give to each signer
-  const signerAmount = BigInt(10 * 1e18);
+  const signerAmount = ethers.BigNumber.from('150000000').mul(exp);
 
-  // Mints 100 million ZOO and allocates it to ZooFaucet
+  // Mints 1.5B ZOO and allocates it to ZooFaucet
   await token.mint(faucet.address, faucetAmount);
 
   for (var i = 0; i < signers.length; i++) {
-    // The 20 signer wallets get 10K ZOO on deployment
-    await faucet.getZoo(
-      signers[i].address,
-      signerAmount
-    );
+    // The 20 signer wallets get 150M ZOO on deployment
+    await token.mint(signers[i].address, signerAmount);
   }
 
   return hre.network.live;
