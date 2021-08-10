@@ -3,6 +3,7 @@ const chainID = '0x539' // Localhost
 // const chainID = '0x38'   // Mainnet
 
 async function getZooKeeper() {
+  	const web3 = Moralis.web3ByChain(chainID);
     const Contract = Moralis.Object.extend("Contracts");
     const query = new Moralis.Query(Contract)
     query.equalTo("Name", "ZooKeeper")
@@ -13,7 +14,6 @@ async function getZooKeeper() {
 
 Moralis.Cloud.afterSave("BuyEgg", async (request) => {
 	const confirmed = request.object.get("confirmed");
-  	const web3 = Moralis.web3ByChain("0x61"); // testnet
   	const logger = Moralis.Cloud.getLogger();
   	if (confirmed) {
 
@@ -53,7 +53,6 @@ Moralis.Cloud.afterSave("BuyEgg", async (request) => {
 
 // Moralis.Cloud.afterSave("Burn", async (request) => {
 // 	const confirmed = request.object.get("confirmed");
-//   	const web3 = Moralis.web3ByChain("0x61"); // testnet
 //   	const logger = Moralis.Cloud.getLogger();
 //   	if (confirmed) {
 //       const object = request.object
@@ -71,7 +70,6 @@ Moralis.Cloud.afterSave("BuyEgg", async (request) => {
 
 Moralis.Cloud.afterSave("Hatch", async (request) => {
 	const confirmed = request.object.get("confirmed");
-  	const web3 = Moralis.web3ByChain(chainID); // testnet
   	const logger = Moralis.Cloud.getLogger();
   	if (confirmed) {
       const object = request.object
@@ -123,7 +121,6 @@ Moralis.Cloud.afterSave("Hatch", async (request) => {
 
 Moralis.Cloud.afterSave("Breed", async (request) => {
 	const confirmed = request.object.get("confirmed");
-  	const web3 = Moralis.web3ByChain(chainID); // testnet
   	const logger = Moralis.Cloud.getLogger();
   	if (confirmed) {
 
@@ -183,7 +180,6 @@ Moralis.Cloud.afterSave("Breed", async (request) => {
 
  Moralis.Cloud.afterSave("Free", async (request) => {
    	const confirmed = request.object.get("confirmed");
-   	const web3 = Moralis.web3ByChain(chainID);
    	const logger = Moralis.Cloud.getLogger();
  	if (confirmed) {
        const object = request.object
