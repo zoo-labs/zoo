@@ -47,7 +47,7 @@ Moralis.Cloud.afterSave("BuyEgg", async (request) => {
       current.set("MetaURI", eggInfo.data.metadataURI)
       current.set("Kind", eggInfo.kind)
       await current.save()
-      logger.info("Saved Egg:" + tokenID)
+      logger.info("Egg:" + tokenID)
   	} else {
     	logger.info("Egg Bought pending confirmation")
       	const FinalEggs = Moralis.Object.extend("FinalEggs");
@@ -59,7 +59,7 @@ Moralis.Cloud.afterSave("BuyEgg", async (request) => {
       	current.set("Interactable", false)
       	current.set("Hatched", false)
         current.save();
-      	logger.info("Test Saved at " + Date.now())
+      	logger.info("Egg Saved at " + Date.now())
     };
 });
 
@@ -102,7 +102,6 @@ Moralis.Cloud.afterSave("Hatch", async (request) => {
 
       const zooKeeper = await getZooKeeper()
       const hatchedAnimal = await zooKeeper.methods.tokens(tokenID).call()
-      logger.info('hatchedAnimal', hatchedAnimal)
       current.set("AnimalID", parseInt(tokenID))
       current.set("Owner", request.object.get("from"))
       current.set("BlockNumber", request.object.get("block_number"))
@@ -117,7 +116,7 @@ Moralis.Cloud.afterSave("Hatch", async (request) => {
       current.set("Revealed", false)
       current.set("AnimalTypeID", hatchedAnimal.kind)
       current.save()
-      logger.info("Saved Animal")
+      logger.info("Saved " + hatchedAnimal.name)
     } else {
     	logger.info("Hatched Animal pending confirmation")
         const currentClass = Moralis.Object.extend("FinalEggs");
