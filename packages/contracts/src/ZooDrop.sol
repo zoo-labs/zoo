@@ -329,6 +329,7 @@ contract ZooDrop is Ownable {
         token.name = hybrid.name;
         token.data = hybrid.data;
         token.rarity = hybrid.rarity;
+        token.rarity.yield = hybrid.yield; // Hybrid rarity overrides default
         token.bidShares = hybrid.bidShares;
         token.timestamp = block.timestamp;
         token.birthday = block.number;
