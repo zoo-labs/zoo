@@ -24,6 +24,7 @@ import {
    getZooMedia,
    getZooKeeper,
 } from "util/contractHelpers";
+
 import useWeb3 from "hooks/useWeb3";
 import useToast from "hooks/useToast";
 
@@ -32,26 +33,26 @@ const HeadingContainer = styles.div`
     display: flex;
     justify-content: start;
     margin: 0px 8px;
-`;
+`
 
 const MyZooContainer = styles.div`
     width: 100%;
     display: flex;
     padding: 16px;
-`;
+`
 
 const StyledButton = styles.button`
     cursor: pointer;
     text-decoration: underline;
     text-transform: uppercase;
-`;
+`
 
 const LabelWrapper = styles.div`
     display: flex;
     width: 100%;
     justify-content: space-evenly;
     align-items: center;
-`;
+`
 
 const ValueWrapper = styles(Text)`
     color: ${({ theme }) => theme.colors.text};
@@ -61,17 +62,18 @@ const ValueWrapper = styles(Text)`
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 18px;
-`;
+`
+
 const RowWrapper = styles.div`
     width: 100%;
     display: flex;
     justify-content: space-around;
     margin: 16px;
-`;
+`
 
 const StyledHeading = styles(Heading)`
-   color: ${({ theme }) => theme.colors.text};
-`;
+    color: ${({ theme }) => theme.colors.text};
+`
 
 
 const Account: React.FC = () => {
@@ -257,16 +259,15 @@ const Account: React.FC = () => {
       setDisable(true);``
 
       const drop = await zooKeeper.methods.drops(0).call();
-      console.log("Drop:", drop);
       const token = await zooKeeper.methods.buyEgg(1).call({ from: account })
-      console.log(token)
-      const createdDate = new Date().getTime();
-      const now = new Date().getTime();
+      const createdAt = token.createdAt
+      const now = Date.now()
       const hatchTimeout = getMilliseconds(eggTimeout);
-      const elapsedTime = now - createdDate;
+      const elapsedTime = now - createdAt;
       const timeRemaining = hatchTimeout - elapsedTime;
       const timeRemainingDaysHours = getDaysHours(timeRemaining);
       const barwidth = [100 * (elapsedTime / hatchTimeout), "%"].join("");
+
       try {
         await zooKeeper.methods
             .buyEgg(1)

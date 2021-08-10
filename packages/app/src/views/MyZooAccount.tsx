@@ -87,7 +87,7 @@ const MyZooAccount: React.FC = () => {
   const hatchEggReady = async (egg) => {
     const eggObject = Moralis.Object.extend('Eggs')
     const eggQuery = new Moralis.Query(eggObject)
-    eggQuery.equalTo('eggID', egg.tokenID)
+    eggQuery.equalTo('tokenID', egg.tokenID)
     const eggResults = await eggQuery.find()
     const foundEgg = eggResults[0]
 
