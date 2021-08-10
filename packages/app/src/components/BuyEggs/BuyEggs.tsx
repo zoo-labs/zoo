@@ -10,10 +10,6 @@ import { useDispatch } from "react-redux";
 import { Flex, TextButton } from 'components'
 import Moralis from "moralis";
 
-Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
-
-Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server";
-
 const ColumnContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -43,7 +39,7 @@ const ModalWrapper = styled.div`
   }
 `
 
-const EggInput = styled.input.attrs({ 
+const EggInput = styled.input.attrs({
   type: 'string',
   min: 1
 })`
@@ -109,7 +105,7 @@ const ArrowUp = styled.div`
   }
 `
 
-const SubmitBtn = styled.input.attrs({ 
+const SubmitBtn = styled.input.attrs({
   type: 'submit',
 })`
   width: 40%;
@@ -140,7 +136,7 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
   const dispatch = useDispatch()
   const [value, setValue] = useState(1)
   const {account} = useWeb3React()
-  
+
   const increaseEgg = () => {
     setValue(value + 1);
   }
@@ -166,7 +162,7 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
       parentB: "",
       basic: true
     }
-  
+
     const handleSubmit = async () => {
       const testEggs = [];
       console.log("value", value);

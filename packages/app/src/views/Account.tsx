@@ -141,7 +141,7 @@ const Account: React.FC = () => {
          } else {
             setKeepApprove(true);
             toastClear();
-            toastInfo('Trying to approve account...');
+            toastInfo('Please approve allowance to play');
          }
       } catch (error) {
          console.log(error);
@@ -239,7 +239,7 @@ const Account: React.FC = () => {
    const handleFunds = () => {
       console.log(chainId);
       switch (chainId) {
-         case 31337:
+         case 1337:
             handleFaucet();
             break;
          case 97:
@@ -320,7 +320,7 @@ const Account: React.FC = () => {
                      minWidth={!isXl ? "120px" : "140px"}
                      style={{ fontSize: `${!isXl ? "14px" : "16px"}` }}
                      onClick={handleFunds}>
-                     {chainId !== 97 && chainId !== 31337
+                     {chainId !== 97 && chainId !== 1337
                         ? "Add Funds"
                         : wait
                         ? "Processing..."

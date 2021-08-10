@@ -3,7 +3,7 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers } from 'ethers';
 
 /* 	const CONTRACTS_JSON = require('../contracts.json');
-	const CONTRACTS = CONTRACTS_JSON['31337']['hardhat'].contracts; */
+	const CONTRACTS = CONTRACTS_JSON['1337']['hardhat'].contracts; */
 interface ContractType {
 	contract: any;
 	senderContract: any;
@@ -27,11 +27,11 @@ interface ContractMap {
 		return contractMap[contractName];
 	}
 
-	
+
 	const ContractDef = require(`../../../contracts/artifacts/src/${contractName}.sol/${contractName}.json`);
 	// TODO: tie this to web3
 	const provider = getProvider();
-	const inst = new ethers.Contract(CONTRACTS[contractName].address,ContractDef.abi, provider); 
+	const inst = new ethers.Contract(CONTRACTS[contractName].address,ContractDef.abi, provider);
 
 	const signer = provider.getSigner();
 	const sender = new ethers.Contract(CONTRACTS[contractName].address, ContractDef.abi, signer);
@@ -54,7 +54,7 @@ interface ContractMap {
 	return ct;
 	}
 
-	
+
 
 	return {getContract}
 
