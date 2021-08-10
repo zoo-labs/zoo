@@ -336,7 +336,7 @@ const Account: React.FC = () => {
                      flexDirection="column"
                      flexGrow={2}
                      height={allowance && !keepApprove ? "100%" : "65px"}>
-                     <Label small>{currentEggsOwned} Eggs Owned</Label>
+                     <Label>{currentEggsOwned} Eggs Owned</Label>
                   </Flex>
                   <Flex
                      flexDirection="column"

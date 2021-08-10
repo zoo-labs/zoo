@@ -44,6 +44,8 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
       }
    };
 
+   const daysOld = (new Date().getTime()) / 86400000
+
    return (
       <>
          <BottomModal header="Yield Info" height="300px" onDismiss={onDismiss}>
@@ -79,7 +81,7 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
                   mb="16px"
                   fontSize="22px"
                   color="text">
-                  {Math.floor(item.yield * (Math.random() * (12 - 1) + 1))}
+                  {item.yield * daysOld}
                </Text>
                {canFree && (
                   <Flex flexDirection="row" justifyContent="space-around">
