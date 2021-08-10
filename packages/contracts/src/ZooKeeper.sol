@@ -101,7 +101,7 @@ contract ZooKeeper is Ownable {
         require(zoo.balanceOf(msg.sender) >= drop.eggPrice(), "ZK: Not Enough ZOO to purchase Egg");
 
         // Transfer funds
-        console.log('zoo.transferFrom', msg.sender, address(this),drop.eggPrice());
+        console.log('zoo.transferFrom', msg.sender, address(this), drop.eggPrice());
         zoo.transferFrom(msg.sender, address(this), drop.eggPrice());
 
         // Get Egg from this drop
@@ -176,18 +176,20 @@ contract ZooKeeper is Ownable {
         uint256 daysOld = blockAge.div(28800);
 
         // Calculate yield
-        yield = daysOld.mul(token.rarity.yield);
-        console.log(block.number, token.birthday, yield);
+        yield = daysOld.mul(token.rarity.yield.mul(10**18));
+        console.log('calculateYield', blockAge, daysOld, yield);
 
         // Transfer yield
         zoo.transfer(msg.sender, yield);
 
         emit Free(msg.sender, tokenID, yield);
+
+        return yield;
     }
 
     // Set price for buying a name
     function setNamePrice(uint256 price) public onlyOwner {
-        namePrice = price;
+        namePrice = price.mul(10**18);
     }
 
     // Buy a custom name for your NFT
@@ -285,6 +287,6 @@ contract ZooKeeper is Ownable {
 
     // Enable owner to withdraw ZOO if necessary
     function zooWithdraw(address receiver, uint256 amount) public onlyOwner returns (bool) {
-        return zoo.transferFrom(address(this), receiver, amount);
+        return zoo.transferFrom(address(this), receiver, amount.mul(10**18));
     }
 }

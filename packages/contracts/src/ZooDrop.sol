@@ -2,6 +2,7 @@
 
 pragma solidity >=0.8.4;
 
+import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { Decimal } from "./Decimal.sol";
 import { IMarket } from "./interfaces/IMarket.sol";
@@ -12,6 +13,7 @@ import "./console.sol";
 
 
 contract ZooDrop is Ownable {
+    using SafeMath for uint256;
 
     struct Egg {
         IZoo.Type kind;
@@ -128,7 +130,7 @@ contract ZooDrop is Ownable {
         egg.name = name;
         egg.data = getMediaData(tokenURI, metadataURI);
         egg.bidShares = getBidShares();
-        egg.price = price;
+        egg.price = price.mul(10**18);
         egg.supply = supply;
         eggs[name] = egg;
         return egg;

@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
 import { useHistory } from "react-router-dom";
 import styles from "styled-components";
+import web3 from 'web3';
+
 import { Label, Text } from "components/Text";
 import { Flex, Heading, useMatchBreakpoints } from "components";
 import Body from "components/layout/Body";
@@ -150,9 +152,10 @@ const Account: React.FC = () => {
       toastInfo('Processing approval...');
 
       // Increase allowance
-       const eggPrice = await zooDrop.methods.eggPrice().call();
+       const eggPrice = await zooDrop.methods.eggPrice().call()
+       const allowance = web3.utils.toBN(eggPrice).mul(web3.utils.toBN(100))
        const tx = zooToken.methods
-          .approve(keeperAdd, eggPrice*100)
+          .approve(keeperAdd, allowance)
           .send({ from: account })
 
       tx.then(() => {

@@ -32,7 +32,8 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
             .freeAnimal(tknId)
             .send({ from: account })
             .then(() => {
-               setPending(false);
+               setPending(false)
+               window.location.href = '/account'
             })
             .catch((e) => {
                console.error("THERE WAS AN ISSUE FREEING THE ANIMAL \n", e);
@@ -45,9 +46,7 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
    };
 
   // Calculate yield
-  const now        = (new Date()).getTime()
-  const msOld      = Number(item.dob) * 1000
-  const daysOld    = (now - msOld) / 86400000
+  const daysOld    = (Date.now() - item.dob) / 86400000
   const totalYield = (daysOld > 0) ? (item.yield * daysOld).toFixed(8) : 0
 
    return (
