@@ -119,7 +119,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
     return ''
   }
 
-  const backgroundImage = egg.interactable ? (egg.basic ? basicEggURL : hybridEggURL) : transparentEggURL
+  const backgroundImage = (!egg.interactable && !hatching) ? transparentEggURL : (egg.basic ? basicEggURL : hybridEggURL)
 
    return (
       <>
