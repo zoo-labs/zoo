@@ -166,11 +166,6 @@ const StyledText = styled(Text)`
 `
 
 
-Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
-
-Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server";
-
-
 const Bank: React.FC = () => {
    const animalsState = useSelector<AppState, AppState["zoo"]["animals"]>(
       (state) => state.zoo.animals
@@ -239,9 +234,8 @@ const Bank: React.FC = () => {
    };
 
    const handleFunds = () => {
-      console.log(chainId);
       switch (chainId) {
-         case 31337:
+         case 1337:
             handleFaucet();
             break;
          case 97:

@@ -123,16 +123,6 @@ function Feed<FeedPagePops>({ match }) {
    const [swiperRef, setSwiperRef] = useState(null);
    const [activeIndex, setActiveIndex] = useState(1);
 
-   Moralis.initialize(
-      chainId === 97
-         ? "16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy"
-         : "cIGUkzL7pyhM8aC8gIcDiH46QGpsEutO5SAQzTgy"
-   );
-   Moralis.serverURL =
-      chainId === 97
-         ? "https://dblpeaqbqk32.usemoralis.com:2053/server"
-         : "https://j0ixlvmwc1kz.usemoralis.com:2053/server";
-
    let animals = Object.values(animalsState);
    const { pathname } = useLocation();
 

@@ -12,7 +12,6 @@ import PageLoader from "./components/Svg/Icons/LoadingLogo";
 import history from "./routerHistory";
 import { PrivateRoute } from "components/PrivateRoute";
 import { useWeb3React } from "@web3-react/core";
-import { MoralisProvider } from "react-moralis";
 import { useDispatch } from "react-redux";
 import { clearZoo } from "state/zoo";
 import { addEggs, addAnimals, addEgg, addAnimal, burnEgg } from "state/actions";
@@ -23,7 +22,6 @@ import { getZooKeeper } from "util/contractHelpers";
 import useWeb3 from "hooks/useWeb3";
 
 Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
-
 Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server";
 
 // Route-based code splitting
@@ -123,15 +121,6 @@ const App: React.FC = () => {
    }, [chainId]);
 
    const signedIn = chainId && window.localStorage.getItem("connectorId");
-
-   const moralisId =
-      chainId === 97
-         ? "16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy"
-         : "16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy";
-   const moralisUrl =
-      chainId === 97
-         ? "https://dblpeaqbqk32.usemoralis.com:2053/server"
-         : "https://dblpeaqbqk32.usemoralis.com:2053/server";
 
    const getEggs = async () => {
       console.log("GETTING EGGS");
@@ -314,7 +303,6 @@ const App: React.FC = () => {
    };
 
    return (
-      // <MoralisProvider appId={moralisId} serverUrl={moralisUrl}>
          <Suspense fallback={null}>
             <Router history={history}>
                <ResetCSS />
@@ -372,7 +360,6 @@ const App: React.FC = () => {
                <ToastListener />
             </Router>
          </Suspense>
-      // </MoralisProvider>
    );
 };
 
