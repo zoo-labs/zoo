@@ -576,10 +576,10 @@ contract ZooMedia is IMedia, ERC721Burnable, ReentrancyGuard {
             data.contentHash != 0,
             "ZooMedia: content hash must be non-zero"
         );
-        require(
-            _contentHashes[data.contentHash] == false,
-            "ZooMedia: a token has already been created with this content hash"
-        );
+        // require(
+        //     _contentHashes[data.contentHash] == false,
+        //     "ZooMedia: a token has already been created with this content hash"
+        // );
         require(
             data.metadataHash != 0,
             "ZooMedia: metadata hash must be non-zero"
