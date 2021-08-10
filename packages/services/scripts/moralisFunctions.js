@@ -3,24 +3,26 @@ const spawn = require('child_process').spawn
 
 const NETWORK  = process.env.NETWORK ? process.env.NETWORK : 'localhost'
 
-const CHAIN_ID = {
+const chainID = {
   localhost: '0x539',
   testnet:   '0x61',
   mainnet:   '0x38',
 }[NETWORK]
 
-const SUBDOMAIN = {
+const subdomain = {
   localhost: 'qjydxwdegh7e.usemoralis.com',
   testnet:   'dblpeaqbqk32.usemoralis.com',
   mainnet:   'j0ixlvmwc1kz.usemoralis.com',
 }[NETWORK]
 
-const moralisJS = fs.readFileSync(__dirname + '/../functions/moralis.js')
-const zkJSON    = fs.readFileSync(__dirname + `/../deployments/${NETWORK}/ZooKeeper.json`)
-const cloudFunctions = String(moralisJS).replace('CHAIN_ID', CHAIN_ID).replace('ZOOKEEPER', zkJSON)
-fs.writeFileSync(__dirname + '/../cache/moralis.js', cloudFunctions)
+const cached = __dirname + '/../node_modules/moralis-cached.js'
+const funcJS = fs.readFileSync(__dirname + '/../moralis/functions.js')
+const zkJSON = fs.readFileSync(__dirname + `/../../contracts/deployments/${NETWORK}/ZooKeeper.json`)
+const cloudFunctions = String(funcJS).replace('CHAIN_ID', chainID).replace('ZOOKEEPER', zkJSON)
 
-const child = spawn('node', ['node_modules/.bin/moralis-admin-cli', 'watch-cloud-file', '--moralisSubdomain', SUBDOMAIN, '--moralisCloudFile', 'cache/moralis.js'], { shell: true })
+fs.writeFileSync(cached, cloudFunctions)
+
+const child = spawn('node', ['node_modules/.bin/moralis-admin-cli', 'watch-cloud-file', '--moralisSubdomain', subdomain, '--moralisCloudFile', cached], { shell: true })
 
 child.stdout.on('data', (data) => {
   if (String(data).match(/File Uploaded Correctly/)) {

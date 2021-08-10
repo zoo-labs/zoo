@@ -7,7 +7,7 @@ import { useModal, BottomModal } from "components/Modal";
 import Confirmation from "./ConfirmationModal";
 import Moralis from "moralis";
 import { useWeb3React } from "@web3-react/core";
-import { Animal } from "entities/zooentities";
+import { Animal } from "types/zoo";
 
 interface Props {
    onDismiss?: () => null;
@@ -91,7 +91,7 @@ const ButtonContent = styled(Flex)`
 `;
 
 const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
-   const [value, setValue] = React.useState(parseInt(item.currentBid) + 1);
+   const [value, setValue] = React.useState(item.currentBid + 1);
    const { account, chainId } = useWeb3React();
    const dispatch = useDispatch();
 
@@ -100,53 +100,51 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
       // toSet.listed = true;
       // toSet.owner = account;
       // dispatch(addAnimal(toSet));
-      const kind = parseInt(item.tokenID)
-      console.log(kind)
-      const queryObject = Moralis.Object.extend("FinalAnimals")
+      const queryObject = Moralis.Object.extend("Animals")
       const query = new Moralis.Query(queryObject)
       query.limit(1000)
-      query.equalTo("kind", kind)
+      query.equalTo("tokenID", item.tokenID)
       const results = await query.find()
       const currentObject = results[0]
       console.log(currentObject.attributes)
-      currentObject.set("Listed", false)
-      currentObject.set("Owner", account)
+      currentObject.set("listed", false)
+      currentObject.set("owner", account)
       await currentObject.save()
 
       const TransOb = Moralis.Object.extend("Transactions")
       const newTrans = new TransOb
 
-      newTrans.set("From", account)
-      newTrans.set("Action", "Bought")
-      newTrans.set("AnimalTokenID", currentObject.attributes.AnimalID)
-      newTrans.set("AnimalName", currentObject.attributes.Name)
-      newTrans.set("BuyAmount", currentObject.attributes.BuyNow)
+      newTrans.set("from", account)
+      newTrans.set("action", "Bought")
+      newTrans.set("tokenID", currentObject.attributes.tokenID)
+      newTrans.set("animalName", currentObject.attributes.name)
+      newTrans.set("buyAmount", currentObject.attributes.buyNow)
       newTrans.save()
-      onDismiss();
 
       onDismiss();
    };
+
    const confirmBid = async () => {
-      const queryObject = Moralis.Object.extend("FinalAnimals")
+      const queryObject = Moralis.Object.extend("Animals")
       const query = new Moralis.Query(queryObject)
       query.limit(1000)
       console.log(item)
-      query.equalTo("AnimalID", parseInt(item.tokenID))
+      query.equalTo("tokenID", item.tokenID)
       const results = await query.find()
       const currentObject = results[0]
       console.log(currentObject)
-      currentObject.set("CurrentBid", String(value))
-      currentObject.set("BuyNow", String(value + 100))
+      currentObject.set("currentBid", String(value))
+      currentObject.set("buyNow", String(value + 100))
       currentObject.save()
 
       const TransOb = Moralis.Object.extend("Transactions")
       const newTrans = new TransOb
 
-      newTrans.set("From", account)
-      newTrans.set("Action", "Bid")
-      newTrans.set("AnimalTokenID", currentObject.attributes.AnimalID)
-      newTrans.set("AnimalName", currentObject.attributes.Name)
-      newTrans.set("BidAmount", currentObject.attributes.CurrentBid)
+      newTrans.set("from", account)
+      newTrans.set("action", "Bid")
+      newTrans.set("animalTokenID", currentObject.attributes.tokenID)
+      newTrans.set("animalName", currentObject.attributes.name)
+      newTrans.set("bidAmount", currentObject.attributes.currentBid)
       newTrans.save()
       onDismiss();
       // const toSet: Animal = { ...item };
@@ -162,7 +160,7 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
          onDismiss={() => null}
          action="Buy"
          name={item.name}
-         amount={parseFloat(item.buyNow)}
+         amount={item.buyNow}
       />
    );
    const [onConfirmBid] = useModal(
@@ -171,7 +169,7 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
          onDismiss={() => null}
          action="Bid"
          name={item.name}
-         amount={parseFloat(item.currentBid)}
+         amount={item.currentBid}
          submission={value}
       />
    );

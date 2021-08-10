@@ -17,12 +17,9 @@ import { clearZoo } from "state/zoo";
 import { addEggs, addAnimals, addEgg, addAnimal, burnEgg } from "state/actions";
 import Moralis from "moralis";
 import { useMoralisSubscription, useMoralis } from "react-moralis";
-import { Egg, Animal } from "entities/zooentities";
+import { Egg, Animal } from "types/zoo";
 import { getZooKeeper } from "util/contractHelpers";
 import useWeb3 from "hooks/useWeb3";
-
-Moralis.initialize("16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy");
-Moralis.serverURL = "https://dblpeaqbqk32.usemoralis.com:2053/server";
 
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page
@@ -96,13 +93,13 @@ const App: React.FC = () => {
 
    // if (chainId) getEvents();
 
-   useMoralisSubscription("FinalEggs", (q) => q, [], {
+   useMoralisSubscription("Eggs", (q) => q, [], {
       onCreate: (data) => createdUpdateEgg(data),
       onUpdate: (data) => createdUpdateEgg(data),
       onDelete: (data) => deleteEgg(data),
    });
 
-   useMoralisSubscription("FinalAnimals", (q) => q, [], {
+   useMoralisSubscription("Animals", (q) => q, [], {
       onCreate: (data) => createdUpdateAnimal(data),
       onUpdate: (data) => createdUpdateAnimal(data),
    });
@@ -126,29 +123,30 @@ const App: React.FC = () => {
       console.log("GETTING EGGS");
       try {
          const Eggs = [];
-         const MoralisObject = Moralis.Object.extend("FinalEggs");
+         const MoralisObject = Moralis.Object.extend("Eggs");
          const query = new Moralis.Query(MoralisObject);
          query.limit(1000);
          const results = await query.find();
          for (let i = 0; i < results.length; i++) {
             const singleResult = results[i];
-            let string = String(singleResult.get("createdAt"));
-            const replacedString = string.replace("at ", "");
+            const s = String(singleResult.get("createdAt"));
+            const replacedString = s.replace("at ", "");
             const date = new Date(replacedString);
             const tempEgg: Egg = {
-               owner: singleResult.get("Owner"),
-               tokenID: String(singleResult.get("EggID")),
-               kind: singleResult.get("AnimalTypeID"),
-               parentA: String(singleResult.get("ParentA")),
-               parentB: String(singleResult.get("ParentB")),
-               basic: singleResult.get("Type") === "basic",
-               timeRemaining: singleResult.get("TimeRemaining"),
+               owner: singleResult.get("owner"),
+               tokenID: singleResult.get("eggID"),
+               kind: singleResult.get("kind"),
+               parentA: singleResult.get("parentA"),
+               parentB: singleResult.get("parentB"),
+               basic: singleResult.get("type") === "basic",
+               timeRemaining: singleResult.get("timeRemaining"),
                CTAOverride: singleResult.get("CTAOverride"),
-               created: String(date.getTime()),
-               burned: singleResult.get("Burn"),
-               interactable: singleResult.get("Interactable"),
-               hatched: singleResult.get("Hatched"),
-               animalID: singleResult.get("AnimalID"),
+               createdAt: singleResult.get('createdAt'),
+               updatedAt: singleResult.get('updatedAt'),
+               burned: singleResult.get("burn"),
+               interactive: singleResult.get("interactive"),
+               hatched: singleResult.get("hatched"),
+               animalID: singleResult.get("animalID"),
             };
             Eggs.push(tempEgg);
          }
@@ -163,40 +161,37 @@ const App: React.FC = () => {
 
       try {
          const Animals = [];
-         const MoralisObject = Moralis.Object.extend("FinalAnimals");
+         const MoralisObject = Moralis.Object.extend("Animals");
          const query = new Moralis.Query(MoralisObject);
          query.limit(1000);
          const results = await query.find();
          let animal;
          for (let i = 0; i < results.length; i++) {
             animal = results[i];
-            let string = String(animal.get("createdAt"));
-            const replacedString = string.replace("at ", "");
-            const date = new Date(replacedString);
             const tempAnimal: Animal = {
-               owner: String(animal.get("Owner")),
-               tokenID: String(animal.get("AnimalID")),
-               name: animal.get("Name"),
+               owner: String(animal.get("owner")),
+               tokenID: animal.get("tokenID"),
+               name: animal.get("name"),
                description: animal.get("NA"),
-               yield: animal.get("Yield"),
-               boost: animal.get("Boost"),
-               rarity: animal.get("Rarity"),
-               dob: animal.get("Timestamp"),
-               startBid: animal.get("StartBid"),
-               currentBid: animal.get("CurrentBid"),
-               imageUrl: animal.get("TokenURI"),
-               listed: animal.get("Listed"),
-               bloodline: animal.get("AnimalTypeID") === "1" ? "pure" : "hybrid",
+               yield: animal.get("yield"),
+               boost: animal.get("boost"),
+               rarity: animal.get("rarity"),
+               dob: animal.get("timestamp"),
+               startBid: animal.get("startBid"),
+               currentBid: animal.get("currentBid"),
+               imageUrl: animal.get("tokenURI"),
+               listed: animal.get("listed"),
+               bloodline: animal.get('kind') === 1 ? "pure" : "hybrid",
                selected: false,
                bred: false,
-               breedCount: animal.get("BreedCount"),
-               kind: animal.get("AnimalTypeID"),
-               timeRemaining: animal.get("TimeRemaining"),
+               breedCount: animal.get("breedCount"),
+               kind: animal.get("kind"),
+               timeRemaining: animal.get("timeRemaining"),
                CTAOverride: animal.get("CTAOverride"),
                lastBred: animal.get("lastBred"),
-               buyNow: animal.get("BuyNow"),
-               revealed: animal.get("Revealed"),
-               freed: animal.get("Freed")
+               buyNow: animal.get("buyNow"),
+               revealed: animal.get("revealed"),
+               freed: animal.get("freed")
             };
             Animals.push(tempAnimal);
          }
@@ -214,19 +209,20 @@ const App: React.FC = () => {
          const replacedString = string.replace("at ", "");
          const date = new Date(replacedString);
          const tempEgg: Egg = {
-            owner: singleResult.get("Owner"),
-            tokenID: String(singleResult.get("EggID")),
-            kind: singleResult.get("AnimalTypeID"),
-            parentA: String(singleResult.get("ParentA")),
-            parentB: String(singleResult.get("ParentB")),
-            basic: singleResult.get("Type") === "basic",
-            timeRemaining: singleResult.get("TimeRemaining"),
+            owner: singleResult.get("owner"),
+            tokenID: singleResult.get("eggID"),
+            kind: singleResult.get("kind"),
+            parentA: singleResult.get("parentA"),
+            parentB: singleResult.get("parentB"),
+            basic: singleResult.get("type") === "basic",
+            timeRemaining: singleResult.get("timeRemaining"),
             CTAOverride: singleResult.get("CTAOverride"),
-            created: String(date.getTime()),
-            burned: singleResult.get("Burn"),
-            interactable: singleResult.get("Interactable"),
-            hatched: singleResult.get("Hatched"),
-            animalID: singleResult.get("AnimalID"),
+            createdAt: singleResult.get('createdAt'),
+            updatedAt: singleResult.get('updatedAt'),
+            burned: singleResult.get("burn"),
+            interactive: singleResult.get("interactive"),
+            hatched: singleResult.get("hatched"),
+            animalID: singleResult.get("animalID"),
          };
          dispatch(addEgg(tempEgg));
       } catch (e) {
@@ -244,8 +240,8 @@ const App: React.FC = () => {
          const replacedString = string.replace("at ", "");
          const date = new Date(replacedString);
          const tempAnimal: Animal = {
-            owner: String(animal.get("Owner")),
-            tokenID: String(animal.get("AnimalID")),
+            owner: String(animal.get("owner")),
+            tokenID: animal.get("AnimalID"),
             name: animal.get("Name"),
             description: animal.get("NA"),
             yield: animal.get("Yield"),
@@ -282,19 +278,20 @@ const App: React.FC = () => {
          const replacedString = string.replace("at ", "");
          const date = new Date(replacedString);
          const tempEgg: Egg = {
-            owner: singleResult.get("Owner"),
-            tokenID: String(singleResult.get("EggID")),
-            kind: singleResult.get("AnimalTypeID"),
-            parentA: String(singleResult.get("ParentA")),
-            parentB: String(singleResult.get("ParentB")),
-            basic: singleResult.get("Type") === "basic",
-            timeRemaining: singleResult.get("TimeRemaining"),
+            owner: singleResult.get("owner"),
+            tokenID: singleResult.get("eggID"),
+            kind: singleResult.get("kind"),
+            parentA: singleResult.get("parentA"),
+            parentB: singleResult.get("parentB"),
+            basic: singleResult.get("type") === "basic",
+            timeRemaining: singleResult.get("timeRemaining"),
             CTAOverride: singleResult.get("CTAOverride"),
-            created: String(date.getTime()),
-            burned: singleResult.get("Burn"),
-            interactable: singleResult.get("Interactable"),
-            hatched: singleResult.get("Hatched"),
-            animalID: singleResult.get("AnimalID"),
+            createdAt: singleResult.get('createdAt'),
+            updatedAt: singleResult.get('updatedAt'),
+            burned: singleResult.get("burn"),
+            interactive: singleResult.get("interactive"),
+            hatched: singleResult.get("hatched"),
+            animalID: singleResult.get("animalID"),
          };
          dispatch(burnEgg(tempEgg));
       } catch (e) {

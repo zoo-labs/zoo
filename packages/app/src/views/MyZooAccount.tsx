@@ -1,28 +1,26 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Route, useRouteMatch } from "react-router-dom";
-import { AppState } from "state";
-import { useDispatch, useSelector } from "react-redux";
-import Moralis from "moralis";
-import { useWeb3React } from "@web3-react/core";
-import styled from "styled-components";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper.min.css";
-import "swiper/components/pagination/pagination.min.css";
+import React, { useState, useEffect, useCallback } from 'react';
+import { Route, useRouteMatch } from 'react-router-dom';
+import { AppState } from 'state';
+import { useDispatch, useSelector } from 'react-redux';
+import Moralis from 'moralis';
+import { useWeb3React } from '@web3-react/core';
+import styled from 'styled-components';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.min.css';
+import 'swiper/components/pagination/pagination.min.css';
 
-import { Text, Card as Existing, EggCard, VideoPlayer } from "components";
-import { getMilliseconds, getDaysHours } from "util/timeHelpers";
-import { breedTimeouts, eggTimeout } from "constants/constants";
-// import { Animal } from "entities/zooentities";
-import { addAnimal, addEgg, burnEgg } from "state/actions";
-// import { animalMapping } from "util/animalMapping";
-import NewAnimalCard from "components/NewAnimal/NewAnimalCard";
-import { RarityColor } from "enums/rarity-color";
-import { AnimalCard } from "components/AnimalCard";
-import useWeb3 from "hooks/useWeb3";
+import { Text, Card as Existing, EggCard, VideoPlayer } from 'components';
+import { getMilliseconds, getDaysHours } from 'util/timeHelpers';
+import { breedTimeouts, eggTimeout } from 'constants/constants';
+import { addAnimal, addEgg, burnEgg } from 'state/actions';
+import NewAnimalCard from 'components/NewAnimal/NewAnimalCard';
+import { RarityColor } from 'enums/rarity-color';
+import { AnimalCard } from 'components/AnimalCard';
+import useWeb3 from 'hooks/useWeb3';
 import {
   getZooKeeper,
-} from "util/contractHelpers";
-import { Animal, Egg } from "entities/zooentities";
+} from 'util/contractHelpers';
+import { Animal, Egg } from 'types/zoo';
 
 
 const StyledText = styled(Text)`
@@ -52,91 +50,91 @@ const RowLayout = styled.div`
 `;
 
 const Card = styled(Existing)<{ selected?: boolean; timedOut?: boolean }>`
-  border: ${({ selected }) => (selected ? "2px solid white" : null)};
-  opacity: ${({ timedOut }) => (timedOut ? "0.6" : null)};
+  border: ${({ selected }) => (selected ? '2px solid white' : null)};
+  opacity: ${({ timedOut }) => (timedOut ? '0.6' : null)};
 `;
 
 const MyZooAccount: React.FC = () => {
   const { account, chainId } = useWeb3React();
   const { path } = useRouteMatch();
   const dispatch = useDispatch();
-  const [eggType, setEggType] = useState("");
+  const [eggType, setEggType] = useState('');
   const [isOpen, setOpen] = useState(false);
   const [_, setShowBoth] = useState(false);
   const web3 = useWeb3();
   const zooKeeper = getZooKeeper(web3, chainId);
   const videoTimeout = [];
-  const [newEgg, setNewEgg] = useState("")
+  const [newEgg, setNewEgg] = useState('')
   const [hatched, setHatched] = useState({
-    tokenID: "",
-    name: "",
-    description: "",
-    yield: "",
-    boost: "",
-    rarity: "",
-    dob: "",
-    imageUrl: "",
-    listed: false,
+    tokenID:     0,
+    name:        '',
+    rarity:      '',
+    description: '',
+    dob:         0,
+    imageUrl:    '',
+    listed:      false,
+    boost:       0,
+    yield:       0,
   });
 
-  const allAnimals = useSelector<AppState, AppState["zoo"]["animals"]>(
+  const allAnimals = useSelector<AppState, AppState['zoo']['animals']>(
     (state) => state.zoo.animals
   );
-  const allEggs = useSelector<AppState, AppState["zoo"]["eggs"]>(
+  const allEggs = useSelector<AppState, AppState['zoo']['eggs']>(
     (state) => state.zoo.eggs
   );
 
   const hatchEggReady = async (egg) => {
-    const eggNum = parseInt(egg.tokenID)
-    const eggObject = Moralis.Object.extend("FinalEggs")
+    const eggObject = Moralis.Object.extend('Eggs')
     const eggQuery = new Moralis.Query(eggObject)
-    eggQuery.equalTo("EggID", eggNum)
+    eggQuery.equalTo('eggID', egg.tokenID)
     const eggResults = await eggQuery.find()
     const foundEgg = eggResults[0]
 
-    foundEgg.set("Burn", true)
+    foundEgg.set('burn', true)
     foundEgg.save()
 
     setShowBoth(true);
-    setEggType(egg.basic ? "basic" : "hybrid");
+    setEggType(egg.basic ? 'basic' : 'hybrid');
 
-    const animalObject = Moralis.Object.extend("FinalAnimals")
+    const animalObject = Moralis.Object.extend('Animals')
     const animalQuery = new Moralis.Query(animalObject)
-    animalQuery.equalTo("AnimalID", egg.animalID)
+    console.log('QUERY ANIMAL', egg.animalID)
+    animalQuery.equalTo('tokenID', egg.animalID)
     const animalResults = await animalQuery.find()
     const foundAnimal = animalResults[0]
 
-    let string = String(foundAnimal.get("createdAt"));
-    const replacedString = string.replace("at ", "");
+    let string = String(foundAnimal.get('createdAt'));
+    const replacedString = string.replace('at ', '');
     const date = new Date(replacedString);
 
     const newAnimal: Animal = {
-        owner: String(foundAnimal.get("Owner")),
-        tokenID: String(foundAnimal.get("AnimalID")),
-        name: foundAnimal.get("Name"),
-        description: foundAnimal.get("NA"),
-        yield: foundAnimal.get("Yield"),
-        boost: foundAnimal.get("Boost"),
-        rarity: foundAnimal.get("Rarity"),
-        dob: String(foundAnimal.get("Timestamp")),
-        startBid: foundAnimal.get("StartBid"),
-        currentBid: foundAnimal.get("CurrentBid"),
-        imageUrl: foundAnimal.get("TokenURI"),
-        listed: foundAnimal.get("Listed"),
-        bloodline: foundAnimal.get("AnimalTypeID") === "1" ? "pure" : "hybrid",
-        selected: false,
-        bred: false,
-        breedCount: foundAnimal.get("BreedCount"),
-        kind: foundAnimal.get("AnimalTypeID"),
-        timeRemaining: foundAnimal.get("TimeRemaining"),
-        CTAOverride: foundAnimal.get("CTAOverride"),
-        lastBred: foundAnimal.get("lastBred"),
-        buyNow: foundAnimal.get("BuyNow"),
-        revealed: foundAnimal.get("Revealed"),
-        freed: foundAnimal.get("Freed")
-      };
+      owner:         foundAnimal.get('owner'),
+      tokenID:       foundAnimal.get('tokenID'),
+      name:          foundAnimal.get('name'),
+      description:   foundAnimal.get('description'),
+      yield:         foundAnimal.get('yield'),
+      boost:         foundAnimal.get('boost'),
+      rarity:        foundAnimal.get('rarity'),
+      dob:           foundAnimal.get('timestamp'),
+      startBid:      foundAnimal.get('startBid'),
+      currentBid:    foundAnimal.get('currentBid'),
+      imageUrl:      foundAnimal.get('tokenURI'),
+      listed:        foundAnimal.get('listed'),
+      bloodline:     foundAnimal.get('kind') === 1 ? 'pure' : 'hybrid',
+      selected:      false,
+      bred:          false,
+      breedCount:    foundAnimal.get('breedCount'),
+      kind:          foundAnimal.get('kind'),
+      timeRemaining: foundAnimal.get('timeRemaining'),
+      CTAOverride:   foundAnimal.get('CTAOverride'),
+      lastBred:      foundAnimal.get('lastBred'),
+      buyNow:        foundAnimal.get('buyNow'),
+      revealed:      foundAnimal.get('revealed'),
+      freed:         foundAnimal.get('freed')
+    };
     setHatched(newAnimal);
-    foundAnimal.set("Revealed", true)
+    foundAnimal.set('revealed', true)
     foundAnimal.save()
     startAnimationTimer();
   }
@@ -151,9 +149,10 @@ const MyZooAccount: React.FC = () => {
         basic: egg.basic,
         timeRemaining: egg.timeRemaining,
         CTAOverride: egg.CTAOverride,
-        created: egg.created,
+        createdAt: egg.createdAt,
+        updatedAt: egg.updatedAt,
         burned: egg.burned,
-        interactable: false,
+        interactive: false,
         hatched: true,
         animalID: egg.animalID,
      };
@@ -185,9 +184,10 @@ const MyZooAccount: React.FC = () => {
           basic: egg.basic,
           timeRemaining: egg.timeRemaining,
           CTAOverride: egg.CTAOverride,
-          created: egg.created,
+          createdAt: egg.createdAt,
+          updatedAt: egg.updatedAt,
           burned: egg.burned,
-          interactable: true,
+          interactive: true,
           hatched: false,
           animalID: egg.animalID,
        };
@@ -197,21 +197,21 @@ const MyZooAccount: React.FC = () => {
   };
 
   const startAnimationTimer = useCallback(() => {
-    videoTimeout.push(setTimeout(() => { setOpen(true); setNewEgg("")}, 5450));
-    videoTimeout.push(setTimeout(() => setEggType(""), 7000));
+    videoTimeout.push(setTimeout(() => { setOpen(true); setNewEgg('')}, 5450));
+    videoTimeout.push(setTimeout(() => setEggType(''), 7000));
   }, []);
 
   const closeAnimation = useCallback(async (e) => {
-    setEggType("");
+    setEggType('');
     videoTimeout.forEach((i) => {
       clearTimeout(i);
     });
   }, []);
 
   useEffect(() => {
-    document.addEventListener("keydown", closeAnimation, false);
+    document.addEventListener('keydown', closeAnimation, false);
     return () => {
-      document.removeEventListener("keydown", closeAnimation, false);
+      document.removeEventListener('keydown', closeAnimation, false);
     };
   }, []);
 
@@ -247,7 +247,7 @@ const MyZooAccount: React.FC = () => {
       const elapsedTime = now - lastBred;
       const timeRemaining = breedTimeout - elapsedTime;
       const timeRemainingDaysHours = getDaysHours(timeRemaining);
-      const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
+      const barwidth = [100 * (elapsedTime / breedTimeout), '%'].join('');
 
       if (
         timeRemaining <= 0 &&
@@ -260,47 +260,47 @@ const MyZooAccount: React.FC = () => {
         animalData.push({
           id: index,
           ...animal,
-          name: animal.name.replace(/\u0000/g, ""),
+          name: animal.name.replace(/\u0000/g, ''),
           timeRemaining:
-            animal.bloodline === "pure"
+            animal.bloodline === 'pure'
               ? elapsedTime < breedTimeout
                 ? timeRemaining
                 : 0
               : 0,
           CTAOverride:
-            animal.bloodline === "pure"
+            animal.bloodline === 'pure'
               ? elapsedTime < breedTimeout
                 ? { barwidth, timeRemainingDaysHours }
                 : null
               : null,
-          rarityColor: RarityColor[animal.rarity.toLowerCase()] || "white",
+          rarityColor: RarityColor[animal.rarity.toLowerCase()] || 'white',
         });
       }
     });
 
     const animals = sortData(
       animalData.filter((item) => item.bloodline === hybrid),
-      "bloodline"
+      'bloodline'
     );
 
     return (
       <>
-        {hybrid === "pure" ? (
+        {hybrid === 'pure' ? (
           <RowTitle>
-            {animals.length}{" "}
-            {animals.length != 1 ? "Breedable Animals" : "Breedable Animal"}
+            {animals.length}{' '}
+            {animals.length != 1 ? 'Breedable Animals' : 'Breedable Animal'}
           </RowTitle>
         ) : (
           <RowTitle>
-            {animals.length}{" "}
-            {animals.length != 1 ? "Hybrid Animals" : "Hybrid Animal"}
+            {animals.length}{' '}
+            {animals.length != 1 ? 'Hybrid Animals' : 'Hybrid Animal'}
           </RowTitle>
         )}
         <RowLayout>
           <Route exact path={`${path}`}>
             {animals.length === 0 ? (
-              <StyledText textAlign="center" fontSize="16px">
-                No {hybrid === "pure" ? `breedable` : `hybrid`} animals
+              <StyledText textAlign='center' fontSize='16px'>
+                No {hybrid === 'pure' ? `breedable` : `hybrid`} animals
               </StyledText>
             ) : (
               <Swiper
@@ -310,7 +310,7 @@ const MyZooAccount: React.FC = () => {
               >
                 {animals.map((animal) => (
                   <SwiperSlide
-                    style={{ width: "220px", display: "flex" }}
+                    style={{ width: '220px', display: 'flex' }}
                     key={animal.tokenID}
                   >
                     <AnimalCard
@@ -339,20 +339,20 @@ const MyZooAccount: React.FC = () => {
     // };
 
     Object.values(allEggs).forEach((egg, index) => {
-      const eggType = egg.basic ? "BASIC" : "HYBRID";
-      if ((egg.owner).toLowerCase() !== (account).toLowerCase()) {
+      const eggType = egg.basic ? 'BASIC' : 'HYBRID';
+      if ((egg.owner || '').toLowerCase() !== (account).toLowerCase()) {
         //console.log(account, egg)
         return;
       }
-      const createdDate = egg.created
-        ? new Date(Number(egg.created)).getTime()
+      const createdDate = egg.createdAt
+        ? new Date(Number(egg.createdAt)).getTime()
         : new Date().getTime();
       const now = new Date().getTime();
       const hatchTimeout = egg.basic ? 0 : getMilliseconds(eggTimeout);
       const elapsedTime = now - createdDate;
       const timeRemaining = hatchTimeout - elapsedTime;
       const timeRemainingDaysHours = getDaysHours(timeRemaining);
-      const barwidth = [100 * (elapsedTime / hatchTimeout), "%"].join("");
+      const barwidth = [100 * (elapsedTime / hatchTimeout), '%'].join('');
 
       //  if (timeRemaining <= 0 && eggData.find(a => a.basic === egg.basic && a.timeRemaining <= 0)) {
       //     eggGroup[eggType] = eggGroup[eggType] + 1
@@ -376,28 +376,29 @@ const MyZooAccount: React.FC = () => {
       }
       //  }
     });
-    /* if(newEgg !== ""){
+
+    /* if(newEgg !== ''){
       const createdDate = new Date().getTime();
       const now = new Date().getTime();
       const hatchTimeout = getMilliseconds(eggTimeout);
       const elapsedTime = now - createdDate;
       const timeRemaining = hatchTimeout - elapsedTime;
       const timeRemainingDaysHours = getDaysHours(timeRemaining);
-      const barwidth = [100 * (elapsedTime / hatchTimeout), "%"].join("");
+      const barwidth = [100 * (elapsedTime / hatchTimeout), '%'].join('');
       eggData.push({
         id: eggData.length + 1,
-        name: newEgg === "Base Egg" ? "BASIC" : "HYBRID",
+        name: newEgg === 'Base Egg' ? 'BASIC' : 'HYBRID',
         timeRemaining: timeRemaining,
         CTAOverride: { barwidth, timeRemainingDaysHours },
       });
     } */
-    eggData = sortData(eggData, "hybrid");
+    eggData = sortData(eggData, 'hybrid');
 
     return (
       <RowLayout>
         <Route exact path={`${path}`}>
           {eggData.length === 0 ? (
-            <StyledText textAlign="center" fontSize="16px">
+            <StyledText textAlign='center' fontSize='16px'>
               No eggs
             </StyledText>
           ) : (
@@ -409,7 +410,7 @@ const MyZooAccount: React.FC = () => {
               {eggData.map((egg) => (
 
                 <SwiperSlide
-                  style={{ width: "220px", display: "flex" }}
+                  style={{ width: '220px', display: 'flex' }}
                   key={egg.tokenID}
                 >
                   {/* <CardWrapper> */}
@@ -444,12 +445,12 @@ const MyZooAccount: React.FC = () => {
 
   return (
     <div>
-      {eggType !== "" && (
+      {eggType !== '' && (
         <VideoPlayer
           videoPath={
-            eggType === "basic"
-              ? "hatch_mobile_basic.mp4"
-              : "hatch_mobile_hybrid.mp4"
+            eggType === 'basic'
+              ? 'hatch_mobile_basic.mp4'
+              : 'hatch_mobile_hybrid.mp4'
           }
         />
       )}
@@ -457,9 +458,9 @@ const MyZooAccount: React.FC = () => {
         <NewAnimalCard animal={hatched} isOpen={setOpen} />
       ) : (
         <>
-          {eggType === "" && renderEggs()}
-          {eggType === "" && renderAnimals("pure")}
-          {eggType === "" && renderAnimals("hybrid")}
+          {eggType === '' && renderEggs()}
+          {eggType === '' && renderAnimals('pure')}
+          {eggType === '' && renderAnimals('hybrid')}
         </>
       )}
     </div>

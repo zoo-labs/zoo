@@ -10,7 +10,7 @@ const run = () => {
 }
 
 console.log('🔬 Watching Functions...')
-watch('./functions/moralis.js', { recursive: false }, function (evt, name) {
+watch(__dirname + '/../moralis/functions.js', { recursive: false }, function (evt, name) {
   console.log('%s changed.', name)
   run()
 })

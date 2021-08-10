@@ -1,4 +1,4 @@
-import { Animal } from "entities/zooentities";
+import { Animal } from "types/zoo";
 import { RarityColor } from "enums/rarity-color";
 
 interface AnimalData extends Animal {

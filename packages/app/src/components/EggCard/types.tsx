@@ -1,4 +1,4 @@
-import { Egg } from 'entities/zooentities'
+import { Egg } from 'types/zoo'
 
 
 export interface CardEgg extends Egg {

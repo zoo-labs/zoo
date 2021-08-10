@@ -13,8 +13,7 @@ import Body from "components/layout/Body";
 import { useModal } from "components/Modal";
 import BuyEggs from "components/BuyEggs";
 import MyZooAccount from "views/MyZooAccount";
-import { Egg } from "entities/zooentities";
-import { addEgg } from "state/zoo";
+import { Egg } from "types/zoo";
 import { useDispatch } from "react-redux";
 import { breedTimeouts, eggTimeout } from "constants/constants";
 import { getMilliseconds, getDaysHours } from "util/timeHelpers";
@@ -98,7 +97,7 @@ const Account: React.FC = () => {
    };
 
    const currentEggsOwned = Object.values(allEggs).filter(
-      (egg) => egg.owner.toLowerCase() === account.toLowerCase() && !egg.burned
+      (egg) => (egg.owner || '').toLowerCase() === account.toLowerCase() && !egg.burned
    ).length;
    // setEggsOwned(currentEggsOwned)
    const handleClick = () => {
@@ -268,18 +267,6 @@ const Account: React.FC = () => {
       const timeRemaining = hatchTimeout - elapsedTime;
       const timeRemainingDaysHours = getDaysHours(timeRemaining);
       const barwidth = [100 * (elapsedTime / hatchTimeout), "%"].join("");
-      // const egg: Egg = {
-      //    owner: account,
-      //    tokenID: token[2],
-      //    kind: "0",
-      //    parentA: "",
-      //    parentB: "",
-      //    basic: true,
-      //    created: String(new Date().getTime()),
-      //    timeRemaining: 15000,
-      //    CTAOverride: { barwidth, timeRemainingDaysHours },
-      //  };
-      //  dispatch(addEgg(egg));
       try {
         await zooKeeper.methods
             .buyEgg(1)
