@@ -76,7 +76,7 @@ export const darkColors: Colors = {
   secondary: "#9FC554",
   accent: "rgb(195 0 168)", // "#DFDE4E",
   background: "#000000",
-  backgroundDisabled: "#A6B6CE",
+  backgroundDisabled: "#333333",
   sidebar: "#212226",
   contrast: "#FFFFFF",
   dropdown: "#1E1D20",
