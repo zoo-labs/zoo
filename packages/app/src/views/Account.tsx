@@ -75,7 +75,6 @@ const StyledHeading = styles(Heading)`
     color: ${({ theme }) => theme.colors.text};
 `
 
-
 const Account: React.FC = () => {
    const [isInitial, setIsInitial] = useState(true);
    const [balance, setBalance] = useState(0.0);
@@ -101,11 +100,6 @@ const Account: React.FC = () => {
    const currentEggsOwned = Object.values(allEggs).filter(
       (egg) => (egg.owner || '').toLowerCase() === account.toLowerCase() && !egg.burned
    ).length;
-   // setEggsOwned(currentEggsOwned)
-   const handleClick = () => {
-      history.push("/bank");
-      toastClear();
-   };
 
    const zooToken = getZooToken(web3, chainId);
    const faucet = getZooFaucet(web3, chainId);
@@ -184,29 +178,24 @@ const Account: React.FC = () => {
       };
    }, [account, chainId]);
 
-   useEffect(() => {
-      let mounted = true;
-      if (mounted) {
-         getBalance();
-      }
-      return () => {
-         mounted = false;
-      };
-   }, []);
+   const bankClick = () => {
+      history.push('/bank')
+      toastClear()
+   }
 
    const pageHeading = (
       <HeadingContainer>
          <StyledHeading>My Account</StyledHeading>
-         {/* <StyledButton
+          <StyledButton
             style={{
                background: "transparent",
                border: "none",
                color: "white",
                marginLeft: "8px",
             }}
-            onClick={() => handleClick()}>
+            onClick={() => bankClick()}>
             View Bank
-         </StyledButton> */}
+         </StyledButton>
       </HeadingContainer>
    );
 
