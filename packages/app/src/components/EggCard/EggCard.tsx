@@ -79,7 +79,7 @@ const animation = props =>
 const Card = styled(Existing)<{ timedOut?: boolean, interactable?: boolean, hatching?: boolean, hatched?: boolean}>`
    animation: ${({hatching}) => hatching ? animation : ''};
    cursor: pointer;
-   width: 120px;
+   width: 140px;
    margin: 0px 8px 8px;
    background-color: ${({ theme }) => theme.colors.background};
    border-radius: 8px;
@@ -90,8 +90,8 @@ const Card = styled(Existing)<{ timedOut?: boolean, interactable?: boolean, hatc
    transition: box-shadow 1s ease-in-out;
 `;
 
-const basicEggURL = window.location.origin + "/static/images/basic.jpg";
-const hybridEggURL = window.location.origin + "/static/images/hybrid.jpg";
+const basicEggURL       = window.location.origin + "/static/images/basic.jpg";
+const hybridEggURL      = window.location.origin + "/static/images/hybrid.jpg";
 const transparentEggURL = window.location.origin + "/static/images/transparent.jpg";
 
 
