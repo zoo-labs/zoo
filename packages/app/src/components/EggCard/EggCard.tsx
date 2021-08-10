@@ -76,7 +76,7 @@ const animation = props =>
     ${rotate} 2s linear infinite;
   `
 
-const Card = styled(Existing)<{ timedOut?: boolean, interactable?: boolean, hatching?: boolean }>`
+const Card = styled(Existing)<{ timedOut?: boolean, interactable?: boolean, hatching?: boolean, hatched?: boolean}>`
    animation: ${({hatching}) => hatching ? animation : ''};
    cursor: pointer;
    width: 120px;
@@ -84,8 +84,10 @@ const Card = styled(Existing)<{ timedOut?: boolean, interactable?: boolean, hatc
    background-color: ${({ theme }) => theme.colors.background};
    border-radius: 8px;
    display: block;
-   opacity: ${({ interactable, hatching }) => (!interactable && !hatching ? "0.5" : null)};
-   box-shadow: ${({ hatching }) => (hatching ? "3px 4px 10px #9d4c0a" : null)};
+   opacity: ${({ interactable, hatching }) => (!interactable && !hatching ? "0.7" : null)};
+   box-shadow: ${({ hatched }) => (hatched ? "3px 4px 10px #9d4c0a" : null)};
+   transition: animation 1s ease-in-out;
+   transition: box-shadow 1s ease-in-out;
 `;
 
 const basicEggURL = window.location.origin + "/static/images/basic.jpg";
@@ -107,6 +109,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
    }
 
   const hatching = !egg.interactable && egg.hatched
+  const hatched   = egg.hatched && egg.interactable
 
   const buttonLabel = (egg) => {
     if (!egg.hatched && !egg.interactable) return 'CONFIRMING'
@@ -129,7 +132,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             timedOut={egg.timeRemaining > 0 ? true : false}
             interactable = {egg.interactable}
             hatching={hatching}
-            // hatching={hatching}
+            hatched={hatched}
             >
             <CardBody
                style={{
