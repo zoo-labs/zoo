@@ -60,7 +60,7 @@
     "frpc": "frpc -c frpc.ini",
     "generate": "hardhat generate",
     "matrix": "ts-node utils/yieldMatrix.ts",
-    "moralis:functions": "./scripts/moralisFunctions.sh",
+    "moralis:functions": "node ./scripts/moralisFunctions.js",
     "moralis:plugins": "node ./scripts/moralisPlugins.js",
     "send": "hardhat send",
     "test": "hardhat test --network hardhat",
