@@ -84,8 +84,7 @@ const Card = styled(Existing)<{ timedOut?: boolean, interactable?: boolean, hatc
    background-color: ${({ theme }) => theme.colors.background};
    border-radius: 8px;
    display: block;
-   opacity: ${({ timedOut }) => (timedOut ? "0.6" : null)};
-   opacity: ${({ interactable }) => (!interactable ? "0.5" : null)};
+   opacity: ${({ interactable, hatching }) => (!interactable && !hatching ? "0.5" : null)};
    box-shadow: ${({ hatching }) => (hatching ? "3px 4px 10px #9d4c0a" : null)};
 `;
 
