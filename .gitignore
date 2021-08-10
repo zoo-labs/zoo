@@ -6,12 +6,11 @@ packages/hardhat/*.txt
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 **/node_modules
-packages/app/package-lock.json
+**/package-lock.json
+packages/contracts/deployments/localhost/solcInputs/
 packages/hardhat/artifacts*
-packages/hardhat/deployments
-packages/react-app/src/contracts/*
-!packages/react-app/src/contracts/external_contracts.js
 packages/hardhat/cache*
+packages/hardhat/deployments
 
 
 packages/subgraph/config/config.json

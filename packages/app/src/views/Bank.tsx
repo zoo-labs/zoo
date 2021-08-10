@@ -265,7 +265,7 @@ const Bank: React.FC = () => {
             const newDate = date.toLocaleDateString("en-US");
             console.log(newDate)
             const tx: any = {
-               txHash: transaction.get("txHash"),
+               txHash: transaction.get("transactionHash"),
                action: transaction.get("action"),
                from: transaction.get("from"),
                date: newDate,
@@ -274,7 +274,6 @@ const Bank: React.FC = () => {
             tempTransactions.push(tx);
 
          }
-         console.log(tempTransactions)
          setTransactions(tempTransactions);
          setWaitTx(false);
       } catch (e) {

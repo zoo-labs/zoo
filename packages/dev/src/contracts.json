@@ -9655,7 +9655,7 @@
                 {
                   "indexed": true,
                   "internalType": "uint256",
-                  "name": "tokenID",
+                  "name": "eggID",
                   "type": "uint256"
                 }
               ],
@@ -9693,7 +9693,7 @@
                 {
                   "indexed": true,
                   "internalType": "uint256",
-                  "name": "tokenID",
+                  "name": "eggID",
                   "type": "uint256"
                 }
               ],
@@ -9739,12 +9739,6 @@
                   "internalType": "uint256",
                   "name": "eggID",
                   "type": "uint256"
-                },
-                {
-                  "indexed": true,
-                  "internalType": "string",
-                  "name": "name",
-                  "type": "string"
                 },
                 {
                   "indexed": true,
@@ -16706,7 +16700,7 @@
                 {
                   "indexed": true,
                   "internalType": "uint256",
-                  "name": "tokenID",
+                  "name": "eggID",
                   "type": "uint256"
                 }
               ],
@@ -16744,7 +16738,7 @@
                 {
                   "indexed": true,
                   "internalType": "uint256",
-                  "name": "tokenID",
+                  "name": "eggID",
                   "type": "uint256"
                 }
               ],
@@ -16790,12 +16784,6 @@
                   "internalType": "uint256",
                   "name": "eggID",
                   "type": "uint256"
-                },
-                {
-                  "indexed": true,
-                  "internalType": "string",
-                  "name": "name",
-                  "type": "string"
                 },
                 {
                   "indexed": true,
