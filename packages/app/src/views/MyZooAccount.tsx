@@ -21,7 +21,7 @@ import {
   getZooKeeper,
 } from 'util/contractHelpers';
 import { Animal, Egg } from 'types/zoo';
-import { mapEgg, mapAnimal } from 'moralis/mapping';
+import { mapEgg, mapAnimal } from 'util/moralis';
 
 
 const StyledText = styled(Text)`

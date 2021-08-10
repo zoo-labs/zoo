@@ -7,7 +7,7 @@ import { ThemeContextProvider } from 'contexts/ThemeContext'
 import { Web3ReactProvider } from '@web3-react/core'
 import { getLibrary } from 'util/web3React'
 import { ModalProvider } from './components'
-import { MoralisProvider } from './moralis/provider'
+import { MoralisProvider } from 'util/moralis/provider'
 
 const Providers: React.FC = ({ children }) => {
    return (
