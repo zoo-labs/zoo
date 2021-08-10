@@ -5,7 +5,7 @@
       "chainId": "97",
       "contracts": {
         "ZooAuction": {
-          "address": "0x8183F909d770DbD0b120806C0f4529ae817685e8",
+          "address": "0xE13800F848bc8Bb83910babdF908F4CD7D6EDC0B",
           "abi": [
             {
               "anonymous": false,
@@ -638,7 +638,7 @@
           ]
         },
         "ZooDrop": {
-          "address": "0x9907c6e3Db277655D01c56e2a4825042c4b61922",
+          "address": "0x57355D801e203AC73aBa795FaB8e8bA00585AF37",
           "abi": [
             {
               "inputs": [
@@ -2304,6 +2304,41 @@
             {
               "inputs": [
                 {
+                  "components": [
+                    {
+                      "internalType": "string",
+                      "name": "rarity",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "tokenURI",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "metadataURI",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct ZooDrop._Animal[]",
+                  "name": "_animals",
+                  "type": "tuple[]"
+                }
+              ],
+              "name": "setAnimals",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
                   "internalType": "string",
                   "name": "name",
                   "type": "string"
@@ -2499,6 +2534,56 @@
             {
               "inputs": [
                 {
+                  "components": [
+                    {
+                      "internalType": "string",
+                      "name": "rarity",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "yield",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "parentA",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "parentB",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "tokenURI",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "metadataURI",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct ZooDrop._Hybrid[]",
+                  "name": "_hybrids",
+                  "type": "tuple[]"
+                }
+              ],
+              "name": "setHybrids",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
                   "internalType": "string",
                   "name": "name",
                   "type": "string"
@@ -2572,7 +2657,7 @@
           ]
         },
         "ZooFaucet": {
-          "address": "0x487d4730B4569926B3f1572531456dE80a28504a",
+          "address": "0xc8424c93d8D4eF8E444aDE6c1bE331f0Ae6d664a",
           "abi": [
             {
               "inputs": [
@@ -2703,7 +2788,7 @@
           ]
         },
         "ZooKeeper": {
-          "address": "0x7722A4ea02386897bdb461Eebe1c327D8314d25D",
+          "address": "0x7Fe78f9C3d6ab6F3A541dd3c922c133058ce8de3",
           "abi": [
             {
               "anonymous": false,
@@ -2754,7 +2839,7 @@
                 {
                   "indexed": true,
                   "internalType": "uint256",
-                  "name": "tokenID",
+                  "name": "eggID",
                   "type": "uint256"
                 }
               ],
@@ -2792,7 +2877,7 @@
                 {
                   "indexed": true,
                   "internalType": "uint256",
-                  "name": "tokenID",
+                  "name": "eggID",
                   "type": "uint256"
                 }
               ],
@@ -2838,12 +2923,6 @@
                   "internalType": "uint256",
                   "name": "eggID",
                   "type": "uint256"
-                },
-                {
-                  "indexed": true,
-                  "internalType": "string",
-                  "name": "name",
-                  "type": "string"
                 },
                 {
                   "indexed": true,
@@ -4048,7 +4127,7 @@
           ]
         },
         "ZooMarket": {
-          "address": "0xe364163e5332E2A58f86c648b4f740137A3771DA",
+          "address": "0xd71028E5BdfDE0f845d321fc60F292E3C8139911",
           "abi": [
             {
               "inputs": [],
@@ -4864,7 +4943,7 @@
           ]
         },
         "ZooMedia": {
-          "address": "0xA605Cf535571b2B7DEc66fd156B28Fcc2b128797",
+          "address": "0x9E49a8355D97E0e6bB2e4fC043D77C14DeF53077",
           "abi": [
             {
               "inputs": [
@@ -6517,7 +6596,7 @@
           ]
         },
         "ZooToken": {
-          "address": "0x5FDE36D3e0f79692e9574304b5D1A3a784fc5051",
+          "address": "0xC5b3e1e72dB0E711F0432eBC2cBe711885362d67",
           "abi": [
             {
               "inputs": [],
@@ -19654,6 +19733,41 @@
             {
               "inputs": [
                 {
+                  "components": [
+                    {
+                      "internalType": "string",
+                      "name": "rarity",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "tokenURI",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "metadataURI",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct ZooDrop._Animal[]",
+                  "name": "_animals",
+                  "type": "tuple[]"
+                }
+              ],
+              "name": "setAnimals",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
                   "internalType": "string",
                   "name": "name",
                   "type": "string"
@@ -19843,6 +19957,56 @@
                   "type": "bool"
                 }
               ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "string",
+                      "name": "rarity",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "yield",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "parentA",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "parentB",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "tokenURI",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "metadataURI",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct ZooDrop._Hybrid[]",
+                  "name": "_hybrids",
+                  "type": "tuple[]"
+                }
+              ],
+              "name": "setHybrids",
+              "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
             },
