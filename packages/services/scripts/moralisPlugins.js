@@ -13,12 +13,11 @@ const CHAIN_IDS = {
   mainnet:   '0x38',
 }
 const CHAIN_ID = CHAIN_IDS[NETWORK]
-const SERVERS = {
+const SERVER_NAME = {
   localhost: 'zoo Hardhat',
   testnet:   'Zoo Testnet',
   mainnet:   'Zoo Mainnet',
-}
-const SERVER_NAME = SERVERS[NETWORK]
+}[NETWORK]
 const ABI_PATH = `${__dirname}/../../contracts/deployments/${NETWORK}/ZooKeeper.json`
 
 /**
