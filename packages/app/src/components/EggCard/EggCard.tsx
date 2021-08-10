@@ -46,7 +46,6 @@ const TimeoutWrapper = styled.div<{ barwidth?: string }>`
    left: 0;
    right: 0;
    line-height: 1.8;
-   // background: white;
    text-align: center;
    color: white;
    padding: 4px;
@@ -82,7 +81,7 @@ const Card = styled(Existing)<{ timedOut?: boolean, interactable?: boolean, hatc
    cursor: pointer;
    width: 120px;
    margin: 0px 8px 8px;
-   backgroundcolor: ${({ theme }) => theme.colors.background};
+   background-color: ${({ theme }) => theme.colors.background};
    border-radius: 8px;
    display: block;
    opacity: ${({ timedOut }) => (timedOut ? "0.6" : null)};
@@ -141,6 +140,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
                   backgroundPosition: "center",
                   height: 150,
                   padding: 10,
+                  transition: 'background-image 1s ease-in-out',
                }}>
                <TextWrapper
                   style={{
