@@ -92,7 +92,7 @@ const MyZooAccount: React.FC = () => {
     const foundEgg = eggResults[0]
 
     foundEgg.set('burn', true)
-    foundEgg.save()
+    await foundEgg.save()
 
     setShowBoth(true);
     setEggType(egg.basic ? 'basic' : 'hybrid');
@@ -107,6 +107,8 @@ const MyZooAccount: React.FC = () => {
     let string = String(foundAnimal.get('createdAt'));
     const replacedString = string.replace('at ', '');
     const date = new Date(replacedString);
+
+    console.log('foundAnimal', foundAnimal)
 
     const newAnimal: Animal = {
       owner:         foundAnimal.get('owner'),
