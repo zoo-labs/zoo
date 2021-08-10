@@ -8,11 +8,6 @@ async function getZooKeeper() {
     return new web3.eth.Contract(ZK.abi, ZK.address)
 }
 
-// Is current request confirmed?
-function confirmed(request) {
-    return request.object.get('confirmed')
-}
-
 // Query for a specific Animal
 async function getAnimal(tokenID) {
     const Animals = Moralis.Object.extend('Animals')
@@ -33,6 +28,12 @@ async function getEgg(eggID) {
 async function getToken(tokenID) {
     const zooKeeper = await getZooKeeper()
     return (await zooKeeper.methods.tokens(tokenID).call())
+}
+
+
+// Is current request confirmed?
+function confirmed(request) {
+    return request.object.get('confirmed')
 }
 
 function setCommon(entity, { object }) {
@@ -108,6 +109,7 @@ Moralis.Cloud.afterSave('BuyEgg', async (request) => {
     egg.set('interactive', true)
     egg.set('tokenURI', tok.data.tokenURI)
     egg.set('metadataURI', tok.data.metadataURI)
+    egg.set('rarity', tok.rarity.name)
     await egg.save()
 
     const tx = newTransaction(request)
@@ -126,13 +128,13 @@ Moralis.Cloud.afterSave('Hatch', async (request) => {
     const egg = await getEgg(eggID)
 
   	if (!confirmed(request)) {
-
-        // Update token
+        // Update egg state
         egg.set('animalID', tokenID)
-        egg.set('interactive', false)
         egg.set('hatched', true)
+        egg.set('interactive', false)
         await egg.save()
 
+        // Set initial animal state
         const animal = newAnimal(request)
         animal.set('tokenID', tokenID)
         animal.set('eggID', eggID)
@@ -143,7 +145,6 @@ Moralis.Cloud.afterSave('Hatch', async (request) => {
     }
 
     // Update Egg
-    egg.set('animalID', tokenID)
     egg.set('hatched', true)
     egg.set('interactive', true)
     await egg.save()
@@ -209,6 +210,7 @@ Moralis.Cloud.afterSave('Breed', async (request) => {
     egg.set('interactive', true)
     egg.set('tokenURI', tok.data.tokenURI)
     egg.set('metadataURI', tok.data.metadataURI)
+    egg.set('rarity', tok.rarity.name)
     await egg.save()
 
     const tx = newTransaction(request)
