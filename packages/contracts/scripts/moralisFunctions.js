@@ -1,15 +1,42 @@
 const fs    = require('fs')
 const spawn = require('child_process').spawn
 
-const buf = fs.readFileSync(__dirname + '/../src/functions/moralis.js')
-const buf2 = fs.readFileSync(__dirname + '/../deployments/localhost/ZooKeeper.json')
+const NETWORK  = process.env.NETWORK ? process.env.NETWORK : 'localhost'
 
-fs.writeFileSync(__dirname + '/../cache/moralis.js', String(buf).replace('ZOOKEEPER_ABI', buf2))
+const CHAIN_ID = {
+  localhost: '0x539',
+  testnet:   '0x61',
+  mainnet:   '0x38',
+}[NETWORK]
 
-const child = spawn('node', ['node_modules/.bin/moralis-admin-cli', 'watch-cloud-file', '--moralisSubdomain', 'qjydxwdegh7e.usemoralis.com', '--moralisCloudFile', 'cache/moralis.js'], { shell: true })
+const SUBDOMAIN = {
+  localhost: 'qjydxwdegh7e.usemoralis.com',
+  testnet:   'dblpeaqbqk32.usemoralis.com',
+  mainnet:   'j0ixlvmwc1kz.usemoralis.com',
+}[NETWORK]
+
+console.log(`Updating Cloud Functions for ${NETWORK}`)
+
+const moralisJS = fs.readFileSync(__dirname + '/../functions/moralis.js')
+const zkJSON    = fs.readFileSync(__dirname + `/../deployments/${NETWORK}/ZooKeeper.json`)
+const cloudFunctions = String(moralisJS).replace('CHAIN_ID', CHAIN_ID).replace('ZOOKEEPER', zkJSON)
+fs.writeFileSync(__dirname + '/../cache/moralis.js', cloudFunctions)
+
+console.log('Built Cloud Functions')
+
+const child = spawn('node', ['node_modules/.bin/moralis-admin-cli', 'watch-cloud-file', '--moralisSubdomain', SUBDOMAIN, '--moralisCloudFile', 'cache/moralis.js'], { shell: true })
 
 child.stdout.on('data', (data) => {
-  if (String(data).trim() == 'File Uploaded Correctly') child.kill('SIGHUP') && process.exit(0)
-})
+  if (String(data).match(/File Uploaded Correctly/)) {
+    console.log('Updated Cloud Functions')
+    child.kill('SIGHUP')
+    process.exit(0)
+  }
 
-child.stderr.on('data', (data) => { console.log('error', data) })
+  // anything else should be logged
+  console.error(String(data))
+  if (String(data).match(/File Uploaded Failed/)) {
+    child.kill('SIGHUP')
+    process.exit(1)
+  }
+})

@@ -32,7 +32,7 @@ const StyledText = styled(Text)`
 const RowTitle = styled.div`
   color: ${({ theme }) => theme.colors.text};
   font-size: 20px;
-  margin-t: 15px;
+  margin-top: 15px;
   margin-bottom: 15px;
   margin-left: 10px;
   font-weight: 600;
@@ -105,9 +105,6 @@ const MyZooAccount: React.FC = () => {
     animalQuery.equalTo("AnimalID", egg.animalID)
     const animalResults = await animalQuery.find()
     const foundAnimal = animalResults[0]
-
-
-
 
     let string = String(foundAnimal.get("createdAt"));
     const replacedString = string.replace("at ", "");
@@ -307,10 +304,8 @@ const MyZooAccount: React.FC = () => {
               </StyledText>
             ) : (
               <Swiper
-                slidesPerView={
-                  document.body.getBoundingClientRect().width / 220
-                }
-                spaceBetween={8}
+                slidesPerView={document.body.getBoundingClientRect().width / 220}
+                spaceBetween={4}
                 pagination={{ clickable: true }}
               >
                 {animals.map((animal) => (
@@ -407,13 +402,14 @@ const MyZooAccount: React.FC = () => {
             </StyledText>
           ) : (
             <Swiper
-              slidesPerView={document.body.getBoundingClientRect().width / 180}
+              slidesPerView={document.body.getBoundingClientRect().width / 220}
               spaceBetween={8}
               pagination={{ clickable: true }}
             >
               {eggData.map((egg) => (
+
                 <SwiperSlide
-                  style={{ padding: "3px", width: "180", display: "flex" }}
+                  style={{ width: "220px", display: "flex" }}
                   key={egg.tokenID}
                 >
                   {/* <CardWrapper> */}

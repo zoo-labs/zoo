@@ -30,3 +30,34 @@ yarn start
 ```
 
 You should now have a local blockchain, with contracts deployed, and your app running on https://localhost:3000.
+
+
+## Moralis integration
+Zoo builds on top of Moralis, which provides both cloud functions and a realtime
+API for the React frontend.
+
+### Plugins
+Moralis servers support plugins which can listen to and respond to events on a given
+contract. For Zoo, we Moralis watches the `ZooKeeper` contract for any new game
+events and updates various game tables accordingly.
+
+```shell
+yarn moralis:plugins
+```
+
+### Cloud Functions
+Moralis Cloud Functions are used to update cached game state when key events are
+fired.
+
+```shell
+yarn moralis:functions
+```
+
+## Running Local Devchain Proxy
+To connect your local blockchain to Moralis:
+
+```shell
+yarn moralis:proxy
+```
+
+This requires `frpc`, which can be installed with `brew install frpc` on macOS.
