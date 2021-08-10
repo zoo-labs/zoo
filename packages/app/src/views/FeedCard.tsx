@@ -149,9 +149,7 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup, hideBid }) => {
       return null;
    }, [hideBid]);
 
-   console.log('DOB', item.dob);
    const date = new Date(Number(item.dob) * 1000);
-   console.log('date', date);
    const StringDate = date.toLocaleDateString("en-US");
    const { isXl } = useMatchBreakpoints();
    const isMobile = !isXl;
