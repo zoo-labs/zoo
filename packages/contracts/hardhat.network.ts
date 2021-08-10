@@ -24,7 +24,7 @@ const networks: HardhatUserConfig['networks'] = {
     allowUnlimitedContractSize: true,
     mining: {
       auto: true,
-      interval: 3000
+      interval: 5000
     },
     accounts: {
       mnemonic: mnemonic(),
