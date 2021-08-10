@@ -13,6 +13,9 @@ const prompt = require('prompt-sync')({sigint: true});
 
 // Get the path to the abi json file
 const abiPath = 'deployments/localhost/ZooKeeper.json';
+const serverName = 'zoo Hardhat';
+// const abiPath = 'deployments/testnet/ZooKeeper.json';
+// const serverName = 'Zoo Testnet';
 
 (async() => {
     try {
@@ -27,9 +30,8 @@ const abiPath = 'deployments/localhost/ZooKeeper.json';
             return;
         }
 
-
         // Get the server to apply the event syncs to
-        const server = servers.filter(item => item.updateCloudError === 0 && item.update === 0 && item.enabledEvms && item.name == 'zoo Hardhat')[0]
+        const server = servers.filter(item => item.updateCloudError === 0 && item.update === 0 && item.enabledEvms && item.name == serverName)[0]
 
         console.log('Using server:', server.name)
 
