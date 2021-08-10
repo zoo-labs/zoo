@@ -1,24 +1,24 @@
-import { useRef } from "react";
-import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import Moralis from "moralis";
-import { useWeb3React } from "@web3-react/core";
-import { Card as Existing, CardBody } from "components";
-import { Animal, Egg } from "entities/zooentities";
-import { addAnimal, addEgg } from "state/zoo";
-import { Modal, useModal } from "components/Modal";
-import { getDaysHours, getMilliseconds } from "util/timeHelpers";
-import { breedTimeouts, eggTimeout } from "constants/constants";
-import { Flex } from "components/Box";
-import { Text } from "components/Text";
-import BorderButton from "components/Button/BorderButton";
-import { EggCreatedNotify } from "./EggCreatedNotify";
-import { AnimalCardProps, SubAnimalCommonProps } from "./types";
-import useWeb3 from "hooks/useWeb3";
+import { useRef } from 'react';
+import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import Moralis from 'moralis';
+import { useWeb3React } from '@web3-react/core';
+import { Card as Existing, CardBody } from 'components';
+import { Animal, Egg } from 'types/zoo';
+import { addAnimal, addEgg } from 'state/zoo';
+import { Modal, useModal } from 'components/Modal';
+import { getDaysHours, getMilliseconds } from 'util/timeHelpers';
+import { breedTimeouts, eggTimeout } from 'constants/constants';
+import { Flex } from 'components/Box';
+import { Text } from 'components/Text';
+import BorderButton from 'components/Button/BorderButton';
+import { EggCreatedNotify } from './EggCreatedNotify';
+import { AnimalCardProps, SubAnimalCommonProps } from './types';
+import useWeb3 from 'hooks/useWeb3';
 import {
   getZooKeeper,
-} from "util/contractHelpers";
+} from 'util/contractHelpers';
 
 const InfoBlock = styled.div`
   padding: 4px;
@@ -56,7 +56,7 @@ const TimeoutWrapper = styled.div<{ barwidth?: string }>`
   background-color: #a7565e;
   z-index: 999999;
   ::before {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     z-index: 1;
@@ -92,11 +92,11 @@ const Card = styled(Existing)<{
   width: 100%;
   margin: 8px;
   box-shadow: ${(props) => `0px 0px 13px -2px ${props.rarityColor}`};
-  backgroundcolor: "#000000";
+  backgroundcolor: '#000000';
   display: inline-block;
   border-radius: 8px;
-  border: ${({ selected }) => (selected ? "2px solid white" : null)};
-  opacity: ${({ timedOut }) => (timedOut ? "0.6" : null)};
+  border: ${({ selected }) => (selected ? '2px solid white' : null)};
+  opacity: ${({ timedOut }) => (timedOut ? '0.6' : null)};
 `;
 
 const StyledText = styled(Text)`
@@ -104,7 +104,7 @@ const StyledText = styled(Text)`
 `;
 
 const BidPriceInput = styled.input.attrs({
-  type: "number",
+  type: 'number',
   min: 1,
 })`
   width: 100%;
@@ -126,15 +126,17 @@ export const AnimalCard = ({
   const {chainId} = useWeb3React()
   const zooKeeper = getZooKeeper(web3, chainId);
   let sellAnimal: Animal = {
-    tokenID: "",
-    name: "",
-    description: "",
-    boost: "",
-    yield: "",
-    rarity: "",
-    imageUrl: "",
-    dob: "",
-    listed: false,
+    owner:       '',
+    kind:        -1,
+    tokenID:     -1,
+    name:        '',
+    description: '',
+    boost:       -1,
+    yield:       -1,
+    rarity:      '',
+    imageUrl:    '',
+    dob:         -1,
+    listed:      false,
   };
 
   const Confirmation: React.FC<SubAnimalCommonProps> = ({
@@ -151,20 +153,20 @@ export const AnimalCard = ({
       onDismiss();
     };
     return (
-      <Modal title="Confirm Breed" onDismiss={onDismiss}>
-        <StyledText color="text">
+      <Modal title='Confirm Breed' onDismiss={onDismiss}>
+        <StyledText color='text'>
           {`Do you want to breed ${animal1.name} with ${animal2.name}?`}
         </StyledText>
         <Flex
           style={{ marginTop: 15 }}
-          width="100%"
-          alignItems="center"
-          justifyContent="space-around"
+          width='100%'
+          alignItems='center'
+          justifyContent='space-around'
         >
-          <BorderButton scale="sm" onClick={() => breed(onDismiss)}>
+          <BorderButton scale='sm' onClick={() => breed(onDismiss)}>
             YES
           </BorderButton>
-          <BorderButton scale="sm" onClick={cancel}>
+          <BorderButton scale='sm' onClick={cancel}>
             NO
           </BorderButton>
         </Flex>
@@ -174,26 +176,26 @@ export const AnimalCard = ({
 
   const sell = async (onDismiss) => {
     const animal: Animal = sellAnimal;
-    const animalObject = Moralis.Object.extend("FinalAnimals");
+    const animalObject = Moralis.Object.extend('Animals');
     const query = new Moralis.Query(animalObject);
-    query.equalTo("AnimalID", parseInt(animal.tokenID));
+    query.equalTo('tokenID', animal.tokenID);
     const results = await query.find();
     const animalM = results[0];
-    animalM.set("Listed", true);
-    animalM.set("StartBid", String(bid.current));
-    animalM.set("CurrentBid", String(bid.current - 1));
-    animalM.set("BuyNow", String(bid.current + 100));
+    animalM.set('listed', true);
+    animalM.set('startBid', String(bid.current));
+    animalM.set('currentBid', String(bid.current - 1));
+    animalM.set('buyNow', String(bid.current + 100));
     await animalM.save();
     // animal.listed = true;
     // dispatch(addAnimal(animal));
-    const TransOb = Moralis.Object.extend("Transactions");
+    const TransOb = Moralis.Object.extend('Transactions');
     const newTrans = new TransOb();
 
-    newTrans.set("From", account);
-    newTrans.set("Action", "Listed Animal");
-    newTrans.set("TokenID", parseInt(animal.tokenID));
-    newTrans.set("StartingBid", String(bid.current));
-    newTrans.set("AnimalName", animalM.attributes.Name);
+    newTrans.set('from', account);
+    newTrans.set('action', 'Listed Animal');
+    newTrans.set('tokenID', animal.tokenID);
+    newTrans.set('startingBid', String(bid.current));
+    newTrans.set('animalName', animalM.attributes.Name);
     newTrans.save();
     bid.current = 100;
 
@@ -205,36 +207,36 @@ export const AnimalCard = ({
     breed,
   }) => {
     return (
-      <Modal title="Confirm Listing" onDismiss={onDismiss}>
+      <Modal title='Confirm Listing' onDismiss={onDismiss}>
         <StyledText
-          style={{ textAlign: "center" }}
+          style={{ textAlign: 'center' }}
         >{`Do you want to list ${sellAnimal.name}?`}</StyledText>
         <Flex
-          width="100%"
-          alignItems="center"
-          justifyContent="space-evenly"
-          flexDirection="row"
-          mt="16px"
+          width='100%'
+          alignItems='center'
+          justifyContent='space-evenly'
+          flexDirection='row'
+          mt='16px'
         >
           <StyledText
-            fontSize="20px"
-            style={{ whiteSpace: "nowrap", marginTop: "5px" }}
+            fontSize='20px'
+            style={{ whiteSpace: 'nowrap', marginTop: '5px' }}
           >
             BID PRICE
           </StyledText>
-          <BidPriceInput type="number" />
+          <BidPriceInput type='number' />
         </Flex>
         <Flex
-          width="100%"
-          alignItems="center"
-          justifyContent="space-evenly"
-          flexDirection="row"
-          mt="16px"
+          width='100%'
+          alignItems='center'
+          justifyContent='space-evenly'
+          flexDirection='row'
+          mt='16px'
         >
-          <BorderButton scale="md" onClick={() => breed(onDismiss)}>
+          <BorderButton scale='md' onClick={() => breed(onDismiss)}>
             Confirm
           </BorderButton>
-          <BorderButton scale="md" onClick={() => onDismiss()}>
+          <BorderButton scale='md' onClick={() => onDismiss()}>
             Cancel
           </BorderButton>
         </Flex>
@@ -251,44 +253,29 @@ export const AnimalCard = ({
   const breed = async (onDismiss) => {
     const an1 = parseInt(array[0].tokenID);
     const an2 = parseInt(array[1].tokenID);
-    const anOb = Moralis.Object.extend("FinalAnimals");
+    const anOb = Moralis.Object.extend('Animals');
     const anQ1 = new Moralis.Query(anOb);
     const anQ2 = new Moralis.Query(anOb);
-    anQ1.equalTo("AnimalID", an1);
-    anQ2.equalTo("AnimalID", an2);
+    anQ1.equalTo('tokenID', an1);
+    anQ2.equalTo('tokenID', an2);
     const res1 = await anQ1.find();
     const res2 = await anQ2.find();
     const aniM1 = res1[0];
     const aniM2 = res2[0];
     const mArray = [aniM1, aniM2];
-    console.log("Breeding", mArray)
-    // const egg: Egg = {
-    //   owner: account,
-    //   tokenID: String(Math.floor(Math.random() * 100000000) + 1),
-    //   kind: "3123",
-    //   parentA: "123",
-    //   parentB: "1231",
-    //   basic: false,
-    //   created: String(new Date().getTime()),
-    //   timeRemaining: 15000,
-    //   CTAOverride: null,
-    // };
-    // dispatch(addEgg(egg));
+    console.log('Breeding', mArray)
     try {
-    // const token = await zooKeeper.methods.tokens(11).call();
-    //   console.log('token', token);
-      
-      const hatching = await zooKeeper.methods.breedAnimals(1, an1, an2).send({ from: account })
+      await zooKeeper.methods.breedAnimals(1, an1, an2).send({ from: account })
       .then((res) => {
               console.log(res)
-              const TransOb = Moralis.Object.extend("Transactions");
+              const TransOb = Moralis.Object.extend('Transactions');
               const newTrans = new TransOb();
 
-              newTrans.set("From", account);
-              newTrans.set("Action", "Bred Animals");
-              // newTrans.set("TokenID", parseInt(egg.tokenID));
-              newTrans.set("ParentA", aniM1.attributes.Name);
-              newTrans.set("ParentB", aniM2.attributes.Name);
+              newTrans.set('from', account);
+              newTrans.set('action', 'Bred Animals');
+              // newTrans.set('tokenID', parseInt(egg.tokenID));
+              newTrans.set('parentA', aniM1.attributes.Name);
+              newTrans.set('parentB', aniM2.attributes.Name);
               newTrans.save();
               dispatch(addAnimal({...array[0], selected: false}));
               dispatch(addAnimal({...array[1], selected: false}));
@@ -297,158 +284,7 @@ export const AnimalCard = ({
     } catch (error) {
       console.log(error)
     }
-    
-        // const animal1: Animal = array[0];
-    // const animal2: Animal = array[1];
-    // array.forEach((animal) => {
-    //   animal.bred = true;
-    //   animal.breedCount = animal.breedCount + 1 || 1;
-    //   const now = new Date().getTime();
-    //   animal.lastBred = new Date().getTime();
-    //   const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount;
-    //   const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
-    //   const elapsedTime = now - animal.lastBred;
-
-    //   if (elapsedTime < breedTimeout) {
-    //     const timeRemaining = breedTimeout - elapsedTime;
-    //     const timeRemainingDaysHours = getDaysHours(timeRemaining);
-    //     const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
-
-    //     animal.timeRemaining = timeRemaining;
-    //     animal.CTAOverride = { barwidth, timeRemainingDaysHours };
-    //   } else {
-    //     animal.timeRemaining = 0;
-    //     animal.CTAOverride = {
-    //       barwidth: null,
-    //       timeRemainingDaysHours: null,
-    //     };
-    //   }
-    //   animal.selected = false;
-    // });
-
-    // array = [];
-    // // dispatch(addAnimal(animal1));
-    // // dispatch(addAnimal(animal2));
-    // lastBred TimeRemaining BreedCount
-    // mArray.forEach((animal) => {
-    //   const count = animal.get("BreedCount");
-    //   animal.set("BreedCount", count + 1 || 1);
-    //   animal.breedCount = animal.breedCount + 1 || 1;
-    //   const now = new Date().getTime();
-    //   const time = new Date().getTime();
-    //   animal.set("lastBred", time.toString());
-    //   const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount;
-    //   const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
-    //   const elapsedTime = now - animal.lastBred;
-
-    //   if (elapsedTime < breedTimeout) {
-    //     const timeRemaining = breedTimeout - elapsedTime;
-    //     const timeRemainingDaysHours = getDaysHours(timeRemaining);
-    //     const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
-
-    //     animal.set("TimeRemaining", timeRemaining);
-    //     animal.set("CTAOverride", { barwidth, timeRemainingDaysHours });
-    //   } else {
-    //     animal.set("TimeRemaining", 0);
-    //     animal.set("CTAOverride", {
-    //       barwidth: null,
-    //       timeRemainingDaysHours: null,
-    //     });
-    //   }
-    //   animal.set("Selected", false);
-    //   animal.save();
-    // });
-
-    //@dev Redux Logic to be Removed
-    // const animal1: Animal = array[0];
-    // const animal2: Animal = array[1];
-    // array.forEach((animal) => {
-    //   animal.bred = true;
-    //   animal.breedCount = animal.breedCount + 1 || 1;
-    //   const now = new Date().getTime();
-    //   animal.lastBred = new Date().getTime();
-    //   const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount;
-    //   const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey]);
-    //   const elapsedTime = now - animal.lastBred;
-
-    //   if (elapsedTime < breedTimeout) {
-    //     const timeRemaining = breedTimeout - elapsedTime;
-    //     const timeRemainingDaysHours = getDaysHours(timeRemaining);
-    //     const barwidth = [100 * (elapsedTime / breedTimeout), "%"].join("");
-
-    //     animal.timeRemaining = timeRemaining;
-    //     animal.CTAOverride = { barwidth, timeRemainingDaysHours };
-    //   } else {
-    //     animal.timeRemaining = 0;
-    //     animal.CTAOverride = {
-    //       barwidth: null,
-    //       timeRemainingDaysHours: null,
-    //     };
-    //   }
-    //   animal.selected = false;
-    // });
-
-    // array = [];
-    // // dispatch(addAnimal(animal1));
-    // // dispatch(addAnimal(animal2));
-
-    // const egg: Egg = {
-    //   owner: account,
-    //   tokenID: String(Math.floor(Math.random() * 100000000) + 1),
-    //   kind: "3123",
-    //   parentA: "123",
-    //   parentB: "1231",
-    //   basic: false,
-    //   created: String(new Date().getTime()),
-    //   timeRemaining: 0,
-    //   CTAOverride: null,
-    // };
-
-    // const now = new Date().getTime();
-    // const createdDate = egg.created
-    //   ? new Date(Number(egg.created)).getTime()
-    //   : new Date().getTime();
-    // const hatchTimeout = getMilliseconds(eggTimeout);
-    // const elapsedTime = now - createdDate;
-
-    // if (elapsedTime < hatchTimeout) {
-    //   const timeRemaining = hatchTimeout - elapsedTime;
-    //   const timeRemainingDaysHours = getDaysHours(timeRemaining);
-    //   const barwidth = [100 * (elapsedTime / hatchTimeout), "%"].join("");
-
-    //   egg.timeRemaining = timeRemaining;
-    //   egg.CTAOverride = { barwidth, timeRemainingDaysHours };
-    // } else {
-    //   egg.timeRemaining = 0;
-    // }
-
-    // const mObject = Moralis.Object.extend("FinalEggs");
-    // const mEgg = new mObject();
-    // mEgg.set("EggID", parseInt(egg.tokenID));
-    // mEgg.set("ParentA", parseInt(egg.parentA));
-    // mEgg.set("MetaURI", "META URI");
-    // mEgg.set("ParentB", parseInt(egg.parentB));
-    // mEgg.set("Burned", false);
-    // mEgg.set("AnimalTypeId", egg.kind);
-    // mEgg.set("TokenURI");
-    // mEgg.set("Owner", account);
-    // mEgg.set("BlockNumber");
-    // mEgg.set("Type", "hybrid");
-    // await mEgg.save();
-
-    // // dispatch(addEgg(egg));
-    // onEggCreated();
-
-    // const TransOb = Moralis.Object.extend("Transactions");
-    // const newTrans = new TransOb();
-
-    // newTrans.set("From", account);
-    // newTrans.set("Action", "Bred Animals");
-    // newTrans.set("TokenID", parseInt(egg.tokenID));
-    // newTrans.set("ParentA", aniM1.attributes.Name);
-    // newTrans.set("ParentB", aniM2.attributes.Name);
-    // newTrans.save();
-  };
+  }
 
   const breedClick = (animal) => {
     const selected = Object.values(allAnimals).filter((item) => item.selected);
@@ -495,22 +331,22 @@ export const AnimalCard = ({
     >
       <CardBody
         style={{
-          backgroundImage: `url("${animal.imageUrl}")`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
+          backgroundImage: `url('${animal.imageUrl}')`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
           height: 280,
-          width: "100%",
+          width: '100%',
         }}
       >
         <Link to={`/feed/myzoo/${animal.tokenID}`}>
           <TextWrapper
             style={{
-              textShadow: "0px 2px 6px rgb(0, 0, 0)",
+              textShadow: '0px 2px 6px rgb(0, 0, 0)',
               fontSize: 18,
               letterSpacing: 0,
-              position: "absolute",
-              textTransform: "lowercase",
+              position: 'absolute',
+              textTransform: 'lowercase',
               right: 11,
               top: 9,
             }}
@@ -518,16 +354,16 @@ export const AnimalCard = ({
             {animal.timeRemaining === 0
               ? animalGroup[animal.name]
                 ? `x${animalGroup[animal.name]}`
-                : ""
-              : ""}
+                : ''
+              : ''}
           </TextWrapper>
           <TextWrapper
             style={{
-              textShadow: "0px 2px 6px rgb(0, 0, 0)",
-              textAlign: "center",
+              textShadow: '0px 2px 6px rgb(0, 0, 0)',
+              textAlign: 'center',
               fontSize: 16,
               letterSpacing: 0,
-              height: "100%",
+              height: '100%',
             }}
           >
             {animal.name}
@@ -544,7 +380,7 @@ export const AnimalCard = ({
         ) : (
           <InfoBlock
             onClick={() =>
-              hybrid === "pure"
+              hybrid === 'pure'
                 ? breedClick(animal)
                 : !animal.listed
                 ? list(animal)
@@ -552,10 +388,10 @@ export const AnimalCard = ({
             }
           >
             <BreedWrapper>
-              {animal.bloodline === "pure"
+              {animal.bloodline === 'pure'
                 ? `BREED`
                 : animal.listed
-                ? "LISTED"
+                ? 'LISTED'
                 : `SELL`}
             </BreedWrapper>
           </InfoBlock>

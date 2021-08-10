@@ -76,7 +76,7 @@ const animation = props =>
     ${rotate} 2s linear infinite;
   `
 
-const Card = styled(Existing)<{ timedOut?: boolean, interactable?: boolean, hatching?: boolean, hatched?: boolean}>`
+const Card = styled(Existing)<{ timedOut?: boolean, interactive?: boolean, hatching?: boolean, hatched?: boolean}>`
    animation: ${({hatching}) => hatching ? animation : ''};
    cursor: pointer;
    width: 140px;
@@ -84,7 +84,7 @@ const Card = styled(Existing)<{ timedOut?: boolean, interactable?: boolean, hatc
    background-color: ${({ theme }) => theme.colors.background};
    border-radius: 8px;
    display: block;
-   opacity: ${({ interactable, hatching }) => (!interactable && !hatching ? "0.7" : null)};
+   opacity: ${({ interactive, hatching }) => (!interactive && !hatching ? "0.7" : null)};
    box-shadow: ${({ hatched }) => (hatched ? "3px 4px 10px #9d4c0a" : null)};
    transition: animation 1s ease-in-out;
    transition: box-shadow 1s ease-in-out;
@@ -103,24 +103,24 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
 
    const buttonActions = () => {
       if(egg.timeRemaining > 0) return null
-      if(!egg.interactable) return null
+      if(!egg.interactive) return null
       if(egg.hatched) return onReveal()
       if(!egg.hatched) return onHatch()
    }
 
-  const hatching = !egg.interactable && egg.hatched
-  const hatched   = egg.hatched && egg.interactable
+  const hatching = !egg.interactive && egg.hatched
+  const hatched   = egg.hatched && egg.interactive
 
   const buttonLabel = (egg) => {
-    if (!egg.hatched && !egg.interactable) return 'CONFIRMING'
-    if (!egg.hatched && egg.interactable) return 'HATCH'
-    if (egg.hatched && !egg.interactable) return 'HATCHING'
-    if (egg.hatched && egg.interactable) return 'REVEAL'
+    if (!egg.hatched && !egg.interactive) return 'CONFIRMING'
+    if (!egg.hatched && egg.interactive) return 'HATCH'
+    if (egg.hatched && !egg.interactive) return 'HATCHING'
+    if (egg.hatched && egg.interactive) return 'REVEAL'
 
     return ''
   }
 
-  const backgroundImage = (!egg.interactable && !hatching) ? transparentEggURL : (egg.basic ? basicEggURL : hybridEggURL)
+  const backgroundImage = (!egg.interactive && !hatching) ? transparentEggURL : (egg.basic ? basicEggURL : hybridEggURL)
 
    return (
       <>
@@ -130,7 +130,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             }
             style={{ backgroundColor: "#000000" }}
             timedOut={egg.timeRemaining > 0 ? true : false}
-            interactable = {egg.interactable}
+            interactive = {egg.interactive}
             hatching={hatching}
             hatched={hatched}
             >

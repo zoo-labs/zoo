@@ -2,7 +2,7 @@
 import { Toast } from "../../components/Toast";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ZooState } from "../types";
-import { Animal, Egg } from "entities/zooentities";
+import { Animal, Egg } from "types/zoo";
 import { test } from "./test";
 
 // const initialState: ZooState = test;

@@ -19,7 +19,7 @@ const SERVERS = {
   mainnet:   'Zoo Mainnet',
 }
 const SERVER_NAME = SERVERS[NETWORK]
-const ABI_PATH = `deployments/${NETWORK}/ZooKeeper.json`
+const ABI_PATH = `${__dirname}/../../contracts/deployments/${NETWORK}/ZooKeeper.json`
 
 /**
  * Configures the events to subscribe to on a smart contract based on the abi file

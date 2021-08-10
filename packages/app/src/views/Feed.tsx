@@ -166,14 +166,16 @@ function Feed<FeedPagePops>({ match }) {
    const isMyZoo = filter === "myZoo";
    let totalAnimalsFiltered = animals.filter((animal) => {
       return (
-         animal.owner && animal.owner.toLowerCase() !== account.toLowerCase() && !animal.freed
+         (animal.owner || '').toLowerCase() !== account.toLowerCase() && !animal.freed
       );
    });
    let myZooAnimalsFiltered = animals.filter((animal) => {
       return (
-         animal.owner && animal.owner.toLowerCase() === account.toLowerCase() && !animal.freed
+         (animal.owner || '').toLowerCase() === account.toLowerCase() && !animal.freed
       );
    });
+
+  console.log('myZooFiltered', myZooAnimalsFiltered)
 
    if (toFind && isMyZoo) {
       const ogIndex = myZooAnimalsFiltered.findIndex(
@@ -187,12 +189,14 @@ function Feed<FeedPagePops>({ match }) {
    const animalGroup = {};
    let myZooAnimalData = [];
    let totalAnimalData = [];
-   // if (isMyZoo) {
+
    myZooAnimalsFiltered.forEach((animal) => {
+      console.log('myZooAnimalsFiltered', animal)
+      console.log('myZooAnimalData', myZooAnimalData)
       // AF[1,2,3,2,1] //AD[1,2,3]
       if (myZooAnimalData.find((a) => a.name === animal.name)) {
-         animalGroup[animal.name] = animalGroup[animal.name] + 1 || 2;
-      } else {
+         animalGroup[animal.name] = animalGroup[animal.name] ? animalGroup[animal.name] + 1 : 2;
+      } else if (animal) {
          myZooAnimalData.push(animal);
       }
       // return animalGroup[animal.kind] === 1 ? true : false
