@@ -44,7 +44,11 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
       }
    };
 
-   const daysOld = (new Date().getTime() - (Number(item.dob) * 1000)) / 86400000
+  // Calculate yield
+  const now        = (new Date()).getTime()
+  const msOld      = Number(item.dob) * 1000
+  const daysOld    = (now - msOld) / 86400000
+  const totalYield = (daysOld > 0) ? (item.yield * daysOld).toFixed(8) : 0
 
    return (
       <>
@@ -81,7 +85,7 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
                   mb="16px"
                   fontSize="22px"
                   color="text">
-                  {(item.yield * daysOld).toFixed(8)} ZOO
+                  {totalYield} ZOO
                </Text>
                {canFree && (
                   <Flex flexDirection="row" justifyContent="space-around">
