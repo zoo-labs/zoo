@@ -134,7 +134,7 @@ const App: React.FC = () => {
             const date = new Date(replacedString);
             const tempEgg: Egg = {
                owner: singleResult.get("owner"),
-               tokenID: singleResult.get("eggID"),
+               tokenID: singleResult.get("tokenID"),
                kind: singleResult.get("kind"),
                parentA: singleResult.get("parentA"),
                parentB: singleResult.get("parentB"),
@@ -210,7 +210,7 @@ const App: React.FC = () => {
          const date = new Date(replacedString);
          const tempEgg: Egg = {
             owner: singleResult.get("owner"),
-            tokenID: singleResult.get("eggID"),
+            tokenID: singleResult.get("tokenID"),
             kind: singleResult.get("kind"),
             parentA: singleResult.get("parentA"),
             parentB: singleResult.get("parentB"),
@@ -279,7 +279,7 @@ const App: React.FC = () => {
          const date = new Date(replacedString);
          const tempEgg: Egg = {
             owner: singleResult.get("owner"),
-            tokenID: singleResult.get("eggID"),
+            tokenID: singleResult.get("tokenID"),
             kind: singleResult.get("kind"),
             parentA: singleResult.get("parentA"),
             parentB: singleResult.get("parentB"),

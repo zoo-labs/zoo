@@ -23,12 +23,12 @@ contract ZooKeeper is Ownable {
 
     // Declare an Event
     event AddDrop(address indexed dropAddress, string title, uint256 eggSupply);
-    event BuyEgg(address indexed from, uint256 indexed tokenID);
-    event Hatch(address indexed from, uint256 eggID, string indexed name, uint256 indexed tokenID);
-    event Breed(address indexed from, uint256 parentA, uint256 parentB, uint256 indexed tokenID);
-    event Mint(address indexed from, uint256 indexed tokenID);
+    event Breed(address indexed from, uint256 parentA, uint256 parentB, uint256 indexed eggID);
     event Burn(address indexed from, uint256 indexed tokenID);
+    event BuyEgg(address indexed from, uint256 indexed eggID);
     event Free(address indexed from, uint256 indexed tokenID, uint256 indexed yield);
+    event Hatch(address indexed from, uint256 eggID, uint256 indexed tokenID);
+    event Mint(address indexed from, uint256 indexed tokenID);
 
     // Mapping of Address to Drop ID
     mapping(uint256 => address) public drops;
@@ -136,7 +136,7 @@ contract ZooKeeper is Ownable {
         burn(msg.sender, eggID);
         console.log('burned', eggID);
 
-        emit Hatch(msg.sender, eggID, animal.name, animal.id);
+        emit Hatch(msg.sender, eggID, animal.id);
         return animal;
     }
 

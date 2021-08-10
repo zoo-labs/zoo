@@ -1,5 +1,6 @@
-const ZK    = ZOOKEEPER  // Generated during build
-const CHAIN = 'CHAIN_ID' // Generated during build
+// Global constants injected during build
+const ZK    = ZOOKEEPER
+const CHAIN = 'CHAIN_ID'
 
 // Get this enviroment's ZK contract
 async function getZooKeeper() {
@@ -7,7 +8,7 @@ async function getZooKeeper() {
     return new web3.eth.Contract(ZK.abi, ZK.address)
 }
 
-// Is request confirmed?
+// Is current request confirmed?
 function confirmed(request) {
     return request.object.get('confirmed')
 }
@@ -24,7 +25,7 @@ async function getAnimal(tokenID) {
 async function getEgg(eggID) {
     const Eggs = Moralis.Object.extend('Eggs')
     const query = new Moralis.Query(Eggs)
-    query.equalTo('eggID', eggID)
+    query.equalTo('tokenID', eggID)
     return (await query.find())[0]
 }
 
@@ -34,36 +35,35 @@ async function getToken(tokenID) {
     return (await zooKeeper.methods.tokens(tokenID).call())
 }
 
+function setCommon(entity, { object }) {
+    entity.set('owner', object.get('from'))
+    entity.set('from', object.get('from'))
+    entity.set('blockNumber', object.get('block_number'))
+    entity.set('transactionHash', object.get('transaction_hash'))
+    entity.set('timestamp', Date.now())
+}
+
 // Instantiate a new Animal
-function newAnimal({ object }) {
+function newAnimal(request) {
     const Animals = Moralis.Object.extend('Animals')
     const animal = new Animals()
-    animal.set('owner', object.get('from'))
-    animal.set('blockNumber', object.get('block_number'))
-    animal.set('transactionHash', object.get('transaction_hash'))
-    animal.set('timestamp', Date.now())
+    setCommon(animal, request)
     return animal
 }
 
 // Instantiate a new Egg
-function newEgg({ object }) {
+function newEgg(request) {
     const Eggs = Moralis.Object.extend('Eggs')
     const egg = new Eggs()
-    egg.set('owner', object.get('from'))
-    egg.set('blockNumber', object.get('block_number'))
-    egg.set('transactionHash', object.get('transaction_hash'))
-    egg.set('timestamp', Date.now())
+    setCommon(egg, request)
     return egg
 }
 
 // Instantiate a new Transaction
-function newTransaction({ object }) {
+function newTransaction(request) {
     const Transactions = Moralis.Object.extend('Transactions')
     const tx = new Transactions()
-    tx.set('owner', object.get('from'))
-    tx.set('blockNumber', object.get('block_number'))
-    tx.set('transactionHash', object.get('transaction_hash'))
-    tx.set('timestamp', Date.now())
+    setCommon(tx, request)
     return tx
 }
 
@@ -88,132 +88,113 @@ Moralis.Cloud.afterSave('AddDrop', async (request) => {
 
 Moralis.Cloud.afterSave('BuyEgg', async (request) => {
   	const logger = Moralis.Cloud.getLogger()
-    const tokenID = parseInt(request.object.get('tokenID'))
+    const eggID = parseInt(request.object.get('eggID')) // new Token ID
 
   	if (!confirmed(request)) {
-    	logger.info('Egg Bought pending confirmation')
         const egg = newEgg(request)
-        egg.set('eggID', tokenID)
+        egg.set('tokenID', eggID)
         egg.set('kind', 0)
         egg.set('type', 'basic')
       	egg.set('interactive', false)
       	egg.set('hatched', false)
         await egg.save()
-      	logger.info('Egg', tokenID, 'saved at ' + Date.now())
-        return
+      	return logger.info(`Egg ${eggID} saved at ${Date.now()}`)
     }
 
-    const egg = await getEgg(tokenID)
-    const tok = await getToken(tokenID)
+    const egg = await getEgg(eggID)
+    const tok = await getToken(eggID)
 
     egg.set('interactive', true)
     egg.set('tokenURI', tok.data.tokenURI)
     egg.set('metadataURI', tok.data.metadataURI)
     await egg.save()
 
-    logger.info('Saved Egg:' + tokenID)
-
     const tx = newTransaction(request)
     tx.set('action', 'Bought Egg')
-    tx.set('tokenID', tokenID)
+    tx.set('tokenID', eggID)
     await tx.save()
-})
 
-Moralis.Cloud.afterSave('Burn', async (request) => {
-    if (!confirmed(request)) return
-    const tokenID = parseInt(request.object.get('tokenID'))
-    const tx = newTransaction(request)
-    tx.set('action', 'Burned Token')
-    tx.set('tokenID', tokenID)
-    await tx.save()
+    logger.info(`Egg ${eggID} saved at ${Date.now()}`)
 })
 
 Moralis.Cloud.afterSave('Hatch', async (request) => {
   	const logger  = Moralis.Cloud.getLogger()
-  	const eggID   = parseInt(request.object.get('eggID'))
-    const tokenID = parseInt(request.object.get('tokenID'))
+  	const eggID   = parseInt(request.object.get('eggID'))   // Egg hatching will be burned
+    const tokenID = parseInt(request.object.get('tokenID')) // New Animal minted
 
   	if (!confirmed(request)) {
-  	    const egg = await getEgg(eggID)
-        egg.set('interactive', false)
-      	egg.set('hatched', true)
-        await egg.save()
-        return logger.info('Hatched Egg pending confirmation')
+        const animal = newAnimal(request)
+        animal.set('tokenID', tokenID)
+        animal.set('eggID', eggID)
+      	return logger.info(`Hatch Egg ${eggID} saved at ${Date.now()}`)
     }
 
     const egg = await getEgg(eggID)
     egg.set('animalID', tokenID)
+    egg.set('interactive', false)
     egg.set('hatched', true)
-    egg.set('interactive', true)
-    egg.save()
+    await egg.save()
 
     const tok = await getToken(tokenID)
-    const animal = newAnimal(request)
-
-    animal.set('tokenID', tokenID)
-    animal.set('eggID', eggID)
-    animal.set('owner', request.object.get('from'))
-    animal.set('blockNumber', request.object.get('block_number'))
+    const animal = await getAnimal(tokenID)
+    animal.set('kind', tok.kind)
     animal.set('tokenURI', tok.data.tokenURI)
     animal.set('metadataURI', tok.data.metadataURI)
     animal.set('rarity', tok.rarity.name)
-    animal.set('yield', parseInt(tok.rarity.yield))
-    animal.set('boost', parseInt(tok.rarity.boost))
+    animal.set('yield', tok.rarity.yield)
+    animal.set('boost', tok.rarity.boost)
     animal.set('name', tok.name)
-    animal.set('timestamp', parseInt(tok.timestamp))
     animal.set('listed', false)
     animal.set('revealed', false)
-    animal.set('kind', parseInt(tok.kind))
     await animal.save()
-    logger.info('Saved ' + tok.name)
 
     const tx = newTransaction(request)
     tx.set('action', 'Hatched Egg')
+    tx.set('eggID', eggID)
     tx.set('tokenID', tokenID)
     await tx.save()
+
+    logger.info(`Hatched new ${tok.name} (${tokenID}) from ${eggID}`)
 })
 
 Moralis.Cloud.afterSave('Breed', async (request) => {
   	const logger = Moralis.Cloud.getLogger()
-    const tokenID = parseInt(request.object.get('tokenID'))
-    const parentA = parseInt(request.object.get('parentA'))
-    const parentB = parseInt(request.object.get('parentB'))
+    const eggID = parseInt(request.object.get('eggID'))     // new Hybrid Egg
+    const parentA = parseInt(request.object.get('parentA')) // parent A ID
+    const parentB = parseInt(request.object.get('parentB')) // parent B ID
     const now = Date.now()
 
 	if (!confirmed(request)) {
-      // Save new Hybrid Egg
-      const egg = newEgg(request)
-      egg.set('tokenID', tokenID)
-      egg.set('kind', 2)
-      egg.set('type', 'hybrid')
-      egg.set('interactive', false)
-      egg.set('owner', request.object.get('from'))
-      egg.set('hatched', false)
-      egg.set('parentA', parentA)
-      egg.set('parentB', parentB)
-      await egg.save()
+        // Save new Hybrid Egg
+        const egg = newEgg(request)
+        egg.set('tokenID', eggID)
+        egg.set('kind', 2)
+        egg.set('type', 'hybrid')
+        egg.set('interactive', false)
+        egg.set('hatched', false)
+        egg.set('parentA', parentA)
+        egg.set('parentB', parentB)
+        await egg.save()
 
-      // Update breeding time on animals
-      const pA = await getAnimal(parentA)
-      pA.set('recentBreedTime', now)
-      await pA.save()
+        // Update breeding time on animals
+        const pA = await getAnimal(parentA)
+        pA.set('recentBreedTime', now)
+        await pA.save()
 
-      const pB = await getAnimal(parentB)
-      pB.set('recentBreedTime', now)
-      await pB.save()
+        const pB = await getAnimal(parentB)
+        pB.set('recentBreedTime', now)
+        await pB.save()
 
-      return logger.info(`Hybrid Egg ${tokenID} hatched, pending confirmation`)
-      }
+        return logger.info(`Hybrid Egg ${tokenID} hatched, pending confirmation`)
+    }
 
     // confirmed, set to interactive
-    const egg = await getEgg(tokenID)
-    const tok = await getToken(tokenID)
+    const egg = await getEgg(eggID)
+    const tok = await getToken(eggID)
     egg.set('interactive', true)
     egg.set('tokenURI', tok.data.tokenURI)
     egg.set('metadataURI', tok.data.metadataURI)
     await egg.save()
-
-    logger.info(`Hybrid Egg ${tokenID} saved successfully`)
 
     const tx = newTransaction(request)
     tx.set('action', 'Breed Animals')
@@ -221,20 +202,40 @@ Moralis.Cloud.afterSave('Breed', async (request) => {
     tx.set('parentB', tok.parentB)
     tx.set('tokenID', tokenID)
     await tx.save()
+
+    logger.info(`Hybrid Egg ${tokenID} saved successfully`)
 })
 
-Moralis.Cloud.afterSave('Free', async (request) => {
-    const logger = Moralis.Cloud.getLogger()
-
+// Update token state after burn
+Moralis.Cloud.afterSave('Burn', async (request) => {
     if (!confirmed(request)) return
+
+    const logger = Moralis.Cloud.getLogger()
+    const tokenID = parseInt(request.object.get('tokenID')) // Token burning
+
+    const tx = newTransaction(request)
+    tx.set('action', 'Burned Token')
+    tx.set('tokenID', tokenID)
+    await tx.save()
+
+    logger.info(`Burned ${tokenID}`)
+})
+
+// Update animal state after Free
+Moralis.Cloud.afterSave('Free', async (request) => {
+    if (!confirmed(request)) return
+
+    const logger = Moralis.Cloud.getLogger()
+    const tokenID = parseInt(request.object.get('tokenID')) // Animal being freed
 
     const animal = getAnimal(tokenID)
     animal.set('freed', true)
     await animal.save()
-    logger.info('Animal released into Wild')
 
     const tx = newTransaction(request)
     tx.set('action', 'Free Animal')
     tx.set('tokenID', tokenID)
     await tx.save()
+
+    logger.info(`Animal ${name} (${tokenID} released into Wild`)
 })
