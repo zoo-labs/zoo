@@ -6,3 +6,5 @@ artifacts/
 mnemonic.mainnet.txt
 mnemonic.testnet.txt
 credentials.json
+deployments/*/solcInputs/
+.migrations.json
