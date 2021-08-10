@@ -245,7 +245,8 @@ Moralis.Cloud.afterSave('Free', async (request) => {
     const logger = Moralis.Cloud.getLogger()
     const tokenID = parseInt(request.object.get('tokenID')) // Animal being freed
 
-    const animal = getAnimal(tokenID)
+    const animal = await getAnimal(tokenID)
+    animal.set('burned', true)
     animal.set('freed', true)
     await animal.save()
 
