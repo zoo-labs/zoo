@@ -84,7 +84,7 @@ const Card = styled(Existing)<{ timedOut?: boolean, interactable?: boolean, incu
 
 const basicEggURL = window.location.origin + "/static/images/basic.jpg";
 const hybridEggURL = window.location.origin + "/static/images/hybrid.jpg";
-
+const transparentEggURL = window.location.origin + "/static/images/transparent.jpg";
 
 
 export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady, hatching }) => {
@@ -111,6 +111,8 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady, h
     return ''
   }
 
+  const backgroundImage = egg.interactable ? (egg.basic ? basicEggURL : hybridEggURL) : transparentEggURL
+
    return (
       <>
          <Card
@@ -125,9 +127,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady, h
             >
             <CardBody
                style={{
-                  backgroundImage: `url("${
-                     egg.basic ? basicEggURL : hybridEggURL
-                  }")`,
+                  backgroundImage: `url("${backgroundImage}")`,
                   backgroundSize: "cover",
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
