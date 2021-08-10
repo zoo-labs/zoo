@@ -21,6 +21,7 @@ import {
   getZooKeeper,
 } from 'util/contractHelpers';
 import { Animal, Egg } from 'types/zoo';
+import { mapEgg, mapAnimal } from 'moralis/mapping';
 
 
 const StyledText = styled(Text)`
@@ -104,136 +105,70 @@ const MyZooAccount: React.FC = () => {
     const animalResults = await animalQuery.find()
     const foundAnimal = animalResults[0]
 
-    let string = String(foundAnimal.get('createdAt'));
-    const replacedString = string.replace('at ', '');
-    const date = new Date(replacedString);
-
     console.log('foundAnimal', foundAnimal)
-
-    const newAnimal: Animal = {
-      owner:         foundAnimal.get('owner'),
-      tokenID:       foundAnimal.get('tokenID'),
-      name:          foundAnimal.get('name'),
-      description:   foundAnimal.get('description'),
-      yield:         foundAnimal.get('yield'),
-      boost:         foundAnimal.get('boost'),
-      rarity:        foundAnimal.get('rarity'),
-      dob:           foundAnimal.get('timestamp'),
-      startBid:      foundAnimal.get('startBid'),
-      currentBid:    foundAnimal.get('currentBid'),
-      imageUrl:      foundAnimal.get('tokenURI'),
-      listed:        foundAnimal.get('listed'),
-      bloodline:     foundAnimal.get('kind') === 1 ? 'pure' : 'hybrid',
-      selected:      false,
-      bred:          false,
-      breedCount:    foundAnimal.get('breedCount'),
-      kind:          foundAnimal.get('kind'),
-      timeRemaining: foundAnimal.get('timeRemaining'),
-      CTAOverride:   foundAnimal.get('CTAOverride'),
-      lastBred:      foundAnimal.get('lastBred'),
-      buyNow:        foundAnimal.get('buyNow'),
-      revealed:      foundAnimal.get('revealed'),
-      freed:         foundAnimal.get('freed')
-    };
-    setHatched(newAnimal);
+    setHatched(mapAnimal(foundAnimal))
     foundAnimal.set('revealed', true)
     foundAnimal.save()
     startAnimationTimer();
   }
 
   const hatchEgg = async (egg) => {
-      let tempEgg: Egg = {
-        owner: egg.owner,
-        tokenID: egg.tokenID,
-        kind: egg.kind,
-        parentA: egg.parentA,
-        parentB: egg.parentB,
-        basic: egg.basic,
-        timeRemaining: egg.timeRemaining,
-        CTAOverride: egg.CTAOverride,
-        createdAt: egg.createdAt,
-        updatedAt: egg.updatedAt,
-        burned: egg.burned,
-        interactive: false,
-        hatched: true,
-        animalID: egg.animalID,
-     };
-      dispatch(addEgg(tempEgg));
+      dispatch(addEgg(mapEgg(egg)))
       try {
-        // const token = await zooKeeper.methods.tokens(parseInt(egg.tokenId)).call()
-        // setNewEgg(egg.tokenId)
-        const numEggID = parseInt(egg.tokenID)
         const gasPrice = await web3.eth.getGasPrice()
         const gasEstimate = await zooKeeper.methods
-        .hatchEgg(1, numEggID)
+            .hatchEgg(1, egg.tokenID)
             .estimateGas({ from: account })
         console.log(gasEstimate)
-        const hatching = await zooKeeper.methods
-        .hatchEgg(1, numEggID)
+        await zooKeeper.methods
+            .hatchEgg(1, egg.tokenID)
             .send({
               from: account,
               gasPrice: gasPrice,
               gas: gasEstimate + 10000000,
              })
-        console.log(hatching)
       } catch (error) {
-        let tempEgg1: Egg = {
-          owner: egg.owner,
-          tokenID: egg.tokenID,
-          kind: egg.kind,
-          parentA: egg.parentA,
-          parentB: egg.parentB,
-          basic: egg.basic,
-          timeRemaining: egg.timeRemaining,
-          CTAOverride: egg.CTAOverride,
-          createdAt: egg.createdAt,
-          updatedAt: egg.updatedAt,
-          burned: egg.burned,
-          interactive: true,
-          hatched: false,
-          animalID: egg.animalID,
-       };
-        dispatch(addEgg(tempEgg1));
-        console.log(error)
+        dispatch(addEgg(mapEgg(egg)))
+        console.error(error)
       }
-  };
+  }
 
   const startAnimationTimer = useCallback(() => {
     videoTimeout.push(setTimeout(() => { setOpen(true); setNewEgg('')}, 5450));
     videoTimeout.push(setTimeout(() => setEggType(''), 7000));
-  }, []);
+  }, [])
 
   const closeAnimation = useCallback(async (e) => {
     setEggType('');
     videoTimeout.forEach((i) => {
       clearTimeout(i);
-    });
-  }, []);
+    })
+  }, [])
 
   useEffect(() => {
     document.addEventListener('keydown', closeAnimation, false);
     return () => {
       document.removeEventListener('keydown', closeAnimation, false);
-    };
-  }, []);
+    }
+  }, [])
 
-  const [timeStartOnPage] = useState(new Date().getTime());
+  const [timeStartOnPage] = useState(new Date().getTime())
   const [elapsedTimeOnPage, setElapsedTimeOnPage] = useState(
     new Date().getTime() - timeStartOnPage
-  );
+  )
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setElapsedTimeOnPage(elapsedTimeOnPage + 5000);
-    }, 5000);
+      setElapsedTimeOnPage(elapsedTimeOnPage + 5000)
+    }, 5000)
     return () => {
-      clearTimeout(timeout);
-    };
-  }, [elapsedTimeOnPage]);
+      clearTimeout(timeout)
+    }
+  }, [elapsedTimeOnPage])
 
   const renderAnimals = (hybrid): JSX.Element => {
-    const animalGroup = {};
-    const animalData = [];
+    const animalGroup = {}
+    const animalData  = []
 
     Object.values(allAnimals).forEach((animal, index) => {
       if (animal.owner.toLowerCase() !== account.toLowerCase() || animal.freed || !animal.revealed) {
@@ -346,19 +281,13 @@ const MyZooAccount: React.FC = () => {
         //console.log(account, egg)
         return;
       }
-      const createdDate = egg.createdAt
-        ? new Date(Number(egg.createdAt)).getTime()
-        : new Date().getTime();
-      const now = new Date().getTime();
-      const hatchTimeout = egg.basic ? 0 : getMilliseconds(eggTimeout);
-      const elapsedTime = now - createdDate;
+      const now = new Date().getTime()
+      const elapsedTime = now - egg.createdAt.getTime()
+      const hatchTimeout = egg.basic ? 0 : getMilliseconds(eggTimeout)
       const timeRemaining = hatchTimeout - elapsedTime;
-      const timeRemainingDaysHours = getDaysHours(timeRemaining);
+      const timeRemainingDaysHours = getDaysHours(timeRemaining)
       const barwidth = [100 * (elapsedTime / hatchTimeout), '%'].join('');
 
-      //  if (timeRemaining <= 0 && eggData.find(a => a.basic === egg.basic && a.timeRemaining <= 0)) {
-      //     eggGroup[eggType] = eggGroup[eggType] + 1
-      //  } else {
       if (egg.owner.toLowerCase() === account.toLowerCase() && !egg.burned) {
         eggData.push({
           id: index,
@@ -376,24 +305,8 @@ const MyZooAccount: React.FC = () => {
             : null,
         });
       }
-      //  }
     });
 
-    /* if(newEgg !== ''){
-      const createdDate = new Date().getTime();
-      const now = new Date().getTime();
-      const hatchTimeout = getMilliseconds(eggTimeout);
-      const elapsedTime = now - createdDate;
-      const timeRemaining = hatchTimeout - elapsedTime;
-      const timeRemainingDaysHours = getDaysHours(timeRemaining);
-      const barwidth = [100 * (elapsedTime / hatchTimeout), '%'].join('');
-      eggData.push({
-        id: eggData.length + 1,
-        name: newEgg === 'Base Egg' ? 'BASIC' : 'HYBRID',
-        timeRemaining: timeRemaining,
-        CTAOverride: { barwidth, timeRemainingDaysHours },
-      });
-    } */
     eggData = sortData(eggData, 'hybrid');
 
     return (
@@ -406,11 +319,10 @@ const MyZooAccount: React.FC = () => {
           ) : (
             <Swiper
               slidesPerView={document.body.getBoundingClientRect().width / 220}
-              spaceBetween={8}
+              spaceBetween={4}
               pagination={{ clickable: true }}
             >
               {eggData.map((egg) => (
-
                 <SwiperSlide
                   style={{ width: '220px', display: 'flex' }}
                   key={egg.tokenID}
