@@ -118,7 +118,7 @@ const MyZooAccount: React.FC = () => {
         yield: foundAnimal.get("Yield"),
         boost: foundAnimal.get("Boost"),
         rarity: foundAnimal.get("Rarity"),
-        dob: String(date.getTime()),
+        dob: String(foundAnimal.get("Timestamp")),
         startBid: foundAnimal.get("StartBid"),
         currentBid: foundAnimal.get("CurrentBid"),
         imageUrl: foundAnimal.get("TokenURI"),
