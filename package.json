@@ -34,6 +34,7 @@
     "send": "yarn workspace @zoolabs/contracts send",
     "matrix": "yarn workspace @zoolabs/contracts matrix",
     "moralis:functions": "yarn workspace @zoolabs/contracts moralis:functions",
+    "moralis:logs": "yarn workspace @zoolabs/contracts moralis:logs",
     "moralis:plugins": "yarn workspace @zoolabs/contracts moralis:plugins",
     "moralis:proxy": "yarn workspace @zoolabs/contracts moralis:proxy",
     "ipfs": "yarn workspace @zoolabs/dev ipfs",
