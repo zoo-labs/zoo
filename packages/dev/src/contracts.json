@@ -6919,10 +6919,10 @@
       }
     }
   },
-  "31337": {
+  "1337": {
     "localhost": {
       "name": "localhost",
-      "chainId": "31337",
+      "chainId": "1337",
       "contracts": {
         "ZooAuction": {
           "address": "0x76F7D5111C0C0e8e528f7474e571afAe5D305077",
@@ -10380,25 +10380,6 @@
               "inputs": [
                 {
                   "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "name": "eggsMinted",
-              "outputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "uint256",
                   "name": "tokenID",
                   "type": "uint256"
                 }
@@ -13840,7 +13821,7 @@
     },
     "hardhat": {
       "name": "hardhat",
-      "chainId": "31337",
+      "chainId": "1337",
       "contracts": {
         "ZooToken": {
           "address": "0x117FbB2f404e2F1e9FbaC0DdB372C25dD979bc60",
@@ -17441,25 +17422,6 @@
                   "internalType": "address",
                   "name": "",
                   "type": "address"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "name": "eggsMinted",
-              "outputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
                 }
               ],
               "stateMutability": "view",

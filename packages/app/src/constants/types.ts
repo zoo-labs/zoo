@@ -3,7 +3,7 @@ import { TranslatableText } from 'state/types'
 export interface Address {
     1?: string      // ETH Mainnet
     42?: string     // ETH Kovan
-    31337?: string  // StarterApp Devnet
+    1337?: string  // StarterApp Devnet
     4?: string      // ETH Rinkeby
     97?: string     // BSC Testnet
     56?: string

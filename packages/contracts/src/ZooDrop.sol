@@ -310,6 +310,8 @@ contract ZooDrop is Ownable {
         token.birthday = block.number;
 
         console.log('randomAnimal', animal.name, animal.rarity.name, animal.rarity.yield);
+        console.log('randomAnimal.data.tokenURI', animal.data.tokenURI);
+        console.log('randomAnimal.data.metadataURI', animal.data.metadataURI);
         return token;
     }
 

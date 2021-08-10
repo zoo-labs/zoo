@@ -95,16 +95,6 @@ const BidModal: React.FC<Props> = ({ onDismiss = () => null, item }) => {
    const { account, chainId } = useWeb3React();
    const dispatch = useDispatch();
 
-   Moralis.initialize(
-      chainId === 97
-         ? "16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy"
-         : "cIGUkzL7pyhM8aC8gIcDiH46QGpsEutO5SAQzTgy"
-   );
-   Moralis.serverURL =
-      chainId === 97
-         ? "https://dblpeaqbqk32.usemoralis.com:2053/server"
-         : "https://j0ixlvmwc1kz.usemoralis.com:2053/server";
-
    const confirmBuy = async () => {
       const toSet: Animal = { ...item };
       // toSet.listed = true;

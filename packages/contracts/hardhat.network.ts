@@ -20,7 +20,7 @@ function mnemonic() {
 //
 const networks: HardhatUserConfig['networks'] = {
   hardhat: {
-    chainId: 31337,
+    chainId: 1337,
     allowUnlimitedContractSize: true,
     mining: {
       auto: true,
