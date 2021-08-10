@@ -5,7 +5,7 @@
       "chainId": "97",
       "contracts": {
         "ZooAuction": {
-          "address": "0x91ca21c4293119f93cE61a4C97f0Ff2459d72b05",
+          "address": "0x8183F909d770DbD0b120806C0f4529ae817685e8",
           "abi": [
             {
               "anonymous": false,
@@ -638,7 +638,7 @@
           ]
         },
         "ZooDrop": {
-          "address": "0x216dB685bE32DF10babC0cf2e0007B91D1443110",
+          "address": "0x9907c6e3Db277655D01c56e2a4825042c4b61922",
           "abi": [
             {
               "inputs": [
@@ -2572,7 +2572,7 @@
           ]
         },
         "ZooFaucet": {
-          "address": "0x44C23417d28330E878039AF38f5a1518875bBD0b",
+          "address": "0x487d4730B4569926B3f1572531456dE80a28504a",
           "abi": [
             {
               "inputs": [
@@ -2703,7 +2703,7 @@
           ]
         },
         "ZooKeeper": {
-          "address": "0x5eb16EA9e6e855061F0EC306CF18c78d2C43e20d",
+          "address": "0x7722A4ea02386897bdb461Eebe1c327D8314d25D",
           "abi": [
             {
               "anonymous": false,
@@ -3460,25 +3460,6 @@
               "inputs": [
                 {
                   "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "name": "eggsMinted",
-              "outputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "uint256",
                   "name": "tokenID",
                   "type": "uint256"
                 }
@@ -4067,7 +4048,7 @@
           ]
         },
         "ZooMarket": {
-          "address": "0x9CBAf8b4a841696860560ee6A538fc67c9b19367",
+          "address": "0xe364163e5332E2A58f86c648b4f740137A3771DA",
           "abi": [
             {
               "inputs": [],
@@ -4883,7 +4864,7 @@
           ]
         },
         "ZooMedia": {
-          "address": "0xbd66aabA27f5b09501355Cc2B28a3Bebb130d9D5",
+          "address": "0xA605Cf535571b2B7DEc66fd156B28Fcc2b128797",
           "abi": [
             {
               "inputs": [
@@ -6536,7 +6517,7 @@
           ]
         },
         "ZooToken": {
-          "address": "0xd20B5e7ce66078382639Eed1d7F0213dA317b8d3",
+          "address": "0x5FDE36D3e0f79692e9574304b5D1A3a784fc5051",
           "abi": [
             {
               "inputs": [],
