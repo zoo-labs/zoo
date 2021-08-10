@@ -44,7 +44,7 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
       }
    };
 
-   const daysOld = (new Date().getTime()) / 86400000
+   const daysOld = (new Date().getTime() - (Number(item.dob) * 1000)) / 86400000
 
    return (
       <>
@@ -69,7 +69,7 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
                      ? `${multiplier} x ${Number(item.yield)} = ${
                           multiplier * Number(item.yield)
                        }`
-                     : `${Number(item.yield)}`}
+                     : `${Number(item.yield)}`} ZOO
                </Text>
                <Label fontSize="22px" color="text" fontWeight="550">
                   Accumulated Yield
@@ -81,7 +81,7 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
                   mb="16px"
                   fontSize="22px"
                   color="text">
-                  {item.yield * daysOld}
+                  {(item.yield * daysOld).toFixed(8)} ZOO
                </Text>
                {canFree && (
                   <Flex flexDirection="row" justifyContent="space-around">
