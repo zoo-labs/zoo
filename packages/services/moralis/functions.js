@@ -98,7 +98,8 @@ Moralis.Cloud.afterSave('BuyEgg', async (request) => {
       	egg.set('interactive', false)
       	egg.set('hatched', false)
         await egg.save()
-      	return logger.info(`Egg ${eggID} saved at ${Date.now()}`)
+      	logger.info(`Egg ${eggID} saved at ${Date.now()}`)
+        return
     }
 
     const egg = await getEgg(eggID)
@@ -122,27 +123,40 @@ Moralis.Cloud.afterSave('Hatch', async (request) => {
   	const eggID   = parseInt(request.object.get('eggID'))   // Egg hatching will be burned
     const tokenID = parseInt(request.object.get('tokenID')) // New Animal minted
 
+    const egg = await getEgg(eggID)
+
   	if (!confirmed(request)) {
+
+        // Update token
+        egg.set('animalID', tokenID)
+        egg.set('interactive', false)
+        egg.set('hatched', true)
+        await egg.save()
+
         const animal = newAnimal(request)
         animal.set('tokenID', tokenID)
         animal.set('eggID', eggID)
-      	return logger.info(`Hatch Egg ${eggID} saved at ${Date.now()}`)
+        await animal.save()
+
+      	logger.info(`Hatch Egg ${eggID} saved at ${Date.now()}`)
+        return
     }
 
-    const egg = await getEgg(eggID)
+    // Update Egg
     egg.set('animalID', tokenID)
-    egg.set('interactive', false)
     egg.set('hatched', true)
+    egg.set('interactive', true)
     await egg.save()
 
-    const tok = await getToken(tokenID)
+    // Update Animal with confirmed state
     const animal = await getAnimal(tokenID)
-    animal.set('kind', tok.kind)
+    const tok = await getToken(tokenID)
+    animal.set('kind', parseInt(tok.kind))
     animal.set('tokenURI', tok.data.tokenURI)
     animal.set('metadataURI', tok.data.metadataURI)
     animal.set('rarity', tok.rarity.name)
-    animal.set('yield', tok.rarity.yield)
-    animal.set('boost', tok.rarity.boost)
+    animal.set('yield', parseInt(tok.rarity.yield))
+    animal.set('boost', parseInt(tok.rarity.boost))
     animal.set('name', tok.name)
     animal.set('listed', false)
     animal.set('revealed', false)
@@ -185,7 +199,8 @@ Moralis.Cloud.afterSave('Breed', async (request) => {
         pB.set('recentBreedTime', now)
         await pB.save()
 
-        return logger.info(`Hybrid Egg ${tokenID} hatched, pending confirmation`)
+        logger.info(`Hybrid Egg ${tokenID} hatched, pending confirmation`)
+        return
     }
 
     // confirmed, set to interactive

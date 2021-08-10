@@ -21,13 +21,10 @@ import { Egg, Animal } from "types/zoo";
 import { getZooKeeper } from "util/contractHelpers";
 import useWeb3 from "hooks/useWeb3";
 
-// Route-based code splitting
-// Only pool is included in the main bundle because of it's the most visited page
 const Account = lazy(() => import("./views/Account"));
 const Login = lazy(() => import("./views/Login"));
 const Bank = lazy(() => import("./views/Bank"));
 const Feed = lazy(() => import("./views/Feed"));
-// const Splash = lazy(() => import('./views/Splash'))
 
 // This config is required for number formating
 BigNumber.config({
@@ -72,43 +69,69 @@ const Marginer = styled.div`
    margin-top: 5rem;
 `;
 
+function mapEgg(egg) {
+    return {
+        tokenID:       egg.get('tokenID'),
+        kind:          egg.get('kind'),
+        animalID:      egg.get('animalID'),
+        basic:         egg.get('type') === 'basic',
+        burned:        egg.get('burn'),
+        hatched:       egg.get('hatched'),
+        interactive:   egg.get('interactive'),
+        owner:         egg.get('owner'),
+        parentA:       egg.get('parentA'),
+        parentB:       egg.get('parentB'),
+        timeRemaining: egg.get('timeRemaining'),
+        createdAt:     egg.get('createdAt'),
+        updatedAt:     egg.get('updatedAt'),
+        CTAOverride:   egg.get('CTAOverride'),
+    }
+}
+
+function mapAnimal(animal) {
+    return {
+        owner:         String(animal.get('owner')),
+        tokenID:       animal.get('tokenID'),
+        name:          animal.get('name'),
+        description:   animal.get('NA'),
+        yield:         animal.get('yield'),
+        boost:         animal.get('boost'),
+        rarity:        animal.get('rarity'),
+        dob:           animal.get('timestamp'),
+        startBid:      animal.get('startBid'),
+        currentBid:    animal.get('currentBid'),
+        imageUrl:      animal.get('tokenURI'),
+        listed:        animal.get('listed'),
+        bloodline:     animal.get('kind') === 1 ? 'pure' :  'hybrid',
+        selected:      false,
+        bred:          false,
+        breedCount:    animal.get('breedCount'),
+        kind:          animal.get('kind'),
+        timeRemaining: animal.get('timeRemaining'),
+        CTAOverride:   animal.get('CTAOverride'),
+        lastBred:      animal.get('lastBred'),
+        buyNow:        animal.get('buyNow'),
+        revealed:      animal.get('revealed'),
+        freed:         animal.get('freed'),
+    }
+}
+
 const App: React.FC = () => {
    useEagerConnect();
    const { chainId } = useWeb3React();
    const web3 = useWeb3();
    const dispatch = useDispatch();
 
-   // const getEvents = async () => {
-   //    const burn = await zooKeeper.getPastEvents("Burn", {
-   //       fromBlock: 0,
-   //       toBlock: "latest",
-   //    });
-   //    console.log("ALL BURN\n", burn);
-   //    const hatch = await zooKeeper.getPastEvents("Hatch", {
-   //       fromBlock: 0,
-   //       toBlock: "latest",
-   //    });
-   //    console.log("ALL HATCH\n", hatch);
-   // };
-
-   // if (chainId) getEvents();
-
    useMoralisSubscription("Eggs", (q) => q, [], {
-      onCreate: (data) => createdUpdateEgg(data),
-      onUpdate: (data) => createdUpdateEgg(data),
+      onCreate: (data) => createOrUpdateEgg(data),
+      onUpdate: (data) => createOrUpdateEgg(data),
       onDelete: (data) => deleteEgg(data),
    });
 
    useMoralisSubscription("Animals", (q) => q, [], {
-      onCreate: (data) => createdUpdateAnimal(data),
-      onUpdate: (data) => createdUpdateAnimal(data),
+      onCreate: (data) => createOrUpdateAnimal(data),
+      onUpdate: (data) => createOrUpdateAnimal(data),
    });
-
-   useEffect(() => {
-      console.warn = () => null;
-      getEggs();
-      getAnimals();
-   }, []);
 
    useEffect(() => {
       dispatch(clearZoo());
@@ -122,35 +145,15 @@ const App: React.FC = () => {
    const getEggs = async () => {
       console.log("GETTING EGGS");
       try {
-         const Eggs = [];
+         const eggs = [];
          const MoralisObject = Moralis.Object.extend("Eggs");
          const query = new Moralis.Query(MoralisObject);
          query.limit(1000);
          const results = await query.find();
          for (let i = 0; i < results.length; i++) {
-            const singleResult = results[i];
-            const s = String(singleResult.get("createdAt"));
-            const replacedString = s.replace("at ", "");
-            const date = new Date(replacedString);
-            const tempEgg: Egg = {
-               owner: singleResult.get("owner"),
-               tokenID: singleResult.get("tokenID"),
-               kind: singleResult.get("kind"),
-               parentA: singleResult.get("parentA"),
-               parentB: singleResult.get("parentB"),
-               basic: singleResult.get("type") === "basic",
-               timeRemaining: singleResult.get("timeRemaining"),
-               CTAOverride: singleResult.get("CTAOverride"),
-               createdAt: singleResult.get('createdAt'),
-               updatedAt: singleResult.get('updatedAt'),
-               burned: singleResult.get("burn"),
-               interactive: singleResult.get("interactive"),
-               hatched: singleResult.get("hatched"),
-               animalID: singleResult.get("animalID"),
-            };
-            Eggs.push(tempEgg);
+            eggs.push(mapEgg(results[i]))
          }
-         dispatch(addEggs(Eggs));
+         dispatch(addEggs(eggs))
       } catch (e) {
          console.error("ISSUE GETTING EGGS \n", e);
       }
@@ -160,82 +163,34 @@ const App: React.FC = () => {
       console.log("GETTING ANIMALS");
 
       try {
-         const Animals = [];
+         const animals = [];
          const MoralisObject = Moralis.Object.extend("Animals");
          const query = new Moralis.Query(MoralisObject);
          query.limit(1000);
          const results = await query.find();
-         let animal;
          for (let i = 0; i < results.length; i++) {
-            animal = results[i];
-            const tempAnimal: Animal = {
-               owner: String(animal.get("owner")),
-               tokenID: animal.get("tokenID"),
-               name: animal.get("name"),
-               description: animal.get("NA"),
-               yield: animal.get("yield"),
-               boost: animal.get("boost"),
-               rarity: animal.get("rarity"),
-               dob: animal.get("timestamp"),
-               startBid: animal.get("startBid"),
-               currentBid: animal.get("currentBid"),
-               imageUrl: animal.get("tokenURI"),
-               listed: animal.get("listed"),
-               bloodline: animal.get('kind') === 1 ? "pure" : "hybrid",
-               selected: false,
-               bred: false,
-               breedCount: animal.get("breedCount"),
-               kind: animal.get("kind"),
-               timeRemaining: animal.get("timeRemaining"),
-               CTAOverride: animal.get("CTAOverride"),
-               lastBred: animal.get("lastBred"),
-               buyNow: animal.get("buyNow"),
-               revealed: animal.get("revealed"),
-               freed: animal.get("freed")
-            };
-            Animals.push(tempAnimal);
+            animals.push(mapAnimal(results[i]))
          }
-         dispatch(addAnimals(Animals));
+         dispatch(addAnimals(animals));
       } catch (e) {
          console.error("ISSUE GETTING ANIMAL \n", e);
       }
    };
 
-   const createdUpdateEgg = async (data) => {
-      console.log("UPDATING EGG");
+    const createOrUpdateEgg = async (data) => {
+      console.log("UPDATING EGG", data)
       try {
-         const singleResult = data;
-         let string = String(singleResult.get("createdAt"));
-         const replacedString = string.replace("at ", "");
-         const date = new Date(replacedString);
-         const tempEgg: Egg = {
-            owner: singleResult.get("owner"),
-            tokenID: singleResult.get("tokenID"),
-            kind: singleResult.get("kind"),
-            parentA: singleResult.get("parentA"),
-            parentB: singleResult.get("parentB"),
-            basic: singleResult.get("type") === "basic",
-            timeRemaining: singleResult.get("timeRemaining"),
-            CTAOverride: singleResult.get("CTAOverride"),
-            createdAt: singleResult.get('createdAt'),
-            updatedAt: singleResult.get('updatedAt'),
-            burned: singleResult.get("burn"),
-            interactive: singleResult.get("interactive"),
-            hatched: singleResult.get("hatched"),
-            animalID: singleResult.get("animalID"),
-         };
-         dispatch(addEgg(tempEgg));
+         dispatch(addEgg(mapEgg(data)))
       } catch (e) {
          console.error("ISSUE UPDATING EGG \n", e);
       }
    };
 
-   const createdUpdateAnimal = async (data) => {
-      console.log("UPDATING ANIMAL");
+   const createOrUpdateAnimal = async (data) => {
+      console.log("UPDATING ANIMAL", data);
 
       try {
          const animal = data;
-         console.log(animal.attributes);
          let string = String(animal.get("createdAt"));
          const replacedString = string.replace("at ", "");
          const date = new Date(replacedString);
@@ -270,31 +225,15 @@ const App: React.FC = () => {
    };
 
    const deleteEgg = async (data) => {
-      console.log("DELETING EGG");
+    console.log("DELETING EGG");
 
-      try {
-         const singleResult = data;
-         let string = String(singleResult.get("createdAt"));
-         const replacedString = string.replace("at ", "");
-         const date = new Date(replacedString);
-         const tempEgg: Egg = {
-            owner: singleResult.get("owner"),
-            tokenID: singleResult.get("tokenID"),
-            kind: singleResult.get("kind"),
-            parentA: singleResult.get("parentA"),
-            parentB: singleResult.get("parentB"),
-            basic: singleResult.get("type") === "basic",
-            timeRemaining: singleResult.get("timeRemaining"),
-            CTAOverride: singleResult.get("CTAOverride"),
-            createdAt: singleResult.get('createdAt'),
-            updatedAt: singleResult.get('updatedAt'),
-            burned: singleResult.get("burn"),
-            interactive: singleResult.get("interactive"),
-            hatched: singleResult.get("hatched"),
-            animalID: singleResult.get("animalID"),
-         };
-         dispatch(burnEgg(tempEgg));
-      } catch (e) {
+    try {
+       const singleResult = data;
+       let string = String(singleResult.get("createdAt"));
+       const replacedString = string.replace("at ", "");
+       const date = new Date(replacedString);
+       dispatch(burnEgg(mapEgg(data)))
+    } catch (e) {
          console.error("ISSUE DELETING EGG \n", e);
       }
    };
