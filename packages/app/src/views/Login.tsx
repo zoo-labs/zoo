@@ -94,7 +94,7 @@ export default function LoginMain() {
     return (
         <Container>
             <img alt="CryptoZoo Logo" src="bearshark-halftone.png" style={{ top: '50%', transform: 'translateY(-50%)', left: '1%', position: 'absolute', width: '98%', margin: 'auto'}}/>
-            <img alt="CryptoZoo Logo" src="cryptozoo-logo-white.png" style={{ top: '50%', transform: 'translateY(-50%)', left: '29vw', position: 'absolute', width: '42vw', margin: 'auto'}}/>
+            <img alt="CryptoZoo Logo" src="ZooLogoWhite.png" style={{ top: '50%', transform: 'translateY(-50%)', left: '29vw', position: 'absolute', width: '42vw', margin: 'auto'}}/>
             <Button onClick={metamaskLogin} style={{ position: 'absolute', left: '35%', bottom: '10%', width: '30%'}}>
                 <p>LOGIN WITH</p>
                 <p>METAMASK</p>
