@@ -37,6 +37,7 @@
     "moralis:logs": "yarn workspace @zoolabs/contracts moralis:logs",
     "moralis:plugins": "yarn workspace @zoolabs/contracts moralis:plugins",
     "moralis:proxy": "yarn workspace @zoolabs/contracts moralis:proxy",
+    "moralis:watch": "yarn workspace @zoolabs/contracts moralis:watch",
     "ipfs": "yarn workspace @zoolabs/dev ipfs",
     "surge": "yarn workspace @zoolabs/dev surge",
     "s3": "yarn workspace @zoolabs/dev s3",
