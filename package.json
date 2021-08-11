@@ -16,7 +16,7 @@
     "test:dev": "yarn workspace @zoolabs/dev test",
     "build": "yarn workspace @zoolabs/app build --max-old-space-size=12288",
     "chain": "yarn workspace @zoolabs/contracts chain",
-    "proxy": "yarn workspace @zoolabs/contracts proxy",
+    "proxy": "yarn workspace @zoolabs/services proxy",
     "fork": "yarn workspace @zoolabs/contracts fork",
     "node": "yarn workspace @zoolabs/contracts chain",
     "test": "yarn workspace @zoolabs/contracts test",
