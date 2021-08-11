@@ -1,41 +1,44 @@
-import React from "react";
-import Svg from "../../Svg";
-import { SvgProps } from "../../types";
+import React from 'react'
+import Svg from '../../Svg'
+import { SvgProps } from '../../types'
 
 const Icon: React.FC<SvgProps> = (props) => {
   return (
-    <Svg viewBox="0 0 32 32" {...props}>
-      <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
-          <defs>
-              <filter id="a" width="111.7%" height="111.7%" x="-5.8%" y="-4.2%" filterUnits="objectBoundingBox">
-                  <feOffset dy=".5" in="SourceAlpha" result="shadowOffsetOuter1"/>
-                  <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation=".5"/>
-                  <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
-                  <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.199473505 0"/>
-              </filter>
-              <filter id="d3" width="117.5%" height="117.5%" x="-8.8%" y="-6.2%" filterUnits="objectBoundingBox">
-                  <feOffset dy=".5" in="SourceAlpha" result="shadowOffsetOuter1"/>
-                  <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation=".5"/>
-                  <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.204257246 0"/>
-              </filter>
-              <linearGradient id="c" x1="50%" x2="50%" y1="0%" y2="100%">
-                  <stop offset="0%" stopColor="#FFF" stopOpacity=".5"/>
-                  <stop offset="100%" stopOpacity=".5"/>
-              </linearGradient>
-              <circle id="b" cx="16" cy="15" r="15"/>
-              <path id="e3" d="M12.116 13.404L16 9.52l3.886 3.886 2.26-2.26L16 5l-6.144 6.144 2.26 2.26zM6 15l2.26-2.26L10.52 15l-2.26 2.26L6 15zm6.116 1.596L16 20.48l3.886-3.886 2.26 2.259L16 25l-6.144-6.144-.003-.003 2.263-2.257zM21.48 15l2.26-2.26L26 15l-2.26 2.26L21.48 15zm-3.188-.002h.002V15L16 17.294l-2.291-2.29-.004-.004.004-.003.401-.402.195-.195L16 12.706l2.293 2.293z"/>
-          </defs>
-          <g fill="none">
-              <use fill="#000" filter="url(#a)" xlinkHref="#b"/>
-              <use fill="#F3BA2F" fillRule="evenodd" xlinkHref="#b"/>
-              <use fill="url(#c)" fillRule="evenodd" style={{mixBlendMode: 'soft-light'}} xlinkHref="#b"/>
-              <circle cx="16" cy="15" r="14.5" stroke="#000" strokeOpacity=".097"/>
-              <use fill="#000" filter="url(#d3)" xlinkHref="#e3"/>
-              <use fill="#FFF" fillRule="evenodd" xlinkHref="#e3"/>
-          </g>
+    <Svg viewBox='0 0 32 32' {...props}>
+      <svg xmlns='http://www.w3.org/2000/svg' xmlnsXlink='http://www.w3.org/1999/xlink' width='32' height='32' viewBox='0 0 32 32'>
+        <defs>
+          <filter id='a' width='111.7%' height='111.7%' x='-5.8%' y='-4.2%' filterUnits='objectBoundingBox'>
+            <feOffset dy='.5' in='SourceAlpha' result='shadowOffsetOuter1' />
+            <feGaussianBlur in='shadowOffsetOuter1' result='shadowBlurOuter1' stdDeviation='.5' />
+            <feComposite in='shadowBlurOuter1' in2='SourceAlpha' operator='out' result='shadowBlurOuter1' />
+            <feColorMatrix in='shadowBlurOuter1' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.199473505 0' />
+          </filter>
+          <filter id='d3' width='117.5%' height='117.5%' x='-8.8%' y='-6.2%' filterUnits='objectBoundingBox'>
+            <feOffset dy='.5' in='SourceAlpha' result='shadowOffsetOuter1' />
+            <feGaussianBlur in='shadowOffsetOuter1' result='shadowBlurOuter1' stdDeviation='.5' />
+            <feColorMatrix in='shadowBlurOuter1' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.204257246 0' />
+          </filter>
+          <linearGradient id='c' x1='50%' x2='50%' y1='0%' y2='100%'>
+            <stop offset='0%' stopColor='#FFF' stopOpacity='.5' />
+            <stop offset='100%' stopOpacity='.5' />
+          </linearGradient>
+          <circle id='b' cx='16' cy='15' r='15' />
+          <path
+            id='e3'
+            d='M12.116 13.404L16 9.52l3.886 3.886 2.26-2.26L16 5l-6.144 6.144 2.26 2.26zM6 15l2.26-2.26L10.52 15l-2.26 2.26L6 15zm6.116 1.596L16 20.48l3.886-3.886 2.26 2.259L16 25l-6.144-6.144-.003-.003 2.263-2.257zM21.48 15l2.26-2.26L26 15l-2.26 2.26L21.48 15zm-3.188-.002h.002V15L16 17.294l-2.291-2.29-.004-.004.004-.003.401-.402.195-.195L16 12.706l2.293 2.293z'
+          />
+        </defs>
+        <g fill='none'>
+          <use fill='#000' filter='url(#a)' xlinkHref='#b' />
+          <use fill='#F3BA2F' fillRule='evenodd' xlinkHref='#b' />
+          <use fill='url(#c)' fillRule='evenodd' style={{ mixBlendMode: 'soft-light' }} xlinkHref='#b' />
+          <circle cx='16' cy='15' r='14.5' stroke='#000' strokeOpacity='.097' />
+          <use fill='#000' filter='url(#d3)' xlinkHref='#e3' />
+          <use fill='#FFF' fillRule='evenodd' xlinkHref='#e3' />
+        </g>
       </svg>
     </Svg>
-  );
-};
+  )
+}
 
-export default Icon;
+export default Icon

@@ -4,13 +4,12 @@ import { Theme } from 'theme'
 
 // import MyMP16OSFFont from '../../fonts/MP16OSF.ttf'
 
-const fontFamily = 'Consolas';
+const fontFamily = 'Consolas'
 import fontFamilySrc from '../../fonts/Consolas.ttf'
 
 declare module 'styled-components' {
-  export interface DefaultTheme extends Theme { }
+  export interface DefaultTheme extends Theme {}
 }
-
 
 const GlobalStyle = createGlobalStyle`
   @font-face{
@@ -26,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
     color: #FFFFFF;
   }
   body {
-    background-color: ${({ theme }) => theme.isDark ? "#040404" : "#FFFFFF"};
+    background-color: ${({ theme }) => (theme.isDark ? '#040404' : '#FFFFFF')};
     overflow-x: hidden;
     position: relative;
     img {

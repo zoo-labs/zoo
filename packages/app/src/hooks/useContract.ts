@@ -1,14 +1,13 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react'
 // import { useWeb3React } from "@web3-react/core";
 
 interface ContractType {
-	contract: any;
-	senderContract: any;
+  contract: any
+  senderContract: any
 }
 
 interface ContractMap {
-	[name: string]: ContractType;
-
+  [name: string]: ContractType
 }
 
 // import { ethers } from 'ethers';
@@ -30,7 +29,6 @@ interface ContractMap {
 // 		return contractMap[contractName];
 // 	}
 
-
 // 	const ContractDef = require(`../../../contracts/artifacts/src/${contractName}.sol/${contractName}.json`);
 // 	// TODO: tie this to web3
 // 	const provider = getProvider();
@@ -47,7 +45,6 @@ interface ContractMap {
 // 		contract: inst,
 // 		senderContract: sender
 // 	};
-
 
 // 	const dupMap = Object.assign({}, contractMap, {
 // 		[contractName]: ct

@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { SideMenu } from 'components/SideMenu'
 import { useWeb3React } from '@web3-react/core'
@@ -19,18 +18,7 @@ const Menu: React.FC = (props) => {
   const web3 = useWeb3()
   const currentPathname = useLocation().pathname
 
-  return (
-    <SideMenu
-      links={links()}
-      account={account as string}
-      chainId={chainId as number}
-      login={login}
-      logout={logout}
-      isDark={isDark}
-      toggleTheme={toggleTheme}
-      {...props}
-    />
-  )
+  return <SideMenu links={links()} account={account as string} chainId={chainId as number} login={login} logout={logout} isDark={isDark} toggleTheme={toggleTheme} {...props} />
 }
 
 export default Menu

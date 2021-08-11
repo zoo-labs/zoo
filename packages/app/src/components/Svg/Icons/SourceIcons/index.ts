@@ -4,6 +4,6 @@ export { default as Bitstamp } from './Bitstamp'
 export { default as Coinbase } from './Coinbase'
 export { default as Coindesk } from './Coindesk'
 export { default as CoinGecko } from './CoinGecko'
-export { default as Ftx } from "./Ftx";
+export { default as Ftx } from './Ftx'
 export { default as GateApi } from './GateAPI'
-export { default as Huobi } from "./Huobi";
+export { default as Huobi } from './Huobi'

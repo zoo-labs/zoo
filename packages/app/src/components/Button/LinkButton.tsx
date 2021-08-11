@@ -40,28 +40,29 @@ const BtnContainer = styled.div`
 `
 
 const LinkButton = (props): JSX.Element => {
-    const { disabled } = props;
-    const { isXs, isSm } = useMatchBreakpoints()
-    const isMobile = isXs || isSm
-    
-    return (
-        <>
-            {disabled ? <Button scale={isMobile ? scales.XS : scales.MD} {...props} />
-                : <BtnContainer>
-                        <Button scale={isMobile ? scales.XS : scales.MD} {...props} />
-                </BtnContainer>
-            }
+  const { disabled } = props
+  const { isXs, isSm } = useMatchBreakpoints()
+  const isMobile = isXs || isSm
 
-        </>
-    )
+  return (
+    <>
+      {disabled ? (
+        <Button scale={isMobile ? scales.XS : scales.MD} {...props} />
+      ) : (
+        <BtnContainer>
+          <Button scale={isMobile ? scales.XS : scales.MD} {...props} />
+        </BtnContainer>
+      )}
+    </>
+  )
 }
 
 LinkButton.defaultProps = {
-    isLoading: false,
-    external: false,
-    // variant: variants.PRIMARY,
-    // scale: scales.SM,
-    disabled: false,
+  isLoading: false,
+  external: false,
+  // variant: variants.PRIMARY,
+  // scale: scales.SM,
+  disabled: false,
 }
 
 export default LinkButton
