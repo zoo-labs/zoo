@@ -58,6 +58,7 @@
     "fork": "hardhat node --fork https://mainnet.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad",
     "generate": "hardhat generate",
     "matrix": "ts-node utils/yieldMatrix.ts",
+    "pretty": "prettier . --write",
     "send": "hardhat send",
     "test": "hardhat test --network hardhat",
     "verify": "hardhat etherscan-verify --api-key B4DWQYJ2WXADKY172FJTAH9736VRYMKIC9",

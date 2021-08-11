@@ -1,9 +1,8 @@
-import { ethers } from "hardhat";
+import { ethers } from 'hardhat'
 
-import chai, { expect } from "chai";
-import asPromised from "chai-as-promised";
-chai.use(asPromised);
-
+import chai, { expect } from 'chai'
+import asPromised from 'chai-as-promised'
+chai.use(asPromised)
 
 describe('ZooToken', function () {
   let token

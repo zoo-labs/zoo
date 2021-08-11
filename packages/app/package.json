@@ -14,7 +14,8 @@
     "format:write": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
     "generate:config": "ts-node --compiler-options '{\"module\":\"commonjs\"}' scripts/generateConfig",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "pretty": "prettier . --write"
   },
   "dependencies": {
     "@binance-chain/bsc-connector": "^1.0.0",

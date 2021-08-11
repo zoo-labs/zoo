@@ -14,10 +14,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     log: true,
   })
 
-  return hre.network.live;
+  return hre.network.live
 }
 
 export default func
 func.id = 'deploy_zoo_media' // ID required to prevent reexecution
 func.tags = ['ZooMedia']
-func.dependencies = [];
+func.dependencies = []

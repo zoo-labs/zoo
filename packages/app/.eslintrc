@@ -15,23 +15,11 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [
-          ".js",
-          ".ts",
-          ".jsx",
-          ".tsx"
-        ],
-        "paths": [
-          "./src"
-        ]
+        "extensions": [".js", ".ts", ".jsx", ".tsx"],
+        "paths": ["./src"]
       }
     },
-    "import/extensions": [
-      ".js",
-      ".ts",
-      ".jsx",
-      ".tsx"
-    ]
+    "import/extensions": [".js", ".ts", ".jsx", ".tsx"]
   },
   //   "extends": [
   //     // "airbnb",
