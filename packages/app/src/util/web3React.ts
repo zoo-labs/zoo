@@ -11,8 +11,8 @@ const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 1337)
 
 const supportedChainIds = [
   1337, // Hardhat
-  56,    // BSC Mainnet
-  97,    // BSC Testnet
+  56, // BSC Mainnet
+  97, // BSC Testnet
 ]
 
 const injected = new InjectedConnector({ supportedChainIds })
@@ -24,7 +24,7 @@ const walletConnect = new WalletConnectConnector({
   pollingInterval: POLLING_INTERVAL,
 })
 
-const bscConnector = new BscConnector({ supportedChainIds: [ 56, 97 ] })
+const bscConnector = new BscConnector({ supportedChainIds: [56, 97] })
 
 export const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.Injected]: injected,

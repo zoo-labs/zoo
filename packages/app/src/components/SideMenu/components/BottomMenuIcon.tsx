@@ -1,6 +1,6 @@
-import React from "react";
-import { FaHome } from "react-icons/fa";
-import styled from "styled-components";
+import React from 'react'
+import { FaHome } from 'react-icons/fa'
+import styled from 'styled-components'
 
 const StickyBottomMenuWrapper = styled.button`
   width: 60px;
@@ -19,23 +19,23 @@ const StickyBottomMenuWrapper = styled.button`
   svg {
     width: 25px;
     height: 25px;
-    color: #FFFFFF;
+    color: #ffffff;
   }
-`;
+`
 
 export interface BottomMenuIconProps {
-    isOpen: boolean;
-    togglePush: () => void;
-    isDark: boolean;
-  href: string;
+  isOpen: boolean
+  togglePush: () => void
+  isDark: boolean
+  href: string
 }
 
-const BottomMenuIcon: React.FC<BottomMenuIconProps> = ({isOpen, togglePush, isDark, href}) => {
-    return (
-        <StickyBottomMenuWrapper onClick={togglePush}>
-        <FaHome />
-      </StickyBottomMenuWrapper>
-    )
+const BottomMenuIcon: React.FC<BottomMenuIconProps> = ({ isOpen, togglePush, isDark, href }) => {
+  return (
+    <StickyBottomMenuWrapper onClick={togglePush}>
+      <FaHome />
+    </StickyBottomMenuWrapper>
+  )
 }
 
-export default React.memo(BottomMenuIcon, (prev, next) => prev.isOpen === next.isOpen && prev.isDark === next.isDark);
+export default React.memo(BottomMenuIcon, (prev, next) => prev.isOpen === next.isOpen && prev.isDark === next.isDark)

@@ -41,9 +41,7 @@ const Timestamp: React.FunctionComponent<TimestampProps> = ({ timestamp }) => {
   return (
     <Container>
       <TimestampWrapper>
-        <Text>
-          {displayTimestamp}
-        </Text>
+        <Text>{displayTimestamp}</Text>
       </TimestampWrapper>
       {/* <Tooltip
         content={

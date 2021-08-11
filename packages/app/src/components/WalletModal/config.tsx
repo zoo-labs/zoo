@@ -1,10 +1,10 @@
-import Metamask from "./icons/Metamask";
-import WalletConnect from "./icons/WalletConnect";
-import { Config, ConnectorNames } from "./types";
+import Metamask from './icons/Metamask'
+import WalletConnect from './icons/WalletConnect'
+import { Config, ConnectorNames } from './types'
 
 const connectors: Config[] = [
   {
-    title: "Metamask",
+    title: 'Metamask',
     icon: Metamask,
     connectorId: ConnectorNames.Injected,
   },
@@ -24,7 +24,7 @@ const connectors: Config[] = [
   //   connectorId: ConnectorNames.Injected,
   // },
   {
-    title: "WalletConnect",
+    title: 'WalletConnect',
     icon: WalletConnect,
     connectorId: ConnectorNames.WalletConnect,
   },
@@ -38,7 +38,7 @@ const connectors: Config[] = [
   //   icon: SafePalWallet,
   //   connectorId: ConnectorNames.Injected,
   // },
-];
+]
 
-export default connectors;
-export const connectorLocalStorageKey = "connectorId";
+export default connectors
+export const connectorLocalStorageKey = 'connectorId'

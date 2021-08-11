@@ -22,7 +22,7 @@ const ContentContainer = styled.div`
   width: 100%;
 
   ${({ theme }) => theme.mediaQueries.lg || theme.mediaQueries.xl} {
-   height: 60px;
+    height: 60px;
   }
 `
 // min-height: 24px;

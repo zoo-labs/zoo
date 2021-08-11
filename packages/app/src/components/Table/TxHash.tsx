@@ -38,7 +38,6 @@ const Container = styled.div`
 ` */
 
 const TxHash: React.FunctionComponent<TxHashProps> = ({ txHash }) => {
-
   /* const { chainId } = useWeb3React()
 
   const displayTxHash = txHash ? abbreviateAddress(txHash.toLowerCase()) : '-'

@@ -9,14 +9,11 @@ const BodyContainer = styles.div`
 `
 
 const Body: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children }) => {
-  
-    return (
-        <>
-            <BodyContainer>
-                {children}
-            </BodyContainer>
-        </>
-    )
+  return (
+    <>
+      <BodyContainer>{children}</BodyContainer>
+    </>
+  )
 }
 
 export default Body

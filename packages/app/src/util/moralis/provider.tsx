@@ -4,14 +4,13 @@ import { MoralisProvider as MProvider } from 'react-moralis'
 import { moralisConfig } from 'constants/moralis'
 import { useWeb3React } from '@web3-react/core'
 
-
 export const MoralisProvider: React.FC = ({ children }) => {
-  const [ chainID, setChainID ] = useState(parseInt(ethereum.chainId || 1337))
+  const [chainID, setChainID] = useState(parseInt(ethereum.chainId || 1337))
 
-  useEffect(()=>{
-      ethereum.on('chainChanged', (chainID) => {
-          window.location.reload()
-      })
+  useEffect(() => {
+    ethereum.on('chainChanged', (chainID) => {
+      window.location.reload()
+    })
   })
 
   const { applicationID, serverURL } = moralisConfig(chainID)
@@ -19,10 +18,10 @@ export const MoralisProvider: React.FC = ({ children }) => {
   Moralis.serverURL = serverURL
 
   return (
-    <MProvider appId={ applicationID } serverUrl={ serverURL }>
-      { children }
+    <MProvider appId={applicationID} serverUrl={serverURL}>
+      {children}
     </MProvider>
-   )
+  )
 }
 
 export default MoralisProvider

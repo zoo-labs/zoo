@@ -1,15 +1,9 @@
 {
   "compilerOptions": {
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "baseUrl": "src",
     "target": "es2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
@@ -29,30 +23,13 @@
     "jsx": "react-jsx",
     "downlevelIteration": true,
     "allowSyntheticDefaultImports": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/types"
-    ]
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
-  "include": [
-    "./src/types",
-    "mdx.d.ts",
-    "src",
-    "scripts",
-    "fonts.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.stories.tsx"
-  ],
+  "include": ["./src/types", "mdx.d.ts", "src", "scripts", "fonts.d.ts"],
+  "exclude": ["node_modules", "dist", "**/*.stories.tsx"],
   "paths": {
-    "rebass/styled-components": [
-      "node_modules/rebass/styled-components"
-    ],
-    "@reach/portal": [
-      "node_modules/@reach/portal/dist/declarations/src/index.d.ts"
-    ]
+    "rebass/styled-components": ["node_modules/rebass/styled-components"],
+    "@reach/portal": ["node_modules/@reach/portal/dist/declarations/src/index.d.ts"]
   },
   "rootDir": "src"
 }

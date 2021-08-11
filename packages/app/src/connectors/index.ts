@@ -47,7 +47,7 @@ export const walletlink = new WalletLinkConnector({
 })
 
 export const connectorsByName: { [connectorName in ConnectorNames]: any } = {
-  "injected": injected,
-  "walletconnect": walletconnect,
-  "bsc": bscConnector,
+  injected: injected,
+  walletconnect: walletconnect,
+  bsc: bscConnector,
 }
