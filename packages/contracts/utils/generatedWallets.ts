@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { ethers } from 'ethers'
 
 // Generated from mnemonic: test test test test test test test test test test test junk
 export const privateKeys = [
@@ -22,17 +22,17 @@ export const privateKeys = [
   '0x689af8efa8c651a91ad287602527f3af2fe9f6501a7ac4b061667b5a93e037fd',
   '0xde9be858da4a475276426320d5e9262ecfc3ba460bfac56360bfa6c4c28b4ee0',
   '0xdf57089febbacf7ba0bc227dafbffa9fc08a93fdc68e1e42411a14efcf23656e',
-];
+]
 
 export function generatedWallets(provider: ethers.providers.BaseProvider) {
   return privateKeys.map((key: string) => {
-    return new ethers.Wallet(key, provider);
-  });
+    return new ethers.Wallet(key, provider)
+  })
 }
 
 export async function signMessage(message: string, wallet: ethers.Wallet) {
-  const messageHash = ethers.utils.id(message);
-  const messageHashBytes = ethers.utils.arrayify(messageHash);
-  const flatSig = await wallet.signMessage(messageHashBytes);
-  return ethers.utils.arrayify(flatSig);
+  const messageHash = ethers.utils.id(message)
+  const messageHashBytes = ethers.utils.arrayify(messageHash)
+  const flatSig = await wallet.signMessage(messageHashBytes)
+  return ethers.utils.arrayify(flatSig)
 }

@@ -26,8 +26,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
 export default func
 func.id = 'deploy_zoo_token' // ID required to prevent reexecution
-func.tags = ['ZooToken'];
-func.dependencies = [];
+func.tags = ['ZooToken']
+func.dependencies = []
 
 // Tenderly verification
 // let verification = await tenderly.verify({

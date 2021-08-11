@@ -75,6 +75,7 @@
     "start": "export PORT=3001 && react-scripts start",
     "test": "react-scripts test",
     "ipfs": "node ./scripts/ipfs.js",
+    "pretty": "prettier --write src/* scrips/*",
     "surge": "cp build/index.html build/200.html && surge ./build",
     "ship": "yarn surge",
     "theme": "npx gulp less",

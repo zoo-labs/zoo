@@ -14,7 +14,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     log: true,
   })
 
-  return hre.network.live;
+  return hre.network.live
 }
 
 export default func

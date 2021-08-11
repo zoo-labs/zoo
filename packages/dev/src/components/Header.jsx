@@ -6,11 +6,7 @@ import React from "react";
 export default function Header() {
   return (
     <a href="https://cryptozoo.co" target="_blank" rel="noopener noreferrer">
-      <PageHeader
-        title="cryptozoo"
-        subTitle=""
-        style={{ cursor: "pointer" }}
-      />
+      <PageHeader title="cryptozoo" subTitle="" style={{ cursor: "pointer" }} />
     </a>
   );
 }

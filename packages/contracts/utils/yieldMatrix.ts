@@ -1,25 +1,25 @@
-import { GoogleSpreadsheet } from 'google-spreadsheet';
-import fs from 'fs';
+import { GoogleSpreadsheet } from 'google-spreadsheet'
+import fs from 'fs'
 
-import credentials from '../credentials.json';
+import credentials from '../credentials.json'
 
 // Load Zoo rarity, animal and yield data from Google Sheet:
 // https://docs.google.com/spreadsheets/d/14wCL5RYul5noZ6BhN2NUcYKaw23YwvcItm7bGG-O9ZM
-(async function() {
-  const doc = new GoogleSpreadsheet('14wCL5RYul5noZ6BhN2NUcYKaw23YwvcItm7bGG-O9ZM');
+;(async function () {
+  const doc = new GoogleSpreadsheet('14wCL5RYul5noZ6BhN2NUcYKaw23YwvcItm7bGG-O9ZM')
 
   await doc.useServiceAccountAuth({
     client_email: credentials.client_email,
     private_key: credentials.private_key,
-  });
+  })
 
-  await doc.loadInfo();
-  const sheet = doc.sheetsByIndex[0];
+  await doc.loadInfo()
+  const sheet = doc.sheetsByIndex[0]
 
   // Get all Rarities
   const rarities = []
-  await sheet.loadCells('C15:G30');
-  [15,19,23,27,29].map((x) => {
+  await sheet.loadCells('C15:G30')
+  ;[15, 19, 23, 27, 29].map((x) => {
     rarities.push({
       probability: sheet.getCellByA1(`C${x}`).value * 10000,
       name: sheet.getCellByA1(`D${x}`).value,
@@ -32,8 +32,8 @@ import credentials from '../credentials.json';
 
   // Get Common Animals
   const animals = []
-  await sheet.loadCells('E15:G30');
-  [15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30].map((x) => {
+  await sheet.loadCells('E15:G30')
+  ;[15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30].map((x) => {
     animals.push({
       name: sheet.getCellByA1(`E${x}`).value,
       rarity: sheet.getCellByA1(`D${x}`).value,
@@ -43,17 +43,17 @@ import credentials from '../credentials.json';
   })
 
   animals.forEach((v, i) => {
-    const slug = v.name.replaceAll(' ', '').toLowerCase();
-    animals[i].tokenURI = `https://db.zoolabs.io/${slug}.jpg`;
-    animals[i].metadataURI = `https://db.zoolabs.io/${slug}.json`;
-    animals[i].yield = Math.round(animals[i].yield);
+    const slug = v.name.replaceAll(' ', '').toLowerCase()
+    animals[i].tokenURI = `https://db.zoolabs.io/${slug}.jpg`
+    animals[i].metadataURI = `https://db.zoolabs.io/${slug}.json`
+    animals[i].yield = Math.round(animals[i].yield)
   })
   fs.writeFileSync(__dirname + '/animals.json', JSON.stringify(animals))
 
   // Get Common Hybrid animals
   let hybrids = []
-  await sheet.loadCells('H15:W30');
-  [15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30].map((x) => {
+  await sheet.loadCells('H15:W30')
+  ;[15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30].map((x) => {
     hybrids = hybrids.concat([
       {
         rarity: 'Common',
@@ -82,13 +82,13 @@ import credentials from '../credentials.json';
         parentA: sheet.getCellByA1(`U${x}`).value,
         parentB: sheet.getCellByA1(`V${x}`).value,
         yield: sheet.getCellByA1(`W${x}`).value,
-      }
+      },
     ])
   })
 
   // Get Uncommon Hybrid animals
-  await sheet.loadCells('Y15:AN30');
-  [15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30].map((x) => {
+  await sheet.loadCells('Y15:AN30')
+  ;[15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30].map((x) => {
     hybrids = hybrids.concat([
       {
         rarity: 'Uncommon',
@@ -117,13 +117,13 @@ import credentials from '../credentials.json';
         parentA: sheet.getCellByA1(`AL${x}`).value,
         parentB: sheet.getCellByA1(`AM${x}`).value,
         yield: sheet.getCellByA1(`AN${x}`).value,
-      }
+      },
     ])
   })
 
   // Get Rare Hybrid animals
-  await sheet.loadCells('AP15:BE30');
-  [15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30].map((x) => {
+  await sheet.loadCells('AP15:BE30')
+  ;[15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30].map((x) => {
     hybrids = hybrids.concat([
       {
         rarity: 'Rare',
@@ -152,13 +152,13 @@ import credentials from '../credentials.json';
         parentA: sheet.getCellByA1(`BC${x}`).value,
         parentB: sheet.getCellByA1(`BD${x}`).value,
         yield: sheet.getCellByA1(`BE${x}`).value,
-      }
+      },
     ])
   })
 
   // Get Super Rare Hybrid animals
-  await sheet.loadCells('BG15:BN30');
-  [15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30].map((x) => {
+  await sheet.loadCells('BG15:BN30')
+  ;[15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30].map((x) => {
     hybrids = hybrids.concat([
       {
         rarity: 'Super Rare',
@@ -173,13 +173,13 @@ import credentials from '../credentials.json';
         parentA: sheet.getCellByA1(`BL${x}`).value,
         parentB: sheet.getCellByA1(`BM${x}`).value,
         yield: sheet.getCellByA1(`BN${x}`).value,
-      }
+      },
     ])
   })
 
   // Get Epic Hybrid animals
-  await sheet.loadCells('BP15:BW30');
-  [15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30].map((x) => {
+  await sheet.loadCells('BP15:BW30')
+  ;[15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30].map((x) => {
     hybrids = hybrids.concat([
       {
         rarity: 'Epic',
@@ -194,16 +194,15 @@ import credentials from '../credentials.json';
         parentA: sheet.getCellByA1(`BU${x}`).value,
         parentB: sheet.getCellByA1(`BV${x}`).value,
         yield: sheet.getCellByA1(`BW${x}`).value,
-      }
+      },
     ])
   })
 
   hybrids.forEach((v, i) => {
-    const slug = v.name.replaceAll(' ', '').toLowerCase();
-    hybrids[i].tokenURI = `https://db.zoolabs.io/${slug}.jpg`;
-    hybrids[i].metadataURI = `https://db.zoolabs.io/${slug}.json`;
-    hybrids[i].yield = Math.round(hybrids[i].yield);
+    const slug = v.name.replaceAll(' ', '').toLowerCase()
+    hybrids[i].tokenURI = `https://db.zoolabs.io/${slug}.jpg`
+    hybrids[i].metadataURI = `https://db.zoolabs.io/${slug}.json`
+    hybrids[i].yield = Math.round(hybrids[i].yield)
   })
   fs.writeFileSync(__dirname + '/hybrids.json', JSON.stringify(hybrids))
-
-}());
+})()
