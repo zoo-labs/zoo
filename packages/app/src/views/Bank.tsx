@@ -236,16 +236,15 @@ const Bank: React.FC = () => {
    const handleFunds = () => {
       switch (chainId) {
          case 1337:
-            handleFaucet();
-            break;
+            handleFaucet()
+            break
          case 97:
-            handleFaucet();
-            break;
+            handleFaucet()
+            break
          default:
-            location.href =
-               "https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997";
+            location.href = "https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997"
       }
-   };
+   }
 
    const getTransactions = async () => {
       console.log("GETTING TRANSACTIONS")

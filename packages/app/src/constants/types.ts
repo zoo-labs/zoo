@@ -1,13 +1,9 @@
 import { TranslatableText } from 'state/types'
 
 export interface Address {
-    1?: string      // ETH Mainnet
-    42?: string     // ETH Kovan
-    1337?: string  // StarterApp Devnet
-    4?: string      // ETH Rinkeby
+    1337?: string   // Localhost
     97?: string     // BSC Testnet
-    56?: string
-    80001?: string  // Mumbai
+    56?: string     // BSC Mainnet
 }
 
 export interface Token {

@@ -1,6 +1,6 @@
 const config = {
   applicationID: {
-    1337: 'UYWgmpnoFH5kSVeiekDaePaQUUTcHnM2Q10yb8N1',
+    1337:  'UYWgmpnoFH5kSVeiekDaePaQUUTcHnM2Q10yb8N1',
     97:    '16weSJXK4RD3aYAuwiP46Cgzjm4Bng1Torxz5qiy',
     56:    'cIGUkzL7pyhM8aC8gIcDiH46QGpsEutO5SAQzTgy',
   },

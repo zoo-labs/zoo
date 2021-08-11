@@ -163,12 +163,12 @@ function Feed<FeedPagePops>({ match }) {
    const isMyZoo = filter === 'myZoo'
    let totalAnimalsFiltered = animals.filter((animal) => {
       return (
-         (animal.owner || '').toLowerCase() !== account.toLowerCase() && !animal.freed
+         (animal.owner.toLowerCase() !== account.toLowerCase() && !animal.freed)
       )
    })
    let myZooAnimalsFiltered = animals.filter((animal) => {
       return (
-         (animal.owner || '').toLowerCase() === account.toLowerCase() && !animal.freed
+         (animal.owner.toLowerCase() === account.toLowerCase() && !animal.freed)
       )
    })
 
