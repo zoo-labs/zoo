@@ -18,12 +18,12 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     log: true,
   })
 
-  const keeperAddress = deployResult.address;
+  const keeperAddress = deployResult.address
 
-  const token = await ethers.getContractAt('ZooToken', tokenAddress);
-  const market = await ethers.getContractAt('ZooMarket', marketAddress);
-  const media = await ethers.getContractAt('ZooMedia', mediaAddress);
-  const keeper = await ethers.getContractAt('ZooKeeper', keeperAddress);
+  const token = await ethers.getContractAt('ZooToken', tokenAddress)
+  const market = await ethers.getContractAt('ZooMarket', marketAddress)
+  const media = await ethers.getContractAt('ZooMedia', mediaAddress)
+  const keeper = await ethers.getContractAt('ZooKeeper', keeperAddress)
 
   // Configure contracts to talk to each other
   market.configure(keeperAddress, mediaAddress)
@@ -31,9 +31,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   keeper.configure(marketAddress, mediaAddress, tokenAddress)
 
   // Mint ZOO to keeper for yield
-  token.mint(keeperAddress, 1000000000000);
+  token.mint(keeperAddress, 1000000000000)
 
-  return hre.network.live;
+  return hre.network.live
 }
 
 export default func

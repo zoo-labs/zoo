@@ -2,32 +2,32 @@ const hre = require('hardhat')
 const ethers = hre.ethers
 
 const rarities = require('../utils/rarities.json')
-const animals  = require('../utils/animals.json')
-const hybrids  = require('../utils/hybrids.json')
-const hybrids  = require('../utils/hybrids.json')
+const animals = require('../utils/animals.json')
+const hybrids = require('../utils/hybrids.json')
+const hybrids = require('../utils/hybrids.json')
 
-const ZooToken  = require('../deployments/testnet/ZooToken.json')
+const ZooToken = require('../deployments/testnet/ZooToken.json')
 const ZooMarket = require('../deployments/testnet/ZooMarket.json')
-const ZooMedia  = require('../deployments/testnet/ZooMedia.json')
+const ZooMedia = require('../deployments/testnet/ZooMedia.json')
 const ZooKeeper = require('../deployments/testnet/ZooKeeper.json')
-const ZooDrop   = require('../deployments/testnet/ZooDrop.json')
+const ZooDrop = require('../deployments/testnet/ZooDrop.json')
 
 // Split game data into deploy-sized chunks
 function chunks(arr, size) {
-    const res = []
-    for (let i = 0; i < arr.length; i += size) {
-        const chunk = arr.slice(i, i + size)
-        res.push(chunk)
-    }
-    return res
+  const res = []
+  for (let i = 0; i < arr.length; i += size) {
+    const chunk = arr.slice(i, i + size)
+    res.push(chunk)
+  }
+  return res
 }
 
 async function main() {
   const [signer] = await ethers.getSigners()
 
   const keeper = await (await ethers.getContractAt('ZooKeeper', ZooKeeper.address)).connect(signer)
-  const drop   = await (await ethers.getContractAt('ZooDrop', ZooDrop.address)).connect(signer)
-  const media  = await (await ethers.getContractAt('ZooMedia', ZooMedia.address)).connect(signer)
+  const drop = await (await ethers.getContractAt('ZooDrop', ZooDrop.address)).connect(signer)
+  const media = await (await ethers.getContractAt('ZooMedia', ZooMedia.address)).connect(signer)
   const market = await (await ethers.getContractAt('ZooMarket', ZooMarket.address)).connect(signer)
 
   // Configure Market
@@ -61,31 +61,33 @@ async function main() {
   // Add eggs
   const eggs = [
     {
-      name: "Base Egg",
+      name: 'Base Egg',
       price: basePrice.mul(10), // about $200 / egg
       supply: 16000,
-      tokenURI: "https://db.zoolabs/egg.jpg",
-      metadataURI: "https://db.zoolabs.org/egg.json"
+      tokenURI: 'https://db.zoolabs/egg.jpg',
+      metadataURI: 'https://db.zoolabs.org/egg.json',
     },
     {
-      name: "Hybrid Egg",
+      name: 'Hybrid Egg',
       price: 0,
       supply: 0,
-      tokenURI: "https://db.zoolabs/hybrid.jpg",
-      metadataURI: "https://db.zoolabs.org/hybrid.json"
-    }
+      tokenURI: 'https://db.zoolabs/hybrid.jpg',
+      metadataURI: 'https://db.zoolabs.org/hybrid.json',
+    },
   ]
 
   for (const v of eggs) {
     console.log('setEgg', v)
     const tx = await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
-    await tx.wait();
+    await tx.wait()
   }
 
   await drop.configureEggs('Base Egg', 'Hybrid Egg')
 
   // Add rarities
-  rarities.sort(function(a, b) { return a.probability - b.probability });
+  rarities.sort(function (a, b) {
+    return a.probability - b.probability
+  })
 
   for (const v of rarities) {
     console.log('setRarity', v)

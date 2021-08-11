@@ -1,5 +1,4 @@
-{
-  "name": "@zoolabs/zoo",
+{  "name": "@zoolabs/zoo",
   "version": "1.0.0",
   "author": "Zoo Labs Limited <hi@zoolabs.io> (https://cryptozoo.co)",
   "license": "MIT",
@@ -49,7 +48,8 @@
     "wallet": "cd packages/contracts && npx contracts wallet",
     "fundedwallet": "cd packages/contracts && npx hardhat fundedwallet",
     "flatten": "cd packages/contracts && npx hardhat flatten",
-    "clean": "cd packages/contracts && npx hardhat clean",
+    "clean": "rm -rf packages/app/build && rm -rf packages/contracts/artifacts && rm -rf packages/contracts/cache && rm -rf packages/contracts/types",
+    "pretty": "yarn workspace @zoolabs/app pretty && yarn workspace @zoolabs/contracts pretty && yarn workspace @zoolabs/dev pretty && yarn workspace @zoolabs/services pretty",
     "run-graph-node": "yarn workspace @zoolabs/services run-graph-node",
     "remove-graph-node": "yarn workspace @zoolabs/services remove-graph-node",
     "clean-graph-node": "yarn workspace @zoolabs/services clean-graph-node",
