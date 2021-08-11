@@ -19,15 +19,16 @@ const BtnContainer = styled.div`
 `
 
 const GradientButton = (props): JSX.Element => {
-  const { disabled } = props;
+  const { disabled } = props
   return (
     <>
-      {disabled ? <Button {...props} />
-        : <BtnContainer>
+      {disabled ? (
+        <Button {...props} />
+      ) : (
+        <BtnContainer>
           <Button {...props} />
         </BtnContainer>
-      }
-
+      )}
     </>
   )
 }

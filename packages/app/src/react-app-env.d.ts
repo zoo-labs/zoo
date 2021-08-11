@@ -2,9 +2,8 @@
 /// <reference types="@emotion/react/types/css-prop" />
 
 interface WindowChain {
-    ethereum?: {
-      isMetaMask?: true
-      request?: (...args: any[]) => void
-    }
+  ethereum?: {
+    isMetaMask?: true
+    request?: (...args: any[]) => void
   }
-  
+}

@@ -9,32 +9,32 @@ import useToast from 'hooks/useToast'
  */
 export const setupNetwork = async (network) => {
   console.log(bsc_nodes)
-  const main = network === "bsc"
+  const main = network === 'bsc'
   const provider = (window as WindowChain).ethereum
   // if (provider) {
-    const chainId = main ? parseInt("56", 10) : parseInt("97", 10)
-    try {
-      await provider.request({
-        method: 'wallet_addEthereumChain',
-        params: [
-          {
-            chainId: `0x${chainId.toString(16)}`,
-            chainName: main ? 'Binance Smart Chain Mainnet': "Binance Smart Chain Testnet",
-            nativeCurrency: {
-              name: 'BNB',
-              symbol: 'bnb',
-              decimals: 18,
-            },
-            rpcUrls: main ? bsc_nodes : chapel_nodes,
-            blockExplorerUrls: ['https://bscscan.com/'],
+  const chainId = main ? parseInt('56', 10) : parseInt('97', 10)
+  try {
+    await provider.request({
+      method: 'wallet_addEthereumChain',
+      params: [
+        {
+          chainId: `0x${chainId.toString(16)}`,
+          chainName: main ? 'Binance Smart Chain Mainnet' : 'Binance Smart Chain Testnet',
+          nativeCurrency: {
+            name: 'BNB',
+            symbol: 'bnb',
+            decimals: 18,
           },
-        ],
-      })
-      return true
-    } catch (error) {
-      console.error(error)
-      return false
-    }
+          rpcUrls: main ? bsc_nodes : chapel_nodes,
+          blockExplorerUrls: ['https://bscscan.com/'],
+        },
+      ],
+    })
+    return true
+  } catch (error) {
+    console.error(error)
+    return false
+  }
   /* } else {
     console.error("Can't setup the BSC network on metamask because window.ethereum is undefined")
     return false
@@ -49,12 +49,7 @@ export const setupNetwork = async (network) => {
  * @param tokenImage
  * @returns {boolean} true if the token has been added, false otherwise
  */
-export const registerToken = async (
-  tokenAddress: string,
-  tokenSymbol: string,
-  tokenDecimals: number,
-  tokenImage: string,
-) => {
+export const registerToken = async (tokenAddress: string, tokenSymbol: string, tokenDecimals: number, tokenImage: string) => {
   const tokenAdded = await (window as WindowChain).ethereum.request({
     method: 'wallet_watchAsset',
     params: {

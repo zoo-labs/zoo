@@ -10,23 +10,21 @@ import { ModalProvider } from './components'
 import { MoralisProvider } from 'util/moralis/provider'
 
 const Providers: React.FC = ({ children }) => {
-   return (
-      <Web3ReactProvider getLibrary={ getLibrary }>
-         <MoralisProvider>
-            <Provider store={ store }>
-               <HelmetProvider>
-                  <ThemeContextProvider>
-                     <RefreshContextProvider>
-                        <ModalProvider>
-                           { children }
-                        </ModalProvider>
-                     </RefreshContextProvider>
-                  </ThemeContextProvider>
-               </HelmetProvider>
-            </Provider>
-         </MoralisProvider>
-      </Web3ReactProvider>
-   )
+  return (
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <MoralisProvider>
+        <Provider store={store}>
+          <HelmetProvider>
+            <ThemeContextProvider>
+              <RefreshContextProvider>
+                <ModalProvider>{children}</ModalProvider>
+              </RefreshContextProvider>
+            </ThemeContextProvider>
+          </HelmetProvider>
+        </Provider>
+      </MoralisProvider>
+    </Web3ReactProvider>
+  )
 }
 
 export default Providers

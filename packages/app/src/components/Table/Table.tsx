@@ -13,7 +13,6 @@ export interface ITableProps {
   scrollingUp?: boolean
 }
 
-
 const Container = styled.div`
   filter: ${({ theme }) => theme.card.dropShadow};
   width: 100%;
@@ -25,7 +24,7 @@ const Container = styled.div`
 const TableWrapper = styled.div`
   flex-direction: row;
   flex: 1 1 auto;
-  
+
   -webkit-box-pack: start;
 
   &::-webkit-scrollbar {
@@ -45,10 +44,10 @@ const StyledTable = styled.table`
 `
 
 const TableBody = styled.tbody`
-width: 100%;
+  width: 100%;
   & tr {
-     display: flex;
-     flex-direction: row;
+    display: flex;
+    flex-direction: row;
     justify-content: space-around;
     td {
       font-size: 16px;
@@ -66,29 +65,29 @@ const TableContainer = styled.div`
 
 const Table: React.FC<ITableProps> = (props) => {
   const tableWrapperEl = useRef<HTMLDivElement>(null)
-   const { scrollingUp } = props
+  const { scrollingUp } = props
   const { data, columns } = props
 
   const { rows } = useTable(columns, data, { sortable: true, sortColumn: 'timestampDescending' })
   const labels = columns.map((name) => name.label)
-  console.log( rows)
+  console.log(rows)
   return (
     <>
       <Container>
-      <TableContainer>
-        <TableWrapper ref={tableWrapperEl}>
+        <TableContainer>
+          <TableWrapper ref={tableWrapperEl}>
             <StyledTable>
               <TableBody>
-                <TableHeaderRow labels={columns} scrollingUp={scrollingUp} actionColumnName="details"/>
+                <TableHeaderRow labels={columns} scrollingUp={scrollingUp} actionColumnName='details' />
                 {rows.map((row) => {
-                return <Row {...row.original} isLastIndex={rows[rows.length - 1].id === row.id} key={`table-row-${row.id}`} />
-              })}
-            </TableBody>
-          </StyledTable>
-        </TableWrapper>
-      </TableContainer>
+                  return <Row {...row.original} isLastIndex={rows[rows.length - 1].id === row.id} key={`table-row-${row.id}`} />
+                })}
+              </TableBody>
+            </StyledTable>
+          </TableWrapper>
+        </TableContainer>
       </Container>
-      </>
+    </>
   )
 }
 

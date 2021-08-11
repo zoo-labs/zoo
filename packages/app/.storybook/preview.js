@@ -1,4 +1,4 @@
-import React from 'react'  
+import React from 'react'
 import { withThemesProvider } from 'themeprovider-storybook'
 import lightTheme from '../src/theme/light'
 import darkTheme from '../src/theme/dark'
@@ -17,11 +17,11 @@ const withReduxSettings = {
 }
 
 const globalDecorator = (StoryFn) => (
-    <HelmetProvider>
-      <MemoryRouter initialEntries={['/']}>
-          <StoryFn />
-      </MemoryRouter>
-    </HelmetProvider>
+  <HelmetProvider>
+    <MemoryRouter initialEntries={['/']}>
+      <StoryFn />
+    </MemoryRouter>
+  </HelmetProvider>
 )
 
 const withReduxDecorator = withRedux(addons)(withReduxSettings)

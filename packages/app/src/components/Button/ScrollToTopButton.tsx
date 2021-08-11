@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { scales, variants } from './types'
 import Button from './Button'
 
-
 export const TopInvisibleDiv = styled.div`
   background: transparent;
   width: 40px;

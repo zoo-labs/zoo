@@ -20,7 +20,7 @@ const StatusWrapper = styled.div`
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  
+
   svg {
     margin-right: 2px;
   }
@@ -36,25 +36,13 @@ const Text = styled(UIText)`
 
 const Status: React.FunctionComponent<StatusProps> = ({ status }) => {
   const displayStatus = status ? String(status.toLowerCase()) : '-'
-  const statusIcon = displayStatus === 'success' ? 
-  (
-    <CheckmarkCircleIcon color="secondary" />
-  ) : 
-  displayStatus === 'failed' ?
-  (
-    <CloseCircleIcon color="failure" />
-  ) : 
-  (
-    <></>
-  )
+  const statusIcon = displayStatus === 'success' ? <CheckmarkCircleIcon color='secondary' /> : displayStatus === 'failed' ? <CloseCircleIcon color='failure' /> : <></>
 
   return (
     <Container>
       <StatusWrapper>
-        <Text style={{ overflow:"hidden", textOverflow:"ellipsis", marginLeft: '4px'}}>{displayStatus}</Text>
-        <IconWrapper>
-          {statusIcon}
-        </IconWrapper>
+        <Text style={{ overflow: 'hidden', textOverflow: 'ellipsis', marginLeft: '4px' }}>{displayStatus}</Text>
+        <IconWrapper>{statusIcon}</IconWrapper>
       </StatusWrapper>
     </Container>
   )

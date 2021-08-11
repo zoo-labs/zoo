@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { scales, variants } from './types'
@@ -16,9 +15,9 @@ const BtnContainer = styled.div<{ useHeaderGradient?: boolean }>`
 `
 
 const TipButton = (props): JSX.Element => {
-  const { disabled, scale } = props;
-  const [isOpen, setIsOpen] = useState(false);
-  const theme = useTheme();
+  const { disabled, scale } = props
+  const [isOpen, setIsOpen] = useState(false)
+  const theme = useTheme()
 
   const toggling = (e) => {
     e.stopPropagation()
@@ -26,12 +25,13 @@ const TipButton = (props): JSX.Element => {
   }
   return (
     <>
-      {disabled ? <Button {...props} />
-        : <BtnContainer>
-          <Button minWidth={scale === scales.XS ? "40px" : "80px"} onClick={toggling}
-            {...props} />
+      {disabled ? (
+        <Button {...props} />
+      ) : (
+        <BtnContainer>
+          <Button minWidth={scale === scales.XS ? '40px' : '80px'} onClick={toggling} {...props} />
         </BtnContainer>
-      }
+      )}
     </>
   )
 }

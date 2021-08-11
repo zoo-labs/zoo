@@ -9,7 +9,6 @@ yarn install
 yarn start
 ```
 
-
 ## See the components in Storybook
 
 ```

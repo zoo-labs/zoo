@@ -1,5 +1,4 @@
-
-const path = require('path');
+const path = require('path')
 
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -16,19 +15,16 @@ module.exports = {
     'themeprovider-storybook/register',
   ],
   webpackFinal: (config) => {
-    config.resolve.modules = [
-      path.resolve(__dirname, '..', 'src'),
-      path.resolve(__dirname, '..', 'node_modules'),
-    ];
+    config.resolve.modules = [path.resolve(__dirname, '..', 'src'), path.resolve(__dirname, '..', 'node_modules')]
     return {
       ...config,
-      plugins: config.plugins.filter(plugin => {
+      plugins: config.plugins.filter((plugin) => {
         if (plugin.constructor.name === 'ESLintWebpackPlugin') {
           return false
         }
         return true
       }),
-    };
+    }
   },
 }
 //   typescript: {

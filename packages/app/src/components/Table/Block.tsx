@@ -40,12 +40,10 @@ const Container = styled.div`
 
 const Block: React.FunctionComponent<BlockProps> = ({ block }) => {
   const { chainId } = useWeb3React()
-  
-  const displayBlock = block
-    ? `${Number(block)}`
-    : '-'
 
-/*   const base = scanLinks[chainId] ? scanLinks[chainId] : 'https://etherscan.io'
+  const displayBlock = block ? `${Number(block)}` : '-'
+
+  /*   const base = scanLinks[chainId] ? scanLinks[chainId] : 'https://etherscan.io'
   const escBlock = `${base}/block/${block}` */
 
   return (

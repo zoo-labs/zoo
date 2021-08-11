@@ -7,30 +7,30 @@ import { SvgProps } from '../types'
 import Page from '../../layout/Page'
 
 const StarterAppLoadingLogo = styled(Logo)`
+  height: 150px;
+  width: 150px;
+  ${({ theme }) => theme.mediaQueries.sm} {
     height: 150px;
     width: 150px;
-    ${({ theme }) => theme.mediaQueries.sm} {
-      height: 150px;
-      width: 150px;
+  }
+  margin-top: 150px;
+  box-shadow: 0 0 0 rgba(204, 169, 44, 0.4);
+  animation: 5s pulse ease-out infinite;
+  fill: white;
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0px fade(@buttonshadow, 30%), 0 0 0 0px fade(@buttonshadow, 20%);
+      transform: scale(1);
     }
-    margin-top: 150px;
-    box-shadow: 0 0 0 rgba(204, 169, 44, 0.4);
-    animation: 5s pulse ease-out infinite;
-    fill: white;
-    @keyframes pulse {
-      0% {
-        box-shadow: 0 0 0 0px fade(@buttonshadow, 30%), 0 0 0 0px fade(@buttonshadow, 20%);
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.6);
-      }
-      100% {
-        box-shadow: 0 0 0 16px fade(@buttonshadow, 0), 0 0 0 27px fade(@buttonshadow, 0);
-        transform: scale(1);
-      }
+    50% {
+      transform: scale(1.6);
     }
-  `
+    100% {
+      box-shadow: 0 0 0 16px fade(@buttonshadow, 0), 0 0 0 27px fade(@buttonshadow, 0);
+      transform: scale(1);
+    }
+  }
+`
 
 const LoadingLogo: React.FC<SvgProps> = memo(() => {
   const Wrapper = styled(Page)`
@@ -47,14 +47,15 @@ const LoadingLogo: React.FC<SvgProps> = memo(() => {
   }
 
   if (!userAccount) {
-    return <Wrapper> <StarterAppLoadingLogo /> </Wrapper>
+    return (
+      <Wrapper>
+        {' '}
+        <StarterAppLoadingLogo />{' '}
+      </Wrapper>
+    )
   }
 
-  return (
-    <Wrapper>
-      {userAccount && <StarterAppLoadingLogo />}
-    </Wrapper>
-  )
+  return <Wrapper>{userAccount && <StarterAppLoadingLogo />}</Wrapper>
 })
 
 export default LoadingLogo

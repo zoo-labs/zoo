@@ -1,13 +1,13 @@
-import React from "react";
-import styled, { keyframes, DefaultTheme } from "styled-components";
-import { Text } from "../../../components/Text";
-import { Colors } from "../../../theme/types";
-import { MENU_ENTRY_HEIGHT } from "../config";
+import React from 'react'
+import styled, { keyframes, DefaultTheme } from 'styled-components'
+import { Text } from '../../../components/Text'
+import { Colors } from '../../../theme/types'
+import { MENU_ENTRY_HEIGHT } from '../config'
 
 export interface Props {
-  secondary?: boolean;
-  isActive?: boolean;
-  theme: DefaultTheme;
+  secondary?: boolean
+  isActive?: boolean
+  theme: DefaultTheme
 }
 
 const rainbowAnimation = keyframes`
@@ -18,10 +18,10 @@ const rainbowAnimation = keyframes`
   50% {
     background-position: 100% 0;
   }
-`;
+`
 
 const LinkLabel = styled.div<{ isPushed: boolean }>`
-  color: ${({ isPushed, theme }) => (isPushed ? theme.colors.text : "transparent")};
+  color: ${({ isPushed, theme }) => (isPushed ? theme.colors.text : 'transparent')};
   transition: color 0.2s;
   flex-grow: 1;
   font-weight: 600;
@@ -32,18 +32,17 @@ const LinkLabel = styled.div<{ isPushed: boolean }>`
   text-align: right;
 
   &:hover {
-    color: ${({ isPushed, theme }) => (isPushed ? theme.colors.primaryPop : "transparent")};
+    color: ${({ isPushed, theme }) => (isPushed ? theme.colors.primaryPop : 'transparent')};
   }
-  
-`;
+`
 
 const MenuEntry = styled.div<Props>`
   cursor: pointer;
   display: flex;
   align-items: center;
   height: ${MENU_ENTRY_HEIGHT}px;
-  padding: ${({ secondary }) => (secondary ? "0 32px" : "0 16px")};
-  font-size: ${({ secondary }) => (secondary ? "16px" : "18px")};
+  padding: ${({ secondary }) => (secondary ? '0 32px' : '0 16px')};
+  font-size: ${({ secondary }) => (secondary ? '16px' : '18px')};
   font-weight: 600;
   color: ${({ theme }) => theme.colors.textSubtle};
 
@@ -71,13 +70,13 @@ const MenuEntry = styled.div<Props>`
     background: ${({ theme }) => theme.colors.primary};
     background-size: 400% 100%;
   }
-`;
+`
 
 MenuEntry.defaultProps = {
   secondary: false,
   isActive: false,
-  role: "button",
-};
+  role: 'button',
+}
 
 const LinkStatus = styled(Text)<{ color: keyof Colors }>`
   border-radius: ${({ theme }) => theme.radii.default};
@@ -86,8 +85,8 @@ const LinkStatus = styled(Text)<{ color: keyof Colors }>`
   border-color: ${({ theme, color }) => theme.colors[color]};
   box-shadow: none;
   color: ${({ theme, color }) => theme.colors[color]};
-`;
+`
 
-const LinkLabelMemo = React.memo(LinkLabel, (prev, next) => prev.isPushed === next.isPushed);
+const LinkLabelMemo = React.memo(LinkLabel, (prev, next) => prev.isPushed === next.isPushed)
 
-export { MenuEntry, LinkStatus, LinkLabelMemo as LinkLabel };
+export { MenuEntry, LinkStatus, LinkLabelMemo as LinkLabel }

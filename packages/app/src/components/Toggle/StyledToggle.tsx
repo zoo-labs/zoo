@@ -1,44 +1,46 @@
-import styled from "styled-components";
-import { scales } from "../Checkbox/types";
-import { ToggleProps, HandleProps, InputProps, ScaleKeys } from "./types";
+import styled from 'styled-components'
+import { scales } from '../Checkbox/types'
+import { ToggleProps, HandleProps, InputProps, ScaleKeys } from './types'
 
 const scaleKeyValues = {
   sm: {
-    handleHeight: "16px",
-    handleWidth: "16px",
-    handleLeft: "3px",
-    handleTop: "3px",
-    checkedLeft: "calc(100% - 18px)",
-    toggleHeight: "22px",
-    toggleWidth: "40px",
+    handleHeight: '16px',
+    handleWidth: '16px',
+    handleLeft: '3px',
+    handleTop: '3px',
+    checkedLeft: 'calc(100% - 18px)',
+    toggleHeight: '22px',
+    toggleWidth: '40px',
   },
   md: {
-    handleHeight: "32px",
-    handleWidth: "32px",
-    handleLeft: "4px",
-    handleTop: "4px",
-    checkedLeft: "calc(100% - 36px)",
-    toggleHeight: "40px",
-    toggleWidth: "72px",
+    handleHeight: '32px',
+    handleWidth: '32px',
+    handleLeft: '4px',
+    handleTop: '4px',
+    checkedLeft: 'calc(100% - 36px)',
+    toggleHeight: '40px',
+    toggleWidth: '72px',
   },
-};
+}
 
-const getScale = (property: ScaleKeys) => ({ scale = scales.MD }: ToggleProps) => {
-  return scaleKeyValues[scale][property];
-};
+const getScale =
+  (property: ScaleKeys) =>
+  ({ scale = scales.MD }: ToggleProps) => {
+    return scaleKeyValues[scale][property]
+  }
 
 export const Handle = styled.div<HandleProps>`
   background-color: ${({ theme }) => theme.toggle.handleBackground};
   border-radius: 50%;
   cursor: pointer;
-  height: ${getScale("handleHeight")};
-  left: ${getScale("handleLeft")};
+  height: ${getScale('handleHeight')};
+  left: ${getScale('handleLeft')};
   position: absolute;
-  top: ${getScale("handleTop")};
+  top: ${getScale('handleTop')};
   transition: left 200ms ease-in;
-  width: ${getScale("handleWidth")};
+  width: ${getScale('handleWidth')};
   z-index: 1;
-`;
+`
 
 export const Input = styled.input<InputProps>`
   cursor: pointer;
@@ -48,7 +50,7 @@ export const Input = styled.input<InputProps>`
   width: 100%;
   z-index: 3;
   &:checked + ${Handle} {
-    left: ${getScale("checkedLeft")};
+    left: ${getScale('checkedLeft')};
   }
   &:hover + ${Handle}:not(:disabled):not(:checked) {
     box-shadow: ${({ theme }) => theme.colors.primary} 0px 0px 0px 2px;
@@ -56,21 +58,21 @@ export const Input = styled.input<InputProps>`
 
 
   }
-`;
+`
 
 // rgb(118 69 217) 0px 0px 0px 1px, rgb(118 69 217 / 60%) 0px 0px 0px 4px;
 
 const StyledToggle = styled.div<ToggleProps>`
   align-items: center;
-  background-color: ${({ theme, checked }) => theme.colors[checked ? "primary" : "inputSecondary"]};
+  background-color: ${({ theme, checked }) => theme.colors[checked ? 'primary' : 'inputSecondary']};
   border-radius: 24px;
   box-shadow: ${({ theme }) => theme.shadows.inset};
   cursor: pointer;
   display: inline-flex;
-  height: ${getScale("toggleHeight")};
+  height: ${getScale('toggleHeight')};
   position: relative;
   transition: background-color 200ms;
-  width: ${getScale("toggleWidth")};
-`;
+  width: ${getScale('toggleWidth')};
+`
 
-export default StyledToggle;
+export default StyledToggle
