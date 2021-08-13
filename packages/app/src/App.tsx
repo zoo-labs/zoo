@@ -76,25 +76,6 @@ const App: React.FC = () => {
   const { chainId } = useWeb3React()
   const web3 = useWeb3()
   const dispatch = useDispatch()
-
-  useMoralisSubscription('Eggs', (q) => q, [], {
-    onCreate: (data) => createOrUpdateEgg(data),
-    onUpdate: (data) => createOrUpdateEgg(data),
-    onDelete: (data) => deleteEgg(data),
-  })
-
-  useMoralisSubscription('Animals', (q) => q, [], {
-    onCreate: (data) => createOrUpdateAnimal(data),
-    onUpdate: (data) => createOrUpdateAnimal(data),
-  })
-
-  useEffect(() => {
-    dispatch(clearZoo())
-    console.warn = () => null
-    getEggs()
-    getAnimals()
-  }, [chainId])
-
   const signedIn = chainId && window.localStorage.getItem('connectorId')
 
   const getEggs = async () => {
@@ -150,6 +131,24 @@ const App: React.FC = () => {
       console.error('ISSUE DELETING EGG:', e)
     }
   }
+
+  useMoralisSubscription('Eggs', (q) => q, [], {
+    onCreate: (data) => createOrUpdateEgg(data),
+    onUpdate: (data) => createOrUpdateEgg(data),
+    onDelete: (data) => deleteEgg(data),
+  })
+
+  useMoralisSubscription('Animals', (q) => q, [], {
+    onCreate: (data) => createOrUpdateAnimal(data),
+    onUpdate: (data) => createOrUpdateAnimal(data),
+  })
+
+  useEffect(() => {
+    dispatch(clearZoo())
+    console.warn = () => null
+    getEggs()
+    getAnimals()
+  }, [chainId])
 
   return (
     <Suspense fallback={null}>
