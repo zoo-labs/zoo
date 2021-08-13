@@ -79,6 +79,7 @@ const MyZooAccount: React.FC = () => {
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
 
   const hatchEggReady = async (egg) => {
+    startAnimationTimer()
     const eggObject = Moralis.Object.extend('Eggs')
     const eggQuery = new Moralis.Query(eggObject)
     eggQuery.equalTo('tokenID', egg.tokenID)
@@ -102,22 +103,16 @@ const MyZooAccount: React.FC = () => {
     setHatched(mapAnimal(foundAnimal))
     foundAnimal.set('revealed', true)
     foundAnimal.save()
-    startAnimationTimer()
   }
 
   const hatchEgg = async (egg) => {
+    egg.hatching = true
     dispatch(addEgg(mapEgg(egg)))
     try {
-      const gasPrice = await web3.eth.getGasPrice()
-      const gasEstimate = await zooKeeper.methods.hatchEgg(1, egg.tokenID).estimateGas({ from: account })
-      console.log(gasEstimate)
       await zooKeeper.methods.hatchEgg(1, egg.tokenID).send({
         from: account,
-        gasPrice: gasPrice,
-        gas: gasEstimate + 10000000,
       })
     } catch (error) {
-      dispatch(addEgg(mapEgg(egg)))
       console.error(error)
     }
   }

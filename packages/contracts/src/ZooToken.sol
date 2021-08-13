@@ -15,10 +15,6 @@ contract ZooToken is ERC20, ERC20Burnable, Ownable {
 
     constructor () ERC20("Zoo", "ZOO") {  }
 
-    function totalSupply() public pure override returns (uint256) {
-        return 2000000000000;
-    }
-
     function mint(address to, uint256 value) public onlyOwner {
         super._mint(to, value);
     }
