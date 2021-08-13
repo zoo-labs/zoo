@@ -172,14 +172,10 @@ const Bank: React.FC = () => {
   const history = useHistory()
   const { isXl } = useMatchBreakpoints()
   const [wait, setWait] = useState(false)
-  const [Transactions, setTransactions] = useState([])
+  const [transactions, setTransactions] = useState([])
   const [waitTx, setWaitTx] = useState(true)
 
   const zooToken = getZooToken(web3, chainId)
-
-  const handleClick = () => {
-    history.push('/account')
-  }
 
   const faucet = getZooFaucet(web3, chainId)
   const faucetAmt = web3.utils.toWei('50')
@@ -243,46 +239,53 @@ const Bank: React.FC = () => {
   }
 
   const getTransactions = async () => {
-    console.log('GETTING TRANSACTIONS')
+    console.log('GETTING TRANSACTIONS for account', account)
     try {
-      let tempTransactions = []
-      const MoralisObject = Moralis.Object.extend('Transactions')
-      const query = new Moralis.Query(MoralisObject)
+      const Transactions = Moralis.Object.extend('Transactions')
+      const query = new Moralis.Query(Transactions)
       query.limit(1000)
-      query.equalTo('from', account)
+      query.descending("createdAt")
+      query.equalTo('from', account.toLowerCase())
       const results = await query.find()
-      console.log(results)
-      for (let i = 0; i < results.length; i++) {
-        const transaction = results[i]
-        let string = String(transaction.get('createdAt'))
-        const replacedString = string.replace('at ', '')
-        const date = new Date(replacedString)
-        const newDate = date.toLocaleDateString('en-US')
-        console.log(newDate)
-        const tx: any = {
-          txHash: transaction.get('transactionHash'),
-          action: transaction.get('action'),
-          from: transaction.get('from'),
-          date: newDate,
-          to: '',
-        }
-        tempTransactions.push(tx)
+      let transactions = []
+      for (const tx of results) {
+        const action = tx.get('action')
+        const txHash = tx.get('TransactionHash')
+        const URL = `https://bscscan.com/${txHash}`
+
+        // Filter out Burned Tokens
+        if (action == 'Burned Token') continue
+
+        console.log('tx', tx)
+        transactions.push({
+          id:               tx.get('objectId'),
+          from:             tx.get('from'),
+          action:           action,
+          hash:             txHash,
+          URL:              URL,
+          createdAt:        tx.get('createdAt').toLocaleDateString(),
+          blockNumber:      tx.get('blockNumber'),
+          timestamp:        tx.get('timestamp'),
+          tokenID:          tx.get('tokenID'),
+        })
       }
-      setTransactions(tempTransactions)
+      console.log('transactions', transactions)
+      setTransactions(transactions)
       setWaitTx(false)
     } catch (e) {
       console.error('ISSUE GETTING TRANSACTIONS \n', e)
     }
   }
 
+  const dailyYield = accountAnimals.reduce((acc, x) => acc + Number(x.yield), 0)
+
   // Get top ten animals
-  const topTenAnimals = accountAnimals.sort((a, b) => Number(b.yield) * (1 + Number(b.boost) / 100) - Number(a.yield) * (1 + Number(a.boost) / 100)).slice(0, 10)
-  console.log(topTenAnimals)
+  const topTenAnimals = accountAnimals.sort((a, b) => Number(b.yield) * (1 + Number(b.boost) / 10000) - Number(a.yield) * (1 + Number(a.boost) / 10000)).slice(0, 10)
 
   const pageHeading = (
     <HeadingContainer>
       <StyledHeading>My Bank</StyledHeading>
-      <StyledButton onClick={() => handleClick()}>View Account</StyledButton>
+      <StyledButton onClick={() => history.push('/account')}>View Account</StyledButton>
     </HeadingContainer>
   )
 
@@ -304,7 +307,7 @@ const Bank: React.FC = () => {
             {/* <ValueWrapper style={{ fontSize: "16px",  color: "rgb(221 224 26)" }}>0 USD</ValueWrapper> */}
           </Flex>
           <Label small>Total Daily Yield</Label>
-          <ValueWrapper> 200 ZOO </ValueWrapper>
+          <ValueWrapper> {dailyYield} ZOO </ValueWrapper>
           <Label small>Top Earners</Label>
           {topTenAnimals.length === 0 ? (
             <ValueWrapper style={{ justifyContent: 'center' }}> No animals </ValueWrapper>
@@ -313,7 +316,7 @@ const Bank: React.FC = () => {
               {topTenAnimals.map((animal) => {
                 return (
                   <EarnerValue key={animal.tokenID + '_earner_'}>
-                    {animal.name} - {Number(animal.yield) * (1 + Number(animal.boost) / 100)}/day
+                    {animal.name} - {animal.yield}/day
                   </EarnerValue>
                 )
               })}
@@ -322,7 +325,7 @@ const Bank: React.FC = () => {
           <Label small>Recent Tansactions</Label>
           {waitTx ? (
             <TableText> Loading Transactions... </TableText>
-          ) : Transactions.length === 0 ? (
+          ) : transactions.length === 0 ? (
             <TableText> No Transaction Data </TableText>
           ) : (
             <Container>
@@ -331,20 +334,20 @@ const Bank: React.FC = () => {
                   <StyledTable>
                     <TableBody>
                       <TableRow>
-                        <TableHeader>TxHash</TableHeader>
+                        <TableHeader>Tx Hash</TableHeader>
                         <TableHeader>Action</TableHeader>
-                        <TableHeader>From</TableHeader>
-                        <TableHeader>To</TableHeader>
-                        <TableHeader>Date</TableHeader>
+                        <TableHeader>Timestamp</TableHeader>
+                        <TableHeader>Block Number</TableHeader>
+                        <TableHeader>Token ID</TableHeader>
                       </TableRow>
-                      {Transactions.map((transaction) => {
+                      {transactions.map((transaction) => {
                         return (
-                          <TableRow key={transaction.txHash}>
-                            <TableData>{transaction.txHash}</TableData>
-                            <TableData>{transaction.txAction}</TableData>
-                            <TableData>{transaction.from}</TableData>
-                            <TableData>{transaction.to}</TableData>
-                            <TableData>{transaction.date}</TableData>
+                          <TableRow key={transaction.id}>
+                            <TableData>{transaction.hash}</TableData>
+                            <TableData>{transaction.action}</TableData>
+                            <TableData>{String(transaction.createdAt)}</TableData>
+                            <TableData>{transaction.blockNumber}</TableData>
+                            <TableData>{transaction.tokenID}</TableData>
                           </TableRow>
                         )
                       })}
