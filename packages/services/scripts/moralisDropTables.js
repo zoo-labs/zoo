@@ -45,7 +45,7 @@ const SERVER_NAME = {
     // Get how many logs the user wants to see (from most recent to older ones). 10 by default
     const numberOfLogs = 100
 
-    const url = `https://${subdomain}:2053/server/scriptlog?n=${numberOfLogs}`
+    const url = `https://${subdomain}:2053/server/functions/dropTables?_ApplicationId=${server.applicationId}`
 
     // Encode key and appId just once
     const encoded = btoa(`${applicationId}:${masterKey}`)
@@ -59,31 +59,13 @@ const SERVER_NAME = {
       },
     }
 
-    const seen = new Set()
-    setInterval(() => {
-      axios(config)
-        .then(function(response) {
-          for (log of response.data) {
-            if (seen.has(log.timestamp)) continue
-            else seen.add(log.timestamp)
-
-            if (
-              !log.message.match(/Client disconnect/) &&
-              !log.message.match(/Create new client/) &&
-              !log.message.match(/Can not find subscription/) &&
-              !log.message.match(/✅/) &&
-              !log.message.match(/⏳/)
-            )
-              console.log(`${log.level}: ${log.message}`)
-          }
-        })
-        .catch(function(error) {
-          if (error.response && error.response.status == 502)
-            console.error(`error: 502 Bad Gateway`)
-          else
-            console.error(`error: ${error}`)
-        })
-    }, timeout)
+    axios(config)
+      .then(function(response) {
+        console.log('Dumping tables')
+      })
+      .catch(function(error) {
+        console.error(error)
+      })
   } catch (error) {
     console.log(error)
   }
