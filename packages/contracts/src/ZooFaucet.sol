@@ -4,14 +4,17 @@ pragma solidity >=0.8.4;
 
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract ZooFaucet is Ownable {
-    uint256 public rate = 1000;
+    using SafeMath for uint256;
+
+    uint256 public rate = 100000000;
 
     IERC20 token;
 
-    event ZooSent(
-        address indexed _to,
+    event Fund(
+        address indexed _address,
         uint256 indexed _amount
     );
 
@@ -19,12 +22,15 @@ contract ZooFaucet is Ownable {
         token = IERC20(zooAddress);
     }
 
-    function getZoo(address to, uint256 amount) public returns (uint256) {
-        require(amount > 0);
-        amount = amount * rate;
+    function setRate(uint256 _rate) public onlyOwner {
+        rate = _rate;
+    }
+
+    function fund(address to) public returns (uint256) {
+        uint256 amount = rate.mul(10**18);
         require(amount <= token.balanceOf(address(this)));
         token.transfer(to, amount);
-        emit ZooSent(msg.sender, amount);
+        emit Fund(msg.sender, amount);
         return amount;
     }
 

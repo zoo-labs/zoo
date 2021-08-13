@@ -192,9 +192,9 @@ const Account: React.FC = () => {
     try {
       setWait(true)
       toastClear()
-      toastInfo('Processing ZOO purchase...')
+      toastInfo('Sending ZOO...')
       faucet.methods
-        .getZoo(account, faucetAmt)
+        .fund(account)
         .send({ from: account })
         .then(() => {
           setWait(false)
@@ -232,11 +232,10 @@ const Account: React.FC = () => {
 
   const buyEgg = async () => {
     setDisable(true)
-    ;``
 
-    const drop = await zooKeeper.methods.drops(0).call()
-    const token = await zooKeeper.methods.buyEgg(1).call({ from: account })
-    const createdAt = token.createdAt
+    // const drop = await zooKeeper.methods.drops(0).call()
+    // const token = await zooKeeper.methods.buyEgg(1).call({ from: account })
+    const createdAt = Date.now()
     const now = Date.now()
     const hatchTimeout = getMilliseconds(eggTimeout)
     const elapsedTime = now - createdAt
