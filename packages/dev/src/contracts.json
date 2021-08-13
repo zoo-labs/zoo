@@ -9656,6 +9656,25 @@
                 {
                   "indexed": true,
                   "internalType": "address",
+                  "name": "_address",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "uint256",
+                  "name": "_amount",
+                  "type": "uint256"
+                }
+              ],
+              "name": "Fund",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
                   "name": "previousOwner",
                   "type": "address"
                 },
@@ -9670,38 +9689,14 @@
               "type": "event"
             },
             {
-              "anonymous": false,
-              "inputs": [
-                {
-                  "indexed": true,
-                  "internalType": "address",
-                  "name": "_to",
-                  "type": "address"
-                },
-                {
-                  "indexed": true,
-                  "internalType": "uint256",
-                  "name": "_amount",
-                  "type": "uint256"
-                }
-              ],
-              "name": "ZooSent",
-              "type": "event"
-            },
-            {
               "inputs": [
                 {
                   "internalType": "address",
                   "name": "to",
                   "type": "address"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "amount",
-                  "type": "uint256"
                 }
               ],
-              "name": "getZoo",
+              "name": "fund",
               "outputs": [
                 {
                   "internalType": "uint256",
@@ -9741,6 +9736,19 @@
             {
               "inputs": [],
               "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "_rate",
+                  "type": "uint256"
+                }
+              ],
+              "name": "setRate",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
@@ -13885,7 +13893,7 @@
                   "type": "uint256"
                 }
               ],
-              "stateMutability": "pure",
+              "stateMutability": "view",
               "type": "function"
             },
             {
@@ -14272,7 +14280,7 @@
                   "type": "uint256"
                 }
               ],
-              "stateMutability": "pure",
+              "stateMutability": "view",
               "type": "function"
             },
             {
@@ -20823,6 +20831,25 @@
                 {
                   "indexed": true,
                   "internalType": "address",
+                  "name": "_address",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "uint256",
+                  "name": "_amount",
+                  "type": "uint256"
+                }
+              ],
+              "name": "Fund",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
                   "name": "previousOwner",
                   "type": "address"
                 },
@@ -20837,38 +20864,14 @@
               "type": "event"
             },
             {
-              "anonymous": false,
-              "inputs": [
-                {
-                  "indexed": true,
-                  "internalType": "address",
-                  "name": "_to",
-                  "type": "address"
-                },
-                {
-                  "indexed": true,
-                  "internalType": "uint256",
-                  "name": "_amount",
-                  "type": "uint256"
-                }
-              ],
-              "name": "ZooSent",
-              "type": "event"
-            },
-            {
               "inputs": [
                 {
                   "internalType": "address",
                   "name": "to",
                   "type": "address"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "amount",
-                  "type": "uint256"
                 }
               ],
-              "name": "getZoo",
+              "name": "fund",
               "outputs": [
                 {
                   "internalType": "uint256",
@@ -20908,6 +20911,19 @@
             {
               "inputs": [],
               "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "_rate",
+                  "type": "uint256"
+                }
+              ],
+              "name": "setRate",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"

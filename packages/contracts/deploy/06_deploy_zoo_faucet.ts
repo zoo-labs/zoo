@@ -25,18 +25,16 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // Get Faucet instance
   const faucet = await ethers.getContractAt('ZooFaucet', deployResult.address)
 
-  // Amount to fund the faucet with
+  // 100B ZOO to faucet
   const exp = ethers.BigNumber.from('10').pow(18)
-  const faucetAmount = ethers.BigNumber.from('15000000000').mul(exp)
+  const faucetAmount = ethers.BigNumber.from('100000000000').mul(exp)
 
-  // Amount to give to each signer
-  const signerAmount = ethers.BigNumber.from('150000000').mul(exp)
+  // 100M ZOO to each signer
+  const signerAmount = ethers.BigNumber.from('100000000').mul(exp)
 
-  // Mints 1.5B ZOO and allocates it to ZooFaucet
+  // Mint new tokens
   await token.mint(faucet.address, faucetAmount)
-
   for (var i = 0; i < signers.length; i++) {
-    // The 20 signer wallets get 150M ZOO on deployment
     await token.mint(signers[i].address, signerAmount)
   }
 
