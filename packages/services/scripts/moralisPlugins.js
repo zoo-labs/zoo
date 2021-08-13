@@ -28,8 +28,8 @@ const ABI_PATH = `${__dirname}/../../contracts/deployments/${NETWORK}/ZooKeeper.
 
   try {
     // Get credentials
-    const apiKey = utils.getApiKey()
-    const apiSecret = utils.getApiSecret()
+    const apiKey = await utils.getApiKey()
+    const apiSecret = await utils.getApiSecret()
 
     // Load servers
     const servers = await utils.getUserServers()
