@@ -19,6 +19,7 @@
     "proxy": "yarn workspace @zoolabs/services proxy",
     "fork": "yarn workspace @zoolabs/contracts fork",
     "node": "yarn workspace @zoolabs/contracts chain",
+    "logs": "yarn workspace @zoolabs/services moralis:logs",
     "test": "yarn workspace @zoolabs/contracts test",
     "start": "yarn workspace @zoolabs/app start",
     "dev": "yarn workspace @zoolabs/dev start",
