@@ -4,7 +4,7 @@ import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, ethers, getNamedAccounts } = hre
+  const { deployments, ethers, getNamedAccounts, network } = hre
   const { deploy } = deployments
   const { deployer } = await getNamedAccounts()
 
@@ -17,6 +17,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     args: [],
     log: true,
   })
+
+  if (network.name != 'hardhat') return
 
   const keeperAddress = deployResult.address
 
@@ -32,11 +34,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   // Mint ZOO to keeper for yield
   token.mint(keeperAddress, 1000000000000)
-
-  return hre.network.live
 }
 
 export default func
-func.id = 'deploy_zoo_keeper'
+func.id = 'keeper'
 func.tags = ['ZooKeeper']
 // func.dependencies = ['ZooMedia', 'ZooMarket']

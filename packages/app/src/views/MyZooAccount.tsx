@@ -62,7 +62,6 @@ const MyZooAccount: React.FC = () => {
   const web3 = useWeb3()
   const zooKeeper = getZooKeeper(web3, chainId)
   const videoTimeout = []
-  const [newEgg, setNewEgg] = useState('')
   const [hatched, setHatched] = useState({
     tokenID: 0,
     name: '',
@@ -79,6 +78,8 @@ const MyZooAccount: React.FC = () => {
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
 
   const hatchEggReady = async (egg) => {
+    startAnimationTimer()
+
     const eggObject = Moralis.Object.extend('Eggs')
     const eggQuery = new Moralis.Query(eggObject)
     eggQuery.equalTo('tokenID', egg.tokenID)
@@ -102,22 +103,16 @@ const MyZooAccount: React.FC = () => {
     setHatched(mapAnimal(foundAnimal))
     foundAnimal.set('revealed', true)
     foundAnimal.save()
-    startAnimationTimer()
   }
 
   const hatchEgg = async (egg) => {
+    egg.hatching = true
     dispatch(addEgg(mapEgg(egg)))
     try {
-      const gasPrice = await web3.eth.getGasPrice()
-      const gasEstimate = await zooKeeper.methods.hatchEgg(1, egg.tokenID).estimateGas({ from: account })
-      console.log(gasEstimate)
       await zooKeeper.methods.hatchEgg(1, egg.tokenID).send({
         from: account,
-        gasPrice: gasPrice,
-        gas: gasEstimate + 10000000,
       })
     } catch (error) {
-      dispatch(addEgg(mapEgg(egg)))
       console.error(error)
     }
   }
@@ -126,7 +121,6 @@ const MyZooAccount: React.FC = () => {
     videoTimeout.push(
       setTimeout(() => {
         setOpen(true)
-        setNewEgg('')
       }, 5450),
     )
     videoTimeout.push(setTimeout(() => setEggType(''), 7000))
@@ -272,7 +266,7 @@ const MyZooAccount: React.FC = () => {
               No eggs
             </StyledText>
           ) : (
-            <Swiper slidesPerView={document.body.getBoundingClientRect().width / 220} spaceBetween={4} pagination={{ clickable: true }}>
+            <Swiper slidesPerView={document.body.getBoundingClientRect().width / 150} spaceBetween={4} pagination={{ clickable: true }}>
               {eggData.map((egg) => (
                 <SwiperSlide style={{ width: '220px', display: 'flex' }} key={egg.tokenID}>
                   {/* <CardWrapper> */}
@@ -292,17 +286,17 @@ const MyZooAccount: React.FC = () => {
   }
 
   const sortData = (data: Array<any>, byType: string) => {
-    return data.sort((a, b) => {
-      if (a.timeRemaining === b.timeRemaining) {
-        if (a[byType]) {
-          if (b[byType]) return 0
-          return -1
-        }
-        if (b[byType]) return 1
-        return 0
-      }
-      return a.timeRemaining - b.timeRemaining
-    })
+    return data.sort((a, b) => Number(b.tokenID) - Number(a.tokenID))
+    // if (a.timeRemaining === b.timeRemaining) {
+    //   if (a[byType]) {
+    //     if (b[byType]) return 0
+    //     return -1
+    //   }
+    //   if (b[byType]) return 1
+    //   return 0
+    // }
+    // return a.timeRemaining - b.timeRemaining
+    // })
   }
 
   return (

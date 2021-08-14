@@ -67,25 +67,6 @@ function newTransaction(request) {
   return tx
 }
 
-// This is a convenience function to drop the tables
-Moralis.Cloud.afterSave('AddDrop', async (request) => {
-  const logger = Moralis.Cloud.getLogger()
-
-  // Wipe out all data
-  const classNames = ['User', 'Breed', 'Burn', 'BuyEgg', 'Free', 'Hatch', 'Mint', 'Eggs', 'Animals', 'Transactions']
-
-  for (const name of classNames) {
-    const Class = Moralis.Object.extend(name)
-    const query = new Moralis.Query(Class)
-    const results = await query.limit(1000).find()
-
-    logger.info(`Dropping table ${name}`)
-    for (let i = 0; i < results.length; i++) {
-      await results[i].destroy()
-    }
-  }
-})
-
 Moralis.Cloud.afterSave('BuyEgg', async (request) => {
   const logger = Moralis.Cloud.getLogger()
   const eggID = parseInt(request.object.get('eggID')) // new Token ID
@@ -255,4 +236,44 @@ Moralis.Cloud.afterSave('Free', async (request) => {
   await tx.save()
 
   logger.info(`Animal ${name} (${tokenID} released into Wild`)
+})
+
+Moralis.Cloud.define('getGasFee', async function(request) {
+  const query = new Moralis.Query('EthTransactions')
+  const pipeline = [
+    {
+      group: {
+        // group by "from_address"
+        objectId: '$from_address',
+        // add computed property avgGas
+        // get average and convert wei to gwei
+        avgGas: { $avg: { $divide: ['$gas_price', 1000000000] } },
+      },
+    },
+    { sort: { avgGas: -1 } }, // sort by avgGas high to low
+    { limit: 10 }, // only return top 10 results
+  ]
+
+  // the master key is required for aggregate queries
+  const results = await query.aggregate(pipeline, { useMasterKey: true })
+  return results
+})
+
+// This is a convenience function to drop the tables
+Moralis.Cloud.define('dropTables', async (request) => {
+  const logger = Moralis.Cloud.getLogger()
+
+  // Wipe out all data
+  const classNames = ['User', 'Breed', 'Burn', 'BuyEgg', 'Free', 'Hatch', 'Mint', 'Eggs', 'Animals', 'Transactions']
+
+  for (const name of classNames) {
+    const Class = Moralis.Object.extend(name)
+    const query = new Moralis.Query(Class)
+    const results = await query.limit(1000).find()
+
+    logger.info(`Dropping table ${name}`)
+    for (let i = 0; i < results.length; i++) {
+      await results[i].destroy()
+    }
+  }
 })

@@ -6,17 +6,21 @@ import { DeployFunction } from 'hardhat-deploy/types'
 import configureGame from '../utils/configureGame'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, ethers, getNamedAccounts } = hre
+  const { deployments, ethers, getNamedAccounts, network } = hre
   const { deploy } = deployments
-  const { deployer } = await getNamedAccounts()
+  // const { deployer } = await getNamedAccounts()
+
+  const [deployer] = await ethers.getSigners()
+  // const nonce = (await deployer.getTransactionCount()) + 1
 
   const deployResult = await deploy('ZooDrop', {
-    from: deployer,
+    // nonce: nonce,
+    from: deployer.address,
     args: ['Gen 0'],
     log: true,
   })
 
-  if (!deployResult.newlyDeployed) return false
+  if (network.name != 'hardhat') return
 
   const drop = await ethers.getContractAt('ZooDrop', deployResult.address)
   const keeperAddress = (await deployments.get('ZooKeeper')).address
@@ -27,11 +31,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // Testnet or Mainnet deployment -- use the standalone `yarn deploy:drop` to
   // update Testnet or Mainnet contracts.
   await configureGame(keeper, drop)
-
-  return hre.network.live
 }
 
 export default func
-func.id = 'deploy_zoo_drop'
+func.id = 'drop'
 func.tags = ['ZooDrop']
 // func.dependencies = ['ZooKeeper']
