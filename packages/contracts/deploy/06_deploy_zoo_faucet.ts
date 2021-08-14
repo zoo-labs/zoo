@@ -38,10 +38,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await token.mint(signers[i].address, signerAmount)
   }
 
-  return hre.network.live
+  // return hre.network.live
 }
 
 export default func
-func.id = 'deploy_zoo_faucet'
+func.id = 'faucet'
 func.tags = ['ZooFaucet']
 // func.dependencies = ['ZooToken']
