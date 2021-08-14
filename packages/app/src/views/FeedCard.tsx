@@ -138,6 +138,7 @@ const ActionButonContainer = styled.div`
 const FeedCard: React.FC<Props> = ({ item, animalGroup, hideBid }) => {
   const notShowBid = hideBid ? hideBid : false
 
+  console.log('ITEM', item)
   useEffect(() => {
     return null
   }, [hideBid])

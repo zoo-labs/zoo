@@ -8,10 +8,8 @@ import useToast from 'hooks/useToast'
  * @returns {boolean} true if the setup succeeded, false otherwise
  */
 export const setupNetwork = async (network) => {
-  console.log(bsc_nodes)
   const main = network === 'bsc'
   const provider = (window as WindowChain).ethereum
-  // if (provider) {
   const chainId = main ? parseInt('56', 10) : parseInt('97', 10)
   try {
     await provider.request({
@@ -19,14 +17,14 @@ export const setupNetwork = async (network) => {
       params: [
         {
           chainId: `0x${chainId.toString(16)}`,
-          chainName: main ? 'Binance Smart Chain Mainnet' : 'Binance Smart Chain Testnet',
+          chainName: main ? 'BSC Mainnet' : 'BSC Testnet',
           nativeCurrency: {
             name: 'BNB',
-            symbol: 'bnb',
+            symbol: 'BNB',
             decimals: 18,
           },
-          rpcUrls: main ? bsc_nodes : chapel_nodes,
-          blockExplorerUrls: ['https://bscscan.com/'],
+          rpcUrls: main ? 'https://speedy-nodes-nyc.moralis.io/1afec1fde198890860916a06/bsc/mainnet' : 'https://speedy-nodes-nyc.moralis.io/1afec1fde198890860916a06/bsc/testnet',
+          blockExplorerUrls: [main ? 'https://bscscan.com/' : 'https://testnet.bscscan.com/'],
         },
       ],
     })

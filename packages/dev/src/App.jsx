@@ -17,7 +17,7 @@ import { Subgraph } from './views'
 const { ethers } = require('ethers')
 
 /// 📡 What chain are your contracts deployed to?
-const targetNetwork = NETWORKS.localhost // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
+const targetNetwork = NETWORKS.testnet // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
 
 // 😬 Sorry for all the console logging
 const DEBUG = true
@@ -117,7 +117,7 @@ function App(props) {
   }, [userSigner])
 
   // You can warn the user if you would like them to be on a specific network
-  const localChainId = 31337
+  const localChainId = 97
   const selectedChainId = userSigner && userSigner.provider && userSigner.provider._network && userSigner.provider._network.chainId
 
   // For more hooks, check out 🔗eth-hooks at: https://www.npmjs.com/package/eth-hooks
@@ -245,7 +245,7 @@ function App(props) {
     !faucetClicked &&
     localProvider &&
     localProvider._network &&
-    localProvider._network.chainId === 31337 &&
+    localProvider._network.chainId === 97 &&
     yourLocalBalance &&
     ethers.utils.formatEther(yourLocalBalance) <= 0
   ) {
