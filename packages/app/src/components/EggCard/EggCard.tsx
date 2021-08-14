@@ -91,7 +91,6 @@ const Card = styled(Existing)<{ timedOut?: boolean; interactive?: boolean; hatch
 `
 
 export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady }) => {
-  // const [onHatch] = useModal(<HatchModal action='hatch' confirmation={() => hatchEgg(egg)} onDismiss={() => null} />)
   const onHatch = () => hatchEgg(egg)
   const onReveal = () => hatchEggReady(egg)
 
@@ -103,7 +102,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
   }
 
   const hatching = !egg.interactive && egg.hatched
-  const hatched  = egg.hatched && egg.interactive
+  const hatched = egg.hatched && egg.interactive
 
   const buttonLabel = (egg) => {
     if (!egg.hatched && !egg.interactive) return 'CONFIRMING'

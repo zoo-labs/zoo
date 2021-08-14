@@ -219,7 +219,7 @@ const Bank: React.FC = () => {
           console.error('ISSUE USING FAUCET \n', e)
           setWait(false)
         })
-        getBalance() // update balance
+      getBalance() // update balance
     } catch (e) {
       console.error('ISSUE USING FAUCET \n', e)
     }
@@ -258,15 +258,15 @@ const Bank: React.FC = () => {
 
         console.log('tx', tx)
         transactions.push({
-          id:               tx.get('objectId'),
-          from:             tx.get('from'),
-          action:           action,
-          hash:             txHash,
-          URL:              URL,
-          createdAt:        tx.get('createdAt').toLocaleDateString(),
-          blockNumber:      tx.get('blockNumber'),
-          timestamp:        tx.get('timestamp'),
-          tokenID:          tx.get('tokenID'),
+          id: tx.get('objectId'),
+          from: tx.get('from'),
+          action: action,
+          hash: txHash,
+          URL: URL,
+          createdAt: tx.get('createdAt').toLocaleDateString(),
+          blockNumber: tx.get('blockNumber'),
+          timestamp: tx.get('timestamp'),
+          tokenID: tx.get('tokenID'),
         })
       }
       console.log('transactions', transactions)
@@ -344,17 +344,13 @@ const Bank: React.FC = () => {
                         return (
                           <TableRow key={transaction.id}>
                             <TableData>
-                              <a href={transaction.URL}>
-                                  {transaction.hash}
-                              </a>
+                              <a href={transaction.URL}>{transaction.hash}</a>
                             </TableData>
                             <TableData>{transaction.action}</TableData>
                             <TableData>{transaction.blockNumber}</TableData>
                             <TableData>
-                              <a href={`/feed/myzoo/${transaction.tokenID}`}>
-                                {transaction.tokenID}
-                              </a>
-                          </TableData>
+                              <a href={`/feed/myzoo/${transaction.tokenID}`}>{transaction.tokenID}</a>
+                            </TableData>
                           </TableRow>
                         )
                       })}

@@ -78,10 +78,8 @@ const SERVER_NAME = {
           }
         })
         .catch(function(error) {
-          if (error.response && error.response.status == 502)
-            console.error(`error: 502 Bad Gateway`)
-          else
-            console.error(`error: ${error}`)
+          if (error.response && error.response.status == 502) console.error(`error: 502 Bad Gateway`)
+          else console.error(`error: ${error}`)
         })
     }, timeout)
   } catch (error) {
