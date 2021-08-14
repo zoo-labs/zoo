@@ -192,9 +192,9 @@ const Account: React.FC = () => {
     try {
       setWait(true)
       toastClear()
-      toastInfo('Processing ZOO purchase...')
+      toastInfo('Sending ZOO...')
       faucet.methods
-        .getZoo(account, faucetAmt)
+        .fund(account)
         .send({ from: account })
         .then(() => {
           setWait(false)
@@ -232,11 +232,10 @@ const Account: React.FC = () => {
 
   const buyEgg = async () => {
     setDisable(true)
-    ;``
 
-    const drop = await zooKeeper.methods.drops(0).call()
-    const token = await zooKeeper.methods.buyEgg(1).call({ from: account })
-    const createdAt = token.createdAt
+    // const drop = await zooKeeper.methods.drops(0).call()
+    // const token = await zooKeeper.methods.buyEgg(1).call({ from: account })
+    const createdAt = Date.now()
     const now = Date.now()
     const hatchTimeout = getMilliseconds(eggTimeout)
     const elapsedTime = now - createdAt
@@ -278,6 +277,19 @@ const Account: React.FC = () => {
         <Body>
           <LabelWrapper>
             <Label small>Wallet Balance</Label>
+            {(keepApprove || !allowance) && (
+              <BorderButton
+                disabled={disable || allowance}
+                scale='sm'
+                minWidth={!isXl ? '120px' : '140px'}
+                onClick={approve}
+                style={{
+                  marginRight: '8px',
+                  fontSize: `${!isXl ? '14px' : '16px'}`,
+                }}>
+                {allowance ? 'APPROVED ZOO' : disable ? 'PROCESSING' : 'APPROVE ZOO'}
+              </BorderButton>
+            )}
             <BorderButton disabled={wait} scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
               {chainId !== 97 && chainId !== 1337 ? 'Add Funds' : wait ? 'Processing...' : 'Get Zoo'}
             </BorderButton>
@@ -291,21 +303,8 @@ const Account: React.FC = () => {
             </Flex>
             <Flex flexDirection='column' height={allowance && !keepApprove ? '100%' : '65px'} justifyContent='space-between'>
               <BorderButton disabled={disable || !allowance} scale='sm' minWidth={!isXl ? '120px' : '140px'} onClick={buyEgg} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }}>
-                {disable ? 'TX PROCESSING' : 'BUY EGGS'}
+                {disable ? 'PROCESSING' : 'BUY EGGS'}
               </BorderButton>
-
-              {(keepApprove || !allowance) && (
-                <BorderButton
-                  disabled={disable || allowance}
-                  scale='sm'
-                  minWidth={!isXl ? '120px' : '140px'}
-                  onClick={approve}
-                  style={{
-                    fontSize: `${!isXl ? '14px' : '16px'}`,
-                  }}>
-                  {allowance ? 'APPROVED ZOO' : disable ? 'TX PROCESSING' : 'APPROVE ZOO'}
-                </BorderButton>
-              )}
             </Flex>
           </LabelWrapper>
         </Body>

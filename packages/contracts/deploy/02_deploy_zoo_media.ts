@@ -13,8 +13,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     args: ['CryptoZoo', 'ANML'],
     log: true,
   })
-
-  return hre.network.live
 }
 
 export default func

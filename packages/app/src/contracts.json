@@ -5,7 +5,7 @@
       "chainId": "97",
       "contracts": {
         "ZooAuction": {
-          "address": "0xaEff3DE5519DF0e7A7b805b8125F911DE0c897Fe",
+          "address": "0x5D2128d6313Ad4EEd9058d786FFE142f382592fC",
           "abi": [
             {
               "anonymous": false,
@@ -638,7 +638,7 @@
           ]
         },
         "ZooDrop": {
-          "address": "0x9Ed7C585227c525449048733f84aE686A89C8070",
+          "address": "0x61D021b871DBc94D49F62eb414D6C0bfAD3E988C",
           "abi": [
             {
               "inputs": [
@@ -2657,7 +2657,7 @@
           ]
         },
         "ZooFaucet": {
-          "address": "0xED90806A224ECF3AaA7855Ef9B72F9c022515f1e",
+          "address": "0x74f0a3b1358b1765Ee66D43fa0d984705b2620aB",
           "abi": [
             {
               "inputs": [
@@ -2669,6 +2669,25 @@
               ],
               "stateMutability": "nonpayable",
               "type": "constructor"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "_address",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "uint256",
+                  "name": "_amount",
+                  "type": "uint256"
+                }
+              ],
+              "name": "Fund",
+              "type": "event"
             },
             {
               "anonymous": false,
@@ -2690,38 +2709,14 @@
               "type": "event"
             },
             {
-              "anonymous": false,
-              "inputs": [
-                {
-                  "indexed": true,
-                  "internalType": "address",
-                  "name": "_to",
-                  "type": "address"
-                },
-                {
-                  "indexed": true,
-                  "internalType": "uint256",
-                  "name": "_amount",
-                  "type": "uint256"
-                }
-              ],
-              "name": "ZooSent",
-              "type": "event"
-            },
-            {
               "inputs": [
                 {
                   "internalType": "address",
                   "name": "to",
                   "type": "address"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "amount",
-                  "type": "uint256"
                 }
               ],
-              "name": "getZoo",
+              "name": "fund",
               "outputs": [
                 {
                   "internalType": "uint256",
@@ -2768,6 +2763,19 @@
             {
               "inputs": [
                 {
+                  "internalType": "uint256",
+                  "name": "_rate",
+                  "type": "uint256"
+                }
+              ],
+              "name": "setRate",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
                   "internalType": "address",
                   "name": "newOwner",
                   "type": "address"
@@ -2788,7 +2796,7 @@
           ]
         },
         "ZooKeeper": {
-          "address": "0x3632CdBc4c75c6794cb97FBA7deB9436ef41f3BE",
+          "address": "0x7F4b464c483e6DF3a01D7703e6Ba45cc4CD888Fa",
           "abi": [
             {
               "anonymous": false,
@@ -4127,7 +4135,7 @@
           ]
         },
         "ZooMarket": {
-          "address": "0x62277b8AD2F21Bf1D3192100BBfcd8618B239f48",
+          "address": "0x97F267F850abD0D5443Fe7a84AADaE69CDed5903",
           "abi": [
             {
               "inputs": [],
@@ -4943,7 +4951,7 @@
           ]
         },
         "ZooMedia": {
-          "address": "0x056eAcC831d7FB2130f441141077020ae3574edF",
+          "address": "0x865BFD67ae8A677e8D1B87579a4baB2166B3BB4c",
           "abi": [
             {
               "inputs": [
@@ -6596,7 +6604,7 @@
           ]
         },
         "ZooToken": {
-          "address": "0x3C58dC4B568F01835cB2050f208A63A6816AC066",
+          "address": "0x117eacFED638ea17c09Df6e4bE18F99CdC472EF1",
           "abi": [
             {
               "inputs": [],
@@ -6905,7 +6913,7 @@
                   "type": "uint256"
                 }
               ],
-              "stateMutability": "pure",
+              "stateMutability": "view",
               "type": "function"
             },
             {
@@ -9656,6 +9664,25 @@
                 {
                   "indexed": true,
                   "internalType": "address",
+                  "name": "_address",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "uint256",
+                  "name": "_amount",
+                  "type": "uint256"
+                }
+              ],
+              "name": "Fund",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
                   "name": "previousOwner",
                   "type": "address"
                 },
@@ -9670,38 +9697,14 @@
               "type": "event"
             },
             {
-              "anonymous": false,
-              "inputs": [
-                {
-                  "indexed": true,
-                  "internalType": "address",
-                  "name": "_to",
-                  "type": "address"
-                },
-                {
-                  "indexed": true,
-                  "internalType": "uint256",
-                  "name": "_amount",
-                  "type": "uint256"
-                }
-              ],
-              "name": "ZooSent",
-              "type": "event"
-            },
-            {
               "inputs": [
                 {
                   "internalType": "address",
                   "name": "to",
                   "type": "address"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "amount",
-                  "type": "uint256"
                 }
               ],
-              "name": "getZoo",
+              "name": "fund",
               "outputs": [
                 {
                   "internalType": "uint256",
@@ -9741,6 +9744,19 @@
             {
               "inputs": [],
               "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "_rate",
+                  "type": "uint256"
+                }
+              ],
+              "name": "setRate",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
@@ -13885,7 +13901,7 @@
                   "type": "uint256"
                 }
               ],
-              "stateMutability": "pure",
+              "stateMutability": "view",
               "type": "function"
             },
             {
@@ -14272,7 +14288,7 @@
                   "type": "uint256"
                 }
               ],
-              "stateMutability": "pure",
+              "stateMutability": "view",
               "type": "function"
             },
             {
@@ -20823,6 +20839,25 @@
                 {
                   "indexed": true,
                   "internalType": "address",
+                  "name": "_address",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "uint256",
+                  "name": "_amount",
+                  "type": "uint256"
+                }
+              ],
+              "name": "Fund",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
                   "name": "previousOwner",
                   "type": "address"
                 },
@@ -20837,38 +20872,14 @@
               "type": "event"
             },
             {
-              "anonymous": false,
-              "inputs": [
-                {
-                  "indexed": true,
-                  "internalType": "address",
-                  "name": "_to",
-                  "type": "address"
-                },
-                {
-                  "indexed": true,
-                  "internalType": "uint256",
-                  "name": "_amount",
-                  "type": "uint256"
-                }
-              ],
-              "name": "ZooSent",
-              "type": "event"
-            },
-            {
               "inputs": [
                 {
                   "internalType": "address",
                   "name": "to",
                   "type": "address"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "amount",
-                  "type": "uint256"
                 }
               ],
-              "name": "getZoo",
+              "name": "fund",
               "outputs": [
                 {
                   "internalType": "uint256",
@@ -20908,6 +20919,19 @@
             {
               "inputs": [],
               "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "_rate",
+                  "type": "uint256"
+                }
+              ],
+              "name": "setRate",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"

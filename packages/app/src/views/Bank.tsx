@@ -165,29 +165,24 @@ const StyledText = styled(Text)`
 `
 
 const Bank: React.FC = () => {
-  const animalsState = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
-  const [zooBalance, setBalance] = useState(0.0)
   const { account, chainId } = useWeb3React()
   const web3 = useWeb3()
   const history = useHistory()
   const { isXl } = useMatchBreakpoints()
+
+  const animalsState = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
+
+  const [zooBalance, setBalance] = useState(0.0)
   const [wait, setWait] = useState(false)
-  const [Transactions, setTransactions] = useState([])
+  const [transactions, setTransactions] = useState([])
   const [waitTx, setWaitTx] = useState(true)
 
   const zooToken = getZooToken(web3, chainId)
-
-  const handleClick = () => {
-    history.push('/account')
-  }
-
   const faucet = getZooFaucet(web3, chainId)
-  const faucetAmt = web3.utils.toWei('50')
+
   const accountAnimals = Object.values(animalsState).filter((animal) => {
     return animal.owner && animal.owner.toLowerCase() === account.toLowerCase()
   })
-
-  console.log(accountAnimals)
 
   const getBalance = async () => {
     try {
@@ -214,8 +209,8 @@ const Bank: React.FC = () => {
     try {
       setWait(true)
       faucet.methods
-        .getZoo(account, faucetAmt)
-        .send({ from: account })
+        .fund(account)
+        .send({ gas: 21000, from: account })
         .then(() => {
           setWait(false)
           getBalance()
@@ -224,6 +219,7 @@ const Bank: React.FC = () => {
           console.error('ISSUE USING FAUCET \n', e)
           setWait(false)
         })
+      getBalance() // update balance
     } catch (e) {
       console.error('ISSUE USING FAUCET \n', e)
     }
@@ -243,46 +239,54 @@ const Bank: React.FC = () => {
   }
 
   const getTransactions = async () => {
-    console.log('GETTING TRANSACTIONS')
+    console.log('GETTING TRANSACTIONS for account', account)
     try {
-      let tempTransactions = []
-      const MoralisObject = Moralis.Object.extend('Transactions')
-      const query = new Moralis.Query(MoralisObject)
+      const Transactions = Moralis.Object.extend('Transactions')
+      const query = new Moralis.Query(Transactions)
       query.limit(1000)
-      query.equalTo('from', account)
+      query.descending('createdAt')
+      query.equalTo('from', account.toLowerCase())
       const results = await query.find()
-      console.log(results)
-      for (let i = 0; i < results.length; i++) {
-        const transaction = results[i]
-        let string = String(transaction.get('createdAt'))
-        const replacedString = string.replace('at ', '')
-        const date = new Date(replacedString)
-        const newDate = date.toLocaleDateString('en-US')
-        console.log(newDate)
-        const tx: any = {
-          txHash: transaction.get('transactionHash'),
-          action: transaction.get('action'),
-          from: transaction.get('from'),
-          date: newDate,
-          to: '',
-        }
-        tempTransactions.push(tx)
+      let transactions = []
+      for (const tx of results) {
+        const action = tx.get('action')
+        const txHash = tx.get('transactionHash')
+        const URL = `https://testnet.bscscan.com/tx/${txHash}`
+
+        // Filter out Burned Tokens
+        if (action == 'Burned Token') continue
+
+        console.log('tx', tx)
+        transactions.push({
+          id: tx.get('objectId'),
+          from: tx.get('from'),
+          action: action,
+          hash: txHash,
+          URL: URL,
+          createdAt: tx.get('createdAt').toLocaleDateString(),
+          blockNumber: tx.get('blockNumber'),
+          timestamp: tx.get('timestamp'),
+          tokenID: tx.get('tokenID'),
+        })
       }
-      setTransactions(tempTransactions)
+      console.log('transactions', transactions)
+      setTransactions(transactions)
       setWaitTx(false)
     } catch (e) {
       console.error('ISSUE GETTING TRANSACTIONS \n', e)
     }
   }
 
+  // Calculate yield
+  const dailyYield = accountAnimals.reduce((acc, x) => acc + Number(x.yield), 0)
+
   // Get top ten animals
-  const topTenAnimals = accountAnimals.sort((a, b) => Number(b.yield) * (1 + Number(b.boost) / 100) - Number(a.yield) * (1 + Number(a.boost) / 100)).slice(0, 10)
-  console.log(topTenAnimals)
+  const topTenAnimals = accountAnimals.sort((a, b) => Number(b.yield) - Number(a.yield)).slice(0, 10)
 
   const pageHeading = (
     <HeadingContainer>
       <StyledHeading>My Bank</StyledHeading>
-      <StyledButton onClick={() => handleClick()}>View Account</StyledButton>
+      <StyledButton onClick={() => history.push('/account')}>View Account</StyledButton>
     </HeadingContainer>
   )
 
@@ -295,7 +299,7 @@ const Bank: React.FC = () => {
             <Label small>Wallet Balance</Label>
 
             <BorderButton scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
-              {chainId !== 97 ? 'Add Funds' : wait ? 'Processing...' : 'Get Zoo'}
+              {chainId !== 97 ? 'Buy ZOO' : wait ? 'Processing...' : 'Get ZOO'}
             </BorderButton>
           </LabelWrapper>
           <Flex width='100%' alignItems='center' justifyContent='space-around'>
@@ -304,7 +308,7 @@ const Bank: React.FC = () => {
             {/* <ValueWrapper style={{ fontSize: "16px",  color: "rgb(221 224 26)" }}>0 USD</ValueWrapper> */}
           </Flex>
           <Label small>Total Daily Yield</Label>
-          <ValueWrapper> 200 ZOO </ValueWrapper>
+          <ValueWrapper> {dailyYield} ZOO </ValueWrapper>
           <Label small>Top Earners</Label>
           {topTenAnimals.length === 0 ? (
             <ValueWrapper style={{ justifyContent: 'center' }}> No animals </ValueWrapper>
@@ -313,7 +317,7 @@ const Bank: React.FC = () => {
               {topTenAnimals.map((animal) => {
                 return (
                   <EarnerValue key={animal.tokenID + '_earner_'}>
-                    {animal.name} - {Number(animal.yield) * (1 + Number(animal.boost) / 100)}/day
+                    {animal.name} - {animal.yield}/day
                   </EarnerValue>
                 )
               })}
@@ -322,7 +326,7 @@ const Bank: React.FC = () => {
           <Label small>Recent Tansactions</Label>
           {waitTx ? (
             <TableText> Loading Transactions... </TableText>
-          ) : Transactions.length === 0 ? (
+          ) : transactions.length === 0 ? (
             <TableText> No Transaction Data </TableText>
           ) : (
             <Container>
@@ -331,20 +335,22 @@ const Bank: React.FC = () => {
                   <StyledTable>
                     <TableBody>
                       <TableRow>
-                        <TableHeader>TxHash</TableHeader>
+                        <TableHeader>Tx Hash</TableHeader>
                         <TableHeader>Action</TableHeader>
-                        <TableHeader>From</TableHeader>
-                        <TableHeader>To</TableHeader>
-                        <TableHeader>Date</TableHeader>
+                        <TableHeader>Block Number</TableHeader>
+                        <TableHeader>Token ID</TableHeader>
                       </TableRow>
-                      {Transactions.map((transaction) => {
+                      {transactions.map((transaction) => {
                         return (
-                          <TableRow key={transaction.txHash}>
-                            <TableData>{transaction.txHash}</TableData>
-                            <TableData>{transaction.txAction}</TableData>
-                            <TableData>{transaction.from}</TableData>
-                            <TableData>{transaction.to}</TableData>
-                            <TableData>{transaction.date}</TableData>
+                          <TableRow key={transaction.id}>
+                            <TableData>
+                              <a href={transaction.URL}>{transaction.hash}</a>
+                            </TableData>
+                            <TableData>{transaction.action}</TableData>
+                            <TableData>{transaction.blockNumber}</TableData>
+                            <TableData>
+                              <a href={`/feed/myzoo/${transaction.tokenID}`}>{transaction.tokenID}</a>
+                            </TableData>
                           </TableRow>
                         )
                       })}
