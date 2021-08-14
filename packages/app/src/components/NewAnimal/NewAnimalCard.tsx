@@ -81,7 +81,6 @@ const CardOverlay = styled.div`
 
 const NewAnimalCard: React.FC<NewAnimalCardType> = ({ animal, isOpen }) => {
   const { isXs, isXl } = useMatchBreakpoints()
-  console.log(window.innerHeight)
 
   const rarityColor = RarityColor[animal.rarity.toLowerCase()] || 'white'
 
