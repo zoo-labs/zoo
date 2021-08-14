@@ -233,7 +233,7 @@ const MyZooAccount: React.FC = () => {
     // };
 
     Object.values(allEggs).forEach((egg, index) => {
-      const eggType = egg.basic ? 'BASIC' : 'HYBRID'
+      const eggType = egg.basic ? 'BASE' : 'HYBRID'
       if ((egg.owner || '').toLowerCase() !== account.toLowerCase()) {
         //console.log(account, egg)
         return

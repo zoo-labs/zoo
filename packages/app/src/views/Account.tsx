@@ -78,6 +78,7 @@ const Account: React.FC = () => {
   const { account, chainId } = useWeb3React()
   const [allowance, setAllowance] = useState(false)
   const [disable, setDisable] = useState(false)
+  const [disableApprove, setDisableApprove] = useState(false)
   const [keepApprove, setKeepApprove] = useState(true)
   const web3 = useWeb3()
   const { isXl } = useMatchBreakpoints()
@@ -136,7 +137,7 @@ const Account: React.FC = () => {
 
   const approve = async () => {
     toastClear()
-    setDisable(true)
+    setDisableApprove(true)
     toastInfo('Processing approval...')
 
     // Increase allowance
@@ -146,12 +147,12 @@ const Account: React.FC = () => {
 
     tx.then(() => {
       setAllowance(true)
-      setDisable(false)
+      setDisableApprove(false)
       toastClear()
       toastSuccess('Approval success!')
     }).catch((e) => {
       console.error('APPROVE ERROR', e)
-      setDisable(false)
+      setDisableApprove(false)
       toastClear()
       toastError('Failed to approve account')
     })
@@ -279,7 +280,7 @@ const Account: React.FC = () => {
             <Label small>Wallet Balance</Label>
             {(keepApprove || !allowance) && (
               <BorderButton
-                disabled={disable || allowance}
+                disabledApprove={disable || allowance}
                 scale='sm'
                 minWidth={!isXl ? '120px' : '140px'}
                 onClick={approve}
@@ -287,7 +288,7 @@ const Account: React.FC = () => {
                   marginRight: '8px',
                   fontSize: `${!isXl ? '14px' : '16px'}`,
                 }}>
-                {allowance ? 'APPROVED ZOO' : disable ? 'PROCESSING' : 'APPROVE ZOO'}
+                {allowance ? 'APPROVED' : disableApprove ? 'PROCESSING' : 'APPROVE ZOO'}
               </BorderButton>
             )}
             <BorderButton disabled={wait} scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>

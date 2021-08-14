@@ -11,7 +11,7 @@ export const NETWORKS = {
   localhost: {
     name: 'hardhat',
     color: '#666666',
-    chainId: 31337,
+    chainId: 1337,
     blockExplorer: '',
     rpcUrl: 'http://' + window.location.hostname + ':8545',
   },
@@ -26,8 +26,8 @@ export const NETWORKS = {
     name: 'testnet',
     color: '#ff8b9e',
     chainId: 97,
-    rpcUrl: `https://data-seed-prebsc-1-s1.binance.org:8545/`,
-    blockExplorer: 'https://testnet.bscscan.com',
+    rpcUrl: `https://speedy-nodes-nyc.moralis.io/1afec1fde198890860916a06/bsc/testnet`,
+    blockExplorer: 'https://testnet.bscscan.com/',
   },
   kovan: {
     name: 'kovan',
