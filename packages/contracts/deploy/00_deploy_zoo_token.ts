@@ -8,6 +8,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deploy } = deployments
 
   const [deployer] = await ethers.getSigners()
+
+  // Sometimes necessary to manually increment nonce
   // const nonce = (await deployer.getTransactionCount()) + 1
 
   // const useProxy = !hre.network.live
