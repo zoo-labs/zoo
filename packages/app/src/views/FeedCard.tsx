@@ -152,7 +152,7 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup, hideBid }) => {
 
   const [onBid] = useModal(<BidModal item={item} onDismiss={() => null} />)
 
-  const rarityColor = RarityColor[item.rarity.toLowerCase()] || 'white'
+  const rarityColor = RarityColor[(item.rarity || '').toLowerCase()] || 'white'
   const multiplier = animalGroup[item.kind] > 1 ? `x${animalGroup[item.kind]}` : ''
 
   const buyButton = notShowBid ? (
