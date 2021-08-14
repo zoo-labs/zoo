@@ -62,7 +62,7 @@ const SERVER_NAME = {
     const seen = new Set()
     setInterval(() => {
       axios(config)
-        .then(function(response) {
+        .then(function (response) {
           for (log of response.data) {
             if (seen.has(log.timestamp)) continue
             else seen.add(log.timestamp)
@@ -77,7 +77,7 @@ const SERVER_NAME = {
               console.log(`${log.level}: ${log.message}`)
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           if (error.response && error.response.status == 502) console.error(`error: 502 Bad Gateway`)
           else console.error(`error: ${error}`)
         })
