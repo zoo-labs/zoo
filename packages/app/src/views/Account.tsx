@@ -280,7 +280,7 @@ const Account: React.FC = () => {
             <Label small>Wallet Balance</Label>
             {(keepApprove || !allowance) && (
               <BorderButton
-                disabledApprove={disable || allowance}
+                disabledApprove={disableApprove || allowance}
                 scale='sm'
                 minWidth={!isXl ? '120px' : '140px'}
                 onClick={approve}
@@ -292,7 +292,7 @@ const Account: React.FC = () => {
               </BorderButton>
             )}
             <BorderButton disabled={wait} scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
-              {chainId !== 97 && chainId !== 1337 ? 'Add Funds' : wait ? 'Processing...' : 'Get Zoo'}
+              {chainId !== 97 && chainId !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
             </BorderButton>
           </LabelWrapper>
           <RowWrapper>
