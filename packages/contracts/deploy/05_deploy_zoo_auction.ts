@@ -4,7 +4,7 @@ import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, ethers, getNamedAccounts } = hre
+  const { deployments, ethers, getNamedAccounts, network } = hre
   const { deploy } = deployments
   const { deployer } = await getNamedAccounts()
 
@@ -14,11 +14,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     log: true,
   })
 
-  // const tokenAddress = (await deployments.get('ZooToken')).address
-  // const mediaAddress = (await deployments.get('ZooMedia')).address
+  if (network.name != 'hardhat') return
 
-  // const auction = await ethers.getContractAt('ZooAuction', deployResult.address)
-  // auction.configure(mediaAddress, tokenAddress)
+  const tokenAddress = (await deployments.get('ZooToken')).address
+  const mediaAddress = (await deployments.get('ZooMedia')).address
+
+  const auction = await ethers.getContractAt('ZooAuction', deployResult.address)
+  auction.configure(mediaAddress, tokenAddress)
 
   return hre.network.live
 }
