@@ -241,14 +241,7 @@ function App(props) {
   const faucetAvailable = (localProvider && localProvider.connection && targetNetwork.name.indexOf('local') !== -1) || targetNetwork.name.indexOf('hardhat') !== -1
 
   const [faucetClicked, setFaucetClicked] = useState(false)
-  if (
-    !faucetClicked &&
-    localProvider &&
-    localProvider._network &&
-    localProvider._network.chainId === 97 &&
-    yourLocalBalance &&
-    ethers.utils.formatEther(yourLocalBalance) <= 0
-  ) {
+  if (!faucetClicked && localProvider && localProvider._network && localProvider._network.chainId === 97 && yourLocalBalance && ethers.utils.formatEther(yourLocalBalance) <= 0) {
     faucetHint = (
       <div style={{ padding: 16 }}>
         <Button

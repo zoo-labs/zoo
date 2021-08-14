@@ -238,7 +238,7 @@ Moralis.Cloud.afterSave('Free', async (request) => {
   logger.info(`Animal ${name} (${tokenID} released into Wild`)
 })
 
-Moralis.Cloud.define('getGasFee', async function(request) {
+Moralis.Cloud.define('getGasFee', async function (request) {
   const query = new Moralis.Query('EthTransactions')
   const pipeline = [
     {

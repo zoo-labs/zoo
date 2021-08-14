@@ -18,9 +18,7 @@ const subdomain = {
 const cached = __dirname + '/../node_modules/moralis-cached.js'
 const funcJS = fs.readFileSync(__dirname + '/../moralis/functions.js')
 const zkJSON = fs.readFileSync(__dirname + `/../../contracts/deployments/${NETWORK}/ZooKeeper.json`)
-const cloudFunctions = String(funcJS)
-  .replace('CHAIN_ID', chainID)
-  .replace('ZOOKEEPER', zkJSON)
+const cloudFunctions = String(funcJS).replace('CHAIN_ID', chainID).replace('ZOOKEEPER', zkJSON)
 
 fs.writeFileSync(cached, cloudFunctions)
 

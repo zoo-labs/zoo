@@ -60,10 +60,10 @@ const SERVER_NAME = {
     }
 
     axios(config)
-      .then(function(response) {
+      .then(function (response) {
         console.log('Dumping tables')
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.error(error)
       })
   } catch (error) {
