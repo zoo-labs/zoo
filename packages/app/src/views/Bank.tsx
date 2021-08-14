@@ -299,7 +299,7 @@ const Bank: React.FC = () => {
             <Label small>Wallet Balance</Label>
 
             <BorderButton scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
-              {chainId !== 97 ? 'Buy ZOO' : wait ? 'Processing...' : 'Get ZOO'}
+              {chainId !== 97 ? 'Buy ZOO' : wait ? 'Processing' : 'Get ZOO'}
             </BorderButton>
           </LabelWrapper>
           <Flex width='100%' alignItems='center' justifyContent='space-around'>
@@ -340,16 +340,16 @@ const Bank: React.FC = () => {
                         <TableHeader>Block Number</TableHeader>
                         <TableHeader>Token ID</TableHeader>
                       </TableRow>
-                      {transactions.map((transaction) => {
+                      {transactions.map((tx) => {
                         return (
-                          <TableRow key={transaction.id}>
+                          <TableRow key={tx.id}>
                             <TableData>
-                              <a href={transaction.URL}>{transaction.hash}</a>
+                              <a href={tx.url}>{tx.hash}</a>
                             </TableData>
-                            <TableData>{transaction.action}</TableData>
-                            <TableData>{transaction.blockNumber}</TableData>
+                            <TableData>{tx.action}</TableData>
+                            <TableData>{tx.blockNumber}</TableData>
                             <TableData>
-                              <a href={`/feed/myzoo/${transaction.tokenID}`}>{transaction.tokenID}</a>
+                              <a href={`/feed/myzoo/${tx.tokenID}`}>{tx.tokenID}</a>
                             </TableData>
                           </TableRow>
                         )
