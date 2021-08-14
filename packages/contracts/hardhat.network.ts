@@ -38,16 +38,16 @@ const networks: HardhatUserConfig['networks'] = {
   mainnet: {
     url: 'https://bsc-dataseed.binance.org/',
     chainId: 56,
-    // gasPrice: 1000000000,
     accounts: {
       mnemonic: mnemonic(),
     },
   },
   testnet: {
-    url: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+    // url: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+    url: 'https://speedy-nodes-nyc.moralis.io/1afec1fde198890860916a06/bsc/testnet',
     chainId: 97,
-    gasPrice: 20e9,
-    gas: 20e6,
+    gasPrice: 12e9,
+    // gas: 30000e9,
     accounts: {
       mnemonic: mnemonic(),
     },
