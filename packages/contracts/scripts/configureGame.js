@@ -51,8 +51,9 @@ async function main() {
   await keeper.setDrop(ZooDrop.address)
 
   // Base Price for Egg / Names
-  const exp = ethers.BigNumber.from('10').pow(18)
-  const basePrice = ethers.BigNumber.from('1500000').mul(exp)
+  // const exp = ethers.BigNumber.from('10').pow(18)
+  // const basePrice = ethers.BigNumber.from('1500000').mul(exp)
+  const basePrice = ethers.BigNumber.from('1500000')
 
   // Configure Name price
   console.log('keeper.setNamePrice', basePrice)
@@ -76,34 +77,35 @@ async function main() {
     },
   ]
 
-  for (const v of eggs) {
-    console.log('setEgg', v)
-    const tx = await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
-    await tx.wait()
-  }
+  // for (const v of eggs) {
+  //   console.log('setEgg', v)
+  //   const tx = await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
+  //   await tx.wait()
+  // }
 
-  await drop.configureEggs('Base Egg', 'Hybrid Egg')
+  // console.log('configureEggs')
+  // await drop.configureEggs('Base Egg', 'Hybrid Egg')
 
   // Add rarities
   rarities.sort(function (a, b) {
     return a.probability - b.probability
   })
 
-  for (const v of rarities) {
-    console.log('setRarity', v)
-    const tx = await drop.setRarity(v.name, v.probability, v.yield, v.boost)
-    await tx.wait()
-  }
+  // for (const v of rarities) {
+  //   console.log('setRarity', v)
+  //   const tx = await drop.setRarity(v.name, v.probability, v.yield, v.boost)
+  //   await tx.wait()
+  // }
 
   // Add animals
-  for (const chunk of chunks(animals, 20)) {
+  for (const chunk of chunks(animals, 100)) {
     console.log('setAnimals', chunk)
     const tx = await drop.setAnimals(chunk)
     await tx.wait()
   }
 
   // Add hybrids
-  for (const chunk of chunks(hybrids, 20)) {
+  for (const chunk of chunks(hybrids, 100)) {
     console.log('setHybrids', chunk)
     const tx = await drop.setHybrids(chunk)
     await tx.wait()

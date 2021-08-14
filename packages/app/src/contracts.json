@@ -5,7 +5,7 @@
       "chainId": "97",
       "contracts": {
         "ZooAuction": {
-          "address": "0x5D2128d6313Ad4EEd9058d786FFE142f382592fC",
+          "address": "0x10791bE854B057b426870102F1E11b21D3b54868",
           "abi": [
             {
               "anonymous": false,
@@ -638,7 +638,7 @@
           ]
         },
         "ZooDrop": {
-          "address": "0x61D021b871DBc94D49F62eb414D6C0bfAD3E988C",
+          "address": "0xE76DFE997858e320E3C04146Bba827d0e0EC2993",
           "abi": [
             {
               "inputs": [
@@ -2657,7 +2657,7 @@
           ]
         },
         "ZooFaucet": {
-          "address": "0x74f0a3b1358b1765Ee66D43fa0d984705b2620aB",
+          "address": "0x533f6D00f5B5637B48bf182Ba77cDC4c2aAc3930",
           "abi": [
             {
               "inputs": [
@@ -2796,7 +2796,7 @@
           ]
         },
         "ZooKeeper": {
-          "address": "0x7F4b464c483e6DF3a01D7703e6Ba45cc4CD888Fa",
+          "address": "0xD3879840881100108dA45379bdcFd094C215D780",
           "abi": [
             {
               "anonymous": false,
@@ -4135,7 +4135,7 @@
           ]
         },
         "ZooMarket": {
-          "address": "0x97F267F850abD0D5443Fe7a84AADaE69CDed5903",
+          "address": "0x551DAf1EFa85dBc6ED52a2C59BE5708f0b0AbcBa",
           "abi": [
             {
               "inputs": [],
@@ -4951,7 +4951,7 @@
           ]
         },
         "ZooMedia": {
-          "address": "0x865BFD67ae8A677e8D1B87579a4baB2166B3BB4c",
+          "address": "0x030b97ccD62d07864139c029bE725E677A0bE897",
           "abi": [
             {
               "inputs": [
@@ -6604,7 +6604,7 @@
           ]
         },
         "ZooToken": {
-          "address": "0x117eacFED638ea17c09Df6e4bE18F99CdC472EF1",
+          "address": "0x34f3F270B85532f32c6F8039B960c569816Fc67a",
           "abi": [
             {
               "inputs": [],
