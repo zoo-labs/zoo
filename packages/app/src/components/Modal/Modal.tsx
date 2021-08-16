@@ -13,7 +13,7 @@ const Modal: React.FC<ModalProps> = ({
   bodyPadding = '24px',
   headerBackground = 'transparent',
   minWidth = '320px',
-  borderRadius = '32px',
+  borderRadius = '64px',
   styles = {},
   headerColor,
   ...props

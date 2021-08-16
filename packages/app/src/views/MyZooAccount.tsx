@@ -9,16 +9,16 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/swiper.min.css'
 import 'swiper/components/pagination/pagination.min.css'
 
+import useWeb3 from 'hooks/useWeb3'
 import { Text, Card as Existing, EggCard, VideoPlayer } from 'components'
 import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
 import { breedTimeouts, eggTimeout } from 'constants/constants'
 import { addAnimal, addEgg, burnEgg } from 'state/actions'
-import NewAnimalCard from 'components/NewAnimal/NewAnimalCard'
 import { RarityColor } from 'enums/rarity-color'
-import { AnimalCard } from 'components/AnimalCard'
-import useWeb3 from 'hooks/useWeb3'
 import { getZooKeeper } from 'util/contractHelpers'
 import { Animal, Egg } from 'types/zoo'
+import { AnimalCard } from 'components/AnimalCard'
+import { NewAnimalCard } from 'components/NewAnimal'
 import { mapEgg, mapAnimal } from 'util/moralis'
 
 const StyledText = styled(Text)`
@@ -233,7 +233,7 @@ const MyZooAccount: React.FC = () => {
     // };
 
     Object.values(allEggs).forEach((egg, index) => {
-      const eggType = egg.basic ? 'BASE' : 'HYBRID'
+      const eggType = egg.basic ? 'EGG' : 'HYBRID'
       if ((egg.owner || '').toLowerCase() !== account.toLowerCase()) {
         //console.log(account, egg)
         return
@@ -259,7 +259,7 @@ const MyZooAccount: React.FC = () => {
     eggData = sortData(eggData, 'hybrid')
 
     return (
-      <RowLayout>
+      <RowLayout style={{ marginBottom: -8}}>
         <Route exact path={`${path}`}>
           {eggData.length === 0 ? (
             <StyledText textAlign='center' fontSize='16px'>

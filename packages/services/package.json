@@ -6,7 +6,7 @@
     "moralis:functions": "node ./scripts/moralisFunctions.js && NETWORK=testnet node ./scripts/moralisFunctions.js",
     "moralis:plugins": "node ./scripts/moralisPlugins.js && NETWORK=testnet node ./scripts/moralisPlugins.js",
     "moralis:logs": "node ./scripts/moralisLogs.js",
-    "moralis:drop": "node ./scripts/moralisDropTables.js",
+    "moralis:drop": "NETWORK=testnet node ./scripts/moralisDropTables.js",
     "moralis:watch": "node ./scripts/moralisWatch.js",
     "moralis:proxy": "frpc -c frpc.ini",
     "logs": "yarn moralis:logs",

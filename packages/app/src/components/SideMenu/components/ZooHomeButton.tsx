@@ -1,19 +1,18 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import logo from 'media/ZooEggLogoWhite.png'
+import logo from 'media/white-egg.png'
 
 const LogoContainer = styled.button<{ width?: string }>`
   cursor: pointer;
-  border-radius: 30px;
   background: transparent;
   border: none;
   width: 100%;
+
 `
 
 const MaxHeightLogo = styled.img`
-  width: 60px;
-  height: 60px;
+  height: 20px;
   z-index: 100;
 `
 

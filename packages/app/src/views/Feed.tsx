@@ -15,7 +15,6 @@ import { AppState } from 'state/index'
 import FeedCard from './FeedCard'
 import BorderButton from 'components/Button/BorderButton'
 import { ChevronLeftIcon } from 'components/Svg'
-import logo from 'media/ZooLogoWhite.png'
 import './styles.css'
 
 interface ButtonProp extends ButtonMenuItemProps {
@@ -32,19 +31,19 @@ const Container = styled.div<{ isMobile?: boolean }>`
   }
 `
 
-const StyledChevron = styled(ChevronLeftIcon)`
-  height: 40px;
-  width: 40px;
-  z-index: 101;
-  fill: white;
-`
+// const StyledChevron = styled(ChevronLeftIcon)`
+//   height: 40px;
+//   width: 40px;
+//   z-index: 101;
+//   fill: white;
+// `
 
 const StyledMenuButton = styled.button`
   position: relative;
   top: -8px;
   left: -12px;
   border: none;
-  background: transparent;
+  background: white;
   box-shadow: none;
   color: transparant;
 `
@@ -180,9 +179,6 @@ function Feed<FeedPagePops>({ match }) {
     <Container isMobile={isMobile}>
       <ToggleContainer>
         <ButtonMenu activeIndex={activeIndex} onItemClick={handleClick} scale='sm'>
-          <StyledMenuButton>
-            <StyledChevron onClick={HomeClick} />
-          </StyledMenuButton>
           <ButtonMenuItem as='a'>My Zoo</ButtonMenuItem>
           <ButtonMenuItem as='a'>Marketplace</ButtonMenuItem>
         </ButtonMenu>
@@ -201,9 +197,9 @@ function Feed<FeedPagePops>({ match }) {
             </Swiper>
           ) : (
             <EmptyZoo>
-              <Text textAlign='center'>There are currently no animals up for auction</Text>
+              <Text textAlign='center'>You do not currently own any animals</Text>
               <BorderButton scale='md' onClick={HomeClick}>
-                Home
+                Buy Egg
               </BorderButton>
             </EmptyZoo>
           )}
@@ -216,7 +212,12 @@ function Feed<FeedPagePops>({ match }) {
                   <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={{}} />
                 </SwiperSlide>
               ) : (
-                <div key={index}></div>
+                <EmptyZoo>
+                  <Text textAlign='center'>There are currently no animals up for auction</Text>
+                  <BorderButton scale='md' onClick={HomeClick}>
+                    Home
+                  </BorderButton>
+                </EmptyZoo>
               )
             })}
           </Swiper>

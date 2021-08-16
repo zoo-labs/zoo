@@ -42,7 +42,7 @@ const LabelWrapper = styled.div`
 `
 
 const ValueWrapper = styled(Text)`
-    font-size: 18px;
+    font-size: 16px;
     color: ${({ theme }) => theme.colors.text}
     width: 100%;
     white-space: nowrap;
@@ -143,7 +143,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
     }
   }
 
-  const switchIcon = <FaExchangeAlt size='18px' style={{ margin: '0px 8px 0px 0px' }} />
+  const switchIcon = <FaExchangeAlt size='16px' style={{ margin: '0px 8px 0px 0px' }} />
   return (
     <Modal title='Your wallet' onDismiss={onDismiss} styles={{ minHeight: '250px', justifyContent: 'space-between' }}>
       <Label>Address</Label>

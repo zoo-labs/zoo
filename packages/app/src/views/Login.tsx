@@ -19,19 +19,22 @@ interface Props {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background: linear-gradient(#4eff9d, #22d4a3, #28c3ff);
+  background: rgb(173,61,255);
+  background: radial-gradient(circle, rgba(173,61,255,1) 19%, rgba(0,212,255,1) 100%);
   height: 100vh;
   overflow: hidden;
 `
 const Button = styled.button`
   width: 200px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
   margin: 0px auto auto auto;
-  background-color: #030303;
+  // background: #df4c97;
+  background: linear-gradient(360deg, #8C4FF8 20%, rgb(173, 61, 255) 100%);
   border: 2px solid #ffffff;
   border-radius: 4px;
   padding: 10px;
   cursor: pointer;
-  background: #df4c97;
   text-transform: uppercase;
   border-radius: 8px;
   transition: all 0.2s;
@@ -42,7 +45,7 @@ const Button = styled.button`
     background-color: #538fbe;
     padding: 20px 70px;
     font-size: 24px; */
-  border: 1px solid #230616;
+  border: 1px solid blue;
   -webkit-box-shadow: 0px 2px 0px #461e34, 0px 3px 15px rgba(0, 0, 0, 0.4), inset 0px 1px 0px rgba(255, 255, 255, 0.3), inset 0px 0px 3px rgba(255, 255, 255, 0.5);
   -moz-box-shadow: 0px 2px 0px #461e34, 0px 3px 15px rgba(0, 0, 0, 0.4), inset 0px 1px 0px rgba(255, 255, 255, 0.3), inset 0px 0px 3px rgba(255, 255, 255, 0.5);
   box-shadow: 0px 2px 0px #461e34, 0px 3px 15px rgba(0, 0, 0, 0.4), inset 0px 1px 0px rgba(255, 255, 255, 0.3), inset 0px 0px 3px rgba(255, 255, 255, 0.5);

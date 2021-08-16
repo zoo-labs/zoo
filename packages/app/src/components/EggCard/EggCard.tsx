@@ -5,23 +5,64 @@ import { useModal } from 'components/Modal'
 import HatchModal from 'components/ZooModals/HatchModal'
 import { EggCardType } from './types'
 
-const rotate = keyframes`
+
+const wiggle = keyframes`
   0% {
     transform: rotate(0deg);
   }
   25% {
-    transform: rotate(5deg);
-  }
-  50% {
-     transform: rotate(0deg);
+    transform: rotate(4deg);
   }
   75% {
-   transform: rotate(-5deg);
+    transform: rotate(-4deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+`
+
+const pulse = keyframes`
+  0% {
+    box-shadow: 0px 4px 12px #555555;
+  }
+  50% {
+    box-shadow: 0px 4px 14px #EEEEEE;
+  }
+  100% {
+    box-shadow: 0px 4px 12px #555555;
+  }
+}
+`
+const scale = keyframes`
+  0% {
+	transform: scale(1);
+  }
+  50% {
+	transform: scale(1.05);
+  }
+  100% {
+	transform: scale(1);
+  }
 }
 `
 
+const wiggleAnimation = (props) =>
+  css`
+    ${wiggle} 0.5s ease-in-out;
+  `
+
+const pulseAnimation = (props) =>
+  css`
+    ${pulse} 2.2s ease-in-out infinite;
+  `
+
+const scaleAnimation = (props) =>
+  css`
+    ${scale} 2.2s ease-in-out infinite;
+  `
+
 const InfoBlock = styled.div`
-  padding: 4px;
+  padding: 8px;
   text-align: center;
   position: relative;
   left: 0;
@@ -36,7 +77,7 @@ const TextWrapper = styled.div`
   color: #ffffff;
   font-weight: 550;
   line-height: 1.5;
-  letter-spacing: 3px;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
 `
 
@@ -71,23 +112,23 @@ const TimeoutDisplay = styled.span`
   z-index: 2;
 `
 
-const animation = (props) =>
-  css`
-    ${rotate} 2s linear infinite;
-  `
+const cardAnimation = (interactive, hatching, hatched) => {
+  if (!interactive && !hatching) return scaleAnimation
+  if (hatched) return pulseAnimation
+  if (hatching) return scaleAnimation
+  return null
+}
 
 const Card = styled(Existing)<{ timedOut?: boolean; interactive?: boolean; hatching?: boolean; hatched?: boolean }>`
-  animation: ${({ hatching }) => (hatching ? animation : '')};
+  animation:  ${({ interactive, hatching, hatched }) => cardAnimation(interactive, hatching, hatched)};
   cursor: pointer;
-  width: 140px;
-  margin: 0px 8px 8px;
+  width: 160px;
+  margin: 4px 8px 16px 8px;
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 8px;
   display: block;
   opacity: ${({ interactive, hatching }) => (!interactive && !hatching ? '0.7' : null)};
-  box-shadow: ${({ hatched }) => (hatched ? '3px 4px 10px #9d4c0a' : null)};
-  transition: animation 1s ease-in-out;
-  transition: box-shadow 1s ease-in-out;
+  transition: all 1s ease-in-out;
 `
 
 export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady }) => {
@@ -97,25 +138,25 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
   const buttonActions = () => {
     if (egg.timeRemaining > 0) return null
     if (!egg.interactive) return null
-    if (egg.hatched) return onReveal()
     if (!egg.hatched) return onHatch()
+    if (egg.hatched) return onReveal()
   }
 
-  const hatching = !egg.interactive && egg.hatched
-  const hatched = egg.hatched && egg.interactive
+  const hatched  = egg.hatched && egg.interactive
+  const hatching = egg.hatched && !egg.interactive
 
   const buttonLabel = (egg) => {
-    if (!egg.hatched && !egg.interactive) return 'CONFIRMING'
-    if (!egg.hatched && egg.interactive) return 'HATCH'
-    if (egg.hatched && !egg.interactive) return 'HATCHING'
-    if (egg.hatched && egg.interactive) return 'REVEAL'
+    if (!egg.hatched && !egg.interactive) return 'PENDING'
+    if (!egg.hatched &&  egg.interactive) return 'HATCH'
+    if  (egg.hatched && !egg.interactive) return 'MINTING'
+    if  (egg.hatched &&  egg.interactive) return 'READY'
     return ''
   }
 
-  const basicEggURL = window.location.origin + '/static/images/basic.jpg'
-  const hybridEggURL = window.location.origin + '/static/images/hybrid.jpg'
+  const basicEggURL       = window.location.origin + '/static/images/basic.jpg'
+  const hybridEggURL      = window.location.origin + '/static/images/hybrid.jpg'
   const transparentEggURL = window.location.origin + '/static/images/transparent.jpg'
-  const backgroundImage = !egg.interactive && !hatching ? transparentEggURL : egg.basic ? basicEggURL : hybridEggURL
+  const backgroundImage   = !egg.interactive && !hatching ? transparentEggURL : egg.basic ? basicEggURL : hybridEggURL
 
   return (
     <>
@@ -131,20 +172,21 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             backgroundImage: `url('${backgroundImage}')`,
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            height: 150,
-            padding: 10,
+            backgroundPosition: '0% 60%',
+            borderRadius: 8,
+            height: 160,
             transition: 'background-image 1000ms linear',
           }}>
           <TextWrapper
             style={{
+              position: 'absolute',
+              top: 8,
+              left: 0,
               width: '100%',
               textAlign: 'center',
-              paddingLeft: '7px',
             }}>
             {egg.name}
           </TextWrapper>
-        </CardBody>
         {egg.timeRemaining > 0 ? (
           <TimeoutWrapper barwidth={egg.CTAOverride ? egg.CTAOverride.barwidth : 0}>
             <TimeoutDisplay>{`${egg.CTAOverride.timeRemainingDaysHours.days}D ${egg.CTAOverride.timeRemainingDaysHours.hours}H`}</TimeoutDisplay>
@@ -152,14 +194,14 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
         ) : (
           <InfoBlock
             style={{
+              position: 'absolute',
               textAlign: 'center',
-              boxShadow: '#000000 0px 0px 10px 1px',
-              padding: 4,
-              paddingLeft: '7px',
+              padding: 8,
             }}>
             <TextWrapper>{buttonLabel(egg)}</TextWrapper>
           </InfoBlock>
         )}
+        </CardBody>
       </Card>
     </>
   )

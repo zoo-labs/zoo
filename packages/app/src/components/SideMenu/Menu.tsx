@@ -9,7 +9,8 @@ import Logo from './components/Logo'
 import Panel from './components/Panel'
 import UserBlock from './components/UserBlock'
 import { NavProps } from './types'
-import logo from 'media/ZooLogoWhite.png'
+import goldenEgg from 'media/hybrid-egg.png'
+import logo from 'media/logo-white.png'
 import { MENU_HEIGHT, SIDEBAR_WIDTH_REDUCED, SIDEBAR_WIDTH_FULL } from './config'
 
 const Wrapper = styled.div`

@@ -21,28 +21,25 @@ interface Props {
 }
 
 const FirstThird = styled.div`
-  height: 35vh;
+  height: 33vh;
   width: 100%;
-  // max-height: 256px;
 `
 const SecondThird = styled.div`
-  height: 35vh;
+  height: 33vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  // max-height: 256px;
 `
 const FinalThird = styled.div`
-  height: 35vh;
+  height: 33vh;
   width: 100%;
-  padding-left: 15px;
-  padding-bottom: 30px;
   display: flex;
+  justify-content: flex-end;
   flex-direction: column;
-  justify-content: center;
-  max-height: 256px;
+  padding: 16px;
 `
+
 const IconButton = styled.button`
   display: flex;
   flex-direction: column;
@@ -74,7 +71,7 @@ const IconButton = styled.button`
   }
 `
 const MainHeading = styled(Text)`
-  font-size: 32px;
+  font-size: 42px;
   width: 100%;
   line-height: 1;
   color: white;
@@ -124,15 +121,13 @@ const StyledChevron = styled(ChevronLeftIcon)`
   height: 40px;
 `
 
-const ActionButonContainer = styled.div`
+const ActionButtonContainer = styled.div`
   width: 80px;
   display: flex;
   position: absolute;
   right: 0;
-  bottom: 40px;
-  flex-direction: row;
-  // align-items: end;
-  justify-content: flex-end;
+  bottom: 16px;
+  flex-direction: column;
 `
 
 const FeedCard: React.FC<Props> = ({ item, animalGroup, hideBid }) => {
@@ -179,25 +174,28 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup, hideBid }) => {
                 style={{
                   textShadow: '2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000',
                 }}>
-                <MainHeading bold as='p'>
+                <MainHeading bold>
                   {`${item.name} ${multiplier}`}
                 </MainHeading>
 
-                <Subheading bold as='p'>
+                <Subheading>
                   {item.rarity}
                 </Subheading>
-                <Subheading bold as='p'>{`Born: ${StringDate}`}</Subheading>
+                <Subheading>{`Born: ${StringDate}`}</Subheading>
                 {item.currentBid && currentBid}
               </Flex>
-              <ActionButonContainer>
-                <Flex width='100%' height='100%' flexDirection='column'>
-                  <IconButton onClick={onYield} style={{ padding: '10px 0px' }}>
-                    <FaMoneyBillWave />
-                  </IconButton>
-                  {buyButton}
-                  <ZooHomeButton />
-                </Flex>
-              </ActionButonContainer>
+              <Flex
+                flexDirection='column'>
+                <ActionButtonContainer>
+                  <Flex width='100%' height='100%' flexDirection='column'>
+                    <IconButton onClick={onYield} style={{ padding: '10px 0px' }}>
+                      <FaMoneyBillWave />
+                    </IconButton>
+                    {buyButton}
+                    <ZooHomeButton />
+                  </Flex>
+                </ActionButtonContainer>
+              </Flex>
             </Flex>
           </FinalThird>
         </CardOverlay>

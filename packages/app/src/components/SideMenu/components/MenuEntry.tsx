@@ -24,8 +24,8 @@ const LinkLabel = styled.div<{ isPushed: boolean }>`
   color: ${({ isPushed, theme }) => (isPushed ? theme.colors.text : 'transparent')};
   transition: color 0.2s;
   flex-grow: 1;
-  font-weight: 600;
-  letter-spacing: 3px;
+  font-weight: 550;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
   line-height: 1.5;
   margin: 8px 24px 8px 0px;

@@ -53,13 +53,13 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
     <>
       <BottomModal header='Yield Info' height='300px' onDismiss={onDismiss}>
         <Flex justifyContent='center' alignContent='center' flexDirection='column' ml='20px' mt='20px'>
-          <Label fontSize='22px' color='text' fontWeight='550'>
+          <Label fontSize='20px' color='text' fontWeight='550'>
             Daily Yield
           </Label>
           <Text bold ml='16px' mt='4px' mb='16px' fontSize='22px' color='text'>
             {multiplier ? `${multiplier} x ${Number(item.yield)} = ${multiplier * Number(item.yield)}` : `${Number(item.yield)}`} ZOO
           </Text>
-          <Label fontSize='22px' color='text' fontWeight='550'>
+          <Label fontSize='20px' color='text' fontWeight='550'>
             Accumulated Yield
           </Label>
           <Text bold ml='16px' mt='4px' mb='16px' fontSize='22px' color='text'>
