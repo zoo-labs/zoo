@@ -71,7 +71,7 @@ export const darkColors: Colors = {
   // secondary: "#138AF2",
   primary: '#193F52',
   primaryDark: '#AA3866',
-  primaryLight: '#8BCACB',
+  primaryLight: '#222',
   primaryPop: '#28D7FD',
   secondary: '#9FC554',
   accent: 'rgb(195 0 168)', // "#DFDE4E",
