@@ -6,7 +6,6 @@ const IconButton: PolymorphicComponent<BaseButtonProps, 'button'> = styled(Butto
   padding: 0;
   border: 0px;
   background: white;
-  width: ${({ scale }) => (scale === 'sm' ? '28px' : '32px')};
 `
 
 export default IconButton
