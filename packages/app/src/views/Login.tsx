@@ -26,7 +26,7 @@ const Container = styled.div`
 `
 const Button = styled.button`
   width: 200px;
-  font-weight: 600;
+  font-weight: 550;
   letter-spacing: 1.4px;
   margin: 0px auto auto auto;
   // background: #df4c97;
@@ -96,10 +96,10 @@ export default function LoginMain() {
       <img
         alt='CryptoZoo Logo'
         src='bearshark-halftone.png'
-        style={{ top: '50%', transform: 'translateY(-50%)', left: '1%', position: 'absolute', width: '98%', margin: 'auto' }}
+        style={{ opacity: '0.8', top: '50%', transform: 'translateY(-50%)', left: '1%', position: 'absolute', width: '98%', margin: 'auto' }}
       />
       <img alt='CryptoZoo Logo' src='ZooLogoWhite.png' style={{ top: '50%', transform: 'translateY(-50%)', left: '29vw', position: 'absolute', width: '42vw', margin: 'auto' }} />
-      <Button onClick={metamaskLogin} style={{ position: 'absolute', left: '35%', bottom: '10%', width: '30%' }}>
+      <Button onClick={metamaskLogin} style={{ position: 'absolute', left: '33%', bottom: '10%', width: '33%' }}>
         <p>LOGIN WITH</p>
         <p>METAMASK</p>
       </Button>
