@@ -3,6 +3,11 @@
 import { bsc_nodes, chapel_nodes } from '../util/getRpcUrl'
 import useToast from 'hooks/useToast'
 
+const rpcURLs = {
+  mainnet: ['https://speedy-nodes-nyc.moralis.io/1afec1fde198890860916a06/bsc/mainnet'],
+  testnet: ['https://speedy-nodes-nyc.moralis.io/1afec1fde198890860916a06/bsc/testnet'],
+}
+
 /**
  * Prompt the user to add BSC as a network on Metamask, or switch to BSC if the wallet is on a different network
  * @returns {boolean} true if the setup succeeded, false otherwise
@@ -23,7 +28,7 @@ export const setupNetwork = async (network) => {
             symbol: 'BNB',
             decimals: 18,
           },
-          rpcUrls: main ? 'https://speedy-nodes-nyc.moralis.io/1afec1fde198890860916a06/bsc/mainnet' : 'https://speedy-nodes-nyc.moralis.io/1afec1fde198890860916a06/bsc/testnet',
+          rpcUrls: main ? rpcURLs.mainnet : rpcURLs.testnet,
           blockExplorerUrls: [main ? 'https://bscscan.com/' : 'https://testnet.bscscan.com/'],
         },
       ],
