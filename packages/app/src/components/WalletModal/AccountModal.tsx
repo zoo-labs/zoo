@@ -42,7 +42,6 @@ const LabelWrapper = styled.div`
 `
 
 const ValueWrapper = styled(Text)`
-    font-size: 16px;
     color: ${({ theme }) => theme.colors.text}
     width: 100%;
     white-space: nowrap;
@@ -82,7 +81,6 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
   // const { authenticate, isAuthenticated } = useMoralis();
 
   const bscSwith = async (network) => {
-    console.log('CLICKING')
     const connector = connectorsByName.injected
     const hasSetup = await setupNetwork(network)
     if (hasSetup) {
@@ -143,16 +141,16 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
     }
   }
 
-  const switchIcon = <FaExchangeAlt size='16px' style={{ margin: '0px 8px 0px 0px' }} />
+  const switchIcon = <FaExchangeAlt size='16px' style={{ margin: '0 8px -2px 0px' }} />
   return (
-    <Modal title='Your wallet' onDismiss={onDismiss} styles={{ minHeight: '250px', justifyContent: 'space-between' }}>
-      <Label>Address</Label>
+    <Modal title='Your wallet' onDismiss={onDismiss} styles={{ minHeight: '250px', maxWidth: '90vw', justifyContent: 'space-between'}}>
+      <Label style={{marginBottom:-20, padding:0}}>Address</Label>
       <ValueWrapper>{account}</ValueWrapper>
       <Flex justifyContent='space-evenly' flexDirection='column' mb={bscType ? '8px' : '32px'}>
         <LabelWrapper>
           <Label>Balance</Label>
-          <BorderButton scale='xs' height='25px' onClick={handleFunds} width='130px'>
-            Add Funds
+          <BorderButton height='25px' onClick={handleFunds} width='120px'>
+            Get ZOO
           </BorderButton>
         </LabelWrapper>
         <ValueWrapper>{balance} ZOO</ValueWrapper>
@@ -160,7 +158,6 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
       <Flex width='100%' alignItems='center' justifyContent='space-between' flexDirection={moreSpace ? 'column' : 'row'}>
         {chainId !== 56 ? (
           <BorderButton
-            scale='sm'
             mb={moreSpace ? '8px' : null}
             onClick={() => {
               bscSwith('bsc')
@@ -171,7 +168,6 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
         ) : null}
         {chainId !== 97 ? (
           <BorderButton
-            scale='sm'
             mb={moreSpace ? '8px' : null}
             onClick={() => {
               bscSwith('chapel')
