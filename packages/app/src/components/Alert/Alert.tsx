@@ -63,7 +63,7 @@ const Details = styled.div<{ hasHandler: boolean }>`
 
 const CloseHandler = styled.div`
   border-radius: 0 16px 16px 0;
-  right: 4px;
+  right: 16px;
   position: absolute;
   top: 12px;
 `
@@ -81,7 +81,7 @@ const Alert: React.FC<AlertProps> = ({ title, children, variant, onClick }) => {
   return (
     <StyledAlert>
       <IconLabel variant={variant} hasDescription={!!children}>
-        <Icon color='currentColor' width='24px' />
+        <Icon color='currentColor' width='32px' />
       </IconLabel>
       <Details hasHandler={!!onClick}>
         <Text bold>{title}</Text>
@@ -89,7 +89,7 @@ const Alert: React.FC<AlertProps> = ({ title, children, variant, onClick }) => {
       </Details>
       {onClick && (
         <CloseHandler>
-          <IconButton scale='sm' variant='text' onClick={onClick}>
+          <IconButton width='32px' variant='text' onClick={onClick}>
             <CloseIcon width='24px' color='currentColor' />
           </IconButton>
         </CloseHandler>

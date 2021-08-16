@@ -14,14 +14,14 @@ const alertTypeMap = {
 }
 
 const StyledToast = styled.div`
-  right: -42px;
+  right: -50px;
   bottom: 20px;
   padding-bottom: 20px;
   position: fixed;
   max-width: calc(100% - 32px);
-  transition: all 250ms ease-in;
+  transition: all 1250ms ease-in;
   width: 100%;
-  scale: 80%;
+  scale: 75%;
 
   ${({ theme }) => theme.mediaQueries.sm} {
     max-width: 400px;
@@ -65,7 +65,7 @@ const Toast: React.FC<ToastProps> = ({ toast, onRemove, style, ttl, ...props }) 
   }, [timer, ttl, handleRemove])
 
   return (
-    <CSSTransition nodeRef={ref} timeout={100} style={style} {...props}>
+    <CSSTransition nodeRef={ref} timeout={1000} style={style} {...props}>
       <StyledToast ref={ref} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <Alert title={title} variant={alertTypeMap[type]} onClick={handleRemove}>
           {action ? (
