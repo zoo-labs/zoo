@@ -164,6 +164,10 @@ const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.text};
 `
 
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+}
+
 const Bank: React.FC = () => {
   const { account, chainId } = useWeb3React()
   const web3 = useWeb3()
@@ -303,7 +307,7 @@ const Bank: React.FC = () => {
             </BorderButton>
           </LabelWrapper>
           <Flex width='100%' alignItems='center' justifyContent='space-around'>
-            <ValueWrapper>{zooBalance} ZOO </ValueWrapper>
+            <ValueWrapper>{numberWithCommas(zooBalance)} ZOO </ValueWrapper>
             {/* Commented out since there is to ZOO to USD conversion yet */}
             {/* <ValueWrapper style={{ fontSize: "16px",  color: "rgb(221 224 26)" }}>0 USD</ValueWrapper> */}
           </Flex>

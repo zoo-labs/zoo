@@ -9,25 +9,19 @@ const BtnContainer = styled.div`
   * {
     &:hover {
       transition: all 0.2s;
-      // border: ${({ theme }) => `2px solid ${theme.colors.primaryDark}`};
-      background: ${({ theme }) => theme.colors.secondary};
     }
   }
 
   button {
-    margin-top: -2px;
+    background: linear-gradient(360deg, #8C4FF8 20%, rgb(173, 61, 255) 100%);
+    color: white !important;
     align-items: center;
-    background: #df4c97;
     text-transform: uppercase;
     border-radius: 8px;
     transition: all 0.2s;
     display: inline-block;
     text-shadow: x-offset y-offset blur color;
     text-decoration: none;
-    /* font-weight: bold;
-    background-color: #538fbe;
-    padding: 20px 70px;
-    font-size: 24px; */
     border: 1px solid #230616;
     -webkit-box-shadow: 0px 2px 0px #461e34, 0px 3px 15px rgba(0, 0, 0, 0.4), inset 0px 1px 0px rgba(255, 255, 255, 0.3), inset 0px 0px 3px rgba(255, 255, 255, 0.5);
     -moz-box-shadow: 0px 2px 0px #461e34, 0px 3px 15px rgba(0, 0, 0, 0.4), inset 0px 1px 0px rgba(255, 255, 255, 0.3), inset 0px 0px 3px rgba(255, 255, 255, 0.5);
@@ -35,7 +29,18 @@ const BtnContainer = styled.div`
     -webkit-transition: all 0.1s ease-in-out;
     -moz-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
+    font-weight: 550;
+    line-height: 1.5;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
   }
+
+  button:hover {
+      transition: all 0.2s;
+      background: linear-gradient(circle, #df4c97 33%, rgb(173,61,255) 100%);
+    }
+  }
+
   button:active {
     -webkit-box-shadow: 0px 0px 0px #461e34, 0px 1px 6px rgba(0, 0, 0, 0.4), inset 0px 1px 0px rgba(255, 255, 255, 0.3), inset 0px 0px 3px rgba(255, 255, 255, 0.5);
     -moz-box-shadow: 0px 0px 0px #461e34, 0px 1px 6px rgba(0, 0, 0, 0.4), inset 0px 1px 0px rgba(255, 255, 255, 0.3), inset 0px 0px 3px rgba(255, 255, 255, 0.5);

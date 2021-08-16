@@ -71,6 +71,10 @@ const StyledHeading = styles(Heading)`
     color: ${({ theme }) => theme.colors.text};
 `
 
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+}
+
 const Account: React.FC = () => {
   const [isInitial, setIsInitial] = useState(true)
   const [balance, setBalance] = useState(0.0)
@@ -181,7 +185,8 @@ const Account: React.FC = () => {
           background: 'transparent',
           border: 'none',
           color: 'white',
-          marginLeft: '8px',
+          marginLeft: '16px',
+          letterSpacing: '1.4px',
         }}
         onClick={() => bankClick()}>
         View Bank
@@ -276,31 +281,32 @@ const Account: React.FC = () => {
       <Page>
         {pageHeading}
         <Body>
-          <LabelWrapper>
-            <Label small>Wallet Balance</Label>
-            {(keepApprove || !allowance) && (
-              <BorderButton
-                disabledApprove={disableApprove || allowance}
-                scale='sm'
-                minWidth={!isXl ? '120px' : '140px'}
-                onClick={approve}
-                style={{
-                  marginRight: '8px',
-                  fontSize: `${!isXl ? '14px' : '16px'}`,
-                }}>
-                {allowance ? 'APPROVED' : disableApprove ? 'PROCESSING' : 'APPROVE ZOO'}
+          <RowWrapper style={{margin: '0 auto'}}>
+            <LabelWrapper style={{marginBottom: '32px'}}>
+              <Label style={{ fontSize: '20px'}}>Wallet Balance
+                <ValueWrapper style={{ fontWeight: 550 }}>{numberWithCommas(balance)} ZOO</ValueWrapper>
+              </Label>
+              {(keepApprove || !allowance) && (
+                <BorderButton
+                  disabledApprove={disableApprove || allowance}
+                  scale='sm'
+                  minWidth={!isXl ? '120px' : '140px'}
+                  onClick={approve}
+                  style={{
+                    marginRight: '8px',
+                    fontSize: `${!isXl ? '14px' : '16px'}`,
+                  }}>
+                  {allowance ? 'APPROVED' : disableApprove ? 'PROCESSING' : 'APPROVE'}
+                </BorderButton>
+              )}
+              <BorderButton disabled={wait} scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
+                {chainId !== 97 && chainId !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
               </BorderButton>
-            )}
-            <BorderButton disabled={wait} scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
-              {chainId !== 97 && chainId !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
-            </BorderButton>
-          </LabelWrapper>
-          <RowWrapper>
-            <ValueWrapper>{balance} ZOO</ValueWrapper>
+            </LabelWrapper>
           </RowWrapper>
           <LabelWrapper>
             <Flex alignItems='flex-start' flexDirection='column' flexGrow={2} height={allowance && !keepApprove ? '100%' : '65px'}>
-              <Label>{currentEggsOwned} Eggs Owned</Label>
+              <Label style={{fontSize: '20px'}}>{currentEggsOwned} Eggs Owned</Label>
             </Flex>
             <Flex flexDirection='column' height={allowance && !keepApprove ? '100%' : '65px'} justifyContent='space-between'>
               <BorderButton disabled={disable || !allowance} scale='sm' minWidth={!isXl ? '120px' : '140px'} onClick={buyEgg} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }}>

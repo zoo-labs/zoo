@@ -35,7 +35,7 @@ const TextWrapper = styled.div`
   color: #ffffff;
   font-weight: 550;
   line-height: 1.5;
-  letter-spacing: 3px;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
 `
 
@@ -52,6 +52,7 @@ const TimeoutWrapper = styled.div<{ barwidth?: string }>`
   text-align: center;
   width: 100%;
   background-color: #a7565e;
+  font-size: 14px;
   z-index: 999999;
   ::before {
     content: '';
@@ -73,11 +74,11 @@ const TimeoutDisplay = styled.span`
 
 const BreedWrapper = styled.div<{ cols?: number }>`
   text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
-  font-size: 18px;
+  font-size: 16px;
   color: ${({ theme }) => theme.colors.text};
   font-weight: 550;
   line-height: 1.5;
-  letter-spacing: 3px;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
 `
 
@@ -283,15 +284,14 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account }:
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
-          height: 280,
+          height: 256,
           width: '100%',
         }}>
         <Link to={`/feed/myzoo/${animal.tokenID}`}>
           <TextWrapper
             style={{
               textShadow: '0px 2px 6px rgb(0, 0, 0)',
-              fontSize: 18,
-              letterSpacing: 0,
+              fontSize: 16,
               position: 'absolute',
               textTransform: 'lowercase',
               right: 11,
