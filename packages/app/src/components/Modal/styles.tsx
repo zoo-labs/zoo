@@ -11,10 +11,11 @@ export const ModalHeader = styled.div<{ background?: string }>`
   background: ${({ background }) => background || 'transparent'};
   border-bottom: 1px solid ${({ theme }) => theme.colors.contrast};
   display: flex;
-  padding: 12px 24px;
+  padding: 8px 24px;
 `
 
 export const ModalTitle = styled(Flex)`
+  color: ${({ theme }) => theme.colors.text};
   align-items: center;
   flex: 1;
 `
@@ -43,7 +44,7 @@ export const ModalContainer = styled(Box)<{ minWidth: string; borderRadius: stri
   background: ${({ theme }) => theme.colors.background};
   box-shadow: 0px 20px 36px -8px rgba(14, 14, 44, 0.1), 0px 1px 1px rgba(0, 0, 0, 0.05);
   // border: 2px solid ${({ theme }) => theme.colors.borderColor};
-  border-radius: 8px;
+  border-radius: 16px;
   width: 100%;
   z-index: ${({ theme }) => theme.zIndices.modal};
   position: relative;
