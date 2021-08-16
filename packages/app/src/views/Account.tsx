@@ -57,7 +57,7 @@ const ValueWrapper = styles(Text)`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 18px;
+    font-weight: 600;
 `
 
 const RowWrapper = styles.div`
