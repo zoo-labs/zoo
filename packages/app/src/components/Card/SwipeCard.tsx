@@ -8,7 +8,7 @@ import { Animal } from 'types/zoo'
 // import { EggCardType } from './types'
 import { burnEgg, addAnimal } from 'state/actions'
 import { useDispatch } from 'react-redux'
-import NewAnimalCard from 'components/NewAnimal/NewAnimalCard'
+import { NewAnimalCard } from 'components/NewAnimal'
 import { Link } from 'react-router-dom'
 
 const InfoBlock = styled.div`

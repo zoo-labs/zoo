@@ -62,17 +62,20 @@ const BottomModal: React.FC<Props> = ({ children, header, onDismiss, height }) =
       <CustomSheet isOpen={isOpen} onClose={onClose} ismodalopen={ismodalopen} height={height}>
         <Sheet.Container
           style={{
-            height: height ? height : '300px',
+            width: '90vw',
+            left: '5vw',
+            overflow: 'hidden',
+            height: height ? height : '320px',
             background: theme.isDark ? '#000000' : '#FFFFFF',
           }}>
           {/* <Sheet.Header /> */}
           <Sheet.Header>
             <HeaderOutline>
-              <Label mt='16px' mb='8px' textTransform='uppercase' textAlign='center' fontSize='22px' fontWeight='600'>
+              <Label mt='16px' mb='16px' textTransform='uppercase' textAlign='center' fontSize='20px' fontWeight='550'>
                 {header}
               </Label>
             </HeaderOutline>
-            <IconButton onClick={onClose} style={{ position: 'absolute', background: 'transparent', top: '10px', right: '10px' }}>
+            <IconButton onClick={onClose} style={{ position: 'absolute', background: 'white', width: '32px', top: '12px', right: '12px' }}>
               <CloseIcon />
             </IconButton>
           </Sheet.Header>

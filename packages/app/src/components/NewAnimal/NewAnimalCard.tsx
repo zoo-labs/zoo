@@ -79,7 +79,7 @@ const CardOverlay = styled.div`
   }
 `
 
-const NewAnimalCard: React.FC<NewAnimalCardType> = ({ animal, isOpen }) => {
+export const NewAnimalCard: React.FC<NewAnimalCardType> = ({ animal, isOpen }) => {
   const { isXs, isXl } = useMatchBreakpoints()
 
   const rarityColor = RarityColor[animal.rarity.toLowerCase()] || 'white'
@@ -118,5 +118,3 @@ const NewAnimalCard: React.FC<NewAnimalCardType> = ({ animal, isOpen }) => {
     </>
   )
 }
-
-export default NewAnimalCard

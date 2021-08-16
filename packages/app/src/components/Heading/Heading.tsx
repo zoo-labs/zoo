@@ -28,11 +28,12 @@ const style = {
 }
 
 const Heading = styled(Text).attrs({ bold: true })<HeadingProps>`
-  font-size: ${({ size }) => style[size || sizes.MD].fontSize};
+  // font-size: ${({ size }) => style[size || sizes.MD].fontSize};
+  font-size: 14px;
   color: ${({ theme }) => theme.colors.text};
   font-weight: 550;
   line-height: 1.5;
-  letter-spacing: 3px;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
 
   ${({ theme }) => theme.mediaQueries.lg} {
