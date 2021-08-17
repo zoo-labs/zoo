@@ -16,7 +16,7 @@ import BorderButton from 'components/Button/BorderButton'
 import { EggCreatedNotify } from './EggCreatedNotify'
 import { AnimalCardProps, SubAnimalCommonProps } from './types'
 import useWeb3 from 'hooks/useWeb3'
-import { getZooKeeper } from 'util/contractHelpers'
+import { getZooKeeper } from 'util/contracts'
 
 const InfoBlock = styled.div`
   padding: 4px;
@@ -117,7 +117,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account }:
   let array = []
   const web3 = useWeb3()
   const { chainId } = useWeb3React()
-  const zooKeeper = getZooKeeper(web3, chainId)
+  const zooKeeper = getZooKeeper(web3)
   let sellAnimal: Animal = {
     owner: '',
     kind: -1,

@@ -6,7 +6,7 @@ import { ButtonMenu, ButtonMenuItem, ButtonMenuItemProps } from 'components/Butt
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { useRouteMatch, Link, useLocation, useHistory, RouteComponentProps, withRouter } from 'react-router-dom'
 
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3 } from 'hooks/useWeb3'
 import 'swiper/swiper.min.css'
 import { useSelector } from 'react-redux'
 import { useMatchBreakpoints } from 'hooks'
@@ -107,7 +107,7 @@ function Feed<FeedPagePops>({ match }) {
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
   const history = useHistory()
-  const { account, chainId } = useWeb3React()
+  const { account } = useWeb3()
   const [swiperRef, setSwiperRef] = useState(null)
   const [activeIndex, setActiveIndex] = useState(1)
 

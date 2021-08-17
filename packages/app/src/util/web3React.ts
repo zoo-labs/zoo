@@ -3,11 +3,10 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { BscConnector } from '@binance-chain/bsc-connector'
 import Web3 from 'web3'
 import { ConnectorNames } from 'components'
-import getNodeUrl from './getRpcUrl'
+import { getRandomNode } from './getRandomNode'
 
 const POLLING_INTERVAL = 12000
-const rpcUrl = getNodeUrl()
-const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 1337)
+const chainID = parseInt(process.env.REACT_APP_CHAIN_ID, 97)
 
 const supportedChainIds = [
   1337, // Hardhat
@@ -18,7 +17,7 @@ const supportedChainIds = [
 const injected = new InjectedConnector({ supportedChainIds })
 
 const walletConnect = new WalletConnectConnector({
-  rpc: { [chainId]: rpcUrl },
+  rpc: { [chainID]: getRandomNode(chainID) },
   bridge: 'https://bridge.walletconnect.org',
   qrcode: true,
   pollingInterval: POLLING_INTERVAL,

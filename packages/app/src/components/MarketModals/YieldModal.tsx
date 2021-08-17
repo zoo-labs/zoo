@@ -4,7 +4,7 @@ import useWeb3 from 'hooks/useWeb3'
 import { Label, Text, Flex } from 'components'
 import BorderButton from 'components/Button/BorderButton'
 import { BottomModal } from 'components/Modal'
-import { getZooKeeper } from 'util/contractHelpers'
+import { getZooKeeper } from 'util/contracts'
 
 interface Props {
   onDismiss?: () => null
@@ -16,7 +16,7 @@ const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
   const [pendingTsx, setPending] = useState(false)
   const { account, chainId } = useWeb3React()
   const web3 = useWeb3()
-  const zooKeeper = getZooKeeper(web3, chainId)
+  const zooKeeper = getZooKeeper(web3)
   const multiplier = animalGroup[item.name]
   const canFree = item.owner.toLowerCase() === account.toLowerCase()
 

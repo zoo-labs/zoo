@@ -1,11 +1,11 @@
 // Set of helper functions to facilitate wallet setup
 
-import { bsc_nodes, chapel_nodes } from '../util/getRpcUrl'
+import getRandomNode from '../util/getRandomNode'
 import useToast from 'hooks/useToast'
 
 const rpcURLs = {
-  mainnet: ['https://speedy-nodes-nyc.moralis.io/1afec1fde198890860916a06/bsc/mainnet'],
-  testnet: ['https://speedy-nodes-nyc.moralis.io/1afec1fde198890860916a06/bsc/testnet'],
+  mainnet: [getRandomNode(56)],
+  testnet: [getRandomNode(97)]
 }
 
 /**
