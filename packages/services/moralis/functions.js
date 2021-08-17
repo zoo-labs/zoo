@@ -239,7 +239,7 @@ Moralis.Cloud.afterSave('Free', async (request) => {
 })
 
 Moralis.Cloud.define('getAverageGasPrice', async function (request) {
-  const query = new Moralis.Query('EthTransactions')
+  const query = new Moralis.Query('BscTransactions')
   const pipeline = [
     {
       group: {
@@ -255,8 +255,7 @@ Moralis.Cloud.define('getAverageGasPrice', async function (request) {
   ]
 
   // the master key is required for aggregate queries
-  const results = await query.aggregate(pipeline, { useMasterKey: true })
-  return results
+  return await query.aggregate(pipeline, { useMasterKey: true })
 })
 
 // This is a convenience function to drop the tables
