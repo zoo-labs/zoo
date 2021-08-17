@@ -10,7 +10,7 @@ export const MoralisProvider: React.FC = ({ children }) => {
   const [chainID, setChainID] = useState(Number(ethereum.chainId))
 
   // We only have servers for Local Dev, BSC Testnet and Mainnet
-  if (chainID != 56 && chainID != 97 && chainID != 1337) setChainID(1337) // Default to hardhat
+  if (chainID != 56 && chainID != 97 && chainID != 1337) setChainID(97) // Default to Testnet
 
   useEffect(() => {
     ethereum.on('chainChanged', (chainID) => {
