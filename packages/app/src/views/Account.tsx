@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux'
 import { useWeb3React } from '@web3-react/core'
 import { useHistory } from 'react-router-dom'
 import styles from 'styled-components'
-import web3 from 'web3'
 
 import { Label, Text } from 'components/Text'
 import { Flex, Heading, useMatchBreakpoints } from 'components'
@@ -86,6 +85,7 @@ const Account: React.FC = () => {
   const [disableApprove, setDisableApprove] = useState(false)
   const [keepApprove, setKeepApprove] = useState(true)
   const web3 = useWeb3()
+  web3.eth.handleRevert = true
   const { isXl } = useMatchBreakpoints()
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const history = useHistory()
