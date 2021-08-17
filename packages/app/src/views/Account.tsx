@@ -104,8 +104,6 @@ const Account: React.FC = () => {
   const zooDrop = getZooDrop(web3)
   const keeperAdd = zooKeeper.options.address
 
-  console.log('account', account, 'chainID', chainID)
-
   const getBalance = async () => {
     try {
       const decimals = await zooToken.methods.decimals().call()
@@ -250,8 +248,8 @@ const Account: React.FC = () => {
 
     try {
       await zooKeeper.methods
-        .buyEgg(1)
-        .send({ gasPrice: gasPrice, from: account })
+        .buyEgg(1) // buy from first drop
+        .send({ from: account })
         .then((res) => {
           toastClear()
           toastInfo('Transaction submitted.')
