@@ -60,7 +60,7 @@ const MyZooAccount: React.FC = () => {
   const [isOpen, setOpen] = useState(false)
   const [_, setShowBoth] = useState(false)
   const web3 = useWeb3()
-  web3.eth.handleRevert = true
+  const { gasPrice } = web3
   const zooKeeper = getZooKeeper(web3)
   const videoTimeout = []
   const [hatched, setHatched] = useState({
@@ -112,6 +112,7 @@ const MyZooAccount: React.FC = () => {
     try {
       await zooKeeper.methods.hatchEgg(1, egg.tokenID).send({
         from: account,
+        gasPrice: gasPrice,
       })
     } catch (error) {
       console.error(error)

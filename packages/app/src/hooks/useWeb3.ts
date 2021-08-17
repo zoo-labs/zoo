@@ -32,19 +32,13 @@ export const useWeb3 = () => {
   }, [library])
 
   useEffect(() => {
-    if (library !== ref.current) {
-      setWeb3(library ? library : getWeb3NoAccount())
-      ref.current = library
-    }
-  }, [library])
-
-  useEffect(() => {
-    async function getGasPrice() {
-      const price = await Moralis.Cloud.run('getAverageGasPrice')
+    (async function getGasPrice() {
+      let price = 8 // default to 8 for hardhat
+      const results = await Moralis.Cloud.run('getAverageGasPrice')
+      if (results.length > 0) price = results[0].avgGas
       console.log('Average Gas Price:', price)
-      setGasPrice(price)
-    }
-
+      setGasPrice((price + 3) * (10 ** 9)) // Increase price so transactions go through quickly
+    })()
   }, [])
 
   const custom = web3 as CustomWeb3
