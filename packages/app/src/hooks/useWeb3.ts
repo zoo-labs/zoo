@@ -3,7 +3,7 @@ import Web3 from 'web3'
 import { useWeb3React } from '@web3-react/core'
 import { getWeb3NoAccount } from 'util/web3'
 
-import Moralis from 'moralis'
+// import Moralis from 'moralis'
 
 export type Extra = {
     account: string
@@ -33,11 +33,13 @@ export const useWeb3 = () => {
 
   useEffect(() => {
     (async function getGasPrice() {
-      let price = 8 // default to 8 for hardhat
-      const results = await Moralis.Cloud.run('getAverageGasPrice')
-      if (results.length > 0) price = results[0].avgGas
-      console.log('Average Gas Price:', price)
-      setGasPrice((price + 3) * (10 ** 9)) // Increase price so transactions go through quickly
+      const price = await web3.eth.getGasPrice()
+
+      // let price = 11 * (10 ** 9)
+      // const results = await Moralis.Cloud.run('getAverageGasPrice')
+      // if (results.length > 0) price = (results[0].avgGas) * (10 ** 9)
+      // console.log('Current gas price:', price)
+      setGasPrice(price)
     })()
   }, [])
 
