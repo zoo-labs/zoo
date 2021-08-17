@@ -5,8 +5,7 @@ import Page from 'components/layout/Page'
 import React, { useState, useEffect } from 'react'
 import { AppState } from 'state'
 import { useSelector } from 'react-redux'
-import { useWeb3React } from '@web3-react/core'
-import useWeb3 from 'hooks/useWeb3'
+import { useWeb3 } from 'hooks/useWeb3'
 import { useHistory } from 'react-router-dom'
 import styles from 'styled-components'
 import { Label, Text } from 'components/Text'
@@ -14,7 +13,7 @@ import { Flex, Heading } from 'components'
 import Body from 'components/layout/Body'
 import { useModal } from 'components/Modal'
 import BuyEggs from 'components/BuyEggs'
-import { getZooToken, getZooFaucet } from 'util/contractHelpers'
+import { getZooToken, getZooFaucet } from 'util/contracts'
 import { useMatchBreakpoints } from 'components'
 import { FaHome } from 'react-icons/fa'
 import Moralis from 'moralis'
@@ -170,8 +169,8 @@ function numberWithCommas(num) {
 }
 
 const Bank: React.FC = () => {
-  const { account, chainId } = useWeb3React()
   const web3 = useWeb3()
+  const { account, chainID } = web3
   const history = useHistory()
   const { isXl } = useMatchBreakpoints()
 
@@ -182,8 +181,8 @@ const Bank: React.FC = () => {
   const [transactions, setTransactions] = useState([])
   const [waitTx, setWaitTx] = useState(true)
 
-  const zooToken = getZooToken(web3, chainId)
-  const faucet = getZooFaucet(web3, chainId)
+  const zooToken = getZooToken(web3)
+  const faucet = getZooFaucet(web3)
 
   const accountAnimals = Object.values(animalsState).filter((animal) => {
     return animal.owner && animal.owner.toLowerCase() === account.toLowerCase()
@@ -204,7 +203,7 @@ const Bank: React.FC = () => {
   useEffect(() => {
     getBalance()
     getTransactions()
-  }, [account, chainId])
+  }, [account])
 
   useEffect(() => {
     getBalance()
@@ -231,7 +230,7 @@ const Bank: React.FC = () => {
   }
 
   const handleFunds = () => {
-    switch (chainId) {
+    switch (chainID) {
       case 1337:
         handleFaucet()
         break
@@ -304,7 +303,7 @@ const Bank: React.FC = () => {
             <Label small>Wallet Balance</Label>
 
             <BorderButton scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
-              {chainId !== 97 ? 'Buy ZOO' : wait ? 'Processing' : 'Get ZOO'}
+              {chainID !== 97 ? 'Buy ZOO' : wait ? 'Processing' : 'Get ZOO'}
             </BorderButton>
           </LabelWrapper>
           <Flex width='100%' alignItems='center' justifyContent='space-around'>

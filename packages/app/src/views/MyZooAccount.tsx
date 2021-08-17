@@ -15,7 +15,7 @@ import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
 import { breedTimeouts, eggTimeout } from 'constants/constants'
 import { addAnimal, addEgg, burnEgg } from 'state/actions'
 import { RarityColor } from 'enums/rarity-color'
-import { getZooKeeper } from 'util/contractHelpers'
+import { getZooKeeper } from 'util/contracts'
 import { Animal, Egg } from 'types/zoo'
 import { AnimalCard } from 'components/AnimalCard'
 import { NewAnimalCard } from 'components/NewAnimal'
@@ -61,7 +61,7 @@ const MyZooAccount: React.FC = () => {
   const [_, setShowBoth] = useState(false)
   const web3 = useWeb3()
   web3.eth.handleRevert = true
-  const zooKeeper = getZooKeeper(web3, chainId)
+  const zooKeeper = getZooKeeper(web3)
   const videoTimeout = []
   const [hatched, setHatched] = useState({
     tokenID: 0,
