@@ -19,8 +19,8 @@ interface Props {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background: rgb(173,61,255);
-  background: radial-gradient(circle, rgba(173,61,255,1) 19%, rgba(0,212,255,1) 100%);
+  background: rgb(173, 61, 255);
+  background: radial-gradient(circle, rgba(173, 61, 255, 1) 19%, rgba(0, 212, 255, 1) 100%);
   height: 100vh;
   overflow: hidden;
 `
@@ -30,7 +30,7 @@ const Button = styled.button`
   letter-spacing: 1.4px;
   margin: 0px auto auto auto;
   // background: #df4c97;
-  background: linear-gradient(360deg, #8C4FF8 20%, rgb(173, 61, 255) 100%);
+  background: linear-gradient(360deg, #8c4ff8 20%, rgb(173, 61, 255) 100%);
   border: 2px solid #ffffff;
   border-radius: 4px;
   padding: 10px;

@@ -5,7 +5,6 @@ import { useModal } from 'components/Modal'
 import HatchModal from 'components/ZooModals/HatchModal'
 import { EggCardType } from './types'
 
-
 const wiggle = keyframes`
   0% {
     transform: rotate(0deg);
@@ -120,7 +119,7 @@ const cardAnimation = (interactive, hatching, hatched) => {
 }
 
 const Card = styled(Existing)<{ timedOut?: boolean; interactive?: boolean; hatching?: boolean; hatched?: boolean }>`
-  animation:  ${({ interactive, hatching, hatched }) => cardAnimation(interactive, hatching, hatched)};
+  animation: ${({ interactive, hatching, hatched }) => cardAnimation(interactive, hatching, hatched)};
   cursor: pointer;
   width: 160px;
   margin: 4px 8px 16px 8px;
@@ -142,21 +141,21 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
     if (egg.hatched) return onReveal()
   }
 
-  const hatched  = egg.hatched && egg.interactive
+  const hatched = egg.hatched && egg.interactive
   const hatching = egg.hatched && !egg.interactive
 
   const buttonLabel = (egg) => {
     if (!egg.hatched && !egg.interactive) return 'PENDING'
-    if (!egg.hatched &&  egg.interactive) return 'HATCH'
-    if  (egg.hatched && !egg.interactive) return 'MINTING'
-    if  (egg.hatched &&  egg.interactive) return 'READY'
+    if (!egg.hatched && egg.interactive) return 'HATCH'
+    if (egg.hatched && !egg.interactive) return 'MINTING'
+    if (egg.hatched && egg.interactive) return 'READY'
     return ''
   }
 
-  const basicEggURL       = window.location.origin + '/static/images/basic.jpg'
-  const hybridEggURL      = window.location.origin + '/static/images/hybrid.jpg'
+  const basicEggURL = window.location.origin + '/static/images/basic.jpg'
+  const hybridEggURL = window.location.origin + '/static/images/hybrid.jpg'
   const transparentEggURL = window.location.origin + '/static/images/transparent.jpg'
-  const backgroundImage   = !egg.interactive && !hatching ? transparentEggURL : egg.basic ? basicEggURL : hybridEggURL
+  const backgroundImage = !egg.interactive && !hatching ? transparentEggURL : egg.basic ? basicEggURL : hybridEggURL
 
   return (
     <>
@@ -187,20 +186,20 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             }}>
             {egg.name}
           </TextWrapper>
-        {egg.timeRemaining > 0 ? (
-          <TimeoutWrapper barwidth={egg.CTAOverride ? egg.CTAOverride.barwidth : 0}>
-            <TimeoutDisplay>{`${egg.CTAOverride.timeRemainingDaysHours.days}D ${egg.CTAOverride.timeRemainingDaysHours.hours}H`}</TimeoutDisplay>
-          </TimeoutWrapper>
-        ) : (
-          <InfoBlock
-            style={{
-              position: 'absolute',
-              textAlign: 'center',
-              padding: 8,
-            }}>
-            <TextWrapper>{buttonLabel(egg)}</TextWrapper>
-          </InfoBlock>
-        )}
+          {egg.timeRemaining > 0 ? (
+            <TimeoutWrapper barwidth={egg.CTAOverride ? egg.CTAOverride.barwidth : 0}>
+              <TimeoutDisplay>{`${egg.CTAOverride.timeRemainingDaysHours.days}D ${egg.CTAOverride.timeRemainingDaysHours.hours}H`}</TimeoutDisplay>
+            </TimeoutWrapper>
+          ) : (
+            <InfoBlock
+              style={{
+                position: 'absolute',
+                textAlign: 'center',
+                padding: 8,
+              }}>
+              <TextWrapper>{buttonLabel(egg)}</TextWrapper>
+            </InfoBlock>
+          )}
         </CardBody>
       </Card>
     </>

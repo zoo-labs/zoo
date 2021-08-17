@@ -8,7 +8,6 @@ const LogoContainer = styled.button<{ width?: string }>`
   background: transparent;
   border: none;
   width: 100%;
-
 `
 
 const MaxHeightLogo = styled.img`

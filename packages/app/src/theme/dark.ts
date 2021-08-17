@@ -11,14 +11,14 @@ import { darkColors } from './colors'
 
 const darkTheme: DefaultTheme = {
   ...base,
-  isDark:  true,
-  alert:   darkAlert,
-  colors:  darkColors,
-  card:    darkCard,
-  toggle:  darkToggle,
-  nav:     darkNav,
-  modal:   darkModal,
-  radio:   darkRadio,
+  isDark: true,
+  alert: darkAlert,
+  colors: darkColors,
+  card: darkCard,
+  toggle: darkToggle,
+  nav: darkNav,
+  modal: darkModal,
+  radio: darkRadio,
   tooltip: darkTooltip,
 }
 

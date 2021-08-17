@@ -174,18 +174,13 @@ const FeedCard: React.FC<Props> = ({ item, animalGroup, hideBid }) => {
                 style={{
                   textShadow: '2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000',
                 }}>
-                <MainHeading bold>
-                  {`${item.name} ${multiplier}`}
-                </MainHeading>
+                <MainHeading bold>{`${item.name} ${multiplier}`}</MainHeading>
 
-                <Subheading>
-                  {item.rarity}
-                </Subheading>
+                <Subheading>{item.rarity}</Subheading>
                 <Subheading>{`Born: ${StringDate}`}</Subheading>
                 {item.currentBid && currentBid}
               </Flex>
-              <Flex
-                flexDirection='column'>
+              <Flex flexDirection='column'>
                 <ActionButtonContainer>
                   <Flex width='100%' height='100%' flexDirection='column'>
                     <IconButton onClick={onYield} style={{ padding: '10px 0px' }}>

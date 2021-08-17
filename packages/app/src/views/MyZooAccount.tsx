@@ -259,7 +259,7 @@ const MyZooAccount: React.FC = () => {
     eggData = sortData(eggData, 'hybrid')
 
     return (
-      <RowLayout style={{ marginBottom: -8}}>
+      <RowLayout style={{ marginBottom: -8 }}>
         <Route exact path={`${path}`}>
           {eggData.length === 0 ? (
             <StyledText textAlign='center' fontSize='16px'>

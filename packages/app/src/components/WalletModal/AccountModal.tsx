@@ -143,8 +143,8 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
 
   const switchIcon = <FaExchangeAlt size='16px' style={{ margin: '0 8px -2px 0px' }} />
   return (
-    <Modal title='Your wallet' onDismiss={onDismiss} styles={{ minHeight: '250px', maxWidth: '90vw', justifyContent: 'space-between'}}>
-      <Label style={{marginBottom:-20, padding:0}}>Address</Label>
+    <Modal title='Your wallet' onDismiss={onDismiss} styles={{ minHeight: '250px', maxWidth: '90vw', justifyContent: 'space-between' }}>
+      <Label style={{ marginBottom: -20, padding: 0 }}>Address</Label>
       <ValueWrapper>{account}</ValueWrapper>
       <Flex justifyContent='space-evenly' flexDirection='column' mb={bscType ? '8px' : '32px'}>
         <LabelWrapper>
