@@ -1,41 +1,43 @@
-import contracts from 'contracts.json'
+import contractsJSON from 'contracts.json'
 
-const hardhat = contracts['1337']['hardhat']['contracts']
-const testnet = contracts['97']['testnet']['contracts']
+const hardhat = contractsJSON['1337']['hardhat']['contracts']
+const testnet = contractsJSON['97']['testnet']['contracts']
 const mainnet = testnet // does not work yet
 
-export default {
-  zooToken: {
+export const contracts = hardhat
+
+export const addresses = {
+  ZooToken: {
     1337: hardhat['ZooToken']['address'], // local
     97: testnet['ZooToken']['address'], // testnet
     56: '0xB09FE1613fE03E7361319d2a43eDc17422f36B09', // mainnet
   },
-  zooMarket: {
+  ZooMarket: {
     1337: hardhat['ZooMarket']['address'],
     97: testnet['ZooMarket']['address'],
     56: mainnet['ZooMarket']['address'],
   },
-  zooMedia: {
+  ZooMedia: {
     1337: hardhat['ZooMedia']['address'],
     97: testnet['ZooMedia']['address'],
     56: mainnet['ZooMedia']['address'],
   },
-  zooAuction: {
+  ZooAuction: {
     1337: hardhat['ZooAuction']['address'],
     97: testnet['ZooAuction']['address'],
     56: mainnet['ZooAuction']['address'],
   },
-  zooDrop: {
+  ZooDrop: {
     1337: hardhat['ZooDrop']['address'],
     97: testnet['ZooDrop']['address'],
     56: mainnet['ZooDrop']['address'],
   },
-  zooFaucet: {
+  ZooFaucet: {
     1337: hardhat['ZooFaucet']['address'],
     97: testnet['ZooFaucet']['address'],
     56: mainnet['ZooFaucet']['address'],
   },
-  zooKeeper: {
+  ZooKeeper: {
     1337: hardhat['ZooKeeper']['address'],
     97: testnet['ZooKeeper']['address'],
     56: mainnet['ZooKeeper']['address'],

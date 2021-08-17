@@ -15,7 +15,7 @@ import { Modal } from '../Modal'
 import CopyToClipboard from './CopyToClipboard'
 import { FaExchangeAlt } from 'react-icons/fa'
 import useWeb3 from 'hooks/useWeb3'
-import { getZooFaucet, getZooToken } from 'util/contractHelpers'
+import { getZooFaucet, getZooToken } from 'util/contracts'
 // import LinkExternal from '../../components/Link/LinkExternal'
 
 interface Props {
@@ -74,8 +74,8 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
   const web3 = useWeb3()
   const mobile = isSm || isXs
   const moreSpace = mobile && !bscType
-  const zooToken = getZooToken(web3, chainId)
-  const faucet = getZooFaucet(web3, chainId)
+  const zooToken = getZooToken(web3)
+  const faucet = getZooFaucet(web3)
   const faucetAmt = web3.utils.toWei('50')
 
   // const { authenticate, isAuthenticated } = useMoralis();

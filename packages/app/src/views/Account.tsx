@@ -4,7 +4,6 @@ import Page from 'components/layout/Page'
 import React, { useState, useEffect } from 'react'
 import { AppState } from 'state'
 import { useSelector } from 'react-redux'
-import { useWeb3React } from '@web3-react/core'
 import { useHistory } from 'react-router-dom'
 import styles from 'styled-components'
 
@@ -18,7 +17,7 @@ import { Egg } from 'types/zoo'
 import { useDispatch } from 'react-redux'
 import { breedTimeouts, eggTimeout } from 'constants/constants'
 import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
-import { getZooToken, getZooDrop, getZooFaucet, getZooMedia, getZooKeeper } from 'util/contractHelpers'
+import { getZooToken, getZooDrop, getZooFaucet, getZooMedia, getZooKeeper } from 'util/contracts'
 
 import useWeb3 from 'hooks/useWeb3'
 import useToast from 'hooks/useToast'
@@ -79,13 +78,12 @@ const Account: React.FC = () => {
   const [isInitial, setIsInitial] = useState(true)
   const [balance, setBalance] = useState(0.0)
   const [wait, setWait] = useState(false)
-  const { account, chainId } = useWeb3React()
   const [allowance, setAllowance] = useState(false)
   const [disable, setDisable] = useState(false)
   const [disableApprove, setDisableApprove] = useState(false)
   const [keepApprove, setKeepApprove] = useState(true)
   const web3 = useWeb3()
-  web3.eth.handleRevert = true
+  const { account, chainID, gasPrice } = web3
   const { isXl } = useMatchBreakpoints()
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const history = useHistory()
@@ -99,13 +97,14 @@ const Account: React.FC = () => {
 
   const currentEggsOwned = Object.values(allEggs).filter((egg) => (egg.owner || '').toLowerCase() === account.toLowerCase() && !egg.burned).length
 
-  const zooToken = getZooToken(web3, chainId)
-  const faucet = getZooFaucet(web3, chainId)
-  const zooMedia = getZooMedia(web3, chainId)
-  const zooKeeper = getZooKeeper(web3, chainId)
-  const zooDrop = getZooDrop(web3, chainId)
+  const zooToken = getZooToken(web3)
+  const faucet = getZooFaucet(web3)
+  const zooMedia = getZooMedia(web3)
+  const zooKeeper = getZooKeeper(web3)
+  const zooDrop = getZooDrop(web3)
   const keeperAdd = zooKeeper.options.address
-  const faucetAmt = web3.utils.toWei('50')
+
+  console.log('account', account, 'chainID', chainID)
 
   const getBalance = async () => {
     try {
@@ -171,7 +170,7 @@ const Account: React.FC = () => {
     return () => {
       mounted = false
     }
-  }, [account, chainId])
+  }, [account, chainID])
 
   const bankClick = () => {
     history.push('/bank')
@@ -223,8 +222,7 @@ const Account: React.FC = () => {
   }
 
   const handleFunds = () => {
-    console.log(chainId)
-    switch (chainId) {
+    switch (chainID) {
       case 1337:
         handleFaucet()
         break
@@ -253,7 +251,7 @@ const Account: React.FC = () => {
     try {
       await zooKeeper.methods
         .buyEgg(1)
-        .send({ from: account })
+        .send({ gasPrice: gasPrice, from: account })
         .then((res) => {
           toastClear()
           toastInfo('Transaction submitted.')
@@ -302,7 +300,7 @@ const Account: React.FC = () => {
                 </BorderButton>
               )}
               <BorderButton disabled={wait} scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
-                {chainId !== 97 && chainId !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
+                {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
               </BorderButton>
             </LabelWrapper>
           </RowWrapper>
