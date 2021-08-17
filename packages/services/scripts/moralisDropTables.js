@@ -61,7 +61,7 @@ const SERVER_NAME = {
 
     axios(config)
       .then(function (response) {
-        console.log('Dumping tables')
+        console.log(`Dropping tables in ${NETWORK}`)
       })
       .catch(function (error) {
         console.error(error)
