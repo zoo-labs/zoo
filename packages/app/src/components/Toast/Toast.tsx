@@ -21,7 +21,7 @@ const StyledToast = styled.div`
   max-width: calc(100% - 32px);
   transition: all 1250ms ease-in;
   width: 100%;
-  scale: 75%;
+  scale: 70%;
 
   ${({ theme }) => theme.mediaQueries.sm} {
     max-width: 400px;
