@@ -60,6 +60,7 @@ const MyZooAccount: React.FC = () => {
   const [isOpen, setOpen] = useState(false)
   const [_, setShowBoth] = useState(false)
   const web3 = useWeb3()
+  web3.eth.handleRevert = true
   const zooKeeper = getZooKeeper(web3, chainId)
   const videoTimeout = []
   const [hatched, setHatched] = useState({
