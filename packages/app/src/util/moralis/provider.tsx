@@ -7,7 +7,10 @@ import { useWeb3React } from '@web3-react/core'
 const ethereum = (window as any).ethereum || { chainId: null, on: () => {} }
 
 export const MoralisProvider: React.FC = ({ children }) => {
-  const [chainID, setChainID] = useState(Number(ethereum.chainId) || 97)
+  const [chainID, setChainID] = useState(Number(ethereum.chainId))
+
+  // We only have servers for Local Dev, BSC Testnet and Mainnet
+  if (chainID != 56 && chainID != 97 && chainID != 1337) setChainID(1337) // Default to hardhat
 
   useEffect(() => {
     ethereum.on('chainChanged', (chainID) => {
