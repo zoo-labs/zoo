@@ -36,7 +36,7 @@ export const useWeb3 = () => {
       const weiPrice = Number(await web3.eth.getGasPrice())
 
       const price = Math.floor(weiPrice + weiPrice * 0.42)
-      console.log('GasPrice', price)
+      console.log('Gas price', weiPrice / (10**9), 'boosted to', price / (10**9))
 
       // let price = 11 * (10 ** 9)
       // const results = await Moralis.Cloud.run('getAverageGasPrice')
