@@ -50,7 +50,7 @@ export const useWeb3 = () => {
   custom.account = account
   custom.chainID = Number(chainId)
   custom.gasPrice = gasPrice
-  custom.eth.handleRevert = true
+  // custom.eth.handleRevert = true
 
   return custom
 }
