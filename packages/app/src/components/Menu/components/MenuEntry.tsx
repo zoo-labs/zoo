@@ -31,7 +31,7 @@ const MenuEntry = styled.div<Props>`
   display: flex;
   align-items: center;
   height: ${MENU_ENTRY_HEIGHT}px;
-  padding: ${({ secondary }) => (secondary ? '0 32px' : '0 16px')};
+  padding: ${({ secondary }) => (secondary ? '0 64px' : '0 50px')};
   font-size: ${({ secondary }) => (secondary ? '14px' : '16px')};
   color: ${({ theme }) => theme.colors.textSubtle};
   box-shadow: ${({ isActive, theme }) => (isActive ? `inset 4px 0px 0px ${theme.colors.primary}` : 'none')};
