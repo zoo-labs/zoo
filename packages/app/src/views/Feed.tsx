@@ -94,9 +94,9 @@ const LogoContainer = styled.div`
   }
 `
 
-export interface FeedPagePops extends RouteComponentProps<{ key?: string }> {}
+interface RouteProps extends RouteComponentProps<{ key?: string }> {}
 
-function Feed<FeedPagePops>({ match }) {
+function Feed<RouteProps>({ match }) {
   const animalsState = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
@@ -105,7 +105,7 @@ function Feed<FeedPagePops>({ match }) {
   const [swiperRef, setSwiperRef] = useState(undefined)
 
   // Current set of view, either MyZoo or Marketplace
-  const [activeView, setActiveView] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(0)
 
   const { pathname } = useLocation()
 
@@ -114,14 +114,13 @@ function Feed<FeedPagePops>({ match }) {
     history.push('/account')
   }
 
-  const menuClick = (index) => {
-    console.log('index', index)
-    setActiveView(index)
+  const onItemClick = (index) => {
+    setActiveIndex(index)
     swiperRef.slideTo(index, 200)
   }
 
-  const onMenuClick = (obj) => {
-    menuClick(obj.activeIndex)
+  const onActiveIndexChange = (obj) => {
+    onItemClick(obj.activeIndex)
   }
 
   //  Settings for Zoo vs Market
@@ -134,17 +133,24 @@ function Feed<FeedPagePops>({ match }) {
     animals = animals.filter((a) => a.owner.toLowerCase() != account.toLowerCase())
   }
 
+  // If viewing specific NFT, sort NFTs to that index
+  if (match) {
+    console.log('match', match.params)
+    const index = animals.findIndex((a) => a.tokenID === match.params.key)
+    animals = animals.slice(0,index).concat(animals.slice(index))
+  }
+
   return (
     <Container isMobile={isMobile}>
 
       <ToggleContainer>
-        <ButtonMenu activeIndex={activeView} onItemClick={menuClick} scale='sm'>
+        <ButtonMenu activeIndex={activeIndex} onItemClick={onItemClick} scale='sm'>
           <ButtonMenuItem as='a'>My Zoo</ButtonMenuItem>
           <ButtonMenuItem as='a'>Marketplace</ButtonMenuItem>
         </ButtonMenu>
       </ToggleContainer>
 
-      <Swiper onSwiper={setSwiperRef} onActiveIndexChange={onMenuClick} centeredSlides={isMobile ? true : false} spaceBetween={30} slidesPerView={1} direction='horizontal'>
+      <Swiper onSwiper={setSwiperRef} onActiveIndexChange={onActiveIndexChange} centeredSlides={isMobile ? true : false} spaceBetween={30} slidesPerView={1} direction='horizontal'>
 
         // MyZoo slides
         <Slide key={'myzoo-slides'}>
