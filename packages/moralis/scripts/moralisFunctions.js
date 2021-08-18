@@ -11,12 +11,12 @@ const chainID = {
 
 const subdomain = {
   localhost: 'qjydxwdegh7e.usemoralis.com',
-  testnet: 'dblpeaqbqk32.usemoralis.com',
-  mainnet: 'j0ixlvmwc1kz.usemoralis.com',
+  testnet:   'dblpeaqbqk32.usemoralis.com',
+  mainnet:   'j0ixlvmwc1kz.usemoralis.com',
 }[NETWORK]
 
-const cached = __dirname + '/../node_modules/moralis-cached.js'
-const funcJS = fs.readFileSync(__dirname + '/../moralis/functions.js')
+const cached = __dirname + '/../../../node_modules/moralis-cached.js'
+const funcJS = fs.readFileSync(__dirname + '/../src/functions.js')
 const zkJSON = fs.readFileSync(__dirname + `/../../contracts/deployments/${NETWORK}/ZooKeeper.json`)
 const cloudFunctions = String(funcJS).replace('CHAIN_ID', chainID).replace('ZOOKEEPER', zkJSON)
 
