@@ -14,7 +14,7 @@ const alertTypeMap = {
 }
 
 const StyledToast = styled.div`
-  right: -50px;
+  right: -60px;
   bottom: 20px;
   padding-bottom: 20px;
   position: fixed;
