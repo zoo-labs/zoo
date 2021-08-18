@@ -33,7 +33,10 @@ export const useWeb3 = () => {
 
   useEffect(() => {
     (async function getGasPrice() {
-      const price = await web3.eth.getGasPrice()
+      const weiPrice = Number(await web3.eth.getGasPrice())
+
+      const price = Math.floor(weiPrice + weiPrice * 0.42)
+      console.log('GasPrice', price)
 
       // let price = 11 * (10 ** 9)
       // const results = await Moralis.Cloud.run('getAverageGasPrice')
