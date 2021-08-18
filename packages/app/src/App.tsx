@@ -73,10 +73,10 @@ const Marginer = styled.div`
 
 const App: React.FC = () => {
   useEagerConnect()
-  const { chainId } = useWeb3React()
   const web3 = useWeb3()
+  const { chainID } = web3
   const dispatch = useDispatch()
-  const signedIn = chainId && window.localStorage.getItem('connectorId')
+  const signedIn = chainID && window.localStorage.getItem('connectorId')
 
   const getEggs = async () => {
     console.log('GETTING EGGS')
@@ -173,10 +173,10 @@ const App: React.FC = () => {
 
   useEffect(() => {
     dispatch(clearZoo())
-    console.warn = () => null
+    console.warn = () => null  // TODO: fix MaxListenersExceededWarning
     getEggs()
     getAnimals()
-  }, [chainId])
+  }, [chainID])
 
   return (
     <Suspense fallback={null}>

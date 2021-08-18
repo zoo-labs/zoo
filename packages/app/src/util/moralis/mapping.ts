@@ -1,8 +1,6 @@
 export function mapEgg(egg) {
   if (!egg.get) egg.get = (k) => egg[k]
 
-  console.log('EGG', egg.tokenID, egg.get('kind'), egg.get('name'))
-
   return {
     tokenID: egg.get('tokenID'),
     name: egg.get('name'),
@@ -25,8 +23,6 @@ export function mapEgg(egg) {
 
 export function mapAnimal(animal) {
   if (!animal.get) animal.get = (k) => animal[k]
-
-  console.log('ANIMAL', animal.get('tokenID'), animal.get('kind'), animal.get('name'))
 
   return {
     owner: String(animal.get('owner')),

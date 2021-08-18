@@ -7,20 +7,33 @@ import { EggCardType } from './types'
 
 const wiggle = keyframes`
   0% {
-    transform: rotate(0deg);
+    transform: rotate(0deg) scale(1);
   }
   25% {
-    transform: rotate(4deg);
+    transform: rotate(4deg) scale(1.05);
   }
   75% {
-    transform: rotate(-4deg);
+    transform: rotate(-4deg) scale(1.075);
   }
   100% {
-    transform: rotate(0deg);
+    transform: rotate(0deg) scale(1);;
   }
 `
 
 const pulse = keyframes`
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+`
+
+const glow = keyframes`
   0% {
     box-shadow: 0px 4px 12px #555555;
   }
@@ -32,6 +45,7 @@ const pulse = keyframes`
   }
 }
 `
+
 const scale = keyframes`
   0% {
 	transform: scale(1);
@@ -47,7 +61,12 @@ const scale = keyframes`
 
 const wiggleAnimation = (props) =>
   css`
-    ${wiggle} 0.5s ease-in-out;
+    ${wiggle} 1s ease-in-out infinite;
+  `
+
+const glowAnimation = (props) =>
+  css`
+    ${glow} 2.2s ease-in-out infinite;
   `
 
 const pulseAnimation = (props) =>
@@ -112,10 +131,17 @@ const TimeoutDisplay = styled.span`
 `
 
 const cardAnimation = (interactive, hatching, hatched) => {
-  if (!interactive && !hatching) return scaleAnimation
-  if (hatched) return pulseAnimation
-  if (hatching) return scaleAnimation
+  if (!interactive && !hatching) return pulseAnimation
+  if (hatched) return glowAnimation
+  if (hatching) return wiggleAnimation
   return null
+}
+
+const hashEgg = egg => {
+  const s = String(egg.tokenID)
+  for (var i=0, h=9; i<s.length;)
+    h = Math.imul(h ^ s.charCodeAt(i++), 9**9)
+  return h^h>>>9
 }
 
 const Card = styled(Existing)<{ timedOut?: boolean; interactive?: boolean; hatching?: boolean; hatched?: boolean }>`
@@ -126,7 +152,7 @@ const Card = styled(Existing)<{ timedOut?: boolean; interactive?: boolean; hatch
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 8px;
   display: block;
-  opacity: ${({ interactive, hatching }) => (!interactive && !hatching ? '0.7' : null)};
+  // opacity: ${({ interactive, hatching }) => (!interactive && !hatching ? '0.8' : null)};
   transition: all 1s ease-in-out;
 `
 
@@ -156,6 +182,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
   const hybridEggURL = window.location.origin + '/static/images/hybrid.jpg'
   const transparentEggURL = window.location.origin + '/static/images/transparent.jpg'
   const backgroundImage = !egg.interactive && !hatching ? transparentEggURL : egg.basic ? basicEggURL : hybridEggURL
+  const hue = hashEgg(egg) % 9
 
   return (
     <>
@@ -175,6 +202,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             borderRadius: 8,
             height: 160,
             transition: 'background-image 1000ms linear',
+            filter: (!egg.hatched && !egg.interactive) ? null : `hue-rotate(0.${hue}turn)`,
           }}>
           <TextWrapper
             style={{
