@@ -15,6 +15,8 @@
     "build": "yarn workspace @zoolabs/app build --max-old-space-size=12288",
     "clean": "rm -rf packages/app/build && rm -rf packages/contracts/artifacts && rm -rf packages/contracts/cache && rm -rf packages/contracts/types",
     "start": "yarn workspace @zoolabs/app start",
+    "storybook": "yarn workspace @zoolabs/app storybook",
+    "build-storybook": "yarn workspace @zoolabs/app build-storybook",
 
     "build:dev": "yarn workspace @zoolabs/dev build --max-old-space-size=12288",
     "dev": "yarn workspace @zoolabs/dev start",
@@ -25,7 +27,6 @@
     "surge": "yarn workspace @zoolabs/dev surge",
     "theme": "yarn workspace @zoolabs/dev theme",
     "watch-theme": "yarn workspace @zoolabs/dev watch",
-
 
     "drop": "yarn workspace @zoolabs/moralis drop",
     "functions": "yarn workspace @zoolabs/moralis functions",
