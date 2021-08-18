@@ -18,23 +18,6 @@
     "storybook": "yarn workspace @zoolabs/app storybook",
     "build-storybook": "yarn workspace @zoolabs/app build-storybook",
 
-    "build:dev": "yarn workspace @zoolabs/dev build --max-old-space-size=12288",
-    "dev": "yarn workspace @zoolabs/dev start",
-    "ipfs": "yarn workspace @zoolabs/dev ipfs",
-    "s3": "yarn workspace @zoolabs/dev s3",
-    "ship": "yarn workspace @zoolabs/dev ship",
-    "start:dev": "yarn workspace @zoolabs/dev start",
-    "surge": "yarn workspace @zoolabs/dev surge",
-    "theme": "yarn workspace @zoolabs/dev theme",
-    "watch-theme": "yarn workspace @zoolabs/dev watch",
-
-    "drop": "yarn workspace @zoolabs/moralis drop",
-    "functions": "yarn workspace @zoolabs/moralis functions",
-    "logs": "yarn workspace @zoolabs/moralis logs",
-    "plugins": "yarn workspace @zoolabs/moralis plugins",
-    "proxy": "yarn workspace @zoolabs/moralis proxy",
-    "watch": "yarn workspace @zoolabs/moralis watch",
-
     "account": "yarn workspace @zoolabs/contracts account",
     "accounts": "yarn workspace @zoolabs/contracts accounts",
     "balance": "yarn workspace @zoolabs/contracts balance",
@@ -55,6 +38,15 @@
     "send": "yarn workspace @zoolabs/contracts send",
     "test": "yarn workspace @zoolabs/contracts test",
     "wallet": "cd packages/contracts && npx contracts wallet",
+
+    "drop": "yarn workspace @zoolabs/moralis drop",
+    "functions": "yarn workspace @zoolabs/moralis functions",
+    "logs": "yarn workspace @zoolabs/moralis logs",
+    "plugins": "yarn workspace @zoolabs/moralis plugins",
+    "proxy": "yarn workspace @zoolabs/moralis proxy",
+    "watch": "yarn workspace @zoolabs/moralis watch",
+
+    "lab": "yarn workspace @zoolabs/lab start",
 
     "deploy-graph": "yarn deploy && yarn graph-ship-local",
     "graph-build": "yarn workspace @zoolabs/subgraph graph build",
