@@ -14,7 +14,7 @@ import { PrivateRoute } from 'components/PrivateRoute'
 import { useWeb3React } from '@web3-react/core'
 import { useDispatch } from 'react-redux'
 import { clearZoo } from 'state/zoo'
-import { addEggs, addAnimals, addEgg, addAnimal, burnEgg } from 'state/actions'
+import { addEggs, addAnimals, addEgg, addAnimal, burnEgg, burnAnimal } from 'state/actions'
 import Moralis from 'moralis'
 import { useMoralisSubscription } from 'react-moralis'
 import { Egg, Animal } from 'types/zoo'
@@ -105,7 +105,16 @@ const App: React.FC = () => {
     }
   }
 
-  const createOrUpdateEgg = async (data) => {
+  const createEgg = async (data) => {
+    console.log('CREATING EGG', mapEgg(data))
+    try {
+      dispatch(addEgg(mapEgg(data)))
+    } catch (e) {
+      console.error('ISSUE CREATING EGG:', e)
+    }
+  }
+
+  const updateEgg = async (data) => {
     console.log('UPDATING EGG', mapEgg(data))
     try {
       dispatch(addEgg(mapEgg(data)))
@@ -114,12 +123,30 @@ const App: React.FC = () => {
     }
   }
 
-  const createOrUpdateAnimal = async (data) => {
+  const createAnimal = async (data) => {
+    console.log('CREATING ANIMAL', mapAnimal(data))
+    try {
+      dispatch(addAnimal(mapAnimal(data)))
+    } catch (e) {
+      console.error('ISSUE CREATING ANIMAL:', e)
+    }
+  }
+
+  const updateAnimal = async (data) => {
     console.log('UPDATING ANIMAL', mapAnimal(data))
     try {
       dispatch(addAnimal(mapAnimal(data)))
     } catch (e) {
       console.error('ISSUE UPDATING ANIMAL:', e)
+    }
+  }
+
+  const deleteAnimal = async (data) => {
+    console.log('DELETING ANIMAL', mapAnimal(data))
+    try {
+      dispatch(burnAnimal(mapAnimal(data)))
+    } catch (e) {
+      console.error('ISSUE DELETING ANIMAL:', e)
     }
   }
 
@@ -133,14 +160,15 @@ const App: React.FC = () => {
   }
 
   useMoralisSubscription('Eggs', (q) => q, [], {
-    onCreate: (data) => createOrUpdateEgg(data),
-    onUpdate: (data) => createOrUpdateEgg(data),
+    onCreate: (data) => createEgg(data),
+    onUpdate: (data) => updateEgg(data),
     onDelete: (data) => deleteEgg(data),
   })
 
   useMoralisSubscription('Animals', (q) => q, [], {
-    onCreate: (data) => createOrUpdateAnimal(data),
-    onUpdate: (data) => createOrUpdateAnimal(data),
+    onCreate: (data) => createAnimal(data),
+    onUpdate: (data) => updateAnimal(data),
+    onDelete: (data) => deleteAnimal(data),
   })
 
   useEffect(() => {
