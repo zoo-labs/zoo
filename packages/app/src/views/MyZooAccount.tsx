@@ -47,10 +47,10 @@ const RowLayout = styled.div`
   }
 `
 
-const Card = styled(Existing)<{ selected?: boolean; timedOut?: boolean }>`
-  border: ${({ selected }) => (selected ? '2px solid white' : null)};
-  opacity: ${({ timedOut }) => (timedOut ? '0.6' : null)};
-`
+// const Card = styled(Existing)<{ selected?: boolean; timedOut?: boolean }>`
+//   border: ${({ selected }) => (selected ? '2px solid white' : null)};
+//   opacity: ${({ timedOut }) => (timedOut ? '0.6' : null)};
+// `
 
 const MyZooAccount: React.FC = () => {
   const { account, chainId } = useWeb3React()
@@ -218,10 +218,10 @@ const MyZooAccount: React.FC = () => {
             )}
           </Route>
           <Route exact path={`${path}/history`}>
-            {animalData.map((animal) => (
-              <Card key={animal.tokenID} />
-            )
-            )}
+            {/* {animalData.map((animal) => ( */}
+              {/* // <Card key={animal.tokenID} /> */}
+            {/* // ) */}
+            {/* )} */}
           </Route>
         </RowLayout>
       </>
@@ -280,9 +280,9 @@ const MyZooAccount: React.FC = () => {
           )}
         </Route>
         <Route exact path={`${path}/history`}>
-          {eggData.map((egg) => (
+          {/* {eggData.map((egg) => (
             <Card key={egg.id} />
-          ))}
+          ))} */}
         </Route>
       </RowLayout>
     )
