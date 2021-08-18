@@ -249,7 +249,7 @@ const Account: React.FC = () => {
     try {
       await zooKeeper.methods
         .buyEgg(1) // buy from first drop
-        .send({ from: account })
+        .send({ from: account, gasPrice: gasPrice })
         .then((res) => {
           toastClear()
           toastInfo('Transaction submitted.')
