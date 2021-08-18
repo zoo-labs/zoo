@@ -265,12 +265,6 @@ const Account: React.FC = () => {
       toastClear()
       toastError('Unable to purchase eggs. Try again later.')
     }
-
-    // onBuyEggs()
-  }
-
-  const handleRedirect = () => {
-    history.push('/feed')
   }
 
   return (

@@ -129,8 +129,6 @@ interface CardProps {
 }
 
 export const FeedCard: React.FC<CardProps> = ({ nft, showBid }) => {
-  console.log('NFT', nft, showBid)
-
   const dob = new Date(nft.dob)
   const birthday = dob.toLocaleDateString('en-US')
   const { isXl } = useMatchBreakpoints()
