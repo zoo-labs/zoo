@@ -151,12 +151,14 @@ function Feed<FeedPagePops>({ match }) {
   let totalAnimalsFiltered = animals.filter((animal) => {
     return (animal.owner || '').toLowerCase() !== account.toLowerCase() && !animal.freed
   })
+  console.log("Total Animals Filtered:")
   console.log(totalAnimalsFiltered)
 
   let myZooAnimalsFiltered = animals.filter((animal) => {
     return animal.owner.toLowerCase() === account.toLowerCase()
     // && !animal.freed
   })
+  console.log("My Zoo Animals Filtered")
   console.log(myZooAnimalsFiltered)
 
   if(myZooAnimalsFiltered[0] === undefined){
@@ -205,7 +207,8 @@ function Feed<FeedPagePops>({ match }) {
         <SwiperSlide key={0}>
           {myZooAnimalData.length ? (
             <Swiper spaceBetween={30} slidesPerView={1} direction='vertical'>
-              {myZooAnimalData.map((data) => {
+              {myZooAnimalsFiltered.map((data) => {
+                console.log("DATA")
                 console.log(data)
                 return (
                   <SwiperSlide key={data.tokenID + 'slide'}>
