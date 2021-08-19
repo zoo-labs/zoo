@@ -19,7 +19,7 @@ const InfoBlock = styled.div`
   bottom: 0;
   width: 100%;
   z-index: 999999;
-  background: ${({ theme }) => theme.colors.background};
+  background: rgba(0,0,0,0.6);
 `
 
 const TextWrapper = styled.div`
@@ -80,10 +80,17 @@ const Card = styled(Existing)<{ selected?: boolean; timedOut?: boolean; rarityCo
   margin: 8px;
   box-shadow: ${(props) => `0px 0px 13px -2px ${props.rarityColor}`};
   backgroundcolor: '#000000';
-  display: inline-block;
+  display: block;
   border-radius: 8px;
   border: ${({ selected }) => (selected ? '2px solid white' : null)};
   opacity: ${({ timedOut }) => (timedOut ? '0.6' : null)};
+  position: relative;
+  ::before {
+    content: '';
+    display: block;
+    width: 100%;
+    padding-bottom: 177.77%;
+  }
 `
 
 export interface SwiperCardProps {
@@ -110,7 +117,10 @@ export const SwiperCard: React.FC<SwiperCardProps> = ({ egg, animal, group, eggT
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
-            height: 280,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            height: '100%',
             // width: `calc(100vw/2.2 - 13px )`,
             width: '100%',
           }}>
