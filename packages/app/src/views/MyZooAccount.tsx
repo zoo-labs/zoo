@@ -78,6 +78,18 @@ const MyZooAccount: React.FC = () => {
   const allAnimals = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
 
+
+  console.log("ALL ANIMALS")
+  console.log(allAnimals)
+
+
+  console.log("ALL EGGs")
+  console.log(allEggs)
+
+
+  console.log("HATCHED")
+  console.log(hatched)
+
   const hatchEggReady = async (egg) => {
     startAnimationTimer()
 
@@ -171,6 +183,7 @@ const MyZooAccount: React.FC = () => {
       const timeRemainingDaysHours = getDaysHours(timeRemaining)
       const barwidth = [100 * (elapsedTime / breedTimeout), '%'].join('')
 
+      
       if (timeRemaining <= 0 && animalData.find((a) => a.name === animal.name && a.timeRemaining <= 0)) {
         animalGroup[animal.name] = animalGroup[animal.name] + 1 || 2
       } else {
@@ -189,6 +202,9 @@ const MyZooAccount: React.FC = () => {
       animalData.filter((item) => item.bloodline === hybrid),
       'bloodline',
     )
+
+    console.log("ANIMALS")
+    console.log(animals)
 
     return (
       <>
