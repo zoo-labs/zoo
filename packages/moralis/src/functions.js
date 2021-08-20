@@ -173,11 +173,13 @@ Moralis.Cloud.afterSave('Breed', async (request) => {
 
     // Update breeding time on animals
     const pA = await getAnimal(parentA)
-    pA.set('recentBreedTime', now)
+    pA.set('lastBred', now)
+    pA.set('breedCount', pA.breed.count)
     await pA.save()
 
     const pB = await getAnimal(parentB)
-    pB.set('recentBreedTime', now)
+    pB.set('lastBred', now)
+    pB.set('breedCount', pB.breed.count)
     await pB.save()
 
     logger.info(`Hybrid Egg ${tokenID} hatched, pending confirmation`)
