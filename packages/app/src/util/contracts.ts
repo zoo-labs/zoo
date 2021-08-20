@@ -1,4 +1,4 @@
-import { addresses, contracts }  from 'constants/contracts'
+import { addresses, contracts } from 'constants/contracts'
 import { AbiItem } from 'web3-utils'
 import { Address } from 'constants/types'
 import { CustomWeb3 as Web3 } from 'hooks/useWeb3'

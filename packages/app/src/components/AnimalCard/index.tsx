@@ -216,7 +216,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
   const breed = async (onDismiss) => {
     var an1 = parseInt(array[0].tokenID)
     var an2 = parseInt(array[1].tokenID)
-    const isBreedingStackedAnimal = an1 === an2;  
+    const isBreedingStackedAnimal = an1 === an2
 
     if (an1 === an2) {
       an2 = animalGroup[array[0].name][0].tokenID
@@ -232,7 +232,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
     const aniM1 = res1[0]
     const aniM2 = res2[0]
     const mArray = [aniM1, aniM2]
-    
+
     try {
       await zooKeeper.methods
         .breedAnimals(1, an1, an2)
@@ -241,7 +241,6 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
           console.log(res)
           const TransOb = Moralis.Object.extend('Transactions')
           const newTrans = new TransOb()
-
 
           // //
           // // Get next timestamp token can be bred
@@ -283,8 +282,6 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
     }
   }
 
-
-
   const breedClick = (animal) => {
     const selected = Object.values(allAnimals).filter((item) => item.selected)
     const toSet: Animal = { ...animal }
@@ -296,14 +293,14 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
       array = temp
       onConfirm()
     }
-        
+
     toSet.selected = animal.selected ? false : true
 
     if ((!animal.selected && selected.length === 1) || (animalGroup[animal.name] && animal.selected && selected.length === 1)) {
       const temp = [{ ...selected[0] }, { ...animal }]
       array = temp
       onConfirm()
-    } 
+    }
 
     dispatch(addAnimal(toSet))
   }
@@ -338,7 +335,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
               right: 11,
               top: 9,
             }}>
-            {animal.timeRemaining <= 0 ? ((animalGroup[animal.name] && animalGroup[animal.name].length > 0) ? `x${animalGroup[animal.name].length + 1}` : '') : ''}
+            {animal.timeRemaining <= 0 ? (animalGroup[animal.name] && animalGroup[animal.name].length > 0 ? `x${animalGroup[animal.name].length + 1}` : '') : ''}
           </TextWrapper>
           <TextWrapper
             style={{

@@ -120,13 +120,13 @@ function Feed<FeedPagePops>({ match }) {
   }
 
   const handleClick = (newIndex) => {
-  console.log('new Index ' + newIndex)
+    console.log('new Index ' + newIndex)
     setActiveIndex(newIndex)
     swiperRef.slideTo(newIndex + 1, 200)
   }
 
   const handleIndexChange = (obj) => {
-    console.log("handleIndexChange")
+    console.log('handleIndexChange')
     console.log(obj)
     setActiveIndex(obj.activeIndex)
   }
@@ -151,25 +151,25 @@ function Feed<FeedPagePops>({ match }) {
   let totalAnimalsFiltered = animals.filter((animal) => {
     return (animal.owner || '').toLowerCase() !== account.toLowerCase() && !animal.freed
   })
-  console.log("Total Animals Filtered:")
+  console.log('Total Animals Filtered:')
   console.log(totalAnimalsFiltered)
 
   let myZooAnimalsFiltered = animals.filter((animal) => {
     return animal.owner.toLowerCase() === account.toLowerCase()
     // && !animal.freed
   })
-  console.log("My Zoo Animals Filtered")
+  console.log('My Zoo Animals Filtered')
   console.log(myZooAnimalsFiltered)
 
-  if(myZooAnimalsFiltered[0] === undefined){
-      myZooAnimalsFiltered.shift()
-      myZooAnimalsFiltered.pop()
+  if (myZooAnimalsFiltered[0] === undefined) {
+    myZooAnimalsFiltered.shift()
+    myZooAnimalsFiltered.pop()
   }
 
   if (match) {
     const index1 = myZooAnimalsFiltered.findIndex((a) => a.tokenID === match.params.key)
     const index = index1 + 1
-    console.log('Indexer '  + index)
+    console.log('Indexer ' + index)
     const toMove = myZooAnimalsFiltered[index]
     console.log(toMove)
     myZooAnimalsFiltered[index] = myZooAnimalsFiltered[index]
@@ -208,7 +208,7 @@ function Feed<FeedPagePops>({ match }) {
           {myZooAnimalData.length ? (
             <Swiper spaceBetween={30} slidesPerView={1} direction='vertical'>
               {myZooAnimalsFiltered.map((data) => {
-                console.log("DATA")
+                console.log('DATA')
                 console.log(data)
                 return (
                   <SwiperSlide key={data.tokenID + 'slide'}>

@@ -6,9 +6,9 @@ import { getWeb3NoAccount } from 'util/web3'
 // import Moralis from 'moralis'
 
 export type Extra = {
-    account: string
-    chainID: number
-    gasPrice: number
+  account: string
+  chainID: number
+  gasPrice: number
 }
 
 export type CustomWeb3 = Web3 & Extra
@@ -32,11 +32,11 @@ export const useWeb3 = () => {
   }, [library])
 
   useEffect(() => {
-    (async function getGasPrice() {
+    ;(async function getGasPrice() {
       const weiPrice = Number(await web3.eth.getGasPrice())
 
       const price = Math.floor(weiPrice + weiPrice * 0.42)
-      console.log('Gas price', weiPrice / (10**9), 'boosted to', price / (10**9))
+      console.log('Gas price', weiPrice / 10 ** 9, 'boosted to', price / 10 ** 9)
 
       // let price = 11 * (10 ** 9)
       // const results = await Moralis.Cloud.run('getAverageGasPrice')

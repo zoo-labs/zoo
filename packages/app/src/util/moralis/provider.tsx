@@ -19,7 +19,6 @@ export const MoralisProvider: React.FC = ({ children }) => {
     })
   })
 
-
   const { applicationID, serverURL } = moralisConfig(chainID)
   console.log(`Moralis.initialize appID: ${applicationID} serverURL: ${serverURL}`)
   Moralis.initialize(applicationID)

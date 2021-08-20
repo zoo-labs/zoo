@@ -15,7 +15,7 @@ export interface AnimalCardProps {
   allAnimals: {
     [key: string]: any
   }
-  account: string,
+  account: string
   executeStackedBreeding: (Animal) => void
 }
 

@@ -51,7 +51,7 @@ const BottomModal: React.FC<Props> = ({ children, header, onDismiss, height }) =
 
   const onClose = () => {
     setIsModalOpen(false)
-    setTimeout(function () {
+    setTimeout(function() {
       setOpen(false)
       onDismiss()
     }, 400)
