@@ -184,11 +184,6 @@ const App: React.FC = () => {
       <Router history={history}>
         <ResetCSS/>
         <GlobalStyle/>
-<<<<<<< HEAD:packages/legacy/src/App.tsx
-        <AppBar/>
-=======
-        <Heading/>
->>>>>>> f4f637d (Sushi inject (wip)):packages/app/src/App.tsx
         <Switch>
           <Route exact path='/login'>{signedIn ? <Redirect to='/account' /> : <Login />}</Route>
           <SuspenseWithChunkError fallback={<></>}>
@@ -199,11 +194,6 @@ const App: React.FC = () => {
           </SuspenseWithChunkError>
         </Switch>
         <ToastListener/>
-<<<<<<< HEAD:packages/legacy/src/App.tsx
-        {/* <Footer> */}
-=======
-        <Footer>
->>>>>>> f4f637d (Sushi inject (wip)):packages/app/src/App.tsx
       </Router>
     </Suspense>
   )
