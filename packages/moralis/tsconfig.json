@@ -20,16 +20,15 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": false,
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "lib": ["es2020"],
     "module": "commonjs",
     "target": "es2020",
-
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-
     "typeRoots": ["./node_modules/@types", "./src"]
   },
   "include": ["src", "scripts"],

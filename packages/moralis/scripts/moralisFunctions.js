@@ -15,14 +15,8 @@ const subdomain = {
   mainnet: 'j0ixlvmwc1kz.usemoralis.com',
 }[NETWORK]
 
-const cached = __dirname + '/../../../node_modules/moralis-cached.js'
-const funcJS = fs.readFileSync(__dirname + '/../src/functions.js')
-const zkJSON = fs.readFileSync(__dirname + `/../../contracts/deployments/${NETWORK}/ZooKeeper.json`)
-const cloudFunctions = String(funcJS).replace('CHAIN_ID', chainID).replace('ZOOKEEPER', zkJSON)
-
-fs.writeFileSync(cached, cloudFunctions)
-
-const child = spawn('node', ['node_modules/.bin/moralis-admin-cli', 'watch-cloud-file', '--moralisSubdomain', subdomain, '--moralisCloudFile', cached], { shell: true })
+const functions = __dirname + '/../dist/functions.ts'
+const child = spawn('node', ['node_modules/.bin/moralis-admin-cli', 'watch-cloud-file', '--moralisSubdomain', subdomain, '--moralisCloudFile', functions], { shell: true })
 
 child.stdout.on('data', (data) => {
   if (String(data).match(/File Uploaded Correctly/)) {
