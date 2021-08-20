@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -111,7 +111,7 @@ const BidPriceInput = styled.input.attrs({
   margin-left: 15px;
 `
 
-export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account }: AnimalCardProps): JSX.Element => {
+export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, executeStackedBreeding }: AnimalCardProps): JSX.Element => {
   const dispatch = useDispatch()
   const bid = useRef(100)
   let array = []
@@ -136,12 +136,14 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account }:
     const animal1 = array[0]
     const animal2 = array[1]
     const cancel = () => {
+      console.log()
       animal1.selected = false
       animal2.selected = false
       dispatch(addAnimal(animal1))
       dispatch(addAnimal(animal2))
       onDismiss()
     }
+
     return (
       <Modal title='Confirm Breed' onDismiss={onDismiss}>
         <StyledText color='text'>{`Do you want to breed ${animal1.name} with ${animal2.name}?`}</StyledText>
@@ -212,8 +214,14 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account }:
   const [onEggCreated] = useModal(<EggCreatedNotify onDismiss={() => null} />)
 
   const breed = async (onDismiss) => {
-    const an1 = parseInt(array[0].tokenID)
-    const an2 = parseInt(array[1].tokenID)
+    var an1 = parseInt(array[0].tokenID)
+    var an2 = parseInt(array[1].tokenID)
+    const isBreedingStackedAnimal = an1 === an2;  
+
+    if (an1 === an2) {
+      an2 = animalGroup[array[0].name][0].tokenID
+    }
+
     const anOb = Moralis.Object.extend('Animals')
     const anQ1 = new Moralis.Query(anOb)
     const anQ2 = new Moralis.Query(anOb)
@@ -224,7 +232,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account }:
     const aniM1 = res1[0]
     const aniM2 = res2[0]
     const mArray = [aniM1, aniM2]
-    console.log('Breeding', mArray)
+    
     try {
       await zooKeeper.methods
         .breedAnimals(1, an1, an2)
@@ -234,12 +242,38 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account }:
           const TransOb = Moralis.Object.extend('Transactions')
           const newTrans = new TransOb()
 
+
+          // //
+          // // Get next timestamp token can be bred
+          // function breedNext(uint256 tokenID) public view returns (uint256) {
+          //     IZoo.Token memory token = tokens[tokenID];
+          //     return token.breed.timestamp + (token.breed.count * 1 days);
+          // }
+
+          // // Check whether token is ready to breed again
+          // function breedReady(uint256 tokenID) public view returns (bool) {
+          //     // Never bred? Lets go
+          //     if (tokens[tokenID].breed.count == 0) {
+          //         return true;
+          //     }
+          //     // If current timestamp is greater than the next breed time, lets go
+          //     if (block.timestamp > breedNext(tokenID)) {
+          //         return true;
+          //     }
+
+          //     // Not ready
+          //     return false;
+          // }
+
           newTrans.set('from', account)
           newTrans.set('action', 'Bred Animals')
           // newTrans.set('tokenID', parseInt(egg.tokenID));
           newTrans.set('parentA', aniM1.attributes.Name)
           newTrans.set('parentB', aniM2.attributes.Name)
           newTrans.save()
+
+          // breed.count
+
           dispatch(addAnimal({ ...array[0], selected: false }))
           dispatch(addAnimal({ ...array[1], selected: false }))
           onDismiss()
@@ -249,21 +283,28 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account }:
     }
   }
 
+
+
   const breedClick = (animal) => {
     const selected = Object.values(allAnimals).filter((item) => item.selected)
     const toSet: Animal = { ...animal }
-    if (animal.selected && selected.length === 1 && animalGroup[animal.kind] > 1) {
+    console.log(animalGroup)
+
+    if (animal.selected && selected.length === 1 && animalGroup[animal.kind] && animalGroup[animal.kind].length > 1) {
       const multipleAvailable = Object.values(allAnimals).filter((item) => item.kind === animal.kind && item.timeRemaining === 0)
       const temp = [{ ...multipleAvailable[0] }, { ...multipleAvailable[1] }]
       array = temp
       onConfirm()
     }
+        
     toSet.selected = animal.selected ? false : true
-    if (!animal.selected && selected.length === 1) {
+
+    if ((!animal.selected && selected.length === 1) || (animalGroup[animal.name] && animal.selected && selected.length === 1)) {
       const temp = [{ ...selected[0] }, { ...animal }]
       array = temp
       onConfirm()
-    }
+    } 
+
     dispatch(addAnimal(toSet))
   }
 
@@ -280,7 +321,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account }:
     <Card rarityColor={animal.rarityColor} onClick={onCardClick} key={animal.id} selected={animal.selected ? true : false} timedOut={animal.timeRemaining > 0 ? true : false}>
       <CardBody
         style={{
-          backgroundImage: `url('${animal.imageUrl}')`,
+          // backgroundImage: `url('${animal.imageUrl}')`,
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
@@ -297,7 +338,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account }:
               right: 11,
               top: 9,
             }}>
-            {animal.timeRemaining === 0 ? (animalGroup[animal.name] ? `x${animalGroup[animal.name]}` : '') : ''}
+            {animal.timeRemaining <= 0 ? ((animalGroup[animal.name] && animalGroup[animal.name].length > 0) ? `x${animalGroup[animal.name].length + 1}` : '') : ''}
           </TextWrapper>
           <TextWrapper
             style={{
