@@ -155,7 +155,7 @@ const MyZooAccount: React.FC = () => {
   }, [elapsedTimeOnPage])
 
 
-  async function getToken(tokenID) {  
+  async function getToken(tokenID) {
     return await zooKeeper.methods.tokens(tokenID).call()
   }
 
@@ -181,7 +181,7 @@ const MyZooAccount: React.FC = () => {
       // console.log(animal.tokenID)
       // console.log(t.breed['count'])
       // console.log(t.breed['timestamp'])
-     
+
 
       const lastBred = animal.lastBred ? new Date(Number(animal.lastBred)).getTime() : new Date().getTime()
       const now = new Date().getTime()
@@ -194,7 +194,7 @@ const MyZooAccount: React.FC = () => {
 
 
 
-        
+
       console.log(lastBred)
       console.log(timeRemaining)
 
@@ -221,7 +221,7 @@ const MyZooAccount: React.FC = () => {
       animalData.filter((item) => item.bloodline === hybrid),
       'bloodline',
     )
-    
+
 
     const executeStackedBreeding = (a : Animal) => {
       console.log("EXECUTING STACKED BREEDING")
@@ -256,8 +256,8 @@ const MyZooAccount: React.FC = () => {
             ) : (
               <Swiper slidesPerView={document.body.getBoundingClientRect().width / 220} spaceBetween={4} pagination={{ clickable: true }}>
                 {animals.map((animal) => {
-                 
-                  return ( 
+
+                  return (
                     <SwiperSlide style={{ width: '220px', display: 'flex' }} key={animal.tokenID}>
                       <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding }} />
                     </SwiperSlide>
