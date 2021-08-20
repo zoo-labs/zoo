@@ -1,36 +1,25 @@
 {
-  "rootDir": "src",
-  "outDir": "dist",
   "compilerOptions": {
-    "types": ["node"],
-    "baseUrl": "src",
-    "target": "es2017",
+    "target": "esnext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "strict": true,
-    "alwaysStrict": true,
-    "strictNullChecks": false,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
+    "module": "es2020",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": false,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "lib": ["es2020"],
-    "module": "commonjs",
-    "target": "es2020",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["./node_modules/@types", "./src"]
+    "jsx": "preserve",
+    "preserveConstEnums": true,
+    "sourceMap": true
   },
-  "include": ["src", "scripts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

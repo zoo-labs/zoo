@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   ARCHER_ROUTER_ADDRESS,
   BAR_ADDRESS,
@@ -176,40 +177,73 @@ export function useBentoBoxContract(withSignerIfPossible?: boolean): Contract | 
   const { chainID } = useWeb3()
   return useContract(chainID && BENTOBOX_ADDRESS[chainID], BENTOBOX_ABI, withSignerIfPossible)
 }
+=======
+import { useEffect, useState, useRef } from 'react'
+// import { useWeb3React } from "@web3-react/core";
 
-export function useChainlinkOracle(): Contract | null {
-  return useContract(CHAINLINK_ORACLE_ADDRESS, CHAINLINK_ORACLE_ABI, false)
+interface ContractType {
+  contract: any
+  senderContract: any
 }
 
-export function useUniV2FactoryContract(): Contract | null {
-  return useContract(UNI_FACTORY_ADDRESS, UNI_FACTORY_ABI, false)
+interface ContractMap {
+  [name: string]: ContractType
 }
 
-export function useComplexRewarderContract(address, withSignerIfPossible?: boolean): Contract | null {
-  return useContract(address, COMPLEX_REWARDER_ABI, withSignerIfPossible)
-}
+// import { ethers } from 'ethers';
 
-export function useCloneRewarderContract(address, withSignerIfPossibe?: boolean): Contract | null {
-  return useContract(address, CLONE_REWARDER_ABI, withSignerIfPossibe)
-}
+// const CONTRACTS_JSON = require('../contracts.json');
+// const CONTRACTS = CONTRACTS_JSON['1337']['hardhat'].contracts;
 
-export function useMeowshiContract(withSignerIfPossible?: boolean): Contract | null {
-  return useContract('0x650F44eD6F1FE0E1417cb4b3115d52494B4D9b6D', MEOWSHI_ABI, withSignerIfPossible)
-}
+// /**
+//  * Can only be used in an useEffect() call
+//  */
+// const useContract = () => {
+// 	const [contractMap, setContractMap]= useState({});
 
+// 	const getProvider = () => new ethers.providers.Web3Provider((window as any).ethereum);
+
+// 	const getContract = (contractName: string) => {
+// 	// Should be using a set
+// 	if (contractMap && !!contractMap[contractName]) {
+// 		return contractMap[contractName];
+// 	}
+>>>>>>> 372b5a7 (Typescript moralis)
+
+// 	const ContractDef = require(`../../../contracts/artifacts/src/${contractName}.sol/${contractName}.json`);
+// 	// TODO: tie this to web3
+// 	const provider = getProvider();
+// 	const inst = new ethers.Contract(CONTRACTS[contractName].address,ContractDef.abi, provider);
+
+// 	const signer = provider.getSigner();
+// 	const sender = new ethers.Contract(CONTRACTS[contractName].address, ContractDef.abi, signer);
+
+// 	const getBalance = async (account: string) => {
+// 		const provider = getProvider();
+// 	}
+
+// 	const ct: ContractType = {
+// 		contract: inst,
+// 		senderContract: sender
+// 	};
+
+// 	const dupMap = Object.assign({}, contractMap, {
+// 		[contractName]: ct
+// 	});
+
+<<<<<<< HEAD
 export function useLimitOrderContract(withSignerIfPossibe?: boolean): Contract | null {
   const { chainID } = useWeb3()
   return useContract(STOP_LIMIT_ORDER_ADDRESS[chainID], LIMIT_ORDER_ABI, withSignerIfPossibe)
 }
+=======
+// 	setContractMap(dupMap);
+// 	  return ct;
+// 	}
+>>>>>>> 372b5a7 (Typescript moralis)
 
-export function useLimitOrderHelperContract(withSignerIfPossible?: boolean): Contract | null {
-  return useContract('0xe2f736B7d1f6071124CBb5FC23E93d141CD24E12', LIMIT_ORDER_HELPER_ABI, withSignerIfPossible)
-}
+// 	return {getContract}
 
-export function useInariContract(withSignerIfPossible?: boolean): Contract | null {
-  return useContract('0x195E8262AA81Ba560478EC6Ca4dA73745547073f', INARI_ABI, withSignerIfPossible)
-}
+// }
 
-export function useZenkoContract(withSignerIfPossible?: boolean): Contract | null {
-  return useContract('0xa8f676c49f91655ab3b7c3ea2b73bb3088b2bc1f', ZENKO_ABI, withSignerIfPossible)
-}
+// export default useContract
