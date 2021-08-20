@@ -320,7 +320,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
     <Card rarityColor={animal.rarityColor} onClick={onCardClick} key={animal.id} selected={animal.selected ? true : false} timedOut={animal.timeRemaining > 0 ? true : false}>
       <CardBody
         style={{
-          // backgroundImage: `url('${animal.imageUrl}')`,
+          backgroundImage: `url('${animal.imageUrl}')`,
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
