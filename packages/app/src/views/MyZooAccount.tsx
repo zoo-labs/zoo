@@ -240,7 +240,7 @@ const MyZooAccount: React.FC = () => {
           <Route exact path={`${path}`}>
             {animals.length === 0 ? (
               <StyledText textAlign='center' fontSize='16px'>
-                No {hybrid === 'pure' ? `breedable` : `hybrid`} animals
+                No {hybrid === 'pure' ? '': `hybrid `}animals
               </StyledText>
             ) : (
               <Swiper slidesPerView={document.body.getBoundingClientRect().width / 220} spaceBetween={4} pagination={{ clickable: true }}>
