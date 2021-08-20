@@ -22,6 +22,7 @@ import { getZooKeeper } from 'util/contracts'
 import useWeb3 from 'hooks/useWeb3'
 
 import { mapEgg, mapAnimal, queryEggs, queryAnimals } from 'util/moralis'
+import Header from 'components/Header'
 
 const Account = lazy(() => import('./views/Account'))
 const Login = lazy(() => import('./views/Login'))
@@ -173,7 +174,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     dispatch(clearZoo())
-    console.warn = () => null  // TODO: fix MaxListenersExceededWarning
+    console.warn = () => null // TODO: fix MaxListenersExceededWarning
     getEggs()
     getAnimals()
   }, [chainID])
@@ -191,9 +192,12 @@ const App: React.FC = () => {
           <SuspenseWithChunkError fallback={<></>}>
             <Route exact path='/account'>
               {signedIn ? (
-                <Menu>
+                <>
+                  <div className='flex fixed top-0 justify-between flex-nowrap w-full'>
+                    <Header />
+                  </div>
                   <Account />
-                </Menu>
+                </>
               ) : (
                 <Redirect to='/login' />
               )}
@@ -201,9 +205,12 @@ const App: React.FC = () => {
             <Route path='/feed'>{signedIn ? <Feed /> : <Redirect to='/login' />}</Route>
             <Route exact path='/bank'>
               {signedIn ? (
-                <Menu>
+                <>
+                  <div className='flex fixed top-0 justify-between flex-nowrap w-full'>
+                    <Header />
+                  </div>
                   <Bank />
-                </Menu>
+                </>
               ) : (
                 <Redirect to='/login' />
               )}

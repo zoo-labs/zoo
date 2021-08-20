@@ -267,9 +267,9 @@ const Account: React.FC = () => {
   }
 
   return (
-    <>
+    <div style={{ height: '100vh' }} className='flex items-center'>
       <Page>
-        {pageHeading}
+        {/* {pageHeading} */}
         <Body>
           <RowWrapper style={{ margin: '0 auto' }}>
             <LabelWrapper style={{ marginBottom: '32px' }}>
@@ -308,7 +308,7 @@ const Account: React.FC = () => {
         </Body>
         <MyZooAccount />
       </Page>
-    </>
+    </div>
   )
 }
 

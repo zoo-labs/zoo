@@ -21,11 +21,11 @@ const ThemeSwitcher: React.FC<Props> = ({ isDark, toggleTheme }) => (
     }}>
     {/* alignItems center is a Safari fix */}
     <Flex alignItems='center'>
-      <SunIcon fill={isDark ? 'white' : 'text'} width='24px' />
-      <Text color='textDisabled' mx='4px'>
+      <SunIcon fill={isDark ? 'white' : 'text'} width='18px' />
+      <Text color='textDisabled' mx='3px'>
         /
       </Text>
-      <MoonIcon fill={isDark ? 'white' : 'textDisabled'} width='24px' />
+      <MoonIcon fill={isDark ? 'white' : 'textDisabled'} width='18px' />
     </Flex>
   </Button>
 )
