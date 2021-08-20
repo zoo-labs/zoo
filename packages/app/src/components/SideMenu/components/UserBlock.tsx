@@ -14,26 +14,30 @@ interface Props {
 const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
   const history = useHistory()
   const { onPresentConnectModal, onPresentAccountModal } = useWalletModal(login, logout, account, history)
-  const accountEllipsis = account ? `${account.substring(0, 4)}...${account.substring(account.length - 4)}` : null
+  const accountEllipsis = account ? `${account.substring(0, 6)}...${account.substring(account.length - 6)}` : null
   return (
     <div>
       {account ? (
         <BorderButton
           scale='sm'
           style={{ fontSize: 14 }}
+        <button
+          className='font-semibold flex flex-nowrap p-2 rounded-lg'
+          style={{ color: 'rgb(80, 144, 234)', backgroundColor: 'rgba(21, 61, 111, 0.44)', border: '1px solid rgba(21, 61, 111, 0.44)' }}
           onClick={() => {
             onPresentAccountModal()
           }}>
           {accountEllipsis}
-        </BorderButton>
+        </button>
       ) : (
-        <BorderButton
-          scale='sm'
+        <button
+          className='font-semibold flex flex-nowrap p-2 rounded-lg'
+          style={{ color: 'rgb(80, 144, 234)', backgroundColor: 'rgba(21, 61, 111, 0.44)', border: '1px solid rgba(21, 61, 111, 0.44)' }}
           onClick={() => {
             onPresentConnectModal()
           }}>
           Connect
-        </BorderButton>
+        </button>
       )}
     </div>
   )
