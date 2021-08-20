@@ -26,7 +26,7 @@ const InfoBlock = styled.div`
   bottom: 0;
   width: 100%;
   z-index: 999999;
-  background: ${({ theme }) => theme.colors.background};
+  background: rgba(0, 0, 0, 0.6);
 `
 
 const TextWrapper = styled.div`
