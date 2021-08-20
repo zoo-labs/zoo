@@ -229,7 +229,7 @@ const MyZooAccount: React.FC = () => {
       <>
         {hybrid === 'pure' ? (
           <RowTitle>
-            {animals.length} {animals.length != 1 ? 'Breedable Animals' : 'Breedable Animal'}
+            {animals.length} {animals.length != 1 ? 'Animals' : 'Animal'}
           </RowTitle>
         ) : (
           <RowTitle>
