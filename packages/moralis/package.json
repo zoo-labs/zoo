@@ -5,6 +5,7 @@
   "scripts": {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "drop": "node ./scripts/moralisDropTables.js",
     "format": "prettier --write src/* scripts/*",
 =======
@@ -13,6 +14,9 @@
 =======
     "build": "tsc -p src/functions.ts --outDir dist",
 >>>>>>> f2ec3e4 (Wip)
+=======
+    "build": "tsc -p . --outDir dist",
+>>>>>>> 372b5a7 (Typescript moralis)
     "functions": "node ./scripts/moralisFunctions.js",
     "logs": "node ./scripts/moralisLogs.js",
     "plugins": "node ./scripts/moralisPlugins.js",
@@ -20,7 +24,14 @@
     "watch": "node ./scripts/moralisWatch.js"
   },
   "dependencies": {
+<<<<<<< HEAD
     "moralis-admin-cli": "^2.1.11",
     "prettier": "^2.3.2"
+=======
+    "@babel/types": "^7.15.0",
+    "moralis-admin-cli": "^2.1.3",
+    "prettier": "^2.3.2",
+    "web3": "^1.5.2"
+>>>>>>> 372b5a7 (Typescript moralis)
   }
 }

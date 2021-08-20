@@ -1,39 +1,20 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { connectorLocalStorageKey, ConnectorNames } from 'components'
+import useAuth from './useAuth'
 
-import { injected } from '../connectors'
-import { isMobile } from 'react-device-detect'
-import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
-
-function useEagerConnect() {
-  const { activate, active } = useWeb3ReactCore() // specifically using useWeb3ReactCore because of what this hook does
-  const [tried, setTried] = useState(false)
+const useEagerConnect = () => {
+  const { login } = useAuth()
 
   useEffect(() => {
-    injected.isAuthorized().then((isAuthorized) => {
-      if (isAuthorized) {
-        activate(injected, undefined, true).catch(() => {
-          setTried(true)
-        })
-      } else {
-        if (isMobile && window.ethereum) {
-          activate(injected, undefined, true).catch(() => {
-            setTried(true)
-          })
-        } else {
-          setTried(true)
-        }
-      }
-    })
-  }, [activate]) // intentionally only running on mount (make sure it's only mounted once :))
+    const connectorId = window.localStorage.getItem(connectorLocalStorageKey) as ConnectorNames
 
-  // if the connection worked, wait until we get confirmation of that to flip the flag
-  useEffect(() => {
-    if (active) {
-      setTried(true)
+    // Disable eager connect for BSC Wallet. Currently the BSC Wallet extension does not inject BinanceChain
+    // into the Window object in time causing it to throw an error
+    // TODO: Figure out an elegant way to listen for when the BinanceChain object is ready
+    if (connectorId && connectorId !== ConnectorNames.BSC) {
+      login(connectorId)
     }
-  }, [active])
-
-  return tried
+  }, [login])
 }
 
 export default useEagerConnect

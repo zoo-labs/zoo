@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 // Should replace variables here to target different networks
-var contracts_json_1 = require("contracts.json");
+var contracts_json_1 = require("./contracts.json");
 var ZK = contracts_json_1["default"]['97']['testnet']['ZooKeeper'];
 var CHAIN_ID = '97';
 // Get this enviroment's ZK contract

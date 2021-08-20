@@ -1,5 +1,8 @@
-import { AbstractConnector } from '@web3-react/abstract-connector'
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-param-reassign */
+/* eslint-disable max-classes-per-file */
 import { ConnectorUpdate } from '@web3-react/types'
+import { AbstractConnector } from '@web3-react/abstract-connector'
 import invariant from 'tiny-invariant'
 
 interface NetworkConnectorArguments {
@@ -12,8 +15,8 @@ type AsyncSendable = {
   isMetaMask?: boolean
   host?: string
   path?: string
-  sendAsync?: (request: unknown, callback: (error: unknown, response: unknown) => void) => void
-  send?: (request: unknown, callback: (error: unknown, response: unknown) => void) => void
+  sendAsync?: (request: any, callback: (error: any, response: any) => void) => void
+  send?: (request: any, callback: (error: any, response: any) => void) => void
 }
 
 class RequestError extends Error {
@@ -30,14 +33,21 @@ interface BatchItem {
 
 class MiniRpcProvider implements AsyncSendable {
   public readonly isMetaMask: false = false
+
   public readonly chainId: number
+
   public readonly url: string
+
   public readonly host: string
+
   public readonly path: string
+
   public readonly batchWaitTimeMs: number
 
   private nextId = 1
+
   private batchTimeoutId: ReturnType<typeof setTimeout> | null = null
+
   private batch: BatchItem[] = []
 
   constructor(chainId: number, url: string, batchWaitTimeMs?: number) {
@@ -51,18 +61,15 @@ class MiniRpcProvider implements AsyncSendable {
   }
 
   public readonly clearBatch = async () => {
-    console.debug('Clearing batch', this.batch)
-    const batch = this.batch
+    console.info('Clearing batch', this.batch)
+    const { batch } = this
     this.batch = []
     this.batchTimeoutId = null
     let response: Response
     try {
       response = await fetch(this.url, {
         method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          accept: 'application/json',
-        },
+        headers: { 'content-type': 'application/json', accept: 'application/json' },
         body: JSON.stringify(batch.map((item) => item.request)),
       })
     } catch (error) {
@@ -86,6 +93,7 @@ class MiniRpcProvider implements AsyncSendable {
       memo[current.request.id] = current
       return memo
     }, {})
+    // eslint-disable-next-line no-restricted-syntax
     for (const result of json) {
       const {
         resolve,
@@ -104,24 +112,13 @@ class MiniRpcProvider implements AsyncSendable {
     }
   }
 
-  public readonly sendAsync = (
-    request: {
-      jsonrpc: '2.0'
-      id: number | string | null
-      method: string
-      params?: unknown[] | unknown
-    },
-    callback: (error: unknown, response: unknown) => void
-  ): void => {
+  public readonly sendAsync = (request: { jsonrpc: '2.0'; id: number | string | null; method: string; params?: any }, callback: (error: any, response: any) => void): void => {
     this.request(request.method, request.params)
       .then((result) => callback(null, { jsonrpc: '2.0', id: request.id, result }))
       .catch((error) => callback(error, null))
   }
 
-  public readonly request = async (
-    method: string | { method: string; params: unknown[] },
-    params?: unknown[] | unknown
-  ): Promise<unknown> => {
+  public readonly request = async (method: string | { method: string; params: unknown[] }, params?: any): Promise<unknown> => {
     if (typeof method !== 'string') {
       return this.request(method.method, method.params)
     }
@@ -147,18 +144,15 @@ class MiniRpcProvider implements AsyncSendable {
 
 export class NetworkConnector extends AbstractConnector {
   private readonly providers: { [chainId: number]: MiniRpcProvider }
+
   private currentChainId: number
 
   constructor({ urls, defaultChainId }: NetworkConnectorArguments) {
     invariant(defaultChainId || Object.keys(urls).length === 1, 'defaultChainId is a required argument with >1 url')
-    super({
-      supportedChainIds: Object.keys(urls).map((k): number => Number(k)),
-    })
+    super({ supportedChainIds: Object.keys(urls).map((k): number => Number(k)) })
 
     this.currentChainId = defaultChainId || Number(Object.keys(urls)[0])
-    this.providers = Object.keys(urls).reduce<{
-      [chainId: number]: MiniRpcProvider
-    }>((accumulator, chainId) => {
+    this.providers = Object.keys(urls).reduce<{ [chainId: number]: MiniRpcProvider }>((accumulator, chainId) => {
       accumulator[Number(chainId)] = new MiniRpcProvider(Number(chainId), urls[Number(chainId)])
       return accumulator
     }, {})
@@ -169,11 +163,7 @@ export class NetworkConnector extends AbstractConnector {
   }
 
   public async activate(): Promise<ConnectorUpdate> {
-    return {
-      provider: this.providers[this.currentChainId],
-      chainId: this.currentChainId,
-      account: null,
-    }
+    return { provider: this.providers[this.currentChainId], chainId: this.currentChainId, account: null }
   }
 
   public async getProvider(): Promise<MiniRpcProvider> {
@@ -189,6 +179,8 @@ export class NetworkConnector extends AbstractConnector {
   }
 
   public deactivate() {
-    return
+    return null
   }
 }
+
+export default NetworkConnector
