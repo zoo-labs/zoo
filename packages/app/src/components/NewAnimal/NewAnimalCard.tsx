@@ -66,7 +66,7 @@ const Span = styled.span`
   font-weight: 900;
   text-align: center;
   position: relative;
-  margin-bottom: 15px; ;
+  margin-bottom: 15px;
 `
 
 const CardOverlay = styled.div`

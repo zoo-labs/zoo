@@ -4,7 +4,7 @@ function random(max) {
   return Math.floor(Math.random() * max)
 }
 
-export const getRandomNode = (chainID? : number) => {
+export const getRandomNode = (chainID?: number) => {
   if (nodes[chainID] == null) chainID = 97
   console.log('getRandomNode', chainID)
   const chainNodes = nodes[chainID]
