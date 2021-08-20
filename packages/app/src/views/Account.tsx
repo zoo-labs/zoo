@@ -278,7 +278,7 @@ const Account: React.FC = () => {
                 Wallet Balance
                 <ValueWrapper style={{ fontWeight: 500 }}>{numberWithCommas(balance)} ZOO</ValueWrapper>
               </Label>
-              <BorderButton disabled={wait} scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
+              <BorderButton scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
                 {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
               </BorderButton>
             </LabelWrapper>
