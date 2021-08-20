@@ -137,11 +137,10 @@ const cardAnimation = (interactive, hatching, hatched) => {
   return null
 }
 
-const hashEgg = egg => {
+const hashEgg = (egg) => {
   const s = String(egg.tokenID)
-  for (var i=0, h=9; i<s.length;)
-    h = Math.imul(h ^ s.charCodeAt(i++), 9**9)
-  return h^h>>>9
+  for (var i = 0, h = 9; i < s.length; ) h = Math.imul(h ^ s.charCodeAt(i++), 9 ** 9)
+  return h ^ (h >>> 9)
 }
 
 const Card = styled(Existing)<{ timedOut?: boolean; interactive?: boolean; hatching?: boolean; hatched?: boolean }>`
@@ -178,11 +177,12 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
     return ''
   }
 
+  // const hue = hashEgg(egg) % 9
+  // const basicEggURL = window.location.origin + '/static/images/hue.jpg'
   const basicEggURL = window.location.origin + '/static/images/basic.jpg'
   const hybridEggURL = window.location.origin + '/static/images/hybrid.jpg'
   const transparentEggURL = window.location.origin + '/static/images/transparent.jpg'
   const backgroundImage = !egg.interactive && !hatching ? transparentEggURL : egg.basic ? basicEggURL : hybridEggURL
-  const hue = hashEgg(egg) % 9
 
   return (
     <>
@@ -202,7 +202,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             borderRadius: 8,
             height: 160,
             transition: 'background-image 1000ms linear',
-            filter: (!egg.hatched && !egg.interactive) ? null : `hue-rotate(0.${hue}turn)`,
+            // filter: (!egg.hatched && !egg.interactive) ? null : `hue-rotate(0.${hue}turn)`,
           }}>
           <TextWrapper
             style={{
