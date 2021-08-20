@@ -9,13 +9,14 @@ interface AnimalData extends Animal {
 export interface AnimalCardProps {
   animal: AnimalData
   animalGroup: {
-    [key: string]: number
+    [key: string]: [Animal]
   }
   hybrid: string
   allAnimals: {
-    [key: string]: Animal
+    [key: string]: any
   }
-  account: string
+  account: string,
+  executeStackedBreeding: (Animal) => void
 }
 
 export interface SubAnimalCommonProps {
