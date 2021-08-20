@@ -5,7 +5,7 @@ import useToast from 'hooks/useToast'
 
 const rpcURLs = {
   mainnet: [getRandomNode(56)],
-  testnet: [getRandomNode(97)]
+  testnet: [getRandomNode(97)],
 }
 
 /**

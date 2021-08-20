@@ -29,6 +29,7 @@ const ModalBody = styled.div`
   display: flex;
   flex-direction: column;
 `
+
 const ModalCloseButton: React.FC<any> = ({ onDismiss }) => {
   return (
     <IconButton style={{ width: 'fit-content', height: 'fit-content', marginLeft: 'auto' }} variant='text' onClick={onDismiss} aria-label='Close the dialog'>

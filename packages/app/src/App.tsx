@@ -173,7 +173,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     dispatch(clearZoo())
-    console.warn = () => null  // TODO: fix MaxListenersExceededWarning
+    console.warn = () => null // TODO: fix MaxListenersExceededWarning
     getEggs()
     getAnimals()
   }, [chainID])
@@ -198,7 +198,9 @@ const App: React.FC = () => {
                 <Redirect to='/login' />
               )}
             </Route>
+
             <Route path='/feed'>{signedIn ? <Feed /> : <Redirect to='/login' />}</Route>
+
             <Route exact path='/bank'>
               {signedIn ? (
                 <Menu>
@@ -208,9 +210,11 @@ const App: React.FC = () => {
                 <Redirect to='/login' />
               )}
             </Route>
-            <Route exact path='/'>
+
+            <Route path='/'>
               {signedIn ? <Redirect to='/account' /> : <Redirect to='/login' />}
             </Route>
+
           </SuspenseWithChunkError>
         </Switch>
         <ToastListener />

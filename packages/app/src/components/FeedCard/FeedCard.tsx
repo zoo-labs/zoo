@@ -139,7 +139,9 @@ export const FeedCard: React.FC<CardProps> = ({ nft, showBid }) => {
 
   const rarityColor = RarityColor[(nft.rarity || '').toLowerCase()] || 'white'
 
-  const bidButton = showBid ? <></> : (
+  const bidButton = showBid ? (
+    <></>
+  ) : (
     <IconButton onClick={onBid} style={{ padding: '10px 0px' }}>
       <FaDollarSign />
     </IconButton>
