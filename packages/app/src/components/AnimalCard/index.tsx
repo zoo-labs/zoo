@@ -233,6 +233,8 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
     const aniM2 = res2[0]
     const mArray = [aniM1, aniM2]
 
+    onDismiss()
+
     try {
       await zooKeeper.methods
         .breedAnimals(1, an1, an2)
