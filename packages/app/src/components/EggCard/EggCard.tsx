@@ -182,7 +182,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
   const hybridEggURL = window.location.origin + '/static/images/hybrid.jpg'
   const transparentEggURL = window.location.origin + '/static/images/transparent.jpg'
   const backgroundImage = !egg.interactive && !hatching ? transparentEggURL : egg.basic ? basicEggURL : hybridEggURL
-  const hue = hashEgg(egg) % 9
+  // const hue = hashEgg(egg) % 9
 
   return (
     <>
@@ -202,7 +202,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             borderRadius: 8,
             height: 160,
             transition: 'background-image 1000ms linear',
-            filter: (!egg.hatched && !egg.interactive) ? null : `hue-rotate(0.${hue}turn)`,
+            // filter: (!egg.hatched && !egg.interactive) ? null : `hue-rotate(0.${hue}turn)`,
           }}>
           <TextWrapper
             style={{
