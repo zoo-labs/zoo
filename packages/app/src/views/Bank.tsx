@@ -29,12 +29,13 @@ const HeadingContainer = styles.div`
 
 const StyledButton = styles.button`
     cursor: pointer;
-    text-decoration: underline;
+    text-decoration: none;
     text-transform: uppercase;
     color: ${({ theme }) => theme.colors.text};
     background: transparent;
     border: none;
-    margin-left: 8px;
+    margin-top: 1px;
+    margin-left: 16px;
 `
 
 const LabelWrapper = styles.div`

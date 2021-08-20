@@ -37,7 +37,9 @@ const MyZooContainer = styles.div`
 
 const StyledButton = styles.button`
     cursor: pointer;
-    text-decoration: underline;
+    margin-top: 1px;
+    margin-left: 16px;
+    text-decoration: none;
     text-transform: uppercase;
 `
 
