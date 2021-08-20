@@ -32,7 +32,7 @@ const VidContainer = styled.div`
 
 function fade(element) {
   var op = 1
-  var timer = setInterval(function () {
+  var timer = setInterval(function() {
     if (op <= 0) clearInterval(timer)
     element.style.opacity = op
     element.style.filter = 'alpha(opacity=' + op * 100 + ')'
@@ -45,7 +45,7 @@ const VideoPlayer: React.FC<VideoPlayerTheme> = ({ videoPath }: VideoPlayerTheme
 
   useEffect(() => {
     const el = videoEl.current as any
-    setTimeout(function () {
+    setTimeout(function() {
       fade(el)
     }, 5500)
   }, [])
