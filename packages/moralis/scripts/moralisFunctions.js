@@ -5,8 +5,8 @@ const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'localhost'
 
 const chainID = {
   localhost: '0x539',
-  testnet: '0x61',
-  mainnet: '0x38',
+  testnet:   '0x61',
+  mainnet:   '0x38',
 }[NETWORK]
 
 const subdomain = {
