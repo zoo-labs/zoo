@@ -242,6 +242,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
           const TransOb = Moralis.Object.extend('Transactions')
           const newTrans = new TransOb()
 
+
           // //
           // // Get next timestamp token can be bred
           // function breedNext(uint256 tokenID) public view returns (uint256) {
@@ -270,6 +271,9 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
           newTrans.set('parentA', aniM1.attributes.Name)
           newTrans.set('parentB', aniM2.attributes.Name)
           newTrans.save()
+
+          // breed.count
+
           dispatch(addAnimal({ ...array[0], selected: false }))
           dispatch(addAnimal({ ...array[1], selected: false }))
           onDismiss()
