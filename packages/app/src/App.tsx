@@ -211,7 +211,11 @@ const App: React.FC = () => {
               )}
             </Route>
 
-            <Route path='/'>
+            <Route exact path='/'>
+              {signedIn ? <Redirect to='/account' /> : <Redirect to='/login' />}
+            </Route>
+
+            <Route exact path=''>
               {signedIn ? <Redirect to='/account' /> : <Redirect to='/login' />}
             </Route>
 
