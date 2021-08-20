@@ -13,6 +13,13 @@ import { RarityColor } from 'enums/rarity-color'
 import { ChevronLeftIcon } from 'components/Svg'
 import ZooHomeButton from 'components/SideMenu/components/ZooHomeButton'
 
+interface Props {
+  item: Animal
+  url?: string
+  animalGroup?: { [key: string]: number }
+  hideBid?: boolean
+}
+
 const FirstThird = styled.div`
   height: 33vh;
   width: 100%;
@@ -22,7 +29,7 @@ const SecondThird = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-nfts: flex-end;
+  align-items: flex-end;
 `
 const FinalThird = styled.div`
   height: 33vh;
@@ -123,23 +130,27 @@ const ActionButtonContainer = styled.div`
   flex-direction: column;
 `
 
-interface CardProps {
-  nft: Animal
-  showBid?: boolean
-}
+const FeedCard: React.FC<Props> = ({ item, animalGroup, hideBid }) => {
+  const notShowBid = hideBid ? hideBid : false
 
-export const FeedCard: React.FC<CardProps> = ({ nft, showBid }) => {
-  const dob = new Date(nft.dob)
-  const birthday = dob.toLocaleDateString('en-US')
+  console.log('ITEM', item)
+  useEffect(() => {
+    return null
+  }, [hideBid])
+
+  const date = new Date(item.dob)
+  const StringDate = date.toLocaleDateString('en-US')
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
 
-  const [onYield] = useModal(<YieldModal item={nft} onDismiss={() => null} />)
-  const [onBid] = useModal(<BidModal item={nft} onDismiss={() => null} />)
+  const [onYield] = useModal(<YieldModal item={item} animalGroup={animalGroup} onDismiss={() => null} />)
 
-  const rarityColor = RarityColor[(nft.rarity || '').toLowerCase()] || 'white'
+  const [onBid] = useModal(<BidModal item={item} onDismiss={() => null} />)
 
-  const bidButton = showBid ? (
+  const rarityColor = RarityColor[(item.rarity || '').toLowerCase()] || 'white'
+  const multiplier = animalGroup[item.kind] > 1 ? `x${animalGroup[item.kind]}` : ''
+
+  const buyButton = notShowBid ? (
     <></>
   ) : (
     <IconButton onClick={onBid} style={{ padding: '10px 0px' }}>
@@ -147,11 +158,11 @@ export const FeedCard: React.FC<CardProps> = ({ nft, showBid }) => {
     </IconButton>
   )
 
-  const currentBid = <Subheading bold as='p'>{`Current Bid: ${nft.currentBid}`}</Subheading>
+  const currentBid = <Subheading bold as='p'>{`Current Bid: ${item.currentBid}`}</Subheading>
 
   return (
     <>
-      <Card url={nft.imageUrl} isMobile={isMobile}>
+      <Card url={item.imageUrl} isMobile={isMobile}>
         <CardOverlay>
           <FirstThird />
           <SecondThird></SecondThird>
@@ -163,11 +174,11 @@ export const FeedCard: React.FC<CardProps> = ({ nft, showBid }) => {
                 style={{
                   textShadow: '2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000',
                 }}>
-                <MainHeading bold>{`${nft.name}`}</MainHeading>
+                <MainHeading bold>{`${item.name} ${multiplier}`}</MainHeading>
 
-                <Subheading>{nft.rarity}</Subheading>
-                <Subheading>{`Born: ${birthday}`}</Subheading>
-                {nft.currentBid && currentBid}
+                <Subheading>{item.rarity}</Subheading>
+                <Subheading>{`Born: ${StringDate}`}</Subheading>
+                {item.currentBid && currentBid}
               </Flex>
               <Flex flexDirection='column'>
                 <ActionButtonContainer>
@@ -175,7 +186,7 @@ export const FeedCard: React.FC<CardProps> = ({ nft, showBid }) => {
                     <IconButton onClick={onYield} style={{ padding: '10px 0px' }}>
                       <FaMoneyBillWave />
                     </IconButton>
-                    {bidButton}
+                    {buyButton}
                     <ZooHomeButton />
                   </Flex>
                 </ActionButtonContainer>

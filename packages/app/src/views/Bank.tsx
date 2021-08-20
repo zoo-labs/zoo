@@ -18,6 +18,7 @@ import { useMatchBreakpoints } from 'components'
 import { FaHome } from 'react-icons/fa'
 import Moralis from 'moralis'
 import { resourceLimits } from 'worker_threads'
+import { Link } from 'react-router-dom'
 
 const HeadingContainer = styles.div`
     width: 100%;
@@ -28,12 +29,13 @@ const HeadingContainer = styles.div`
 
 const StyledButton = styles.button`
     cursor: pointer;
-    text-decoration: underline;
+    text-decoration: none;
     text-transform: uppercase;
     color: ${({ theme }) => theme.colors.text};
     background: transparent;
     border: none;
-    margin-left: 8px;
+    margin-top: 1px;
+    margin-left: 16px;
 `
 
 const LabelWrapper = styles.div`
@@ -255,7 +257,7 @@ const Bank: React.FC = () => {
       for (const tx of results) {
         const action = tx.get('action')
         const txHash = tx.get('transactionHash')
-        const URL = `https://testnet.bscscan.com/tx/${txHash}`
+        const url = `https://testnet.bscscan.com/tx/${txHash}`
 
         // Filter out Burned Tokens
         if (action == 'Burned Token') continue
@@ -266,7 +268,7 @@ const Bank: React.FC = () => {
           from: tx.get('from'),
           action: action,
           hash: txHash,
-          URL: URL,
+          url: url,
           createdAt: tx.get('createdAt').toLocaleDateString(),
           blockNumber: tx.get('blockNumber'),
           timestamp: tx.get('timestamp'),
@@ -300,24 +302,25 @@ const Bank: React.FC = () => {
         {pageHeading}
         <Body>
           <LabelWrapper>
-            <Label small>Wallet Balance</Label>
-
+            <Label style={{ marginLeft: -8, fontSize: '20px' }}>Wallet Balance</Label>
             <BorderButton scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
               {chainID !== 97 ? 'Buy ZOO' : wait ? 'Processing' : 'Get ZOO'}
             </BorderButton>
           </LabelWrapper>
-          <Flex width='100%' alignItems='center' justifyContent='space-around'>
+          <Flex width='100%' alignItems='center' justifyContent='space-around' style={{ marginLeft: -16 }}>
             <ValueWrapper>{numberWithCommas(zooBalance)} ZOO </ValueWrapper>
             {/* Commented out since there is to ZOO to USD conversion yet */}
             {/* <ValueWrapper style={{ fontSize: "16px",  color: "rgb(221 224 26)" }}>0 USD</ValueWrapper> */}
           </Flex>
-          <Label small>Total Daily Yield</Label>
-          <ValueWrapper> {dailyYield} ZOO </ValueWrapper>
-          <Label small>Top Earners</Label>
+          <Label style={{ marginLeft: -8, fontSize: '20px' }}>Total Daily Yield</Label>
+          <Flex width='100%' alignItems='center' justifyContent='space-around' style={{ marginLeft: -16 }}>
+            <ValueWrapper> {dailyYield} ZOO </ValueWrapper>
+          </Flex>
+          <Label style={{ marginLeft: -8, fontSize: '20px' }}>Top Earners</Label>
           {topTenAnimals.length === 0 ? (
             <ValueWrapper style={{ justifyContent: 'center' }}> No animals </ValueWrapper>
           ) : (
-            <EarnerValueWrapper>
+            <EarnerValueWrapper style={{ marginLeft: -16}}>
               {topTenAnimals.map((animal) => {
                 return (
                   <EarnerValue key={animal.tokenID + '_earner_'}>
@@ -327,33 +330,33 @@ const Bank: React.FC = () => {
               })}
             </EarnerValueWrapper>
           )}
-          <Label small>Recent Tansactions</Label>
+          <Label style={{ marginLeft: -8, fontSize: '20px' }}>Recent Tansactions</Label>
           {waitTx ? (
             <TableText> Loading Transactions... </TableText>
           ) : transactions.length === 0 ? (
             <TableText> No Transaction Data </TableText>
           ) : (
-            <Container>
+            <Container style={{marginLeft: -8}}>
               <TableContainer>
                 <TableWrapper>
                   <StyledTable>
                     <TableBody>
                       <TableRow>
-                        <TableHeader>Tx Hash</TableHeader>
-                        <TableHeader>Action</TableHeader>
-                        <TableHeader>Block Number</TableHeader>
-                        <TableHeader>Token ID</TableHeader>
+                        <TableHeader style={{ fontWeight: 400, width: '200px' }}>Tx Hash</TableHeader>
+                        <TableHeader style={{ fontWeight: 400 }}>Action</TableHeader>
+                        <TableHeader style={{ fontWeight: 400 }}>Block</TableHeader>
+                        <TableHeader style={{ fontWeight: 400 }}>Token ID</TableHeader>
                       </TableRow>
                       {transactions.map((tx) => {
                         return (
                           <TableRow key={tx.id}>
-                            <TableData>
+                            <TableData style={{ width: '200px' }}>
                               <a href={tx.url}>{tx.hash}</a>
                             </TableData>
                             <TableData>{tx.action}</TableData>
                             <TableData>{tx.blockNumber}</TableData>
                             <TableData>
-                              <a href={`/feed/myzoo/${tx.tokenID}`}>{tx.tokenID}</a>
+                              <Link to={`/feed/myzoo/${tx.tokenID}`}>{tx.tokenID}</Link>
                             </TableData>
                           </TableRow>
                         )

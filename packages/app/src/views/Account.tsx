@@ -36,7 +36,9 @@ const MyZooContainer = styles.div`
 
 const StyledButton = styles.button`
     cursor: pointer;
-    text-decoration: underline;
+    margin-top: 1px;
+    margin-left: 16px;
+    text-decoration: none;
     text-transform: uppercase;
 `
 
@@ -271,12 +273,23 @@ const Account: React.FC = () => {
       <Page>
         {/* {pageHeading} */}
         <Body>
-          <RowWrapper style={{ margin: '0 auto' }}>
-            <LabelWrapper style={{ marginBottom: '32px' }}>
+          <RowWrapper style={{ marginLeft: -8, marginBottom: -8 }}>
+            <LabelWrapper style={{ marginTop: -8, marginBottom: 32 }}>
               <Label style={{ fontSize: '20px' }}>
                 Wallet Balance
-                <ValueWrapper style={{ fontWeight: 550 }}>{numberWithCommas(balance)} ZOO</ValueWrapper>
+                <ValueWrapper style={{ fontWeight: 500 }}>{numberWithCommas(balance)} ZOO</ValueWrapper>
               </Label>
+              <BorderButton scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
+                {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
+              </BorderButton>
+            </LabelWrapper>
+          </RowWrapper>
+          <RowWrapper style={{ marginLeft: -8, marginBottom: -4 }}>
+            <Flex alignItems='flex-start' flexDirection='column' flexGrow={2} height={allowance && !keepApprove ? '100%' : '65px'}>
+              <Label style={{ fontSize: '20px' }}>{currentEggsOwned} Eggs Owned</Label>
+            </Flex>
+            <Flex flexDirection='column' height={allowance && !keepApprove ? '100%' : '65px'} justifyContent='space-between'>
+
               {(keepApprove || !allowance) && (
                 <BorderButton
                   disabledApprove={disableApprove || allowance}
@@ -290,21 +303,12 @@ const Account: React.FC = () => {
                   {allowance ? 'APPROVED' : disableApprove ? 'PROCESSING' : 'APPROVE'}
                 </BorderButton>
               )}
-              <BorderButton disabled={wait} scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
-                {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
-              </BorderButton>
-            </LabelWrapper>
-          </RowWrapper>
-          <LabelWrapper>
-            <Flex alignItems='flex-start' flexDirection='column' flexGrow={2} height={allowance && !keepApprove ? '100%' : '65px'}>
-              <Label style={{ fontSize: '20px' }}>{currentEggsOwned} Eggs Owned</Label>
-            </Flex>
-            <Flex flexDirection='column' height={allowance && !keepApprove ? '100%' : '65px'} justifyContent='space-between'>
+
               <BorderButton disabled={disable || !allowance} scale='sm' minWidth={!isXl ? '120px' : '140px'} onClick={buyEgg} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }}>
                 {disable ? 'PROCESSING' : 'BUY EGGS'}
               </BorderButton>
             </Flex>
-          </LabelWrapper>
+          </RowWrapper>
         </Body>
         <MyZooAccount />
       </Page>
