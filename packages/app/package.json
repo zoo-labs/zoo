@@ -5,9 +5,9 @@
   "private": true,
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "start": "react-scripts start",
+    "start": "craco start",
     "build": "CI=false react-scripts build",
-    "test": "react-scripts test",
+    "test": "craco test",
     "eject": "react-scripts eject",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "format:check": "prettier --check --loglevel error 'src/**/*.{js,jsx,ts,tsx}'",
@@ -19,12 +19,14 @@
   },
   "dependencies": {
     "@binance-chain/bsc-connector": "^1.0.0",
+    "@craco/craco": "^6.2.0",
     "@crowdin/crowdin-api-client": "^1.8.16",
     "@datepicker-react/styled": "^2.8.0",
     "@ethersproject/abi": "^5.0.7",
     "@ethersproject/experimental": "^5.0.1",
     "@headlessui/react": "^1.4.0",
     "@lingui/macro": "^3.10.2",
+    "@lingui/react": "^3.10.2",
     "@mdx-js/loader": "^1.6.22",
     "@mdx-js/mdx": "^1.6.22",
     "@popperjs/core": "^2.4.4",
@@ -118,6 +120,7 @@
   "devDependencies": {
     "@commitlint/cli": "^12.1.1",
     "@commitlint/config-conventional": "^12.1.1",
+    "@lingui/macro": "^3.10.2",
     "@storybook/addon-actions": "^6.3.5",
     "@storybook/addon-essentials": "^6.3.5",
     "@storybook/addon-links": "^6.3.5",
@@ -129,9 +132,12 @@
     "@types/jest": "^26.0.15",
     "@types/react-redux": "^7.1.14",
     "addon-redux": "^1.1.0",
+    "autoprefixer": "^9",
     "eslint": "^7.20.0",
+    "postcss": "^7",
     "prettier": "^2.1.2",
     "source-map-explorer": "^2.5.2",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "ts-node": "^9.1.1"
   },
   "eslintConfig": {
