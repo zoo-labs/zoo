@@ -1,6 +1,10 @@
 {
   "arrowParens": "always",
   "bracketSpacing": true,
+<<<<<<< HEAD
+=======
+  "embeddedLanguageFormatting": "auto",
+>>>>>>> 372b5a7 (Typescript moralis)
   "htmlWhitespaceSensitivity": "css",
   "insertPragma": false,
   "jsxBracketSameLine": true,

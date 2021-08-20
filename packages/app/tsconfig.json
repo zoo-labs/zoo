@@ -1,19 +1,20 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "types": ["node"],
+    "baseUrl": "src",
+    "target": "es2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
+<<<<<<< HEAD
     "strict": false,
+=======
+    "strict": true,
+>>>>>>> 372b5a7 (Typescript moralis)
     "alwaysStrict": true,
     "strictNullChecks": false,
     "noFallthroughCasesInSwitch": true,
@@ -23,10 +24,21 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "downlevelIteration": true
+    "jsx": "react-jsx",
+    "downlevelIteration": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
+<<<<<<< HEAD
   "include": ["./src/types", "src", "scripts"],
   "exclude": ["node_modules", "build"],
+=======
+  "include": ["./src/types", "mdx.d.ts", "src", "scripts", "fonts.d.ts"],
+  "exclude": ["node_modules", "dist", "**/*.stories.tsx"],
+  "paths": {
+    "rebass/styled-components": ["node_modules/rebass/styled-components"],
+    "@reach/portal": ["node_modules/@reach/portal/dist/declarations/src/index.d.ts"]
+  },
+>>>>>>> 372b5a7 (Typescript moralis)
   "rootDir": "src"
 }
