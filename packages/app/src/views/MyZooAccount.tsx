@@ -271,7 +271,7 @@ const MyZooAccount: React.FC = () => {
           ) : (
             <Swiper slidesPerView={document.body.getBoundingClientRect().width / 150} spaceBetween={4} pagination={{ clickable: true }}>
               {eggData.map((egg) => (
-                <SwiperSlide style={{ width: '220px', display: 'flex' }} key={egg.tokenID}>
+                <SwiperSlide className="account__animal-slide" style={{ width: '220px', display: 'flex' }} key={egg.tokenID}>
                   {/* <CardWrapper> */}
                   <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
                 </SwiperSlide>
