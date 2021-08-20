@@ -1,12 +1,10 @@
-const { Moralis } = require('./moralis');
+import Moralis from './moralis'
 
-const ZK = {
-  // injected during build
-  abi:      'ZK_ABI',
-  address:  'ZK_ADDRESS',
-}
+// Should replace variables here to target different networks
+import contracts from 'contracts.json'
 
-const CHAIN = 'CHAIN_ID'
+const ZK = (contracts as any)['97']['testnet']['ZooKeeper']
+const CHAIN_ID = '97'
 
 // Get this enviroment's ZK contract
 <<<<<<< HEAD:packages/moralis/src/functions.js
@@ -19,8 +17,12 @@ async function getZooToken() {
 async function getZooKeeper() {
 =======
 async function getZooKeeper(): Promise<any> {
+<<<<<<< HEAD
 >>>>>>> c5f90c4 (Typescript cloud functions):packages/moralis/src/functions.ts
   const web3 = Moralis.web3ByChain(CHAIN)
+=======
+  const web3 = Moralis.web3ByChain(CHAIN_ID)
+>>>>>>> f2ec3e4 (Wip)
   return new web3.eth.Contract(ZK.abi, ZK.address)
 }
 
