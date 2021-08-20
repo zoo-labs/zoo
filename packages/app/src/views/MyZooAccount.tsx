@@ -154,14 +154,35 @@ const MyZooAccount: React.FC = () => {
     }
   }, [elapsedTimeOnPage])
 
+
+  async function getToken(tokenID) {  
+    return await zooKeeper.methods.tokens(tokenID).call()
+  }
+
+  // useEffect(() => {
+
+  // }, [])
+
   const renderAnimals = (hybrid): JSX.Element => {
     const animalGroup = {}
     const animalData = []
 
-    Object.values(allAnimals).forEach((animal, index) => {
+    Object.values(allAnimals).forEach( (animal, index) => {
       if (animal.owner.toLowerCase() !== account.toLowerCase() || animal.freed || !animal.revealed) {
         return
       }
+
+
+
+      // const t = await getToken(animal.tokenID)
+
+
+      // console.log("ANIMAL")
+      // console.log(animal.tokenID)
+      // console.log(t.breed['count'])
+      // console.log(t.breed['timestamp'])
+     
+
       const lastBred = animal.lastBred ? new Date(Number(animal.lastBred)).getTime() : new Date().getTime()
       const now = new Date().getTime()
       const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount || 0
@@ -171,8 +192,19 @@ const MyZooAccount: React.FC = () => {
       const timeRemainingDaysHours = getDaysHours(timeRemaining)
       const barwidth = [100 * (elapsedTime / breedTimeout), '%'].join('')
 
+
+
+        
+      console.log(lastBred)
+      console.log(timeRemaining)
+
+      console.log()
+      console.log()
+
+
+      console.log()
       if (timeRemaining <= 0 && animalData.find((a) => a.name === animal.name && a.timeRemaining <= 0)) {
-        animalGroup[animal.name] = animalGroup[animal.name] + 1 || 2
+        animalGroup[animal.name] = animalGroup[animal.name] ? [ ...animalGroup[animal.name], animal] : [animal]
       } else {
         animalData.push({
           id: index,
@@ -189,6 +221,20 @@ const MyZooAccount: React.FC = () => {
       animalData.filter((item) => item.bloodline === hybrid),
       'bloodline',
     )
+    
+
+    const executeStackedBreeding = (a : Animal) => {
+      console.log("EXECUTING STACKED BREEDING")
+    }
+
+    console.log("ANIMALS")
+    console.log(animals)
+    console.log()
+
+    console.log(animalGroup)
+
+    console.log()
+
 
     return (
       <>
@@ -209,11 +255,13 @@ const MyZooAccount: React.FC = () => {
               </StyledText>
             ) : (
               <Swiper slidesPerView={document.body.getBoundingClientRect().width / 220} spaceBetween={4} pagination={{ clickable: true }}>
-                {animals.map((animal) => (
-                  <SwiperSlide style={{ width: '220px', display: 'flex' }} key={animal.tokenID}>
-                    <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals }} />
-                  </SwiperSlide>
-                ))}
+                {animals.map((animal) => {
+                 
+                  return ( 
+                    <SwiperSlide style={{ width: '220px', display: 'flex' }} key={animal.tokenID}>
+                      <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding }} />
+                    </SwiperSlide>
+                )})}
               </Swiper>
             )}
           </Route>

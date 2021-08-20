@@ -125,12 +125,6 @@ function Feed<RouteProps>({ match }) {
 
   //  Settings for Zoo vs Market
   const isMyZoo = pathname.includes('myzoo') ? true : false
-
-  let animals = Object.values(animalsState)
-  if (isMyZoo) {
-    animals =  animals.filter((a) => a.owner.toLowerCase() == account.toLowerCase()) // only user animals
-  } else {
-    animals = animals.filter((a) => a.owner.toLowerCase() != account.toLowerCase())
   }
 
   // If viewing specific NFT, sort NFTs to that index
@@ -158,8 +152,14 @@ function Feed<RouteProps>({ match }) {
           {animals.length ? (
             // Animals found, show animal slides
             <Swiper spaceBetween={30} slidesPerView={1} direction='vertical'>
+<<<<<<< HEAD
               // Render animals
               {animals.map((nft) => {
+=======
+              {myZooAnimalsFiltered.map((data) => {
+                console.log("DATA")
+                console.log(data)
+>>>>>>> 59a947685d7950b6cecb41419b7dec8ac755a976
                 return (
                   <Slide key={nft.tokenID + 'slide'}>
                     <FeedCard nft={nft} key={nft.tokenID + 'card'} showBid={false} />
