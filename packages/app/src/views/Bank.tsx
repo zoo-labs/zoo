@@ -301,23 +301,25 @@ const Bank: React.FC = () => {
         {pageHeading}
         <Body>
           <LabelWrapper>
-            <Label style={{ fontSize: '20px' }}>Wallet Balance</Label>
+            <Label style={{ marginLeft: -8, fontSize: '20px' }}>Wallet Balance</Label>
             <BorderButton scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
               {chainID !== 97 ? 'Buy ZOO' : wait ? 'Processing' : 'Get ZOO'}
             </BorderButton>
           </LabelWrapper>
-          <Flex width='100%' alignItems='center' justifyContent='space-around'>
+          <Flex width='100%' alignItems='center' justifyContent='space-around' style={{ marginLeft: -16 }}>
             <ValueWrapper>{numberWithCommas(zooBalance)} ZOO </ValueWrapper>
             {/* Commented out since there is to ZOO to USD conversion yet */}
             {/* <ValueWrapper style={{ fontSize: "16px",  color: "rgb(221 224 26)" }}>0 USD</ValueWrapper> */}
           </Flex>
-          <Label style={{ fontSize: '20px' }}>Total Daily Yield</Label>
-          <ValueWrapper> {dailyYield} ZOO </ValueWrapper>
-          <Label style={{ fontSize: '20px' }}>Top Earners</Label>
+          <Label style={{ marginLeft: -8, fontSize: '20px' }}>Total Daily Yield</Label>
+          <Flex width='100%' alignItems='center' justifyContent='space-around' style={{ marginLeft: -16 }}>
+            <ValueWrapper> {dailyYield} ZOO </ValueWrapper>
+          </Flex>
+          <Label style={{ marginLeft: -8, fontSize: '20px' }}>Top Earners</Label>
           {topTenAnimals.length === 0 ? (
             <ValueWrapper style={{ justifyContent: 'center' }}> No animals </ValueWrapper>
           ) : (
-            <EarnerValueWrapper>
+            <EarnerValueWrapper style={{ marginLeft: -16}}>
               {topTenAnimals.map((animal) => {
                 return (
                   <EarnerValue key={animal.tokenID + '_earner_'}>
@@ -327,22 +329,22 @@ const Bank: React.FC = () => {
               })}
             </EarnerValueWrapper>
           )}
-          <Label style={{ fontSize: '20px' }}>Recent Tansactions</Label>
+          <Label style={{ marginLeft: -8, fontSize: '20px' }}>Recent Tansactions</Label>
           {waitTx ? (
             <TableText> Loading Transactions... </TableText>
           ) : transactions.length === 0 ? (
             <TableText> No Transaction Data </TableText>
           ) : (
-            <Container>
+            <Container style={{marginLeft: -8}}>
               <TableContainer>
                 <TableWrapper>
                   <StyledTable>
                     <TableBody>
                       <TableRow>
-                        <TableHeader style={{ width: '200px' }}>Tx Hash</TableHeader>
-                        <TableHeader>Action</TableHeader>
-                        <TableHeader>Block</TableHeader>
-                        <TableHeader>Token ID</TableHeader>
+                        <TableHeader style={{ fontWeight: 400, width: '200px' }}>Tx Hash</TableHeader>
+                        <TableHeader style={{ fontWeight: 400 }}>Action</TableHeader>
+                        <TableHeader style={{ fontWeight: 400 }}>Block</TableHeader>
+                        <TableHeader style={{ fontWeight: 400 }}>Token ID</TableHeader>
                       </TableRow>
                       {transactions.map((tx) => {
                         return (
