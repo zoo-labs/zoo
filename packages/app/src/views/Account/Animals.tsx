@@ -1,0 +1,136 @@
+import { useWeb3React } from '@web3-react/core'
+import React, { useCallback, useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { AppState } from 'state'
+import { Route, useRouteMatch } from 'react-router-dom'
+import styled from 'styled-components'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/swiper.min.css'
+import 'swiper/components/pagination/pagination.min.css'
+
+import { Text, Card as Existing, useMatchBreakpoints } from 'components'
+import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
+import { breedTimeouts } from 'constants/constants'
+import { RarityColor } from 'enums/rarity-color'
+import { Animal } from 'types/zoo'
+import { AnimalCard } from 'components/AnimalCard'
+interface AnimalsProps {
+  hybrid: string
+}
+const StyledText = styled(Text)`
+  color: ${({ theme }) => theme.colors.text};
+`
+const RowTitle = styled.div`
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 10px;
+  font-weight: 600;
+`
+
+const RowLayout = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  & > * {
+    // min-width: calc(100vw - 20px);
+    // max-width: 31.5%;
+    width: 100%;
+    margin: 8px;
+    margin-bottom: 32px;
+  }
+`
+const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
+  const { account, chainId } = useWeb3React()
+  const { path } = useRouteMatch()
+  const { isXl, isSm } = useMatchBreakpoints()
+
+  const allAnimals = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
+  const animalGroup = {}
+  const animalData = []
+
+  Object.values(allAnimals).forEach((animal, index) => {
+    if (animal.owner.toLowerCase() !== account.toLowerCase() || animal.freed || !animal.revealed) {
+      return
+    }
+    const lastBred = animal.lastBred ? new Date(Number(animal.lastBred)).getTime() : new Date().getTime()
+    const now = new Date().getTime()
+    const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount || 0
+    const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey])
+    const elapsedTime = now - lastBred
+    const timeRemaining = breedTimeout - elapsedTime
+    const timeRemainingDaysHours = getDaysHours(timeRemaining)
+    const barwidth = [100 * (elapsedTime / breedTimeout), '%'].join('')
+
+    console.log(lastBred)
+    console.log(timeRemaining)
+
+    console.log()
+    console.log()
+
+    console.log()
+    if (timeRemaining <= 0 && animalData.find((a) => a.name === animal.name && a.timeRemaining <= 0)) {
+      animalGroup[animal.name] = animalGroup[animal.name] ? [...animalGroup[animal.name], animal] : [animal]
+    } else {
+      animalData.push({
+        id: index,
+        ...animal,
+        name: animal.name.replace(/\u0000/g, ''),
+        timeRemaining: animal.bloodline === 'pure' ? (elapsedTime < breedTimeout ? timeRemaining : 0) : 0,
+        CTAOverride: animal.bloodline === 'pure' ? (elapsedTime < breedTimeout ? { barwidth, timeRemainingDaysHours } : null) : null,
+        rarityColor: RarityColor[animal.rarity.toLowerCase()] || 'white',
+      })
+    }
+  })
+  const sortData = (data: Array<any>, byType: string) => {
+    return data.sort((a, b) => Number(b.tokenID) - Number(a.tokenID))
+  }
+  const animals = sortData(
+    animalData.filter((item) => item.bloodline === hybrid),
+    'bloodline',
+  )
+  const executeStackedBreeding = (a: Animal) => {
+    console.log('EXECUTING STACKED BREEDING')
+  }
+
+  return (
+    <>
+      {hybrid === 'pure' ? (
+        <RowTitle>
+          {animals.length} {animals.length != 1 ? 'Animals' : 'Animal'}
+        </RowTitle>
+      ) : (
+        <RowTitle>
+          {animals.length} {animals.length != 1 ? 'Hybrid Animals' : 'Hybrid Animal'}
+        </RowTitle>
+      )}
+      <RowLayout>
+        <Route exact path={`${path}`}>
+          {animals.length === 0 ? (
+            <StyledText textAlign='center' fontSize='16px'>
+              No {hybrid === 'pure' ? '' : `hybrid `}animals
+            </StyledText>
+          ) : (
+            <Swiper slidesPerView={isSm ? 1 : 2} spaceBetween={4} pagination={{ clickable: true }}>
+              {animals.map((animal) => {
+                return (
+                  <SwiperSlide style={{ width: '33%', display: 'flex' }} key={animal.tokenID}>
+                    <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding }} />
+                  </SwiperSlide>
+                )
+              })}
+            </Swiper>
+          )}
+        </Route>
+        <Route exact path={`${path}/history`}>
+          {animalData.map((animal) => (
+            <Existing key={animal.tokenID} />
+          ))}
+        </Route>
+      </RowLayout>
+    </>
+  )
+}
+
+export default Animals

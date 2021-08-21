@@ -23,8 +23,9 @@ import useWeb3 from 'hooks/useWeb3'
 
 import { mapEgg, mapAnimal, queryEggs, queryAnimals } from 'util/moralis'
 import Header from 'components/Header'
+import indexRoutes from 'routes'
 
-const Account = lazy(() => import('./views/Account'))
+const Account = lazy(() => import('./views/Account/Index'))
 const Login = lazy(() => import('./views/Login'))
 const Bank = lazy(() => import('./views/Bank'))
 const Feed = lazy(() => import('./views/Feed'))
@@ -190,7 +191,15 @@ const App: React.FC = () => {
           </Route>
 
           <SuspenseWithChunkError fallback={<></>}>
-            <Route exact path='/account'>
+            <div className='flex fixed top-0 justify-between flex-nowrap w-full'>
+              <Header />
+            </div>
+            <Switch>
+              {indexRoutes.map((prop, key) => (signedIn ? <Route path={prop.path} key={key} component={prop.component} /> : <Redirect to='/login' />))}
+              <Redirect from='/' to={signedIn ? '/account' : '/login'} />
+              <Redirect from='' to={signedIn ? '/account' : '/login'} />
+            </Switch>
+            {/* <Route exact path='/account'>
               {signedIn ? (
                 <>
                   <div className='flex fixed top-0 justify-between flex-nowrap w-full'>
@@ -224,8 +233,7 @@ const App: React.FC = () => {
 
             <Route exact path=''>
               {signedIn ? <Redirect to='/account' /> : <Redirect to='/login' />}
-            </Route>
-
+            </Route> */}
           </SuspenseWithChunkError>
         </Switch>
         <ToastListener />

@@ -196,6 +196,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
         <CardBody
           style={{
             backgroundImage: `url('${backgroundImage}')`,
+            width: '100%',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: '0% 60%',
