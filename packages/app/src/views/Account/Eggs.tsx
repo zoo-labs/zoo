@@ -37,15 +37,14 @@ const RowLayout = styled.div`
 const Eggs: React.FC<EggsProps> = ({}) => {
   const { account, chainId } = useWeb3React()
   const { path } = useRouteMatch()
-  const { isXl, isSm } = useMatchBreakpoints()
-
+  const dispatch = useDispatch()
   const [eggType, setEggType] = useState('')
   const [isOpen, setOpen] = useState(false)
   const [_, setShowBoth] = useState(false)
   const web3 = useWeb3()
   const { gasPrice } = web3
   const zooKeeper = getZooKeeper(web3)
-
+  const videoTimeout = []
   const [hatched, setHatched] = useState({
     tokenID: 0,
     name: '',
@@ -57,9 +56,50 @@ const Eggs: React.FC<EggsProps> = ({}) => {
     boost: 0,
     yield: 0,
   })
-  const dispatch = useDispatch()
+  let eggData = []
+  const { isXl, isSm } = useMatchBreakpoints()
+
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
-  const videoTimeout = []
+
+  const hatchEggReady = async (egg) => {
+    const eggObject = Moralis.Object.extend('Eggs')
+    const eggQuery = new Moralis.Query(eggObject)
+    eggQuery.equalTo('tokenID', egg.tokenID)
+    const eggResults = await eggQuery.find()
+    const foundEgg = eggResults[0]
+
+    foundEgg.set('burn', true)
+    await foundEgg.save()
+
+    setShowBoth(true)
+    setEggType(egg.basic ? 'basic' : 'hybrid')
+
+    const animalObject = Moralis.Object.extend('Animals')
+    const animalQuery = new Moralis.Query(animalObject)
+    console.log('QUERY ANIMAL', egg.animalID)
+    animalQuery.equalTo('tokenID', egg.animalID)
+    const animalResults = await animalQuery.find()
+    const foundAnimal = animalResults[0]
+
+    console.log('ANIMAL', foundAnimal)
+    setHatched(mapAnimal(foundAnimal))
+    foundAnimal.set('revealed', true)
+    foundAnimal.save()
+    startAnimationTimer()
+  }
+
+  const hatchEgg = async (egg) => {
+    egg.hatching = true
+    dispatch(addEgg(mapEgg(egg)))
+    try {
+      await zooKeeper.methods.hatchEgg(1, egg.tokenID).send({
+        from: account,
+        gasPrice: gasPrice,
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const startAnimationTimer = useCallback(() => {
     videoTimeout.push(
@@ -84,47 +124,18 @@ const Eggs: React.FC<EggsProps> = ({}) => {
     }
   }, [])
 
-  const hatchEggReady = async (egg) => {
-    startAnimationTimer()
+  const [timeStartOnPage] = useState(new Date().getTime())
+  const [elapsedTimeOnPage, setElapsedTimeOnPage] = useState(new Date().getTime() - timeStartOnPage)
 
-    const eggObject = Moralis.Object.extend('Eggs')
-    const eggQuery = new Moralis.Query(eggObject)
-    eggQuery.equalTo('tokenID', egg.tokenID)
-    const eggResults = await eggQuery.find()
-    const foundEgg = eggResults[0]
-
-    foundEgg.set('burn', true)
-    await foundEgg.save()
-
-    setShowBoth(true)
-    setEggType(egg.basic ? 'basic' : 'hybrid')
-
-    const animalObject = Moralis.Object.extend('Animals')
-    const animalQuery = new Moralis.Query(animalObject)
-    console.log('QUERY ANIMAL', egg.animalID)
-    animalQuery.equalTo('tokenID', egg.animalID)
-    const animalResults = await animalQuery.find()
-    const foundAnimal = animalResults[0]
-
-    console.log('foundAnimal', foundAnimal)
-    setHatched(mapAnimal(foundAnimal))
-    foundAnimal.set('revealed', true)
-    foundAnimal.save()
-  }
-
-  const hatchEgg = async (egg) => {
-    egg.hatching = true
-    dispatch(addEgg(mapEgg(egg)))
-    try {
-      await zooKeeper.methods.hatchEgg(1, egg.tokenID).send({
-        from: account,
-        gasPrice: gasPrice,
-      })
-    } catch (error) {
-      console.error(error)
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setElapsedTimeOnPage(elapsedTimeOnPage + 5000)
+    }, 5000)
+    return () => {
+      clearTimeout(timeout)
     }
-  }
-  let eggData = []
+  }, [elapsedTimeOnPage])
+
   const sortData = (data: Array<any>, byType: string) => {
     return data.sort((a, b) => Number(b.tokenID) - Number(a.tokenID))
   }
@@ -153,7 +164,6 @@ const Eggs: React.FC<EggsProps> = ({}) => {
   })
 
   eggData = sortData(eggData, 'hybrid')
-
   return (
     <div>
       {eggType !== '' && <VideoPlayer videoPath={eggType === 'basic' ? 'hatch_mobile_basic.mp4' : 'hatch_mobile_hybrid.mp4'} />}
