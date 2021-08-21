@@ -184,16 +184,16 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
       <Modal title='Confirm Listing' onDismiss={onDismiss}>
         <StyledText style={{ textAlign: 'center' }}>{`Do you want to list ${sellAnimal.name}?`}</StyledText>
         <Flex width='100%' alignItems='center' justifyContent='space-evenly' flexDirection='row' mt='16px'>
-          <StyledText fontSize='20px' style={{ whiteSpace: 'nowrap', marginTop: '5px' }}>
-            BID PRICE
+          <StyledText fontSize='18px' style={{ whiteSpace: 'nowrap', marginTop: '5px' }}>
+            LIST PRICE (ZOO)
           </StyledText>
-          <BidPriceInput type='number' value='1000' style={{ color: 'black' }}/>
+          <BidPriceInput type='number' style={{ color: 'black' }}/>
         </Flex>
         <Flex width='100%' alignItems='center' justifyContent='space-evenly' flexDirection='row' mt='16px'>
-          <BorderButton scale='md' onClick={() => sell(onDismiss)}>
+          <BorderButton style={{ fontSize: 14 }} scale='md' onClick={() => sell(onDismiss)}>
             Confirm
           </BorderButton>
-          <BorderButton scale='md' onClick={() => onDismiss()}>
+          <BorderButton style={{ fontSize: 14 }} scale='md' onClick={() => onDismiss()}>
             Cancel
           </BorderButton>
         </Flex>
