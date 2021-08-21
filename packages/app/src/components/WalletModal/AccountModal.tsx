@@ -149,9 +149,6 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
       <Flex justifyContent='space-evenly' flexDirection='column' mb={bscType ? '8px' : '32px'}>
         <LabelWrapper>
           <Label>Balance</Label>
-          <BorderButton height='25px' onClick={handleFunds} width='120px'>
-            Get ZOO
-          </BorderButton>
         </LabelWrapper>
         <ValueWrapper>{balance} ZOO</ValueWrapper>
       </Flex>

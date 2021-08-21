@@ -14,14 +14,14 @@ const alertTypeMap = {
 }
 
 const StyledToast = styled.div`
-  right: -60px;
-  bottom: 20px;
+  right: -40px;
+  bottom: 0px;
   padding-bottom: 20px;
   position: fixed;
   max-width: calc(100% - 32px);
   transition: all 1250ms ease-in;
   width: 100%;
-  scale: 70%;
+  scale: 80%;
 
   ${({ theme }) => theme.mediaQueries.sm} {
     max-width: 400px;

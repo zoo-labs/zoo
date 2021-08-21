@@ -16,6 +16,11 @@ let defaultConf = [
     icon: 'MarketIcon',
     href: '/feed',
   },
+  {
+    label: 'Market',
+    icon: 'MarketIcon',
+    href: '/market',
+  },
 ]
 
 let config: () => MenuEntry[] = () => defaultConf
