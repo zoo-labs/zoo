@@ -12,7 +12,7 @@ import { Flex, Heading, useMatchBreakpoints } from 'components'
 import Body from 'components/layout/Body'
 import { useModal } from 'components/Modal'
 import BuyEggs from 'components/BuyEggs'
-import MyZooAccount from 'views/MyZooAccount'
+import MyZoo from 'views/MyZoo'
 import { Egg } from 'types/zoo'
 import { useDispatch } from 'react-redux'
 import { breedTimeouts, eggTimeout } from 'constants/constants'
@@ -238,16 +238,6 @@ const Account: React.FC = () => {
   const buyEgg = async () => {
     setDisable(true)
 
-    // const drop = await zooKeeper.methods.drops(0).call()
-    // const token = await zooKeeper.methods.buyEgg(1).call({ from: account })
-    const createdAt = Date.now()
-    const now = Date.now()
-    const hatchTimeout = getMilliseconds(eggTimeout)
-    const elapsedTime = now - createdAt
-    const timeRemaining = hatchTimeout - elapsedTime
-    const timeRemainingDaysHours = getDaysHours(timeRemaining)
-    const barwidth = [100 * (elapsedTime / hatchTimeout), '%'].join('')
-
     try {
       await zooKeeper.methods
         .buyEgg(1) // buy from first drop
@@ -280,7 +270,7 @@ const Account: React.FC = () => {
                 Wallet Balance
                 <ValueWrapper style={{ fontWeight: 500 }}>{numberWithCommas(balance)} ZOO</ValueWrapper>
               </Label>
-              <BorderButton scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
+              <BorderButton disabled={ wait } scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
                 {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
               </BorderButton>
             </LabelWrapper>
@@ -311,7 +301,8 @@ const Account: React.FC = () => {
             </Flex>
           </RowWrapper>
         </Body>
-        <MyZooAccount />
+
+        <MyZoo />
       </Page>
     </>
   )
