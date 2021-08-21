@@ -240,7 +240,7 @@ export default function Header() {
           isSm && 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2'
         }`}
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
-        {['Account', 'Bank', 'Feed', 'Charts'].map((path: string) => {
+        {['Home', 'Bank', 'Feed', 'Charts'].map((path: string) => {
           const selected = active === path.toLowerCase()
           return (
             <a
