@@ -1,6 +1,6 @@
-import { Animal } from 'entities/zooentities'
+import { Animal } from 'types/zoo'
 
 export type NewAnimalCardType = {
-    animal: Animal,
-    isOpen: any
+  animal: Animal
+  isOpen: any
 }

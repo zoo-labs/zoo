@@ -18,20 +18,10 @@ export { default as TelegramIcon } from './Telegram'
 export { default as TicketIcon } from './Ticket'
 export { default as TradeIcon } from './Trade'
 export { default as TwitterIcon } from './Twitter'
-export {
-  FaStore as MarketIcon,
-  FaBoxes as BlockExplorerIcon,
-  FaHardHat as HardHatIcon,
-  FaSearchDollar as SearchDollarIcon,
-  FaPiggyBank as BankIcon,
-} from 'react-icons/fa'
+export { FaStore as MarketIcon, FaBoxes as BlockExplorerIcon, FaHardHat as HardHatIcon, FaSearchDollar as SearchDollarIcon, FaPiggyBank as BankIcon } from 'react-icons/fa'
 export { default as NewTokenIcon } from './NewToken'
 export { default as DiscordIcon } from './Discord'
+export { RiExchangeFill as FaucetIcon, RiAccountPinCircleFill as AccountIcon } from 'react-icons/ri'
 export {
-  RiExchangeFill as FaucetIcon,
-  RiAccountPinCircleFill as AccountIcon
-} from 'react-icons/ri'
-export {
-  ImBook as DocsIcon,
-  // ImHome3 as HomeIcon,
+  ImBook as DocsIcon, // ImHome3 as HomeIcon,
 } from 'react-icons/im'

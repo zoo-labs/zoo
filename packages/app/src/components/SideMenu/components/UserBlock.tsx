@@ -19,20 +19,19 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
     <div>
       {account ? (
         <BorderButton
-          scale="sm"
+          scale='sm'
+          style={{ fontSize: 14 }}
           onClick={() => {
             onPresentAccountModal()
-          }}
-        >
+          }}>
           {accountEllipsis}
         </BorderButton>
       ) : (
         <BorderButton
-          scale="sm"
+          scale='sm'
           onClick={() => {
             onPresentConnectModal()
-          }}
-        >
+          }}>
           Connect
         </BorderButton>
       )}

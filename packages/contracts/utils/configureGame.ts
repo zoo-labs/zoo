@@ -1,33 +1,37 @@
 // Generated from Yield Matrix spreadsheet (see: `yarn matrix`)
-import rarities from './rarities.json';
-import animals from './animals.json';
-import hybrids from './hybrids.json';
-
+import rarities from './rarities.json'
+import animals from './animals.json'
+import hybrids from './hybrids.json'
 
 // Configure game for our Gen 0 drop
 export default async function configureGame(keeper: any, drop: any) {
   // Add Drop to ZooKeeper
   await keeper.setDrop(drop.address)
 
+  const basePrice = 1500000
+
+  // Set name price
+  await keeper.setNamePrice(basePrice) // about $20 / name
+
   // Configure Drop
-  await drop.configureKeeper(keeper.address);
+  await drop.configureKeeper(keeper.address)
 
   // Add eggs
   const eggs = [
     {
-      name: "Base Egg",
-      price: 15405200*18, // about $210 / egg
+      name: 'Base Egg',
+      price: basePrice * 10, // about $200 / egg
       supply: 16000,
-      tokenURI: "https://db.zoolabs/egg.jpg",
-      metadataURI: "https://db.zoolabs.org/egg.json"
+      tokenURI: 'https://db.zoolabs/egg.jpg',
+      metadataURI: 'https://db.zoolabs.org/egg.json',
     },
     {
-      name: "Hybrid Egg",
+      name: 'Hybrid Egg',
       price: 0,
       supply: 0,
-      tokenURI: "https://db.zoolabs/hybrid.jpg",
-      metadataURI: "https://db.zoolabs.org/hybrid.json"
-    }
+      tokenURI: 'https://db.zoolabs/hybrid.jpg',
+      metadataURI: 'https://db.zoolabs.org/hybrid.json',
+    },
   ]
 
   eggs.map(async (v) => {
@@ -38,7 +42,9 @@ export default async function configureGame(keeper: any, drop: any) {
   await drop.configureEggs('Base Egg', 'Hybrid Egg')
 
   // Add rarities
-  rarities.sort(function(a, b) { return a.probability - b.probability });
+  rarities.sort(function (a, b) {
+    return a.probability - b.probability
+  })
   rarities.map(async (v) => {
     console.log('Add Rarity:', v.name, v.probability, v.yield, v.boost)
     await drop.setRarity(v.name, v.probability, v.yield, v.boost)

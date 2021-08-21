@@ -2,60 +2,48 @@
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
-import { ethers } from 'hardhat'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-    const { deployments, getNamedAccounts } = hre
-    const { deploy } = deployments
-    const { deployer } = await getNamedAccounts()
+  const { deployments, ethers, network, getNamedAccounts } = hre
+  const { deploy } = deployments
+  const { deployer } = await getNamedAccounts()
 
-    let zooToken: any;
+  const tokenAddress = (await deployments.get('ZooToken')).address
 
-    const signers = await ethers.getSigners()
-    const tokenAddress = (await deployments.get('ZooToken')).address
+  const deployResult = await deploy('ZooFaucet', {
+    from: deployer,
+    args: [tokenAddress],
+    log: true,
+  })
 
-    await deploy('ZooFaucet', {
-        from: deployer,
-        args: [tokenAddress],
-        log: true,
-    })
+  if (network.name != 'hardhat') return
 
-    // Gets the ZooToken interface
-    const zooTokenFactory = await ethers.getContractFactory('ZooToken');
+  // Get signers to fund
+  const signers = await ethers.getSigners()
 
-    // Attaches the deployed ZooToken address to this instance of zooToken
-    zooToken = zooTokenFactory.attach(tokenAddress);
+  // Get Token instance
+  const token = await ethers.getContractAt('ZooToken', tokenAddress)
 
-    // Gets the ZooFaucet interface
-    const faucetFactory = await ethers.getContractFactory('ZooFaucet');
+  // Get Faucet instance
+  const faucet = await ethers.getContractAt('ZooFaucet', deployResult.address)
 
-    // Gets the deployed ZooFaucet address
-    const faucetAddress = (await deployments.get('ZooFaucet')).address;
+  // 100B ZOO to faucet
+  const exp = ethers.BigNumber.from('10').pow(18)
+  const faucetAmount = ethers.BigNumber.from('100000000000').mul(exp)
 
-    // Attaches the deployed ZooFaucet address to this instance of faucet
-    const faucet = faucetFactory.attach(faucetAddress);
+  // 100M ZOO to each signer
+  const signerAmount = ethers.BigNumber.from('100000000').mul(exp)
 
-    // Amount to fund the faucet with
-    const mintAmt = BigInt(500000000 * 1e18);
+  // Mint new tokens
+  await token.mint(faucet.address, faucetAmount)
+  for (var i = 0; i < signers.length; i++) {
+    await token.mint(signers[i].address, signerAmount)
+  }
 
-    // Amount to give to each signer
-    const buyZooAmt = BigInt(10 * 1e18);
-
-    // Mints 100 million ZOO and allocates it to ZooFaucet
-    await zooToken.mint(faucet.address, mintAmt);
-
-    for (var i = 0; i < signers.length; i++) {
-        // The 20 signer wallets get 10K ZOO on deployment
-        await faucet.buyZoo(
-            signers[i].address,
-            buyZooAmt
-        );
-    }
-
-    return hre.network.live;
+  // return hre.network.live
 }
 
 export default func
-func.id = 'deploy_zoo_faucet'
+func.id = 'faucet'
 func.tags = ['ZooFaucet']
-func.dependencies = ['ZooToken']
+// func.dependencies = ['ZooToken']

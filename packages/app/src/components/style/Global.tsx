@@ -2,31 +2,18 @@ import { createGlobalStyle } from 'styled-components'
 
 import { Theme } from 'theme'
 
-// import MyMP16OSFFont from '../../fonts/MP16OSF.ttf'
-
-const fontFamily = 'Consolas';
-import fontFamilySrc from '../../fonts/Consolas.ttf'
-
 declare module 'styled-components' {
-  export interface DefaultTheme extends Theme { }
+  export interface DefaultTheme extends Theme {}
 }
 
-
 const GlobalStyle = createGlobalStyle`
-  @font-face{
-      font-family: ${fontFamily};
-      src:url('${fontFamilySrc}') format('TrueType');
-  }
-  @font-face{
-    font-family: ${fontFamily};
-    src:url('${fontFamilySrc}') format('TrueType');
-  }
   * {
-    font-family: ${fontFamily};
-    color: #FFFFFF;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    color: ${({ theme }) => (theme.isDark ? '#FFFFFF' : '#040404')};
   }
+
   body {
-    background-color: ${({ theme }) => theme.isDark ? "#040404" : "#FFFFFF"};
+    background-color: ${({ theme }) => (theme.isDark ? '#040404' : '#FFFFFF')};
     overflow-x: hidden;
     position: relative;
     img {

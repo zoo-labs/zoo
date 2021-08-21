@@ -1,9 +1,9 @@
-deployments/
 cache/
 *.txt
 cache/
 types/
 artifacts/
-mnemonic.mainnet.txt
-mnemonic.testnet.txt
 credentials.json
+deployments/*/solcInputs/
+deployments/*/.chainId
+.migrations.json

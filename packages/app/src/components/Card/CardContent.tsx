@@ -18,7 +18,7 @@ const StyledCardContent = styled.div`
 const CardContent = ({ imgSrc, children }) => {
   return (
     <StyledCardContent>
-      <Image src={imgSrc} alt="card icon" />
+      <Image src={imgSrc} alt='card icon' />
       <Content>{children}</Content>
     </StyledCardContent>
   )

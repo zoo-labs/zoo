@@ -1,24 +1,23 @@
-import React from "react";
-import styled from "styled-components";
-import Logo from "./Logo";
-
+import React from 'react'
+import styled from 'styled-components'
+import Logo from './Logo'
 
 const StarterAppRoundLogoWrapper = styled.div<{ width?: number }>`
-  width: ${(props) => props.width ? props.width < 40 ? `${props.width + 8}px` : `${props.width + 10}` : "70px"};
-  height: ${(props) => props.width ? props.width < 40 ? `${props.width + 8}px` : `${props.width + 10}` : "70px"};
+  width: ${(props) => (props.width ? (props.width < 40 ? `${props.width + 8}px` : `${props.width + 10}`) : '70px')};
+  height: ${(props) => (props.width ? (props.width < 40 ? `${props.width + 8}px` : `${props.width + 10}`) : '70px')};
   border-radius: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: white;
-  border:  ${(props) => props.width < 40 ? `2px solid ${props.theme.colors.primary}` : `3px solid ${props.theme.colors.primary}`};
+  border: ${(props) => (props.width < 40 ? `2px solid ${props.theme.colors.primary}` : `3px solid ${props.theme.colors.primary}`)};
 `
 
-const StarterAppIconWrapper = styled(Logo) <{ width?: number }>`
-  width: ${(props) => props.width ? `${props.width}px` : "60px"};
-  height: ${(props) => props.width ? `${props.width}px` : "60px"};
+const StarterAppIconWrapper = styled(Logo)<{ width?: number }>`
+  width: ${(props) => (props.width ? `${props.width}px` : '60px')};
+  height: ${(props) => (props.width ? `${props.width}px` : '60px')};
   border-radius: 90px;
-  background: linear-gradient(192deg,#2498fd 67.36%,#50c1fd 54.22%);
+  background: linear-gradient(192deg, #2498fd 67.36%, #50c1fd 54.22%);
 `
 // ${({ theme }) => theme.colors.bubblegum};
 interface LogoRoundProps {
@@ -33,10 +32,10 @@ const Icon: React.FC<LogoRoundProps> = (props) => {
         <Logo />
       </StarterAppIconWrapper>
     </StarterAppRoundLogoWrapper>
-  );
-};
+  )
+}
 
-export default Icon;
+export default Icon
 // {/* <circle cx="256" cy="256" r="256" fill="url(#paint0_linear_logoround)" />
 //       <path
 //         fillRule="evenodd"

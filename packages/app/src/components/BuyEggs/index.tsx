@@ -1,3 +1,3 @@
-import BuyEggs from "./BuyEggs";
+import BuyEggs from './BuyEggs'
 
-export default BuyEggs;
+export default BuyEggs

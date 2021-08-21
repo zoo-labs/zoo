@@ -2,6 +2,7 @@
 
 pragma solidity >=0.8.4;
 
+import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { Decimal } from "./Decimal.sol";
 import { IMarket } from "./interfaces/IMarket.sol";
@@ -12,6 +13,7 @@ import "./console.sol";
 
 
 contract ZooDrop is Ownable {
+    using SafeMath for uint256;
 
     struct Egg {
         IZoo.Type kind;
@@ -77,15 +79,16 @@ contract ZooDrop is Ownable {
     // mapping of (parent + parent) to Hybrid
     mapping (string => Hybrid) public hybridParents;
 
-    constructor(string memory _title) {
-        title = _title;
-    }
-
+    // Ensure only ZK can call method
     modifier onlyZoo() {
         require(
             keeperAddress == msg.sender, "ZooDrop: Only ZooKeeper can call this method"
         );
         _;
+    }
+
+    constructor(string memory _title) {
+        title = _title;
     }
 
     function totalSupply() public view returns (uint256) {
@@ -127,7 +130,7 @@ contract ZooDrop is Ownable {
         egg.name = name;
         egg.data = getMediaData(tokenURI, metadataURI);
         egg.bidShares = getBidShares();
-        egg.price = price;
+        egg.price = price.mul(10**18);
         egg.supply = supply;
         eggs[name] = egg;
         return egg;
@@ -169,6 +172,41 @@ contract ZooDrop is Ownable {
         hybridParents[parentsKey(parentA, parentB)] = hybrid;
         return true;
     }
+
+    struct _Animal {
+        string rarity;
+        string name;
+        string tokenURI;
+        string metadataURI;
+    }
+
+    // Helper to set many Animal at once
+    function setAnimals(_Animal[] calldata _animals) public onlyOwner {
+        for (uint256 i = 0; i < _animals.length; i++) {
+            _Animal calldata animal = _animals[i];
+            setAnimal(animal.name, animal.rarity, animal.tokenURI, animal.metadataURI);
+        }
+    }
+
+    struct _Hybrid {
+        string rarity;
+        string name;
+        uint256 yield;
+        string parentA;
+        string parentB;
+        string tokenURI;
+        string metadataURI;
+    }
+
+
+    // Helper to set many Animal at once
+    function setHybrids(_Hybrid[] calldata _hybrids) public onlyOwner {
+        for (uint256 i = 0; i < _hybrids.length; i++) {
+            _Hybrid calldata hybrid = _hybrids[i];
+            setHybrid(hybrid.name, hybrid.rarity, hybrid.yield, hybrid.parentA, hybrid.parentB, hybrid.tokenURI, hybrid.metadataURI);
+        }
+    }
+
 
     // Add Animal to rarity set if it has not been seen before
     function addAnimalToRarity(string memory rarity, string memory name) private {
@@ -291,13 +329,10 @@ contract ZooDrop is Ownable {
             console.log('rarity.probability', rarity.probability);
             console.log('rarityAnimals', rarityAnimals[name][0], rarityAnimals[name][1]);
 
-            // Choose random animal from choices
-            if (rarity.probability > random) {
+            // Highest probability first, failing that use lowest rarity (common) animal
+            if (rarity.probability > random || i == raritySorted.length - 1) {
                 string[] memory choices = rarityAnimals[name];
-                name = choices[random % choices.length];
-                console.log('animal name', name);
-                animal = getAnimal(name);
-                console.log('animal', animal.name);
+                animal = getAnimal(choices[random % choices.length]);
                 break;
             }
         }
@@ -306,9 +341,14 @@ contract ZooDrop is Ownable {
         token.kind = IZoo.Type.BASE_ANIMAL;
         token.name = animal.name;
         token.data = animal.data;
+        token.rarity = animal.rarity;
         token.bidShares = animal.bidShares;
         token.timestamp = block.timestamp;
         token.birthday = block.number;
+
+        console.log('randomAnimal', animal.name, animal.rarity.name, animal.rarity.yield);
+        console.log('randomAnimal.data.tokenURI', animal.data.tokenURI);
+        console.log('randomAnimal.data.metadataURI', animal.data.metadataURI);
         return token;
     }
 
@@ -325,9 +365,12 @@ contract ZooDrop is Ownable {
         token.kind = IZoo.Type.HYBRID_ANIMAL;
         token.name = hybrid.name;
         token.data = hybrid.data;
+        token.rarity = hybrid.rarity;
+        token.rarity.yield = hybrid.yield; // Hybrid rarity overrides default
         token.bidShares = hybrid.bidShares;
         token.timestamp = block.timestamp;
         token.birthday = block.number;
+        token.parents = parents;
         return token;
     }
 

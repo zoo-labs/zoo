@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import Button from "../../../components/Button/Button";
+import styled from 'styled-components'
+import Button from '../../../components/Button/Button'
 
 const MenuButton = styled(Button)`
   // color: ${({ theme }) => theme.colors.background};
@@ -10,10 +10,10 @@ const MenuButton = styled(Button)`
   svg {
     color: white;
   }
-`;
+`
 MenuButton.defaultProps = {
-  variant: "text",
-  size: "sm",
-};
+  variant: 'text',
+  size: 'sm',
+}
 
-export default MenuButton;
+export default MenuButton

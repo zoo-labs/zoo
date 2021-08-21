@@ -3,12 +3,7 @@
     "target": "es5",
     "module": "commonjs",
     "strict": false,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext",
-      "esnext.asynciterable"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext", "esnext.asynciterable"],
     "typeRoots": ["./node_modules/@types", "./types"],
     "allowJs": true,
     "esModuleInterop": true,
@@ -20,10 +15,7 @@
     "noEmit": true,
     "skipLibCheck": true,
     "rootDir": ".",
-    "types": [
-      "node",
-      "preact"
-    ],
+    "types": ["node", "preact"],
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
     "isolatedModules": true,

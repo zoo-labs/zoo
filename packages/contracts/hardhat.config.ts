@@ -1,10 +1,10 @@
 import { task } from 'hardhat/config'
 import { HardhatUserConfig } from 'hardhat/types'
 
+import '@nomiclabs/hardhat-ethers'
 import 'hardhat-deploy'
 import '@typechain/hardhat'
-import '@nomiclabs/hardhat-ethers'
-import '@nomiclabs/hardhat-web3';
+import '@nomiclabs/hardhat-web3'
 
 import { utils } from 'ethers'
 const { isAddress, getAddress, formatUnits, parseUnits } = utils
@@ -54,7 +54,7 @@ const config: HardhatUserConfig = {
   },
 
   paths: {
-    sources: './src'
+    sources: './src',
   },
 
   typechain: {
@@ -66,9 +66,8 @@ const config: HardhatUserConfig = {
 
   mocha: {
     timeout: 20000000,
-    parallel: true
-  }
-
+    parallel: true,
+  },
 }
 
 export default config
@@ -89,10 +88,7 @@ task('wallet', 'Create a wallet (pk) link', async (_, { ethers }) => {
 })
 
 task('fundedwallet', 'Create a wallet (pk) link and fund it with deployer?')
-  .addOptionalParam(
-    'amount',
-    'Amount of ETH to send to wallet after generating'
-  )
+  .addOptionalParam('amount', 'Amount of ETH to send to wallet after generating')
   .addOptionalParam('url', 'URL to add pk to')
   .setAction(async (taskArgs, { network, ethers }) => {
     const randomWallet = ethers.Wallet.createRandom()
@@ -117,28 +113,14 @@ task('fundedwallet', 'Create a wallet (pk) link and fund it with deployer?')
     // SEND USING LOCAL DEPLOYER MNEMONIC IF THERE
     // IS ONE IF NOT SEND USING LOCAL HARDHAT NODE:
     if (localDeployerMnemonic) {
-      let deployerWallet = ethers.Wallet.fromMnemonic(
-        localDeployerMnemonic as string
-      )
+      let deployerWallet = ethers.Wallet.fromMnemonic(localDeployerMnemonic as string)
       deployerWallet = deployerWallet.connect(ethers.provider)
-      console.log(
-        '💵 Sending ' +
-        amount +
-        ' ETH to ' +
-        randomWallet.address +
-        ' using deployer account'
-      )
+      console.log('💵 Sending ' + amount + ' ETH to ' + randomWallet.address + ' using deployer account')
       let sendresult = await deployerWallet.sendTransaction(tx)
       console.log('\n' + url + '/pk#' + privateKey + '\n')
       return
     } else {
-      console.log(
-        '💵 Sending ' +
-        amount +
-        ' BNB to ' +
-        randomWallet.address +
-        ' using local node'
-      )
+      console.log('💵 Sending ' + amount + ' BNB to ' + randomWallet.address + ' using local node')
       console.log('\n' + url + '/pk#' + privateKey + '\n')
       return send(ethers.provider.getSigner(), tx)
     }
@@ -157,23 +139,15 @@ task('generate', 'Create a mnemonic for builder deploys', async (_, { ethers }) 
   const wallet = hdwallet.derivePath(fullPath).getWallet()
   const privateKey = '0x' + wallet.getPrivateKey().toString('hex')
   if (DEBUG) console.log('privateKey', privateKey)
-  const address =
-    '0x' + privateToAddress(wallet.getPrivateKey()).toString('hex')
-  console.log(
-    '🔐 Account Generated as ' +
-    address +
-    ' and set as mnemonic in packages/hardhat'
-  )
-  console.log(
-    `💬 Use 'yarn run account' to get more information about the deployment account.`
-  )
+  const address = '0x' + privateToAddress(wallet.getPrivateKey()).toString('hex')
+  console.log('🔐 Account Generated as ' + address + ' and set as mnemonic in packages/hardhat')
+  console.log(`💬 Use 'yarn run account' to get more information about the deployment account.`)
 
   mnemonic = `affair lunar oak mention science hundred involve venture spider vast seven memory`
 
   fs.writeFileSync('./' + address + '.txt', mnemonic.toString())
   fs.writeFileSync('./mnemonic.txt', mnemonic.toString())
-}
-)
+})
 
 task('mineContractAddress', 'Looks for a deployer account that will give leading zeros')
   .addParam('searchFor', 'String to search for')
@@ -196,9 +170,7 @@ task('mineContractAddress', 'Looks for a deployer account that will give leading
       const privateKey = '0x' + wallet.getPrivateKey().toString('hex')
       if (DEBUG) console.log('privateKey', privateKey)
 
-      address =
-        '0x' + privateToAddress(wallet.getPrivateKey()).toString('hex')
-
+      address = '0x' + privateToAddress(wallet.getPrivateKey()).toString('hex')
 
       let nonce = 0x00 //The nonce must be a hex literal!
       let sender = address
@@ -213,23 +185,11 @@ task('mineContractAddress', 'Looks for a deployer account that will give leading
       // contract_address = contract_address_long.substring(24) //Trim the first 24 characters.
     }
 
-    console.log(
-      '⛏  Account Mined as ' +
-      address +
-      ' and set as mnemonic in packages/hardhat'
-    )
-    console.log(
-      '📜 This will create the first contract: ' +
-      chalk.magenta('0x' + contract_address)
-    )
-    console.log(
-      `💬 Use 'yarn run account' to get more information about the deployment account.`
-    )
+    console.log('⛏  Account Mined as ' + address + ' and set as mnemonic in packages/hardhat')
+    console.log('📜 This will create the first contract: ' + chalk.magenta('0x' + contract_address))
+    console.log(`💬 Use 'yarn run account' to get more information about the deployment account.`)
 
-    fs.writeFileSync(
-      './' + address + '_produces' + contract_address + '.txt',
-      mnemonic.toString()
-    )
+    fs.writeFileSync('./' + address + '_produces' + contract_address + '.txt', mnemonic.toString())
     fs.writeFileSync('./mnemonic.txt', mnemonic.toString())
   })
 
@@ -248,8 +208,7 @@ task('account', 'Get balance informations for the deployment account.', async (_
 
   '0x' + privateToAddress(wallet.getPrivateKey()).toString('hex')
   if (DEBUG) console.log('privateKey', privateKey)
-  const address =
-    '0x' + privateToAddress(wallet.getPrivateKey()).toString('hex')
+  const address = '0x' + privateToAddress(wallet.getPrivateKey()).toString('hex')
 
   qrcode.generate(address)
 
@@ -262,17 +221,14 @@ task('account', 'Get balance informations for the deployment account.', async (_
       let balance = await provider.getBalance(address)
       console.log(' -- ' + n + ' --  -- -- 📡 ')
       console.log('   balance: ' + ethers.utils.formatEther(balance))
-      console.log(
-        '   nonce: ' + (await provider.getTransactionCount(address))
-      )
+      console.log('   nonce: ' + (await provider.getTransactionCount(address)))
     } catch (e) {
       if (DEBUG) {
         console.log(e)
       }
     }
   }
-}
-)
+})
 
 async function addr(ethers, addr) {
   if (isAddress(addr)) {
@@ -298,16 +254,11 @@ task('blockNumber', 'Prints the block number', async (_, { ethers }) => {
 task('balance', `Prints an account's balance`)
   .addPositionalParam('account', `The account's address`)
   .setAction(async (taskArgs, { ethers }) => {
-    const balance = await ethers.provider.getBalance(
-      await addr(ethers, taskArgs.account)
-    )
+    const balance = await ethers.provider.getBalance(await addr(ethers, taskArgs.account))
     console.log(formatUnits(balance, 'ether'), 'ETH')
   })
 
-task('Faucet', `Gives 10K ZOO to each signer wallet`)
-  .setAction(async ({ ethers }) => {
-
-  })
+task('Faucet', `Gives 10K ZOO to each signer wallet`).setAction(async ({ ethers }) => {})
 
 function send(signer, txparams) {
   return signer.sendTransaction(txparams, (error, transactionHash) => {

@@ -4,13 +4,14 @@
 pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
-import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import { IERC165 } from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
-import { ReentrancyGuard } from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
+import { IERC165 } from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
+import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+import { ReentrancyGuard } from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import { IMarket, Decimal } from "./interfaces/IMarket.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 import { IAuctionHouse } from "./interfaces/IAuctionHouse.sol";
@@ -23,7 +24,7 @@ interface IMediaExtended is IMedia {
 /**
  * @title Zoo's auction house, enabling players to buy, sell and trade NFTs
  */
-contract ZooAuction is IAuctionHouse, ReentrancyGuard {
+contract ZooAuction is IAuctionHouse, ReentrancyGuard, Ownable {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
     using Counters for Counters.Counter;
@@ -56,15 +57,15 @@ contract ZooAuction is IAuctionHouse, ReentrancyGuard {
     }
 
     /*
-     * Constructor
+     * Configure ZooAuction to work with the proper media and token contract
      */
-    constructor(address _media, address _token) {
+    function configure(address _mediaAddress, address _tokenAddress) public onlyOwner {
         require(
-            IERC165(_media).supportsInterface(interfaceID),
+            IERC165(_mediaAddress).supportsInterface(interfaceID),
             "Doesn't support NFT interface"
         );
-        mediaAddress = _media;
-        tokenAddress = _token;
+        mediaAddress = _mediaAddress;
+        tokenAddress = _tokenAddress;
         timeBuffer = 15 * 60; // extend 15 minutes after every bid made in last 15 minutes
         minBidIncrementPercentage = 5; // 5%
     }
