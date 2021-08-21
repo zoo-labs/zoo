@@ -159,6 +159,8 @@ Moralis.Cloud.afterSave('Breed', async (request) => {
   const parentB = parseInt(request.object.get('parentB')) // parent B ID
   const now = Date.now()
 
+  logger.info(`Breed ${eggID}, ${parentA}, ${parentB}`)
+
   if (!confirmed(request)) {
     // Save new Hybrid Egg
     const egg = newEgg(request)
@@ -174,32 +176,32 @@ Moralis.Cloud.afterSave('Breed', async (request) => {
     // Update breeding time on animals
     const pA = await getAnimal(parentA)
     pA.set('lastBred', now)
-    pA.set('breedCount', pA.breed.count)
+    pA.set('breedCount', pA.breedCount+1)
     await pA.save()
 
     const pB = await getAnimal(parentB)
     pB.set('lastBred', now)
-    pB.set('breedCount', pB.breed.count)
+    pB.set('breedCount', pB.breedCount+1)
     await pB.save()
 
-    logger.info(`Hybrid Egg ${tokenID} hatched, pending confirmation`)
+    logger.info(`Hybrid Egg ${eggID} hatched, pending confirmation`)
     return
   }
 
   // confirmed, set to interactive
   const egg = await getEgg(eggID)
-  const tok = await getToken(eggID)
+  // const tok = await getToken(eggID)
   egg.set('interactive', true)
-  egg.set('tokenURI', tok.data.tokenURI)
-  egg.set('metadataURI', tok.data.metadataURI)
-  egg.set('rarity', tok.rarity.name)
+  // egg.set('tokenURI', tok.data.tokenURI)
+  // egg.set('metadataURI', tok.data.metadataURI)
+  // egg.set('rarity', tok.rarity.name)
   await egg.save()
 
   const tx = newTransaction(request)
   tx.set('action', 'Breed Animals')
   tx.set('parentA', tok.parentA)
   tx.set('parentB', tok.parentB)
-  tx.set('tokenID', tokenID)
+  tx.set('tokenID', eggID)
   await tx.save()
 
   logger.info(`Hybrid Egg ${tokenID} saved successfully`)

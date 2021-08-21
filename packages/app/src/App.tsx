@@ -200,6 +200,7 @@ const App: React.FC = () => {
             </Route>
 
             <Route path='/feed'>{signedIn ? <Feed /> : <Redirect to='/login' />}</Route>
+            <Route path='/market'>{signedIn ? <Feed /> : <Redirect to='/login' />}</Route>
 
             <Route exact path='/bank'>
               {signedIn ? (
