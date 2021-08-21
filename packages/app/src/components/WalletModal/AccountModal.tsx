@@ -155,6 +155,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
       <Flex width='100%' alignItems='center' justifyContent='space-between' flexDirection={moreSpace ? 'column' : 'row'}>
         {chainId !== 56 ? (
           <BorderButton
+            style={{ fontSize: 14 }}
             mb={moreSpace ? '8px' : null}
             onClick={() => {
               bscSwith('bsc')
@@ -166,6 +167,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
         {chainId !== 97 ? (
           <BorderButton
             mb={moreSpace ? '8px' : null}
+            style={{ fontSize: 14 }}
             onClick={() => {
               bscSwith('chapel')
             }}
@@ -176,6 +178,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
         ) : null}
         <BorderButton
           scale='sm'
+          style={{ fontSize: 14 }}
           onClick={() => {
             logout()
             window.localStorage.removeItem(connectorLocalStorageKey)
