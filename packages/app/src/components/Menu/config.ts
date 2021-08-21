@@ -2,9 +2,9 @@ import { MenuEntry } from './types'
 
 let defaultConf = [
   {
-    label: 'My Account',
+    label: 'Home',
     icon: 'AccountIcon',
-    href: '/account',
+    href: '/home',
   },
   {
     label: 'Bank',
@@ -12,9 +12,9 @@ let defaultConf = [
     href: '/bank',
   },
   {
-    label: 'Feed',
+    label: 'My Zoo',
     icon: 'MarketIcon',
-    href: '/feed',
+    href: '/myzoo',
   },
   {
     label: 'Market',
