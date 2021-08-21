@@ -5,6 +5,9 @@ import { NavLink, useHistory, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import Logo from '../../assets/img/ZooLogoWhite.png'
 import Menu from '../Menu'
+import { Label, Text } from 'components/Text'
+import { getZooToken, getZooDrop, getZooFaucet, getZooMedia, getZooKeeper } from 'util/contracts'
+
 // import Modal from '../Modal'
 import useTheme from 'hooks/useTheme'
 import useAuth from 'hooks/useAuth'
@@ -13,6 +16,7 @@ import UserBlock from 'components/SideMenu/components/UserBlock'
 import useToast from 'hooks/useToast'
 import ThemeSwitcher from 'components/SideMenu/components/ThemeSwitcher'
 import { MENU_ENTRY_HEIGHT } from 'components/SideMenu/config'
+import useWeb3 from 'hooks/useWeb3'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; isSm: boolean }>`
   grid-template-columns: 120px 1fr 120px;
@@ -67,7 +71,7 @@ const AccountElement = styled.div<{ active: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  border-radius: 12px;
+  background-color: #212429;
   white-space: nowrap;
   width: 100%;
   cursor: pointer;
@@ -168,18 +172,24 @@ const StyledNavLink = styled(NavLink).attrs({
   :focus {
   }
 `
+const BalanceText = styled(Text)``
+function numberWithCommas(num) {
+  const values = num.toString().split('.')
+  return values[0].replace(/.(?=(?:.{3})+$)/g, '$&,') + (values.length == 2 ? '.' + values[1] : '')
+}
 export default function Header() {
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const history = useHistory()
   const toastClear = () => {
     clear()
   }
+  const [balance, setBalance] = useState(0.0)
 
-  const [showUniBalanceModal, setShowUniBalanceModal] = useState(false)
   const [active, setActive] = useState('account')
   const { isXl, isXs, isSm } = useMatchBreakpoints()
   const { isDark, toggleTheme } = useTheme()
-  const { account, chainId } = useWeb3React()
+  const web3 = useWeb3()
+  const { account, chainID, gasPrice } = web3
   const { login, logout } = useAuth()
   const isMobile = isXl === false
   const [isPushed, setIsPushed] = useState(!isMobile)
@@ -194,7 +204,30 @@ export default function Header() {
     history.push(`${url}`)
     toastClear()
   }
+  const zooToken = getZooToken(web3)
+  const getBalance = async () => {
+    try {
+      const decimals = await zooToken.methods.decimals().call()
+      const rawBalance = await zooToken.methods.balanceOf(account).call()
+      const divisor = parseFloat(Math.pow(10, decimals).toString())
+      const balance = rawBalance / divisor
+      setBalance(balance)
+    } catch (e) {
+      console.error('ISSUE LOADING ZOO BALANCE \n', e)
+      toastClear()
+      toastError('Failed to load ZOO balance')
+    }
+  }
 
+  useEffect(() => {
+    let mounted = true
+    if (mounted) {
+      getBalance()
+    }
+    return () => {
+      mounted = false
+    }
+  }, [account, chainID])
   return (
     <HeaderFrame showBackground={scrollY > 45} isSm={isSm}>
       <Title href='.'>
@@ -224,7 +257,15 @@ export default function Header() {
       <HeaderControls>
         {/* <NetworkCard /> */}
         <HeaderElement>
-          <UserBlock account={account} login={login} logout={logout} />
+          <AccountElement active={!!account} style={{ pointerEvents: 'auto' }} className='rounded-xl'>
+            {account ? (
+              <BalanceText style={{ flexShrink: 0 }} pl='0.75rem' pr='0.5rem' fontWeight={500}>
+                <h6 className='text-sm font-semibold'>{numberWithCommas(balance)} ZOO</h6>
+              </BalanceText>
+            ) : null}
+            <UserBlock account={account} login={login} logout={logout} />
+          </AccountElement>
+
           <div className='flex items-center justify-center' style={{ height: MENU_ENTRY_HEIGHT }}>
             <ThemeSwitcher isDark={isDark} toggleTheme={toggleTheme} />
           </div>
