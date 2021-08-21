@@ -9,9 +9,9 @@ import { ModalProps } from './types'
 export const ModalHeader = styled.div<{ background?: string }>`
   align-items: center;
   background: ${({ background }) => background || 'transparent'};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.contrast};
+  border-bottom: 1px solid rgba(255,255,255,0.8);
   display: flex;
-  padding: 8px 24px;
+  padding: 12px 12px;
 `
 
 export const ModalTitle = styled(Flex)`

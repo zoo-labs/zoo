@@ -303,7 +303,7 @@ const Bank: React.FC = () => {
         <Body>
           <LabelWrapper>
             <Label style={{ marginLeft: -8, fontSize: '20px' }}>Wallet Balance</Label>
-            <BorderButton scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
+            <BorderButton disabled={ wait } scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
               {chainID !== 97 ? 'Buy ZOO' : wait ? 'Processing' : 'Get ZOO'}
             </BorderButton>
           </LabelWrapper>
