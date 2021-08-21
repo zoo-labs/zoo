@@ -149,15 +149,13 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
       <Flex justifyContent='space-evenly' flexDirection='column' mb={bscType ? '8px' : '32px'}>
         <LabelWrapper>
           <Label>Balance</Label>
-          <BorderButton height='25px' onClick={handleFunds} width='120px'>
-            Get ZOO
-          </BorderButton>
         </LabelWrapper>
         <ValueWrapper>{balance} ZOO</ValueWrapper>
       </Flex>
       <Flex width='100%' alignItems='center' justifyContent='space-between' flexDirection={moreSpace ? 'column' : 'row'}>
         {chainId !== 56 ? (
           <BorderButton
+            style={{ fontSize: 14 }}
             mb={moreSpace ? '8px' : null}
             onClick={() => {
               bscSwith('bsc')
@@ -169,6 +167,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
         {chainId !== 97 ? (
           <BorderButton
             mb={moreSpace ? '8px' : null}
+            style={{ fontSize: 14 }}
             onClick={() => {
               bscSwith('chapel')
             }}
@@ -179,6 +178,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
         ) : null}
         <BorderButton
           scale='sm'
+          style={{ fontSize: 14 }}
           onClick={() => {
             logout()
             window.localStorage.removeItem(connectorLocalStorageKey)

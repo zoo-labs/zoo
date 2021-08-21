@@ -187,7 +187,7 @@ const App: React.FC = () => {
         <GlobalStyle />
         <Switch>
           <Route exact path='/login'>
-            {signedIn ? <Redirect to='/account' /> : <Login />}
+            {signedIn ? <Redirect to='/home' /> : <Login />}
           </Route>
 
           <SuspenseWithChunkError fallback={<></>}>
@@ -213,6 +213,8 @@ const App: React.FC = () => {
             </Route>
 
             <Route path='/feed'>{signedIn ? <Feed /> : <Redirect to='/login' />}</Route>
+            <Route path='/myzoo'>{signedIn ? <Feed /> : <Redirect to='/login' />}</Route>
+            <Route path='/market'>{signedIn ? <Feed /> : <Redirect to='/login' />}</Route>
 
             <Route exact path='/bank'>
               {signedIn ? (
@@ -228,7 +230,7 @@ const App: React.FC = () => {
             </Route>
 
             <Route exact path='/'>
-              {signedIn ? <Redirect to='/account' /> : <Redirect to='/login' />}
+              {signedIn ? <Redirect to='/home' /> : <Redirect to='/login' />}
             </Route>
 
             <Route exact path=''>
