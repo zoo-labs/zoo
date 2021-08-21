@@ -20,6 +20,7 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
       {account ? (
         <BorderButton
           scale='sm'
+          style={{ fontSize: 14 }}
           onClick={() => {
             onPresentAccountModal()
           }}>
