@@ -27,18 +27,18 @@ const LogoContainer = styled.div`
 
 const StyledNav = styled.nav<{ showMenu: boolean; isPushed: boolean }>`
   position: fixed;
-  // top: ${({ showMenu }) => (showMenu ? 0 : `-${MENU_HEIGHT}px`)};
+  top: ${({ showMenu }) => (showMenu ? 0 : `-${MENU_HEIGHT}px`)};
   right: 0;
   transition: background-color 0.2s ease;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 8px;
+  padding-left: 16px;
   padding-right: 16px;
   width: 100%;
   height: ${MENU_HEIGHT}px;
   background-color: ${({ showMenu, theme }) => (showMenu ? (theme.isDark ? 'transparent' : `black`) : `black`)};
-  z-index: 20;
+  z-index: 90;
   transform: translate3d(0, 0, 0);
 `
 
@@ -173,6 +173,7 @@ const Menu: React.FC<NavProps> = ({ providerTitle, account, chainId, login, logo
     history.push('/feed')
   }
 
+  console.log('NAV')
   return (
     <Wrapper>
       <StyledNav showMenu={showMenu} isPushed={isPushed}>

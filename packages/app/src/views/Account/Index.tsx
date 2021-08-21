@@ -13,7 +13,7 @@ import { Flex, Heading, useMatchBreakpoints } from 'components'
 import Body from 'components/layout/Body'
 import { useModal } from 'components/Modal'
 import BuyEggs from 'components/BuyEggs'
-import MyZooAccount from 'views/MyZooAccount'
+import MyZoo from 'views/MyZoo'
 import { Egg } from 'types/zoo'
 import { useDispatch } from 'react-redux'
 import { breedTimeouts, eggTimeout } from 'constants/constants'
@@ -251,16 +251,6 @@ const Account: React.FC = () => {
 
   const buyEgg = async () => {
     setDisable(true)
-
-    // const drop = await zooKeeper.methods.drops(0).call()
-    // const token = await zooKeeper.methods.buyEgg(1).call({ from: account })
-    const createdAt = Date.now()
-    const now = Date.now()
-    const hatchTimeout = getMilliseconds(eggTimeout)
-    const elapsedTime = now - createdAt
-    const timeRemaining = hatchTimeout - elapsedTime
-    const timeRemainingDaysHours = getDaysHours(timeRemaining)
-    const barwidth = [100 * (elapsedTime / hatchTimeout), '%'].join('')
 
     try {
       await zooKeeper.methods

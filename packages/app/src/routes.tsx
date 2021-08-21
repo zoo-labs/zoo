@@ -4,6 +4,7 @@ import Feed from './views/Feed'
 
 let indexRoutes = [
   { path: '/account', name: 'Account', component: Account },
+  { path: '/home', name: 'Home', component: Account },
   { path: '/bank', name: 'Bank', component: Bank },
   { path: '/feed', name: 'Feed', component: Feed },
 ]

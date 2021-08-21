@@ -31,13 +31,6 @@ const Container = styled.div<{ isMobile?: boolean }>`
   }
 `
 
-// const StyledChevron = styled(ChevronLeftIcon)`
-//   height: 40px;
-//   width: 40px;
-//   z-index: 101;
-//   fill: white;
-// `
-
 const StyledMenuButton = styled.button`
   position: relative;
   top: -8px;
@@ -116,13 +109,24 @@ function Feed<FeedPagePops>({ match }) {
 
   //  Reroute to homes
   const HomeClick = () => {
-    history.push('/account')
+    history.push('/home')
   }
 
-  const handleClick = (newIndex) => {
-    console.log('new Index ' + newIndex)
-    setActiveIndex(newIndex)
-    swiperRef.slideTo(newIndex + 1, 200)
+  const onItemClick = (index) => {
+    console.log('new Index ' + index)
+    if (activeIndex == 0) {
+      index = 1
+    } else {
+      index = 0
+    }
+    swiperRef.slideTo(index, 200)
+    setActiveIndex(index)
+
+    if (index == 0) {
+      history.push('/myzoo')
+    } else {
+      history.push('/market')
+    }
   }
 
   const handleIndexChange = (obj) => {
@@ -132,82 +136,33 @@ function Feed<FeedPagePops>({ match }) {
   }
 
   //  Settings for Zoo vs Market
-  let filter = ''
-  switch (true) {
-    case pathname.includes('myzoo'):
-      filter = 'myZoo'
-      break
-    case pathname.includes('marketplace'):
-      filter = 'marketplace'
-      break
-    default:
-      filter = ''
-      break
-  }
-
-  //  Filter if in the Zoo or Market
-  const isMyZoo = filter === 'myZoo'
-
-  let totalAnimalsFiltered = animals.filter((animal) => {
-    return (animal.owner || '').toLowerCase() !== account.toLowerCase() && !animal.freed
-  })
-  console.log('Total Animals Filtered:')
-  console.log(totalAnimalsFiltered)
-
-  let myZooAnimalsFiltered = animals.filter((animal) => {
-    return animal.owner.toLowerCase() === account.toLowerCase()
-    // && !animal.freed
-  })
-  console.log('My Zoo Animals Filtered')
-  console.log(myZooAnimalsFiltered)
-
-  if (myZooAnimalsFiltered[0] === undefined) {
-    myZooAnimalsFiltered.shift()
-    myZooAnimalsFiltered.pop()
-  }
+  const isMarket = pathname.includes('market')
+  // setActiveIndex(isMarket ? 0 : 1)
+  useEffect(()=>{
+    if (isMarket) setActiveIndex(1)
+  }, [])
 
   if (match) {
-    const index1 = myZooAnimalsFiltered.findIndex((a) => a.tokenID === match.params.key)
-    const index = index1 + 1
-    console.log('Indexer ' + index)
-    const toMove = myZooAnimalsFiltered[index]
-    console.log(toMove)
-    myZooAnimalsFiltered[index] = myZooAnimalsFiltered[index]
-    myZooAnimalsFiltered[index] = toMove
+    console.log(match)
+    const index = animals.findIndex((a) => a.tokenID === match.params.key)
+    console.log('Index of match:', index)
   }
 
-  // const index = myZooAnimalsFiltered.findIndex((a) => a.tokenID === match.params.key)
-
   const animalGroup = {}
-  let myZooAnimalData = []
-  let totalAnimalData = []
-
-  myZooAnimalsFiltered.forEach((animal) => {
-    if (myZooAnimalData.find((a) => a.name === animal.name)) {
-      console.log(animal.name)
-    } else if (animal) {
-      console.log(animal)
-      myZooAnimalData.push(animal)
-    }
-  })
-
-  totalAnimalData = totalAnimalsFiltered
-  console.log('myZooAnimalsFiltered', myZooAnimalsFiltered)
-  console.log(myZooAnimalData.length)
 
   return (
     <Container isMobile={isMobile}>
       <ToggleContainer>
-        <ButtonMenu activeIndex={activeIndex} onItemClick={handleClick} scale='sm'>
+        <ButtonMenu activeIndex={activeIndex} onItemClick={onItemClick} scale='sm'>
           <ButtonMenuItem as='a'>My Zoo</ButtonMenuItem>
-          <ButtonMenuItem as='a'>Marketplace</ButtonMenuItem>
+          <ButtonMenuItem as='a'>Market</ButtonMenuItem>
         </ButtonMenu>
       </ToggleContainer>
       <Swiper onSwiper={setSwiperRef} onActiveIndexChange={handleIndexChange} centeredSlides={isMobile ? true : false} spaceBetween={30} slidesPerView={1} direction='horizontal'>
         <SwiperSlide key={0}>
-          {myZooAnimalData.length ? (
+          {animals.length ? (
             <Swiper spaceBetween={30} slidesPerView={1} direction='vertical'>
-              {myZooAnimalsFiltered.map((data) => {
+              {animals.map((data) => {
                 console.log('DATA')
                 console.log(data)
                 return (
@@ -228,7 +183,7 @@ function Feed<FeedPagePops>({ match }) {
         </SwiperSlide>
         <SwiperSlide key={1}>
           <Swiper spaceBetween={30} slidesPerView={1} direction='vertical'>
-            {totalAnimalData.map((data, index) => {
+            {animals.map((data, index) => {
               return data.listed ? (
                 <SwiperSlide key={data.tokenID + 'slide'}>
                   <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={{}} />

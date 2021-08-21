@@ -79,8 +79,6 @@ const MyZooAccount: React.FC = () => {
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
 
   const hatchEggReady = async (egg) => {
-    startAnimationTimer()
-
     const eggObject = Moralis.Object.extend('Eggs')
     const eggQuery = new Moralis.Query(eggObject)
     eggQuery.equalTo('tokenID', egg.tokenID)
@@ -100,10 +98,11 @@ const MyZooAccount: React.FC = () => {
     const animalResults = await animalQuery.find()
     const foundAnimal = animalResults[0]
 
-    console.log('foundAnimal', foundAnimal)
+    console.log('ANIMAL', foundAnimal)
     setHatched(mapAnimal(foundAnimal))
     foundAnimal.set('revealed', true)
     foundAnimal.save()
+    startAnimationTimer()
   }
 
   const hatchEgg = async (egg) => {
@@ -183,17 +182,15 @@ const MyZooAccount: React.FC = () => {
       const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount || 0
       const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey])
       const elapsedTime = now - lastBred
-      const timeRemaining = breedTimeout - elapsedTime
+      const timeRemaining = elapsedTime - breedTimeout
       const timeRemainingDaysHours = getDaysHours(timeRemaining)
       const barwidth = [100 * (elapsedTime / breedTimeout), '%'].join('')
 
-      console.log(lastBred)
-      console.log(timeRemaining)
+      console.log('animal', animal)
+      console.log('barwidth', barwidth, timeRemainingDaysHours)
+      console.log('lastBred', lastBred)
+      console.log('timeRemaining', timeRemaining)
 
-      console.log()
-      console.log()
-
-      console.log()
       if (timeRemaining <= 0 && animalData.find((a) => a.name === animal.name && a.timeRemaining <= 0)) {
         animalGroup[animal.name] = animalGroup[animal.name] ? [...animalGroup[animal.name], animal] : [animal]
       } else {
@@ -216,14 +213,6 @@ const MyZooAccount: React.FC = () => {
     const executeStackedBreeding = (a: Animal) => {
       console.log('EXECUTING STACKED BREEDING')
     }
-
-    console.log('ANIMALS')
-    console.log(animals)
-    console.log()
-
-    console.log(animalGroup)
-
-    console.log()
 
     return (
       <>

@@ -118,6 +118,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
   const web3 = useWeb3()
   const { chainId } = useWeb3React()
   const zooKeeper = getZooKeeper(web3)
+
   let sellAnimal: Animal = {
     owner: '',
     kind: -1,
@@ -173,35 +174,26 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
     await animalM.save()
     // animal.listed = true;
     // dispatch(addAnimal(animal));
-    const TransOb = Moralis.Object.extend('Transactions')
-    const newTrans = new TransOb()
-
-    newTrans.set('from', account)
-    newTrans.set('action', 'Listed Animal')
-    newTrans.set('tokenID', animal.tokenID)
-    newTrans.set('startingBid', String(bid.current))
-    newTrans.set('animalName', animalM.attributes.Name)
-    newTrans.save()
     bid.current = 100
 
     onDismiss()
   }
 
-  const SellConfirm: React.FC<SubAnimalCommonProps> = ({ onDismiss = () => null, breed }) => {
+  const SellConfirm: React.FC<SubAnimalCommonProps> = ({ onDismiss = () => null }) => {
     return (
       <Modal title='Confirm Listing' onDismiss={onDismiss}>
         <StyledText style={{ textAlign: 'center' }}>{`Do you want to list ${sellAnimal.name}?`}</StyledText>
         <Flex width='100%' alignItems='center' justifyContent='space-evenly' flexDirection='row' mt='16px'>
-          <StyledText fontSize='20px' style={{ whiteSpace: 'nowrap', marginTop: '5px' }}>
-            BID PRICE
+          <StyledText fontSize='18px' style={{ whiteSpace: 'nowrap', marginTop: '5px' }}>
+            LIST PRICE (ZOO)
           </StyledText>
-          <BidPriceInput type='number' />
+          <BidPriceInput type='number' style={{ color: 'black' }}/>
         </Flex>
         <Flex width='100%' alignItems='center' justifyContent='space-evenly' flexDirection='row' mt='16px'>
-          <BorderButton scale='md' onClick={() => breed(onDismiss)}>
+          <BorderButton style={{ fontSize: 14 }} scale='md' onClick={() => sell(onDismiss)}>
             Confirm
           </BorderButton>
-          <BorderButton scale='md' onClick={() => onDismiss()}>
+          <BorderButton style={{ fontSize: 14 }} scale='md' onClick={() => onDismiss()}>
             Cancel
           </BorderButton>
         </Flex>

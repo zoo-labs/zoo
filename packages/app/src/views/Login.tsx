@@ -54,7 +54,7 @@ const Button = styled.button`
   transition: all 0.2s ease-in-out;
   p {
     color: white;
-    font-size: 16px;
+    font-size: 14px;
   }
   :hover {
     -webkit-box-shadow: 0px 0px 0px #461e34, 0px 1px 6px rgba(0, 0, 0, 0.4), inset 0px 1px 0px rgba(255, 255, 255, 0.3), inset 0px 0px 3px rgba(255, 255, 255, 0.5);
