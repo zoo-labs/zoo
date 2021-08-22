@@ -7,15 +7,18 @@ import BorderButton from 'components/Button/BorderButton'
 import { connectorsByName } from '../../connectors'
 // import { useMoralis } from "react-moralis"
 // import Moralis from 'moralis'
-import { ethers } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 import Button from '../../components/Button/Button'
 import { Label, Text } from '../../components/Text'
 import Flex from '../../components/Box/Flex'
-import { Modal } from '../Modal'
+import { Modal, ModalCloseButton } from '../Modal'
 import CopyToClipboard from './CopyToClipboard'
 import { FaExchangeAlt } from 'react-icons/fa'
 import useWeb3 from 'hooks/useWeb3'
 import { getZooFaucet, getZooToken } from 'util/contracts'
+import AltModal from 'components/Modal/AltModal'
+import { numberWithCommas } from 'components/Functions'
+import { CloseIcon } from 'components/Svg'
 // import LinkExternal from '../../components/Link/LinkExternal'
 
 interface Props {
@@ -142,9 +145,84 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
   }
 
   const switchIcon = <FaExchangeAlt size='16px' style={{ margin: '0 8px -2px 0px' }} />
+  const getNetwork = (chainId: number) => {
+    switch (chainId) {
+      case 56:
+        return 'BSC-Test'
+      case 97:
+        return 'BSC'
+      default:
+        return ''
+    }
+  }
+
   return (
-    <Modal title='Your wallet' onDismiss={onDismiss} styles={{ minHeight: '250px', maxWidth: '90vw', justifyContent: 'space-between' }}>
-      <Label style={{ marginBottom: -20, padding: 0 }}>Address</Label>
+    <AltModal title='Your wallet' onDismiss={onDismiss}>
+      <div className='px-1 w-full'>
+        <div className='w-full rounded bg-gradient-to-r from-primary to-altBlue' style={{ padding: 1 }}>
+          <div className='flex flex-col h-full w-full bg-gray-900 rounded p-6 overflow-y-auto'>
+            <div className='space-y-3'>
+              <div className='space-y-3'>
+                <div className='flex items-center justify-between mb-4 '>
+                  <h2 className='text-2xl font-medium font-bold'>Account</h2>
+                  <div className='flex items-center justify-center w-6 h-6 cursor-pointer text-white hover:text-high-emphesis'>
+                    <div className='p-1 bg-white rounded-full' onClick={onDismiss}>
+                      <CloseIcon color='white' />
+                    </div>
+                  </div>
+                </div>
+                <div className='space-y-3'>
+                  <div className='flex items-center justify-between'>
+                    <div className='font-medium text-baseline text-secondary'>Connected with {getNetwork(chainId)}</div>
+                    <div className='flex space-x-3'>
+                      <button
+                        onClick={() => (chainId !== 56 ? bscSwith('bsc') : null, chainId !== 97 ? bscSwith('chapel') : null)}
+                        className='bg-dark-700 bg-opacity-20 outline-gray rounded text-gray hover:bg-opacity-40 disabled:bg-opacity-20 px-2 py-1 text-xs rounded disabled:cursor-not-allowed focus:outline-none'>
+                        Change
+                      </button>
+                    </div>
+                  </div>
+                  <div className='flex flex-col justify-center space-y-3'>
+                    <div className='bg-dark-800 py-2 px-3 rounded'>
+                      <div className='text-base font-medium currentColor'>{account ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}` : ''}</div>
+                    </div>
+                    <div className='flex items-center space-x-3 gap-2'>
+                      <a
+                        className='text-baseline whitespace-nowrap text-blue opacity-80 hover:opacity-100 focus:opacity-100 space-x-1 flex items-center justify-center'
+                        href={`https://testnet.bscscan.com/address/${account || ''}`}
+                        target='_blank'
+                        rel='noopener noreferrer'>
+                        <div className='text-sm font-medium primary'>View on explorer</div>
+                      </a>
+                      <div className='flex items-center flex-shrink-0 space-x-1 no-underline cursor-pointer whitespace-nowrap hover:no-underline focus:no-underline active:no-underline text-blue opacity-80 hover:opacity-100 focus:opacity-100'>
+                        <div className='text-sm font-medium primary'>Copy Address</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className='space-y-2'>
+                <div className='flex items-center justify-between mt-8'>
+                  <div className='text-base font-bold currentColor'>{numberWithCommas(balance)} ZOO</div>
+                  <div>
+                    <button
+                      onClick={() => {
+                        logout()
+                        window.localStorage.removeItem(connectorLocalStorageKey)
+                        history.push(`/login`)
+                        onDismiss()
+                      }}
+                      className='bg-dark-700 bg-opacity-20 outline-gray rounded text-gray hover:bg-opacity-40 disabled:bg-opacity-20 px-2 py-1 text-xs rounded disabled:cursor-not-allowed focus:outline-none'>
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <Label style={{ marginBottom: -20, padding: 0 }}>Address</Label>
       <ValueWrapper>{account}</ValueWrapper>
       <Flex justifyContent='space-evenly' flexDirection='column' mb={bscType ? '8px' : '32px'}>
         <LabelWrapper>
@@ -187,8 +265,8 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
           }}>
           Logout
         </BorderButton>
-      </Flex>
-    </Modal>
+      </Flex> */}
+    </AltModal>
   )
 }
 

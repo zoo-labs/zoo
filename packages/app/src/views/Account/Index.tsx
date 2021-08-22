@@ -291,7 +291,7 @@ const Account: React.FC = () => {
               <Eggs />
             </div>
 
-            <div className='m-4 flex justify-between flex-wrap'>
+            <div className='m-4 flex flex-wrap'>
               {(keepApprove || !allowance) && (
                 <div className={` ${isSm ? 'w-1/2' : 'w-1/6'} px-2`}>
                   <button
