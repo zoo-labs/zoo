@@ -21,7 +21,7 @@ import { MoreIcon } from 'components/SideMenu/icons'
 import More from './More'
 import QuestionHelper from './QuestionHelper'
 
-const HeaderFrame = styled.div<{ showBackground: boolean; isSm: boolean }>`
+const HeaderFrame = styled.div<{ showBackground: boolean; isSm: boolean; isFeed?: boolean }>`
   grid-template-columns: 120px 1fr 120px;
   -moz-box-pack: justify;
   -moz-box-align: center;
@@ -36,9 +36,9 @@ const HeaderFrame = styled.div<{ showBackground: boolean; isSm: boolean }>`
   box-shadow: transparent 0px 0px 0px 1px;
   transition: background-position 0.1s ease 0s, box-shadow 0.1s ease 0s;
   background-blend-mode: hard-light;
-  display: grid;
   width: 100%;
   ${({ isSm }) => (isSm ? 'grid-template-columns: 36px 1fr; padding: 1rem' : '')};
+  ${({ isFeed }) => (isFeed ? 'display: none' : 'display: grid')};
 `
 
 const HeaderLinks = styled.div`
@@ -235,7 +235,7 @@ export default function Header() {
     }
   }, [account, chainID])
   return (
-    <HeaderFrame showBackground={scrollY > 45} isSm={isSm}>
+    <HeaderFrame showBackground={scrollY > 45} isSm={isSm} isFeed={active == 'feed'}>
       <Title href='.'>
         <UniIcon>
           <img src={Logo} alt='logo' className='lg:w-2/3 w-full' />
