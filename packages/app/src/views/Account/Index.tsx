@@ -274,22 +274,6 @@ const Account: React.FC = () => {
     >
       <div className='lg:p-16 p-4 space-y-4 rounded-lg  m-4 flex flex-col'>
         <HeaderFrame isSm={isSm}>
-          {/* <div className={` grid rounded-md p-1 grid-cols-3 justify-self-start`} style={{ backgroundColor: 'rgb(44, 47, 54)', padding: 3, height: 46 }}>
-            {['Eggs', 'Animals', 'Hybrid'].map((path: string, index: number) => {
-              const selected = index === tab
-              return (
-                <a
-                  onClick={() => setTab(index)}
-                  id={`${path}-nav-link`}
-                  className={`rounded-md flex justify-center items-center cursor-pointer font-normal flex text-gray-300 text-center px-4 text-base ${
-                    selected && 'font-semibold text-white'
-                  }`}
-                  style={{ backgroundColor: selected ? '#212429' : 'transparent' }}>
-                  <h6>{path}</h6>
-                </a>
-              )
-            })}
-          </div> */}
           <div
             onClick={() => handleFunds()}
             className={`border flex justify-center items-center rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2  bg-opacity-80  text-primary border-gray-800 hover:bg-opacity-100 px-4 py-2 text-base rounded  font-semibold cursor-pointer focus:outline-none`}
