@@ -2,3 +2,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-dark-800 {
+    background-color: rgba(32,34,49,var(--tw-bg-opacity));
+}
+.bg-dark-700 {
+    background-color: rgba(46,51,72,var(--tw-bg-opacity));
+}
+.bg-primary {
+    background-color: rgb(140, 79, 248);
+}
+.primary {
+    color:rgb(140, 79, 248)
+}
