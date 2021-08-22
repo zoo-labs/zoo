@@ -20,6 +20,7 @@ import useWeb3 from 'hooks/useWeb3'
 import { MoreIcon } from 'components/SideMenu/icons'
 import More from './More'
 import QuestionHelper from './QuestionHelper'
+import { numberWithCommas } from 'components/Functions'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; isSm: boolean; isFeed?: boolean }>`
   grid-template-columns: 120px 1fr 120px;
@@ -176,10 +177,7 @@ const StyledNavLink = styled(NavLink).attrs({
   }
 `
 const BalanceText = styled(Text)``
-function numberWithCommas(num) {
-  const values = num.toString().split('.')
-  return values[0].replace(/.(?=(?:.{3})+$)/g, '$&,') + (values.length == 2 ? '.' + values[1] : '')
-}
+
 export default function Header() {
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const history = useHistory()
