@@ -203,11 +203,6 @@ const Account: React.FC = () => {
     }
   }, [account, chainID])
 
-  const bankClick = () => {
-    history.push('/bank')
-    toastClear()
-  }
-
   const handleFaucet = () => {
     try {
       setWait(true)
@@ -274,10 +269,12 @@ const Account: React.FC = () => {
   }
 
   return (
-    <div style={{ height: '100vh' }} className='flex items-center'>
-      <div style={{ backgroundColor: '#191b1f', width: isSm ? '80%' : '35%', minHeight: '40vh' }} className='p-4 space-y-4 rounded-lg z-10 m-auto flex flex-col'>
+    <div
+    // style={{ height: '100vh' }} className='flex items-center'
+    >
+      <div className='lg:p-16 p-4 space-y-4 rounded-lg  m-4 flex flex-col'>
         <HeaderFrame isSm={isSm}>
-          <div className={` grid rounded-md p-1 grid-cols-3 justify-self-start`} style={{ backgroundColor: 'rgb(44, 47, 54)', padding: 3, height: 46 }}>
+          {/* <div className={` grid rounded-md p-1 grid-cols-3 justify-self-start`} style={{ backgroundColor: 'rgb(44, 47, 54)', padding: 3, height: 46 }}>
             {['Eggs', 'Animals', 'Hybrid'].map((path: string, index: number) => {
               const selected = index === tab
               return (
@@ -292,17 +289,54 @@ const Account: React.FC = () => {
                 </a>
               )
             })}
-          </div>
+          </div> */}
           <div
-            style={{ color: 'rgb(255,255,255)', border: '1px solid rgba(21, 61, 111, 0.44)' }}
-            className={`border flex justify-center items-center rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2  bg-opacity-80  text-primary border-gray-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80 px-4 py-2 text-base rounded  font-semibold cursor-pointer focus:outline-none ${
-              isSm && 'z-10 fixed bottom-20 right-2/4 transform translate-x-2/4 -translate-y-1/2'
-            }`}>
+            onClick={() => handleFunds()}
+            className={`border flex justify-center items-center rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2  bg-opacity-80  text-primary border-gray-800 hover:bg-opacity-100 px-4 py-2 text-base rounded  font-semibold cursor-pointer focus:outline-none`}
+            style={{ color: 'rgb(255,255,255)', backgroundColor: '#8C4FF8', border: '1px solid rgba(21, 61, 111, 0.44)', width: isSm ? '40%' : 100, height: 50 }}>
             {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
           </div>
         </HeaderFrame>
+
         <div className='flex flex-col h-full'>
-          {tab === 0 ? (
+          <div className='flex flex-col justify-between h-full'>
+            <div style={{ flex: 1 }} className='p-5 rounded'>
+              <div className='mb-2'>
+                <Label style={{ fontSize: '20px' }}>{currentEggsOwned} Eggs Owned</Label>
+              </div>
+              <Eggs />
+            </div>
+
+            <div className='m-4 flex justify-between flex-wrap'>
+              {(keepApprove || !allowance) && (
+                <div className={` ${isSm ? 'w-1/2' : 'w-1/6'} px-2`}>
+                  <button
+                    disabled={disableApprove || allowance}
+                    style={{ color: 'rgb(255,255,255)', backgroundColor: '#8C4FF8', border: '1px solid rgba(21, 61, 111, 0.44)' }}
+                    className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-gray-700 bg-opacity-80  text-primary border-gray-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80  py-4 text-base rounded  font-semibold disabled:cursor-not-allowed focus:outline-none w-full`}
+                    onClick={approve}>
+                    {allowance ? 'APPROVED' : disableApprove ? 'PROCESSING' : 'APPROVE'}
+                  </button>
+                </div>
+              )}
+              <div className={` ${isSm && !allowance ? 'w-1/2' : isSm ? 'w-full' : 'w-1/6'} px-2`}>
+                <button
+                  disabled={disable || !allowance}
+                  className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80 px-6 py-4 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full`}
+                  style={{ backgroundColor: allowance ? '#8C4FF8' : 'rgb(44, 47, 54)' }}
+                  onClick={buyEgg}>
+                  {disable ? 'PROCESSING' : 'BUY EGGS'}
+                </button>
+              </div>
+            </div>
+          </div>
+          <div style={{ flex: 1 }} className='p-5 rounded my-4'>
+            <Animals hybrid='pure' />
+          </div>
+          <div style={{ flex: 1 }} className='p-5 rounded my-4'>
+            <Animals hybrid='hybrid' />
+          </div>
+          {/* {tab === 0 ? (
             <div className='flex flex-col justify-between h-full'>
               <div style={{ backgroundColor: '#212429', flex: 1 }} className='p-5 rounded'>
                 <div className='mb-2'>
@@ -346,7 +380,7 @@ const Account: React.FC = () => {
                 <Animals hybrid='hybrid' />
               </div>
             </>
-          )}
+          )} */}
         </div>
       </div>
       <div

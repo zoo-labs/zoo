@@ -112,7 +112,7 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
               No {hybrid === 'pure' ? '' : `hybrid `}animals
             </StyledText>
           ) : (
-            <Swiper slidesPerView={isSm ? 1 : 2} spaceBetween={4} pagination={{ clickable: true }}>
+            <Swiper slidesPerView={isSm ? 1 : 8} spaceBetween={4} pagination={{ clickable: true }}>
               {animals.map((animal) => {
                 return (
                   <SwiperSlide style={{ width: '33%', display: 'flex' }} key={animal.tokenID}>
