@@ -29,6 +29,7 @@ const Container = styled.div<{ isMobile?: boolean }>`
   & .swiper-container {
     height: 100vh;
   }
+  z-index: 4;
 `
 
 const StyledMenuButton = styled.button`
@@ -114,19 +115,19 @@ function Feed<FeedPagePops>({ match }) {
 
   const onItemClick = (index) => {
     console.log('new Index ' + index)
-    if (activeIndex == 0) {
-      index = 1
-    } else {
-      index = 0
-    }
+    // if (activeIndex == 0) {
+    //   index = 1
+    // } else {
+    //   index = 0
+    // }
     swiperRef.slideTo(index, 200)
     setActiveIndex(index)
 
-    if (index == 0) {
-      history.push('/myzoo')
-    } else {
-      history.push('/market')
-    }
+    // if (index == 0) {
+    //   history.push('/myzoo')
+    // } else {
+    //   history.push('/market')
+    // }
   }
 
   const handleIndexChange = (obj) => {
@@ -138,7 +139,7 @@ function Feed<FeedPagePops>({ match }) {
   //  Settings for Zoo vs Market
   const isMarket = pathname.includes('market')
   // setActiveIndex(isMarket ? 0 : 1)
-  useEffect(()=>{
+  useEffect(() => {
     if (isMarket) setActiveIndex(1)
   }, [])
 
@@ -152,12 +153,28 @@ function Feed<FeedPagePops>({ match }) {
 
   return (
     <Container isMobile={isMobile}>
-      <ToggleContainer>
-        <ButtonMenu activeIndex={activeIndex} onItemClick={onItemClick} scale='sm'>
+      {/* <ButtonMenu activeIndex={activeIndex} onItemClick={onItemClick} scale='sm'>
           <ButtonMenuItem as='a'>My Zoo</ButtonMenuItem>
           <ButtonMenuItem as='a'>Market</ButtonMenuItem>
-        </ButtonMenu>
-      </ToggleContainer>
+        </ButtonMenu> */}
+      <div className='w-full items-center justify-center absolute z-10 mt-4 flex'>
+        <div className={` grid rounded-md p-1 grid-cols-2 justify-self-start w-2/3`} style={{ backgroundColor: 'rgb(44, 47, 54)', padding: 3, height: 46 }}>
+          {['My Zoo', 'Market'].map((item: string, index: number) => {
+            const active = activeIndex == index
+            return (
+              <a
+                onClick={() => onItemClick(index)}
+                className={`rounded-md flex justify-center items-center cursor-pointer font-normal flex text-gray-300 text-center px-4 text-base ${
+                  active && 'font-semibold text-white'
+                }`}
+                style={{ backgroundColor: active ? '#212429' : 'transparent' }}>
+                <h6>{item}</h6>
+              </a>
+            )
+          })}
+        </div>
+      </div>
+
       <Swiper onSwiper={setSwiperRef} onActiveIndexChange={handleIndexChange} centeredSlides={isMobile ? true : false} spaceBetween={30} slidesPerView={1} direction='horizontal'>
         <SwiperSlide key={0}>
           {animals.length ? (
