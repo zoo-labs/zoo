@@ -3,6 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-dark-900 {
+    background-color: rgba(22,21,34,var(--tw-bg-opacity));
+}
 .bg-dark-800 {
     background-color: rgba(32,34,49,var(--tw-bg-opacity));
 }

@@ -159,8 +159,8 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
   return (
     <AltModal title='Your wallet' onDismiss={onDismiss}>
       <div className='px-1 w-full'>
-        <div className='w-full rounded bg-gradient-to-r from-primary to-altBlue' style={{ padding: 1 }}>
-          <div className='flex flex-col h-full w-full bg-gray-900 rounded p-6 overflow-y-auto'>
+        <div className='w-full rounded bg-gradient-to-r from-primary to-pink' style={{ padding: 1 }}>
+          <div className='flex flex-col h-full w-full bg-dark-900 bg-opacity-100 rounded p-6 overflow-y-auto'>
             <div className='space-y-3'>
               <div className='space-y-3'>
                 <div className='flex items-center justify-between mb-4 '>
