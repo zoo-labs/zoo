@@ -10,6 +10,7 @@ module.exports = {
 
       secondary: 'rgb(44, 47, 54)',
       altBlue: 'rgb(80, 144, 234)',
+      pink: '#f338c3',
       danger: '#e3342f',
     }),
   },
