@@ -192,19 +192,7 @@ const App: React.FC = () => {
           </Route>
 
           <SuspenseWithChunkError fallback={<></>}>
-// <<<<<<< HEAD
-//             <Route exact path='/home'>
-//               {signedIn ? (
-//                 <Menu>
-//                   <Account />
-//                 </Menu>
-//               ) : (
-//                 <Redirect to='/login' />
-//               )}
-//             </Route>
-//             <Route exact path='/account'>
-// =======
-            <div className='flex fixed top-0 justify-between flex-nowrap w-full'>
+            <div className='flex sticky top-0 justify-between flex-nowrap w-full z-10'>
               <Header />
             </div>
             <Switch>
@@ -247,11 +235,6 @@ const App: React.FC = () => {
             </Route>
 
             <Route exact path=''>
-// <<<<<<< HEAD
-//               {signedIn ? <Redirect to='/home' /> : <Redirect to='/login' />}
-//             </Route>
-
-// =======
               {signedIn ? <Redirect to='/account' /> : <Redirect to='/login' />}
             </Route> */}
           </SuspenseWithChunkError>
