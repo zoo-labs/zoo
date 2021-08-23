@@ -198,11 +198,17 @@ export default function Header() {
   const isMobile = isXl === false
   const [isPushed, setIsPushed] = useState(!isMobile)
   const [showMenu, setShowMenu] = useState(true)
+<<<<<<< HEAD
   const [wait, setWait] = useState(false)
 
   let location = useLocation()
   useEffect(() => {
     setActive(location.pathname.split('/')[1])
+=======
+  let location = useLocation()
+  useEffect(() => {
+    setActive(location.pathname.slice(1))
+>>>>>>> dev
   }, [location])
   console.log('active', active)
   const scrollY = useScrollPosition()
@@ -324,7 +330,7 @@ export default function Header() {
             <UserBlock account={account} login={login} logout={logout} />
           </AccountElement>
           <More />
-          {/*          
+          {/*
           <div
             className='font-semibold flex flex-nowrap p-2 rounded-xl'
             style={{ color: 'white', backgroundColor: 'rgba(21, 61, 111, 0.44)', border: '1px solid rgba(21, 61, 111, 0.44)' }}>
