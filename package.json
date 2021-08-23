@@ -17,7 +17,6 @@
     "start": "yarn workspace @zoolabs/app start",
     "storybook": "yarn workspace @zoolabs/app storybook",
     "build-storybook": "yarn workspace @zoolabs/app build-storybook",
-
     "account": "yarn workspace @zoolabs/contracts account",
     "accounts": "yarn workspace @zoolabs/contracts accounts",
     "balance": "yarn workspace @zoolabs/contracts balance",
@@ -38,16 +37,13 @@
     "send": "yarn workspace @zoolabs/contracts send",
     "test": "yarn workspace @zoolabs/contracts test",
     "wallet": "cd packages/contracts && npx contracts wallet",
-
     "drop": "yarn workspace @zoolabs/moralis drop",
     "functions": "yarn workspace @zoolabs/moralis functions",
     "logs": "yarn workspace @zoolabs/moralis logs",
     "plugins": "yarn workspace @zoolabs/moralis plugins",
     "proxy": "yarn workspace @zoolabs/moralis proxy",
     "watch": "yarn workspace @zoolabs/moralis watch",
-
     "lab": "yarn workspace @zoolabs/lab start",
-
     "deploy-graph": "yarn deploy && yarn graph-ship-local",
     "graph-build": "yarn workspace @zoolabs/subgraph graph build",
     "graph-codegen": "yarn workspace @zoolabs/subgraph graph codegen",
@@ -56,11 +52,9 @@
     "graph-prepare": "mustache packages/subgraph/config/config.json packages/subgraph/src/subgraph.template.yaml > packages/subgraph/subgraph.yaml",
     "graph-remove-local": "yarn workspace @zoolabs/subgraph graph remove --node http://localhost:8020/ scaffold-eth/your-contract",
     "graph-ship-local": "yarn graph-prepare && yarn graph-codegen && yarn graph-deploy-local",
-
     "run-graph-node": "yarn workspace @zoolabs/graph-node run-graph-node",
     "remove-graph-node": "yarn workspace @zoolabs/graph-node remove-graph-node",
     "clean-graph-node": "yarn workspace @zoolabs/graph-node clean-graph-node",
-
     "pretty": "yarn workspace @zoolabs/app pretty && yarn workspace @zoolabs/contracts pretty && yarn workspace @zoolabs/dev pretty && yarn workspace @zoolabs/moralis pretty"
   },
   "workspaces": {
