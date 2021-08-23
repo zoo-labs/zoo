@@ -19,6 +19,7 @@ import { getZooFaucet, getZooToken } from 'util/contracts'
 import AltModal from 'components/Modal/AltModal'
 import { numberWithCommas } from 'components/Functions'
 import { CloseIcon } from 'components/Svg'
+import CopyHelper from './Copy'
 // import LinkExternal from '../../components/Link/LinkExternal'
 
 interface Props {
@@ -194,9 +195,9 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
                         rel='noopener noreferrer'>
                         <div className='text-sm font-medium primary'>View on explorer</div>
                       </a>
-                      <div className='flex items-center flex-shrink-0 space-x-1 no-underline cursor-pointer whitespace-nowrap hover:no-underline focus:no-underline active:no-underline text-blue opacity-80 hover:opacity-100 focus:opacity-100'>
+                      <CopyHelper toCopy={account}>
                         <div className='text-sm font-medium primary'>Copy Address</div>
-                      </div>
+                      </CopyHelper>
                     </div>
                   </div>
                 </div>

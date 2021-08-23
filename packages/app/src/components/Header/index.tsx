@@ -200,7 +200,7 @@ export default function Header() {
   const [showMenu, setShowMenu] = useState(true)
   let location = useLocation()
   useEffect(() => {
-    setActive(location.pathname.slice(1))
+    setActive(location.pathname.split('/')[1])
   }, [location])
   console.log('active', active)
   const scrollY = useScrollPosition()
@@ -232,6 +232,7 @@ export default function Header() {
       mounted = false
     }
   }, [account, chainID])
+
   return (
     <HeaderFrame showBackground={scrollY > 45} isSm={isSm} isFeed={active == 'feed'}>
       <Title href='.'>
