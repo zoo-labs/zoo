@@ -221,7 +221,6 @@ const Account: React.FC = () => {
 
   return (
     <div
-      className=''
       // style={{ height: '100vh' }} className='flex items-center'
     >
       <div className='lg:p-16 p-4 space-y-4 rounded-lg  m-4 flex flex-col relative filter drop-shadow'>
@@ -334,7 +333,6 @@ const Account: React.FC = () => {
         }}
         className='absolute  bg-pink-light  rounded-full z-0 filter  blur-3xl'></div>
       {/* <div
-        style={{
           background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
           backgroundColor: 'rgba(20,20,20,1)',
           width: '200vw',
@@ -344,7 +342,7 @@ const Account: React.FC = () => {
           left: 0,
           right: 0,
           zIndex: -1,
-         
+
         }}
         className='fixed '></div> */}
     </div>
