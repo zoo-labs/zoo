@@ -109,8 +109,6 @@ const HeaderFrame = styles.div<{ isSm: boolean }>`
 const Account: React.FC = () => {
   const [isInitial, setIsInitial] = useState(true)
   const [tab, setTab] = useState(0)
-  const [balance, setBalance] = useState(0.0)
-  const [wait, setWait] = useState(false)
   const [allowance, setAllowance] = useState(false)
   const [disable, setDisable] = useState(false)
   const [disableApprove, setDisableApprove] = useState(false)
@@ -119,9 +117,6 @@ const Account: React.FC = () => {
   const { account, chainID, gasPrice } = web3
   const { isXl, isSm } = useMatchBreakpoints()
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
-  const history = useHistory()
-  const [onBuyEggs] = useModal(<BuyEggs />)
-  const dispatch = useDispatch()
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
 
   const toastClear = () => {
@@ -131,8 +126,6 @@ const Account: React.FC = () => {
   const currentEggsOwned = Object.values(allEggs).filter((egg) => (egg.owner || '').toLowerCase() === account.toLowerCase() && !egg.burned).length
 
   const zooToken = getZooToken(web3)
-  const faucet = getZooFaucet(web3)
-  const zooMedia = getZooMedia(web3)
   const zooKeeper = getZooKeeper(web3)
   const zooDrop = getZooDrop(web3)
   const keeperAdd = zooKeeper.options.address
@@ -143,7 +136,6 @@ const Account: React.FC = () => {
       const rawBalance = await zooToken.methods.balanceOf(account).call()
       const divisor = parseFloat(Math.pow(10, decimals).toString())
       const balance = rawBalance / divisor
-      setBalance(balance)
     } catch (e) {
       console.error('ISSUE LOADING ZOO BALANCE \n', e)
       toastClear()
@@ -203,47 +195,6 @@ const Account: React.FC = () => {
     }
   }, [account, chainID])
 
-  const handleFaucet = () => {
-    try {
-      setWait(true)
-      toastClear()
-      toastInfo('Sending ZOO...')
-      faucet.methods
-        .fund(account)
-        .send({ from: account })
-        .then(() => {
-          setWait(false)
-          getBalance()
-          toastClear()
-          toastSuccess('Sent ZOO!')
-        })
-        .catch((e) => {
-          console.error('ISSUE USING FAUCET \n', e)
-          setWait(false)
-          toastClear()
-          toastInfo('Canceled request for ZOO.')
-        })
-    } catch (e) {
-      console.error('ISSUE USING FAUCET \n', e)
-      toastClear()
-      toastError('Unable to process transaction. Try again later.')
-    }
-  }
-
-  const handleFunds = () => {
-    switch (chainID) {
-      case 1337:
-        handleFaucet()
-        break
-      case 97:
-        handleFaucet()
-        break
-      default:
-        const redirectWindow = window.open('https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997', '_blank')
-        redirectWindow.location
-    }
-  }
-
   const buyEgg = async () => {
     setDisable(true)
 
@@ -274,15 +225,6 @@ const Account: React.FC = () => {
       // style={{ height: '100vh' }} className='flex items-center'
     >
       <div className='lg:p-16 p-4 space-y-4 rounded-lg  m-4 flex flex-col relative filter drop-shadow'>
-        <HeaderFrame isSm={isSm}>
-          <div
-            onClick={() => handleFunds()}
-            className={`border flex justify-center items-center rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2  bg-opacity-80  text-primary border-gray-800 hover:bg-opacity-100 px-4 py-2 text-base rounded  font-semibold cursor-pointer focus:outline-none`}
-            style={{ color: 'rgb(255,255,255)', backgroundColor: '#8C4FF8', border: '1px solid rgba(21, 61, 111, 0.44)', width: isSm ? '40%' : 100, height: 50 }}>
-            {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
-          </div>
-        </HeaderFrame>
-
         <div className='flex flex-col h-full'>
           <div className='flex flex-col justify-between h-full'>
             <div style={{ flex: 1 }} className='p-5 rounded'>
