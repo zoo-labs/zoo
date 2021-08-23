@@ -1,6 +1,6 @@
 import useScrollPosition from '@react-hook/window-scroll'
 import { useMatchBreakpoints } from 'hooks'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import Logo from '../../assets/img/ZooLogoWhite.png'
@@ -17,6 +17,9 @@ import useToast from 'hooks/useToast'
 import ThemeSwitcher from 'components/SideMenu/components/ThemeSwitcher'
 import { MENU_ENTRY_HEIGHT } from 'components/SideMenu/config'
 import useWeb3 from 'hooks/useWeb3'
+import { MoreIcon } from 'components/SideMenu/icons'
+import More from './More'
+import QuestionHelper from './QuestionHelper'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; isSm: boolean }>`
   grid-template-columns: 120px 1fr 120px;
@@ -184,6 +187,9 @@ export default function Header() {
     clear()
   }
   const [balance, setBalance] = useState(0.0)
+  const [show, setShow] = useState<boolean>(false)
+
+  const open = useCallback(() => setShow(true), [setShow])
 
   const [active, setActive] = useState('account')
   const { isXl, isXs, isSm } = useMatchBreakpoints()
@@ -232,22 +238,22 @@ export default function Header() {
     <HeaderFrame showBackground={scrollY > 45} isSm={isSm}>
       <Title href='.'>
         <UniIcon>
-          <img width='36px' src={Logo} alt='logo' />
+          <img src={Logo} alt='logo' className='lg:w-2/3 w-full' />
         </UniIcon>
       </Title>
       <div
-        className={`self-center items-center grid gap-4 grid-flow-col w-max rounded-2xl p-1 m-1 justify-self-center ${
+        className={`self-center items-center grid gap-6 grid-flow-col w-max rounded-2xl p-1 m-1 justify-self-center ${
           isSm && 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2'
         }`}
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
-        {['Home', 'Bank', 'Feed', 'Charts'].map((path: string) => {
+        {['Home', 'Bank', 'Feed'].map((path: string) => {
           const selected = active === path.toLowerCase()
           return (
             <a
               onClick={() => urlClick(path.toLowerCase())}
               id={`${path}-nav-link`}
               className={`items-left rounded-md cursor-pointer text-md font-normal flex text-gray-300 ${selected && 'font-semibold rounded-xl text-white'}`}
-              style={{ backgroundColor: selected ? 'rgb(44, 47, 54)' : 'transparent', padding: '8px 12px' }}>
+              style={{ backgroundColor: selected ? 'rgb(44, 47, 54)' : 'transparent', padding: '10px 14px' }}>
               <h6>{path}</h6>
             </a>
           )
@@ -259,16 +265,22 @@ export default function Header() {
         <HeaderElement>
           <AccountElement active={!!account} style={{ pointerEvents: 'auto' }} className='rounded-xl'>
             {account ? (
-              <BalanceText style={{ flexShrink: 0 }} pl='0.75rem' pr='0.5rem' fontWeight={500}>
-                <h6 className='text-sm font-semibold'>{numberWithCommas(balance)} ZOO</h6>
-              </BalanceText>
+              <>
+                {/* <QuestionHelper text='Buy ZOO' show={show} /> */}
+                <BalanceText onMouseEnter={open} style={{ flexShrink: 0 }} pl='0.75rem' pr='0.5rem' fontWeight={500}>
+                  <h6 className='text-xs font-semibold'>{numberWithCommas(balance)} ZOO</h6>
+                </BalanceText>
+              </>
             ) : null}
             <UserBlock account={account} login={login} logout={logout} />
           </AccountElement>
-
-          <div className='flex items-center justify-center' style={{ height: MENU_ENTRY_HEIGHT }}>
-            <ThemeSwitcher isDark={isDark} toggleTheme={toggleTheme} />
-          </div>
+          <More />
+          {/*          
+          <div
+            className='font-semibold flex flex-nowrap p-2 rounded-xl'
+            style={{ color: 'white', backgroundColor: 'rgba(21, 61, 111, 0.44)', border: '1px solid rgba(21, 61, 111, 0.44)' }}>
+            <MoreIcon fill={isDark ? 'white' : 'textDisabled'} />
+          </div> */}
           {/* <Menu /> */}
         </HeaderElement>
       </HeaderControls>
