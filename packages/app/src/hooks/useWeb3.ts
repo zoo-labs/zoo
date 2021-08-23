@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import Web3 from 'web3'
 import { useWeb3React } from '@web3-react/core'
 import { getWeb3NoAccount } from 'util/web3'
+import { AbstractConnector } from '@web3-react/abstract-connector';
 
 // import Moralis from 'moralis'
 
@@ -9,6 +10,7 @@ export type Extra = {
   account: string
   chainID: number
   gasPrice: number
+  connector:AbstractConnector
 }
 
 export type CustomWeb3 = Web3 & Extra
@@ -19,7 +21,7 @@ export type CustomWeb3 = Web3 & Extra
  * Recreate web3 instance only if the provider change
  */
 export const useWeb3 = () => {
-  const { account, chainId, library } = useWeb3React()
+  const { account, chainId, library,connector } = useWeb3React()
   const ref = useRef(library)
   const [gasPrice, setGasPrice] = useState(null)
   const [web3, setWeb3] = useState(library ? new Web3(library) : getWeb3NoAccount())
@@ -50,6 +52,7 @@ export const useWeb3 = () => {
   custom.account = account
   custom.chainID = Number(chainId)
   custom.gasPrice = gasPrice
+  custom.connector = connector
   // custom.eth.handleRevert = true
 
   return custom
