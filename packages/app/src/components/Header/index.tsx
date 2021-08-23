@@ -198,6 +198,8 @@ export default function Header() {
   const isMobile = isXl === false
   const [isPushed, setIsPushed] = useState(!isMobile)
   const [showMenu, setShowMenu] = useState(true)
+  const [wait, setWait] = useState(false)
+
   let location = useLocation()
   useEffect(() => {
     setActive(location.pathname.split('/')[1])
@@ -232,7 +234,48 @@ export default function Header() {
       mounted = false
     }
   }, [account, chainID])
+  const faucet = getZooFaucet(web3)
 
+  const handleFaucet = () => {
+    try {
+      setWait(true)
+      toastClear()
+      toastInfo('Sending ZOO...')
+      faucet.methods
+        .fund(account)
+        .send({ from: account })
+        .then(() => {
+          setWait(false)
+          getBalance()
+          toastClear()
+          toastSuccess('Sent ZOO!')
+        })
+        .catch((e) => {
+          console.error('ISSUE USING FAUCET \n', e)
+          setWait(false)
+          toastClear()
+          toastInfo('Canceled request for ZOO.')
+        })
+    } catch (e) {
+      console.error('ISSUE USING FAUCET \n', e)
+      toastClear()
+      toastError('Unable to process transaction. Try again later.')
+    }
+  }
+
+  const handleFunds = () => {
+    switch (chainID) {
+      case 1337:
+        handleFaucet()
+        break
+      case 97:
+        handleFaucet()
+        break
+      default:
+        const redirectWindow = window.open('https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997', '_blank')
+        redirectWindow.location
+    }
+  }
   return (
     <HeaderFrame showBackground={scrollY > 45} isSm={isSm} isFeed={active == 'feed'}>
       <Title href='.'>
@@ -241,8 +284,8 @@ export default function Header() {
         </UniIcon>
       </Title>
       <div
-        className={`self-center items-center grid gap-6 grid-flow-col w-max rounded-2xl p-1 m-1 justify-self-center ${
-          isSm && 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2'
+        className={`self-center items-center grid grid-flow-col w-max rounded-2xl p-1 m-1 justify-self-center ${
+          isSm ? 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
         }`}
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
         {['Home', 'Bank', 'Feed'].map((path: string) => {
@@ -257,6 +300,13 @@ export default function Header() {
             </a>
           )
         })}
+        <a
+          onClick={() => handleFunds()}
+          // id={`${path}-nav-link`}
+          className={`items-left cursor-pointer text-md flex text-gray-300 font-semibold rounded-xl text-white`}
+          style={{ backgroundColor: '#8C4FF8', padding: '10px 14px' }}>
+          <h6> {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}</h6>
+        </a>
       </div>
 
       <HeaderControls>

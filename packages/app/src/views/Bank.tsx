@@ -9,7 +9,7 @@ import { useWeb3 } from 'hooks/useWeb3'
 import { useHistory } from 'react-router-dom'
 import styles from 'styled-components'
 import { Label, Text } from 'components/Text'
-import { Flex, Heading } from 'components'
+import { CheckmarkCircleIcon, Flex, Heading } from 'components'
 import Body from 'components/layout/Body'
 import { useModal } from 'components/Modal'
 import BuyEggs from 'components/BuyEggs'
@@ -19,6 +19,28 @@ import { FaHome } from 'react-icons/fa'
 import Moralis from 'moralis'
 import { resourceLimits } from 'worker_threads'
 import { Link } from 'react-router-dom'
+import Transaction from 'components/Transaction'
+import TransactionTable from 'components/Transaction/Table'
+
+const HeaderFrame = styles.div<{ isSm: boolean }>`
+  grid-template-columns: 1fr 120px;
+  -moz-box-pack: justify;
+  -moz-box-align: center;
+  flex-direction: row;
+  top: 0px;
+  padding: 1rem;
+  z-index: 21;
+  position: relative;
+  background-image: linear-gradient(transparent 50%, rgb(25, 27, 31) 50%);
+  background-position: 0px 0px;
+  background-size: 100% 200%;
+  box-shadow: transparent 0px 0px 0px 1px;
+  transition: background-position 0.1s ease 0s, box-shadow 0.1s ease 0s;
+  background-blend-mode: hard-light;
+  display: grid;
+  width: 100%;
+  ${({ isSm }) => (isSm ? 'grid-template-columns: 1fr; padding: 1rem' : '')};
+`
 
 const HeadingContainer = styles.div`
     width: 100%;
@@ -174,7 +196,7 @@ const Bank: React.FC = () => {
   const web3 = useWeb3()
   const { account, chainID } = web3
   const history = useHistory()
-  const { isXl } = useMatchBreakpoints()
+  const { isXl, isSm } = useMatchBreakpoints()
 
   const animalsState = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
 
@@ -299,19 +321,7 @@ const Bank: React.FC = () => {
   return (
     <>
       <Page>
-        {pageHeading}
         <Body>
-          <LabelWrapper>
-            <Label style={{ marginLeft: -8, fontSize: '20px' }}>Wallet Balance</Label>
-            <BorderButton disabled={ wait } scale='sm' minWidth={!isXl ? '120px' : '140px'} style={{ fontSize: `${!isXl ? '14px' : '16px'}` }} onClick={handleFunds}>
-              {chainID !== 97 ? 'Buy ZOO' : wait ? 'Processing' : 'Get ZOO'}
-            </BorderButton>
-          </LabelWrapper>
-          <Flex width='100%' alignItems='center' justifyContent='space-around' style={{ marginLeft: -16 }}>
-            <ValueWrapper>{numberWithCommas(zooBalance)} ZOO </ValueWrapper>
-            {/* Commented out since there is to ZOO to USD conversion yet */}
-            {/* <ValueWrapper style={{ fontSize: "16px",  color: "rgb(221 224 26)" }}>0 USD</ValueWrapper> */}
-          </Flex>
           <Label style={{ marginLeft: -8, fontSize: '20px' }}>Total Daily Yield</Label>
           <Flex width='100%' alignItems='center' justifyContent='space-around' style={{ marginLeft: -16 }}>
             <ValueWrapper> {dailyYield} ZOO </ValueWrapper>
@@ -320,7 +330,7 @@ const Bank: React.FC = () => {
           {topTenAnimals.length === 0 ? (
             <ValueWrapper style={{ justifyContent: 'center' }}> No animals </ValueWrapper>
           ) : (
-            <EarnerValueWrapper style={{ marginLeft: -16}}>
+            <EarnerValueWrapper style={{ marginLeft: -16 }}>
               {topTenAnimals.map((animal) => {
                 return (
                   <EarnerValue key={animal.tokenID + '_earner_'}>
@@ -336,22 +346,31 @@ const Bank: React.FC = () => {
           ) : transactions.length === 0 ? (
             <TableText> No Transaction Data </TableText>
           ) : (
-            <Container style={{marginLeft: -8}}>
-              <TableContainer>
+            <Container style={{ marginLeft: -8 }}>
+              <TransactionTable Transactions={transactions} />
+              {/* <TableContainer>
                 <TableWrapper>
                   <StyledTable>
-                    <TableBody>
-                      <TableRow>
-                        <TableHeader style={{ fontWeight: 400, width: '200px' }}>Tx Hash</TableHeader>
+                    <TableBody className='w-full'>
+                      <TableRow className='w-full'>
+                        <TableHeader style={{ fontWeight: 400, width: isSm ? '100%' : '50%' }} className={`${isSm ? 'w-full' : 'w-1/2'}`}>
+                          Tx Hash
+                        </TableHeader>
                         <TableHeader style={{ fontWeight: 400 }}>Action</TableHeader>
                         <TableHeader style={{ fontWeight: 400 }}>Block</TableHeader>
                         <TableHeader style={{ fontWeight: 400 }}>Token ID</TableHeader>
                       </TableRow>
-                      {transactions.map((tx) => {
+                      {transactions.map((tx: { hash: string; action: string; blockNumber: string; tokenID: string; url: string; id: string }) => {
+                        console.log('tx', tx)
                         return (
-                          <TableRow key={tx.id}>
-                            <TableData style={{ width: '200px' }}>
-                              <a href={tx.url}>{tx.hash}</a>
+                          <TableRow key={tx.id} className='w-full'>
+                            <TableData style={{ width: `${isSm ? '100%' : '50%'}` }}>
+                              <a href={`${tx.url}`} className='flex items-center gap-2'>
+                                <h6 className='flex items-center hover:underline py-0.5'>{tx.hash.slice(0, 35)} ↗</h6>
+                                <div className='text-green'>
+                                  <CheckmarkCircleIcon width={16} height={16} />
+                                </div>
+                              </a>
                             </TableData>
                             <TableData>{tx.action}</TableData>
                             <TableData>{tx.blockNumber}</TableData>
@@ -365,10 +384,18 @@ const Bank: React.FC = () => {
                   </StyledTable>
                 </TableWrapper>
               </TableContainer>
+             */}
             </Container>
           )}
         </Body>
       </Page>
+      {/* <div>
+      <div className="flex flex-col gap-2 flex-nowrap">
+      {transactions.map((hash, i) => {
+        return <Transaction transaction={tx} />
+      })}
+    </div>
+      </div> */}
     </>
   )
 }
