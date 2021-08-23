@@ -18,12 +18,11 @@ import { useDispatch } from 'react-redux'
 import { breedTimeouts, eggTimeout } from 'constants/constants'
 import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
 import { getZooToken, getZooDrop, getZooFaucet, getZooMedia, getZooKeeper } from 'util/contracts'
-
 import useWeb3 from 'hooks/useWeb3'
 import useToast from 'hooks/useToast'
 
 const HeadingContainer = styles.div`
-    width: 100%;
+    width: 200%;
     display: flex;
     justify-content: start;
     margin: 0px 8px;
@@ -185,7 +184,7 @@ const Account: React.FC = () => {
           background: 'transparent',
           border: 'none',
           color: 'white',
-          marginLeft: '16px',
+          marginLeft: '50px',
           letterSpacing: '1.4px',
         }}
         onClick={() => bankClick()}>
