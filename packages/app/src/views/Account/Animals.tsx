@@ -60,16 +60,17 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
     const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey])
     const elapsedTime = now - lastBred
     const timeRemaining = breedTimeout - elapsedTime
+    // const timeRemaining = 60
+    console.log('lastBred', lastBred)
+    console.log('timeRemaining', timeRemaining)
+    console.log('animal.breedCount', animal.breedCount)
+
+    console.log('breedTimeoutKey', breedTimeoutKey)
+
+    console.log('breedTimeout', breedTimeout)
+    console.log('elapsedTime', elapsedTime)
     const timeRemainingDaysHours = getDaysHours(timeRemaining)
     const barwidth = [100 * (elapsedTime / breedTimeout), '%'].join('')
-
-    console.log(lastBred)
-    console.log(timeRemaining)
-
-    console.log()
-    console.log()
-
-    console.log()
     if (timeRemaining <= 0 && animalData.find((a) => a.name === animal.name && a.timeRemaining <= 0)) {
       animalGroup[animal.name] = animalGroup[animal.name] ? [...animalGroup[animal.name], animal] : [animal]
     } else {

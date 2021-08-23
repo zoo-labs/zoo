@@ -37,9 +37,15 @@ const AltModal: React.FC<ModalProps> = ({
   headerColor,
   ...props
 }) => (
-  <ModalContainer style={{ width: '65wv' }} minWidth={minWidth} borderRadius={borderRadius} {...props}>
+  <ModalContainer style={{ width: '65wv' }} minWidth={minWidth} borderRadius={borderRadius} {...props} className=''>
     {children}
   </ModalContainer>
 )
 
 export default AltModal
+{
+  /* <div className='w-full max-w-2xl relative'>
+<div className='absolute top-1/4 -left-10 bg-blue-500 bottom-4 w-3/5 rounded-full z-0 filter blur-[150px]'></div>
+<div className='absolute bottom-1/4 -right-10 bg-pink-500 top-4 w-3/5 rounded-full z-0  filter blur-[150px]'></div>
+</div> */
+}

@@ -158,13 +158,13 @@ function Feed<FeedPagePops>({ match }) {
           <ButtonMenuItem as='a'>Market</ButtonMenuItem>
         </ButtonMenu> */}
       <div className='w-full items-center justify-center absolute z-10 mt-4 flex'>
-        <div className={` grid rounded-md p-1 grid-cols-2 justify-self-start w-2/3`} style={{ backgroundColor: 'rgb(44, 47, 54)', padding: 3, height: 46 }}>
+        <div className={`grid rounded-md p-1 grid-cols-2 justify-self-start`} style={{ backgroundColor: 'rgb(44, 47, 54)', height: 46 }}>
           {['My Zoo', 'Market'].map((item: string, index: number) => {
             const active = activeIndex == index
             return (
               <a
                 onClick={() => onItemClick(index)}
-                className={`rounded-md flex justify-center items-center cursor-pointer font-normal flex text-gray-300 text-center px-4 text-base ${
+                className={`rounded-md flex justify-center items-center cursor-pointer font-normal flex text-gray-300 text-center px-8 text-base ${
                   active && 'font-semibold text-white'
                 }`}
                 style={{ backgroundColor: active ? '#212429' : 'transparent' }}>
@@ -180,8 +180,8 @@ function Feed<FeedPagePops>({ match }) {
           {animals.length ? (
             <Swiper spaceBetween={30} slidesPerView={1} direction='vertical'>
               {animals.map((data) => {
-                console.log('DATA')
-                console.log(data)
+                // console.log('DATA')
+                // console.log(data)
                 return (
                   <SwiperSlide key={data.tokenID + 'slide'}>
                     <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={animalGroup} hideBid={activeIndex === 0} />
