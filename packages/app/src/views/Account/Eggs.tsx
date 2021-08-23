@@ -165,7 +165,7 @@ const Eggs: React.FC<EggsProps> = ({}) => {
 
   eggData = sortData(eggData, 'hybrid')
   return (
-    <div>
+    <>
       {eggType !== '' && <VideoPlayer videoPath={eggType === 'basic' ? 'hatch_mobile_basic.mp4' : 'hatch_mobile_hybrid.mp4'} />}
       {isOpen ? (
         <NewAnimalCard animal={hatched} isOpen={setOpen} />
@@ -179,7 +179,7 @@ const Eggs: React.FC<EggsProps> = ({}) => {
                     No eggs
                   </StyledText>
                 ) : (
-                  <Swiper slidesPerView={isSm ? 1 : 3} spaceBetween={4} pagination={{ clickable: true }}>
+                  <Swiper slidesPerView={isSm ? 2 : 12} spaceBetween={4} pagination={{ clickable: true }} style={{ marginBottom: 0 }}>
                     {eggData.map((egg) => (
                       <SwiperSlide className='account__animal-slide' style={{ width: '33%', display: 'flex' }} key={egg.tokenID}>
                         {/* <CardWrapper> */}
@@ -198,7 +198,7 @@ const Eggs: React.FC<EggsProps> = ({}) => {
           )}
         </>
       )}
-    </div>
+    </>
   )
 }
 
