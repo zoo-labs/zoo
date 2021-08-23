@@ -8,10 +8,10 @@ const BodyContainer = styles.div`
     // background: ${({ theme }) => theme.colors.card};;
 `
 
-const Body: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children }) => {
+const Body: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children, ...props }) => {
   return (
     <>
-      <BodyContainer>{children}</BodyContainer>
+      <BodyContainer {...props}>{children}</BodyContainer>
     </>
   )
 }
