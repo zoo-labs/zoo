@@ -2,3 +2,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-dark-900 {
+    background-color: rgba(22,21,34,var(--tw-bg-opacity));
+}
+.bg-dark-800 {
+    background-color: rgba(32,34,49,var(--tw-bg-opacity));
+}
+.bg-dark-700 {
+    background-color: rgba(46,51,72,var(--tw-bg-opacity));
+}
+.bg-primary {
+    background-color: rgb(140, 79, 248);
+}
+.bg-primary-light {
+    background-color: rgba(140, 79, 248,0.1);
+}
+.primary {
+    color:rgb(140, 79, 248)
+}
+.bg-pink-light {
+    background-color: rgba(236, 72, 153, 0.1);
+}
+.blur-\[150px\] {
+    --tw-blur: blur(150px);
+}

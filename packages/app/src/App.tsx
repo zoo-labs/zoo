@@ -186,7 +186,6 @@ const App: React.FC = () => {
         <ResetCSS />
         <GlobalStyle />
         <Switch>
-
           <Route exact path='/login'>
             {signedIn ? <Redirect to='/home' /> : <Login />}
           </Route>

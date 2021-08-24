@@ -187,7 +187,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
           <StyledText fontSize='18px' style={{ whiteSpace: 'nowrap', marginTop: '5px' }}>
             LIST PRICE (ZOO)
           </StyledText>
-          <BidPriceInput type='number' style={{ color: 'black' }}/>
+          <BidPriceInput type='number' style={{ color: 'black' }} />
         </Flex>
         <Flex width='100%' alignItems='center' justifyContent='space-evenly' flexDirection='row' mt='16px'>
           <BorderButton style={{ fontSize: 14 }} scale='md' onClick={() => sell(onDismiss)}>
@@ -306,7 +306,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
 
   const [onConfirm] = useModal(<Confirmation onDismiss={() => null} breed={breed} />)
 
-  const onCardClick = () => {}
+  const onCardClick = () => console.log('animal', animal)
 
   return (
     <Card rarityColor={animal.rarityColor} onClick={onCardClick} key={animal.id} selected={animal.selected ? true : false} timedOut={animal.timeRemaining > 0 ? true : false}>
