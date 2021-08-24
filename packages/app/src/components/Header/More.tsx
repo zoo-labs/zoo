@@ -4,6 +4,11 @@ import React, { Fragment } from 'react'
 import ThemeSwitcher from 'components/SideMenu/components/ThemeSwitcher'
 import { MENU_ENTRY_HEIGHT } from 'components/SideMenu/config'
 import useTheme from 'hooks/useTheme'
+import { InfoIcon } from 'components/Svg'
+import { GrCode } from 'react-icons/gr'
+import { RiChat1Fill, RiChat1Line, RiCodeLine, RiPieChart2Line } from 'react-icons/ri'
+import { GiPieChart } from 'react-icons/gi'
+import { MoonIcon, SunIcon } from 'components/SideMenu/icons'
 
 export default function More({}) {
   const { isDark, toggleTheme } = useTheme()
@@ -49,9 +54,9 @@ export default function More({}) {
             leave='transition ease-in duration-150'
             leaveFrom='opacity-100 translate-y-0'
             leaveTo='opacity-0 translate-y-1'>
-            <Popover.Panel static className='absolute z-50  max-w-xs px-2 mt-3 transform -translate-x-full bottom-12 top-12 left-full sm:px-0'>
+            <Popover.Panel static className='absolute z-50  w-max px-2 mt-3 transform -translate-x-full bottom-12 top-12 left-full sm:px-0'>
               <div className='overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5'>
-                <div className='relative grid gap-6 px-5 py-6 bg-gray-900 sm:gap-8 sm:p-8' style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
+                <div className='relative grid gap-6 px-3 py-6 bg-gray-900 sm:gap-8 sm:p-8' style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
                   {/* {solutions.map((item) =>
                     item.external ? (
                       <ExternalLink key={item.name} href={item.href} className='block p-3 -m-3 transition duration-150 ease-in-out rounded-md hover:bg-dark-800'>
@@ -67,8 +72,35 @@ export default function More({}) {
                       </NavLink>
                     ),
                   )} */}
-                  <div className='flex items-center justify-center p-3 -m-3 transition duration-150 ease-in-out rounded-md hover:bg-gray-700' style={{}}>
-                    <ThemeSwitcher isDark={isDark} toggleTheme={toggleTheme} />
+                  <div className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer' style={{}}>
+                    About
+                    <div className='ml-14'>
+                      <InfoIcon fill='gray' />
+                    </div>
+                  </div>
+                  <div className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer' style={{}}>
+                    Code
+                    <div className='ml-14'>
+                      <RiCodeLine />
+                    </div>
+                  </div>
+                  <div className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer' style={{}}>
+                    Discord
+                    <div className='ml-14'>
+                      <RiChat1Line />
+                    </div>
+                  </div>
+                  <div className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer' style={{}}>
+                    Analytics
+                    <div className='ml-14'>
+                      <RiPieChart2Line />
+                    </div>
+                  </div>
+                  <div className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer' style={{}}>
+                    Theme
+                    <div className='ml-14'>
+                      {isDark ? <SunIcon fill={isDark ? 'white' : 'text'} width='18px' /> : <MoonIcon fill={isDark ? 'white' : 'textDisabled'} width='18px' />}
+                    </div>
                   </div>
                 </div>
               </div>

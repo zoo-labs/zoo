@@ -5,20 +5,22 @@ import Flex from '../../../components/Box/Flex'
 import Button from '../../../components/Button/Button'
 import * as IconModule from '../icons'
 
-const Icons = (IconModule as unknown) as { [key: string]: React.FC<SvgProps> }
+const Icons = IconModule as unknown as { [key: string]: React.FC<SvgProps> }
 const { MoonIcon, SunIcon } = Icons
 
 interface Props {
   isDark: boolean
   toggleTheme: (isDark: boolean) => void
+  className?: string
 }
 
-const ThemeSwitcher: React.FC<Props> = ({ isDark, toggleTheme }) => (
+const ThemeSwitcher: React.FC<Props> = ({ isDark, toggleTheme, className }) => (
   <Button
     variant='text'
     onClick={() => {
       toggleTheme(!isDark)
-    }}>
+    }}
+    className={`${className}`}>
     {/* alignItems center is a Safari fix */}
     <Flex alignItems='center'>
       <SunIcon fill={isDark ? 'white' : 'text'} width='18px' />
