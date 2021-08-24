@@ -150,8 +150,24 @@ function Feed<FeedPagePops>({ match }) {
 
   const animalGroup = {}
 
+  /*
+   * Get index of selected animal to set Swipers initial slide
+   * equal to that index
+   */
+  let animalIndex = 0;
+  if (history.location && history.location.state) {
+    animalIndex = animals.findIndex((a) => a.tokenID === history.location.state['tokenID']);
+  }
+
+  const handleContainerClick = (event) => {
+    const className = event.target.className;
+    if (className === 'swiper-slide swiper-slide-active') {
+      HomeClick();
+    }
+  }
+
   return (
-    <Container isMobile={isMobile}>
+    <Container onClick={handleContainerClick} isMobile={isMobile}>
       <ToggleContainer>
         <ButtonMenu activeIndex={activeIndex} onItemClick={onItemClick} scale='sm'>
           <ButtonMenuItem as='a'>My Zoo</ButtonMenuItem>
@@ -161,7 +177,7 @@ function Feed<FeedPagePops>({ match }) {
       <Swiper onSwiper={setSwiperRef} onActiveIndexChange={handleIndexChange} centeredSlides={isMobile ? true : false} spaceBetween={30} slidesPerView={1} direction='horizontal'>
         <SwiperSlide key={0}>
           {animals.length ? (
-            <Swiper spaceBetween={30} slidesPerView={1} direction='vertical'>
+            <Swiper initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
               {animals.map((data) => {
                 console.log('DATA')
                 console.log(data)
