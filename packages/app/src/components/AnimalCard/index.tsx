@@ -308,6 +308,13 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
 
   const onCardClick = () => console.log('animal', animal)
 
+  const zoo_location = {
+    pathname: `/feed/myzoo/${animal.tokenID}`,
+    state: {
+      tokenID: animal.tokenID
+    }
+  }
+
   return (
     <Card rarityColor={animal.rarityColor} onClick={onCardClick} key={animal.id} selected={animal.selected ? true : false} timedOut={animal.timeRemaining > 0 ? true : false}>
       <CardBody
@@ -319,7 +326,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
           height: 256,
           width: '100%',
         }}>
-        <Link to={`/feed/myzoo/${animal.tokenID}`}>
+        <Link to={zoo_location}>
           <TextWrapper
             style={{
               textShadow: '0px 2px 6px rgb(0, 0, 0)',
