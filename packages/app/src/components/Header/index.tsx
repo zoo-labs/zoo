@@ -7,7 +7,7 @@ import Logo from '../../assets/img/ZooLogoWhite.png'
 import Menu from '../Menu'
 import { Label, Text } from 'components/Text'
 import { getZooToken, getZooDrop, getZooFaucet, getZooMedia, getZooKeeper } from 'util/contracts'
-
+import Tooltip from '@material-ui/core/Tooltip'
 // import Modal from '../Modal'
 import useTheme from 'hooks/useTheme'
 import useAuth from 'hooks/useAuth'
@@ -21,6 +21,7 @@ import { MoreIcon } from 'components/SideMenu/icons'
 import More from './More'
 import QuestionHelper from './QuestionHelper'
 import { numberWithCommas } from 'components/Functions'
+import NetworkCard from './NetworkCard'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; isSm: boolean; isFeed?: boolean }>`
   grid-template-columns: 120px 1fr 120px;
@@ -194,6 +195,8 @@ export default function Header() {
   const { isDark, toggleTheme } = useTheme()
   const web3 = useWeb3()
   const { account, chainID, gasPrice } = web3
+  const { library } = useWeb3React()
+
   const { login, logout } = useAuth()
   const isMobile = isXl === false
   const [isPushed, setIsPushed] = useState(!isMobile)
@@ -277,6 +280,7 @@ export default function Header() {
         redirectWindow.location
     }
   }
+
   return (
     <HeaderFrame showBackground={scrollY > 45} isSm={isSm} isFeed={active == 'feed'}>
       <Title href='.'>
@@ -311,7 +315,45 @@ export default function Header() {
       </div>
 
       <HeaderControls>
-        {/* <NetworkCard /> */}
+        {/* chainID && library && library.target && library.target.isMetaMask && */}
+
+        <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
+          <div
+            style={{ width: 40, height: 40 }}
+            className='hidden rounded-md cursor-pointer sm:inline-flex bg-gray-900 hover:bg-gray-800 p-0.5 w-full mr-2'
+            // onClick={() => {
+            //   const params: any = {
+            //     type: 'ERC20',
+            //     options: {
+            //       address: 'ZOO ADDRESS',
+            //       symbol: 'ZOO',
+            //       decimals: 18,
+            //       image:
+            //         'https://raw.githubusercontent.com/sushiswap/assets/master/blockchains/ethereum/assets/0x6B3595068778DD592e39A122f4f5a5cF09C90fE2/logo.png',
+            //     },
+            //   }
+            //   if (library && library.provider.isMetaMask && library.provider.request) {
+            //     library.provider
+            //       .request({
+            //         method: 'wallet_watchAsset',
+            //         params,
+            //       })
+            //       .then((success) => {
+            //         if (success) {
+            //           console.log('Successfully added SUSHI to MetaMask')
+            //         } else {
+            //           throw new Error('Something went wrong.')
+            //         }
+            //       })
+            //       .catch(console.error)
+            //   }
+            // }}
+          >
+            <img src={require('../../assets/img/hybrid.png').default} alt='ZOO' className='rounded-md' style={{ width: 40, height: 40 }} />
+          </div>
+        </Tooltip>
+
+        <NetworkCard />
         <HeaderElement>
           <AccountElement active={!!account} style={{ pointerEvents: 'auto' }} className='rounded-xl'>
             {account ? (
