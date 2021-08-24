@@ -109,8 +109,6 @@ const HeaderFrame = styles.div<{ isSm: boolean }>`
 const Account: React.FC = () => {
   const [isInitial, setIsInitial] = useState(true)
   const [tab, setTab] = useState(0)
-  const [balance, setBalance] = useState(0.0)
-  const [wait, setWait] = useState(false)
   const [allowance, setAllowance] = useState(false)
   const [disable, setDisable] = useState(false)
   const [disableApprove, setDisableApprove] = useState(false)
@@ -119,9 +117,6 @@ const Account: React.FC = () => {
   const { account, chainID, gasPrice } = web3
   const { isXl, isSm } = useMatchBreakpoints()
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
-  const history = useHistory()
-  const [onBuyEggs] = useModal(<BuyEggs />)
-  const dispatch = useDispatch()
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
 
   const toastClear = () => {
@@ -131,8 +126,6 @@ const Account: React.FC = () => {
   const currentEggsOwned = Object.values(allEggs).filter((egg) => (egg.owner || '').toLowerCase() === account.toLowerCase() && !egg.burned).length
 
   const zooToken = getZooToken(web3)
-  const faucet = getZooFaucet(web3)
-  const zooMedia = getZooMedia(web3)
   const zooKeeper = getZooKeeper(web3)
   const zooDrop = getZooDrop(web3)
   const keeperAdd = zooKeeper.options.address
@@ -143,7 +136,6 @@ const Account: React.FC = () => {
       const rawBalance = await zooToken.methods.balanceOf(account).call()
       const divisor = parseFloat(Math.pow(10, decimals).toString())
       const balance = rawBalance / divisor
-      setBalance(balance)
     } catch (e) {
       console.error('ISSUE LOADING ZOO BALANCE \n', e)
       toastClear()
@@ -203,47 +195,6 @@ const Account: React.FC = () => {
     }
   }, [account, chainID])
 
-  const handleFaucet = () => {
-    try {
-      setWait(true)
-      toastClear()
-      toastInfo('Sending ZOO...')
-      faucet.methods
-        .fund(account)
-        .send({ from: account })
-        .then(() => {
-          setWait(false)
-          getBalance()
-          toastClear()
-          toastSuccess('Sent ZOO!')
-        })
-        .catch((e) => {
-          console.error('ISSUE USING FAUCET \n', e)
-          setWait(false)
-          toastClear()
-          toastInfo('Canceled request for ZOO.')
-        })
-    } catch (e) {
-      console.error('ISSUE USING FAUCET \n', e)
-      toastClear()
-      toastError('Unable to process transaction. Try again later.')
-    }
-  }
-
-  const handleFunds = () => {
-    switch (chainID) {
-      case 1337:
-        handleFaucet()
-        break
-      case 97:
-        handleFaucet()
-        break
-      default:
-        const redirectWindow = window.open('https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997', '_blank')
-        redirectWindow.location
-    }
-  }
-
   const buyEgg = async () => {
     setDisable(true)
 
@@ -270,18 +221,9 @@ const Account: React.FC = () => {
 
   return (
     <div
-    // style={{ height: '100vh' }} className='flex items-center'
+      // style={{ height: '100vh' }} className='flex items-center'
     >
-      <div className='lg:p-16 p-4 space-y-4 rounded-lg  m-4 flex flex-col'>
-        <HeaderFrame isSm={isSm}>
-          <div
-            onClick={() => handleFunds()}
-            className={`border flex justify-center items-center rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2  bg-opacity-80  text-primary border-gray-800 hover:bg-opacity-100 px-4 py-2 text-base rounded  font-semibold cursor-pointer focus:outline-none`}
-            style={{ color: 'rgb(255,255,255)', backgroundColor: '#8C4FF8', border: '1px solid rgba(21, 61, 111, 0.44)', width: isSm ? '40%' : 100, height: 50 }}>
-            {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
-          </div>
-        </HeaderFrame>
-
+      <div className='lg:p-16 p-4 space-y-4 rounded-lg  m-4 flex flex-col relative filter drop-shadow'>
         <div className='flex flex-col h-full'>
           <div className='flex flex-col justify-between h-full'>
             <div style={{ flex: 1 }} className='p-5 rounded'>
@@ -291,7 +233,7 @@ const Account: React.FC = () => {
               <Eggs />
             </div>
 
-            <div className='m-4 flex justify-between flex-wrap'>
+            <div className='m-4 flex flex-wrap'>
               {(keepApprove || !allowance) && (
                 <div className={` ${isSm ? 'w-1/2' : 'w-1/6'} px-2`}>
                   <button
@@ -369,6 +311,28 @@ const Account: React.FC = () => {
       </div>
       <div
         style={{
+          // background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
+          width: '50vw',
+          height: '50vh',
+          // transform: 'translate(-50vw, -100vh)',
+          top: '0%',
+          left: '-15%',
+          right: 0,
+          zIndex: -1,
+        }}
+        className='absolute  bg-primary-light  rounded-full z-0 filter  blur-3xl'></div>
+      <div
+        style={{
+          // background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
+          width: '50vw',
+          height: '50vh',
+          // transform: 'translate(-50vw, -100vh)',
+          bottom: '0%',
+          right: '-15%',
+          zIndex: -1,
+        }}
+        className='absolute  bg-pink-light  rounded-full z-0 filter  blur-3xl'></div>
+      {/* <div
           background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
           backgroundColor: 'rgba(20,20,20,1)',
           width: '200vw',
@@ -378,8 +342,9 @@ const Account: React.FC = () => {
           left: 0,
           right: 0,
           zIndex: -1,
+
         }}
-        className='fixed '></div>
+        className='fixed '></div> */}
     </div>
   )
 }
