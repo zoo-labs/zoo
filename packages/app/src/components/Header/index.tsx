@@ -198,18 +198,13 @@ export default function Header() {
   const isMobile = isXl === false
   const [isPushed, setIsPushed] = useState(!isMobile)
   const [showMenu, setShowMenu] = useState(true)
-<<<<<<< HEAD
   const [wait, setWait] = useState(false)
 
   let location = useLocation()
   useEffect(() => {
     setActive(location.pathname.split('/')[1])
-=======
-  let location = useLocation()
-  useEffect(() => {
-    setActive(location.pathname.slice(1))
->>>>>>> dev
   }, [location])
+
   console.log('active', active)
   const scrollY = useScrollPosition()
   const urlClick = (url) => {
