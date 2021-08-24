@@ -245,7 +245,7 @@ const MyZooAccount: React.FC = () => {
           </Route>
           <Route exact path={`${path}/history`}>
             {animalData.map((animal) => (
-              <Card key={animal.tokenID} />
+              <Existing key={animal.tokenID} />
             ))}
           </Route>
         </RowLayout>
