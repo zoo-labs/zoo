@@ -27,3 +27,6 @@
 .blur-\[150px\] {
     --tw-blur: blur(150px);
 }
+.bg-secondary {
+    background-color: #212429;
+}

@@ -57,7 +57,7 @@ const Eggs: React.FC<EggsProps> = ({}) => {
     yield: 0,
   })
   let eggData = []
-  const { isXl, isSm } = useMatchBreakpoints()
+  const { isXl, isSm, isMd } = useMatchBreakpoints()
 
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
 
@@ -179,9 +179,9 @@ const Eggs: React.FC<EggsProps> = ({}) => {
                     No eggs
                   </StyledText>
                 ) : (
-                  <Swiper slidesPerView={isSm ? 2 : 12} spaceBetween={4} pagination={{ clickable: true }} style={{ marginBottom: 0 }}>
+                  <Swiper slidesPerView={isSm ? 2 : isMd ? 4 : 12} spaceBetween={4} pagination={{ clickable: true }} style={{ marginBottom: 0 }}>
                     {eggData.map((egg) => (
-                      <SwiperSlide className='account__animal-slide' style={{ width: '33%', display: 'flex' }} key={egg.tokenID}>
+                      <SwiperSlide className='account__animal-slide' style={{ width: '33%', display: 'flex', minWidth: 130 }} key={egg.tokenID}>
                         {/* <CardWrapper> */}
                         <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
                       </SwiperSlide>
