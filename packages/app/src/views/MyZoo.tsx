@@ -182,7 +182,7 @@ const MyZooAccount: React.FC = () => {
       const breedTimeoutKey = animal.breedCount > 5 ? 5 : animal.breedCount || 0
       const breedTimeout = getMilliseconds(breedTimeouts[breedTimeoutKey])
       const elapsedTime = now - lastBred
-      const timeRemaining = elapsedTime - breedTimeout
+      const timeRemaining = breedTimeout - elapsedTime
       const timeRemainingDaysHours = getDaysHours(timeRemaining)
       const barwidth = [100 * (elapsedTime / breedTimeout), '%'].join('')
 
