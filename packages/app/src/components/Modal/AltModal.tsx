@@ -5,19 +5,19 @@ import { ModalProps } from './types'
 import styled from 'styled-components'
 import { Box } from '../Box'
 
-const ModalContainer = styled(Box)<{ minWidth: string; borderRadius: string }>`
+const ModalContainer = styled(Box)<{ minWidth: string; borderRadius: string; maxWidth: string }>`
   box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 8px 0px;
   align-self: center;
   // border: 2px solid ${({ theme }) => theme.colors.borderColor};
   border-radius: 10px;
-  width: 100%;
+  width: 65vw;
   z-index: ${({ theme }) => theme.zIndices.modal};
   position: relative;
   display: flex;
   margin: 4rem 0.5rem;
   ${({ theme }) => theme.mediaQueries.xs} {
     min-width: ${({ minWidth }) => minWidth};
-    max-width: 420px;
+    max-width: ${({ maxWidth }) => maxWidth};
     max-height: 90vh;
   }
 `
@@ -32,13 +32,17 @@ const AltModal: React.FC<ModalProps> = ({
   headerBackground = 'transparent',
   minWidth = '320px',
   borderRadius = '8px',
-
+  maxWidth,
   styles = {},
   headerColor,
   ...props
 }) => (
-  <ModalContainer style={{ width: '65wv' }} minWidth={minWidth} borderRadius={borderRadius} {...props} className=''>
-    {children}
+  <ModalContainer maxWidth={maxWidth} minWidth={minWidth} borderRadius={borderRadius} {...props} className=''>
+    <div className='px-1 w-full'>
+      <div className='w-full rounded   bg-gradient-to-r from-blue-500 via-blue-800 to-pink-500' style={{ padding: 1 }}>
+        <div className='flex flex-col h-full w-full bg-dark-900 bg-opacity-100 rounded p-6 overflow-y-auto'>{children}</div>
+      </div>
+    </div>
   </ModalContainer>
 )
 

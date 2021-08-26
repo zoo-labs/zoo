@@ -44,7 +44,7 @@ const RowLayout = styled.div`
 const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
   const { account, chainId } = useWeb3React()
   const { path } = useRouteMatch()
-  const { isXl, isSm } = useMatchBreakpoints()
+  const { isSm, isMd, isLg, isXl, isXs } = useMatchBreakpoints()
 
   const allAnimals = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
   const animalGroup = {}
@@ -61,14 +61,14 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
     const elapsedTime = now - lastBred
     const timeRemaining = breedTimeout - elapsedTime
     // const timeRemaining = 60
-    console.log('lastBred', lastBred)
-    console.log('timeRemaining', timeRemaining)
-    console.log('animal.breedCount', animal.breedCount)
+    // console.log('lastBred', lastBred)
+    // console.log('timeRemaining', timeRemaining)
+    // console.log('animal.breedCount', animal.breedCount)
 
-    console.log('breedTimeoutKey', breedTimeoutKey)
+    // console.log('breedTimeoutKey', breedTimeoutKey)
 
-    console.log('breedTimeout', breedTimeout)
-    console.log('elapsedTime', elapsedTime)
+    // console.log('breedTimeout', breedTimeout)
+    // console.log('elapsedTime', elapsedTime)
     const timeRemainingDaysHours = getDaysHours(timeRemaining)
     const barwidth = [100 * (elapsedTime / breedTimeout), '%'].join('')
     if (timeRemaining <= 0 && animalData.find((a) => a.name === animal.name && a.timeRemaining <= 0)) {
@@ -91,8 +91,9 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
     animalData.filter((item) => item.bloodline === hybrid),
     'bloodline',
   )
+  const points = useMatchBreakpoints()
   const executeStackedBreeding = (a: Animal) => {
-    console.log('EXECUTING STACKED BREEDING')
+    console.log('EXECUTING STACKED BREEDING', points)
   }
 
   return (
@@ -113,10 +114,10 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
               No {hybrid === 'pure' ? '' : `hybrid `}animals
             </StyledText>
           ) : (
-            <Swiper slidesPerView={isSm ? 1 : 8} spaceBetween={4} pagination={{ clickable: true }}>
+            <Swiper slidesPerView={isSm ? 1 : isMd ? 3 : 8} spaceBetween={4} pagination={{ clickable: true }}>
               {animals.map((animal) => {
                 return (
-                  <SwiperSlide style={{ width: '33%', display: 'flex' }} key={animal.tokenID}>
+                  <SwiperSlide style={{ width: '33%', display: 'flex', minWidth: 190 }} key={animal.tokenID}>
                     <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding }} />
                   </SwiperSlide>
                 )

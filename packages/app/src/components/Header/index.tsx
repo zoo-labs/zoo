@@ -7,7 +7,7 @@ import Logo from '../../assets/img/ZooLogoWhite.png'
 import Menu from '../Menu'
 import { Label, Text } from 'components/Text'
 import { getZooToken, getZooDrop, getZooFaucet, getZooMedia, getZooKeeper } from 'util/contracts'
-
+import Tooltip from '@material-ui/core/Tooltip'
 // import Modal from '../Modal'
 import useTheme from 'hooks/useTheme'
 import useAuth from 'hooks/useAuth'
@@ -21,8 +21,9 @@ import { MoreIcon } from 'components/SideMenu/icons'
 import More from './More'
 import QuestionHelper from './QuestionHelper'
 import { numberWithCommas } from 'components/Functions'
+import NetworkCard from './NetworkCard'
 
-const HeaderFrame = styled.div<{ showBackground: boolean; isSm: boolean; isFeed?: boolean }>`
+const HeaderFrame = styled.div<{ showBackground: boolean; isSm: boolean; isMd: boolean; isFeed?: boolean }>`
   grid-template-columns: 120px 1fr 120px;
   -moz-box-pack: justify;
   -moz-box-align: center;
@@ -38,7 +39,7 @@ const HeaderFrame = styled.div<{ showBackground: boolean; isSm: boolean; isFeed?
   transition: background-position 0.1s ease 0s, box-shadow 0.1s ease 0s;
   background-blend-mode: hard-light;
   width: 100%;
-  ${({ isSm }) => (isSm ? 'grid-template-columns: 36px 1fr; padding: 1rem' : '')};
+  ${({ isSm, isMd }) => (isMd || isSm ? 'grid-template-columns: 36px 1fr; padding: 1rem' : '')};
   ${({ isFeed }) => (isFeed ? 'display: none' : 'display: grid')};
 `
 
@@ -82,28 +83,6 @@ const AccountElement = styled.div<{ active: boolean }>`
 
   :focus {
     border: 1px solid blue;
-  }
-`
-
-const UNIAmount = styled(AccountElement)`
-  color: white;
-  padding: 4px 8px;
-  height: 36px;
-  font-weight: 500;
-  background: radial-gradient(174.47% 188.91% at 1.84% 0%, #ff007a 0%, #2172e5 100%), #edeef2;
-`
-
-const UNIWrapper = styled.span`
-  width: fit-content;
-  position: relative;
-  cursor: pointer;
-
-  :hover {
-    opacity: 0.8;
-  }
-
-  :active {
-    opacity: 0.9;
   }
 `
 
@@ -190,10 +169,12 @@ export default function Header() {
   const open = useCallback(() => setShow(true), [setShow])
 
   const [active, setActive] = useState('account')
-  const { isXl, isXs, isSm } = useMatchBreakpoints()
+  const { isXl, isXs, isSm, isMd } = useMatchBreakpoints()
   const { isDark, toggleTheme } = useTheme()
   const web3 = useWeb3()
   const { account, chainID, gasPrice } = web3
+  const { library } = useWeb3React()
+
   const { login, logout } = useAuth()
   const isMobile = isXl === false
   const [isPushed, setIsPushed] = useState(!isMobile)
@@ -277,8 +258,9 @@ export default function Header() {
         redirectWindow.location
     }
   }
+
   return (
-    <HeaderFrame showBackground={scrollY > 45} isSm={isSm} isFeed={active == 'feed'}>
+    <HeaderFrame showBackground={scrollY > 45} isSm={isSm} isMd={isMd} isFeed={active == 'feed'}>
       <Title href='.'>
         <UniIcon>
           <img src={Logo} alt='logo' className='lg:w-2/3 w-full' />
@@ -286,7 +268,7 @@ export default function Header() {
       </Title>
       <div
         className={`self-center items-center grid grid-flow-col w-max rounded-2xl p-1 m-1 justify-self-center ${
-          isSm ? 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
+          isMd || isSm ? 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
         }`}
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
         {['Home', 'Bank', 'Feed'].map((path: string) => {
@@ -311,7 +293,50 @@ export default function Header() {
       </div>
 
       <HeaderControls>
-        {/* <NetworkCard /> */}
+        {/* chainID && library && library.target && library.target.isMetaMask && */}
+
+        {!isSm && (
+          <>
+            <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
+              <div
+                onClick={() => handleFunds()}
+                style={{ width: 40, height: 40 }}
+                className='hidden rounded-md cursor-pointer sm:inline-flex bg-secondary hover:bg-gray-800 p-0.5 w-full mr-2'
+                // onClick={() => {
+                //   const params: any = {
+                //     type: 'ERC20',
+                //     options: {
+                //       address: 'ZOO ADDRESS',
+                //       symbol: 'ZOO',
+                //       decimals: 18,
+                //       image:
+                //         'https://raw.githubusercontent.com/sushiswap/assets/master/blockchains/ethereum/assets/0x6B3595068778DD592e39A122f4f5a5cF09C90fE2/logo.png',
+                //     },
+                //   }
+                //   if (library && library.provider.isMetaMask && library.provider.request) {
+                //     library.provider
+                //       .request({
+                //         method: 'wallet_watchAsset',
+                //         params,
+                //       })
+                //       .then((success) => {
+                //         if (success) {
+                //           console.log('Successfully added SUSHI to MetaMask')
+                //         } else {
+                //           throw new Error('Something went wrong.')
+                //         }
+                //       })
+                //       .catch(console.error)
+                //   }
+                // }}
+              >
+                <img src={require('../../assets/img/hybrid1.png').default} alt='ZOO' className='rounded-md' style={{ width: 40, height: 40 }} />
+              </div>
+            </Tooltip>
+
+            <NetworkCard />
+          </>
+        )}
         <HeaderElement>
           <AccountElement active={!!account} style={{ pointerEvents: 'auto' }} className='rounded-xl'>
             {account ? (
