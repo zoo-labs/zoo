@@ -4,7 +4,11 @@ import { ZooToken } from '../types/ZooToken'
 
 import chai, { expect } from 'chai'
 import asPromised from 'chai-as-promised'
+
+import { solidity } from 'ethereum-waffle'
+
 chai.use(asPromised)
+chai.use(solidity)
 
 const setupTest = deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
   const contracts = await deployments.fixture() // ensure you start from a fresh deployments
@@ -13,12 +17,13 @@ const setupTest = deployments.createFixture(async ({ deployments, getNamedAccoun
   const owner = (await getNamedAccounts()).deployer
   return {
     owner: owner,
-    token: token
+    signers: signers,
+    token: token,
   }
 })
 
 describe.only('ZooToken', function () {
-  it.only('should have correct name, symbol, decimal', async function () {
+  it('should have correct name, symbol, decimal', async function () {
     const {token} = await setupTest()
     const name = await token.name()
     const symbol = await token.symbol()
@@ -28,7 +33,43 @@ describe.only('ZooToken', function () {
     expect(decimals.valueOf()).to.eq(18)
   })
 
+  it('should add user to blacklist', async function() {
+    const {signers, token} = await setupTest()
+
+    const address = signers[1].address
+    const address2 = signers[2].address
+
+    // Add user to blacklist
+    await token.blacklistAddress(address)
+    expect(await token.isBlacklisted(address))
+
+    // Only blacklist users should be blacklisted
+    expect(await token.isBlacklisted(address2)).to.be.false
+  })
+
   it.only('should not allow transfer when blacklisted', async function() {
+    const {signers, token} = await setupTest()
+
+    const address = signers[1].address
+    const address2 = signers[2].address
+    const address3 = signers[3].address
+
+
+    await token.mint(address, 1000)
+    await token.mint(address2, 1000)
+    await token.mint(address3, 1000)
+
+    await (token.connect(signers[1])).approve(address2, 1000)
+    // await token.connect(signers[2]).approve(address3, 1000)
+
+    console.log(await token.allowance(address, address2))
+    await token.connect(signers[1]).transferFrom(address, address2, 100)
+    // await expect(token.transferFrom(address2, address3, 100)).not.to.be.reverted
+
+    // Add user to blacklist
+    await token.blacklistAddress(address)
+    await expect(token.transferFrom(address, address2, 100)).to.be.revertedWith('ss is on blacklist')
+    // await token.transferFrom(address, address1, 100)
 
   })
 })
