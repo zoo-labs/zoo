@@ -96,7 +96,7 @@ export const NewAnimalCard: React.FC<NewAnimalCardType> = ({ animal, isOpen }) =
   }
   return (
     <>
-      <Card url={animal.imageUrl} isMobile={isXs} onClick={() => isOpen(false)}>
+      <Card url={animal.imageUrl} isMobile={isXs} onClick={() => isOpen(false)} className='z-50'>
         <CardOverlay>
           <Flex height={'100vh'} flexDirection='column' justifyContent='flex-end'>
             <Span
