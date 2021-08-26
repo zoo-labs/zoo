@@ -191,7 +191,7 @@ const App: React.FC = () => {
           </Route>
 
           <SuspenseWithChunkError fallback={<></>}>
-            <div className='flex sticky top-0 justify-between flex-nowrap w-full z-10'>
+            <div className='flex sticky top-0 justify-between flex-nowrap w-full z-20'>
               <Header />
             </div>
             <Switch>

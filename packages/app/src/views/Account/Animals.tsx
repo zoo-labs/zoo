@@ -114,10 +114,10 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
               No {hybrid === 'pure' ? '' : `hybrid `}animals
             </StyledText>
           ) : (
-            <Swiper slidesPerView={isSm ? 1 : isMd ? 3 : 8} spaceBetween={4} pagination={{ clickable: true }}>
+            <Swiper slidesPerView={'auto'} spaceBetween={30} pagination={{ clickable: true }}>
               {animals.map((animal) => {
                 return (
-                  <SwiperSlide style={{ width: '33%', display: 'flex', minWidth: 190 }} key={animal.tokenID}>
+                  <SwiperSlide style={{ display: 'flex', minWidth: 190, minHeight: 272, maxWidth: 215 }} key={animal.tokenID}>
                     <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding }} />
                   </SwiperSlide>
                 )
