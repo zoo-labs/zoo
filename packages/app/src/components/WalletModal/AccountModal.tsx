@@ -20,6 +20,8 @@ import AltModal from 'components/Modal/AltModal'
 import { numberWithCommas } from 'components/Functions'
 import { CloseIcon } from 'components/Svg'
 import CopyHelper from './Copy'
+import useWalletModal from './useWalletModal'
+import HeaderModal from 'components/Modal/HeaderModal'
 // import LinkExternal from '../../components/Link/LinkExternal'
 
 interface Props {
@@ -81,6 +83,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
   const zooToken = getZooToken(web3)
   const faucet = getZooFaucet(web3)
   const faucetAmt = web3.utils.toWei('50')
+  const { onPresentWalletModal } = useWalletModal()
 
   // const { authenticate, isAuthenticated } = useMoralis();
 
@@ -161,20 +164,17 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
     <AltModal title='Your wallet' onDismiss={onDismiss} maxWidth='440px'>
       <div className='space-y-3'>
         <div className='space-y-3'>
-          <div className='flex items-center justify-between mb-4 '>
-            <h2 className='text-2xl font-medium font-bold'>Account</h2>
-            <div className='flex items-center justify-center w-6 h-6 cursor-pointer text-white hover:text-high-emphesis'>
-              <div className='p-1 bg-white rounded-full' onClick={onDismiss}>
-                <CloseIcon color='white' />
-              </div>
-            </div>
-          </div>
+          <HeaderModal onDismiss={onDismiss} title='Account' />
           <div className='space-y-3'>
             <div className='flex items-center justify-between'>
               <div className='font-medium text-baseline text-secondary'>Connected with {getNetwork(chainId)}</div>
               <div className='flex space-x-3'>
                 <button
-                  onClick={() => (chainId !== 56 ? bscSwith('bsc') : null, chainId !== 97 ? bscSwith('chapel') : null)}
+                  //  chainId !== 56 ? bscSwith('bsc') : null, chainId !== 97 ? bscSwith('chapel')
+
+                  //  : null
+
+                  onClick={() => onPresentWalletModal()}
                   className='bg-dark-700 bg-opacity-20 outline-gray rounded text-gray hover:bg-opacity-40 disabled:bg-opacity-20 px-2 py-1 text-xs rounded disabled:cursor-not-allowed focus:outline-none'>
                   Change
                 </button>

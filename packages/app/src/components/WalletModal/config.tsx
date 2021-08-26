@@ -1,12 +1,15 @@
 import Metamask from './icons/Metamask'
 import WalletConnect from './icons/WalletConnect'
 import { Config, ConnectorNames } from './types'
+import { injected, walletconnect, walletlink } from '../../connectors'
 
 const connectors: Config[] = [
   {
     title: 'Metamask',
     icon: Metamask,
     connectorId: ConnectorNames.Injected,
+    connector: injected,
+    color: '#E8831D',
   },
   // {
   //   title: "TrustWallet",
@@ -27,6 +30,8 @@ const connectors: Config[] = [
     title: 'WalletConnect',
     icon: WalletConnect,
     connectorId: ConnectorNames.WalletConnect,
+    connector: walletconnect,
+    color: '#4196FC',
   },
   // {
   //   title: "Binance Chain Wallet",
