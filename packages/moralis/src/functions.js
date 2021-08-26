@@ -188,10 +188,10 @@ Moralis.Cloud.afterSave('Breed', async (request) => {
     pB.set('lastBred', now)
 
     if (pB['breedCount'] === undefined) {
-      pb['breedCount'] = 0;
+      pB['breedCount'] = 0;
     }
 
-    pB.set('breedCount', pb['breedCount']+1)
+    pB.set('breedCount', pB['breedCount']+1)
     await pB.save()
 
     logger.info(`Hybrid Egg ${eggID} hatched, pending confirmation`)
@@ -209,8 +209,8 @@ Moralis.Cloud.afterSave('Breed', async (request) => {
 
   const tx = newTransaction(request)
   tx.set('action', 'Breed Animals')
-  tx.set('parentA', tok.parentA)
-  tx.set('parentB', tok.parentB)
+  tx.set('parentA', parentA)
+  tx.set('parentB', parentB)
   tx.set('tokenID', eggID)
   await tx.save()
 
