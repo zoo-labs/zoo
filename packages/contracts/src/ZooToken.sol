@@ -15,17 +15,31 @@ contract ZooToken is ERC20, ERC20Burnable, Ownable, AccessControl {
 
     bytes32 public constant BLACKLISTED = keccak256("BLACKLISTED");
 
-    constructor () ERC20("Zoo", "ZOO") {  }
+    constructor () ERC20("Zoo", "ZOO") {
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    }
+
+    function blacklistAddress(address _addr) public onlyOwner {
+        grantRole(BLACKLISTED, _addr);
+    }
+
+    function isBlacklisted(address _addr) public view returns (bool) {
+        return hasRole(BLACKLISTED, _addr);
+    }
+
+    function _transferAllowed(address _addr) internal view {
+        require(hasRole(BLACKLISTED, _addr) == false, "Address is on blacklist");
+    }
 
     function transfer(address _to, uint256 _value) public override returns (bool) {
-        require(hasRole(BLACKLISTED, msg.sender) == false);
-        require(hasRole(BLACKLISTED, _to) == false);
+        _transferAllowed(_to);
+        _transferAllowed(msg.sender);
         return super.transfer(_to, _value);
     }
 
     function transferFrom(address _from, address _to, uint256 _value) public override returns (bool) {
-        require(hasRole(BLACKLISTED, _to) == false);
-        require(hasRole(BLACKLISTED, _from) == false);
+        _transferAllowed(_to);
+        _transferAllowed(msg.sender);
         return super.transferFrom(_from, _to, _value);
     }
 
