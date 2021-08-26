@@ -4,7 +4,7 @@ import chai, { expect } from 'chai'
 import asPromised from 'chai-as-promised'
 chai.use(asPromised)
 
-describe('ZooToken', function () {
+describe.only('ZooToken', function () {
   let token
 
   it('should deploy ZooToken contract', async function () {
@@ -13,7 +13,7 @@ describe('ZooToken', function () {
     token = await ZooToken.deploy()
   })
 
-  it('should have correct name and symbol and decimal', async () => {
+  it.only('should have correct name and symbol and decimal', async () => {
     const [signer] = await ethers.getSigners()
     const ZooToken = await ethers.getContractFactory('Zoo')
     token = await ZooToken.deploy()
