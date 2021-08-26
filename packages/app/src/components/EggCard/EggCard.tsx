@@ -4,7 +4,7 @@ import { Card as Existing, CardBody } from 'components'
 import { useModal } from 'components/Modal'
 import HatchModal from 'components/ZooModals/HatchModal'
 import { EggCardType } from './types'
-import myVideo from './media/spinning_egg_animation.mov';
+import myVideo from './media/spinning_egg_animation.mov'
 
 const wiggle = keyframes`
   0% {
@@ -20,7 +20,14 @@ const wiggle = keyframes`
     transform: rotate(0deg) scale(1);;
   }
 `
-
+const spin = keyframes` 
+  0% {
+      transform:rotate(0deg);
+  }
+  100% {
+      transform:rotate(360deg);
+  }
+`
 const pulse = keyframes`
   0% {
     opacity: 1;
@@ -59,7 +66,10 @@ const scale = keyframes`
   }
 }
 `
-
+const spinAnimation = () =>
+  css`
+    ${spin} 1s ease-in-out infinite;
+  `
 const wiggleAnimation = (props) =>
   css`
     ${wiggle} 1s ease-in-out infinite;
@@ -132,9 +142,10 @@ const TimeoutDisplay = styled.span`
 `
 
 const cardAnimation = (interactive, hatching, hatched) => {
+  console.log('')
   if (!interactive && !hatching) return pulseAnimation
   if (hatched) return glowAnimation
-  if (hatching) return wiggleAnimation
+  if (hatching) return spinAnimation
   return null
 }
 
@@ -180,14 +191,18 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
 
   const getVideo = () => {
     return (
-      <video autoPlay loop muted style={{
-        height: '235%',
-        width: '235%',
-        alignSelf: 'center',
-      }}>
-        <source src={myVideo} type="video/mp4"></source>
+      <video
+        autoPlay
+        loop
+        muted
+        style={{
+          height: '235%',
+          width: '235%',
+          alignSelf: 'center',
+        }}>
+        <source src={myVideo} type='video/mp4'></source>
       </video>
-    );
+    )
   }
 
   // const hue = hashEgg(egg) % 9
@@ -218,12 +233,10 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             transition: 'background-image 1000ms linear',
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
             // filter: (!egg.hatched && !egg.interactive) ? null : `hue-rotate(0.${hue}turn)`,
           }}>
-          {!egg.basic ? 
-          getVideo() :
-          null }
+          {!egg.basic ? getVideo() : null}
           <TextWrapper
             style={{
               position: 'absolute',

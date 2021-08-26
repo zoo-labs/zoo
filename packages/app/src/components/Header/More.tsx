@@ -56,7 +56,7 @@ export default function More({}) {
             leaveTo='opacity-0 translate-y-1'>
             <Popover.Panel static className='absolute z-50  w-max px-2 mt-3 transform -translate-x-full bottom-12 top-12 left-full sm:px-0'>
               <div className='overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5'>
-                <div className='relative grid gap-6 px-3 py-6 bg-gray-900 sm:gap-8 sm:p-8' style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
+                <div className='relative grid gap-6 px-6 py-6 bg-gray-900 sm:gap-8 sm:p-8' style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
                   {/* {solutions.map((item) =>
                     item.external ? (
                       <ExternalLink key={item.name} href={item.href} className='block p-3 -m-3 transition duration-150 ease-in-out rounded-md hover:bg-dark-800'>
@@ -72,33 +72,45 @@ export default function More({}) {
                       </NavLink>
                     ),
                   )} */}
-                  <div className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer' style={{}}>
+                  <div
+                    className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
+                    style={{}}
+                    onClick={() => window.open('https://cryptozoo.co/ ')}>
                     About
-                    <div className='ml-14'>
+                    <div className='ml-4 sm:ml-14'>
                       <InfoIcon fill='gray' />
                     </div>
                   </div>
-                  <div className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer' style={{}}>
+                  <div
+                    className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
+                    style={{}}
+                    onClick={() => window.open('https://github.com/zoo-labs/zoo')}>
                     Code
-                    <div className='ml-14'>
+                    <div className='ml-4 sm:ml-14'>
                       <RiCodeLine />
                     </div>
                   </div>
-                  <div className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer' style={{}}>
+                  <div
+                    className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
+                    style={{}}
+                    onClick={() => window.open('https://discord.com/channels/@me/878753766248177685/880493331010945095')}>
                     Discord
-                    <div className='ml-14'>
+                    <div className='ml-4 sm:ml-14'>
                       <RiChat1Line />
                     </div>
                   </div>
-                  <div className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer' style={{}}>
+                  <div
+                    className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
+                    style={{}}
+                    onClick={() => window.open('https://poocoin.app/tokens/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997')}>
                     Analytics
-                    <div className='ml-14'>
+                    <div className='ml-4 sm:ml-14'>
                       <RiPieChart2Line />
                     </div>
                   </div>
                   <div className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer' style={{}}>
                     Theme
-                    <div className='ml-14'>
+                    <div className='ml-4 sm:ml-14'>
                       {isDark ? <SunIcon fill={isDark ? 'white' : 'text'} width='18px' /> : <MoonIcon fill={isDark ? 'white' : 'textDisabled'} width='18px' />}
                     </div>
                   </div>

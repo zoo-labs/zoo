@@ -172,8 +172,7 @@ export default function Header() {
   const { isXl, isXs, isSm, isMd } = useMatchBreakpoints()
   const { isDark, toggleTheme } = useTheme()
   const web3 = useWeb3()
-  const { account, chainID, gasPrice } = web3
-  const { library } = useWeb3React()
+  const { account, chainID, gasPrice, library } = web3
 
   const { login, logout } = useAuth()
   const isMobile = isXl === false
@@ -193,20 +192,34 @@ export default function Header() {
     toastClear()
   }
   const zooToken = getZooToken(web3)
+  // const getBalance = async () => {
+  //   try {
+  //     const decimals = await zooToken.methods.decimals().call()
+  //     const rawBalance = await zooToken.methods.balanceOf(account).call()
+  //     const divisor = parseFloat(Math.pow(10, decimals).toString())
+  //     const balance = rawBalance / divisor
+  //     setBalance(balance)
+  //   } catch (e) {
+  //     console.error('ISSUE LOADING ZOO BALANCE \n', e)
+  //     toastClear()
+  //     toastError('Failed to load ZOO balance')
+  //   }
+  // }
   const getBalance = async () => {
     try {
-      const decimals = await zooToken.methods.decimals().call()
-      const rawBalance = await zooToken.methods.balanceOf(account).call()
-      const divisor = parseFloat(Math.pow(10, decimals).toString())
-      const balance = rawBalance / divisor
-      setBalance(balance)
+      // const decimals = await zooToken.methods.decimals().call()
+      await web3.eth.getBalance(account).then((val) => {
+        const divisor = parseFloat(Math.pow(10, 18).toString())
+        const balance = parseFloat(val) / divisor
+        console.log('balance', balance)
+        setBalance(parseFloat(balance.toFixed(4)))
+      })
     } catch (e) {
       console.error('ISSUE LOADING ZOO BALANCE \n', e)
       toastClear()
       toastError('Failed to load ZOO balance')
     }
   }
-
   useEffect(() => {
     let mounted = true
     if (mounted) {
@@ -293,43 +306,46 @@ export default function Header() {
       </div>
 
       <HeaderControls>
-        {/* chainID && library && library.target && library.target.isMetaMask && */}
+        {/* */}
 
-        {!isSm && (
+        {chainID && library && library.isMetaMask && !isSm && (
           <>
             <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
               <div
-                onClick={() => handleFunds()}
                 style={{ width: 40, height: 40 }}
                 className='hidden rounded-md cursor-pointer sm:inline-flex bg-secondary hover:bg-gray-800 p-0.5 w-full mr-2'
-                // onClick={() => {
-                //   const params: any = {
-                //     type: 'ERC20',
-                //     options: {
-                //       address: 'ZOO ADDRESS',
-                //       symbol: 'ZOO',
-                //       decimals: 18,
-                //       image:
-                //         'https://raw.githubusercontent.com/sushiswap/assets/master/blockchains/ethereum/assets/0x6B3595068778DD592e39A122f4f5a5cF09C90fE2/logo.png',
-                //     },
-                //   }
-                //   if (library && library.provider.isMetaMask && library.provider.request) {
-                //     library.provider
-                //       .request({
-                //         method: 'wallet_watchAsset',
-                //         params,
-                //       })
-                //       .then((success) => {
-                //         if (success) {
-                //           console.log('Successfully added SUSHI to MetaMask')
-                //         } else {
-                //           throw new Error('Something went wrong.')
-                //         }
-                //       })
-                //       .catch(console.error)
-                //   }
-                // }}
-              >
+                onClick={() => {
+                  const tokenAddress = '0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997'
+                  const tokenSymbol = 'ZOO'
+                  const tokenDecimals = 18
+                  const tokenImage = 'https://freight.cargo.site/t/original/i/92806d1ec020d34eb53078a68dab13ad65d3f771de20d9d13423e923b7db7787/ZOO_COIN_solo.png'
+                  const params: any = {
+                    type: 'BEP20',
+                    options: {
+                      address: tokenAddress,
+                      symbol: tokenSymbol,
+                      decimals: tokenDecimals,
+                      image: tokenImage,
+                    },
+                  }
+                  try {
+                    if (library && library.isMetaMask && library.request) {
+                      library
+                        .request({
+                          method: 'wallet_watchAsset',
+                          params,
+                        })
+                        .then((success) => {
+                          if (success) {
+                            console.log('Successfully added ZOO to MetaMask')
+                          } else {
+                            throw new Error('Something went wrong.')
+                          }
+                        })
+                        .catch(console.error)
+                    }
+                  } catch (error) {}
+                }}>
                 <img src={require('../../assets/img/hybrid1.png').default} alt='ZOO' className='rounded-md' style={{ width: 40, height: 40 }} />
               </div>
             </Tooltip>
@@ -343,7 +359,7 @@ export default function Header() {
               <>
                 {/* <QuestionHelper text='Buy ZOO' show={show} /> */}
                 <BalanceText onMouseEnter={open} style={{ flexShrink: 0 }} pl='0.75rem' pr='0.5rem' fontWeight={500}>
-                  <h6 className='text-xs font-semibold'>{numberWithCommas(balance)} ZOO</h6>
+                  <h6 className='text-xs font-semibold'>{numberWithCommas(balance)} BNB</h6>
                 </BalanceText>
               </>
             ) : null}
