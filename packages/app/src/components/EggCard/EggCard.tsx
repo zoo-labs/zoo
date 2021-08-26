@@ -4,6 +4,7 @@ import { Card as Existing, CardBody } from 'components'
 import { useModal } from 'components/Modal'
 import HatchModal from 'components/ZooModals/HatchModal'
 import { EggCardType } from './types'
+import myVideo from './media/spinning_egg_animation.mov';
 
 const wiggle = keyframes`
   0% {
@@ -177,6 +178,18 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
     return ''
   }
 
+  const getVideo = () => {
+    return (
+      <video autoPlay loop muted style={{
+        height: '235%',
+        width: '235%',
+        alignSelf: 'center',
+      }}>
+        <source src={myVideo} type="video/mp4"></source>
+      </video>
+    );
+  }
+
   // const hue = hashEgg(egg) % 9
   // const basicEggURL = window.location.origin + '/static/images/hue.jpg'
   const basicEggURL = window.location.origin + '/static/images/basic.jpg'
@@ -203,8 +216,14 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             borderRadius: 8,
             height: 160,
             transition: 'background-image 1000ms linear',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
             // filter: (!egg.hatched && !egg.interactive) ? null : `hue-rotate(0.${hue}turn)`,
           }}>
+          {!egg.basic ? 
+          getVideo() :
+          null }
           <TextWrapper
             style={{
               position: 'absolute',

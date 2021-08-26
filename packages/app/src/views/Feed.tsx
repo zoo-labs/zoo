@@ -195,7 +195,7 @@ function Feed<FeedPagePops>({ match }) {
       <Swiper onSwiper={setSwiperRef} onActiveIndexChange={handleIndexChange} centeredSlides={isMobile ? true : false} spaceBetween={30} slidesPerView={1} direction='horizontal'>
         <SwiperSlide key={0}>
           {animals.length ? (
-            <Swiper initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
+            <Swiper speed={900} initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
               {animals.map((data) => {
                 // console.log('DATA')
                 // console.log(data)
@@ -216,7 +216,7 @@ function Feed<FeedPagePops>({ match }) {
           )}
         </SwiperSlide>
         <SwiperSlide key={1}>
-          <Swiper spaceBetween={30} slidesPerView={1} direction='vertical'>
+          <Swiper speed={900} initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
             {animals.map((data, index) => {
               return data.listed ? (
                 <SwiperSlide key={data.tokenID + 'slide'}>
