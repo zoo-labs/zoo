@@ -311,8 +311,8 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
   const zoo_location = {
     pathname: `/feed/myzoo/${animal.tokenID}`,
     state: {
-      tokenID: animal.tokenID
-    }
+      tokenID: animal.tokenID,
+    },
   }
 
   return (
