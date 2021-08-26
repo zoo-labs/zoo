@@ -115,7 +115,7 @@ const Account: React.FC = () => {
   const [keepApprove, setKeepApprove] = useState(true)
   const web3 = useWeb3()
   const { account, chainID, gasPrice } = web3
-  const { isXl, isSm } = useMatchBreakpoints()
+  const { isXl, isSm, isMd } = useMatchBreakpoints()
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
 
@@ -221,9 +221,9 @@ const Account: React.FC = () => {
 
   return (
     <div
-      // style={{ height: '100vh' }} className='flex items-center'
+    // style={{ height: '100vh' }} className='flex items-center'
     >
-      <div className='lg:p-16 p-4 space-y-4 rounded-lg  m-4 flex flex-col relative filter drop-shadow'>
+      <div className='lg:p-16 p-4 space-y-4 rounded-lg  m-4 flex flex-col relative filter drop-shadow z-10'>
         <div className='flex flex-col h-full'>
           <div className='flex flex-col justify-between h-full'>
             <div style={{ flex: 1 }} className='p-5 rounded'>
@@ -235,7 +235,7 @@ const Account: React.FC = () => {
 
             <div className='m-4 flex flex-wrap'>
               {(keepApprove || !allowance) && (
-                <div className={` ${isSm ? 'w-1/2' : 'w-1/6'} px-2`}>
+                <div className={` ${isSm ? 'w-1/2' : isMd ? 'w-1/3' : 'w-1/6'} px-2`}>
                   <button
                     disabled={disableApprove || allowance}
                     style={{ color: 'rgb(255,255,255)', backgroundColor: '#8C4FF8', border: '1px solid rgba(21, 61, 111, 0.44)' }}
@@ -245,7 +245,7 @@ const Account: React.FC = () => {
                   </button>
                 </div>
               )}
-              <div className={` ${isSm && !allowance ? 'w-1/2' : isSm ? 'w-full' : 'w-1/6'} px-2`}>
+              <div className={` ${isSm && !allowance ? 'w-1/2' : isSm ? 'w-full' : isMd ? 'w-1/3' : 'w-1/6'} px-2`}>
                 <button
                   disabled={disable || !allowance}
                   className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80 px-6 py-4 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full`}
