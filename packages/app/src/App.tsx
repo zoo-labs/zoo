@@ -187,18 +187,22 @@ const App: React.FC = () => {
         <GlobalStyle />
         <Switch>
           <Route exact path='/login'>
-            {signedIn ? <Redirect to='/home' /> : <Login />}
+            {signedIn ? <Redirect to='/swap' /> : <Login />}
           </Route>
 
           <SuspenseWithChunkError fallback={<></>}>
-            <div className='flex sticky top-0 justify-between flex-nowrap w-full z-20'>
-              <Header />
+            <div className='z-0 flex flex-col items-center w-full h-screen pb-16 lg:pb-0'>
+              <div className='flex sticky top-0 justify-between flex-nowrap w-full z-20 flex-shrink-0 w-full'>
+                <Header />
+              </div>
+              <main className='flex flex-col items-center justify-start flex-grow w-full h-full'>
+                <Switch>
+                  {indexRoutes.map((prop, key) => (signedIn ? <Route path={prop.path} key={key} component={prop.component} /> : <Redirect to='/login' />))}
+                  <Redirect from='/' to={signedIn ? '/swap' : '/login'} />
+                  <Redirect from='' to={signedIn ? '/swap' : '/login'} />
+                </Switch>
+              </main>
             </div>
-            <Switch>
-              {indexRoutes.map((prop, key) => (signedIn ? <Route path={prop.path} key={key} component={prop.component} /> : <Redirect to='/login' />))}
-              <Redirect from='/' to={signedIn ? '/home' : '/login'} />
-              <Redirect from='' to={signedIn ? '/home' : '/login'} />
-            </Switch>
             {/* <Route exact path='/account'>
               {signedIn ? (
                 <>
