@@ -3,7 +3,6 @@ import { useMatchBreakpoints } from 'hooks'
 import { useCallback, useEffect, useState } from 'react'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import Logo from '../../assets/img/ZooLogoWhite.png'
 import Menu from '../Menu'
 import { Label, Text } from 'components/Text'
 import { getZooToken, getZooDrop, getZooFaucet, getZooMedia, getZooKeeper } from 'util/contracts'
@@ -17,11 +16,13 @@ import useToast from 'hooks/useToast'
 import ThemeSwitcher from 'components/SideMenu/components/ThemeSwitcher'
 import { MENU_ENTRY_HEIGHT } from 'components/SideMenu/config'
 import useWeb3 from 'hooks/useWeb3'
-import { MoreIcon } from 'components/SideMenu/icons'
+// import { MoreIcon } from 'components/SideMenu/icons'
 import More from './More'
 import QuestionHelper from './QuestionHelper'
 import { numberWithCommas } from 'components/Functions'
 import NetworkCard from './NetworkCard'
+
+const logoURL = window.location.origin + '/static/images/logo-white.png'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; isMobile: boolean; isFeed?: boolean }>`
   grid-template-columns: 120px 1fr 120px;
@@ -275,7 +276,7 @@ export default function Header() {
     <HeaderFrame showBackground={scrollY > 45} isMobile={isMobile} isFeed={active == 'feed'}>
       <Title href='.'>
         <LogoIcon>
-          <img src={Logo} alt='logo' />
+          <img src={logoURL} alt='logo' />
         </LogoIcon>
       </Title>
       <div
