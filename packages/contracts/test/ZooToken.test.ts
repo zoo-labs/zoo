@@ -14,9 +14,8 @@ const BigNumber = ethers.BigNumber;
 
 const setupTest = deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
   await deployments.fixture(['ZooToken'])
-  // const contracts = await deployments.fixture() // ensure you start from a fresh deployments
+  const token: ZooToken = await ethers.getContract('ZooToken')
   const signers = await ethers.getSigners()
-  const token = (await ethers.getContract('ZooToken')) as ZooToken
   const owner = (await getNamedAccounts()).deployer
   return {
     owner: owner,
