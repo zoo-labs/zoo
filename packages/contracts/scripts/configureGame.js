@@ -7,8 +7,8 @@ const hybrids = require('../utils/hybrids.json')
 const hybrids = require('../utils/hybrids.json')
 
 const ZooToken = require('../deployments/testnet/ZooToken.json')
-const ZooMarket = require('../deployments/testnet/ZooMarket.json')
-const ZooMedia = require('../deployments/testnet/ZooMedia.json')
+const Market = require('../deployments/testnet/Market.json')
+const Media = require('../deployments/testnet/Media.json')
 const ZooKeeper = require('../deployments/testnet/ZooKeeper.json')
 const ZooDrop = require('../deployments/testnet/ZooDrop.json')
 
@@ -27,20 +27,20 @@ async function main() {
 
   const keeper = await (await ethers.getContractAt('ZooKeeper', ZooKeeper.address)).connect(signer)
   const drop = await (await ethers.getContractAt('ZooDrop', ZooDrop.address)).connect(signer)
-  const media = await (await ethers.getContractAt('ZooMedia', ZooMedia.address)).connect(signer)
-  const market = await (await ethers.getContractAt('ZooMarket', ZooMarket.address)).connect(signer)
+  const media = await (await ethers.getContractAt('Media', Media.address)).connect(signer)
+  const market = await (await ethers.getContractAt('Market', Market.address)).connect(signer)
 
   // Configure Market
-  console.log('market.configure', ZooKeeper.address, ZooMedia.address)
-  await market.configure(ZooKeeper.address, ZooMedia.address)
+  console.log('market.configure', ZooKeeper.address, Media.address)
+  await market.configure(ZooKeeper.address, Media.address)
 
   // Configure Media
-  console.log('media.configure', ZooKeeper.address, ZooMarket.address)
-  await market.configure(ZooKeeper.address, ZooMarket.address)
+  console.log('media.configure', ZooKeeper.address, Market.address)
+  await market.configure(ZooKeeper.address, Market.address)
 
   // Configure game for our Gen 0 drop
-  console.log('keeper.configure', ZooMarket.address, ZooMedia.address, ZooToken.address)
-  await keeper.configure(ZooMarket.address, ZooMedia.address, ZooToken.address)
+  console.log('keeper.configure', Market.address, Media.address, ZooToken.address)
+  await keeper.configure(Market.address, Media.address, ZooToken.address)
 
   // Configure Drop
   console.log('drop.configure', ZooKeeper.address)

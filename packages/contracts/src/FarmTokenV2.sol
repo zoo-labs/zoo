@@ -7,9 +7,9 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 // MFRM Token is the MemeFarm goverance token which is issued by the MemeFarm
 // contract as a reward for staking LP tokens
-contract ZooFarmTokenV2 is ERC20Upgradeable, OwnableUpgradeable {
+contract FarmTokenV2 is ERC20Upgradeable, OwnableUpgradeable {
     function initialize() public initializer  {
-        __ERC20_init("ZooFarmTokenV2", "ZFRM");
+        __ERC20_init("FarmTokenV2", "ZFRM");
         __Ownable_init();
     }
 
