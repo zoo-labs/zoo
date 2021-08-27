@@ -30,7 +30,7 @@ describe.skip('integration', () => {
   }
 
   beforeEach(async () => {
-    await ethers.provider.send('hardhat_reset', [])
+    await ethers.providers[0].send('hardhat_reset', [])
     ;[deployer, creator, owner, curator, bidderA, bidderB, otherUser] = await ethers.getSigners()
     ;[deployerAddress, creatorAddress, ownerAddress, curatorAddress, bidderAAddress, bidderBAddress, otherUserAddress] = await Promise.all(
       [deployer, creator, owner, curator, bidderA, bidderB].map((s) => s.getAddress()),
@@ -57,7 +57,7 @@ describe.skip('integration', () => {
       console.log('createbid auction')
       await auction.connect(bidderA).createBid(0, ONE_ZOO, { value: ONE_ZOO })
       await auction.connect(bidderB).createBid(0, TWO_ZOO, { value: TWO_ZOO })
-      await ethers.provider.send('evm_setNextBlockTimestamp', [Date.now() + ONE_DAY])
+      await ethers.providers[0].send('evm_setNextBlockTimestamp', [Date.now() + ONE_DAY])
       await auction.connect(otherUser).endAuction(0)
     }
 
@@ -67,25 +67,25 @@ describe.skip('integration', () => {
     })
 
     it('should withdraw the winning bid amount from the winning bidder', async () => {
-      const beforeBalance = await ethers.provider.getBalance(bidderBAddress)
+      const beforeBalance = await ethers.providers[0].getBalance(bidderBAddress)
       await run()
-      const afterBalance = await ethers.provider.getBalance(bidderBAddress)
+      const afterBalance = await ethers.providers[0].getBalance(bidderBAddress)
 
       expect(smallify(beforeBalance.sub(afterBalance))).to.be.approximately(smallify(TWO_ZOO), smallify(TENTH_ZOO))
     })
 
     it('should refund the losing bidder', async () => {
-      const beforeBalance = await ethers.provider.getBalance(bidderAAddress)
+      const beforeBalance = await ethers.providers[0].getBalance(bidderAAddress)
       await run()
-      const afterBalance = await ethers.provider.getBalance(bidderAAddress)
+      const afterBalance = await ethers.providers[0].getBalance(bidderAAddress)
 
       expect(smallify(beforeBalance)).to.be.approximately(smallify(afterBalance), smallify(TENTH_ZOO))
     })
 
     it('should pay the auction creator', async () => {
-      const beforeBalance = await ethers.provider.getBalance(ownerAddress)
+      const beforeBalance = await ethers.providers[0].getBalance(ownerAddress)
       await run()
-      const afterBalance = await ethers.provider.getBalance(ownerAddress)
+      const afterBalance = await ethers.providers[0].getBalance(ownerAddress)
 
       // 15% creator fee -> 2ZOO * 85% = 1.7 ZOO
       expect(smallify(afterBalance)).to.be.approximately(smallify(beforeBalance.add(TENTH_ZOO.mul(17))), smallify(TENTH_ZOO))
@@ -108,7 +108,7 @@ describe.skip('integration', () => {
       await auction.connect(curator).setAuctionApproval(0, true)
       await auction.connect(bidderA).createBid(0, ONE_ZOO, { value: ONE_ZOO })
       await auction.connect(bidderB).createBid(0, TWO_ZOO, { value: TWO_ZOO })
-      await ethers.provider.send('evm_setNextBlockTimestamp', [Date.now() + ONE_DAY])
+      await ethers.providers[0].send('evm_setNextBlockTimestamp', [Date.now() + ONE_DAY])
       await auction.connect(otherUser).endAuction(0)
     }
 
