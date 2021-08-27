@@ -118,8 +118,6 @@ describe('ZooKeeper', () =>   {
     await expect(async () => {
       await zooKeeper.buyEgg(1)
       await zooKeeper.buyEgg(1)
-
-      await zooKeeper.hatchAnimal(
     }).not.to.throw();
 
     // // Hatch eggs into animals
