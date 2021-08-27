@@ -15,6 +15,8 @@ import schema from '@uniswap/token-lists/src/tokenlist.schema.json'
 // addFormats(ajv)
 const tokenListValidator = new Ajv({ allErrors: true }).compile(schema)
 
+// const ajv = new AJV()
+// addFormats(ajv)
 /**
  * Contains the logic for resolving a list URL to a validated token list
  * @param listUrl list url

@@ -1,4 +1,4 @@
-import Account from './views/Account/Index'
+import Account from './views/Account'
 import Bank from './views/Bank'
 import Feed from './views/Feed'
 import Swap from './views/Swap'
