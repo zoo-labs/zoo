@@ -100,6 +100,7 @@ const Title = styled.a`
 `
 
 const LogoIcon = styled.div`
+  margin-left: 8px;
   width: 64px;
   transition: transform 0.3s ease;
   :hover {
