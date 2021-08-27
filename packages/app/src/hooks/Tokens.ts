@@ -186,9 +186,9 @@ export function useCurrency(currencyId: string | undefined): Currency | null | u
   const isDual = [ChainId.CELO].includes(chainId)
 
   const useNative = isETH && !isDual
-
   if (isETH && isDual) {
     currencyId = WNATIVE_ADDRESS[chainId]
+
   }
 
   const token = useToken(useNative ? undefined : currencyId)
@@ -198,9 +198,13 @@ export function useCurrency(currencyId: string | undefined): Currency | null | u
 
   const native = useMemo(() => (chainId ? NATIVE[chainId] : undefined), [chainId])
 
+
   const wnative = chainId ? WNATIVE[chainId] : undefined
+  console.log('native',native)
+  console.log('token',token)
+  console.log('wnative',wnative)
 
   if (wnative?.address?.toLowerCase() === currencyId?.toLowerCase()) return wnative
-
-  return useNative ? native : token
+  // useNative ? native : token
+  return native 
 }
