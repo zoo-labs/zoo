@@ -30,10 +30,8 @@ export const requireDependencies = () => {
   }
   }
 export const setupTestFactory = (contractArr: string[]) => deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
-
-
   await deployments.fixture(contractArr)
-  let tokens: { [key: string]: Contract } = contractArr.reduce(async (sum: {}, name: string) => {
+  let tokens: { [key: string]: Contract } = await contractArr.reduce(async (sum: {}, name: string) => {
     const contract: Contract = await ethers.getContract(name);
     return {
       [name]: contract,
