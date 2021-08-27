@@ -1635,7 +1635,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.4.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.3, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.4.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.3, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.15.3
   resolution: "@babel/runtime@npm:7.15.3"
   dependencies:
@@ -2042,7 +2042,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/abstract-provider@npm:5.4.1, @ethersproject/abstract-provider@npm:^5.4.0":
+"@ethersproject/abstract-provider@npm:5.4.1, @ethersproject/abstract-provider@npm:^5.4.0, @ethersproject/abstract-provider@npm:^5.4.1":
   version: 5.4.1
   resolution: "@ethersproject/abstract-provider@npm:5.4.1"
   dependencies:
@@ -3674,6 +3674,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sushiswap/default-token-list@npm:^14.9.0":
+  version: 14.9.0
+  resolution: "@sushiswap/default-token-list@npm:14.9.0"
+  checksum: 2fe27a5b15bde1778c69726e56a4302517aa6dc71eec189be8006c1cf325e138e3b17e400d8bebaa2a8100d491cdcd7f27b26233dd7a6b3689936e67172d68de
+  languageName: node
+  linkType: hard
+
 "@sushiswap/sdk@npm:^5.0.0-canary.52":
   version: 5.0.0-canary.52
   resolution: "@sushiswap/sdk@npm:5.0.0-canary.52"
@@ -4561,7 +4568,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^4.5.0":
+"@typescript-eslint/parser@npm:^4.29.3, @typescript-eslint/parser@npm:^4.5.0":
   version: 4.29.3
   resolution: "@typescript-eslint/parser@npm:4.29.3"
   dependencies:
@@ -5159,25 +5166,33 @@ __metadata:
   dependencies:
     "@binance-chain/bsc-connector": ^1.0.0
     "@craco/craco": ^6.2.0
+    "@ethereumjs/common": ^2.4.0
+    "@ethereumjs/tx": ^3.3.0
     "@ethersproject/abi": ^5.4.0
+    "@ethersproject/abstract-provider": ^5.4.1
     "@ethersproject/abstract-signer": ^5.4.1
     "@ethersproject/address": ^5.4.0
     "@ethersproject/bignumber": ^5.4.1
     "@ethersproject/bytes": ^5.4.0
+    "@ethersproject/constants": ^5.4.0
     "@ethersproject/contracts": ^5.4.1
     "@ethersproject/experimental": ^5.4.0
+    "@ethersproject/hash": ^5.4.0
+    "@ethersproject/keccak256": ^5.4.0
     "@ethersproject/networks": ^5.4.2
     "@ethersproject/providers": ^5.4.4
     "@ethersproject/signing-key": ^5.4.0
     "@ethersproject/solidity": ^5.4.0
+    "@ethersproject/strings": ^5.4.0
     "@ethersproject/transactions": ^5.4.0
+    "@ethersproject/units": ^5.4.0
     "@headlessui/react": ^1.4.0
     "@lingui/macro": ^3.10.2
     "@lingui/react": ^3.10.2
     "@material-ui/core": ^4.12.3
     "@react-hook/window-scroll": ^1.3.0
     "@reduxjs/toolkit": ^1.6.1
-    "@styled-system/css": ^5.1.5
+    "@sushiswap/default-token-list": ^14.9.0
     "@sushiswap/sdk": ^5.0.0-canary.52
     "@types/history": ^4.7.9
     "@types/node": ^16.7.2
@@ -5188,36 +5203,46 @@ __metadata:
     "@types/react-router-dom": ^5.1.8
     "@types/styled-components": ^5.1.13
     "@types/styled-system": ^5.1.13
+    "@typescript-eslint/parser": ^4.29.3
     "@uniswap/token-lists": 1.0.0-beta.24
+    "@web3-react/abstract-connector": ^6.0.7
     "@web3-react/core": ^6.1.9
     "@web3-react/injected-connector": ^6.0.7
+    "@web3-react/types": ^6.0.7
     "@web3-react/walletconnect-connector": ^6.2.4
     "@web3-react/walletlink-connector": ^6.2.3
     autoprefixer: ^10.3.3
     bignumber.js: ^9.0.1
+    cids: ^1.1.8
     copy-to-clipboard: ^3.3.1
     eip-712: ^0.4.3
     eslint: ^7.32.0
     ethers: ^5.4.5
     framer-motion: ^4.1.17
     history: ^5.0.1
+    immutable: ^4.0.0-rc.14
     lodash: ^4.17.21
     moralis: ^0.0.37
+    multicodec: ^3.1.1
+    multihash: ^0.1.0
     multihashes: ^4.0.3
     numeral: ^2.0.6
     polished: ^4.1.3
     postcss: ^8.3.6
     prettier: ^2.3.2
+    qs: ^6.10.1
     react: ^17.0.2
     react-device-detect: ^1.17.0
     react-dom: ^17.0.2
     react-feather: ^2.0.9
+    react-ga: ^3.3.0
     react-helmet-async: ^1.1.2
     react-icons: ^4.2.0
     react-is: ^17.0.2
     react-modal-sheet: ^1.4.0
     react-moralis: ^0.2.1
     react-redux: ^7.2.4
+    react-router: ^5.2.1
     react-router-dom: ^5.2.0
     react-scripts: ^4.0.3
     react-transition-group: ^4.4.2
@@ -5227,9 +5252,12 @@ __metadata:
     styled-system: ^5.1.5
     swiper: ^7.0.1
     tailwindcss: ^2.2.8
+    tiny-invariant: ^1.1.0
+    tiny-warning: ^1.0.3
     ts-node: ^10.2.1
     typescript: ^4.4.2
     web3: ^1.5.2
+    web3-utils: ^1.5.2
   languageName: unknown
   linkType: soft
 
@@ -8208,6 +8236,18 @@ __metadata:
     multicodec: ^1.0.0
     multihashes: ~0.4.15
   checksum: 54aa031bef76b08a2c934237696a4af2cfc8afb5d2727cb39ab69f6ac142ef312b9a0c6070dc2b4be0a43076d8961339d8bf85287773c647b3d1d25ce203f325
+  languageName: node
+  linkType: hard
+
+"cids@npm:^1.1.8":
+  version: 1.1.8
+  resolution: "cids@npm:1.1.8"
+  dependencies:
+    multibase: ^4.0.1
+    multicodec: ^3.0.1
+    multihashes: ^4.0.1
+    uint8arrays: ^3.0.0
+  checksum: 1183dbf4499bf7faf9e713294c978e1e2f5b2f477f4fb4aad334ce7c7dce3ec5b9126a29cae237bcc35df491fa20ac3d36b4c2d922677257841679edb457dafe
   languageName: node
   linkType: hard
 
@@ -13722,7 +13762,7 @@ fsevents@~2.1.1:
   languageName: node
   linkType: hard
 
-"immutable@npm:^4.0.0-rc.12":
+"immutable@npm:^4.0.0-rc.12, immutable@npm:^4.0.0-rc.14":
   version: 4.0.0-rc.14
   resolution: "immutable@npm:4.0.0-rc.14"
   checksum: 40941a80dd957361471697388019ae09be28d046a2c79d88dc81b215e6f2ed68a8c7356b9d99bb814a2d978c60d0bdf78997f65403f87adca60d7e11993e8c91
@@ -17819,10 +17859,27 @@ fsevents@~2.1.1:
   languageName: node
   linkType: hard
 
+"multicodec@npm:^3.0.1, multicodec@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "multicodec@npm:3.1.1"
+  dependencies:
+    uint8arrays: ^3.0.0
+    varint: ^6.0.0
+  checksum: 10f62818ea3b3d26ec133bbd1ee3c38225f703f0a74191fc42636320f87f07fba48e47d6a349d4a083e02bc600b7473ee102e5ec3ed1d66733747686c782a873
+  languageName: node
+  linkType: hard
+
 "multiformats@npm:^9.4.2":
   version: 9.4.6
   resolution: "multiformats@npm:9.4.6"
   checksum: bb5ec4382d117b81ecfa2df6dd7a5cd9198ee5d0b4909975c1077541f54548b2645f290462f32b7c89cc41efa7b67950d4eb032a8296b64de9501707ad676c5c
+  languageName: node
+  linkType: hard
+
+"multihash@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "multihash@npm:0.1.0"
+  checksum: 325fa06947efd2c5b36649643faa0bbd80d13634742273e6aa6d376db9efecdc1d6636075fc9a6862eb552b9935b33532e2331dafc050882f22fdb463d567883
   languageName: node
   linkType: hard
 
@@ -17848,7 +17905,7 @@ fsevents@~2.1.1:
   languageName: node
   linkType: hard
 
-"multihashes@npm:^4.0.3":
+"multihashes@npm:^4.0.1, multihashes@npm:^4.0.3":
   version: 4.0.3
   resolution: "multihashes@npm:4.0.3"
   dependencies:
@@ -20916,7 +20973,7 @@ fsevents@~2.1.1:
   languageName: node
   linkType: hard
 
-"qs@npm:^6.5.2, qs@npm:^6.7.0, qs@npm:^6.9.4":
+"qs@npm:^6.10.1, qs@npm:^6.5.2, qs@npm:^6.7.0, qs@npm:^6.9.4":
   version: 6.10.1
   resolution: "qs@npm:6.10.1"
   dependencies:
@@ -21205,6 +21262,16 @@ fsevents@~2.1.1:
   languageName: node
   linkType: hard
 
+"react-ga@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "react-ga@npm:3.3.0"
+  peerDependencies:
+    prop-types: ^15.6.0
+    react: ^15.6.2 || ^16.0 || ^17
+  checksum: b4f5b0ed3a5d7ea781397d6a1f8dacae2284fe7f03f72dde330958dd0a64732f8766c6fa26cf0f1a8fb1303fa02aa51f23cf0b261e52981d0275262b831c7fea
+  languageName: node
+  linkType: hard
+
 "react-helmet-async@npm:^1.1.2":
   version: 1.1.2
   resolution: "react-helmet-async@npm:1.1.2"
@@ -21347,6 +21414,26 @@ fsevents@~2.1.1:
   peerDependencies:
     react: ">=15"
   checksum: 6fc908729110a65a5676a9e41333e0f511a3c0ff84c93c0dc704330cf3e02124c93aaeab8031b0e2c71712390d9278fff848eeebfbdda36dca3201142f309973
+  languageName: node
+  linkType: hard
+
+"react-router@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "react-router@npm:5.2.1"
+  dependencies:
+    "@babel/runtime": ^7.12.13
+    history: ^4.9.0
+    hoist-non-react-statics: ^3.1.0
+    loose-envify: ^1.3.1
+    mini-create-react-context: ^0.4.0
+    path-to-regexp: ^1.7.0
+    prop-types: ^15.6.2
+    react-is: ^16.6.0
+    tiny-invariant: ^1.0.2
+    tiny-warning: ^1.0.0
+  peerDependencies:
+    react: ">=15"
+  checksum: 7daae084bf64531eb619cc5f4cc40ce5ae0a541b64f71d74ec71a38cbf6130ebdbb7cf38f157303fad5846deec259401f96c4d6c7386466dcc989719e01f9aaa
   languageName: node
   linkType: hard
 
@@ -25353,6 +25440,13 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
+"varint@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "varint@npm:6.0.0"
+  checksum: 7684113c9d497c01e40396e50169c502eb2176203219b96e1c5ac965a3e15b4892bd22b7e48d87148e10fffe638130516b6dbeedd0efde2b2d0395aa1772eea7
+  languageName: node
+  linkType: hard
+
 "vary@npm:^1, vary@npm:~1.1.2":
   version: 1.1.2
   resolution: "vary@npm:1.1.2"
@@ -26044,7 +26138,7 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"web3-utils@npm:1.5.2, web3-utils@npm:^1.0.0-beta.31":
+"web3-utils@npm:1.5.2, web3-utils@npm:^1.0.0-beta.31, web3-utils@npm:^1.5.2":
   version: 1.5.2
   resolution: "web3-utils@npm:1.5.2"
   dependencies:
