@@ -25,4 +25,11 @@ describe('ZooFarmToken', async () => {
         await token.mint(toAddr, 100);
         expect(await token.balanceOf(toAddr)).to.equal(100)
     })
+
+    it('cannot be called by someone other than the owner', async () => {
+        const {tokens: {'ZooFarmToken': token}, signers} = await setupTest()
+        const toAddr = signers[1].address;
+        const contract = token.connect(signers[1]);
+        await expect(contract.mint(toAddr, 100)).to.be.revertedWith('Ownable: caller is not the owner')
+    })
 })
