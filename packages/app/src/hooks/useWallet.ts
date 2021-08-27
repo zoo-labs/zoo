@@ -1,5 +1,5 @@
 import { Currency, CurrencyAmount, Ether, JSBI, Token } from '@sushiswap/sdk'
-import { useMultipleContractSingleData, useSingleContractMultipleData } from '../multicall/hooks'
+import { useMultipleContractSingleData, useSingleContractMultipleData } from '../state/multicall/hooks'
 
 import ERC20_ABI from '../constants/abis/erc20.json'
 import { Interface } from '@ethersproject/abi'
@@ -142,7 +142,7 @@ export function useCurrencyBalance(account?: string, currency?: Currency): Curre
 export function useAllTokenBalances(): {
   [tokenAddress: string]: CurrencyAmount<Token> | undefined
 } {
-  const { account } = useActiveWeb3React()
+  const { account } = useWeb3React()
   const allTokens = useAllTokens()
   const allTokensArray = useMemo(() => Object.values(allTokens ?? {}), [allTokens])
   const balances = useTokenBalances(account ?? undefined, allTokensArray)
