@@ -73,7 +73,7 @@
     "copy-to-clipboard": "^3.3.1",
     "cryptocurrency-icons": "^0.18.0",
     "eip-712": "^0.4.3",
-    "ethers": "^5.4.1",
+    "ethers": "^5.4.5",
     "framer-motion": "^4.1.17",
     "history": "^5.0.1",
     "i18next": "^20.4.0",
