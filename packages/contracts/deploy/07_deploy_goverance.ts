@@ -16,7 +16,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // Proxy only in non-live network (localhost and hardhat network) enabling
   // HCR (Hot Contract Replacement) in live network, proxy is disabled and
   // constructor is invoked
-  await deploy('ZooFarmToken', {
+  await deploy('GoveranceToken', {
     // nonce: nonce,
     from: deployer.address,
     args: [],
@@ -29,6 +29,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 }
 
 export default func
-func.id = 'farm'
-func.tags = ['ZooFarmToken']
+func.id = 'goverance'
+func.tags = ['GoveranceToken']
 func.dependencies = []
