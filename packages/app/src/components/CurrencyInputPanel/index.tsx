@@ -56,14 +56,13 @@ export default function CurrencyInputPanel({
 }: CurrencyInputPanelProps) {
   const [modalOpen, setModalOpen] = useState(false)
   const { account } = useWeb3React()
-  //   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
-  const selectedCurrencyBalance: any = 20
+  const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false)
   }, [setModalOpen])
-
+  console.log('currecny', currency)
   return (
-    <div id={id} className={`${hideInput ? 'p-4' : 'p-5'}, rounded bg-dark-800`}>
+    <div id={id} className={`${hideInput ? 'p-4' : 'p-5'} rounded bg-dark-800`}>
       <div className='flex flex-col justify-between space-y-3 sm:space-y-0 sm:flex-row'>
         <div className={'w-full sm:w-2/5'}>
           <button
@@ -125,9 +124,14 @@ export default function CurrencyInputPanel({
                 id='token-amount-input'
                 value={value}
                 onChange={(e) => onUserInput(e.target.value)}
-                // onUserInput={(val) => {
-                //   onUserInput(val)
-                // }}
+                className='relative font-bold outline-none border-none flex-auto overflow-hidden overflow-ellipsis placeholder-low-emphesis focus:placeholder-primary w-0 p-0 text-2xl bg-transparent'
+                placeholder='0.0'
+                min={1}
+                max={79}
+                type='text'
+                pattern='^[0-9]*[.,]?[0-9]*$'
+                title='Token Amount'
+                inputMode='decimal'
               />
               {!hideBalance && currency && selectedCurrencyBalance ? (
                 <div className='flex flex-col'>
