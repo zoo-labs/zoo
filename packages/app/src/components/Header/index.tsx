@@ -73,10 +73,11 @@ const HeaderElement = styled.div`
 `
 
 const AccountElement = styled.div<{ active: boolean }>`
+  font-size: 14px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: #212429;
+  background-color: #222;
   white-space: nowrap;
   width: 100%;
   cursor: pointer;
@@ -98,7 +99,8 @@ const Title = styled.a`
   }
 `
 
-const UniIcon = styled.div`
+const LogoIcon = styled.div`
+  width: 64px;
   transition: transform 0.3s ease;
   :hover {
     transform: rotate(-5deg);
@@ -275,9 +277,9 @@ export default function Header() {
   return (
     <HeaderFrame showBackground={scrollY > 45} isSm={isSm} isMd={isMd} isFeed={active == 'feed'}>
       <Title href='.'>
-        <UniIcon>
-          <img src={Logo} alt='logo' className='lg:w-2/3 w-full' />
-        </UniIcon>
+        <LogoIcon>
+          <img src={Logo} alt='logo' />
+        </LogoIcon>
       </Title>
       <div
         className={`self-center items-center grid grid-flow-col w-max rounded-2xl p-1 m-1 justify-self-center ${
@@ -296,13 +298,6 @@ export default function Header() {
             </a>
           )
         })}
-        <a
-          onClick={() => handleFunds()}
-          // id={`${path}-nav-link`}
-          className={`items-left cursor-pointer text-md flex text-gray-300 font-semibold rounded-xl text-white`}
-          style={{ backgroundColor: '#8C4FF8', padding: '10px 14px' }}>
-          <h6> {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}</h6>
-        </a>
       </div>
 
       <HeaderControls>
@@ -354,12 +349,12 @@ export default function Header() {
           </>
         )}
         <HeaderElement>
-          <AccountElement active={!!account} style={{ pointerEvents: 'auto' }} className='rounded-xl'>
+          <AccountElement active={!!account} style={{ padding: '3px 3px 3px 0', pointerEvents: 'auto' }} className='rounded-xl'>
             {account ? (
               <>
                 {/* <QuestionHelper text='Buy ZOO' show={show} /> */}
-                <BalanceText onMouseEnter={open} style={{ flexShrink: 0 }} pl='0.75rem' pr='0.5rem' fontWeight={500}>
-                  <h6 className='text-xs font-semibold'>{numberWithCommas(balance)} BNB</h6>
+                <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} pl='0.5rem' pr='0.5rem' fontWeight={500}>
+                  {numberWithCommas(balance)} BNB
                 </BalanceText>
               </>
             ) : null}
