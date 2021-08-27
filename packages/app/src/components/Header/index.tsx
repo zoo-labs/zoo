@@ -23,7 +23,7 @@ import QuestionHelper from './QuestionHelper'
 import { numberWithCommas } from 'components/Functions'
 import NetworkCard from './NetworkCard'
 
-const HeaderFrame = styled.div<{ showBackground: boolean; isSm: boolean; isMd: boolean; isFeed?: boolean }>`
+const HeaderFrame = styled.div<{ showBackground: boolean; isMobile: boolean; isFeed?: boolean }>`
   grid-template-columns: 120px 1fr 120px;
   -moz-box-pack: justify;
   -moz-box-align: center;
@@ -39,7 +39,7 @@ const HeaderFrame = styled.div<{ showBackground: boolean; isSm: boolean; isMd: b
   transition: background-position 0.1s ease 0s, box-shadow 0.1s ease 0s;
   background-blend-mode: hard-light;
   width: 100%;
-  ${({ isSm, isMd }) => (isMd || isSm ? 'grid-template-columns: 36px 1fr; padding: 1rem' : '')};
+  ${({ isMobile }) => (isMobile ? 'grid-template-columns: 80px 1fr; padding: 1rem' : '')};
   ${({ isFeed }) => (isFeed ? 'display: none' : 'display: grid')};
 `
 
@@ -169,7 +169,7 @@ export default function Header() {
   const open = useCallback(() => setShow(true), [setShow])
 
   const [active, setActive] = useState('account')
-  const { isXl, isXs, isSm, isMd } = useMatchBreakpoints()
+  const { isXl, isXs, isSm, isMd, isLg } = useMatchBreakpoints()
   const { isDark, toggleTheme } = useTheme()
   const web3 = useWeb3()
   const { account, chainID, gasPrice, library } = web3
@@ -273,15 +273,15 @@ export default function Header() {
   }
 
   return (
-    <HeaderFrame showBackground={scrollY > 45} isSm={isSm} isMd={isMd} isFeed={active == 'feed'}>
+    <HeaderFrame showBackground={scrollY > 45} isMobile={isMobile} isFeed={active == 'feed'}>
       <Title href='.'>
         <UniIcon>
-          <img src={Logo} alt='logo' className='lg:w-2/3 w-full' />
+          <img src={Logo} alt='logo' className='w-full' />
         </UniIcon>
       </Title>
       <div
         className={`self-center items-center grid grid-flow-col w-max rounded-2xl p-1 m-1 justify-self-center ${
-          isMd || isSm ? 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
+          isMobile ? 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
         }`}
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
         {['Home', 'Feed', 'Swap', 'Pool'].map((path: string) => {
