@@ -1,25 +1,26 @@
-// import { ARCHER_ROUTER_ADDRESS, ChainId, Currency, CurrencyAmount, JSBI, Token, TradeType, Trade as V2Trade } from '@sushiswap/sdk'
+import { ARCHER_ROUTER_ADDRESS, ChainId, Currency, CurrencyAmount, JSBI, Token, TradeType, Trade as V2Trade } from '@sushiswap/sdk'
 // import { ApprovalState, useApproveCallbackFromTrade } from '../../../hooks/useApproveCallback'
 // import { ArrowWrapper, BottomGrouping, SwapCallbackError } from '../../../features/exchange-v1/swap/styleds'
 // import { ButtonConfirmed, ButtonError } from '../../../components/Button'
 // import Column, { AutoColumn } from '../../../components/Column'
-// import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 // import { UseERC20PermitState, useERC20PermitFromTrade } from '../../../hooks/useERC20Permit'
 // import { useAllTokens, useCurrency } from '../../../hooks/Tokens'
-// import { useDefaultsFromURLSearch, useDerivedSwapInfo, useSwapActionHandlers, useSwapState } from '../state/swap/hooks'
-// import {
-//   useExpertModeManager,
-//   useUserArcherETHTip,
-//   useUserArcherGasPrice,
-//   useUserArcherUseRelay,
-//   useUserSingleHopOnly,
-//   useUserSlippageTolerance,
-//   useUserTransactionTTL,
-// } from '../../../state/user/hooks'
+import { useDefaultsFromURLSearch, useDerivedSwapInfo, useSwapActionHandlers, useSwapState } from '../../state/swap/hooks'
+import Lottie from 'lottie-react'
+import {
+  useExpertModeManager,
+  useUserArcherETHTip,
+  useUserArcherGasPrice,
+  useUserArcherUseRelay,
+  useUserSingleHopOnly,
+  useUserSlippageTolerance,
+  useUserTransactionTTL,
+} from '../../state/user/hooks'
 // import { useNetworkModalToggle, useToggleSettingsMenu, useWalletModalToggle } from '../../../state/application/hooks'
-// import useWrapCallback, { WrapType } from '../../../hooks/useWrapCallback'
+import useWrapCallback, { WrapType } from '../../hooks/useWrapCallback'
 
-// import { ARCHER_RELAY_URI } from '../../../config/archer'
+import { ARCHER_RELAY_URI } from '../../config/archer'
 // import AddressInputPanel from '../../../components/AddressInputPanel'
 // import { AdvancedSwapDetails } from '../../../features/exchange-v1/swap/AdvancedSwapDetails'
 // import AdvancedSwapDetailsDropdown from '../../../features/exchange-v1/swap/AdvancedSwapDetailsDropdown'
@@ -28,25 +29,24 @@
 // import Button from '../../../components/Button'
 // import ConfirmSwapModal from '../../../features/exchange-v1/swap/ConfirmSwapModal'
 // import Container from '../../../components/Container'
-import CurrencyInputPanel from '../components/CurrencyInputPanel'
-import DoubleGlowShadow from '../components/DoubleGlowShadow'
-// import { Field } from '../../../state/swap/actions'
-// import { INITIAL_ALLOWED_SLIPPAGE } from '../../../constants'
+import CurrencyInputPanel from '../../components/CurrencyInputPanel'
+import DoubleGlowShadow from '../../components/DoubleGlowShadow'
+import { Field } from '../../state/swap/actions'
+import { INITIAL_ALLOWED_SLIPPAGE } from '../../constants'
 // import Loader from '../../../components/Loader'
 // import MinerTip from '../../../features/exchange-v1/swap/MinerTip'
 // import ProgressSteps from '../../../components/ProgressSteps'
 // import ReactGA from 'react-ga'
-// import SwapHeader from '../../../features/trade/Header'
+import SwapHeader from './Header'
 // import TokenWarningModal from '../../../modals/TokenWarningModal'
-// import TradePrice from '../../../features/exchange-v1/swap/TradePrice'
 // import Typography from '../../../components/Typography'
 // import UnsupportedCurrencyFooter from '../../../features/exchange-v1/swap/UnsupportedCurrencyFooter'
 // import Web3Connect from '../../../components/Web3Connect'
 // import { classNames } from '../../../functions'
-// import { computeFiatValuePriceImpact } from '../../../functions/trade'
+import { computeFiatValuePriceImpact } from '../../functions/trade'
 // import confirmPriceImpactWithoutFee from '../../../features/exchange-v1/swap/confirmPriceImpactWithoutFee'
-// import { maxAmountSpend } from '../../../functions/currency'
-// import swapArrowsAnimationData from '../../../animation/swap-arrows.json'
+import { maxAmountSpend } from '../../functions/currency'
+import swapArrowsAnimationData from '../../assets/animations/swap-arrows.json'
 // import { useActiveWeb3React } from '../../../hooks/useActiveWeb3React'
 // import useENSAddress from '../../../hooks/useENSAddress'
 // import useIsArgentWallet from '../../../hooks/useIsArgentWallet'
@@ -54,7 +54,9 @@ import DoubleGlowShadow from '../components/DoubleGlowShadow'
 // import usePrevious from '../../../hooks/usePrevious'
 // import { useRouter } from 'next/router'
 // import { useSwapCallback } from '../../../hooks/useSwapCallback'
-// import { useUSDCValue } from '../../../hooks/useUSDCPrice'
+import { useUSDCValue } from '../../hooks/useUSDCPrice'
+import TradePrice from 'components/TradePrice'
+import { useWeb3React } from '@web3-react/core'
 // import { warningSeverity } from '../../../functions/prices'
 
 export default function Swap() {
@@ -80,7 +82,7 @@ export default function Swap() {
   //       return !Boolean(token.address in defaultTokens)
   //     })
 
-  //   const { account, chainId } = useActiveWeb3React()
+  const { account, chainId } = useWeb3React()
 
   //   const toggleNetworkModal = useNetworkModalToggle()
 
@@ -90,67 +92,66 @@ export default function Swap() {
   //   const toggleWalletModal = useWalletModalToggle()
 
   //   // for expert mode
-  //   const [isExpertMode] = useExpertModeManager()
+  const [isExpertMode] = useExpertModeManager()
   //   const toggleSettings = useToggleSettingsMenu()
 
   //   // get custom setting values for user
   //   const [ttl] = useUserTransactionTTL()
-  //   const [useArcher] = useUserArcherUseRelay()
+  const [useArcher] = useUserArcherUseRelay()
   //   const [archerETHTip] = useUserArcherETHTip()
   //   const [archerGasPrice] = useUserArcherGasPrice()
 
-  //   // archer
-  //   const archerRelay = chainId ? ARCHER_RELAY_URI?.[chainId] : undefined
-  //   // const doArcher = archerRelay !== undefined && useArcher
-  //   const doArcher = undefined
+  // archer
+  const archerRelay = chainId ? ARCHER_RELAY_URI?.[chainId] : undefined
+  const doArcher = archerRelay !== undefined && useArcher
 
   //   // swap state
-  // const { independentField, typedValue, recipient } = useSwapState()
-  //   const { v2Trade, currencyBalances, parsedAmount, currencies, inputError: swapInputError, allowedSlippage } = useDerivedSwapInfo(doArcher)
+  const { independentField, typedValue, recipient } = useSwapState()
+  const { v2Trade, currencyBalances, parsedAmount, currencies, inputError: swapInputError, allowedSlippage } = useDerivedSwapInfo(doArcher)
 
-  //   const { wrapType, execute: onWrap, inputError: wrapInputError } = useWrapCallback(currencies[Field.INPUT], currencies[Field.OUTPUT], typedValue)
-  //   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE
+  const { wrapType, execute: onWrap, inputError: wrapInputError } = useWrapCallback(currencies[Field.INPUT], currencies[Field.OUTPUT], typedValue)
+  const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE
   //   const { address: recipientAddress } = useENSAddress(recipient)
 
-  //   const trade = showWrap ? undefined : v2Trade
+  const trade = showWrap ? undefined : v2Trade
 
-  //   const parsedAmounts = useMemo(
-  //     () =>
-  //       showWrap
-  //         ? {
-  //             [Field.INPUT]: parsedAmount,
-  //             [Field.OUTPUT]: parsedAmount,
-  //           }
-  //         : {
-  //             [Field.INPUT]: independentField === Field.INPUT ? parsedAmount : trade?.inputAmount,
-  //             [Field.OUTPUT]: independentField === Field.OUTPUT ? parsedAmount : trade?.outputAmount,
-  //           },
-  //     [independentField, parsedAmount, showWrap, trade],
-  //   )
+  const parsedAmounts = useMemo(
+    () =>
+      showWrap
+        ? {
+            [Field.INPUT]: parsedAmount,
+            [Field.OUTPUT]: parsedAmount,
+          }
+        : {
+            [Field.INPUT]: independentField === Field.INPUT ? parsedAmount : trade?.inputAmount,
+            [Field.OUTPUT]: independentField === Field.OUTPUT ? parsedAmount : trade?.outputAmount,
+          },
+    [independentField, parsedAmount, showWrap, trade],
+  )
 
-  //   const fiatValueInput = useUSDCValue(parsedAmounts[Field.INPUT])
-  //   const fiatValueOutput = useUSDCValue(parsedAmounts[Field.OUTPUT])
-  //   const priceImpact = computeFiatValuePriceImpact(fiatValueInput, fiatValueOutput)
+  const fiatValueInput = useUSDCValue(parsedAmounts[Field.INPUT])
+  const fiatValueOutput = useUSDCValue(parsedAmounts[Field.OUTPUT])
+  const priceImpact = computeFiatValuePriceImpact(fiatValueInput, fiatValueOutput)
 
-  //   const { onSwitchTokens, onCurrencySelection, onUserInput, onChangeRecipient } = useSwapActionHandlers()
+  const { onSwitchTokens, onCurrencySelection, onUserInput, onChangeRecipient } = useSwapActionHandlers()
 
   //   const isValid = !swapInputError
 
-  //   const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
+  const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
 
-  //   const handleTypeInput = useCallback(
-  //     (value: string) => {
-  //       onUserInput(Field.INPUT, value)
-  //     },
-  //     [onUserInput],
-  //   )
+  const handleTypeInput = useCallback(
+    (value: string) => {
+      onUserInput(Field.INPUT, value)
+    },
+    [onUserInput],
+  )
 
-  //   const handleTypeOutput = useCallback(
-  //     (value: string) => {
-  //       onUserInput(Field.OUTPUT, value)
-  //     },
-  //     [onUserInput],
-  //   )
+  const handleTypeOutput = useCallback(
+    (value: string) => {
+      onUserInput(Field.OUTPUT, value)
+    },
+    [onUserInput],
+  )
 
   //   // reset if they close warning without tokens in params
   //   const handleDismissTokenWarning = useCallback(() => {
@@ -173,10 +174,10 @@ export default function Swap() {
   //     txHash: undefined,
   //   })
 
-  //   const formattedAmounts = {
-  //     [independentField]: typedValue,
-  //     [dependentField]: showWrap ? parsedAmounts[independentField]?.toExact() ?? '' : parsedAmounts[dependentField]?.toSignificant(6) ?? '',
-  //   }
+  const formattedAmounts = {
+    [independentField]: typedValue,
+    [dependentField]: showWrap ? parsedAmounts[independentField]?.toExact() ?? '' : parsedAmounts[dependentField]?.toSignificant(6) ?? '',
+  }
 
   //   const userHasSpecifiedInputOutput = Boolean(currencies[Field.INPUT] && currencies[Field.OUTPUT] && parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0)))
 
@@ -211,7 +212,7 @@ export default function Swap() {
   //   // }, [approveCallback, gatherPermitSignature, signatureState])
 
   //   // check if user has gone through approval process, used to show two step buttons, reset on token change
-  //   const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
+  const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
 
   //   // mark when a user has submitted an approval, reset onTokenSelection for input field
   //   useEffect(() => {
@@ -220,7 +221,7 @@ export default function Swap() {
   //     }
   //   }, [approvalState, approvalSubmitted])
 
-  //   const maxInputAmount: CurrencyAmount<Currency> | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
+  const maxInputAmount: CurrencyAmount<Currency> | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
   //   const showMaxButton = Boolean(maxInputAmount?.greaterThan(0) && !parsedAmounts[Field.INPUT]?.equalTo(maxInputAmount))
 
   //   // the callback to execute the swap
@@ -286,7 +287,7 @@ export default function Swap() {
   //   ])
 
   //   // errors
-  //   const [showInverted, setShowInverted] = useState<boolean>(false)
+  const [showInverted, setShowInverted] = useState<boolean>(false)
 
   //   // warnings on slippage
   //   // const priceImpactSeverity = warningSeverity(priceImpactWithoutFee);
@@ -331,19 +332,19 @@ export default function Swap() {
   //     })
   //   }, [attemptingTxn, showConfirm, swapErrorMessage, trade, txHash])
 
-  //   const handleInputSelect = useCallback(
-  //     (inputCurrency) => {
-  //       setApprovalSubmitted(false) // reset 2 step UI for approvals
-  //       onCurrencySelection(Field.INPUT, inputCurrency)
-  //     },
-  //     [onCurrencySelection],
-  //   )
+  const handleInputSelect = useCallback(
+    (inputCurrency) => {
+      setApprovalSubmitted(false) // reset 2 step UI for approvals
+      onCurrencySelection(Field.INPUT, inputCurrency)
+    },
+    [onCurrencySelection],
+  )
 
-  //   const handleMaxInput = useCallback(() => {
-  //     maxInputAmount && onUserInput(Field.INPUT, maxInputAmount.toExact())
-  //   }, [maxInputAmount, onUserInput])
+  const handleMaxInput = useCallback(() => {
+    maxInputAmount && onUserInput(Field.INPUT, maxInputAmount.toExact())
+  }, [maxInputAmount, onUserInput])
 
-  //   const handleOutputSelect = useCallback((outputCurrency) => onCurrencySelection(Field.OUTPUT, outputCurrency), [onCurrencySelection])
+  const handleOutputSelect = useCallback((outputCurrency) => onCurrencySelection(Field.OUTPUT, outputCurrency), [onCurrencySelection])
 
   //   // useEffect(() => {
   //   //   if (
@@ -360,7 +361,7 @@ export default function Swap() {
 
   //   const priceImpactTooHigh = priceImpactSeverity > 3 && !isExpertMode
 
-  //   const [animateSwapArrows, setAnimateSwapArrows] = useState<boolean>(false)
+  const [animateSwapArrows, setAnimateSwapArrows] = useState<boolean>(false)
 
   //   const previousChainId = usePrevious<ChainId>(chainId)
 
@@ -373,7 +374,7 @@ export default function Swap() {
   //     router.push(`/swap/${Currency.getNativeCurrencySymbol(chainId)}`);
   //   }
   // }, [chainId, previousChainId, router]);
-
+  console.log('currencies', currencies)
   return (
     <div id='swap-page' className='py-4 md:py-8 lg:py-12 max-w-2xl w-full'>
       <head>
@@ -383,40 +384,7 @@ export default function Swap() {
 
       <DoubleGlowShadow>
         <div className='p-4 space-y-4 rounded bg-dark-900 z-1'>
-          <div className='flex justify-between mb-4 space-x-3 items-center'>
-            <div className='grid grid-cols-3 rounded p-3px bg-dark-800 h-[46px]' style={{ height: 46 }}>
-              <a
-                className='flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-r from-opaque-blue to-opaque-pink hover:from-blue hover:to-pink'
-                href='/swap?inputCurrency=ETH'>
-                Swap
-              </a>
-              <a
-                className='flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis'
-                href='/limit-order?inputCurrency=ETH'>
-                Limit
-              </a>
-              <a className='flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis' href='/add/ETH'>
-                Liquidity
-              </a>
-            </div>
-            <div className='flex items-center'>
-              <div className='grid grid-flow-col gap-1'>
-                <div className='relative w-full h-full rounded hover:bg-dark-800 flex items-center'>
-                  <div className='relative flex'>
-                    <div className='flex items-center justify-center w-8 h-8 rounded cursor-pointer' id='open-settings-dialog-button'>
-                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor' className='w-[26px] h-[26px] transform rotate-90'>
-                        <path
-                          stroke-linecap='round'
-                          stroke-linejoin='round'
-                          stroke-width='2'
-                          d='M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4'></path>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <SwapHeader input={currencies[Field.INPUT]} output={currencies[Field.OUTPUT]} allowedSlippage={allowedSlippage} />
 
           {/* <ConfirmSwapModal
             isOpen={showConfirm}
@@ -433,7 +401,7 @@ export default function Swap() {
             minerBribe={doArcher ? archerETHTip : undefined}
           /> */}
           <div>
-            {/* <CurrencyInputPanel
+            <CurrencyInputPanel
               // priceImpact={priceImpact}
               label={independentField === Field.OUTPUT && !showWrap ? `Swap From (est.):` : `Swap From:`}
               value={formattedAmounts[Field.INPUT]}
@@ -446,16 +414,16 @@ export default function Swap() {
               otherCurrency={currencies[Field.OUTPUT]}
               showCommonBases={true}
               id='swap-currency-input'
-            /> */}
-            {/* <AutoColumn justify='space-between' className='py-3'>
-              <div className={classNames(isExpertMode ? 'justify-between' : 'flex-start', 'px-4 flex-wrap w-full flex')}>
+            />
+            <div className='grid py-3'>
+              <div className={`${isExpertMode ? 'justify-between' : 'flex-start'} px-4 flex-wrap w-full flex`}>
                 <button
                   className='z-10 -mt-6 -mb-6 rounded-full'
                   onClick={() => {
                     setApprovalSubmitted(false) // reset 2 step UI for approvals
                     onSwitchTokens()
                   }}>
-                  <div className='rounded-full bg-dark-900 p-3px'>
+                  <div className='rounded-full bg-dark-900 p-1'>
                     <div
                       className='p-3 rounded-full bg-dark-800 hover:bg-dark-700'
                       onMouseEnter={() => setAnimateSwapArrows(true)}
@@ -466,23 +434,23 @@ export default function Swap() {
                 </button>
                 {isExpertMode ? (
                   recipient === null && !showWrap ? (
-                    <Button variant='link' size='none' id='add-recipient-button' onClick={() => onChangeRecipient('')}>
+                    <button id='add-recipient-button' onClick={() => onChangeRecipient('')}>
                       + Add recipient (optional)
-                    </Button>
+                    </button>
                   ) : (
-                    <Button variant='link' size='none' id='remove-recipient-button' onClick={() => onChangeRecipient(null)}>
-                      - {i18n._(t`Remove recipient`)}
-                    </Button>
+                    <button id='remove-recipient-button' onClick={() => onChangeRecipient(null)}>
+                      - Remove recipient
+                    </button>
                   )
                 ) : null}
               </div>
-            </AutoColumn> */}
+            </div>
 
-            {/* <div>
+            <div>
               <CurrencyInputPanel
                 value={formattedAmounts[Field.OUTPUT]}
                 onUserInput={handleTypeOutput}
-                label={independentField === Field.INPUT && !showWrap ? i18n._(t`Swap To (est.):`) : i18n._(t`Swap To:`)}
+                label={independentField === Field.INPUT && !showWrap ? `Swap To (est.):` : `Swap To:`}
                 showMaxButton={false}
                 hideBalance={false}
                 fiatValue={fiatValueOutput ?? undefined}
@@ -498,7 +466,7 @@ export default function Swap() {
                   <TradePrice price={trade?.executionPrice} showInverted={showInverted} setShowInverted={setShowInverted} className='bg-dark-900' />
                 </div>
               )}
-            </div> */}
+            </div>
           </div>
 
           {/* {recipient !== null && !showWrap && (

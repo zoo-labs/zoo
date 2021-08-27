@@ -1,14 +1,18 @@
 import { contenthashToUri, uriToHttp } from './convert'
 
-import Ajv from 'ajv'
+// import Ajv from 'ajv'
 import { DEFAULT_LIST_OF_LISTS } from '../config/token-lists'
 import { TokenList } from '@uniswap/token-lists'
 import { Version } from '@uniswap/token-lists'
 import { parseENSAddress } from './ens'
 import schema from '@uniswap/token-lists/src/tokenlist.schema.json'
 
-const tokenListValidator = new Ajv({ allErrors: true }).compile(schema)
+// const tokenListValidator = new Ajv({ allErrors: true }).compile(schema)
+// const AJV = require('ajv').default
+// const addFormats = require('ajv-formats').default
 
+// const ajv = new AJV()
+// addFormats(ajv)
 /**
  * Contains the logic for resolving a list URL to a validated token list
  * @param listUrl list url
