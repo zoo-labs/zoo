@@ -9,9 +9,9 @@ import Logo from './components/Logo'
 import Panel from './components/Panel'
 import UserBlock from './components/UserBlock'
 import { NavProps } from './types'
-import goldenEgg from 'media/hybrid-egg.png'
-import logo from 'media/logo-white.png'
 import { MENU_HEIGHT, SIDEBAR_WIDTH_REDUCED, SIDEBAR_WIDTH_FULL } from './config'
+
+const logoURL = window.location.origin + '/static/images/logo-white.png'
 
 const Wrapper = styled.div`
   position: relative;
@@ -120,14 +120,14 @@ const Menu: React.FC<NavProps> = ({ providerTitle, account, chainId, login, logo
           if (isXs || isSm) {
             setNetwork('BSC-M')
           } else {
-            setNetwork('BSC-Main')
+            setNetwork('BSC Mainnet')
           }
           break
         case 97:
           if (isXs || isSm) {
             setNetwork('BSC-T')
           } else {
-            setNetwork('BSC-Test')
+            setNetwork('BSC Testnet')
           }
           break
         default:
@@ -179,7 +179,7 @@ const Menu: React.FC<NavProps> = ({ providerTitle, account, chainId, login, logo
       <StyledNav showMenu={showMenu} isPushed={isPushed}>
         <Logo isPushed={isPushed} togglePush={() => setIsPushed((prevState: boolean) => !prevState)} isDark={isDark} href={homeLink?.href ?? '/feed'} />
         <LogoContainer>
-          <MaxHeightLogo src={logo} alt='zoo-logo' onClick={() => handleClick()} />
+          <MaxHeightLogo src={logoURL} alt='zoo-logo' onClick={() => handleClick()} />
         </LogoContainer>
         <Flex alignItems='center'>
           <UserBlock account={account} login={login} logout={logout} />

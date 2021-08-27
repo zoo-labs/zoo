@@ -15,7 +15,7 @@ interface Size {
   height: number | undefined
 }
 
-const Icons = (IconModule as any) as { [key: string]: React.FC<SvgProps> }
+const Icons = IconModule as any as { [key: string]: React.FC<SvgProps> }
 
 const IconWrapper = styled.div`
   margin: 5px 5px;

@@ -15,8 +15,6 @@
     "build": "yarn workspace @zoolabs/app build --max-old-space-size=12288",
     "clean": "rm -rf packages/app/build && rm -rf packages/contracts/artifacts && rm -rf packages/contracts/cache && rm -rf packages/contracts/types",
     "start": "yarn workspace @zoolabs/app start",
-    "storybook": "yarn workspace @zoolabs/app storybook",
-    "build-storybook": "yarn workspace @zoolabs/app build-storybook",
     "account": "yarn workspace @zoolabs/contracts account",
     "accounts": "yarn workspace @zoolabs/contracts accounts",
     "balance": "yarn workspace @zoolabs/contracts balance",
@@ -55,20 +53,11 @@
     "run-graph-node": "yarn workspace @zoolabs/graph-node run-graph-node",
     "remove-graph-node": "yarn workspace @zoolabs/graph-node remove-graph-node",
     "clean-graph-node": "yarn workspace @zoolabs/graph-node clean-graph-node",
-    "pretty": "yarn workspace @zoolabs/app pretty && yarn workspace @zoolabs/contracts pretty && yarn workspace @zoolabs/dev pretty && yarn workspace @zoolabs/moralis pretty"
+    "format": "yarn workspace @zoolabs/app format && yarn workspace @zoolabs/contracts format && yarn workspace @zoolabs/moralis format"
   },
   "workspaces": {
     "packages": [
       "packages/*"
-    ],
-    "nohoist": [
-      "**/@graphprotocol/graph-ts",
-      "**/@graphprotocol/graph-ts/**",
-      "**/contracts",
-      "**/contracts/**"
     ]
-  },
-  "dependencies": {
-    "node-gyp": "^3.8.0"
   }
 }
