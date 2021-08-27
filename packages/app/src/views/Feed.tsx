@@ -155,15 +155,15 @@ function Feed<FeedPagePops>({ match }) {
    * Get index of selected animal to set Swipers initial slide
    * equal to that index
    */
-  let animalIndex = 0;
+  let animalIndex = 0
   if (history.location && history.location.state) {
-    animalIndex = animals.findIndex((a) => a.tokenID === history.location.state['tokenID']);
+    animalIndex = animals.findIndex((a) => a.tokenID === history.location.state['tokenID'])
   }
 
   const handleContainerClick = (event) => {
-    const className = event.target.className;
+    const className = event.target.className
     if (className === 'swiper-slide swiper-slide-active') {
-      HomeClick();
+      HomeClick()
     }
   }
 

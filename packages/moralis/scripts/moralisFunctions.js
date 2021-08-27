@@ -5,14 +5,14 @@ const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'localhost'
 
 const chainID = {
   localhost: '0x539',
-  testnet:   '0x61',
-  mainnet:   '0x38',
+  testnet: '0x61',
+  mainnet: '0x38',
 }[NETWORK]
 
 const subdomain = {
   localhost: 'qjydxwdegh7e.usemoralis.com',
-  testnet:   'dblpeaqbqk32.usemoralis.com',
-  mainnet:   'j0ixlvmwc1kz.usemoralis.com',
+  testnet: 'dblpeaqbqk32.usemoralis.com',
+  mainnet: 'j0ixlvmwc1kz.usemoralis.com',
 }[NETWORK]
 
 const cached = __dirname + '/../../../node_modules/moralis-cached.js'
