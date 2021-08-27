@@ -18,34 +18,38 @@ let provider = new JsonRpcProvider()
 let [deployerWallet] = generatedWallets(provider)
 
 export const requireDependencies = () => {
-  const chai = require('chai');
-  const expect = chai.expect;
-  const asPromised = require('chai-as-promised');
-  const {solidity} = require('ethereum-waffle');
-  
+  const chai = require('chai')
+  const expect = chai.expect
+  const asPromised = require('chai-as-promised')
+  const { solidity } = require('ethereum-waffle')
+
   chai.use(asPromised)
   chai.use(solidity)
   return {
-    chai, expect, asPromised, solidity
+    chai,
+    expect,
+    asPromised,
+    solidity,
   }
-  }
-export const setupTestFactory = (contractArr: string[]) => deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
-  await deployments.fixture(contractArr)
-  let tokens: { [key: string]: Contract } = await contractArr.reduce(async (sum: {}, name: string) => {
-    const contract: Contract = await ethers.getContract(name);
+}
+export const setupTestFactory = (contractArr: string[]) =>
+  deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
+    await deployments.fixture(contractArr)
+    let tokens: { [key: string]: Contract } = await contractArr.reduce(async (sum: {}, name: string) => {
+      const contract: Contract = await ethers.getContract(name)
+      return {
+        [name]: contract,
+        ...sum,
+      }
+    }, {})
+    const signers = await ethers.getSigners()
+    const owner = (await getNamedAccounts()).deployer
     return {
-      [name]: contract,
-      ...sum
+      owner: owner,
+      signers: signers,
+      tokens,
     }
-  }, {})
-  const signers = await ethers.getSigners()
-  const owner = (await getNamedAccounts()).deployer
-  return {
-    owner: owner,
-    signers: signers,
-    tokens,
-  }
-})
+  })
 
 export async function deployCurrency() {
   const currency = await new ZooToken__factory(deployerWallet).deploy()
