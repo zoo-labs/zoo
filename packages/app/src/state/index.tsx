@@ -2,7 +2,7 @@ import { configureStore, createSerializableStateInvariantMiddleware, isPlain } f
 import { useDispatch } from 'react-redux'
 import toastsReducer from './toasts'
 import zooReducer from './zoo'
-
+import swapReducer from './swap/reducer'
 import { Iterable } from 'immutable'
 
 // Augment middleware to consider Immutable.JS iterables serializable
@@ -15,6 +15,7 @@ const store = configureStore({
   reducer: {
     toasts: toastsReducer,
     zoo: zooReducer,
+    swap: swapReducer,
   },
   middleware: [serializableMiddleware],
 })
