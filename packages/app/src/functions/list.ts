@@ -10,6 +10,9 @@ import schema from '@uniswap/token-lists/src/tokenlist.schema.json'
 // const tokenListValidator = new Ajv({ allErrors: true }).compile(schema)
 // const AJV = require('ajv').default
 // const addFormats = require('ajv-formats').default
+// const ajv = new AJV()
+// addFormats(ajv)
+const tokenListValidator = new Ajv({ allErrors: true }).compile(schema)
 
 // const ajv = new AJV()
 // addFormats(ajv)
