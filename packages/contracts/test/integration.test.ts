@@ -3,7 +3,7 @@ import { ethers } from 'hardhat'
 import chai, { expect } from 'chai'
 import asPromised from 'chai-as-promised'
 import { deployOtherNFTs, deployZooToken, deployZooProtocol, mint, ONE_ZOO, TENTH_ZOO, THOUSANDTH_ZOO, TWO_ZOO } from './utils'
-import { ZooAuction, ZooMarket, ZooMedia, ZooToken, TestERC721 } from '../types'
+import { ZooAuction, Market, Media, ZooToken, TestERC721 } from '../types'
 import { BigNumber, Signer } from 'ethers'
 
 chai.use(asPromised)
@@ -14,8 +14,8 @@ const ONE_DAY = 24 * 60 * 60
 const smallify = (bn: BigNumber) => bn.div(THOUSANDTH_ZOO).toNumber()
 
 describe.skip('integration', () => {
-  let market: ZooMarket
-  let media: ZooMedia
+  let market: Market
+  let media: Media
   let token: ZooToken
   let auction: ZooAuction
   let otherNft: TestERC721

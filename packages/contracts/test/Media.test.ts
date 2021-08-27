@@ -8,8 +8,8 @@ import { LogDescription } from '@ethersproject/abi'
 import { AddressZero } from '@ethersproject/constants'
 import Decimal from '../utils/Decimal'
 import { BigNumber, BigNumberish, Bytes } from 'ethers'
-import { ZooToken__factory, ZooMarket__factory, ZooMedia__factory, ZooKeeper__factory, ZooMarket } from '../types'
-import { ZooMedia } from '../types/ZooMedia'
+import { ZooToken__factory, Market__factory, Media__factory, ZooKeeper__factory, Market } from '../types'
+import { Media } from '../types/Media'
 import { approveCurrency, deployCurrency, EIP712Sig, getBalance, mintCurrency, signMintWithSig, signPermit, toNumWei } from './utils'
 import { arrayify, formatBytes32String, formatUnits, sha256 } from 'ethers/lib/utils'
 import exp from 'constants'
@@ -19,7 +19,7 @@ chai.use(asPromised)
 let provider = new JsonRpcProvider()
 let blockchain = new Blockchain(provider)
 
-let market: ZooMarket
+let market: Market
 
 let contentHex: string
 let contentHash: string
@@ -63,7 +63,7 @@ type Bid = {
   sellOnShare: { value: BigNumberish }
 }
 
-describe('ZooMedia', () => {
+describe('Media', () => {
   let [deployerWallet, bidderWallet, creatorWallet, ownerWallet, prevOwnerWallet, otherWallet, nonBidderWallet] = generatedWallets(provider)
 
   let defaultBidShares = {
@@ -92,17 +92,17 @@ describe('ZooMedia', () => {
   let keeperAddress: string
 
   async function mediaAs(wallet: Wallet) {
-    return ZooMedia__factory.connect(mediaAddress, wallet)
+    return Media__factory.connect(mediaAddress, wallet)
   }
 
   async function deploy() {
     const token = await (await new ZooToken__factory(deployerWallet).deploy()).deployed()
     tokenAddress = token.address
 
-    const market = await (await new ZooMarket__factory(deployerWallet).deploy()).deployed()
+    const market = await (await new Market__factory(deployerWallet).deploy()).deployed()
     marketAddress = market.address
 
-    const media = await (await new ZooMedia__factory(deployerWallet).deploy('ANML', 'CryptoZoo')).deployed()
+    const media = await (await new Media__factory(deployerWallet).deploy('ANML', 'CryptoZoo')).deployed()
     mediaAddress = media.address
 
     const keeper = await (await new ZooKeeper__factory(deployerWallet).deploy()).deployed()
@@ -111,7 +111,7 @@ describe('ZooMedia', () => {
     await market.configure(mediaAddress, keeper.address)
   }
 
-  async function mint(media: ZooMedia, metadataURI: string, tokenURI: string, contentHash: Bytes, metadataHash: Bytes, shares: BidShares) {
+  async function mint(media: Media, metadataURI: string, tokenURI: string, contentHash: Bytes, metadataHash: Bytes, shares: BidShares) {
     const data: MediaData = {
       tokenURI,
       metadataURI,
@@ -121,7 +121,7 @@ describe('ZooMedia', () => {
     return media.mint(data, shares)
   }
 
-  async function mintWithSig(media: ZooMedia, creator: string, tokenURI: string, metadataURI: string, contentHash: Bytes, metadataHash: Bytes, shares: BidShares, sig: EIP712Sig) {
+  async function mintWithSig(media: Media, creator: string, tokenURI: string, metadataURI: string, contentHash: Bytes, metadataHash: Bytes, shares: BidShares, sig: EIP712Sig) {
     const data: MediaData = {
       tokenURI,
       metadataURI,
@@ -132,23 +132,23 @@ describe('ZooMedia', () => {
     return media.mintWithSig(creator, data, shares, sig)
   }
 
-  async function setAsk(media: ZooMedia, mediaId: number, ask: Ask) {
+  async function setAsk(media: Media, mediaId: number, ask: Ask) {
     return media.setAsk(mediaId, ask)
   }
 
-  async function removeAsk(media: ZooMedia, mediaId: number) {
+  async function removeAsk(media: Media, mediaId: number) {
     return media.removeAsk(mediaId)
   }
 
-  async function setBid(media: ZooMedia, bid: Bid, mediaId: number) {
+  async function setBid(media: Media, bid: Bid, mediaId: number) {
     return media.setBid(mediaId, bid)
   }
 
-  async function removeBid(media: ZooMedia, mediaId: number) {
+  async function removeBid(media: Media, mediaId: number) {
     return media.removeBid(mediaId)
   }
 
-  async function acceptBid(media: ZooMedia, mediaId: number, bid: Bid) {
+  async function acceptBid(media: Media, mediaId: number, bid: Bid) {
     return media.acceptBid(mediaId, bid)
   }
 
@@ -276,7 +276,7 @@ describe('ZooMedia', () => {
         })
         passed = false
       } catch (error) {
-        expect(error.error.body).to.contain('ZooMedia: a token has already been created with this content hash', 'This error body should have the correct revert error')
+        expect(error.error.body).to.contain('Media: a token has already been created with this content hash', 'This error body should have the correct revert error')
       }
       passed = true
       expect(passed, 'The previous tx was not reverted').to.be.true
@@ -350,7 +350,7 @@ describe('ZooMedia', () => {
 
     it('should mint a media for a given creator with a valid signature', async () => {
       const media = await mediaAs(otherWallet)
-      const market = await ZooMarket__factory.connect(marketAddress, otherWallet)
+      const market = await Market__factory.connect(marketAddress, otherWallet)
       const sig = await signMintWithSig(creatorWallet, media.address, creatorWallet.address, contentHash, metadataHash, Decimal.new(5).value.toString(), 1)
 
       const beforeNonce = await media.mintWithSigNonces(creatorWallet.address)
@@ -530,7 +530,7 @@ describe('ZooMedia', () => {
   })
 
   describe('#removeAsk', () => {
-    let media: ZooMedia
+    let media: Media
     beforeEach(async () => {
       media = await (await mediaAs(creatorWallet)).deployed()
       await mint(media, metadataURI, tokenURI, contentHashBytes, metadataHashBytes, {
@@ -540,7 +540,7 @@ describe('ZooMedia', () => {
       })
     })
     it('should remove the ask', async () => {
-      const market = await ZooMarket__factory.connect(marketAddress, deployerWallet).deployed()
+      const market = await Market__factory.connect(marketAddress, deployerWallet).deployed()
       await setAsk(media, 0, defaultAsk)
 
       await expect(removeAsk(media, 0)).fulfilled
@@ -550,7 +550,7 @@ describe('ZooMedia', () => {
     })
 
     it('should emit an Ask Removed event', async () => {
-      const auction = await ZooMarket__factory.connect(marketAddress, deployerWallet).deployed()
+      const auction = await Market__factory.connect(marketAddress, deployerWallet).deployed()
       await setAsk(media, 0, defaultAsk)
       const block = await provider.getBlockNumber()
       const tx = await removeAsk(media, 0)
@@ -570,7 +570,7 @@ describe('ZooMedia', () => {
       try {
         await media.connect(otherWallet).removeAsk(0)
       } catch (error) {
-        expect(error.error.body).to.contain('ZooMedia: Only approved or owner')
+        expect(error.error.body).to.contain('Media: Only approved or owner')
         passed = false
       }
       expect(passed, 'Previous tx should have reverted').to.be.false
@@ -675,7 +675,7 @@ describe('ZooMedia', () => {
         await removeBid(media, 100)
         passed = true
       } catch (error) {
-        expect(error.error.body).to.contain('ZooMedia: token with that id does not exist')
+        expect(error.error.body).to.contain('Media: token with that id does not exist')
         passed = true
       }
       expect(passed, 'The previous transaction was not reverted').to.be.true
@@ -721,7 +721,7 @@ describe('ZooMedia', () => {
 
     it('should accept a bid', async () => {
       const media = await mediaAs(ownerWallet)
-      const auction = await ZooMarket__factory.connect(marketAddress, bidderWallet)
+      const auction = await Market__factory.connect(marketAddress, bidderWallet)
       const asBidder = await mediaAs(bidderWallet)
       const bid = {
         ...defaultBid(currencyAddr, bidderWallet.address, otherWallet.address),
@@ -751,7 +751,7 @@ describe('ZooMedia', () => {
     it('should emit a bid finalized event if the bid is accepted', async () => {
       const asBidder = await mediaAs(bidderWallet)
       const media = await mediaAs(ownerWallet)
-      const auction = await ZooMarket__factory.connect(marketAddress, bidderWallet)
+      const auction = await Market__factory.connect(marketAddress, bidderWallet)
       const bid = defaultBid(currencyAddr, bidderWallet.address)
       const block = await provider.getBlockNumber()
       await setBid(asBidder, bid, 0)
@@ -769,7 +769,7 @@ describe('ZooMedia', () => {
     it('should emit a bid shares updated event if the bid is accepted', async () => {
       const asBidder = await mediaAs(bidderWallet)
       const media = await mediaAs(ownerWallet)
-      const auction = await ZooMarket__factory.connect(marketAddress, bidderWallet)
+      const auction = await Market__factory.connect(marketAddress, bidderWallet)
       const bid = defaultBid(currencyAddr, bidderWallet.address)
       const block = await provider.getBlockNumber()
       await setBid(asBidder, bid, 0)
@@ -819,7 +819,7 @@ describe('ZooMedia', () => {
 
     it('should remove the ask after a transfer', async () => {
       const media = await mediaAs(ownerWallet)
-      const auction = ZooMarket__factory.connect(marketAddress, deployerWallet)
+      const auction = Market__factory.connect(marketAddress, deployerWallet)
       await setAsk(media, 0, defaultAsk)
 
       await expect(media.transferFrom(ownerWallet.address, otherWallet.address, 0)).fulfilled

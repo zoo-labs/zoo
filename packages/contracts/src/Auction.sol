@@ -24,7 +24,7 @@ interface IMediaExtended is IMedia {
 /**
  * @title Zoo's auction house, enabling players to buy, sell and trade NFTs
  */
-contract ZooAuction is IAuctionHouse, ReentrancyGuard, Ownable {
+contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
     using Counters for Counters.Counter;

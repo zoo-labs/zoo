@@ -1,4 +1,4 @@
-// deploy/03_deploy_zoo_keeper.ts
+// deploy/03_deploy_keeper.ts
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
@@ -8,9 +8,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deploy } = deployments
   const { deployer } = await getNamedAccounts()
 
-  const tokenAddress = (await deployments.get('ZooToken')).address
-  const marketAddress = (await deployments.get('ZooMarket')).address
-  const mediaAddress = (await deployments.get('ZooMedia')).address
+  const tokenAddress = (await deployments.get('Token')).address
+  const marketAddress = (await deployments.get('Market')).address
+  const mediaAddress = (await deployments.get('Media')).address
 
   const deployResult = await deploy('ZooKeeper', {
     from: deployer,
@@ -22,10 +22,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const keeperAddress = deployResult.address
 
-  const token = await ethers.getContractAt('ZooToken', tokenAddress)
-  const market = await ethers.getContractAt('ZooMarket', marketAddress)
-  const media = await ethers.getContractAt('ZooMedia', mediaAddress)
-  const keeper = await ethers.getContractAt('ZooKeeper', keeperAddress)
+  const token = await ethers.getContractAt('Token', tokenAddress)
+  const market = await ethers.getContractAt('Market', marketAddress)
+  const media = await ethers.getContractAt('Media', mediaAddress)
+  const keeper = await ethers.getContractAt('Keeper', keeperAddress)
 
   // Configure contracts to talk to each other
   market.configure(keeperAddress, mediaAddress)
@@ -37,6 +37,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 }
 
 export default func
-func.id = 'keeper'
+func.id = 'zookeeper'
 func.tags = ['ZooKeeper']
-// func.dependencies = ['ZooMedia', 'ZooMarket']
+// func.dependencies = ['Media', 'Market']
