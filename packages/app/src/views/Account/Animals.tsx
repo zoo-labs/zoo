@@ -10,7 +10,7 @@ import 'swiper/components/pagination/pagination.min.css'
 
 import { Text, Card as Existing, useMatchBreakpoints } from 'components'
 import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
-import { breedTimeouts } from 'constants/constants'
+import { breedTimeouts } from 'constants/index'
 import { RarityColor } from 'enums/rarity-color'
 import { Animal } from 'types/zoo'
 import { AnimalCard } from 'components/AnimalCard'
