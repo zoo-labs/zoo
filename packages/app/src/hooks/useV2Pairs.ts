@@ -15,19 +15,12 @@ export enum PairState {
 }
 
 export function useV2Pairs(currencies: [Currency | undefined, Currency | undefined][]): [PairState, Pair | null][] {
-  const tokens = useMemo(
-    () => currencies.map(([currencyA, currencyB]) => [currencyA?.wrapped, currencyB?.wrapped]),
-    [currencies]
-  )
+  const tokens = useMemo(() => currencies.map(([currencyA, currencyB]) => [currencyA?.wrapped, currencyB?.wrapped]), [currencies])
 
   const pairAddresses = useMemo(
     () =>
       tokens.map(([tokenA, tokenB]) => {
-        return tokenA &&
-          tokenB &&
-          tokenA.chainId === tokenB.chainId &&
-          !tokenA.equals(tokenB) &&
-          FACTORY_ADDRESS[tokenA.chainId]
+        return tokenA && tokenB && tokenA.chainId === tokenB.chainId && !tokenA.equals(tokenB) && FACTORY_ADDRESS[tokenA.chainId]
           ? computePairAddress({
               factoryAddress: FACTORY_ADDRESS[tokenA.chainId],
               tokenA,
@@ -35,7 +28,7 @@ export function useV2Pairs(currencies: [Currency | undefined, Currency | undefin
             })
           : undefined
       }),
-    [tokens]
+    [tokens],
   )
 
   const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')
@@ -50,13 +43,7 @@ export function useV2Pairs(currencies: [Currency | undefined, Currency | undefin
       if (!reserves) return [PairState.NOT_EXISTS, null]
       const { reserve0, reserve1 } = reserves
       const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]
-      return [
-        PairState.EXISTS,
-        new Pair(
-          CurrencyAmount.fromRawAmount(token0, reserve0.toString()),
-          CurrencyAmount.fromRawAmount(token1, reserve1.toString())
-        ),
-      ]
+      return [PairState.EXISTS, new Pair(CurrencyAmount.fromRawAmount(token0, reserve0.toString()), CurrencyAmount.fromRawAmount(token1, reserve1.toString()))]
     })
   }, [results, tokens])
 }

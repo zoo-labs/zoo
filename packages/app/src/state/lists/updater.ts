@@ -23,9 +23,7 @@ export default function Updater(): null {
   const fetchList = useFetchListCallback()
   const fetchAllListsCallback = useCallback(() => {
     if (!isWindowVisible) return
-    Object.keys(lists).forEach((url) =>
-      fetchList(url).catch((error) => console.debug('interval list fetching error', error))
-    )
+    Object.keys(lists).forEach((url) => fetchList(url).catch((error) => console.debug('interval list fetching error', error)))
   }, [fetchList, isWindowVisible, lists])
 
   // fetch all lists every 10 minutes, but only after we initialize library
@@ -68,7 +66,7 @@ export default function Updater(): null {
               dispatch(acceptListUpdate(listUrl))
             } else {
               console.error(
-                `List at url ${listUrl} could not automatically update because the version bump was only PATCH/MINOR while the update had breaking changes and should have been MAJOR`
+                `List at url ${listUrl} could not automatically update because the version bump was only PATCH/MINOR while the update had breaking changes and should have been MAJOR`,
               )
             }
             break

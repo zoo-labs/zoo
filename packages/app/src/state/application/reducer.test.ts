@@ -21,7 +21,7 @@ describe('application reducer', () => {
       store.dispatch(
         addPopup({
           content: { txn: { hash: 'abc', summary: 'test', success: true } },
-        })
+        }),
       )
       const list = store.getState().popupList
       expect(list).toHaveLength(1)
@@ -38,13 +38,13 @@ describe('application reducer', () => {
         addPopup({
           key: 'abc',
           content: { txn: { hash: 'abc', summary: 'test', success: true } },
-        })
+        }),
       )
       store.dispatch(
         addPopup({
           key: 'abc',
           content: { txn: { hash: 'def', summary: 'test2', success: false } },
-        })
+        }),
       )
       const list = store.getState().popupList
       expect(list).toHaveLength(1)
@@ -94,7 +94,7 @@ describe('application reducer', () => {
         addPopup({
           key: 'abc',
           content: { txn: { hash: 'abc', summary: 'test', success: true } },
-        })
+        }),
       )
     })
     it('hides the popup', () => {

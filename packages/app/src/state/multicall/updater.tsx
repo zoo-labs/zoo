@@ -10,7 +10,6 @@ import { chunkArray } from '../../functions/array'
 import { updateBlockNumber } from '../application/actions'
 import { useBlockNumber } from '../application/hooks'
 import useDebounce from '../../hooks/useDebounce'
-import { useMulticall2Contract } from '../../hooks/useContract'
 import { useWeb3 } from 'hooks'
 import { useWeb3React } from '@web3-react/core'
 import { useMulticall2Contract } from '../../hooks/useContract'
@@ -58,7 +57,7 @@ async function fetchChunk(
  * @param allListeners the all listeners state
  * @param chainId the current chain id
  */
-export function activeListeningKeys(allListeners: AppState['multicall']['callListeners'], chainId?: number): { [callKey: string]: number } {
+export function activeListeningKeys(
   allListeners: AppState['multicall']['callListeners'],
   chainId?: number
 ): { [callKey: string]: number } {

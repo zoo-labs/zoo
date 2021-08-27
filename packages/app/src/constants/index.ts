@@ -2,11 +2,11 @@ import { ChainId, JSBI, Percent } from '@sushiswap/sdk'
 
 export const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigInt(10000))
 export const rarityTable = {
-    1000: 'COMMON',
-    100: 'RARE',
-    10: 'EPIC',
-    1: 'LEGENDARY',
-  }
+  1000: 'COMMON',
+  100: 'RARE',
+  10: 'EPIC',
+  1: 'LEGENDARY',
+}
 
 export const breedTimeouts = {
   0: { days: 0, hours: 0 },
