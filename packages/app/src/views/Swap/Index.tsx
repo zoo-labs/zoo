@@ -376,17 +376,18 @@ export default function Swap() {
   // }, [chainId, previousChainId, router]);
   console.log('currencies', currencies)
   return (
-    <div id='swap-page' className='py-4 md:py-8 lg:py-12 max-w-2xl w-full'>
-      <head>
-        <title>ZOO</title>
-        <meta key='description' name='description' content='SushiSwap allows for swapping of ERC20 compatible tokens across multiple networks' />
-      </head>
+    <main className='flex flex-col items-center justify-start flex-grow w-full h-full'>
+      <div id='swap-page' className='py-4 md:py-8 lg:py-12 max-w-2xl w-full'>
+        <head>
+          <title>ZOO</title>
+          <meta key='description' name='description' content='SushiSwap allows for swapping of ERC20 compatible tokens across multiple networks' />
+        </head>
 
-      <DoubleGlowShadow>
-        <div className='p-4 space-y-4 rounded bg-dark-900 z-1'>
-          <SwapHeader input={currencies[Field.INPUT]} output={currencies[Field.OUTPUT]} allowedSlippage={allowedSlippage} />
+        <DoubleGlowShadow>
+          <div className='p-4 space-y-4 rounded bg-dark-900 z-1'>
+            <SwapHeader input={currencies[Field.INPUT]} output={currencies[Field.OUTPUT]} allowedSlippage={allowedSlippage} />
 
-          {/* <ConfirmSwapModal
+            {/* <ConfirmSwapModal
             isOpen={showConfirm}
             trade={trade}
             originalTrade={tradeToConfirm}
@@ -400,76 +401,76 @@ export default function Swap() {
             onDismiss={handleConfirmDismiss}
             minerBribe={doArcher ? archerETHTip : undefined}
           /> */}
-          <div>
-            <CurrencyInputPanel
-              // priceImpact={priceImpact}
-              label={independentField === Field.OUTPUT && !showWrap ? `Swap From (est.):` : `Swap From:`}
-              value={formattedAmounts[Field.INPUT]}
-              showMaxButton={true}
-              currency={currencies[Field.INPUT]}
-              onUserInput={handleTypeInput}
-              onMax={handleMaxInput}
-              fiatValue={fiatValueInput ?? undefined}
-              onCurrencySelect={handleInputSelect}
-              otherCurrency={currencies[Field.OUTPUT]}
-              showCommonBases={true}
-              id='swap-currency-input'
-            />
-            <div className='grid py-3'>
-              <div className={`${isExpertMode ? 'justify-between' : 'flex-start'} px-4 flex-wrap w-full flex`}>
-                <button
-                  className='z-10 -mt-6 -mb-6 rounded-full'
-                  onClick={() => {
-                    setApprovalSubmitted(false) // reset 2 step UI for approvals
-                    onSwitchTokens()
-                  }}>
-                  <div className='rounded-full bg-dark-900 p-1'>
-                    <div
-                      className='p-3 rounded-full bg-dark-800 hover:bg-dark-700'
-                      onMouseEnter={() => setAnimateSwapArrows(true)}
-                      onMouseLeave={() => setAnimateSwapArrows(false)}>
-                      <Lottie animationData={swapArrowsAnimationData} autoplay={animateSwapArrows} loop={false} style={{ width: 32, height: 32 }} />
+            <div>
+              <CurrencyInputPanel
+                // priceImpact={priceImpact}
+                label={independentField === Field.OUTPUT && !showWrap ? `Swap From (est.):` : `Swap From:`}
+                value={formattedAmounts[Field.INPUT]}
+                showMaxButton={true}
+                currency={currencies[Field.INPUT]}
+                onUserInput={handleTypeInput}
+                onMax={handleMaxInput}
+                fiatValue={fiatValueInput ?? undefined}
+                onCurrencySelect={handleInputSelect}
+                otherCurrency={currencies[Field.OUTPUT]}
+                showCommonBases={true}
+                id='swap-currency-input'
+              />
+              <div className='grid py-3'>
+                <div className={`${isExpertMode ? 'justify-between' : 'flex-start'} px-4 flex-wrap w-full flex`}>
+                  <button
+                    className='z-10 -mt-6 -mb-6 rounded-full'
+                    onClick={() => {
+                      setApprovalSubmitted(false) // reset 2 step UI for approvals
+                      onSwitchTokens()
+                    }}>
+                    <div className='rounded-full bg-dark-900 p-1'>
+                      <div
+                        className='p-3 rounded-full bg-dark-800 hover:bg-dark-700'
+                        onMouseEnter={() => setAnimateSwapArrows(true)}
+                        onMouseLeave={() => setAnimateSwapArrows(false)}>
+                        <Lottie animationData={swapArrowsAnimationData} autoplay={animateSwapArrows} loop={false} style={{ width: 32, height: 32 }} />
+                      </div>
                     </div>
+                  </button>
+                  {isExpertMode ? (
+                    recipient === null && !showWrap ? (
+                      <button id='add-recipient-button' onClick={() => onChangeRecipient('')}>
+                        + Add recipient (optional)
+                      </button>
+                    ) : (
+                      <button id='remove-recipient-button' onClick={() => onChangeRecipient(null)}>
+                        - Remove recipient
+                      </button>
+                    )
+                  ) : null}
+                </div>
+              </div>
+
+              <div>
+                <CurrencyInputPanel
+                  value={formattedAmounts[Field.OUTPUT]}
+                  onUserInput={handleTypeOutput}
+                  label={independentField === Field.INPUT && !showWrap ? `Swap To (est.):` : `Swap To:`}
+                  showMaxButton={false}
+                  hideBalance={false}
+                  fiatValue={fiatValueOutput ?? undefined}
+                  priceImpact={priceImpact}
+                  currency={currencies[Field.OUTPUT]}
+                  onCurrencySelect={handleOutputSelect}
+                  otherCurrency={currencies[Field.INPUT]}
+                  showCommonBases={true}
+                  id='swap-currency-output'
+                />
+                {Boolean(trade) && (
+                  <div className='p-1 -mt-2 cursor-pointer rounded-b-md bg-dark-800'>
+                    <TradePrice price={trade?.executionPrice} showInverted={showInverted} setShowInverted={setShowInverted} className='bg-dark-900' />
                   </div>
-                </button>
-                {isExpertMode ? (
-                  recipient === null && !showWrap ? (
-                    <button id='add-recipient-button' onClick={() => onChangeRecipient('')}>
-                      + Add recipient (optional)
-                    </button>
-                  ) : (
-                    <button id='remove-recipient-button' onClick={() => onChangeRecipient(null)}>
-                      - Remove recipient
-                    </button>
-                  )
-                ) : null}
+                )}
               </div>
             </div>
 
-            <div>
-              <CurrencyInputPanel
-                value={formattedAmounts[Field.OUTPUT]}
-                onUserInput={handleTypeOutput}
-                label={independentField === Field.INPUT && !showWrap ? `Swap To (est.):` : `Swap To:`}
-                showMaxButton={false}
-                hideBalance={false}
-                fiatValue={fiatValueOutput ?? undefined}
-                priceImpact={priceImpact}
-                currency={currencies[Field.OUTPUT]}
-                onCurrencySelect={handleOutputSelect}
-                otherCurrency={currencies[Field.INPUT]}
-                showCommonBases={true}
-                id='swap-currency-output'
-              />
-              {Boolean(trade) && (
-                <div className='p-1 -mt-2 cursor-pointer rounded-b-md bg-dark-800'>
-                  <TradePrice price={trade?.executionPrice} showInverted={showInverted} setShowInverted={setShowInverted} className='bg-dark-900' />
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* {recipient !== null && !showWrap && (
+            {/* {recipient !== null && !showWrap && (
             <>
               <AddressInputPanel id='recipient' value={recipient} onChange={onChangeRecipient} />
               {recipient !== account && (
@@ -478,7 +479,7 @@ export default function Swap() {
             </>
           )} */}
 
-          {/* {showWrap ? null : (
+            {/* {showWrap ? null : (
               <div
                 style={{
                   padding: showWrap ? '.25rem 1rem 0 1rem' : '0px',
@@ -487,14 +488,14 @@ export default function Swap() {
                 <div className="px-5 mt-1">{doArcher && userHasSpecifiedInputOutput && <MinerTip />}</div>
               </div>
             )} */}
-          {/*
+            {/*
             {trade && (
               <div className="p-5 rounded bg-dark-800">
                 <AdvancedSwapDetails trade={trade} allowedSlippage={allowedSlippage} />
               </div>
             )} */}
 
-          {/* <BottomGrouping>
+            {/* <BottomGrouping>
             {swapIsUnsupported ? (
               <Button color='red' size='lg' disabled>
                 {i18n._(t`Unsupported Asset`)}
@@ -585,7 +586,7 @@ export default function Swap() {
           </BottomGrouping>
            */}
 
-          {/* {!swapIsUnsupported ? (
+            {/* {!swapIsUnsupported ? (
           <AdvancedSwapDetailsDropdown trade={trade} />
         ) : (
           <UnsupportedCurrencyFooter
@@ -594,9 +595,10 @@ export default function Swap() {
           />
         )} */}
 
-          {/* {!swapIsUnsupported ? null : <UnsupportedCurrencyFooter show={swapIsUnsupported} currencies={[currencies.INPUT, currencies.OUTPUT]} />} */}
-        </div>
-      </DoubleGlowShadow>
-    </div>
+            {/* {!swapIsUnsupported ? null : <UnsupportedCurrencyFooter show={swapIsUnsupported} currencies={[currencies.INPUT, currencies.OUTPUT]} />} */}
+          </div>
+        </DoubleGlowShadow>
+      </div>
+    </main>
   )
 }
