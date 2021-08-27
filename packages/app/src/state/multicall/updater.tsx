@@ -13,6 +13,7 @@ import useDebounce from '../../hooks/useDebounce'
 import { useMulticall2Contract } from '../../hooks/useContract'
 import { useWeb3 } from 'hooks'
 import { useWeb3React } from '@web3-react/core'
+import { useMulticall2Contract } from '../../hooks/useContract'
 
 /**
  * Fetches a chunk of calls, enforcing a minimum block number constraint
@@ -23,7 +24,7 @@ import { useWeb3React } from '@web3-react/core'
 async function fetchChunk(
   multicall: Contract,
   chunk: Call[],
-  minBlockNumber: number,
+  minBlockNumber: number
 ): Promise<{
   results: { success: boolean; returnData: string }[]
   blockNumber: number
@@ -35,7 +36,7 @@ async function fetchChunk(
     const { blockNumber, returnData } = await multicall.callStatic.tryBlockAndAggregate(
       false,
       chunk.map((obj) => ({ target: obj.address, callData: obj.callData, gasLimit: obj.gasRequired ?? 1_000_000 })),
-      { blockTag: minBlockNumber },
+      { blockTag: minBlockNumber }
     )
     resultsBlockNumber = blockNumber.toNumber()
     results = returnData
@@ -58,6 +59,9 @@ async function fetchChunk(
  * @param chainId the current chain id
  */
 export function activeListeningKeys(allListeners: AppState['multicall']['callListeners'], chainId?: number): { [callKey: string]: number } {
+  allListeners: AppState['multicall']['callListeners'],
+  chainId?: number
+): { [callKey: string]: number } {
   if (!allListeners || !chainId) return {}
   const listeners = allListeners[chainId]
   if (!listeners) return {}
@@ -89,7 +93,7 @@ export function outdatedListeningKeys(
   callResults: AppState['multicall']['callResults'],
   listeningKeys: { [callKey: string]: number },
   chainId: number | undefined,
-  latestBlockNumber: number | undefined,
+  latestBlockNumber: number | undefined
 ): string[] {
   if (!chainId || !latestBlockNumber) return []
   const results = callResults[chainId]
@@ -131,7 +135,10 @@ export default function Updater(): null {
     return outdatedListeningKeys(state.callResults, listeningKeys, chainId, latestBlockNumber)
   }, [chainId, state.callResults, listeningKeys, latestBlockNumber])
 
-  const serializedOutdatedCallKeys = useMemo(() => JSON.stringify(unserializedOutdatedCallKeys.sort()), [unserializedOutdatedCallKeys])
+  const serializedOutdatedCallKeys = useMemo(
+    () => JSON.stringify(unserializedOutdatedCallKeys.sort()),
+    [unserializedOutdatedCallKeys]
+  )
 
   useEffect(() => {
     if (!latestBlockNumber || !chainId || !multicall2Contract) return
@@ -183,7 +190,7 @@ export default function Updater(): null {
                 }
                 return memo
               },
-              { erroredCalls: [], results: {} },
+              { erroredCalls: [], results: {} }
             )
 
             // dispatch any new results
@@ -193,7 +200,7 @@ export default function Updater(): null {
                   chainId,
                   results,
                   blockNumber: fetchBlockNumber,
-                }),
+                })
               )
 
             // dispatch any errored calls
@@ -204,7 +211,7 @@ export default function Updater(): null {
                   calls: erroredCalls,
                   chainId,
                   fetchingBlockNumber: fetchBlockNumber,
-                }),
+                })
               )
             }
 
@@ -223,7 +230,7 @@ export default function Updater(): null {
                 calls: chunk,
                 chainId,
                 fetchingBlockNumber: latestBlockNumber,
-              }),
+              })
             )
           })
         return cancel
