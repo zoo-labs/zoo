@@ -1,32 +1,13 @@
-import { deployments, ethers, getNamedAccounts } from 'hardhat'
+import {setupTestFactory, requireDependencies} from './utils'
 
-import { ZooToken } from '../types/ZooToken'
+const {expect} = requireDependencies();
 
-import chai, { expect } from 'chai'
-import asPromised from 'chai-as-promised'
-
-import { solidity } from 'ethereum-waffle'
-
-chai.use(asPromised)
-chai.use(solidity)
-
-const BigNumber = ethers.BigNumber;
-
-const setupTest = deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
-  await deployments.fixture(['ZooToken'])
-  const token: ZooToken = await ethers.getContract('ZooToken')
-  const signers = await ethers.getSigners()
-  const owner = (await getNamedAccounts()).deployer
-  return {
-    owner: owner,
-    signers: signers,
-    token: token,
-  }
-})
+const setupTest = setupTestFactory(['ZooToken'])
 
 describe.only('ZooToken', function () {
   it('should have correct name, symbol, decimal', async function () {
-    const {token} = await setupTest()
+    const {tokens} = await setupTest()
+    const token = tokens['ZooToken']
     const name = await token.name()
     const symbol = await token.symbol()
     const decimals = await token.decimals()
@@ -36,7 +17,9 @@ describe.only('ZooToken', function () {
   })
 
   it('should add user to blacklist', async function() {
-    const {signers, token} = await setupTest()
+    const {signers, tokens} = await setupTest()
+    const token = tokens['ZooToken']
+
 
     const address = signers[1].address
     const address2 = signers[2].address
@@ -50,7 +33,9 @@ describe.only('ZooToken', function () {
   })
 
   it('allows transfer for eligable accounts', async function() {
-    const {signers, token} = await setupTest()
+    const {signers, tokens} = await setupTest()
+    const token = tokens['ZooToken']
+
 
     const address = signers[1].address
     const address2 = signers[2].address
@@ -68,7 +53,9 @@ describe.only('ZooToken', function () {
   });
 
   it('should not allow transferFrom when blacklisted', async function() {
-    const {signers, token} = await setupTest()
+    const {signers, tokens} = await setupTest()
+    const token = tokens['ZooToken']
+
 
     const address = signers[1].address
     const address2 = signers[2].address
@@ -85,7 +72,9 @@ describe.only('ZooToken', function () {
   })
 
   it('does not allow transfer from a blacklisted address', async function() {
-    const {signers, token} = await setupTest()
+    const {signers, tokens} = await setupTest()
+    const token = tokens['ZooToken']
+
 
     const address = signers[1].address
     const address2 = signers[2].address
