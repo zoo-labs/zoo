@@ -5,7 +5,7 @@ import { NavLink, useHistory, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import Menu from '../Menu'
 import { Label, Text } from 'components/Text'
-import { getZooToken, getZooDrop, getZooFaucet, getZooMedia, getZooKeeper } from 'util/contracts'
+import { getDrop, getFaucet, getMedia, getZooToken, getZooKeeper } from 'util/contracts'
 import Tooltip from '@material-ui/core/Tooltip'
 // import Modal from '../Modal'
 import useTheme from 'hooks/useTheme'
@@ -229,7 +229,7 @@ export default function Header() {
     getBalance()
   }, [])
 
-  const faucet = getZooFaucet(web3)
+  const faucet = getFaucet(web3)
 
   const handleFaucet = () => {
     try {
