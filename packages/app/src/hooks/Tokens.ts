@@ -206,5 +206,5 @@ export function useCurrency(currencyId: string | undefined): Currency | null | u
 
   if (wnative?.address?.toLowerCase() === currencyId?.toLowerCase()) return wnative
   // useNative ? native : token
-  return native 
+  return native
 }

@@ -33,9 +33,13 @@ const SocialEntry = styled.div`
 
 const PanelFooter: React.FC<Props> = ({ isPushed, toggleTheme, isDark }) => {
   if (!isPushed) {
-    return <Container>{/* <IconButton variant="text" onClick={() => pushNav(true)}>
+    return (
+      <Container>
+        {/* <IconButton variant="text" onClick={() => pushNav(true)}>
           <CogIcon />
-        </IconButton> */}</Container>
+        </IconButton> */}
+      </Container>
+    )
   }
 
   return (

@@ -13,6 +13,7 @@ import useDebounce from '../../hooks/useDebounce'
 import { useMulticall2Contract } from '../../hooks/useContract'
 import { useWeb3 } from 'hooks'
 import { useWeb3React } from '@web3-react/core'
+import { useMulticall2Contract } from '../../hooks/useContract'
 
 /**
  * Fetches a chunk of calls, enforcing a minimum block number constraint
@@ -58,6 +59,9 @@ async function fetchChunk(
  * @param chainId the current chain id
  */
 export function activeListeningKeys(allListeners: AppState['multicall']['callListeners'], chainId?: number): { [callKey: string]: number } {
+  allListeners: AppState['multicall']['callListeners'],
+  chainId?: number
+): { [callKey: string]: number } {
   if (!allListeners || !chainId) return {}
   const listeners = allListeners[chainId]
   if (!listeners) return {}

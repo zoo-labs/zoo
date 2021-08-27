@@ -14,6 +14,6 @@ export interface Config {
   title: string
   icon: FC<SvgProps>
   connectorId: ConnectorNames
-  connector:AbstractConnector
-  color:string
+  connector: AbstractConnector
+  color: string
 }
