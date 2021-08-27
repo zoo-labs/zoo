@@ -1,6 +1,6 @@
 import { ethers } from 'hardhat'
 import { ZooToken } from '../types/ZooToken'
-import { ZooFaucet } from '../types/ZooFaucet'
+import { Faucet } from '../types/Faucet'
 import { expect } from 'chai'
 import { BigNumber } from 'ethers'
 
@@ -19,9 +19,9 @@ describe('Test Faucet', () => {
     zooToken = (await zooTokenFactory.deploy()) as ZooToken
     await zooToken.deployed()
 
-    const zooFaucetFactory = await ethers.getContractFactory('ZooFaucet', signers[0])
+    const zooFaucetFactory = await ethers.getContractFactory('Faucet', signers[0])
 
-    zooFaucet = (await zooFaucetFactory.deploy(zooToken.address)) as ZooFaucet
+    zooFaucet = (await zooFaucetFactory.deploy(zooToken.address)) as Faucet
     await zooFaucet.deployed()
 
     owner = signers[0]
@@ -33,7 +33,7 @@ describe('Test Faucet', () => {
     expect(faucetOwner).to.equal(owner.address)
   })
 
-  it('Should mint 100,000,000 tokens from ZooToken to ZooFaucet', async () => {
+  it('Should mint 100,000,000 tokens from ZooToken to Faucet', async () => {
     const faucetPreBal: BigNumber = await zooToken.balanceOf(zooFaucet.address)
     await zooToken.mint(zooFaucet.address, mintAmt)
     const faucetPostBal: BigNumber = await zooToken.balanceOf(zooFaucet.address)
@@ -41,7 +41,7 @@ describe('Test Faucet', () => {
     expect(parseInt(faucetPostBal._hex)).to.equal(mintAmt)
   })
 
-  it('Should be able buy 10k ZOO from ZooFaucet', async () => {
+  it('Should be able buy 10k ZOO from Faucet', async () => {
     await zooToken.mint(zooFaucet.address, mintAmt)
 
     const rate = 1000

@@ -10,16 +10,16 @@ import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import { Decimal } from "./Decimal.sol";
 import { ZooKeeper } from "./ZooKeeper.sol";
-import { ZooMedia } from "./ZooMedia.sol";
+import { Media } from "./Media.sol";
 import { IMarket } from "./interfaces/IMarket.sol";
 
 import "./console.sol";
 
 /**
  * @title A Market for pieces of media
- * @notice This contract contains all of the market logic for ZooMedia
+ * @notice This contract contains all of the market logic for Media
  */
-contract ZooMarket is IMarket {
+contract Market is IMarket {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
@@ -57,13 +57,13 @@ contract ZooMarket is IMarket {
     modifier onlyZoo() {
         require(
             keeperAddress == msg.sender || mediaAddress == msg.sender,
-            "ZooMarket: Only Zoo contracts can call this method"
+            "Market: Only Zoo contracts can call this method"
         );
         _;
     }
 
     modifier onlyOwner() {
-        require(_owner == msg.sender, "ZooMarket: Only owner has access");
+        require(_owner == msg.sender, "Market: Only owner has access");
         _;
     }
 
@@ -116,7 +116,7 @@ contract ZooMarket is IMarket {
 
         // require(
         //     isValidBidShares(bidShares),
-        //     "ZooMarket: Invalid bid shares for token"
+        //     "Market: Invalid bid shares for token"
         // );
         return
             bidAmount != 0 &&
@@ -171,15 +171,15 @@ contract ZooMarket is IMarket {
         external
         onlyOwner
     {
-        // require(mediaAddress == address(0), "ZooMarket: Already configured");
-        // require(keeperAddress == address(0), "ZooMarket: Already configured");
+        // require(mediaAddress == address(0), "Market: Already configured");
+        // require(keeperAddress == address(0), "Market: Already configured");
         require(
             _mediaAddress != address(0),
-            "ZooMarket: cannot set Media contract as zero address"
+            "Market: cannot set Media contract as zero address"
         );
         require(
             _keeperAddress != address(0),
-            "ZooMarket: cannot set Keeper contract as zero address"
+            "Market: cannot set Keeper contract as zero address"
         );
 
         keeperAddress = _keeperAddress;
@@ -197,7 +197,7 @@ contract ZooMarket is IMarket {
     {
         // require(
         //     isValidBidShares(bidShares),
-        //     "ZooMarket: Invalid bid shares, must sum to 100"
+        //     "Market: Invalid bid shares, must sum to 100"
         // );
         _bidShares[tokenID] = bidShares;
         emit BidShareUpdated(tokenID, bidShares);
@@ -210,7 +210,7 @@ contract ZooMarket is IMarket {
     function setAsk(uint256 tokenID, Ask memory ask) public override onlyZoo {
         require(
             isValidBid(tokenID, ask.amount),
-            "ZooMarket: Ask invalid for share splitting"
+            "Market: Ask invalid for share splitting"
         );
 
         _tokenAsks[tokenID] = ask;
@@ -239,20 +239,20 @@ contract ZooMarket is IMarket {
         require(
             bidShares.creator.value.add(bid.sellOnShare.value) <=
                 uint256(100).mul(Decimal.BASE),
-            "ZooMarket: Sell on fee invalid for share splitting"
+            "Market: Sell on fee invalid for share splitting"
         );
         require(
             bid.bidder != address(0),
-            "ZooMarket: bidder cannot be 0 address"
+            "Market: bidder cannot be 0 address"
         );
-        require(bid.amount != 0, "ZooMarket: cannot bid amount of 0");
+        require(bid.amount != 0, "Market: cannot bid amount of 0");
         require(
             bid.currency != address(0),
-            "ZooMarket: bid currency cannot be 0 address"
+            "Market: bid currency cannot be 0 address"
         );
         require(
             bid.recipient != address(0),
-            "ZooMarket: bid recipient cannot be 0 address"
+            "Market: bid recipient cannot be 0 address"
         );
 
         Bid storage existingBid = _tokenBidders[tokenID][bid.bidder];
@@ -304,7 +304,7 @@ contract ZooMarket is IMarket {
         uint256 bidAmount = bid.amount;
         address bidCurrency = bid.currency;
 
-        require(bid.amount > 0, "ZooMarket: cannot remove bid amount of 0");
+        require(bid.amount > 0, "Market: cannot remove bid amount of 0");
 
         IERC20 token = IERC20(bidCurrency);
 
@@ -328,17 +328,17 @@ contract ZooMarket is IMarket {
         onlyZoo
     {
         Bid memory bid = _tokenBidders[tokenID][expectedBid.bidder];
-        require(bid.amount > 0, "ZooMarket: cannot accept bid of 0");
+        require(bid.amount > 0, "Market: cannot accept bid of 0");
         require(
             bid.amount == expectedBid.amount &&
                 bid.currency == expectedBid.currency &&
                 bid.sellOnShare.value == expectedBid.sellOnShare.value &&
                 bid.recipient == expectedBid.recipient,
-            "ZooMarket: Unexpected bid found."
+            "Market: Unexpected bid found."
         );
         require(
             isValidBid(tokenID, bid.amount),
-            "ZooMarket: Bid invalid for share splitting"
+            "Market: Bid invalid for share splitting"
         );
 
         _finalizeNFTTransfer(tokenID, bid.bidder);
@@ -362,17 +362,17 @@ contract ZooMarket is IMarket {
         );
         // Transfer bid share to creator of media
         token.safeTransfer(
-            ZooMedia(mediaAddress).tokenCreators(tokenID),
+            Media(mediaAddress).tokenCreators(tokenID),
             splitShare(bidShares.creator, bid.amount)
         );
         // Transfer bid share to previous owner of media (if applicable)
         token.safeTransfer(
-            ZooMedia(mediaAddress).previousTokenOwners(tokenID),
+            Media(mediaAddress).previousTokenOwners(tokenID),
             splitShare(bidShares.prevOwner, bid.amount)
         );
 
         // Transfer media to bid recipient
-        ZooMedia(mediaAddress).auctionTransfer(tokenID, bid.recipient);
+        Media(mediaAddress).auctionTransfer(tokenID, bid.recipient);
 
         // Calculate the bid share for the new owner,
         // equal to 100 - creatorShare - sellOnShare
