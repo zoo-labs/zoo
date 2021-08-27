@@ -62,7 +62,7 @@ export default function Pool() {
     <main className='flex flex-col items-center justify-start flex-grow w-full h-full'>
       <div id='pool-page' className='py-4 md:py-8 lg:py-12 max-w-2xl w-full'>
         <div className='p-4 mb-3 space-y-3'>
-          <div>
+          <div onClick={() => history.goBack()}>
             <a className='flex items-center space-x-2 text-base text-center cursor-pointer font text-secondary hover:text-high-emphesis'>
               <svg xmlns='http://www.w3.org/2000/svg' className='w-4 h-4' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                 <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 19l-7-7 7-7'></path>

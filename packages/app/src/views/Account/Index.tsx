@@ -223,7 +223,7 @@ const Account: React.FC = () => {
     <div
     // style={{ height: '100vh' }} className='flex items-center'
     >
-      <div className='lg:p-16 p-4 space-y-4 rounded-lg  m-4 flex flex-col relative filter drop-shadow z-10'>
+      <div className='lg:p-16 p-4 pr-0 lg:pr-0 mr-0 space-y-4 rounded-lg  m-4 flex flex-col relative filter drop-shadow z-10'>
         <div className='flex flex-col h-full'>
           <div className='flex flex-col justify-between h-full'>
             <div style={{ flex: 1 }} className='p-5 rounded'>
@@ -238,7 +238,14 @@ const Account: React.FC = () => {
                 <div className={` ${isSm ? 'w-1/2' : isMd ? 'w-1/3' : 'w-1/6'} px-2`}>
                   <button
                     disabled={disableApprove || allowance}
-                    style={{ width: '120px', fontSize: '16px', fontWeight: 550, color: 'rgb(255,255,255)', backgroundColor: '#8C4FF8', border: '1px solid rgba(21, 61, 111, 0.44)' }}
+                    style={{
+                      width: '120px',
+                      fontSize: '16px',
+                      fontWeight: 550,
+                      color: 'rgb(255,255,255)',
+                      backgroundColor: '#8C4FF8',
+                      border: '1px solid rgba(21, 61, 111, 0.44)',
+                    }}
                     className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-gray-700 bg-opacity-80  text-primary border-gray-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80  py-4 text-base rounded  font-semibold disabled:cursor-not-allowed focus:outline-none w-full`}
                     onClick={approve}>
                     {allowance ? 'APPROVED' : disableApprove ? 'PROCESSING' : 'APPROVE'}
