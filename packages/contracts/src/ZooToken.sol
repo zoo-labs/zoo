@@ -39,6 +39,7 @@ contract ZooToken is ERC20, ERC20Burnable, Ownable, AccessControl {
 
     function transferFrom(address _from, address _to, uint256 _value) public override returns (bool) {
         _transferAllowed(_to);
+        _transferAllowed(_from);
         _transferAllowed(msg.sender);
         return super.transferFrom(_from, _to, _value);
     }
