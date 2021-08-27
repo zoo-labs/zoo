@@ -107,7 +107,7 @@ const Eggs: React.FC<EggsProps> = ({}) => {
         setOpen(true)
       }, 5450),
     )
-    videoTimeout.push(setTimeout(() => setEggType(''), 7000))
+    // videoTimeout.push(setTimeout(() => setEggType(''), 7000))
   }, [])
 
   const closeAnimation = useCallback(async (e) => {
@@ -179,7 +179,7 @@ const Eggs: React.FC<EggsProps> = ({}) => {
                     No eggs
                   </StyledText>
                 ) : (
-                  <Swiper slidesPerView={isSm ? 2 : isMd ? 4 : 12} spaceBetween={4} pagination={{ clickable: true }} style={{ marginBottom: 0 }}>
+                  <Swiper slidesPerView={isSm ? 3 : isMd ? 6 : 12} spaceBetween={4} pagination={{ clickable: true }} style={{ marginBottom: 0 }}>
                     {eggData.map((egg) => (
                       <SwiperSlide className='account__animal-slide' style={{ width: '33%', display: 'flex', minWidth: 130, minHeight: 180 }} key={egg.tokenID}>
                         {/* <CardWrapper> */}
