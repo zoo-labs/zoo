@@ -26,49 +26,35 @@ export function useETHBalances(uncheckedAddresses?: (string | undefined)[]): {
             .filter((a): a is string => a !== false)
             .sort()
         : [],
-    [uncheckedAddresses]
+    [uncheckedAddresses],
   )
 
   const results = useSingleContractMultipleData(
     multicallContract,
     'getEthBalance',
-    addresses.map((address) => [address])
+    addresses.map((address) => [address]),
   )
 
   return useMemo(
     () =>
       addresses.reduce<{ [address: string]: CurrencyAmount<Currency> }>((memo, address, i) => {
         const value = results?.[i]?.result?.[0]
-        if (value && chainId)
-          memo[address] = CurrencyAmount.fromRawAmount(Ether.onChain(chainId), JSBI.BigInt(value.toString()))
+        if (value && chainId) memo[address] = CurrencyAmount.fromRawAmount(Ether.onChain(chainId), JSBI.BigInt(value.toString()))
         return memo
       }, {}),
-    [addresses, chainId, results]
+    [addresses, chainId, results],
   )
 }
 
 /**
  * Returns a map of token addresses to their eventually consistent token balances for a single account.
  */
-export function useTokenBalancesWithLoadingIndicator(
-  address?: string,
-  tokens?: (Token | undefined)[]
-): [{ [tokenAddress: string]: CurrencyAmount<Token> | undefined }, boolean] {
-  const validatedTokens: Token[] = useMemo(
-    () => tokens?.filter((t?: Token): t is Token => isAddress(t?.address) !== false) ?? [],
-    [tokens]
-  )
+export function useTokenBalancesWithLoadingIndicator(address?: string, tokens?: (Token | undefined)[]): [{ [tokenAddress: string]: CurrencyAmount<Token> | undefined }, boolean] {
+  const validatedTokens: Token[] = useMemo(() => tokens?.filter((t?: Token): t is Token => isAddress(t?.address) !== false) ?? [], [tokens])
 
   const validatedTokenAddresses = useMemo(() => validatedTokens.map((vt) => vt.address), [validatedTokens])
   const ERC20Interface = new Interface(ERC20_ABI)
-  const balances = useMultipleContractSingleData(
-    validatedTokenAddresses,
-    ERC20Interface,
-    'balanceOf',
-    [address],
-    undefined,
-    100_000
-  )
+  const balances = useMultipleContractSingleData(validatedTokenAddresses, ERC20Interface, 'balanceOf', [address], undefined, 100_000)
 
   const anyLoading: boolean = useMemo(() => balances.some((callState) => callState.loading), [balances])
 
@@ -87,16 +73,13 @@ export function useTokenBalancesWithLoadingIndicator(
               return memo
             }, {})
           : {},
-      [address, validatedTokens, balances]
+      [address, validatedTokens, balances],
     ),
     anyLoading,
   ]
 }
 
-export function useTokenBalances(
-  address?: string,
-  tokens?: (Token | undefined)[]
-): { [tokenAddress: string]: CurrencyAmount<Token> | undefined } {
+export function useTokenBalances(address?: string, tokens?: (Token | undefined)[]): { [tokenAddress: string]: CurrencyAmount<Token> | undefined } {
   const balances = useTokenBalancesWithLoadingIndicator(address, tokens)[0]
   const memoizedBalances = useMemo(() => JSON.stringify(balances), [balances])
   return useMemo(() => balances, [memoizedBalances])
@@ -109,14 +92,8 @@ export function useTokenBalance(account?: string, token?: Token): CurrencyAmount
   return tokenBalances[token.address]
 }
 
-export function useCurrencyBalances(
-  account?: string,
-  currencies?: (Currency | undefined)[]
-): (CurrencyAmount<Currency> | undefined)[] {
-  const tokens = useMemo(
-    () => currencies?.filter((currency): currency is Token => currency?.isToken ?? false) ?? [],
-    [currencies]
-  )
+export function useCurrencyBalances(account?: string, currencies?: (Currency | undefined)[]): (CurrencyAmount<Currency> | undefined)[] {
+  const tokens = useMemo(() => currencies?.filter((currency): currency is Token => currency?.isToken ?? false) ?? [], [currencies])
 
   const tokenBalances = useTokenBalances(account, tokens)
   const containsETH: boolean = useMemo(() => currencies?.some((currency) => currency?.isNative) ?? false, [currencies])
@@ -130,7 +107,7 @@ export function useCurrencyBalances(
         if (currency.isNative) return ethBalance[account]
         return undefined
       }) ?? [],
-    [account, currencies, ethBalance, tokenBalances]
+    [account, currencies, ethBalance, tokenBalances],
   )
 }
 
