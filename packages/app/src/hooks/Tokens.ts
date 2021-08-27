@@ -188,6 +188,7 @@ export function useCurrency(currencyId: string | undefined): Currency | null | u
   const useNative = isETH && !isDual
   if (isETH && isDual) {
     currencyId = WNATIVE_ADDRESS[chainId]
+
   }
 
   const token = useToken(useNative ? undefined : currencyId)
@@ -196,6 +197,7 @@ export function useCurrency(currencyId: string | undefined): Currency | null | u
   // const weth = chainId ? WETH9_EXTENDED[chainId] : undefined
 
   const native = useMemo(() => (chainId ? NATIVE[chainId] : undefined), [chainId])
+
 
   const wnative = chainId ? WNATIVE[chainId] : undefined
   console.log('native',native)
