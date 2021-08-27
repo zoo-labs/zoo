@@ -1,29 +1,15 @@
 import { contenthashToUri, uriToHttp } from './convert'
 
-// import Ajv from 'ajv'
+import Ajv from 'ajv'
 import { DEFAULT_LIST_OF_LISTS } from '../config/token-lists'
 import { TokenList } from '@uniswap/token-lists'
 import { Version } from '@uniswap/token-lists'
 import { parseENSAddress } from './ens'
 import schema from '@uniswap/token-lists/src/tokenlist.schema.json'
 
-// const tokenListValidator = new Ajv({ allErrors: true }).compile(schema)
-// const AJV = require('ajv').default
-// const addFormats = require('ajv-formats').default
-<<<<<<< HEAD
-
-// const ajv = new AJV()
-// addFormats(ajv)
 const tokenListValidator = new Ajv({ allErrors: true }).compile(schema)
 
-// const ajv = new AJV()
-// addFormats(ajv)
-=======
-
-// const ajv = new AJV()
-// addFormats(ajv)
 /**
->>>>>>> db3c343 (DEMO)
  * Contains the logic for resolving a list URL to a validated token list
  * @param listUrl list url
  * @param resolveENSContentHash resolves an ens name to a contenthash
