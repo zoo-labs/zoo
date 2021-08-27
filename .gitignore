@@ -20,6 +20,8 @@ tenderly.yaml
 /node_modules
 /.pnp
 .pnp.js
+.pnp.cjs
+.yarn
 
 # testing
 coverage
