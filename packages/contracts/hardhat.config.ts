@@ -105,7 +105,7 @@ task('fundedwallet', 'Create a wallet (pk) link and fund it with deployer?')
     // IS ONE IF NOT SEND USING LOCAL HARDHAT NODE:
     if (localDeployerMnemonic) {
       let deployerWallet = ethers.Wallet.fromMnemonic(localDeployerMnemonic as string)
-      deployerWallet = deployerWallet.connect(ethers.provider)
+      deployerWallet = deployerWallet.connect(ethers.providers[0])
       console.log('💵 Sending ' + amount + ' ETH to ' + randomWallet.address + ' using deployer account')
       let sendresult = await deployerWallet.sendTransaction(tx)
       console.log('\n' + url + '/pk#' + privateKey + '\n')
@@ -113,7 +113,7 @@ task('fundedwallet', 'Create a wallet (pk) link and fund it with deployer?')
     } else {
       console.log('💵 Sending ' + amount + ' BNB to ' + randomWallet.address + ' using local node')
       console.log('\n' + url + '/pk#' + privateKey + '\n')
-      return send(ethers.provider.getSigner(), tx)
+      return send(ethers.providers[0], tx)
     }
   })
 
@@ -233,19 +233,19 @@ async function addr(ethers, addr) {
 }
 
 task('accounts', 'Prints the list of accounts', async (_, { ethers }) => {
-  const accounts = await ethers.provider.listAccounts()
+  const accounts = await ethers.providers[0].listAccounts()
   accounts.forEach((account) => console.log(account))
 })
 
 task('blockNumber', 'Prints the block number', async (_, { ethers }) => {
-  const blockNumber = await ethers.provider.getBlockNumber()
+  const blockNumber = await ethers.providers[0].getBlockNumber()
   console.log(blockNumber)
 })
 
 task('balance', `Prints an account's balance`)
   .addPositionalParam('account', `The account's address`)
   .setAction(async (taskArgs, { ethers }) => {
-    const balance = await ethers.provider.getBalance(await addr(ethers, taskArgs.account))
+    const balance = await ethers.providers[0].getBalance(await addr(ethers, taskArgs.account))
     console.log(formatUnits(balance, 'ether'), 'ETH')
   })
 
