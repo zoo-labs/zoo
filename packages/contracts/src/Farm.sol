@@ -96,7 +96,7 @@ contract Farm is Ownable {
         }));
     }
 
-    // Update the given pool's MFRM allocation point. Can only be called by the owner.
+    // Update the given pool's ZFRM allocation point. Can only be called by the owner.
     function set(uint256 _pid, uint256 _allocPoint, bool _withUpdate) public onlyOwner {
         if (_withUpdate) {
             massUpdatePools();

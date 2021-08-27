@@ -1,4 +1,4 @@
-// deploy/03_deploy_keeper.ts
+// deploy/03_zookeeper.ts
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
@@ -39,4 +39,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 export default func
 func.id = 'zookeeper'
 func.tags = ['ZooKeeper']
-// func.dependencies = ['Media', 'Market']
+func.dependencies = ['Media', 'Market']

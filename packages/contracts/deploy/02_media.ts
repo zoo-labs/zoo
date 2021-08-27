@@ -1,4 +1,4 @@
-// deploy/02_deploy_media.js
+// deploy/02_media.js
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
@@ -16,6 +16,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 }
 
 export default func
-func.id = 'deploy_zoo_media' // ID required to prevent reexecution
+func.id = 'media' // ID required to prevent reexecution
 func.tags = ['Media']
 func.dependencies = []
