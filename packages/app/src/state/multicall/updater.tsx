@@ -57,10 +57,7 @@ async function fetchChunk(
  * @param allListeners the all listeners state
  * @param chainId the current chain id
  */
-export function activeListeningKeys(
-  allListeners: AppState['multicall']['callListeners'],
-  chainId?: number
-): { [callKey: string]: number } {
+export function activeListeningKeys(allListeners: AppState['multicall']['callListeners'], chainId?: number): { [callKey: string]: number } {
   if (!allListeners || !chainId) return {}
   const listeners = allListeners[chainId]
   if (!listeners) return {}
