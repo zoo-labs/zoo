@@ -314,12 +314,12 @@ export default function Header() {
                 style={{ width: 40, height: 40 }}
                 className='hidden rounded-md cursor-pointer sm:inline-flex bg-secondary hover:bg-gray-800 p-0.5 w-full mr-2'
                 onClick={() => {
-                  const tokenAddress = '0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997'
+                  const tokenAddress = '0x34f3F270B85532f32c6F8039B960c569816Fc67a'
                   const tokenSymbol = 'ZOO'
                   const tokenDecimals = 18
-                  const tokenImage = 'https://freight.cargo.site/t/original/i/92806d1ec020d34eb53078a68dab13ad65d3f771de20d9d13423e923b7db7787/ZOO_COIN_solo.png'
+                  const tokenImage = window.location.origin + '/static/images/token.png'
                   const params: any = {
-                    type: 'BEP20',
+                    type: 'ERC20',
                     options: {
                       address: tokenAddress,
                       symbol: tokenSymbol,
