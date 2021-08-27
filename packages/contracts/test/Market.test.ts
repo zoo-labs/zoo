@@ -12,8 +12,8 @@ import Decimal from '../utils/Decimal'
 import { Blockchain } from '../utils/Blockchain'
 import { generatedWallets } from '../utils/generatedWallets'
 
-import { ZooMarket } from '../types/ZooMarket'
-import { ZooToken, ZooMedia__factory, ZooMarket__factory, ZooToken__factory, ZooKeeper__factory } from '../types'
+import { Market } from '../types/Market'
+import { ZooToken, Media__factory, Market__factory, ZooToken__factory, ZooKeeper__factory } from '../types'
 
 let provider = new JsonRpcProvider()
 let blockchain = new Blockchain(provider)
@@ -39,7 +39,7 @@ type Bid = {
   sellOnShare: { value: BigNumberish }
 }
 
-describe('ZooMarket', () => {
+describe('Market', () => {
   let [deployerWallet, bidderWallet, mockTokenWallet, otherWallet] = generatedWallets(provider)
 
   let defaultBidShares = {
@@ -69,17 +69,17 @@ describe('ZooMarket', () => {
   }
 
   async function maketAs(wallet: Wallet) {
-    return ZooMarket__factory.connect(marketAddress, wallet)
+    return Market__factory.connect(marketAddress, wallet)
   }
 
   async function deploy() {
     const token = await (await new ZooToken__factory(deployerWallet).deploy()).deployed()
     tokenAddress = token.address
 
-    const market = await (await new ZooMarket__factory(deployerWallet).deploy()).deployed()
+    const market = await (await new Market__factory(deployerWallet).deploy()).deployed()
     marketAddress = market.address
 
-    const media = await (await new ZooMedia__factory(deployerWallet).deploy('ZooAnimals', 'ANML')).deployed()
+    const media = await (await new Media__factory(deployerWallet).deploy('ZooAnimals', 'ANML')).deployed()
     mediaAddress = media.address
 
     const zookeeper = await (await new ZooKeeper__factory(deployerWallet).deploy()).deployed()
@@ -87,18 +87,18 @@ describe('ZooMarket', () => {
   }
 
   async function configure() {
-    return ZooMarket__factory.connect(marketAddress, deployerWallet).configure(mediaAddress, zookeeperAddress)
+    return Market__factory.connect(marketAddress, deployerWallet).configure(mediaAddress, zookeeperAddress)
   }
 
   async function readMedia() {
-    return ZooMarket__factory.connect(marketAddress, deployerWallet).mediaAddress()
+    return Market__factory.connect(marketAddress, deployerWallet).mediaAddress()
   }
 
-  async function setBidShares(maket: ZooMarket, tokenId: number, bidShares?: BidShares) {
+  async function setBidShares(maket: Market, tokenId: number, bidShares?: BidShares) {
     return maket.setBidShares(tokenId, bidShares)
   }
 
-  async function setAsk(maket: ZooMarket, tokenId: number, ask?: Ask) {
+  async function setAsk(maket: Market, tokenId: number, ask?: Ask) {
     return maket.setAsk(tokenId, ask)
   }
 
@@ -120,7 +120,7 @@ describe('ZooMarket', () => {
   async function getBalance(currency: string, owner: string) {
     return ZooToken__factory.connect(currency, deployerWallet).balanceOf(owner)
   }
-  async function setBid(maket: ZooMarket, bid: Bid, tokenId: number, spender?: string) {
+  async function setBid(maket: Market, bid: Bid, tokenId: number, spender?: string) {
     await maket.setBid(tokenId, bid, spender || bid.bidder, { gasLimit: 3500000 })
   }
 
@@ -140,7 +140,7 @@ describe('ZooMarket', () => {
     })
 
     it('should revert if not called by the owner', async () => {
-      await expect(ZooMarket__factory.connect(marketAddress, otherWallet).configure(mediaAddress, zookeeperAddress)).eventually.rejectedWith('Market: Only owner')
+      await expect(Market__factory.connect(marketAddress, otherWallet).configure(mediaAddress, zookeeperAddress)).eventually.rejectedWith('Market: Only owner')
     })
 
     it('should be callable by the owner', async () => {

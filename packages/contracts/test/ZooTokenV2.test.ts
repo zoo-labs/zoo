@@ -1,15 +1,22 @@
 import { setupTestFactory, requireDependencies } from './utils'
+import { Signer } from '@ethersproject/abstract-signer'
+import { ZooTokenV2 } from '../types'
 
 const { expect } = requireDependencies()
 
-const setupTest = setupTestFactory(['ZooToken'])
+const setupTest = setupTestFactory(['ZooTokenV2'])
 
-describe.only('ZooToken', function () {
+describe.only('ZooTokenV2', function () {
+  let token: ZooTokenV2
+  let signers: Signer[]
+
+  beforeEach(async ()=> {
+    const test = await setupTest()
+    token = test.tokens.ZooTokenV2 as ZooTokenV2
+    signers = test.signers
+  })
+
   it('should have correct name, symbol, decimal', async function () {
-    const {
-      tokens: { ZooToken },
-    } = await setupTest()
-    const token = ZooToken
     const name = await token.name()
     const symbol = await token.symbol()
     const decimals = await token.decimals()
@@ -19,8 +26,8 @@ describe.only('ZooToken', function () {
   })
 
   it('should add user to blacklist', async function () {
-    const { signers, tokens } = await setupTest()
-    const token = tokens['ZooToken']
+    const { signers, tokens: { ZooTokenV2 } } = await setupTest()
+    const token = ZooTokenV2
 
     const address = signers[1].address
     const address2 = signers[2].address
@@ -34,8 +41,8 @@ describe.only('ZooToken', function () {
   })
 
   it('allows transfer for eligable accounts', async function () {
-    const { signers, tokens } = await setupTest()
-    const token = tokens['ZooToken']
+    const { signers, tokens: { ZooTokenV2 } } = await setupTest()
+    const token = ZooTokenV2
 
     const address = signers[1].address
     const address2 = signers[2].address

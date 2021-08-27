@@ -1,16 +1,17 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity >=0.6.0 <=0.8.4;
+pragma solidity >= 0.8.4;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "./ZooFarmTokenV2.sol";
+import "./interfaces/IERC20Mintable.sol";
 
-contract ZooFarm is Ownable {
+contract Farm is Ownable {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
+    using SafeERC20 for IERC20Mintable;
 
     // Info of each user.
     struct UserInfo {
@@ -20,25 +21,28 @@ contract ZooFarm is Ownable {
 
     // Info of each pool.
     struct PoolInfo {
-        IERC20 lpToken;           // Address of LP token contract.
-        uint256 allocPoint;       // How many allocation points assigned to this pool. MFRMs to distribute per block.
-        uint256 lastRewardBlock;  // Last block number that MFRMs distribution occurs.
-        uint256 accZooPerShare;  // Accumulated MFRMs per share, times 1e12. See below.
+        IERC20 lpToken;            // Address of LP token contract.
+        uint256 allocPoint;        // How many allocation points assigned to this pool. Tokens to distribute per block.
+        uint256 lastRewardBlock;   // Last block number that reward distribution occurs.
+        uint256 accRewardPerShare; // Accumulated reward per share, times 1e12. See below.
     }
 
-    // The ZFRM token!
-    ZooFarmTokenV2 public zoo;
+    // Reward token
+    IERC20Mintable public token;
 
-    // ZooBarn contract address
-    address public zooAddress;
+    // DAO address
+    address public daoAddress;
 
-    // Block number when bonus ZFRM period ends.
+    // DAO share
+    address public daoShare;
+
+    // Block number when bonus period ends.
     uint256 public bonusEndBlock;
 
-    // ZFRM tokens created per block.
-    uint256 public zooPerBlock;
+    // Token reward minted per block
+    uint256 public rewardPerBlock;
 
-    // Bonus muliplier for early zoo farmers.
+    // Bonus muliplier for early farmers.
     uint256 public constant BONUS_MULTIPLIER = 2;
 
     // Info of each pool.
@@ -50,7 +54,7 @@ contract ZooFarm is Ownable {
     // Total allocation points. Must be the sum of all allocation points in all pools.
     uint256 public totalAllocPoint = 0;
 
-    // The block number when ZFRM mining starts.
+    // The block number when mining starts.
     uint256 public startBlock;
 
     event Deposit(address indexed user, uint256 indexed pid, uint256 amount);
@@ -58,15 +62,17 @@ contract ZooFarm is Ownable {
     event EmergencyWithdraw(address indexed user, uint256 indexed pid, uint256 amount);
 
     constructor(
-        ZooFarmTokenV2 _zoo,
-        address _zooAddress,
-        uint256 _zooPerBlock,
+        address _daoAddress,
+        address _daoShare,
+        address _tokenAddress,
+        uint256 _rewardPerBlock,
         uint256 _startBlock,
         uint256 _bonusEndBlock
     ) {
-        zoo = _zoo;
-        zooAddress = _zooAddress;
-        zooPerBlock = _zooPerBlock;
+        daoAddress = _daoAddress;
+        daoShare = _daoShare;
+        token = IERC20Mintable(_tokenAddress);
+        rewardPerBlock = _rewardPerBlock;
         startBlock = _startBlock;
         bonusEndBlock = _bonusEndBlock;
     }
@@ -86,7 +92,7 @@ contract ZooFarm is Ownable {
             lpToken: _lpToken,
             allocPoint: _allocPoint,
             lastRewardBlock: lastRewardBlock,
-            accZooPerShare: 0
+            accRewardPerShare: 0
         }));
     }
 
@@ -112,18 +118,18 @@ contract ZooFarm is Ownable {
         }
     }
 
-    // View function to see pending MFRMs on frontend.
-    function pendingZoo(uint256 _pid, address _user) external view returns (uint256) {
+    // View function to see pending reward on frontend.
+    function pendingReward(uint256 _pid, address _user) external view returns (uint256) {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][_user];
-        uint256 accZooPerShare = pool.accZooPerShare;
+        uint256 accRewardPerShare = pool.accRewardPerShare;
         uint256 lpSupply = pool.lpToken.balanceOf(address(this));
         if (block.number > pool.lastRewardBlock && lpSupply != 0) {
             uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
-            uint256 zooReward = multiplier.mul(zooPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
-            accZooPerShare = accZooPerShare.add(zooReward.mul(1e12).div(lpSupply));
+            uint256 reward = multiplier.mul(rewardPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
+            accRewardPerShare = accRewardPerShare.add(reward.mul(1e12).div(lpSupply));
         }
-        return user.amount.mul(accZooPerShare).div(1e12).sub(user.rewardDebt);
+        return user.amount.mul(accRewardPerShare).div(1e12).sub(user.rewardDebt);
     }
 
     // Update reward variables for all pools. Be careful of gas spending!
@@ -146,47 +152,47 @@ contract ZooFarm is Ownable {
             return;
         }
         uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
-        uint256 zooReward = multiplier.mul(zooPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
-        zoo.mint(address(this), zooReward);
-        zoo.mint(zooAddress, zooReward.div(10));
-        pool.accZooPerShare = pool.accZooPerShare.add(zooReward.mul(1e12).div(lpSupply));
+        uint256 reward = multiplier.mul(rewardPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
+        token.mint(address(this), reward);
+        token.mint(daoAddress, reward.div(10));
+        pool.accRewardPerShare = pool.accRewardPerShare.add(reward.mul(1e12).div(lpSupply));
         pool.lastRewardBlock = block.number;
     }
 
-    // Deposit LP tokens to ZooFarm for ZFRM allocation.
+    // Deposit LP tokens to Farm for Reward allocation.
     function deposit(uint256 _pid, uint256 _amount) public {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
         updatePool(_pid);
         if (user.amount > 0) {
-            uint256 pending = user.amount.mul(pool.accZooPerShare).div(1e12).sub(user.rewardDebt);
+            uint256 pending = user.amount.mul(pool.accRewardPerShare).div(1e12).sub(user.rewardDebt);
             if (pending > 0) {
-                safeZooTransfer(msg.sender, pending);
+                safeTransfer(msg.sender, pending);
             }
         }
         if (_amount > 0) {
             pool.lpToken.safeTransferFrom(address(msg.sender), address(this), _amount);
             user.amount = user.amount.add(_amount);
         }
-        user.rewardDebt = user.amount.mul(pool.accZooPerShare).div(1e12);
+        user.rewardDebt = user.amount.mul(pool.accRewardPerShare).div(1e12);
         emit Deposit(msg.sender, _pid, _amount);
     }
 
-    // Withdraw LP tokens from ZooFarm
+    // Withdraw LP tokens from Farm
     function withdraw(uint256 _pid, uint256 _amount) public {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
-        require(user.amount >= _amount, "withdraw: not good");
+        require(user.amount >= _amount, "withdraw: invalid amount");
         updatePool(_pid);
-        uint256 pending = user.amount.mul(pool.accZooPerShare).div(1e12).sub(user.rewardDebt);
+        uint256 pending = user.amount.mul(pool.accRewardPerShare).div(1e12).sub(user.rewardDebt);
         if (pending > 0) {
-            safeZooTransfer(msg.sender, pending);
+            safeTransfer(msg.sender, pending);
         }
         if (_amount > 0) {
             user.amount = user.amount.sub(_amount);
             pool.lpToken.safeTransfer(address(msg.sender), _amount);
         }
-        user.rewardDebt = user.amount.mul(pool.accZooPerShare).div(1e12);
+        user.rewardDebt = user.amount.mul(pool.accRewardPerShare).div(1e12);
         emit Withdraw(msg.sender, _pid, _amount);
     }
 
@@ -200,18 +206,19 @@ contract ZooFarm is Ownable {
         user.rewardDebt = 0;
     }
 
-    // Safe zoo transfer function, just in case if rounding error causes pool to not have enough ZFRMs.
-    function safeZooTransfer(address _to, uint256 _amount) internal {
-        uint256 zooBal = zoo.balanceOf(address(this));
-        if (_amount > zooBal) {
-            zoo.transfer(_to, zooBal);
+    // Safe transfer function, just in case if rounding error causes pool to not have enough tokens.
+    function safeTransfer(address _to, uint256 _amount) internal {
+        uint256 bal = token.balanceOf(address(this));
+        if (_amount > bal) {
+            token.transfer(_to, bal);
         } else {
-            zoo.transfer(_to, _amount);
+            token.transfer(_to, _amount);
         }
     }
 
-    // Set the ZooBarn address
-    function setZooAddress(address _zooAddress) public onlyOwner {
-        zooAddress = _zooAddress;
+    // Update token used for rewards
+    function setToken(address _tokenAddress) public onlyOwner {
+        require(_tokenAddress != address(0), 'Token address cannot be zero address');
+        token = IERC20Mintable(_tokenAddress);
     }
 }
