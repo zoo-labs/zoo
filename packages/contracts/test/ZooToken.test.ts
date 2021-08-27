@@ -6,8 +6,8 @@ const setupTest = setupTestFactory(['ZooToken'])
 
 describe.only('ZooToken', function () {
   it('should have correct name, symbol, decimal', async function () {
-    const { tokens } = await setupTest()
-    const token = tokens['ZooToken']
+    const { tokens: { ZooToken } } = await setupTest()
+    const token = ZooToken
     const name = await token.name()
     const symbol = await token.symbol()
     const decimals = await token.decimals()
