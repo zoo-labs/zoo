@@ -112,7 +112,7 @@ class Helper {
 }
 
 describe('ZooKeeper', () =>   {
-  it.only('Should configure a playable game', async () => {
+  it('Should configure a playable game', async () => {
     const zooKeeper = await Helper.setup();
 
     await expect(async () => {
