@@ -34,20 +34,17 @@ export const useWeb3 = () => {
     }
   }, [library])
 
+
+  async function getGasPrice() {
+    const weiPrice = Number(await web3.eth.getGasPrice())
+    console.log('Gas price', weiPrice / 10 ** 9)
+    setGasPrice(weiPrice)
+  }
+
   useEffect(() => {
-    ;(async function getGasPrice() {
-      const weiPrice = Number(await web3.eth.getGasPrice())
-
-      const price = Math.floor(weiPrice + weiPrice * 0.42)
-      console.log('Gas price', weiPrice / 10 ** 9, 'boosted to', price / 10 ** 9)
-
-      // let price = 11 * (10 ** 9)
-      // const results = await Moralis.Cloud.run('getAverageGasPrice')
-      // if (results.length > 0) price = (results[0].avgGas) * (10 ** 9)
-      // console.log('Current gas price:', price)
-      setGasPrice(price)
-    })()
+    getGasPrice()
   }, [])
+
   const custom = web3 as CustomWeb3
   custom.account = account
   custom.chainID = Number(chainId)
