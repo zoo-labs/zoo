@@ -1,4 +1,4 @@
-// deploy/06_deploy_faucet.ts
+// deploy/06_faucet.ts
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
@@ -46,4 +46,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 export default func
 func.id = 'faucet'
 func.tags = ['Faucet']
-// func.dependencies = ['Token']
+func.dependencies = ['Token']

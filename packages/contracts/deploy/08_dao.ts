@@ -1,4 +1,4 @@
-// deploy/00_deploy_token.js
+// deploy/08_dao.ts
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
@@ -17,10 +17,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // Proxy only in non-live network (localhost and hardhat network) enabling
   // HCR (Hot Contract Replacement) in live network, proxy is disabled and
   // constructor is invoked
-  await deploy('Token', {
+  await deploy('DAO', {
     // nonce: nonce,
     from: deployer.address,
-    args: [],
+    args: ['GOO', 'GoveranceToken', 'DAO', 'DAO', deployer.address],
     log: true,
     // proxy: useProxy && 'postUpgrade',
   })
@@ -30,8 +30,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 }
 
 export default func
-func.id = 'token'
-func.tags = ['Token']
+func.id = 'dao'
+func.tags = ['DAO']
 func.dependencies = []
 
 // Tenderly verification

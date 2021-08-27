@@ -1,3 +1,5 @@
+// deploy/00_token.ts
+
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
 
@@ -15,7 +17,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // Proxy only in non-live network (localhost and hardhat network) enabling
   // HCR (Hot Contract Replacement) in live network, proxy is disabled and
   // constructor is invoked
-  await deploy('FarmToken', {
+  await deploy('ZooToken', {
     // nonce: nonce,
     from: deployer.address,
     args: [],
@@ -28,6 +30,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 }
 
 export default func
-func.id = 'farmtoken'
-func.tags = ['FarmToken']
+func.id = 'token'
+func.tags = ['Token']
 func.dependencies = []
+
+// Tenderly verification
+// let verification = await tenderly.verify({
+//   name: contractName,
+//   address: contractAddress,
+//   network: targetNetwork,
+// })
