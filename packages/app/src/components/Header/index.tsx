@@ -284,7 +284,7 @@ export default function Header() {
           isMd || isSm ? 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
         }`}
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
-        {['Home', 'Bank', 'Feed'].map((path: string) => {
+        {['Swap', 'Pool'].map((path: string) => {
           const selected = active === path.toLowerCase()
           return (
             <a
@@ -296,13 +296,13 @@ export default function Header() {
             </a>
           )
         })}
-        <a
+        {/* <a
           onClick={() => handleFunds()}
           // id={`${path}-nav-link`}
           className={`items-left cursor-pointer text-md flex text-gray-300 font-semibold rounded-xl text-white`}
           style={{ backgroundColor: '#8C4FF8', padding: '10px 14px' }}>
           <h6> {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}</h6>
-        </a>
+        </a> */}
       </div>
 
       <HeaderControls>
