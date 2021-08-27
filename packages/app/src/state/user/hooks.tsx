@@ -23,10 +23,9 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { useCallback, useMemo } from 'react'
 
-import ReactGA from 'react-ga'
 import flatMap from 'lodash/flatMap'
-import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { useAllTokens } from '../../hooks/Tokens'
+import { useWeb3React } from '@web3-react/core'
 
 function serializeToken(token: Token): SerializedToken {
   return {
@@ -39,13 +38,7 @@ function serializeToken(token: Token): SerializedToken {
 }
 
 function deserializeToken(serializedToken: SerializedToken): Token {
-  return new Token(
-    serializedToken.chainId,
-    serializedToken.address,
-    serializedToken.decimals,
-    serializedToken.symbol,
-    serializedToken.name
-  )
+  return new Token(serializedToken.chainId, serializedToken.address, serializedToken.decimals, serializedToken.symbol, serializedToken.name)
 }
 
 export function useIsDarkMode(): boolean {
@@ -54,7 +47,7 @@ export function useIsDarkMode(): boolean {
       userDarkMode,
       matchesDarkMode,
     }),
-    shallowEqual
+    shallowEqual,
   )
 
   return userDarkMode === null ? matchesDarkMode : userDarkMode
@@ -93,13 +86,13 @@ export function useUserSingleHopOnly(): [boolean, (newSingleHopOnly: boolean) =>
 
   const setSingleHopOnly = useCallback(
     (newSingleHopOnly: boolean) => {
-      ReactGA.event({
-        category: 'Routing',
-        action: newSingleHopOnly ? 'enable single hop' : 'disable single hop',
-      })
+      // ReactGA.event({
+      //   category: 'Routing',
+      //   action: newSingleHopOnly ? 'enable single hop' : 'disable single hop',
+      // })
       dispatch(updateUserSingleHopOnly({ userSingleHopOnly: newSingleHopOnly }))
     },
-    [dispatch]
+    [dispatch],
   )
 
   return [singleHopOnly, setSingleHopOnly]
@@ -112,18 +105,17 @@ export function useSetUserSlippageTolerance(): (slippageTolerance: Percent | 'au
     (userSlippageTolerance: Percent | 'auto') => {
       let value: 'auto' | number
       try {
-        value =
-          userSlippageTolerance === 'auto' ? 'auto' : JSBI.toNumber(userSlippageTolerance.multiply(10_000).quotient)
+        value = userSlippageTolerance === 'auto' ? 'auto' : JSBI.toNumber(userSlippageTolerance.multiply(10_000).quotient)
       } catch (error) {
         value = 'auto'
       }
       dispatch(
         updateUserSlippageTolerance({
           userSlippageTolerance: value,
-        })
+        }),
       )
     },
-    [dispatch]
+    [dispatch],
   )
 }
 
@@ -135,10 +127,7 @@ export function useUserSlippageTolerance(): Percent | 'auto' {
     return state.user.userSlippageTolerance
   })
 
-  return useMemo(
-    () => (userSlippageTolerance === 'auto' ? 'auto' : new Percent(userSlippageTolerance, 10_000)),
-    [userSlippageTolerance]
-  )
+  return useMemo(() => (userSlippageTolerance === 'auto' ? 'auto' : new Percent(userSlippageTolerance, 10_000)), [userSlippageTolerance])
 }
 
 export function useUserTransactionTTL(): [number, (slippage: number) => void] {
@@ -151,7 +140,7 @@ export function useUserTransactionTTL(): [number, (slippage: number) => void] {
     (userDeadline: number) => {
       dispatch(updateUserDeadline({ userDeadline }))
     },
-    [dispatch]
+    [dispatch],
   )
 
   return [userDeadline, setUserDeadline]
@@ -163,7 +152,7 @@ export function useAddUserToken(): (token: Token) => void {
     (token: Token) => {
       dispatch(addSerializedToken({ serializedToken: serializeToken(token) }))
     },
-    [dispatch]
+    [dispatch],
   )
 }
 
@@ -173,12 +162,12 @@ export function useRemoveUserAddedToken(): (chainId: number, address: string) =>
     (chainId: number, address: string) => {
       dispatch(removeSerializedToken({ chainId, address }))
     },
-    [dispatch]
+    [dispatch],
   )
 }
 
 export function useUserAddedTokens(): Token[] {
-  const { chainId } = useActiveWeb3React()
+  const { chainId } = useWeb3React()
   const serializedTokensMap = useAppSelector(({ user: { tokens } }) => tokens)
 
   return useMemo(() => {
@@ -201,7 +190,7 @@ export function usePairAdder(): (pair: Pair) => void {
     (pair: Pair) => {
       dispatch(addSerializedPair({ serializedPair: serializePair(pair) }))
     },
-    [dispatch]
+    [dispatch],
   )
 }
 
@@ -224,20 +213,14 @@ export function toV2LiquidityToken([tokenA, tokenB]: [Token, Token]): Token {
   if (tokenA.equals(tokenB)) throw new Error('Tokens cannot be equal')
   if (!FACTORY_ADDRESS[tokenA.chainId]) throw new Error('No V2 factory address on this chain')
 
-  return new Token(
-    tokenA.chainId,
-    computePairAddress({ factoryAddress: FACTORY_ADDRESS[tokenA.chainId], tokenA, tokenB }),
-    18,
-    'UNI-V2',
-    'Uniswap V2'
-  )
+  return new Token(tokenA.chainId, computePairAddress({ factoryAddress: FACTORY_ADDRESS[tokenA.chainId], tokenA, tokenB }), 18, 'UNI-V2', 'Uniswap V2')
 }
 
 /**
  * Returns all the pairs of tokens that are tracked by the user for the current chain ID.
  */
 export function useTrackedTokenPairs(): [Token, Token][] {
-  const { chainId } = useActiveWeb3React()
+  const { chainId } = useWeb3React()
   const tokens = useAllTokens()
 
   // pinned pairs
@@ -265,7 +248,7 @@ export function useTrackedTokenPairs(): [Token, Token][] {
             )
           })
         : [],
-    [tokens, chainId]
+    [tokens, chainId],
   )
 
   // pairs saved by users
@@ -281,10 +264,7 @@ export function useTrackedTokenPairs(): [Token, Token][] {
     })
   }, [savedSerializedPairs, chainId])
 
-  const combinedList = useMemo(
-    () => userPairs.concat(generatedPairs).concat(pinnedPairs),
-    [generatedPairs, pinnedPairs, userPairs]
-  )
+  const combinedList = useMemo(() => userPairs.concat(generatedPairs).concat(pinnedPairs), [generatedPairs, pinnedPairs, userPairs])
 
   return useMemo(() => {
     // dedupes pairs of tokens in the combined list
@@ -303,15 +283,13 @@ export function useTrackedTokenPairs(): [Token, Token][] {
 export function useUserArcherUseRelay(): [boolean, (newUseRelay: boolean) => void] {
   const dispatch = useAppDispatch()
 
-  const useRelay = useSelector<AppState, AppState['user']['userArcherUseRelay']>(
-    (state) => state.user.userArcherUseRelay
-  )
+  const useRelay = useSelector<AppState, AppState['user']['userArcherUseRelay']>((state) => state.user.userArcherUseRelay)
 
   const setUseRelay = useCallback(
     (newUseRelay: boolean) => {
       dispatch(updateUserArcherUseRelay({ userArcherUseRelay: newUseRelay }))
     },
-    [dispatch]
+    [dispatch],
   )
 
   return [useRelay, setUseRelay]
@@ -327,7 +305,7 @@ export function useUserArcherGasPrice(): [string, (newGasPrice: string) => void]
     (newGasPrice: string) => {
       dispatch(updateUserArcherGasPrice({ userArcherGasPrice: newGasPrice }))
     },
-    [dispatch]
+    [dispatch],
   )
 
   return [userGasPrice, setUserGasPrice]
@@ -343,7 +321,7 @@ export function useUserArcherETHTip(): [string, (newETHTip: string) => void] {
     (newETHTip: string) => {
       dispatch(updateUserArcherETHTip({ userArcherETHTip: newETHTip }))
     },
-    [dispatch]
+    [dispatch],
   )
 
   return [userETHTip, setUserETHTip]
@@ -360,10 +338,10 @@ export function useUserArcherGasEstimate(): [string, (newGasEstimate: string) =>
       dispatch(
         updateUserArcherGasEstimate({
           userArcherGasEstimate: newGasEstimate,
-        })
+        }),
       )
     },
-    [dispatch]
+    [dispatch],
   )
 
   return [userGasEstimate, setUserGasEstimate]
@@ -380,10 +358,10 @@ export function useUserArcherTipManualOverride(): [boolean, (newManualOverride: 
       dispatch(
         updateUserArcherTipManualOverride({
           userArcherTipManualOverride: newManualOverride,
-        })
+        }),
       )
     },
-    [dispatch]
+    [dispatch],
   )
 
   return [userTipManualOverride, setUserTipManualOverride]
@@ -395,8 +373,5 @@ export function useUserArcherTipManualOverride(): [boolean, (newManualOverride: 
  */
 export function useUserSlippageToleranceWithDefault(defaultSlippageTolerance: Percent): Percent {
   const allowedSlippage = useUserSlippageTolerance()
-  return useMemo(
-    () => (allowedSlippage === 'auto' ? defaultSlippageTolerance : allowedSlippage),
-    [allowedSlippage, defaultSlippageTolerance]
-  )
+  return useMemo(() => (allowedSlippage === 'auto' ? defaultSlippageTolerance : allowedSlippage), [allowedSlippage, defaultSlippageTolerance])
 }
