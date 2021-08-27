@@ -17,7 +17,7 @@ function NetworkCard(): JSX.Element | null {
 
   return (
     <div
-      className='flex items-center rounded-xl whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto border border-gray-600 border-solid mr-2 hover:border-gray-500 '
+      className='flex items-center rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'
       onClick={() => onPresentNetworkModal()}>
       <div className='grid items-center grid-flow-col px-3 py-2 space-x-2 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'>
         <img src={NETWORK_ICON[chainId]} alt='Switch Network' className='rounded-md' width='22px' height='22px' />
