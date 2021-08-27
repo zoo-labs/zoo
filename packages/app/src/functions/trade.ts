@@ -1,14 +1,4 @@
-import {
-  Currency,
-  CurrencyAmount,
-  Fraction,
-  JSBI,
-  Percent,
-  Token,
-  Trade,
-  TradeType,
-  currencyEquals,
-} from '@sushiswap/sdk'
+import { Currency, CurrencyAmount, Fraction, JSBI, Percent, Token, Trade, TradeType, currencyEquals } from '@sushiswap/sdk'
 import { ONE_HUNDRED_PERCENT, ZERO_PERCENT } from '../constants'
 
 import { BigNumber } from '@ethersproject/bignumber'
@@ -17,7 +7,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 export function isTradeBetter(
   tradeA: Trade<Currency, Currency, TradeType> | undefined | null,
   tradeB: Trade<Currency, Currency, TradeType> | undefined | null,
-  minimumDelta: Percent = ZERO_PERCENT
+  minimumDelta: Percent = ZERO_PERCENT,
 ): boolean | undefined {
   if (tradeA && !tradeB) return false
   if (tradeB && !tradeA) return true
@@ -34,9 +24,7 @@ export function isTradeBetter(
   if (minimumDelta.equalTo(ZERO_PERCENT)) {
     return tradeA.executionPrice.lessThan(tradeB.executionPrice)
   } else {
-    return tradeA.executionPrice.asFraction
-      .multiply(minimumDelta.add(ONE_HUNDRED_PERCENT))
-      .lessThan(tradeB.executionPrice)
+    return tradeA.executionPrice.asFraction.multiply(minimumDelta.add(ONE_HUNDRED_PERCENT)).lessThan(tradeB.executionPrice)
   }
 }
 
@@ -54,7 +42,7 @@ export function calculateSlippageAmount(value: CurrencyAmount<Currency>, slippag
 
 export function computeFiatValuePriceImpact(
   fiatValueInput: CurrencyAmount<Token> | undefined | null,
-  fiatValueOutput: CurrencyAmount<Token> | undefined | null
+  fiatValueOutput: CurrencyAmount<Token> | undefined | null,
 ): Percent | undefined {
   if (!fiatValueOutput || !fiatValueInput) return undefined
   if (!fiatValueInput.currency.equals(fiatValueOutput.currency)) return undefined

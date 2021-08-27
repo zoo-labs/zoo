@@ -20,10 +20,7 @@ export function useAllCurrencyCombinations(currencyA?: Currency, currencyB?: Cur
     return [...common, ...additionalA, ...additionalB]
   }, [chainId, tokenA, tokenB])
 
-  const basePairs: [Token, Token][] = useMemo(
-    () => flatMap(bases, (base): [Token, Token][] => bases.map((otherBase) => [base, otherBase])),
-    [bases]
-  )
+  const basePairs: [Token, Token][] = useMemo(() => flatMap(bases, (base): [Token, Token][] => bases.map((otherBase) => [base, otherBase])), [bases])
 
   return useMemo(
     () =>
@@ -40,7 +37,7 @@ export function useAllCurrencyCombinations(currencyA?: Currency, currencyB?: Cur
           ]
             .filter((tokens): tokens is [Token, Token] => Boolean(tokens[0] && tokens[1]))
             .filter(([t0, t1]) => t0.address !== t1.address)
-            .filter(([tokenA, tokenB]) => {   
+            .filter(([tokenA, tokenB]) => {
               if (!chainId) return true
               const customBases = CUSTOM_BASES[chainId]
 
@@ -55,6 +52,6 @@ export function useAllCurrencyCombinations(currencyA?: Currency, currencyB?: Cur
               return true
             })
         : [],
-    [tokenA, tokenB, bases, basePairs, chainId]
+    [tokenA, tokenB, bases, basePairs, chainId],
   )
 }

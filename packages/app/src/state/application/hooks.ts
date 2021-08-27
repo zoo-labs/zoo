@@ -71,7 +71,7 @@ export function useAddPopup(): (content: PopupContent, key?: string) => void {
     (content: PopupContent, key?: string) => {
       dispatch(addPopup({ content, key }))
     },
-    [dispatch]
+    [dispatch],
   )
 }
 
@@ -82,7 +82,7 @@ export function useRemovePopup(): (key: string) => void {
     (key: string) => {
       dispatch(removePopup({ key }))
     },
-    [dispatch]
+    [dispatch],
   )
 }
 

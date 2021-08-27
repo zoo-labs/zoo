@@ -190,19 +190,21 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
   }
 
   const getVideo = () => {
-    return <div style={{ margin: 0, position: 'absolute', width: '108%' }}>
-      <video
-        autoPlay
-        loop
-        muted
-        style={{
-          height: '235%',
-          width: '235%',
-          alignSelf: 'center',
-        }}>
-        <source src={myVideo} type='video/mp4'></source>
-      </video>
-    </div>
+    return (
+      <div style={{ margin: 0, position: 'absolute', width: '108%' }}>
+        <video
+          autoPlay
+          loop
+          muted
+          style={{
+            height: '235%',
+            width: '235%',
+            alignSelf: 'center',
+          }}>
+          <source src={myVideo} type='video/mp4'></source>
+        </video>
+      </div>
+    )
   }
 
   // const hue = hashEgg(egg) % 9

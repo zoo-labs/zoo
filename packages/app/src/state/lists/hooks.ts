@@ -14,8 +14,7 @@ export type TokenAddressMap = Readonly<{
   }>
 }>
 
-const listCache: WeakMap<TokenList, TokenAddressMap> | null =
-  typeof WeakMap !== 'undefined' ? new WeakMap<TokenList, TokenAddressMap>() : null
+const listCache: WeakMap<TokenList, TokenAddressMap> | null = typeof WeakMap !== 'undefined' ? new WeakMap<TokenList, TokenAddressMap>() : null
 
 export function listToTokenMap(list: TokenList): TokenAddressMap {
   const result = listCache?.get(list)
@@ -130,10 +129,7 @@ export function useUnsupportedTokenList(): TokenAddressMap {
   const loadedUnsupportedListMap = useCombinedTokenMapFromUrls(UNSUPPORTED_LIST_URLS)
 
   // format into one token address map
-  return useMemo(
-    () => combineMaps(localUnsupportedListMap, loadedUnsupportedListMap),
-    [localUnsupportedListMap, loadedUnsupportedListMap]
-  )
+  return useMemo(() => combineMaps(localUnsupportedListMap, loadedUnsupportedListMap), [localUnsupportedListMap, loadedUnsupportedListMap])
 }
 
 export function useIsListActive(url: string): boolean {

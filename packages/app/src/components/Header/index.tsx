@@ -3,7 +3,6 @@ import { useMatchBreakpoints } from 'hooks'
 import { useCallback, useEffect, useState } from 'react'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import Logo from '../../assets/img/ZooLogoWhite.png'
 import Menu from '../Menu'
 import { Label, Text } from 'components/Text'
 import { getZooToken, getZooDrop, getZooFaucet, getZooMedia, getZooKeeper } from 'util/contracts'
@@ -17,11 +16,13 @@ import useToast from 'hooks/useToast'
 import ThemeSwitcher from 'components/SideMenu/components/ThemeSwitcher'
 import { MENU_ENTRY_HEIGHT } from 'components/SideMenu/config'
 import useWeb3 from 'hooks/useWeb3'
-import { MoreIcon } from 'components/SideMenu/icons'
+// import { MoreIcon } from 'components/SideMenu/icons'
 import More from './More'
 import QuestionHelper from './QuestionHelper'
 import { numberWithCommas } from 'components/Functions'
 import NetworkCard from './NetworkCard'
+
+const logoURL = window.location.origin + '/static/images/logo-white.png'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; isMobile: boolean; isFeed?: boolean }>`
   grid-template-columns: 120px 1fr 120px;
@@ -223,15 +224,11 @@ export default function Header() {
       toastError('Failed to load ZOO balance')
     }
   }
+
   useEffect(() => {
-    let mounted = true
-    if (mounted) {
-      getBalance()
-    }
-    return () => {
-      mounted = false
-    }
-  }, [account, chainID])
+    getBalance()
+  }, [])
+
   const faucet = getZooFaucet(web3)
 
   const handleFaucet = () => {
@@ -279,7 +276,7 @@ export default function Header() {
     <HeaderFrame showBackground={scrollY > 45} isMobile={isMobile} isFeed={active == 'feed'}>
       <Title href='.'>
         <LogoIcon>
-          <img src={Logo} alt='logo' />
+          <img src={logoURL} alt='logo' />
         </LogoIcon>
       </Title>
       <div
@@ -318,12 +315,12 @@ export default function Header() {
                 style={{ width: 40, height: 40 }}
                 className='hidden rounded-md cursor-pointer sm:inline-flex bg-secondary hover:bg-gray-800 p-0.5 w-full mr-2'
                 onClick={() => {
-                  const tokenAddress = '0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997'
+                  const tokenAddress = '0x34f3F270B85532f32c6F8039B960c569816Fc67a'
                   const tokenSymbol = 'ZOO'
                   const tokenDecimals = 18
-                  const tokenImage = 'https://freight.cargo.site/t/original/i/92806d1ec020d34eb53078a68dab13ad65d3f771de20d9d13423e923b7db7787/ZOO_COIN_solo.png'
+                  const tokenImage = window.location.origin + '/static/images/token.png'
                   const params: any = {
-                    type: 'BEP20',
+                    type: 'ERC20',
                     options: {
                       address: tokenAddress,
                       symbol: tokenSymbol,
