@@ -60,15 +60,10 @@
   "workspaces": {
     "packages": [
       "packages/*"
-    ],
-    "nohoist": [
-      "**/@graphprotocol/graph-ts",
-      "**/@graphprotocol/graph-ts/**",
-      "**/contracts",
-      "**/contracts/**"
     ]
   },
   "dependencies": {
     "node-gyp": "^8.2.0"
-  }
+  },
+  "packageManager": "yarn@3.0.1"
 }
