@@ -13,8 +13,8 @@ describe('multicall updater', () => {
               },
             },
           },
-          1
-        )
+          1,
+        ),
       ).toEqual({
         abc: 4,
       })
@@ -31,8 +31,8 @@ describe('multicall updater', () => {
               },
             },
           },
-          1
-        )
+          1,
+        ),
       ).toEqual({
         abc: 3,
       })
@@ -51,8 +51,8 @@ describe('multicall updater', () => {
               },
             },
           },
-          1
-        )
+          1,
+        ),
       ).toEqual({
         abc: 4,
         def: Infinity,
@@ -73,8 +73,8 @@ describe('multicall updater', () => {
               },
             },
           },
-          1
-        )
+          1,
+        ),
       ).toEqual({
         abc: 4,
         def: 2,
@@ -92,8 +92,8 @@ describe('multicall updater', () => {
               },
             },
           },
-          1
-        )
+          1,
+        ),
       ).toEqual({
         abc: 4,
       })
@@ -110,8 +110,8 @@ describe('multicall updater', () => {
               },
             },
           },
-          1
-        )
+          1,
+        ),
       ).toEqual({
         abc: 4,
       })
@@ -128,9 +128,7 @@ describe('multicall updater', () => {
       expect(outdatedListeningKeys({}, { abc: 2, def: 3 }, 1, 1)).toEqual(['abc', 'def'])
     })
     it('returns only outdated keys', () => {
-      expect(outdatedListeningKeys({ 1: { abc: { data: '0x', blockNumber: 2 } } }, { abc: 1, def: 1 }, 1, 2)).toEqual([
-        'def',
-      ])
+      expect(outdatedListeningKeys({ 1: { abc: { data: '0x', blockNumber: 2 } } }, { abc: 1, def: 1 }, 1, 2)).toEqual(['def'])
     })
     it('returns only keys not being fetched', () => {
       expect(
@@ -143,8 +141,8 @@ describe('multicall updater', () => {
           },
           { abc: 1, def: 1 },
           1,
-          2
-        )
+          2,
+        ),
       ).toEqual([])
     })
     it('returns keys being fetched for old blocks', () => {
@@ -158,8 +156,8 @@ describe('multicall updater', () => {
           },
           { abc: 1, def: 1 },
           1,
-          2
-        )
+          2,
+        ),
       ).toEqual(['def'])
     })
     it('respects blocks per fetch', () => {
@@ -173,8 +171,8 @@ describe('multicall updater', () => {
           },
           { abc: 2, def: 2 },
           1,
-          3
-        )
+          3,
+        ),
       ).toEqual(['def'])
     })
   })

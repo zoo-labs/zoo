@@ -14,7 +14,7 @@ interface Props extends PanelProps, PushedProps {
   isMobile: boolean
 }
 
-const Icons = (IconModule as unknown) as { [key: string]: React.FC<SvgProps> }
+const Icons = IconModule as unknown as { [key: string]: React.FC<SvgProps> }
 
 const Container = styled.div`
   display: flex;
@@ -50,9 +50,7 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
     <Container>
       {links.map((entry) => {
         const Icon = entry.icon.length > 0 ? Icons[entry.icon] : null
-        const iconElement = (
-          <> </>
-        ) /* 
+        const iconElement = <> </> /* 
           entry.icon.length > 0 ? (
             <IconContainer>
               <Icon width="24px" />

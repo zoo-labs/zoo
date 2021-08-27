@@ -126,7 +126,7 @@ const PERMIT_ALLOWED_TYPE = [
 export function useERC20Permit(
   currencyAmount: CurrencyAmount<Currency> | null | undefined,
   spender: string | null | undefined,
-  overridePermitInfo: PermitInfo | undefined | null
+  overridePermitInfo: PermitInfo | undefined | null,
 ): {
   signatureData: SignatureData | null
   state: UseERC20PermitState
@@ -139,8 +139,7 @@ export function useERC20Permit(
   const isArgentWallet = useIsArgentWallet()
   const nonceInputs = useMemo(() => [account ?? undefined], [account])
   const tokenNonceState = useSingleCallResult(eip2612Contract, 'nonces', nonceInputs)
-  const permitInfo =
-    overridePermitInfo ?? (chainId && tokenAddress ? PERMITTABLE_TOKENS[chainId]?.[tokenAddress] : undefined)
+  const permitInfo = overridePermitInfo ?? (chainId && tokenAddress ? PERMITTABLE_TOKENS[chainId]?.[tokenAddress] : undefined)
 
   const [signatureData, setSignatureData] = useState<SignatureData | null>(null)
 
@@ -272,28 +271,19 @@ const REMOVE_V2_LIQUIDITY_PERMIT_INFO: PermitInfo = {
   type: PermitType.AMOUNT,
 }
 
-export function useV2LiquidityTokenPermit(
-  liquidityAmount: CurrencyAmount<Token> | null | undefined,
-  spender: string | null | undefined
-) {
+export function useV2LiquidityTokenPermit(liquidityAmount: CurrencyAmount<Token> | null | undefined, spender: string | null | undefined) {
   return useERC20Permit(liquidityAmount, spender, REMOVE_V2_LIQUIDITY_PERMIT_INFO)
 }
 
-export function useERC20PermitFromTrade(
-  trade: V2Trade<Currency, Currency, TradeType> | undefined,
-  allowedSlippage: Percent
-) {
+export function useERC20PermitFromTrade(trade: V2Trade<Currency, Currency, TradeType> | undefined, allowedSlippage: Percent) {
   const { chainId } = useWeb3React()
 
-  const amountToApprove = useMemo(
-    () => (trade ? trade.maximumAmountIn(allowedSlippage) : undefined),
-    [trade, allowedSlippage]
-  )
+  const amountToApprove = useMemo(() => (trade ? trade.maximumAmountIn(allowedSlippage) : undefined), [trade, allowedSlippage])
 
   return useERC20Permit(
     amountToApprove,
     // v2 router does not support
     trade instanceof V2Trade ? undefined : trade,
-    null
+    null,
   )
 }

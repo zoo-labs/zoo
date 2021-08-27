@@ -40,7 +40,7 @@ function useTokensFromMap(tokenMap: TokenAddressMap, includeUserAdded: boolean):
             },
             // must make a copy because reduce modifies the map, and we do not
             // want to make a copy in every iteration
-            { ...mapWithoutUrls }
+            { ...mapWithoutUrls },
           )
       )
     }
@@ -139,12 +139,7 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
   const token: Token | undefined = address ? tokens[address] : undefined
 
   const tokenName = useSingleCallResult(token ? undefined : tokenContract, 'name', undefined, NEVER_RELOAD)
-  const tokenNameBytes32 = useSingleCallResult(
-    token ? undefined : tokenContractBytes32,
-    'name',
-    undefined,
-    NEVER_RELOAD
-  )
+  const tokenNameBytes32 = useSingleCallResult(token ? undefined : tokenContractBytes32, 'name', undefined, NEVER_RELOAD)
   const symbol = useSingleCallResult(token ? undefined : tokenContract, 'symbol', undefined, NEVER_RELOAD)
   const symbolBytes32 = useSingleCallResult(token ? undefined : tokenContractBytes32, 'symbol', undefined, NEVER_RELOAD)
   const decimals = useSingleCallResult(token ? undefined : tokenContract, 'decimals', undefined, NEVER_RELOAD)
@@ -159,7 +154,7 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
         address,
         decimals.result[0],
         parseStringOrBytes32(symbol.result?.[0], symbolBytes32.result?.[0], 'UNKNOWN'),
-        parseStringOrBytes32(tokenName.result?.[0], tokenNameBytes32.result?.[0], 'Unknown Token')
+        parseStringOrBytes32(tokenName.result?.[0], tokenNameBytes32.result?.[0], 'Unknown Token'),
       )
     }
     return undefined
@@ -188,7 +183,6 @@ export function useCurrency(currencyId: string | undefined): Currency | null | u
   const useNative = isETH && !isDual
   if (isETH && isDual) {
     currencyId = WNATIVE_ADDRESS[chainId]
-
   }
 
   const token = useToken(useNative ? undefined : currencyId)
@@ -198,13 +192,12 @@ export function useCurrency(currencyId: string | undefined): Currency | null | u
 
   const native = useMemo(() => (chainId ? NATIVE[chainId] : undefined), [chainId])
 
-
   const wnative = chainId ? WNATIVE[chainId] : undefined
-  console.log('native',native)
-  console.log('token',token)
-  console.log('wnative',wnative)
+  console.log('native', native)
+  console.log('token', token)
+  console.log('wnative', wnative)
 
   if (wnative?.address?.toLowerCase() === currencyId?.toLowerCase()) return wnative
   // useNative ? native : token
-  return native 
+  return native
 }

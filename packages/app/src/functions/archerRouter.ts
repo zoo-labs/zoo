@@ -1,14 +1,4 @@
-import {
-  ChainId,
-  Currency,
-  CurrencyAmount,
-  Ether,
-  SwapParameters,
-  Trade,
-  TradeOptions,
-  TradeOptionsDeadline,
-  TradeType,
-} from '@sushiswap/sdk'
+import { ChainId, Currency, CurrencyAmount, Ether, SwapParameters, Trade, TradeOptions, TradeOptionsDeadline, TradeType } from '@sushiswap/sdk'
 
 import { getAddress } from '@ethersproject/address'
 import invariant from 'tiny-invariant'
@@ -64,11 +54,7 @@ export abstract class ArcherRouter {
    * @param trade to produce call parameters for
    * @param options options for the call parameters
    */
-  public static swapCallParameters(
-    factoryAddress: string,
-    trade: Trade<Currency, Currency, TradeType>,
-    options: ArcherTradeOptions
-  ): ArcherSwapParameters {
+  public static swapCallParameters(factoryAddress: string, trade: Trade<Currency, Currency, TradeType>, options: ArcherTradeOptions): ArcherSwapParameters {
     const etherIn = trade.inputAmount.currency === Ether.onChain(ChainId.MAINNET)
     const etherOut = trade.outputAmount.currency === Ether.onChain(ChainId.MAINNET)
     // the router does not support both ether in and out

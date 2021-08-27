@@ -1,22 +1,7 @@
 import { AppDispatch, AppState } from '../index'
-import {
-  ChainId,
-  Currency,
-  CurrencyAmount,
-  JSBI,
-  Percent,
-  SUSHI_ADDRESS,
-  TradeType,
-  Trade as V2Trade,
-  WNATIVE_ADDRESS,
-} from '@sushiswap/sdk'
+import { ChainId, Currency, CurrencyAmount, JSBI, Percent, SUSHI_ADDRESS, TradeType, Trade as V2Trade, WNATIVE_ADDRESS } from '@sushiswap/sdk'
 import { DEFAULT_ARCHER_ETH_TIP, DEFAULT_ARCHER_GAS_ESTIMATE } from '../../config/archer'
-import {
-  EstimatedSwapCall,
-  SuccessfulCall,
-  swapErrorToUserReadableMessage,
-  useSwapCallArguments,
-} from '../../hooks/useSwapCallback'
+import { EstimatedSwapCall, SuccessfulCall, swapErrorToUserReadableMessage, useSwapCallArguments } from '../../hooks/useSwapCallback'
 // import {
 //   EstimatedSwapCall,
 //   SuccessfulCall,
@@ -66,15 +51,11 @@ export function useSwapActionHandlers(): {
       dispatch(
         selectCurrency({
           field,
-          currencyId: currency.isToken
-            ? currency.address
-            : currency.isNative && currency.chainId !== ChainId.CELO
-            ? 'ETH'
-            : '',
-        })
+          currencyId: currency.isToken ? currency.address : currency.isNative && currency.chainId !== ChainId.CELO ? 'ETH' : '',
+        }),
       )
     },
-    [dispatch]
+    [dispatch],
   )
 
   const onSwitchTokens = useCallback(() => {
@@ -85,14 +66,14 @@ export function useSwapActionHandlers(): {
     (field: Field, typedValue: string) => {
       dispatch(typeInput({ field, typedValue }))
     },
-    [dispatch]
+    [dispatch],
   )
 
   const onChangeRecipient = useCallback(
     (recipient: string | null) => {
       dispatch(setRecipient({ recipient }))
     },
-    [dispatch]
+    [dispatch],
   )
 
   return {
@@ -120,9 +101,7 @@ function involvesAddress(trade: V2Trade<Currency, Currency, TradeType>, checksum
   const path = trade.route.path
   return (
     path.some((token) => token.address === checksummedAddress) ||
-    (trade instanceof V2Trade
-      ? trade.route.pairs.some((pair) => pair.liquidityToken.address === checksummedAddress)
-      : false)
+    (trade instanceof V2Trade ? trade.route.pairs.some((pair) => pair.liquidityToken.address === checksummedAddress) : false)
   )
 }
 
@@ -149,7 +128,7 @@ export function useDerivedSwapInfo(doArcher = false): {
     recipient,
   } = useSwapState()
   const inputCurrency = useCurrency(inputCurrencyId)
-  console.log('inputCurrency',inputCurrency)
+  console.log('inputCurrency', inputCurrency)
 
   const outputCurrency = useCurrency(outputCurrencyId)
 
@@ -157,10 +136,7 @@ export function useDerivedSwapInfo(doArcher = false): {
 
   const to: string | null = (recipient === null ? account : recipientLookup.address) ?? null
 
-  const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [
-    inputCurrency ?? undefined,
-    outputCurrency ?? undefined,
-  ])
+  const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [inputCurrency ?? undefined, outputCurrency ?? undefined])
 
   const isExactIn: boolean = independentField === Field.INPUT
   const parsedAmount = tryParseAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined)
@@ -285,14 +261,11 @@ export function useDerivedSwapInfo(doArcher = false): {
                   }
                 })
             })
-        })
+        }),
       )
 
       // a successful estimation is a bignumber gas estimate and the next call is also a bignumber gas estimate
-      const successfulEstimation = estimatedCalls.find(
-        (el, ix, list): el is SuccessfulCall =>
-          'gasEstimate' in el && (ix === list.length - 1 || 'gasEstimate' in list[ix + 1])
-      )
+      const successfulEstimation = estimatedCalls.find((el, ix, list): el is SuccessfulCall => 'gasEstimate' in el && (ix === list.length - 1 || 'gasEstimate' in list[ix + 1]))
 
       if (successfulEstimation) {
         setUserGasEstimate(successfulEstimation.gasEstimate.toString())
@@ -312,8 +285,6 @@ export function useDerivedSwapInfo(doArcher = false): {
     allowedSlippage,
   }
 }
-
-
 
 function parseCurrencyFromURLParameter(urlParam: any): string {
   if (typeof urlParam === 'string') {
@@ -401,7 +372,7 @@ export function useDefaultsFromURLSearch():
         inputCurrencyId: parsed[Field.INPUT].currencyId,
         outputCurrencyId: parsed[Field.OUTPUT].currencyId,
         recipient: expertMode ? parsed.recipient : null,
-      })
+      }),
     )
 
     setResult({

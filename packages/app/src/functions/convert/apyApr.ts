@@ -10,8 +10,7 @@ const BLOCKS_IN_A_YEAR = SECONDS_PER_YEAR / 14
  * @param frequency {Number} Compounding frequency (times a year)
  * @returns {Number} APR as percentage (ie. 5.82 for APY of 6%)
  */
-export const apyToApr = (apy, frequency = BLOCKS_IN_A_YEAR) =>
-  ((1 + apy / 100) ** (1 / frequency) - 1) * frequency * 100
+export const apyToApr = (apy, frequency = BLOCKS_IN_A_YEAR) => ((1 + apy / 100) ** (1 / frequency) - 1) * frequency * 100
 
 /**
  * Formula source: http://www.linked8.com/blog/158-apy-to-apr-and-apr-to-apy-calculation-methodologies

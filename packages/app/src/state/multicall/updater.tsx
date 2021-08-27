@@ -10,9 +10,9 @@ import { chunkArray } from '../../functions/array'
 import { updateBlockNumber } from '../application/actions'
 import { useBlockNumber } from '../application/hooks'
 import useDebounce from '../../hooks/useDebounce'
-import { useMulticall2Contract } from '../../hooks/useContract'
 import { useWeb3 } from 'hooks'
 import { useWeb3React } from '@web3-react/core'
+import { useMulticall2Contract } from '../../hooks/useContract'
 
 /**
  * Fetches a chunk of calls, enforcing a minimum block number constraint

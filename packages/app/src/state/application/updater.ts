@@ -32,7 +32,7 @@ export default function Updater(): null {
         return state
       })
     },
-    [chainId, setState]
+    [chainId, setState],
   )
 
   // attach/detach listeners
@@ -60,7 +60,7 @@ export default function Updater(): null {
       updateBlockNumber({
         chainId: debouncedState.chainId,
         blockNumber: debouncedState.blockNumber,
-      })
+      }),
     )
   }, [windowVisible, dispatch, debouncedState.blockNumber, debouncedState.chainId])
 

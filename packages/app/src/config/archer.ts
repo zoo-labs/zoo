@@ -23,6 +23,4 @@ export const DEFAULT_ARCHER_GAS_PRICES: BigNumber[] = [
   BigNumber.from(2000000000000),
 ]
 // default miner tip, equal to median gas price * default gas estimate
-export const DEFAULT_ARCHER_ETH_TIP: JSBI = JSBI.BigInt(
-  DEFAULT_ARCHER_GAS_ESTIMATE.mul(DEFAULT_ARCHER_GAS_PRICES[4]).toString()
-)
+export const DEFAULT_ARCHER_ETH_TIP: JSBI = JSBI.BigInt(DEFAULT_ARCHER_GAS_ESTIMATE.mul(DEFAULT_ARCHER_GAS_PRICES[4]).toString())
