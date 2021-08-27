@@ -1,4 +1,4 @@
-// deploy/05_deploy_zoo_auction.ts
+// deploy/05_deploy_auction.ts
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
@@ -8,7 +8,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deploy } = deployments
   const { deployer } = await getNamedAccounts()
 
-  const deployResult = await deploy('ZooAuction', {
+  const deployResult = await deploy('Auction', {
     from: deployer,
     args: [],
     log: true,
@@ -16,10 +16,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   if (network.name != 'hardhat') return
 
-  const tokenAddress = (await deployments.get('ZooToken')).address
-  const mediaAddress = (await deployments.get('ZooMedia')).address
+  const tokenAddress = (await deployments.get('Token')).address
+  const mediaAddress = (await deployments.get('Media')).address
 
-  const auction = await ethers.getContractAt('ZooAuction', deployResult.address)
+  const auction = await ethers.getContractAt('Auction', deployResult.address)
   auction.configure(mediaAddress, tokenAddress)
 
   return hre.network.live
@@ -27,5 +27,5 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
 export default func
 func.id = 'auction'
-func.tags = ['ZooAuction']
-// func.dependencies = ['ZooMedia', 'ZooMarket']
+func.tags = ['Auction']
+// func.dependencies = ['Media', 'Market']

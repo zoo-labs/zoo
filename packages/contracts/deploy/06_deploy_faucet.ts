@@ -1,4 +1,4 @@
-// deploy/06_deploy_zoo_faucet.ts
+// deploy/06_deploy_faucet.ts
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
@@ -8,9 +8,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deploy } = deployments
   const { deployer } = await getNamedAccounts()
 
-  const tokenAddress = (await deployments.get('ZooToken')).address
+  const tokenAddress = (await deployments.get('Token')).address
 
-  const deployResult = await deploy('ZooFaucet', {
+  const deployResult = await deploy('Faucet', {
     from: deployer,
     args: [tokenAddress],
     log: true,
@@ -22,10 +22,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const signers = await ethers.getSigners()
 
   // Get Token instance
-  const token = await ethers.getContractAt('ZooToken', tokenAddress)
+  const token = await ethers.getContractAt('Token', tokenAddress)
 
   // Get Faucet instance
-  const faucet = await ethers.getContractAt('ZooFaucet', deployResult.address)
+  const faucet = await ethers.getContractAt('Faucet', deployResult.address)
 
   // 100B ZOO to faucet
   const exp = ethers.BigNumber.from('10').pow(18)
@@ -45,5 +45,5 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
 export default func
 func.id = 'faucet'
-func.tags = ['ZooFaucet']
-// func.dependencies = ['ZooToken']
+func.tags = ['Faucet']
+// func.dependencies = ['Token']
