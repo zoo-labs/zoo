@@ -145,7 +145,7 @@ const cardAnimation = (interactive, hatching, hatched) => {
   console.log('')
   if (!interactive && !hatching) return pulseAnimation
   if (hatched) return glowAnimation
-  if (hatching) return spinAnimation
+  // if (hatching) return spinAnimation
   return null
 }
 
@@ -238,7 +238,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             alignItems: 'center',
             // filter: (!egg.hatched && !egg.interactive) ? null : `hue-rotate(0.${hue}turn)`,
           }}>
-          {!egg.basic ? getVideo() : null}
+          {!egg.interactive && hatching ? getVideo() : null}
           <TextWrapper
             style={{
               position: 'absolute',
