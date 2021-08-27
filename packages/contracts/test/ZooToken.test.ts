@@ -13,9 +13,10 @@ chai.use(solidity)
 const BigNumber = ethers.BigNumber;
 
 const setupTest = deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
-  const contracts = await deployments.fixture() // ensure you start from a fresh deployments
+  await deployments.fixture(['ZooToken'])
+  // const contracts = await deployments.fixture() // ensure you start from a fresh deployments
   const signers = await ethers.getSigners()
-  const token = (await ethers.getContractAt('ZooToken', contracts.ZooToken.address, signers[0]) as ZooToken)
+  const token = (await ethers.getContract('ZooToken')) as ZooToken
   const owner = (await getNamedAccounts()).deployer
   return {
     owner: owner,
