@@ -5,7 +5,7 @@ import getThemeValue from '../../util/getThemeValue'
 import { VideoPlayerTheme } from './types'
 import Moralis from 'moralis'
 
-/* 
+/*
 const getColor = ({ color, theme }: ThemedProps) => {
   return getThemeValue(`colors.${color}`, color)(theme);
 };
@@ -27,7 +27,7 @@ const VidContainer = styled.div`
   width: 100vw;
   max-height: 110vh;
   // transform: translateX(-50%);
-  z-index: 102;
+  z-index: 1000;
 `
 
 function fade(element) {
