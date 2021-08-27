@@ -79,7 +79,7 @@ const LOGO: { readonly [chainId in ChainId]?: string } = {
 }
 
 interface CurrencyLogoProps {
-  currency?: any
+  currency?: Currency
   size?: string | number
   style?: React.CSSProperties
   className?: string
@@ -89,28 +89,29 @@ interface CurrencyLogoProps {
 const unknown = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/unknown.png'
 
 const CurrencyLogo: FunctionComponent<CurrencyLogoProps> = ({ currency, size = '24px', style, className = '', ...rest }) => {
-  const uriLocations = useHttpLocations(currency instanceof WrappedTokenInfo ? currency.logoURI || currency.tokenInfo.logoURI : undefined)
+  //   const uriLocations = useHttpLocations(
+  //     currency instanceof WrappedTokenInfo ? currency.logoURI || currency.tokenInfo.logoURI : undefined
+  //   )
 
-  const srcs = useMemo(() => {
-    if (!currency) {
-      return [unknown]
-    }
+  //   const srcs = useMemo(() => {
+  //     if (!currency) {
+  //       return [unknown]
+  //     }
 
-    if (currency.isNative || currency.equals(WNATIVE[currency.chainId])) {
-      return [LOGO[currency.chainId], unknown]
-    }
+  //     if (currency.isNative || currency.equals(WNATIVE[currency.chainId])) {
+  //       return [LOGO[currency.chainId], unknown]
+  //     }
 
-    if (currency.isToken) {
-      const defaultUrls = [...getCurrencyLogoUrls(currency)]
-      if (currency instanceof WrappedTokenInfo) {
-        return [...uriLocations, ...defaultUrls, unknown]
-      }
-      return defaultUrls
-    }
-    return null
-  }, [currency, uriLocations])
+  //     if (currency.isToken) {
+  //       const defaultUrls = [...getCurrencyLogoUrls(currency)]
+  //       if (currency instanceof WrappedTokenInfo) {
+  //         return [...uriLocations, ...defaultUrls, unknown]
+  //       }
+  //       return defaultUrls
+  //     }
+  //   }, [currency, uriLocations])
 
-  return <Logo srcs={srcs} width={size} height={size} alt={currency?.symbol} {...rest} />
+  return <Logo srcs={[]} width={size} height={size} alt={currency?.symbol} {...rest} />
 }
 
 export default CurrencyLogo

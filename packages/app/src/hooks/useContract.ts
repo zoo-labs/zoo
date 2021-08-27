@@ -19,10 +19,11 @@ import {
   TIMELOCK_ADDRESS,
   WNATIVE_ADDRESS,
 } from '@sushiswap/sdk'
-import {
-  ARGENT_WALLET_DETECTOR_ABI,
-  ARGENT_WALLET_DETECTOR_MAINNET_ADDRESS,
-} from '../constants/abis/argent-wallet-detector'
+
+// import {
+//   ARGENT_WALLET_DETECTOR_ABI,
+//   ARGENT_WALLET_DETECTOR_MAINNET_ADDRESS,
+// } from '../constants/abis/argent-wallet-detector'
 
 import ARCHER_ROUTER_ABI from '../constants/abis/archer-router.json'
 import BAR_ABI from '../constants/abis/bar.json'
@@ -90,14 +91,14 @@ export function useWETH9Contract(withSignerIfPossible?: boolean): Contract | nul
   return useContract(chainID && WNATIVE_ADDRESS[chainID], WETH9_ABI, withSignerIfPossible)
 }
 
-export function useArgentWalletDetectorContract(): Contract | null {
-  const { chainID } = useWeb3()
-  return useContract(
-    chainID === 1 ? ARGENT_WALLET_DETECTOR_MAINNET_ADDRESS : undefined,
-    ARGENT_WALLET_DETECTOR_ABI,
-    false
-  )
-}
+// export function useArgentWalletDetectorContract(): Contract | null {
+//   const { chainID } = useWeb3React()
+//   return useContract(
+//     chainID === chainID.MAINNET ? ARGENT_WALLET_DETECTOR_MAINNET_ADDRESS : undefined,
+//     ARGENT_WALLET_DETECTOR_ABI,
+//     false
+//   )
+// }
 
 export function useENSRegistrarContract(withSignerIfPossible?: boolean): Contract | null {
   const { chainID } = useWeb3()

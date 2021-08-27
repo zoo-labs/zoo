@@ -4,7 +4,6 @@ import { isZero } from '../functions'
 import { namehash } from '@ethersproject/hash'
 import { useMemo } from 'react'
 import { useSingleCallResult } from '../state/multicall/hooks'
-
 /**
  * Does a lookup for an ENS name to find its contenthash.
  */
