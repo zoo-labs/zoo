@@ -248,8 +248,8 @@ const Account: React.FC = () => {
               <div className={` ${isSm && !allowance ? 'w-1/2' : isSm ? 'w-full' : isMd ? 'w-1/3' : 'w-1/6'} px-2`}>
                 <button
                   disabled={disable || !allowance}
-                  className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full`}
-                  style={{ width: '140px', fontSize: '16px', fontWeight: 550, backgroundColor: allowance ? '#8C4FF8' : 'rgb(44, 47, 54)' }}
+                  className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80 px-6 py-4 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full`}
+                  style={{ fontSize: '16px', fontWeight: 550, backgroundColor: allowance ? '#8C4FF8' : 'rgb(44, 47, 54)' }}
                   onClick={buyEgg}>
                   {disable ? 'PROCESSING' : 'BUY EGGS'}
                 </button>
