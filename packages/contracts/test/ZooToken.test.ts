@@ -1,12 +1,12 @@
-import {setupTestFactory, requireDependencies} from './utils'
+import { setupTestFactory, requireDependencies } from './utils'
 
-const {expect} = requireDependencies();
+const { expect } = requireDependencies()
 
 const setupTest = setupTestFactory(['ZooToken'])
 
 describe.only('ZooToken', function () {
   it('should have correct name, symbol, decimal', async function () {
-    const {tokens} = await setupTest()
+    const { tokens } = await setupTest()
     const token = tokens['ZooToken']
     const name = await token.name()
     const symbol = await token.symbol()
@@ -16,10 +16,9 @@ describe.only('ZooToken', function () {
     expect(decimals.valueOf()).to.eq(18)
   })
 
-  it('should add user to blacklist', async function() {
-    const {signers, tokens} = await setupTest()
+  it('should add user to blacklist', async function () {
+    const { signers, tokens } = await setupTest()
     const token = tokens['ZooToken']
-
 
     const address = signers[1].address
     const address2 = signers[2].address
@@ -32,10 +31,9 @@ describe.only('ZooToken', function () {
     expect(await token.isBlacklisted(address2)).to.be.false
   })
 
-  it('allows transfer for eligable accounts', async function() {
-    const {signers, tokens} = await setupTest()
+  it('allows transfer for eligable accounts', async function () {
+    const { signers, tokens } = await setupTest()
     const token = tokens['ZooToken']
-
 
     const address = signers[1].address
     const address2 = signers[2].address
@@ -48,14 +46,13 @@ describe.only('ZooToken', function () {
     await token.connect(signers[1]).approve(address2, 1000)
     await token.connect(signers[2]).approve(address, 1000)
 
-    const initialBalance = await token.balanceOf(address);
-    await expect(token.connect(signers[2]).transferFrom(address, address2, 100)).not.to.be.reverted;
-  });
+    const initialBalance = await token.balanceOf(address)
+    await expect(token.connect(signers[2]).transferFrom(address, address2, 100)).not.to.be.reverted
+  })
 
-  it('should not allow transferFrom when blacklisted', async function() {
-    const {signers, tokens} = await setupTest()
+  it('should not allow transferFrom when blacklisted', async function () {
+    const { signers, tokens } = await setupTest()
     const token = tokens['ZooToken']
-
 
     const address = signers[1].address
     const address2 = signers[2].address
@@ -71,10 +68,9 @@ describe.only('ZooToken', function () {
     await expect(token.connect(signers[1]).transferFrom(address, address2, 100)).to.be.revertedWith('Address is on blacklist')
   })
 
-  it('does not allow transfer from a blacklisted address', async function() {
-    const {signers, tokens} = await setupTest()
+  it('does not allow transfer from a blacklisted address', async function () {
+    const { signers, tokens } = await setupTest()
     const token = tokens['ZooToken']
-
 
     const address = signers[1].address
     const address2 = signers[2].address
@@ -88,5 +84,5 @@ describe.only('ZooToken', function () {
     // Add user to blacklist
     await token.blacklistAddress(address)
     await expect(token.connect(signers[1]).transfer(address2, 100)).to.be.revertedWith('Address is on blacklist')
-  });
+  })
 })
