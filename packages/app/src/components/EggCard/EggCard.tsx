@@ -20,7 +20,7 @@ const wiggle = keyframes`
     transform: rotate(0deg) scale(1);;
   }
 `
-const spin = keyframes` 
+const spin = keyframes`
   0% {
       transform:rotate(0deg);
   }
@@ -190,7 +190,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
   }
 
   const getVideo = () => {
-    return (
+    return <div style={{ margin: 0, position: 'absolute', width: '108%' }}>
       <video
         autoPlay
         loop
@@ -202,7 +202,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
         }}>
         <source src={myVideo} type='video/mp4'></source>
       </video>
-    )
+    </div>
   }
 
   // const hue = hashEgg(egg) % 9

@@ -6,9 +6,8 @@
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "craco start",
-    "build": "CI=false react-scripts build",
+    "build": "CI=false craco build",
     "test": "craco test",
-    "eject": "react-scripts eject",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "format:check": "prettier --check --loglevel error 'src/**/*.{js,jsx,ts,tsx}'",
     "pretty": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
