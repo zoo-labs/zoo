@@ -24,7 +24,7 @@ export const SellConfirm: React.FC<SellConfirmProps> = ({ onDismiss = () => null
         <BidPriceInput type='number' />
       </Flex>
       <Flex width='100%' alignItems='center' justifyContent='space-evenly' flexDirection='row' mt='16px'>
-        <BorderButton style={{ fontSize: 14 }}scale='md' onClick={() => breed(onDismiss)}>
+        <BorderButton style={{ fontSize: 14 }} scale='md' onClick={() => breed(onDismiss)}>
           Confirm
         </BorderButton>
         <BorderButton style={{ fontSize: 14 }} scale='md' onClick={() => onDismiss()}>
