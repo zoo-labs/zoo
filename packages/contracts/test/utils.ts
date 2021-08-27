@@ -1,9 +1,9 @@
 // @ts-ignore
-import { ethers } from 'hardhat'
+import { ethers, deployments } from 'hardhat'
 import { ZooAuction, ZooMarket, ZooMedia, ZooMarket__factory, ZooMedia__factory, ZooToken__factory, ZooKeeper__factory, BadBidder, BadERC721, TestERC721, ZooToken } from '../types'
 import { sha256 } from 'ethers/lib/utils'
 import Decimal from '../utils/Decimal'
-import { BigNumber, BigNumberish } from 'ethers'
+import { BigNumber, BigNumberish, Contract } from 'ethers'
 import { MaxUint256, AddressZero } from '@ethersproject/constants'
 import { generatedWallets } from '../utils/generatedWallets'
 import { JsonRpcProvider } from '@ethersproject/providers'
@@ -16,6 +16,40 @@ import { keccak256 } from '@ethersproject/keccak256'
 
 let provider = new JsonRpcProvider()
 let [deployerWallet] = generatedWallets(provider)
+
+export const requireDependencies = () => {
+  const chai = require('chai')
+  const expect = chai.expect
+  const asPromised = require('chai-as-promised')
+  const { solidity } = require('ethereum-waffle')
+
+  chai.use(asPromised)
+  chai.use(solidity)
+  return {
+    chai,
+    expect,
+    asPromised,
+    solidity,
+  }
+}
+export const setupTestFactory = (contractArr: string[]) =>
+  deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
+    await deployments.fixture(contractArr)
+    let tokens: { [key: string]: Contract } = await contractArr.reduce(async (sum: {}, name: string) => {
+      const contract: Contract = await ethers.getContract(name)
+      return {
+        [name]: contract,
+        ...sum,
+      }
+    }, {})
+    const signers = await ethers.getSigners()
+    const owner = (await getNamedAccounts()).deployer
+    return {
+      owner: owner,
+      signers: signers,
+      tokens,
+    }
+  })
 
 export async function deployCurrency() {
   const currency = await new ZooToken__factory(deployerWallet).deploy()

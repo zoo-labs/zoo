@@ -27,7 +27,7 @@ const style = {
   },
 }
 
-const Heading = styled(Text).attrs({ bold: true })<HeadingProps>` 
+const Heading = styled(Text).attrs({ bold: true })<HeadingProps>`
   // font-size: ${({ size }) => style[size || sizes.MD].fontSize};
   font-size: 55px;
   color: ${({ theme }) => theme.colors.text};
