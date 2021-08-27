@@ -198,6 +198,7 @@ export function useCurrency(currencyId: string | undefined): Currency | null | u
 
   const native = useMemo(() => (chainId ? NATIVE[chainId] : undefined), [chainId])
 
+
   const wnative = chainId ? WNATIVE[chainId] : undefined
   console.log('native',native)
   console.log('token',token)
