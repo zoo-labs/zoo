@@ -223,15 +223,11 @@ export default function Header() {
       toastError('Failed to load ZOO balance')
     }
   }
+
   useEffect(() => {
-    let mounted = true
-    if (mounted) {
-      getBalance()
-    }
-    return () => {
-      mounted = false
-    }
-  }, [account, chainID])
+    getBalance()
+  }, [])
+
   const faucet = getZooFaucet(web3)
 
   const handleFaucet = () => {

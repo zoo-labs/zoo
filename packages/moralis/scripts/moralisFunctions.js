@@ -20,6 +20,8 @@ const funcJS = fs.readFileSync(__dirname + '/../src/functions.js')
 const zkJSON = fs.readFileSync(__dirname + `/../../contracts/deployments/${NETWORK}/ZooKeeper.json`)
 const cloudFunctions = String(funcJS).replace('CHAIN_ID', chainID).replace('ZOOKEEPER', zkJSON)
 
+console.log(zkJSON.address)
+
 fs.writeFileSync(cached, cloudFunctions)
 
 const child = spawn('node', ['node_modules/.bin/moralis-admin-cli', 'watch-cloud-file', '--moralisSubdomain', subdomain, '--moralisCloudFile', cached], { shell: true })
