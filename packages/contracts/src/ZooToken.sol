@@ -13,22 +13,22 @@ import { AccessControl } from "@openzeppelin/contracts/access/AccessControl.sol"
 contract ZooToken is ERC20, ERC20Burnable, Ownable, AccessControl {
     using SafeERC20 for IERC20;
 
-    bytes32 public constant BLACKLISTED = keccak256("BLACKLISTED");
+    bytes32 public constant BLACKLIST = keccak256("BLACKLIST");
 
     constructor () ERC20("Zoo", "ZOO") {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
     function blacklistAddress(address _addr) public onlyOwner {
-        grantRole(BLACKLISTED, _addr);
+        grantRole(BLACKLIST, _addr);
     }
 
     function isBlacklisted(address _addr) public view returns (bool) {
-        return hasRole(BLACKLISTED, _addr);
+        return hasRole(BLACKLIST, _addr);
     }
 
     function _transferAllowed(address _addr) internal view {
-        require(hasRole(BLACKLISTED, _addr) == false, "Address is on blacklist");
+        require(hasRole(BLACKLIST, _addr) == false, "Address is on blacklist");
     }
 
     function transfer(address _to, uint256 _value) public override returns (bool) {
