@@ -22,7 +22,8 @@ export const breedTimeouts = {
   export const ONE_HUNDRED_PERCENT = new Percent('1')
   export const DEFAULT_DEADLINE_FROM_NOW = 60 * 30
   export const INITIAL_ALLOWED_SLIPPAGE = 50
-  
+  export const BIG_INT_ZERO = JSBI.BigInt(0)
+
   export const EIP_1559_ACTIVATION_BLOCK: { [chainId in ChainId]?: number } = {
     [ChainId.ROPSTEN]: 10499401,
     [ChainId.GÖRLI]: 5062605,

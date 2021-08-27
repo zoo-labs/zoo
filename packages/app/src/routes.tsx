@@ -2,7 +2,7 @@ import Account from './views/Account/Index'
 import Bank from './views/Bank'
 import Feed from './views/Feed'
 import Swap from './views/Swap/Index'
-import Pool from './views/Pool'
+import Pool from './views/Pool/Index'
 let indexRoutes = [
   { path: '/account', name: 'Account', component: Account },
   { path: '/home', name: 'Home', component: Account },
