@@ -22,9 +22,9 @@ function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
           .reduce<{ [pairAddress: string]: Pair }>((memo, [, curr]) => {
             memo[curr.liquidityToken.address] = memo[curr.liquidityToken.address] ?? curr
             return memo
-          }, {})
+          }, {}),
       ),
-    [allPairs]
+    [allPairs],
   )
 }
 
@@ -36,7 +36,7 @@ const MAX_HOPS = 3
 export function useV2TradeExactIn(
   currencyAmountIn?: CurrencyAmount<Currency>,
   currencyOut?: Currency,
-  { maxHops = MAX_HOPS } = {}
+  { maxHops = MAX_HOPS } = {},
 ): Trade<Currency, Currency, TradeType.EXACT_INPUT> | null {
   const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut)
 
@@ -76,7 +76,7 @@ export function useV2TradeExactIn(
 export function useV2TradeExactOut(
   currencyIn?: Currency,
   currencyAmountOut?: CurrencyAmount<Currency>,
-  { maxHops = MAX_HOPS } = {}
+  { maxHops = MAX_HOPS } = {},
 ): Trade<Currency, Currency, TradeType.EXACT_OUTPUT> | null {
   const allowedPairs = useAllCommonPairs(currencyIn, currencyAmountOut?.currency)
 
