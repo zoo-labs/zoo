@@ -1,4 +1,4 @@
-import contractsJSON from 'contracts.json'
+import contractsJSON from '../contracts.json'
 
 const hardhat = contractsJSON['1337']['hardhat']['contracts']
 const testnet = contractsJSON['97']['testnet']['contracts']
