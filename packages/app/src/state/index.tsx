@@ -7,6 +7,7 @@ import listsReducer from './lists/reducer'
 import multicallReducer from './multicall/reducer'
 import applicationReducer from './application/reducer'
 import userReducer from './user/reducer'
+import transactionsReducer from './transactions/reducer'
 import { Iterable } from 'immutable'
 
 // Augment middleware to consider Immutable.JS iterables serializable
@@ -24,6 +25,7 @@ const store = configureStore({
     multicall: multicallReducer,
     application: applicationReducer,
     user: userReducer,
+    transactions: transactionsReducer,
   },
   middleware: [serializableMiddleware],
 })

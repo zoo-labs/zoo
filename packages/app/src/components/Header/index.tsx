@@ -285,7 +285,7 @@ export default function Header() {
         }`}
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
         {['Swap', 'Pool'].map((path: string) => {
-          const selected = active === path.toLowerCase()
+          const selected = path == 'Swap' ? active == 'swap' || active == 'limit-order' : active === path.toLowerCase()
           return (
             <a
               onClick={() => urlClick(path.toLowerCase())}
