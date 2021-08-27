@@ -30,14 +30,14 @@ let marketAddress: string
 let eggPrice: any
 
 class Helper {
-  private zooToken: Contract;
-  private zooDrop: Contract;
-  private owner: any;
-  private zooMarket: Contract;
-  private zooMedia: Contract;
-  private zooKeeper: Contract;
-  private eggPrice: BigNumber;
-  private signers: any;
+  public zooToken: Contract;
+  public zooDrop: Contract;
+  public owner: any;
+  public zooMarket: Contract;
+  public zooMedia: Contract;
+  public zooKeeper: Contract;
+  public eggPrice: BigNumber;
+  public signers: any;
 
   constructor() {}
 
@@ -83,7 +83,8 @@ class Helper {
   async freeAnimal(id: Number) {}
   async hatchEgg() {}
 
-  async buyEgg(priorEggId: number = 1) {
+  async buyEgg(signerIdx: number = 0) {
+    // await this.zooToken.connect(this.zooKeeper.address).approve(addr, this.eggPrice)
     await this.zooToken.approve(this.zooKeeper.address, this.eggPrice)
     const tx = await this.zooKeeper.buyEgg(1);
     const args = await this.getEventData(tx, 'BuyEgg')
@@ -93,15 +94,15 @@ class Helper {
   async hatchAnimal(token_id: String) {
     const tx = await this.zooKeeper.hatchEgg(1, token_id)
     const args = await this.getEventData(tx, 'Hatch');
-    return {animalID: args['animalID']}
+    return {eggID: args['eggID'], tokenID: args['tokenID']}
   }
 
   async breedHybrid() {
     const {eggID: egg_id_1} = await this.buyEgg();
     const {eggID: egg_id_2} = await this.buyEgg();
 
-    const {animalID: animal_id_1} = await this.hatchAnimal(egg_id_1);
-    const {animalID: animal_id_2} = await this.hatchAnimal(egg_id_2);
+    const {tokenID: animal_id_1} = await this.hatchAnimal(egg_id_1);
+    const {tokenID: animal_id_2} = await this.hatchAnimal(egg_id_2);
 
     const hybridEgg = await zooKeeper.breedAnimals(1, parseInt(animal_id_1), parseInt(animal_id_2))
 
@@ -112,13 +113,42 @@ class Helper {
 }
 
 describe('ZooKeeper', () =>   {
-  it('Should configure a playable game', async () => {
-    const zooKeeper = await Helper.setup();
+  it('can buy an egg and hatch an animal from the egg', async () => {
+    const h = await Helper.setup();
 
-    await expect(async () => {
-      await zooKeeper.buyEgg(1)
-      await zooKeeper.buyEgg(1)
-    }).not.to.throw();
+    await h.zooToken.approve(h.zooKeeper.address, h.eggPrice)
+
+
+      const {eggID: egg1_id} = await h.buyEgg(1)
+      const {eggID: egg2_id} = await h.buyEgg(1)
+
+      const {eggID: animal1_id} = await h.hatchAnimal(egg1_id);
+      const {eggID: animal2_id} = await h.hatchAnimal(egg2_id);
+      
+      expect(animal1_id).to.equal(egg1_id);
+      expect(animal2_id).to.equal(egg2_id);
+  });
+
+  it('sets the owner of the egg to the buyer', async () => {
+    const h = await Helper.setup();
+
+    await h.zooToken.approve(h.zooKeeper.address, h.eggPrice)
+    const {from_evt: egg_buyer, eggID: egg1_id} = await h.buyEgg(1)
+
+    expect(egg_buyer).to.equal(h.owner)
+
+    expect(parseInt(egg1_id._hex)).to.equal(1)
+  })
+
+  it('assigns the zooKeyper owner', async () => {
+    const h = await Helper.setup();
+    const zooDropOwner: string = await h.zooKeeper.owner()
+
+    expect(zooDropOwner).to.equal(h.owner)
+  })
+
+  
+
 
     // // Hatch eggs into animals
     // await zooKeeper.methods.hatchEgg(1, 1).send({ from: account }).then((res) => {
@@ -152,7 +182,7 @@ describe('ZooKeeper', () =>   {
     //     console.log('freeAnimal', res);
     //  })
 
-    await zooKeeper.freeAnimal(6)
+    // await zooKeeper.freeAnimal(6)
 
     // if (tokenBalance > 1) {
     //    const tokenID = await zooMedia.methods
@@ -166,5 +196,4 @@ describe('ZooKeeper', () =>   {
     // }
 
     // TOTAL EGGS AFTER THIS TEST = 2
-  })
 })
