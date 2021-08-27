@@ -10,7 +10,7 @@ describe.only('ZooTokenV2', function () {
   let token: ZooTokenV2
   let signers: Signer[]
 
-  beforeEach(async ()=> {
+  beforeEach(async () => {
     const test = await setupTest()
     token = test.tokens.ZooTokenV2 as ZooTokenV2
     signers = test.signers
@@ -26,7 +26,10 @@ describe.only('ZooTokenV2', function () {
   })
 
   it('should add user to blacklist', async function () {
-    const { signers, tokens: { ZooTokenV2 } } = await setupTest()
+    const {
+      signers,
+      tokens: { ZooTokenV2 },
+    } = await setupTest()
     const token = ZooTokenV2
 
     const address = signers[1].address
@@ -41,7 +44,10 @@ describe.only('ZooTokenV2', function () {
   })
 
   it('allows transfer for eligable accounts', async function () {
-    const { signers, tokens: { ZooTokenV2 } } = await setupTest()
+    const {
+      signers,
+      tokens: { ZooTokenV2 },
+    } = await setupTest()
     const token = ZooTokenV2
 
     const address = signers[1].address
