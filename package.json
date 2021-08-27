@@ -55,7 +55,7 @@
     "run-graph-node": "yarn workspace @zoolabs/graph-node run-graph-node",
     "remove-graph-node": "yarn workspace @zoolabs/graph-node remove-graph-node",
     "clean-graph-node": "yarn workspace @zoolabs/graph-node clean-graph-node",
-    "pretty": "yarn workspace @zoolabs/app pretty && yarn workspace @zoolabs/contracts pretty && yarn workspace @zoolabs/dev pretty && yarn workspace @zoolabs/moralis pretty"
+    "format": "yarn workspace @zoolabs/app format && yarn workspace @zoolabs/contracts format && yarn workspace @zoolabs/moralis format"
   },
   "workspaces": {
     "packages": [
@@ -69,6 +69,6 @@
     ]
   },
   "dependencies": {
-    "node-gyp": "^3.8.0"
+    "node-gyp": "^8.2.0"
   }
 }
