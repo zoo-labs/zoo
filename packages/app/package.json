@@ -81,6 +81,7 @@
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.21",
     "lodash.flatmap": "^4.5.0",
+    "lottie-react": "^2.1.0",
     "mdx-loader": "^3.0.2",
     "moralis": "^0.0.30",
     "multicodec": "^3.0.1",

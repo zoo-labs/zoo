@@ -24,9 +24,21 @@
 .bg-pink-light {
     background-color: rgba(236, 72, 153, 0.1);
 }
+.bg-pink {
+    background-color: rgba(243,56,195,1);
+}
 .blur-\[150px\] {
     --tw-blur: blur(150px);
 }
+.opaque-pink {
+    color:rgba(243,56,195,0.50196)
+}
+.opaque-blue{
+    color:rgba(9,147,236,0.50196)
+}
 .bg-secondary {
     background-color: #212429;
+}
+.border-dark-800 {
+    border-color: rgba(32,34,49,1);
 }
