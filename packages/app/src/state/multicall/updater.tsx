@@ -8,10 +8,11 @@ import { AppState } from '../index'
 import { Contract } from '@ethersproject/contracts'
 import { chunkArray } from '../../functions/array'
 import { updateBlockNumber } from '../application/actions'
-import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { useBlockNumber } from '../application/hooks'
 import useDebounce from '../../hooks/useDebounce'
 import { useMulticall2Contract } from '../../hooks/useContract'
+import { useWeb3 } from 'hooks'
+import { useWeb3React } from '@web3-react/core'
 
 /**
  * Fetches a chunk of calls, enforcing a minimum block number constraint
@@ -22,7 +23,7 @@ import { useMulticall2Contract } from '../../hooks/useContract'
 async function fetchChunk(
   multicall: Contract,
   chunk: Call[],
-  minBlockNumber: number
+  minBlockNumber: number,
 ): Promise<{
   results: { success: boolean; returnData: string }[]
   blockNumber: number
@@ -34,7 +35,7 @@ async function fetchChunk(
     const { blockNumber, returnData } = await multicall.callStatic.tryBlockAndAggregate(
       false,
       chunk.map((obj) => ({ target: obj.address, callData: obj.callData, gasLimit: obj.gasRequired ?? 1_000_000 })),
-      { blockTag: minBlockNumber }
+      { blockTag: minBlockNumber },
     )
     resultsBlockNumber = blockNumber.toNumber()
     results = returnData
@@ -56,10 +57,7 @@ async function fetchChunk(
  * @param allListeners the all listeners state
  * @param chainId the current chain id
  */
-export function activeListeningKeys(
-  allListeners: AppState['multicall']['callListeners'],
-  chainId?: number
-): { [callKey: string]: number } {
+export function activeListeningKeys(allListeners: AppState['multicall']['callListeners'], chainId?: number): { [callKey: string]: number } {
   if (!allListeners || !chainId) return {}
   const listeners = allListeners[chainId]
   if (!listeners) return {}
@@ -91,7 +89,7 @@ export function outdatedListeningKeys(
   callResults: AppState['multicall']['callResults'],
   listeningKeys: { [callKey: string]: number },
   chainId: number | undefined,
-  latestBlockNumber: number | undefined
+  latestBlockNumber: number | undefined,
 ): string[] {
   if (!chainId || !latestBlockNumber) return []
   const results = callResults[chainId]
@@ -121,7 +119,7 @@ export default function Updater(): null {
   // wait for listeners to settle before triggering updates
   const debouncedListeners = useDebounce(state.callListeners, 100)
   const latestBlockNumber = useBlockNumber()
-  const { chainId } = useActiveWeb3React()
+  const { chainId } = useWeb3React()
   const multicall2Contract = useMulticall2Contract()
   const cancellations = useRef<{ blockNumber: number; cancellations: (() => void)[] }>()
 
@@ -133,10 +131,7 @@ export default function Updater(): null {
     return outdatedListeningKeys(state.callResults, listeningKeys, chainId, latestBlockNumber)
   }, [chainId, state.callResults, listeningKeys, latestBlockNumber])
 
-  const serializedOutdatedCallKeys = useMemo(
-    () => JSON.stringify(unserializedOutdatedCallKeys.sort()),
-    [unserializedOutdatedCallKeys]
-  )
+  const serializedOutdatedCallKeys = useMemo(() => JSON.stringify(unserializedOutdatedCallKeys.sort()), [unserializedOutdatedCallKeys])
 
   useEffect(() => {
     if (!latestBlockNumber || !chainId || !multicall2Contract) return
@@ -156,7 +151,7 @@ export default function Updater(): null {
         calls,
         chainId,
         fetchingBlockNumber: latestBlockNumber,
-      })
+      }),
     )
 
     cancellations.current = {
@@ -188,7 +183,7 @@ export default function Updater(): null {
                 }
                 return memo
               },
-              { erroredCalls: [], results: {} }
+              { erroredCalls: [], results: {} },
             )
 
             // dispatch any new results
@@ -198,7 +193,7 @@ export default function Updater(): null {
                   chainId,
                   results,
                   blockNumber: fetchBlockNumber,
-                })
+                }),
               )
 
             // dispatch any errored calls
@@ -209,7 +204,7 @@ export default function Updater(): null {
                   calls: erroredCalls,
                   chainId,
                   fetchingBlockNumber: fetchBlockNumber,
-                })
+                }),
               )
             }
 
@@ -228,7 +223,7 @@ export default function Updater(): null {
                 calls: chunk,
                 chainId,
                 fetchingBlockNumber: latestBlockNumber,
-              })
+              }),
             )
           })
         return cancel

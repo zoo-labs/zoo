@@ -3,6 +3,10 @@ import { useDispatch } from 'react-redux'
 import toastsReducer from './toasts'
 import zooReducer from './zoo'
 import swapReducer from './swap/reducer'
+import listsReducer from './lists/reducer'
+import multicallReducer from './multicall/reducer'
+import applicationReducer from './application/reducer'
+import userReducer from './user/reducer'
 import { Iterable } from 'immutable'
 
 // Augment middleware to consider Immutable.JS iterables serializable
@@ -16,6 +20,10 @@ const store = configureStore({
     toasts: toastsReducer,
     zoo: zooReducer,
     swap: swapReducer,
+    lists: listsReducer,
+    multicall: multicallReducer,
+    application: applicationReducer,
+    user: userReducer,
   },
   middleware: [serializableMiddleware],
 })
