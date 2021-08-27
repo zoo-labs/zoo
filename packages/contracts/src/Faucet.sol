@@ -6,7 +6,7 @@ import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-contract ZooFaucet is Ownable {
+contract Faucet is Ownable {
     using SafeMath for uint256;
 
     uint256 public rate = 100000000;

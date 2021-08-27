@@ -1,11 +1,11 @@
 import { deployments, ethers, getNamedAccounts } from 'hardhat'
 
-// import { ZooKeeper__factory, ZooMedia__factory, ZooMarket__factory, Token, ZooDrop } from '../types';
+// import { ZooKeeper__factory, Media__factory, Market__factory, Token, ZooDrop } from '../types';
 
-// import { ZooMedia } from '../types/ZooMedia';
+// import { Media } from '../types/Media';
 // import { ZooToken } from '../types/ZooToken';
-// import { ZooFaucet } from '../types/ZooFaucet';
-// import { ZooMarket } from '../types/ZooMarket';
+// import { Faucet } from '../types/Faucet';
+// import { Market } from '../types/Market';
 // import { ZooKeeper } from '../types/ZooKeeper';
 import chai, { expect } from 'chai'
 // import configureGame from '../utils/configureGame';
@@ -48,8 +48,8 @@ class Helper {
 
       const signers = (inst.signers = await ethers.getSigners())
       inst.zooToken = await ethers.getContractAt('ZooToken', contracts.ZooToken.address, signers[0])
-      inst.zooMarket = await ethers.getContractAt('ZooMarket', contracts.ZooMarket.address, signers[0])
-      inst.zooMedia = await ethers.getContractAt('ZooMedia', contracts.ZooMedia.address, signers[0])
+      inst.zooMarket = await ethers.getContractAt('Market', contracts.Market.address, signers[0])
+      inst.zooMedia = await ethers.getContractAt('Media', contracts.Media.address, signers[0])
       inst.zooKeeper = await ethers.getContractAt('ZooKeeper', contracts.ZooKeeper.address, signers[0])
       inst.zooDrop = await ethers.getContractAt('ZooDrop', contracts.ZooDrop.address, signers[0])
 
