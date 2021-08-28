@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect, lazy } from 'react'
-import { Router, Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from 'react-router-dom'
+
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import useEagerConnect from 'hooks/useEagerConnect'
@@ -24,11 +25,10 @@ import useWeb3 from 'hooks/useWeb3'
 import { mapEgg, mapAnimal, queryEggs, queryAnimals } from 'util/moralis'
 import Header from 'components/Header'
 import indexRoutes from 'routes'
-
-const Account = lazy(() => import('./views/Account/Index'))
+import { createBrowserHistory } from 'history'
+// import 'swiper/swiper.min.css'
+// import 'swiper/components/pagination/pagination.min.css'
 const Login = lazy(() => import('./views/Login'))
-const Bank = lazy(() => import('./views/Bank'))
-const Feed = lazy(() => import('./views/Feed'))
 
 // This config is required for number formating
 BigNumber.config({
@@ -186,10 +186,10 @@ const App: React.FC = () => {
   useEffect(() => {
     getAnimals()
   }, [chainID])
-
+  const history = useHistory()
   return (
     <Suspense fallback={null}>
-      <Router history={history}>
+      <Router>
         <ResetCSS />
         <GlobalStyle />
         <Switch>
@@ -211,43 +211,6 @@ const App: React.FC = () => {
                 <Redirect from='' to={signedIn ? '/home' : '/login'} />
               </Switch>
             </div>
-            {/* <Route exact path='/account'>
-              {signedIn ? (
-                <>
-                  <div className='flex fixed top-0 justify-between flex-nowrap w-full'>
-                    <Header />
-                  </div>
-                  <Account />
-                </>
-              ) : (
-                <Redirect to='/login' />
-              )}
-            </Route>
-
-            <Route path='/feed'>{signedIn ? <Feed /> : <Redirect to='/login' />}</Route>
-            <Route path='/myzoo'>{signedIn ? <Feed /> : <Redirect to='/login' />}</Route>
-            <Route path='/market'>{signedIn ? <Feed /> : <Redirect to='/login' />}</Route>
-
-            <Route exact path='/bank'>
-              {signedIn ? (
-                <>
-                  <div className='flex fixed top-0 justify-between flex-nowrap w-full'>
-                    <Header />
-                  </div>
-                  <Bank />
-                </>
-              ) : (
-                <Redirect to='/login' />
-              )}
-            </Route>
-
-            <Route exact path='/'>
-              {signedIn ? <Redirect to='/home' /> : <Redirect to='/login' />}
-            </Route>
-
-            <Route exact path=''>
-              {signedIn ? <Redirect to='/account' /> : <Redirect to='/login' />}
-            </Route> */}
           </SuspenseWithChunkError>
         </Switch>
         <ToastListener />

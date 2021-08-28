@@ -158,11 +158,11 @@ const hashEgg = (egg) => {
 const Card = styled(Existing)<{ timedOut?: boolean; interactive?: boolean; hatching?: boolean; hatched?: boolean }>`
   animation: ${({ interactive, hatching, hatched }) => cardAnimation(interactive, hatching, hatched)};
   cursor: pointer;
-  width: 160px;
-  margin: 4px 8px 16px 8px;
+  width: 100%;
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 8px;
   display: block;
+  height: 100%;
   // opacity: ${({ interactive, hatching }) => (!interactive && !hatching ? '0.8' : null)};
   transition: all 1s ease-in-out;
 `
@@ -217,7 +217,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
     <>
       <Card
         onClick={() => buttonActions()}
-        style={{ backgroundColor: '#000000' }}
+        style={{ backgroundColor: '#000000', minHeight: 230, height: 230, width: 130 }}
         timedOut={egg.timeRemaining > 0 ? true : false}
         interactive={egg.interactive}
         hatching={hatching}
@@ -230,7 +230,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             backgroundRepeat: 'no-repeat',
             backgroundPosition: '0% 60%',
             borderRadius: 8,
-            height: 160,
+            height: '100%',
             transition: 'background-image 1000ms linear',
             display: 'flex',
             justifyContent: 'center',
