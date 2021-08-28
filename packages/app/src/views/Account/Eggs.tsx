@@ -6,8 +6,6 @@ import { Route, useRouteMatch } from 'react-router-dom'
 import Moralis from 'moralis'
 import styled from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/swiper.min.css'
-import 'swiper/components/pagination/pagination.min.css'
 
 import useWeb3 from 'hooks/useWeb3'
 import { Text, Card as Existing, EggCard, VideoPlayer, useMatchBreakpoints } from 'components'
