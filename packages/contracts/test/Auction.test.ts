@@ -5,7 +5,7 @@ import { ethers } from 'hardhat'
 import { Auction, Market, Media, BadBidder, TestERC721, BadERC721 } from '../types'
 import { formatUnits } from 'ethers/lib/utils'
 import { BigNumber, Contract, Signer } from 'ethers'
-import { approveAuction, deployBidder, deployOtherNFTs, deployZooToken, deployZooProtocol, mint, ONE_ZOO, revert, TWO_ZOO } from './utils'
+import { approveAuction, deployBidder, deployOtherNFTs, deployToken, deployProtocol, mint, ONE_ZOO, revert, TWO_ZOO } from './utils'
 
 import { solidity } from 'ethereum-waffle'
 
