@@ -7,7 +7,6 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { useRouteMatch, Link, useLocation, useHistory, RouteComponentProps, withRouter } from 'react-router-dom'
 
 import { useWeb3 } from 'hooks/useWeb3'
-import 'swiper/swiper.min.css'
 import { useSelector } from 'react-redux'
 import { useMatchBreakpoints } from 'hooks'
 import Moralis from 'moralis'
@@ -15,7 +14,6 @@ import { AppState } from 'state/index'
 import FeedCard from './FeedCard'
 import BorderButton from 'components/Button/BorderButton'
 import { ChevronLeftIcon } from 'components/Svg'
-import './styles.css'
 
 interface ButtonProp extends ButtonMenuItemProps {
   activeIndex: number
