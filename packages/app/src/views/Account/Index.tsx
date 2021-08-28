@@ -127,7 +127,7 @@ const Account: React.FC = () => {
 
   const zooToken = getZooToken(web3)
   const zooKeeper = getZooKeeper(web3)
-  const zooDrop = getZooDrop(web3)
+  const zooDrop = getDrop(web3)
   const keeperAdd = zooKeeper.options.address
 
   const getBalance = async () => {
