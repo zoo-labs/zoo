@@ -8,7 +8,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deploy } = deployments
   const { deployer } = await getNamedAccounts()
 
-  const tokenAddress = (await deployments.get('Token')).address
+  const tokenAddress = (await deployments.get('ZooTokenV2')).address
   const marketAddress = (await deployments.get('Market')).address
   const mediaAddress = (await deployments.get('Media')).address
 
@@ -22,7 +22,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const keeperAddress = deployResult.address
 
-  const token = await ethers.getContractAt('Token', tokenAddress)
+  const token = await ethers.getContractAt('ZooTokenV2', tokenAddress)
   const market = await ethers.getContractAt('Market', marketAddress)
   const media = await ethers.getContractAt('Media', mediaAddress)
   const keeper = await ethers.getContractAt('Keeper', keeperAddress)
@@ -39,4 +39,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 export default func
 func.id = 'zookeeper'
 func.tags = ['ZooKeeper']
-func.dependencies = ['Media', 'Market']
+func.dependencies = ['ZooTokenV2', 'Media', 'Market']
