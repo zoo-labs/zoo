@@ -66,6 +66,7 @@
     "history": "^5.0.1",
     "immutable": "^4.0.0-rc.14",
     "lodash": "^4.17.21",
+    "lottie-react": "^2.1.0",
     "moralis": "^0.0.37",
     "multicodec": "^3.1.1",
     "multihash": "^0.1.0",

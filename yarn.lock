@@ -5311,6 +5311,7 @@ __metadata:
     history: ^5.0.1
     immutable: ^4.0.0-rc.14
     lodash: ^4.17.21
+    lottie-react: ^2.1.0
     moralis: ^0.0.37
     multicodec: ^3.1.1
     multihash: ^0.1.0
@@ -17144,6 +17145,26 @@ fsevents@~2.1.1:
   bin:
     loose-envify: cli.js
   checksum: 6517e24e0cad87ec9888f500c5b5947032cdfe6ef65e1c1936a0c48a524b81e65542c9c3edc91c97d5bddc806ee2a985dbc79be89215d613b1de5db6d1cfe6f4
+  languageName: node
+  linkType: hard
+
+"lottie-react@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "lottie-react@npm:2.1.0"
+  dependencies:
+    lottie-web: ^5.7.3
+  peerDependencies:
+    prop-types: ^15.5.7
+    react: ^16.8.0
+    react-dom: ^16.8.0
+  checksum: 7cfd65bc96f0c68e87bb006ac73234f4afe0cfcd8a215cd5e4bb943356499a300d3ea517de1fb2cb5bd20ed5d5edd090787b13751433aa1f16a3da6e93a685ee
+  languageName: node
+  linkType: hard
+
+"lottie-web@npm:^5.7.3":
+  version: 5.7.13
+  resolution: "lottie-web@npm:5.7.13"
+  checksum: 1b26e88d0e12df10afed9f5c686887ddb30b5cc8ca9d4268b1b0ddc78a794d6d6d7cc8573a87ab51c9d9bd60ac493582b1d002586425df4e5d9c638c682e3c01
   languageName: node
   linkType: hard
 
