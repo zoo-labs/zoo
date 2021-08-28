@@ -25,11 +25,7 @@
     "allowSyntheticDefaultImports": true,
     "typeRoots": ["./node_modules/@types", "./src/types"]
   },
-  "include": ["./src/types", "mdx.d.ts", "src", "scripts", "fonts.d.ts"],
-  "exclude": ["node_modules", "dist", "**/*.stories.tsx"],
-  "paths": {
-    "rebass/styled-components": ["node_modules/rebass/styled-components"],
-    "@reach/portal": ["node_modules/@reach/portal/dist/declarations/src/index.d.ts"]
-  },
+  "include": ["./src/types", "src", "scripts"],
+  "exclude": ["node_modules", "build"],
   "rootDir": "src"
 }

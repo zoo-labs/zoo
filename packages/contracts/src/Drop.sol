@@ -12,7 +12,7 @@ import { IZoo } from "./interfaces/IZoo.sol";
 import "./console.sol";
 
 
-contract ZooDrop is Ownable {
+contract Drop is Ownable {
     using SafeMath for uint256;
 
     struct Egg {

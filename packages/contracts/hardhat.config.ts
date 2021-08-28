@@ -5,6 +5,7 @@ import '@nomiclabs/hardhat-ethers'
 import 'hardhat-deploy'
 import '@typechain/hardhat'
 import '@nomiclabs/hardhat-web3'
+import '@openzeppelin/hardhat-upgrades'
 
 import { utils } from 'ethers'
 const { isAddress, getAddress, formatUnits, parseUnits } = utils
