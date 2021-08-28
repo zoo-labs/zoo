@@ -3,6 +3,12 @@ const ZK = ZOOKEEPER
 const CHAIN = 'CHAIN_ID'
 
 // Get this enviroment's ZK contract
+async function getZooToken() {
+  const web3 = Moralis.web3ByChain(CHAIN)
+  return new web3.eth.Contract(ZK.abi, ZK.address)
+}
+
+// Get this enviroment's ZK contract
 async function getZooKeeper() {
   const web3 = Moralis.web3ByChain(CHAIN)
   return new web3.eth.Contract(ZK.abi, ZK.address)
@@ -250,6 +256,24 @@ Moralis.Cloud.afterSave('Free', async (request) => {
   await tx.save()
 
   logger.info(`Animal ${name} (${tokenID} released into Wild`)
+})
+
+Moralis.Cloud.afterSave('Swap', async (request) => {
+  if (!confirmed(request)) return
+
+  if request.object.get()
+
+  const logger  = Moralis.Cloud.getLogger()
+  const chainID = parseInt(request.object.get('chainID'))
+  const from    = request.object.get('from')
+  const to      = request.object.get('to')
+  const amount  = parseInt(request.object.get('amount'))
+
+  if (chainID == CHAIN) {
+    logger.info(`Minting ${amount} -> ${to}`)
+  }
+
+  logger.info(`Swap ${from} ${to} ${amount} ${chainID}`)
 })
 
 Moralis.Cloud.define('getAverageGasPrice', async function (request) {
