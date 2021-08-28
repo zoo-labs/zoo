@@ -8475,13 +8475,13 @@
                 {
                   "indexed": false,
                   "internalType": "address",
-                  "name": "_from",
+                  "name": "from",
                   "type": "address"
                 },
                 {
                   "indexed": false,
                   "internalType": "uint256",
-                  "name": "_amount",
+                  "name": "amount",
                   "type": "uint256"
                 }
               ],
@@ -8494,13 +8494,13 @@
                 {
                   "indexed": false,
                   "internalType": "address",
-                  "name": "_to",
+                  "name": "to",
                   "type": "address"
                 },
                 {
                   "indexed": false,
                   "internalType": "uint256",
-                  "name": "_amount",
+                  "name": "amount",
                   "type": "uint256"
                 }
               ],
@@ -8532,25 +8532,25 @@
                 {
                   "indexed": false,
                   "internalType": "address",
-                  "name": "_from",
+                  "name": "from",
                   "type": "address"
                 },
                 {
                   "indexed": false,
                   "internalType": "address",
-                  "name": "_to",
+                  "name": "to",
                   "type": "address"
                 },
                 {
                   "indexed": false,
                   "internalType": "uint256",
-                  "name": "_amount",
+                  "name": "amount",
                   "type": "uint256"
                 },
                 {
                   "indexed": false,
                   "internalType": "string",
-                  "name": "_chain",
+                  "name": "chainID",
                   "type": "string"
                 }
               ],
@@ -8573,6 +8573,19 @@
               "name": "burn",
               "outputs": [],
               "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "getChainID",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
               "type": "function"
             },
             {
@@ -8632,7 +8645,7 @@
                 },
                 {
                   "internalType": "string",
-                  "name": "_chain",
+                  "name": "_chainID",
                   "type": "string"
                 }
               ],
