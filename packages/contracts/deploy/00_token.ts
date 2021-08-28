@@ -17,7 +17,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // Proxy only in non-live network (localhost and hardhat network) enabling
   // HCR (Hot Contract Replacement) in live network, proxy is disabled and
   // constructor is invoked
-  await deploy('ZooToken', {
+  await deploy('ZooTokenV2', {
     // nonce: nonce,
     from: deployer.address,
     args: [],

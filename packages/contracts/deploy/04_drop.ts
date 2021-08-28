@@ -23,8 +23,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   if (network.name != 'hardhat') return
 
   const drop = await ethers.getContractAt('Drop', deployResult.address)
-  const keeperAddress = (await deployments.get('Keeper')).address
-  const keeper = await ethers.getContractAt('Keeper', keeperAddress)
+  const keeperAddress = (await deployments.get('ZooKeeper')).address
+  const keeper = await ethers.getContractAt('ZooKeeper', keeperAddress)
 
   // Configure game executes a very long series of transactions which set the
   // initial state for our Gen 0 drop. Do not expect this to work during
@@ -36,4 +36,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 export default func
 func.id = 'drop'
 func.tags = ['Drop']
-// func.dependencies = ['Keeper']
+func.dependencies = ['ZooKeeper']
