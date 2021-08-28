@@ -26,7 +26,6 @@ import { useCallback, useMemo } from 'react'
 import flatMap from 'lodash/flatMap'
 import { useAllTokens } from '../../hooks/Tokens'
 import { useWeb3React } from '@web3-react/core'
-import ReactGA from 'react-ga'
 
 function serializeToken(token: Token): SerializedToken {
   return {
