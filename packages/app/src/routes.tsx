@@ -1,9 +1,9 @@
-// import Account from './views/Home/Account/Index'
-import Home from './views/Home/Index'
+// import Account from './views/Home/Account'
+import Home from './views/Home'
 // import Bank from './views/Home/Bank'
 import Feed from './views/Feed'
-import Swap from './views/Swap/Index'
-import Pool from './views/Pool/Index'
+import Swap from './views/Swap'
+import Pool from './views/Pool'
 let indexRoutes = [
   // { path: '/account', name: 'Account', component: Account },
   { path: '/home', name: 'Home', component: Home },
