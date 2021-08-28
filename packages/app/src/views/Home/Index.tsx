@@ -2,7 +2,7 @@ import { useWeb3 } from 'hooks'
 import useToast from 'hooks/useToast'
 import React, { useState } from 'react'
 import { getZooFaucet } from 'util/contracts'
-import Account from './Account/Index'
+import Account from './Account'
 import Bank from './Bank'
 
 interface indexProps {}
