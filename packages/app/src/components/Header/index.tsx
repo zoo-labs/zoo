@@ -21,10 +21,12 @@ import More from './More'
 import QuestionHelper from './QuestionHelper'
 import { numberWithCommas } from 'components/Functions'
 import NetworkCard from './NetworkCard'
+import { useModalOpen } from 'state/application/hooks'
+import { ApplicationModal } from 'state/application/actions'
 
 const logoURL = window.location.origin + '/static/images/logo-white.png'
 
-const HeaderFrame = styled.div<{ showBackground: boolean; isMobile: boolean; isFeed?: boolean }>`
+const HeaderFrame = styled.div<{ showBackground: boolean; isMobile: boolean; isFeed?: boolean; newAnimalModalOpen: boolean }>`
   grid-template-columns: 120px 1fr 120px;
   -moz-box-pack: justify;
   -moz-box-align: center;
@@ -41,7 +43,7 @@ const HeaderFrame = styled.div<{ showBackground: boolean; isMobile: boolean; isF
   background-blend-mode: hard-light;
   width: 100%;
   ${({ isMobile }) => (isMobile ? 'grid-template-columns: 80px 1fr; padding: 1rem' : '')};
-  ${({ isFeed }) => (isFeed ? 'display: none' : 'display: grid')};
+  ${({ isFeed, newAnimalModalOpen }) => (isFeed || newAnimalModalOpen ? 'display: none' : 'display: grid')};
 `
 
 const HeaderLinks = styled.div`
@@ -271,9 +273,10 @@ export default function Header() {
         redirectWindow.location
     }
   }
+  const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
 
   return (
-    <HeaderFrame showBackground={scrollY > 45} isMobile={isMobile} isFeed={active == 'feed'}>
+    <HeaderFrame showBackground={scrollY > 45} isMobile={isMobile} isFeed={active == 'feed'} newAnimalModalOpen={newAnimalModalOpen}>
       <Title href='.'>
         <LogoIcon>
           <img src={logoURL} alt='logo' />
