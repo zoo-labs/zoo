@@ -8,15 +8,16 @@ import styled from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/swiper.min.css'
 import 'swiper/components/pagination/pagination.min.css'
-
+import NewAnimalModal from '../../modals/NewAnimal'
 import useWeb3 from 'hooks/useWeb3'
 import { Text, Card as Existing, EggCard, VideoPlayer, useMatchBreakpoints } from 'components'
 import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
 import { eggTimeout } from 'constants/index'
 import { addEgg } from 'state/actions'
 import { getZooKeeper } from 'util/contracts'
-import { NewAnimalCard } from 'components/NewAnimal'
+import NewAnimalCard from '../../modals/NewAnimal'
 import { mapEgg, mapAnimal } from 'util/moralis'
+import { useNewAnimalModalToggle } from 'state/application/hooks'
 interface EggsProps {}
 const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.text};
@@ -58,6 +59,7 @@ const Eggs: React.FC<EggsProps> = ({}) => {
   })
   let eggData = []
   const { isXl, isSm, isMd } = useMatchBreakpoints()
+  const toggleNewAnimalModal = useNewAnimalModalToggle()
 
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
 
@@ -104,7 +106,7 @@ const Eggs: React.FC<EggsProps> = ({}) => {
   const startAnimationTimer = useCallback(() => {
     videoTimeout.push(
       setTimeout(() => {
-        setOpen(true)
+        toggleNewAnimalModal()
       }, 5450),
     )
     // videoTimeout.push(setTimeout(() => setEggType(''), 7000))
@@ -162,44 +164,41 @@ const Eggs: React.FC<EggsProps> = ({}) => {
       })
     }
   })
-
+  console.log('eggType', eggType)
   eggData = sortData(eggData, 'hybrid')
   return (
     <>
-      {eggType !== '' && <VideoPlayer videoPath={eggType === 'basic' ? 'hatch_mobile_basic.mp4' : 'hatch_mobile_hybrid.mp4'} />}
-      {isOpen ? (
-        <NewAnimalCard animal={hatched} isOpen={setOpen} />
-      ) : (
-        <>
-          {eggType === '' && (
-            <RowLayout style={{ marginBottom: -8 }}>
-              <Route exact path={`${path}`}>
-                {eggData.length === 0 ? (
-                  <StyledText textAlign='center' fontSize='16px'>
-                    No eggs
-                  </StyledText>
-                ) : (
-                  <Swiper slidesPerView={isSm ? 3 : isMd ? 6 : 12} spaceBetween={4} pagination={{ clickable: true }} style={{ marginBottom: 0 }}>
-                    {eggData.map((egg) => (
-                      <SwiperSlide className='account__animal-slide' style={{ width: '33%', display: 'flex', minWidth: 130, minHeight: 180 }} key={egg.tokenID}>
-                        {/* <CardWrapper> */}
-                        <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-                )}
-              </Route>
-              <Route exact path={`${path}/history`}>
-                {/* {eggData.map((egg) => (
+      {eggType === '' ? (
+        <RowLayout style={{ marginBottom: -8 }}>
+          <Route exact path={`${path}`}>
+            {eggData.length === 0 ? (
+              <StyledText textAlign='center' fontSize='16px'>
+                No eggs
+              </StyledText>
+            ) : (
+              <Swiper slidesPerView={isSm ? 3 : isMd ? 6 : 12} spaceBetween={4} pagination={{ clickable: true }} style={{ marginBottom: 0 }}>
+                {eggData.map((egg) => (
+                  <SwiperSlide className='account__animal-slide' style={{ width: '33%', display: 'flex', minWidth: 130, minHeight: 180 }} key={egg.tokenID}>
+                    {/* <CardWrapper> */}
+                    <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            )}
+          </Route>
+          <Route exact path={`${path}/history`}>
+            {/* {eggData.map((egg) => (
       <Card key={egg.id} />
     ))} */}
-              </Route>
-            </RowLayout>
-          )}
-        </>
+          </Route>
+        </RowLayout>
+      ) : (
+        <VideoPlayer videoPath={eggType === 'basic' ? 'hatch_mobile_basic.mp4' : 'hatch_mobile_hybrid.mp4'} />
       )}
+
+      <NewAnimalModal animal={hatched} onDismiss={() => setEggType('')} />
     </>
   )
 }
-
+// animal={hatched}
 export default Eggs
