@@ -37,6 +37,8 @@
     "@nomiclabs/hardhat-web3": "^2.0.0",
     "@openzeppelin/contracts": "^4.3.1",
     "@openzeppelin/contracts-upgradeable": "^4.3.1",
+    "@zoolabs/framework": "zoo-labs/hardhat-framework",
+    "@zoolabs/solidity": "zoo-labs/boring-solidity",
     "bip39": "^3.0.4",
     "eth-sig-util": "^3.0.1",
     "ethereum-waffle": "^3.4.0",
