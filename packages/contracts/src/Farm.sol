@@ -34,7 +34,7 @@ contract Farm is Ownable {
     address public daoAddress;
 
     // DAO share
-    address public daoShare;
+    uint256 public daoShare;
 
     // Block number when bonus period ends.
     uint256 public bonusEndBlock;
@@ -63,7 +63,7 @@ contract Farm is Ownable {
 
     constructor(
         address _daoAddress,
-        address _daoShare,
+        uint256 _daoShare,
         address _tokenAddress,
         uint256 _rewardPerBlock,
         uint256 _startBlock,
