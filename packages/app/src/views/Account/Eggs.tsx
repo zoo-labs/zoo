@@ -5,7 +5,7 @@ import { AppState } from 'state'
 import { Route, useRouteMatch } from 'react-router-dom'
 import Moralis from 'moralis'
 import styled from 'styled-components'
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper, Slide } from 'components/Swiper'
 
 import useWeb3 from 'hooks/useWeb3'
 import { Text, Card as Existing, EggCard, VideoPlayer, useMatchBreakpoints } from 'components'
@@ -179,10 +179,10 @@ const Eggs: React.FC<EggsProps> = ({}) => {
                 ) : (
                   <Swiper slidesPerView={isSm ? 3 : isMd ? 6 : 12} spaceBetween={4} pagination={{ clickable: true }} style={{ marginBottom: 0 }}>
                     {eggData.map((egg) => (
-                      <SwiperSlide className='account__animal-slide' style={{ width: '33%', display: 'flex', minWidth: 130, minHeight: 180 }} key={egg.tokenID}>
+                      <Slide className='account__animal-slide' style={{ width: '33%', display: 'flex', minWidth: 130, minHeight: 180 }} key={egg.tokenID}>
                         {/* <CardWrapper> */}
                         <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
-                      </SwiperSlide>
+                      </Slide>
                     ))}
                   </Swiper>
                 )}

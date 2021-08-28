@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from 'state'
 import { Route, useRouteMatch } from 'react-router-dom'
 import styled from 'styled-components'
-import { Swiper, SwiperSlide } from 'swiper/react'
+
+import { Swiper, Slide } from 'components/Swiper'
 
 import { Text, Card as Existing, useMatchBreakpoints } from 'components'
 import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
@@ -115,9 +116,9 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
             <Swiper slidesPerView={'auto'} spaceBetween={30} pagination={{ clickable: true }}>
               {animals.map((animal) => {
                 return (
-                  <SwiperSlide style={{ display: 'flex', minWidth: 190, minHeight: 272, maxWidth: 215 }} key={animal.tokenID}>
+                  <Slide style={{ display: 'flex', minWidth: 190, minHeight: 272, maxWidth: 215 }} key={animal.tokenID}>
                     <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding }} />
-                  </SwiperSlide>
+                  </Slide>
                 )
               })}
             </Swiper>
