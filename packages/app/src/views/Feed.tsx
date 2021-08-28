@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Flex, Text } from 'components'
 import { ButtonMenu, ButtonMenuItem, ButtonMenuItemProps } from 'components/ButtonMenu'
 
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper, Slide } from 'components/Swiper'
 import { useRouteMatch, Link, useLocation, useHistory, RouteComponentProps, withRouter } from 'react-router-dom'
 
 import { useWeb3 } from 'hooks/useWeb3'
@@ -191,16 +191,16 @@ function Feed<FeedPagePops>({ match }) {
       </div>
 
       <Swiper onSwiper={setSwiperRef} onActiveIndexChange={handleIndexChange} centeredSlides={isMobile ? true : false} spaceBetween={30} slidesPerView={1} direction='horizontal'>
-        <SwiperSlide key={0}>
+        <Slide key={0}>
           {animals.length ? (
             <Swiper speed={900} initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
               {animals.map((data) => {
                 // console.log('DATA')
                 // console.log(data)
                 return (
-                  <SwiperSlide key={data.tokenID + 'slide'}>
+                  <Slide key={data.tokenID + 'slide'}>
                     <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={animalGroup} hideBid={activeIndex === 0} />
-                  </SwiperSlide>
+                  </Slide>
                 )
               })}
             </Swiper>
@@ -212,14 +212,14 @@ function Feed<FeedPagePops>({ match }) {
               </BorderButton>
             </EmptyZoo>
           )}
-        </SwiperSlide>
-        <SwiperSlide key={1}>
+        </Slide>
+        <Slide key={1}>
           <Swiper speed={900} initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
             {animals.map((data, index) => {
               return data.listed ? (
-                <SwiperSlide key={data.tokenID + 'slide'}>
+                <Slide key={data.tokenID + 'slide'}>
                   <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={{}} />
-                </SwiperSlide>
+                </Slide>
               ) : (
                 <EmptyZoo>
                   <Text textAlign='center'>There are currently no animals up for auction</Text>
@@ -230,7 +230,7 @@ function Feed<FeedPagePops>({ match }) {
               )
             })}
           </Swiper>
-        </SwiperSlide>
+        </Slide>
       </Swiper>
     </Container>
   )
