@@ -23,9 +23,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const keeperAddress = deployResult.address
 
   const token = await ethers.getContractAt('ZooTokenV2', tokenAddress)
+  const keeper = await ethers.getContractAt('ZooKeeper', keeperAddress)
   const market = await ethers.getContractAt('Market', marketAddress)
   const media = await ethers.getContractAt('Media', mediaAddress)
-  const keeper = await ethers.getContractAt('Keeper', keeperAddress)
 
   // Configure contracts to talk to each other
   market.configure(keeperAddress, mediaAddress)

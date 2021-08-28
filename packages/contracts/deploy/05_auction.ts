@@ -16,7 +16,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   if (network.name != 'hardhat') return
 
-  const tokenAddress = (await deployments.get('Token')).address
+  const tokenAddress = (await deployments.get('ZooTokenV2')).address
   const mediaAddress = (await deployments.get('Media')).address
 
   const auction = await ethers.getContractAt('Auction', deployResult.address)

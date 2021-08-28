@@ -8,22 +8,29 @@ import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 contract Bridge is Ownable {
 
     IERC20Burnable public token;
-    event Mint(address _to, uint256 _amount);
-    event Burn(address _from, uint256 _amount);
-    event Swap(address _from, address _to, uint256 _amount, string _chain);
+    event Mint(address to, uint256 amount);
+    event Burn(address from, uint256 amount);
+    event Swap(address from, address to, uint256 amount, string chainID);
 
     constructor(address tokenAddress) {
         token = IERC20Burnable(tokenAddress);
     }
 
-    function swap(address _from, address _to, uint256 _amount, string memory _chain) public onlyOwner {
+    function getChainID() external view returns (uint256) {
+        uint256 id;
+        assembly {
+            id := chainid()
+        }
+        return id;
+    }
+
+    function swap(address _from, address _to, uint256 _amount, string memory _chainID) public onlyOwner {
         require(_from != address(0));
         require(_to != address(0));
         require(_amount > 0);
-        require(keccak256(abi.encodePacked(_chain)) == keccak256(abi.encodePacked(_chain)));
-
+        require(keccak256(abi.encodePacked(_chainID)) == keccak256(abi.encodePacked(_chainID)));
         burn(_from, _amount);
-        emit Swap(_from, _to, _amount, _chain);
+        emit Swap(_from, _to, _amount, _chainID);
     }
 
     function burn(address _from, uint256 _amount) public onlyOwner {
