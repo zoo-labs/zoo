@@ -34,7 +34,7 @@ contract Farm is Ownable {
     address public daoAddress;
 
     // DAO share
-    address public daoShare;
+    uint256 public daoShare;
 
     // Block number when bonus period ends.
     uint256 public bonusEndBlock;
@@ -63,7 +63,7 @@ contract Farm is Ownable {
 
     constructor(
         address _daoAddress,
-        address _daoShare,
+        uint256 _daoShare,
         address _tokenAddress,
         uint256 _rewardPerBlock,
         uint256 _startBlock,
@@ -154,7 +154,6 @@ contract Farm is Ownable {
         uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
         uint256 reward = multiplier.mul(rewardPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
         token.mint(address(this), reward);
-        token.mint(daoAddress, reward.div(10));
         pool.accRewardPerShare = pool.accRewardPerShare.add(reward.mul(1e12).div(lpSupply));
         pool.lastRewardBlock = block.number;
     }
