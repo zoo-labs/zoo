@@ -15,7 +15,10 @@ import { EggCreatedNotify } from './EggCreatedNotify'
 import { AnimalCardProps, SubAnimalCommonProps } from './types'
 import useWeb3 from 'hooks/useWeb3'
 import { getZooKeeper } from 'util/contracts'
-
+import { useBreedConfirmModalToggle } from 'state/application/hooks'
+import { ApplicationModal } from 'state/application/actions'
+import BreedConfirmationModal from '../../modals/BreedConfirmation'
+import { useAppSelector } from 'state/hooks'
 const InfoBlock = styled.div`
   padding: 4px;
   text-align: center;
@@ -203,7 +206,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
 
   const [onEggCreated] = useModal(<EggCreatedNotify onDismiss={() => null} />)
 
-  const breed = async (onDismiss) => {
+  const breed = async () => {
     var an1 = parseInt(array[0].tokenID)
     var an2 = parseInt(array[1].tokenID)
     const isBreedingStackedAnimal = an1 === an2
@@ -223,7 +226,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
     const aniM2 = res2[0]
     const mArray = [aniM1, aniM2]
 
-    onDismiss()
+    useBreedConfirmModalToggle()
 
     try {
       await zooKeeper.methods
@@ -267,7 +270,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
 
           dispatch(addAnimal({ ...array[0], selected: false }))
           dispatch(addAnimal({ ...array[1], selected: false }))
-          onDismiss()
+          useBreedConfirmModalToggle()
         })
     } catch (error) {
       console.log(error)
@@ -302,8 +305,8 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
     onSell()
   }
 
-  const [onConfirm] = useModal(<Confirmation onDismiss={() => null} breed={breed} />)
-
+  // const [onConfirm] = useModal(<Confirmation onDismiss={() => null} breed={breed} />)
+  const onConfirm = useBreedConfirmModalToggle()
   const onCardClick = () => console.log('animal', animal)
 
   const zoo_location = {
@@ -312,51 +315,53 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
       tokenID: animal.tokenID,
     },
   }
-
   return (
-    <Card rarityColor={animal.rarityColor} onClick={onCardClick} key={animal.id} selected={animal.selected ? true : false} timedOut={animal.timeRemaining > 0 ? true : false}>
-      <CardBody
-        style={{
-          backgroundImage: `url('${animal.imageUrl}')`,
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
-          height: 256,
-          width: '100%',
-        }}>
-        <Link to={zoo_location}>
-          <TextWrapper
-            style={{
-              textShadow: '0px 2px 6px rgb(0, 0, 0)',
-              fontSize: 16,
-              position: 'absolute',
-              textTransform: 'lowercase',
-              right: 11,
-              top: 9,
-            }}>
-            {animal.timeRemaining <= 0 ? (animalGroup[animal.name] && animalGroup[animal.name].length > 0 ? `x${animalGroup[animal.name].length + 1}` : '') : ''}
-          </TextWrapper>
-          <TextWrapper
-            style={{
-              textShadow: '0px 2px 6px rgb(0, 0, 0)',
-              textAlign: 'center',
-              fontSize: 16,
-              letterSpacing: 0,
-              height: '100%',
-            }}>
-            {animal.name}
-          </TextWrapper>
-        </Link>
-        {animal.timeRemaining > 0 ? (
-          <TimeoutWrapper barwidth={animal.CTAOverride ? animal.CTAOverride.barwidth : 0}>
-            <TimeoutDisplay>{`${animal.CTAOverride.timeRemainingDaysHours.days}D ${animal.CTAOverride.timeRemainingDaysHours.hours}H`}</TimeoutDisplay>
-          </TimeoutWrapper>
-        ) : (
-          <InfoBlock onClick={() => (hybrid === 'pure' ? breedClick(animal) : !animal.listed ? list(animal) : null)}>
-            <BreedWrapper>{animal.bloodline === 'pure' ? `BREED` : animal.listed ? 'LISTED' : `SELL`}</BreedWrapper>
-          </InfoBlock>
-        )}
-      </CardBody>
-    </Card>
+    <>
+      <Card rarityColor={animal.rarityColor} onClick={onCardClick} key={animal.id} selected={animal.selected ? true : false} timedOut={animal.timeRemaining > 0 ? true : false}>
+        <CardBody
+          style={{
+            backgroundImage: `url('${animal.imageUrl}')`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            height: 256,
+            width: '100%',
+          }}>
+          <Link to={zoo_location}>
+            <TextWrapper
+              style={{
+                textShadow: '0px 2px 6px rgb(0, 0, 0)',
+                fontSize: 16,
+                position: 'absolute',
+                textTransform: 'lowercase',
+                right: 11,
+                top: 9,
+              }}>
+              {animal.timeRemaining <= 0 ? (animalGroup[animal.name] && animalGroup[animal.name].length > 0 ? `x${animalGroup[animal.name].length + 1}` : '') : ''}
+            </TextWrapper>
+            <TextWrapper
+              style={{
+                textShadow: '0px 2px 6px rgb(0, 0, 0)',
+                textAlign: 'center',
+                fontSize: 16,
+                letterSpacing: 0,
+                height: '100%',
+              }}>
+              {animal.name}
+            </TextWrapper>
+          </Link>
+          {animal.timeRemaining > 0 ? (
+            <TimeoutWrapper barwidth={animal.CTAOverride ? animal.CTAOverride.barwidth : 0}>
+              <TimeoutDisplay>{`${animal.CTAOverride.timeRemainingDaysHours.days}D ${animal.CTAOverride.timeRemainingDaysHours.hours}H`}</TimeoutDisplay>
+            </TimeoutWrapper>
+          ) : (
+            <InfoBlock onClick={() => (hybrid === 'pure' ? breedClick(animal) : !animal.listed ? list(animal) : null)}>
+              <BreedWrapper>{animal.bloodline === 'pure' ? `BREED` : animal.listed ? 'LISTED' : `SELL`}</BreedWrapper>
+            </InfoBlock>
+          )}
+        </CardBody>
+      </Card>
+      <BreedConfirmationModal breed={breed} />
+    </>
   )
 }

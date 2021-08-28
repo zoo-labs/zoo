@@ -38,7 +38,9 @@ export function useWalletModalToggle(): () => void {
 export function useNewAnimalModalToggle(): () => void {
   return useToggleModal(ApplicationModal.NEWANIMAL)
 }
-
+export function useBreedConfirmModalToggle(): () => void {
+  return useToggleModal(ApplicationModal.BREEDCONFIRM)
+}
 export function useNetworkModalToggle(): () => void {
   return useToggleModal(ApplicationModal.NETWORK)
 }

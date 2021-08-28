@@ -6,16 +6,17 @@ import { Route, useRouteMatch } from 'react-router-dom'
 import Moralis from 'moralis'
 import styled from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/swiper.min.css'
-import 'swiper/components/pagination/pagination.min.css'
-import NewAnimalModal from '../../modals/NewAnimal'
+import SwiperCore, { Pagination } from 'swiper'
+
+import NewAnimalModal from '../../../modals/NewAnimal'
 import useWeb3 from 'hooks/useWeb3'
 import { Text, Card as Existing, EggCard, VideoPlayer, useMatchBreakpoints } from 'components'
+import AspectRatio from 'react-aspect-ratio'
 import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
 import { eggTimeout } from 'constants/index'
 import { addEgg } from 'state/actions'
 import { getZooKeeper } from 'util/contracts'
-import NewAnimalCard from '../../modals/NewAnimal'
+import NewAnimalCard from '../../../modals/NewAnimal'
 import { mapEgg, mapAnimal } from 'util/moralis'
 import { useNewAnimalModalToggle } from 'state/application/hooks'
 interface EggsProps {}
@@ -164,8 +165,10 @@ const Eggs: React.FC<EggsProps> = ({}) => {
       })
     }
   })
-  console.log('eggType', eggType)
+  console.log('isSm', isSm)
   eggData = sortData(eggData, 'hybrid')
+  // SwiperCore.use([Pagination])
+
   return (
     <>
       {eggType === '' ? (
@@ -176,13 +179,30 @@ const Eggs: React.FC<EggsProps> = ({}) => {
                 No eggs
               </StyledText>
             ) : (
-              <Swiper slidesPerView={isSm ? 3 : isMd ? 6 : 12} spaceBetween={4} pagination={{ clickable: true }} style={{ marginBottom: 0 }}>
-                {eggData.map((egg) => (
-                  <SwiperSlide className='account__animal-slide' style={{ width: '33%', display: 'flex', minWidth: 130, minHeight: 180 }} key={egg.tokenID}>
-                    {/* <CardWrapper> */}
-                    <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
-                  </SwiperSlide>
-                ))}
+              // <Swiper slidesPerView={isSm ? 2 : isMd ? 6 : 12} spaceBetween={30} pagination={{ clickable: true }} style={{ marginBottom: 0 }}>
+              //   {eggData.map((egg) => (
+              //     <SwiperSlide className='account__animal-slide' style={{ display: 'flex', minWidth: 130, minHeight: 180 }} key={egg.tokenID}>
+              //       <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
+              //     </SwiperSlide>
+              //   ))}
+
+              // </Swiper>
+              <Swiper
+                slidesPerView={2}
+                spaceBetween={30}
+                pagination={{
+                  clickable: true,
+                }}
+                className='mySwiper'>
+                {eggData.map((egg) => {
+                  return (
+                    <SwiperSlide key={egg.tokenID}>
+                      <div style={{ height: 230, width: '100%' }}>
+                        <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
+                      </div>
+                    </SwiperSlide>
+                  )
+                })}
               </Swiper>
             )}
           </Route>

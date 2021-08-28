@@ -320,7 +320,7 @@ const Bank: React.FC = () => {
 
   return (
     <>
-      <Page>
+      <div className='w-full'>
         <Body>
           <Label style={{ marginLeft: -8, fontSize: '20px' }}>Total Daily Yield</Label>
           <Flex width='100%' alignItems='center' justifyContent='space-around' style={{ marginLeft: -16 }}>
@@ -388,7 +388,7 @@ const Bank: React.FC = () => {
             </Container>
           )}
         </Body>
-      </Page>
+      </div>
       {/* <div>
       <div className="flex flex-col gap-2 flex-nowrap">
       {transactions.map((hash, i) => {

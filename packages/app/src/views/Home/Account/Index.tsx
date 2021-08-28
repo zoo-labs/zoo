@@ -6,7 +6,7 @@ import { AppState } from 'state'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import styles from 'styled-components'
-import Metamask from '../../components/WalletModal/icons/Metamask'
+import Metamask from '../../../components/WalletModal/icons/Metamask'
 
 import { Label, Text } from 'components/Text'
 import { Flex, Heading, useMatchBreakpoints } from 'components'
@@ -24,6 +24,7 @@ import useToast from 'hooks/useToast'
 import Header from 'components/Header'
 import Eggs from './Eggs'
 import Animals from './Animals'
+import AccountHeader from './AccountHeader'
 const HeadingContainer = styles.div`
     width: 200%;
     display: flex;
@@ -223,8 +224,10 @@ const Account: React.FC = () => {
     <div
     // style={{ height: '100vh' }} className='flex items-center'
     >
-      <div className='lg:p-16 p-4 pr-0 lg:pr-0 mr-0 space-y-4 rounded-lg  m-4 flex flex-col relative filter drop-shadow z-10'>
+      {/* pr-0 lg:pr-0 mr-0  */}
+      <div className='flex flex-col relative filter drop-shadow z-10'>
         <div className='flex flex-col h-full'>
+          <AccountHeader />
           <div className='flex flex-col justify-between h-full'>
             <div style={{ flex: 1 }} className='p-5 rounded'>
               <div className='mb-2'>

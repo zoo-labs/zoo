@@ -1,6 +1,6 @@
 import React from 'react'
 import { ApplicationModal } from 'state/application/actions'
-import { useModalOpen, useNetworkModalToggle } from 'state/application/hooks'
+import { useModalOpen, useNetworkModalToggle, useNewAnimalModalToggle } from 'state/application/hooks'
 import Modal from '../../components/NewModal'
 import ModalHeader from '../../components/NewModal/Header'
 interface indexProps {
@@ -20,7 +20,7 @@ interface indexProps {
 
 const index: React.FC<indexProps> = ({ animal, onDismiss }) => {
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
-  const toggleNewAnimalModal = useNetworkModalToggle()
+  const toggleNewAnimalModal = useNewAnimalModalToggle()
   console.log('newAnimalModalOpen', newAnimalModalOpen)
 
   return (
