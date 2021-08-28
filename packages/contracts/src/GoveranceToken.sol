@@ -2,6 +2,7 @@
 pragma solidity ^0.6.12;
 pragma experimental ABIEncoderV2;
 
+import '@zoolabs/solidity/contracts/libraries/BoringERC20.sol';
 import '@zoolabs/solidity/contracts/libraries/BoringMath.sol';
 import '@zoolabs/solidity/contracts/Domain.sol';
 import '@zoolabs/solidity/contracts/ERC20.sol';
@@ -23,7 +24,7 @@ contract GoveranceToken is ERC20, BoringBatchable {
   string public symbol;
   string public name;
   uint8 public constant decimals = 18;
-  uint256 public constant totalSupply = 100000000 * 1e18;
+  uint256 public constant override totalSupply = 100000000 * 1e18;
 
   DAO public immutable dao;
 
