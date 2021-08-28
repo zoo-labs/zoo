@@ -26,9 +26,9 @@ import Header from 'components/Header'
 import indexRoutes from 'routes'
 
 const Account = lazy(() => import('./views/Account'))
-const Login = lazy(() => import('./views/Login'))
-const Bank = lazy(() => import('./views/Bank'))
-const Feed = lazy(() => import('./views/Feed'))
+const Login   = lazy(() => import('./views/Login'))
+const Bank    = lazy(() => import('./views/Bank'))
+const Feed    = lazy(() => import('./views/Feed'))
 
 // This config is required for number formating
 BigNumber.config({
