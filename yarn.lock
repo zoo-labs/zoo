@@ -3262,6 +3262,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@openzeppelin/hardhat-upgrades@npm:^1.10.0":
+  version: 1.10.0
+  resolution: "@openzeppelin/hardhat-upgrades@npm:1.10.0"
+  dependencies:
+    "@openzeppelin/upgrades-core": ^1.9.0
+  peerDependencies:
+    "@nomiclabs/hardhat-ethers": ^2.0.0
+    hardhat: ^2.0.2
+  bin:
+    migrate-oz-cli-project: dist/scripts/migrate-oz-cli-project.js
+  checksum: e1f1fea2258a5d2f7c04025412752bc5d6096b9645003389cae79334cb07ac0870815a14e0bf8f12f77bc1c30fadd10a92e9792c3bd2dc04253ded5307b2e371
+  languageName: node
+  linkType: hard
+
+"@openzeppelin/upgrades-core@npm:^1.9.0":
+  version: 1.9.0
+  resolution: "@openzeppelin/upgrades-core@npm:1.9.0"
+  dependencies:
+    bn.js: ^5.1.2
+    cbor: ^8.0.0
+    chalk: ^4.1.0
+    compare-versions: ^3.6.0
+    debug: ^4.1.1
+    ethereumjs-util: ^7.0.3
+    proper-lockfile: ^4.1.1
+    solidity-ast: ^0.4.15
+  checksum: bc1aed9d77dbfed4fa16b9eef53ca1db872e142041fc5c3eb303ee9ac30f3f30435e521265eee60ae229b6caef62616304e101ec05196e0619d9f8d7302e2a25
+  languageName: node
+  linkType: hard
+
 "@pmmmwh/react-refresh-webpack-plugin@npm:0.4.3":
   version: 0.4.3
   resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.4.3"
@@ -5514,6 +5544,7 @@ __metadata:
     "@nomiclabs/hardhat-web3": ^2.0.0
     "@openzeppelin/contracts": ^4.3.1
     "@openzeppelin/contracts-upgradeable": ^4.3.1
+    "@openzeppelin/hardhat-upgrades": ^1.10.0
     "@tenderly/hardhat-tenderly": ^1.0.12
     "@typechain/ethers-v5": ^7.0.1
     "@typechain/hardhat": ^2.3.0
@@ -8360,6 +8391,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cbor@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "cbor@npm:8.0.0"
+  dependencies:
+    nofilter: ^3.0.2
+  checksum: a53199261c531311e813926e249101aac11cef8594edb21715a2968782433902b9cba1939f1c837e59f4ef903d82f3eddfaae8d685c1c6789f3b7ed6f3889ee2
+  languageName: node
+  linkType: hard
+
 "chai-as-promised@npm:^7.1.1":
   version: 7.1.1
   resolution: "chai-as-promised@npm:7.1.1"
@@ -8991,6 +9031,13 @@ __metadata:
   version: 1.0.1
   resolution: "commondir@npm:1.0.1"
   checksum: 59715f2fc456a73f68826285718503340b9f0dd89bfffc42749906c5cf3d4277ef11ef1cca0350d0e79204f00f1f6d83851ececc9095dc88512a697ac0b9bdcb
+  languageName: node
+  linkType: hard
+
+"compare-versions@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "compare-versions@npm:3.6.0"
+  checksum: 7492a50cdaa2c27f5254eee7c4b38856e1c164991bab3d98d7fd067fe4b570d47123ecb92523b78338be86aa221668fd3868bfe8caa5587dc3ebbe1a03d52b5d
   languageName: node
   linkType: hard
 
@@ -11893,7 +11940,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethereumjs-util@npm:^7.0.10, ethereumjs-util@npm:^7.0.2, ethereumjs-util@npm:^7.0.7, ethereumjs-util@npm:^7.1.0":
+"ethereumjs-util@npm:^7.0.10, ethereumjs-util@npm:^7.0.2, ethereumjs-util@npm:^7.0.3, ethereumjs-util@npm:^7.0.7, ethereumjs-util@npm:^7.1.0":
   version: 7.1.0
   resolution: "ethereumjs-util@npm:7.1.0"
   dependencies:
@@ -19259,6 +19306,13 @@ fsevents@~2.1.1:
   languageName: node
   linkType: hard
 
+"nofilter@npm:^3.0.2":
+  version: 3.0.3
+  resolution: "nofilter@npm:3.0.3"
+  checksum: c13974cf064179f5574dc4ff2c4e26ff3dedf06309715ea888e92ab2947e2a1068f22b9597a2b79813d2d1958b63f65548b9ad4dbb7d9ab85c05d01a97d40333
+  languageName: node
+  linkType: hard
+
 "noop-logger@npm:^0.1.1":
   version: 0.1.1
   resolution: "noop-logger@npm:0.1.1"
@@ -21710,6 +21764,17 @@ fsevents@~2.1.1:
     object-assign: ^4.1.1
     react-is: ^16.8.1
   checksum: 5eef82fdda64252c7e75aa5c8cc28a24bbdece0f540adb60ce67c205cf978a5bd56b83e4f269f91c6e4dcfd80b36f2a2dec24d362e278913db2086ca9c6f9430
+  languageName: node
+  linkType: hard
+
+"proper-lockfile@npm:^4.1.1":
+  version: 4.1.2
+  resolution: "proper-lockfile@npm:4.1.2"
+  dependencies:
+    graceful-fs: ^4.2.4
+    retry: ^0.12.0
+    signal-exit: ^3.0.2
+  checksum: 00078ee6a61c216a56a6140c7d2a98c6c733b3678503002dc073ab8beca5d50ca271de4c85fca13b9b8ee2ff546c36674d1850509b84a04a5d0363bcb8638939
   languageName: node
   linkType: hard
 
@@ -24271,6 +24336,13 @@ resolve@^2.0.0-next.3:
   bin:
     solcjs: solcjs
   checksum: 041da7ff725c19023ef34a17f83b3303971d2e62bcea9d0fd3c7af728d6f40ff7cdf2b806d0208a3336d3c9be18c321955e1712ab39ee57390ba00d512def946
+  languageName: node
+  linkType: hard
+
+"solidity-ast@npm:^0.4.15":
+  version: 0.4.26
+  resolution: "solidity-ast@npm:0.4.26"
+  checksum: bfd07ea806fa3989a91f496457969afb292b840a74b0c4015ea16d9ff861091454e1ce3931e667bcbf8aa5c64f10b932fbe8ce50a4b594a031072ebd1938f948
   languageName: node
   linkType: hard
 
