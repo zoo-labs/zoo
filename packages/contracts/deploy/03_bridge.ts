@@ -1,4 +1,4 @@
-// deploy/09_bridge.ts
+// deploy/03_bridge.ts
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
@@ -9,12 +9,11 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const [deployer] = await ethers.getSigners()
 
-  const tokenAddress = (await deployments.get('ZooTokenV2')).address
+  // const tokenAddress = (await deployments.get('ZooTokenV2')).address
 
   await deploy('Bridge', {
-    // nonce: nonce,
     from: deployer.address,
-    args: [tokenAddress],
+    args: [],
     log: true
   })
 }
@@ -22,4 +21,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 export default func
 func.id = 'bridge'
 func.tags = ['Bridge']
-func.dependencies = ['Token']
+func.dependencies = []

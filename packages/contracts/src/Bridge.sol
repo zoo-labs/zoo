@@ -3,7 +3,6 @@
 pragma solidity >=0.8.4;
 
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
-import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
 import { ZooKeeper } from "./ZooKeeper.sol";
 import { IERC20Burnable } from "./interfaces/IERC20Burnable.sol";
 import { IZoo } from "./interfaces/IZoo.sol";
@@ -11,11 +10,6 @@ import { IZoo } from "./interfaces/IZoo.sol";
 import "./console.sol";
 
 contract Bridge is Ownable {
-    using Counters for Counters.Counter;
-
-    Counters.Counter private tokenIDs;
-    Counters.Counter private txIDs;
-
     // Supported token types
     enum Type {
         ERC20,

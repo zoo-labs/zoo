@@ -1,4 +1,4 @@
-// deploy/05_auction.ts
+// deploy/06_auction.ts
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'

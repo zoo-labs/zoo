@@ -1,4 +1,4 @@
-// deploy/03_zookeeper.ts
+// deploy/04_zookeeper.ts
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
@@ -8,6 +8,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deploy } = deployments
   const { deployer } = await getNamedAccounts()
 
+  const bridgeAddress = (await deployments.get('Bridge')).address
   const tokenAddress = (await deployments.get('ZooTokenV2')).address
   const marketAddress = (await deployments.get('Market')).address
   const mediaAddress = (await deployments.get('Media')).address
@@ -22,6 +23,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const keeperAddress = deployResult.address
 
+  const bridge = await ethers.getContractAt('Bridge', bridgeAddress)
   const token = await ethers.getContractAt('ZooTokenV2', tokenAddress)
   const keeper = await ethers.getContractAt('ZooKeeper', keeperAddress)
   const market = await ethers.getContractAt('Market', marketAddress)
@@ -30,7 +32,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // Configure contracts to talk to each other
   market.configure(keeperAddress, mediaAddress)
   media.configure(keeperAddress, marketAddress)
-  keeper.configure(marketAddress, mediaAddress, tokenAddress)
+  keeper.configure(marketAddress, mediaAddress, tokenAddress, bridgeAddress)
 
   // Mint ZOO to keeper for yield
   token.mint(keeperAddress, 1000000000000)
@@ -39,4 +41,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 export default func
 func.id = 'zookeeper'
 func.tags = ['ZooKeeper']
-func.dependencies = ['ZooTokenV2', 'Media', 'Market']
+func.dependencies = ['ZooTokenV2', 'Bridge', 'Media', 'Market']
