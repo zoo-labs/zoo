@@ -39,27 +39,7 @@ const generateTokens = (token: any, count: number = 2, custom: TokenCustomizatio
 }
 
 describe.only('Bridge', function () {
-  it('it should swap tokens', async function () {
-    const { signers, tokens } = await setupTest()
 
-    const bridge = tokens.Bridge
-    const token = tokens.ZooTokenV2
-    token.configure(bridge.address)
-
-    const [user1, user2] = signers
-    const address1 = user1.address
-    const address2 = user2.address
-
-    // Mint tokens to user1
-    token.mint(address1, 10000)
-    await token.approve(bridge.address, 200)
-
-    const [tokenA, tokenB] = generateTokens(token, 2)
-    await bridge.setToken(tokenA)
-    await bridge.setToken(tokenB)
-
-    await expect(bridge.swap(tokenA, tokenB, address2, 100, 1)).to.not.be.rejected
-  })
 
   it('explodes if not approved', async () => {
     const {
@@ -116,7 +96,7 @@ describe.only('Bridge', function () {
     let execGoodSwap: () => Promise<any>;
 
     beforeEach(async () => {
-      const { signers: s, tokens: { Bridge, ZooTokenV2 } } = await setupTest();
+      const { signers: s, owner, tokens: { Bridge, ZooTokenV2 } } = await setupTest();
       signers = s;
       bridge = Bridge;
       token = ZooTokenV2;
@@ -180,6 +160,7 @@ describe.only('Bridge', function () {
       const [user1] = signers;
       await token.approve(bridge.address, 200)
       const [tokenA, tokenB] = generateTokens(token, 2, {})
+
       bridge.setToken(tokenA);
       bridge.setToken(tokenB);
 
@@ -212,6 +193,28 @@ describe.only('Bridge', function () {
         bridge.swap(tokenA, tokenB, user1.address, 100, 1)
       ).to.be.rejectedWith("Nonce already used")
     });
+
+    it('it should swap tokens', async function () {
+      const { signers, tokens } = await setupTest()
+
+      const bridge = tokens.Bridge
+      const token = tokens.ZooTokenV2
+      token.configure(bridge.address)
+
+      const [user1, user2] = signers
+      const address1 = user1.address
+      const address2 = user2.address
+
+      // Mint tokens to user1
+      token.mint(address1, 10000)
+      await token.approve(bridge.address, 200)
+
+      const [tokenA, tokenB] = generateTokens(token, 2)
+      await bridge.setToken(tokenA)
+      await bridge.setToken(tokenB)
+
+      await expect(bridge.swap(tokenA, tokenB, address2, 100, 1)).to.not.be.rejected
+    })
 
     it('throws a swap event with a successful swap', async () => {
       const tx = await execGoodSwap();

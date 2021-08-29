@@ -4,7 +4,7 @@ pragma solidity >=0.8.4;
 
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { ZooKeeper } from "./ZooKeeper.sol";
-import { IERC20Burnable } from "./interfaces/IERC20Burnable.sol";
+import { IERC20Bridgable } from "./interfaces/IERC20Bridgable.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { IZoo } from "./interfaces/IZoo.sol";
@@ -151,7 +151,7 @@ contract Bridge is Ownable {
         console.log("burn", token.tokenAddress, owner, amount);
 
         if (token.kind == Type.ERC20) {
-            IERC20Burnable(token.tokenAddress).burnFrom(owner, amount);
+            IERC20Bridgable(token.tokenAddress).bridgeBurn(owner, amount);
         } else if (token.kind == Type.ERC721) {
             // ZooKeeper(token.tokenAddress).swap(owner, token.id);
         }
@@ -167,8 +167,8 @@ contract Bridge is Ownable {
 
         if (token.kind == Type.ERC20) {
             uint256 fee = daoShare.div(10000).mul(amount);
-            IERC20Burnable(token.tokenAddress).mint(owner, amount.sub(fee));
-            IERC20Burnable(token.tokenAddress).mint(daoAddress, fee);
+            IERC20Bridgable(token.tokenAddress).bridgeMint(owner, amount.sub(fee));
+            IERC20Bridgable(token.tokenAddress).bridgeMint(daoAddress, fee);
         } else {
             // ZooKeeper(token.id).remint(owner, token, token.chainID);
         }
