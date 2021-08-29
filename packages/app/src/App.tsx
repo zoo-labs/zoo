@@ -25,10 +25,15 @@ import useWeb3 from 'hooks/useWeb3'
 import { mapEgg, mapAnimal, queryEggs, queryAnimals } from 'util/moralis'
 import Header from 'components/Header'
 import indexRoutes from 'routes'
+
 import { createBrowserHistory } from 'history'
 // import 'swiper/swiper.min.css'
 // import 'swiper/components/pagination/pagination.min.css'
-const Login = lazy(() => import('./views/Login'))
+
+const Account = lazy(() => import('./views/Account'))
+const Login   = lazy(() => import('./views/Login'))
+const Bank    = lazy(() => import('./views/Bank'))
+const Feed    = lazy(() => import('./views/Feed'))
 
 // This config is required for number formating
 BigNumber.config({

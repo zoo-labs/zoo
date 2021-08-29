@@ -5,9 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Moralis from 'moralis'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/swiper.min.css'
-import 'swiper/components/pagination/pagination.min.css'
+
+import { Swiper, Slide } from 'components/Swiper'
 
 import useWeb3 from 'hooks/useWeb3'
 import { Text, Card as Existing, EggCard, VideoPlayer } from 'components'
@@ -235,9 +234,9 @@ const MyZooAccount: React.FC = () => {
               <Swiper slidesPerView={document.body.getBoundingClientRect().width / 220} spaceBetween={4} pagination={{ clickable: true }}>
                 {animals.map((animal) => {
                   return (
-                    <SwiperSlide style={{ width: '220px', display: 'flex' }} key={animal.tokenID}>
-                      <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding, breedClick: () => null }} />
-                    </SwiperSlide>
+                    <Slide style={{ width: '220px', display: 'flex' }} key={animal.tokenID}>
+                      <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding }} />
+                    </Slide>
                   )
                 })}
               </Swiper>
@@ -296,10 +295,10 @@ const MyZooAccount: React.FC = () => {
           ) : (
             <Swiper slidesPerView={document.body.getBoundingClientRect().width / 150} spaceBetween={4} pagination={{ clickable: true }}>
               {eggData.map((egg) => (
-                <SwiperSlide className='account__animal-slide' style={{ width: '220px', display: 'flex' }} key={egg.tokenID}>
+                <Slide className='account__animal-slide' style={{ width: '220px', display: 'flex' }} key={egg.tokenID}>
                   {/* <CardWrapper> */}
                   <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
-                </SwiperSlide>
+                </Slide>
               ))}
             </Swiper>
           )}
