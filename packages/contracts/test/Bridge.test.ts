@@ -40,6 +40,7 @@ const generateTokens = (token: any, count: number = 2, custom: TokenCustomizatio
 
 describe.only('Bridge', function () {
   describe('setToken', async () => {
+
     it('allows owner to set token', async () => {
       const {
         tokens: { Bridge, ZooV2 },
@@ -48,6 +49,7 @@ describe.only('Bridge', function () {
       ZooV2.configure(Bridge.address)
       await expect(Bridge.setToken(tokenA)).to.not.be.rejected
     })
+
     it('setToken with enabled = true emits AddToken event', async () => {
       const {
         tokens: { Bridge, ZooV2 },
@@ -62,6 +64,7 @@ describe.only('Bridge', function () {
       expect(tx.events[0].args[0]).to.be.equal(tokenA.chainID);
       expect(tx.events[0].args[1]).to.be.eql(tokenA.tokenAddress);
     })
+
     it('setToken with enabled = false emits RemoveToken event', async () => {
       const {
         tokens: { Bridge, ZooV2 },
@@ -76,6 +79,7 @@ describe.only('Bridge', function () {
       expect(tx.events[0].args[0]).to.be.equal(tokenA.chainID);
       expect(tx.events[0].args[1]).to.be.eql(tokenA.tokenAddress);
     })
+
     it('forbids setting Chain ID to address 0', async () => {
       const {
         tokens: { Bridge, ZooV2 },
@@ -84,6 +88,7 @@ describe.only('Bridge', function () {
       ZooV2.configure(Bridge.address)
       await expect(Bridge.setToken(tokenA)).to.be.rejectedWith('Chain ID must not be zero')
     })
+
     it('forbids setting token address to address 0', async () => {
       const {
         tokens: { Bridge, ZooV2 },
@@ -92,6 +97,7 @@ describe.only('Bridge', function () {
       ZooV2.configure(Bridge.address)
       await expect(Bridge.setToken(tokenA)).to.be.rejectedWith('Token address must not be zero')
     })
+
     it('forbids any non-owner permission', async () => {
       const {
         signers,
