@@ -70,23 +70,16 @@ const {
 
   })
 
-  it('only allows the owner to call swap', async () => {
+  it('only allows the owner to call setToken', async () => {
     const {
       signers,
       tokens: { Bridge, ZooTokenV2 },
     } = await setupTest()
-    const [user1, user2] = signers
-    const [tokenA, tokenB] = generateTokens(ZooTokenV2, 2)
-
-    await Bridge.setToken(tokenA)
-    await Bridge.setToken(tokenB)
-    await ZooTokenV2.mint(user1.address, 10000);
-    await ZooTokenV2.approve(Bridge.address, 200)
+    const [_user1, user2] = signers
+    const [tokenA] = generateTokens(ZooTokenV2, 1)
     ZooTokenV2.configure(Bridge.address);
-
     const bridge = Bridge.connect(user2);
 
-    await expect(bridge.swap(tokenA, tokenB, user2.address, 100, 1))
-      .to.rejectedWith('Ownable: caller is not the owner');
+    await expect(bridge.setToken(tokenA)).to.be.rejectedWith('Ownable: caller is not the owner')
   })
 })
