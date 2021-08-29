@@ -12,11 +12,11 @@ describe.only('Bridge', function () {
 
     const bridge = tokens.Bridge
     const token = tokens.ZooTokenV2
-    //console.log(token, bridge)
 
     const [user1, user2] = signers
-    const address1 = await user1.getAddress()
-    const address2 = await user2.getAddress()
+    console.log('user1', user1.address)
+    const address1 = user1.address
+    const address2 = user2.address
 
     console.log('minting')
     // Mint tokens to user1
