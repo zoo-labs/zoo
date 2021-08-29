@@ -39,22 +39,6 @@ const generateTokens = (token: any, count: number = 2, custom: TokenCustomizatio
 }
 
 describe.only('Bridge', function () {
-  it('explodes if not approved', async () => {
-    const {
-      signers,
-      tokens: { Bridge, ZooV2 },
-    } = await setupTest()
-    const [user1, user2] = signers
-    ZooV2.mint(user1.address, 100)
-    ZooV2.configure(Bridge.address)
-
-    const [tokenA, tokenB] = generateTokens(ZooV2, 2, {})
-
-    await Bridge.setToken(tokenA)
-    await Bridge.setToken(tokenB)
-    await expect(Bridge.swap(tokenA, tokenB, user2.address, 100, 1)).to.rejectedWith('ERC20: burn amount exceeds allowance')
-  })
-
   describe('setToken', async () => {
     it('allows owner to set token', async () => {
       const { tokens: { Bridge, ZooV2 } } = await setupTest();
@@ -62,13 +46,13 @@ describe.only('Bridge', function () {
       ZooV2.configure(Bridge.address);
       await expect(Bridge.setToken(tokenA)).to.not.be.rejected;
     })
-    it('forbigs setting Chain ID to address 0', async () => {
+    it('forbids setting Chain ID to address 0', async () => {
       const { tokens: { Bridge, ZooV2 } } = await setupTest();
       const [tokenA] = generateTokens(ZooV2, 1, {chainID: ZERO_ADDRESS})
       ZooV2.configure(Bridge.address);
       await expect(Bridge.setToken(tokenA)).to.be.rejectedWith('Chain ID must not be zero')
     })
-    it('forbigs setting token address to address 0', async () => {
+    it('forbids setting token address to address 0', async () => {
       const { tokens: { Bridge, ZooV2 } } = await setupTest();
       const [tokenA] = generateTokens(ZooV2, 1, {tokenAddress: ZERO_ADDRESS})
       ZooV2.configure(Bridge.address);
@@ -118,12 +102,12 @@ describe.only('Bridge', function () {
       // bridge.mint(token, s[0].address, 1000);
     it('cannot swap tokens on a different chainID', async () => {
       const [user1] = signers;
-      const [tokenA] = generateTokens(token, 2, {chainID: 1338})
-      bridge.setToken(token);
+      const [tokenA, tokenB] = generateTokens(token, 2, {chainID: 1338})
       bridge.setToken(tokenA);
+      bridge.setToken(tokenB);
 
       await token.approve(bridge.address, 200)
-      await expect(bridge.swap(token, tokenA, user1.address, 100, 1)).to.be.rejectedWith("Not tokens we can swap")
+      await expect(bridge.swap(tokenA, tokenB, user1.address, 100, 1)).to.be.rejectedWith("Wrong chain")
     });
 
     it('cannot swap a disabled token', async () => {
@@ -227,7 +211,7 @@ describe.only('Bridge', function () {
 
       expect(tx).not.to.be.null;
       expect(tx.events).not.to.be.null
-      expect(tx.events[1].event).to.be.eql("Burn");
+      expect(tx.events[tx.events.length - 1].event).to.be.eql("Burn");
     });
 
     it('throws a mint event if the from token is on a different chain', async () => {
@@ -242,7 +226,7 @@ describe.only('Bridge', function () {
       const txn = await bridge.swap(tokenA, tokenB, user1.address, 100, 1);
       const tx = await txn.wait();
 
-      expect(tx.events[1].event).to.be.eql("Mint");
+      expect(tx.events[tx.events.length - 1].event).to.be.eql("Mint");
     })
 
   });

@@ -119,9 +119,7 @@ contract Bridge is Ownable {
 
         // Save transaction
         Transaction memory t = Transaction(0, tokenA, tokenB, msg.sender, recipient, amount, nonce);
-        console.log("txID");
         t.id = txID(t);
-        console.log("txID", t.id);
 
         // Ensure this is a new swap request
         // There could be an error here as the transaction itself is created
@@ -137,7 +135,7 @@ contract Bridge is Ownable {
         if (currentChain(tokenA.chainID)) {
             console.log("burn", msg.sender, amount);
             burn(tokenA, msg.sender, amount);
-        }
+        } else
 
         // Mint new tokens
         if (currentChain(tokenB.chainID)) {
