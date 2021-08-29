@@ -1,6 +1,6 @@
 // @ts-ignore
 import { ethers, deployments } from 'hardhat'
-import { Auction, Market, Media, Market__factory, Media__factory, ZooTokenV2__factory, ZooKeeper__factory, BadBidder, BadERC721, TestERC721, ZooTokenV2 } from '../types'
+import { Auction, Market, Media, Market__factory, Media__factory, FarmTokenV2__factory, ZooKeeper__factory, BadBidder, BadERC721, TestERC721, ZooV2 } from '../types'
 import { sha256 } from 'ethers/lib/utils'
 import Decimal from '../utils/Decimal'
 import { BigNumber, BigNumberish, Contract } from 'ethers'
@@ -66,19 +66,19 @@ export const setupTestFactory = (contractArr: string[]) =>
   })
 
 export async function deployCurrency() {
-  const currency = await new ZooTokenV2__factory(deployerWallet).deploy()
+  const currency = await new FarmTokenV2__factory(deployerWallet).deploy()
   return currency.address
 }
 
 export async function mintCurrency(currency: string, to: string, value: number) {
-  await ZooTokenV2__factory.connect(currency, deployerWallet).mint(to, value)
+  await FarmTokenV2__factory.connect(currency, deployerWallet).mint(to, value)
 }
 
 export async function approveCurrency(currency: string, spender: string, owner: Wallet) {
-  await ZooTokenV2__factory.connect(currency, owner).approve(spender, MaxUint256)
+  await FarmTokenV2__factory.connect(currency, owner).approve(spender, MaxUint256)
 }
 export async function getBalance(currency: string, owner: string) {
-  return ZooTokenV2__factory.connect(currency, deployerWallet).balanceOf(owner)
+  return FarmTokenV2__factory.connect(currency, deployerWallet).balanceOf(owner)
 }
 
 export function toNumWei(val: BigNumber) {
@@ -232,12 +232,12 @@ export const ONE_ZOO = ethers.utils.parseUnits('1', 'ether') as BigNumber
 export const TWO_ZOO = ethers.utils.parseUnits('2', 'ether') as BigNumber
 
 export const deployToken = async () => {
-  return (await (await ethers.getContractFactory('ZooTokenV2')).deploy()) as ZooTokenV2
+  return (await (await ethers.getContractFactory('ZooV2')).deploy()) as ZooV2
 }
 
 export const deployProtocol = async (tokenAddress) => {
   const [deployer] = await ethers.getSigners()
-  const token = await (await new ZooTokenV2__factory(deployer).deploy()).deployed()
+  const token = await (await new FarmTokenV2__factory(deployer).deploy()).deployed()
   // const drop = await (await new ZooDrop__factory(deployer).deploy()).deployed();
   const market = await (await new Market__factory(deployer).deploy()).deployed()
   const media = await (await new Media__factory(deployer).deploy('ANML', 'ZooAnimals')).deployed()
