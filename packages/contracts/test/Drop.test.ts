@@ -1,5 +1,5 @@
 import { ethers } from 'hardhat'
-import { ZooDrop } from '../types/ZooDrop'
+import { Drop } from '../types/Drop'
 import chai, { expect } from 'chai'
 import { BigNumber, Bytes, BytesLike, utils } from 'ethers'
 
@@ -11,16 +11,16 @@ let owner
 const TOKEN_URI = 'idx.zoolabs.io/token/'
 const META_URI = 'idx.zoolabs.io/meta/'
 
-describe('ZooDrop', () => {
+describe('Drop', () => {
   beforeEach(async () => {
     signers = await ethers.getSigners()
     owner = signers[0]
 
-    // Deploy zoodrop
-    const ZooDrop = await ethers.getContractFactory('ZooDrop', owner)
-    drop = await ZooDrop.deploy('Gen1')
+    // Deploy drop
+    const Drop = await ethers.getContractFactory('Drop', owner)
+    drop = await Drop.deploy('Gen1')
 
-    // Set default eggs on ZooDrop
+    // Set default eggs on Drop
     const eggs = [
       {
         name: 'baseEgg',
