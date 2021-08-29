@@ -27,22 +27,22 @@ export const getZooKeeper = (web3?: Web3) => {
   return getContract('ZooKeeper', web3)
 }
 
-export const getZooDrop = (web3?: Web3) => {
-  return getContract('ZooDrop', web3)
+export const getDrop = (web3?: Web3) => {
+  return getContract('Drop', web3)
 }
 
-export const getZooMedia = (web3?: Web3) => {
-  return getContract('ZooMedia', web3)
+export const getMedia = (web3?: Web3) => {
+  return getContract('Media', web3)
 }
 
-export const getZooMarket = (web3?: Web3) => {
-  return getContract('ZooMarket', web3)
+export const getMarket = (web3?: Web3) => {
+  return getContract('Market', web3)
 }
 
-export const getZooAuction = (web3?: Web3) => {
-  return getContract('ZooAuction', web3)
+export const getAuction = (web3?: Web3) => {
+  return getContract('Auction', web3)
 }
 
-export const getZooFaucet = (web3?: Web3) => {
-  return getContract('ZooFaucet', web3)
+export const getFaucet = (web3?: Web3) => {
+  return getContract('Faucet', web3)
 }

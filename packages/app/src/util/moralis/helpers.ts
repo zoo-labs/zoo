@@ -1,9 +1,10 @@
-import Moralis from 'moralis'
+import { Moralis, Object, Attributes } from 'moralis'
 
 declare type DefaultQueryAttribute = Moralis.Attributes
 declare type Query<Entity extends DefaultQueryAttribute = DefaultQueryAttribute> = Moralis.Query<Moralis.Object<Entity>>
+declare type QueryPromise = Promise<Moralis.Object<Moralis.Attributes>[]>
 
-export function queryEggs(): any {
+export function queryEggs(): QueryPromise {
   const Eggs = Moralis.Object.extend('Eggs')
   const query = new Moralis.Query(Eggs)
   query.limit(1000)
@@ -11,7 +12,7 @@ export function queryEggs(): any {
   return query.find()
 }
 
-export function queryAnimals(): any {
+export function queryAnimals(): QueryPromise {
   const Animals = Moralis.Object.extend('Animals')
   const query = new Moralis.Query(Animals)
   query.limit(1000)

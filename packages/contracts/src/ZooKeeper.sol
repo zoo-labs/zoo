@@ -30,6 +30,10 @@ contract ZooKeeper is Ownable {
     event Hatch(address indexed from, uint256 eggID, uint256 indexed tokenID);
     event Mint(address indexed from, uint256 indexed tokenID);
 
+
+    event Swap(address indexed owner, uint256 indexed tokenID, uint indexed chainID);
+    event Remint(address indexed owner, uint256 indexed tokenID, uint indexed chainID);
+
     // Mapping of Address to Drop ID
     mapping(uint256 => address) public drops;
 
@@ -46,11 +50,18 @@ contract ZooKeeper is Ownable {
     IMarket public market;
     IMedia public media;
     IERC20 public zoo;
+    address public bridge;
 
-    function configure(address _market, address _media, address _zoo) public onlyOwner {
+    modifier onlyBridge {
+        require(msg.sender == bridge);
+        _;
+    }
+
+    function configure(address _market, address _media, address _zoo, address _bridge) public onlyOwner {
         market = IMarket(_market);
         media = IMedia(_media);
         zoo = IERC20(_zoo);
+        bridge = _bridge;
     }
 
     function setDrop(address dropAddress) public returns (uint256) {
@@ -80,8 +91,23 @@ contract ZooKeeper is Ownable {
     function burn(address owner, uint256 tokenID) private {
         console.log("burn", owner, tokenID);
         media.burnToken(owner, tokenID);
-        // delete tokens[tokenID];
+        tokens[tokenID].meta.burned = true;
         emit Burn(owner, tokenID);
+    }
+
+    // Swap to new chain requested
+    function swap(address owner, uint256 tokenID, uint chainID) external onlyBridge {
+        console.log("swap", owner, tokenID);
+        burn(owner, tokenID);
+        tokens[tokenID].meta.swapped = true;
+        emit Swap(owner, tokenID, chainID);
+    }
+
+    // Swap from new chain requested
+    function remint(address owner, IZoo.Token memory token, uint chainID) external onlyBridge {
+        console.log("remint", owner, token.id, chainID);
+        token = mint(owner, token);
+        emit Remint(owner, token.id, chainID);
     }
 
     // Accept ZOO and return Egg NFT
