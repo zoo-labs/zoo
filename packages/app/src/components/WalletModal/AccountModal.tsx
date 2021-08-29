@@ -15,7 +15,7 @@ import { Modal, ModalCloseButton } from '../Modal'
 import CopyToClipboard from './CopyToClipboard'
 import { FaExchangeAlt } from 'react-icons/fa'
 import useWeb3 from 'hooks/useWeb3'
-import { getFaucet, getZooToken } from 'util/contracts'
+import { getFaucet, getToken } from 'util/contracts'
 import AltModal from 'components/Modal/AltModal'
 import { numberWithCommas } from 'components/Functions'
 import { CloseIcon } from 'components/Svg'
@@ -80,7 +80,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
   const web3 = useWeb3()
   const mobile = isSm || isXs
   const moreSpace = mobile && !bscType
-  const zooToken = getZooToken(web3)
+  const zooToken = getToken(web3)
   const faucet = getFaucet(web3)
   const faucetAmt = web3.utils.toWei('50')
   const { onPresentWalletModal } = useWalletModal()
