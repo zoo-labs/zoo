@@ -80,6 +80,7 @@ contract Bridge is Ownable {
         token.id = tokenID(token);
         tokens[token.id] = token;
 
+
         if (enabledToken(token)) {
             emit AddToken(token.chainID, token.tokenAddress);
         } else {
@@ -100,7 +101,11 @@ contract Bridge is Ownable {
         t.id = txID(t);
 
         // Ensure this is a new swap request
+        // There could be an error here as the transaction itself is created
+        // and then this check is run.
+        // TODO: revert the swap
         require(transactions[t.id].nonce != nonce, "Nonce already used");
+        transactions[t.id] = t;
 
         // Emit all swap related events so listening contracts can mint on other side
         emit Swap(tokenID(tokenA), tokenID(tokenB), t.id, msg.sender, recipient, amount);
