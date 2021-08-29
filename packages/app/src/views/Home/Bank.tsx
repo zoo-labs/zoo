@@ -13,7 +13,7 @@ import { CheckmarkCircleIcon, Flex, Heading } from 'components'
 import Body from 'components/layout/Body'
 import { useModal } from 'components/Modal'
 import BuyEggs from 'components/BuyEggs'
-import { getZooToken, getFaucet } from 'util/contracts'
+import { getToken, getFaucet } from 'util/contracts'
 import { useMatchBreakpoints } from 'components'
 import { FaHome } from 'react-icons/fa'
 import Moralis from 'moralis'
@@ -205,8 +205,8 @@ const Bank: React.FC = () => {
   const [transactions, setTransactions] = useState([])
   const [waitTx, setWaitTx] = useState(true)
 
-  const zooToken = getZooToken(web3)
-  const faucet = getZooFaucet(web3)
+  const zooToken = getToken(web3)
+  const faucet = getFaucet(web3)
 
   const accountAnimals = Object.values(animalsState).filter((animal) => {
     return animal.owner && animal.owner.toLowerCase() === account.toLowerCase()

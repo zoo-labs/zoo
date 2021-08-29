@@ -19,7 +19,7 @@ export const getContract = (name: string, web3?: Web3) => {
 }
 
 // Helpers
-export const getZooToken = (web3?: Web3) => {
+export const getToken = (web3?: Web3) => {
   return getContract('ZooToken', web3)
 }
 

@@ -2,7 +2,7 @@ import { numberWithCommas } from 'components/Functions'
 import { useWeb3 } from 'hooks'
 import useToast from 'hooks/useToast'
 import React, { useEffect, useState } from 'react'
-import { getZooFaucet, getZooToken } from 'util/contracts'
+import { getFaucet, getToken } from 'util/contracts'
 import Account from './Account'
 import Bank from './Bank'
 
@@ -15,12 +15,12 @@ const index: React.FC<indexProps> = ({}) => {
   const [balance, setBalance] = useState(0.0)
 
   const [wait, setWait] = useState(false)
-  const faucet = getZooFaucet(web3)
+  const faucet = getFaucet(web3)
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const toastClear = () => {
     clear()
   }
-  const zooToken = getZooToken(web3)
+  const zooToken = getToken(web3)
 
   const getBalance = async () => {
     try {
