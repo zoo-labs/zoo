@@ -5,7 +5,7 @@
       "chainId": "1337",
       "contracts": {
         "Auction": {
-          "address": "0x73CE5DB40ef535edeb8986EC3060BFCbF62114fb",
+          "address": "0x7C6Ab56Dd30d25d728A1A2A4993405DaB5E9Da32",
           "abi": [
             {
               "anonymous": false,
@@ -641,7 +641,18 @@
           "address": "0xb3C26aAFa12DeBE5EcFd5dA4D71E9910586dDAF7",
           "abi": [
             {
-              "inputs": [],
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_daoAddress",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "_daoShare",
+                  "type": "uint256"
+                }
+              ],
               "stateMutability": "nonpayable",
               "type": "constructor"
             },
@@ -806,6 +817,32 @@
               ],
               "name": "Swap",
               "type": "event"
+            },
+            {
+              "inputs": [],
+              "name": "daoAddress",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "daoShare",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
             },
             {
               "inputs": [
@@ -1162,7 +1199,7 @@
           ]
         },
         "DAO": {
-          "address": "0x74F9551f99ce5cC3f84B43765495BAD7d325F9f0",
+          "address": "0xaF16f94DEAe27a46F6A157CBd1b3C85F14CF0Cb8",
           "abi": [
             {
               "inputs": [
@@ -1860,7 +1897,7 @@
           ]
         },
         "Drop": {
-          "address": "0x247124065114a03Cf51898b21F20C6C1Cf50679A",
+          "address": "0x5153D1A35d295a5C860E5721a6100E601f289e2a",
           "abi": [
             {
               "inputs": [
@@ -3919,7 +3956,7 @@
           ]
         },
         "Farm": {
-          "address": "0x653a83CaCa8D49134dE9931Fd5C2Ea4eC1D47752",
+          "address": "0x6fF4EB8f824dE2d2c1Aa4f646fbCf7E8E3a0df77",
           "abi": [
             {
               "inputs": [
@@ -4443,7 +4480,7 @@
           ]
         },
         "Faucet": {
-          "address": "0x7C6Ab56Dd30d25d728A1A2A4993405DaB5E9Da32",
+          "address": "0x86D9d34b581c3f5C954d7ee272A0eB46c8E1A803",
           "abi": [
             {
               "inputs": [
@@ -4582,7 +4619,7 @@
           ]
         },
         "Market": {
-          "address": "0x86D9d34b581c3f5C954d7ee272A0eB46c8E1A803",
+          "address": "0x351DcE5B0972f4E9b369e5Fc726295E37360ce19",
           "abi": [
             {
               "inputs": [],
@@ -5398,7 +5435,7 @@
           ]
         },
         "Media": {
-          "address": "0xaF16f94DEAe27a46F6A157CBd1b3C85F14CF0Cb8",
+          "address": "0x1D8A3bF24Fe919c90Af60fd1c722BB69B85a562e",
           "abi": [
             {
               "inputs": [
@@ -7071,7 +7108,7 @@
           ]
         },
         "ZooKeeper": {
-          "address": "0x351DcE5B0972f4E9b369e5Fc726295E37360ce19",
+          "address": "0xE5355bd4f87Fb825A79E712D93d171f60Ef0C3e0",
           "abi": [
             {
               "anonymous": false,
@@ -8763,7 +8800,7 @@
             }
           ]
         },
-        "ZooTokenV2": {
+        "ZooV2": {
           "address": "0x117FbB2f404e2F1e9FbaC0DdB372C25dD979bc60",
           "abi": [
             {
@@ -9022,6 +9059,55 @@
               "type": "function"
             },
             {
+              "inputs": [],
+              "name": "bridge",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "account",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "amount",
+                  "type": "uint256"
+                }
+              ],
+              "name": "bridgeBurn",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "to",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "value",
+                  "type": "uint256"
+                }
+              ],
+              "name": "bridgeMint",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
               "inputs": [
                 {
                   "internalType": "uint256",
@@ -9048,6 +9134,19 @@
                 }
               ],
               "name": "burnFrom",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_bridge",
+                  "type": "address"
+                }
+              ],
+              "name": "configure",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
