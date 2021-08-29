@@ -9,11 +9,11 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const [deployer] = await ethers.getSigners()
 
-  // const tokenAddress = (await deployments.get('ZooTokenV2')).address
+  const daoAddress = (await deployments.get('DAO')).address
 
   await deploy('Bridge', {
     from: deployer.address,
-    args: [],
+    args: [daoAddress, 25],
     log: true
   })
 }
@@ -21,4 +21,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 export default func
 func.id = 'bridge'
 func.tags = ['Bridge']
-func.dependencies = []
+func.dependencies = ['DAO']

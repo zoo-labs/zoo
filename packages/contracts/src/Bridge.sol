@@ -5,11 +5,17 @@ pragma solidity >=0.8.4;
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { ZooKeeper } from "./ZooKeeper.sol";
 import { IERC20Burnable } from "./interfaces/IERC20Burnable.sol";
+import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { IZoo } from "./interfaces/IZoo.sol";
+import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 import "./console.sol";
 
 contract Bridge is Ownable {
+    using SafeERC20 for IERC20;
+    using SafeMath for uint256;
+
     // Supported token types
     enum Type {
         ERC20,
@@ -49,7 +55,16 @@ contract Bridge is Ownable {
     event Burn(uint chainID, address tokenAddress, address from, uint256 amount);
     event Swap(uint256 tokenA, uint256 tokenB, uint256 txID, address sender, address recipient, uint256 amount);
 
-    constructor() { }
+    // DAO address
+    address public daoAddress;
+
+    // DAO share
+    uint256 public daoShare;
+
+    constructor(address _daoAddress, uint _daoShare) {
+        daoAddress = _daoAddress;
+        daoShare = _daoShare;
+    }
 
     // Hash chain, address to a unique identifier
     function tokenID(Token memory token) internal pure returns (uint256) {
@@ -133,7 +148,9 @@ contract Bridge is Ownable {
         require(currentChain(token.chainID), "Token not on chain");
 
         if (token.kind == Type.ERC20) {
-            IERC20Burnable(token.tokenAddress).mint(owner, amount);
+            uint256 fee = daoShare.div(10000).mul(amount);
+            IERC20Burnable(token.tokenAddress).mint(owner, amount.sub(fee));
+            IERC20Burnable(token.tokenAddress).mint(daoAddress, fee);
         } else {
             // ZooKeeper(token.id).remint(owner, token, token.chainID);
         }
