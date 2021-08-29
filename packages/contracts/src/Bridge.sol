@@ -88,17 +88,22 @@ contract Bridge is Ownable {
 
     // Enable swapping a new ERC20 token
     function setToken(Token memory token) public onlyOwner {
+        console.log("setToken", token.chainID, token.tokenAddress);
         require(token.tokenAddress != address(0), "Token address must not be zero");
+
         require(token.chainID != 0, "Chain ID must not be zero");
 
         // Update token configuration save ID
         token.id = tokenID(token);
         tokens[token.id] = token;
+        console.log("Save token");
 
-
+        console.log("Check enabled Token");
         if (enabledToken(token)) {
+            console.log("AddToken");
             emit AddToken(token.chainID, token.tokenAddress);
         } else {
+            console.log("RemoveToken");
             emit RemoveToken(token.chainID, token.tokenAddress);
         }
     }
@@ -106,6 +111,7 @@ contract Bridge is Ownable {
     // Swap from tokenA to tokenB on another chain. User initiated function, relies on msg.sender
     function swap(Token memory tokenA, Token memory tokenB, address recipient, uint256 amount, uint256 nonce) public {
         require(currentChain(tokenA.chainID) || currentChain(tokenB.chainID), "Wrong chain");
+        console.log("swap", msg.sender, recipient, nonce);
         require(enabledToken(tokenA), "Swap from token not enabled");
         require(enabledToken(tokenB), "Swap to token not enabled");
         require(amount > 0, "Amount must be greater than zero");
@@ -113,7 +119,9 @@ contract Bridge is Ownable {
 
         // Save transaction
         Transaction memory t = Transaction(0, tokenA, tokenB, msg.sender, recipient, amount, nonce);
+        console.log("txID");
         t.id = txID(t);
+        console.log("txID", t.id);
 
         // Ensure this is a new swap request
         // There could be an error here as the transaction itself is created
@@ -127,11 +135,13 @@ contract Bridge is Ownable {
 
         // Burn original tokens
         if (currentChain(tokenA.chainID)) {
+            console.log("burn", msg.sender, amount);
             burn(tokenA, msg.sender, amount);
         }
 
         // Mint new tokens
         if (currentChain(tokenB.chainID)) {
+            console.log("mint", msg.sender, amount);
             mint(tokenB, msg.sender, amount);
         }
     }

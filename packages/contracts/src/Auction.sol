@@ -38,7 +38,7 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
     // The address of the Media protocol to use via this contract
     address public mediaAddress;
 
-    // The address of the ZooToken contract
+    // The address of the Token contract
     address public tokenAddress;
 
     // A mapping of all of the auctions currently running.

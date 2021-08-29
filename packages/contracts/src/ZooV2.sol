@@ -10,7 +10,7 @@ import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.s
 import { AccessControl } from "@openzeppelin/contracts/access/AccessControl.sol";
 
 
-contract ZooTokenV2 is ERC20, ERC20Burnable, Ownable, AccessControl {
+contract ZooV2 is ERC20, ERC20Burnable, Ownable, AccessControl {
     using SafeERC20 for IERC20;
 
     bytes32 public constant BLACKLIST = keccak256("BLACKLIST");
@@ -70,7 +70,8 @@ contract ZooTokenV2 is ERC20, ERC20Burnable, Ownable, AccessControl {
         super._mint(to, value);
     }
 
-    function burnFrom(address owner, uint256 amount) public override onlyBridge {
-        super.burnFrom(owner, amount);
+    function burnFrom(address account, uint256 amount) public override onlyBridge {
+        _approve(account, msg.sender, amount);
+        _burn(account, amount);
     }
 }
