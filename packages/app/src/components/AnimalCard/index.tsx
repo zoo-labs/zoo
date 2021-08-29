@@ -112,7 +112,7 @@ const BidPriceInput = styled.input.attrs({
   margin-left: 15px;
 `
 
-export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, executeStackedBreeding, breedClick }: AnimalCardProps): JSX.Element => {
+export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, breedClick }: AnimalCardProps): JSX.Element => {
   const dispatch = useDispatch()
   const bid = useRef(100)
   let array = []
