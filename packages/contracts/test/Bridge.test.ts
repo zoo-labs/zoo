@@ -14,14 +14,13 @@ describe.only('Bridge', function () {
     const token = tokens.ZooTokenV2
 
     const [user1, user2] = signers
-    console.log('user1', user1.address)
     const address1 = user1.address
     const address2 = user2.address
 
-    console.log('minting')
     // Mint tokens to user1
-    token.mint(String(user1), 10000)
+    token.mint(address1, 10000)
 
+    const tokenB = token
     const tokenA = {
       kind: 0,
       id: 0,
@@ -30,16 +29,16 @@ describe.only('Bridge', function () {
       enabled: true,
     }
 
-    const tokenB = {
-      kind: 0,
-      id: 1,
-      chainID: 1338,
-      tokenAddress: token.address,
-      enabled: true,
-    }
+    // const tokenB = {
+    //   kind: 0,
+    //   id: 1,
+    //   chainID: 1338,
+    //   tokenAddress: token.address,
+    //   enabled: true,
+    // }
 
     await bridge.setToken(tokenA)
     await bridge.setToken(tokenB)
-    await bridge.swap(tokenA, tokenB, address2, 100, 1)
+    // await bridge.swap(tokenA, tokenB, address2, 100, 1)
   })
 })
