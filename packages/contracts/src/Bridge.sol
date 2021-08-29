@@ -3,8 +3,12 @@
 pragma solidity >=0.8.4;
 
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
-import { Swappable } from "./interfaces/Swappable.sol";
 import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
+import { ZooKeeper } from "./ZooKeeper.sol";
+import { IERC20Burnable } from "./interfaces/IERC20Burnable.sol";
+import { IZoo } from "./interfaces/IZoo.sol";
+
+import "./console.sol";
 
 contract Bridge is Ownable {
     using Counters for Counters.Counter;
@@ -54,22 +58,22 @@ contract Bridge is Ownable {
     constructor() { }
 
     // Hash chain, address to a unique identifier
-    function tokenID(Token memory token) internal returns (uint256) {
+    function tokenID(Token memory token) internal pure returns (uint256) {
         return uint256(keccak256(abi.encodePacked(token.chainID, token.tokenAddress)));
     }
 
     // Hash TX to unique identifier
-    function txID(Transaction memory t) internal returns (uint256) {
-        return uint256(keccak256(abi.encodePacked(block.timestamp, t.id, t.tokenA.chainID, t.tokenB.chainID, t.sender, t.recipient, t.amount, t.nonce)));
+    function txID(Transaction memory t) internal pure returns (uint256) {
+        return uint256(keccak256(abi.encodePacked(t.tokenA.id, t.tokenB.id, t.sender, t.recipient, t.amount, t.nonce)));
     }
 
     // Check if chain ID and token is supported
-    function enabledToken(Token memory token) internal returns (bool) {
+    function enabledToken(Token memory token) internal view returns (bool) {
         return tokens[tokenID(token)].enabled;
     }
 
     // Compare chain ID to local chain ID
-    function currentChain(uint _chainID) internal returns (bool) {
+    function currentChain(uint _chainID) internal view returns (bool) {
         return keccak256(abi.encodePacked(block.chainid)) == keccak256(abi.encodePacked(_chainID));
     }
 
@@ -91,7 +95,7 @@ contract Bridge is Ownable {
 
     // Swap from tokenA to tokenB on another chain. User initiated function, relies on msg.sender
     function swap(Token memory tokenA, Token memory tokenB, address recipient, uint256 amount, uint256 nonce) public {
-        require(!currentChain(tokenB.chainID), "We cannot swap to ourselves");
+        require(currentChain(tokenA.chainID) || !currentChain(tokenB.chainID), "Not tokens we can swap");
         require(enabledToken(tokenA), "Swap from token not enabled");
         require(enabledToken(tokenB), "Swap to token not enabled");
         require(amount > 0, "Amount must be greater than zero");
@@ -100,7 +104,9 @@ contract Bridge is Ownable {
         // Save transaction
         Transaction memory t = Transaction(0, tokenA, tokenB, msg.sender, recipient, amount, nonce);
         t.id = txID(t);
-        transactions[t.id] = t;
+
+        // Ensure this is a new swap request
+        require(transactions[t.id].nonce != nonce, "Nonce already used");
 
         // Emit all swap related events so listening contracts can mint on other side
         emit Swap(tokenID(tokenA), tokenID(tokenB), t.id, msg.sender, recipient, amount);
@@ -114,18 +120,29 @@ contract Bridge is Ownable {
     }
 
     // Internal function to burn token + emit event
-    function burn(Token memory token, address _from, uint256 _amount) internal {
-        require(currentChain(token.chainID), "Token not on chain");
-        tokens[tokenID(token)].burnFrom(_from, _amount);
-        emit Burn(_from, _amount);
+    function burn(Token memory token, address owner, uint256 amount) internal {
+        console.log("burn", token.tokenAddress, owner, amount);
+
+        if (token.kind == Type.ERC20) {
+            IERC20Burnable(token.tokenAddress).burnFrom(owner, amount);
+        } else if (token.kind == Type.ERC721) {
+            // ZooKeeper(token.tokenAddress).swap(owner, token.id);
+        }
+
+        emit Burn(token.chainID, token.tokenAddress, owner, token.id);
     }
 
     // Mint new tokens for user after burn + swap on alternate chain
-    function mint(Token memory token, address _to, uint256 _amount) public onlyOwner {
-        require(_to != address(0));
-        require(_amount > 0);
+    function mint(Token memory token, address owner, uint256 amount) public onlyOwner {
+        require(owner != address(0));
+        require(amount > 0);
         require(currentChain(token.chainID), "Token not on chain");
-        tokens[tokenID].mint(_to, _amount);
-        emit Mint(_to, _amount);
+
+        if (token.kind == Type.ERC20) {
+            IERC20Burnable(token.tokenAddress).mint(owner, amount);
+        } else {
+            // ZooKeeper(token.id).remint(owner, token, token.chainID);
+        }
+        emit Mint(token.chainID, token.tokenAddress, owner, amount);
     }
 }

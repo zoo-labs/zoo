@@ -265,7 +265,7 @@ contract Drop is Ownable {
             id: 0,
             customName: "",
             breed: IZoo.Breed(0, 0),
-            meta: IZoo.Meta(0, 0)
+            meta: IZoo.Meta(0, 0, false, false)
         });
     }
 
@@ -289,7 +289,7 @@ contract Drop is Ownable {
             id: 0,
             customName: "",
             breed: IZoo.Breed(0, 0),
-            meta: IZoo.Meta(0, 0)
+            meta: IZoo.Meta(0, 0, false, false)
         });
     }
 

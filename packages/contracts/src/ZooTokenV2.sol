@@ -22,15 +22,9 @@ contract ZooTokenV2 is ERC20, ERC20Burnable, Ownable, AccessControl {
      *     => 0xc87b56dd ^ 0x157c3df9 == 0x4e222e66
      */
     bytes4 private constant _INTERFACE_ID_ERC20 = 0x4e222e66;
+    // bytes4 private constant _INTERFACE_ID_SWAP = 0x4e222e66;
 
-    supportedInterfaces[this.supportsInterface.selector] = true;
-
-    function supportsInterface(bytes4 interfaceID) external view returns (bool) {
-        if (interfaceID == _INTERFACE_ID_SWAPPABLE_ERC20) {
-            return true
-        }
-        return false
-    }
+    // supportedInterfaces[this.supportsInterface.selector] = true;
 
     constructor () ERC20("Zoo", "ZOO") {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
