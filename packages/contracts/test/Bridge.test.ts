@@ -48,6 +48,34 @@ describe.only('Bridge', function () {
       ZooV2.configure(Bridge.address)
       await expect(Bridge.setToken(tokenA)).to.not.be.rejected
     })
+    it('setToken with enabled = true emits AddToken event', async () => {
+      const {
+        tokens: { Bridge, ZooV2 },
+      } = await setupTest()
+      const [tokenA] = generateTokens(ZooV2, 1, {enabled:true})
+      ZooV2.configure(Bridge.address)
+      const txn = await Bridge.setToken(tokenA)
+      const tx = await txn.wait()
+      expect(tx).not.to.be.null
+      expect(tx.events).not.to.be.null
+      expect(tx.events[0].event).to.be.eql('AddToken');
+      expect(tx.events[0].args[0]).to.be.equal(tokenA.chainID);
+      expect(tx.events[0].args[1]).to.be.eql(tokenA.tokenAddress);
+    })
+    it('setToken with enabled = false emits RemoveToken event', async () => {
+      const {
+        tokens: { Bridge, ZooV2 },
+      } = await setupTest()
+      const [tokenA] = generateTokens(ZooV2, 1, {enabled:false})
+      ZooV2.configure(Bridge.address)
+      const txn = await Bridge.setToken(tokenA)
+      const tx = await txn.wait()
+      expect(tx).not.to.be.null
+      expect(tx.events).not.to.be.null
+      expect(tx.events[0].event).to.be.eql('RemoveToken');
+      expect(tx.events[0].args[0]).to.be.equal(tokenA.chainID);
+      expect(tx.events[0].args[1]).to.be.eql(tokenA.tokenAddress);
+    })
     it('forbids setting Chain ID to address 0', async () => {
       const {
         tokens: { Bridge, ZooV2 },
@@ -176,7 +204,7 @@ describe.only('Bridge', function () {
       await expect(bridge.swap(tokenA, tokenB, user1.address, 100, 1)).to.be.rejectedWith('Nonce already used')
     })
 
-    it('it should swap tokens', async function () {
+    it('it swaps tokens successfully', async function () {
       const { signers, tokens } = await setupTest()
 
       const bridge = tokens.Bridge
