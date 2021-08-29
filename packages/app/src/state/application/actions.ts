@@ -30,7 +30,8 @@ export enum ApplicationModal {
   LANGUAGE,
   NETWORK,
   NEWANIMAL,
-  BREEDCONFIRM
+  BREEDCONFIRM,
+  VIDEOPLAYER
 }
 
 export const updateBlockNumber = createAction<{
