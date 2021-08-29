@@ -30,9 +30,9 @@ import { createBrowserHistory } from 'history'
 // import 'swiper/swiper.min.css'
 // import 'swiper/components/pagination/pagination.min.css'
 
-const Account = lazy(() => import('./views/Account'))
 const Login   = lazy(() => import('./views/Login'))
-const Bank    = lazy(() => import('./views/Bank'))
+const Home    = lazy(() => import('./views/Home'))
+// const Bank    = lazy(() => import('./views/Bank'))
 const Feed    = lazy(() => import('./views/Feed'))
 
 // This config is required for number formating
