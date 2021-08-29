@@ -2,7 +2,7 @@ import { requireDependencies, setupTestFactory } from './utils'
 
 const { expect } = requireDependencies()
 
-const setupTest = setupTestFactory(['Bridge', 'ZooTokenV2'])
+const setupTest = setupTestFactory(['Bridge', 'ZooV2'])
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -44,13 +44,13 @@ describe.only('Bridge', function () {
   it('explodes if not approved', async () => {
     const {
       signers,
-      tokens: { Bridge, ZooTokenV2 },
+      tokens: { Bridge, ZooV2 },
     } = await setupTest()
     const [user1, user2] = signers
-    ZooTokenV2.mint(user1.address, 100)
-    ZooTokenV2.configure(Bridge.address)
+    ZooV2.mint(user1.address, 100)
+    ZooV2.configure(Bridge.address)
 
-    const [tokenA, tokenB] = generateTokens(ZooTokenV2, 2, {})
+    const [tokenA, tokenB] = generateTokens(ZooV2, 2, {})
 
     await Bridge.setToken(tokenA)
     await Bridge.setToken(tokenB)
@@ -59,31 +59,31 @@ describe.only('Bridge', function () {
 
   describe('setToken', async () => {
     it('allows owner to set token', async () => {
-      const { tokens: { Bridge, ZooTokenV2 } } = await setupTest();
-      const [tokenA] = generateTokens(ZooTokenV2, 1)
-      ZooTokenV2.configure(Bridge.address);
+      const { tokens: { Bridge, ZooV2 } } = await setupTest();
+      const [tokenA] = generateTokens(ZooV2, 1)
+      ZooV2.configure(Bridge.address);
       await expect(Bridge.setToken(tokenA)).to.not.be.rejected;
     })
     it('forbigs setting Chain ID to address 0', async () => {
-      const { tokens: { Bridge, ZooTokenV2 } } = await setupTest();
-      const [tokenA] = generateTokens(ZooTokenV2, 1, {chainID: ZERO_ADDRESS})
-      ZooTokenV2.configure(Bridge.address);
+      const { tokens: { Bridge, ZooV2 } } = await setupTest();
+      const [tokenA] = generateTokens(ZooV2, 1, {chainID: ZERO_ADDRESS})
+      ZooV2.configure(Bridge.address);
       await expect(Bridge.setToken(tokenA)).to.be.rejectedWith('Chain ID must not be zero')
     })
     it('forbigs setting token address to address 0', async () => {
-      const { tokens: { Bridge, ZooTokenV2 } } = await setupTest();
-      const [tokenA] = generateTokens(ZooTokenV2, 1, {tokenAddress: ZERO_ADDRESS})
-      ZooTokenV2.configure(Bridge.address);
+      const { tokens: { Bridge, ZooV2 } } = await setupTest();
+      const [tokenA] = generateTokens(ZooV2, 1, {tokenAddress: ZERO_ADDRESS})
+      ZooV2.configure(Bridge.address);
       await expect(Bridge.setToken(tokenA)).to.be.rejectedWith('Token address must not be zero')
     })
     it('forbids any non-owner permission', async () => {
       const {
         signers,
-        tokens: { Bridge, ZooTokenV2 },
+        tokens: { Bridge, ZooV2 },
       } = await setupTest()
       const [_user1, user2] = signers
-      const [tokenA] = generateTokens(ZooTokenV2, 1)
-      ZooTokenV2.configure(Bridge.address)
+      const [tokenA] = generateTokens(ZooV2, 1)
+      ZooV2.configure(Bridge.address)
       const bridge = Bridge.connect(user2)
 
       await expect(bridge.setToken(tokenA)).to.be.rejectedWith('Ownable: caller is not the owner')
@@ -96,10 +96,10 @@ describe.only('Bridge', function () {
     let execGoodSwap: () => Promise<any>;
 
     beforeEach(async () => {
-      const { signers: s, owner, tokens: { Bridge, ZooTokenV2 } } = await setupTest();
+      const { signers: s, owner, tokens: { Bridge, ZooV2 } } = await setupTest();
       signers = s;
       bridge = Bridge;
-      token = ZooTokenV2;
+      token = ZooV2;
       token.configure(bridge.address);
       await token.mint(s[0].address, 1000);
 
@@ -198,7 +198,7 @@ describe.only('Bridge', function () {
       const { signers, tokens } = await setupTest()
 
       const bridge = tokens.Bridge
-      const token = tokens.ZooTokenV2
+      const token = tokens.ZooV2
       token.configure(bridge.address)
 
       const [user1, user2] = signers
