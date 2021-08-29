@@ -1,4 +1,4 @@
-export enum ChainID {
+export enum ChainId {
   HARDHAT  = 1337,
   HARDHAT2 = 1338,
   MAINNET = 1,
@@ -29,4 +29,11 @@ export enum ChainID {
   PALM_TESTNET = 11297108099,
 }
 
-export const supportedChains = [ChainID.HARDHAT, ChainID.HARDHAT2, ChainID.MAINNET, ChainID.ROPSTEN, ChainID.BSC, ChainID.BSC_TESTNET]
+export const supportedChains = [
+  ChainId.HARDHAT,
+  ChainId.HARDHAT2,
+  ChainId.MAINNET,
+  ChainId.ROPSTEN,
+  ChainId.BSC,
+  ChainId.BSC_TESTNET
+]

@@ -5,11 +5,13 @@ import { CustomWeb3 as Web3 } from 'hooks/useWeb3'
 
 // Get Address for any contract
 export const getAddress = (contract: string, chainID: number): string => {
+  console.log('getAddress', contract, chainID)
   return addresses[contract][chainID]
 }
 
 // Get ABI for any contract
 export const getABI = (name: string) => {
+  console.log('getABI', name)
   return contracts[name].abi
 }
 
@@ -20,7 +22,7 @@ export const getContract = (name: string, web3?: Web3) => {
 
 // Helpers
 export const getToken = (web3?: Web3) => {
-  return getContract('ZooToken', web3)
+  return getContract('ZooV2', web3)
 }
 
 export const getZooKeeper = (web3?: Web3) => {

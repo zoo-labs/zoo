@@ -1,5 +1,5 @@
 import { AddressZero } from '@ethersproject/constants'
-import { ChainId } from '../../constants/Chains'
+import { ChainId } from '../../constants/chains'
 
 type Currency = { address: string; decimals: number }
 
