@@ -1,6 +1,6 @@
 import { Currency } from '@sushiswap/sdk'
 import React, { FunctionComponent, useMemo } from 'react'
-import { ChainId } from '../../constants/Chains'
+import { ChainID } from '../../constants/chains'
 
 import Logo from '../Logo'
 import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
@@ -8,14 +8,14 @@ import useHttpLocations from '../../hooks/useHttpLocations'
 import { WNATIVE } from '@sushiswap/sdk'
 
 const BLOCKCHAIN = {
-  [ChainId.MAINNET]: 'ethereum',
-  [ChainId.BSC]: 'binanace',
-  [ChainId.CELO]: 'celo',
-  [ChainId.FANTOM]: 'fantom',
-  [ChainId.HARMONY]: 'harmony',
-  [ChainId.MATIC]: 'polygon',
-  [ChainId.XDAI]: 'xdai',
-  // [ChainId.OKEX]: 'okex',
+  [ChainID.MAINNET]: 'ethereum',
+  [ChainID.BSC]: 'binanace',
+  [ChainID.CELO]: 'celo',
+  [ChainID.FANTOM]: 'fantom',
+  [ChainID.HARMONY]: 'harmony',
+  [ChainID.MATIC]: 'polygon',
+  [ChainID.XDAI]: 'xdai',
+  [ChainID.OKEX]: 'okex',
 }
 
 function getCurrencySymbol(currency) {
@@ -53,29 +53,29 @@ const xDaiLogo = 'https://raw.githubusercontent.com/sushiswap/assets/master/bloc
 const CeloLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/celo.jpg'
 const PalmLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/palm.jpg'
 
-const LOGO: { readonly [chainId in ChainId]?: string } = {
-  [ChainId.MAINNET]: EthereumLogo,
-  [ChainId.FANTOM]: FantomLogo,
-  [ChainId.FANTOM_TESTNET]: FantomLogo,
-  [ChainId.MATIC]: MaticLogo,
-  [ChainId.MATIC_TESTNET]: MaticLogo,
-  [ChainId.XDAI]: xDaiLogo,
-  [ChainId.BSC]: BinanceCoinLogo,
-  [ChainId.BSC_TESTNET]: BinanceCoinLogo,
-  [ChainId.MOONBEAM_TESTNET]: MoonbeamLogo,
-  [ChainId.AVALANCHE]: AvalancheLogo,
-  [ChainId.AVALANCHE_TESTNET]: AvalancheLogo,
-  [ChainId.HECO]: HecoLogo,
-  [ChainId.HECO_TESTNET]: HecoLogo,
-  [ChainId.HARMONY]: HarmonyLogo,
-  [ChainId.HARMONY_TESTNET]: HarmonyLogo,
-  [ChainId.OKEX]: OKExLogo,
-  [ChainId.OKEX_TESTNET]: OKExLogo,
-  [ChainId.ARBITRUM]: EthereumLogo,
-  [ChainId.ARBITRUM_TESTNET]: EthereumLogo,
-  [ChainId.CELO]: CeloLogo,
-  [ChainId.PALM]: PalmLogo,
-  [ChainId.PALM_TESTNET]: PalmLogo,
+const LOGO: { readonly [id in ChainID]?: string } = {
+  [ChainID.MAINNET]: EthereumLogo,
+  [ChainID.FANTOM]: FantomLogo,
+  [ChainID.FANTOM_TESTNET]: FantomLogo,
+  [ChainID.MATIC]: MaticLogo,
+  [ChainID.MATIC_TESTNET]: MaticLogo,
+  [ChainID.XDAI]: xDaiLogo,
+  [ChainID.BSC]: BinanceCoinLogo,
+  [ChainID.BSC_TESTNET]: BinanceCoinLogo,
+  [ChainID.MOONBEAM_TESTNET]: MoonbeamLogo,
+  [ChainID.AVALANCHE]: AvalancheLogo,
+  [ChainID.AVALANCHE_TESTNET]: AvalancheLogo,
+  [ChainID.HECO]: HecoLogo,
+  [ChainID.HECO_TESTNET]: HecoLogo,
+  [ChainID.HARMONY]: HarmonyLogo,
+  [ChainID.HARMONY_TESTNET]: HarmonyLogo,
+  [ChainID.OKEX]: OKExLogo,
+  [ChainID.OKEX_TESTNET]: OKExLogo,
+  [ChainID.ARBITRUM]: EthereumLogo,
+  [ChainID.ARBITRUM_TESTNET]: EthereumLogo,
+  [ChainID.CELO]: CeloLogo,
+  [ChainID.PALM]: PalmLogo,
+  [ChainID.PALM_TESTNET]: PalmLogo,
 }
 
 interface CurrencyLogoProps {
