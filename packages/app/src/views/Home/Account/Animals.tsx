@@ -101,9 +101,7 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
     'bloodline',
   )
   const points = useMatchBreakpoints()
-  const executeStackedBreeding = (a: Animal) => {
-    console.log('EXECUTING STACKED BREEDING', points)
-  }
+
   const breed = async (arrayValues) => {
     console.log('breeeding', arrayValues)
 
@@ -174,6 +172,7 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
       onConfirm()
     }
   }
+
   const breedClick = (animal) => {
     const selected = Object.values(allAnimals).filter((item) => item.selected)
     const toSet: Animal = { ...animal }
@@ -220,7 +219,7 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
             //   {animals.map((animal) => {
             //     return (
             //       <SwiperSlide style={{ display: 'flex', minWidth: 190, minHeight: 272, maxWidth: 215 }} key={animal.tokenID}>
-            //         <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding, breedClick }} />
+            //         <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, breedClick }} />
             //       </SwiperSlide>
             //     )
             //   })}
@@ -236,7 +235,7 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
                 return (
                   <SwiperSlide key={animal.tokenID} style={{ minWidth: 150 }}>
                     <div className='flex items-center' style={{ height: 270, width: '100%' }}>
-                      <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding, breedClick }} />
+                      <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, breedClick }} />
                     </div>
                   </SwiperSlide>
                 )

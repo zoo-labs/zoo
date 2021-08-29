@@ -209,7 +209,7 @@ const MyZooAccount: React.FC = () => {
       'bloodline',
     )
 
-    const executeStackedBreeding = (a: Animal) => {
+    const breedClick = (a: Animal) => {
       console.log('EXECUTING STACKED BREEDING')
     }
 
@@ -235,7 +235,7 @@ const MyZooAccount: React.FC = () => {
                 {animals.map((animal) => {
                   return (
                     <Slide style={{ width: '220px', display: 'flex' }} key={animal.tokenID}>
-                      <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding }} />
+                      <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, breedClick }} />
                     </Slide>
                   )
                 })}
