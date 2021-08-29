@@ -1,14 +1,14 @@
 import { contracts } from './contracts.json'
-import { ChainID, supportedChains } from '@zoolabs/app/src/constants/chains'
+import { supportedChains } from '@zoolabs/app/src/constants/chains'
 
-const contractNames = ['ZooV2', 'ZooKeeper', 'Bridge', 'DAO', 'Market', 'Media', 'Auction', 'Faucet']
+const contractNames = ['ZooV2', 'ZooKeeper', 'Drop', 'Bridge', 'DAO', 'Market', 'Media', 'Auction', 'Faucet']
 
 const getAddresses = () => {
   const addresses = {}
   contractNames.map((name) => {
     addresses[name] = {}
-    supportedChains.map((chain) => {
-      addresses[name][chain] = contracts[name].address
+    supportedChains.map((chainID) => {
+      addresses[name][chainID] = contracts[name].address
     })
   })
   return addresses
