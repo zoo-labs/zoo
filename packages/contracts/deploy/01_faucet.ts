@@ -1,6 +1,6 @@
 // deploy/01_faucet.ts
 
-import { Deploy } from './deploy'
+import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
 export default Deploy('Faucet', ['ZooV2'], async({ hre, deploy, deployments, deps }) => {
   const token = deps.ZooV2

@@ -28,9 +28,9 @@ export function Deploy(name: string, dependencies: string[], fn?: any) {
 
     }
 
-    const deps = []
+    const deps = {}
     for (const dep of dependencies) {
-      deps.push(await deployments.get(dep))
+      deps[dep] = await deployments.get(dep)
     }
 
     await fn({ hre: hre, deploy: deployContract, deployments: deployments, deps: deps })
