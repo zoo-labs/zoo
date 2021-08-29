@@ -1,4 +1,4 @@
-// deploy/06_faucet.ts
+// deploy/07_faucet.ts
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
