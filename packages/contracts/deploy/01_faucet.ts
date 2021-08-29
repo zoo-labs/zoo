@@ -2,8 +2,8 @@
 
 import { Deploy } from './deploy'
 
-export default Deploy('Faucet', ['ZooTokenV2'], async({ hre, deploy, deployments, deps }) => {
-  const token = deps.ZooTokenV2
+export default Deploy('Faucet', ['ZooV2'], async({ hre, deploy, deployments, deps }) => {
+  const token = deps.ZooV2
   await deploy([token.address])
 })
 
@@ -12,7 +12,7 @@ export default Deploy('Faucet', ['ZooTokenV2'], async({ hre, deploy, deployments
 //   const { deploy } = deployments
 //   const { deployer } = await getNamedAccounts()
 
-//   const tokenAddress = (await deployments.get('ZooTokenV2')).address
+//   const tokenAddress = (await deployments.get('ZooV2')).address
 
 //   const deployResult = await deploy('Faucet', {
 //     from: deployer,
@@ -27,7 +27,7 @@ export default Deploy('Faucet', ['ZooTokenV2'], async({ hre, deploy, deployments
 //   const signers = await ethers.getSigners()
 
 //   // Get Token instance
-//   const token = await ethers.getContractAt('ZooTokenV2', tokenAddress)
+//   const token = await ethers.getContractAt('ZooV2', tokenAddress)
 
 //   // Get Faucet instance
 //   const faucet = await ethers.getContractAt('Faucet', deployResult.address)
@@ -51,4 +51,4 @@ export default Deploy('Faucet', ['ZooTokenV2'], async({ hre, deploy, deployments
 // export default func
 // func.id = 'faucet'
 // func.tags = ['Faucet']
-// func.dependencies = ['ZooTokenV2']
+// func.dependencies = ['ZooV2']
