@@ -1,6 +1,6 @@
 // @ts-ignore
 import { ethers, deployments } from 'hardhat'
-import { Auction, Market, Media, Market__factory, Media__factory, FarmTokenV2__factory, ZooKeeper__factory, BadBidder, BadERC721, TestERC721, ZooV2 } from '../types'
+import { Auction, Market, Media, Market__factory, Media__factory, ZooV2__factory, ZooKeeper__factory, BadBidder, BadERC721, TestERC721, ZooV2  } from '../types'
 import { sha256 } from 'ethers/lib/utils'
 import Decimal from '../utils/Decimal'
 import { BigNumber, BigNumberish, Contract } from 'ethers'
@@ -66,19 +66,19 @@ export const setupTestFactory = (contractArr: string[]) =>
   })
 
 export async function deployCurrency() {
-  const currency = await new FarmTokenV2__factory(deployerWallet).deploy()
+  const currency = await new ZooV2__factory(deployerWallet).deploy()
   return currency.address
 }
 
 export async function mintCurrency(currency: string, to: string, value: number) {
-  await FarmTokenV2__factory.connect(currency, deployerWallet).mint(to, value)
+  await ZooV2__factory.connect(currency, deployerWallet).mint(to, value)
 }
 
 export async function approveCurrency(currency: string, spender: string, owner: Wallet) {
-  await FarmTokenV2__factory.connect(currency, owner).approve(spender, MaxUint256)
+  await ZooV2__factory.connect(currency, owner).approve(spender, MaxUint256)
 }
 export async function getBalance(currency: string, owner: string) {
-  return FarmTokenV2__factory.connect(currency, deployerWallet).balanceOf(owner)
+  return ZooV2__factory.connect(currency, deployerWallet).balanceOf(owner)
 }
 
 export function toNumWei(val: BigNumber) {
