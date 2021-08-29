@@ -26,8 +26,19 @@ contract ZooTokenV2 is ERC20, ERC20Burnable, Ownable, AccessControl {
 
     // supportedInterfaces[this.supportsInterface.selector] = true;
 
+    address public bridge;
+
+    modifier onlyBridge {
+        require(msg.sender == address(bridge));
+        _;
+    }
+
     constructor () ERC20("Zoo", "ZOO") {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    }
+
+    function configure(address _bridge) public onlyOwner {
+        bridge = _bridge;
     }
 
     function blacklistAddress(address _addr) public onlyOwner {
@@ -57,5 +68,9 @@ contract ZooTokenV2 is ERC20, ERC20Burnable, Ownable, AccessControl {
 
     function mint(address to, uint256 value) public onlyOwner {
         super._mint(to, value);
+    }
+
+    function burnFrom(address owner, uint256 amount) public override onlyBridge {
+        super.burnFrom(owner, amount);
     }
 }
