@@ -109,6 +109,7 @@
     "@types/react-router-dom": "^5.1.8",
     "@types/styled-components": "^5.1.13",
     "@types/styled-system": "^5.1.13",
+    "@typescript-eslint/eslint-plugin-tslint": "^4.29.3",
     "prettier": "^2.3.2",
     "source-map-explorer": "^2.5.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.7",
