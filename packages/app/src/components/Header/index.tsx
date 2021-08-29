@@ -26,7 +26,7 @@ import { ApplicationModal } from 'state/application/actions'
 
 const logoURL = window.location.origin + '/static/images/logo-white.png'
 
-const HeaderFrame = styled.div<{ showBackground: boolean; isMobile: boolean; isFeed?: boolean; newAnimalModalOpen: boolean }>`
+const HeaderFrame = styled.div<{ showBackground: boolean; isMobile: boolean; isFeed?: boolean; modalOpen: boolean }>`
   grid-template-columns: 120px 1fr 120px;
   -moz-box-pack: justify;
   -moz-box-align: center;
@@ -43,7 +43,7 @@ const HeaderFrame = styled.div<{ showBackground: boolean; isMobile: boolean; isF
   background-blend-mode: hard-light;
   width: 100%;
   ${({ isMobile }) => (isMobile ? 'grid-template-columns: 80px 1fr; padding: 1rem' : '')};
-  ${({ isFeed, newAnimalModalOpen }) => (isFeed || newAnimalModalOpen ? 'display: none' : 'display: grid')};
+  ${({ isFeed, modalOpen }) => (isFeed || modalOpen ? 'display: none' : 'display: grid')};
 `
 
 const HeaderLinks = styled.div`
@@ -232,9 +232,10 @@ export default function Header() {
   }, [])
 
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
+  const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
 
   return (
-    <HeaderFrame showBackground={scrollY > 45} isMobile={isMobile} isFeed={active == 'feed'} newAnimalModalOpen={newAnimalModalOpen}>
+    <HeaderFrame showBackground={scrollY > 45} isMobile={isMobile} isFeed={active == 'feed'} modalOpen={newAnimalModalOpen || videoPlayerModalOpen}>
       <Title href='.'>
         <LogoIcon>
           <img src={logoURL} alt='logo' />

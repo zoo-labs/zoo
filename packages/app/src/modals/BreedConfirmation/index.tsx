@@ -1,47 +1,52 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { ApplicationModal } from 'state/application/actions'
-import { useBreedConfirmModalToggle, useModalOpen, useNetworkModalToggle } from 'state/application/hooks'
+import { useModalOpen, useNetworkModalToggle, useBreedConfirmModalToggle } from 'state/application/hooks'
 import { useAppSelector } from 'state/hooks'
 import { addAnimal } from 'state/zoo'
+import { Animal } from 'types/zoo'
 import Modal from '../../components/NewModal'
 import ModalHeader from '../../components/NewModal/Header'
 interface indexProps {
-  breed: () => Promise<void>
+  breed: (arrayValues: Animal[]) => void
 }
 
 const index: React.FC<indexProps> = ({ breed }) => {
   const breedConfirmModalOpen = useModalOpen(ApplicationModal.BREEDCONFIRM)
   const toggleBreedConfirmModalModal = useBreedConfirmModalToggle()
+  // const toggleBreedConfirmModalModal = console.log('hittin meee 555')
   const selectedAnimals = useAppSelector((state) => Object.values(state.zoo.animals).filter((animal) => animal.selected))
   let animal1 = selectedAnimals[0]
   let animal2 = selectedAnimals[1]
 
   const dispatch = useDispatch()
   const cancel = () => {
-    console.log()
     if (animal1 && animal2) {
       animal1 = { ...animal1, selected: false }
       animal2 = { ...animal2, selected: false }
       dispatch(addAnimal(animal1))
       dispatch(addAnimal(animal2))
     }
+    console.log('hitting meeeee 3')
 
     toggleBreedConfirmModalModal()
   }
+  // console.log('breedConfirmModalOpen', breedConfirmModalOpen)
   return (
-    <Modal
-      isOpen={breedConfirmModalOpen}
-      onDismiss={() => {
-        cancel()
-      }}
-      maxWidth={440}>
-      <ModalHeader onClose={cancel} title='Confirm Breed' />
+    <Modal isOpen={breedConfirmModalOpen} onDismiss={() => null} maxWidth={440}>
+      <ModalHeader onClose={() => cancel()} title='Confirm Breed' />
       <div>
-        <div className='mb-4 text-center'>{animal1 && animal2 && <h6>{`Do you want to breed ${animal1.name} with ${animal2.name}?`}</h6>}</div>
+        <div className='mb-4 text-center flex justify-center items-center' style={{ minHeight: 100 }}>
+          {animal1 && animal2 && (
+            <h6>
+              Do you want to breed <span className='primary textx-lg font-semibold'>{animal1.name}</span> with{' '}
+              <span className='text-pink-500 text-lg font-semibold'>{animal2.name}</span> ?
+            </h6>
+          )}
+        </div>
         <div className={`grid gap-4 grid-cols-2 `}>
           <button
-            onClick={() => breed()}
+            onClick={() => breed(selectedAnimals)}
             id='add-pool-button'
             color='gradient'
             className='w-full text-high-emphesis bg-gradient-to-r from-blue-600 to-pink-600 opacity-80 hover:opacity-100 disabled:bg-opacity-80 px-4 py-3 text-base rounded disabled:cursor-not-allowed focus:outline-none grid items-center justify-center grid-flow-col gap-2 whitespace-nowrap'>

@@ -3,6 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    overflow: scroll !important
+}
 .bg-dark-900 {
     background-color: rgba(22,21,34,1);
 }
