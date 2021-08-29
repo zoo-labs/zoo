@@ -12,9 +12,11 @@ interface ModalProps {
   padding?: number
   maxWidth?: number
   className?: string
+  isMax?: boolean
+  backgroundColor?: string
 }
 
-export default function Modal({ isOpen, onDismiss, minHeight = 0, maxHeight = 90, initialFocusRef, children, padding = 5, maxWidth = 420 }: ModalProps) {
+export default function Modal({ isOpen, onDismiss, minHeight = 0, maxHeight = 90, initialFocusRef, children, padding = 5, maxWidth = 420, isMax, backgroundColor }: ModalProps) {
   // console.log({ maxHeight: `${maxHeight}vh` })
   let refDiv = useRef(null)
 
@@ -35,11 +37,11 @@ export default function Modal({ isOpen, onDismiss, minHeight = 0, maxHeight = 90
               <div
                 className='transition-all transform'
                 style={{
-                  width: isMobile ? `100%` : '65vw',
-                  maxWidth: `${maxWidth}px`,
+                  width: isMobile ? `100%` : isMax ? '100vw' : '65vw',
+                  maxWidth: isMax ? '100%' : `${maxWidth}px`,
                 }}>
                 <div className='w-full p-px rounded bg-gradient-to-r from-blue-500 via-blue-800 to-pink-500'>
-                  <div className='flex flex-col w-full h-full p-6 overflow-y-hidden rounded bg-dark-900'>
+                  <div className='flex flex-col w-full h-full p-6 overflow-y-hidden rounded bg-dark-900' style={{ backgroundColor }}>
                     <div style={{ minHeight: `${minHeight}vh`, maxHeight: `${maxHeight}vh` }}>{children}</div>
                   </div>
                 </div>

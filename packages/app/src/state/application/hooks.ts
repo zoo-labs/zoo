@@ -36,12 +36,20 @@ export function useWalletModalToggle(): () => void {
 }
 
 export function useNewAnimalModalToggle(): () => void {
+  console.log("hitting useNetworkModalToggle")
   return useToggleModal(ApplicationModal.NEWANIMAL)
 }
+export function useVideoPlayerModalToggle(): () => void {
+  console.log("hitting useVideoPlayerModalToggle")
+  return useToggleModal(ApplicationModal.VIDEOPLAYER)
+}
 export function useBreedConfirmModalToggle(): () => void {
+  console.log("hitting useBreedConfirmModalToggle")
   return useToggleModal(ApplicationModal.BREEDCONFIRM)
 }
 export function useNetworkModalToggle(): () => void {
+  console.log("hitting useNetworkModalToggle")
+
   return useToggleModal(ApplicationModal.NETWORK)
 }
 

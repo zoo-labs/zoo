@@ -236,7 +236,7 @@ const MyZooAccount: React.FC = () => {
                 {animals.map((animal) => {
                   return (
                     <SwiperSlide style={{ width: '220px', display: 'flex' }} key={animal.tokenID}>
-                      <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding }} />
+                      <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding, breedClick: () => null }} />
                     </SwiperSlide>
                   )
                 })}

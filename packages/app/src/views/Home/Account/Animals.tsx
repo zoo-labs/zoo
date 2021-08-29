@@ -7,13 +7,19 @@ import styled from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/swiper.min.css'
 import 'swiper/components/pagination/pagination.min.css'
+import BreedConfirmationModal from '../../../modals/BreedConfirmation'
+import Moralis from 'moralis'
+import { getZooKeeper } from 'util/contracts'
 
-import { Text, Card as Existing, useMatchBreakpoints } from 'components'
+import { Text, Card as Existing, useMatchBreakpoints, useWeb3 } from 'components'
 import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
 import { breedTimeouts } from 'constants/index'
 import { RarityColor } from 'enums/rarity-color'
 import { Animal } from 'types/zoo'
 import { AnimalCard } from 'components/AnimalCard'
+import { addAnimal } from 'state/zoo'
+import { useOpenModal, useBreedConfirmModalToggle } from 'state/application/hooks'
+import { ApplicationModal } from 'state/application/actions'
 interface AnimalsProps {
   hybrid: string
 }
@@ -49,7 +55,10 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
   const allAnimals = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
   const animalGroup = {}
   const animalData = []
+  const web3 = useWeb3()
+  const zooKeeper = getZooKeeper(web3)
 
+  const dispatch = useDispatch()
   Object.values(allAnimals).forEach((animal, index) => {
     if (animal.owner.toLowerCase() !== account.toLowerCase() || animal.freed || !animal.revealed) {
       return
@@ -95,6 +104,99 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
   const executeStackedBreeding = (a: Animal) => {
     console.log('EXECUTING STACKED BREEDING', points)
   }
+  const breed = async (arrayValues) => {
+    console.log('breeeding', arrayValues)
+
+    var an1 = parseInt(arrayValues[0].tokenID)
+    var an2 = parseInt(arrayValues[1].tokenID)
+    const isBreedingStackedAnimal = an1 === an2
+    if (an1 === an2) {
+      an2 = animalGroup[arrayValues[0].name][0].tokenID
+    }
+
+    const anOb = Moralis.Object.extend('Animals')
+    const anQ1 = new Moralis.Query(anOb)
+    const anQ2 = new Moralis.Query(anOb)
+    anQ1.equalTo('tokenID', an1)
+    anQ2.equalTo('tokenID', an2)
+    const res1 = await anQ1.find()
+    const res2 = await anQ2.find()
+    const aniM1 = res1[0]
+    const aniM2 = res2[0]
+    const mArray = [aniM1, aniM2]
+
+    try {
+      await zooKeeper.methods
+        .breedAnimals(1, an1, an2)
+        .send({ from: account })
+        .then((res) => {
+          console.log(res)
+          const TransOb = Moralis.Object.extend('Transactions')
+          const newTrans = new TransOb()
+
+          // //
+          // // Get next timestamp token can be bred
+          // function breedNext(uint256 tokenID) public view returns (uint256) {
+          //     IZoo.Token memory token = tokens[tokenID];
+          //     return token.breed.timestamp + (token.breed.count * 1 days);
+          // }
+
+          // // Check whether token is ready to breed again
+          // function breedReady(uint256 tokenID) public view returns (bool) {
+          //     // Never bred? Lets go
+          //     if (tokens[tokenID].breed.count == 0) {
+          //         return true;
+          //     }
+          //     // If current timestamp is greater than the next breed time, lets go
+          //     if (block.timestamp > breedNext(tokenID)) {
+          //         return true;
+          //     }
+
+          //     // Not ready
+          //     return false;
+          // }
+
+          newTrans.set('from', account)
+          newTrans.set('action', 'Bred Animals')
+          // newTrans.set('tokenID', parseInt(egg.tokenID));
+          newTrans.set('parentA', aniM1.attributes.Name)
+          newTrans.set('parentB', aniM2.attributes.Name)
+          newTrans.save()
+
+          // breed.count
+          console.log('reached here')
+          dispatch(addAnimal({ ...arrayValues[0], selected: false }))
+          dispatch(addAnimal({ ...arrayValues[1], selected: false }))
+          onConfirm()
+        })
+    } catch (error) {
+      console.log('error in hybrid', error)
+      onConfirm()
+    }
+  }
+  const breedClick = (animal) => {
+    const selected = Object.values(allAnimals).filter((item) => item.selected)
+    const toSet: Animal = { ...animal }
+    console.log(animalGroup)
+
+    if (animal.selected && selected.length === 1 && animalGroup[animal.kind] && animalGroup[animal.kind].length > 1) {
+      const multipleAvailable = Object.values(allAnimals).filter((item) => item.kind === animal.kind && item.timeRemaining === 0)
+      const temp = [{ ...multipleAvailable[0] }, { ...multipleAvailable[1] }]
+      // array = temp
+      onConfirm()
+    }
+
+    toSet.selected = animal.selected ? false : true
+
+    if ((!animal.selected && selected.length === 1) || (animalGroup[animal.name] && animal.selected && selected.length === 1)) {
+      const temp = [{ ...selected[0] }, { ...animal }]
+      // array = temp
+      onConfirm()
+    }
+
+    dispatch(addAnimal(toSet))
+  }
+  const onConfirm = useBreedConfirmModalToggle()
 
   return (
     <>
@@ -118,7 +220,7 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
               {animals.map((animal) => {
                 return (
                   <SwiperSlide style={{ display: 'flex', minWidth: 190, minHeight: 272, maxWidth: 215 }} key={animal.tokenID}>
-                    <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding }} />
+                    <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding, breedClick }} />
                   </SwiperSlide>
                 )
               })}
@@ -131,6 +233,7 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
           ))}
         </Route>
       </RowLayout>
+      <BreedConfirmationModal breed={(arrayValues) => breed(arrayValues)} />
     </>
   )
 }
