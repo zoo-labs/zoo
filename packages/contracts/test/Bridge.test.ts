@@ -1,8 +1,5 @@
-import { setupTestFactory, requireDependencies } from './utils'
-import { Signer } from '@ethersproject/abstract-signer'
-import { Bridge, ZooTokenV2 } from '../types'
+import { requireDependencies, setupTestFactory } from './utils'
 
-import { ethers, deployments } from 'hardhat'
 const { expect } = requireDependencies()
 
 const setupTest = setupTestFactory(['Bridge', 'ZooTokenV2'])
@@ -56,7 +53,18 @@ describe.only('Bridge', function () {
 
     await Bridge.setToken(tokenA)
     await Bridge.setToken(tokenB)
-    await expect(Bridge.swap(tokenA, tokenB, user2.address, 100, 1))
-    .to.rejectedWith('ERC20: burn amount exceeds allowance')
+    await expect(Bridge.swap(tokenA, tokenB, user2.address, 100, 1)).to.rejectedWith('ERC20: burn amount exceeds allowance')
+  })
+  it('only allows the owner to call swap', async () => {
+    const {
+      signers,
+      tokens: { Bridge, ZooTokenV2 },
+    } = await setupTest()
+    const [_user1, user2] = signers
+
+    const bridge = Bridge.connect(user2);
+
+    const [tokenA, tokenB] = generateTokens(ZooTokenV2, 2)
+    await expect(bridge.swap(tokenA, tokenB, user2.address, 100, 1)).to.rejectedWith('Swap from token not enabled');
   })
 })
