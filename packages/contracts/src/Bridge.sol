@@ -104,7 +104,7 @@ contract Bridge is Ownable {
 
     // Swap from tokenA to tokenB on another chain. User initiated function, relies on msg.sender
     function swap(Token memory tokenA, Token memory tokenB, address recipient, uint256 amount, uint256 nonce) public {
-        require(currentChain(tokenA.chainID) || !currentChain(tokenB.chainID), "Not tokens we can swap");
+        require(currentChain(tokenA.chainID) || currentChain(tokenB.chainID), "Wrong chain");
         require(enabledToken(tokenA), "Swap from token not enabled");
         require(enabledToken(tokenB), "Swap to token not enabled");
         require(amount > 0, "Amount must be greater than zero");
@@ -120,10 +120,13 @@ contract Bridge is Ownable {
         // Emit all swap related events so listening contracts can mint on other side
         emit Swap(tokenID(tokenA), tokenID(tokenB), t.id, msg.sender, recipient, amount);
 
-        // Burn
+        // Burn original tokens
         if (currentChain(tokenA.chainID)) {
             burn(tokenA, msg.sender, amount);
-        } else {
+        }
+
+        // Mint new tokens
+        if (currentChain(tokenB.chainID)) {
             mint(tokenB, msg.sender, amount);
         }
     }
