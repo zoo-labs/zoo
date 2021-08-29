@@ -294,14 +294,20 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
   }
 
   return (
-    <Card rarityColor={animal.rarityColor} onClick={onCardClick} key={animal.id} selected={animal.selected ? true : false} timedOut={animal.timeRemaining > 0 ? true : false}>
+    <Card
+      rarityColor={animal.rarityColor}
+      onClick={onCardClick}
+      key={animal.id}
+      selected={animal.selected ? true : false}
+      timedOut={animal.timeRemaining > 0 ? true : false}
+      style={{ height: '95%', width: 130 }}>
       <CardBody
         style={{
           backgroundImage: `url('${animal.imageUrl}')`,
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
-          height: 256,
+          height: ' 100%',
           width: '100%',
         }}>
         <Link to={zoo_location}>

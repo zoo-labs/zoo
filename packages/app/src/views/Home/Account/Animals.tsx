@@ -216,11 +216,28 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
               No {hybrid === 'pure' ? '' : `hybrid `}animals
             </StyledText>
           ) : (
-            <Swiper slidesPerView={'auto'} spaceBetween={30} pagination={{ clickable: true }}>
+            // <Swiper slidesPerView={'auto'} spaceBetween={30} pagination={{ clickable: true }}>
+            //   {animals.map((animal) => {
+            //     return (
+            //       <SwiperSlide style={{ display: 'flex', minWidth: 190, minHeight: 272, maxWidth: 215 }} key={animal.tokenID}>
+            //         <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding, breedClick }} />
+            //       </SwiperSlide>
+            //     )
+            //   })}
+            // </Swiper>
+            <Swiper
+              slidesPerView={isSm ? 2 : isMd ? 6 : 12}
+              spaceBetween={isSm ? 4 : isMd ? 15 : 30}
+              pagination={{
+                clickable: true,
+              }}
+              className='mySwiper'>
               {animals.map((animal) => {
                 return (
-                  <SwiperSlide style={{ display: 'flex', minWidth: 190, minHeight: 272, maxWidth: 215 }} key={animal.tokenID}>
-                    <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding, breedClick }} />
+                  <SwiperSlide key={animal.tokenID} style={{ minWidth: 150 }}>
+                    <div className='flex items-center' style={{ height: 270, width: '100%' }}>
+                      <AnimalCard {...{ animal, account, animalGroup, hybrid, allAnimals, executeStackedBreeding, breedClick }} />
+                    </div>
                   </SwiperSlide>
                 )
               })}

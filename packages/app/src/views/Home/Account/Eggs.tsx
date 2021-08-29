@@ -191,15 +191,15 @@ const Eggs: React.FC<EggsProps> = ({}) => {
             // </Swiper>
             <Swiper
               slidesPerView={isSm ? 2 : isMd ? 6 : 12}
-              spaceBetween={30}
+              spaceBetween={isSm ? 4 : isMd ? 15 : 30}
               pagination={{
                 clickable: true,
               }}
               className='mySwiper'>
               {eggData.map((egg) => {
                 return (
-                  <SwiperSlide key={egg.tokenID}>
-                    <div style={{ height: 230, width: '100%' }}>
+                  <SwiperSlide key={egg.tokenID} style={{ minWidth: 150 }}>
+                    <div className='flex items-center' style={{ height: 230, width: '100%' }}>
                       <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
                     </div>
                   </SwiperSlide>
