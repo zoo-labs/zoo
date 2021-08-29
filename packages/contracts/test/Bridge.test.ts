@@ -40,6 +40,24 @@ const generateTokens = (token: any, count: number = 2, custom: TokenCustomizatio
 
 describe.only('Bridge', function () {
 
+    const bridge = tokens.Bridge
+    const token = tokens.ZooV2
+    token.configure(bridge.address)
+
+    const [user1, user2] = signers
+    const address1 = user1.address
+    const address2 = user2.address
+
+    // Mint tokens to user1
+    token.mint(address1, 10000)
+    await token.approve(bridge.address, 200)
+
+    const [tokenA, tokenB] = generateTokens(token, 2)
+    await bridge.setToken(tokenA)
+    await bridge.setToken(tokenB)
+
+    await expect(bridge.swap(tokenA, tokenB, address2, 100, 1)).to.not.be.rejected
+  })
 
   it('explodes if not approved', async () => {
     const {
@@ -243,7 +261,7 @@ describe.only('Bridge', function () {
 
       const txn = await bridge.swap(tokenA, tokenB, user1.address, 100, 1);
       const tx = await txn.wait();
- 
+
       expect(tx.events[1].event).to.be.eql("Mint");
     })
 

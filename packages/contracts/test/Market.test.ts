@@ -13,7 +13,7 @@ import { Blockchain } from '../utils/Blockchain'
 import { generatedWallets } from '../utils/generatedWallets'
 
 import { Market } from '../types/Market'
-import { ZooTokenV2, Media__factory, Market__factory, ZooTokenV2__factory, ZooKeeper__factory } from '../types'
+import { ZooV2, Media__factory, Market__factory, ZooV2__factory, ZooKeeper__factory } from '../types'
 
 let provider = new JsonRpcProvider()
 let blockchain = new Blockchain(provider)
@@ -73,7 +73,7 @@ describe('Market', () => {
   }
 
   async function deploy() {
-    const token = await (await new ZooTokenV2__factory(deployerWallet).deploy()).deployed()
+    const token = await (await new ZooV2__factory(deployerWallet).deploy()).deployed()
     tokenAddress = token.address
 
     const market = await (await new Market__factory(deployerWallet).deploy()).deployed()
@@ -103,7 +103,7 @@ describe('Market', () => {
   }
 
   async function deployCurrency() {
-    const currency = await new ZooTokenV2__factory(deployerWallet).deploy()
+    const currency = await new ZooV2__factory(deployerWallet).deploy()
     return {
       address: currency.address,
       contract: currency,
@@ -111,14 +111,14 @@ describe('Market', () => {
   }
 
   async function mintCurrency(currency: string, to: string, value: number) {
-    await ZooTokenV2__factory.connect(currency, deployerWallet).mint(to, value)
+    await ZooV2__factory.connect(currency, deployerWallet).mint(to, value)
   }
 
   async function approveCurrency(currency: string, spender: string, owner: Wallet) {
-    await ZooTokenV2__factory.connect(currency, owner).approve(spender, MaxUint256)
+    await ZooV2__factory.connect(currency, owner).approve(spender, MaxUint256)
   }
   async function getBalance(currency: string, owner: string) {
-    return ZooTokenV2__factory.connect(currency, deployerWallet).balanceOf(owner)
+    return ZooV2__factory.connect(currency, deployerWallet).balanceOf(owner)
   }
   async function setBid(maket: Market, bid: Bid, tokenId: number, spender?: string) {
     await maket.setBid(tokenId, bid, spender || bid.bidder, { gasLimit: 3500000 })
@@ -273,7 +273,7 @@ describe('Market', () => {
       recipient: otherWallet.address,
       spender: bidderWallet.address,
       sellOnShare: Decimal.new(10),
-      contract: null as ZooTokenV2,
+      contract: null as ZooV2,
     }
 
     beforeEach(async () => {
@@ -394,12 +394,12 @@ describe('Market', () => {
       await mintCurrency(defaultBid.currency, defaultBid.bidder, 5000)
       await approveCurrency(defaultBid.currency, maket.address, bidderWallet)
 
-      const bidderBalance = toNumWei(await ZooTokenV2__factory.connect(defaultBid.currency, bidderWallet).balanceOf(bidderWallet.address))
+      const bidderBalance = toNumWei(await ZooV2__factory.connect(defaultBid.currency, bidderWallet).balanceOf(bidderWallet.address))
 
       await setBid(maket, defaultBid, defaultTokenId)
       await expect(setBid(maket, { ...defaultBid, amount: defaultBid.amount * 2 }, defaultTokenId)).fulfilled
 
-      const afterBalance = toNumWei(await ZooTokenV2__factory.connect(defaultBid.currency, bidderWallet).balanceOf(bidderWallet.address))
+      const afterBalance = toNumWei(await ZooV2__factory.connect(defaultBid.currency, bidderWallet).balanceOf(bidderWallet.address))
       await expect(afterBalance).eq(bidderBalance - defaultBid.amount * 2)
     })
 
