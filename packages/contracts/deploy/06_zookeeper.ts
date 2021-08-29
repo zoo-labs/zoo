@@ -9,7 +9,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await getNamedAccounts()
 
   const bridgeAddress = (await deployments.get('Bridge')).address
-  const tokenAddress = (await deployments.get('ZooTokenV2')).address
+  const tokenAddress = (await deployments.get('ZooV2')).address
   const marketAddress = (await deployments.get('Market')).address
   const mediaAddress = (await deployments.get('Media')).address
 
@@ -24,7 +24,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const keeperAddress = deployResult.address
 
   const bridge = await ethers.getContractAt('Bridge', bridgeAddress)
-  const token = await ethers.getContractAt('ZooTokenV2', tokenAddress)
+  const token = await ethers.getContractAt('ZooV2', tokenAddress)
   const keeper = await ethers.getContractAt('ZooKeeper', keeperAddress)
   const market = await ethers.getContractAt('Market', marketAddress)
   const media = await ethers.getContractAt('Media', mediaAddress)
@@ -41,4 +41,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 export default func
 func.id = 'zookeeper'
 func.tags = ['ZooKeeper']
-func.dependencies = ['ZooTokenV2', 'Bridge', 'Media', 'Market']
+func.dependencies = ['ZooV2', 'Bridge', 'Media', 'Market']
