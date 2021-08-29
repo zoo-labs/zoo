@@ -34,18 +34,28 @@ export const requireDependencies = () => {
   }
 }
 
+const deployContractsAsync = async (contractArr: string[]) => {
+  return await contractArr.reduce(async (prev: Promise<{}>, name: string) => {
+    const sum = await prev
+    const contract: Contract = await ethers.getContract(name)
+    sum[name] = contract;
+    return sum;
+  }, Promise.resolve({}))
+}
+
 export const setupTestFactory = (contractArr: string[]) =>
   deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
     requireDependencies()
-    await contractArr.map(async (name: string) => deployments.fixture(name))
+    await deployments.fixture(contractArr)
 
-    let tokens: { [key: string]: Contract } = await contractArr.reduce(async (sum: {}, name: string) => {
-      const contract: Contract = await ethers.getContract(name)
-      return {
-        [name]: contract,
-        ...sum,
-      }
-    }, {})
+    let tokens: { [key: string]: Contract } = await deployContractsAsync(contractArr);
+    // contractArr.reduce(async (sum: {}, name: string) => {
+    //   const contract: Contract = await ethers.getContract(name)
+    //   return {
+    //     [name]: contract,
+    //     ...sum,
+    //   }
+    // }, {})
     const signers = await ethers.getSigners()
     const owner = (await getNamedAccounts()).deployer
     return {
