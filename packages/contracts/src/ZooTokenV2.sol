@@ -15,6 +15,23 @@ contract ZooTokenV2 is ERC20, ERC20Burnable, Ownable, AccessControl {
 
     bytes32 public constant BLACKLIST = keccak256("BLACKLIST");
 
+    /*
+     *     bytes4(keccak256('burn(address, uint256)')) == 0x06fdde03
+     *     bytes4(keccak256('mint(address, uint256)')) == 0x95d89b41
+     *
+     *     => 0xc87b56dd ^ 0x157c3df9 == 0x4e222e66
+     */
+    bytes4 private constant _INTERFACE_ID_ERC20 = 0x4e222e66;
+
+    supportedInterfaces[this.supportsInterface.selector] = true;
+
+    function supportsInterface(bytes4 interfaceID) external view returns (bool) {
+        if (interfaceID == _INTERFACE_ID_SWAPPABLE_ERC20) {
+            return true
+        }
+        return false
+    }
+
     constructor () ERC20("Zoo", "ZOO") {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
