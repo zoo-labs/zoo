@@ -1,7 +1,8 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import logo from 'media/white-egg.png'
+
+const eggURL = window.location.origin + '/static/images/white-egg.png'
 
 const LogoContainer = styled.button<{ width?: string }>`
   cursor: pointer;
@@ -27,7 +28,7 @@ const ZooHomeButton: React.FC<ZooHomeButtonProps> = ({ width }) => {
 
   return (
     <LogoContainer width={width}>
-      <MaxHeightLogo src={logo} alt='zoo-logo' onClick={() => handleClick()} />
+      <MaxHeightLogo src={eggURL} alt='Back Home' onClick={() => handleClick()} />
     </LogoContainer>
   )
 }
