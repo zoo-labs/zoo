@@ -4,7 +4,7 @@ pragma solidity >=0.8.4;
 
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import { ERC20Burnable } from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import { ERC20Burnable  } from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import { AccessControl } from "@openzeppelin/contracts/access/AccessControl.sol";
@@ -70,8 +70,13 @@ contract ZooV2 is ERC20, ERC20Burnable, Ownable, AccessControl {
         super._mint(to, value);
     }
 
-    function burnFrom(address account, uint256 amount) public override onlyBridge {
-        _approve(account, msg.sender, amount);
-        _burn(account, amount);
+
+    function bridgeMint(address to, uint256 value) external onlyBridge {
+        super._mint(to, value);
+    }
+
+    function bridgeBurn(address account, uint256 amount) external onlyBridge {
+        super._approve(account, msg.sender, amount);
+        super._burn(account, amount);
     }
 }
