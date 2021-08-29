@@ -4,7 +4,9 @@ const { expect } = requireDependencies()
 
 const setupTest = setupTestFactory(['Bridge', 'ZooTokenV2'])
 
-const generateTokens = (token: any, count: number = 2) => {
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+
+const generateTokens = (token: any, count: number = 2, customAddr: string = null) => {
   // Lame version
   let tokens = []
   for (let i = 0; i < count; i++) {
@@ -12,7 +14,7 @@ const generateTokens = (token: any, count: number = 2) => {
       kind: 0,
       id: i,
       chainID: 1337 + i,
-      tokenAddress: token.address,
+      tokenAddress: customAddr || token.address,
       enabled: true,
     })
   }
@@ -25,6 +27,7 @@ describe.only('Bridge', function () {
 
     const bridge = tokens.Bridge
     const token = tokens.ZooTokenV2
+    token.configure(bridge.address);
 
     const [user1, user2] = signers
     const address1 = user1.address
@@ -48,6 +51,7 @@ describe.only('Bridge', function () {
     } = await setupTest()
     const [user1, user2] = signers
     ZooTokenV2.mint(user1.address, 100)
+    ZooTokenV2.configure(Bridge.address);
 
     const [tokenA, tokenB] = generateTokens(ZooTokenV2, 2)
 
@@ -55,16 +59,34 @@ describe.only('Bridge', function () {
     await Bridge.setToken(tokenB)
     await expect(Bridge.swap(tokenA, tokenB, user2.address, 100, 1)).to.rejectedWith('ERC20: burn amount exceeds allowance')
   })
+
+  it('does not allow setting token to 0x0', async () => {
+const {
+      tokens: { Bridge, ZooTokenV2 },
+    } = await setupTest()
+    const [tokenA] = generateTokens(ZooTokenV2, 2, ZERO_ADDRESS)
+
+    await expect(Bridge.setToken(tokenA)).to.rejectedWith('Token address must not be zero')
+
+  })
+
   it('only allows the owner to call swap', async () => {
     const {
       signers,
       tokens: { Bridge, ZooTokenV2 },
     } = await setupTest()
-    const [_user1, user2] = signers
+    const [user1, user2] = signers
+    const [tokenA, tokenB] = generateTokens(ZooTokenV2, 2)
+
+    await Bridge.setToken(tokenA)
+    await Bridge.setToken(tokenB)
+    await ZooTokenV2.mint(user1.address, 10000);
+    await ZooTokenV2.approve(Bridge.address, 200)
+    ZooTokenV2.configure(Bridge.address);
 
     const bridge = Bridge.connect(user2);
 
-    const [tokenA, tokenB] = generateTokens(ZooTokenV2, 2)
-    await expect(bridge.swap(tokenA, tokenB, user2.address, 100, 1)).to.rejectedWith('Swap from token not enabled');
+    await expect(bridge.swap(tokenA, tokenB, user2.address, 100, 1))
+      .to.rejectedWith('Ownable: caller is not the owner');
   })
 })
