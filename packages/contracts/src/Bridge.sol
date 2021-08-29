@@ -158,7 +158,7 @@ contract Bridge is Ownable {
     }
 
     // Mint new tokens for user after burn + swap on alternate chain
-    function mint(Token memory token, address owner, uint256 amount) public onlyOwner {
+    function mint(Token memory token, address owner, uint256 amount) internal {
         require(owner != address(0));
         require(amount > 0);
         require(currentChain(token.chainID), "Token not on chain");
