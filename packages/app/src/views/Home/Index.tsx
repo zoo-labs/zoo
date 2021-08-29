@@ -76,8 +76,8 @@ const index: React.FC<indexProps> = ({}) => {
   }
   return (
     // className='lg:p-16 p-4 pr-0 lg:pr-0 mr-0 space-y-4 rounded-lg  m-4 flex flex-col relative filter drop-shadow z-10'
-    <main className='flex flex-col  flex-grow w-full h-full lg:p-16 p-4 pr-0 lg:pr-0 mr-0 space-y-4 rounded-lg  m-4 flex flex-col relative filter drop-shadow z-10'>
-      <div className='flex lg:p-16 p-4 '>
+    <main className='flex flex-col  flex-grow w-full h-full lg:p-16 lg:m-4 p-0 m-0 lg:pr-0 lg:mr-0 space-y-4 rounded-lg  flex flex-col relative filter drop-shadow z-10'>
+      <div className='flex lg:p-16 p-4 justify-center lg:justify-start'>
         <div className='grid grid-cols-3 rounded-lg bg-dark-800 h-[46px] gap-2' style={{ height: 40 }}>
           {[
             { name: 'Account', id: 0 },

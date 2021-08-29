@@ -217,7 +217,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
     <>
       <Card
         onClick={() => buttonActions()}
-        style={{ backgroundColor: '#000000', minHeight: 230, height: 230, width: 130 }}
+        style={{ backgroundColor: '#000000', height: '95%', width: 130 }}
         timedOut={egg.timeRemaining > 0 ? true : false}
         interactive={egg.interactive}
         hatching={hatching}
