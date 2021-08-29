@@ -2,7 +2,7 @@ import { ethers, upgrades } from 'hardhat'
 
 async function main() {
   // Deploy the upgradeable token contract
-  const ZooToken = await ethers.getContractFactory('ZooTokenV2')
+  const ZooToken = await ethers.getContractFactory('ZooV2')
   const Token = await ethers.getContractFactory('FarmTokenV2')
   const token = await upgrades.deployProxy(Token)
   await token.deployed()

@@ -57,7 +57,7 @@
     "balance": "hardhat balance",
     "chain": "hardhat node --network hardhat --show-stack-traces",
     "clean": "rm -rf artifacts && rm -rf cache && rm -rf types",
-    "compile": "yarn clean && hardhat compile",
+    "compile": "hardhat compile",
     "console": "hardhat console --network hardhat",
     "deploy": "mkdirp deployments && hardhat deploy --network hardhat",
     "deploy:game": "hardhat run --network testnet scripts/configureGame.js",

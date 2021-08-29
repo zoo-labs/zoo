@@ -1,6 +1,6 @@
 import { setupTestFactory, requireDependencies } from './utils'
 import { Signer } from '@ethersproject/abstract-signer'
-import { Bridge, ZooTokenV2 } from '../types'
+import { Bridge, ZooV2 } from '../types'
 
 const { expect } = requireDependencies()
 

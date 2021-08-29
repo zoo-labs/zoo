@@ -237,7 +237,7 @@ export const deployToken = async () => {
 
 export const deployProtocol = async (tokenAddress) => {
   const [deployer] = await ethers.getSigners()
-  const token = await (await new FarmTokenV2__factory(deployer).deploy()).deployed()
+  const token = await (await new ZooV2__factory(deployer).deploy()).deployed()
   // const drop = await (await new ZooDrop__factory(deployer).deploy()).deployed();
   const market = await (await new Market__factory(deployer).deploy()).deployed()
   const media = await (await new Media__factory(deployer).deploy('ANML', 'ZooAnimals')).deployed()

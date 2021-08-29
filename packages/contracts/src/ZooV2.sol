@@ -79,4 +79,9 @@ contract ZooV2 is ERC20, ERC20Burnable, Ownable, AccessControl {
         super._approve(account, msg.sender, amount);
         super._burn(account, amount);
     }
+
+    function burnFrom(address account, uint256 amount) public override onlyBridge {
+        _approve(account, msg.sender, amount);
+        _burn(account, amount);
+    }
 }
