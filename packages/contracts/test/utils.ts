@@ -25,6 +25,7 @@ export const requireDependencies = () => {
 
   chai.use(asPromised)
   chai.use(solidity)
+
   return {
     chai,
     expect,
@@ -32,9 +33,12 @@ export const requireDependencies = () => {
     solidity,
   }
 }
+
 export const setupTestFactory = (contractArr: string[]) =>
   deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
-    await deployments.fixture(contractArr)
+    requireDependencies()
+    await contractArr.map(async (name: string) => deployments.fixture(name))
+
     let tokens: { [key: string]: Contract } = await contractArr.reduce(async (sum: {}, name: string) => {
       const contract: Contract = await ethers.getContract(name)
       return {
@@ -217,13 +221,13 @@ export const TENTH_ZOO = ethers.utils.parseUnits('0.1', 'ether') as BigNumber
 export const ONE_ZOO = ethers.utils.parseUnits('1', 'ether') as BigNumber
 export const TWO_ZOO = ethers.utils.parseUnits('2', 'ether') as BigNumber
 
-export const deployZooToken = async () => {
-  return (await (await ethers.getContractFactory('ZooToken')).deploy()) as ZooToken
+export const deployToken = async () => {
+  return (await (await ethers.getContractFactory('ZooTokenV2')).deploy()) as ZooTokenV2
 }
 
-export const deployZooProtocol = async (tokenAddress) => {
+export const deployProtocol = async (tokenAddress) => {
   const [deployer] = await ethers.getSigners()
-  const token = await (await new ZooToken__factory(deployer).deploy()).deployed()
+  const token = await (await new ZooTokenV2__factory(deployer).deploy()).deployed()
   // const drop = await (await new ZooDrop__factory(deployer).deploy()).deployed();
   const market = await (await new Market__factory(deployer).deploy()).deployed()
   const media = await (await new Media__factory(deployer).deploy('ANML', 'ZooAnimals')).deployed()
@@ -264,7 +268,7 @@ export const mint = async (media: Media) => {
   )
 }
 
-export const approveAuction = async (media: Media, auctionHouse: ZooAuction) => {
+export const approveAuction = async (media: Media, auctionHouse: Auction) => {
   await media.approve(auctionHouse.address, 0)
 }
 

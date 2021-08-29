@@ -2,8 +2,8 @@
 import { ethers } from 'hardhat'
 import chai, { expect } from 'chai'
 import asPromised from 'chai-as-promised'
-import { deployOtherNFTs, deployZooToken, deployZooProtocol, mint, ONE_ZOO, TENTH_ZOO, THOUSANDTH_ZOO, TWO_ZOO } from './utils'
-import { ZooAuction, Market, Media, ZooToken, TestERC721 } from '../types'
+import { deployOtherNFTs, deployToken, deployProtocol, mint, ONE_ZOO, TENTH_ZOO, THOUSANDTH_ZOO, TWO_ZOO } from './utils'
+import { Auction, Market, Media, ZooTokenV2, TestERC721 } from '../types'
 import { BigNumber, Signer } from 'ethers'
 
 chai.use(asPromised)
@@ -16,17 +16,17 @@ const smallify = (bn: BigNumber) => bn.div(THOUSANDTH_ZOO).toNumber()
 describe.skip('integration', () => {
   let market: Market
   let media: Media
-  let token: ZooToken
-  let auction: ZooAuction
+  let token: ZooTokenV2
+  let auction: Auction
   let otherNft: TestERC721
   let deployer, creator, owner, curator, bidderA, bidderB, otherUser: Signer
   let deployerAddress, ownerAddress, creatorAddress, curatorAddress, bidderAAddress, bidderBAddress, otherUserAddress: string
 
-  async function deploy(): Promise<ZooAuction> {
+  async function deploy(): Promise<Auction> {
     const ZooAuction = await ethers.getContractFactory('ZooAuction')
     const auctionHouse = await ZooAuction.deploy()
     await auctionHouse.configure(media.address, token.address)
-    return auctionHouse as ZooAuction
+    return auctionHouse as Auction
   }
 
   beforeEach(async () => {
@@ -35,8 +35,8 @@ describe.skip('integration', () => {
     ;[deployerAddress, creatorAddress, ownerAddress, curatorAddress, bidderAAddress, bidderBAddress, otherUserAddress] = await Promise.all(
       [deployer, creator, owner, curator, bidderA, bidderB].map((s) => s.getAddress()),
     )
-    token = await deployZooToken()
-    const contracts = await deployZooProtocol(token.address)
+    token = await deployToken()
+    const contracts = await deployProtocol(token.address)
     const nfts = await deployOtherNFTs()
     market = contracts.market
     media = contracts.media
