@@ -1,4 +1,4 @@
-// deploy/04_drop.ts
+// deploy/05_drop.ts
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
