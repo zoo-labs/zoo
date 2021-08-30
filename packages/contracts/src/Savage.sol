@@ -20,7 +20,7 @@ contract Savage {
     address b;
     address router;
 
-    event SwapTokens(uint256 amountIn, uint256 amountOutMin, bool success);
+    event SwapTokens(uint256 amountIn, uint256 amountOutMin);
 
     // Setup swap
     constructor(address _z, address _b, address _router) public {
@@ -51,11 +51,13 @@ contract Savage {
         require(Z.approve(router, amountIn), 'approve failed.');
 
         console.log('router.swapExactTokensForTokens', amountIn, amountOutMin, deadline);
-        (bool success, bytes memory result) = router.delegatecall(
-            abi.encodeWithSignature("swapExactTokensForTokens(uint256,uint256,address[],address,uint256)", amountIn, amountOutMin, getPath(), msg.sender, deadline)
+        (bool success, bytes memory data) = router.delegatecall(
+            abi.encodeWithSignature("swapExactTokensForTokens(uint,uint,address[],address,uint)", amountIn, amountOutMin, getPath(), msg.sender, deadline)
         );
         console.log('SwapTokens', amountIn, amountOutMin, success);
-        emit SwapTokens(amountIn, amountOutMin, success);
+
+        require(success && (data.length == 0 || abi.decode(data, (bool))), 'swapTokens: SWAP_FAILED');
+        emit SwapTokens(amountIn, amountOutMin);
     }
 
     // Helper to show the init code for the UniswapV2Pair
