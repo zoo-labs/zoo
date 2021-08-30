@@ -12,38 +12,53 @@ contract Savage {
     using SafeMath  for uint;
     using SafeMath  for uint8;
 
-    IERC20  B; // token 1
-    IERC20  Z; // token 2
-    address F; // factory
-    address R; // router
-    uint256 A; // amount
-    uint256 M; // min amount out
+    IERC20  Z;                 // from Z
+    IERC20  B;                 // to B
+    IUniswapV2Router01 Router; // router
+
+    address z;
+    address b;
+    address router;
+
+    event SwapTokens(uint256 amountIn, uint256 amountOutMin, bool success);
 
     // Setup swap
-    constructor(address b, address z, address f, address r, uint256 a, uint256 m) public {
-        B = IERC20(b);
-        Z = IERC20(z);
-        F = address(f);
-        R = address(r);
-        A = a;
-        M = m;
+    constructor(address _z, address _b, address _router) public {
+        Z = IERC20(_z);
+        B = IERC20(_b);
+        Router = IUniswapV2Router01(_router);
+
+        z = _z;
+        b = _b;
+        router = _router;
     }
 
-    // Execute swap
-    function swap() public {
-        uint a = Z.decimals().mul(A).mul(10);
-
-        require(Z.approve(address(this), a), 'approve failed');
-        // require(Z.transferFrom(msg.sender, address(this), a), 'transferFrom failed');
-        require(Z.approve(address(R), a), 'approve failed');
-
+    // get path Z -> B
+    function getPath() private view returns (address[] memory) {
         address[] memory path = new address[](2);
-        path[0] = address(Z);
-        path[1] = address(B);
-
-        IUniswapV2Router01(R).swapExactTokensForTokens(a, M, path, msg.sender, block.timestamp);
+        path[0] = z;
+        path[1] = b;
+        return path;
     }
 
+    // Maybe works
+    function swapTokens(uint amountIn, uint amountOutMin) public {
+        // Calculate deadline
+        uint deadline = block.timestamp + 15;
+
+        // transfer
+        console.log('Z.approve', address(this), amountIn);
+        require(Z.approve(router, amountIn), 'approve failed.');
+
+        console.log('router.swapExactTokensForTokens', amountIn, amountOutMin, deadline);
+        (bool success, bytes memory result) = router.delegatecall(
+            abi.encodeWithSignature("swapExactTokensForTokens(uint256,uint256,address[],address,uint256)", amountIn, amountOutMin, getPath(), msg.sender, deadline)
+        );
+        console.log('SwapTokens', amountIn, amountOutMin, success);
+        emit SwapTokens(amountIn, amountOutMin, success);
+    }
+
+    // Helper to show the init code for the UniswapV2Pair
     function getInitHash() public view returns(bytes32) {
         bytes memory bytecode = type(UniswapV2Pair).creationCode;
         console.logBytes32(keccak256(abi.encodePacked(bytecode)));
