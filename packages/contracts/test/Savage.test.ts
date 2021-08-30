@@ -56,13 +56,14 @@ describe.only('Savage', function () {
     const evt = tx.events[0];
     const addr = evt.args.pair;
 
-    const amount = ethers.utils.parseEther('1000')
+    const amount = ethers.utils.parseEther('10000')
     await bnbToken.mint(sender.address, amount)
     await oldZoo.mint(sender.address, amount)
 
     await bnbToken.approve(router.address, amount)
     await oldZoo.approve(router.address, amount)
 
+    // Add liquidity
     await router.addLiquidity(
       bnbToken.address,
       oldZoo.address,
@@ -73,6 +74,6 @@ describe.only('Savage', function () {
       sender.address,
       Date.now() * 60);
 
-    await expect(savage.swap()).to.be.revertedWith("Err");
+    await savage.swap()
   })
 })
