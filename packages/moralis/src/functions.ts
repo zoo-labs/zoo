@@ -1,8 +1,15 @@
-// Global constants injected during build
-const ZK = ZOOKEEPER
+const { Moralis } = require('./moralis');
+
+const ZK = {
+  // injected during build
+  abi:      'ZK_ABI',
+  address:  'ZK_ADDRESS',
+}
+
 const CHAIN = 'CHAIN_ID'
 
 // Get this enviroment's ZK contract
+<<<<<<< HEAD:packages/moralis/src/functions.js
 async function getZooToken() {
   const web3 = Moralis.web3ByChain(CHAIN)
   return new web3.eth.Contract(ZK.abi, ZK.address)
@@ -10,12 +17,15 @@ async function getZooToken() {
 
 // Get this enviroment's ZK contract
 async function getZooKeeper() {
+=======
+async function getZooKeeper(): Promise<any> {
+>>>>>>> c5f90c4 (Typescript cloud functions):packages/moralis/src/functions.ts
   const web3 = Moralis.web3ByChain(CHAIN)
   return new web3.eth.Contract(ZK.abi, ZK.address)
 }
 
 // Query for a specific Animal
-async function getAnimal(tokenID) {
+async function getAnimal(tokenID: number): Promise<any> {
   const Animals = Moralis.Object.extend('Animals')
   const query = new Moralis.Query(Animals)
   query.equalTo('tokenID', tokenID)
@@ -23,7 +33,7 @@ async function getAnimal(tokenID) {
 }
 
 // Query for a specific Egg
-async function getEgg(eggID) {
+async function getEgg(eggID: number): Promise<any> {
   const Eggs = Moralis.Object.extend('Eggs')
   const query = new Moralis.Query(Eggs)
   query.equalTo('tokenID', eggID)
@@ -31,17 +41,17 @@ async function getEgg(eggID) {
 }
 
 // Get latest token information from ZK
-async function getToken(tokenID) {
+async function getToken(tokenID: number): Promise<any> {
   const zooKeeper = await getZooKeeper()
   return await zooKeeper.methods.tokens(tokenID).call()
 }
 
 // Is current request confirmed?
-function confirmed(request) {
+function confirmed(request: any) {
   return request.object.get('confirmed')
 }
 
-function setCommon(entity, { object }) {
+function setCommon(entity: any, { object }: any) {
   entity.set('owner', object.get('from'))
   entity.set('from', object.get('from'))
   entity.set('blockNumber', object.get('block_number'))
@@ -50,7 +60,7 @@ function setCommon(entity, { object }) {
 }
 
 // Instantiate a new Animal
-function newAnimal(request) {
+function newAnimal(request: any) {
   const Animals = Moralis.Object.extend('Animals')
   const animal = new Animals()
   setCommon(animal, request)
@@ -58,7 +68,7 @@ function newAnimal(request) {
 }
 
 // Instantiate a new Egg
-function newEgg(request) {
+function newEgg(request: any) {
   const Eggs = Moralis.Object.extend('Eggs')
   const egg = new Eggs()
   setCommon(egg, request)
@@ -66,14 +76,14 @@ function newEgg(request) {
 }
 
 // Instantiate a new Transaction
-function newTransaction(request) {
+function newTransaction(request: any) {
   const Transactions = Moralis.Object.extend('Transactions')
   const tx = new Transactions()
   setCommon(tx, request)
   return tx
 }
 
-Moralis.Cloud.afterSave('BuyEgg', async (request) => {
+Moralis.Cloud.afterSave('BuyEgg', async (request: any) => {
   const logger = Moralis.Cloud.getLogger()
   const eggID = parseInt(request.object.get('eggID')) // new Token ID
 
@@ -106,7 +116,7 @@ Moralis.Cloud.afterSave('BuyEgg', async (request) => {
   logger.info(`Egg ${eggID} saved at ${Date.now()}`)
 })
 
-Moralis.Cloud.afterSave('Hatch', async (request) => {
+Moralis.Cloud.afterSave('Hatch', async (request: any) => {
   const logger = Moralis.Cloud.getLogger()
   const eggID = parseInt(request.object.get('eggID')) // Egg hatching will be burned
   const tokenID = parseInt(request.object.get('tokenID')) // New Animal minted
@@ -158,7 +168,7 @@ Moralis.Cloud.afterSave('Hatch', async (request) => {
   logger.info(`Hatched new ${tok.name} (${tokenID}) from ${eggID}`)
 })
 
-Moralis.Cloud.afterSave('Breed', async (request) => {
+Moralis.Cloud.afterSave('Breed', async (request: any) => {
   const logger = Moralis.Cloud.getLogger()
   const eggID = parseInt(request.object.get('eggID')) // new Hybrid Egg
   const parentA = parseInt(request.object.get('parentA')) // parent A ID
@@ -215,16 +225,22 @@ Moralis.Cloud.afterSave('Breed', async (request) => {
 
   const tx = newTransaction(request)
   tx.set('action', 'Breed Animals')
+<<<<<<< HEAD:packages/moralis/src/functions.js
   tx.set('parentA', parentA)
   tx.set('parentB', parentB)
   tx.set('tokenID', eggID)
+=======
+  tx.set('parentA', tok.parentA)
+  tx.set('parentB', tok.parentB)
+  tx.set('tokenID', tok.tokenID)
+>>>>>>> c5f90c4 (Typescript cloud functions):packages/moralis/src/functions.ts
   await tx.save()
 
-  logger.info(`Hybrid Egg ${tokenID} saved successfully`)
+  logger.info(`Hybrid Egg ${tok.tokenID} saved successfully`)
 })
 
 // Update token state after burn
-Moralis.Cloud.afterSave('Burn', async (request) => {
+Moralis.Cloud.afterSave('Burn', async (request: any) => {
   if (!confirmed(request)) return
 
   const logger = Moralis.Cloud.getLogger()
@@ -239,7 +255,7 @@ Moralis.Cloud.afterSave('Burn', async (request) => {
 })
 
 // Update animal state after Free
-Moralis.Cloud.afterSave('Free', async (request) => {
+Moralis.Cloud.afterSave('Free', async (request: any) => {
   if (!confirmed(request)) return
 
   const logger = Moralis.Cloud.getLogger()
@@ -255,9 +271,10 @@ Moralis.Cloud.afterSave('Free', async (request) => {
   tx.set('tokenID', tokenID)
   await tx.save()
 
-  logger.info(`Animal ${name} (${tokenID} released into Wild`)
+  logger.info(`Animal ${animal.name} (${tokenID} released into Wild`)
 })
 
+<<<<<<< HEAD:packages/moralis/src/functions.js
 Moralis.Cloud.afterSave('Swap', async (request) => {
   if (!confirmed(request)) return
 
@@ -277,6 +294,9 @@ Moralis.Cloud.afterSave('Swap', async (request) => {
 })
 
 Moralis.Cloud.define('getAverageGasPrice', async function (request) {
+=======
+Moralis.Cloud.define('getAverageGasPrice', async function (request: any) {
+>>>>>>> c5f90c4 (Typescript cloud functions):packages/moralis/src/functions.ts
   const query = new Moralis.Query('BscTransactions')
   const pipeline = [
     {
@@ -297,7 +317,7 @@ Moralis.Cloud.define('getAverageGasPrice', async function (request) {
 })
 
 // This is a convenience function to drop the tables
-Moralis.Cloud.define('dropTables', async (request) => {
+Moralis.Cloud.define('dropTables', async (request: any) => {
   const logger = Moralis.Cloud.getLogger()
 
   // Wipe out all data
