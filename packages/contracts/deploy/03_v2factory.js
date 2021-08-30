@@ -4,7 +4,7 @@
 const {
   bytecode,
   abi,
-} = require("../deployments/mainnet/UniswapV2Factory.json");
+} = require("../artifacts/src//uniswapv2//UniswapV2Factory.sol/UniswapV2Factory.json");
 
 module.exports = async function ({
   ethers,
