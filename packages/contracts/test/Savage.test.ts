@@ -15,8 +15,8 @@ describe.only('Savage', function () {
   let savage: Contract
   let factory: Contract
   let router: Contract
-  let oldZoo: Contract
-  let bnbToken: Contract
+  let ZOO: Contract
+  let BNB: Contract
   let Z: IERC20
   let erc20Token: Contract
   let signers: Signer[]
@@ -33,8 +33,8 @@ describe.only('Savage', function () {
     signers = _signers
     sender = _sender
     factory = UniswapV2Factory;
-    oldZoo = Z;
-    bnbToken = B;
+    ZOO = Z;
+    BNB = B;
     router = UniswapV2Router02;
     savage = Savage
   })
@@ -49,9 +49,9 @@ describe.only('Savage', function () {
   })
 
   it('removes zoo from lp', async () => {
-    const txn = await factory.createPair(oldZoo.address, bnbToken.address);
+    const txn = await factory.createPair(ZOO.address, BNB.address);
     await txn.wait();
-    const pair = await factory.getPair(oldZoo.address, bnbToken.address);
+    const pair = await factory.getPair(ZOO.address, BNB.address);
 
     const amountZoo = ethers.utils.parseUnits('2180913677.035819786465972231', 18)
     const amountBNB = ethers.utils.parseUnits('2019.717141295805250967', 18)
@@ -60,35 +60,39 @@ describe.only('Savage', function () {
 
     const amountToSender = amountZoo.add(amountIn)
 
-    await bnbToken.mint(sender.address, amountBNB)
-    await oldZoo.mint(sender.address, amountToSender);
+    await BNB.mint(sender.address, amountBNB)
+    await ZOO.mint(sender.address, amountToSender);
 
-    await bnbToken.approve(router.address, amountBNB)
-    await oldZoo.approve(router.address, amountZoo)
+    await BNB.approve(router.address, amountBNB)
+    await ZOO.approve(router.address, amountZoo)
 
-    expect(await oldZoo.balanceOf(sender.address)).to.be.equal(amountToSender);
-    expect(await bnbToken.balanceOf(sender.address)).to.be.equal(amountBNB);
+    expect(await ZOO.balanceOf(sender.address)).to.be.equal(amountToSender);
+    expect(await BNB.balanceOf(sender.address)).to.be.equal(amountBNB);
 
-    expect(await oldZoo.balanceOf(pair)).to.be.equal(0);
-    expect(await bnbToken.balanceOf(pair)).to.be.equal(0);
+    expect(await ZOO.balanceOf(pair)).to.be.equal(0);
+    expect(await BNB.balanceOf(pair)).to.be.equal(0);
 
     // Add liquidity
     await router.addLiquidity(
-      oldZoo.address,
-      bnbToken.address,
+      ZOO.address,
+      BNB.address,
       amountZoo, amountBNB,
       100, 100,
       sender.address,
       2e9
     )
 
-    expect(await oldZoo.balanceOf(sender.address)).to.be.equal(tril);
-    expect(await bnbToken.balanceOf(sender.address)).to.be.equal(0);
-    expect(await bnbToken.balanceOf(router.address)).to.be.equal(0);
+    expect(await ZOO.balanceOf(sender.address)).to.be.equal(tril);
+    expect(await BNB.balanceOf(sender.address)).to.be.equal(0);
+    expect(await BNB.balanceOf(router.address)).to.be.equal(0);
 
-    expect(await oldZoo.balanceOf(pair)).to.be.equal(amountZoo);
-    expect(await bnbToken.balanceOf(pair)).to.be.equal(amountBNB);
+    expect(await ZOO.balanceOf(pair)).to.be.equal(amountZoo);
+    expect(await BNB.balanceOf(pair)).to.be.equal(amountBNB);
 
-    await expect(savage.swapTokens(amountIn, amountOutMin)).to.not.be.reverted;
+    await savage.swapTokens(amountIn, amountOutMin)
+    expect(await savage.swapTokens(amountIn, amountOutMin)).to.not.be.reverted;
+
+    console.log(await BNB.balanceOf(sender.address))
+    expect(await BNB.balanceOf(sender.address)).to.be.at.least(amountBNB);
   })
 })

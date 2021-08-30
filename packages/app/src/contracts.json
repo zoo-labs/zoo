@@ -313,37 +313,41 @@
               "inputs": [
                 {
                   "internalType": "address",
-                  "name": "b",
+                  "name": "_z",
                   "type": "address"
                 },
                 {
                   "internalType": "address",
-                  "name": "z",
+                  "name": "_b",
                   "type": "address"
                 },
                 {
                   "internalType": "address",
-                  "name": "f",
+                  "name": "_router",
                   "type": "address"
-                },
-                {
-                  "internalType": "address",
-                  "name": "r",
-                  "type": "address"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "a",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "m",
-                  "type": "uint256"
                 }
               ],
               "stateMutability": "nonpayable",
               "type": "constructor"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "amountIn",
+                  "type": "uint256"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "amountOutMin",
+                  "type": "uint256"
+                }
+              ],
+              "name": "SwapTokens",
+              "type": "event"
             },
             {
               "inputs": [],
@@ -359,8 +363,19 @@
               "type": "function"
             },
             {
-              "inputs": [],
-              "name": "swap",
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "amountIn",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "amountOutMin",
+                  "type": "uint256"
+                }
+              ],
+              "name": "swapTokens",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
@@ -5574,37 +5589,41 @@
               "inputs": [
                 {
                   "internalType": "address",
-                  "name": "b",
+                  "name": "_z",
                   "type": "address"
                 },
                 {
                   "internalType": "address",
-                  "name": "z",
+                  "name": "_b",
                   "type": "address"
                 },
                 {
                   "internalType": "address",
-                  "name": "f",
+                  "name": "_router",
                   "type": "address"
-                },
-                {
-                  "internalType": "address",
-                  "name": "r",
-                  "type": "address"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "a",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "m",
-                  "type": "uint256"
                 }
               ],
               "stateMutability": "nonpayable",
               "type": "constructor"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "amountIn",
+                  "type": "uint256"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "amountOutMin",
+                  "type": "uint256"
+                }
+              ],
+              "name": "SwapTokens",
+              "type": "event"
             },
             {
               "inputs": [],
@@ -5620,8 +5639,19 @@
               "type": "function"
             },
             {
-              "inputs": [],
-              "name": "swap",
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "amountIn",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "amountOutMin",
+                  "type": "uint256"
+                }
+              ],
+              "name": "swapTokens",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
