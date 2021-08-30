@@ -15,7 +15,7 @@ interface indexProps {
 //     op -= op * 0.1 || 0.1
 //   }, 70)
 // }
-const index: React.FC<indexProps> = ({ videoPath }) => {
+const Index: React.FC<indexProps> = ({ videoPath }) => {
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
   const toggleNewAnimalModal = useNewAnimalModalToggle()
   //   const videoEl = useRef(null)
@@ -45,4 +45,4 @@ const index: React.FC<indexProps> = ({ videoPath }) => {
   )
 }
 
-export default index
+export default Index

@@ -262,6 +262,7 @@ const Bank: React.FC = () => {
         handleFaucet()
         break
       default:
+        // eslint-disable-next-line no-restricted-globals
         location.href = 'https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997'
     }
   }

@@ -207,7 +207,7 @@
 import React from 'react'
 interface indexProps {}
 
-const index: React.FC<indexProps> = ({}) => {
+const Index: React.FC<indexProps> = ({}) => {
   return (
     <div>
       <h6>Hello index</h6>
@@ -215,4 +215,4 @@ const index: React.FC<indexProps> = ({}) => {
   )
 }
 
-export default index
+export default Index

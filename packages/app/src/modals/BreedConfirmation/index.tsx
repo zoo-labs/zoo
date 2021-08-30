@@ -11,7 +11,7 @@ interface indexProps {
   breed: (arrayValues: Animal[]) => void
 }
 
-const index: React.FC<indexProps> = ({ breed }) => {
+const Index: React.FC<indexProps> = ({ breed }) => {
   const breedConfirmModalOpen = useModalOpen(ApplicationModal.BREEDCONFIRM)
   const toggleBreedConfirmModalModal = useBreedConfirmModalToggle()
   // const toggleBreedConfirmModalModal = console.log('hittin meee 555')
@@ -63,4 +63,4 @@ const index: React.FC<indexProps> = ({ breed }) => {
   )
 }
 
-export default index
+export default Index
