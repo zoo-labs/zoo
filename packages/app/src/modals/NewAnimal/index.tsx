@@ -21,7 +21,6 @@ interface indexProps {
 const index: React.FC<indexProps> = ({ animal, onDismiss }) => {
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const toggleNewAnimalModal = useNewAnimalModalToggle()
-  console.log('newAnimalModalOpen', newAnimalModalOpen)
 
   return (
     <Modal

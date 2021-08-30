@@ -105,8 +105,6 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
     console.log('EXECUTING STACKED BREEDING', points)
   }
   const breed = async (arrayValues) => {
-    console.log('breeeding', arrayValues)
-
     var an1 = parseInt(arrayValues[0].tokenID)
     var an2 = parseInt(arrayValues[1].tokenID)
     const isBreedingStackedAnimal = an1 === an2
@@ -164,7 +162,6 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
           newTrans.save()
 
           // breed.count
-          console.log('reached here')
           dispatch(addAnimal({ ...arrayValues[0], selected: false }))
           dispatch(addAnimal({ ...arrayValues[1], selected: false }))
           onConfirm()

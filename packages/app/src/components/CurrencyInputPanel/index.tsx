@@ -1,15 +1,17 @@
 import { Currency, CurrencyAmount, Pair, Percent, Token } from '@sushiswap/sdk'
 import React, { ReactNode, useCallback, useState } from 'react'
 import { formatCurrencyAmount } from '../../functions'
+import selectCoinAnimation from '../../assets/animations/select-coin.json'
 
 import CurrencyLogo from './CurrencyLogo'
-// import CurrencySearchModal from '../../modals/SearchModal/CurrencySearchModal'
+import CurrencySearchModal from '../../modals/SearchModal/CurrencySearchModal'
 import DoubleCurrencyLogo from './DoubleLogo'
 import { FiatValue } from './FiatValue'
 // import { useCurrencyBalance } from '../../state/wallet/hooks'
 import { useWeb3React } from '@web3-react/core'
 import { ChevronDownIcon } from 'components/Svg'
 import { useCurrencyBalance } from 'hooks/useWallet'
+import Lottie from 'lottie-react'
 
 interface CurrencyInputPanelProps {
   value?: string
@@ -60,7 +62,6 @@ export default function CurrencyInputPanel({
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false)
   }, [setModalOpen])
-  console.log('currecny', currency)
   return (
     <div id={id} className={`${hideInput ? 'p-4' : 'p-5'} rounded bg-dark-800`}>
       <div className='flex flex-col justify-between space-y-3 sm:space-y-0 sm:flex-row'>
@@ -72,7 +73,7 @@ export default function CurrencyInputPanel({
             } open-currency-select-button h-full outline-none select-none cursor-pointer border-none text-xl font-medium items-center`}
             onClick={() => {
               if (onCurrencySelect) {
-                setModalOpen(true)
+                // setModalOpen(true)
               }
             }}>
             <div className='flex'>
@@ -84,7 +85,9 @@ export default function CurrencyInputPanel({
                 </div>
               ) : (
                 <div className='rounded bg-dark-700' style={{ maxWidth: 54, maxHeight: 54 }}>
-                  <div style={{ width: 54, height: 54 }}>{/* <Lottie animationData={selectCoinAnimation} autoplay loop /> */}</div>
+                  <div style={{ width: 54, height: 54 }}>
+                    <Lottie animationData={selectCoinAnimation} autoplay loop />
+                  </div>
                 </div>
               )}
               {pair ? (
@@ -151,7 +154,7 @@ export default function CurrencyInputPanel({
           </div>
         )}
       </div>
-      {/* {!disableCurrencySelect && onCurrencySelect && (
+      {!disableCurrencySelect && onCurrencySelect && (
         <CurrencySearchModal
           isOpen={modalOpen}
           onDismiss={handleDismissSearch}
@@ -160,7 +163,7 @@ export default function CurrencyInputPanel({
           otherSelectedCurrency={otherCurrency}
           showCommonBases={showCommonBases}
         />
-      )} */}
+      )}
     </div>
   )
 }

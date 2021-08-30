@@ -27,11 +27,9 @@ const index: React.FC<indexProps> = ({ breed }) => {
       dispatch(addAnimal(animal1))
       dispatch(addAnimal(animal2))
     }
-    console.log('hitting meeeee 3')
 
     toggleBreedConfirmModalModal()
   }
-  // console.log('breedConfirmModalOpen', breedConfirmModalOpen)
   return (
     <Modal isOpen={breedConfirmModalOpen} onDismiss={() => null} maxWidth={440}>
       <ModalHeader onClose={() => cancel()} title='Confirm Breed' />

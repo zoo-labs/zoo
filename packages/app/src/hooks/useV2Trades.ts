@@ -9,8 +9,8 @@ import { useMemo } from 'react'
 function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
   const allCurrencyCombinations = useAllCurrencyCombinations(currencyA, currencyB)
 
-  const allPairs = useV2Pairs(allCurrencyCombinations)
 
+  const allPairs = useV2Pairs(allCurrencyCombinations)
   // only pass along valid pairs, non-duplicated pairs
   return useMemo(
     () =>
@@ -39,9 +39,9 @@ export function useV2TradeExactIn(
   { maxHops = MAX_HOPS } = {},
 ): Trade<Currency, Currency, TradeType.EXACT_INPUT> | null {
   const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut)
-
   return useMemo(() => {
     if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {
+
       if (maxHops === 1) {
         return (
           Trade.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, {

@@ -45,6 +45,7 @@ export function useSwapActionHandlers(): {
   onUserInput: (field: Field, typedValue: string) => void
   onChangeRecipient: (recipient: string | null) => void
 } {
+
   const dispatch = useAppDispatch()
   const onCurrencySelection = useCallback(
     (field: Field, currency: Currency) => {
@@ -128,7 +129,6 @@ export function useDerivedSwapInfo(doArcher = false): {
     recipient,
   } = useSwapState()
   const inputCurrency = useCurrency(inputCurrencyId)
-  console.log('inputCurrency', inputCurrency)
 
   const outputCurrency = useCurrency(outputCurrencyId)
 
@@ -137,19 +137,18 @@ export function useDerivedSwapInfo(doArcher = false): {
   const to: string | null = (recipient === null ? account : recipientLookup.address) ?? null
 
   const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [inputCurrency ?? undefined, outputCurrency ?? undefined])
-
   const isExactIn: boolean = independentField === Field.INPUT
   const parsedAmount = tryParseAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined)
 
   const bestTradeExactIn = useTradeExactIn(isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined, {
     maxHops: singleHopOnly ? 1 : undefined,
   })
-
   const bestTradeExactOut = useTradeExactOut(inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined, {
     maxHops: singleHopOnly ? 1 : undefined,
   })
 
   const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut
+
 
   const currencyBalances = {
     [Field.INPUT]: relevantTokenBalances[0],

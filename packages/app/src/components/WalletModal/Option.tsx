@@ -30,7 +30,6 @@ export default function Option({
   active?: boolean
   id: string
 }) {
-  console.log('isActive', active)
   const content = (
     <div onClick={onClick} className={`flex items-center justify-between w-full p-3 rounded cursor-pointer ${!active ? 'bg-dark-800 hover:bg-dark-700' : 'bg-dark-900'}`}>
       <div>
