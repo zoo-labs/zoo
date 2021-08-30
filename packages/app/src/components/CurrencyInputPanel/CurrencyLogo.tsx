@@ -1,4 +1,4 @@
-import { Currency } from '@uniswap/sdk'
+import { Currency } from '@sushiswap/sdk'
 import React, { FunctionComponent, useMemo } from 'react'
 import { ChainId } from '../../constants/Chains'
 
