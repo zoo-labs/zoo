@@ -173,7 +173,6 @@ const Menu: React.FC<NavProps> = ({ providerTitle, account, chainId, login, logo
     history.push('/feed')
   }
 
-  console.log('NAV')
   return (
     <Wrapper>
       <StyledNav showMenu={showMenu} isPushed={isPushed}>

@@ -81,7 +81,6 @@ const App: React.FC = () => {
   const signedIn = chainID && window.localStorage.getItem('connectorId')
 
   const getEggs = async () => {
-    console.log('GETTING EGGS')
     try {
       const eggs = []
       for (const egg of await queryEggs()) {
@@ -94,8 +93,6 @@ const App: React.FC = () => {
   }
 
   const getAnimals = async () => {
-    console.log('GETTING ANIMALS')
-
     try {
       const animals = []
       for (const animal of await queryAnimals()) {

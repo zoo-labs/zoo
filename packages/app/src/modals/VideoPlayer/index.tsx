@@ -18,7 +18,6 @@ interface indexProps {
 const index: React.FC<indexProps> = ({ videoPath }) => {
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
   const toggleNewAnimalModal = useNewAnimalModalToggle()
-  console.log('videoPlayerModalOpen', videoPlayerModalOpen)
   //   const videoEl = useRef(null)
 
   //   useEffect(() => {

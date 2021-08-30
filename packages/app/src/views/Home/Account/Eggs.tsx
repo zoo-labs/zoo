@@ -166,7 +166,6 @@ const Eggs: React.FC<EggsProps> = ({}) => {
       })
     }
   })
-  console.log('isSm', isSm)
   eggData = sortData(eggData, 'hybrid')
   // SwiperCore.use([Pagination])
   useEffect(() => {

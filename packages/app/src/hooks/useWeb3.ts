@@ -36,7 +36,7 @@ export const useWeb3 = () => {
 
   async function getGasPrice() {
     const weiPrice = Number(await web3.eth.getGasPrice())
-    console.log('Gas price', weiPrice / 10 ** 9)
+    // console.log('Gas price', weiPrice / 10 ** 9)
     setGasPrice(weiPrice)
   }
 
