@@ -34,12 +34,12 @@ contract Savage {
         uint a = Z.decimals().mul(A).mul(10);
 
         require(Z.approve(address(this), a), 'approve failed');
-        require(Z.transferFrom(msg.sender, address(this), a), 'transferFrom failed');
+        // require(Z.transferFrom(msg.sender, address(this), a), 'transferFrom failed');
         require(Z.approve(address(R), a), 'approve failed');
 
         address[] memory path = new address[](2);
-        path[0] = address(B);
-        path[1] = address(Z);
+        path[0] = address(Z);
+        path[1] = address(B);
 
         IUniswapV2Router01(R).swapExactTokensForTokens(a, M, path, msg.sender, block.timestamp);
     }
