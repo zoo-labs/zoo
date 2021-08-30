@@ -71,6 +71,7 @@ describe.only('Savage', function () {
     expect(await oldZoo.balanceOf(pair)).to.be.equal(0);
     expect(await bnbToken.balanceOf(pair)).to.be.equal(0);
 
+    // Add liquidity
     await router.addLiquidity(
       oldZoo.address,
       bnbToken.address,
