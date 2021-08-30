@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
+<<<<<<< HEAD
     "drop": "node ./scripts/moralisDropTables.js",
     "format": "prettier --write src/* scripts/*",
+=======
+    "build": "tsc -p . --outDir dist",
+>>>>>>> c5f90c4 (Typescript cloud functions)
     "functions": "node ./scripts/moralisFunctions.js",
     "logs": "node ./scripts/moralisLogs.js",
     "plugins": "node ./scripts/moralisPlugins.js",
