@@ -12,7 +12,7 @@ import { IZoo } from "./interfaces/IZoo.sol";
 import "./console.sol";
 
 
-contract ZooDrop is Ownable {
+contract Drop is Ownable {
     using SafeMath for uint256;
 
     struct Egg {
@@ -265,7 +265,7 @@ contract ZooDrop is Ownable {
             id: 0,
             customName: "",
             breed: IZoo.Breed(0, 0),
-            meta: IZoo.Meta(0, 0)
+            meta: IZoo.Meta(0, 0, false, false)
         });
     }
 
@@ -289,7 +289,7 @@ contract ZooDrop is Ownable {
             id: 0,
             customName: "",
             breed: IZoo.Breed(0, 0),
-            meta: IZoo.Meta(0, 0)
+            meta: IZoo.Meta(0, 0, false, false)
         });
     }
 

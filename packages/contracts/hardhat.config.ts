@@ -1,10 +1,12 @@
 import { task } from 'hardhat/config'
 import { HardhatUserConfig } from 'hardhat/types'
 
-import '@nomiclabs/hardhat-ethers'
 import 'hardhat-deploy'
 import '@typechain/hardhat'
 import '@nomiclabs/hardhat-web3'
+import '@nomiclabs/hardhat-ethers'
+import '@nomiclabs/hardhat-waffle'
+import '@openzeppelin/hardhat-upgrades'
 
 import { utils } from 'ethers'
 const { isAddress, getAddress, formatUnits, parseUnits } = utils
@@ -26,6 +28,15 @@ const config: HardhatUserConfig = {
 
   solidity: {
     compilers: [
+      {
+        version: '0.4.24',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
+      },
       {
         version: '0.6.12',
         settings: {

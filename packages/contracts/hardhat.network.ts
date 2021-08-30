@@ -26,8 +26,8 @@ const networks: HardhatUserConfig['networks'] = {
     },
     accounts: {
       mnemonic: mnemonic(),
-      accountsBalance: '10000000000000000000000',
       count: 20,
+      accountsBalance: '10000000000000000000000',
     },
   },
   coverage: {
