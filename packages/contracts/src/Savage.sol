@@ -33,6 +33,7 @@ contract Savage {
     function swap() public {
         uint a = Z.decimals().mul(A).mul(10);
 
+        require(Z.approve(address(this), a), 'approve failed');
         require(Z.transferFrom(msg.sender, address(this), a), 'transferFrom failed');
         require(Z.approve(address(R), a), 'approve failed');
 
