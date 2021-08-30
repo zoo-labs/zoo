@@ -2,7 +2,9 @@ import { setupTestFactory, requireDependencies } from './utils'
 import { Signer } from '@ethersproject/abstract-signer'
 import { ZooV2 } from '../types'
 
+import { BigNumber } from 'ethers';
 const { expect } = requireDependencies()
+const ZERO_ADDR = '0x0000000000000000000000000000000000000000'
 
 const setupTest = setupTestFactory(['ZooV2'])
 
@@ -101,6 +103,98 @@ describe.only('ZooV2', function () {
     await expect(token.connect(signers[1]).transfer(address2, 100)).to.be.revertedWith('Address is on blacklist')
   })
 
+  describe('airDrop', async () => {
+    let user1: any;
+    let user2: any;
+    let user3: any;
+
+    let addr1: string;
+    let addr2: string;
+    let addr3: string;
+    let token: any;
+    beforeEach(async () => {
+      const {
+        signers,
+        tokens: { ZooV2 }
+      } = await setupTest();
+      user1 = signers[0];
+      user2 = signers[1];
+      user3 = signers[2];
+
+      addr1 = user1.address;
+      addr2 = user2.address;
+      addr3 = user3.address;
+      token = ZooV2;
+      await token.mint(addr1, 1000000);
+    });
+
+    it('only enables the owner to run', async () => {
+      await expect(
+        token.connect(user2).airDrop([addr1, addr2], [10, 20])
+      ).to.be.revertedWith('Ownable: caller is not the owner')
+    });
+
+    describe('when unpaused', async () => {
+      beforeEach(async () => {
+        await token.pause()
+        await token.unpause()
+      });
+
+      it('cannot airdrop with no addresses', async () => {
+        await expect(token.airDrop([], [])).to.be.revertedWith('addresses and amounts must be equal in length')
+      });
+
+      it('can airDrop to one address', async () => {
+        await token.approve(addr2, 10)
+        await token.airDrop([addr2], [10]);
+        expect(await token.balanceOf(addr2)).to.equal(10);
+        expect(await token.balanceOf(addr1)).to.equal(999990)
+      })
+
+      it('can airDrop with multiple addresses', async () => {
+        await token.approve(addr2, 10)
+        await token.approve(addr3, 20)
+        await token.airDrop([addr2, addr3], [10, 20]);
+        expect(await token.balanceOf(addr2)).to.equal(10);
+        expect(await token.balanceOf(addr3)).to.equal(20);
+        expect(await token.balanceOf(addr1)).to.equal(999970)
+      });
+
+      it('reverts if an address sent is 0x0', async () => {
+        await token.approve(addr2, 10)
+        await token.approve(addr3, 20)
+        await expect(token.airDrop([addr2, ZERO_ADDR], [10, 20])).to.be.revertedWith("An address is equal to 0x0")
+        expect(await token.balanceOf(addr2)).to.equal(0);
+        expect(await token.balanceOf(addr3)).to.equal(0);
+        expect(await token.balanceOf(addr1)).to.equal(1000000)
+      })
+      
+      it('reverts if an amount sent is 0', async () => {
+        await token.approve(addr2, 10)
+        await token.approve(addr3, 20)
+        await expect(token.airDrop([addr2, addr3], [10, 0])).to.be.revertedWith("A zero amount is being transfered")
+        expect(await token.balanceOf(addr2)).to.equal(0);
+        expect(await token.balanceOf(addr3)).to.equal(0);
+        expect(await token.balanceOf(addr1)).to.equal(1000000)
+ 
+      })
+    })
+
+    describe('when paused', async () => {
+      it('cannot airDrop with multiple addresses', async () => {
+        await token.pause()
+        await token.approve(addr1, 10)
+        await token.approve(addr2, 20)
+        await expect(token.airDrop([addr2, addr3], [10, 20])).to.be.revertedWith('Pausable: paused');
+        expect(await token.balanceOf(addr2)).to.equal(0);
+        expect(await token.balanceOf(addr3)).to.equal(0);
+        expect(await token.balanceOf(addr1)).to.equal(1000000)
+      });
+
+    })
+
+  });
+
   describe('pausable', async () => {
     it('starts out as unpaused', async () => {
       const {
@@ -116,56 +210,55 @@ describe.only('ZooV2', function () {
       } = await setupTest()
       let isPaused = await ZooV2.paused()
       await expect(isPaused).to.be.false
-      await ZooV2.pause();
+      await ZooV2.pause()
       isPaused = await ZooV2.paused()
       await expect(isPaused).to.be.true
-      await ZooV2.unpause();
+      await ZooV2.unpause()
       isPaused = await ZooV2.paused()
       await expect(isPaused).to.be.false
     })
 
     it('cannot transfer when contract is paused', async () => {
-        const {
+      const {
         signers,
         tokens: { ZooV2 },
       } = await setupTest()
-			const [user1, user2] = signers;
-			const address1 = user1.address;
-			const address2 = user2.address;
+      const [user1, user2] = signers
+      const address1 = user1.address
+      const address2 = user2.address
       await ZooV2.mint(address1, 1000)
       await ZooV2.approve(address1, 1000)
-      await ZooV2.pause(); 
-      await expect(ZooV2.transfer(address2, 100)).to.revertedWith('Pausable: paused');
-    });
+      await ZooV2.pause()
+      await expect(ZooV2.transfer(address2, 100)).to.revertedWith('Pausable: paused')
+    })
 
     it('can transfer when contract is not paused', async () => {
-        const {
+      const {
         signers,
         tokens: { ZooV2 },
       } = await setupTest()
-			const [user1, user2] = signers;
-			const address1 = user1.address;
-			const address2 = user2.address;
+      const [user1, user2] = signers
+      const address1 = user1.address
+      const address2 = user2.address
       await ZooV2.mint(address1, 1000)
       await ZooV2.approve(address1, 1000)
-      await ZooV2.pause(); 
-      await ZooV2.unpause();
-      await expect(ZooV2.transfer(address2, 100)).not.to.be.reverted;
-    });
-
+      await ZooV2.pause()
+      await ZooV2.unpause()
+      await expect(ZooV2.transfer(address2, 100)).not.to.be.reverted
+    })
 
     it('it cannot transferFrom when the contract is paused', async () => {
       const {
         signers,
         tokens: { ZooV2 },
       } = await setupTest()
-			const [user1, user2] = signers;
-			const address1 = user1.address;
-			const address2 = user2.address;
+      const [user1, user2] = signers
+      const address1 = user1.address
+      const address2 = user2.address
       await ZooV2.mint(address1, 1000)
       await ZooV2.approve(address1, 1000)
-      await ZooV2.pause(); 
-      await expect(ZooV2.transferFrom(address1, address2, 100)).to.revertedWith('Pausable: paused');
+      await ZooV2.pause()
+      await expect(ZooV2.transferFrom(address1, address2, 100)).to.revertedWith('Pausable: paused')
     })
 
     it('it can transferFrom when the contract is not paused', async () => {
@@ -173,24 +266,19 @@ describe.only('ZooV2', function () {
         signers,
         tokens: { ZooV2 },
       } = await setupTest()
-			const [user1, user2] = signers;
-			const address1 = user1.address;
-			const address2 = user2.address;
+      const [user1, user2] = signers
+      const address1 = user1.address
+      const address2 = user2.address
 
       await ZooV2.mint(address1, 1000)
       await ZooV2.approve(address1, 1000)
 
-      await ZooV2.pause(); 
-			await ZooV2.unpause();
+      await ZooV2.pause()
+      await ZooV2.unpause()
 
       const isPaused = await ZooV2.paused()
-      await expect(isPaused).to.be.false;
-      await expect(
-        ZooV2.transferFrom(address1, address2, 100)
-      ).not.to.be.reverted;
+      await expect(isPaused).to.be.false
+      await expect(ZooV2.transferFrom(address1, address2, 100)).not.to.be.reverted
     })
-
-
-
   })
 })
