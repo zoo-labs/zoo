@@ -83,7 +83,7 @@ export default function LoginMain() {
   const { login, logout } = useAuth()
   const { isXs, isSm } = useMatchBreakpoints()
   const isMobile = isXs || isSm
-
+  // eslint-disable-next-line no-restricted-globals
   const { onPresentConnectModal, onPresentAccountModal } = useWalletModal(login, logout, account, history)
 
   const metamaskLogin = () => {

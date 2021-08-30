@@ -1,3 +1,4 @@
+
 import { useCallback } from 'react'
 import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { NoBscProviderError } from '@binance-chain/bsc-connector'
@@ -16,6 +17,7 @@ const useAuth = () => {
   const isMobile = isXs || isSm
 
   const login = useCallback((connectorID: ConnectorNames) => {
+    
     console.log('LOGGING IN.....')
     const connector = connectorsByName[connectorID]
     if (connector) {
@@ -29,6 +31,7 @@ const useAuth = () => {
           }
         } else if (error instanceof NoEthereumProviderError || error instanceof NoBscProviderError) {
           toastError('Provider Error', 'No provider was found')
+          // eslint-disable-next-line no-restricted-globals
           setTimeout(() => (location.href = 'https://metamask.io/download'), 3000)
         } else if (error instanceof UserRejectedRequestErrorInjected || error instanceof UserRejectedRequestErrorWalletConnect) {
           if (connector instanceof WalletConnectConnector) {

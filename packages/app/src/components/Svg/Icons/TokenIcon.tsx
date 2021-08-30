@@ -1,5 +1,5 @@
 import React from 'react'
-import useDynamicsSVGImport, { useDynamicsSVGImportOptions } from '../../../hooks/useDynamicsSVGImport'
+import useDynamicsSVGImport, { useDynamicsSVGImportOptions } from '../../hooks/useDynamicsSVGImport'
 import useMatchBreakpoints from '../../../hooks/useMatchBreakpoints'
 import { ZAP } from './TokenIcons'
 

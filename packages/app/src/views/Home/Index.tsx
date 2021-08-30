@@ -8,7 +8,7 @@ import Bank from './Bank'
 
 interface indexProps {}
 
-const index: React.FC<indexProps> = ({}) => {
+const Index: React.FC<indexProps> = ({}) => {
   const [tab, setTab] = useState(0)
   const web3 = useWeb3()
   const { chainID, account } = web3
@@ -72,8 +72,8 @@ const index: React.FC<indexProps> = ({}) => {
         handleFaucet()
         break
       default:
-        const redirectWindow = window.open('https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997', '_blank')
-        redirectWindow.location
+        window.open('https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997', '_blank')
+      // redirectWindow.location
     }
   }
   useEffect(() => {
@@ -120,4 +120,4 @@ const index: React.FC<indexProps> = ({}) => {
   )
 }
 
-export default index
+export default Index
