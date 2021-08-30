@@ -33,5 +33,7 @@ export default Deploy('UniswapV2Router02', ['WETH', 'UniswapV2Factory'], async({
   // } else {
   //   throw Error("No WNATIVE!")
   // }
-  await deploy([UniswapV2Factory.address, WETH.address])
+  await deploy(
+    [UniswapV2Factory.address, WETH.address],
+    ['UniswapV2Library', 'SafeMath', 'TransferHelper'])
 })

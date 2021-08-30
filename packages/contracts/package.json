@@ -63,7 +63,7 @@
     "deploy": "mkdirp deployments && hardhat deploy --network hardhat",
     "deploy:game": "hardhat run --network testnet scripts/configureGame.js",
     "deploy:testnet": "mkdirp deployments && hardhat deploy --network testnet",
-    "export": "mkdirp deployments && hardhat deploy --network hardhat --export-all ../react-app/src/contracts.json",
+    "export": "mkdirp deployments && hardhat deploy --network hardhat --export-all ../app/src/contracts.json",
     "fork": "hardhat node --fork https://mainnet.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad",
     "format": "prettier . --write",
     "generate": "hardhat generate",

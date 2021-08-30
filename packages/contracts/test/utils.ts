@@ -1,6 +1,5 @@
 // @ts-ignore
 import { ethers, deployments } from 'hardhat'
-import { Token } from '../types'
 import { sha256 } from 'ethers/lib/utils'
 import Decimal from '../utils/Decimal'
 import { BigNumber, BigNumberish, Contract } from 'ethers'
