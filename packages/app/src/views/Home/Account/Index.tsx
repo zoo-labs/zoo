@@ -17,7 +17,7 @@ import { Egg } from 'types/zoo'
 import { useDispatch } from 'react-redux'
 import { breedTimeouts, eggTimeout } from 'constants/index'
 import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
-import { getZooToken, getZooDrop, getZooFaucet, getZooMedia, getZooKeeper } from 'util/contracts'
+import { getToken, getDrop, getFaucet, getMedia, getZooKeeper } from 'util/contracts'
 import useWeb3 from 'hooks/useWeb3'
 import useToast from 'hooks/useToast'
 import Header from 'components/Header'
@@ -125,9 +125,9 @@ const Account: React.FC = () => {
 
   const currentEggsOwned = Object.values(allEggs).filter((egg) => (egg.owner || '').toLowerCase() === account.toLowerCase() && !egg.burned).length
 
-  const zooToken = getZooToken(web3)
+  const zooToken = getToken(web3)
   const zooKeeper = getZooKeeper(web3)
-  const zooDrop = getZooDrop(web3)
+  const zooDrop = getDrop(web3)
   const keeperAdd = zooKeeper.options.address
 
   const getBalance = async () => {

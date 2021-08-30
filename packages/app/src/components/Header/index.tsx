@@ -5,7 +5,7 @@ import { NavLink, useHistory, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import Menu from '../Menu'
 import { Label, Text } from 'components/Text'
-import { getZooToken, getZooDrop, getZooFaucet, getZooMedia, getZooKeeper } from 'util/contracts'
+import { getDrop, getFaucet, getMedia, getToken, getZooKeeper } from 'util/contracts'
 import Tooltip from '@material-ui/core/Tooltip'
 // import Modal from '../Modal'
 import useTheme from 'hooks/useTheme'
@@ -196,7 +196,7 @@ export default function Header() {
     history.push(`${url}`)
     toastClear()
   }
-  const zooToken = getZooToken(web3)
+  const zooToken = getToken(web3)
   // const getBalance = async () => {
   //   try {
   //     const decimals = await zooToken.methods.decimals().call()
