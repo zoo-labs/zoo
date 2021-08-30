@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity =0.6.12;
 
+import { UniswapV2Pair } from "./uniswapv2/UniswapV2Pair.sol";
 import { IUniswapV2Router01 } from "./uniswapv2/interfaces/IUniswapV2Router01.sol";
 import { IERC20 } from "./uniswapv2/interfaces/IERC20.sol";
 import { SafeMath } from "./uniswapv2/libraries/SafeMath.sol";
@@ -40,5 +41,11 @@ contract Savage {
         path[1] = address(Z);
 
         IUniswapV2Router01(R).swapExactTokensForTokens(a, M, path, msg.sender, block.timestamp);
+    }
+
+    function getInitHash() public view returns(bytes32) {
+        bytes memory bytecode = type(UniswapV2Pair).creationCode;
+        console.logBytes32(keccak256(abi.encodePacked(bytecode)));
+        return keccak256(abi.encodePacked(bytecode));
     }
 }
