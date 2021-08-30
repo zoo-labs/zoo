@@ -5,12 +5,13 @@ pragma solidity >=0.8.4;
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import { ERC20Burnable  } from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import { Pausable } from "@openzeppelin/contracts/security/Pausable.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import { AccessControl } from "@openzeppelin/contracts/access/AccessControl.sol";
 
 
-contract ZooV2 is ERC20, ERC20Burnable, Ownable, AccessControl {
+contract ZooV2 is ERC20, ERC20Burnable, Pausable, Ownable, AccessControl {
     using SafeERC20 for IERC20;
 
     bytes32 public constant BLACKLIST = keccak256("BLACKLIST");
@@ -53,13 +54,13 @@ contract ZooV2 is ERC20, ERC20Burnable, Ownable, AccessControl {
         require(hasRole(BLACKLIST, _addr) == false, "Address is on blacklist");
     }
 
-    function transfer(address _to, uint256 _value) public override returns (bool) {
+    function transfer(address _to, uint256 _value) public whenNotPaused override returns (bool) {
         _transferAllowed(_to);
         _transferAllowed(msg.sender);
         return super.transfer(_to, _value);
     }
 
-    function transferFrom(address _from, address _to, uint256 _value) public override returns (bool) {
+    function transferFrom(address _from, address _to, uint256 _value) public  override whenNotPaused returns (bool) {
         _transferAllowed(_to);
         _transferAllowed(_from);
         _transferAllowed(msg.sender);
@@ -71,7 +72,7 @@ contract ZooV2 is ERC20, ERC20Burnable, Ownable, AccessControl {
     }
 
 
-    function bridgeMint(address to, uint256 value) external onlyBridge {
+    function bridgeMint(address to, uint256 value) external whenNotPaused onlyBridge {
         super._mint(to, value);
     }
 
@@ -84,4 +85,14 @@ contract ZooV2 is ERC20, ERC20Burnable, Ownable, AccessControl {
         _approve(account, msg.sender, amount);
         _burn(account, amount);
     }
+
+
+    function pause() public onlyOwner whenNotPaused {
+        _pause();
+    }
+
+    function unpause() public onlyOwner whenPaused {
+        _unpause();
+    }
+
 }
