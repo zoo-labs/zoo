@@ -15,6 +15,7 @@ contract Savage {
     uint256 A;
     uint256 M;
 
+    // Setup swap
     constructor(address b, address t, address lp, address pf, address pr, uint256 a, uint256 m) {
         B = IERC20Uniswap(b);
         T = IERC20Uniswap(t);
@@ -25,7 +26,8 @@ contract Savage {
         M = m;
     }
 
-    function savage() public {
+    // Execute swap
+    function swap() public {
         uint amountIn = A * 10 ** T.decimals();
 
         require(T.transferFrom(msg.sender, address(this), amountIn), 'transferFrom failed');
