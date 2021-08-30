@@ -1,6 +1,6 @@
 import { setupTestFactory, requireDependencies } from './utils'
 import { ethers, waffle } from 'hardhat'
-import { Contract, ContractFactory, Wallet } from 'ethers'
+import { Contract, BigNumber, ContractFactory, Wallet } from 'ethers'
 import { Signer } from '@ethersproject/abstract-signer'
 import { Savage as ISavage } from '../types'
 
@@ -52,27 +52,42 @@ describe.only('Savage', function () {
 
   it('removes zoo from lp', async () => {
     const txn = await factory.createPair(oldZoo.address, bnbToken.address);
-    const tx = await txn.wait();
-    const evt = tx.events[0];
-    const addr = evt.args.pair;
+    await txn.wait();
+    const pair = await factory.getPair(oldZoo.address, bnbToken.address);
 
-    const amount = ethers.utils.parseEther('1000')
-    await bnbToken.mint(sender.address, amount)
-    await oldZoo.mint(sender.address, amount)
+    const amount = ethers.utils.parseEther('10')
+    const amountZoo = ethers.utils.parseEther('2180913677.035819786465972231').add(ethers.utils.parseEther('1000000000'))
+    const amountBNB = ethers.utils.parseEther('2019.717141295805250967')
 
-    await bnbToken.approve(router.address, amount)
-    await oldZoo.approve(router.address, amount)
+    await bnbToken.mint(sender.address, amountBNB)
+    await oldZoo.mint(sender.address, amountZoo)
+
+    await bnbToken.approve(router.address, amountBNB)
+    await oldZoo.approve(router.address, amountZoo)
+
+    expect(await oldZoo.balanceOf(sender.address)).to.be.equal(amountZoo);
+    expect(await bnbToken.balanceOf(sender.address)).to.be.equal(amountBNB);
+
+    expect(await oldZoo.balanceOf(pair)).to.be.equal(0);
+    expect(await bnbToken.balanceOf(pair)).to.be.equal(0);
 
     await router.addLiquidity(
-      bnbToken.address,
       oldZoo.address,
-      amount,
-      amount,
-      0,
-      0,
+      bnbToken.address,
+      amountZoo, amountBNB,
+      100, 100,
       sender.address,
-      Date.now() * 60);
+      2e9
+    )
 
+    expect(await oldZoo.balanceOf(sender.address)).to.be.equal(0);
+    expect(await bnbToken.balanceOf(sender.address)).to.be.equal(0);
+    expect(await bnbToken.balanceOf(router.address)).to.be.equal(0);
+
+    expect(await oldZoo.balanceOf(pair)).to.be.equal(amountZoo);
+    expect(await bnbToken.balanceOf(pair)).to.be.equal(amountBNB);
+
+    await savage.swap()
     await expect(savage.swap()).to.be.revertedWith("Err");
   })
 })
