@@ -144,7 +144,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
         break
       default:
         const redirectWindow = window.open('https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997', '_blank')
-        redirectWindow.location
+      // redirectWindow.location
     }
   }
 

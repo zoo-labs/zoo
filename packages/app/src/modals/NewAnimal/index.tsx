@@ -18,7 +18,7 @@ interface indexProps {
   onDismiss: () => void
 }
 
-const index: React.FC<indexProps> = ({ animal, onDismiss }) => {
+const Index: React.FC<indexProps> = ({ animal, onDismiss }) => {
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const toggleNewAnimalModal = useNewAnimalModalToggle()
 
@@ -36,4 +36,4 @@ const index: React.FC<indexProps> = ({ animal, onDismiss }) => {
   )
 }
 
-export default index
+export default Index

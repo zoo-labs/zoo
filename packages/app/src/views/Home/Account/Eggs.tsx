@@ -11,7 +11,6 @@ import VideoPlayerModal from '../../../modals/VideoPlayer'
 import NewAnimalModal from '../../../modals/NewAnimal'
 import useWeb3 from 'hooks/useWeb3'
 import { Text, Card as Existing, EggCard, VideoPlayer, useMatchBreakpoints } from 'components'
-import AspectRatio from 'react-aspect-ratio'
 import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
 import { eggTimeout } from 'constants/index'
 import { addEgg } from 'state/actions'
@@ -169,7 +168,9 @@ const Eggs: React.FC<EggsProps> = ({}) => {
   eggData = sortData(eggData, 'hybrid')
   // SwiperCore.use([Pagination])
   useEffect(() => {
-    eggType !== '' && (console.log('yaaaaay 1'), toggleVideoPlayerModal())
+    if (eggType !== '') {
+      toggleVideoPlayerModal()
+    }
   }, [eggType])
   return (
     <>
