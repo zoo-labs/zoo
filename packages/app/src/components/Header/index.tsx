@@ -191,7 +191,6 @@ export default function Header() {
     setActive(location.pathname.split('/')[1])
   }, [location])
 
-  console.log('active', active)
   const scrollY = useScrollPosition()
   const urlClick = (url) => {
     history.push(`${url}`)
@@ -217,7 +216,6 @@ export default function Header() {
       await web3.eth.getBalance(account).then((val) => {
         const divisor = parseFloat(Math.pow(10, 18).toString())
         const balance = parseFloat(val) / divisor
-        console.log('balance', balance)
         setBalance(parseFloat(balance.toFixed(4)))
       })
     } catch (e) {

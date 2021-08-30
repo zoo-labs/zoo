@@ -3,7 +3,7 @@
 import { ChainId, Currency, Token } from '@sushiswap/sdk'
 
 import { BigNumber } from '@ethersproject/bignumber'
-// import { TokenAddressMap } from '../state/lists/hooks'
+ import { TokenAddressMap } from '../state/lists/hooks'
 import { getAddress } from '@ethersproject/address'
 
 /**
@@ -25,6 +25,6 @@ export function isAddress(value: any): string | false {
   }
 }
 
-// export function isTokenOnList(tokenAddressMap: TokenAddressMap, token?: Token): boolean {
-//   return Boolean(token?.isToken && tokenAddressMap[token.chainId]?.[token.address])
-// }
+export function isTokenOnList(tokenAddressMap: TokenAddressMap, token?: Token): boolean {
+  return Boolean(token?.isToken && tokenAddressMap[token.chainId]?.[token.address])
+}

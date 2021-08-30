@@ -1,13 +1,13 @@
 import { ChainId, Currency, Percent } from '@sushiswap/sdk'
 import React, { FC, useState } from 'react'
 
-// import Gas from '../../components/Gas'
 // import MyOrders from '../exchange-v1/limit-order/MyOrders'
 // import NavLink from '../../components/NavLink'
 // import Settings from '../../components/Settings'
 import { currencyId } from '../../functions'
 import { useWeb3React } from '@web3-react/core'
 import { NavLink } from 'react-router-dom'
+import { useWeb3 } from 'hooks'
 
 const getQuery = (input: any, output: any) => {
   if (!input && !output) return null
@@ -29,6 +29,7 @@ interface ExchangeHeaderProps {
 
 const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippage }) => {
   const { chainId } = useWeb3React()
+  const { gasPrice } = useWeb3()
   //   const router = useRouter()
   const [animateWallet, setAnimateWallet] = useState(false)
   //   const isRemove = router.asPath.startsWith('/remove')
@@ -72,7 +73,7 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
               <MyOrders />
             </div>
           )} */}
-          {chainId === ChainId.MAINNET && (
+          {
             <div className='items-center hidden w-full h-full px-3 space-x-3 rounded cursor-pointer text-green text-opacity-80 hover:text-opacity-100 md:flex hover:bg-dark-800'>
               <svg width='18' height='20' viewBox='0 0 18 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
                 <path
@@ -81,10 +82,10 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
                 />
               </svg>
 
-              <div className='hidden md:block text-baseline'>{/* <Gas /> */}</div>
+              <div className='hidden md:block text-baseline'>{gasPrice / 1000000000}</div>
             </div>
-          )}
-          <div className='relative flex items-center w-full h-full rounded hover:bg-dark-800'>{/* <Settings placeholderSlippage={allowedSlippage} /> */}</div>
+          }
+          <div className='relative flex items-center w-full h-full rounded hover:bg-dark-800'>0.4BNB</div>
         </div>
       </div>
     </div>

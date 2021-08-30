@@ -136,8 +136,6 @@ export default function WalletModal({ onDismiss = () => null }: { onDismiss?: ()
     // const isMetamask = window.ethereum && window.ethereum.isMetaMask
     return Object.keys(connectors).map((key) => {
       const option = connectors[key]
-      console.log('option', option)
-      console.log('connector', connector)
       // check for mobile options
       //   if (isMobile) {
       //     // disable portis on mobile for now

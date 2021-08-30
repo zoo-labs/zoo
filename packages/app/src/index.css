@@ -85,4 +85,9 @@ html {
     object-fit: cover;
   }
 
-  
+  .disabled\:cursor-not-allowed:disabled{
+      cursor: not-allowed;
+  }
+  .disabled\:bg-opacity-80:disabled {
+    --tw-bg-opacity: 0.8;
+}

@@ -175,7 +175,6 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
 
 export function useCurrency(currencyId: string | undefined): Currency | null | undefined {
   const { chainId } = useWeb3React()
-
   const isETH = currencyId?.toUpperCase() === 'ETH'
 
   const isDual = [ChainId.CELO].includes(chainId)
@@ -193,11 +192,9 @@ export function useCurrency(currencyId: string | undefined): Currency | null | u
   const native = useMemo(() => (chainId ? NATIVE[chainId] : undefined), [chainId])
 
   const wnative = chainId ? WNATIVE[chainId] : undefined
-  console.log('native', native)
-  console.log('token', token)
-  console.log('wnative', wnative)
+
 
   if (wnative?.address?.toLowerCase() === currencyId?.toLowerCase()) return wnative
   // useNative ? native : token
-  return native
+  return useNative ? native : token
 }

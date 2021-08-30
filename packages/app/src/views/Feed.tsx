@@ -114,7 +114,6 @@ function Feed<FeedPagePops>({ match }) {
   }
 
   const onItemClick = (index) => {
-    console.log('new Index ' + index)
     // if (activeIndex == 0) {
     //   index = 1
     // } else {
@@ -131,7 +130,6 @@ function Feed<FeedPagePops>({ match }) {
   }
 
   const handleIndexChange = (obj) => {
-    console.log('handleIndexChange')
     console.log(obj)
     setActiveIndex(obj.activeIndex)
   }
