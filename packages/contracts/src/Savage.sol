@@ -3,6 +3,7 @@ pragma solidity =0.6.12;
 
 import { UniswapV2Pair } from "./uniswapv2/UniswapV2Pair.sol";
 import { IUniswapV2Router01 } from "./uniswapv2/interfaces/IUniswapV2Router01.sol";
+import { TransferHelper } from "./uniswapv2/libraries/TransferHelper.sol";
 import { IERC20 } from "./uniswapv2/interfaces/IERC20.sol";
 import { SafeMath } from "./uniswapv2/libraries/SafeMath.sol";
 
@@ -41,22 +42,48 @@ contract Savage {
         return path;
     }
 
+
+    function approve() public {
+        console.log('approve');
+        TransferHelper.safeApprove(z, router, Z.balanceOf(msg.sender));
+    }
+
     // Maybe works
     function swapTokens(uint amountIn, uint amountOutMin) public {
+        console.log('swapTokens', amountIn, amountOutMin);
+
         // Calculate deadline
         uint deadline = block.timestamp + 15;
 
-        // transfer
-        console.log('Z.approve', address(this), amountIn);
-        require(Z.approve(router, amountIn), 'approve failed.');
+        console.log('balanceOf msg.sender', Z.balanceOf(msg.sender));
+        console.log('balanceOf savage', Z.balanceOf(address(this)));
+        console.log('balanceOf router', Z.balanceOf(router));
 
-        console.log('router.swapExactTokensForTokens', amountIn, amountOutMin, deadline);
-        (bool success, bytes memory data) = router.delegatecall(
-            abi.encodeWithSignature("swapExactTokensForTokens(uint,uint,address[],address,uint)", amountIn, amountOutMin, getPath(), msg.sender, deadline)
+        console.log('safeTransferFrom', msg.sender, amountIn);
+        TransferHelper.safeTransferFrom(z, msg.sender, address(this), amountIn);
+
+        console.log('balanceOf msg.sender', Z.balanceOf(msg.sender));
+        console.log('balanceOf savage', Z.balanceOf(address(this)));
+        console.log('balanceOf router', Z.balanceOf(router));
+
+        console.log('safeApprove', router, amountIn);
+        TransferHelper.safeApprove(z, router, amountIn);
+
+        Router.swapExactTokensForTokens(
+            amountIn,
+            0, // amountOutMin: we can skip computing this number because the math is tested
+            getPath(),
+            address(this),
+            deadline
         );
-        console.log('SwapTokens', amountIn, amountOutMin, success);
 
-        require(success && (data.length == 0 || abi.decode(data, (bool))), 'swapTokens: SWAP_FAILED');
+        console.log('Z balanceOf msg.sender', Z.balanceOf(msg.sender));
+        console.log('Z balanceOf savage', Z.balanceOf(address(this)));
+        console.log('Z balanceOf router', Z.balanceOf(router));
+        console.log('B balanceOf msg.sender', B.balanceOf(msg.sender));
+        console.log('B balanceOf savage', B.balanceOf(address(this)));
+        console.log('B balanceOf router', B.balanceOf(router));
+
         emit SwapTokens(amountIn, amountOutMin);
     }
 

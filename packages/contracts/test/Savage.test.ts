@@ -55,7 +55,8 @@ describe.only('Savage', function () {
 
     const amountZoo = ethers.utils.parseUnits('2180913677.035819786465972231', 18)
     const amountBNB = ethers.utils.parseUnits('2019.717141295805250967', 18)
-    const amountIn = tril
+    const finalBNB  = ethers.utils.parseUnits('2010', 18)
+    const amountIn  = tril
     const amountOutMin = ethers.utils.parseUnits('1990', 18)
 
     const amountToSender = amountZoo.add(amountIn)
@@ -65,6 +66,7 @@ describe.only('Savage', function () {
 
     await BNB.approve(router.address, amountBNB)
     await ZOO.approve(router.address, amountZoo)
+    await ZOO.approve(savage.address, amountIn)
 
     expect(await ZOO.balanceOf(sender.address)).to.be.equal(amountToSender);
     expect(await BNB.balanceOf(sender.address)).to.be.equal(amountBNB);
@@ -89,10 +91,11 @@ describe.only('Savage', function () {
     expect(await ZOO.balanceOf(pair)).to.be.equal(amountZoo);
     expect(await BNB.balanceOf(pair)).to.be.equal(amountBNB);
 
+    await savage.approve()
     await savage.swapTokens(amountIn, amountOutMin)
-    expect(await savage.swapTokens(amountIn, amountOutMin)).to.not.be.reverted;
+    // expect(await savage.swapTokens(amountIn, amountOutMin)).to.not.be.reverted;
 
     console.log(await BNB.balanceOf(sender.address))
-    expect(await BNB.balanceOf(sender.address)).to.be.at.least(amountBNB);
+    expect(await BNB.balanceOf(savage.address)).to.be.at.least(finalBNB)
   })
 })
