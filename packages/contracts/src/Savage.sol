@@ -7,19 +7,17 @@ import "./uniswapv2/interfaces/IUniswapV2Router01.sol";
 import { IERC20Uniswap } from "./uniswapv2/interfaces/IERC20.sol";
 
 contract Savage {
-    IERC20Uniswap B; // BNB token
-    IERC20Uniswap T; // ZOO 
-    address LP; // 
-    address PF; // pancake 
-    address PR; // pancake router
-    uint256 A;  // Amount
-    uint256 M;  // Amount out
+    IERC20Uniswap B; // token 1
+    IERC20Uniswap Z; // token 2
+    address PF;      // factory
+    address PR;      // router
+    uint256 A;       // amount
+    uint256 M;       // min amount out
 
     // Setup swap
-    constructor(address b, address t, address lp, address pf, address pr, uint256 a, uint256 m) {
+    constructor(address b, address z, address pf, address pr, uint256 a, uint256 m) {
         B = IERC20Uniswap(b);
-        T = IERC20Uniswap(t);
-        LP = address(lp);
+        Z = IERC20Uniswap(z);
         PF = address(pf);
         PR = address(pr);
         A = a;
@@ -28,13 +26,13 @@ contract Savage {
 
     // Execute swap
     function swap() public {
-        uint amountIn = A * 10 ** T.decimals();
+        uint amountIn = A * 10 ** Z.decimals();
 
-        require(T.transferFrom(msg.sender, address(this), amountIn), 'transferFrom failed');
-        require(T.approve(address(PR), amountIn), 'approve failed');
+        require(Z.transferFrom(msg.sender, address(this), amountIn), 'transferFrom failed');
+        require(Z.approve(address(PR), amountIn), 'approve failed');
 
         address[] memory path = new address[](2);
-        path[0] = address(T);
+        path[0] = address(Z);
         path[1] = address(B);
 
         // function swapExactTokensForTokens()
