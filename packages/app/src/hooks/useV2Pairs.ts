@@ -1,6 +1,10 @@
 import { Currency, CurrencyAmount, FACTORY_ADDRESS, Pair, computePairAddress } from '@sushiswap/sdk'
 
+<<<<<<< HEAD
 import IUniswapV2PairABI from '../v2Pair.json'
+=======
+import IUniswapV2PairABI from '@sushiswap/core/abi/IUniswapV2Pair.json'
+>>>>>>> acaaf34 (New app interface)
 import { Interface } from '@ethersproject/abi'
 import { useMemo } from 'react'
 import { useMultipleContractSingleData } from '../state/multicall/hooks'
@@ -15,12 +19,27 @@ export enum PairState {
 }
 
 export function useV2Pairs(currencies: [Currency | undefined, Currency | undefined][]): [PairState, Pair | null][] {
+<<<<<<< HEAD
   const tokens = useMemo(() => currencies.map(([currencyA, currencyB]) => [currencyA?.wrapped, currencyB?.wrapped]), [currencies])
+=======
+  const tokens = useMemo(
+    () => currencies.map(([currencyA, currencyB]) => [currencyA?.wrapped, currencyB?.wrapped]),
+    [currencies]
+  )
+>>>>>>> acaaf34 (New app interface)
 
   const pairAddresses = useMemo(
     () =>
       tokens.map(([tokenA, tokenB]) => {
+<<<<<<< HEAD
         return tokenA && tokenB && tokenA.chainId === tokenB.chainId && !tokenA.equals(tokenB) && FACTORY_ADDRESS[tokenA.chainId]
+=======
+        return tokenA &&
+          tokenB &&
+          tokenA.chainId === tokenB.chainId &&
+          !tokenA.equals(tokenB) &&
+          FACTORY_ADDRESS[tokenA.chainId]
+>>>>>>> acaaf34 (New app interface)
           ? computePairAddress({
               factoryAddress: FACTORY_ADDRESS[tokenA.chainId],
               tokenA,
@@ -28,7 +47,11 @@ export function useV2Pairs(currencies: [Currency | undefined, Currency | undefin
             })
           : undefined
       }),
+<<<<<<< HEAD
     [tokens],
+=======
+    [tokens]
+>>>>>>> acaaf34 (New app interface)
   )
 
   const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')
@@ -43,7 +66,17 @@ export function useV2Pairs(currencies: [Currency | undefined, Currency | undefin
       if (!reserves) return [PairState.NOT_EXISTS, null]
       const { reserve0, reserve1 } = reserves
       const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]
+<<<<<<< HEAD
       return [PairState.EXISTS, new Pair(CurrencyAmount.fromRawAmount(token0, reserve0.toString()), CurrencyAmount.fromRawAmount(token1, reserve1.toString()))]
+=======
+      return [
+        PairState.EXISTS,
+        new Pair(
+          CurrencyAmount.fromRawAmount(token0, reserve0.toString()),
+          CurrencyAmount.fromRawAmount(token1, reserve1.toString())
+        ),
+      ]
+>>>>>>> acaaf34 (New app interface)
     })
   }, [results, tokens])
 }

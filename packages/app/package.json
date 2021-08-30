@@ -1,7 +1,6 @@
 {
   "name": "@zoolabs/app",
-  "version": "0.1.0",
-  "license": "MIT",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
@@ -14,7 +13,16 @@
     "format:pretty": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
     "generate:config": "ts-node --compiler-options '{\"module\":\"commonjs\"}' scripts/generateConfig"
   },
-  "dependencies": {
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write"
+    ],
+    "*.{md,css}": "prettier --write"
+  },
+  "resolutions": {
+    "@walletconnect/web3-provider": "1.6.0"
+  },
+  "devDependencies": {
     "@binance-chain/bsc-connector": "^1.0.0",
     "@craco/craco": "^6.2.0",
     "@crowdin/crowdin-api-client": "^1.11.3",
@@ -52,6 +60,7 @@
     "@uniswap/token-lists": "1.0.0-beta.24",
     "@web3-react/abstract-connector": "^6.0.7",
     "@web3-react/core": "^6.1.9",
+    "@web3-react/fortmatic-connector": "^6.1.6",
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/types": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.4",
@@ -124,10 +133,15 @@
       "not dead",
       "not op_mini all"
     ],
-    "development": [
-      "last 5 chrome version",
-      "last 5 firefox version",
-      "last 5 safari version"
+    "exclude": [],
+    "entrypoints": [
+      "src/pages"
     ]
-  }
+  },
+  "browserslist": [
+    ">0.3%",
+    "not ie 11",
+    "not dead",
+    "not op_mini all"
+  ]
 }

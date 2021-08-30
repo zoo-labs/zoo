@@ -1,7 +1,11 @@
 import { AppState } from '..'
 import DEFAULT_TOKEN_LIST from '@sushiswap/default-token-list'
 import { TokenList } from '@uniswap/token-lists'
+<<<<<<< HEAD
 import { UNSUPPORTED_LIST_URLS } from '../../config/token-lists'
+=======
+import { UNSUPPORTED_LIST_URLS } from '../../constants/token-lists'
+>>>>>>> acaaf34 (New app interface)
 import UNSUPPORTED_TOKEN_LIST from '../../constants/token-lists/sushiswap-v2-unsupported.tokenlist.json'
 import { WrappedTokenInfo } from './wrappedTokenInfo'
 import { sortByListPriority } from '../../functions/list'
@@ -14,7 +18,12 @@ export type TokenAddressMap = Readonly<{
   }>
 }>
 
+<<<<<<< HEAD
 const listCache: WeakMap<TokenList, TokenAddressMap> | null = typeof WeakMap !== 'undefined' ? new WeakMap<TokenList, TokenAddressMap>() : null
+=======
+const listCache: WeakMap<TokenList, TokenAddressMap> | null =
+  typeof WeakMap !== 'undefined' ? new WeakMap<TokenList, TokenAddressMap>() : null
+>>>>>>> acaaf34 (New app interface)
 
 export function listToTokenMap(list: TokenList): TokenAddressMap {
   const result = listCache?.get(list)
@@ -129,7 +138,14 @@ export function useUnsupportedTokenList(): TokenAddressMap {
   const loadedUnsupportedListMap = useCombinedTokenMapFromUrls(UNSUPPORTED_LIST_URLS)
 
   // format into one token address map
+<<<<<<< HEAD
   return useMemo(() => combineMaps(localUnsupportedListMap, loadedUnsupportedListMap), [localUnsupportedListMap, loadedUnsupportedListMap])
+=======
+  return useMemo(
+    () => combineMaps(localUnsupportedListMap, loadedUnsupportedListMap),
+    [localUnsupportedListMap, loadedUnsupportedListMap]
+  )
+>>>>>>> acaaf34 (New app interface)
 }
 
 export function useIsListActive(url: string): boolean {

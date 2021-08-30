@@ -1,5 +1,9 @@
 import { AppDispatch, AppState } from '..'
+<<<<<<< HEAD
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../config/routing'
+=======
+import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants'
+>>>>>>> acaaf34 (New app interface)
 import { ChainId, FACTORY_ADDRESS, JSBI, Pair, Percent, Token, computePairAddress } from '@sushiswap/sdk'
 import {
   SerializedPair,
@@ -23,9 +27,16 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { useCallback, useMemo } from 'react'
 
+<<<<<<< HEAD
 import flatMap from 'lodash/flatMap'
 import { useAllTokens } from '../../hooks/Tokens'
 import { useWeb3React } from '@web3-react/core'
+=======
+import ReactGA from 'react-ga'
+import flatMap from 'lodash/flatMap'
+import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
+import { useAllTokens } from '../../hooks/Tokens'
+>>>>>>> acaaf34 (New app interface)
 
 function serializeToken(token: Token): SerializedToken {
   return {
@@ -38,7 +49,17 @@ function serializeToken(token: Token): SerializedToken {
 }
 
 function deserializeToken(serializedToken: SerializedToken): Token {
+<<<<<<< HEAD
   return new Token(serializedToken.chainId, serializedToken.address, serializedToken.decimals, serializedToken.symbol, serializedToken.name)
+=======
+  return new Token(
+    serializedToken.chainId,
+    serializedToken.address,
+    serializedToken.decimals,
+    serializedToken.symbol,
+    serializedToken.name
+  )
+>>>>>>> acaaf34 (New app interface)
 }
 
 export function useIsDarkMode(): boolean {
@@ -47,7 +68,11 @@ export function useIsDarkMode(): boolean {
       userDarkMode,
       matchesDarkMode,
     }),
+<<<<<<< HEAD
     shallowEqual,
+=======
+    shallowEqual
+>>>>>>> acaaf34 (New app interface)
   )
 
   return userDarkMode === null ? matchesDarkMode : userDarkMode
@@ -86,6 +111,7 @@ export function useUserSingleHopOnly(): [boolean, (newSingleHopOnly: boolean) =>
 
   const setSingleHopOnly = useCallback(
     (newSingleHopOnly: boolean) => {
+<<<<<<< HEAD
       // ReactGA.event({
       //   category: 'Routing',
       //   action: newSingleHopOnly ? 'enable single hop' : 'disable single hop',
@@ -93,6 +119,15 @@ export function useUserSingleHopOnly(): [boolean, (newSingleHopOnly: boolean) =>
       dispatch(updateUserSingleHopOnly({ userSingleHopOnly: newSingleHopOnly }))
     },
     [dispatch],
+=======
+      ReactGA.event({
+        category: 'Routing',
+        action: newSingleHopOnly ? 'enable single hop' : 'disable single hop',
+      })
+      dispatch(updateUserSingleHopOnly({ userSingleHopOnly: newSingleHopOnly }))
+    },
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 
   return [singleHopOnly, setSingleHopOnly]
@@ -105,17 +140,29 @@ export function useSetUserSlippageTolerance(): (slippageTolerance: Percent | 'au
     (userSlippageTolerance: Percent | 'auto') => {
       let value: 'auto' | number
       try {
+<<<<<<< HEAD
         value = userSlippageTolerance === 'auto' ? 'auto' : JSBI.toNumber(userSlippageTolerance.multiply(10_000).quotient)
+=======
+        value =
+          userSlippageTolerance === 'auto' ? 'auto' : JSBI.toNumber(userSlippageTolerance.multiply(10_000).quotient)
+>>>>>>> acaaf34 (New app interface)
       } catch (error) {
         value = 'auto'
       }
       dispatch(
         updateUserSlippageTolerance({
           userSlippageTolerance: value,
+<<<<<<< HEAD
         }),
       )
     },
     [dispatch],
+=======
+        })
+      )
+    },
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 }
 
@@ -127,7 +174,14 @@ export function useUserSlippageTolerance(): Percent | 'auto' {
     return state.user.userSlippageTolerance
   })
 
+<<<<<<< HEAD
   return useMemo(() => (userSlippageTolerance === 'auto' ? 'auto' : new Percent(userSlippageTolerance, 10_000)), [userSlippageTolerance])
+=======
+  return useMemo(
+    () => (userSlippageTolerance === 'auto' ? 'auto' : new Percent(userSlippageTolerance, 10_000)),
+    [userSlippageTolerance]
+  )
+>>>>>>> acaaf34 (New app interface)
 }
 
 export function useUserTransactionTTL(): [number, (slippage: number) => void] {
@@ -140,7 +194,11 @@ export function useUserTransactionTTL(): [number, (slippage: number) => void] {
     (userDeadline: number) => {
       dispatch(updateUserDeadline({ userDeadline }))
     },
+<<<<<<< HEAD
     [dispatch],
+=======
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 
   return [userDeadline, setUserDeadline]
@@ -152,7 +210,11 @@ export function useAddUserToken(): (token: Token) => void {
     (token: Token) => {
       dispatch(addSerializedToken({ serializedToken: serializeToken(token) }))
     },
+<<<<<<< HEAD
     [dispatch],
+=======
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 }
 
@@ -162,12 +224,20 @@ export function useRemoveUserAddedToken(): (chainId: number, address: string) =>
     (chainId: number, address: string) => {
       dispatch(removeSerializedToken({ chainId, address }))
     },
+<<<<<<< HEAD
     [dispatch],
+=======
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 }
 
 export function useUserAddedTokens(): Token[] {
+<<<<<<< HEAD
   const { chainId } = useWeb3React()
+=======
+  const { chainId } = useActiveWeb3React()
+>>>>>>> acaaf34 (New app interface)
   const serializedTokensMap = useAppSelector(({ user: { tokens } }) => tokens)
 
   return useMemo(() => {
@@ -190,7 +260,11 @@ export function usePairAdder(): (pair: Pair) => void {
     (pair: Pair) => {
       dispatch(addSerializedPair({ serializedPair: serializePair(pair) }))
     },
+<<<<<<< HEAD
     [dispatch],
+=======
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 }
 
@@ -213,14 +287,28 @@ export function toV2LiquidityToken([tokenA, tokenB]: [Token, Token]): Token {
   if (tokenA.equals(tokenB)) throw new Error('Tokens cannot be equal')
   if (!FACTORY_ADDRESS[tokenA.chainId]) throw new Error('No V2 factory address on this chain')
 
+<<<<<<< HEAD
   return new Token(tokenA.chainId, computePairAddress({ factoryAddress: FACTORY_ADDRESS[tokenA.chainId], tokenA, tokenB }), 18, 'UNI-V2', 'Uniswap V2')
+=======
+  return new Token(
+    tokenA.chainId,
+    computePairAddress({ factoryAddress: FACTORY_ADDRESS[tokenA.chainId], tokenA, tokenB }),
+    18,
+    'UNI-V2',
+    'Uniswap V2'
+  )
+>>>>>>> acaaf34 (New app interface)
 }
 
 /**
  * Returns all the pairs of tokens that are tracked by the user for the current chain ID.
  */
 export function useTrackedTokenPairs(): [Token, Token][] {
+<<<<<<< HEAD
   const { chainId } = useWeb3React()
+=======
+  const { chainId } = useActiveWeb3React()
+>>>>>>> acaaf34 (New app interface)
   const tokens = useAllTokens()
 
   // pinned pairs
@@ -248,7 +336,11 @@ export function useTrackedTokenPairs(): [Token, Token][] {
             )
           })
         : [],
+<<<<<<< HEAD
     [tokens, chainId],
+=======
+    [tokens, chainId]
+>>>>>>> acaaf34 (New app interface)
   )
 
   // pairs saved by users
@@ -264,7 +356,14 @@ export function useTrackedTokenPairs(): [Token, Token][] {
     })
   }, [savedSerializedPairs, chainId])
 
+<<<<<<< HEAD
   const combinedList = useMemo(() => userPairs.concat(generatedPairs).concat(pinnedPairs), [generatedPairs, pinnedPairs, userPairs])
+=======
+  const combinedList = useMemo(
+    () => userPairs.concat(generatedPairs).concat(pinnedPairs),
+    [generatedPairs, pinnedPairs, userPairs]
+  )
+>>>>>>> acaaf34 (New app interface)
 
   return useMemo(() => {
     // dedupes pairs of tokens in the combined list
@@ -283,13 +382,23 @@ export function useTrackedTokenPairs(): [Token, Token][] {
 export function useUserArcherUseRelay(): [boolean, (newUseRelay: boolean) => void] {
   const dispatch = useAppDispatch()
 
+<<<<<<< HEAD
   const useRelay = useSelector<AppState, AppState['user']['userArcherUseRelay']>((state) => state.user.userArcherUseRelay)
+=======
+  const useRelay = useSelector<AppState, AppState['user']['userArcherUseRelay']>(
+    (state) => state.user.userArcherUseRelay
+  )
+>>>>>>> acaaf34 (New app interface)
 
   const setUseRelay = useCallback(
     (newUseRelay: boolean) => {
       dispatch(updateUserArcherUseRelay({ userArcherUseRelay: newUseRelay }))
     },
+<<<<<<< HEAD
     [dispatch],
+=======
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 
   return [useRelay, setUseRelay]
@@ -305,7 +414,11 @@ export function useUserArcherGasPrice(): [string, (newGasPrice: string) => void]
     (newGasPrice: string) => {
       dispatch(updateUserArcherGasPrice({ userArcherGasPrice: newGasPrice }))
     },
+<<<<<<< HEAD
     [dispatch],
+=======
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 
   return [userGasPrice, setUserGasPrice]
@@ -321,7 +434,11 @@ export function useUserArcherETHTip(): [string, (newETHTip: string) => void] {
     (newETHTip: string) => {
       dispatch(updateUserArcherETHTip({ userArcherETHTip: newETHTip }))
     },
+<<<<<<< HEAD
     [dispatch],
+=======
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 
   return [userETHTip, setUserETHTip]
@@ -338,10 +455,17 @@ export function useUserArcherGasEstimate(): [string, (newGasEstimate: string) =>
       dispatch(
         updateUserArcherGasEstimate({
           userArcherGasEstimate: newGasEstimate,
+<<<<<<< HEAD
         }),
       )
     },
     [dispatch],
+=======
+        })
+      )
+    },
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 
   return [userGasEstimate, setUserGasEstimate]
@@ -358,10 +482,17 @@ export function useUserArcherTipManualOverride(): [boolean, (newManualOverride: 
       dispatch(
         updateUserArcherTipManualOverride({
           userArcherTipManualOverride: newManualOverride,
+<<<<<<< HEAD
         }),
       )
     },
     [dispatch],
+=======
+        })
+      )
+    },
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 
   return [userTipManualOverride, setUserTipManualOverride]
@@ -373,5 +504,12 @@ export function useUserArcherTipManualOverride(): [boolean, (newManualOverride: 
  */
 export function useUserSlippageToleranceWithDefault(defaultSlippageTolerance: Percent): Percent {
   const allowedSlippage = useUserSlippageTolerance()
+<<<<<<< HEAD
   return useMemo(() => (allowedSlippage === 'auto' ? defaultSlippageTolerance : allowedSlippage), [allowedSlippage, defaultSlippageTolerance])
+=======
+  return useMemo(
+    () => (allowedSlippage === 'auto' ? defaultSlippageTolerance : allowedSlippage),
+    [allowedSlippage, defaultSlippageTolerance]
+  )
+>>>>>>> acaaf34 (New app interface)
 }

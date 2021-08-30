@@ -29,6 +29,7 @@ const initialState: SwapState = {
 
 export default createReducer<SwapState>(initialState, (builder) =>
   builder
+<<<<<<< HEAD
     .addCase(replaceSwapState, (state, { payload: { typedValue, recipient, field, inputCurrencyId, outputCurrencyId } }) => {
       return {
         [Field.INPUT]: {
@@ -42,6 +43,24 @@ export default createReducer<SwapState>(initialState, (builder) =>
         recipient,
       }
     })
+=======
+    .addCase(
+      replaceSwapState,
+      (state, { payload: { typedValue, recipient, field, inputCurrencyId, outputCurrencyId } }) => {
+        return {
+          [Field.INPUT]: {
+            currencyId: inputCurrencyId,
+          },
+          [Field.OUTPUT]: {
+            currencyId: outputCurrencyId,
+          },
+          independentField: field,
+          typedValue: typedValue,
+          recipient,
+        }
+      }
+    )
+>>>>>>> acaaf34 (New app interface)
     .addCase(selectCurrency, (state, { payload: { currencyId, field } }) => {
       const otherField = field === Field.INPUT ? Field.OUTPUT : Field.INPUT
       // console.log({ currencyId, other: state[otherField].currencyId, test: state[otherField].currencyId }, currencyId === state[otherField].currencyId)
@@ -78,5 +97,9 @@ export default createReducer<SwapState>(initialState, (builder) =>
     })
     .addCase(setRecipient, (state, { payload: { recipient } }) => {
       state.recipient = recipient
+<<<<<<< HEAD
     }),
+=======
+    })
+>>>>>>> acaaf34 (New app interface)
 )

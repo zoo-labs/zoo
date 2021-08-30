@@ -1,5 +1,17 @@
 import { createReducer, nanoid } from '@reduxjs/toolkit'
+<<<<<<< HEAD
 import { addPopup, ApplicationModal, PopupContent, removePopup, setKashiApprovalPending, setOpenModal, updateBlockNumber } from './actions'
+=======
+import {
+  addPopup,
+  ApplicationModal,
+  PopupContent,
+  removePopup,
+  setKashiApprovalPending,
+  setOpenModal,
+  updateBlockNumber,
+} from './actions'
+>>>>>>> acaaf34 (New app interface)
 
 type PopupList = Array<{
   key: string
@@ -54,5 +66,9 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(setKashiApprovalPending, (state, action) => {
       state.kashiApprovalPending = action.payload
+<<<<<<< HEAD
     }),
+=======
+    })
+>>>>>>> acaaf34 (New app interface)
 )

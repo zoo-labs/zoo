@@ -8,10 +8,16 @@ import { AppState } from '../index'
 import { Contract } from '@ethersproject/contracts'
 import { chunkArray } from '../../functions/array'
 import { updateBlockNumber } from '../application/actions'
+<<<<<<< HEAD
 import { useBlockNumber } from '../application/hooks'
 import useDebounce from '../../hooks/useDebounce'
 import { useWeb3 } from 'hooks'
 import { useWeb3React } from '@web3-react/core'
+=======
+import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
+import { useBlockNumber } from '../application/hooks'
+import useDebounce from '../../hooks/useDebounce'
+>>>>>>> acaaf34 (New app interface)
 import { useMulticall2Contract } from '../../hooks/useContract'
 
 /**
@@ -23,7 +29,11 @@ import { useMulticall2Contract } from '../../hooks/useContract'
 async function fetchChunk(
   multicall: Contract,
   chunk: Call[],
+<<<<<<< HEAD
   minBlockNumber: number,
+=======
+  minBlockNumber: number
+>>>>>>> acaaf34 (New app interface)
 ): Promise<{
   results: { success: boolean; returnData: string }[]
   blockNumber: number
@@ -35,7 +45,11 @@ async function fetchChunk(
     const { blockNumber, returnData } = await multicall.callStatic.tryBlockAndAggregate(
       false,
       chunk.map((obj) => ({ target: obj.address, callData: obj.callData, gasLimit: obj.gasRequired ?? 1_000_000 })),
+<<<<<<< HEAD
       { blockTag: minBlockNumber },
+=======
+      { blockTag: minBlockNumber }
+>>>>>>> acaaf34 (New app interface)
     )
     resultsBlockNumber = blockNumber.toNumber()
     results = returnData
@@ -57,7 +71,14 @@ async function fetchChunk(
  * @param allListeners the all listeners state
  * @param chainId the current chain id
  */
+<<<<<<< HEAD
 export function activeListeningKeys(allListeners: AppState['multicall']['callListeners'], chainId?: number): { [callKey: string]: number } {
+=======
+export function activeListeningKeys(
+  allListeners: AppState['multicall']['callListeners'],
+  chainId?: number
+): { [callKey: string]: number } {
+>>>>>>> acaaf34 (New app interface)
   if (!allListeners || !chainId) return {}
   const listeners = allListeners[chainId]
   if (!listeners) return {}
@@ -89,7 +110,11 @@ export function outdatedListeningKeys(
   callResults: AppState['multicall']['callResults'],
   listeningKeys: { [callKey: string]: number },
   chainId: number | undefined,
+<<<<<<< HEAD
   latestBlockNumber: number | undefined,
+=======
+  latestBlockNumber: number | undefined
+>>>>>>> acaaf34 (New app interface)
 ): string[] {
   if (!chainId || !latestBlockNumber) return []
   const results = callResults[chainId]
@@ -119,7 +144,11 @@ export default function Updater(): null {
   // wait for listeners to settle before triggering updates
   const debouncedListeners = useDebounce(state.callListeners, 100)
   const latestBlockNumber = useBlockNumber()
+<<<<<<< HEAD
   const { chainId } = useWeb3React()
+=======
+  const { chainId } = useActiveWeb3React()
+>>>>>>> acaaf34 (New app interface)
   const multicall2Contract = useMulticall2Contract()
   const cancellations = useRef<{ blockNumber: number; cancellations: (() => void)[] }>()
 
@@ -131,7 +160,14 @@ export default function Updater(): null {
     return outdatedListeningKeys(state.callResults, listeningKeys, chainId, latestBlockNumber)
   }, [chainId, state.callResults, listeningKeys, latestBlockNumber])
 
+<<<<<<< HEAD
   const serializedOutdatedCallKeys = useMemo(() => JSON.stringify(unserializedOutdatedCallKeys.sort()), [unserializedOutdatedCallKeys])
+=======
+  const serializedOutdatedCallKeys = useMemo(
+    () => JSON.stringify(unserializedOutdatedCallKeys.sort()),
+    [unserializedOutdatedCallKeys]
+  )
+>>>>>>> acaaf34 (New app interface)
 
   useEffect(() => {
     if (!latestBlockNumber || !chainId || !multicall2Contract) return
@@ -151,7 +187,11 @@ export default function Updater(): null {
         calls,
         chainId,
         fetchingBlockNumber: latestBlockNumber,
+<<<<<<< HEAD
       }),
+=======
+      })
+>>>>>>> acaaf34 (New app interface)
     )
 
     cancellations.current = {
@@ -183,7 +223,11 @@ export default function Updater(): null {
                 }
                 return memo
               },
+<<<<<<< HEAD
               { erroredCalls: [], results: {} },
+=======
+              { erroredCalls: [], results: {} }
+>>>>>>> acaaf34 (New app interface)
             )
 
             // dispatch any new results
@@ -193,7 +237,11 @@ export default function Updater(): null {
                   chainId,
                   results,
                   blockNumber: fetchBlockNumber,
+<<<<<<< HEAD
                 }),
+=======
+                })
+>>>>>>> acaaf34 (New app interface)
               )
 
             // dispatch any errored calls
@@ -204,7 +252,11 @@ export default function Updater(): null {
                   calls: erroredCalls,
                   chainId,
                   fetchingBlockNumber: fetchBlockNumber,
+<<<<<<< HEAD
                 }),
+=======
+                })
+>>>>>>> acaaf34 (New app interface)
               )
             }
 
@@ -223,7 +275,11 @@ export default function Updater(): null {
                 calls: chunk,
                 chainId,
                 fetchingBlockNumber: latestBlockNumber,
+<<<<<<< HEAD
               }),
+=======
+              })
+>>>>>>> acaaf34 (New app interface)
             )
           })
         return cancel
