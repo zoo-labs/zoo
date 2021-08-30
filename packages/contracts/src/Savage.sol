@@ -13,31 +13,30 @@ contract Savage {
     using SafeMath  for uint;
     using SafeMath  for uint8;
 
-    IERC20  Z;                 // from Z
+    IERC20  A;                 // from A
     IERC20  B;                 // to B
     IUniswapV2Router01 Router; // router
 
-    address z;
+    address a;
     address b;
     address router;
 
     event SwapTokens(uint256 amountIn, uint256 amountOutMin);
 
     // Setup swap
-    constructor(address _z, address _b, address _router) public {
-        Z = IERC20(_z);
+    constructor(address _a, address _b, address _router) public {
+        A = IERC20(_a);
         B = IERC20(_b);
         Router = IUniswapV2Router01(_router);
-
-        z = _z;
+        a = _a;
         b = _b;
         router = _router;
     }
 
-    // get path Z -> B
+    // get path A -> B
     function getPath() private view returns (address[] memory) {
         address[] memory path = new address[](2);
-        path[0] = z;
+        path[0] = a;
         path[1] = b;
         return path;
     }
@@ -45,7 +44,7 @@ contract Savage {
 
     function approve() public {
         console.log('approve');
-        TransferHelper.safeApprove(z, router, Z.balanceOf(msg.sender));
+        TransferHelper.safeApprove(a, router, A.balanceOf(msg.sender));
     }
 
     // Maybe works
@@ -55,19 +54,19 @@ contract Savage {
         // Calculate deadline
         uint deadline = block.timestamp + 15;
 
-        console.log('balanceOf msg.sender', Z.balanceOf(msg.sender));
-        console.log('balanceOf savage', Z.balanceOf(address(this)));
-        console.log('balanceOf router', Z.balanceOf(router));
+        console.log('balanceOf msg.sender', A.balanceOf(msg.sender));
+        console.log('balanceOf savage', A.balanceOf(address(this)));
+        console.log('balanceOf router', A.balanceOf(router));
 
         console.log('safeTransferFrom', msg.sender, amountIn);
-        TransferHelper.safeTransferFrom(z, msg.sender, address(this), amountIn);
+        TransferHelper.safeTransferFrom(a, msg.sender, address(this), amountIn);
 
-        console.log('balanceOf msg.sender', Z.balanceOf(msg.sender));
-        console.log('balanceOf savage', Z.balanceOf(address(this)));
-        console.log('balanceOf router', Z.balanceOf(router));
+        console.log('balanceOf msg.sender', A.balanceOf(msg.sender));
+        console.log('balanceOf savage', A.balanceOf(address(this)));
+        console.log('balanceOf router', A.balanceOf(router));
 
         console.log('safeApprove', router, amountIn);
-        TransferHelper.safeApprove(z, router, amountIn);
+        TransferHelper.safeApprove(a, router, amountIn);
 
         Router.swapExactTokensForTokens(
             amountIn,
@@ -77,9 +76,9 @@ contract Savage {
             deadline
         );
 
-        console.log('Z balanceOf msg.sender', Z.balanceOf(msg.sender));
-        console.log('Z balanceOf savage', Z.balanceOf(address(this)));
-        console.log('Z balanceOf router', Z.balanceOf(router));
+        console.log('Z balanceOf msg.sender', A.balanceOf(msg.sender));
+        console.log('Z balanceOf savage', A.balanceOf(address(this)));
+        console.log('Z balanceOf router', A.balanceOf(router));
         console.log('B balanceOf msg.sender', B.balanceOf(msg.sender));
         console.log('B balanceOf savage', B.balanceOf(address(this)));
         console.log('B balanceOf router', B.balanceOf(router));
