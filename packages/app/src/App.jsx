@@ -438,6 +438,56 @@ function App(props) {
       {networkDisplay}
       <BrowserRouter>
         <Menu style={{ textAlign: "center" }} selectedKeys={[route]} mode="horizontal">
+          <Menu.Item key="/weth">
+            <Link
+              onClick={() => {
+                setRoute("/weth");
+              }}
+              to="/weth"
+            >
+              WETH
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="/b">
+            <Link
+              onClick={() => {
+                setRoute("/b");
+              }}
+              to="/b"
+            >
+              B
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="/z">
+            <Link
+              onClick={() => {
+                setRoute("/z");
+              }}
+              to="/z"
+            >
+              Z
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="/factory">
+            <Link
+              onClick={() => {
+                setRoute("/factory");
+              }}
+              to="/factory"
+            >
+              Factory
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="/router">
+            <Link
+              onClick={() => {
+                setRoute("/router");
+              }}
+              to="/router"
+            >
+              Router
+            </Link>
+          </Menu.Item>
           <Menu.Item key="/">
             <Link
               onClick={() => {
@@ -445,52 +495,21 @@ function App(props) {
               }}
               to="/"
             >
-              YourContract
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="/hints">
-            <Link
-              onClick={() => {
-                setRoute("/hints");
-              }}
-              to="/hints"
-            >
-              Hints
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="/exampleui">
-            <Link
-              onClick={() => {
-                setRoute("/exampleui");
-              }}
-              to="/exampleui"
-            >
-              ExampleUI
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="/mainnetdai">
-            <Link
-              onClick={() => {
-                setRoute("/mainnetdai");
-              }}
-              to="/mainnetdai"
-            >
-              Mainnet DAI
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="/subgraph">
-            <Link
-              onClick={() => {
-                setRoute("/subgraph");
-              }}
-              to="/subgraph"
-            >
-              Subgraph
+              Savage
             </Link>
           </Menu.Item>
         </Menu>
 
         <Switch>
+          <Route exact path="/weth">
+            <Contract
+              name="WETH"
+              signer={userSigner}
+              provider={localProvider}
+              address={address}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
           <Route exact path="/b">
             <Contract
               name="B"
@@ -527,12 +546,13 @@ function App(props) {
               blockExplorer={blockExplorer}
             />
           </Route>
-          <Route path="/subgraph">
-            <Subgraph
-              subgraphUri={props.subgraphUri}
-              tx={tx}
-              writeContracts={writeContracts}
-              mainnetProvider={mainnetProvider}
+          <Route exact path="/">
+            <Contract
+              name="Savage"
+              signer={userSigner}
+              provider={localProvider}
+              address={address}
+              blockExplorer={blockExplorer}
             />
           </Route>
         </Switch>
