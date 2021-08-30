@@ -14,7 +14,7 @@ module.exports = async function ({
 }) {
   const { deploy } = deployments;
 
-  const { deployer, dev } = await getNamedAccounts();
+  const { deployer, dao } = await getNamedAccounts();
 
   await deploy("UniswapV2Factory", {
     contract: {
@@ -22,7 +22,7 @@ module.exports = async function ({
       bytecode,
     },
     from: deployer,
-    args: [dev],
+    args: [dao],
     log: true,
     deterministicDeployment: false,
   });

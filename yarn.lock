@@ -2947,6 +2947,19 @@
     tiny-warning "^1.0.3"
     toformat "^2.0.0"
 
+"@sushiswap/sdk@^5.0.0-canary.53":
+  version "5.0.0-canary.53"
+  resolved "https://registry.yarnpkg.com/@sushiswap/sdk/-/sdk-5.0.0-canary.53.tgz#37af021f21342649df60fad11e9e9864f01f0018"
+  integrity sha512-KW3SU+oW/+OQ/S/xf9I0tk8ZwAqespkG+UmITFE7YpDmuPabkp45FX/Man7DFPCwguUdE7OMAzpLPSi0jQuCSg==
+  dependencies:
+    big.js "^6.1.0"
+    decimal.js-light "^2.5.0"
+    isomorphic-unfetch "^3.1.0"
+    jsbi "^3.1.0"
+    tiny-invariant "^1.1.0"
+    tiny-warning "^1.0.3"
+    toformat "^2.0.0"
+
 "@svgr/babel-plugin-add-jsx-attribute@^5.4.0":
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-5.4.0.tgz#81ef61947bb268eb9d50523446f9c638fb355906"
