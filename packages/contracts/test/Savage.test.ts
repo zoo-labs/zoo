@@ -56,16 +56,19 @@ describe.only('Savage', function () {
     const pair = await factory.getPair(oldZoo.address, bnbToken.address);
 
     const amount = ethers.utils.parseEther('10')
-    const amountZoo = ethers.utils.parseEther('2180913677.035819786465972231').add(ethers.utils.parseEther('1000000000'))
+    const amountZoo = ethers.utils.parseEther('2180913677.035819786465972231')
+    const tril = ethers.utils.parseEther('1000000000')
+    const amountToSender = amountZoo.add(tril)
     const amountBNB = ethers.utils.parseEther('2019.717141295805250967')
 
     await bnbToken.mint(sender.address, amountBNB)
-    await oldZoo.mint(sender.address, amountZoo)
+    // await oldZoo.mint(sender.address, amountZoo)
+    await oldZoo.mint(sender.address, amountToSender);
 
     await bnbToken.approve(router.address, amountBNB)
     await oldZoo.approve(router.address, amountZoo)
 
-    expect(await oldZoo.balanceOf(sender.address)).to.be.equal(amountZoo);
+    expect(await oldZoo.balanceOf(sender.address)).to.be.equal(amountToSender);
     expect(await bnbToken.balanceOf(sender.address)).to.be.equal(amountBNB);
 
     expect(await oldZoo.balanceOf(pair)).to.be.equal(0);
@@ -81,7 +84,7 @@ describe.only('Savage', function () {
       2e9
     )
 
-    expect(await oldZoo.balanceOf(sender.address)).to.be.equal(0);
+    expect(await oldZoo.balanceOf(sender.address)).to.be.equal(tril);
     expect(await bnbToken.balanceOf(sender.address)).to.be.equal(0);
     expect(await bnbToken.balanceOf(router.address)).to.be.equal(0);
 
