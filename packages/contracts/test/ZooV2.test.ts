@@ -67,7 +67,7 @@ describe.only('ZooV2', function () {
 
   it('should not allow transferFrom when blacklisted', async function () {
     const { signers, tokens } = await setupTest()
-    const token = tokens['ZooToken']
+    const token = tokens['ZooV2']
 
     const address = signers[1].address
     const address2 = signers[2].address
@@ -85,7 +85,7 @@ describe.only('ZooV2', function () {
 
   it('does not allow transfer from a blacklisted address', async function () {
     const { signers, tokens } = await setupTest()
-    const token = tokens['ZooToken']
+    const token = tokens['ZooV2']
 
     const address = signers[1].address
     const address2 = signers[2].address
@@ -99,5 +99,98 @@ describe.only('ZooV2', function () {
     // Add user to blacklist
     await token.blacklistAddress(address)
     await expect(token.connect(signers[1]).transfer(address2, 100)).to.be.revertedWith('Address is on blacklist')
+  })
+
+  describe('pausable', async () => {
+    it('starts out as unpaused', async () => {
+      const {
+        tokens: { ZooV2 },
+      } = await setupTest()
+      const isPaused = await ZooV2.paused()
+      await expect(isPaused).to.be.false
+    })
+
+    it('can be paused and unpaused', async () => {
+      const {
+        tokens: { ZooV2 },
+      } = await setupTest()
+      let isPaused = await ZooV2.paused()
+      await expect(isPaused).to.be.false
+      await ZooV2.pause();
+      isPaused = await ZooV2.paused()
+      await expect(isPaused).to.be.true
+      await ZooV2.unpause();
+      isPaused = await ZooV2.paused()
+      await expect(isPaused).to.be.false
+    })
+
+    it('cannot transfer when contract is paused', async () => {
+        const {
+        signers,
+        tokens: { ZooV2 },
+      } = await setupTest()
+			const [user1, user2] = signers;
+			const address1 = user1.address;
+			const address2 = user2.address;
+      await ZooV2.mint(address1, 1000)
+      await ZooV2.approve(address1, 1000)
+      await ZooV2.pause(); 
+      await expect(ZooV2.transfer(address2, 100)).to.revertedWith('Pausable: paused');
+    });
+
+    it('can transfer when contract is not paused', async () => {
+        const {
+        signers,
+        tokens: { ZooV2 },
+      } = await setupTest()
+			const [user1, user2] = signers;
+			const address1 = user1.address;
+			const address2 = user2.address;
+      await ZooV2.mint(address1, 1000)
+      await ZooV2.approve(address1, 1000)
+      await ZooV2.pause(); 
+      await ZooV2.unpause();
+      await expect(ZooV2.transfer(address2, 100)).not.to.be.reverted;
+    });
+
+
+    it('it cannot transferFrom when the contract is paused', async () => {
+      const {
+        signers,
+        tokens: { ZooV2 },
+      } = await setupTest()
+			const [user1, user2] = signers;
+			const address1 = user1.address;
+			const address2 = user2.address;
+      await ZooV2.mint(address1, 1000)
+      await ZooV2.approve(address1, 1000)
+      await ZooV2.pause(); 
+      await expect(ZooV2.transferFrom(address1, address2, 100)).to.revertedWith('Pausable: paused');
+    })
+
+    it('it can transferFrom when the contract is not paused', async () => {
+      const {
+        signers,
+        tokens: { ZooV2 },
+      } = await setupTest()
+			const [user1, user2] = signers;
+			const address1 = user1.address;
+			const address2 = user2.address;
+
+      await ZooV2.mint(address1, 1000)
+      await ZooV2.approve(address1, 1000)
+
+      await ZooV2.pause(); 
+			await ZooV2.unpause();
+
+      const isPaused = await ZooV2.paused()
+      await expect(isPaused).to.be.false;
+      await expect(
+        ZooV2.transferFrom(address1, address2, 100)
+      ).not.to.be.reverted;
+    })
+
+
+
   })
 })
