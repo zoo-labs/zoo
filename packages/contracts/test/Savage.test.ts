@@ -21,9 +21,7 @@ describe.only('Savage', function () {
   let erc20Token: Contract
   let signers: Signer[]
   let sender: any;
-  const amountIn = 10 * 11
-  const amountOut = 10 * 10
-
+  const tril = ethers.utils.parseEther('1000000000000')
 
   beforeEach(async () => {
     const {
@@ -35,8 +33,8 @@ describe.only('Savage', function () {
     signers = _signers
     sender = _sender
     factory = UniswapV2Factory;
-    bnbToken = B;
     oldZoo = Z;
+    bnbToken = B;
     router = UniswapV2Router02;
     savage = Savage
   })
@@ -55,14 +53,14 @@ describe.only('Savage', function () {
     await txn.wait();
     const pair = await factory.getPair(oldZoo.address, bnbToken.address);
 
-    const amount = ethers.utils.parseEther('10')
-    const amountZoo = ethers.utils.parseEther('2180913677.035819786465972231')
-    const tril = ethers.utils.parseEther('1000000000')
-    const amountToSender = amountZoo.add(tril)
-    const amountBNB = ethers.utils.parseEther('2019.717141295805250967')
+    const amountZoo = ethers.utils.parseUnits('2180913677.035819786465972231', 18)
+    const amountBNB = ethers.utils.parseUnits('2019.717141295805250967', 18)
+    const amountIn = tril
+    const amountOutMin = ethers.utils.parseUnits('1990', 18)
+
+    const amountToSender = amountZoo.add(amountIn)
 
     await bnbToken.mint(sender.address, amountBNB)
-    // await oldZoo.mint(sender.address, amountZoo)
     await oldZoo.mint(sender.address, amountToSender);
 
     await bnbToken.approve(router.address, amountBNB)
@@ -91,7 +89,6 @@ describe.only('Savage', function () {
     expect(await oldZoo.balanceOf(pair)).to.be.equal(amountZoo);
     expect(await bnbToken.balanceOf(pair)).to.be.equal(amountBNB);
 
-    await savage.swap()
-    await expect(savage.swap()).to.be.revertedWith("Err");
+    await expect(savage.swapTokens(amountIn, amountOutMin)).to.not.be.reverted;
   })
 })
