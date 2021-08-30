@@ -4,7 +4,7 @@
 import {
   bytecode,
   abi,
-} = require("../artifacts/src/uniswapv2//UniswapV2Factory.sol/UniswapV2Factory.json");
+} from "../artifacts/src/uniswapv2//UniswapV2Factory.sol/UniswapV2Factory.json"
 
 export default async function ({
   ethers,
