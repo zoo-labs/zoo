@@ -9,7 +9,7 @@ import { IERC20 } from '../types'
 const { expect } = requireDependencies()
 const { deployContract, deployMockContract  } = waffle;
 
-const setupTest = setupTestFactory(['UniswapV2Factory', 'UniswapV2Router02', 'Savage', 'Z', 'B', 'WETH'])
+const setupTest = setupTestFactory(['UniswapV2Factory', 'UniswapV2Router02', 'Savage', 'Z', 'B'])
 
 describe.only('Savage', function () {
   let savage: Contract
@@ -21,7 +21,6 @@ describe.only('Savage', function () {
   let erc20Token: Contract
   let signers: Signer[]
   let sender: any;
-  let WETH = 10 ** 18
   const amountIn = 10 * 11
   const amountOut = 10 * 10
 
@@ -30,7 +29,7 @@ describe.only('Savage', function () {
     const {
       signers: _signers,
       deployments,
-      tokens: { UniswapV2Factory, UniswapV2Router02, Savage, Z, B, WETH }
+      tokens: { UniswapV2Factory, UniswapV2Router02, Savage, Z, B }
     } = await setupTest()
     const _sender = _signers[0]
     signers = _signers
@@ -57,19 +56,23 @@ describe.only('Savage', function () {
     const evt = tx.events[0];
     const addr = evt.args.pair;
 
-    await bnbToken.mint(sender.address, 10 * 18)
-    await oldZoo.mint(sender.address, 10 * 18)
+    const amount = ethers.utils.parseEther('1000')
+    await bnbToken.mint(sender.address, amount)
+    await oldZoo.mint(sender.address, amount)
 
-    await bnbToken.approve(router.address, 10 * 18);
-    await oldZoo.approve(router.address, 10 * 18);
+    await bnbToken.approve(router.address, amount)
+    await oldZoo.approve(router.address, amount)
 
     await router.addLiquidity(
-      oldZoo.address,
       bnbToken.address,
-      3000, 9000,
-      2000, 1000,
+      oldZoo.address,
+      amount,
+      amount,
+      0,
+      0,
       sender.address,
       Date.now() * 60);
+
     await expect(savage.swap()).to.be.revertedWith("Err");
   })
 })
