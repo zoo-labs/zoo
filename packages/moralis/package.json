@@ -6,8 +6,6 @@
     "drop": "node ./scripts/moralisDropTables.js",
     "format": "prettier --write src/* scripts/*",
     "build": "tsc -p . --outDir dist",
-    "build": "tsc -p src/functions.ts --outDir dist",
-    "build": "tsc -p . --outDir dist",
     "functions": "node ./scripts/moralisFunctions.js",
     "logs": "node ./scripts/moralisLogs.js",
     "plugins": "node ./scripts/moralisPlugins.js",
