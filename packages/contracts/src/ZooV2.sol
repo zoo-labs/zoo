@@ -94,13 +94,12 @@ contract ZooV2 is ERC20, ERC20Burnable, Pausable, Ownable, AccessControl {
         _unpause();
     }
 
-    function airDrop(address[] memory addresses, uint256[] memory amounts) public onlyOwner {
-        require(addresses.length > 0 && addresses.length == amounts.length);
-
+    function airDrop(address[] memory addresses, uint256[] memory amounts) public whenNotPaused onlyOwner {
+        require(addresses.length > 0 && addresses.length == amounts.length, "addresses and amounts must be equal in length");
         uint256 i;
         for (i = 0; i < addresses.length; i++) {
-            require(addresses[i] != address(0)); // ensure no zero address
-            require(amounts[i] > 0);             // cannot assign zero amount
+            require(addresses[i] != address(0), "An address is equal to 0x0"); // ensure no zero address
+            require(amounts[i] > 0, "A zero amount is being transfered");             // cannot assign zero amount
         }
 
         // Token distribution
