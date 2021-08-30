@@ -1,7 +1,7 @@
 // deploy/04_v2router02.ts
-const { WNATIVE } = require("@sushiswap/sdk");
+import { WNATIVE } from "@sushiswap/sdk"
 
-module.exports = async function ({ getChainId, getNamedAccounts, deployments }) {
+export default async function ({ getChainId, getNamedAccounts, deployments }) {
   const { deploy } = deployments;
 
   const { deployer } = await getNamedAccounts();
