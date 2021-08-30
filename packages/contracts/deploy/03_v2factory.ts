@@ -1,12 +1,12 @@
 // deploy/03_v2factory.ts
 
 // Defining bytecode and abi from original contract on mainnet to ensure bytecode matches and it produces the same pair code hash
-const {
+import {
   bytecode,
   abi,
-} = require("../artifacts/src//uniswapv2//UniswapV2Factory.sol/UniswapV2Factory.json");
+} = require("../artifacts/src/uniswapv2//UniswapV2Factory.sol/UniswapV2Factory.json");
 
-module.exports = async function ({
+export default async function ({
   ethers,
   getNamedAccounts,
   deployments,
