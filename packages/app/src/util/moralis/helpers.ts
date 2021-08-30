@@ -1,4 +1,4 @@
-import { Moralis, Object, Attributes } from 'moralis'
+import { Moralis,  } from 'moralis'
 
 declare type DefaultQueryAttribute = Moralis.Attributes
 declare type Query<Entity extends DefaultQueryAttribute = DefaultQueryAttribute> = Moralis.Query<Moralis.Object<Entity>>
