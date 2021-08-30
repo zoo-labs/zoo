@@ -1,7 +1,27 @@
 import { AppDispatch, AppState } from '../index'
+<<<<<<< HEAD
 import { ChainId, Currency, CurrencyAmount, JSBI, Percent, SUSHI_ADDRESS, TradeType, Trade as V2Trade, WNATIVE_ADDRESS } from '@sushiswap/sdk'
 import { DEFAULT_ARCHER_ETH_TIP, DEFAULT_ARCHER_GAS_ESTIMATE } from '../../config/archer'
 import { EstimatedSwapCall, SuccessfulCall, swapErrorToUserReadableMessage, useSwapCallArguments } from '../../hooks/useSwapCallback'
+=======
+import {
+  ChainId,
+  Currency,
+  CurrencyAmount,
+  JSBI,
+  Percent,
+  TradeType,
+  Trade as V2Trade,
+  WNATIVE_ADDRESS,
+} from '@sushiswap/sdk'
+import { DEFAULT_ARCHER_ETH_TIP, DEFAULT_ARCHER_GAS_ESTIMATE } from '../../constants'
+import {
+  EstimatedSwapCall,
+  SuccessfulCall,
+  swapErrorToUserReadableMessage,
+  useSwapCallArguments,
+} from '../../hooks/useSwapCallback'
+>>>>>>> acaaf34 (New app interface)
 // import {
 //   EstimatedSwapCall,
 //   SuccessfulCall,
@@ -27,6 +47,7 @@ import { ParsedQs } from 'qs'
 import { SwapState } from './reducer'
 import { t } from '@lingui/macro'
 import { tryParseAmount } from '../../functions/parse'
+<<<<<<< HEAD
 import { useCurrency } from '../../hooks/Tokens'
 import useENS from '../../hooks/useENS'
 // import { useLingui } from '@lingui/react'
@@ -34,6 +55,15 @@ import useParsedQueryString from '../../hooks/useParsedQueryString'
 import useSwapSlippageTolerance from '../../hooks/useSwapSlippageTollerence'
 import { useWeb3React } from '@web3-react/core'
 import { useCurrencyBalances } from 'hooks/useWallet'
+=======
+import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
+import { useCurrency } from '../../hooks/Tokens'
+import { useCurrencyBalances } from '../wallet/hooks'
+import useENS from '../../hooks/useENS'
+import { useLingui } from '@lingui/react'
+import useParsedQueryString from '../../hooks/useParsedQueryString'
+import useSwapSlippageTolerance from '../../hooks/useSwapSlippageTollerence'
+>>>>>>> acaaf34 (New app interface)
 
 export function useSwapState(): AppState['swap'] {
   return useAppSelector((state) => state.swap)
@@ -51,11 +81,23 @@ export function useSwapActionHandlers(): {
       dispatch(
         selectCurrency({
           field,
+<<<<<<< HEAD
           currencyId: currency.isToken ? currency.address : currency.isNative && currency.chainId !== ChainId.CELO ? 'ETH' : '',
         }),
       )
     },
     [dispatch],
+=======
+          currencyId: currency.isToken
+            ? currency.address
+            : currency.isNative && currency.chainId !== ChainId.CELO
+            ? 'ETH'
+            : '',
+        })
+      )
+    },
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 
   const onSwitchTokens = useCallback(() => {
@@ -66,14 +108,22 @@ export function useSwapActionHandlers(): {
     (field: Field, typedValue: string) => {
       dispatch(typeInput({ field, typedValue }))
     },
+<<<<<<< HEAD
     [dispatch],
+=======
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 
   const onChangeRecipient = useCallback(
     (recipient: string | null) => {
       dispatch(setRecipient({ recipient }))
     },
+<<<<<<< HEAD
     [dispatch],
+=======
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 
   return {
@@ -101,7 +151,13 @@ function involvesAddress(trade: V2Trade<Currency, Currency, TradeType>, checksum
   const path = trade.route.path
   return (
     path.some((token) => token.address === checksummedAddress) ||
+<<<<<<< HEAD
     (trade instanceof V2Trade ? trade.route.pairs.some((pair) => pair.liquidityToken.address === checksummedAddress) : false)
+=======
+    (trade instanceof V2Trade
+      ? trade.route.pairs.some((pair) => pair.liquidityToken.address === checksummedAddress)
+      : false)
+>>>>>>> acaaf34 (New app interface)
   )
 }
 
@@ -114,9 +170,15 @@ export function useDerivedSwapInfo(doArcher = false): {
   v2Trade: V2Trade<Currency, Currency, TradeType> | undefined
   allowedSlippage: Percent
 } {
+<<<<<<< HEAD
   // const { i18n } = useLingui()
 
   const { account, chainId, library } = useWeb3React()
+=======
+  const { i18n } = useLingui()
+
+  const { account, chainId, library } = useActiveWeb3React()
+>>>>>>> acaaf34 (New app interface)
 
   const [singleHopOnly] = useUserSingleHopOnly()
 
@@ -127,8 +189,13 @@ export function useDerivedSwapInfo(doArcher = false): {
     [Field.OUTPUT]: { currencyId: outputCurrencyId },
     recipient,
   } = useSwapState()
+<<<<<<< HEAD
   const inputCurrency = useCurrency(inputCurrencyId)
   console.log('inputCurrency', inputCurrency)
+=======
+
+  const inputCurrency = useCurrency(inputCurrencyId)
+>>>>>>> acaaf34 (New app interface)
 
   const outputCurrency = useCurrency(outputCurrencyId)
 
@@ -136,7 +203,14 @@ export function useDerivedSwapInfo(doArcher = false): {
 
   const to: string | null = (recipient === null ? account : recipientLookup.address) ?? null
 
+<<<<<<< HEAD
   const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [inputCurrency ?? undefined, outputCurrency ?? undefined])
+=======
+  const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [
+    inputCurrency ?? undefined,
+    outputCurrency ?? undefined,
+  ])
+>>>>>>> acaaf34 (New app interface)
 
   const isExactIn: boolean = independentField === Field.INPUT
   const parsedAmount = tryParseAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined)
@@ -167,23 +241,39 @@ export function useDerivedSwapInfo(doArcher = false): {
   }
 
   if (!parsedAmount) {
+<<<<<<< HEAD
     inputError = inputError ?? `Enter an amount`
   }
 
   if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT]) {
     inputError = inputError ?? `Select a token`
+=======
+    inputError = inputError ?? i18n._(t`Enter an amount`)
+  }
+
+  if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT]) {
+    inputError = inputError ?? i18n._(t`Select a token`)
+>>>>>>> acaaf34 (New app interface)
   }
 
   const formattedTo = isAddress(to)
   if (!to || !formattedTo) {
+<<<<<<< HEAD
     inputError = inputError ?? `Enter a recipient`
+=======
+    inputError = inputError ?? i18n._(t`Enter a recipient`)
+>>>>>>> acaaf34 (New app interface)
   } else {
     if (
       BAD_RECIPIENT_ADDRESSES?.[chainId]?.[formattedTo] ||
       (bestTradeExactIn && involvesAddress(bestTradeExactIn, formattedTo)) ||
       (bestTradeExactOut && involvesAddress(bestTradeExactOut, formattedTo))
     ) {
+<<<<<<< HEAD
       inputError = inputError ?? `Invalid recipient`
+=======
+      inputError = inputError ?? i18n._(t`Invalid recipient`)
+>>>>>>> acaaf34 (New app interface)
     }
   }
 
@@ -193,7 +283,11 @@ export function useDerivedSwapInfo(doArcher = false): {
   const [balanceIn, amountIn] = [currencyBalances[Field.INPUT], v2Trade?.maximumAmountIn(allowedSlippage)]
 
   if (balanceIn && amountIn && balanceIn.lessThan(amountIn)) {
+<<<<<<< HEAD
     inputError = `Insufficient ${amountIn.currency.symbol} balance`
+=======
+    inputError = i18n._(t`Insufficient ${amountIn.currency.symbol} balance`)
+>>>>>>> acaaf34 (New app interface)
   }
 
   const swapCalls = useSwapCallArguments(v2Trade, allowedSlippage, to, undefined, doArcher)
@@ -261,11 +355,22 @@ export function useDerivedSwapInfo(doArcher = false): {
                   }
                 })
             })
+<<<<<<< HEAD
         }),
       )
 
       // a successful estimation is a bignumber gas estimate and the next call is also a bignumber gas estimate
       const successfulEstimation = estimatedCalls.find((el, ix, list): el is SuccessfulCall => 'gasEstimate' in el && (ix === list.length - 1 || 'gasEstimate' in list[ix + 1]))
+=======
+        })
+      )
+
+      // a successful estimation is a bignumber gas estimate and the next call is also a bignumber gas estimate
+      const successfulEstimation = estimatedCalls.find(
+        (el, ix, list): el is SuccessfulCall =>
+          'gasEstimate' in el && (ix === list.length - 1 || 'gasEstimate' in list[ix + 1])
+      )
+>>>>>>> acaaf34 (New app interface)
 
       if (successfulEstimation) {
         setUserGasEstimate(successfulEstimation.gasEstimate.toString())
@@ -316,6 +421,7 @@ function validatedRecipient(recipient: any): string | null {
 export function queryParametersToSwapState(parsedQs: ParsedQs, chainId: ChainId = ChainId.MAINNET): SwapState {
   let inputCurrency = parseCurrencyFromURLParameter(parsedQs.inputCurrency)
   let outputCurrency = parseCurrencyFromURLParameter(parsedQs.outputCurrency)
+<<<<<<< HEAD
   const eth = chainId === ChainId.CELO ? WNATIVE_ADDRESS[chainId] : 'ETH'
   const sushi = SUSHI_ADDRESS[chainId]
   if (inputCurrency === '' && outputCurrency === '') {
@@ -325,6 +431,18 @@ export function queryParametersToSwapState(parsedQs: ParsedQs, chainId: ChainId 
     inputCurrency = outputCurrency === eth ? sushi : eth
   } else if (outputCurrency === '' || inputCurrency === outputCurrency) {
     outputCurrency = inputCurrency === eth ? sushi : eth
+=======
+  if (inputCurrency === '' && outputCurrency === '') {
+    if (chainId === ChainId.CELO) {
+      inputCurrency = WNATIVE_ADDRESS[chainId]
+    } else {
+      // default to ETH input
+      inputCurrency = 'ETH'
+    }
+  } else if (inputCurrency === outputCurrency) {
+    // clear output if identical
+    outputCurrency = ''
+>>>>>>> acaaf34 (New app interface)
   }
 
   const recipient = validatedRecipient(parsedQs.recipient)
@@ -349,7 +467,11 @@ export function useDefaultsFromURLSearch():
       outputCurrencyId: string | undefined
     }
   | undefined {
+<<<<<<< HEAD
   const { chainId } = useWeb3React()
+=======
+  const { chainId } = useActiveWeb3React()
+>>>>>>> acaaf34 (New app interface)
   const dispatch = useAppDispatch()
   const parsedQs = useParsedQueryString()
   const [expertMode] = useExpertModeManager()
@@ -372,13 +494,21 @@ export function useDefaultsFromURLSearch():
         inputCurrencyId: parsed[Field.INPUT].currencyId,
         outputCurrencyId: parsed[Field.OUTPUT].currencyId,
         recipient: expertMode ? parsed.recipient : null,
+<<<<<<< HEAD
       }),
+=======
+      })
+>>>>>>> acaaf34 (New app interface)
     )
 
     setResult({
       inputCurrencyId: parsed[Field.INPUT].currencyId,
       outputCurrencyId: parsed[Field.OUTPUT].currencyId,
     })
+<<<<<<< HEAD
+=======
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+>>>>>>> acaaf34 (New app interface)
   }, [dispatch, chainId])
 
   return result

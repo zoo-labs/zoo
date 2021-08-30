@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { DEFAULT_ACTIVE_LIST_URLS, DEFAULT_LIST_OF_LISTS } from '../../config/token-lists'
+=======
+import { DEFAULT_ACTIVE_LIST_URLS, DEFAULT_LIST_OF_LISTS } from '../../constants/token-lists'
+>>>>>>> acaaf34 (New app interface)
 import { VersionUpgrade, getVersionUpgrade } from '@uniswap/token-lists'
 import { acceptListUpdate, addList, disableList, enableList, fetchTokenList, removeList } from './actions'
 
@@ -152,7 +156,14 @@ export default createReducer(initialState, (builder) =>
         state.byUrl = initialState.byUrl
         state.activeListUrls = initialState.activeListUrls
       } else if (state.lastInitializedDefaultListOfLists) {
+<<<<<<< HEAD
         const lastInitializedSet = state.lastInitializedDefaultListOfLists.reduce<Set<string>>((s, l) => s.add(l), new Set())
+=======
+        const lastInitializedSet = state.lastInitializedDefaultListOfLists.reduce<Set<string>>(
+          (s, l) => s.add(l),
+          new Set()
+        )
+>>>>>>> acaaf34 (New app interface)
         const newListOfListsSet = DEFAULT_LIST_OF_LISTS.reduce<Set<string>>((s, l) => s.add(l), new Set())
 
         DEFAULT_LIST_OF_LISTS.forEach((listUrl) => {
@@ -182,5 +193,9 @@ export default createReducer(initialState, (builder) =>
           return true
         })
       }
+<<<<<<< HEAD
     }),
+=======
+    })
+>>>>>>> acaaf34 (New app interface)
 )

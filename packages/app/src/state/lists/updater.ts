@@ -1,18 +1,31 @@
 import { VersionUpgrade, getVersionUpgrade, minVersionBump } from '@uniswap/token-lists'
 import { useCallback, useEffect } from 'react'
 
+<<<<<<< HEAD
 import { UNSUPPORTED_LIST_URLS } from '../../config/token-lists'
 import { acceptListUpdate } from './actions'
 import { useActiveListUrls } from './hooks'
+=======
+import { UNSUPPORTED_LIST_URLS } from '../../constants/token-lists'
+import { acceptListUpdate } from './actions'
+import { useActiveListUrls } from './hooks'
+import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
+>>>>>>> acaaf34 (New app interface)
 import { useAllLists } from './hooks'
 import { useAppDispatch } from '../hooks'
 import { useFetchListCallback } from '../../hooks/useFetchListCallback'
 import useInterval from '../../hooks/useInterval'
 import useIsWindowVisible from '../../hooks/useIsWindowVisible'
+<<<<<<< HEAD
 import { useWeb3React } from '@web3-react/core'
 
 export default function Updater(): null {
   const { library } = useWeb3React()
+=======
+
+export default function Updater(): null {
+  const { library } = useActiveWeb3React()
+>>>>>>> acaaf34 (New app interface)
   const dispatch = useAppDispatch()
   const isWindowVisible = useIsWindowVisible()
 
@@ -23,7 +36,13 @@ export default function Updater(): null {
   const fetchList = useFetchListCallback()
   const fetchAllListsCallback = useCallback(() => {
     if (!isWindowVisible) return
+<<<<<<< HEAD
     Object.keys(lists).forEach((url) => fetchList(url).catch((error) => console.debug('interval list fetching error', error)))
+=======
+    Object.keys(lists).forEach((url) =>
+      fetchList(url).catch((error) => console.debug('interval list fetching error', error))
+    )
+>>>>>>> acaaf34 (New app interface)
   }, [fetchList, isWindowVisible, lists])
 
   // fetch all lists every 10 minutes, but only after we initialize library
@@ -66,7 +85,11 @@ export default function Updater(): null {
               dispatch(acceptListUpdate(listUrl))
             } else {
               console.error(
+<<<<<<< HEAD
                 `List at url ${listUrl} could not automatically update because the version bump was only PATCH/MINOR while the update had breaking changes and should have been MAJOR`,
+=======
+                `List at url ${listUrl} could not automatically update because the version bump was only PATCH/MINOR while the update had breaking changes and should have been MAJOR`
+>>>>>>> acaaf34 (New app interface)
               )
             }
             break

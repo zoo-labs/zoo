@@ -6,9 +6,21 @@ export interface ListenerOptions {
   readonly blocksPerFetch: number
 }
 
+<<<<<<< HEAD
 export const addMulticallListeners = createAction<{ chainId: number; calls: Call[]; options: ListenerOptions }>('multicall/addMulticallListeners')
 export const removeMulticallListeners = createAction<{ chainId: number; calls: Call[]; options: ListenerOptions }>('multicall/removeMulticallListeners')
 export const fetchingMulticallResults = createAction<{ chainId: number; calls: Call[]; fetchingBlockNumber: number }>('multicall/fetchingMulticallResults')
+=======
+export const addMulticallListeners = createAction<{ chainId: number; calls: Call[]; options: ListenerOptions }>(
+  'multicall/addMulticallListeners'
+)
+export const removeMulticallListeners = createAction<{ chainId: number; calls: Call[]; options: ListenerOptions }>(
+  'multicall/removeMulticallListeners'
+)
+export const fetchingMulticallResults = createAction<{ chainId: number; calls: Call[]; fetchingBlockNumber: number }>(
+  'multicall/fetchingMulticallResults'
+)
+>>>>>>> acaaf34 (New app interface)
 export const errorFetchingMulticallResults = createAction<{
   chainId: number
   calls: Call[]

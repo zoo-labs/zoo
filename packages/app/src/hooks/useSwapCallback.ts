@@ -4,7 +4,6 @@ import { arrayify, hexlify, splitSignature } from '@ethersproject/bytes'
 import { isAddress, isZero } from '../functions/validate'
 import { useFactoryContract, useRouterContract } from './useContract'
 
-import { ARCHER_RELAY_URI } from '../config/archer'
 import { ArcherRouter } from '../functions/archerRouter'
 import { BigNumber } from '@ethersproject/bignumber'
 import Common from '@ethereumjs/common'
@@ -294,12 +293,13 @@ export function useSwapCallback(
                     }
                   })
               })
-          }),
+          })
         )
 
         // a successful estimation is a bignumber gas estimate and the next call is also a bignumber gas estimate
         let bestCallOption: SuccessfulCall | SwapCallEstimate | undefined = estimatedCalls.find(
-          (el, ix, list): el is SuccessfulCall => 'gasEstimate' in el && (ix === list.length - 1 || 'gasEstimate' in list[ix + 1]),
+          (el, ix, list): el is SuccessfulCall =>
+            'gasEstimate' in el && (ix === list.length - 1 || 'gasEstimate' in list[ix + 1])
         )
 
         // check if any calls errored with a recognizable error
@@ -341,7 +341,15 @@ export function useSwapCallback(
               const withRecipient =
                 recipient === account
                   ? base
+<<<<<<< HEAD
                   : `${base} to ${recipientAddressOrName && isAddress(recipientAddressOrName) ? shortenAddress(recipientAddressOrName) : recipientAddressOrName}`
+=======
+                  : `${base} to ${
+                      recipientAddressOrName && isAddress(recipientAddressOrName)
+                        ? shortenAddress(recipientAddressOrName)
+                        : recipientAddressOrName
+                    }`
+>>>>>>> acaaf34 (New app interface)
 
               addTransaction(response, {
                 summary: withRecipient,
@@ -445,6 +453,7 @@ export function useSwapCallback(
               const unsignedTx = tx.getMessageToSign()
               // console.log('unsignedTx', unsignedTx)
 
+<<<<<<< HEAD
               return library.provider.request({ method: 'eth_sign', params: [account, hexlify(unsignedTx)] }).then((signature) => {
                 const signatureParts = splitSignature(signature)
                 // really crossing the streams here
@@ -456,6 +465,25 @@ export function useSwapCallback(
                   fullTx,
                 }
               })
+=======
+              return library.provider
+                .request({ method: 'eth_sign', params: [account, hexlify(unsignedTx)] })
+                .then((signature) => {
+                  const signatureParts = splitSignature(signature)
+                  // really crossing the streams here
+                  // eslint-disable-next-line
+                  // @ts-ignore
+                  const txWithSignature = tx._processSignature(
+                    signatureParts.v,
+                    arrayify(signatureParts.r),
+                    arrayify(signatureParts.s)
+                  )
+                  return {
+                    signedTx: hexlify(txWithSignature.serialize()),
+                    fullTx,
+                  }
+                })
+>>>>>>> acaaf34 (New app interface)
             })
           } else {
             signedTxPromise = fullTxPromise.then((fullTx) => {
@@ -496,7 +524,7 @@ export function useSwapCallback(
                 {
                   summary: withRecipient,
                   archer,
-                },
+                }
               )
               return archer ? postToRelay(archer.rawTransaction, archer.deadline).then(() => hash) : hash
             })
