@@ -105,7 +105,9 @@ export default function CurrencyInputPanel({
                       )}
                     </div>
 
-                    {!disableCurrencySelect && currency && <ChevronDownIcon width={16} height={16} className='ml-2 stroke-current' />}
+                    {!disableCurrencySelect && currency && (
+                      <ChevronDownIcon width={16} height={16} className="ml-2 stroke-current" />
+                    )}
                   </div>
                 </div>
               )}
@@ -113,29 +115,32 @@ export default function CurrencyInputPanel({
           </button>
         </div>
         {!hideInput && (
-          <div className='flex items-center w-full space-x-3 rounded bg-dark-900 focus:bg-dark-700 p-3 sm:w-3/5'>
+          <div
+            className={classNames(
+              'flex items-center w-full space-x-3 rounded bg-dark-900 focus:bg-dark-700 p-3 sm:w-3/5'
+              // showMaxButton && selectedCurrencyBalance && 'px-3'
+            )}
+          >
             <>
               {showMaxButton && selectedCurrencyBalance && (
-                <button onClick={onMax} className='text-xs font-medium bg-transparent border rounded-full hover:bg-primary border-low-emphesis text-secondary whitespace-nowrap'>
-                  Max
-                </button>
+                <Button
+                  onClick={onMax}
+                  size="xs"
+                  className="text-xs font-medium bg-transparent border rounded-full hover:bg-primary border-low-emphesis text-secondary whitespace-nowrap"
+                >
+                  {i18n._(t`Max`)}
+                </Button>
               )}
-              <input
-                id='token-amount-input'
+              <NumericalInput
+                id="token-amount-input"
                 value={value}
-                onChange={(e) => onUserInput(e.target.value)}
-                className='relative font-bold outline-none border-none flex-auto overflow-hidden overflow-ellipsis placeholder-low-emphesis focus:placeholder-primary w-0 p-0 text-2xl bg-transparent'
-                placeholder='0.0'
-                min={1}
-                max={79}
-                type='text'
-                pattern='^[0-9]*[.,]?[0-9]*$'
-                title='Token Amount'
-                inputMode='decimal'
+                onUserInput={(val) => {
+                  onUserInput(val)
+                }}
               />
               {!hideBalance && currency && selectedCurrencyBalance ? (
-                <div className='flex flex-col'>
-                  <div onClick={onMax} className='text-xs font-medium text-right cursor-pointer text-low-emphesis'>
+                <div className="flex flex-col">
+                  <div onClick={onMax} className="text-xs font-medium text-right cursor-pointer text-low-emphesis">
                     {renderBalance ? (
                       renderBalance(selectedCurrencyBalance)
                     ) : (

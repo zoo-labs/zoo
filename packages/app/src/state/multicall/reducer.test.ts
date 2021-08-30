@@ -1,5 +1,15 @@
 import { Store, createStore } from '@reduxjs/toolkit'
+<<<<<<< HEAD
 import { addMulticallListeners, errorFetchingMulticallResults, fetchingMulticallResults, removeMulticallListeners, updateMulticallResults } from './actions'
+=======
+import {
+  addMulticallListeners,
+  errorFetchingMulticallResults,
+  fetchingMulticallResults,
+  removeMulticallListeners,
+  updateMulticallResults,
+} from './actions'
+>>>>>>> acaaf34 (New app interface)
 import reducer, { MulticallState } from './reducer'
 
 const DAI_ADDRESS = '0x6b175474e89094c44da98b954eedeac495271d0f'
@@ -27,7 +37,11 @@ describe('multicall reducer', () => {
             },
           ],
           options: { blocksPerFetch: 1 },
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       expect(store.getState()).toEqual({
         callListeners: {
@@ -54,7 +68,11 @@ describe('multicall reducer', () => {
           ],
           chainId: 1,
           options: { blocksPerFetch: 1 },
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       expect(store.getState()).toEqual({ callResults: {}, callListeners: {} })
     })
@@ -69,7 +87,11 @@ describe('multicall reducer', () => {
             },
           ],
           options: { blocksPerFetch: 1 },
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       store.dispatch(
         removeMulticallListeners({
@@ -81,7 +103,11 @@ describe('multicall reducer', () => {
           ],
           chainId: 1,
           options: { blocksPerFetch: 1 },
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       expect(store.getState()).toEqual({
         callResults: {},
@@ -99,7 +125,11 @@ describe('multicall reducer', () => {
           results: {
             abc: '0x',
           },
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       expect(store.getState()).toEqual({
         callResults: {
@@ -120,7 +150,11 @@ describe('multicall reducer', () => {
           results: {
             abc: '0x',
           },
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       store.dispatch(
         updateMulticallResults({
@@ -129,7 +163,11 @@ describe('multicall reducer', () => {
           results: {
             abc: '0x2',
           },
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       expect(store.getState()).toEqual({
         callResults: {
@@ -150,7 +188,11 @@ describe('multicall reducer', () => {
           results: {
             abc: '0x2',
           },
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       store.dispatch(
         updateMulticallResults({
@@ -159,7 +201,11 @@ describe('multicall reducer', () => {
           results: {
             abc: '0x1',
           },
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       expect(store.getState()).toEqual({
         callResults: {
@@ -180,7 +226,11 @@ describe('multicall reducer', () => {
           chainId: 1,
           fetchingBlockNumber: 2,
           calls: [{ address: DAI_ADDRESS, callData: '0x0' }],
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       expect(store.getState()).toEqual({
         callResults: {
@@ -197,14 +247,22 @@ describe('multicall reducer', () => {
           chainId: 1,
           fetchingBlockNumber: 2,
           calls: [{ address: DAI_ADDRESS, callData: '0x0' }],
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       store.dispatch(
         fetchingMulticallResults({
           chainId: 1,
           fetchingBlockNumber: 3,
           calls: [{ address: DAI_ADDRESS, callData: '0x0' }],
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       expect(store.getState()).toEqual({
         callResults: {
@@ -221,14 +279,22 @@ describe('multicall reducer', () => {
           chainId: 1,
           fetchingBlockNumber: 2,
           calls: [{ address: DAI_ADDRESS, callData: '0x0' }],
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       store.dispatch(
         fetchingMulticallResults({
           chainId: 1,
           fetchingBlockNumber: 1,
           calls: [{ address: DAI_ADDRESS, callData: '0x0' }],
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       expect(store.getState()).toEqual({
         callResults: {
@@ -247,7 +313,11 @@ describe('multicall reducer', () => {
           chainId: 1,
           fetchingBlockNumber: 1,
           calls: [{ address: DAI_ADDRESS, callData: '0x0' }],
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       expect(store.getState()).toEqual({
         callResults: {
@@ -261,14 +331,22 @@ describe('multicall reducer', () => {
           chainId: 1,
           fetchingBlockNumber: 2,
           calls: [{ address: DAI_ADDRESS, callData: '0x0' }],
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       store.dispatch(
         errorFetchingMulticallResults({
           chainId: 1,
           fetchingBlockNumber: 2,
           calls: [{ address: DAI_ADDRESS, callData: '0x0' }],
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       expect(store.getState()).toEqual({
         callResults: {
@@ -288,14 +366,22 @@ describe('multicall reducer', () => {
           chainId: 1,
           fetchingBlockNumber: 3,
           calls: [{ address: DAI_ADDRESS, callData: '0x0' }],
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       store.dispatch(
         errorFetchingMulticallResults({
           chainId: 1,
           fetchingBlockNumber: 2,
           calls: [{ address: DAI_ADDRESS, callData: '0x0' }],
+<<<<<<< HEAD
         }),
+=======
+        })
+>>>>>>> acaaf34 (New app interface)
       )
       expect(store.getState()).toEqual({
         callResults: {

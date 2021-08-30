@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 import { addMulticallListeners, errorFetchingMulticallResults, fetchingMulticallResults, removeMulticallListeners, updateMulticallResults } from './actions'
+=======
+import {
+  addMulticallListeners,
+  errorFetchingMulticallResults,
+  fetchingMulticallResults,
+  removeMulticallListeners,
+  updateMulticallResults,
+} from './actions'
+>>>>>>> acaaf34 (New app interface)
 
 import { createReducer } from '@reduxjs/toolkit'
 import { toCallKey } from './utils'
@@ -42,16 +52,28 @@ export default createReducer(initialState, (builder) =>
             chainId,
             options: { blocksPerFetch },
           },
+<<<<<<< HEAD
         },
       ) => {
         const listeners: MulticallState['callListeners'] = state.callListeners ? state.callListeners : (state.callListeners = {})
+=======
+        }
+      ) => {
+        const listeners: MulticallState['callListeners'] = state.callListeners
+          ? state.callListeners
+          : (state.callListeners = {})
+>>>>>>> acaaf34 (New app interface)
         listeners[chainId] = listeners[chainId] ?? {}
         calls.forEach((call) => {
           const callKey = toCallKey(call)
           listeners[chainId][callKey] = listeners[chainId][callKey] ?? {}
           listeners[chainId][callKey][blocksPerFetch] = (listeners[chainId][callKey][blocksPerFetch] ?? 0) + 1
         })
+<<<<<<< HEAD
       },
+=======
+      }
+>>>>>>> acaaf34 (New app interface)
     )
     .addCase(
       removeMulticallListeners,
@@ -63,9 +85,17 @@ export default createReducer(initialState, (builder) =>
             calls,
             options: { blocksPerFetch },
           },
+<<<<<<< HEAD
         },
       ) => {
         const listeners: MulticallState['callListeners'] = state.callListeners ? state.callListeners : (state.callListeners = {})
+=======
+        }
+      ) => {
+        const listeners: MulticallState['callListeners'] = state.callListeners
+          ? state.callListeners
+          : (state.callListeners = {})
+>>>>>>> acaaf34 (New app interface)
 
         if (!listeners[chainId]) return
         calls.forEach((call) => {
@@ -79,7 +109,11 @@ export default createReducer(initialState, (builder) =>
             listeners[chainId][callKey][blocksPerFetch]--
           }
         })
+<<<<<<< HEAD
       },
+=======
+      }
+>>>>>>> acaaf34 (New app interface)
     )
     .addCase(fetchingMulticallResults, (state, { payload: { chainId, fetchingBlockNumber, calls } }) => {
       state.callResults[chainId] = state.callResults[chainId] ?? {}
@@ -119,5 +153,9 @@ export default createReducer(initialState, (builder) =>
           blockNumber,
         }
       })
+<<<<<<< HEAD
     }),
+=======
+    })
+>>>>>>> acaaf34 (New app interface)
 )

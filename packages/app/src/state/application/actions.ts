@@ -29,9 +29,12 @@ export enum ApplicationModal {
   VOTE,
   LANGUAGE,
   NETWORK,
+<<<<<<< HEAD
   NEWANIMAL,
   BREEDCONFIRM,
   VIDEOPLAYER
+=======
+>>>>>>> acaaf34 (New app interface)
 }
 
 export const updateBlockNumber = createAction<{

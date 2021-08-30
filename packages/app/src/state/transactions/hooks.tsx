@@ -6,7 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { TransactionDetails } from './reducer'
 import { TransactionResponse } from '@ethersproject/providers'
 import { addTransaction } from './actions'
+<<<<<<< HEAD
 import { useWeb3React } from '@web3-react/core'
+=======
+import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
+>>>>>>> acaaf34 (New app interface)
 
 export interface TransactionResponseLight {
   hash: string
@@ -25,9 +29,15 @@ export function useTransactionAdder(): (
       nonce: number
       ethTip: string
     }
+<<<<<<< HEAD
   },
 ) => void {
   const { chainId, account } = useWeb3React()
+=======
+  }
+) => void {
+  const { chainId, account } = useActiveWeb3React()
+>>>>>>> acaaf34 (New app interface)
   const dispatch = useAppDispatch()
 
   return useCallback(
@@ -48,7 +58,11 @@ export function useTransactionAdder(): (
           nonce: number
           ethTip: string
         }
+<<<<<<< HEAD
       } = {},
+=======
+      } = {}
+>>>>>>> acaaf34 (New app interface)
     ) => {
       if (!account) return
       if (!chainId) return
@@ -66,16 +80,27 @@ export function useTransactionAdder(): (
           summary,
           claim,
           archer,
+<<<<<<< HEAD
         }),
       )
     },
     [dispatch, chainId, account],
+=======
+        })
+      )
+    },
+    [dispatch, chainId, account]
+>>>>>>> acaaf34 (New app interface)
   )
 }
 
 // returns all the transactions for the current chain
 export function useAllTransactions(): { [txHash: string]: TransactionDetails } {
+<<<<<<< HEAD
   const { chainId } = useWeb3React()
+=======
+  const { chainId } = useActiveWeb3React()
+>>>>>>> acaaf34 (New app interface)
 
   const state = useAppSelector((state) => state.transactions)
 
@@ -116,7 +141,11 @@ export function useHasPendingApproval(tokenAddress: string | undefined, spender:
           return approval.spender === spender && approval.tokenAddress === tokenAddress && isTransactionRecent(tx)
         }
       }),
+<<<<<<< HEAD
     [allTransactions, spender, tokenAddress],
+=======
+    [allTransactions, spender, tokenAddress]
+>>>>>>> acaaf34 (New app interface)
   )
 }
 

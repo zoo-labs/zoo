@@ -7,7 +7,11 @@ import { useCallback, useEffect, useMemo } from 'react'
 
 import { ChainId } from '@sushiswap/sdk'
 import { updateBlockNumber } from '../application/actions'
+<<<<<<< HEAD
 import { useWeb3React } from '@web3-react/core'
+=======
+import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
+>>>>>>> acaaf34 (New app interface)
 
 interface TxInterface {
   addedTime: number
@@ -40,7 +44,11 @@ const RETRY_OPTIONS_BY_CHAIN_ID: { [chainId: number]: RetryOptions } = {
 const DEFAULT_RETRY_OPTIONS: RetryOptions = { n: 3, minWait: 1000, maxWait: 3000 }
 
 export default function Updater(): null {
+<<<<<<< HEAD
   const { chainId, library } = useWeb3React()
+=======
+  const { chainId, library } = useActiveWeb3React()
+>>>>>>> acaaf34 (New app interface)
 
   const lastBlockNumber = useBlockNumber()
 
@@ -65,6 +73,7 @@ export default function Updater(): null {
             }
             return receipt
           }),
+<<<<<<< HEAD
         retryOptions,
       )
     },
@@ -73,13 +82,27 @@ export default function Updater(): null {
 
   useEffect(() => {
     if (!chainId || !library || !lastBlockNumber) return null
+=======
+        retryOptions
+      )
+    },
+    [chainId, library]
+  )
+
+  useEffect(() => {
+    if (!chainId || !library || !lastBlockNumber) return
+>>>>>>> acaaf34 (New app interface)
 
     const cancels = Object.keys(transactions)
       .filter((hash) => shouldCheck(lastBlockNumber, transactions[hash]))
       .map((hash) => {
         const { promise, cancel } = getReceipt(hash)
         promise
+<<<<<<< HEAD
           .then((receipt: any) => {
+=======
+          .then((receipt) => {
+>>>>>>> acaaf34 (New app interface)
             if (receipt) {
               dispatch(
                 finalizeTransaction({
@@ -95,7 +118,11 @@ export default function Updater(): null {
                     transactionHash: receipt.transactionHash,
                     transactionIndex: receipt.transactionIndex,
                   },
+<<<<<<< HEAD
                 }),
+=======
+                })
+>>>>>>> acaaf34 (New app interface)
               )
 
               addPopup(
@@ -106,7 +133,11 @@ export default function Updater(): null {
                     summary: transactions[hash]?.summary,
                   },
                 },
+<<<<<<< HEAD
                 hash,
+=======
+                hash
+>>>>>>> acaaf34 (New app interface)
               )
 
               // the receipt was fetched before the block, fast forward to that block to trigger balance updates

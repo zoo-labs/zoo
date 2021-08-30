@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import { AppDispatch } from '../index'
 import { updateMatchesDarkMode } from './actions'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
+=======
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../index'
+import { updateMatchesDarkMode } from './actions'
+>>>>>>> acaaf34 (New app interface)
 
 export default function Updater(): null {
   const dispatch = useDispatch<AppDispatch>()

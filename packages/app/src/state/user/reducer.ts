@@ -1,5 +1,15 @@
+<<<<<<< HEAD
 import { DEFAULT_ARCHER_ETH_TIP, DEFAULT_ARCHER_GAS_ESTIMATE, DEFAULT_ARCHER_GAS_PRICES } from '../../config/archer'
 import { DEFAULT_DEADLINE_FROM_NOW, INITIAL_ALLOWED_SLIPPAGE } from '../../constants'
+=======
+import {
+  DEFAULT_ARCHER_ETH_TIP,
+  DEFAULT_ARCHER_GAS_ESTIMATE,
+  DEFAULT_ARCHER_GAS_PRICES,
+  DEFAULT_DEADLINE_FROM_NOW,
+  INITIAL_ALLOWED_SLIPPAGE,
+} from '../../constants'
+>>>>>>> acaaf34 (New app interface)
 import {
   SerializedPair,
   SerializedToken,
@@ -139,7 +149,14 @@ export default createReducer(initialState, (builder) =>
       state.timestamp = currentTimestamp()
     })
     .addCase(addSerializedPair, (state, { payload: { serializedPair } }) => {
+<<<<<<< HEAD
       if (serializedPair.token0.chainId === serializedPair.token1.chainId && serializedPair.token0.address !== serializedPair.token1.address) {
+=======
+      if (
+        serializedPair.token0.chainId === serializedPair.token1.chainId &&
+        serializedPair.token0.address !== serializedPair.token1.address
+      ) {
+>>>>>>> acaaf34 (New app interface)
         const chainId = serializedPair.token0.chainId
         state.pairs[chainId] = state.pairs[chainId] || {}
         state.pairs[chainId][pairKey(serializedPair.token0.address, serializedPair.token1.address)] = serializedPair
@@ -171,5 +188,9 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(updateUserArcherTipManualOverride, (state, action) => {
       state.userArcherTipManualOverride = action.payload.userArcherTipManualOverride
+<<<<<<< HEAD
     }),
+=======
+    })
+>>>>>>> acaaf34 (New app interface)
 )

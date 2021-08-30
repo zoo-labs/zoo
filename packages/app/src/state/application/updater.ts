@@ -1,12 +1,22 @@
+<<<<<<< HEAD
 import { useWeb3React } from '@web3-react/core'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+=======
+import { useCallback, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
+>>>>>>> acaaf34 (New app interface)
 import useDebounce from '../../hooks/useDebounce'
 import useIsWindowVisible from '../../hooks/useIsWindowVisible'
 import { updateBlockNumber } from './actions'
 
 export default function Updater(): null {
+<<<<<<< HEAD
   const { library, chainId } = useWeb3React()
+=======
+  const { library, chainId } = useActiveWeb3React()
+>>>>>>> acaaf34 (New app interface)
   const dispatch = useDispatch()
 
   const windowVisible = useIsWindowVisible()
@@ -32,7 +42,11 @@ export default function Updater(): null {
         return state
       })
     },
+<<<<<<< HEAD
     [chainId, setState],
+=======
+    [chainId, setState]
+>>>>>>> acaaf34 (New app interface)
   )
 
   // attach/detach listeners
@@ -60,7 +74,11 @@ export default function Updater(): null {
       updateBlockNumber({
         chainId: debouncedState.chainId,
         blockNumber: debouncedState.blockNumber,
+<<<<<<< HEAD
       }),
+=======
+      })
+>>>>>>> acaaf34 (New app interface)
     )
   }, [windowVisible, dispatch, debouncedState.blockNumber, debouncedState.chainId])
 

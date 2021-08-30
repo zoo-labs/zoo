@@ -1,11 +1,21 @@
+<<<<<<< HEAD
 import { useWeb3React } from '@web3-react/core'
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+=======
+import { useCallback, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
+>>>>>>> acaaf34 (New app interface)
 import { AppDispatch, AppState } from '../index'
 import { addPopup, ApplicationModal, PopupContent, removePopup, setOpenModal } from './actions'
 
 export function useBlockNumber(): number | undefined {
+<<<<<<< HEAD
   const { chainId } = useWeb3React()
+=======
+  const { chainId } = useActiveWeb3React()
+>>>>>>> acaaf34 (New app interface)
 
   return useSelector((state: AppState) => state.application.blockNumber[chainId ?? -1])
 }
@@ -35,6 +45,7 @@ export function useWalletModalToggle(): () => void {
   return useToggleModal(ApplicationModal.WALLET)
 }
 
+<<<<<<< HEAD
 export function useNewAnimalModalToggle(): () => void {
   console.log("hitting useNetworkModalToggle")
   return useToggleModal(ApplicationModal.NEWANIMAL)
@@ -50,6 +61,9 @@ export function useBreedConfirmModalToggle(): () => void {
 export function useNetworkModalToggle(): () => void {
   console.log("hitting useNetworkModalToggle")
 
+=======
+export function useNetworkModalToggle(): () => void {
+>>>>>>> acaaf34 (New app interface)
   return useToggleModal(ApplicationModal.NETWORK)
 }
 
@@ -85,7 +99,11 @@ export function useAddPopup(): (content: PopupContent, key?: string) => void {
     (content: PopupContent, key?: string) => {
       dispatch(addPopup({ content, key }))
     },
+<<<<<<< HEAD
     [dispatch],
+=======
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 }
 
@@ -96,7 +114,11 @@ export function useRemovePopup(): (key: string) => void {
     (key: string) => {
       dispatch(removePopup({ key }))
     },
+<<<<<<< HEAD
     [dispatch],
+=======
+    [dispatch]
+>>>>>>> acaaf34 (New app interface)
   )
 }
 
