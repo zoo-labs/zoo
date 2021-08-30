@@ -27,11 +27,14 @@
 <<<<<<< HEAD
     "moralis-admin-cli": "^2.1.11",
     "prettier": "^2.3.2"
+<<<<<<< HEAD
 =======
     "@babel/types": "^7.15.0",
     "moralis-admin-cli": "^2.1.3",
     "prettier": "^2.3.2",
     "web3": "^1.5.2"
 >>>>>>> 372b5a7 (Typescript moralis)
+=======
+>>>>>>> 43eeb20 (Fix previous merge)
   }
 }

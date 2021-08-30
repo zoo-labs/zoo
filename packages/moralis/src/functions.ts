@@ -1,7 +1,7 @@
 import Moralis from './moralis'
 
 // Should replace variables here to target different networks
-import contracts from './contracts.json'
+import { contracts } from '@zoolabs/app/src/constants/contracts'
 
 const ZK = (contracts as any)['97']['testnet']['ZooKeeper']
 const CHAIN_ID = '97'
