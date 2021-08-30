@@ -1,28 +1,73 @@
 import { setupTestFactory, requireDependencies } from './utils'
+import { ethers } from 'hardhat'
+import { Contract, ContractFactory, Wallet } from 'ethers'
 import { Signer } from '@ethersproject/abstract-signer'
-import { Savage, Token } from '../types'
+import { Savage as ISavage, Token as IToken } from '../types'
 
-import { BigNumber } from 'ethers';
+import { MockProvider, deployContract, deployMockContract } from 'ethereum-waffle'
+
+import { IERC20Uniswap, IUniswapV2Router02, IUniswapV2ERC20, IUniswapV2Factory } from '../types'
+
+import Token from '../artifacts/src/Token.sol/Token.json'
+import Savage from '../artifacts/src/Savage.sol/Savage.json';
+import UniswapV2ERC20 from '../artifacts/src/uniswapv2/UniswapV2ERC20.sol/UniswapV2ERC20.json'
+import UniswapV2Factory from '../artifacts/src/uniswapv2/UniswapV2Factory.sol/UniswapV2Factory.json'
+import UniswapV2Router02 from '../artifacts/src/uniswapv2/UniswapV2Router02.sol/UniswapV2Router02.json'
+
+import { BigNumber } from 'ethers'
 const { expect } = requireDependencies()
-const ZERO_ADDR = '0x0000000000000000000000000000000000000000'
 
-const setupTest = setupTestFactory(['Savage', 'Token'])
+const setupTest = setupTestFactory(['Savage'])
 
 describe.only('Savage', function () {
-  let savage: Savage
-  let Z: Token
-  let B: Token
+  let wallet: Wallet
+  let savage: ISavage
+  let factory: Contract
+  let router: Contract
+  let oldZoo: Contract
+  let bnbToken: Contract
+  let Z: IERC20Uniswap
+  let erc20Token: Contract
   let signers: Signer[]
+  let WETH = 10 ** 18
+  const amountIn = 10 * 11
+  const amountOut = 10 * 10
+
 
   beforeEach(async () => {
-    const test = await setupTest()
-    savage = test.tokens.Savage as Savage
-    Z = test.tokens.Token as Token
-    B = test.tokens.Token as Token
-    signers = test.signers
+    const {
+      signers: _signers,
+      deployments,
+      tokens: { Savage: S },
+    } = await setupTest()
+    const sender = _signers[0]
+    const [wallet1] = new MockProvider().getWallets()
+    wallet = wallet1;
+    erc20Token = await deployMockContract(sender, UniswapV2ERC20.abi)
+    factory = await deployMockContract(sender, UniswapV2Factory.abi)
+    router = await deployMockContract(sender, UniswapV2Router02.abi)
+
+    oldZoo = await deployMockContract(sender, UniswapV2ERC20.abi)
+
+    oldZoo = await deployMockContract(sender, Token.abi)
+    bnbToken = await deployMockContract(sender, Token.abi)
+    signers = _signers
+
+    // const contractFactory = new ContractFactory(Savage.abi, Savage.bytecode, sender);
+
+    // savage = (await deployContract(sender, Savage, [bnbToken, oldZoo, factory, router, amountIn, amountOut])) as ISavage
+
+    // savage = await Savage.deploy(
+    //   bnbToken,
+    //   oldZoo,
+    //   factory,
+    //   router,
+    //   amountIn,
+    //   amountOut
+    // ) as ISavage;
   })
 
-  it('should be savage', async function () {
-    await savage.swap()
+  it('can be deployed', async () => {
+    expect(savage).not.to.be.null
   })
 })
