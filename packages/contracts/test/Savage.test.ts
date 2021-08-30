@@ -2,16 +2,9 @@ import { setupTestFactory, requireDependencies } from './utils'
 import { ethers, waffle } from 'hardhat'
 import { Contract, ContractFactory, Wallet } from 'ethers'
 import { Signer } from '@ethersproject/abstract-signer'
-import { Savage as ISavage, Token as IToken } from '../types'
+import { Savage as ISavage } from '../types'
 
-import { IERC20Uniswap } from '../types'
-
-import Savage from '../artifacts/src/Savage.sol/Savage.json';
-import Token from '../artifacts/src/Token.sol/Token.json'
-import UniswapV2ERC20 from '../artifacts/src/uniswapv2/UniswapV2ERC20.sol/UniswapV2ERC20.json'
-import UniswapV2Pair from '../artifacts/src/uniswapv2/UniswapV2Pair.sol/UniswapV2Pair.json'
-import UniswapV2Factory from '../artifacts/src/uniswapv2/UniswapV2Factory.sol/UniswapV2Factory.json'
-import UniswapV2Router02 from '../artifacts/src/uniswapv2/UniswapV2Router02.sol/UniswapV2Router02.json'
+import { IERC20 } from '../types'
 
 const { expect } = requireDependencies()
 const { deployContract, deployMockContract  } = waffle;
@@ -24,7 +17,7 @@ describe.only('Savage', function () {
   let router: Contract
   let oldZoo: Contract
   let bnbToken: Contract
-  let Z: IERC20Uniswap
+  let Z: IERC20
   let erc20Token: Contract
   let signers: Signer[]
   let sender: any;
@@ -71,11 +64,11 @@ describe.only('Savage', function () {
     await oldZoo.approve(router.address, 10 * 18);
 
     await router.addLiquidity(
-      oldZoo.address, 
-      bnbToken.address, 
+      oldZoo.address,
+      bnbToken.address,
       3000, 9000,
-      2000, 1000, 
-      sender.address, 
+      2000, 1000,
+      sender.address,
       Date.now() * 60);
     await expect(savage.swap()).to.be.revertedWith("Err");
   })
