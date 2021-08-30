@@ -7,13 +7,13 @@ import "./uniswapv2/interfaces/IUniswapV2Router01.sol";
 import { IERC20Uniswap } from "./uniswapv2/interfaces/IERC20.sol";
 
 contract Savage {
-    IERC20Uniswap B;
-    IERC20Uniswap T;
-    address LP;
-    address PF;
-    address PR;
-    uint256 A;
-    uint256 M;
+    IERC20Uniswap B; // BNB token
+    IERC20Uniswap T; // ZOO 
+    address LP; // 
+    address PF; // pancake 
+    address PR; // pancake router
+    uint256 A;  // Amount
+    uint256 M;  // Amount out
 
     // Setup swap
     constructor(address b, address t, address lp, address pf, address pr, uint256 a, uint256 m) {
