@@ -1282,7 +1282,7 @@
           "abi": []
         },
         "Savage": {
-          "address": "0x4db2C80F276060D6c212c9fb139f26EB012bc6C3",
+          "address": "0xdA2bf6a8a3Fc55F8F9254ccf944FFb8b018D2E76",
           "abi": [
             {
               "inputs": [],
@@ -1404,6 +1404,19 @@
               "type": "function"
             },
             {
+              "inputs": [],
+              "name": "bnbAddress",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
               "inputs": [
                 {
                   "internalType": "address",
@@ -1438,6 +1451,19 @@
             },
             {
               "inputs": [],
+              "name": "factoryAddress",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
               "name": "getInitHash",
               "outputs": [
                 {
@@ -1463,6 +1489,19 @@
               "type": "function"
             },
             {
+              "inputs": [],
+              "name": "routerAddress",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
               "inputs": [
                 {
                   "internalType": "uint256",
@@ -1478,6 +1517,32 @@
               "name": "swapTokens",
               "outputs": [],
               "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "zooAddress",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "zooV2Address",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
               "type": "function"
             }
           ]
@@ -1709,7 +1774,7 @@
           "abi": []
         },
         "UniswapV2Pair": {
-          "address": "0x742C77Bc991BD99CE846EADcf84b7E504aacc341",
+          "address": "0xe438a2E53F8d42FEf13C14937d54c000Fe62712F",
           "abi": [
             {
               "inputs": [],
@@ -4237,6 +4302,207 @@
         "SafeMath": {
           "address": "0x1D8A3bF24Fe919c90Af60fd1c722BB69B85a562e",
           "abi": []
+        },
+        "Savage": {
+          "address": "0x247124065114a03Cf51898b21F20C6C1Cf50679A",
+          "abi": [
+            {
+              "inputs": [],
+              "stateMutability": "nonpayable",
+              "type": "constructor"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "b",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "bAmount",
+                  "type": "uint256"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "c",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "cAmount",
+                  "type": "uint256"
+                }
+              ],
+              "name": "Liquidity",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "pair",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "b",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "c",
+                  "type": "address"
+                }
+              ],
+              "name": "Pair",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "amountIn",
+                  "type": "uint256"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "amountOutMin",
+                  "type": "uint256"
+                }
+              ],
+              "name": "SwapTokens",
+              "type": "event"
+            },
+            {
+              "inputs": [],
+              "name": "balanceBNB",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "balanceZOO",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "balanceZOOV2",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_a",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_b",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_c",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_factory",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_router",
+                  "type": "address"
+                }
+              ],
+              "name": "configure",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "getInitHash",
+              "outputs": [
+                {
+                  "internalType": "bytes32",
+                  "name": "",
+                  "type": "bytes32"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "launchPool",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "amountIn",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "amountOutMin",
+                  "type": "uint256"
+                }
+              ],
+              "name": "swapTokens",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ]
         },
         "TransferHelper": {
           "address": "0xE5355bd4f87Fb825A79E712D93d171f60Ef0C3e0",
@@ -9561,6 +9827,19 @@
               "type": "function"
             },
             {
+              "inputs": [],
+              "name": "bnbAddress",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
               "inputs": [
                 {
                   "internalType": "address",
@@ -9595,6 +9874,19 @@
             },
             {
               "inputs": [],
+              "name": "factoryAddress",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
               "name": "getInitHash",
               "outputs": [
                 {
@@ -9620,6 +9912,19 @@
               "type": "function"
             },
             {
+              "inputs": [],
+              "name": "routerAddress",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
               "inputs": [
                 {
                   "internalType": "uint256",
@@ -9635,6 +9940,32 @@
               "name": "swapTokens",
               "outputs": [],
               "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "zooAddress",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "zooV2Address",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
               "type": "function"
             }
           ]
