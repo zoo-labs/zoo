@@ -9,18 +9,25 @@ export const BLOCKNATIVE_DAPPID = "0b58206a-f3c0-4701-a62f-73c7243e8c77";
 
 export const NETWORKS = {
   localhost: {
-    name: "localhost",
-    color: "#666666",
-    chainId: 31337,
-    blockExplorer: "",
-    rpcUrl: "http://" + window.location.hostname + ":8545",
+    name: 'hardhat',
+    color: '#666666',
+    chainId: 1337,
+    blockExplorer: '',
+    rpcUrl: 'http://' + window.location.hostname + ':8545',
   },
   mainnet: {
-    name: "mainnet",
-    color: "#ff8b9e",
-    chainId: 1,
-    rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`,
-    blockExplorer: "https://etherscan.io/",
+    name: 'mainnet',
+    color: '#ff8b9e',
+    chainId: 56,
+    rpcUrl: `https://bsc-dataseed1.defibit.io`,
+    blockExplorer: 'https://bscscan.com/',
+  },
+  testnet: {
+    name: 'testnet',
+    color: '#ff8b9e',
+    chainId: 97,
+    rpcUrl: `https://speedy-nodes-nyc.moralis.io/1afec1fde198890860916a06/bsc/testnet`,
+    blockExplorer: 'https://testnet.bscscan.com/',
   },
   kovan: {
     name: "kovan",

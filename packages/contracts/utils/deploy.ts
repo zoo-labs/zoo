@@ -8,13 +8,15 @@ export function Deploy(name: string, dependencies: string[], fn?: any) {
     const { deploy } = deployments
     const signers = await ethers.getSigners()
 
-    // Fund all signers
-    await signers.map(async (s) => {
-      await hre.network.provider.send('hardhat_setBalance', [
-        s.address,
-        "0x420000000000000000000",
-      ])
-    })
+    if (hre.network.name == 'hardhat') {
+      // Fund all signers
+      await signers.map(async (s) => {
+        await hre.network.provider.send('hardhat_setBalance', [
+          s.address,
+          "0x420000000000000000000",
+        ])
+      })
+    }
 
     // Use deployer named account to deploy contract
     const { deployer } = await getNamedAccounts()
