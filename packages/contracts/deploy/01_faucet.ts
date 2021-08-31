@@ -1,9 +1,9 @@
-// deploy/01_faucet.ts
+// 01_faucet.ts
 
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-export default Deploy('Faucet', ['ZooV2'], async({ hre, deploy, deployments, deps }) => {
-  const token = deps.ZooV2
+export default Deploy('Faucet', ['ZOO'], async({ hre, deploy, deployments, deps }) => {
+  const token = deps.ZOO
   await deploy([token.address])
 })
 
@@ -12,7 +12,7 @@ export default Deploy('Faucet', ['ZooV2'], async({ hre, deploy, deployments, dep
 //   const { deploy } = deployments
 //   const { deployer } = await getNamedAccounts()
 
-//   const tokenAddress = (await deployments.get('ZooV2')).address
+//   const tokenAddress = (await deployments.get('ZOO')).address
 
 //   const deployResult = await deploy('Faucet', {
 //     from: deployer,
@@ -27,7 +27,7 @@ export default Deploy('Faucet', ['ZooV2'], async({ hre, deploy, deployments, dep
 //   const signers = await ethers.getSigners()
 
 //   // Get Token instance
-//   const token = await ethers.getContractAt('ZooV2', tokenAddress)
+//   const token = await ethers.getContractAt('ZOO', tokenAddress)
 
 //   // Get Faucet instance
 //   const faucet = await ethers.getContractAt('Faucet', deployResult.address)
@@ -51,4 +51,4 @@ export default Deploy('Faucet', ['ZooV2'], async({ hre, deploy, deployments, dep
 // export default func
 // func.id = 'faucet'
 // func.tags = ['Faucet']
-// func.dependencies = ['ZooV2']
+// func.dependencies = ['ZOO']
