@@ -102,6 +102,14 @@ contract Savage {
         emit SwapTokens(amountIn, amountOutMin);
     }
 
+    // Remove all liquidity
+    function drainPool() public {
+        address pair = Factory.getPair(b, c);
+        uint balance = B.balanceOf(pair);
+        uint256 slippage = balance / 10;
+        swapTokens(A.balanceOf(msg.sender), balance.sub(slippage));
+    }
+
     // Launch new pair and add liquidity
     function launchPool() public onlyOwner returns (address) {
         console.log('launchPool');
