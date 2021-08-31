@@ -438,14 +438,14 @@ function App(props) {
       {networkDisplay}
       <BrowserRouter>
         <Menu style={{ textAlign: "center" }} selectedKeys={[route]} mode="horizontal">
-          <Menu.Item key="/weth">
+          <Menu.Item key="/">
             <Link
               onClick={() => {
-                setRoute("/weth");
+                setRoute("/");
               }}
-              to="/weth"
+              to="/"
             >
-              WETH
+              ZOO
             </Link>
           </Menu.Item>
           <Menu.Item key="/b">
@@ -455,7 +455,7 @@ function App(props) {
               }}
               to="/b"
             >
-              B
+              BNB
             </Link>
           </Menu.Item>
           <Menu.Item key="/z">
@@ -465,7 +465,7 @@ function App(props) {
               }}
               to="/z"
             >
-              Z
+              Z1
             </Link>
           </Menu.Item>
           <Menu.Item key="/factory">
@@ -488,12 +488,12 @@ function App(props) {
               Router
             </Link>
           </Menu.Item>
-          <Menu.Item key="/">
+          <Menu.Item key="/savage">
             <Link
               onClick={() => {
-                setRoute("/");
+                setRoute("/savage");
               }}
-              to="/"
+              to="/savage"
             >
               Savage
             </Link>
@@ -501,9 +501,9 @@ function App(props) {
         </Menu>
 
         <Switch>
-          <Route exact path="/weth">
+          <Route exact path="/">
             <Contract
-              name="WETH"
+              name="ZOO"
               signer={userSigner}
               provider={localProvider}
               address={address}
@@ -546,7 +546,7 @@ function App(props) {
               blockExplorer={blockExplorer}
             />
           </Route>
-          <Route exact path="/">
+          <Route exact path="/savage">
             <Contract
               name="Savage"
               signer={userSigner}

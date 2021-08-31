@@ -126,6 +126,10 @@ contract Savage {
         uint amountC = C.balanceOf(address(this));
         uint deadline = block.timestamp + 15;
 
+        B.approve(router, amountB);
+        C.approve(router, amountC);
+        console.log("Approve", amountB, amountC);
+
         Router.addLiquidity(
             b,
             c,
