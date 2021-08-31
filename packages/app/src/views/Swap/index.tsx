@@ -385,8 +385,9 @@ export default function Swap() {
       symbol: 'USDT',
     })
   }, [])
+  console.log('formattedAmounts', formattedAmounts)
   return (
-    <main className='flex flex-col items-center justify-start flex-grow w-full h-full'>
+    <main className='flex flex-col items-center justify-start flex-grow w-full h-full' style={{ height: '80vh' }}>
       <div id='swap-page' className='py-4 md:py-8 lg:py-12 max-w-2xl w-full'>
         <head>
           <title>ZOO</title>
@@ -394,7 +395,7 @@ export default function Swap() {
         </head>
 
         <DoubleGlowShadow>
-          <div className='p-4 space-y-4 rounded bg-dark-900 z-1'>
+          <div className='p-4 space-y-4 rounded-2xl bg-dark-900 z-1'>
             <SwapHeader input={currencies[Field.INPUT]} output={currencies[Field.OUTPUT]} allowedSlippage={allowedSlippage} />
 
             <ConfirmSwapModal

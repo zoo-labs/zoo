@@ -59,6 +59,7 @@ export default function CurrencyInputPanel({
   const [modalOpen, setModalOpen] = useState(false)
   const { account } = useWeb3React()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+  console.log('selectedCurrencyBalance', selectedCurrencyBalance)
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false)
   }, [setModalOpen])
@@ -92,9 +93,9 @@ export default function CurrencyInputPanel({
               ) : currency ? (
                 <div className='flex items-center'>
                   {currency.symbol === 'USDT' ? (
-                    <img src='https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg' style={{ width: 54, height: 54 }} />
+                    <img src='https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg' className='rounded' style={{ width: 54, height: 54 }} />
                   ) : (
-                    <CurrencyLogo currency={currency} size={'54px'} />
+                    <CurrencyLogo currency={currency} size={'54px'} className='rounded' />
                   )}
                 </div>
               ) : (

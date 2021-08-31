@@ -56,9 +56,7 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
   return (
     <div>
       {account ? (
-        <div
-          className='font-semibold flex flex-nowrap p-2 rounded-xl'
-          style={{ color: 'rgb(80, 144, 234)', backgroundColor: 'rgba(21, 61, 111, 0.44)', border: '1px solid rgba(21, 61, 111, 0.44)' }}>
+        <div className='font-semibold flex flex-nowrap p-2 rounded-xl bg-secondary-dark border-primary' style={{ border: '1px solid rgba(21, 61, 111, 0.44)' }}>
           <button
             className='mr-2 rounded-lg'
             onClick={() => {

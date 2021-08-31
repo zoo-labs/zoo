@@ -95,3 +95,31 @@ html {
   .disabled\:bg-opacity-80:disabled {
     --tw-bg-opacity: 0.8;
 }
+.border-blue {
+    --tw-border-opacity: 1;
+    border-color: rgba(9,147,236,var(--tw-border-opacity));
+}
+.rounded {
+    border-radius: 0.625rem;
+}
+.bg-gold {
+    background-color: #f2c282;
+}
+.bg-gold-light {
+    background-color: #F8E0C0 ;
+}
+
+.from-primary {
+    --tw-gradient-from:  rgb(140, 79, 248);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
+.from-secondary-dark {
+    --tw-gradient-from:  #6c7464;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
+.to-gold {
+    --tw-gradient-to:#f2c282;
+}
+.bg-secondary-dark {
+    background-color: #6c7464;
+}
