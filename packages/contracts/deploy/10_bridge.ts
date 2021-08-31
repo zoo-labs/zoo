@@ -1,24 +1,10 @@
 // 10_bridge.ts
 
-import { HardhatRuntimeEnvironment } from 'hardhat/types'
-import { DeployFunction } from 'hardhat-deploy/types'
+import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, ethers, getNamedAccounts } = hre
-  const { deploy } = deployments
-
-  const [deployer] = await ethers.getSigners()
-
-  const daoAddress = (await deployments.get('DAO')).address
-
-  await deploy('Bridge', {
-    from: deployer.address,
-    args: [daoAddress, 25],
-    log: true
-  })
-}
-
-export default func
-func.id = 'bridge'
-func.tags = ['Bridge']
-func.dependencies = ['DAO']
+export default Deploy('Bridge', ['ZOO', 'DAO'], async({ ethers, getChainId, deploy, deps }) => {
+  const { DAO } = deps
+  const tx = await deploy([DAO.address, 25])
+  const ZOO = await ethers.getContract('ZOO')
+  await ZOO.configure(tx.address)
+})
