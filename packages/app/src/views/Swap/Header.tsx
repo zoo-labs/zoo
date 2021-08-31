@@ -3,7 +3,7 @@ import React, { FC, useState, useEffect } from 'react'
 
 // import MyOrders from '../exchange-v1/limit-order/MyOrders'
 // import NavLink from '../../components/NavLink'
-// import Settings from '../../components/Settings'
+import Settings from '../../components/Settings'
 import { currencyId } from '../../functions'
 import { useWeb3React } from '@web3-react/core'
 import { NavLink } from 'react-router-dom'
@@ -56,7 +56,7 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
       <div className='grid grid-cols-3 rounded p-1 bg-dark-800 h-[46px]' style={{ height: 46 }}>
         <NavLink
           className='flex items-center justify-center'
-          activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600'
+          activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-r from-secondary-dark to-gold hover:from-blue-600 hover:to-pink-600'
           to={{
             pathname: '/swap',
             state: getQuery(input, output),
@@ -102,6 +102,9 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
             </div>
           }
           <div className='relative flex items-center w-full h-full rounded text-gray-500 text-sm font-bold'>{balance} BNB</div>
+          <div className='relative flex items-center w-full h-full rounded hover:bg-dark-800'>
+            <Settings placeholderSlippage={allowedSlippage} />
+          </div>
         </div>
       </div>
     </div>
