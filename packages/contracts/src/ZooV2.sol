@@ -34,7 +34,7 @@ contract ZooV2 is ERC20, ERC20Burnable, Pausable, Ownable, AccessControl {
         _;
     }
 
-    constructor () ERC20("Zoo", "ZOO") {
+    constructor () ERC20("ZOO", "ZOO") {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
@@ -71,6 +71,13 @@ contract ZooV2 is ERC20, ERC20Burnable, Pausable, Ownable, AccessControl {
         super._mint(to, value);
     }
 
+    function pause() public onlyOwner whenNotPaused {
+        _pause();
+    }
+
+    function unpause() public onlyOwner whenPaused {
+        _unpause();
+    }
 
     function bridgeMint(address to, uint256 value) external whenNotPaused onlyBridge {
         super._mint(to, value);
@@ -79,19 +86,6 @@ contract ZooV2 is ERC20, ERC20Burnable, Pausable, Ownable, AccessControl {
     function bridgeBurn(address account, uint256 amount) external onlyBridge {
         super._approve(account, msg.sender, amount);
         super._burn(account, amount);
-    }
-
-    function burnFrom(address account, uint256 amount) public override onlyBridge {
-        _approve(account, msg.sender, amount);
-        _burn(account, amount);
-    }
-
-    function pause() public onlyOwner whenNotPaused {
-        _pause();
-    }
-
-    function unpause() public onlyOwner whenPaused {
-        _unpause();
     }
 
     function airDrop(address[] memory addresses, uint256[] memory amounts) public whenNotPaused onlyOwner {

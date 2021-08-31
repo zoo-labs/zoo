@@ -22,7 +22,7 @@ describe.only('ZooV2', function () {
     const name = await token.name()
     const symbol = await token.symbol()
     const decimals = await token.decimals()
-    expect(name.valueOf()).to.eq('Zoo')
+    expect(name.valueOf()).to.eq('ZOO')
     expect(symbol.valueOf()).to.eq('ZOO')
     expect(decimals.valueOf()).to.eq(18)
   })
@@ -168,7 +168,7 @@ describe.only('ZooV2', function () {
         expect(await token.balanceOf(addr3)).to.equal(0);
         expect(await token.balanceOf(addr1)).to.equal(1000000)
       })
-      
+
       it('reverts if an amount sent is 0', async () => {
         await token.approve(addr2, 10)
         await token.approve(addr3, 20)
@@ -176,7 +176,7 @@ describe.only('ZooV2', function () {
         expect(await token.balanceOf(addr2)).to.equal(0);
         expect(await token.balanceOf(addr3)).to.equal(0);
         expect(await token.balanceOf(addr1)).to.equal(1000000)
- 
+
       })
     })
 
