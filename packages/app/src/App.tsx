@@ -200,9 +200,7 @@ const App: React.FC = () => {
           </Route>
 
           <SuspenseWithChunkError fallback={<></>}>
-            <div
-            //  className='z-0 flex flex-col items-center w-full h-screen pb-16 lg:pb-0'
-            >
+            <div className='z-0 flex flex-col items-center w-full h-screen pb-16 lg:pb-0'>
               <div className='flex sticky top-0 justify-between flex-nowrap w-full z-20 flex-shrink-0 w-full'>
                 <Header />
               </div>
