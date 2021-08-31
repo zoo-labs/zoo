@@ -210,7 +210,7 @@ interface indexProps {}
 const Index: React.FC<indexProps> = ({}) => {
   return (
     <div>
-      <h6>Hello index</h6>
+      <h6></h6>
     </div>
   )
 }

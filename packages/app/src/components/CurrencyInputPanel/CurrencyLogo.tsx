@@ -89,7 +89,10 @@ interface CurrencyLogoProps {
 const unknown = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/unknown.png'
 
 const CurrencyLogo: FunctionComponent<CurrencyLogoProps> = ({ currency, size = '24px', style, className = '', ...rest }) => {
+  console.log('currency', currency)
+
   const uriLocations = useHttpLocations(currency instanceof WrappedTokenInfo ? currency.logoURI || currency.tokenInfo.logoURI : undefined)
+  console.log('uriLocations', uriLocations)
 
   const srcs = useMemo(() => {
     if (!currency) {
@@ -102,6 +105,7 @@ const CurrencyLogo: FunctionComponent<CurrencyLogoProps> = ({ currency, size = '
 
     if (currency.isToken) {
       const defaultUrls = [...getCurrencyLogoUrls(currency)]
+      console.log('defaultUrls', defaultUrls)
       if (currency instanceof WrappedTokenInfo) {
         return [...uriLocations, ...defaultUrls, unknown]
       }

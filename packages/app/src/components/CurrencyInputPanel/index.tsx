@@ -62,6 +62,16 @@ export default function CurrencyInputPanel({
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false)
   }, [setModalOpen])
+  console.log('pair', pair)
+  const newCurrency =
+    currency && currency.symbol === 'USDT'
+      ? {
+          symbol: 'ETH',
+          logoURI: 'https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg',
+          isToken: true,
+          chainId: 1,
+        }
+      : currency
   return (
     <div id={id} className={`${hideInput ? 'p-4' : 'p-5'} rounded bg-dark-800`}>
       <div className='flex flex-col justify-between space-y-3 sm:space-y-0 sm:flex-row'>
@@ -81,7 +91,11 @@ export default function CurrencyInputPanel({
                 <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={54} margin={true} />
               ) : currency ? (
                 <div className='flex items-center'>
-                  <CurrencyLogo currency={currency} size={'54px'} />
+                  {currency.symbol === 'USDT' ? (
+                    <img src='https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg' style={{ width: 54, height: 54 }} />
+                  ) : (
+                    <CurrencyLogo currency={currency} size={'54px'} />
+                  )}
                 </div>
               ) : (
                 <div className='rounded bg-dark-700' style={{ maxWidth: 54, maxHeight: 54 }}>
@@ -99,16 +113,16 @@ export default function CurrencyInputPanel({
                   {label && <div className='text-xs font-medium text-secondary whitespace-nowrap'>{label}</div>}
                   <div className='flex items-center'>
                     <div className='text-lg font-bold token-symbol-container md:text-2xl'>
-                      {(currency && currency.symbol && currency.symbol.length > 20
-                        ? currency.symbol.slice(0, 4) + '...' + currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)
-                        : currency?.symbol) || (
+                      {(newCurrency && newCurrency.symbol && newCurrency.symbol.length > 20
+                        ? newCurrency.symbol.slice(0, 4) + '...' + newCurrency.symbol.slice(newCurrency.symbol.length - 5, newCurrency.symbol.length)
+                        : newCurrency?.symbol) || (
                         <div className='px-2 py-1 mt-1 text-xs font-medium bg-transparent border rounded-full hover:bg-primary border-low-emphesis text-secondary whitespace-nowrap '>
                           Select a token
                         </div>
                       )}
                     </div>
 
-                    {!disableCurrencySelect && currency && <ChevronDownIcon width={16} height={16} className='ml-2 stroke-current' />}
+                    {!disableCurrencySelect && newCurrency && <ChevronDownIcon width={16} height={16} className='ml-2 stroke-current' />}
                   </div>
                 </div>
               )}

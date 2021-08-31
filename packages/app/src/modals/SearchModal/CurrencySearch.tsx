@@ -63,7 +63,7 @@ export function CurrencySearch({
   const [invertSearchOrder] = useState<boolean>(false)
 
   let allTokens = useAllTokens()
-
+  console.log('allTokens', allTokens)
   const history = useHistory()
 
   if (history.location.pathname.startsWith('/kashi/create')) {
@@ -102,7 +102,6 @@ export function CurrencySearch({
   const filteredTokens: Token[] = useMemo(() => {
     return filterTokens(Object.values(allTokens), debouncedQuery)
   }, [allTokens, debouncedQuery])
-
   const sortedTokens: Token[] = useMemo(() => {
     return filteredTokens.sort(tokenComparator)
   }, [filteredTokens, tokenComparator])
@@ -117,7 +116,24 @@ export function CurrencySearch({
     if (s === '' || s === 'e' || s === 'et' || s === 'eth') {
       return ether ? [ether, ...filteredSortedTokens] : filteredSortedTokens
     }
-    return filteredSortedTokens
+    return [
+      ...filteredSortedTokens,
+
+      {
+        _checksummedAddress: '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee',
+        _tags: null,
+        isNative: false,
+        isToken: true,
+        tokenInfo: {
+          address: '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee',
+          chainId: 97,
+          decimals: 18,
+          logoURI: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/binance/assets/BUSD-BD1/logo.png',
+          name: 'ETHEREUM',
+          symbol: 'ETH',
+        },
+      },
+    ]
   }, [debouncedQuery, ether, filteredSortedTokens])
 
   const handleCurrencySelect = useCallback(
@@ -165,7 +181,6 @@ export function CurrencySearch({
 
   // if no results on main list, show option to expand into inactive
   const filteredInactiveTokens = useSearchInactiveTokenLists(filteredTokens.length === 0 || (debouncedQuery.length > 2 && !isAddressSearch) ? debouncedQuery : undefined)
-
   return (
     <div className='flex flex-col max-h-[inherit]'>
       <ModalHeader className='h-full' onClose={onDismiss} title='Select a token' />
