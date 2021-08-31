@@ -2,15 +2,16 @@
 
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-export default Deploy('Savage', ['Z', 'B', 'ZOO', 'UniswapV2Factory', 'UniswapV2Router02'], async({ ethers, hre, deploy, deployments, deps, signers }) => {
-  const { Z, B, ZOO, UniswapV2Factory, UniswapV2Router02 } = deps
+export default Deploy('Savage', ['Z1', 'BNB', 'ZOO', 'UniswapV2Factory', 'UniswapV2Router02'], async({ ethers, hre, deploy, deployments, deps, signers }) => {
+  const { ZOO, UniswapV2Factory, UniswapV2Router02 } = deps
+  let { Z1, BNB } = deps
 
   // bsc mainnet
   const isMainnet = hre.network == 'mainnet'
 
   // get addresses for this environment
-  const z1      = (isMainnet) ? '0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997' : Z.address
-  const bnb     = (isMainnet) ? '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c' : B.address
+  const z1      = (isMainnet) ? '0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997' : Z1.address
+  const bnb     = (isMainnet) ? '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c' : BNB.address
   const zoo     = ZOO.address
   const factory = (isMainnet) ? '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73' : UniswapV2Factory.address
   const router  = (isMainnet) ? '0x10ED43C718714eb63d5aA57B78B54704E256024E' : UniswapV2Router02.address
@@ -26,8 +27,8 @@ export default Deploy('Savage', ['Z', 'B', 'ZOO', 'UniswapV2Factory', 'UniswapV2
   const Factory = await ethers.getContract('UniswapV2Factory')
   const Router = await ethers.getContract('UniswapV2Router02')
   const Savage = await ethers.getContract('Savage')
-  const Z1 = await ethers.getContract('Z')
-  const BNB = await ethers.getContract('B')
+  Z1 = await ethers.getContract('Z1')
+  BNB = await ethers.getContract('BNB')
 
   console.log('Factory', Factory.address)
   console.log('Router', Router.address)

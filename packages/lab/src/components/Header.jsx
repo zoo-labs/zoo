@@ -7,7 +7,7 @@ export default function Header() {
   return (
     <a href="https://github.com/zoo-labs/savage" target="_blank" rel="noopener noreferrer">
       <PageHeader
-        title="savage"
+        title="lab"
         subTitle=""
         style={{ cursor: "pointer" }}
       />
