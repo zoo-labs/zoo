@@ -14,7 +14,7 @@ export default Deploy('Savage', ['WETH', 'Z', 'B', 'UniswapV2Factory', 'UniswapV
   const factory = (isTestnet || isMainnet) ? '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73' : UniswapV2Factory.address
   const router  = (isTestnet || isMainnet) ? '0x10ED43C718714eb63d5aA57B78B54704E256024E' : UniswapV2Router02.address
 
-  const res = await deploy()
+  const res = await deploy([], ['SafeMath', 'TransferHelper'])
 
   const savage = await ethers.getContractAt('Savage', res.address)
   await savage.configure(z, b, c, factory, router)

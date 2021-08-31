@@ -84,6 +84,7 @@ export default function useContractLoader(providerOrSigner, config = {}) {
 
           let combinedContracts = {};
 
+          console.log('_chainId', _chainId)
           if (contractList[_chainId]) {
             for (const hardhatNetwork in contractList[_chainId]) {
               if (Object.prototype.hasOwnProperty.call(contractList[_chainId], hardhatNetwork)) {
@@ -96,6 +97,8 @@ export default function useContractLoader(providerOrSigner, config = {}) {
               }
             }
           }
+
+          console.log(combinedContracts)
 
           if (externalContractList[_chainId]) {
             combinedContracts = { ...combinedContracts, ...externalContractList[_chainId].contracts };
