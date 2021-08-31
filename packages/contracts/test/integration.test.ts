@@ -3,7 +3,7 @@ import { ethers } from 'hardhat'
 import chai, { expect } from 'chai'
 import asPromised from 'chai-as-promised'
 import { deployOtherNFTs, deployToken, deployProtocol, mint, ONE_ZOO, TENTH_ZOO, THOUSANDTH_ZOO, TWO_ZOO } from './utils'
-import { Auction, Market, Media, ZooV2, TestERC721 } from '../types'
+import { Auction, Market, Media, ZOO, TestERC721 } from '../types'
 import { BigNumber, Signer } from 'ethers'
 
 chai.use(asPromised)
@@ -16,7 +16,7 @@ const smallify = (bn: BigNumber) => bn.div(THOUSANDTH_ZOO).toNumber()
 describe.skip('integration', () => {
   let market: Market
   let media: Media
-  let token: ZooV2
+  let token: ZOO
   let auction: Auction
   let otherNft: TestERC721
   let deployer, creator, owner, curator, bidderA, bidderB, otherUser: Signer

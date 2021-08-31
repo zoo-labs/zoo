@@ -1,18 +1,18 @@
 import { setupTestFactory, requireDependencies } from './utils'
 import { Signer } from '@ethersproject/abstract-signer'
-import { ZooV2 } from '../types'
+import { Z1 } from '../types'
 
 const { expect } = requireDependencies()
 
-const setupTest = setupTestFactory(['ZooV2'])
+const setupTest = setupTestFactory(['ZOO'])
 
-describe.only('ZooV2', function () {
-  let token: ZooV2
+describe.only('ZOO', function () {
+  let token: ZOO
   let signers: Signer[]
 
   beforeEach(async () => {
     const test = await setupTest()
-    token = test.tokens.ZooV2 as ZooV2
+    token = test.tokens.ZOO as ZOO
     signers = test.signers
   })
 
@@ -20,7 +20,7 @@ describe.only('ZooV2', function () {
     const name = await token.name()
     const symbol = await token.symbol()
     const decimals = await token.decimals()
-    expect(name.valueOf()).to.eq('Zoo')
+    expect(name.valueOf()).to.eq('ZOO')
     expect(symbol.valueOf()).to.eq('ZOO')
     expect(decimals.valueOf()).to.eq(18)
   })
@@ -28,9 +28,9 @@ describe.only('ZooV2', function () {
   it('should add user to blacklist', async function () {
     const {
       signers,
-      tokens: { ZooV2 },
+      tokens: { ZOO },
     } = await setupTest()
-    const token = ZooV2
+    const token = ZOO
 
     const address = signers[1].address
     const address2 = signers[2].address
@@ -46,9 +46,9 @@ describe.only('ZooV2', function () {
   it('allows transfer for eligable accounts', async function () {
     const {
       signers,
-      tokens: { ZooV2 },
+      tokens: { ZOO },
     } = await setupTest()
-    const token = ZooV2
+    const token = ZOO
 
     const address = signers[1].address
     const address2 = signers[2].address
@@ -67,7 +67,7 @@ describe.only('ZooV2', function () {
 
   it('should not allow transferFrom when blacklisted', async function () {
     const { signers, tokens } = await setupTest()
-    const token = tokens['ZooToken']
+    const token = tokens['ZOO']
 
     const address = signers[1].address
     const address2 = signers[2].address
@@ -85,7 +85,7 @@ describe.only('ZooV2', function () {
 
   it('does not allow transfer from a blacklisted address', async function () {
     const { signers, tokens } = await setupTest()
-    const token = tokens['ZooToken']
+    const token = tokens['ZOO']
 
     const address = signers[1].address
     const address2 = signers[2].address
