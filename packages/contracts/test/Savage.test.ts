@@ -66,7 +66,6 @@ describe.only('Savage', function () {
 
     await BNB.approve(router.address, amountBNB)
     await ZOO.approve(router.address, amountZoo)
-    await ZOO.approve(savage.address, amountIn)
 
     expect(await ZOO.balanceOf(sender.address)).to.be.equal(amountToSender);
     expect(await BNB.balanceOf(sender.address)).to.be.equal(amountBNB);
@@ -91,7 +90,7 @@ describe.only('Savage', function () {
     expect(await ZOO.balanceOf(pair)).to.be.equal(amountZoo);
     expect(await BNB.balanceOf(pair)).to.be.equal(amountBNB);
 
-    await savage.approve()
+    await ZOO.approve(savage.address, amountIn)
     await savage.swapTokens(amountIn, amountOutMin)
     // expect(await savage.swapTokens(amountIn, amountOutMin)).to.not.be.reverted;
 
