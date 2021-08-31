@@ -21,10 +21,8 @@ contract ZooV2 is ERC20, ERC20Burnable, Ownable, AccessControl {
      *
      *     => 0xc87b56dd ^ 0x157c3df9 == 0x4e222e66
      */
+    bytes4 private constant _INTERFACE_ID_SWAP  = 0xd64db887;
     bytes4 private constant _INTERFACE_ID_ERC20 = 0x4e222e66;
-    // bytes4 private constant _INTERFACE_ID_SWAP = 0x4e222e66;
-
-    // supportedInterfaces[this.supportsInterface.selector] = true;
 
     address public bridge;
 
@@ -33,7 +31,7 @@ contract ZooV2 is ERC20, ERC20Burnable, Ownable, AccessControl {
         _;
     }
 
-    constructor () ERC20("Zoo", "ZOO") {
+    constructor () ERC20("ZOO", "ZOO") {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
