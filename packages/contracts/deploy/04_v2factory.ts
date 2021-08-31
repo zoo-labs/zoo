@@ -1,5 +1,5 @@
-// deploy/03_v2factory.ts
-//
+// 03_v2factory.ts
+
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
 // // Defining bytecode and abi from original contract on mainnet to ensure bytecode matches and it produces the same pair code hash

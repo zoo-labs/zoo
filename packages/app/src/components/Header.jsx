@@ -5,9 +5,9 @@ import React from "react";
 
 export default function Header() {
   return (
-    <a href="https://github.com/zoo-labs/zoo" target="_blank" rel="noopener noreferrer">
+    <a href="https://github.com/zoo-labs/savage" target="_blank" rel="noopener noreferrer">
       <PageHeader
-        title="lab"
+        title="savage"
         subTitle=""
         style={{ cursor: "pointer" }}
       />

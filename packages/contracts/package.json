@@ -43,6 +43,8 @@
     "@zoolabs/framework": "zoo-labs/hardhat-framework",
     "@zoolabs/solidity": "zoo-labs/boring-solidity",
     "bip39": "^3.0.4",
+    "csv-parse": "^4.16.2",
+    "csv-parser": "^3.0.0",
     "eth-sig-util": "^3.0.1",
     "ethereum-waffle": "^3.4.0",
     "ethereumjs-util": "^7.1.0",
@@ -55,6 +57,7 @@
   "scripts": {
     "account": "hardhat account",
     "accounts": "hardhat accounts",
+    "airdrop": "hardhat run --network hardhat scripts/airDrop.ts",
     "balance": "hardhat balance",
     "chain": "hardhat node --network hardhat --show-stack-traces",
     "clean": "rm -rf artifacts && rm -rf cache && rm -rf types",

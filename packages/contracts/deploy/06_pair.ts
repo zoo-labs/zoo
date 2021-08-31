@@ -1,4 +1,4 @@
-// deploy/05_pair.ts
+// 06_pair.ts
 
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
