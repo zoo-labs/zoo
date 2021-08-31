@@ -67,12 +67,18 @@ export default function CurrencyInputPanel({
   const newCurrency =
     currency && currency.symbol === 'USDT'
       ? {
-          symbol: 'ETH',
+          symbol: 'ZOO',
           logoURI: 'https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg',
           isToken: true,
           chainId: 1,
         }
-      : currency
+      : {
+          symbol: 'ZOO',
+          logoURI: 'https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg',
+          isToken: true,
+          isNative: true,
+          chainId: 1,
+        }
   return (
     <div id={id} className={`${hideInput ? 'p-4' : 'p-5'} rounded bg-dark-800`}>
       <div className='flex flex-col justify-between space-y-3 sm:space-y-0 sm:flex-row'>

@@ -82,9 +82,8 @@ const Index: React.FC<indexProps> = ({}) => {
   return (
     // className='lg:p-16 p-4 pr-0 lg:pr-0 mr-0 space-y-4 rounded-lg  m-4 flex flex-col relative filter drop-shadow z-10'
     <main className='flex flex-col  flex-grow w-full h-full lg:p-16 lg:m-4 p-0 m-0 lg:pr-0 lg:mr-0 space-y-4 rounded-lg  flex flex-col relative filter drop-shadow z-10'>
-      <div className='flex lg:p-16 p-4 justify-center lg:justify-between items-end flex-wrap'>
-        <div className='flex-1 '>
-          <div className='text-base font-bold currentColor mb-2'>{numberWithCommas(balance)} ZOO</div>
+      <div className='flex lg:p-0 p-4 justify-center lg:justify-start items-end flex-wrap'>
+        <div className=' mr-4'>
           <div className='flex items-center  cursor-pointer' onClick={() => handleFunds()}>
             <span
               className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-lg text-high-emphesis border-dark-800 bg-dark-700  hover:bg-primary h-full
@@ -95,7 +94,7 @@ const Index: React.FC<indexProps> = ({}) => {
           </div>
         </div>
         <div>
-          <div className='flex-1 grid grid-cols-2 rounded-lg bg-dark-800 h-[46px] gap-2' style={{ height: 40 }}>
+          <div className=' grid grid-cols-2 rounded-lg bg-dark-800 h-[46px] gap-2' style={{ height: 40 }}>
             {[
               { name: 'Account', id: 0 },
               { name: 'Bank', id: 1 },
@@ -105,7 +104,7 @@ const Index: React.FC<indexProps> = ({}) => {
                   <span
                     className={`w-full flex items-center justify-center px-2 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis ${
                       tab === type.id &&
-                      'font-bold border rounded-lg text-high-emphesis border-dark-800 bg-gradient-to-r from-secondary-dark to-gold hover:from-blue-600 hover:to-pink-600 h-full'
+                      'font-bold border rounded-lg text-high-emphesis border-dark-800 bg-gradient-to-r from-primary to-pink hover:from-blue-600 hover:to-pink-600 h-full'
                     }`}>
                     {type.name}
                   </span>

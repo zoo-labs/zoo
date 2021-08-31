@@ -112,6 +112,7 @@ const Account: React.FC = () => {
   const [allowance, setAllowance] = useState(false)
   const [disable, setDisable] = useState(false)
   const [disableApprove, setDisableApprove] = useState(false)
+  const [balance, setBalance] = useState(0)
   const [keepApprove, setKeepApprove] = useState(true)
   const web3 = useWeb3()
   const { account, chainID, gasPrice } = web3
@@ -136,6 +137,7 @@ const Account: React.FC = () => {
       const rawBalance = await zooToken.methods.balanceOf(account).call()
       const divisor = parseFloat(Math.pow(10, decimals).toString())
       const balance = rawBalance / divisor
+      setBalance(balance)
     } catch (e) {
       console.error('ISSUE LOADING ZOO BALANCE \n', e)
       toastClear()
@@ -230,6 +232,7 @@ const Account: React.FC = () => {
           <div className='flex flex-col justify-between h-full'>
             <div style={{ flex: 1 }} className='p-5 rounded'>
               <div className='mb-2'>
+                <div className='text-base font-bold currentColor mb-2'>{numberWithCommas(balance)} ZOO</div>
                 <Label style={{ fontSize: '20px' }}>{currentEggsOwned} Eggs Owned</Label>
               </div>
               <Eggs />
@@ -318,22 +321,23 @@ const Account: React.FC = () => {
           height: '50vh',
           // transform: 'translate(-50vw, -100vh)',
           top: '0%',
-          left: '-15%',
-          right: 0,
+
+          right: '-15%',
           zIndex: -1,
         }}
-        className='absolute  bg-secondary-dark opacity-50  rounded-full z-0 filter  blur-3xl'></div>
+        className='absolute  bg-primary opacity-50  rounded-full z-0 filter  blur-3xl'></div>
       <div
         style={{
           // background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
           width: '50vw',
           height: '50vh',
           // transform: 'translate(-50vw, -100vh)',
+          left: '-15%',
+          right: 0,
           bottom: '0%',
-          right: '-15%',
           zIndex: -1,
         }}
-        className='absolute  bg-gold rounded-full opacity-30  z-0 filter  blur-3xl'></div>
+        className='absolute  bg-pink rounded-full opacity-30  z-0 filter  blur-3xl'></div>
       {/* <div
           background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
           backgroundColor: 'rgba(20,20,20,1)',

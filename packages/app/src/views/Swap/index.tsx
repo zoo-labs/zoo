@@ -385,7 +385,7 @@ export default function Swap() {
       symbol: 'USDT',
     })
   }, [])
-  console.log('formattedAmounts', formattedAmounts)
+  console.log('currencies[Field.INPUT]', currencies[Field.INPUT])
   return (
     <main className='flex flex-col items-center justify-start flex-grow w-full h-full' style={{ height: '80vh' }}>
       <div id='swap-page' className='py-4 md:py-8 lg:py-12 max-w-2xl w-full'>
@@ -415,7 +415,8 @@ export default function Swap() {
             <div>
               <CurrencyInputPanel
                 // priceImpact={priceImpact}
-                label={independentField === Field.OUTPUT && !showWrap ? `Swap From (est.):` : `Swap From:`}
+                // label={independentField === Field.OUTPUT && !showWrap ? `Swap From (est.):` : `Swap From:`}
+                label={currencies[Field.INPUT] && currencies[Field.INPUT].isNative ? `Swap From (BSC):` : `Swap From:(ETH)`}
                 value={formattedAmounts[Field.INPUT]}
                 showMaxButton={showMaxButton}
                 currency={currencies[Field.INPUT]}
@@ -462,7 +463,8 @@ export default function Swap() {
                 <CurrencyInputPanel
                   value={formattedAmounts[Field.OUTPUT]}
                   onUserInput={handleTypeOutput}
-                  label={independentField === Field.INPUT && !showWrap ? `Swap To (est.):` : `Swap To:`}
+                  label={currencies[Field.OUTPUT] && !currencies[Field.OUTPUT].isNative ? `Swap To (ETH):` : `Swap To: (BSC)`}
+                  // label={independentField === Field.INPUT && !showWrap ? `Swap To (eth):` : `Swap To:`}
                   showMaxButton={showMaxButton}
                   hideBalance={false}
                   fiatValue={fiatValueOutput ?? undefined}
@@ -529,8 +531,8 @@ export default function Swap() {
                 </button>
               ) : routeNotFound && userHasSpecifiedInputOutput ? (
                 <div style={{ textAlign: 'center' }}>
-                  <div className='mb-1'>Insufficient liquidity for this trade</div>
-                  {singleHopOnly && <div className='mb-1'>Try enabling multi-hop trades</div>}
+                  {/* <div className='mb-1'>Insufficient liquidity for this trade</div>
+                  {singleHopOnly && <div className='mb-1'>Try enabling multi-hop trades</div>} */}
                 </div>
               ) : showApproveFlow ? (
                 <div>
