@@ -187,11 +187,11 @@ export default function NetworkModal({ onDismiss = () => null }): JSX.Element | 
           ChainId.BSC,
           // ChainId.BSCTESTNET,
           // ChainId.XDAI,
-          ChainId.HARMONY,
+          // ChainId.HARMONY,
           // ChainId.AVALANCHE,
           // ChainId.CELO,
           // ChainId.PALM,
-          ChainId.MATIC,
+          // ChainId.MATIC,
         ].map((key: ChainId, i: number) => {
           if (chainId === key) {
             return (
