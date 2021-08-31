@@ -53,17 +53,17 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
   }, [])
   return (
     <div className='flex items-center justify-between mb-4 space-x-3'>
-      <div className='grid grid-cols-3 rounded p-1 bg-dark-800 h-[46px]' style={{ height: 46 }}>
+      <div className='grid grid-cols-1 rounded p-1 bg-dark-800 h-[46px]' style={{ height: 46 }}>
         <NavLink
           className='flex items-center justify-center'
-          activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-r from-secondary-dark to-gold hover:from-blue-600 hover:to-pink-600'
+          activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-r from-primary to-pink hover:from-blue-600 hover:to-pink-600'
           to={{
             pathname: '/swap',
             state: getQuery(input, output),
           }}>
           <a className='flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis'>Swap</a>
         </NavLink>
-        <NavLink
+        {/* <NavLink
           className='flex items-center justify-center'
           activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600'
           to={{
@@ -80,7 +80,7 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
           to={`/
           ${input ? `/${currencyId(input)}` : ''}${output ? `/${currencyId(output)}` : ''}`}>
           <a className='flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis'>Liquidity</a>
-        </NavLink>
+        </NavLink> */}
       </div>
       <div className='flex items-center'>
         <div className='grid grid-flow-col gap-1'>

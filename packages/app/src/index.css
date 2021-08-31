@@ -120,6 +120,9 @@ html {
 .to-gold {
     --tw-gradient-to:#f2c282;
 }
+.to-pink {
+    --tw-gradient-to:rgba(243,56,195,1);;
+}
 .bg-secondary-dark {
     background-color: #6c7464;
 }

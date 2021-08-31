@@ -30,10 +30,10 @@ import { createBrowserHistory } from 'history'
 // import 'swiper/swiper.min.css'
 // import 'swiper/components/pagination/pagination.min.css'
 
-const Login   = lazy(() => import('./views/Login'))
-const Home    = lazy(() => import('./views/Home'))
+const Login = lazy(() => import('./views/Login'))
+const Home = lazy(() => import('./views/Home'))
 // const Bank    = lazy(() => import('./views/Bank'))
-const Feed    = lazy(() => import('./views/Feed'))
+const Feed = lazy(() => import('./views/Feed'))
 
 // This config is required for number formating
 BigNumber.config({
@@ -196,7 +196,7 @@ const App: React.FC = () => {
         <GlobalStyle />
         <Switch>
           <Route exact path='/login'>
-            {signedIn ? <Redirect to='/home' /> : <Login />}
+            {signedIn ? <Redirect to='/swap' /> : <Login />}
           </Route>
 
           <SuspenseWithChunkError fallback={<></>}>
@@ -209,8 +209,8 @@ const App: React.FC = () => {
 
               <Switch>
                 {indexRoutes.map((prop, key) => (signedIn ? <Route path={prop.path} key={key} component={prop.component} /> : <Redirect to='/login' />))}
-                <Redirect from='/' to={signedIn ? '/home' : '/login'} />
-                <Redirect from='' to={signedIn ? '/home' : '/login'} />
+                <Redirect from='/' to={signedIn ? '/swap' : '/login'} />
+                <Redirect from='' to={signedIn ? '/swap' : '/login'} />
               </Switch>
             </div>
           </SuspenseWithChunkError>
