@@ -139,7 +139,7 @@
     eslint-visitor-keys "^2.1.0"
     semver "^6.3.0"
 
-"@babel/generator@^7.11.6", "@babel/generator@^7.12.1", "@babel/generator@^7.14.5", "@babel/generator@^7.15.0":
+"@babel/generator@^7.11.6", "@babel/generator@^7.12.1", "@babel/generator@^7.15.0":
   version "7.15.0"
   resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.15.0.tgz#a7d0c172e0d814974bad5aa77ace543b97917f15"
   integrity sha512-eKl4XdMrbpYvuB505KTta4AV9g+wWzmVBW69tX0H2NwKVKd2YJbKgyK6M8j/rgLbmHOYJn6rUklV677nOyJrEQ==
@@ -1323,13 +1323,6 @@
     semver "^7.3.2"
     webpack-merge "^4.2.2"
 
-"@crowdin/crowdin-api-client@^1.11.3":
-  version "1.11.3"
-  resolved "https://registry.yarnpkg.com/@crowdin/crowdin-api-client/-/crowdin-api-client-1.11.3.tgz#ba513d2e92456bd53f50a3b685a5d61bd2111c64"
-  integrity sha512-JhT55F1u5pfZTiwTCnGyR5IxccQD5e4Y5SPWcalq8uYUMOz4jdorDKCH0j0NQXnLSvSdD+PdWAnK403FlDrZJQ==
-  dependencies:
-    axios "^0.21.1"
-
 "@cspotcode/source-map-consumer@0.8.0":
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/@cspotcode/source-map-consumer/-/source-map-consumer-0.8.0.tgz#33bf4b7b39c178821606f669bbc447a6a629786b"
@@ -1356,21 +1349,6 @@
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.4.0.tgz#c3c5ae543c897caa9c2a68630bed355be5f9990f"
   integrity sha512-JZButFdZ1+/xAfpguQHoabIXkcqRRKpMrWKBkpEZZyxfY9C1DpADFB8PEqGSTeFr135SaTRfKqGKx5xSCLI7ZQ==
-
-"@datepicker-react/hooks@^2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@datepicker-react/hooks/-/hooks-2.8.0.tgz#34e921f64fda5fb25d140a25f2143596a6b637eb"
-  integrity sha512-hc+SKVi595W5fToh5gHJiMiREAw58YAbt37N0MpQdGNiMWwO4DYm37PpmVUQlT23GL7ZkLNThp0ZJsrk69HRLQ==
-  dependencies:
-    date-fns "^2.14.0"
-
-"@datepicker-react/styled@^2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@datepicker-react/styled/-/styled-2.8.0.tgz#1a117c4e767de52de8aa5460f4428ade9c99e7f1"
-  integrity sha512-YCmrvcOYcd1Zrkg2XdEoNRcuRe6in9YoDxP44cGcKPaF+pXtf3nb88dhN2IOw+RSCRS9cdPw4tHICST4jkX2Ww==
-  dependencies:
-    "@datepicker-react/hooks" "^2.8.0"
-    styled-system "^5.1.5"
 
 "@emotion/hash@^0.8.0":
   version "0.8.0"
@@ -2441,17 +2419,6 @@
     make-plural "^6.2.2"
     messageformat-parser "^4.1.3"
 
-"@lingui/loader@^3.10.2":
-  version "3.10.2"
-  resolved "https://registry.yarnpkg.com/@lingui/loader/-/loader-3.10.2.tgz#1994de9bcce2f2f67b1efe46c377d70866466cf7"
-  integrity sha512-6iktLXTnZktm5V1ZaJqh7LQxQuPf2f/SkxzLrIS8eIRkMYX5Pf+XbUQH1b9aZisZp2gToHLKDpHx+w5PbfH0Ug==
-  dependencies:
-    "@babel/runtime" "^7.11.2"
-    "@lingui/cli" "^3.10.2"
-    "@lingui/conf" "^3.10.2"
-    loader-utils "^2.0.0"
-    ramda "^0.27.1"
-
 "@lingui/macro@^3.10.2":
   version "3.10.2"
   resolved "https://registry.yarnpkg.com/@lingui/macro/-/macro-3.10.2.tgz#30286cf7d77d87de2869ada1f5814953e747e415"
@@ -2468,17 +2435,6 @@
   dependencies:
     "@babel/runtime" "^7.11.2"
     "@lingui/core" "^3.10.2"
-
-"@lingui/remote-loader@^3.10.4":
-  version "3.10.4"
-  resolved "https://registry.yarnpkg.com/@lingui/remote-loader/-/remote-loader-3.10.4.tgz#ab8be14b110e3258eafa423c1e0216583c052dfe"
-  integrity sha512-X1LE0jaYm2QV33kkPreUzIh+QCsbvqvsUMqUsfK4NQjE2QELlRWxY621QquYafzp9KgOgk9ZgnJ70l3lZ9zbaQ==
-  dependencies:
-    "@babel/generator" "^7.14.5"
-    "@babel/types" "^7.14.5"
-    json5 "^2.2.0"
-    messageformat-parser "^4.1.3"
-    ramda "^0.27.1"
 
 "@material-ui/core@^4.12.3":
   version "4.12.3"
@@ -3090,22 +3046,10 @@
   resolved "https://registry.yarnpkg.com/@sushiswap/core/-/core-1.4.2.tgz#065a6613f842ab7ac6d12878072b59327bffa296"
   integrity sha512-Khd2i6Bob9uk7dCgVkhUioEoxRP28m6aj25MegAHvnJyxZPVzZDhxSkeL6wdv5MeAp2DwHkYqUq03KDfVTTP4Q==
 
-"@sushiswap/default-token-list@^11.3.0":
-  version "11.5.0"
-  resolved "https://registry.yarnpkg.com/@sushiswap/default-token-list/-/default-token-list-11.5.0.tgz#07f31e6771c31fff44ca1a6a37697f266dd486a7"
-  integrity sha512-XuouWhMJdhz/QaWOLuPb/PkPzqfnipBi3VBzUuMisWdCAiUy7mhh2ep209/qoQcOAXj0Dgzz/cuHYTy20Uab5w==
-
 "@sushiswap/default-token-list@^14.9.0":
   version "14.9.0"
   resolved "https://registry.yarnpkg.com/@sushiswap/default-token-list/-/default-token-list-14.9.0.tgz#d79e0c91a81eaf316fb43e211bf35ecf226dea40"
   integrity sha512-Z/SqJDgeli9OIHpYZRwafQJJ4BLzVDy5Rf6Js37neyJMSXyFOeYFAQlMT9e3667JtXahkTrK9e8WFyxexsEDiA==
-
-"@sushiswap/limit-order-pair-list@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@sushiswap/limit-order-pair-list/-/limit-order-pair-list-0.2.2.tgz#49b6ec5008627e1fb2d7dc43e88b6249308383ab"
-  integrity sha512-5BdxmT8xjNT57IaWQswNZld6mALGNp4LoVaLA8SytVEl2XAqJlVr26S79X1Cf+ath1F5SJntcIyaCuQg6vGDtA==
-  dependencies:
-    "@sushiswap/default-token-list" "^11.3.0"
 
 "@sushiswap/sdk@^5.0.0-canary.52":
   version "5.0.0-canary.53"
@@ -8416,7 +8360,7 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-date-fns@2.x, date-fns@^2.14.0, date-fns@^2.16.1:
+date-fns@2.x, date-fns@^2.16.1:
   version "2.23.0"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.23.0.tgz#4e886c941659af0cf7b30fafdd1eaa37e88788a9"
   integrity sha512-5ycpauovVyAk0kXNZz6ZoB9AYMZB4DObse7P3BPWmyEjXNORTI8EJ6X0uaSAq4sCHzM1uajzrkr6HnsLQpxGXA==
@@ -14623,7 +14567,7 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-json5@^2.1.2, json5@^2.2.0:
+json5@^2.1.2:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.0.tgz#2dfefe720c6ba525d9ebd909950f0515316c89a3"
   integrity sha512-f+8cldu7X/y7RAJurMEJmdoKXGB/X550w2Nr3tTbezL6RwEE/iMcm+tZnXeoZtKuOq6ft8+CqzEkrIgx1fPoQA==
@@ -16495,7 +16439,7 @@ multicodec@^1.0.0, multicodec@^1.0.1:
     buffer "^5.6.0"
     varint "^5.0.0"
 
-multicodec@^3.0.1, multicodec@^3.1.1:
+multicodec@^3.0.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/multicodec/-/multicodec-3.1.1.tgz#477004dbd21e357b98a882b76dce1e13cb4a3f9f"
   integrity sha512-q29htEIgHglgxEcD0SvTmf1er68nfhm87rMKPqpClequHOTJknDCX5xA8QHBwBstgj+niO2KrsJeFzpsMZj2DQ==
@@ -16507,11 +16451,6 @@ multiformats@^9.4.2:
   version "9.4.6"
   resolved "https://registry.yarnpkg.com/multiformats/-/multiformats-9.4.6.tgz#d24b2e313ff3a3f8f48eef771d44fb329a354e56"
   integrity sha512-ngZRO82P7mPvw/3gu5NQ2QiUJGYTS0LAxvQnEAlWCJakvn7YpK2VAd9JWM5oosYUeqoVbkylH/FsqRc4fc2+ag==
-
-multihash@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/multihash/-/multihash-0.1.0.tgz#ac2f1d22626c4e7aceaefa421eea542ebc6025cf"
-  integrity sha1-rC8dImJsTnrOrvpCHupULrxgJc8=
 
 multihashes@^0.4.15, multihashes@~0.4.13, multihashes@~0.4.14, multihashes@~0.4.15:
   version "0.4.21"
