@@ -1,5 +1,5 @@
 import { ethers } from 'hardhat'
-import { ZooV2 } from '../types'
+import { ZOO } from '../types'
 import { Faucet } from '../types/Faucet'
 import { expect } from 'chai'
 import { BigNumber } from 'ethers'
@@ -16,7 +16,7 @@ describe('Test Faucet', () => {
 
     const zooTokenFactory = await ethers.getContractFactory('ZooToken', signers[0])
 
-    zooToken = (await zooTokenFactory.deploy()) as ZooV2
+    zooToken = (await zooTokenFactory.deploy()) as ZOO
     await zooToken.deployed()
 
     const zooFaucetFactory = await ethers.getContractFactory('Faucet', signers[0])
