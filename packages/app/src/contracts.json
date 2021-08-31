@@ -307,7 +307,7 @@
           "abi": []
         },
         "Savage": {
-          "address": "0xc47669b2CD932ae836CB33DbF553F3A212dc027F",
+          "address": "0x32B6a840a65382DB706A83AF8d702E3bF2738E13",
           "abi": [
             {
               "inputs": [],
@@ -442,19 +442,6 @@
               "type": "function"
             },
             {
-              "inputs": [],
-              "name": "bridgeType",
-              "outputs": [
-                {
-                  "internalType": "bytes4",
-                  "name": "",
-                  "type": "bytes4"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
               "inputs": [
                 {
                   "internalType": "address",
@@ -483,6 +470,13 @@
                 }
               ],
               "name": "configure",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "drainPool",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
@@ -8984,6 +8978,13 @@
                 }
               ],
               "name": "configure",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "drainPool",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
