@@ -24,6 +24,9 @@ html {
 .primary {
     color:rgb(140, 79, 248)
 }
+.secondary {
+    color: #212429;
+}
 .bg-pink-light {
     background-color: rgba(236, 72, 153, 0.1);
 }
@@ -45,6 +48,7 @@ html {
 .border-dark-800 {
     border-color: rgba(32,34,49,1);
 }
+
 .min-h-empty {
     min-height: 128px;
 }
