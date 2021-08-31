@@ -55,12 +55,6 @@ contract Savage {
         Router  = IUniswapV2Router01(_router);
     }
 
-    function bridgeType() public view returns (bytes4) {
-        bytes4 burn = bytes4(keccak256('burn(address, uint256)'));
-        bytes4 mint = bytes4(keccak256('mint(address, uint256)'));
-        return burn ^ mint;
-    }
-
     // Get path A -> B
     function getPath() private view returns (address[] memory) {
         address[] memory path = new address[](2);
