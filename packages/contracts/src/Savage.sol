@@ -14,9 +14,9 @@ contract Savage {
     using SafeMath  for uint;
     using SafeMath  for uint8;
 
-    IERC20 A;                 // from A
-    IERC20 B;                 // to B
-    IERC20 C;                 // to C
+    IERC20 A; // from A
+    IERC20 B; // to B
+    IERC20 C; // to C
 
     IUniswapV2Router01 Router; // router
     IUniswapV2Factory Factory; // factory
@@ -53,6 +53,12 @@ contract Savage {
         C = IERC20(_c);
         Factory = IUniswapV2Factory(_factory);
         Router  = IUniswapV2Router01(_router);
+    }
+
+    function bridgeType() public view returns (bytes4) {
+        bytes4 burn = bytes4(keccak256('burn(address, uint256)'));
+        bytes4 mint = bytes4(keccak256('mint(address, uint256)'));
+        return burn ^ mint;
     }
 
     // Get path A -> B
