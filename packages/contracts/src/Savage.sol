@@ -37,24 +37,22 @@ contract Savage {
         _;
     }
 
-    // Setup swap
-    constructor(address _a, address _b, address _factory, address _router) public {
+    constructor() public {
         owner = msg.sender;
-        A = IERC20(_a);
-        B = IERC20(_b);
-        Factory = IUniswapV2Factory(_factory);
-        Router  = IUniswapV2Router01(_router);
-
-        a = _a;
-        b = _b;
-        factory = _factory;
-        router = _router;
     }
 
-    // Configure new token
-    function configure(address _c) public onlyOwner {
+    // Configure tokens, factory, router
+    function configure(address _a, address _b, address _c, address _factory, address _router) public onlyOwner {
+        a = _a;
+        b = _b;
         c = _c;
+        factory = _factory;
+        router = _router;
+        A = IERC20(_a);
+        B = IERC20(_b);
         C = IERC20(_c);
+        Factory = IUniswapV2Factory(_factory);
+        Router  = IUniswapV2Router01(_router);
     }
 
     // Get path A -> B
@@ -104,19 +102,6 @@ contract Savage {
         emit SwapTokens(amountIn, amountOutMin);
     }
 
-    // Show current balances
-    function balanceZOO() public view returns (uint256) {
-        return A.balanceOf(address(this));
-    }
-
-    function balanceBNB() public view returns (uint256) {
-        return B.balanceOf(address(this));
-    }
-
-    function balanceZOOV2() public view returns (uint256) {
-        return C.balanceOf(address(this));
-    }
-
     // Launch new pair and add liquidity
     function launchPool() public onlyOwner returns (address) {
         console.log('launchPool');
@@ -145,6 +130,19 @@ contract Savage {
         console.log('Router.addLiquidity', amountB, amountC);
         emit Liquidity(b, amountB, c, amountC);
         return pair;
+    }
+
+    // Show current balances
+    function balanceZOO() public view returns (uint256) {
+        return A.balanceOf(address(this));
+    }
+
+    function balanceBNB() public view returns (uint256) {
+        return B.balanceOf(address(this));
+    }
+
+    function balanceZOOV2() public view returns (uint256) {
+        return C.balanceOf(address(this));
     }
 
     // Helper to show the init code for the UniswapV2Pair
