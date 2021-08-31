@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# install 300,000 npm libraries & create verbose sceripts with 40k library dependencies or 
+# install 300,000 npm libraries & create verbose scripts with 40k library dependencies or 
 # on any linux server anywhere or any macbook: 
 
 # cat whitelist.csv 
