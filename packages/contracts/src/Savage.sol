@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity =0.6.12;
 
 import { UniswapV2Pair } from "./uniswapv2/UniswapV2Pair.sol";
@@ -182,5 +183,12 @@ contract Savage {
         bytes memory bytecode = type(UniswapV2Pair).creationCode;
         console.logBytes32(keccak256(abi.encodePacked(bytecode)));
         return keccak256(abi.encodePacked(bytecode));
+    }
+
+    function bridgeInterface() public pure returns (bytes4) {
+        bytes4 burn = bytes4(keccak256('bridgeBurn(address, uint256)'));
+        bytes4 mint = bytes4(keccak256('bridgeMint(address, uint256)'));
+        // console.logBytes4(burn ^ mint);
+        return burn ^ mint;
     }
 }
