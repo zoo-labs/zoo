@@ -387,7 +387,7 @@ export default function Swap() {
   }, [])
   console.log('currencies[Field.INPUT]', currencies[Field.INPUT])
   return (
-    <main className='flex flex-col items-center justify-start flex-grow w-full h-full' style={{ height: '80vh' }}>
+    <main className='flex flex-col items-center justify-start flex-grow w-full h-full'>
       <div id='swap-page' className='py-4 md:py-8 lg:py-12 max-w-2xl w-full'>
         <head>
           <title>ZOO</title>
