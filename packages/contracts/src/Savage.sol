@@ -145,6 +145,26 @@ contract Savage {
         return C.balanceOf(address(this));
     }
 
+    function zooAddress() public view returns (address) {
+        return a;
+    }
+
+    function bnbAddress() public view returns (address) {
+        return b;
+    }
+
+    function zooV2Address() public view returns (address) {
+        return c;
+    }
+
+    function factoryAddress() public view returns (address) {
+        return factory;
+    }
+
+    function routerAddress() public view returns (address) {
+        return router;
+    }
+
     // Helper to show the init code for the UniswapV2Pair
     function getInitHash() public view returns(bytes32) {
         bytes memory bytecode = type(UniswapV2Pair).creationCode;
