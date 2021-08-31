@@ -1,5 +1,5 @@
 import { ChainId, Currency, Percent } from '@sushiswap/sdk'
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 
 // import MyOrders from '../exchange-v1/limit-order/MyOrders'
 // import NavLink from '../../components/NavLink'
@@ -28,13 +28,29 @@ interface ExchangeHeaderProps {
 }
 
 const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippage }) => {
+  const [balance, setBalance] = useState(0)
   const { chainId } = useWeb3React()
-  const { gasPrice } = useWeb3()
+  const { gasPrice, account, eth } = useWeb3()
   //   const router = useRouter()
   const [animateWallet, setAnimateWallet] = useState(false)
   //   const isRemove = router.asPath.startsWith('/remove')
   //   const isLimitOrder = router.asPath.startsWith('/limit-order')
+  const getBalance = async () => {
+    try {
+      // const decimals = await zooToken.methods.decimals().call()
+      await eth.getBalance(account).then((val) => {
+        const divisor = parseFloat(Math.pow(10, 18).toString())
+        const balance = parseFloat(val) / divisor
+        setBalance(parseFloat(balance.toFixed(4)))
+      })
+    } catch (e) {
+      console.error('ISSUE LOADING ZOO BALANCE \n', e)
+    }
+  }
 
+  useEffect(() => {
+    getBalance()
+  }, [])
   return (
     <div className='flex items-center justify-between mb-4 space-x-3'>
       <div className='grid grid-cols-3 rounded p-1 bg-dark-800 h-[46px]' style={{ height: 46 }}>
@@ -85,7 +101,7 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
               <div className='hidden md:block text-baseline'>{gasPrice / 1000000000}</div>
             </div>
           }
-          <div className='relative flex items-center w-full h-full rounded hover:bg-dark-800'>0.4BNB</div>
+          <div className='relative flex items-center w-full h-full rounded text-gray-500 text-sm font-bold'>{balance} BNB</div>
         </div>
       </div>
     </div>
