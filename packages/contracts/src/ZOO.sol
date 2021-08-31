@@ -122,7 +122,7 @@ contract ZOO is ERC20, ERC20Burnable, Pausable, Ownable, AccessControl {
         // Token distribution
         for (i = 0; i < addresses.length; i++) {
             // super.transfer(addresses[i], amounts[i]);
-            super._mint(addresses[i], amounts[i] * decimals() * 10);
+            super._mint(addresses[i], amounts[i] * (decimals() ** 10));
         }
     }
 }
