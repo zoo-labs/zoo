@@ -52,6 +52,7 @@
     "web3": "^1.5.2"
   },
   "scripts": {
+    "airdrop": "hardhat run --network testnet scripts/airdrop.ts",
     "account": "hardhat account",
     "accounts": "hardhat accounts",
     "balance": "hardhat balance",
@@ -59,9 +60,9 @@
     "clean": "rm -rf artifacts && rm -rf cache && rm -rf types",
     "compile": "hardhat compile",
     "console": "hardhat console --network hardhat",
-    "deploy": "mkdirp deployments && hardhat deploy --network hardhat",
+    "deploy": "mkdirp deployments && hardhat deploy --network testnet --export-all ../app/src/contracts.json",
+    "deploy:pool": "hardhat run --network testnet scripts/deployPool.ts",
     "deploy:game": "hardhat run --network testnet scripts/configureGame.js",
-    "deploy:testnet": "mkdirp deployments && hardhat deploy --network testnet",
     "export": "mkdirp deployments && hardhat deploy --network hardhat --export-all ../app/src/contracts.json",
     "fork": "hardhat node --fork https://mainnet.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad",
     "format": "prettier . --write",

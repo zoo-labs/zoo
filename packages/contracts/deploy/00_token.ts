@@ -1,6 +1,5 @@
-// deploy/00_token.ts
+// 00_token.ts
+
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-export default Deploy('ZooV2', [], async ({ deploy }) => {
-  await deploy([])
-})
+export default Deploy('ZOO', [], async ({ deploy }) => { await deploy([]) })
