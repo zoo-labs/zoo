@@ -448,26 +448,29 @@ function App(props) {
               ZOO
             </Link>
           </Menu.Item>
-          <Menu.Item key="/b">
+
+          <Menu.Item key="/bridge">
             <Link
               onClick={() => {
-                setRoute("/b");
+                setRoute("/bridge");
               }}
-              to="/b"
+              to="/bridge"
             >
-              BNB
+              Bridge
             </Link>
           </Menu.Item>
-          <Menu.Item key="/z">
+
+          <Menu.Item key="/dao">
             <Link
               onClick={() => {
-                setRoute("/z");
+                setRoute("/dao");
               }}
-              to="/z"
+              to="/dao"
             >
-              Z1
+              DAO
             </Link>
           </Menu.Item>
+
           <Menu.Item key="/factory">
             <Link
               onClick={() => {
@@ -478,6 +481,7 @@ function App(props) {
               Factory
             </Link>
           </Menu.Item>
+
           <Menu.Item key="/router">
             <Link
               onClick={() => {
@@ -488,6 +492,7 @@ function App(props) {
               Router
             </Link>
           </Menu.Item>
+
           <Menu.Item key="/savage">
             <Link
               onClick={() => {
@@ -496,6 +501,28 @@ function App(props) {
               to="/savage"
             >
               Savage
+            </Link>
+          </Menu.Item>
+
+          <Menu.Item key="/bnb">
+            <Link
+              onClick={() => {
+                setRoute("/bnb");
+              }}
+              to="/bnb"
+            >
+              BNB
+            </Link>
+          </Menu.Item>
+
+          <Menu.Item key="/z1">
+            <Link
+              onClick={() => {
+                setRoute("/z1");
+              }}
+              to="/z1"
+            >
+              Z1
             </Link>
           </Menu.Item>
         </Menu>
@@ -510,18 +537,18 @@ function App(props) {
               blockExplorer={blockExplorer}
             />
           </Route>
-          <Route exact path="/b">
+          <Route exact path="/bnb">
             <Contract
-              name="B"
+              name="BNB"
               signer={userSigner}
               provider={localProvider}
               address={address}
               blockExplorer={blockExplorer}
             />
           </Route>
-          <Route exact path="/z">
+          <Route exact path="/z1">
             <Contract
-              name="Z"
+              name="Z1"
               signer={userSigner}
               provider={localProvider}
               address={address}
@@ -549,6 +576,24 @@ function App(props) {
           <Route exact path="/savage">
             <Contract
               name="Savage"
+              signer={userSigner}
+              provider={localProvider}
+              address={address}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+          <Route exact path="/dao">
+            <Contract
+              name="DAO"
+              signer={userSigner}
+              provider={localProvider}
+              address={address}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+          <Route exact path="/bridge">
+            <Contract
+              name="Bridge"
               signer={userSigner}
               provider={localProvider}
               address={address}

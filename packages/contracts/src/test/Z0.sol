@@ -227,7 +227,7 @@ contract PausableToken is StandardToken, Pausable {
 
 }
 
-contract ZooV1 is PausableToken {
+contract Z0 is PausableToken {
     string public name;
     string public symbol;
     uint public decimals;
