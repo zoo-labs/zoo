@@ -26,7 +26,7 @@ export function Deploy(name: string, dependencies: string[], fn?: any) {
 
       if (libraries != null) {
         for (const name of libraries) {
-          console.log('deploying library', name)
+          console.log('deploy', name)
           libs[name] = (await deploy(name, { from: deployer })).address
         }
       }
