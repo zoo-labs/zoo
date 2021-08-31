@@ -105,7 +105,7 @@ const Index: React.FC<indexProps> = ({}) => {
                   <span
                     className={`w-full flex items-center justify-center px-2 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis ${
                       tab === type.id &&
-                      'font-bold border rounded-lg text-high-emphesis border-dark-800 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 h-full'
+                      'font-bold border rounded-lg text-high-emphesis border-dark-800 bg-gradient-to-r from-secondary-dark to-gold hover:from-blue-600 hover:to-pink-600 h-full'
                     }`}>
                     {type.name}
                   </span>

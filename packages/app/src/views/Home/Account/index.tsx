@@ -322,7 +322,7 @@ const Account: React.FC = () => {
           right: 0,
           zIndex: -1,
         }}
-        className='absolute  bg-primary-light  rounded-full z-0 filter  blur-3xl'></div>
+        className='absolute  bg-secondary-dark opacity-50  rounded-full z-0 filter  blur-3xl'></div>
       <div
         style={{
           // background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
@@ -333,7 +333,7 @@ const Account: React.FC = () => {
           right: '-15%',
           zIndex: -1,
         }}
-        className='absolute  bg-pink-light  rounded-full z-0 filter  blur-3xl'></div>
+        className='absolute  bg-gold rounded-full opacity-30  z-0 filter  blur-3xl'></div>
       {/* <div
           background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
           backgroundColor: 'rgba(20,20,20,1)',
