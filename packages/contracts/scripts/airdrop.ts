@@ -3,7 +3,7 @@ import parse from 'csv-parse/lib/sync'
 import assert from 'assert'
 import fs from 'fs'
 
-import ZOO from '../deployments/mainnet/ZOO.json'
+import ZOO from '../deployments/localhost/ZOO.json'
 
 function chunks(arr, size) {
   const res = []
@@ -32,6 +32,7 @@ async function main() {
   // load in addresses
   let count = 0;
   const size = 420
+
   for (const chunk of chunks(records, size)) {
     const addresses = []
     const amounts   = []
@@ -69,4 +70,3 @@ main()
     console.error(error)
     process.exit(1)
   })
-
