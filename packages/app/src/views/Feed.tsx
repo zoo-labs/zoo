@@ -157,7 +157,6 @@ function Feed<FeedPagePops>({ match }) {
   }
 
   const handleContainerClick = (event) => {
-    console.log("In handle container click: ", event.target.className)
     const className = event.target.className
     if (className.includes('sc-')) {
       HomeClick()
