@@ -8,6 +8,7 @@ import { currencyId } from '../../functions'
 import { useWeb3React } from '@web3-react/core'
 import { NavLink } from 'react-router-dom'
 import { useWeb3 } from 'hooks'
+import { getToken } from 'util/contracts'
 
 const getQuery = (input: any, output: any) => {
   if (!input && !output) return null
@@ -31,18 +32,21 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
   const [balance, setBalance] = useState(0)
   const { chainId } = useWeb3React()
   const { gasPrice, account, eth } = useWeb3()
+  const web3 = useWeb3()
   //   const router = useRouter()
   const [animateWallet, setAnimateWallet] = useState(false)
   //   const isRemove = router.asPath.startsWith('/remove')
   //   const isLimitOrder = router.asPath.startsWith('/limit-order')
+  const zooToken = getToken(web3)
+
   const getBalance = async () => {
     try {
       // const decimals = await zooToken.methods.decimals().call()
-      await eth.getBalance(account).then((val) => {
-        const divisor = parseFloat(Math.pow(10, 18).toString())
-        const balance = parseFloat(val) / divisor
-        setBalance(parseFloat(balance.toFixed(4)))
-      })
+      const decimals = await zooToken.methods.decimals().call()
+      const rawBalance = await zooToken.methods.balanceOf(account).call()
+      const divisor = parseFloat(Math.pow(10, decimals).toString())
+      const balance = rawBalance / divisor
+      setBalance(parseFloat(balance.toFixed(4)))
     } catch (e) {
       console.error('ISSUE LOADING ZOO BALANCE \n', e)
     }
@@ -63,7 +67,7 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
           }}>
           <a className='flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis'>Swap</a>
         </NavLink> */}
-        <a className='flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis'>Swap</a>
+        <a className='flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis'>Bridge</a>
         {/* <NavLink
           className='flex items-center justify-center'
           activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600'
@@ -102,7 +106,7 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
               <div className='hidden md:block text-baseline'>{gasPrice / 1000000000}</div>
             </div>
           }
-          <div className='relative flex items-center w-full h-full rounded text-gray-500 text-sm font-bold'>{balance} BNB</div>
+          <div className='relative flex items-center w-full h-full rounded text-gray-500 text-sm font-bold'>{balance} ZOO</div>
           <div className='relative flex items-center w-full h-full rounded hover:bg-dark-800'>
             <Settings placeholderSlippage={allowedSlippage} />
           </div>

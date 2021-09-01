@@ -9,9 +9,11 @@ import { GrCode } from 'react-icons/gr'
 import { RiChat1Fill, RiChat1Line, RiCodeLine, RiPieChart2Line } from 'react-icons/ri'
 import { GiPieChart } from 'react-icons/gi'
 import { MoonIcon, SunIcon } from 'components/SideMenu/icons'
+import useAuth from 'hooks/useAuth'
 
 export default function More({}) {
   const { isDark, toggleTheme } = useTheme()
+  const { logout } = useAuth()
 
   return (
     <Popover className='relative ml-auto md:m-0'>
@@ -108,11 +110,23 @@ export default function More({}) {
                       <RiPieChart2Line />
                     </div>
                   </div>
-                  <div className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer' style={{}}>
+                  <div
+                    onClick={() => toggleTheme()}
+                    className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
+                    style={{}}>
                     Theme
                     <div className='ml-4 sm:ml-14'>
                       {isDark ? <SunIcon fill={isDark ? 'white' : 'text'} width='18px' /> : <MoonIcon fill={isDark ? 'white' : 'textDisabled'} width='18px' />}
                     </div>
+                  </div>
+                  <div
+                    onClick={() => logout()}
+                    className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
+                    style={{}}>
+                    Log Out
+                    {/* <div className='ml-4 sm:ml-14'>
+                      {isDark ? <SunIcon fill={isDark ? 'white' : 'text'} width='18px' /> : <MoonIcon fill={isDark ? 'white' : 'textDisabled'} width='18px' />}
+                    </div> */}
                   </div>
                 </div>
               </div>
