@@ -151,7 +151,7 @@ export const FeedCard: React.FC<CardProps> = ({ nft, showBid }) => {
 
   return (
     <>
-      <Card className='feed-card-class' url={nft.imageUrl} isMobile={isMobile}>
+      <Card url={nft.imageUrl} isMobile={isMobile}>
         <CardOverlay>
           <FirstThird />
           <SecondThird></SecondThird>
