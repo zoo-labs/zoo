@@ -13,6 +13,8 @@ import { ChevronDownIcon } from 'components/Svg'
 import { useCurrencyBalance } from 'hooks/useWallet'
 import Lottie from 'lottie-react'
 
+import './index.css'
+
 interface CurrencyInputPanelProps {
   value?: string
   onUserInput?: (value: string) => void
@@ -152,10 +154,11 @@ export default function CurrencyInputPanel({
                 placeholder='0.0'
                 min={1}
                 max={79}
-                type='text'
+                type='number'
                 pattern='^[0-9]*[.,]?[0-9]*$'
                 title='Token Amount'
                 inputMode='decimal'
+                style={{ WebkitAppearance  : 'none', margin: 0, MozAppearance: 'none' }}
               />
               {!hideBalance && currency && selectedCurrencyBalance ? (
                 <div className='flex flex-col'>
