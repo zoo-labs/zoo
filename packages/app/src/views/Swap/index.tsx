@@ -48,7 +48,7 @@ import swapArrowsAnimationData from '../../assets/animations/swap-arrows.json'
 import useENSAddress from '../../hooks/useENSAddress'
 import useIsArgentWallet from '../../hooks/useIsArgentWallet'
 import { useIsSwapUnsupported } from '../../hooks/useIsSwapUnsupported'
-// import usePrevious from '../../../hooks/usePrevious'
+import usePrevious from '../../hooks/usePrevious'
 // import { useRouter } from 'next/router'
 import { useSwapCallback } from '../../hooks/useSwapCallback'
 import { useUSDCValue } from '../../hooks/useUSDCPrice'
@@ -58,10 +58,11 @@ import { AlertTriangle } from 'react-feather'
 import { warningSeverity } from '../../functions/prices'
 import { Alert } from 'components'
 import ConfirmSwapModal from 'modals/ConfirmSwap'
+import { useHistory } from 'react-router'
 
 export default function Swap() {
   const loadedUrlParams = useDefaultsFromURLSearch()
-
+  const history = useHistory()
   //   // token warning stuff
   const [loadedInputCurrency, loadedOutputCurrency] = [useCurrency(loadedUrlParams?.inputCurrencyId), useCurrency(loadedUrlParams?.outputCurrencyId)]
 
@@ -362,18 +363,19 @@ export default function Swap() {
 
   const [animateSwapArrows, setAnimateSwapArrows] = useState<boolean>(false)
 
-  //   const previousChainId = usePrevious<ChainId>(chainId)
+  const previousChainId = usePrevious<ChainId>(chainId)
 
   // useEffect(() => {
   //   if (
   //     previousChainId &&
   //     previousChainId !== chainId &&
-  //     router.asPath.includes(Currency.getNativeCurrencySymbol(previousChainId))
+  //     history.location.pathname.includes(Currency.getNativeCurrencySymbol(previousChainId))
   //   ) {
-  //     router.push(`/swap/${Currency.getNativeCurrencySymbol(chainId)}`);
+  //     history.push(`/swap/${Currency.getNativeCurrencySymbol(chainId)}`);
   //   }
-  // }, [chainId, previousChainId, router]);
+  // }, [chainId, previousChainId, history]);
   useEffect(() => {
+    ![currencies[Field.OUTPUT]] && console.log('hitting meee')
     handleOutputSelect({
       _checksummedAddress: '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd',
       _tags: null,
@@ -386,8 +388,8 @@ export default function Swap() {
       name: 'USDT Token',
       symbol: 'USDT',
     })
-  }, [])
-  console.log('currencies[Field.INPUT]', currencies[Field.INPUT])
+  }, [currencies[Field.OUTPUT]])
+  console.log('currencies[Field.INPUT]', currencies)
   return (
     <main className='flex flex-col items-center justify-start flex-grow w-full h-full'>
       <div id='swap-page' className='py-4 md:py-8 lg:py-12 max-w-2xl w-full'>
