@@ -198,4 +198,11 @@ contract Savage {
     function routerAddress() public view returns (address) {
         return router;
     }
+
+    // Helper to show the init code for the UniswapV2Pair
+    function getInitHash() public view returns(bytes32) {
+        bytes memory bytecode = type(UniswapV2Pair).creationCode;
+        console.logBytes32(keccak256(abi.encodePacked(bytecode)));
+        return keccak256(abi.encodePacked(bytecode));
+    }
 }
