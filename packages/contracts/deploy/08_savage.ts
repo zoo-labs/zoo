@@ -1,8 +1,8 @@
-// 08_savage.ts
+//// 08_savage.ts
 
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-export default Deploy('Savage', ['Z1', 'BNB', 'ZOO', 'UniswapV2Factory', 'UniswapV2Router02'], async({ ethers, hre, deploy, deployments, deps, signers }) => {
+export default Deploy('Savage', [], async({ ethers, hre, deploy, deployments, deps, signers }) => {
   const { ZOO, UniswapV2Factory, UniswapV2Router02 } = deps
   let { Z1, BNB } = deps
 
@@ -36,8 +36,8 @@ export default Deploy('Savage', ['Z1', 'BNB', 'ZOO', 'UniswapV2Factory', 'Uniswa
   console.log('Z1', Z1.address)
   console.log('BNB', BNB.address)
 
-  // const txn = await Factory.createPair(Z1.address, BNB.address);
-  // await txn.wait();
+  const txn = await Factory.createPair(Z1.address, BNB.address);
+  await txn.wait();
 
   const pair = await Factory.getPair(Z1.address, BNB.address);
   console.log('Pair', pair)
