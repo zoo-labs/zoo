@@ -76,6 +76,7 @@ describe.only('Bridge', function () {
     let token: any;
     let signers: any[];
     let execGoodSwap: () => Promise<any>;
+    let execBurnSwap: () => Promise<any>;
 
     beforeEach(async () => {
       const { signers: s, owner, tokens: { Bridge, ZOO } } = await setupTest();
@@ -97,6 +98,19 @@ describe.only('Bridge', function () {
       const tx = await txn.wait();
       return tx;
       }
+      execBurnSwap = async () => {
+      const [user1] = signers;
+      const [tokenA] = generateTokens(token, 1, {chainID: 1338})
+      const [tokenB] = generateTokens(token, 1, {})
+
+      await bridge.setToken(tokenA);
+      await bridge.setToken(tokenB);
+      await token.approve(bridge.address, 200)
+
+      const txn = await bridge.swap(tokenA, tokenB, user1.address, 100, 1);
+      const tx = await txn.wait();
+      return tx
+     }
     })
 
       // bridge.mint(token, s[0].address, 1000);
