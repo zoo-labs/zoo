@@ -1,5 +1,6 @@
 import { ChainId, Currency, Percent } from '@sushiswap/sdk'
 import React, { FC, useState, useEffect } from 'react'
+import { getToken, getDrop, getFaucet, getZooKeeper } from 'util/contracts'
 
 // import MyOrders from '../exchange-v1/limit-order/MyOrders'
 // import NavLink from '../../components/NavLink'
@@ -29,6 +30,7 @@ interface ExchangeHeaderProps {
 }
 
 const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippage }) => {
+
   const [balance, setBalance] = useState(0)
   const { chainId } = useWeb3React()
   const { gasPrice, account, eth } = useWeb3()
