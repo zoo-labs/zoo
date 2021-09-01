@@ -124,8 +124,7 @@ const Account: React.FC = () => {
     clear()
   }
 
-  let currentEggsOwned;
-  
+  let currentEggsOwned = 0;
   if (account) {
     currentEggsOwned = Object.values(allEggs).filter((egg) => (egg.owner || '').toLowerCase() === account.toLowerCase() && !egg.burned).length
   }
