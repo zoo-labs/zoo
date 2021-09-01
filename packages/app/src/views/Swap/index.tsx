@@ -416,7 +416,7 @@ export default function Swap() {
               <CurrencyInputPanel
                 // priceImpact={priceImpact}
                 // label={independentField === Field.OUTPUT && !showWrap ? `Swap From (est.):` : `Swap From:`}
-                label={currencies[Field.INPUT] && currencies[Field.INPUT].isNative ? `Swap From (BSC):` : `Swap From:(ETH)`}
+                label={currencies[Field.INPUT] && currencies[Field.INPUT].isNative ? `Withdraw From (BSC):` : `Withdraw From:(ETH)`}
                 value={formattedAmounts[Field.INPUT]}
                 showMaxButton={showMaxButton}
                 currency={currencies[Field.INPUT]}
@@ -463,7 +463,7 @@ export default function Swap() {
                 <CurrencyInputPanel
                   value={formattedAmounts[Field.OUTPUT]}
                   onUserInput={handleTypeOutput}
-                  label={currencies[Field.OUTPUT] && !currencies[Field.OUTPUT].isNative ? `Swap To (ETH):` : `Swap To: (BSC)`}
+                  label={currencies[Field.OUTPUT] && !currencies[Field.OUTPUT].isNative ? `Deposit To (ETH):` : `Deposit To: (BSC)`}
                   // label={independentField === Field.INPUT && !showWrap ? `Swap To (eth):` : `Swap To:`}
                   showMaxButton={showMaxButton}
                   hideBalance={false}
