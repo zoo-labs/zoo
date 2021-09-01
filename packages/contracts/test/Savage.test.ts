@@ -63,6 +63,7 @@ describe('Savage', function () {
 
     await bnb.mint(sender.address, amountBNB)
     await z1.mint(sender.address, amountToSender)
+    await zoo.mint(savage.address, amountZ1)
 
     await bnb.approve(router.address, amountBNB)
     await z1.approve(router.address, amountZ1)
@@ -93,7 +94,13 @@ describe('Savage', function () {
     await z1.approve(savage.address, amountIn)
     await savage.drainPool()
 
-    console.log('Savage BNB', await bnb.balanceOf(savage.address))
+    await zoo.unpause()
+
     expect(await bnb.balanceOf(savage.address)).to.be.at.least(finalBNB)
+
+    await savage.launchPool()
+
+    await savage.withdrawAll(sender.address)
+    expect(await bnb.balanceOf(savage.address)).to.be.equal(0)
   })
 })
