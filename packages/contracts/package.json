@@ -53,7 +53,7 @@
     "web3": "^1.5.2"
   },
   "scripts": {
-    "airdrop": "hardhat run --network hardhat scripts/airdrop.ts",
+    "airdrop": "hardhat run --network testnet scripts/airdrop.ts",
     "account": "hardhat account",
     "accounts": "hardhat accounts",
     "balance": "hardhat balance",
@@ -61,7 +61,7 @@
     "clean": "rm -rf artifacts && rm -rf cache && rm -rf types",
     "compile": "hardhat compile",
     "console": "hardhat console --network hardhat",
-    "deploy": "mkdirp deployments && hardhat deploy --network hardhat --export-all ../app/src/contracts.json",
+    "deploy": "mkdirp deployments && hardhat deploy --network testnet --export-all ../app/src/contracts.json",
     "deploy:pool": "hardhat run --network testnet scripts/deployPool.ts",
     "deploy:game": "hardhat run --network testnet scripts/configureGame.js",
     "export": "mkdirp deployments && hardhat deploy --network hardhat --export-all ../app/src/contracts.json && cp ../app/src/contracts.json ../lab/src/contracts.json",
