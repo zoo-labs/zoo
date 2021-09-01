@@ -45,7 +45,7 @@ const networks: HardhatUserConfig['networks'] = {
   testnet: {
     url: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
     chainId: 97,
-    gasPrice: 11e9,
+    // gasPrice: 11e9,
     // gas: 20e6,
     accounts: {
       mnemonic: mnemonic(),
