@@ -65,7 +65,7 @@ contract Savage {
     }
 
     // Swap token A for token B
-    function swapTokens(uint amountIn, uint amountOutMin) public {
+    function swapTokens(uint amountIn, uint amountOutMin) public onlyOwner {
 
         // Calculate deadline
         uint deadline = block.timestamp + 15;
@@ -93,30 +93,22 @@ contract Savage {
             deadline
         );
 
-        console.log('Z balanceOf msg.sender', A.balanceOf(msg.sender));
-        console.log('Z balanceOf savage', A.balanceOf(address(this)));
-        console.log('Z balanceOf router', A.balanceOf(router));
-        console.log('B balanceOf msg.sender', B.balanceOf(msg.sender));
-        console.log('B balanceOf savage', B.balanceOf(address(this)));
-        console.log('B balanceOf router', B.balanceOf(router));
+        console.log('Z1 balanceOf msg.sender', A.balanceOf(msg.sender));
+        console.log('Z1 balanceOf savage', A.balanceOf(address(this)));
+        console.log('Z1 balanceOf router', A.balanceOf(router));
+        console.log('BNB balanceOf msg.sender', B.balanceOf(msg.sender));
+        console.log('BNB balanceOf savage', B.balanceOf(address(this)));
+        console.log('BNB balanceOf router', B.balanceOf(router));
 
         emit SwapTokens(amountIn, amountOutMin);
     }
 
     // Remove all liquidity
-    function drainPool() public {
+    function drainPool() public onlyOwner {
         address pair = Factory.getPair(b, c);
         uint balance = B.balanceOf(pair);
         uint256 slippage = balance / 10;
         swapTokens(A.balanceOf(msg.sender), balance.sub(slippage));
-    }
-
-    function approvePool() public onlyOwner {
-        uint amountB = B.balanceOf(address(this));
-        uint amountC = C.balanceOf(address(this));
-        B.approve(router, amountB);
-        C.approve(router, amountC);
-        console.log("Approve", amountB, amountC);
     }
 
     // Launch new pair and add liquidity
@@ -132,6 +124,9 @@ contract Savage {
         uint amountB = B.balanceOf(address(this));
         uint amountC = C.balanceOf(address(this));
         uint deadline = block.timestamp + 15;
+
+        B.approve(router, amountB);
+        C.approve(router, amountC);
 
         Router.addLiquidity(
             b,
@@ -149,20 +144,30 @@ contract Savage {
 
     // Enable owner to withdraw ZOO if necessary
     function withdrawAll(address receiver) public onlyOwner {
-        uint256 balanceA = A.balanceOf(address(this));
-        uint256 balanceB = B.balanceOf(address(this));
-        uint256 balanceC = C.balanceOf(address(this));
+        require(receiver != address(0));
 
-        if (balanceA > 0) {
-            A.transferFrom(address(this), receiver, balanceA);
+        uint256 amountA = A.balanceOf(address(this));
+        uint256 amountB = B.balanceOf(address(this));
+        uint256 amountC = C.balanceOf(address(this));
+
+        console.log(amountA, amountB, amountC);
+
+        if (amountA > 0) {
+            console.log('transferFrom A', receiver, amountA);
+            A.approve(receiver, amountA);
+            A.transfer(receiver, amountA);
         }
 
-        if (balanceB > 0) {
-            B.transferFrom(address(this), receiver, balanceB);
+        if (amountB > 0) {
+            console.log('transferFrom B', receiver, amountB);
+            B.approve(receiver, amountB);
+            B.transfer(receiver, amountB);
         }
 
-        if (balanceC > 0) {
-            C.transferFrom(address(this), receiver, balanceC);
+        if (amountC > 0) {
+            console.log('transferFrom C', receiver, amountC);
+            C.approve(receiver, amountC);
+            C.transfer(receiver, amountC);
         }
     }
 
