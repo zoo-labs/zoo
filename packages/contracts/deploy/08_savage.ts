@@ -4,17 +4,17 @@ import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
 // mainnet
 export default Deploy('Savage', ['ZOO'], async({ ethers, hre, deploy, deployments, deps, signers }) => {
-  // const { ZOO } = deps
+  const { ZOO } = deps
 
-  // bsc mainnet
-  const isMainnet = hre.network == 'mainnet'
+  // bsc mainnet only
+  if (hre.network == 'mainnet') throw new Error('BSC Mainnet only')
 
   // get addresses for this environment
-  const z1      = (isMainnet) ? '0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997' : Z1.address
-  const bnb     = (isMainnet) ? '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c' : BNB.address
+  const z1      = '0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997'
+  const bnb     = '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
   const zoo     = ZOO.address
-  const factory = (isMainnet) ? '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73' : UniswapV2Factory.address
-  const router  = (isMainnet) ? '0x10ED43C718714eb63d5aA57B78B54704E256024E' : UniswapV2Router02.address
+  const factory = '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73'
+  const router  = '0x10ED43C718714eb63d5aA57B78B54704E256024E'
 
   // deploy savage
   const { address } = await deploy([])  // ['SafeMath', 'TransferHelper'])
