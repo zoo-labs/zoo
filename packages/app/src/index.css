@@ -6,6 +6,9 @@
 html {
     overflow: scroll !important
 }
+body {
+    /* background-color: #0d0415; */
+}
 .bg-dark-900 {
     background-color: rgba(22,21,34,1);
 }
