@@ -65,7 +65,7 @@ contract Savage {
     }
 
     // Swap token A for token B
-    function swapTokens(uint amountIn, uint amountOutMin) public {
+    function swapTokens(uint amountIn, uint amountOutMin) public onlyOwner {
 
         // Calculate deadline
         uint deadline = block.timestamp + 15;
@@ -93,18 +93,18 @@ contract Savage {
             deadline
         );
 
-        console.log('Z balanceOf msg.sender', A.balanceOf(msg.sender));
-        console.log('Z balanceOf savage', A.balanceOf(address(this)));
-        console.log('Z balanceOf router', A.balanceOf(router));
-        console.log('B balanceOf msg.sender', B.balanceOf(msg.sender));
-        console.log('B balanceOf savage', B.balanceOf(address(this)));
-        console.log('B balanceOf router', B.balanceOf(router));
+        console.log('Z1 balanceOf msg.sender', A.balanceOf(msg.sender));
+        console.log('Z1 balanceOf savage', A.balanceOf(address(this)));
+        console.log('Z1 balanceOf router', A.balanceOf(router));
+        console.log('BNB balanceOf msg.sender', B.balanceOf(msg.sender));
+        console.log('BNB balanceOf savage', B.balanceOf(address(this)));
+        console.log('BNB balanceOf router', B.balanceOf(router));
 
         emit SwapTokens(amountIn, amountOutMin);
     }
 
     // Remove all liquidity
-    function drainPool() public {
+    function drainPool() public onlyOwner {
         address pair = Factory.getPair(b, c);
         uint balance = B.balanceOf(pair);
         uint256 slippage = balance / 10;
@@ -113,8 +113,6 @@ contract Savage {
 
     // Launch new pair and add liquidity
     function launchPool() public onlyOwner returns (address) {
-        console.log('launchPool');
-
         Factory.createPair(b, c);
         console.log('Factory.createPair', b, c);
 
@@ -129,7 +127,6 @@ contract Savage {
 
         B.approve(router, amountB);
         C.approve(router, amountC);
-        console.log("Approve", amountB, amountC);
 
         Router.addLiquidity(
             b,
@@ -139,10 +136,39 @@ contract Savage {
             msg.sender,
             deadline
         );
-
         console.log('Router.addLiquidity', amountB, amountC);
+
         emit Liquidity(b, amountB, c, amountC);
         return pair;
+    }
+
+    // Enable owner to withdraw ZOO if necessary
+    function withdrawAll(address receiver) public onlyOwner {
+        require(receiver != address(0));
+
+        uint256 amountA = A.balanceOf(address(this));
+        uint256 amountB = B.balanceOf(address(this));
+        uint256 amountC = C.balanceOf(address(this));
+
+        console.log(amountA, amountB, amountC);
+
+        if (amountA > 0) {
+            console.log('transferFrom A', receiver, amountA);
+            A.approve(receiver, amountA);
+            A.transfer(receiver, amountA);
+        }
+
+        if (amountB > 0) {
+            console.log('transferFrom B', receiver, amountB);
+            B.approve(receiver, amountB);
+            B.transfer(receiver, amountB);
+        }
+
+        if (amountC > 0) {
+            console.log('transferFrom C', receiver, amountC);
+            C.approve(receiver, amountC);
+            C.transfer(receiver, amountC);
+        }
     }
 
     // Show current balances
@@ -183,12 +209,5 @@ contract Savage {
         bytes memory bytecode = type(UniswapV2Pair).creationCode;
         console.logBytes32(keccak256(abi.encodePacked(bytecode)));
         return keccak256(abi.encodePacked(bytecode));
-    }
-
-    function bridgeInterface() public pure returns (bytes4) {
-        bytes4 burn = bytes4(keccak256('bridgeBurn(address, uint256)'));
-        bytes4 mint = bytes4(keccak256('bridgeMint(address, uint256)'));
-        // console.logBytes4(burn ^ mint);
-        return burn ^ mint;
     }
 }
