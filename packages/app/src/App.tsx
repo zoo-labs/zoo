@@ -83,7 +83,13 @@ const App: React.FC = () => {
   const web3 = useWeb3()
   const { chainID } = web3
   const dispatch = useDispatch()
-  const signedIn = chainID && window.localStorage.getItem('connectorId')
+  const signedIn = (chainID !== undefined && window.localStorage.getItem('connectorId') !== undefined)
+
+  // console.log('chainID: ', chainID)
+  console.log("window.localStorage.getItem('connectorId'): ", window.localStorage.getItem('connectorId'))
+  console.log('signedIn: ', signedIn)
+
+  console.log("indexRoutes: ", indexRoutes)
 
   const getEggs = async () => {
     try {
