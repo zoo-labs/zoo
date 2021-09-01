@@ -157,13 +157,13 @@ function Feed<FeedPagePops>({ match }) {
 
   const handleContainerClick = (event) => {
     const className = event.target.className
-    if (className.includes('sc-')) {
+    if (className === 'feed-container') {
       HomeClick()
     }
   }
 
   return (
-    <Container onClick={handleContainerClick} isMobile={isMobile}>
+    <Container className='feed-container' onClick={handleContainerClick} isMobile={isMobile}>
       {/* <ButtonMenu activeIndex={activeIndex} onItemClick={onItemClick} scale='sm'>
         <ButtonMenu activeIndex={activeIndex} onItemClick={onItemClick} scale='sm'>
           <ButtonMenuItem as='a'>My Zoo</ButtonMenuItem>
