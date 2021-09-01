@@ -10,7 +10,7 @@ export default Deploy('Savage', ['Z1', 'BNB', 'ZOO', 'UniswapV2Factory', 'Uniswa
   const isMainnet = hre.network == 'mainnet'
 
   // get addresses for this environment
-  const z1      = (isMainnet) ? '0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997' : Z1.address
+  const z1      = (isMainnet) ? '0x19263f2b4693da0991c4df046e4baa5386f5735e' : Z1.address
   const bnb     = (isMainnet) ? '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c' : BNB.address
   const zoo     = ZOO.address
   const factory = (isMainnet) ? '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73' : UniswapV2Factory.address
