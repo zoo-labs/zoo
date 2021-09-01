@@ -1,44 +1,23 @@
 // 13_zookeeper.ts
 
-import { HardhatRuntimeEnvironment } from 'hardhat/types'
-import { DeployFunction } from 'hardhat-deploy/types'
+import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, ethers, getNamedAccounts, network } = hre
-  const { deploy } = deployments
-  const { deployer } = await getNamedAccounts()
+export default Deploy('ZooKeeper', ['Bridge', 'Media', 'ZOO', 'Market'], async({ ethers, deploy, deployments, hre }) => {
+  const tx = await deploy([])
 
-  const bridgeAddress = (await deployments.get('Bridge')).address
-  const tokenAddress = (await deployments.get('ZOO')).address
-  const marketAddress = (await deployments.get('Market')).address
-  const mediaAddress = (await deployments.get('Media')).address
+  if (hre.network.name != 'hardhat') return
 
-  const deployResult = await deploy('ZooKeeper', {
-    from: deployer,
-    args: [],
-    log: true,
-  })
-
-  if (network.name != 'hardhat') return
-
-  const keeperAddress = deployResult.address
-
-  const bridge = await ethers.getContractAt('Bridge', bridgeAddress)
-  const token = await ethers.getContractAt('ZOO', tokenAddress)
-  const keeper = await ethers.getContractAt('ZooKeeper', keeperAddress)
-  const market = await ethers.getContractAt('Market', marketAddress)
-  const media = await ethers.getContractAt('Media', mediaAddress)
+  const bridge = await ethers.getContract('Bridge')
+  const token = await ethers.getContract('ZOO')
+  const keeper = await ethers.getContract('ZooKeeper')
+  const market = await ethers.getContract('Market')
+  const media = await ethers.getContract('Media')
 
   // Configure contracts to talk to each other
-  market.configure(keeperAddress, mediaAddress)
-  media.configure(keeperAddress, marketAddress)
-  keeper.configure(marketAddress, mediaAddress, tokenAddress, bridgeAddress)
+  market.configure(keeper.address, media.address)
+  media.configure(keeper.address, market.address)
+  keeper.configure(market.address, media.address, token.address, bridge.address)
 
   // Mint ZOO to keeper for yield
-  token.mint(keeperAddress, 1000000000000)
-}
-
-export default func
-func.id = 'zookeeper'
-func.tags = ['ZooKeeper']
-func.dependencies = ['ZOO', 'Bridge', 'Media', 'Market']
+  token.mint(keeper.address, 1000000000000)
+})

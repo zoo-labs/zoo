@@ -1,20 +1,5 @@
 // 11_market.ts
 
-import { HardhatRuntimeEnvironment } from 'hardhat/types'
-import { DeployFunction } from 'hardhat-deploy/types'
+import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts } = hre
-  const { deploy } = deployments
-  const { deployer } = await getNamedAccounts()
-
-  await deploy('Market', {
-    from: deployer,
-    args: [],
-    log: true,
-  })
-}
-
-export default func
-func.id = 'market'
-func.tags = ['Market']
+export default Deploy('Market', [], async({ deploy }) => { await deploy([]) })
