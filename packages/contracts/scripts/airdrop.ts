@@ -3,7 +3,7 @@ import parse from 'csv-parse/lib/sync'
 import assert from 'assert'
 import fs from 'fs'
 
-import ZOO from '../deployments/testnet/ZOO.json'
+import ZOO from '../deployments/mainnet/ZOO.json'
 
 function chunks(arr, size) {
   const res = []
@@ -15,6 +15,8 @@ function chunks(arr, size) {
 }
 
 async function main() {
+  throw new Error('Air drop done')
+
   const [signer]  = await ethers.getSigners()
   const zoo = await (await ethers.getContractAt('ZOO', ZOO.address)).connect(signer)
 
