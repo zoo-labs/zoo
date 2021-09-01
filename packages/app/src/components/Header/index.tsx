@@ -238,7 +238,7 @@ export default function Header() {
 
   return (
     <HeaderFrame showBackground={scrollY > 45} isMobile={isMobile} isFeed={active == 'feed'} modalOpen={newAnimalModalOpen || videoPlayerModalOpen}>
-      <Title href='.'>
+      <Title>
         <LogoIcon>
           <img src={logoURL} alt='logo' onClick={() => clicked_logo()}/>
         </LogoIcon>
