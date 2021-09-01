@@ -38,6 +38,7 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
   const getBalance = async () => {
     try {
       // const decimals = await zooToken.methods.decimals().call()
+      // setBalance(parseFloat(balance.toFixed(4)));
       await eth.getBalance(account).then((val) => {
         const divisor = parseFloat(Math.pow(10, 18).toString())
         const balance = parseFloat(val) / divisor
@@ -102,7 +103,7 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
               <div className='hidden md:block text-baseline'>{gasPrice / 1000000000}</div>
             </div>
           }
-          <div className='relative flex items-center w-full h-full rounded text-gray-500 text-sm font-bold'>{balance} BNB</div>
+          <div className='relative flex items-center w-full h-full rounded text-gray-500 text-sm font-bold'>{balance} ZOO</div>
           <div className='relative flex items-center w-full h-full rounded hover:bg-dark-800'>
             <Settings placeholderSlippage={allowedSlippage} />
           </div>
