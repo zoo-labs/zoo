@@ -128,7 +128,6 @@ function Feed<FeedPagePops>({ match }) {
   }
 
   const handleIndexChange = (obj) => {
-    console.log(obj)
     setActiveIndex(obj.activeIndex)
   }
 
