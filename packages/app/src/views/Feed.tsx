@@ -193,8 +193,6 @@ function Feed<FeedPagePops>({ match }) {
           {animals.length ? (
             <Swiper mousewheel={{releaseOnEdges: true}} speed={900} initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
               {animals.map((data) => {
-                // console.log('DATA')
-                // console.log(data)
                 return (
                   <Slide className='swiper-wrapper' key={data.tokenID + 'slide'}>
                     <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={animalGroup} hideBid={activeIndex === 0} />
