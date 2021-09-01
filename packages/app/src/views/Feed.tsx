@@ -157,14 +157,15 @@ function Feed<FeedPagePops>({ match }) {
   }
 
   const handleContainerClick = (event) => {
+    console.log("In handle container click: ", event.target.className)
     const className = event.target.className
-    if (className === 'swiper-slide swiper-slide-active') {
+    if (className.includes('sc-')) {
       HomeClick()
     }
   }
 
   return (
-    <Container isMobile={isMobile}>
+    <Container onClick={handleContainerClick} isMobile={isMobile}>
       {/* <ButtonMenu activeIndex={activeIndex} onItemClick={onItemClick} scale='sm'>
         <ButtonMenu activeIndex={activeIndex} onItemClick={onItemClick} scale='sm'>
           <ButtonMenuItem as='a'>My Zoo</ButtonMenuItem>
