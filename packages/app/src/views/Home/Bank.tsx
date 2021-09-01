@@ -167,7 +167,7 @@ const TableData = styled.td`
 const TableHeader = styled.th`
   width: 100px;
   margin: 15px 0px;
-  font-weight: 700;
+  font-weight: 600;
   text-align: left;
   font-size: 18px;
 `
