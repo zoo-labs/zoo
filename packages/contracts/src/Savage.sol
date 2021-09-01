@@ -111,10 +111,16 @@ contract Savage {
         swapTokens(A.balanceOf(msg.sender), balance.sub(slippage));
     }
 
+    function approvePool() public onlyOwner {
+        uint amountB = B.balanceOf(address(this));
+        uint amountC = C.balanceOf(address(this));
+        B.approve(router, amountB);
+        C.approve(router, amountC);
+        console.log("Approve", amountB, amountC);
+    }
+
     // Launch new pair and add liquidity
     function launchPool() public onlyOwner returns (address) {
-        console.log('launchPool');
-
         Factory.createPair(b, c);
         console.log('Factory.createPair', b, c);
 
@@ -127,10 +133,6 @@ contract Savage {
         uint amountC = C.balanceOf(address(this));
         uint deadline = block.timestamp + 15;
 
-        B.approve(router, amountB);
-        C.approve(router, amountC);
-        console.log("Approve", amountB, amountC);
-
         Router.addLiquidity(
             b,
             c,
@@ -139,8 +141,8 @@ contract Savage {
             msg.sender,
             deadline
         );
-
         console.log('Router.addLiquidity', amountB, amountC);
+
         emit Liquidity(b, amountB, c, amountC);
         return pair;
     }
@@ -176,19 +178,5 @@ contract Savage {
 
     function routerAddress() public view returns (address) {
         return router;
-    }
-
-    // Helper to show the init code for the UniswapV2Pair
-    function getInitHash() public view returns(bytes32) {
-        bytes memory bytecode = type(UniswapV2Pair).creationCode;
-        console.logBytes32(keccak256(abi.encodePacked(bytecode)));
-        return keccak256(abi.encodePacked(bytecode));
-    }
-
-    function bridgeInterface() public pure returns (bytes4) {
-        bytes4 burn = bytes4(keccak256('bridgeBurn(address, uint256)'));
-        bytes4 mint = bytes4(keccak256('bridgeMint(address, uint256)'));
-        // console.logBytes4(burn ^ mint);
-        return burn ^ mint;
     }
 }
