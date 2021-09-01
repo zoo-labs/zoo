@@ -53,8 +53,8 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
   }, [])
   return (
     <div className='flex items-center justify-between mb-4 space-x-3'>
-      <div className='grid grid-cols-1 rounded p-1 bg-dark-800 h-[46px]' style={{ height: 46 }}>
-        <NavLink
+      <div className='grid grid-cols-1 rounded  bg-dark-900 h-[46px]' style={{ height: 46 }}>
+        {/* <NavLink
           className='flex items-center justify-center'
           activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600'
           to={{
@@ -62,7 +62,8 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
             state: getQuery(input, output),
           }}>
           <a className='flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis'>Swap</a>
-        </NavLink>
+        </NavLink> */}
+        <a className='flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis'>Swap</a>
         {/* <NavLink
           className='flex items-center justify-center'
           activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600'
