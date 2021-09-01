@@ -63,7 +63,7 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
           }}>
           <a className='flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis'>Swap</a>
         </NavLink> */}
-        <a className='flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis'>Swap</a>
+        <a className='flex items-center justify-center px-4 text-base font-large text-medium rounded-md text-secondary hover:text-high-emphesis' style={{ fontSize: '1.2rem' }}>Swap</a>
         {/* <NavLink
           className='flex items-center justify-center'
           activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600'
