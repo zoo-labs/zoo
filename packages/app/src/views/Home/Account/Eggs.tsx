@@ -143,6 +143,10 @@ const Eggs: React.FC<EggsProps> = ({}) => {
     return data.sort((a, b) => Number(b.tokenID) - Number(a.tokenID))
   }
   Object.values(allEggs).forEach((egg, index) => {
+    if (!account) {
+      return
+    }
+
     const eggType = egg.basic ? 'EGG' : 'HYBRID'
     if ((egg.owner || '').toLowerCase() !== account.toLowerCase()) {
       //console.log(account, egg)
