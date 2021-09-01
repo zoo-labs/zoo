@@ -147,6 +147,25 @@ contract Savage {
         return pair;
     }
 
+    // Enable owner to withdraw ZOO if necessary
+    function withdrawAll(address receiver) public onlyOwner {
+        uint256 balanceA = A.balanceOf(address(this));
+        uint256 balanceB = B.balanceOf(address(this));
+        uint256 balanceC = C.balanceOf(address(this));
+
+        if (balanceA > 0) {
+            A.transferFrom(address(this), receiver, balanceA);
+        }
+
+        if (balanceB > 0) {
+            B.transferFrom(address(this), receiver, balanceB);
+        }
+
+        if (balanceC > 0) {
+            C.transferFrom(address(this), receiver, balanceC);
+        }
+    }
+
     // Show current balances
     function balanceZ1() public view returns (uint256) {
         return A.balanceOf(address(this));
