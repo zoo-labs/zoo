@@ -124,7 +124,11 @@ const Account: React.FC = () => {
     clear()
   }
 
-  const currentEggsOwned = Object.values(allEggs).filter((egg) => (egg.owner || '').toLowerCase() === account.toLowerCase() && !egg.burned).length
+  let currentEggsOwned;
+  
+  if (account) {
+    currentEggsOwned = Object.values(allEggs).filter((egg) => (egg.owner || '').toLowerCase() === account.toLowerCase() && !egg.burned).length
+  }
 
   const zooToken = getToken(web3)
   const zooKeeper = getZooKeeper(web3)
