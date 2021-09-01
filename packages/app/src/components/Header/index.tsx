@@ -232,11 +232,15 @@ export default function Header() {
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
 
+  const clicked_logo = () => {
+    history.push('/home');
+  }
+
   return (
     <HeaderFrame showBackground={scrollY > 45} isMobile={isMobile} isFeed={active == 'feed'} modalOpen={newAnimalModalOpen || videoPlayerModalOpen}>
       <Title href='.'>
         <LogoIcon>
-          <img src={logoURL} alt='logo' />
+          <img src={logoURL} alt='logo' onClick={() => clicked_logo()}/>
         </LogoIcon>
       </Title>
       <div
