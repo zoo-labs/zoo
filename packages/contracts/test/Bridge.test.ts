@@ -228,17 +228,14 @@ describe.only('Bridge', function () {
       expect(tx.events[tx.events.length - 1].event).to.be.eql("Burn");
     });
 
+    it('not yet', async () => {
+      const tx = await execBurnSwap();
+
+      expect(tx.events[tx.events.length - 1].event).to.be.eql("Mint");
+    })
+
     it('throws a mint event if the from token is on a different chain', async () => {
-      const [user1] = signers;
-      const [tokenA] = generateTokens(token, 1, {chainID: 1338})
-      const [tokenB] = generateTokens(token, 1, {})
-
-      await bridge.setToken(tokenA);
-      await bridge.setToken(tokenB);
-      await token.approve(bridge.address, 200)
-
-      const txn = await bridge.swap(tokenA, tokenB, user1.address, 100, 1);
-      const tx = await txn.wait();
+      const tx = await execBurnSwap();
 
       expect(tx.events[tx.events.length - 1].event).to.be.eql("Mint");
     })
