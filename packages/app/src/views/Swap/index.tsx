@@ -391,7 +391,7 @@ export default function Swap() {
       <div id='swap-page' className='py-4 md:py-8 lg:py-12 max-w-2xl w-full'>
         <head>
           <title>ZOO</title>
-          <meta key='description' name='description' content='SushiSwap allows for swapping of ERC20 compatible tokens across multiple networks' />
+          <meta key='description' name='description' content='ZooSwap allows for swapping of ERC20 compatible tokens across multiple networks' />
         </head>
 
         <DoubleGlowShadow>
@@ -416,7 +416,7 @@ export default function Swap() {
               <CurrencyInputPanel
                 // priceImpact={priceImpact}
                 // label={independentField === Field.OUTPUT && !showWrap ? `Swap From (est.):` : `Swap From:`}
-                label={currencies[Field.INPUT] && currencies[Field.INPUT].isNative ? `Withdraw From (BSC):` : `Withdraw From:(ETH)`}
+                label={currencies[Field.INPUT] && currencies[Field.INPUT].isNative ? `Withdraw from BSC` : `Withdraw from ETH`}
                 value={formattedAmounts[Field.INPUT]}
                 showMaxButton={showMaxButton}
                 currency={currencies[Field.INPUT]}
@@ -463,7 +463,7 @@ export default function Swap() {
                 <CurrencyInputPanel
                   value={formattedAmounts[Field.OUTPUT]}
                   onUserInput={handleTypeOutput}
-                  label={currencies[Field.OUTPUT] && !currencies[Field.OUTPUT].isNative ? `Deposit To (ETH):` : `Deposit To: (BSC)`}
+                  label={currencies[Field.OUTPUT] && !currencies[Field.OUTPUT].isNative ? `Deposit to ETH` : `Deposit to BSC`}
                   // label={independentField === Field.INPUT && !showWrap ? `Swap To (eth):` : `Swap To:`}
                   showMaxButton={showMaxButton}
                   hideBalance={false}
