@@ -381,29 +381,36 @@ const abi:AbiItem | AbiItem[] = [
     "type": "function"
   }
 ]
+
+console.log('addresses ->', addresses);
+
 // Get Address for any contract
-export const getAddress = (contract: string, chainID: number): string => {
+export const getAddress = (contractName: string, chainID: number): string => {
   console.log('chainID',chainID)
+  return addresses[chainID][contractName]
   // return addresses[contract][chainID]
-  return '0x34f3F270B85532f32c6F8039B960c569816Fc67a'
+  // return '0x34f3F270B85532f32c6F8039B960c569816Fc67a'
 }
 
 // Get ABI for any contract
-export const getABI = (name: string) => {
+export const getABI = (name: string, chainID: number | null) => {
   // console.log('name in getABI',contracts[name].abi)
   // return contracts[name].abi
-  return abi
+  return contracts[chainID] ? contracts[chainID][name] : null
+  // return abi
 }
 
 
 // Get instance of Contract
 export const getContract = (name: string, web3?: Web3) => {
-  return new web3.eth.Contract(getABI(name), getAddress(name, web3.chainID))
+  const abi = getABI(name, web3.chainID)
+  const address = getAddress(name, web3.chainID);
+  return abi && address ? new web3.eth.Contract(abi, address) : null
 }
 
 // Helpers
 export const getToken = (web3?: Web3) => {
-  return getContract('ZooToken', web3)
+  return getContract('ZOO', web3)
 }
 
 export const getZooKeeper = (web3?: Web3) => {
