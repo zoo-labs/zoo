@@ -74,13 +74,7 @@ export default function CurrencyInputPanel({
           isToken: true,
           chainId: 1,
         }
-      : {
-          symbol: 'ZOO',
-          logoURI: 'https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg',
-          isToken: true,
-          isNative: true,
-          chainId: 1,
-        }
+      : currency
   return (
     <div id={id} className={`${hideInput ? 'p-4' : 'p-5'} rounded bg-dark-800`}>
       <div className='flex flex-col justify-between space-y-3 sm:space-y-0 sm:flex-row'>
@@ -158,7 +152,7 @@ export default function CurrencyInputPanel({
                 pattern='^[0-9]*[.,]?[0-9]*$'
                 title='Token Amount'
                 inputMode='decimal'
-                style={{ WebkitAppearance  : 'none', margin: 0, MozAppearance: 'none' }}
+                style={{ WebkitAppearance: 'none', margin: 0, MozAppearance: 'none' }}
               />
               {!hideBalance && currency && selectedCurrencyBalance ? (
                 <div className='flex flex-col'>
