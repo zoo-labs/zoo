@@ -22,7 +22,7 @@ describe('Savage', function () {
   let sender: any
 
   const tril = ethers.utils.parseEther('1000000000000')
-  const amountZoo = ethers.utils.parseUnits('2180913677.035819786465972231', 18)
+  const amountZ1 = ethers.utils.parseUnits('2180913677.035819786465972231', 18)
   const amountBNB = ethers.utils.parseUnits('2019.717141295805250967', 18)
   const finalBNB = ethers.utils.parseUnits('2010', 18)
   const amountIn = tril
@@ -52,34 +52,48 @@ describe('Savage', function () {
     expect(rfactory).to.equal(factory.address)
   })
 
-  it.only('check variables', async () => {
-    console.log('zoo', zoo)
-  })
-
-  it('removes zoo from lp', async () => {
-    const txn = await factory.createPair(zoo.address, bnb.address);
+  it.only('removes BNB from old LP', async () => {
+    const txn = await factory.createPair(z1.address, bnb.address);
     await txn.wait();
-    const pair = await factory.getPair(zoo.address, bnb.address)
+    const pair = await factory.getPair(z1.address, bnb.address)
 
-    const amountToSender = amountZoo.add(amountIn)
-    const originalBalance = await zoo.balanceOf(sender.address)
+    const amountToSender = amountZ1.add(amountIn)
+
+    const originalBalance = await z1.balanceOf(sender.address)
 
     await bnb.mint(sender.address, amountBNB)
-    await zoo.mint(sender.address, amountToSender)
+    await z1.mint(sender.address, amountToSender)
 
     await bnb.approve(router.address, amountBNB)
-    await zoo.approve(router.address, amountZoo)
+    await z1.approve(router.address, amountZ1)
 
-    await zoo.approve(savage.address, amountIn)
+    expect(await z1.balanceOf(sender.address)).to.be.equal(amountToSender.add(originalBalance));
+    expect(await bnb.balanceOf(sender.address)).to.be.equal(amountBNB);
+
+    expect(await z1.balanceOf(pair)).to.be.equal(0);
+    expect(await bnb.balanceOf(pair)).to.be.equal(0);
+
+    // Add liquidity
+    await router.addLiquidity(
+      z1.address,
+      bnb.address,
+      amountZ1, amountBNB,
+      100, 100,
+      sender.address,
+      2e9
+    )
+
+    expect(await z1.balanceOf(sender.address)).to.be.equal(tril)
+    expect(await bnb.balanceOf(sender.address)).to.be.equal(0)
+    expect(await bnb.balanceOf(router.address)).to.be.equal(0)
+
+    expect(await z1.balanceOf(pair)).to.be.equal(amountZ1)
+    expect(await bnb.balanceOf(pair)).to.be.equal(amountBNB)
+
+    await z1.approve(savage.address, amountIn)
     await savage.drainPool()
 
-    console.log(await bnb.balanceOf(sender.address))
-    expect(await bnb.balanceOf(savage.address)).to.be.at.least(finalBNB)
-
-    await savage.approvePool()
-    await savage.launchPool()
-
-    console.log(await bnb.balanceOf(sender.address))
+    console.log('Savage BNB', await bnb.balanceOf(savage.address))
     expect(await bnb.balanceOf(savage.address)).to.be.at.least(finalBNB)
   })
 })
