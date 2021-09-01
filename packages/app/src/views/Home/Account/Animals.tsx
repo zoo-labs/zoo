@@ -60,7 +60,7 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
 
   const dispatch = useDispatch()
   Object.values(allAnimals).forEach((animal, index) => {
-    if (animal.owner.toLowerCase() !== account.toLowerCase() || animal.freed || !animal.revealed) {
+    if (animal && animal.owner && account && animal.owner.toLowerCase() !== account.toLowerCase() || animal.freed || !animal.revealed) {
       return
     }
     const lastBred = animal.lastBred ? new Date(Number(animal.lastBred)).getTime() : new Date().getTime()
