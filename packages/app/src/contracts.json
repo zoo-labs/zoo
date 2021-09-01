@@ -4778,7 +4778,7 @@
           ]
         },
         "Faucet": {
-          "address": "0x920c4fD6F812318963329389aFF1B3Ff08b2ecCd",
+          "address": "0x9ef12Ee41b03dB3D2a17E72ED3b4434B7606afbd",
           "abi": [
             {
               "inputs": [
@@ -10130,7 +10130,7 @@
           ]
         },
         "ZOO": {
-          "address": "0xd13026E59f58523fe7ebf364E8fe989133d0eaC5",
+          "address": "0x10de8FC26604a07707D3B9af2b773aBff792390A",
           "abi": [
             {
               "inputs": [],
