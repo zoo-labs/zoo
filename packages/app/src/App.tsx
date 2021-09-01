@@ -83,6 +83,8 @@ const App: React.FC = () => {
   const web3 = useWeb3()
   const { chainID } = web3
   const dispatch = useDispatch()
+
+  /* Set signedIn to true if chainID and window.localStorage.getItem('connectorId') exist */
   const signedIn = (chainID !== undefined && window.localStorage.getItem('connectorId') !== undefined)
 
   const getEggs = async () => {
