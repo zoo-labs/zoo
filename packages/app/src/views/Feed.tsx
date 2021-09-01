@@ -128,7 +128,6 @@ function Feed<FeedPagePops>({ match }) {
   }
 
   const handleIndexChange = (obj) => {
-    console.log(obj)
     setActiveIndex(obj.activeIndex)
   }
 
@@ -158,13 +157,13 @@ function Feed<FeedPagePops>({ match }) {
 
   const handleContainerClick = (event) => {
     const className = event.target.className
-    if (className === 'swiper-slide swiper-slide-active') {
+    if (className === 'feed-container') {
       HomeClick()
     }
   }
 
   return (
-    <Container isMobile={isMobile}>
+    <Container className='feed-container' onClick={handleContainerClick} isMobile={isMobile}>
       {/* <ButtonMenu activeIndex={activeIndex} onItemClick={onItemClick} scale='sm'>
         <ButtonMenu activeIndex={activeIndex} onItemClick={onItemClick} scale='sm'>
           <ButtonMenuItem as='a'>My Zoo</ButtonMenuItem>
@@ -188,15 +187,13 @@ function Feed<FeedPagePops>({ match }) {
         </div>
       </div>
 
-      <Swiper onSwiper={setSwiperRef} onActiveIndexChange={handleIndexChange} centeredSlides={isMobile ? true : false} spaceBetween={30} slidesPerView={1} direction='horizontal'>
+      <Swiper className='swiper-wrapper' onSwiper={setSwiperRef} onActiveIndexChange={handleIndexChange} centeredSlides={isMobile ? true : false} spaceBetween={30} slidesPerView={1} direction='horizontal'>
         <Slide key={0}>
           {animals.length ? (
-            <Swiper speed={900} initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
+            <Swiper mousewheel={{releaseOnEdges: true}} speed={900} initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
               {animals.map((data) => {
-                // console.log('DATA')
-                // console.log(data)
                 return (
-                  <Slide key={data.tokenID + 'slide'}>
+                  <Slide className='swiper-wrapper' key={data.tokenID + 'slide'}>
                     <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={animalGroup} hideBid={activeIndex === 0} />
                   </Slide>
                 )

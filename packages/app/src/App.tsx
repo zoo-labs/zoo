@@ -175,17 +175,9 @@ const App: React.FC = () => {
     onDelete: (data) => deleteAnimal(data),
   })
 
-  // Only render once and reset when chainID changes
   useEffect(() => {
-    console.warn = () => null // TODO: fix MaxListenersExceededWarning
     dispatch(clearZoo())
-  }, [chainID])
-
-  useEffect(() => {
     getEggs()
-  }, [chainID])
-
-  useEffect(() => {
     getAnimals()
   }, [chainID])
   const history = useHistory()

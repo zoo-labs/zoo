@@ -129,7 +129,7 @@ export default function CurrencyInputPanel({
                       )}
                     </div>
 
-                    {!disableCurrencySelect && newCurrency && <ChevronDownIcon width={16} height={16} className='ml-2 stroke-current' />}
+                    {/* {!disableCurrencySelect && newCurrency && <ChevronDownIcon width={16} height={16} className='ml-2 stroke-current' />} */}
                   </div>
                 </div>
               )}
