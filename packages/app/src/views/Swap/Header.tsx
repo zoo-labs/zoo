@@ -1,5 +1,6 @@
 import { ChainId, Currency, Percent } from '@sushiswap/sdk'
 import React, { FC, useState, useEffect } from 'react'
+import { getToken, getDrop, getFaucet, getZooKeeper } from 'util/contracts'
 
 // import MyOrders from '../exchange-v1/limit-order/MyOrders'
 // import NavLink from '../../components/NavLink'
@@ -28,10 +29,34 @@ interface ExchangeHeaderProps {
 }
 
 const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippage }) => {
+
+
+
+  // const getBalance = async () => {
+  //   try {
+  //     const decimals = await zooToken.methods.decimals().call()
+  //     const rawBalance = await zooToken.methods.balanceOf(account).call()
+  //     const divisor = parseFloat(Math.pow(10, decimals).toString())
+  //     const balance = rawBalance / divisor
+  //     setBalance(balance)
+  //   } catch (e) {
+  //     console.error('ISSUE LOADING ZOO BALANCE \n', e)
+  //   }
+  // }
+
   const [balance, setBalance] = useState(0)
   const { chainId } = useWeb3React()
-  const { gasPrice, account, eth } = useWeb3()
+  
+  const web3 = useWeb3()
+  const { gasPrice, account, eth } = web3
+
+  const zooToken = getToken(web3)
+
+  // const zooKeeper = getZooKeeper(web3)
+  // const zooDrop = getDrop(web3)
+  // const keeperAdd = zooKeeper.options.address
   //   const router = useRouter()
+  
   const [animateWallet, setAnimateWallet] = useState(false)
   //   const isRemove = router.asPath.startsWith('/remove')
   //   const isLimitOrder = router.asPath.startsWith('/limit-order')
@@ -39,11 +64,19 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
     try {
       // const decimals = await zooToken.methods.decimals().call()
       // setBalance(parseFloat(balance.toFixed(4)));
-      await eth.getBalance(account).then((val) => {
-        const divisor = parseFloat(Math.pow(10, 18).toString())
-        const balance = parseFloat(val) / divisor
-        setBalance(parseFloat(balance.toFixed(4)))
-      })
+
+      const decimals = await zooToken.methods.decimals().call()
+      const rawBalance = await zooToken.methods.balanceOf(account).call()
+      const divisor = parseFloat(Math.pow(10, decimals).toString())
+      const balance = rawBalance / divisor
+      setBalance(balance)
+
+
+      // await eth.getBalance(account).then((val) => {
+      //   const divisor = parseFloat(Math.pow(10, 18).toString())
+      //   const balance = parseFloat(val) / divisor
+      //   setBalance(parseFloat(balance.toFixed(4)))
+      // })
     } catch (e) {
       console.error('ISSUE LOADING ZOO BALANCE \n', e)
     }

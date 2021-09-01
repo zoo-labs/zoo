@@ -5,6 +5,7 @@ import { ApprovalState, useApproveCallbackFromTrade } from '../../hooks/useAppro
 // import div, { AutoColumn } from '../../../components/div'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 // import { UseERC20PermitState, useERC20PermitFromTrade } from '../../../hooks/useERC20Permit'
+import { getToken, getDrop, getFaucet, getZooKeeper } from 'util/contracts'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
 import { useDefaultsFromURLSearch, useDerivedSwapInfo, useSwapActionHandlers, useSwapState } from '../../state/swap/hooks'
 import Lottie from 'lottie-react'
