@@ -382,12 +382,10 @@ const abi:AbiItem | AbiItem[] = [
   }
 ]
 
-console.log('addresses ->', addresses);
-
 // Get Address for any contract
 export const getAddress = (contractName: string, chainID: number): string => {
   console.log('chainID',chainID)
-  return addresses[chainID][contractName]
+  return addresses[chainID] ? addresses[chainID][contractName] : null
   // return addresses[contract][chainID]
   // return '0x34f3F270B85532f32c6F8039B960c569816Fc67a'
 }
