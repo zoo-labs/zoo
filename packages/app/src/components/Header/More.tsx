@@ -104,7 +104,7 @@ export default function More({}) {
                   <div
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
                     style={{}}
-                    onClick={() => window.open('https://poocoin.app/tokens/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997')}>
+                    onClick={() => window.open('https://poocoin.app/tokens/0x19263f2b4693da0991c4df046e4baa5386f5735e')}>
                     Analytics
                     <div className='ml-4 sm:ml-14'>
                       <RiPieChart2Line />
