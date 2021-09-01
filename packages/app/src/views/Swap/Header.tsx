@@ -8,7 +8,6 @@ import { currencyId } from '../../functions'
 import { useWeb3React } from '@web3-react/core'
 import { NavLink } from 'react-router-dom'
 import { useWeb3 } from 'hooks'
-import { getToken } from 'util/contracts'
 
 const getQuery = (input: any, output: any) => {
   if (!input && !output) return null
