@@ -1,6 +1,7 @@
 import { ChainId, Currency, Percent } from '@sushiswap/sdk'
 import React, { FC, useState, useEffect } from 'react'
-import { getToken, getDrop, getFaucet, getZooKeeper } from 'util/contracts'
+
+import { getToken } from 'util/contracts'
 
 // import MyOrders from '../exchange-v1/limit-order/MyOrders'
 // import NavLink from '../../components/NavLink'
@@ -29,7 +30,6 @@ interface ExchangeHeaderProps {
 }
 
 const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippage }) => {
-
   const [balance, setBalance] = useState(0)
   const { chainId } = useWeb3React()
   const { gasPrice, account, eth } = useWeb3()
@@ -42,7 +42,6 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
 
   const getBalance = async () => {
     try {
-      // const decimals = await zooToken.methods.decimals().call()
       const decimals = await zooToken.methods.decimals().call()
       const rawBalance = await zooToken.methods.balanceOf(account).call()
       const divisor = parseFloat(Math.pow(10, decimals).toString())
