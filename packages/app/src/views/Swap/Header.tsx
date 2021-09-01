@@ -41,7 +41,6 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
 
   const getBalance = async () => {
     try {
-      // const decimals = await zooToken.methods.decimals().call()
       const decimals = await zooToken.methods.decimals().call()
       const rawBalance = await zooToken.methods.balanceOf(account).call()
       const divisor = parseFloat(Math.pow(10, decimals).toString())
