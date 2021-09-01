@@ -9,6 +9,7 @@ import { currencyId } from '../../functions'
 import { useWeb3React } from '@web3-react/core'
 import { NavLink } from 'react-router-dom'
 import { useWeb3 } from 'hooks'
+import { getToken } from 'util/contracts'
 
 const getQuery = (input: any, output: any) => {
   if (!input && !output) return null
@@ -29,26 +30,25 @@ interface ExchangeHeaderProps {
 }
 
 const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippage }) => {
-  
+
   const [balance, setBalance] = useState(0)
   const { chainId } = useWeb3React()
-  
+  const { gasPrice, account, eth } = useWeb3()
   const web3 = useWeb3()
-  const { gasPrice, account, eth } = web3
-
-  const zooToken = getToken(web3)
-
+  //   const router = useRouter()
   const [animateWallet, setAnimateWallet] = useState(false)
   //   const isRemove = router.asPath.startsWith('/remove')
   //   const isLimitOrder = router.asPath.startsWith('/limit-order')
+  const zooToken = getToken(web3)
 
   const getBalance = async () => {
     try {
+      // const decimals = await zooToken.methods.decimals().call()
       const decimals = await zooToken.methods.decimals().call()
       const rawBalance = await zooToken.methods.balanceOf(account).call()
       const divisor = parseFloat(Math.pow(10, decimals).toString())
       const balance = rawBalance / divisor
-      setBalance(balance)
+      setBalance(parseFloat(balance.toFixed(4)))
     } catch (e) {
       console.error('ISSUE LOADING ZOO BALANCE \n', e)
     }
@@ -69,7 +69,9 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
           }}>
           <a className='flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis'>Swap</a>
         </NavLink> */}
-        <a className='flex items-center justify-center px-4 text-base font-large text-medium rounded-md text-secondary hover:text-high-emphesis' style={{ fontSize: '1.2rem' }}>Bridge</a>
+        <a className='flex items-center justify-center px-4 text-base font-large text-medium rounded-md text-secondary hover:text-high-emphesis' style={{ fontSize: '1.2rem' }}>
+          Bridge
+        </a>
         {/* <NavLink
           className='flex items-center justify-center'
           activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600'
