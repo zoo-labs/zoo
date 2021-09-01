@@ -36,10 +36,14 @@ async function main() {
 
     for (let i = 0; i < chunk.length; i++) {
       const row = Object.values(chunk[i])
-      const amount = parseInt(String(row[1]).replace(/[, ]/g, ''))
-      if (amount == 0) continue
-      amounts.push(ethers.utils.parseEther(String(amount)))
-      addresses.push(row[0])
+      const amount = String(row[1]).replace(/[, ]/g, '')
+      if (parseInt(amount) == 0) continue
+      try {
+        amounts.push(ethers.utils.parseEther(amount))
+        addresses.push(row[0])
+      } catch (e) {
+        console.error(e)
+      }
     }
 
     try {
