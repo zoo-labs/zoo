@@ -1,45 +1,38 @@
 import contractsJSON from '../contracts.json'
 
-const hardhat = contractsJSON['1337']['hardhat']['contracts']
-const testnet = contractsJSON['97']['testnet']['contracts']
-const mainnet = contractsJSON['56']['mainnet']['contracts']
+const networkIds = Object.keys(contractsJSON);
+const networkNames = networkIds.reduce((sum: string[], id: string) => sum = sum.concat(Object.keys(contractsJSON[id])), [])
 
-export const contracts = hardhat
+const contractsByChainIdAndNetwork = networkIds.reduce((sum: any, id: string) => {
+  sum[id] = networkNames.reduce((contracts: any, name: string) => {
+    contracts[name] = contractsJSON[id][name] ? contractsJSON[id][name]['contracts'] : null
+    return contracts;
+  }, {});
+  return sum
+}, {});
 
-export const addresses = {
-  ZOO: {
-    1337: hardhat['ZOO']['address'], // local
-    97: testnet['ZOO']['address'], // testnet
-    56: '0x19263F2b4693da0991c4Df046E4bAA5386F5735E', //
-  },
-  Market: {
-    1337: hardhat['Market']['address'],
-    97: testnet['Market']['address'],
-    56: mainnet['Market']['address'],
-  },
-  Media: {
-    1337: hardhat['Media']['address'],
-    97: testnet['Media']['address'],
-    56: mainnet['Media']['address'],
-  },
-  Auction: {
-    1337: hardhat['Auction']['address'],
-    97: testnet['Auction']['address'],
-    56: mainnet['Auction']['address'],
-  },
-  Drop: {
-    1337: hardhat['Drop']['address'],
-    97: testnet['Drop']['address'],
-    56: mainnet['Drop']['address'],
-  },
-  Faucet: {
-    1337: hardhat['Faucet']['address'],
-    97: testnet['Faucet']['address'],
-    56: mainnet['Faucet']['address'],
-  },
-  ZooKeeper: {
-    1337: hardhat['ZooKeeper']['address'],
-    97: testnet['ZooKeeper']['address'],
-    56: mainnet['ZooKeeper']['address'],
-  },
-}
+/**
+ * Get the contracts in the form of { networkId: { contractName: KEY } }
+ *
+ * By the way, this function is terrible. Change it at your own peril
+ **/
+const getContractsByKey = (key: string) => Object.keys(contractsByChainIdAndNetwork).reduce((sum: string[], id: string) => {
+  Object.keys(contractsByChainIdAndNetwork[id]).forEach((networkName: string) => {
+    const networks = Object.keys(contractsByChainIdAndNetwork[id])
+    sum[id] = networks.reduce((coll: any, network: any) => {
+      const contracts = contractsByChainIdAndNetwork[id][network]
+      if (!!contracts) {
+        Object.keys(contracts).forEach((contractName: string) => {
+          coll[contractName] = contracts[contractName][key]
+        })
+      }
+      return coll;
+    }, {})
+  })
+  return sum;
+}, [])
+
+export const addresses = getContractsByKey('address');
+export const contracts = getContractsByKey('abi');
+
+
