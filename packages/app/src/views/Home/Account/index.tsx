@@ -142,8 +142,6 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
 
   // const zooToken = getToken(web3)
   // const zooKeeper = getZooKeeper(web3)
-  // const zooDrop = getDrop(web3)
-  const keeperAdd = zooKeeper.options.address
 
   useEffect(() => {
     setZooToken(getToken(web3))
@@ -165,7 +163,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
     }
 
     try {
-      const allowance = await zooToken.methods.allowance(account, keeperAdd).call()
+      const allowance = await zooToken.methods.allowance(account, zooKeeper.options.address).call()
       if (allowance > 0) {
         setAllowance(true)
         setKeepApprove(false)
@@ -192,7 +190,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
     // Increase allowance
     const eggPrice = await zooDrop.methods.eggPrice().call()
     const allowance = web3.utils.toBN(eggPrice).mul(web3.utils.toBN(100))
-    const tx = zooToken.methods.approve(keeperAdd, allowance).send({ from: account })
+    const tx = zooToken.methods.approve(zooKeeper.options.address, allowance).send({ from: account })
 
     tx.then(() => {
       setAllowance(true)
