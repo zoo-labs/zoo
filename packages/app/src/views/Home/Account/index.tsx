@@ -249,10 +249,9 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
                 <div className='ml-4'>
                   <div className='flex items-center  cursor-pointer' onClick={() => handleFunds()}>
                     <span
-                      className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-lg text-high-emphesis border-dark-800 bg-dark-700  hover:bg-primary h-full
-                `}
+                      className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-lg text-high-emphesis border-dark-800 bg-dark-700  hover:bg-primary h-full`}
                       style={{ minHeight: 40 }}>
-                      {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
+                      {chainID !== 97 && chainID !== 1337 ? 'ADD FUNDS' : wait ? 'PROCESSING' : 'GET ZOO'}
                     </span>
                   </div>
                 </div>
