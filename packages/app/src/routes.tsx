@@ -9,7 +9,7 @@ let indexRoutes = [
   { path: '/home', name: 'Home', component: Home },
   // { path: '/bank', name: 'Bank', component: Bank },
   { path: '/feed', name: 'Feed', component: Feed },
-  { path: '/swap', name: 'Swap', component: Swap },
+  { path: '/bridge', name: 'Bridge', component: Swap },
   { path: '/limit-order', name: 'Limit', component: Swap },
   { path: '/liquidity', name: 'Liquidity', component: Swap },
   { path: '/pool', name: 'Pool', component: Pool },

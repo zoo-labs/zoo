@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Pagination } from 'swiper'
 import VideoPlayerModal from '../../../modals/VideoPlayer'
 import NewAnimalModal from '../../../modals/NewAnimal'
+import HatchDisabledModal from '../../../modals/HatchDisabled'
 import useWeb3 from 'hooks/useWeb3'
 import { Text, Card as Existing, EggCard, VideoPlayer, useMatchBreakpoints } from 'components'
 import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
@@ -17,7 +18,7 @@ import { addEgg } from 'state/actions'
 import { getZooKeeper } from 'util/contracts'
 import NewAnimalCard from '../../../modals/NewAnimal'
 import { mapEgg, mapAnimal } from 'util/moralis'
-import { useNewAnimalModalToggle, useVideoPlayerModalToggle } from 'state/application/hooks'
+import { useHatchDisabledModalToggle, useNewAnimalModalToggle, useVideoPlayerModalToggle } from 'state/application/hooks'
 interface EggsProps {}
 const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.text};
@@ -90,18 +91,21 @@ const Eggs: React.FC<EggsProps> = ({}) => {
     foundAnimal.save()
     startAnimationTimer()
   }
+  const toggleHatchDisabledModalModal = useHatchDisabledModalToggle()
 
   const hatchEgg = async (egg) => {
-    egg.hatching = true
-    dispatch(addEgg(mapEgg(egg)))
-    try {
-      await zooKeeper.methods.hatchEgg(1, egg.tokenID).send({
-        from: account,
-        gasPrice: gasPrice,
-      })
-    } catch (error) {
-      console.error(error)
-    }
+    //disable egg hatching and show modal here
+    toggleHatchDisabledModalModal()
+    // egg.hatching = true
+    // dispatch(addEgg(mapEgg(egg)))
+    // try {
+    //   await zooKeeper.methods.hatchEgg(1, egg.tokenID).send({
+    //     from: account,
+    //     gasPrice: gasPrice,
+    //   })
+    // } catch (error) {
+    //   console.error(error)
+    // }
   }
 
   const startAnimationTimer = useCallback(() => {
@@ -220,6 +224,7 @@ const Eggs: React.FC<EggsProps> = ({}) => {
       </RowLayout>
       <VideoPlayerModal videoPath={eggType === 'basic' ? 'hatch_mobile_basic.mp4' : 'hatch_mobile_hybrid.mp4'} />
       <NewAnimalModal animal={hatched} onDismiss={() => setEggType('')} />
+      <HatchDisabledModal />
     </>
   )
 }
