@@ -20,7 +20,7 @@ contract ZOO is ERC20, ERC20Burnable, Pausable, Ownable, AccessControl {
 
     constructor () ERC20("ZOO", "ZOO") {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _pause(); // launch in paused state
+        // _pause(); // mainnet launch in paused state
     }
 
     function configure(address _bridge) public onlyOwner {

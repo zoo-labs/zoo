@@ -100,7 +100,7 @@ export default function PendingView({
               color={option.color}
               header={option.name}
               subheader={option.description}
-              Icon={'/images/wallets/' + option.iconName}
+              Icon={option.icon}
             />
           )
         }

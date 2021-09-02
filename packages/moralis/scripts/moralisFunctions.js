@@ -1,18 +1,22 @@
 const fs = require('fs')
 const spawn = require('child_process').spawn
 
-const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'localhost'
+const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'testnet'
 
 const chainID = {
-  localhost: '0x539',
-  testnet: '0x61',
-  mainnet: '0x38',
+  hardhat:  '0x539',
+  testnet:  '0x61',
+  mainnet:  '0x38',
+  ethereum: '0x1',
+  ropsten:  '0x3',
 }[NETWORK]
 
 const subdomain = {
-  localhost: 'qjydxwdegh7e.usemoralis.com',
-  testnet: 'dblpeaqbqk32.usemoralis.com',
-  mainnet: 'j0ixlvmwc1kz.usemoralis.com',
+  hardhat:  'qjydxwdegh7e.usemoralis.com',
+  testnet:  'dblpeaqbqk32.usemoralis.com',
+  mainnet:  'j0ixlvmwc1kz.usemoralis.com',
+  ethereum: 'csiwdg4boaa8.usemoralis.com',
+  ropsten:  '8sebtwlhn2ic.moralisweb3.com',
 }[NETWORK]
 
 const cached = __dirname + '/../../../node_modules/moralis-cached.js'
