@@ -24,6 +24,7 @@ import Header from 'components/Header'
 import Eggs from './Eggs'
 import Animals from './Animals'
 import AccountHeader from './AccountHeader'
+
 const HeadingContainer = styles.div`
     width: 200%;
     display: flex;
