@@ -39,8 +39,14 @@ body {
 .blur-\[150px\] {
     --tw-blur: blur(150px);
 }
+.blur-\[400px\] {
+    --tw-blur: blur(400px);
+}
 .opaque-pink {
     color:rgba(243,56,195,0.50196)
+}
+.bg-black {
+    background-color: rgba(0,0,0,var(--tw-bg-opacity));
 }
 .opaque-blue{
     color:rgba(9,147,236,0.50196)
