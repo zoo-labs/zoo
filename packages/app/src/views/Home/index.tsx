@@ -2,6 +2,7 @@ import { numberWithCommas } from 'components/Functions'
 import { useWeb3 } from 'hooks'
 import useToast from 'hooks/useToast'
 import React, { useEffect, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import { getFaucet, getToken } from 'util/contracts'
 import Account from './Account'
 import Bank from './Bank'
@@ -84,20 +85,24 @@ const Index: React.FC<indexProps> = ({}) => {
     <main className='flex flex-col  flex-grow w-full h-full lg:p-16 lg:m-4 p-0 m-0 lg:pr-0 lg:mr-0 space-y-4 rounded-lg  flex flex-col relative filter drop-shadow z-10'>
       <div className='flex lg:p-0 p-4 justify-center lg:justify-start items-end flex-wrap'>
         <div>
-          <div className=' grid grid-cols-2 rounded-lg bg-dark-800 h-[46px] gap-2' style={{ height: 40 }}>
+          <div
+            className={`self-center items-center grid grid-flow-col w-max rounded-2xl p-1 m-1 justify-self-center ${
+              isMobile ? 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
+            }`}
+            style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
             {[
               { name: 'Account', id: 0 },
               { name: 'Bank', id: 1 },
             ].map((type, index) => {
+              const selected = tab == type.id
               return (
-                <div className={`flex items-center   ${type.id === 1 ? 'justify-center' : 'justify-start'} cursor-pointer`} onClick={() => setTab(type.id)}>
-                  <span
-                    className={`w-full flex items-center justify-center px-2 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis ${
-                      tab === type.id &&
-                      'font-bold border rounded-lg text-high-emphesis border-dark-800 bg-gradient-to-r from-primary to-pink hover:from-blue-600 hover:to-pink-600 h-full'
-                    }`}>
-                    {type.name}
-                  </span>
+                <div
+                  className={`items-left rounded-md cursor-pointer text-md font-normal flex text-gray-300 ${
+                    selected && 'font-semibold rounded-xl text-white bg-gradient-to-r from-primary to-pink hover:from-blue-600 hover:to-pink-600'
+                  }`}
+                  style={{ backgroundColor: selected ? 'rgb(44, 47, 54)' : 'transparent', padding: '10px 14px' }}
+                  onClick={() => setTab(type.id)}>
+                  <span>{type.name}</span>
                 </div>
               )
             })}
