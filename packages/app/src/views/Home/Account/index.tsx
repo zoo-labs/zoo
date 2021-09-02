@@ -230,11 +230,11 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
   }
 
   return (
-    <div
-    // style={{ height: '100vh' }} className='flex items-center'
+    <
+      // style={{ height: '100vh' }} className='flex items-center'
     >
       {/* pr-0 lg:pr-0 mr-0  */}
-      <div className='flex flex-col relative filter drop-shadow z-10'>
+      <div className='flex flex-col relative filter drop-shadow z-10 w-full'>
         <div className='flex flex-col h-full'>
           <AccountHeader />
           <div className='flex flex-col justify-between h-full'>
@@ -263,9 +263,9 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
               <Eggs />
             </div>
 
-            <div className='m-4 flex flex-wrap'>
+            <div className={`m-4 flex flex-wrap ${isSm && 'justify-around'}`}>
               {(keepApprove || !allowance) && (
-                <div className={` ${isSm && !allowance ? 'w-1/2' : isSm ? 'w-full' : isMd ? 'w-1/3' : 'w-1/6'} px-2`}>
+                <div>
                   <button
                     disabled={disableApprove || allowance}
                     style={{ width: '140px', fontSize: '16px', fontWeight: 550, backgroundColor: allowance ? '#8C4FF8' : 'rgb(44, 47, 54)' }}
@@ -275,7 +275,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
                   </button>
                 </div>
               )}
-              <div className={` ${isSm && !allowance ? 'w-1/2' : isSm ? 'w-full' : isMd ? 'w-1/3' : 'w-1/6'} px-2`}>
+              <div className={`${!isSm && 'ml-4'}`}>
                 <button
                   disabled={disable || !allowance}
                   className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full`}
@@ -376,7 +376,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
 
         }}
         className='fixed '></div> */}
-    </div>
+    </>
   )
 }
 
