@@ -230,6 +230,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
         })
         .catch((err) => {
           console.log(err)
+          setDisable(false);
         })
     } catch (error) {
       setDisable(false)
