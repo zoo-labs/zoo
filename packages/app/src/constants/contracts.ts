@@ -33,6 +33,4 @@ const getContractsByKey = (key: string) => Object.keys(contractsByChainIdAndNetw
 }, [])
 
 export const addresses = getContractsByKey('address');
-export const contracts = getContractsByKey('abi');
-
-
+export const abis = getContractsByKey('abi');

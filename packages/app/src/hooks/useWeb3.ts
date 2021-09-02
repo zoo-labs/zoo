@@ -26,6 +26,14 @@ export const useWeb3 = () => {
   const ref = useRef(library)
   const [gasPrice, setGasPrice] = useState(null)
   const [web3, setWeb3] = useState(library ? new Web3(library) : getWeb3NoAccount())
+  const [chain, setChain] = useState(null)
+
+  useEffect(() => {
+    web3.eth.net.getId().then((chainId)=> {
+      console.log('chainId', chainId)
+      setChain(chainId || 1337)
+    })
+  }, [chainId])
 
   useEffect(() => {
     if (library !== ref.current) {
