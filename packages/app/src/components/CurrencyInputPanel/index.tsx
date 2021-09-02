@@ -61,11 +61,11 @@ export default function CurrencyInputPanel({
   const [modalOpen, setModalOpen] = useState(false)
   const { account } = useWeb3React()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
-  console.log('selectedCurrencyBalance', selectedCurrencyBalance)
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false)
   }, [setModalOpen])
-  console.log('pair', pair)
+  console.log('currency', currency)
+
   const newCurrency = currency && currency.symbol === ('ETH' || 'SUSHI') ? { ...currency, symbol: 'ZOO' } : { ...currency, symbol: 'ZOO' }
   return (
     <div id={id} className={`${hideInput ? 'p-4' : 'p-5'} rounded bg-dark-800`}>
@@ -78,7 +78,7 @@ export default function CurrencyInputPanel({
             } open-currency-select-button h-full outline-none select-none cursor-pointer border-none text-xl font-medium items-center`}
             onClick={() => {
               if (onCurrencySelect) {
-                // setModalOpen(true)
+                setModalOpen(true)
               }
             }}>
             <div className='flex'>
@@ -87,10 +87,15 @@ export default function CurrencyInputPanel({
               ) : currency ? (
                 <div className='flex items-center'>
                   {currency.symbol === 'USDT' || currency.symbol === 'SUSHI' ? (
-                    <img src='https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg' className='rounded' style={{ width: 54, height: 54 }} />
+                    currency.chainId === 1 ? (
+                      <img src='https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fbsc-network.jpg&w=64&q=75' className='rounded' style={{ width: 54, height: 54 }} />
+                    ) : (
+                      <img src='https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg' className='rounded' style={{ width: 54, height: 54 }} />
+                    )
                   ) : (
                     <CurrencyLogo currency={currency} size={'54px'} className='rounded' />
                   )}
+                  {/* <CurrencyLogo currency={currency} size={'54px'} className='rounded' /> */}
                 </div>
               ) : (
                 <div className='rounded bg-dark-700' style={{ maxWidth: 54, maxHeight: 54 }}>
