@@ -85,7 +85,7 @@ const App: React.FC = () => {
   const dispatch = useDispatch()
 
   /* Set signedIn to true if chainID and window.localStorage.getItem('connectorId') exist */
-  const signedIn = (chainID !== undefined && window.localStorage.getItem('connectorId') !== undefined)
+  const signedIn = chainID !== undefined && window.localStorage.getItem('connectorId') !== undefined
 
   const getEggs = async () => {
     try {
@@ -190,7 +190,7 @@ const App: React.FC = () => {
         <GlobalStyle />
         <Switch>
           <Route exact path='/login'>
-            {signedIn ? <Redirect to='/swap' /> : <Login />}
+            {signedIn ? <Redirect to='/home' /> : <Login />}
           </Route>
 
           <SuspenseWithChunkError fallback={<></>}>
@@ -201,8 +201,8 @@ const App: React.FC = () => {
 
               <Switch>
                 {indexRoutes.map((prop, key) => (signedIn ? <Route path={prop.path} key={key} component={prop.component} /> : <Redirect to='/login' />))}
-                <Redirect from='/' to={signedIn ? '/swap' : '/login'} />
-                <Redirect from='' to={signedIn ? '/swap' : '/login'} />
+                <Redirect from='/' to={signedIn ? '/home' : '/login'} />
+                <Redirect from='' to={signedIn ? '/home' : '/login'} />
               </Switch>
             </div>
           </SuspenseWithChunkError>
