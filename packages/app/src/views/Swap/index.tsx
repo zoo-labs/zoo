@@ -516,7 +516,28 @@ function Swap() {
             )} */}
 
               <div className='mt-1'>
-                {swapIsUnsupported ? (
+                <button
+                  className='border rounded shadow-sm focus:ring-2 focus:ring-offset-2 bg-dark-700 bg-opacity-80 w-full text-primary border-dark-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80 px-6 py-4 text-base rounded disabled:cursor-not-allowed focus:outline-none'
+                  onClick={() => {
+                    if (isExpertMode) {
+                      handleSwap()
+                    } else {
+                      setSwapState({
+                        tradeToConfirm: trade,
+                        attemptingTxn: false,
+                        swapErrorMessage: undefined,
+                        showConfirm: true,
+                        txHash: undefined,
+                      })
+                    }
+                  }}
+                  id='swap-button'
+                  disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
+                  // error={isValid && priceImpactSeverity > 2 && !swapCallbackError}
+                >
+                  {swapInputError ? swapInputError : 'Bridge is Disabled'}
+                </button>
+                {/* {swapIsUnsupported ? (
                   <button
                     className='border rounded shadow-sm focus:ring-2 focus:ring-offset-2 bg-dark-700 bg-opacity-80 w-full text-primary border-dark-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80 px-6 py-4 text-base rounded disabled:cursor-not-allowed focus:outline-none'
                     disabled>
@@ -536,8 +557,8 @@ function Swap() {
                   </button>
                 ) : routeNotFound && userHasSpecifiedInputOutput ? (
                   <div style={{ textAlign: 'center' }}>
-                    {/* <div className='mb-1'>Insufficient liquidity for this trade</div>
-                  {singleHopOnly && <div className='mb-1'>Try enabling multi-hop trades</div>} */}
+                    <div className='mb-1'>Insufficient liquidity for this trade</div>
+                    {singleHopOnly && <div className='mb-1'>Try enabling multi-hop trades</div>}
                   </div>
                 ) : showApproveFlow ? (
                   <div>
@@ -601,7 +622,7 @@ function Swap() {
                   >
                     {swapInputError ? swapInputError : priceImpactSeverity > 3 && !isExpertMode ? 'Price Impact Too High' : priceImpactSeverity > 2 ? 'Swap Anyway' : 'Swap'}
                   </button>
-                )}
+                )} */}
                 {showApproveFlow && (
                   <div style={{ marginTop: '1rem' }}>
                     <ProgressSteps steps={[approvalState === ApprovalState.APPROVED]} />
@@ -629,7 +650,7 @@ function Swap() {
           </DoubleGlowShadow>
         </div>
       </main>
-      <NetworkGuard />
+      {/* <NetworkGuard /> */}
     </>
   )
 }
