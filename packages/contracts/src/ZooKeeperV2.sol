@@ -17,7 +17,7 @@ import { IMedia } from "./interfaces/IMedia.sol";
 import "./console.sol";
 
 
-contract ZooKeeper is Ownable, Initializable {
+contract ZooKeeperV2 is Ownable, Initializable {
     uint256 public y; 
 
     function initialize(uint256 _y) public initializer {
