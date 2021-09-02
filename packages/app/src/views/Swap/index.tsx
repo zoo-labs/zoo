@@ -376,20 +376,45 @@ function Swap() {
   //   }
   // }, [chainId, previousChainId, history]);
   useEffect(() => {
-    handleOutputSelect({
-      _checksummedAddress: '0x2170Ed0880ac9A755fd29B2688956BD959F933F8',
-      _tags: null,
-      isNative: false,
-      isToken: true,
-      address: '0x2170Ed0880ac9A755fd29B2688956BD959F933F8',
-      chainId: 56,
-      decimals: 18,
-      logoURI: 'https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg',
-      name: 'Ethereum Token',
-      symbol: 'ETH',
-    })
-  }, [])
-  console.log('currencies[Fied.INPUT]', currencies[Field.OUTPUT])
+    console.log('chainIdsssssssss', chainId)
+    if (chainId === 56) {
+      handleOutputSelect({
+        _checksummedAddress: '0x2170Ed0880ac9A755fd29B2688956BD959F933F8',
+        _tags: null,
+        isNative: false,
+        isToken: true,
+        address: '0x2170Ed0880ac9A755fd29B2688956BD959F933F8',
+        chainId: 56,
+        decimals: 18,
+        logoURI: 'https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg',
+        name: 'Ethereum Token',
+        symbol: 'ETH',
+      })
+    } else if (chainId === 97) {
+      handleOutputSelect({
+        _checksummedAddress: '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd',
+        _tags: null,
+        isNative: false,
+        isToken: true,
+        address: '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd',
+        chainId: 97,
+        decimals: 18,
+        logoURI: 'https://raw.githubusercontent.com/sushiswap/art/master/sushi/logo-256x256.png',
+        name: 'USDT Token',
+        symbol: 'USDT',
+      })
+    } else {
+      handleOutputSelect({
+        chainId: 1,
+        decimals: 6,
+        symbol: 'USDT',
+        name: 'Tether USD',
+        isNative: false,
+        isToken: true,
+        address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+      })
+    }
+  }, [chainId])
   return (
     <>
       <main className='flex flex-col items-center justify-start flex-grow w-full h-full'>
@@ -421,7 +446,16 @@ function Swap() {
                 <CurrencyInputPanel
                   // priceImpact={priceImpact}
                   // label={independentField === Field.OUTPUT && !showWrap ? `Swap From (est.):` : `Swap From:`}
-                  label={currencies[Field.INPUT] && currencies[Field.INPUT].isNative ? `Withdraw from BSC` : `Withdraw from ETH`}
+                  label={
+                    currencies[Field.INPUT] &&
+                    (currencies[Field.INPUT].chainId !== 1
+                      ? currencies[Field.INPUT].isNative
+                        ? `Withdraw from BSC`
+                        : `Withdraw from ETH`
+                      : currencies[Field.INPUT].isNative
+                      ? `Withdraw from ETH`
+                      : `Withdraw from BSC`)
+                  }
                   value={formattedAmounts[Field.INPUT]}
                   showMaxButton={showMaxButton}
                   currency={currencies[Field.INPUT]}
@@ -468,7 +502,16 @@ function Swap() {
                   <CurrencyInputPanel
                     value={formattedAmounts[Field.OUTPUT]}
                     onUserInput={handleTypeOutput}
-                    label={currencies[Field.OUTPUT] && !currencies[Field.OUTPUT].isNative ? `Deposit to ETH` : `Deposit to BSC`}
+                    label={
+                      currencies[Field.OUTPUT] &&
+                      (currencies[Field.OUTPUT].chainId !== 1
+                        ? currencies[Field.OUTPUT].isNative
+                          ? `Deposit to BSC`
+                          : `Deposit to ETH`
+                        : currencies[Field.OUTPUT].isNative
+                        ? `Deposit to ETH`
+                        : `Deposit to BSC`)
+                    }
                     // label={independentField === Field.INPUT && !showWrap ? `Swap To (eth):` : `Swap To:`}
                     showMaxButton={showMaxButton}
                     hideBalance={false}
