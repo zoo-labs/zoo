@@ -1,4 +1,4 @@
-import { deployments, ethers, getNamedAccounts } from 'hardhat'
+import { deployments, ethers, upgrades } from 'hardhat'
 
 // import { ZooKeeper__factory, Media__factory, Market__factory, Token, ZooDrop } from '../types';
 
@@ -7,15 +7,15 @@ import { deployments, ethers, getNamedAccounts } from 'hardhat'
 // import { Faucet } from '../types/Faucet';
 // import { Market } from '../types/Market';
 // import { ZooKeeper } from '../types/ZooKeeper';
-import chai, { expect } from 'chai'
 // import configureGame from '../utils/configureGame';
 import { Contract, BigNumber, Bytes, BytesLike, utils } from 'ethers'
 
 import { solidity } from 'ethereum-waffle'
 import '@nomiclabs/hardhat-ethers'
 import { hex } from 'chalk'
+import { requireDependencies, setupTestFactory } from './utils'
 
-chai.use(solidity)
+const { expect } = requireDependencies()
 
 let zooToken: any
 let zooDrop: any
@@ -29,6 +29,7 @@ let mediaAddress: string
 let marketAddress: string
 let eggPrice: any
 
+const setupTest = setupTestFactory(['Market', 'Media', 'Drop',  'ZooKeeper', 'ZOO'])
 class Helper {
   public zooToken: Contract
   public zooDrop: Contract
@@ -44,22 +45,28 @@ class Helper {
   public static async setup() {
     const inst = new Helper()
     await deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
+      await setupTest();
       const contracts = await deployments.fixture() // ensure you start from a fresh deployments
+      const { signers, tokens: { Market, Media, Drop, ZooKeeper, ZOO } } = await setupTest();
+      const tokenOwner = signers[0]
 
-      const signers = (inst.signers = await ethers.getSigners())
-      inst.zooToken = await ethers.getContractAt('ZooToken', contracts.ZooToken.address, signers[0])
-      inst.zooMarket = await ethers.getContractAt('Market', contracts.Market.address, signers[0])
-      inst.zooMedia = await ethers.getContractAt('Media', contracts.Media.address, signers[0])
-      inst.zooKeeper = await ethers.getContractAt('ZooKeeper', contracts.ZooKeeper.address, signers[0])
-      inst.zooDrop = await ethers.getContractAt('ZooDrop', contracts.ZooDrop.address, signers[0])
+      inst.zooToken = ZOO
+      inst.zooMarket = Market
+      inst.zooMedia = Media
+      inst.zooKeeper = ZooKeeper
+      inst.zooDrop = Drop
+      // inst.zooToken = await ethers.getContractAt('ZOO', contracts.ZOO.address, signers[0])
+      // inst.zooMarket = await ethers.getContractAt('Market', contracts.Market.address, signers[0])
+      // inst.zooMedia = await ethers.getContractAt('Media', contracts.Media.address, signers[0])
+      // inst.zooKeeper = await ethers.getContractAt('ZooKeeper', contracts.ZooKeeper.address, signers[0])
+      // inst.zooDrop = await ethers.getContractAt('Drop', contracts.Drop.address, signers[0])
 
       // this mint is executed once and then createFixture will ensure it is snapshotted
-      // await zooToken.mint(tokenOwner.deployer, 100000).then(tx => tx.wait());
+      await inst.zooToken.mint(tokenOwner.address, ethers.utils.parseEther("2000000000")).then(async (tx) => await tx.wait());
 
-      const getDeployer = await getNamedAccounts()
-
-      inst.owner = getDeployer.deployer
+      inst.owner = tokenOwner.address
       inst.eggPrice = await inst.zooDrop.eggPrice()
+      await inst.zooToken.unpause();
     })()
 
     return inst
@@ -110,21 +117,6 @@ class Helper {
 }
 
 describe('ZooKeeper', () => {
-  it('can deploy upgradable', async () => {
-    const ZK = await ethers.getContractFactory("ZooKeeper")
-    const ZK2 = await ethers.getContractFactory("ZooKeeperV2")
-
-    const Market = await ethers.getContract("Market")
-    const Media = await ethers.getContract("Media")
-    const ZOO = await ethers.getContract("ZOO")
-    const Bridge = await ethers.getContract("Bridge")
-
-    const inst = await upgrades.deployProxy(ZK, [Market.address, Media.address, ZOO.address, Bridge.address])
-    const upgraded = await upgrades.upgradeProxy(inst.address, ZK2);
-
-    // Some expectation here
-  })
-
   it('can buy an egg and hatch an animal from the egg', async () => {
     const h = await Helper.setup()
 
