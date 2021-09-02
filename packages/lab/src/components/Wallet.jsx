@@ -91,6 +91,7 @@ export default function Wallet(props) {
         <QR
           value={selectedAddress}
           size="450"
+          style={{border: '10px solid green'}}
           level="H"
           includeMargin
           renderAs="svg"
@@ -182,6 +183,7 @@ export default function Wallet(props) {
             level="H"
             includeMargin
             renderAs="svg"
+            style={{border: '10px solid orange'}}
             imageSettings={{ excavate: false }}
           />
 

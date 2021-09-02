@@ -24,6 +24,7 @@ import Header from 'components/Header'
 import Eggs from './Eggs'
 import Animals from './Animals'
 import AccountHeader from './AccountHeader'
+
 const HeadingContainer = styles.div`
     width: 200%;
     display: flex;
@@ -120,6 +121,11 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
   const [balance, setBalance] = useState(0)
   const [keepApprove, setKeepApprove] = useState(true)
   const web3 = useWeb3()
+
+  const [zooToken, setZooToken] = useState(getToken(web3))
+  const [zooKeeper, setZooKeeper] = useState(getZooKeeper(web3))
+  const [zooDrop, setZooDrop] = useState(getDrop(web3))
+
   const { account, chainID, gasPrice } = web3
   const { isXl, isSm, isMd } = useMatchBreakpoints()
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
@@ -134,10 +140,14 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
     currentEggsOwned = Object.values(allEggs).filter((egg) => (egg.owner || '').toLowerCase() === account.toLowerCase() && !egg.burned).length
   }
 
-  const zooToken = getToken(web3)
-  const zooKeeper = getZooKeeper(web3)
-  const zooDrop = getDrop(web3)
-  const keeperAdd = zooKeeper.options.address
+  // const zooToken = getToken(web3)
+  // const zooKeeper = getZooKeeper(web3)
+
+  useEffect(() => {
+    setZooToken(getToken(web3))
+    setZooKeeper(getZooKeeper(web3))
+    setZooDrop(getDrop(web3))
+  }, [web3])
 
   const getBalance = async () => {
     try {
@@ -153,7 +163,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
     }
 
     try {
-      const allowance = await zooToken.methods.allowance(account, keeperAdd).call()
+      const allowance = await zooToken.methods.allowance(account, zooKeeper.options.address).call()
       if (allowance > 0) {
         setAllowance(true)
         setKeepApprove(false)
@@ -180,7 +190,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
     // Increase allowance
     const eggPrice = await zooDrop.methods.eggPrice().call()
     const allowance = web3.utils.toBN(eggPrice).mul(web3.utils.toBN(100))
-    const tx = zooToken.methods.approve(keeperAdd, allowance).send({ from: account })
+    const tx = zooToken.methods.approve(zooKeeper.options.address, allowance).send({ from: account })
 
     tx.then(() => {
       setAllowance(true)
@@ -220,6 +230,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
         })
         .catch((err) => {
           console.log(err)
+          setDisable(false);
         })
     } catch (error) {
       setDisable(false)

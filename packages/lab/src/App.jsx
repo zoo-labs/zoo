@@ -52,7 +52,7 @@ const targetNetwork = NETWORKS.testnet; // <------- select your target frontend 
 
 // 😬 Sorry for all the console logging
 const DEBUG = true;
-const NETWORKCHECK = true;
+const NETWORKCHECK = false;
 
 // 🛰 providers
 if (DEBUG) console.log("📡 Connecting to Mainnet Ethereum");

@@ -261,8 +261,6 @@ Moralis.Cloud.afterSave('Free', async (request) => {
 Moralis.Cloud.afterSave('Swap', async (request) => {
   if (!confirmed(request)) return
 
-  if request.object.get()
-
   const logger  = Moralis.Cloud.getLogger()
   const chainID = parseInt(request.object.get('chainID'))
   const from    = request.object.get('from')
