@@ -17,23 +17,27 @@ export type Extra = {
 export type CustomWeb3 = Web3 & Extra
 
 /**
- * Provides a web3 instance using the provider provided by useWallet
- * with a fallback of an httpProver
- * Recreate web3 instance only if the provider change
- */
+* Provides a web3 instance using the provider provided by useWallet
+* with a fallback of an httpProver
+* Recreate web3 instance only if the provider change
+*/
 export const useWeb3 = () => {
   const { account, chainId, library, connector } = useWeb3React()
   const ref = useRef(library)
   const [gasPrice, setGasPrice] = useState(null)
   const [web3, setWeb3] = useState(library ? new Web3(library) : getWeb3NoAccount())
-  const [chain, setChain] = useState(null)
+
+  const ethereum = (window as any).ethereum || { chainId: null, on: () => {} }
+  const [chainID, setChainID] = useState(Number(ethereum.chainId))
+  // We only have servers for Local Dev, BSC Testnet and Mainnet
+  if (chainID != 56 && chainID != 97 && chainID != 1337) setChainID(97) // Default to Testnet
 
   useEffect(() => {
-    web3.eth.net.getId().then((chainId)=> {
-      console.log('chainId', chainId)
-      setChain(chainId || 1337)
+    ethereum.on('chainChanged', (chainID) => {
+      setChainID(Number(chainID))
+      // window.location.reload()
     })
-  }, [chainId])
+  })
 
   useEffect(() => {
     if (library !== ref.current) {
@@ -54,7 +58,7 @@ export const useWeb3 = () => {
 
   const custom = web3 as CustomWeb3
   custom.account = account
-  custom.chainID = Number(chainId)
+  custom.chainID = Number(chainID)
   custom.gasPrice = gasPrice
   custom.connector = connector
   custom.library = library
