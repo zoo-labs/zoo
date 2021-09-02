@@ -121,6 +121,11 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
   const [balance, setBalance] = useState(0)
   const [keepApprove, setKeepApprove] = useState(true)
   const web3 = useWeb3()
+
+  const [zooToken, setZooToken] = useState(getToken(web3))
+  const [zooKeeper, setZooKeeper] = useState(getZooKeeper(web3))
+  const [zooDrop, setZooDrop] = useState(getDrop(web3))
+
   const { account, chainID, gasPrice } = web3
   const { isXl, isSm, isMd } = useMatchBreakpoints()
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
@@ -135,10 +140,16 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
     currentEggsOwned = Object.values(allEggs).filter((egg) => (egg.owner || '').toLowerCase() === account.toLowerCase() && !egg.burned).length
   }
 
-  const zooToken = getToken(web3)
-  const zooKeeper = getZooKeeper(web3)
-  const zooDrop = getDrop(web3)
+  // const zooToken = getToken(web3)
+  // const zooKeeper = getZooKeeper(web3)
+  // const zooDrop = getDrop(web3)
   const keeperAdd = zooKeeper.options.address
+
+  useEffect(() => {
+    setZooToken(getToken(web3))
+    setZooKeeper(getZooKeeper(web3))
+    setZooDrop(getDrop(web3))
+  }, [zooToken, zooKeeper, zooDrop, web3])
 
   const getBalance = async () => {
     try {
