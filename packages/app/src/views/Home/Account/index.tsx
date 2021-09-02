@@ -149,7 +149,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
     setZooToken(getToken(web3))
     setZooKeeper(getZooKeeper(web3))
     setZooDrop(getDrop(web3))
-  }, [zooToken, zooKeeper, zooDrop, web3])
+  }, [web3])
 
   const getBalance = async () => {
     try {
