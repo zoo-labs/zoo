@@ -4,7 +4,6 @@ import { CustomWeb3 as Web3 } from 'hooks/useWeb3'
 
 // Get Address for any contract
 export const getAddress = (contractName: string, chainID: number): string => {
-  console.log('chainID',chainID)
   return addresses[chainID] ? addresses[chainID][contractName] : null
   // return addresses[contract][chainID]
   // return '0x34f3F270B85532f32c6F8039B960c569816Fc67a'
