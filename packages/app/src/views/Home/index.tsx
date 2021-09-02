@@ -72,7 +72,7 @@ const Index: React.FC<indexProps> = ({}) => {
         handleFaucet()
         break
       default:
-        window.open('https://pancakeswap.info/token/0x8e7788ee2b1d3e5451e182035d6b2b566c2fe997', '_blank')
+        window.open('https://pancakeswap.info/token/0x19263f2b4693da0991c4df046e4baa5386f5735e', '_blank')
       // redirectWindow.location
     }
   }

@@ -59,6 +59,7 @@ export const setupTestFactory = (contractArr: string[]) =>
     const signers = await ethers.getSigners()
     const owner = (await getNamedAccounts()).deployer
     return {
+      deployments: deployments,
       owner: owner,
       signers: signers,
       tokens,

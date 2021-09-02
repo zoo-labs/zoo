@@ -1,6 +1,6 @@
 import { setupTestFactory, requireDependencies } from './utils'
 import { Signer } from '@ethersproject/abstract-signer'
-import { Z1 } from '../types'
+import { ZOO } from '../types'
 
 const { expect } = requireDependencies()
 
