@@ -209,6 +209,7 @@ const Bank: React.FC = () => {
   const faucet = getFaucet(web3)
 
   const accountAnimals = Object.values(animalsState).filter((animal) => {
+    if (!animal.owner || !account) return false
     return animal.owner && animal.owner.toLowerCase() === account.toLowerCase()
   })
 

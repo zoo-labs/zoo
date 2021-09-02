@@ -13,6 +13,7 @@ const rpcURLs = {
  * @returns {boolean} true if the setup succeeded, false otherwise
  */
 export const setupNetwork = async (network) => {
+  return true
   const main = network === 'bsc'
   const provider = (window as WindowChain).ethereum
   const chainId = main ? parseInt('56', 10) : parseInt('97', 10)
