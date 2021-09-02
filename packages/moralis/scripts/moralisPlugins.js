@@ -8,15 +8,19 @@ const { restartServer } = require('moralis-admin-cli/commands/common')
 
 const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'localhost'
 const CHAIN_IDS = {
-  localhost: '0x539',
-  testnet: '0x61',
-  mainnet: '0x38',
+  hardhat:  '0x539',
+  testnet:  '0x61',
+  mainnet:  '0x38',
+  ethereum: '0x1',
+  ropsten:  '0x3',
 }
 const CHAIN_ID = CHAIN_IDS[NETWORK]
 const SERVER_NAME = {
-  localhost: 'zoo Hardhat',
-  testnet: 'Zoo Testnet',
-  mainnet: 'Zoo Mainnet',
+  hardhat:  'Zoo Hardhat',
+  testnet:  'Zoo Testnet',
+  mainnet:  'Zoo Mainnet',
+  ethereum: 'Zoo ETH Mainnet',
+  ropsten:  'Zoo ETH (Ropsten)',
 }[NETWORK]
 const ABI_PATH = `${__dirname}/../../contracts/deployments/${NETWORK}/ZooKeeper.json`
 
