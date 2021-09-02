@@ -11,6 +11,8 @@ import WalletConnect from '../../WalletModal/icons/WalletConnect'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { useWeb3 } from 'hooks'
+import { useConnectModalToggle } from 'state/application/hooks'
+import ConnectModal from '../../../modals/ConnectModal'
 
 interface Props {
   account?: string
@@ -49,34 +51,37 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
 }
 const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
   const { connector } = useWeb3()
+  const toggleConnectModal = useConnectModalToggle()
 
   const history = useHistory()
   const { onPresentConnectModal, onPresentAccountModal } = useWalletModal(login, logout, account, history)
   const accountEllipsis = account ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}` : null
+
   return (
-    <div>
-      {account ? (
-        <div className='font-semibold flex flex-nowrap p-2 rounded-xl bg-gradient-to-r from-blue-600 to-pink-600 border-primary'>
-          <button
-            className='mr-2 rounded-lg'
-            onClick={() => {
-              onPresentAccountModal()
-            }}>
-            {accountEllipsis}
-          </button>
-          {connector && <StatusIcon connector={connector} />}
-        </div>
-      ) : (
-        <button
-          className='font-semibold flex flex-nowrap p-2 rounded-lg'
-          style={{ color: 'rgb(80, 144, 234)', backgroundColor: 'rgba(21, 61, 111, 0.44)', border: '1px solid rgba(21, 61, 111, 0.44)' }}
-          onClick={() => {
-            onPresentConnectModal()
-          }}>
-          Connect
-        </button>
-      )}
-    </div>
+    <>
+      <div>
+        {account ? (
+          <div className='font-semibold flex flex-nowrap p-2 rounded-xl bg-gradient-to-r from-blue-600 to-pink-600 border-primary'>
+            <button
+              className='mr-2 rounded-lg'
+              onClick={() => {
+                onPresentAccountModal()
+              }}>
+              {accountEllipsis}
+            </button>
+            {connector && <StatusIcon connector={connector} />}
+          </div>
+        ) : (
+          <div className='font-semibold flex flex-nowrap p-2 rounded-xl bg-gradient-to-r from-blue-600 to-pink-600 border-primary'>
+            <button className='mr-2 rounded-lg' onClick={() => toggleConnectModal()}>
+              Connect
+            </button>
+          </div>
+        )}
+      </div>
+
+      <ConnectModal />
+    </>
   )
 }
 

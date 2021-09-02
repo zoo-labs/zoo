@@ -83,16 +83,6 @@ const Index: React.FC<indexProps> = ({}) => {
     // className='lg:p-16 p-4 pr-0 lg:pr-0 mr-0 space-y-4 rounded-lg  m-4 flex flex-col relative filter drop-shadow z-10'
     <main className='flex flex-col  flex-grow w-full h-full lg:p-16 lg:m-4 p-0 m-0 lg:pr-0 lg:mr-0 space-y-4 rounded-lg  flex flex-col relative filter drop-shadow z-10'>
       <div className='flex lg:p-0 p-4 justify-center lg:justify-start items-end flex-wrap'>
-        <div className=' mr-4'>
-          <div className='flex items-center  cursor-pointer' onClick={() => handleFunds()}>
-            <span
-              className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-lg text-high-emphesis border-dark-800 bg-dark-700  hover:bg-primary h-full
-                `}
-              style={{ minHeight: 40 }}>
-              {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
-            </span>
-          </div>
-        </div>
         <div>
           <div className=' grid grid-cols-2 rounded-lg bg-dark-800 h-[46px] gap-2' style={{ height: 40 }}>
             {[
@@ -114,7 +104,7 @@ const Index: React.FC<indexProps> = ({}) => {
           </div>
         </div>
       </div>
-      <div className='flex'>{tab === 0 ? <Account /> : <Bank />}</div>
+      <div className='flex'>{tab === 0 ? <Account handleFunds={() => handleFunds()} wait={wait} /> : <Bank />}</div>
     </main>
   )
 }

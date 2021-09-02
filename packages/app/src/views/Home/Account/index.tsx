@@ -107,7 +107,12 @@ const HeaderFrame = styles.div<{ isSm: boolean }>`
   ${({ isSm }) => (isSm ? 'grid-template-columns: 1fr; padding: 1rem' : '')};
 `
 
-const Account: React.FC = () => {
+interface AccountProps {
+  handleFunds: () => void
+  wait: boolean
+}
+
+const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
   const [isInitial, setIsInitial] = useState(true)
   const [tab, setTab] = useState(0)
   const [allowance, setAllowance] = useState(false)
@@ -125,7 +130,7 @@ const Account: React.FC = () => {
     clear()
   }
 
-  let currentEggsOwned = 0;
+  let currentEggsOwned = 0
   if (account) {
     currentEggsOwned = Object.values(allEggs).filter((egg) => (egg.owner || '').toLowerCase() === account.toLowerCase() && !egg.burned).length
   }
@@ -235,8 +240,25 @@ const Account: React.FC = () => {
           <AccountHeader />
           <div className='flex flex-col justify-between h-full'>
             <div style={{ flex: 1 }} className='p-5 rounded'>
-              <div className='mb-2'>
-                <div className='text-base font-bold currentColor mb-2'>{numberWithCommas(balance)} ZOO</div>
+              <div className='mb-2 flex items-end'>
+                <div>
+                  <div className='text-base font-bold currentColor mb-2 text-lg'>Wallet Balance</div>
+                  <div className='text-base font-bold currentColor mb-2 text-2xl'>
+                    <span className='text-3xl'>{numberWithCommas(balance)} </span>ZOO
+                  </div>
+                </div>
+                <div className='ml-4'>
+                  <div className='flex items-center  cursor-pointer' onClick={() => handleFunds()}>
+                    <span
+                      className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-lg text-high-emphesis border-dark-800 bg-dark-700  hover:bg-primary h-full
+                `}
+                      style={{ minHeight: 40 }}>
+                      {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className='my-8'>
                 <Label style={{ fontSize: '20px' }}>{currentEggsOwned} Eggs Owned</Label>
               </div>
               <Eggs />
@@ -265,12 +287,12 @@ const Account: React.FC = () => {
               </div>
             </div>
           </div>
-          <div style={{ flex: 1 }} className='p-5 rounded my-4'>
+          {/* <div style={{ flex: 1 }} className='p-5 rounded my-4'>
             <Animals hybrid='pure' />
           </div>
           <div style={{ flex: 1 }} className='p-5 rounded my-4'>
             <Animals hybrid='hybrid' />
-          </div>
+          </div> */}
           {/* {tab === 0 ? (
             <div className='flex flex-col justify-between h-full'>
               <div style={{ backgroundColor: '#212429', flex: 1 }} className='p-5 rounded'>
@@ -329,7 +351,7 @@ const Account: React.FC = () => {
           right: '-15%',
           zIndex: -1,
         }}
-        className='absolute  bg-primary opacity-50  rounded-full z-0 filter  blur-3xl'></div>
+        className='absolute  bg-primary opacity-10  rounded-full z-0 filter  blur-3xl'></div>
       <div
         style={{
           // background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
@@ -341,7 +363,7 @@ const Account: React.FC = () => {
           bottom: '0%',
           zIndex: -1,
         }}
-        className='absolute  bg-pink rounded-full opacity-30  z-0 filter  blur-3xl'></div>
+        className='absolute  bg-pink rounded-full opacity-10  z-0 filter  blur-3xl'></div>
       {/* <div
           background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
           backgroundColor: 'rgba(20,20,20,1)',

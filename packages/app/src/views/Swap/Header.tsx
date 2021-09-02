@@ -1,8 +1,6 @@
 import { ChainId, Currency, Percent } from '@sushiswap/sdk'
 import React, { FC, useState, useEffect } from 'react'
 
-import { getToken } from 'util/contracts'
-
 // import MyOrders from '../exchange-v1/limit-order/MyOrders'
 // import NavLink from '../../components/NavLink'
 import Settings from '../../components/Settings'
@@ -10,6 +8,7 @@ import { currencyId } from '../../functions'
 import { useWeb3React } from '@web3-react/core'
 import { NavLink } from 'react-router-dom'
 import { useWeb3 } from 'hooks'
+import { getToken } from 'util/contracts'
 
 const getQuery = (input: any, output: any) => {
   if (!input && !output) return null

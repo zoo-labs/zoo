@@ -66,15 +66,7 @@ export default function CurrencyInputPanel({
     setModalOpen(false)
   }, [setModalOpen])
   console.log('pair', pair)
-  const newCurrency =
-    currency && currency.symbol === 'USDT'
-      ? {
-          symbol: 'ZOO',
-          logoURI: 'https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg',
-          isToken: true,
-          chainId: 1,
-        }
-      : currency
+  const newCurrency = currency && currency.symbol === ('ETH' || 'SUSHI') ? { ...currency, symbol: 'ZOO' } : { ...currency, symbol: 'ZOO' }
   return (
     <div id={id} className={`${hideInput ? 'p-4' : 'p-5'} rounded bg-dark-800`}>
       <div className='flex flex-col justify-between space-y-3 sm:space-y-0 sm:flex-row'>
@@ -94,7 +86,7 @@ export default function CurrencyInputPanel({
                 <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={54} margin={true} />
               ) : currency ? (
                 <div className='flex items-center'>
-                  {currency.symbol === 'USDT' ? (
+                  {currency.symbol === 'USDT' || currency.symbol === 'SUSHI' ? (
                     <img src='https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg' className='rounded' style={{ width: 54, height: 54 }} />
                   ) : (
                     <CurrencyLogo currency={currency} size={'54px'} className='rounded' />
