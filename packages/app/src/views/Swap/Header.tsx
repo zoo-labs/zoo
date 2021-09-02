@@ -1,8 +1,6 @@
 import { ChainId, Currency, Percent } from '@sushiswap/sdk'
 import React, { FC, useState, useEffect } from 'react'
 
-import { getToken } from 'util/contracts'
-
 // import MyOrders from '../exchange-v1/limit-order/MyOrders'
 // import NavLink from '../../components/NavLink'
 import Settings from '../../components/Settings'

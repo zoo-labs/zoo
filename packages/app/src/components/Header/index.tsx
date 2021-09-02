@@ -174,7 +174,7 @@ export default function Header() {
 
   const open = useCallback(() => setShow(true), [setShow])
 
-  const [active, setActive] = useState('account')
+  const [active, setActive] = useState('home')
   const { isXl, isXs, isSm, isMd, isLg } = useMatchBreakpoints()
   const { isDark, toggleTheme } = useTheme()
   const web3 = useWeb3()
@@ -243,10 +243,9 @@ export default function Header() {
         className={`self-center items-center grid grid-flow-col w-max rounded-2xl p-1 m-1 justify-self-center ${
           isMobile ? 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
         }`}
-        // style={{ backgroundColor: 'rgb(25, 27, 31)' }}
-      >
-        {[].map((path: string) => {
-          const selected = path == 'Swap' ? active == 'swap' || active == 'limit-order' : active === path.toLowerCase()
+        style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
+        {['Home', 'Bridge'].map((path: string) => {
+          const selected = path == 'Bridge' ? active == 'bridge' || active == 'limit-order' : active === path.toLowerCase()
           return (
             <a
               onClick={() => urlClick(path.toLowerCase())}
@@ -262,7 +261,7 @@ export default function Header() {
       <HeaderControls>
         {/* */}
 
-        {chainID && library && library.isMetaMask && !isSm && (
+        {chainID && !isNaN(chainID) && library && library.isMetaMask && !isSm && (
           <>
             <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
               <div
@@ -313,7 +312,7 @@ export default function Header() {
               <>
                 {/* <QuestionHelper text='Buy ZOO' show={show} /> */}
                 <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} pl='0.5rem' pr='0.5rem' fontWeight={500}>
-                  {numberWithCommas(balance)} BNB
+                  {numberWithCommas(balance) || 0} BNB
                 </BalanceText>
               </>
             ) : null}

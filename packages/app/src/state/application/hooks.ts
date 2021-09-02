@@ -41,8 +41,15 @@ export function useNewAnimalModalToggle(): () => void {
 export function useVideoPlayerModalToggle(): () => void {
   return useToggleModal(ApplicationModal.VIDEOPLAYER)
 }
+export function useConnectModalToggle(): () => void {
+  console.log('useConnectModalToggle')
+  return useToggleModal(ApplicationModal.CONNECT)
+}
 export function useBreedConfirmModalToggle(): () => void {
   return useToggleModal(ApplicationModal.BREEDCONFIRM)
+}
+export function useHatchDisabledModalToggle():()=>void {
+  return useToggleModal(ApplicationModal.HATCHDISABLED)
 }
 export function useNetworkModalToggle(): () => void {
 
