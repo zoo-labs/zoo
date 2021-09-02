@@ -6,7 +6,7 @@ const path = require('path')
 
 require('dotenv').config()
 
-const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'localhost'
+const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'testnet'
 const CHAIN_IDS = {
   hardhat:  '0x539',
   testnet:  '0x61',
