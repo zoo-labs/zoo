@@ -110,6 +110,21 @@ class Helper {
 }
 
 describe('ZooKeeper', () => {
+  it('can deploy upgradable', async () => {
+    const ZK = await ethers.getContractFactory("ZooKeeper")
+    const ZK2 = await ethers.getContractFactory("ZooKeeperV2")
+
+    const Market = await ethers.getContract("Market")
+    const Media = await ethers.getContract("Media")
+    const ZOO = await ethers.getContract("ZOO")
+    const Bridge = await ethers.getContract("Bridge")
+
+    const inst = await upgrades.deployProxy(ZK, [Market.address, Media.address, ZOO.address, Bridge.address])
+    const upgraded = await upgrades.upgradeProxy(inst.address, ZK2);
+
+    // Some expectation here
+  })
+
   it('can buy an egg and hatch an animal from the egg', async () => {
     const h = await Helper.setup()
 
