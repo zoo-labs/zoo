@@ -6,7 +6,7 @@ const utils = require('moralis-admin-cli/utils')
 const { BASE_URI } = require('moralis-admin-cli/config')
 const { restartServer } = require('moralis-admin-cli/commands/common')
 
-const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'localhost'
+const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'testnet'
 const CHAIN_IDS = {
   hardhat:  '0x539',
   testnet:  '0x61',
