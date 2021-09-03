@@ -32,12 +32,8 @@ const Index: React.FC<indexProps> = ({}) => {
     try {
       const decimals = await zooToken.methods.decimals().call()
       const rawBalance = await zooToken.methods.balanceOf(acc).call()
-      console.log('rawBalance ->', rawBalance)
       const divisor = parseFloat(Math.pow(10, decimals).toString())
-      console.log('divisor ->', divisor)
-
       const balance = rawBalance / divisor
-      console.log('rawBalance ->', balance)
       setBalance(parseFloat(balance.toFixed(4)))
     } catch (e) {
       console.error('ISSUE LOADING ZOO BALANCE \n', e)
