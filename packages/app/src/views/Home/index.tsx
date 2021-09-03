@@ -86,7 +86,7 @@ const Index: React.FC<indexProps> = ({}) => {
       <div className='flex lg:p-0 p-4 justify-center lg:justify-start items-end flex-wrap'>
         <div>
           <div
-            className={`self-center items-center grid grid-flow-col w-max rounded-2xl p-1 m-1 justify-self-center ${
+            className={`self-center items-center grid grid-flow-col w-max rounded-xl p-1 m-1 justify-self-center ${
               isMobile ? 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
             }`}
             style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
@@ -97,10 +97,10 @@ const Index: React.FC<indexProps> = ({}) => {
               const selected = tab == type.id
               return (
                 <div
-                  className={`items-left rounded-md cursor-pointer text-md font-normal flex text-gray-300 ${
-                    selected && 'font-semibold rounded-xl text-white bg-gradient-to-r from-primary to-pink hover:from-blue-600 hover:to-pink-600'
+                  className={`items-left rounded-xl cursor-pointer text-md font-normal flex text-gray-300 ${
+                    selected && 'font-semibold text-white bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2'
                   }`}
-                  style={{ backgroundColor: selected ? 'rgb(44, 47, 54)' : 'transparent', padding: '10px 14px' }}
+                  style={{ padding: '10px 14px' }}
                   onClick={() => setTab(type.id)}>
                   <span>{type.name}</span>
                 </div>

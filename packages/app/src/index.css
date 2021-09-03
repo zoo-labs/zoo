@@ -126,6 +126,9 @@ body {
     --tw-gradient-from:  #6c7464;
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
 }
+.to-primary {
+    --tw-gradient-to:rgb(140, 79, 248);
+}
 .to-gold {
     --tw-gradient-to:#f2c282;
 }
@@ -134,4 +137,20 @@ body {
 }
 .bg-secondary-dark {
     background-color: #6c7464;
+}
+.hover\:to-pink:hover {
+    --tw-gradient-to:rgba(243,56,195,1);;
+}
+.hover\:from-btn1:hover {
+    --tw-gradient-from:rgb(2, 158, 208);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
+.hover\:to-btn2:hover {
+    --tw-gradient-to: rgba(243,56,195,1);
+}
+
+@keyframes border-pulsate {
+    0%   { border-color: rgba(0, 255, 255, 1); }
+    50% { border-color: rgba(0, 255, 255, 0); }
+    100%   { border-color: rgba(0, 255, 255, 1); }
 }
