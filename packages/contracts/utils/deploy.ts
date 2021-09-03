@@ -23,7 +23,7 @@ export function Deploy(name: string, options: any = {}, fn?: any) {
     // Use deployer named account to deploy contract
     const { deployer } = await getNamedAccounts()
 
-    async function deployContract(args: any[]) {
+    async function deployContract(args: any[] = []) {
       const libs = {}
 
       if (libraries != null) {
