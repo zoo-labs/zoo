@@ -7,7 +7,7 @@ export default Deploy('Faucet', { dependencies: ['ZOO'] }, async({ ethers, deplo
 
   const tx = await deploy([token.address])
 
-  if (hre.network.name != 'hardhat') return
+  if (hre.network.name == 'mainnet') return
 
   // 100B ZOO to faucet
   const exp = ethers.BigNumber.from('10').pow(18)
