@@ -81,6 +81,7 @@ export function useApproveCallback(
     const estimatedGas = await tokenContract.estimateGas.approve(spender, MaxUint256).catch(() => {
       // general fallback for tokens who restrict approval amounts
       useExact = true
+      cosnole.log('spender')
       return tokenContract.estimateGas.approve(spender, amountToApprove.quotient.toString())
     })
 
