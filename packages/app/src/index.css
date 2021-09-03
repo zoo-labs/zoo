@@ -122,11 +122,18 @@ body {
     --tw-gradient-from:  rgb(140, 79, 248);
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
 }
+.hover\:from-primary:hover {
+    --tw-gradient-from:  rgb(140, 79, 248);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
 .from-secondary-dark {
     --tw-gradient-from:  #6c7464;
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
 }
 .to-primary {
+    --tw-gradient-to:rgb(140, 79, 248);
+}
+.hover\:to-primary:hover {
     --tw-gradient-to:rgb(140, 79, 248);
 }
 .to-gold {
@@ -140,6 +147,13 @@ body {
 }
 .hover\:to-pink:hover {
     --tw-gradient-to:rgba(243,56,195,1);;
+}
+.from-btn1 {
+    --tw-gradient-from:rgb(2, 158, 208);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
+.to-btn2 {
+    --tw-gradient-to: rgba(243,56,195,1);
 }
 .hover\:from-btn1:hover {
     --tw-gradient-from:rgb(2, 158, 208);
