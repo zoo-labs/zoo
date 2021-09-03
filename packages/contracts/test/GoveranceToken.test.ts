@@ -6,7 +6,7 @@ const { expect } = requireDependencies()
 
 const setupTest = setupTestFactory(['GoveranceToken'])
 
-describe.only('GoveranceToken', function () {
+describe('GoveranceToken', function () {
   it('it needs tests', async function () {
   })
 })

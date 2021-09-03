@@ -94,7 +94,7 @@ describe('Savage', function () {
     await z1.approve(savage.address, amountIn)
     await savage.drainPool()
 
-    await zoo.unpause()
+    // await zoo.unpause()
 
     expect(await bnb.balanceOf(savage.address)).to.be.at.least(finalBNB)
 
