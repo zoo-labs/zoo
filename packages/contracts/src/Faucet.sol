@@ -9,7 +9,7 @@ import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 contract Faucet is Ownable {
     using SafeMath for uint256;
 
-    uint256 public rate = 10000000;
+    uint256 public rate = 100000;
 
     IERC20 token;
 
