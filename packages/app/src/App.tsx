@@ -22,6 +22,7 @@ import Header from 'components/Header'
 import indexRoutes from 'routes'
 
 import { createBrowserHistory } from 'history'
+import ToastListener from 'components/ToastListener'
 // import 'swiper/swiper.min.css'
 // import 'swiper/components/pagination/pagination.min.css'
 
@@ -219,7 +220,7 @@ const App: React.FC = () => {
             </div>
           </SuspenseWithChunkError>
         </Switch>
-        {/* <ToastListener /> */}
+        <ToastListener />
       </Router>
     </Suspense>
   )
