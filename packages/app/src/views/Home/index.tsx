@@ -72,15 +72,20 @@ const Index: React.FC<indexProps> = ({}) => {
 
   const handleFunds = () => {
     switch (chainID) {
+      case 1338:
+        handleFaucet()
+        break
       case 1337:
         handleFaucet()
         break
       case 97:
         handleFaucet()
         break
+      case 4:
+        handleFaucet()
+        break
       default:
         window.open('https://pancakeswap.info/token/0x19263f2b4693da0991c4df046e4baa5386f5735e', '_blank')
-      // redirectWindow.location
     }
   }
   useEffect(() => {

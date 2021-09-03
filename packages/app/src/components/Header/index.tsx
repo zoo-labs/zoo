@@ -24,7 +24,7 @@ import NetworkCard from './NetworkCard'
 import { useModalOpen } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 
-const logoURL = window.location.origin + '/images/logo-white.png'
+const logoURL = window.location.origin + '/static/images/logo-white.png'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; isMobile: boolean; isFeed?: boolean; modalOpen: boolean }>`
   grid-template-columns: 120px 1fr 120px;
@@ -273,8 +273,7 @@ export default function Header() {
             <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
               <div className='flex items-center rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'>
                 <div
-                  // style={{ width: 40, height: 40 }}
-                  className='grid items-center grid-flow-col p-2 space-x-2 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'
+                  className='grid items-center grid-flow-col p-1 space-x-1 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'
                   onClick={() => {
                     const tokenAddress = '0x34f3F270B85532f32c6F8039B960c569816Fc67a'
                     const tokenSymbol = 'ZOO'
@@ -307,7 +306,7 @@ export default function Header() {
                       }
                     } catch (error) {}
                   }}>
-                  <img src={require('../../assets/img/hybrid1.png').default} alt='ZOO' className='rounded-md' style={{ width: 22, height: 22 }} />
+                  <img src={require('../../assets/img/hybrid1.png').default} alt='ZOO' className='rounded-md' style={{ width: 32, height: 32 }} />
                 </div>
               </div>
             </Tooltip>
@@ -316,11 +315,11 @@ export default function Header() {
           </>
         )}
         <HeaderElement>
-          <AccountElement active={!!account} style={{ padding: '3px 3px 3px 0', pointerEvents: 'auto' }} className='rounded-xl'>
+          <AccountElement active={!!account} style={{ padding: '4px', pointerEvents: 'auto' }} className='rounded-xl'>
             {account ? (
               <>
                 {/* <QuestionHelper text='Buy ZOO' show={show} /> */}
-                <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} pl='0.5rem' pr='0.5rem' fontWeight={500}>
+                <BalanceText onMouseEnter={open} style={{ flexShrink: 0 }} pl='0.5rem' pr='0.5rem' fontWeight={500}>
                   {numberWithCommas(balance) || 0} BNB
                 </BalanceText>
               </>

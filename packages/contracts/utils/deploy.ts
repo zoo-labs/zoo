@@ -34,11 +34,11 @@ export function Deploy(name: string, options: any = {}, fn?: any) {
       }
 
       if (options.proxy) {
-        const artifact = await deployments.getArtifact(name)
         const ProxyFactory = await ethers.getContractFactory(name)
         const tx = await upgrades.deployProxy(ProxyFactory, args, options.proxy)
-        await deployments.save(name, { abi: artifact.abi, address: tx.address })
+        const artifact = await deployments.getArtifact(name)
         console.log(`deploying "${name}" (tx: ${tx.hash})...: deployed at ${tx.address}`)
+        await deployments.save(name, { abi: artifact.abi, address: tx.address })
         return await tx
       }
 

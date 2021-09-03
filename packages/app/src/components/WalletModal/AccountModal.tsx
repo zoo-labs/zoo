@@ -201,22 +201,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
         </div>
         <div className='space-y-2'>
           <div className='flex items-center justify-between mt-8'>
-           
-            {/* {
-              chainId === 97 ? (
-                <div className='flex items-center  cursor-pointer' onClick={() => handleFunds()}>
-                  <span
-                    className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-lg text-high-emphesis border-dark-800 bg-dark-700  hover:bg-primary h-full
-                      `}
-                    style={{ minHeight: 40 }}>
-                    {chainId !== 97 && chainId !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
-                  </span>
-                </div>
-              ) : (
-                <div className='text-base font-bold currentColor'>{numberWithCommas(balance)} ZOO</div>
-              )
-            } */}
-            
+
             <div className='text-base font-bold currentColor'>{numberWithCommas(balance)} ZOO</div>
 
             <div>
