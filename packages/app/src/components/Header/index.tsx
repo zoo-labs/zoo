@@ -255,7 +255,7 @@ export default function Header() {
       </div>
 
       <HeaderControls>
-        {!isSm && (
+        {!isMobile && (
           <>
             <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
               <div className='flex items-center mr-2 rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'>
