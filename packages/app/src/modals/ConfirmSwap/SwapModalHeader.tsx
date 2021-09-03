@@ -43,9 +43,9 @@ export default function SwapModalHeader({
             <CurrencyLogo currency={trade.inputAmount.currency} size={48} />
             <div className='overflow-ellipsis w-[220px] overflow-hidden font-bold text-2xl text-high-emphesis'>{trade.inputAmount.toSignificant(6)}</div>
           </div>
-          <div className='ml-3 text-2xl font-medium text-high-emphesis'>{trade.inputAmount.currency.symbol}</div>
+          <div className='ml-2 text-2xl font-medium text-high-emphesis'>{trade.inputAmount.currency.symbol}</div>
         </div>
-        <div className='ml-3 mr-3 min-w-[24px]'>
+        <div className='ml-2 mr-2 min-w-[24px]'>
           <ArrowDown size={24} />
         </div>
         <div className='flex items-center justify-between'>

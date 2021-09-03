@@ -8,6 +8,8 @@ import { useHistory } from 'react-router-dom'
 import styles, { useTheme } from 'styled-components'
 import Metamask from '../../../components/WalletModal/icons/Metamask'
 
+import ToastListener from '../../../components/ToastListener'
+
 import { Label, Text } from 'components/Text'
 import { Flex, Heading, useMatchBreakpoints } from 'components'
 import Body from 'components/layout/Body'
@@ -151,7 +153,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     setZooKeeper(getZooKeeper(web3))
     setZooDrop(getDrop(web3))
     setAccount(web3.account)
-  }, [web3])
+  }, [account, chainID])
 
   const mount = async () => {
     try {
@@ -212,6 +214,8 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
           })
           .catch((err) => {
             console.log('Error in buyEgg', err)
+            toastClear()
+            toastError('Error buying an egg')
             setDisable(false)
           })
       } catch (error) {
@@ -245,11 +249,11 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
           <AccountHeader />
           <div className='flex flex-col justify-between h-full'>
             <div style={{ flex: 1 }} className='p-5 rounded'>
-              <div className='mb-2 flex items-end'>
+              <div className='flex items-end'>
                 <div>
                   <div className='text-base font-bold currentColor mb-2 text-lg'>Wallet Balance</div>
                   <div className='text-base font-bold currentColor text-2xl'>
-                    <span className='text-3xl'>{numberWithCommas(balance.toFixed(3))} </span>ZOO
+                    <span className='text-2xl'>{numberWithCommas(balance.toFixed(3))} </span>ZOO
                   </div>
                 </div>
                 <div className='ml-4 relative inline-flex rounded-md shadow-sm'>
@@ -358,6 +362,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
           )} */}
         </div>
       </div>
+      <ToastListener />
     </>
   )
 }
