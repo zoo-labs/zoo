@@ -275,7 +275,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
                 </div>
               </div>
 
-              <div className='text-base font-bold currentColor pt-8 text-xl'>
+              <div className='text-base font-bold currentColor pt-8 pb-2 text-xl'>
                 {currentEggsOwned} Eggs Owned
               </div>
               <Eggs />
