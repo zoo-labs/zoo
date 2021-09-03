@@ -23,6 +23,7 @@ import { numberWithCommas } from 'components/Functions'
 import NetworkCard from './NetworkCard'
 import { useModalOpen } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
+import { NETWORK_LABEL } from 'constants/networks'
 
 const logoURL = window.location.origin + '/static/images/logo-white.png'
 
@@ -227,7 +228,7 @@ export default function Header() {
   useEffect(() => {
     getBalance()
   }, [account, chainID])
-
+  console.log('chainID', chainID)
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
 
@@ -317,7 +318,7 @@ export default function Header() {
               <>
                 {/* <QuestionHelper text='Buy ZOO' show={show} /> */}
                 <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} pl='0.5rem' pr='0.5rem' fontWeight={500}>
-                  {numberWithCommas(balance) || 0} BNB
+                  {numberWithCommas(balance) || 0} {NETWORK_LABEL[chainID]}
                 </BalanceText>
               </>
             ) : null}
