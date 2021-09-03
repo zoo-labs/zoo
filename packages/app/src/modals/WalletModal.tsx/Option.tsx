@@ -46,5 +46,5 @@ export default function Option({
     return <a href={link}>{content}</a>
   }
 
-  return !active ? content : <div className='w-full p-px rounded bg-gradient-to-r from-blue-500 via-blue-800 to-pink-500'>{content}</div>
+  return !active ? content : <div className='w-full p-px rounded bg-gradient-to-b from-blue-500 via-blue-800 to-pink-500'>{content}</div>
 }
