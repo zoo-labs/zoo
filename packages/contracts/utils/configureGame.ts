@@ -35,7 +35,6 @@ export default async function configureGame(keeper: any, drop: any) {
   ]
 
   eggs.map(async (v) => {
-    console.log('Add Egg:', v.name)
     await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
   })
 
@@ -46,19 +45,16 @@ export default async function configureGame(keeper: any, drop: any) {
     return a.probability - b.probability
   })
   rarities.map(async (v) => {
-    console.log('Add Rarity:', v.name, v.probability, v.yield, v.boost)
     await drop.setRarity(v.name, v.probability, v.yield, v.boost)
   })
 
   // Add animals
   animals.map(async (v) => {
-    console.log('Add Animal:', v.name)
     await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
   })
 
   // Add hybrids
   hybrids.map(async (v) => {
-    console.log('Add Hybrid:', v.name)
     await drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
   })
 }

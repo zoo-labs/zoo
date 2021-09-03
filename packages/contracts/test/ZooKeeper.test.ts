@@ -52,11 +52,11 @@ class Helper {
       const contracts = await deployments.fixture() // ensure you start from a fresh deployments
 
       inst.signers = signers
-      inst.ZOO = await ethers.getContractAt('Zoo', contracts.ZooToken.address, signers[0])
+      inst.ZOO = await ethers.getContractAt('ZOO', contracts.ZOO.address, signers[0])
       inst.Market = await ethers.getContractAt('Market', contracts.Market.address, signers[0])
       inst.Media = await ethers.getContractAt('Media', contracts.Media.address, signers[0])
       inst.zooKeeper = await ethers.getContractAt('ZooKeeper', contracts.ZooKeeper.address, signers[0])
-      inst.Drop = await ethers.getContractAt('ZooDrop', contracts.ZooDrop.address, signers[0])
+      inst.Drop = await ethers.getContractAt('Drop', contracts.Drop.address, signers[0])
 
       // this mint is executed once and then createFixture will ensure it is snapshotted
       // await zooToken.mint(tokenOwner.deployer, 100000).then(tx => tx.wait());
