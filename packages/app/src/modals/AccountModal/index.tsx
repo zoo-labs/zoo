@@ -2,68 +2,27 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { connectorLocalStorageKey, useMatchBreakpoints } from 'components'
-import { setupNetwork } from 'util/wallet'
-import BorderButton from 'components/Button/BorderButton'
-import { connectorsByName } from '../../connectors'
-// import { useMoralis } from "react-moralis"
-// import Moralis from 'moralis'
-import { BigNumber, ethers } from 'ethers'
-import Button from '../../components/Button/Button'
-import { Label, Text } from '../../components/Text'
-import Flex from '../../components/Box/Flex'
-import { Modal, ModalCloseButton } from '../Modal'
-import CopyToClipboard from './CopyToClipboard'
-import { FaExchangeAlt } from 'react-icons/fa'
 import useWeb3 from 'hooks/useWeb3'
 import { getFaucet, getToken } from 'util/contracts'
 import AltModal from 'components/Modal/AltModal'
 import { numberWithCommas } from 'components/Functions'
-import { CloseIcon } from 'components/Svg'
-import CopyHelper from './Copy'
-import useWalletModal from './useWalletModal'
 import HeaderModal from 'components/Modal/HeaderModal'
-// import LinkExternal from '../../components/Link/LinkExternal'
+import { ApplicationModal } from 'state/application/actions'
+import { useModalOpen, useAccountModalToggle, useWalletModalToggle } from 'state/application/hooks'
+import Modal from '../../components/NewModal'
+import useAuth from 'hooks/useAuth'
+import { useHistory } from 'react-router'
+import CopyHelper from 'components/WalletModal/Copy'
 
-interface Props {
-  account: string
-  logout: () => void
-  onDismiss?: () => void
-  history?: any
-}
+interface AccountModalProps {}
 
-const FitContent = styled.div`
-  * > * {
-    width: fit-content;
-  }
-  svg {
-    width: 24px;
-  }
-`
+const AccountModal: React.FC<AccountModalProps> = ({}) => {
+  const accountModal = useModalOpen(ApplicationModal.ACCOUNT)
+  const toggleccountModal = useAccountModalToggle()
+  const toggleWalletModal = useWalletModalToggle()
 
-const LabelWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-evenly;
-  align-items: center;
-`
-
-const ValueWrapper = styled(Text)`
-    color: ${({ theme }) => theme.colors.text}
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 8px;
-`
-const RowWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  margin: 16px;
-`
-
-const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null, history }) => {
-  const { chainId } = useWeb3React()
+  const { logout } = useAuth()
+  const { chainId, account } = useWeb3React()
   const scanLinks = {
     1: `https://etherscan.io/address/`,
     42: `https://kovan.etherscan.io/address/`,
@@ -71,39 +30,24 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
     97: `https://testnet.bscscan.com/address/`,
   }
   const base = scanLinks[chainId] ? scanLinks[chainId] : `https://etherscan.io/address/`
-  const profileLink = `${base}${account}`
   const bscType = chainId === 97 || chainId === 56
-  const { activate } = useWeb3React()
   const { isSm, isXs } = useMatchBreakpoints()
   const [wait, setWait] = useState(false)
   const [balance, setBalance] = useState(0.0)
   const web3 = useWeb3()
   const mobile = isSm || isXs
-  const moreSpace = mobile && !bscType
   const zooToken = getToken(web3)
   const faucet = getFaucet(web3)
   const faucetAmt = web3.utils.toWei('50')
-  const { onPresentWalletModal } = useWalletModal()
 
-  // const { authenticate, isAuthenticated } = useMoralis();
-
-  const bscSwith = async (network) => {
-    const connector = connectorsByName.injected
-    const hasSetup = await setupNetwork(network)
-    if (hasSetup) {
-      activate(connector)
-      window.localStorage.setItem(connectorLocalStorageKey, 'injected')
-      onDismiss()
-    }
-  }
-
+  const history = useHistory()
   const getBalance = async () => {
     try {
       const decimals = await zooToken.methods.decimals().call()
       const rawBalance = await zooToken.methods.balanceOf(account).call()
       const divisor = parseFloat(Math.pow(10, decimals).toString())
       const balance = rawBalance / divisor
-      setBalance(balance)
+      setBalance(parseFloat(balance.toFixed(3)))
     } catch (e) {
       console.error('ISSUE LOADING ZOO BALANCE \n', e)
     }
@@ -148,10 +92,10 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
   }
 
   return (
-    <AltModal title='Your wallet' onDismiss={onDismiss} maxWidth='440px'>
+    <Modal isOpen={accountModal} onDismiss={() => null} maxWidth={440}>
       <div className='space-y-3'>
         <div className='space-y-3'>
-          <HeaderModal onDismiss={onDismiss} title='Account' />
+          <HeaderModal onDismiss={() => toggleccountModal()} title='Account' />
           <div className='space-y-3'>
             <div className='flex items-center justify-between'>
               <div className='font-medium text-baseline text-secondary'>Connected with {getNetwork(chainId)}</div>
@@ -161,7 +105,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
 
                   //  : null
 
-                  onClick={() => onPresentWalletModal()}
+                  onClick={() => toggleWalletModal()}
                   className='bg-dark-700 bg-opacity-20 outline-gray rounded text-gray hover:bg-opacity-40 disabled:bg-opacity-20 px-2 py-1 text-xs rounded disabled:cursor-not-allowed focus:outline-none'>
                   Change
                 </button>
@@ -188,6 +132,21 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
         </div>
         <div className='space-y-2'>
           <div className='flex items-center justify-between mt-8'>
+            {/* {
+              chainId === 97 ? (
+                <div className='flex items-center  cursor-pointer' onClick={() => handleFunds()}>
+                  <span
+                    className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-lg text-high-emphesis border-dark-800 bg-dark-700  hover:bg-primary h-full
+                      `}
+                    style={{ minHeight: 40 }}>
+                    {chainId !== 97 && chainId !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get Zoo'}
+                  </span>
+                </div>
+              ) : (
+                <div className='text-base font-bold currentColor'>{numberWithCommas(balance)} ZOO</div>
+              )
+            } */}
+
             <div className='text-base font-bold currentColor'>{numberWithCommas(balance)} ZOO</div>
 
             <div>
@@ -196,7 +155,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
                   logout()
                   window.localStorage.removeItem(connectorLocalStorageKey)
                   history.push(`/login`)
-                  onDismiss()
+                  toggleccountModal()
                 }}
                 className='bg-dark-700 bg-opacity-20 outline-gray rounded text-gray hover:bg-opacity-40 disabled:bg-opacity-20 px-2 py-1 text-xs rounded disabled:cursor-not-allowed focus:outline-none'>
                 Logout
@@ -205,52 +164,7 @@ const AccountModal: React.FC<Props> = ({ account, logout, onDismiss = () => null
           </div>
         </div>
       </div>
-
-      {/* <Label style={{ marginBottom: -20, padding: 0 }}>Address</Label>
-      <ValueWrapper>{account}</ValueWrapper>
-      <Flex justifyContent='space-evenly' flexDirection='column' mb={bscType ? '8px' : '32px'}>
-        <LabelWrapper>
-          <Label>Balance</Label>
-        </LabelWrapper>
-        <ValueWrapper>{balance} ZOO</ValueWrapper>
-      </Flex>
-      <Flex width='100%' alignItems='center' justifyContent='space-between' flexDirection={moreSpace ? 'column' : 'row'}>
-        {chainId !== 56 ? (
-          <BorderButton
-            style={{ fontSize: 14 }}
-            mb={moreSpace ? '8px' : null}
-            onClick={() => {
-              bscSwith('bsc')
-            }}>
-            {switchIcon}
-            to BSC
-          </BorderButton>
-        ) : null}
-        {chainId !== 97 ? (
-          <BorderButton
-            mb={moreSpace ? '8px' : null}
-            style={{ fontSize: 14 }}
-            onClick={() => {
-              bscSwith('chapel')
-            }}
-            width={mobile ? 'auto' : '170px'}>
-            {switchIcon}
-            to BSC-Test
-          </BorderButton>
-        ) : null}
-        <BorderButton
-          scale='sm'
-          style={{ fontSize: 14 }}
-          onClick={() => {
-            logout()
-            window.localStorage.removeItem(connectorLocalStorageKey)
-            history.push(`/login`)
-            onDismiss()
-          }}>
-          Logout
-        </BorderButton>
-      </Flex> */}
-    </AltModal>
+    </Modal>
   )
 }
 
