@@ -32,7 +32,7 @@ const RowLayout = styled.div`
     // min-width: calc(100vw - 20px);
     // max-width: 31.5%;
     width: 100%;
-    margin: 8px;
+    margin: 0px;
     margin-bottom: 32px;
   }
 `
@@ -198,17 +198,17 @@ const Eggs: React.FC<EggsProps> = ({}) => {
 
             // </Swiper>
             <Swiper
-              slidesPerView={isSm ? 2 : isMd ? 6 : 12}
+              slidesPerView={isSm ? 3 : isMd ? 9 : 12}
               // spaceBetween={isSm ? 4 : isMd ? 15 : 30}
-              spaceBetween={0}
+              spaceBetween={8}
               pagination={{
                 clickable: true,
               }}
               className='mySwiper'>
               {eggData.map((egg) => {
                 return (
-                  <SwiperSlide key={egg.tokenID} style={{ minWidth: 150 }}>
-                    <div className='flex items-center' style={{ height: 230, width: '100%' }}>
+                  <SwiperSlide key={egg.tokenID} style={{ minWidth: 123 }}>
+                    <div className='flex items-center' style={{ height: 200, width: '100%' }}>
                       <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
                     </div>
                   </SwiperSlide>
