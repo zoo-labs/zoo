@@ -59,8 +59,8 @@ body {
     border-color: rgba(32,34,49,1);
 }
 
-.border-gray-600 {
-    border-color: rgba(32,34,49,0.75);
+.border-gray-500 {
+    border-color: rgba(32,34,49,1);
 }
 
 .min-h-empty {
@@ -124,7 +124,8 @@ body {
 }
 
 .from-primary {
-    --tw-gradient-from:  rgb(140, 79, 248);
+    --tw-gradient-to: rgba(243,56,195,1);
+    /* --tw-gradient-from:  rgb(140, 79, 248); */
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
 }
 .hover\:from-primary:hover {
@@ -139,7 +140,7 @@ body {
     --tw-gradient-to:rgb(140, 79, 248);
 }
 .hover\:to-primary:hover {
-    --tw-gradient-to:rgb(140, 79, 248);
+    --tw-gradient-to:rgba(59, 130, 246, 0));
 }
 .to-gold {
     --tw-gradient-to:#f2c282;
@@ -154,18 +155,19 @@ body {
     --tw-gradient-to:rgba(243,56,195,1);;
 }
 .from-btn1 {
-    --tw-gradient-from:rgb(2, 158, 208);
+    --tw-gradient-from: rgba(243,56,195,0.8);
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
 }
 .to-btn2 {
-    --tw-gradient-to: rgba(243,56,195,1);
+    --tw-gradient-to: rgba(54, 146, 244, 0.9);
 }
 .hover\:from-btn1:hover {
-    --tw-gradient-from:rgb(2, 158, 208);
+    --tw-gradient-from: rgba(54, 146, 244, 0.9);
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
 }
+
 .hover\:to-btn2:hover {
-    --tw-gradient-to: rgba(243,56,195,1);
+    --tw-gradient-from:rgba(39, 98, 238, 0.85);
 }
 
 @keyframes border-pulsate {
