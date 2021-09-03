@@ -3,16 +3,18 @@
 pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
+import { Counters } from '@openzeppelin/contracts/utils/Counters.sol';
+import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
+import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import { Initializable } from '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
 import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
-import { UUPSUpgradeable } from '@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol';
-import { Counters } from '@openzeppelin/contracts/utils/Counters.sol';
 import { SafeMath } from '@openzeppelin/contracts/utils/math/SafeMath.sol';
-import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
-import { IZoo } from './interfaces/IZoo.sol';
-import { IDrop } from './interfaces/IDrop.sol';
+import { UUPSUpgradeable } from '@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol';
+
 import { IMarket } from './interfaces/IMarket.sol';
+import { IDrop } from './interfaces/IDrop.sol';
 import { IMedia } from './interfaces/IMedia.sol';
+import { IZoo } from './interfaces/IZoo.sol';
 
 import './console.sol';
 
@@ -130,6 +132,8 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
 
   // Accept ZOO and return Egg NFT
   function buyEggs(uint256 dropID, uint256 quantity) public {
+    require(media.balanceOf(msg.sender) < 4, "Only 3 eggs allowed");
+
     console.log('buyEggs', dropID, quantity);
     for (uint8 i = 0; i < quantity; i++) {
       buyEgg(dropID);
