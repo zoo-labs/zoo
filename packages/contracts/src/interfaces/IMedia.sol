@@ -4,13 +4,14 @@
 pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
+import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import { IMarket } from "./IMarket.sol";
 import { IZoo } from "./IZoo.sol";
 
 /**
  * @title Interface for Zoo Protocol's Media
  */
-interface IMedia {
+interface IMedia is IERC721 {
     struct EIP712Signature {
         uint256 deadline;
         uint8 v;
