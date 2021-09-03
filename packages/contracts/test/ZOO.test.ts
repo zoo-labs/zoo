@@ -101,6 +101,44 @@ describe('ZOO', function () {
     await expect(token.connect(signers[1]).transfer(address2, 100)).to.be.revertedWith('Address is on blacklist')
   })
 
+  describe('transfer', async () => {
+    it('disallows when paused', async () => {
+      const {
+        signers,
+        tokens: { ZOO },
+      } = await setupTest()
+      await ZOO.pause()
+      await expect(ZOO.transfer(signers[1].address, signers[2].address)).to.be.rejectedWith('Pausable: paused')
+    })
+
+    it('disallows a to address that is blacklisted', async () => {
+      const {
+        signers,
+        tokens: { ZOO },
+      } = await setupTest()
+      await ZOO.blacklistAddress(signers[1].address)
+      await expect(ZOO.transfer(signers[1].address, 2000)).to.be.rejectedWith('Address is on blacklist')
+    })
+
+    it('disallows a from address that is blacklisted', async () => {
+      const {
+        signers,
+        tokens: { ZOO },
+      } = await setupTest()
+      await ZOO.blacklistAddress(signers[2].address)
+      await expect(ZOO.connect(signers[2]).transfer(signers[2].address, 2000)).to.be.rejectedWith('Address is on blacklist')
+    })
+    it('transfers', async () => {
+      const {
+        signers,
+        tokens: { ZOO },
+      } = await setupTest()
+      await ZOO.mint(signers[0].address, 2000000000000)
+      await expect(ZOO.transfer(signers[2].address, 2000)).not.to.be.rejected
+      expect(await ZOO.balanceOf(signers[2].address)).to.be.equal(2000)
+    })
+  })
+
   describe('configure', async () => {
     it('allows owner to upgrade bridge through configure', async () => {
       const {
@@ -145,6 +183,5 @@ describe('ZOO', function () {
     })
 
     it('allows the bridge to call mint')
-
   })
 })
