@@ -110,16 +110,17 @@ const HeaderFrame = styles.div<{ isSm: boolean }>`
 interface AccountProps {
   handleFunds: () => void
   wait: boolean
+  balance: number
 }
 
-const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
+const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   const [isInitial, setIsInitial] = useState(true)
   const [tab, setTab] = useState(0)
   const [allowance, setAllowance] = useState(false)
   const [disable, setDisable] = useState(false)
   const [disableApprove, setDisableApprove] = useState(false)
   const [isApproving, setIsApproving] = useState(false)
-  const [balance, setBalance] = useState(0)
+  // const [balance, setBalance] = useState(0)
   const [keepApprove, setKeepApprove] = useState(true)
   const web3 = useWeb3()
 
@@ -150,19 +151,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
     setZooDrop(getDrop(web3))
   }, [web3])
 
-  const getBalance = async () => {
-    try {
-      const decimals = await zooToken.methods.decimals().call()
-      const rawBalance = await zooToken.methods.balanceOf(account).call()
-      const divisor = parseFloat(Math.pow(10, decimals).toString())
-      const balance = rawBalance / divisor
-      setBalance(balance)
-    } catch (e) {
-      console.error('ISSUE LOADING ZOO BALANCE \n', e)
-      toastClear()
-      toastError('Failed to load ZOO balance')
-    }
-
+  const mount = async () => {
     try {
       const allowance = await zooToken.methods.allowance(account, zooKeeper.options.address).call()
       if (allowance > 0) {
@@ -206,16 +195,6 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
     })
   }
 
-  useEffect(() => {
-    let mounted = true
-    if (mounted) {
-      getBalance()
-    }
-    return () => {
-      mounted = false
-    }
-  }, [account, chainID])
-
   const buyEgg = async () => {
     setDisable(true)
     if (currentEggsOwned < 3) {
@@ -243,7 +222,15 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
       history.push('/feed/market')
     }
   }
-
+  useEffect(() => {
+    let mounted = true
+    if (mounted) {
+      mount()
+    }
+    return () => {
+      mounted = false
+    }
+  }, [account, chainID])
   return (
     <
       // style={{ height: '100vh' }} className='flex items-center'
@@ -361,43 +348,6 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
           )} */}
         </div>
       </div>
-      <div
-        style={{
-          // background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
-          width: '50vw',
-          height: '50vh',
-          // transform: 'translate(-50vw, -100vh)',
-          top: '0%',
-
-          right: '-15%',
-          zIndex: -1,
-        }}
-        className='absolute  bg-primary opacity-10  rounded-full z-0 filter  blur-3xl'></div>
-      <div
-        style={{
-          // background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
-          width: '50vw',
-          height: '50vh',
-          // transform: 'translate(-50vw, -100vh)',
-          left: '-15%',
-          right: 0,
-          bottom: '0%',
-          zIndex: -1,
-        }}
-        className='absolute  bg-pink rounded-full opacity-10  z-0 filter  blur-3xl'></div>
-      {/* <div
-          background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
-          backgroundColor: 'rgba(20,20,20,1)',
-          width: '200vw',
-          height: '200vh',
-          transform: 'translate(-50vw, -100vh)',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: -1,
-
-        }}
-        className='fixed '></div> */}
     </>
   )
 }
