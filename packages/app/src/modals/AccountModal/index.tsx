@@ -35,16 +35,20 @@ const AccountModal: React.FC<AccountModalProps> = ({}) => {
   const [wait, setWait] = useState(false)
   const [balance, setBalance] = useState(0.0)
   const web3 = useWeb3()
+
+  const [zooToken, setZooToken] = useState(getToken(web3))
+
+
   const mobile = isSm || isXs
-  const zooToken = getToken(web3)
   const faucet = getFaucet(web3)
   const faucetAmt = web3.utils.toWei('50')
 
   const history = useHistory()
   const getBalance = async () => {
+    if (!web3.account) return;
     try {
       const decimals = await zooToken.methods.decimals().call()
-      const rawBalance = await zooToken.methods.balanceOf(account).call()
+      const rawBalance = await zooToken.methods.balanceOf(web3.account).call()
       const divisor = parseFloat(Math.pow(10, decimals).toString())
       const balance = rawBalance / divisor
       setBalance(parseFloat(balance.toFixed(3)))
@@ -52,6 +56,13 @@ const AccountModal: React.FC<AccountModalProps> = ({}) => {
       console.error('ISSUE LOADING ZOO BALANCE \n', e)
     }
   }
+
+  useEffect(() => {
+    setZooToken(getToken(web3))
+    // setAccount(web3.account)
+  }, [web3])
+
+
 
   useEffect(() => {
     getBalance()
