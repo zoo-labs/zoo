@@ -9,6 +9,7 @@ const chainID = {
   mainnet:  '0x38',
   ethereum: '0x1',
   ropsten:  '0x3',
+  rinkeby:  '0x4',
 }[NETWORK]
 
 const subdomain = {
@@ -25,7 +26,8 @@ const DEPLOYMENT = {
   mainnet:  'mainnet',
   ethereum: 'ethereum',
   rinkeby:  'rinkeby',
-}
+  ropsten:  'ropsten',
+}[NETWORK]
 
 const cached = __dirname + '/../../../node_modules/moralis-cached.js'
 const funcJS = fs.readFileSync(__dirname + '/../src/functions.js')
