@@ -483,14 +483,14 @@ function App(props) {
             </Link>
           </Menu.Item>
 
-          <Menu.Item key="/keeper">
+          <Menu.Item key="/zookeeper">
             <Link
               onClick={() => {
-                setRoute("/keeper");
+                setRoute("/zookeeper");
               }}
-              to="/keeper"
+              to="/zookeeper"
             >
-              Keeper
+              ZooKeeper
             </Link>
           </Menu.Item>
 
@@ -585,6 +585,7 @@ function App(props) {
               blockExplorer={blockExplorer}
             />
           </Route>
+
           <Route exact path="/bnb">
             <Contract
               name="BNB"
@@ -594,6 +595,7 @@ function App(props) {
               blockExplorer={blockExplorer}
             />
           </Route>
+
           <Route exact path="/z1">
             <Contract
               name="Z1"
@@ -603,6 +605,7 @@ function App(props) {
               blockExplorer={blockExplorer}
             />
           </Route>
+
           <Route exact path="/factory">
             <Contract
               name="UniswapV2Factory"
@@ -612,6 +615,7 @@ function App(props) {
               blockExplorer={blockExplorer}
             />
           </Route>
+
           <Route exact path="/router">
             <Contract
               name="UniswapV2Router02"
@@ -621,6 +625,7 @@ function App(props) {
               blockExplorer={blockExplorer}
             />
           </Route>
+
           <Route exact path="/savage">
             <Contract
               name="Savage"
@@ -630,6 +635,7 @@ function App(props) {
               blockExplorer={blockExplorer}
             />
           </Route>
+
           <Route exact path="/dao">
             <Contract
               name="DAO"
@@ -639,6 +645,7 @@ function App(props) {
               blockExplorer={blockExplorer}
             />
           </Route>
+
           <Route exact path="/bridge">
             <Contract
               name="Bridge"
@@ -648,6 +655,7 @@ function App(props) {
               blockExplorer={blockExplorer}
             />
           </Route>
+
           <Route exact path="/faucet">
             <Contract
               name="Faucet"
@@ -657,6 +665,7 @@ function App(props) {
               blockExplorer={blockExplorer}
             />
           </Route>
+
           <Route exact path="/zookeeper">
             <Contract
               name="ZooKeeper"
@@ -666,6 +675,7 @@ function App(props) {
               blockExplorer={blockExplorer}
             />
           </Route>
+
           <Route exact path="/market">
             <Contract
               name="Market"
