@@ -33,7 +33,8 @@ export enum ApplicationModal {
   BREEDCONFIRM,
   VIDEOPLAYER,
   HATCHDISABLED,
-  CONNECT
+  CONNECT,
+  ACCOUNT
 }
 
 export const updateBlockNumber = createAction<{

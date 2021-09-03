@@ -42,8 +42,11 @@ export function useVideoPlayerModalToggle(): () => void {
   return useToggleModal(ApplicationModal.VIDEOPLAYER)
 }
 export function useConnectModalToggle(): () => void {
-  console.log('useConnectModalToggle')
   return useToggleModal(ApplicationModal.CONNECT)
+}
+
+export function useAccountModalToggle(): () => void {
+  return useToggleModal(ApplicationModal.ACCOUNT)
 }
 export function useBreedConfirmModalToggle(): () => void {
   return useToggleModal(ApplicationModal.BREEDCONFIRM)

@@ -6,9 +6,9 @@ import Modal from '../../components/NewModal'
 import ModalHeader from '../../components/NewModal/Header'
 import useAuth from 'hooks/useAuth'
 
-interface indexProps {}
+interface ConnectModalProps {}
 
-const Index: React.FC<indexProps> = ({}) => {
+const ConnectModal: React.FC<ConnectModalProps> = ({}) => {
   const connectdModal = useModalOpen(ApplicationModal.CONNECT)
   const toggleConnectModal = useConnectModalToggle()
   const { login } = useAuth()
@@ -43,4 +43,4 @@ const Index: React.FC<indexProps> = ({}) => {
   )
 }
 
-export default Index
+export default ConnectModal
