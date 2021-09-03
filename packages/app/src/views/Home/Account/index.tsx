@@ -253,7 +253,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
                     <span
                       className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-xl text-high-emphesis  bg-gradient-to-r from-btn1 to-btn2 hover:from-primary hover:to-primary`}
                       style={{ minHeight: 40, animation: 'border-pulsate 2s infinite;' }}>
-                      {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get ZOO'}
+                      {wait ? 'Processing' : 'Get ZOO'}
                     </span>
                   </div>
                   {balance === 0 && (
