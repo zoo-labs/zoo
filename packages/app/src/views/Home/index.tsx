@@ -72,15 +72,20 @@ const Index: React.FC<indexProps> = ({}) => {
 
   const handleFunds = () => {
     switch (chainID) {
+      case 1338:
+        handleFaucet()
+        break
       case 1337:
         handleFaucet()
         break
       case 97:
         handleFaucet()
         break
+      case 4:
+        handleFaucet()
+        break
       default:
         window.open('https://pancakeswap.info/token/0x19263f2b4693da0991c4df046e4baa5386f5735e', '_blank')
-      // redirectWindow.location
     }
   }
 
@@ -105,6 +110,7 @@ const Index: React.FC<indexProps> = ({}) => {
               const selected = tab == type.id
               return (
                 <div
+                  key={type.name}
                   className={`items-left rounded-xl cursor-pointer text-md font-normal flex text-gray-300 ${
                     selected && 'font-semibold text-white bg-gradient-to-r from-btn1 to-btn2 hover:from-primary hover:to-primary'
                   }`}
