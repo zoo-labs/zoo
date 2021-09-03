@@ -218,7 +218,7 @@ export default function Header() {
     if (!account) return
     getBalance()
   }, [account, chainID])
-  console.log('chainID', chainID)
+
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
 

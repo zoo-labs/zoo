@@ -68,7 +68,7 @@ export const useWeb3 = () => {
 
   async function getAccounts() {
     if (custom.account && custom.account.length > 0) return
-    const accounts = web3Account ? [web3Account] : await custom.eth.getAccounts()
+    const accounts = web3Account ? [web3Account] : await web3.eth.getAccounts()
     if (accounts.length > 0) {
       setAccount(accounts[0])
       setCustom(Object.assign({}, custom, { account: accounts[0] }))
