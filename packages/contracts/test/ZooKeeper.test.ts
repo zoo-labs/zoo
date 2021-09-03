@@ -121,10 +121,7 @@ describe('ZooKeeper', () => {
         tokens: { ZOO, Market, Media, Bridge },
       } = await setupTest()
       const ZK = await ethers.getContractFactory('ZooKeeper')
-      const ZK2 = await ethers.getContractFactory('ZooKeeperV2')
-
       const inst = await upgrades.deployProxy(ZK, [])
-
       await inst.configure(Market.address, Media.address, ZOO.address, Bridge.address)
 
       expect(await inst.market()).to.equal(Market.address)
@@ -132,6 +129,7 @@ describe('ZooKeeper', () => {
       expect(await inst.zoo()).to.equal(ZOO.address)
       expect(await inst.bridge()).to.equal(Bridge.address)
 
+      const ZK2 = await ethers.getContractFactory('ZooKeeperV2')
       const upgraded = await upgrades.upgradeProxy(inst.address, ZK2)
 
       expect(await upgraded.market()).to.equal(Market.address)

@@ -17,10 +17,14 @@ import { IMedia } from "./interfaces/IMedia.sol";
 
 import "./console.sol";
 
-
 contract ZooKeeperV2 is Initializable, OwnableUpgradeable {
+    function newMethod() public pure returns (uint256) {
+        return 42;
+    }
 
-    function initialize() public initializer {}
+    function initialize() public initializer {
+        __Ownable_init();
+    }
 
     using SafeMath for uint256;
     using Counters for Counters.Counter;
@@ -35,8 +39,6 @@ contract ZooKeeperV2 is Initializable, OwnableUpgradeable {
     event Free(address indexed from, uint256 indexed tokenID, uint256 indexed yield);
     event Hatch(address indexed from, uint256 eggID, uint256 indexed tokenID);
     event Mint(address indexed from, uint256 indexed tokenID);
-
-
     event Swap(address indexed owner, uint256 indexed tokenID, uint indexed chainID);
     event Remint(address indexed owner, uint256 indexed tokenID, uint indexed chainID);
 
@@ -68,10 +70,6 @@ contract ZooKeeperV2 is Initializable, OwnableUpgradeable {
         media = IMedia(_media);
         zoo = IERC20(_zoo);
         bridge = _bridge;
-    }
-
-    function newMethod() public pure returns (uint256) {
-        return 42;
     }
 
     function setDrop(address dropAddress) public returns (uint256) {
