@@ -103,7 +103,8 @@ const Title = styled.a`
 `
 
 const LogoIcon = styled.div`
-  margin-left: 8px;
+  margin-left: 0px;
+  margin-top: 0px;
   width: 64px;
   transition: transform 0.3s ease;
   :hover {
@@ -247,7 +248,7 @@ export default function Header() {
               className={`items-left rounded-xl cursor-pointer text-md font-normal flex text-gray-300 ${
                 selected && 'font-semibold rounded-xl text-white bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'
               }`}
-              style={{ backgroundColor: selected ? 'rgb(44, 47, 54)' : 'transparent', padding: '8px 14px' }}>
+              style={{ backgroundColor: selected ? 'rgb(44, 47, 54)' : 'transparent', padding: '10px 16px' }}>
               <h6>{path}</h6>
             </a>
           )
