@@ -260,7 +260,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
                     <span className='text-3xl'>{numberWithCommas(balance.toFixed(3))} </span>ZOO
                   </div>
                 </div>
-                <div className='ml-4'>
+                <div className='ml-4 relative inline-flex rounded-md shadow-sm'>
                   <div className='flex items-center  cursor-pointer' onClick={() => handleFunds()}>
                     <span
                       className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-xl text-high-emphesis  bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2`}
@@ -268,6 +268,12 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
                       {chainID !== 97 && chainID !== 1337 ? 'ADD FUNDS' : wait ? 'PROCESSING' : 'GET ZOO'}
                     </span>
                   </div>
+                  {balance === 0 && (
+                    <span className='flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1'>
+                      <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75'></span>
+                      <span className='relative inline-flex rounded-full h-3 w-3 bg-white'></span>
+                    </span>
+                  )}
                 </div>
               </div>
               <div className='my-8'>
@@ -278,7 +284,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
 
             <div className={`m-4 flex flex-wrap ${isSm ? 'justify-around' : 'justify-center'}`}>
               {(keepApprove || !allowance) && (
-                <div>
+                <div className=''>
                   <button
                     disabled={disableApprove || allowance}
                     style={{ width: '140px', fontSize: '16px', fontWeight: 550 }}
@@ -291,8 +297,8 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
               <div className={`${!isSm && 'ml-4'}`}>
                 <button
                   disabled={disable || !allowance}
-                  className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full ${
-                    !allowance ? ' border-gray-600' : 'bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2'
+                  className={` rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full ${
+                    !allowance ? 'border border-gray-600' : 'bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2'
                   }`}
                   style={{ width: '140px', fontSize: '16px', fontWeight: 550 }}
                   onClick={buyEgg}>

@@ -151,6 +151,28 @@ export const SUPPORTED_NETWORKS: {
     rpcUrls: ['https://palm-mainnet.infura.io/v3/da5fbfafcca14b109e2665290681e267'],
     blockExplorerUrls: ['https://explorer.palm.io'],
   },
+  [ChainId.RINKEBY]: {
+    chainId: '0x539',
+    chainName: 'Rinkberry',
+    nativeCurrency: {
+      name: 'Rinkberry',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    rpcUrls: ['http://localhost:8545/'],
+    blockExplorerUrls: ['https://admin.moralis.io/servers'],
+  },
+  [ChainId.BSC_TESTNET]: {
+    chainId: '0x53A',
+    chainName: 'BSC_TESTNET',
+    nativeCurrency: {
+      name: 'BSC_TESTNET',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    rpcUrls: ['http://localhost:8546/'],
+    blockExplorerUrls: ['https://admin.moralis.io/servers'],
+  },
 }
 
 export default function NetworkModal({ onDismiss = () => null }): JSX.Element | null {
@@ -211,8 +233,11 @@ export default function NetworkModal({ onDismiss = () => null }): JSX.Element | 
                 onDismiss()
                 const params = SUPPORTED_NETWORKS[key]
                 if (key === ChainId.MAINNET) {
+                  console.log('1')
                   library?.send('wallet_switchEthereumChain', [{ chainId: '0x1' }, account])
                 } else {
+                  console.log('2')
+
                   library?.send('wallet_addEthereumChain', [params, account])
                 }
               }}
