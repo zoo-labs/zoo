@@ -73,7 +73,7 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
           </div>
         ) : (
           <div className='font-bold flex flex-nowrap p-2 rounded-xl  bg-gradient-to-r from-btn1 to-btn2 hover:from-primary hover:to-primary border-primary'>
-            <button className='mr-2 rounded-lg' onClick={() => toggleConnectModal()}>
+            <button className=' rounded-lg' onClick={() => toggleConnectModal()}>
               Connect
             </button>
           </div>

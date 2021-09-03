@@ -31,7 +31,7 @@ const Index: React.FC<indexProps> = ({}) => {
     }
     try {
       const decimals = await zooToken.methods.decimals().call()
-      const rawBalance = await zooToken.methods.balanceOf(acc).call()
+      const rawBalance = await zooToken.methods.balanceOf(account).call()
       const divisor = parseFloat(Math.pow(10, decimals).toString())
       const balance = rawBalance / divisor
       setBalance(parseFloat(balance.toFixed(4)))
@@ -83,6 +83,7 @@ const Index: React.FC<indexProps> = ({}) => {
       // redirectWindow.location
     }
   }
+
   useEffect(() => {
     getBalance()
   }, [])
@@ -115,7 +116,31 @@ const Index: React.FC<indexProps> = ({}) => {
           </div>
         </div>
       </div>
-      <div className='flex'>{tab === 0 ? <Account handleFunds={() => handleFunds()} wait={wait} /> : <Bank />}</div>
+      <div className='flex'>{tab === 0 ? <Account handleFunds={() => handleFunds()} wait={wait} balance={balance} /> : <Bank />}</div>
+      <div
+        style={{
+          // background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
+          width: '50vw',
+          height: '50vh',
+          // transform: 'translate(-50vw, -100vh)',
+          top: '0%',
+
+          right: '-15%',
+          zIndex: -1,
+        }}
+        className='absolute  bg-primary opacity-10  rounded-full z-0 filter  blur-3xl'></div>
+      <div
+        style={{
+          // background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
+          width: '50vw',
+          height: '50vh',
+          // transform: 'translate(-50vw, -100vh)',
+          left: '-15%',
+          right: 0,
+          bottom: '0%',
+          zIndex: -1,
+        }}
+        className='absolute  bg-pink rounded-full opacity-10  z-0 filter  blur-3xl'></div>
     </main>
   )
 }

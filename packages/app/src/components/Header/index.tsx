@@ -24,7 +24,7 @@ import NetworkCard from './NetworkCard'
 import { useModalOpen } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 
-const logoURL = window.location.origin + '/images/logo-white.png'
+const logoURL = window.location.origin + '/static/images/logo-white.png'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; isMobile: boolean; isFeed?: boolean; modalOpen: boolean }>`
   grid-template-columns: 120px 1fr 120px;
@@ -80,7 +80,6 @@ const AccountElement = styled.div<{ active: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: #222;
   white-space: nowrap;
   width: 100%;
   cursor: pointer;
@@ -265,55 +264,55 @@ export default function Header() {
       <HeaderControls>
         {/* */}
 
-        {chainID && !isNaN(chainID) && library && library.isMetaMask && !isSm && (
-          <>
-            <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
-              <div className='flex items-center rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'>
-                <div
-                  // style={{ width: 40, height: 40 }}
-                  className='grid items-center grid-flow-col p-2 space-x-2 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'
-                  onClick={() => {
-                    const tokenAddress = '0x34f3F270B85532f32c6F8039B960c569816Fc67a'
-                    const tokenSymbol = 'ZOO'
-                    const tokenDecimals = 18
-                    const tokenImage = window.location.origin + '/static/images/token.png'
-                    const params: any = {
-                      type: 'ERC20',
-                      options: {
-                        address: tokenAddress,
-                        symbol: tokenSymbol,
-                        decimals: tokenDecimals,
-                        image: tokenImage,
-                      },
+        {/* {chainID && !isNaN(chainID) && library && library.isMetaMask && !isSm && ( */}
+        <>
+          <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
+            <div className='flex items-center rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'>
+              <div
+                // style={{ width: 40, height: 40 }}
+                className='grid items-center grid-flow-col p-2 space-x-2 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'
+                onClick={() => {
+                  const tokenAddress = '0x34f3F270B85532f32c6F8039B960c569816Fc67a'
+                  const tokenSymbol = 'ZOO'
+                  const tokenDecimals = 18
+                  const tokenImage = window.location.origin + '/static/images/token.png'
+                  const params: any = {
+                    type: 'ERC20',
+                    options: {
+                      address: tokenAddress,
+                      symbol: tokenSymbol,
+                      decimals: tokenDecimals,
+                      image: tokenImage,
+                    },
+                  }
+                  try {
+                    if (library && library.isMetaMask && library.request) {
+                      library
+                        .request({
+                          method: 'wallet_watchAsset',
+                          params,
+                        })
+                        .then((success) => {
+                          if (success) {
+                            console.log('Successfully added ZOO to MetaMask')
+                          } else {
+                            throw new Error('Something went wrong.')
+                          }
+                        })
+                        .catch(console.error)
                     }
-                    try {
-                      if (library && library.isMetaMask && library.request) {
-                        library
-                          .request({
-                            method: 'wallet_watchAsset',
-                            params,
-                          })
-                          .then((success) => {
-                            if (success) {
-                              console.log('Successfully added ZOO to MetaMask')
-                            } else {
-                              throw new Error('Something went wrong.')
-                            }
-                          })
-                          .catch(console.error)
-                      }
-                    } catch (error) {}
-                  }}>
-                  <img src={require('../../assets/img/hybrid1.png').default} alt='ZOO' className='rounded-md' style={{ width: 22, height: 22 }} />
-                </div>
+                  } catch (error) {}
+                }}>
+                <img src={require('../../assets/img/hybrid1.png').default} alt='ZOO' className='rounded-md' style={{ width: 22, height: 22 }} />
               </div>
-            </Tooltip>
+            </div>
+          </Tooltip>
 
-            <NetworkCard />
-          </>
-        )}
+          <NetworkCard />
+        </>
+        {/* )} */}
         <HeaderElement>
-          <AccountElement active={!!account} style={{ padding: '3px 3px 3px 0', pointerEvents: 'auto' }} className='rounded-xl'>
+          <AccountElement active={!!account} style={{ padding: '3px', pointerEvents: 'auto' }} className='rounded-xl  hover:bg-gray-800 bg-secondary'>
             {account ? (
               <>
                 {/* <QuestionHelper text='Buy ZOO' show={show} /> */}
