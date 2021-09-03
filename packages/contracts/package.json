@@ -58,6 +58,7 @@
     "accounts": "hardhat accounts",
     "balance": "hardhat balance",
     "chain": "hardhat node --network hardhat --show-stack-traces",
+    "chain2": "hardhat node --network hardhat2 --show-stack-traces",
     "clean": "rm -rf artifacts && rm -rf cache && rm -rf types",
     "compile": "hardhat compile",
     "console": "hardhat console --network hardhat",
