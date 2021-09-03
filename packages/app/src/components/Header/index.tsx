@@ -186,7 +186,6 @@ export default function Header() {
   const [isPushed, setIsPushed] = useState(!isMobile)
   const [showMenu, setShowMenu] = useState(true)
   const [wait, setWait] = useState(false)
-
   let location = useLocation()
   useEffect(() => {
     setActive(location.pathname.split('/')[1])
@@ -256,7 +255,7 @@ export default function Header() {
       </div>
 
       <HeaderControls>
-        {!isMobile && (
+        {!isSm && (
           <>
             <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
               <div className='flex items-center mr-2 rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'>

@@ -6,7 +6,7 @@ import { MENU_ENTRY_HEIGHT } from 'components/SideMenu/config'
 import useTheme from 'hooks/useTheme'
 import { InfoIcon } from 'components/Svg'
 import { GrCode } from 'react-icons/gr'
-import { RiChat1Fill, RiChat1Line, RiCodeLine, RiPieChart2Line } from 'react-icons/ri'
+import { RiChat1Fill, RiChat1Line, RiCodeLine, RiLogoutBoxLine, RiLogoutCircleLine, RiPieChart2Line } from 'react-icons/ri'
 import { GiPieChart } from 'react-icons/gi'
 import { MoonIcon, SunIcon } from 'components/SideMenu/icons'
 import useAuth from 'hooks/useAuth'
@@ -124,6 +124,9 @@ export default function More({}) {
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
                     style={{}}>
                     Log Out
+                    <div className='ml-4 sm:ml-14'>
+                      <RiLogoutCircleLine />
+                    </div>
                     {/* <div className='ml-4 sm:ml-14'>
                       {isDark ? <SunIcon fill={isDark ? 'white' : 'text'} width='18px' /> : <MoonIcon fill={isDark ? 'white' : 'textDisabled'} width='18px' />}
                     </div> */}
