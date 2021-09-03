@@ -123,12 +123,13 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   // const [balance, setBalance] = useState(0)
   const [keepApprove, setKeepApprove] = useState(true)
   const web3 = useWeb3()
+  const [account, setAccount] = useState(web3.account)
 
   const [zooToken, setZooToken] = useState(getToken(web3))
   const [zooKeeper, setZooKeeper] = useState(getZooKeeper(web3))
   const [zooDrop, setZooDrop] = useState(getDrop(web3))
 
-  const { account, chainID, gasPrice } = web3
+  const { chainID, gasPrice } = web3
   const { isXl, isSm, isMd } = useMatchBreakpoints()
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
@@ -149,6 +150,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     setZooToken(getToken(web3))
     setZooKeeper(getZooKeeper(web3))
     setZooDrop(getDrop(web3))
+    setAccount(web3.account)
   }, [web3])
 
   const mount = async () => {
@@ -195,6 +197,11 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     })
   }
 
+  useEffect(() => {
+    if (!account) return
+    getBalance()
+  }, [account, chainID])
+
   const buyEgg = async () => {
     setDisable(true)
     if (currentEggsOwned < 3) {
@@ -222,6 +229,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
       history.push('/feed/market')
     }
   }
+
   useEffect(() => {
     let mounted = true
     if (mounted) {
@@ -252,7 +260,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
                   <div className='flex items-center  cursor-pointer' onClick={() => handleFunds()}>
                     <span
                       className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-xl text-high-emphesis  bg-gradient-to-r from-btn1 to-btn2 hover:from-primary hover:to-primary`}
-                      style={{ minHeight: 40, animation: 'border-pulsate 2s infinite;' }}>
+                      style={{ minHeight: 40, animation: 'border-pulsate 2s infinite' }}>
                       {wait ? 'Processing' : 'Get ZOO'}
                     </span>
                   </div>
@@ -282,17 +290,21 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
                   </button>
                 </div>
               )}
-              <div className={`${!isSm && 'ml-4'}`}>
-                <button
-                  disabled={disable || !allowance}
-                  className={` rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full ${
-                    !allowance ? 'border border-gray-600' : 'bg-gradient-to-r from-btn1 to-btn2 hover:from-primary hover:to-primary'
-                  }`}
-                  style={{ width: '140px', fontSize: '16px', fontWeight: 550 }}
-                  onClick={buyEgg}>
-                  {currentEggsOwned > 2 ? 'Market' : disable ? 'Processing' : 'Buy Eggs'}
-                </button>
-              </div>
+              {currentEggsOwned > 2 ? (
+                <></>
+              ) : (
+                <div className={`${!isSm && 'ml-4'}`}>
+                  <button
+                    disabled={disable || !allowance}
+                    className={` rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full ${
+                      !allowance ? 'border border-gray-600' : 'bg-gradient-to-r from-btn1 to-btn2 hover:from-primary hover:to-primary'
+                    }`}
+                    style={{ width: '140px', fontSize: '16px', fontWeight: 550 }}
+                    onClick={buyEgg}>
+                    {currentEggsOwned > 2 ? 'Market' : disable ? 'Processing' : 'Buy Eggs'}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           {/* <div style={{ flex: 1 }} className='p-5 rounded my-4'>
