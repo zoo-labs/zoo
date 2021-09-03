@@ -33,6 +33,14 @@ export function Deploy(name: string, options: any = {}, fn?: any) {
         }
       }
 
+      if (options.proxy == true) {
+        options.proxy = {
+          methodName: 'initialize',
+          owner: deployer,
+          proxyContract: 'OpenZeppelinTransparentProxy',
+        }
+      }
+
       return await deploy(
         name,
         Object.assign({}, options, {
