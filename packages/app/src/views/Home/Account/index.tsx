@@ -265,7 +265,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
                     <span
                       className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-xl text-high-emphesis  bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2`}
                       style={{ minHeight: 40, animation: 'border-pulsate 2s infinite;' }}>
-                      {chainID !== 97 && chainID !== 1337 ? 'ADD FUNDS' : wait ? 'PROCESSING' : 'GET ZOO'}
+                      {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get ZOO'}
                     </span>
                   </div>
                   {balance === 0 && (
@@ -290,7 +290,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
                     style={{ width: '140px', fontSize: '16px', fontWeight: 550 }}
                     className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100  disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full  bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2`}
                     onClick={approve}>
-                    {allowance ? 'APPROVED' : disableApprove ? 'PROCESSING' : 'APPROVE'}
+                    {allowance ? 'Approved' : disableApprove ? 'Processing' : 'Approve'}
                   </button>
                 </div>
               )}
@@ -302,7 +302,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
                   }`}
                   style={{ width: '140px', fontSize: '16px', fontWeight: 550 }}
                   onClick={buyEgg}>
-                  {currentEggsOwned > 2 ? 'Market' : disable ? 'PROCESSING' : 'BUY EGGS'}
+                  {currentEggsOwned > 2 ? 'Market' : disable ? 'Processing' : 'Buy Eggs'}
                 </button>
               </div>
             </div>

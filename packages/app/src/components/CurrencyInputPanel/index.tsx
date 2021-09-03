@@ -78,7 +78,7 @@ export default function CurrencyInputPanel({
             } open-currency-select-button h-full outline-none select-none cursor-pointer border-none text-xl font-medium items-center`}
             onClick={() => {
               if (onCurrencySelect) {
-                setModalOpen(true)
+                // setModalOpen(true)
               }
             }}>
             <div className='flex'>
