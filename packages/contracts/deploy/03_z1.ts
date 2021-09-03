@@ -2,6 +2,6 @@
 
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-export default Deploy('Z1', [], async({ hre, deploy, deployments, deps }) => {
+export default Deploy('Z1', {}, async({ hre, deploy, deployments, deps }) => {
   await deploy()
 })

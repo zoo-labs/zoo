@@ -2,8 +2,8 @@
 
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-export default Deploy('ZooKeeper', ['Bridge', 'Media', 'ZOO', 'Market'], async({ ethers, deploy, deployments, hre }) => {
-  const tx = await deploy([])
+export default Deploy('ZooKeeper', {dependencies: ['Bridge', 'Media', 'ZOO', 'Market']}, async({ ethers, deploy, deployments, hre }) => {
+  const tx = await deploy([], { proxy: true })
 
   if (hre.network.name != 'hardhat') return
 

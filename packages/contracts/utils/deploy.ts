@@ -1,8 +1,13 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
+import { DeployOptions } from 'hardhat-deploy/types'
 
 export type HRE = HardhatRuntimeEnvironment
 
-export function Deploy(name: string, dependencies: string[], fn?: any) {
+export function Deploy(name: string, options: any = {}, fn?: any) {
+  options = options || {}
+  const dependencies = options.dependencies || []
+  const libraries = options.libraries || []
+
   const func = async (hre: HardhatRuntimeEnvironment) => {
     const { deployments, ethers, getChainId, getNamedAccounts } = hre
     const { deploy } = deployments
@@ -11,17 +16,14 @@ export function Deploy(name: string, dependencies: string[], fn?: any) {
     // Fund all signers on hardnet network
     if (hre.network.name == 'hardhat') {
       await signers.map(async (s) => {
-        await hre.network.provider.send('hardhat_setBalance', [
-          s.address,
-          "0x420000000000000000000",
-        ])
+        await hre.network.provider.send('hardhat_setBalance', [s.address, '0x420000000000000000000'])
       })
     }
 
     // Use deployer named account to deploy contract
     const { deployer } = await getNamedAccounts()
 
-    async function deployContract(args: any[], libraries?: any) {
+    async function deployContract(args: any[]) {
       const libs = {}
 
       if (libraries != null) {
@@ -31,12 +33,15 @@ export function Deploy(name: string, dependencies: string[], fn?: any) {
         }
       }
 
-      return await deploy(name, {
-        from: deployer,
-        args: args,
-        libraries: libs,
-        log: true,
-      })
+      return await deploy(
+        name,
+        Object.assign({}, options, {
+          from: deployer,
+          args: args,
+          libraries: libs,
+          log: true,
+        }),
+      )
     }
 
     const deps = {}
@@ -52,7 +57,7 @@ export function Deploy(name: string, dependencies: string[], fn?: any) {
 
   func.id = [name]
   func.tags = [name]
-  func.dependencies = dependencies
+  func.dependencies = options.dependencies
   return func
 }
 

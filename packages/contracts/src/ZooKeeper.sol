@@ -17,10 +17,8 @@ import "./console.sol";
 
 
 contract ZooKeeper is Ownable, Initializable {
-    uint256 public x;
     
     function initialize(uint256 _x) public initializer {
-      x = _x;
     }
 
     using SafeMath for uint256;

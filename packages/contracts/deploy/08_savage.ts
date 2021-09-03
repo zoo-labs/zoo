@@ -2,7 +2,7 @@
 
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-export default Deploy('Savage', ['ZOO', 'UniswapV2Factory', 'UniswapV2Router02', 'Z1', 'BNB'], async({ ethers, hre, deploy, deployments, deps, signers }) => {
+export default Deploy('Savage', {dependencies: ['ZOO', 'UniswapV2Factory', 'UniswapV2Router02', 'Z1', 'BNB']}, async({ ethers, hre, deploy, deployments, deps, signers }) => {
   const { ZOO, UniswapV2Factory, UniswapV2Router02 } = deps
   let { Z1, BNB } = deps
 
