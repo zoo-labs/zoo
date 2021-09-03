@@ -6,34 +6,27 @@ import ProxyAdmin from '@openzeppelin/upgrades-core/artifacts/@openzeppelin/cont
 
 export default Deploy(
   'ZooKeeperV2',
-  { proxy: true, dependencies: ['Bridge', 'Media', 'ZOO', 'Market', 'ZooKeeper_Proxy', 'ZooKeeper', 'DefaultProxyAdmin'] },
+  {
+    proxy: {
+      methodName: 'initialize',
+      deployIndex: 2,
+      proxyContract: 'OpenZeppelinTransparentProxy',
+    },
+    dependencies: ['Bridge', 'Media', 'ZOO', 'Market', 'ZooKeeper_Proxy', 'ZooKeeper', 'DefaultProxyAdmin'],
+  },
   async ({ ethers, deploy, deployments, deps, hre, upgrades }) => {
     // const tx = await deploy()
     const { deployer } = await hre.getNamedAccounts()
-    const { ZooKeeper_Proxy, ZooKeeper, DefaultProxyAdmin } = deps
+    const { ZooKeeper_Proxy, DefaultProxyAdmin } = deps
+
+    const dep = await deployments.get('ZooKeeper')
+    const contract = await ethers.getContractAt(dep.abi, dep.address)
+    // await contract.changeAdmin(deployer.address);
 
     const ZK2 = await ethers.getContractFactory('ZooKeeperV2')
-    // const DPA = await ethers.getContractFactory('DefaultProxyAdmin')
-    const adminContract = await ethers.getContractAt(DefaultProxyAdmin.abi, DefaultProxyAdmin.address)
-    const adminFromContract = await adminContract.getProxyAdmin(ZooKeeper_Proxy.address)
-    // const inst = await upgrades.deployProxy(ZK, [])
-
-    const { provider } = hre.network
-    const manifest = await Manifest.forNetwork(provider)
-    const adminAddress = await getAdminAddress(provider, ZooKeeper_Proxy.address)
-
-    const AdminFactory = await hre.ethers.getContractFactory(ProxyAdmin.abi, ProxyAdmin.bytecode, deployer)
-
-    const admin = AdminFactory.attach(adminAddress)
-    const manifestAdmin = await manifest.getAdmin()
-    const proxyFromAddress = await manifest.getProxyFromAddress(DefaultProxyAdmin.address)
-
-    console.log('man', proxyFromAddress, adminAddress, manifestAdmin.address, admin.address)
-
-    // const { ZooKeeper_Proxy } = deps
-
-    // const ZK2 = await ethers.getContractFactory('ZooKeeperV2')
-    const upgraded = await upgrades.upgradeProxy(ZooKeeper_Proxy.address, ZK2, { deployer: manifestAdmin.address })
+    // await upgrades.admin.transferProxyAdminOwnership(deployer.address);
+    const upgraded = await upgrades.upgradeProxy(ZooKeeper_Proxy.address, ZK2, {})
+    console.log(upgraded)
 
     //   console.log('ZooKeeper_Proxy.address', ZooKeeper_Proxy.address)
     //   const upgraded = await upgrades.upgradeProxy(ZooKeeper_Proxy.address, tx.address)
@@ -55,3 +48,38 @@ export default Deploy(
     // token.mint(keeper.address, 1000000000000)
   },
 )
+
+// const ZooKeeper = await ethers.getContractFactory('DefaultProxyAdmin')
+// const zkAdmin = contract.connect(deployer.address)
+
+// // const DPA = await ethers.getContractFactory('DefaultProxyAdmin')
+// const adminContract = await ethers.getContractAt(DefaultProxyAdmin.abi, DefaultProxyAdmin.address)
+// const adminOwner = await adminContract.owner()
+// console.log(adminOwner, deployer.address)
+// // const adminFromContract = await adminContract.getProxyAdmin(ZooKeeper_Proxy.address)
+// // // const inst = await upgrades.deployProxy(ZK, [])
+
+// const { provider } = hre.network
+// const manifest = await Manifest.forNetwork(provider)
+// const adminAddress = await getAdminAddress(provider, ZooKeeper_Proxy.address)
+
+// const AdminFactory = await hre.ethers.getContractFactory(ProxyAdmin.abi, ProxyAdmin.bytecode, deployer)
+
+// const admin = AdminFactory.attach(adminAddress)
+// const manifestAdmin = await manifest.getAdmin()
+// // const proxyFromAddress = await manifest.getProxyFromAddress(DefaultProxyAdmin.address)
+
+// console.log(
+//   'man',
+//   JSON.stringify({
+//     adminOwner,
+//     // proxyFromAddress,
+//     adminAddress,
+//     manifestAdmin: manifestAdmin.address,
+//     admin: admin.address,
+//   }),
+// )
+
+// const { ZooKeeper_Proxy } = deps
+
+// const ZK2 = await ethers.getContractFactory('ZooKeeperV2')

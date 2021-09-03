@@ -4,7 +4,9 @@ pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
 import { Initializable } from '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
-import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+// import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+
 // import { Ownable } from '@openzeppelin/contracts/access/Ownable.sol';
 import { Counters } from '@openzeppelin/contracts/utils/Counters.sol';
 import { SafeMath } from '@openzeppelin/contracts/utils/math/SafeMath.sol';
@@ -17,10 +19,6 @@ import { IMedia } from './interfaces/IMedia.sol';
 import './console.sol';
 
 contract ZooKeeper is Initializable, OwnableUpgradeable {
-  function initialize() public initializer {
-    __Ownable_init();
-  }
-
   using SafeMath for uint256;
   using Counters for Counters.Counter;
 
@@ -58,6 +56,24 @@ contract ZooKeeper is Initializable, OwnableUpgradeable {
   modifier onlyBridge() {
     require(msg.sender == bridge);
     _;
+  }
+
+
+  function initialize() public initializer {
+    __Ownable_init_unchained();
+  }
+
+
+  function ZooKeeper_init_unchained(
+      address _market,
+      address _media,
+      address _zoo,
+      address _bridge
+  ) public initializer {
+      market = IMarket(_market);
+      media = IMedia(_media);
+      zoo = IERC20(_zoo);
+      bridge = _bridge;
   }
 
   function configure(
