@@ -122,7 +122,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
   const [balance, setBalance] = useState(0)
   const [keepApprove, setKeepApprove] = useState(true)
   const web3 = useWeb3()
-  const [account, setAccount] = useState(web3.account);
+  const [account, setAccount] = useState(web3.account)
 
   const [zooToken, setZooToken] = useState(getToken(web3))
   const [zooKeeper, setZooKeeper] = useState(getZooKeeper(web3))
@@ -209,13 +209,8 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
   }
 
   useEffect(() => {
-    let mounted = true
-    if (mounted) {
-      getBalance()
-    }
-    return () => {
-      mounted = false
-    }
+    if (!account) return
+    getBalance()
   }, [account, chainID])
 
   const buyEgg = async () => {
@@ -267,7 +262,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
                   <div className='flex items-center  cursor-pointer' onClick={() => handleFunds()}>
                     <span
                       className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-xl text-high-emphesis  bg-gradient-to-r from-btn1 to-btn2 hover:from-primary hover:to-primary`}
-                      style={{ minHeight: 40, animation: 'border-pulsate 2s infinite;' }}>
+                      style={{ minHeight: 40, animation: 'border-pulsate 2s infinite' }}>
                       {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get ZOO'}
                     </span>
                   </div>
