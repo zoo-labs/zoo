@@ -24,14 +24,21 @@ const Index: React.FC<indexProps> = ({}) => {
   const zooToken = getToken(web3)
 
   const getBalance = async () => {
+    const acc = web3.account
+    if (!acc) {
+      setBalance(0.0)
+      return
+    }
     try {
-      const acc = web3.account;
       const decimals = await zooToken.methods.decimals().call()
       const rawBalance = await zooToken.methods.balanceOf(acc).call()
-      console.log('rawBalance ->', rawBalance);
-      // const divisor = parseFloat(Math.pow(10, decimals).toString())
-      // const balance = rawBalance / divisor
-      // setBalance(parseFloat(balance.toFixed(4)))
+      console.log('rawBalance ->', rawBalance)
+      const divisor = parseFloat(Math.pow(10, decimals).toString())
+      console.log('divisor ->', divisor)
+
+      const balance = rawBalance / divisor
+      console.log('rawBalance ->', balance)
+      setBalance(parseFloat(balance.toFixed(4)))
     } catch (e) {
       console.error('ISSUE LOADING ZOO BALANCE \n', e)
       toastClear()
@@ -41,7 +48,7 @@ const Index: React.FC<indexProps> = ({}) => {
 
   const handleFaucet = () => {
     try {
-      const acc = web3.account;
+      const acc = web3.account
       setWait(true)
       toastClear()
       toastInfo('Sending ZOO...')
