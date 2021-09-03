@@ -110,7 +110,7 @@ export default function Pool() {
               <button
                 id='add-pool-button'
                 color='gradient'
-                className='w-full text-high-emphesis bg-gradient-to-r from-blue-600 to-pink-600 opacity-80 hover:opacity-100 disabled:bg-opacity-80 px-4 py-3 text-base rounded disabled:cursor-not-allowed focus:outline-none grid items-center justify-center grid-flow-col gap-2 whitespace-nowrap'
+                className='w-full text-high-emphesis bg-gradient-to-b from-blue-600 to-pink-600 opacity-80 hover:opacity-100 disabled:bg-opacity-80 px-4 py-3 text-base rounded disabled:cursor-not-allowed focus:outline-none grid items-center justify-center grid-flow-col gap-2 whitespace-nowrap'
                 onClick={() => history.push(`/add/${currencyId(NATIVE[chainId])}`)}>
                 Add
               </button>

@@ -117,7 +117,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   const sm = useMediaQuery(theme.breakpoints.up('sm'))
   const md = useMediaQuery(theme.breakpoints.up('md'))
   return (
-    <div style={{ width: '90%' }}>
+    <div style={{ width: '100%' }}>
       <div className='flex items-center justify-between px-8 py-4'>
         {headCells
           .filter((cell) => {
@@ -245,7 +245,7 @@ export default function TransactionTable(props: { Transactions: any }) {
             onRequestSort={handleRequestSort}
             rowCount={rows.length}
           />
-          <div style={{ width: '90%' }}>
+          <div style={{ width: '100%' }}>
             {stableSort(rows, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => {
