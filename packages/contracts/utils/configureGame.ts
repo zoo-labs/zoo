@@ -8,7 +8,7 @@ export default async function configureGame(keeper: any, drop: any) {
   // Add Drop to ZooKeeper
   await keeper.setDrop(drop.address)
 
-  const basePrice = 50000
+  const basePrice = 300000
 
   // Set name price
   await keeper.setNamePrice(basePrice) // about $40 / name
@@ -20,7 +20,7 @@ export default async function configureGame(keeper: any, drop: any) {
   const eggs = [
     {
       name: 'Base Egg',
-      price: basePrice * 10, // about $400 / egg
+      price: basePrice * 10, // about $300 / egg
       supply: 16000,
       tokenURI: 'https://db.zoolabs/egg.jpg',
       metadataURI: 'https://db.zoolabs.org/egg.json',
