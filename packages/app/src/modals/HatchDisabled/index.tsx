@@ -16,15 +16,10 @@ const Index: React.FC<indexProps> = ({}) => {
 
   return (
     <Modal isOpen={hatchDisabledModal} onDismiss={() => null} maxWidth={300}>
-      <ModalHeader onClose={() => toggleHatchDisabledModalModal()} title='Hatch Disabled' />
-      <div>
+      <ModalHeader onClose={() => toggleHatchDisabledModalModal()} title='Game Locked ⚠️' />
+      <div className='flex justify-center'>
         <div className='mb-4 text-center flex justify-center items-center' style={{ minHeight: 100 }}>
           <h6>Once all eggs have been sold, the game can begin.</h6>
-        </div>
-        <div className='flex justify-center'>
-          <span className='hidden sm:inline text-yellow text-xl' role='img' aria-label='warning'>
-            ⚠️
-          </span>
         </div>
       </div>
     </Modal>
