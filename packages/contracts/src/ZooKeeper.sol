@@ -4,7 +4,7 @@ pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
 import { Initializable } from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import { OwnableUpgradable } from "@openzeppelin/contracts-upgradable/access/OwnableUpgradable.sol";
+import { OwnableUpgradeable } from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
 import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -16,8 +16,8 @@ import { IMedia } from "./interfaces/IMedia.sol";
 import "./console.sol";
 
 
-contract ZooKeeper is OwnableUpgradable, Initializable {
-    
+contract ZooKeeper is OwnableUpgradeable, Initializable {
+
     function initialize() public initializer {
     }
 

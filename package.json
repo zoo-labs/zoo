@@ -60,6 +60,12 @@
   "workspaces": {
     "packages": [
       "packages/*"
+    ],
+    "nohoist": [
+      "**/@openzeppelin/contracts-upgradeable/**",
+      "**/@openzeppelin/contracts",
+      "**/@zoolabs/framework",
+      "**/@zoolabs/solidity"
     ]
   }
 }
