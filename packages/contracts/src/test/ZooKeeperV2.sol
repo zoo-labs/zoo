@@ -12,12 +12,12 @@ import { UUPSUpgradeable } from '@openzeppelin/contracts-upgradeable/proxy/utils
 import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
 import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import { IZoo } from "./interfaces/IZoo.sol";
-import { IDrop } from "./interfaces/IDrop.sol";
-import { IMarket } from "./interfaces/IMarket.sol";
-import { IMedia } from "./interfaces/IMedia.sol";
+import { IZoo } from "../interfaces/IZoo.sol";
+import { IDrop } from "../interfaces/IDrop.sol";
+import { IMarket } from "../interfaces/IMarket.sol";
+import { IMedia } from "../interfaces/IMedia.sol";
 
-import "./console.sol";
+import "../console.sol";
 
 
 contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
