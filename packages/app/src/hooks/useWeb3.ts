@@ -29,13 +29,10 @@ export const useWeb3 = () => {
 
   const ethereum = (window as any).ethereum || { chainId: null, on: () => {} }
   const [chainID, setChainID] = useState(Number(ethereum.chainId))
-  // We only have servers for Local Dev, BSC Testnet and Mainnet
-  if (chainID != 56 && chainID != 97 && chainID != 1337) setChainID(97) // Default to Testnet
 
   useEffect(() => {
     ethereum.on('chainChanged', (chainID) => {
       setChainID(Number(chainID))
-      // window.location.reload()
     })
   })
 

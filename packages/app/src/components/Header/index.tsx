@@ -178,14 +178,13 @@ export default function Header() {
   const { isXl, isXs, isSm, isMd, isLg } = useMatchBreakpoints()
   const { isDark, toggleTheme } = useTheme()
   const web3 = useWeb3()
-  const { account, chainID, gasPrice, library } = web3
-  const { chainId } = useWeb3React()
+  const { chainID, gasPrice, library } = web3
+  const { account, chainId } = useWeb3React()
   const { login, logout } = useAuth()
   const isMobile = isXl === false
   const [isPushed, setIsPushed] = useState(!isMobile)
   const [showMenu, setShowMenu] = useState(true)
   const [wait, setWait] = useState(false)
-  const [account, setAccount] = useState(web3Account);
 
   let location = useLocation()
   useEffect(() => {
@@ -198,19 +197,7 @@ export default function Header() {
     toastClear()
   }
   const zooToken = getToken(web3)
-  // const getBalance = async () => {
-  //   try {
-  //     const decimals = await zooToken.methods.decimals().call()
-  //     const rawBalance = await zooToken.methods.balanceOf(account).call()
-  //     const divisor = parseFloat(Math.pow(10, decimals).toString())
-  //     const balance = rawBalance / divisor
-  //     setBalance(balance)
-  //   } catch (e) {
-  //     console.error('ISSUE LOADING ZOO BALANCE \n', e)
-  //     toastClear()
-  //     toastError('Failed to load ZOO balance')
-  //   }
-  // }
+
   const getBalance = async () => {
     try {
       // const decimals = await zooToken.methods.decimals().call()
@@ -230,6 +217,7 @@ export default function Header() {
     if (!account) return;
     getBalance()
   }, [account, chainID])
+
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
 
@@ -267,7 +255,7 @@ export default function Header() {
       <HeaderControls>
         <>
           <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
-            <div className='flex items-center rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'>
+            <div className='flex items-center mr-2 rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'>
               <div
                 // style={{ width: 40, height: 40 }}
                 className='grid items-center grid-flow-col p-1 space-x-1 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'
@@ -303,34 +291,23 @@ export default function Header() {
                     }
                   } catch (error) {}
                 }}>
-                <img src={require('../../assets/img/hybrid1.png').default} alt='ZOO' className='rounded-md' style={{ width: 30, height: 30 }} />
+                <img src={require('../../assets/img/hybrid1.png').default} alt='ZOO' className='rounded-lg' style={{ width: 32, height: 32 }} />
               </div>
             </div>
           </Tooltip>
-
           <NetworkCard />
         </>
-        {/* )} */}
+
         <HeaderElement>
-          <AccountElement active={!!account} style={{ padding: '3px', pointerEvents: 'auto' }} className='rounded-xl  hover:bg-gray-800 bg-secondary'>
+          <AccountElement active={!!account} style={{ pointerEvents: 'auto' }} className='p-1 rounded-xl  hover:bg-gray-800 bg-secondary'>
             {account ? (
-              <>
-                {/* <QuestionHelper text='Buy ZOO' show={show} /> */}
-                <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} pl='0.5rem' pr='0.5rem' fontWeight={500}>
-                  {numberWithCommas(balance) || 0} {NETWORK_SYMBOL[chainId]}
+                <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} ml='0.25rem' mr='0.25rem' pl='0.5rem' pr='0.5rem' fontWeight={500}>
+                  {numberWithCommas(balance) || 0} {NETWORK_SYMBOL[chainID]}
                 </BalanceText>
-              </>
-            ) : null}
+            ) : null }
             <UserBlock account={account} login={login} logout={logout} />
           </AccountElement>
           <More />
-          {/*
-          <div
-            className='font-semibold flex flex-nowrap p-2 rounded-xl'
-            style={{ color: 'white', backgroundColor: 'rgba(21, 61, 111, 0.44)', border: '1px solid rgba(21, 61, 111, 0.44)' }}>
-            <MoreIcon fill={isDark ? 'white' : 'textDisabled'} />
-          </div> */}
-          {/* <Menu /> */}
         </HeaderElement>
       </HeaderControls>
     </HeaderFrame>
