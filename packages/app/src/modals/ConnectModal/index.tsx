@@ -15,7 +15,7 @@ const Index: React.FC<indexProps> = ({}) => {
   console.log('connectdModal', connectdModal)
   return (
     <Modal isOpen={connectdModal} onDismiss={() => null} maxWidth={440}>
-      <ModalHeader onClose={() => toggleConnectModal()} title='Hatch Disabled' />
+      <ModalHeader onClose={() => toggleConnectModal()} title='Connect' />
       <div className='mb-6 text-lg'>
         You are currently not connected
         <br />
