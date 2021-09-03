@@ -6,7 +6,7 @@ const utils = require('moralis-admin-cli/utils')
 const { BASE_URI } = require('moralis-admin-cli/config')
 const { restartServer } = require('moralis-admin-cli/commands/common')
 
-const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'testnet'
+const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'hardhat'
 const CHAIN_IDS = {
   hardhat:  '0x539',
   testnet:  '0x61',
@@ -16,13 +16,22 @@ const CHAIN_IDS = {
 }
 const CHAIN_ID = CHAIN_IDS[NETWORK]
 const SERVER_NAME = {
-  hardhat:  'Zoo Hardhat',
-  testnet:  'Zoo Testnet',
-  mainnet:  'Zoo Mainnet',
-  ethereum: 'Zoo ETH Mainnet',
-  ropsten:  'Zoo ETH (Ropsten)',
+  hardhat:  'Hardhat',
+  testnet:    'Zoo Testnet',
+  mainnet:    'Zoo Mainnet',
+  ethereum:   'Zoo ETH Mainnet',
+  ropsten:    'Zoo ETH (Ropsten)',
 }[NETWORK]
-const ABI_PATH = `${__dirname}/../../contracts/deployments/${NETWORK}/ZooKeeper.json`
+
+const DEPLOYMENT = {
+  hardhat:  'localhost',
+  testnet:  'testnet',
+  mainnet:  'mainnet',
+  ethereum: 'ethereum',
+  rinkeby:  'rinkeby',
+}[NETWORK]
+
+const ABI_PATH = `${__dirname}/../../contracts/deployments/${DEPLOYMENT}/ZooKeeper.json`
 
 /**
  * Configures the events to subscribe to on a smart contract based on the abi file
