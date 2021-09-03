@@ -24,7 +24,7 @@ import NetworkCard from './NetworkCard'
 import { useModalOpen } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 
-const logoURL = window.location.origin + '/static/images/logo-white.png'
+const logoURL = window.location.origin + '/images/logo-white.png'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; isMobile: boolean; isFeed?: boolean; modalOpen: boolean }>`
   grid-template-columns: 120px 1fr 120px;

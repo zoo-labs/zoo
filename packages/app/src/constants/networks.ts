@@ -13,7 +13,7 @@ const Matic = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fpoly
 const Moonbeam = '/images/networks/moonbeam-network.jpg'
 const OKEx = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fokex-network.jpg&w=64&q=75'
 const Polygon = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fpolygon-network.jpg&w=64&q=75'
-const Rinkeby = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fmainnet-network.jpg&w=64&q=75'
+const Rinkeby = '/images/networks/eth.jpg'
 const Ropsten = '/images/networks/eth.jpg'
 const xDai = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fxdai-network.jpg&w=64&q=75'
 const Celo = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fcelo-network.jpg&w=64&q=75'
