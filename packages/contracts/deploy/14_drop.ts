@@ -5,6 +5,7 @@ import { DeployFunction } from 'hardhat-deploy/types'
 
 import configureGame from '../utils/configureGame'
 
+// Needs to be changed to support Deploy helper
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, ethers, getNamedAccounts, network } = hre
   const { deploy } = deployments
