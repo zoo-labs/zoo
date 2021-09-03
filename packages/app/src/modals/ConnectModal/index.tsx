@@ -9,12 +9,11 @@ import useAuth from 'hooks/useAuth'
 interface ConnectModalProps {}
 
 const ConnectModal: React.FC<ConnectModalProps> = ({}) => {
-  const connectdModal = useModalOpen(ApplicationModal.CONNECT)
+  const connectedModal = useModalOpen(ApplicationModal.CONNECT)
   const toggleConnectModal = useConnectModalToggle()
   const { login } = useAuth()
-  console.log('connectdModal', connectdModal)
   return (
-    <Modal isOpen={connectdModal} onDismiss={() => null} maxWidth={440}>
+    <Modal isOpen={connectedModal} onDismiss={() => null} maxWidth={440}>
       <ModalHeader onClose={() => toggleConnectModal()} title='Connect' />
       <div className='mb-6 text-lg'>
         You are currently not connected

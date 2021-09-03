@@ -197,11 +197,6 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     })
   }
 
-  useEffect(() => {
-    if (!account) return
-    getBalance()
-  }, [account, chainID])
-
   const buyEgg = async () => {
     setDisable(true)
     if (currentEggsOwned < 3) {
