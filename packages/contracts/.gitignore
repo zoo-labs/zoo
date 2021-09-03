@@ -4,8 +4,6 @@ cache/
 types/
 artifacts/
 credentials.json
-deployments/*/solcInputs/
-deployments/*/.chainId
 .migrations.json
 holders.csv
 deployments/localhost

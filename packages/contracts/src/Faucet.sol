@@ -37,4 +37,8 @@ contract Faucet is Ownable {
     function withdraw() public onlyOwner {
         token.transfer(owner(), token.balanceOf(address(this)));
     }
+
+    function balance() public view returns (uint256) {
+        return token.balanceOf(address(this));
+    }
 }
