@@ -14,7 +14,7 @@ describe('Test Faucet', () => {
   beforeEach(async () => {
     signers = await ethers.getSigners()
 
-    const zooTokenFactory = await ethers.getContractFactory('ZooToken', signers[0])
+    const zooTokenFactory = await ethers.getContractFactory('ZOO', signers[0])
 
     zooToken = (await zooTokenFactory.deploy()) as ZOO
     await zooToken.deployed()
@@ -33,7 +33,7 @@ describe('Test Faucet', () => {
     expect(faucetOwner).to.equal(owner.address)
   })
 
-  it('Should mint 100,000,000 tokens from ZooToken to Faucet', async () => {
+  it('Should mint 100,000,000 from ZOO to Faucet', async () => {
     const faucetPreBal: BigNumber = await zooToken.balanceOf(zooFaucet.address)
     await zooToken.mint(zooFaucet.address, mintAmt)
     const faucetPostBal: BigNumber = await zooToken.balanceOf(zooFaucet.address)
@@ -41,13 +41,13 @@ describe('Test Faucet', () => {
     expect(parseInt(faucetPostBal._hex)).to.equal(mintAmt)
   })
 
-  it('Should be able buy 10k ZOO from Faucet', async () => {
+  it('Should be able transfer 10k ZOO from Faucet', async () => {
     await zooToken.mint(zooFaucet.address, mintAmt)
 
     const rate = 1000
 
     for (var i = 0; i < signers.length; i++) {
-      await zooFaucet.buyZoo(signers[i].address, 10)
+      await zooFaucet.fund(signers[i].address, 10)
 
       const signerBalances = await zooToken.balanceOf(signers[i].address)
 
@@ -63,15 +63,14 @@ describe('Test Faucet', () => {
     // The Faucet balance should be 100 million
     const faucetInitialBal = await zooToken.balanceOf(zooFaucet.address)
 
-    // 1:1000 ratio
-    const rate = 1000
+    // 10M tokens
+    const rate = 10000000
 
     // The amount being withdrawn from the Faucet
-    // 10 * rate * 20 = 200,000
-    const faucetWithdrawAmt = 10 * rate * 20
+    const faucetWithdrawAmt = rate * (10 ** 18)
 
     for (var i = 0; i < signers.length; i++) {
-      await zooFaucet.buyZoo(signers[i].address, 10)
+      await zooFaucet.fund(signers[i].address, 10)
 
       // Signer balances
       const signerBalances = await zooToken.balanceOf(signers[i].address)
@@ -84,28 +83,28 @@ describe('Test Faucet', () => {
     const ownerBal = await zooToken.balanceOf(owner.address)
 
     // Faucet balance should decreased by 200k
-    const faucetBalPostBuy = await zooToken.balanceOf(zooFaucet.address)
+    const faucetBalPostFund = await zooToken.balanceOf(zooFaucet.address)
 
     // Withdraw all Zoo from the Faucet to the owners wallet
-    await zooFaucet.withdrawTok()
+    await zooFaucet.withdraw()
 
     // Faucet balance after withdrawTok should be 0
-    const faucetBalPostWithdrawTok = await zooToken.balanceOf(zooFaucet.address)
+    const faucetBalPostWithdraw = await zooToken.balanceOf(zooFaucet.address)
 
     // Owner should acquire all ZOO after withdrawal
-    const ownerBalPostWithdrawTok = await zooToken.balanceOf(owner.address)
+    const ownerBalPostWithdraw = await zooToken.balanceOf(owner.address)
 
-    // Expect the owner balance to increase by the faucetBalPostBuy amount
-    expect(parseInt(ownerBalPostWithdrawTok)).to.equal(parseInt(ownerBal) + parseInt(faucetBalPostBuy))
+    // Expect the owner balance to increase by the faucetBalPostFund amount
+    expect(parseInt(ownerBalPostWithdraw)).to.equal(parseInt(ownerBal) + parseInt(faucetBalPostFund))
 
     // Expect the Faucet balance to be 100 million
     expect(parseInt(faucetInitialBal)).to.equal(mintAmt)
 
     // Expect the balance to equal 99800000
     // faucetInitialBal(100, 000, 000) - faucetWithdrawAmt(200, 000) = 99800000
-    expect(parseInt(faucetBalPostBuy)).to.equal(parseInt(faucetInitialBal) - faucetWithdrawAmt)
+    expect(parseInt(faucetBalPostFund)).to.equal(parseInt(faucetInitialBal) - faucetWithdrawAmt)
 
     // Expect the Faucet balance to be 0
-    expect(parseInt(faucetBalPostWithdrawTok)).to.equal(0)
+    expect(parseInt(faucetBalPostWithdraw)).to.equal(0)
   })
 })
