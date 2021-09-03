@@ -2,7 +2,7 @@
 
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-export default Deploy('UniswapV2Router02', ['WETH', 'UniswapV2Factory'], async({ getChainId, deploy, deps }) => {
+export default Deploy('UniswapV2Router02', {dependencies: ['WETH', 'UniswapV2Factory']}, async({ getChainId, deploy, deps }) => {
   const { WETH, UniswapV2Factory } = deps
   const chainId = await getChainId()
 

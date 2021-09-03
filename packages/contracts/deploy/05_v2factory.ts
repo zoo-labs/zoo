@@ -2,7 +2,7 @@
 
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-export default Deploy('UniswapV2Factory', [], async({ getNamedAccounts, hre, deploy, deployments, deps }) => {
+export default Deploy('UniswapV2Factory', {}, async({ getNamedAccounts, hre, deploy, deployments, deps }) => {
   const { deployer, dao } = await getNamedAccounts()
   await deploy([dao])
 })
