@@ -32,7 +32,7 @@ const Index: React.FC<indexProps> = ({}) => {
     }
     try {
       const decimals = await zooToken.methods.decimals().call()
-      const rawBalance = await zooToken.methods.balanceOf(account).call()
+      const rawBalance = await zooToken.methods.balanceOf(web3.account).call()
       const divisor = parseFloat(Math.pow(10, decimals).toString())
       const balance = rawBalance / divisor
       setBalance(parseFloat(balance.toFixed(4)))
@@ -92,7 +92,7 @@ const Index: React.FC<indexProps> = ({}) => {
 
   useEffect(() => {
     getBalance()
-  }, [chainID, account])
+  }, [chainID, web3.account])
   let location = useLocation()
   useEffect(() => {
     setTab(location.pathname.split('/')[1])

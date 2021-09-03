@@ -59,6 +59,10 @@ body {
     border-color: rgba(32,34,49,1);
 }
 
+.border-gray-600 {
+    border: 2px solid rgb(52, 54,59) !important;
+}
+
 .border-gray-500 {
     border-color: rgba(32,34,49,1);
 }
@@ -176,12 +180,15 @@ body {
     100%   { border-color: rgba(0, 255, 255, 1); }
 }
 
+.font-bold {
+  font-weight: 600 !important;
+}
 
 
 /* animated gradient border */
 .gradient-border {
     --borderWidth: 1px;
-    background: #1D1F20; 
+    background: #1D1F20;
     position: relative;
     border-radius: 0.75rem;
   }
@@ -198,8 +205,8 @@ body {
     animation: animatedgradient 3s ease alternate infinite;
     background-size: 300% 300%;
   }
-  
-  
+
+
   @keyframes animatedgradient {
       0% {
           background-position: 0% 50%;
@@ -211,4 +218,3 @@ body {
           background-position: 0% 50%;
       }
   }
-  

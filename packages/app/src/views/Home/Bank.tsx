@@ -213,9 +213,10 @@ const Bank: React.FC = () => {
   })
 
   const getBalance = async () => {
+    if (!web3.account) return;
     try {
       const decimals = await zooToken.methods.decimals().call()
-      const rawBalance = await zooToken.methods.balanceOf(account).call()
+      const rawBalance = await zooToken.methods.balanceOf(web3.account).call()
       const divisor = parseFloat(Math.pow(10, decimals).toString())
       const balance = rawBalance / divisor
       setBalance(balance)
@@ -230,8 +231,8 @@ const Bank: React.FC = () => {
   }, [account])
 
   useEffect(() => {
-    getBalance()
-  }, [])
+    if (web3.account) getBalance()
+  }, [account])
 
   const handleFaucet = () => {
     try {
@@ -323,11 +324,11 @@ const Bank: React.FC = () => {
     <>
       <div className='w-full m-8'>
         <Body>
-          <Label style={{ marginLeft: -8, fontSize: '20px' }}>Total Daily Yield</Label>
-          <Flex width='100%' alignItems='center' justifyContent='space-around' style={{ marginLeft: -16 }}>
+          <Label className='text-base font-bold currentColor mb-2 text-xl'>Total Daily Yield</Label>
+          <Flex width='100%' alignItems='center' justifyContent='space-around'>
             <ValueWrapper> {dailyYield} ZOO </ValueWrapper>
           </Flex>
-          <Label style={{ marginLeft: -8, fontSize: '20px' }}>Top Earners</Label>
+          <Label>Top Earners</Label>
           {topTenAnimals.length === 0 ? (
             <ValueWrapper style={{ justifyContent: 'center' }}> No animals </ValueWrapper>
           ) : (
@@ -341,13 +342,13 @@ const Bank: React.FC = () => {
               })}
             </EarnerValueWrapper>
           )}
-          <Label style={{ marginLeft: -8, fontSize: '20px' }}>Recent Tansactions</Label>
+          <Label>Recent Tansactions</Label>
           {waitTx ? (
             <TableText> Loading Transactions... </TableText>
           ) : transactions.length === 0 ? (
             <TableText> No Transaction Data </TableText>
           ) : (
-            <Container style={{ marginLeft: -8 }}>
+            <Container>
               <TransactionTable Transactions={transactions} />
               {/* <TableContainer>
                 <TableWrapper>
