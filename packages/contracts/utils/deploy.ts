@@ -9,7 +9,7 @@ export function Deploy(name: string, options: any = {}, fn?: any) {
   const libraries = options.libraries || []
 
   const func = async (hre: HardhatRuntimeEnvironment) => {
-    const { deployments, ethers, getChainId, getNamedAccounts } = hre
+    const { deployments, ethers, getChainId, getNamedAccounts, upgrades } = hre
     const { deploy } = deployments
     const signers = await ethers.getSigners()
 
@@ -57,7 +57,7 @@ export function Deploy(name: string, options: any = {}, fn?: any) {
       deps[dep] = await deployments.get(dep)
     }
 
-    await fn({ ethers: ethers, getChainId, getNamedAccounts: getNamedAccounts, hre: hre, deploy: deployContract, deployments: deployments, deps: deps, signers: signers })
+    await fn({ ethers: ethers, getChainId, getNamedAccounts: getNamedAccounts, hre: hre, deploy: deployContract, deployments: deployments, deps: deps, signers: signers, upgrades: upgrades })
 
     // When live network, record the script as executed to prevent rexecution
     // return !useProxy
