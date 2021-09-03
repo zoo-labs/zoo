@@ -127,9 +127,9 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   const web3 = useWeb3()
   const [account, setAccount] = useState(web3.account)
 
-  const [zooToken, setZooToken] = useState(getToken(web3))
-  const [zooKeeper, setZooKeeper] = useState(getZooKeeper(web3))
-  const [zooDrop, setZooDrop] = useState(getDrop(web3))
+  // const [zooToken, setZooToken] = useState(getToken(web3))
+  // const [zooKeeper, setZooKeeper] = useState(getZooKeeper(web3))
+  // const [zooDrop, setZooDrop] = useState(getDrop(web3))
 
   const { chainID, gasPrice } = web3
   const { isXl, isSm, isMd } = useMatchBreakpoints()
@@ -145,19 +145,20 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     currentEggsOwned = Object.values(allEggs).filter((egg) => (egg.owner || '').toLowerCase() === account.toLowerCase() && !egg.burned).length
   }
 
+  const zooDrop = getDrop(web3);
+  const zooKeeper = getZooKeeper(web3);
+  const zooToken = getToken(web3);
   // const zooToken = getToken(web3)
   // const zooKeeper = getZooKeeper(web3)
-
   useEffect(() => {
-    setZooToken(getToken(web3))
-    setZooKeeper(getZooKeeper(web3))
-    setZooDrop(getDrop(web3))
     setAccount(web3.account)
   }, [web3])
 
   const mount = async () => {
+    if (!zooToken || !zooKeeper || !zooDrop || !web3.account) return false
+    if (!isInitial) return false
     try {
-      const allowance = await zooToken.methods.allowance(account, zooKeeper.options.address).call()
+      const allowance = await zooToken.methods.allowance(web3.account, zooKeeper.options.address).call({ from: web3.account })
       if (allowance > 0) {
         setAllowance(true)
         setKeepApprove(false)
@@ -171,25 +172,29 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
         toastInfo('Please approve allowance to play')
       }
     } catch (error) {
-      console.log('Error in allowance', error)
+      console.log('Error in allowance')
+      console.error(error)
     }
     setIsInitial(false)
+    return true
   }
 
   const approve = async () => {
-    if (!account) {
-      toastClear();
-      toastInfo("Account not connected yet")
-      return 
+    if (!web3.account) {
+      toastClear()
+      toastInfo('Account not connected yet')
+      return
     }
     toastClear()
     setDisableApprove(true)
     toastInfo('Processing approval...')
 
     // Increase allowance
-    const eggPrice = await zooDrop.methods.eggPrice().call()
+    const eggPrice = await zooDrop.methods.eggPrice().call({from: web3.account })
     const allowance = web3.utils.toBN(eggPrice).mul(web3.utils.toBN(100))
-    const tx = zooToken.methods.approve(zooKeeper.options.address, allowance).send({ from: account })
+    const tx = zooToken.methods.approve(zooKeeper.options.address, allowance).send({ from: web3.account })
+
+    console.log('tx ->', tx)
 
     tx.then(() => {
       setAllowance(true)
@@ -218,7 +223,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
             setDisable(false)
           })
           .catch((err) => {
-            console.log('Error in buyEgg', err)
+            console.log(err)
             toastClear()
             toastError('Error buying an egg')
             setDisable(false)
@@ -235,14 +240,8 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   }
 
   useEffect(() => {
-    let mounted = true
-    if (mounted) {
-      mount()
-    }
-    return () => {
-      mounted = false
-    }
-  }, [account, chainID])
+    mount()
+  }, [web3.account, web3.chainID])
   return (
     <
       // style={{ height: '100vh' }} className='flex items-center'
