@@ -11,7 +11,6 @@ import Tooltip from '@material-ui/core/Tooltip'
 import useTheme from 'hooks/useTheme'
 import useAuth from 'hooks/useAuth'
 import { useWeb3React } from '@web3-react/core'
-import UserBlock from 'components/SideMenu/components/UserBlock'
 import useToast from 'hooks/useToast'
 import ThemeSwitcher from 'components/SideMenu/components/ThemeSwitcher'
 import { MENU_ENTRY_HEIGHT } from 'components/SideMenu/config'
@@ -24,6 +23,7 @@ import NetworkCard from './NetworkCard'
 import { useModalOpen } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 import { NETWORK_SYMBOL } from 'constants/networks'
+import UserBlock from 'components/SideMenu/components/UserBlock'
 
 const logoURL = window.location.origin + '/static/images/logo-white.png'
 
@@ -178,8 +178,8 @@ export default function Header() {
   const { isXl, isXs, isSm, isMd, isLg } = useMatchBreakpoints()
   const { isDark, toggleTheme } = useTheme()
   const web3 = useWeb3()
-  const { account, chainID, gasPrice, library } = web3
-  const { chainId } = useWeb3React()
+  const { chainID, gasPrice, library } = web3
+  const { account, chainId } = useWeb3React()
   const { login, logout } = useAuth()
   const isMobile = isXl === false
   const [isPushed, setIsPushed] = useState(!isMobile)
@@ -197,19 +197,7 @@ export default function Header() {
     toastClear()
   }
   const zooToken = getToken(web3)
-  // const getBalance = async () => {
-  //   try {
-  //     const decimals = await zooToken.methods.decimals().call()
-  //     const rawBalance = await zooToken.methods.balanceOf(account).call()
-  //     const divisor = parseFloat(Math.pow(10, decimals).toString())
-  //     const balance = rawBalance / divisor
-  //     setBalance(balance)
-  //   } catch (e) {
-  //     console.error('ISSUE LOADING ZOO BALANCE \n', e)
-  //     toastClear()
-  //     toastError('Failed to load ZOO balance')
-  //   }
-  // }
+
   const getBalance = async () => {
     try {
       // const decimals = await zooToken.methods.decimals().call()
@@ -226,6 +214,7 @@ export default function Header() {
   }
 
   useEffect(() => {
+    if (!account) return
     getBalance()
   }, [account, chainID])
   console.log('chainID', chainID)
@@ -252,6 +241,7 @@ export default function Header() {
           const selected = path == 'Bridge' ? active == 'bridge' || active == 'limit-order' : active === path.toLowerCase()
           return (
             <a
+              key={path}
               onClick={() => urlClick(path.toLowerCase())}
               id={`${path}-nav-link`}
               className={`items-left rounded-xl cursor-pointer text-md font-normal flex text-gray-300 ${selected && 'font-semibold rounded-xl text-white'}`}
@@ -263,15 +253,12 @@ export default function Header() {
       </div>
 
       <HeaderControls>
-        {/* */}
-
-        {/* {chainID && !isNaN(chainID) && library && library.isMetaMask && !isSm && ( */}
         <>
           <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
-            <div className='flex items-center rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'>
+            <div className='flex items-center mr-2 rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'>
               <div
                 // style={{ width: 40, height: 40 }}
-                className='grid items-center grid-flow-col p-2 space-x-2 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'
+                className='grid items-center grid-flow-col p-1 space-x-1 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'
                 onClick={() => {
                   const tokenAddress = '0x34f3F270B85532f32c6F8039B960c569816Fc67a'
                   const tokenSymbol = 'ZOO'
@@ -304,34 +291,23 @@ export default function Header() {
                     }
                   } catch (error) {}
                 }}>
-                <img src={require('../../assets/img/hybrid1.png').default} alt='ZOO' className='rounded-md' style={{ width: 22, height: 22 }} />
+                <img src={require('../../assets/img/hybrid1.png').default} alt='ZOO' className='rounded-lg' style={{ width: 32, height: 32 }} />
               </div>
             </div>
           </Tooltip>
-
           <NetworkCard />
         </>
-        {/* )} */}
+
         <HeaderElement>
-          <AccountElement active={!!account} style={{ padding: '3px', pointerEvents: 'auto' }} className='rounded-xl  hover:bg-gray-800 bg-secondary'>
+          <AccountElement active={!!account} style={{ pointerEvents: 'auto' }} className='p-1 rounded-xl  hover:bg-gray-800 bg-secondary'>
             {account ? (
-              <>
-                {/* <QuestionHelper text='Buy ZOO' show={show} /> */}
-                <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} pl='0.5rem' pr='0.5rem' fontWeight={500}>
-                  {numberWithCommas(balance) || 0} {NETWORK_SYMBOL[chainId]}
-                </BalanceText>
-              </>
+              <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} ml='0.25rem' mr='0.25rem' pl='0.5rem' pr='0.5rem' fontWeight={500}>
+                {numberWithCommas(balance) || 0} {NETWORK_SYMBOL[chainID]}
+              </BalanceText>
             ) : null}
             <UserBlock account={account} login={login} logout={logout} />
           </AccountElement>
           <More />
-          {/*
-          <div
-            className='font-semibold flex flex-nowrap p-2 rounded-xl'
-            style={{ color: 'white', backgroundColor: 'rgba(21, 61, 111, 0.44)', border: '1px solid rgba(21, 61, 111, 0.44)' }}>
-            <MoreIcon fill={isDark ? 'white' : 'textDisabled'} />
-          </div> */}
-          {/* <Menu /> */}
         </HeaderElement>
       </HeaderControls>
     </HeaderFrame>

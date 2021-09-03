@@ -20,9 +20,9 @@ function NetworkCard(): JSX.Element | null {
 
   return (
     <div
-      className='flex items-center rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'
+      className='flex items-center rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-3 hover:bg-gray-800'
       onClick={() => onPresentNetworkModal()}>
-      <div className='grid items-center grid-flow-col px-3 py-2 space-x-2 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'>
+      <div className='grid items-center grid-flow-col mr-2 ml-1 px-2 py-1 space-x-2 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary' style={{ padding: '6px' }}>
         {chainId === 1337 || chainId === 1338 ? (
           <>
             <HardHatIcon />
@@ -30,7 +30,7 @@ function NetworkCard(): JSX.Element | null {
           </>
         ) : (
           <>
-            <img src={NETWORK_ICON[chainId]} alt='Switch Network' className='rounded-md' width='22px' height='22px' /> <div className='text-primary'>{NETWORK_LABEL[chainId]}</div>
+            <img src={NETWORK_ICON[chainId]} alt='Switch Network' className='rounded-md' width='28px' height='28px' /> <div className='text-primary'>{NETWORK_LABEL[chainId]}</div>
           </>
         )}
       </div>

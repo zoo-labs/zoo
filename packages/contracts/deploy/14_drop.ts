@@ -1,40 +1,22 @@
 // 14_drop.ts
 
-import { HardhatRuntimeEnvironment } from 'hardhat/types'
-import { DeployFunction } from 'hardhat-deploy/types'
+import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
 import configureGame from '../utils/configureGame'
 
-// Needs to be changed to support Deploy helper
-const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, ethers, getNamedAccounts, network } = hre
-  const { deploy } = deployments
-  // const { deployer } = await getNamedAccounts()
+export default Deploy('Drop', {}, async({ hre, ethers, deploy, deployments, deps }) => {
+  const tx = await deploy(['Gen 0'])
 
-  const [deployer] = await ethers.getSigners()
-  // const nonce = (await deployer.getTransactionCount()) + 1
+  console.log(Object.keys(deps))
 
-  const deployResult = await deploy('Drop', {
-    // nonce: nonce,
-    from: deployer.address,
-    args: ['Gen 0'],
-    log: true,
-  })
+  if (hre.network.name != 'hardhat') return
 
-  if (network.name != 'hardhat') return
-
-  const drop = await ethers.getContractAt('Drop', deployResult.address)
-  const keeperAddress = (await deployments.get('ZooKeeper')).address
-  const keeper = await ethers.getContractAt('ZooKeeper', keeperAddress)
+  const drop = await ethers.getContractAt('Drop', tx.address)
+  const keeper = await ethers.getContract('ZooKeeper')
 
   // Configure game executes a very long series of transactions which set the
   // initial state for our Gen 0 drop. Do not expect this to work during
   // Testnet or Mainnet deployment -- use the standalone `yarn deploy:drop` to
   // update Testnet or Mainnet contracts.
   await configureGame(keeper, drop)
-}
-
-export default func
-func.id = 'drop'
-func.tags = ['Drop']
-func.dependencies = ['ZooKeeper']
+})

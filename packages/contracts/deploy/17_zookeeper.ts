@@ -1,35 +1,33 @@
 // 17_zookeeper.ts
 
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
+import { Manifest, getAdminAddress } from '@openzeppelin/upgrades-core'
+import ProxyAdmin from '@openzeppelin/upgrades-core/artifacts/@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol/ProxyAdmin.json'
 
-export default Deploy('ZooKeeperV2', {proxy: true, dependencies: ['Bridge', 'Media', 'ZOO', 'Market', 'ZooKeeper_Proxy']}, async({ ethers, deploy, deployments, deps, hre, upgrades }) => {
-  // const tx = await deploy()
-  const { ZooKeeper_Proxy } = deps
+export default Deploy('ZooKeeperV2', {
+    dependencies: ['Bridge', 'Media', 'ZOO', 'Market', 'ZooKeeper'],
+    proxy: { kind: 'uups' },
+  },
+  async ({ ethers, deploy, deployments, deps, hre, upgrades }) => {
+    const ZK = await deployments.get('ZooKeeper')
+    const ZK2 = await ethers.getContractFactory('ZooKeeperV2')
+    const upgraded = await upgrades.upgradeProxy(ZK.address, ZK2)
 
-  const ZK2 = await ethers.getContractFactory('ZooKeeperV2')
-  // const inst = await upgrades.deployProxy(ZK, [])
 
-  // const { ZooKeeper_Proxy } = deps
+    const keeper = await ethers.getContractAt('ZooKeeper', ZK.address)
+    const bridge = await ethers.getContract('Bridge')
+    const token = await ethers.getContract('ZOO')
+    const market = await ethers.getContract('Market')
+    const media = await ethers.getContract('Media')
 
-  // const ZK2 = await ethers.getContractFactory('ZooKeeperV2')
-  const upgraded = await upgrades.upgradeProxy(ZooKeeper_Proxy.address, ZK2)
+    // Configure contracts to talk to each other
+    market.configure(keeper.address, media.address)
+    media.configure(keeper.address, market.address)
+    keeper.configure(market.address, media.address, token.address, bridge.address)
 
-//   console.log('ZooKeeper_Proxy.address', ZooKeeper_Proxy.address)
-//   const upgraded = await upgrades.upgradeProxy(ZooKeeper_Proxy.address, tx.address)
+    if (hre.network.name != 'hardhat') return
 
-  // if (hre.network.name != 'hardhat') return
-
-  // const keeper = await ethers.getContractAt('ZooKeeper', tx.address)
-  // const bridge = await ethers.getContract('Bridge')
-  // const token = await ethers.getContract('ZOO')
-  // const market = await ethers.getContract('Market')
-  // const media = await ethers.getContract('Media')
-
-  // Configure contracts to talk to each other
-  // market.configure(keeper.address, media.address)
-  // media.configure(keeper.address, market.address)
-  // keeper.configure(market.address, media.address, token.address, bridge.address)
-
-  // Mint ZOO to keeper for yield
-  // token.mint(keeper.address, 1000000000000)
-})
+    // Mint ZOO to keeper for yield
+    token.mint(keeper.address, 1000000000000)
+  },
+)
