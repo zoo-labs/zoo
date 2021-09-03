@@ -118,6 +118,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
   const [allowance, setAllowance] = useState(false)
   const [disable, setDisable] = useState(false)
   const [disableApprove, setDisableApprove] = useState(false)
+  const [isApproving, setIsApproving] = useState(false)
   const [balance, setBalance] = useState(0)
   const [keepApprove, setKeepApprove] = useState(true)
   const web3 = useWeb3()
@@ -177,7 +178,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
         toastInfo('Please approve allowance to play')
       }
     } catch (error) {
-      console.log(error)
+      console.log('Error in allowance', error)
     }
     setIsInitial(false)
   }
@@ -229,7 +230,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
             setDisable(false)
           })
           .catch((err) => {
-            console.log(err)
+            console.log('Error in buyEgg', err)
             setDisable(false)
           })
       } catch (error) {
@@ -294,17 +295,21 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
                   </button>
                 </div>
               )}
-              <div className={`${!isSm && 'ml-4'}`}>
-                <button
-                  disabled={disable || !allowance}
-                  className={` rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full ${
-                    !allowance ? 'border border-gray-600' : 'bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2'
-                  }`}
-                  style={{ width: '140px', fontSize: '16px', fontWeight: 550 }}
-                  onClick={buyEgg}>
-                  {currentEggsOwned > 2 ? 'Market' : disable ? 'Processing' : 'Buy Eggs'}
-                </button>
-              </div>
+              {currentEggsOwned > 2 ? (
+                <></>
+              ) : (
+                <div className={`${!isSm && 'ml-4'}`}>
+                  <button
+                    disabled={disable || !allowance}
+                    className={` rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full ${
+                      !allowance ? 'border border-gray-600' : 'bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2'
+                    }`}
+                    style={{ width: '140px', fontSize: '16px', fontWeight: 550 }}
+                    onClick={buyEgg}>
+                    {currentEggsOwned > 2 ? 'Market' : disable ? 'Processing' : 'Buy Eggs'}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           {/* <div style={{ flex: 1 }} className='p-5 rounded my-4'>
