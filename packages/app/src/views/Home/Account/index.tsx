@@ -122,12 +122,13 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
   const [balance, setBalance] = useState(0)
   const [keepApprove, setKeepApprove] = useState(true)
   const web3 = useWeb3()
+  const [account, setAccount] = useState(web3.account);
 
   const [zooToken, setZooToken] = useState(getToken(web3))
   const [zooKeeper, setZooKeeper] = useState(getZooKeeper(web3))
   const [zooDrop, setZooDrop] = useState(getDrop(web3))
 
-  const { account, chainID, gasPrice } = web3
+  const { chainID, gasPrice } = web3
   const { isXl, isSm, isMd } = useMatchBreakpoints()
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
@@ -148,6 +149,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
     setZooToken(getToken(web3))
     setZooKeeper(getZooKeeper(web3))
     setZooDrop(getDrop(web3))
+    setAccount(web3.account)
   }, [web3])
 
   const getBalance = async () => {

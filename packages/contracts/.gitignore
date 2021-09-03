@@ -7,4 +7,3 @@ credentials.json
 .migrations.json
 holders.csv
 deployments/localhost
-.openzeppelin/
