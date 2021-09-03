@@ -34,7 +34,6 @@ contract ZooKeeper is Initializable, OwnableUpgradeable {
   event Free(address indexed from, uint256 indexed tokenID, uint256 indexed yield);
   event Hatch(address indexed from, uint256 eggID, uint256 indexed tokenID);
   event Mint(address indexed from, uint256 indexed tokenID);
-
   event Swap(address indexed owner, uint256 indexed tokenID, uint256 indexed chainID);
   event Remint(address indexed owner, uint256 indexed tokenID, uint256 indexed chainID);
 
