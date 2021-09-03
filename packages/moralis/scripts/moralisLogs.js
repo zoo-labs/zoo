@@ -6,7 +6,7 @@ const path = require('path')
 
 require('dotenv').config()
 
-const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'testnet'
+const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'hardhat'
 const CHAIN_IDS = {
   hardhat:  '0x539',
   testnet:  '0x61',
@@ -16,7 +16,7 @@ const CHAIN_IDS = {
 }
 const CHAIN_ID = CHAIN_IDS[NETWORK]
 const SERVER_NAME = {
-  hardhat:  'Zoo Hardhat',
+  hardhat:  'Hardhat',
   testnet:  'Zoo Testnet',
   mainnet:  'Zoo Mainnet',
   ethereum: 'Zoo ETH Mainnet',
