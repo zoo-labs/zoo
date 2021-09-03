@@ -229,8 +229,13 @@ export default function Header() {
   useEffect(() => {
     if (!account) return;
     getBalance()
+<<<<<<< HEAD
   }, [account])
 
+=======
+  }, [account, chainID])
+  console.log('chainID', chainID)
+>>>>>>> 752aee01 (minor)
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
 
