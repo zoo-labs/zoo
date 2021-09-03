@@ -252,6 +252,7 @@ export default function Header() {
           const selected = path == 'Bridge' ? active == 'bridge' || active == 'limit-order' : active === path.toLowerCase()
           return (
             <a
+              key={path}
               onClick={() => urlClick(path.toLowerCase())}
               id={`${path}-nav-link`}
               className={`items-left rounded-xl cursor-pointer text-md font-normal flex text-gray-300 ${selected && 'font-semibold rounded-xl text-white'}`}
