@@ -578,7 +578,7 @@ function Swap() {
                   disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
                   // error={isValid && priceImpactSeverity > 2 && !swapCallbackError}
                 >
-                  {swapInputError ? swapInputError : 'Bridge is Disabled'}
+                  {swapInputError ? swapInputError : 'Bridge Locked'}
                 </button>
                 {/* {swapIsUnsupported ? (
                   <button
