@@ -17,24 +17,47 @@ export type Extra = {
 export type CustomWeb3 = Web3 & Extra
 
 /**
-* Provides a web3 instance using the provider provided by useWallet
-* with a fallback of an httpProver
-* Recreate web3 instance only if the provider change
-*/
+ * Provides a web3 instance using the provider provided by useWallet
+ * with a fallback of an httpProver
+ * Recreate web3 instance only if the provider change
+ */
 export const useWeb3 = () => {
-  const { account, chainId, library, connector } = useWeb3React()
+  const { account: web3Account, chainId, library, connector } = useWeb3React()
   const ref = useRef(library)
   const [gasPrice, setGasPrice] = useState(null)
   const [web3, setWeb3] = useState(library ? new Web3(library) : getWeb3NoAccount())
 
   const ethereum = (window as any).ethereum || { chainId: null, on: () => {} }
-  const [chainID, setChainID] = useState(Number(ethereum.chainId))
+  const [chainID, setChainID] = useState(Number(ethereum.chainId || 56))
+  const [account, setAccount] = useState(web3Account)
+  const customObject = web3 as CustomWeb3
+
+  customObject.account = account
+  customObject.chainID = Number(chainID)
+  customObject.gasPrice = gasPrice
+  customObject.connector = connector
+  customObject.library = library
+
+  const [custom, setCustom] = useState(
+    Object.assign({}, customObject, {
+      account,
+      chainID: Number(chainID),
+      gasPrice,
+      connector,
+      library,
+    }),
+  )
 
   useEffect(() => {
     ethereum.on('chainChanged', (chainID) => {
       setChainID(Number(chainID))
+      custom.chainID = Number(chainID)
+      setCustom(Object.assign({}, { chainID: Number(chainID) }, custom))
     })
-  })
+    return () => {
+      ethereum.removeAllListeners()
+    }
+  }, [])
 
   useEffect(() => {
     if (library !== ref.current) {
@@ -42,6 +65,19 @@ export const useWeb3 = () => {
       ref.current = library
     }
   }, [library, account, chainID])
+
+  async function getAccounts() {
+    if (custom.account && custom.account.length > 0) return
+    const accounts = web3Account ? [web3Account] : await custom.eth.getAccounts()
+    if (accounts.length > 0) {
+      setAccount(accounts[0])
+      setCustom(Object.assign({}, custom, { account: accounts[0] }))
+    }
+  }
+
+  useEffect(() => {
+    getAccounts()
+  }, [account, chainID, library])
 
   async function getGasPrice() {
     const weiPrice = Number(await web3.eth.getGasPrice())
@@ -52,13 +88,6 @@ export const useWeb3 = () => {
   useEffect(() => {
     getGasPrice()
   }, [])
-
-  const custom = web3 as CustomWeb3
-  custom.account = account
-  custom.chainID = Number(chainID)
-  custom.gasPrice = gasPrice
-  custom.connector = connector
-  custom.library = library
   // custom.eth.handleRevert = true
 
   return custom
