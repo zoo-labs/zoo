@@ -3,6 +3,7 @@ import { useWeb3 } from 'hooks'
 import useToast from 'hooks/useToast'
 import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
+import { useLocation } from 'react-router'
 import { getFaucet, getToken } from 'util/contracts'
 import Account from './Account'
 import Bank from './Bank'
@@ -10,7 +11,7 @@ import Bank from './Bank'
 interface indexProps {}
 
 const Index: React.FC<indexProps> = ({}) => {
-  const [tab, setTab] = useState(0)
+  const [tab, setTab] = useState('account')
   const web3 = useWeb3()
   const { chainID, account } = web3
   const [balance, setBalance] = useState(0.0)
@@ -92,11 +93,14 @@ const Index: React.FC<indexProps> = ({}) => {
   useEffect(() => {
     getBalance()
   }, [chainID, account])
-
+  let location = useLocation()
+  useEffect(() => {
+    setTab(location.pathname.split('/')[1])
+  }, [location])
   return (
     // className='lg:p-16 p-4 pr-0 lg:pr-0 mr-0 space-y-4 rounded-lg  m-4 flex flex-col relative filter drop-shadow z-10'
     <main className='flex flex-col  flex-grow w-full h-full lg:p-16 lg:m-4 p-0 m-0 lg:pr-0 lg:mr-0 space-y-4 rounded-lg  flex flex-col relative filter drop-shadow z-10'>
-      <div className='flex lg:p-0 p-4 justify-center lg:justify-start items-end flex-wrap'>
+      {/* <div className='flex lg:p-0 p-4 justify-center lg:justify-start items-end flex-wrap'>
         <div>
           <div
             className={`self-center items-center grid grid-flow-col w-max rounded-xl p-1 m-1 justify-self-center ${
@@ -104,15 +108,15 @@ const Index: React.FC<indexProps> = ({}) => {
             }`}
             style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
             {[
-              { name: 'Account', id: 0 },
-              { name: 'Bank', id: 1 },
+              { name: 'Account', id: 'account' },
+              { name: 'Bank', id: 'bank' },
             ].map((type, index) => {
               const selected = tab == type.id
               return (
                 <div
                   key={type.name}
                   className={`items-left rounded-xl cursor-pointer text-md font-normal flex text-gray-300 ${
-                    selected && 'font-semibold text-white bg-gradient-to-r from-btn1 to-btn2 hover:from-primary hover:to-primary'
+                    selected && 'font-semibold text-white bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'
                   }`}
                   style={{ padding: '10px 14px' }}
                   onClick={() => setTab(type.id)}>
@@ -122,8 +126,8 @@ const Index: React.FC<indexProps> = ({}) => {
             })}
           </div>
         </div>
-      </div>
-      <div className='flex'>{tab === 0 ? <Account handleFunds={() => handleFunds()} wait={wait} balance={balance} /> : <Bank />}</div>
+      </div> */}
+      <div className='flex'>{tab === 'account' ? <Account handleFunds={() => handleFunds()} wait={wait} balance={balance} /> : <Bank />}</div>
       <div
         style={{
           // background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',

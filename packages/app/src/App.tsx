@@ -202,7 +202,7 @@ const App: React.FC = () => {
         <GlobalStyle />
         <Switch>
           <Route exact path='/login'>
-            {signedIn ? <Redirect to='/home' /> : <Login />}
+            {signedIn ? <Redirect to='/account' /> : <Login />}
           </Route>
 
           <SuspenseWithChunkError fallback={<></>}>
@@ -213,8 +213,8 @@ const App: React.FC = () => {
 
               <Switch>
                 {indexRoutes.map((prop, key) => (signedIn ? <Route path={prop.path} key={prop.path} component={prop.component} /> : <Redirect key={key} to='/login' />))}
-                <Redirect from='/' to={signedIn ? '/home' : '/login'} />
-                <Redirect from='' to={signedIn ? '/home' : '/login'} />
+                <Redirect from='/' to={signedIn ? '/account' : '/login'} />
+                <Redirect from='' to={signedIn ? '/account' : '/login'} />
               </Switch>
             </div>
           </SuspenseWithChunkError>

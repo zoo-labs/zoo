@@ -39,7 +39,7 @@ const AltModal: React.FC<ModalProps> = ({
 }) => (
   <ModalContainer maxWidth={maxWidth} minWidth={minWidth} borderRadius={borderRadius} {...props} className=''>
     <div className='px-1 w-full'>
-      <div className='w-full rounded   bg-gradient-to-r from-btn1 via-blue-800 to-btn2' style={{ padding: 1 }}>
+      <div className='w-full rounded   bg-gradient-to-b from-btn1 via-blue-800 to-btn2' style={{ padding: 1 }}>
         <div className='flex flex-col h-full w-full bg-dark-900 bg-opacity-100 rounded p-6 overflow-y-auto'>{children}</div>
       </div>
     </div>

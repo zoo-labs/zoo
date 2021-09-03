@@ -59,7 +59,7 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
       <div className='grid grid-cols-1 rounded  bg-dark-900 h-[46px]' style={{ height: 46 }}>
         {/* <NavLink
           className='flex items-center justify-center'
-          activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600'
+          activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-b from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600'
           to={{
             pathname: '/swap',
             state: getQuery(input, output),
@@ -71,7 +71,7 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
         </a>
         {/* <NavLink
           className='flex items-center justify-center'
-          activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600'
+          activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-b from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600'
           to={{
             pathname: '/limit-order',
             state: getQuery(input, output),
@@ -80,7 +80,7 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippag
         </NavLink>
         <NavLink
           className='flex items-center justify-center'
-          activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600'
+          activeClassName='font-bold border rounded text-high-emphesis border-dark-800 bg-gradient-to-b from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600'
           //   ${!isRemove ? 'add' : 'remove'}
 
           to={`/
