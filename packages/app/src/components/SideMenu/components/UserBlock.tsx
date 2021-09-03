@@ -61,7 +61,7 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
     <>
       <div>
         {account ? (
-          <div className='font-semibold flex flex-nowrap p-2 rounded-xl  bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2 border-primary'>
+          <div className='font-bold flex flex-nowrap p-2 rounded-xl  bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2 border-primary'>
             <button
               className='mr-2 rounded-lg'
               onClick={() => {
@@ -72,7 +72,7 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
             {connector && <StatusIcon connector={connector} />}
           </div>
         ) : (
-          <div className='font-semibold flex flex-nowrap p-2 rounded-xl  bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2 border-primary'>
+          <div className='font-bold flex flex-nowrap p-2 rounded-xl  bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2 border-primary'>
             <button className='mr-2 rounded-lg' onClick={() => toggleConnectModal()}>
               Connect
             </button>
