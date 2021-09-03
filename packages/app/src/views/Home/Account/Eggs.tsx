@@ -199,7 +199,8 @@ const Eggs: React.FC<EggsProps> = ({}) => {
             // </Swiper>
             <Swiper
               slidesPerView={isSm ? 2 : isMd ? 6 : 12}
-              spaceBetween={isSm ? 4 : isMd ? 15 : 30}
+              // spaceBetween={isSm ? 4 : isMd ? 15 : 30}
+              spaceBetween={0}
               pagination={{
                 clickable: true,
               }}

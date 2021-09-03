@@ -30,8 +30,8 @@ export default function ProgressCircles({ steps, disabled = false, ...rest }: Pr
               </div>
               <div
                 className={`
-                ${disabled && 'bg-dark-1000'} ${step && 'bg-gradient-to-r from-green to-pink'} ${
-                  steps[i - 1] ? 'bg-gradient-to-r from-pink to-dark-1000' : 'bg-dark-900'
+                ${disabled && 'bg-dark-1000'} ${step && 'bg-gradient-to-b from-green to-pink'} ${
+                  steps[i - 1] ? 'bg-gradient-to-b from-pink to-dark-1000' : 'bg-dark-900'
                 } w-full h-0.5 opacity-60
                 `}
               />

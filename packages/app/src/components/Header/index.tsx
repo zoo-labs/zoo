@@ -237,14 +237,16 @@ export default function Header() {
           isMobile ? 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
         }`}
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
-        {['Home', 'Bridge'].map((path: string) => {
+        {['Account', 'Bank', 'Bridge'].map((path: string) => {
           const selected = path == 'Bridge' ? active == 'bridge' || active == 'limit-order' : active === path.toLowerCase()
           return (
             <a
               key={path}
               onClick={() => urlClick(path.toLowerCase())}
               id={`${path}-nav-link`}
-              className={`items-left rounded-xl cursor-pointer text-md font-normal flex text-gray-300 ${selected && 'font-semibold rounded-xl text-white'}`}
+              className={`items-left rounded-xl cursor-pointer text-md font-normal flex text-gray-300 ${
+                selected && 'font-semibold rounded-xl text-white bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'
+              }`}
               style={{ backgroundColor: selected ? 'rgb(44, 47, 54)' : 'transparent', padding: '8px 14px' }}>
               <h6>{path}</h6>
             </a>

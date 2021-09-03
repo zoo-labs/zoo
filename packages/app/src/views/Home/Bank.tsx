@@ -97,7 +97,6 @@ const EarnerValue = styles(Text)`
 const Container = styled.div`
   filter: ${({ theme }) => theme.card.dropShadow};
   width: 100%;
-  background: ${({ theme }) => theme.card.background};
   border-radius: 16px;
   min-width: 280px;
 `
@@ -322,7 +321,7 @@ const Bank: React.FC = () => {
 
   return (
     <>
-      <div className='w-full'>
+      <div className='w-full m-8'>
         <Body>
           <Label style={{ marginLeft: -8, fontSize: '20px' }}>Total Daily Yield</Label>
           <Flex width='100%' alignItems='center' justifyContent='space-around' style={{ marginLeft: -16 }}>
