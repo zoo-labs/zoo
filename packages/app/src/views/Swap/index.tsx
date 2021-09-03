@@ -386,8 +386,8 @@ function Swap() {
         address: '0x2170Ed0880ac9A755fd29B2688956BD959F933F8',
         chainId: 56,
         decimals: 18,
-        logoURI: 'https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg',
-        name: 'Ethereum Token',
+        logoURI: window.location.origin + '/static/images/networks.eth.jpg',
+        name: 'Ethereum',
         symbol: 'ETH',
       })
     } else if (chainId === 97) {
