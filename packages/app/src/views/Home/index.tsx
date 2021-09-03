@@ -103,6 +103,7 @@ const Index: React.FC<indexProps> = ({}) => {
               const selected = tab == type.id
               return (
                 <div
+                  key={type.name}
                   className={`items-left rounded-xl cursor-pointer text-md font-normal flex text-gray-300 ${
                     selected && 'font-semibold text-white bg-gradient-to-r from-btn1 to-btn2 hover:from-primary hover:to-primary'
                   }`}
