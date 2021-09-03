@@ -53,7 +53,7 @@ contract ZOO is ERC20, ERC20Burnable, Pausable, Ownable, AccessControl {
     }
 
     modifier onlyBridge {
-        require(msg.sender == address(bridge));
+        require(msg.sender == address(bridge), "Caller is not the bridge");
         _;
     }
 

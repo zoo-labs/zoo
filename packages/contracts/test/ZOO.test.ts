@@ -4,9 +4,9 @@ import { ZOO } from '../types'
 
 const { expect } = requireDependencies()
 
-const setupTest = setupTestFactory(['ZOO'])
+const setupTest = setupTestFactory(['ZOO', 'Bridge'])
 
-describe.only('ZOO', function () {
+describe('ZOO', function () {
   let token: ZOO
   let signers: Signer[]
 
@@ -99,5 +99,52 @@ describe.only('ZOO', function () {
     // Add user to blacklist
     await token.blacklistAddress(address)
     await expect(token.connect(signers[1]).transfer(address2, 100)).to.be.revertedWith('Address is on blacklist')
+  })
+
+  describe('configure', async () => {
+    it('allows owner to upgrade bridge through configure', async () => {
+      const {
+        signers,
+        tokens: { ZOO, Bridge },
+      } = await setupTest()
+      const beforeAddr = await ZOO.bridge()
+      await ZOO.configure(signers[0].address)
+      expect(await ZOO.bridge()).not.to.equal(beforeAddr)
+    })
+
+    it('prevents non-owner from calling configure', async () => {
+      const {
+        signers,
+        tokens: { ZOO },
+      } = await setupTest()
+      await expect(ZOO.connect(signers[1]).configure(signers[2].address)).to.be.rejectedWith('Ownable: caller is not the owner')
+    })
+  })
+
+  describe('bridgeMint', async () => {
+    let token: any
+    let bridge: any
+
+    beforeEach(async () => {
+      const {
+        signers,
+        tokens: { ZOO, Bridge },
+      } = await setupTest()
+      await ZOO.configure(Bridge.address)
+      // await Bridge.setToken(ZOO)
+      token = ZOO
+      bridge = Bridge
+    })
+
+    it('disallows anyone not the bridge to call mint', async () => {
+      const { signers } = await setupTest()
+      const caller = signers[1].address
+      expect(await token.balanceOf(caller)).to.be.equal(0)
+      await expect(token.bridgeMint(caller, 10000)).to.be.revertedWith('Caller is not the bridge')
+      expect(await token.balanceOf(caller)).to.be.equal(0)
+    })
+
+    it('allows the bridge to call mint')
+
   })
 })
