@@ -104,8 +104,7 @@ function Feed<FeedPagePops>({ match }) {
   const [activeIndex, setActiveIndex] = useState(0)
 
   let animals = Object.values(animalsState)
-  const { pathname } = useLocation()
-
+  const { pathname, state } = useLocation()
   //  Reroute to homes
   const HomeClick = () => {
     history.push('/home')
@@ -187,10 +186,17 @@ function Feed<FeedPagePops>({ match }) {
         </div>
       </div>
 
-      <Swiper className='swiper-wrapper' onSwiper={setSwiperRef} onActiveIndexChange={handleIndexChange} centeredSlides={isMobile ? true : false} spaceBetween={30} slidesPerView={1} direction='horizontal'>
+      <Swiper
+        className='swiper-wrapper'
+        onSwiper={setSwiperRef}
+        onActiveIndexChange={handleIndexChange}
+        centeredSlides={isMobile ? true : false}
+        spaceBetween={30}
+        slidesPerView={1}
+        direction='horizontal'>
         <Slide key={0}>
           {animals.length ? (
-            <Swiper mousewheel={{releaseOnEdges: true}} speed={900} initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
+            <Swiper mousewheel={{ releaseOnEdges: true }} speed={900} initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
               {animals.map((data) => {
                 return (
                   <Slide className='swiper-wrapper' key={data.tokenID + 'slide'}>
