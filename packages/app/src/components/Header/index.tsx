@@ -23,6 +23,7 @@ import { numberWithCommas } from 'components/Functions'
 import NetworkCard from './NetworkCard'
 import { useModalOpen } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
+import { NETWORK_SYMBOL } from 'constants/networks'
 
 const logoURL = window.location.origin + '/static/images/logo-white.png'
 
@@ -262,15 +263,12 @@ export default function Header() {
       </div>
 
       <HeaderControls>
-        {/* */}
-
-        {/* {chainID && !isNaN(chainID) && library && library.isMetaMask && !isSm && ( */}
         <>
           <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
             <div className='flex items-center rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'>
               <div
                 // style={{ width: 40, height: 40 }}
-                className='grid items-center grid-flow-col p-2 space-x-2 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'
+                className='grid items-center grid-flow-col p-1 space-x-1 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'
                 onClick={() => {
                   const tokenAddress = '0x34f3F270B85532f32c6F8039B960c569816Fc67a'
                   const tokenSymbol = 'ZOO'
@@ -303,7 +301,7 @@ export default function Header() {
                     }
                   } catch (error) {}
                 }}>
-                <img src={require('../../assets/img/hybrid1.png').default} alt='ZOO' className='rounded-md' style={{ width: 22, height: 22 }} />
+                <img src={require('../../assets/img/hybrid1.png').default} alt='ZOO' className='rounded-md' style={{ width: 30, height: 30 }} />
               </div>
             </div>
           </Tooltip>
@@ -317,7 +315,7 @@ export default function Header() {
               <>
                 {/* <QuestionHelper text='Buy ZOO' show={show} /> */}
                 <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} pl='0.5rem' pr='0.5rem' fontWeight={500}>
-                  {numberWithCommas(balance) || 0} BNB
+                  {numberWithCommas(balance) || 0} { NETWORK_SYMBOL[chainID] }
                 </BalanceText>
               </>
             ) : null}
