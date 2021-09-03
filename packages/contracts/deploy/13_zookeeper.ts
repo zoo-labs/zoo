@@ -7,9 +7,9 @@ export default Deploy('ZooKeeper', ['Bridge', 'Media', 'ZOO', 'Market'], async({
 
   if (hre.network.name != 'hardhat') return
 
+  const keeper = await ethers.getContractAt('ZooKeeper', tx.address)
   const bridge = await ethers.getContract('Bridge')
   const token = await ethers.getContract('ZOO')
-  const keeper = await ethers.getContract('ZooKeeper')
   const market = await ethers.getContract('Market')
   const media = await ethers.getContract('Media')
 

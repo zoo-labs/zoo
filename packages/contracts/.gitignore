@@ -8,3 +8,4 @@ deployments/*/solcInputs/
 deployments/*/.chainId
 .migrations.json
 holders.csv
+deployments/localhost
