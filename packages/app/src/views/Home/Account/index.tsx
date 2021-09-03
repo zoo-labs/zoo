@@ -244,11 +244,11 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
           <AccountHeader />
           <div className='flex flex-col justify-between h-full'>
             <div style={{ flex: 1 }} className='p-5 rounded'>
-              <div className='mb-2 flex items-end'>
+              <div className='flex items-end'>
                 <div>
                   <div className='text-base font-bold currentColor mb-2 text-lg'>Wallet Balance</div>
-                  <div className='text-base font-bold currentColor mb-2 text-2xl'>
-                    <span className='text-3xl'>{numberWithCommas(balance.toFixed(3))} </span>ZOO
+                  <div className='text-base font-bold currentColor mb-1 text-2xl'>
+                    <span className='text-2xl'>{numberWithCommas(balance.toFixed(3))} </span>ZOO
                   </div>
                 </div>
                 <div className='ml-4 relative inline-flex rounded-md shadow-sm'>
@@ -279,7 +279,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
                   <button
                     disabled={disableApprove || allowance}
                     style={{ width: '140px', fontSize: '16px', fontWeight: 550 }}
-                    className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100  disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full  bg-gradient-to-r from-btn1 to-btn2 hover:from-primary hover:to-primary`}
+                    className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-900 hover:bg-opacity-100  disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full  bg-gradient-to-r from-btn1 to-btn2 hover:from-primary hover:to-primary`}
                     onClick={approve}>
                     {allowance ? 'Approved' : disableApprove ? 'Processing' : 'Approve'}
                   </button>
