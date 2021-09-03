@@ -7,16 +7,16 @@ const Icon: React.FC<SvgProps> = (props) => {
       <title>Artboard</title>
       <defs>
         <radialGradient cx='50%' cy='50%' fx='50%' fy='50%' r='63.4660055%' id='radialGradient-1'>
-          <stop stop-color='#545659' offset='0%'></stop>
-          <stop stop-color='#1D1C14' offset='100%'></stop>
+          <stop stopColor='#545659' offset='0%'></stop>
+          <stop stopColor='#1D1C14' offset='100%'></stop>
         </radialGradient>
       </defs>
-      <g id='Artboard' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'>
+      <g id='Artboard' stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
         <rect id='Rectangle' fill='url(#radialGradient-1)' x='-4' y='-2' width='71' height='71'></rect>
         <g id='hardhat' transform='translate(7.263956, 12.671366)'>
           <rect id='Rectangle' x='23.7360443' y='23.328634' width='168' height='41.067'></rect>
           <rect id='Rectangle' x='23.7360443' y='16.328634' width='52.267' height='56'></rect>
-          <g id='Group' fill-rule='nonzero'>
+          <g id='Group' fillRule='nonzero'>
             <path
               d='M45.7340443,26.512634 C45.7340443,26.512634 38.7680443,25.480634 35.0870443,25.184634 C31.5520443,24.900634 27.3630443,24.736634 22.8690443,24.736634 C18.3750443,24.736634 14.1860443,24.900634 10.6520443,25.184634 C6.97004426,25.484634 0.00504426418,26.916634 0.00504426418,26.916634 L0.00504426418,28.716634 C0.00504426418,30.316634 10.2420443,31.616634 22.8690443,31.616634 C35.4960443,31.616634 45.7330443,30.316634 45.7330443,28.716634 L45.7340443,26.512634 Z'
               id='Path'
