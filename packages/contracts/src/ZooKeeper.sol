@@ -6,6 +6,7 @@ pragma experimental ABIEncoderV2;
 import { Initializable } from '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
 // import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+import { UUPSUpgradeable } from '@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol';
 
 // import { Ownable } from '@openzeppelin/contracts/access/Ownable.sol';
 import { Counters } from '@openzeppelin/contracts/utils/Counters.sol';
@@ -18,7 +19,7 @@ import { IMedia } from './interfaces/IMedia.sol';
 
 import './console.sol';
 
-contract ZooKeeper is Initializable, OwnableUpgradeable {
+contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   using SafeMath for uint256;
   using Counters for Counters.Counter;
 
@@ -58,22 +59,10 @@ contract ZooKeeper is Initializable, OwnableUpgradeable {
     _;
   }
 
+  function _authorizeUpgrade(address newImplementation) internal override onlyOwner { }
 
   function initialize() public initializer {
     __Ownable_init_unchained();
-  }
-
-
-  function ZooKeeper_init_unchained(
-      address _market,
-      address _media,
-      address _zoo,
-      address _bridge
-  ) public initializer {
-      market = IMarket(_market);
-      media = IMedia(_media);
-      zoo = IERC20(_zoo);
-      bridge = _bridge;
   }
 
   function configure(

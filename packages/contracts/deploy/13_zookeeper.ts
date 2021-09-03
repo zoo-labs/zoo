@@ -5,15 +5,14 @@ import { Deploy } from '@zoolabs/contracts/utils/deploy'
 export default Deploy(
   'ZooKeeper',
   {
-    proxy: {
-      methodName: 'initialize',
-      deployIndex: 0,
-      proxyContract: 'OpenZeppelinTransparentProxy',
-    },
     dependencies: ['Bridge', 'Media', 'ZOO', 'Market'],
+    proxy: { kind: 'uups' },
   },
-  async ({ ethers, deploy, deployments, hre }) => {
+  async ({ ethers, deploy, deployments, deps, hre }) => {
+    console.log(Object.keys(deps))
+
     const tx = await deploy()
+    await tx
 
     if (hre.network.name != 'hardhat') return
 
@@ -24,11 +23,11 @@ export default Deploy(
     const media = await ethers.getContract('Media')
 
     // Configure contracts to talk to each other
-    market.configure(keeper.address, media.address)
-    media.configure(keeper.address, market.address)
-    keeper.configure(market.address, media.address, token.address, bridge.address)
+    await market.configure(keeper.address, media.address)
+    await media.configure(keeper.address, market.address)
+    await keeper.configure(market.address, media.address, token.address, bridge.address)
 
     // Mint ZOO to keeper for yield
-    token.mint(keeper.address, 1000000000000)
+    await token.mint(keeper.address, 1000000000000)
   },
 )
