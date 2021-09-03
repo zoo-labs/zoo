@@ -56,7 +56,7 @@ const Index: React.FC<indexProps> = ({}) => {
           setWait(false)
           await getBalance()
           toastClear()
-          toastSuccess('Sent ZOO!')
+          toastSuccess('Got ZOO!')
         })
         .catch((e) => {
           console.error('ISSUE USING FAUCET \n', e)
