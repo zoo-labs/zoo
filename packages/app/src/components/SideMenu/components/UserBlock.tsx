@@ -11,9 +11,10 @@ import WalletConnect from '../../WalletModal/icons/WalletConnect'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { useWeb3 } from 'hooks'
-import { useConnectModalToggle } from 'state/application/hooks'
+import { useConnectModalToggle, useAccountModalToggle } from 'state/application/hooks'
 import ConnectModal from '../../../modals/ConnectModal'
-
+import AccountModal from '../../../modals/AccountModal'
+import WalletModal from 'modals/WalletModal.tsx'
 interface Props {
   account?: string
   login: Login
@@ -52,9 +53,7 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
 const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
   const { connector } = useWeb3()
   const toggleConnectModal = useConnectModalToggle()
-
-  const history = useHistory()
-  const { onPresentConnectModal, onPresentAccountModal } = useWalletModal(login, logout, account, history)
+  const toggleAccountModal = useAccountModalToggle()
   const accountEllipsis = account ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}` : null
 
   return (
@@ -65,7 +64,7 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
             <button
               className='mr-2 rounded-lg'
               onClick={() => {
-                onPresentAccountModal()
+                toggleAccountModal()
               }}>
               {accountEllipsis}
             </button>
@@ -79,8 +78,9 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
           </div>
         )}
       </div>
-
+      <WalletModal />
       <ConnectModal />
+      <AccountModal />
     </>
   )
 }

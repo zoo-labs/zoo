@@ -15,6 +15,7 @@ import { useMoralisSubscription } from 'react-moralis'
 import { Egg, Animal } from 'types/zoo'
 import { getZooKeeper } from 'util/contracts'
 import useWeb3 from 'hooks/useWeb3'
+import myVideo from './components/EggCard/media/spinning_egg_animation.mov'
 
 import { mapEgg, mapAnimal, queryEggs, queryAnimals } from 'util/moralis'
 import Header from 'components/Header'
@@ -178,7 +179,24 @@ const App: React.FC = () => {
   }, [chainID])
   const history = useHistory()
   return (
-    <Suspense fallback={null}>
+    <Suspense
+      fallback={
+        <div className='h-full flex justify-center items-center' style={{ height: '100vh' }}>
+          <div style={{ margin: 0, position: 'absolute', width: '108%' }}>
+            <video
+              autoPlay
+              loop
+              muted
+              style={{
+                height: '235%',
+                width: '235%',
+                alignSelf: 'center',
+              }}>
+              <source src={myVideo} type='video/mp4'></source>
+            </video>
+          </div>
+        </div>
+      }>
       <Router>
         <ResetCSS />
         <GlobalStyle />
