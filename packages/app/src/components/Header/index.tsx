@@ -226,7 +226,7 @@ export default function Header() {
 
   useEffect(() => {
     getBalance()
-  }, [])
+  }, [account, chainID])
 
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
