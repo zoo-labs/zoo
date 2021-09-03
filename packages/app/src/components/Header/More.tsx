@@ -21,7 +21,7 @@ export default function More({}) {
         <>
           <Popover.Button
             className={`${open ? 'text-primary' : 'text-secondary'} focus:outline-none hover:text-high-emphesis flex flex-nowrap p-2 rounded-xl`}
-            style={{ color: 'white', backgroundColor: 'rgb(25, 27, 31)', border: '1px solid rgba(21, 61, 111, 0.44)' }}>
+            style={{ color: 'white', backgroundColor: 'rgb(25, 27, 31)' }}>
             <svg width='16px' height='16px' className='inline-flex items-center w-5 h-5' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
                 d='M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z'
@@ -110,7 +110,7 @@ export default function More({}) {
                       <RiPieChart2Line />
                     </div>
                   </div>
-                  <div
+                  {/* <div
                     onClick={() => toggleTheme()}
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
                     style={{}}>
@@ -118,7 +118,7 @@ export default function More({}) {
                     <div className='ml-4 sm:ml-14'>
                       {isDark ? <SunIcon fill={isDark ? 'white' : 'text'} width='18px' /> : <MoonIcon fill={isDark ? 'white' : 'textDisabled'} width='18px' />}
                     </div>
-                  </div>
+                  </div> */}
                   <div
                     onClick={() => logout()}
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
