@@ -51,9 +51,9 @@ const Index: React.FC<indexProps> = ({}) => {
       faucet.methods
         .fund(acc)
         .send({ from: acc })
-        .then(() => {
+        .then(async () => {
           setWait(false)
-          getBalance()
+          await getBalance()
           toastClear()
           toastSuccess('Sent ZOO!')
         })
