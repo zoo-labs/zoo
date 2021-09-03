@@ -178,13 +178,14 @@ export default function Header() {
   const { isXl, isXs, isSm, isMd, isLg } = useMatchBreakpoints()
   const { isDark, toggleTheme } = useTheme()
   const web3 = useWeb3()
-  const { account, chainID, gasPrice, library } = web3
+  const { account: web3Account, chainID, gasPrice, library } = web3
 
   const { login, logout } = useAuth()
   const isMobile = isXl === false
   const [isPushed, setIsPushed] = useState(!isMobile)
   const [showMenu, setShowMenu] = useState(true)
   const [wait, setWait] = useState(false)
+  const [account, setAccount] = useState(web3Account);
 
   let location = useLocation()
   useEffect(() => {
@@ -226,8 +227,9 @@ export default function Header() {
   }
 
   useEffect(() => {
+    if (!account) return;
     getBalance()
-  }, [])
+  }, [account])
 
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
