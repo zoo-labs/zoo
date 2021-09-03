@@ -153,7 +153,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     setZooKeeper(getZooKeeper(web3))
     setZooDrop(getDrop(web3))
     setAccount(web3.account)
-  }, [account, chainID])
+  }, [web3])
 
   const mount = async () => {
     try {
@@ -177,6 +177,11 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   }
 
   const approve = async () => {
+    if (!account) {
+      toastClear();
+      toastInfo("Account not connected yet")
+      return 
+    }
     toastClear()
     setDisableApprove(true)
     toastInfo('Processing approval...')
