@@ -130,7 +130,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
   const { isXl, isSm, isMd } = useMatchBreakpoints()
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
-
+  const history = useHistory()
   const toastClear = () => {
     clear()
   }
@@ -217,26 +217,29 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
 
   const buyEgg = async () => {
     setDisable(true)
-
-    try {
-      await zooKeeper.methods
-        .buyEgg(1) // buy from first drop
-        .send({ from: account, gasPrice: gasPrice })
-        .then((res) => {
-          toastClear()
-          toastInfo('Transaction submitted.')
-          console.log('bought egg', res)
-          setDisable(false)
-        })
-        .catch((err) => {
-          console.log(err)
-          setDisable(false);
-        })
-    } catch (error) {
-      setDisable(false)
-      console.log(error)
-      toastClear()
-      toastError('Unable to purchase eggs. Try again later.')
+    if (currentEggsOwned < 3) {
+      try {
+        await zooKeeper.methods
+          .buyEgg(1) // buy from first drop
+          .send({ from: account, gasPrice: gasPrice })
+          .then((res) => {
+            toastClear()
+            toastInfo('Transaction submitted.')
+            console.log('bought egg', res)
+            setDisable(false)
+          })
+          .catch((err) => {
+            console.log(err)
+            setDisable(false)
+          })
+      } catch (error) {
+        setDisable(false)
+        console.log(error)
+        toastClear()
+        toastError('Unable to purchase eggs. Try again later.')
+      }
+    } else {
+      history.push('/feed/market')
     }
   }
 
@@ -254,14 +257,14 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
                 <div>
                   <div className='text-base font-bold currentColor mb-2 text-lg'>Wallet Balance</div>
                   <div className='text-base font-bold currentColor mb-2 text-2xl'>
-                    <span className='text-3xl'>{numberWithCommas(balance)} </span>ZOO
+                    <span className='text-3xl'>{numberWithCommas(balance.toFixed(3))} </span>ZOO
                   </div>
                 </div>
                 <div className='ml-4'>
                   <div className='flex items-center  cursor-pointer' onClick={() => handleFunds()}>
                     <span
-                      className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-lg text-high-emphesis border-dark-800 bg-dark-700  hover:bg-primary h-full`}
-                      style={{ minHeight: 40 }}>
+                      className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-xl text-high-emphesis  bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2`}
+                      style={{ minHeight: 40, animation: 'border-pulsate 2s infinite;' }}>
                       {chainID !== 97 && chainID !== 1337 ? 'ADD FUNDS' : wait ? 'PROCESSING' : 'GET ZOO'}
                     </span>
                   </div>
@@ -273,13 +276,13 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
               <Eggs />
             </div>
 
-            <div className={`m-4 flex flex-wrap ${isSm && 'justify-around'}`}>
+            <div className={`m-4 flex flex-wrap ${isSm ? 'justify-around' : 'justify-center'}`}>
               {(keepApprove || !allowance) && (
                 <div>
                   <button
                     disabled={disableApprove || allowance}
-                    style={{ width: '140px', fontSize: '16px', fontWeight: 550, backgroundColor: allowance ? '#8C4FF8' : 'rgb(44, 47, 54)' }}
-                    className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full`}
+                    style={{ width: '140px', fontSize: '16px', fontWeight: 550 }}
+                    className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100  disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full  bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2`}
                     onClick={approve}>
                     {allowance ? 'APPROVED' : disableApprove ? 'PROCESSING' : 'APPROVE'}
                   </button>
@@ -288,10 +291,12 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
               <div className={`${!isSm && 'ml-4'}`}>
                 <button
                   disabled={disable || !allowance}
-                  className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full`}
-                  style={{ width: '140px', fontSize: '16px', fontWeight: 550, backgroundColor: allowance ? '#8C4FF8' : 'rgb(44, 47, 54)' }}
+                  className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full ${
+                    !allowance ? ' border-gray-600' : 'bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2'
+                  }`}
+                  style={{ width: '140px', fontSize: '16px', fontWeight: 550 }}
                   onClick={buyEgg}>
-                  {disable ? 'PROCESSING' : 'BUY EGGS'}
+                  {currentEggsOwned > 2 ? 'Market' : disable ? 'PROCESSING' : 'BUY EGGS'}
                 </button>
               </div>
             </div>

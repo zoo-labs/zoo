@@ -20,6 +20,7 @@
     "accounts": "yarn workspace @zoolabs/contracts accounts",
     "balance": "yarn workspace @zoolabs/contracts balance",
     "chain": "yarn workspace @zoolabs/contracts chain",
+    "chain2": "yarn workspace @zoolabs/contracts chain2",
     "compile": "yarn workspace @zoolabs/contracts compile",
     "deploy": "yarn workspace @zoolabs/contracts deploy",
     "deploy:game": "yarn workspace @zoolabs/contracts deploy:game",
