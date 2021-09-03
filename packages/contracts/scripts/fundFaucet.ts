@@ -12,7 +12,7 @@ async function main() {
   const token = (await ethers.getContractAt('ZOO', ZooToken.address)).connect(deployer)
   const faucet = (await ethers.getContractAt('Faucet', Faucet.address)).connect(deployer)
   // const drop = await (await ethers.getContractAt('Drop', ZooToken.address)).connect(signers[0])
-  const fundAmount = BigNumber.from(800000000000000)
+  const fundAmount = BigNumber.from(1000000000000)
   // console.log('token ->', faucet.address)
   const tx1 = await token.mint(faucet.address, fundAmount.mul(10 * 18))
   console.log('Minted Zoo for faucet')
