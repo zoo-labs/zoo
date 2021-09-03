@@ -1,7 +1,7 @@
 const fs = require('fs')
 const spawn = require('child_process').spawn
 
-const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'testnet'
+const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'hardhat'
 
 const chainID = {
   hardhat:  '0x539',
@@ -12,16 +12,24 @@ const chainID = {
 }[NETWORK]
 
 const subdomain = {
-  hardhat:  'qjydxwdegh7e.usemoralis.com',
+  hardhat:  'zdkisefixfx6.bigmoralis.com',
   testnet:  'dblpeaqbqk32.usemoralis.com',
   mainnet:  'j0ixlvmwc1kz.usemoralis.com',
   ethereum: 'csiwdg4boaa8.usemoralis.com',
   ropsten:  '8sebtwlhn2ic.moralisweb3.com',
 }[NETWORK]
 
+const DEPLOYMENT = {
+  hardhat:  'localhost',
+  testnet:  'testnet',
+  mainnet:  'mainnet',
+  ethereum: 'ethereum',
+  rinkeby:  'rinkeby',
+}
+
 const cached = __dirname + '/../../../node_modules/moralis-cached.js'
 const funcJS = fs.readFileSync(__dirname + '/../src/functions.js')
-const zkJSON = fs.readFileSync(__dirname + `/../../contracts/deployments/${NETWORK}/ZooKeeper.json`)
+const zkJSON = fs.readFileSync(__dirname + `/../../contracts/deployments/${DEPLOYMENT}/ZooKeeper.json`)
 const cloudFunctions = String(funcJS).replace('CHAIN_ID', chainID).replace('ZOOKEEPER', zkJSON)
 
 fs.writeFileSync(cached, cloudFunctions)
