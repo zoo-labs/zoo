@@ -12,7 +12,6 @@ const ConnectModal: React.FC<ConnectModalProps> = ({}) => {
   const connectdModal = useModalOpen(ApplicationModal.CONNECT)
   const toggleConnectModal = useConnectModalToggle()
   const { login } = useAuth()
-  console.log('connectdModal', connectdModal)
   return (
     <Modal isOpen={connectdModal} onDismiss={() => null} maxWidth={440}>
       <ModalHeader onClose={() => toggleConnectModal()} title='Connect' />
