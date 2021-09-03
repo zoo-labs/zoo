@@ -16,11 +16,11 @@ export default function More({}) {
   const { logout } = useAuth()
 
   return (
-    <Popover className='relative ml-auto md:m-2'>
+    <Popover className='relative m-0 p-0'>
       {({ open }) => (
         <>
           <Popover.Button
-            className={`${open ? 'text-primary' : 'text-secondary'} focus:outline-none hover:text-high-emphesis flex flex-nowrap mx-1 p-1 rounded-xl`}
+            className={`${open ? 'text-primary' : 'text-secondary'} focus:outline-none hover:text-high-emphesis flex flex-nowrap rounded-xl`}
             style={{ padding: '10px', color: 'white', backgroundColor: 'rgb(25, 27, 31)' }}>
             <svg width='16px' height='16px' className='inline-flex items-center w-5 h-5' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
