@@ -472,17 +472,6 @@ function App(props) {
             </Link>
           </Menu.Item>
 
-          <Menu.Item key="/faucet">
-            <Link
-              onClick={() => {
-                setRoute("/faucet");
-              }}
-              to="/faucet"
-            >
-              Faucet
-            </Link>
-          </Menu.Item>
-
           <Menu.Item key="/zookeeper">
             <Link
               onClick={() => {
@@ -491,6 +480,17 @@ function App(props) {
               to="/zookeeper"
             >
               ZooKeeper
+            </Link>
+          </Menu.Item>
+
+          <Menu.Item key="/drop">
+            <Link
+              onClick={() => {
+                setRoute("/drop");
+              }}
+              to="/drop"
+            >
+              Drop
             </Link>
           </Menu.Item>
 
@@ -517,6 +517,18 @@ function App(props) {
           </Menu.Item>
 
           {/*
+          <Menu.Item key="/faucet">
+            <Link
+              onClick={() => {
+                setRoute("/faucet");
+              }}
+              to="/faucet"
+            >
+              Faucet
+            </Link>
+          </Menu.Item>
+
+
           <Menu.Item key="/factory">
             <Link
               onClick={() => {
@@ -649,6 +661,16 @@ function App(props) {
           <Route exact path="/bridge">
             <Contract
               name="Bridge"
+              signer={userSigner}
+              provider={localProvider}
+              address={address}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+
+          <Route exact path="/drop">
+            <Contract
+              name="Drop"
               signer={userSigner}
               provider={localProvider}
               address={address}
