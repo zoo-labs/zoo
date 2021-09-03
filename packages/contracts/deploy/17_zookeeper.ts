@@ -7,26 +7,25 @@ import ProxyAdmin from '@openzeppelin/upgrades-core/artifacts/@openzeppelin/cont
 export default Deploy(
   'ZooKeeperV2',
   {
-    proxy: {
-      methodName: 'initialize',
-      deployIndex: 1,
-      proxyContract: 'OpenZeppelinTransparentProxy',
-    },
-    dependencies: ['Bridge', 'Media', 'ZOO', 'Market', 'ZooKeeper_Proxy', 'ZooKeeper', 'DefaultProxyAdmin'],
+    dependencies: ['Bridge', 'Media', 'ZOO', 'Market', 'ZooKeeper'],
+    proxy: { kind: 'uups' },
   },
   async ({ ethers, deploy, deployments, deps, hre, upgrades }) => {
     // const tx = await deploy()
     const { deployer } = await hre.getNamedAccounts()
-    const { ZooKeeper_Proxy, DefaultProxyAdmin } = deps
+    const { ZooKeeper } = deps
 
-    const dep = await deployments.get('ZooKeeper')
-    const contract = await ethers.getContractAt(dep.abi, dep.address)
-    // await contract.changeAdmin(deployer.address);
-
+    const ZK = await deployments.get('ZooKeeper')
     const ZK2 = await ethers.getContractFactory('ZooKeeperV2')
-    // await upgrades.admin.transferProxyAdminOwnership(deployer.address);
-    const upgraded = await upgrades.upgradeProxy(ZooKeeper_Proxy.address, ZK2, {})
-    console.log(upgraded)
+    const upgraded = await upgrades.upgradeProxy(ZK.address, ZK2)
+
+    // const contract = await ethers.getContractAt(dep.abi, dep.address)
+    // // await contract.changeAdmin(deployer.address);
+
+    // const ZK2 = await ethers.getContractFactory('ZooKeeperV2')
+    // // await upgrades.admin.transferProxyAdminOwnership(deployer.address);
+    // const upgraded = await upgrades.upgradeProxy(ZooKeeper_Proxy.address, ZK2, {})
+    // console.log(upgraded)
 
     //   console.log('ZooKeeper_Proxy.address', ZooKeeper_Proxy.address)
     //   const upgraded = await upgrades.upgradeProxy(ZooKeeper_Proxy.address, tx.address)
