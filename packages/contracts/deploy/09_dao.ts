@@ -2,7 +2,10 @@
 
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-export default Deploy('DAO', {}, async({ ethers, getChainId, deploy, deps }) => {
-  const [deployer] = await ethers.getSigners()
-  const tx = await deploy(['GOO', 'GoveranceToken', 'DAO', 'DAO', deployer.address])
-})
+export default Deploy('DAO', {
+    proxy: { kind: 'uups' }
+  },
+  async({ ethers, getChainId, deploy, deps, signers }) => {
+    await deploy()
+  }
+)
