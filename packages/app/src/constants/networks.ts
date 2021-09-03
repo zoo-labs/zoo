@@ -8,13 +8,13 @@ const Goerli = '/images/networks/goerli-network.jpg'
 const Harmony = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fharmonyone-network.jpg&w=64&q=75'
 const Heco = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fheco-network.jpg&w=64&q=75'
 const Kovan = '/images/networks/kovan-network.jpg'
-const Mainnet = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fmainnet-network.jpg&w=64&q=75'
+const Mainnet = '/images/networks/eth.jpg'
 const Matic = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fpolygon-network.jpg&w=64&q=75'
 const Moonbeam = '/images/networks/moonbeam-network.jpg'
 const OKEx = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fokex-network.jpg&w=64&q=75'
 const Polygon = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fpolygon-network.jpg&w=64&q=75'
-const Rinkeby = '/images/networks/rinkeby-network.jpg'
-const Ropsten = '/images/networks/ropsten-network.jpg'
+const Rinkeby = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fmainnet-network.jpg&w=64&q=75'
+const Ropsten = '/images/networks/eth.jpg'
 const xDai = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fxdai-network.jpg&w=64&q=75'
 const Celo = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fcelo-network.jpg&w=64&q=75'
 const Palm = 'https://raw.githubusercontent.com/sushiswap/icons/master/network/palm.jpg'
@@ -49,7 +49,7 @@ export const NETWORK_ICON = {
 
 export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {
   [ChainId.MAINNET]: 'Ethereum',
-  [ChainId.RINKEBY]: 'Rinkeby',
+  [ChainId.RINKEBY]: 'Ethereum Testnet',
   [ChainId.ROPSTEN]: 'Ropsten',
   [ChainId.GÖRLI]: 'Görli',
   [ChainId.KOVAN]: 'Kovan',

@@ -30,6 +30,19 @@ const networks: HardhatUserConfig['networks'] = {
       accountsBalance: '10000000000000000000000',
     },
   },
+  hardhat2: {
+    chainId: 1338,
+    allowUnlimitedContractSize: true,
+    mining: {
+      auto: true,
+      interval: 5000,
+    },
+    accounts: {
+      mnemonic: mnemonic(),
+      count: 20,
+      accountsBalance: '10000000000000000000000',
+    },
+  },
   coverage: {
     url: 'http://127.0.0.1:8555',
     blockGasLimit: 200000000,
