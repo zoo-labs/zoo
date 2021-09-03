@@ -516,7 +516,7 @@ function App(props) {
             </Link>
           </Menu.Item>
 
-          /*
+          {/*
           <Menu.Item key="/factory">
             <Link
               onClick={() => {
@@ -570,8 +570,8 @@ function App(props) {
             >
               Savage
             </Link>
-          */
           </Menu.Item>
+          */}
         </Menu>
 
 
