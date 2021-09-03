@@ -255,51 +255,52 @@ export default function Header() {
       </div>
 
       <HeaderControls>
-        <>
-          <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
-            <div className='flex items-center mr-2 rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'>
-              <div
-                // style={{ width: 40, height: 40 }}
-                className='grid items-center grid-flow-col p-1 space-x-1 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'
-                onClick={() => {
-                  const tokenAddress = '0x34f3F270B85532f32c6F8039B960c569816Fc67a'
-                  const tokenSymbol = 'ZOO'
-                  const tokenDecimals = 18
-                  const tokenImage = window.location.origin + '/static/images/token.png'
-                  const params: any = {
-                    type: 'ERC20',
-                    options: {
-                      address: tokenAddress,
-                      symbol: tokenSymbol,
-                      decimals: tokenDecimals,
-                      image: tokenImage,
-                    },
-                  }
-                  try {
-                    if (library && library.isMetaMask && library.request) {
-                      library
-                        .request({
-                          method: 'wallet_watchAsset',
-                          params,
-                        })
-                        .then((success) => {
-                          if (success) {
-                            console.log('Successfully added ZOO to MetaMask')
-                          } else {
-                            throw new Error('Something went wrong.')
-                          }
-                        })
-                        .catch(console.error)
+        {!isMobile && (
+          <>
+            <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
+              <div className='flex items-center mr-2 rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'>
+                <div
+                  // style={{ width: 40, height: 40 }}
+                  className='grid items-center grid-flow-col p-1 space-x-1 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'
+                  onClick={() => {
+                    const tokenAddress = '0x34f3F270B85532f32c6F8039B960c569816Fc67a'
+                    const tokenSymbol = 'ZOO'
+                    const tokenDecimals = 18
+                    const tokenImage = window.location.origin + '/static/images/token.png'
+                    const params: any = {
+                      type: 'ERC20',
+                      options: {
+                        address: tokenAddress,
+                        symbol: tokenSymbol,
+                        decimals: tokenDecimals,
+                        image: tokenImage,
+                      },
                     }
-                  } catch (error) {}
-                }}>
-                <img src={require('../../assets/img/hybrid1.png').default} alt='ZOO' className='rounded-lg' style={{ width: 32, height: 32 }} />
+                    try {
+                      if (library && library.isMetaMask && library.request) {
+                        library
+                          .request({
+                            method: 'wallet_watchAsset',
+                            params,
+                          })
+                          .then((success) => {
+                            if (success) {
+                              console.log('Successfully added ZOO to MetaMask')
+                            } else {
+                              throw new Error('Something went wrong.')
+                            }
+                          })
+                          .catch(console.error)
+                      }
+                    } catch (error) {}
+                  }}>
+                  <img src={require('../../assets/img/hybrid1.png').default} alt='ZOO' className='rounded-lg' style={{ width: 32, height: 32 }} />
+                </div>
               </div>
-            </div>
-          </Tooltip>
-          <NetworkCard />
-        </>
-
+            </Tooltip>
+            <NetworkCard />
+          </>
+        )}
         <HeaderElement>
           <AccountElement active={!!account} style={{ pointerEvents: 'auto' }} className='p-1 rounded-xl  hover:bg-gray-800 bg-secondary'>
             {account ? (
