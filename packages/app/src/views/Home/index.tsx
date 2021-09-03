@@ -98,7 +98,7 @@ const Index: React.FC<indexProps> = ({}) => {
               return (
                 <div
                   className={`items-left rounded-xl cursor-pointer text-md font-normal flex text-gray-300 ${
-                    selected && 'font-semibold text-white bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2'
+                    selected && 'font-semibold text-white bg-gradient-to-r from-btn1 to-btn2 hover:from-primary hover:to-primary'
                   }`}
                   style={{ padding: '10px 14px' }}
                   onClick={() => setTab(type.id)}>
