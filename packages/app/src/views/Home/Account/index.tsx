@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 import { AppState } from 'state'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import styles from 'styled-components'
+import styles, { useTheme } from 'styled-components'
 import Metamask from '../../../components/WalletModal/icons/Metamask'
 
 import ToastListener from '../../../components/ToastListener'
@@ -238,6 +238,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
       mounted = false
     }
   }, [account, chainID])
+  const theme = useTheme()
   return (
     <
       // style={{ height: '100vh' }} className='flex items-center'
@@ -251,15 +252,17 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
               <div className='flex items-end'>
                 <div>
                   <div className='text-base font-bold currentColor mb-2 text-lg'>Wallet Balance</div>
-                  <div className='text-base font-bold currentColor mb-1 text-2xl'>
+                  <div className='text-base font-bold currentColor text-2xl'>
                     <span className='text-2xl'>{numberWithCommas(balance.toFixed(3))} </span>ZOO
                   </div>
                 </div>
                 <div className='ml-4 relative inline-flex rounded-md shadow-sm'>
                   <div className='flex items-center  cursor-pointer' onClick={() => handleFunds()}>
                     <span
-                      className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-xl text-high-emphesis  bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary`}
-                      style={{ minHeight: 40, animation: 'border-pulsate 2s infinite' }}>
+                      className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-xl text-high-emphesis bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary ${
+                        balance === 0 && 'gradient-border'
+                      }`}
+                      style={{ minHeight: 40 }}>
                       {wait ? 'Processing' : 'Get ZOO'}
                     </span>
                   </div>
