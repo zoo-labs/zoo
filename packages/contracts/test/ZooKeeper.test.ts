@@ -7,33 +7,36 @@ import { deployments, ethers, getNamedAccounts, upgrades } from 'hardhat'
 // import { Faucet } from '../types/Faucet';
 // import { Market } from '../types/Market';
 // import { ZooKeeper } from '../types/ZooKeeper';
-import chai, { expect } from 'chai'
 // import configureGame from '../utils/configureGame';
 import { Contract, BigNumber, Bytes, BytesLike, utils } from 'ethers'
 
 import { solidity } from 'ethereum-waffle'
 import { hex } from 'chalk'
 
-chai.use(solidity)
+import { requireDependencies, setupTestFactory } from './utils'
+const { expect } = requireDependencies()
 
-let zooToken: any
-let zooDrop: any
-let zooMarket: any
+const setupTest = setupTestFactory(['Media', 'Market', 'Bridge', 'ZOO'])
+
+
+// let zooToken: any
+// let zooDrop: any
+// let zooMarket: any
 let zooKeeper: any
-let zooMedia: any
-let signers: any
-let mintAmt = 100000000
-let owner
-let mediaAddress: string
-let marketAddress: string
-let eggPrice: any
+// let zooMedia: any
+// let signers: any
+// let mintAmt = 100000000
+// let owner
+// let mediaAddress: string
+// let marketAddress: string
+// let eggPrice: any
 
 class Helper {
-  public zooToken: Contract
-  public zooDrop: Contract
+  public ZOO: Contract
+  public Drop: Contract
   public owner: any
-  public zooMarket: Contract
-  public zooMedia: Contract
+  public Market: Contract
+  public Media: Contract
   public zooKeeper: Contract
   public eggPrice: BigNumber
   public signers: any
@@ -43,14 +46,15 @@ class Helper {
   public static async setup() {
     const inst = new Helper()
     await deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
+      const { signers, tokens: { ZOO, Market, Media, ZooKeeper, Drop } } = await setupTest()
       const contracts = await deployments.fixture() // ensure you start from a fresh deployments
 
-      const signers = (inst.signers = await ethers.getSigners())
-      inst.zooToken = await ethers.getContractAt('ZooToken', contracts.ZooToken.address, signers[0])
-      inst.zooMarket = await ethers.getContractAt('Market', contracts.Market.address, signers[0])
-      inst.zooMedia = await ethers.getContractAt('Media', contracts.Media.address, signers[0])
+      inst.signers = signers
+      inst.ZOO = await ethers.getContractAt('Zoo', contracts.ZooToken.address, signers[0])
+      inst.Market = await ethers.getContractAt('Market', contracts.Market.address, signers[0])
+      inst.Media = await ethers.getContractAt('Media', contracts.Media.address, signers[0])
       inst.zooKeeper = await ethers.getContractAt('ZooKeeper', contracts.ZooKeeper.address, signers[0])
-      inst.zooDrop = await ethers.getContractAt('ZooDrop', contracts.ZooDrop.address, signers[0])
+      inst.Drop = await ethers.getContractAt('ZooDrop', contracts.ZooDrop.address, signers[0])
 
       // this mint is executed once and then createFixture will ensure it is snapshotted
       // await zooToken.mint(tokenOwner.deployer, 100000).then(tx => tx.wait());
@@ -58,7 +62,7 @@ class Helper {
       const getDeployer = await getNamedAccounts()
 
       inst.owner = getDeployer.deployer
-      inst.eggPrice = await inst.zooDrop.eggPrice()
+      inst.eggPrice = await inst.Drop.eggPrice()
     })()
 
     return inst
@@ -83,7 +87,7 @@ class Helper {
 
   async buyEgg(signerIdx: number = 0) {
     // await this.zooToken.connect(this.zooKeeper.address).approve(addr, this.eggPrice)
-    await this.zooToken.approve(this.zooKeeper.address, this.eggPrice)
+    await this.ZOO.approve(this.zooKeeper.address, this.eggPrice)
     const tx = await this.zooKeeper.buyEgg(1)
     const args = await this.getEventData(tx, 'BuyEgg')
     return { from_evt: args['from'], eggID: args['eggID'] }
@@ -102,21 +106,22 @@ class Helper {
     const { tokenID: animal_id_1 } = await this.hatchAnimal(egg_id_1)
     const { tokenID: animal_id_2 } = await this.hatchAnimal(egg_id_2)
 
-    const hybridEgg = await zooKeeper.breedAnimals(1, parseInt(animal_id_1), parseInt(animal_id_2))
+    const hybridEgg = await this.zooKeeper.breedAnimals(1, parseInt(animal_id_1), parseInt(animal_id_2))
 
     return hybridEgg.id
   }
 }
 
 describe('ZooKeeper', () => {
-  it('it can deploy upgradable', async () => {
+  it.only('it can deploy upgradable', async () => {
+    const { tokens: { ZOO, Market, Media, Bridge} } = await setupTest()
     const ZK = await ethers.getContractFactory("ZooKeeper");
     const ZK2 = await ethers.getContractFactory("ZooKeeperV2");
 
-    const Market = await ethers.getContract("Market");
-    const Media = await ethers.getContract("Media");
-    const ZOO = await ethers.getContract("Zoo");
-    const Bridge = await ethers.getContract("Bridge");
+    // const Market = await ethers.getContract("Market");
+    // const Media = await ethers.getContract("Media");
+    // const ZOO = await ethers.getContract("Zoo");
+    // const Bridge = await ethers.getContract("Bridge");
 
     const inst = await upgrades.deployProxy(ZK, [Market.address, Media.address, ZOO.address, Bridge.address]);
     const upgraded = await upgrades.upgradeProxy(inst.address, ZK2);
@@ -129,7 +134,7 @@ describe('ZooKeeper', () => {
   it('can buy an egg and hatch an animal from the egg', async () => {
     const h = await Helper.setup()
 
-    await h.zooToken.approve(h.zooKeeper.address, h.eggPrice)
+    await h.ZOO.approve(h.zooKeeper.address, h.eggPrice)
 
     const { eggID: egg1_id } = await h.buyEgg(1)
     const { eggID: egg2_id } = await h.buyEgg(1)
@@ -144,7 +149,7 @@ describe('ZooKeeper', () => {
   it('sets the owner of the egg to the buyer', async () => {
     const h = await Helper.setup()
 
-    await h.zooToken.approve(h.zooKeeper.address, h.eggPrice)
+    await h.ZOO.approve(h.zooKeeper.address, h.eggPrice)
     const { from_evt: egg_buyer, eggID: egg1_id } = await h.buyEgg(1)
 
     expect(egg_buyer).to.equal(h.owner)

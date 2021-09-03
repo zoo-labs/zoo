@@ -31,6 +31,7 @@ const networks: HardhatUserConfig['networks'] = {
     },
   },
   hardhat2: {
+    url: 'http://127.0.0.1:3000',
     chainId: 1338,
     allowUnlimitedContractSize: true,
     mining: {
