@@ -14,6 +14,8 @@ import './GoveranceToken.sol';
 // Staking in DAO inspired by Chef Nomi's SushiBar (heavily modified) - MIT license (originally WTFPL)
 // TimeLock functionality Copyright 2020 Compound Labs, Inc. - BSD 3-Clause "New" or "Revised" License
 // Token pool code from SushiSwap MasterChef V2, pioneered by Chef Nomi (I think, under WTFPL) and improved by Keno Budde - MIT license
+
+
 contract DAO is IERC20, Domain {
   using BoringMath for uint256;
   using BoringMath128 for uint128;
