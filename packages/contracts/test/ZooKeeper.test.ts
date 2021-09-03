@@ -18,7 +18,6 @@ const { expect } = requireDependencies()
 
 const setupTest = setupTestFactory(['Media', 'Market', 'Bridge', 'ZOO'])
 
-
 // let zooToken: any
 // let zooDrop: any
 // let zooMarket: any
@@ -46,7 +45,10 @@ class Helper {
   public static async setup() {
     const inst = new Helper()
     await deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
-      const { signers, tokens: { ZOO, Market, Media, ZooKeeper, Drop } } = await setupTest()
+      const {
+        signers,
+        tokens: { ZOO, Market, Media, ZooKeeper, Drop },
+      } = await setupTest()
       const contracts = await deployments.fixture() // ensure you start from a fresh deployments
 
       inst.signers = signers
@@ -113,23 +115,49 @@ class Helper {
 }
 
 describe('ZooKeeper', () => {
-  it.only('it can deploy upgradable', async () => {
-    const { tokens: { ZOO, Market, Media, Bridge} } = await setupTest()
-    const ZK = await ethers.getContractFactory("ZooKeeper");
-    const ZK2 = await ethers.getContractFactory("ZooKeeperV2");
+  describe('upgradable', async () => {
+    it('references do not change', async () => {
+      const {
+        tokens: { ZOO, Market, Media, Bridge },
+      } = await setupTest()
+      const ZK = await ethers.getContractFactory('ZooKeeper')
+      const ZK2 = await ethers.getContractFactory('ZooKeeperV2')
 
-    // const Market = await ethers.getContract("Market");
-    // const Media = await ethers.getContract("Media");
-    // const ZOO = await ethers.getContract("Zoo");
-    // const Bridge = await ethers.getContract("Bridge");
+      const inst = await upgrades.deployProxy(ZK, [])
 
-    const inst = await upgrades.deployProxy(ZK, [Market.address, Media.address, ZOO.address, Bridge.address]);
-    const upgraded = await upgrades.upgradeProxy(inst.address, ZK2);
+      await inst.configure(Market.address, Media.address, ZOO.address, Bridge.address)
 
-    const value = await upgraded.value();
-    expect(value.toString()).to.equal([Market.address, Media.address, ZOO.address, Bridge.address]);
+      expect(await inst.market()).to.equal(Market.address)
+      expect(await inst.media()).to.equal(Media.address)
+      expect(await inst.zoo()).to.equal(ZOO.address)
+      expect(await inst.bridge()).to.equal(Bridge.address)
+
+      const upgraded = await upgrades.upgradeProxy(inst.address, ZK2)
+
+      expect(await upgraded.market()).to.equal(Market.address)
+      expect(await upgraded.media()).to.equal(Media.address)
+      expect(await upgraded.zoo()).to.equal(ZOO.address)
+      expect(await upgraded.bridge()).to.equal(Bridge.address)
+      // expect(value.toString()).to.equal([Market.address, Media.address, ZOO.address, Bridge.address]);
+    })
+
+    it('upgrades functionality', async () => {
+      const {
+        tokens: { ZOO, Market, Media, Bridge },
+      } = await setupTest()
+      const ZK = await ethers.getContractFactory('ZooKeeper')
+      const ZK2 = await ethers.getContractFactory('ZooKeeperV2')
+
+      const inst = await upgrades.deployProxy(ZK, [])
+      expect(inst.newMethod).to.undefined;
+
+      await inst.configure(Market.address, Media.address, ZOO.address, Bridge.address)
+
+      const upgraded = await upgrades.upgradeProxy(inst.address, ZK2)
+      await expect(upgraded.newMethod).not.to.be.undefined;
+      expect(await upgraded.newMethod()).to.be.equal(42);
+    })
   })
-
 
   it('can buy an egg and hatch an animal from the egg', async () => {
     const h = await Helper.setup()

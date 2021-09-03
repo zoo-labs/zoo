@@ -5,7 +5,8 @@ pragma experimental ABIEncoderV2;
 
 // import "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol";
 import { Initializable } from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+// import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
 import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -17,12 +18,9 @@ import { IMedia } from "./interfaces/IMedia.sol";
 import "./console.sol";
 
 
-contract ZooKeeperV2 is Ownable, Initializable {
-    uint256 public y;
+contract ZooKeeperV2 is Initializable, OwnableUpgradeable {
 
-    function initialize(uint256 _y) public initializer {
-        y = _y;
-    }
+    function initialize() public initializer {}
 
     using SafeMath for uint256;
     using Counters for Counters.Counter;
@@ -70,6 +68,10 @@ contract ZooKeeperV2 is Ownable, Initializable {
         media = IMedia(_media);
         zoo = IERC20(_zoo);
         bridge = _bridge;
+    }
+
+    function newMethod() public pure returns (uint256) {
+        return 42;
     }
 
     function setDrop(address dropAddress) public returns (uint256) {
