@@ -2,7 +2,7 @@
 
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-export default Deploy('Faucet', {dependencies: ['ZOO']}, async({ ethers, deploy, deployments, deps, hre }) => {
+export default Deploy('Faucet', { dependencies: ['ZOO'] }, async({ ethers, deploy, deployments, deps, hre }) => {
   const token = await ethers.getContract('ZOO')
 
   const tx = await deploy([token.address])
