@@ -178,8 +178,8 @@ export default function Header() {
   const { isXl, isXs, isSm, isMd, isLg } = useMatchBreakpoints()
   const { isDark, toggleTheme } = useTheme()
   const web3 = useWeb3()
-  const { account: web3Account, chainID, gasPrice, library } = web3
-
+  const { account, chainID, gasPrice, library } = web3
+  const { chainId } = useWeb3React()
   const { login, logout } = useAuth()
   const isMobile = isXl === false
   const [isPushed, setIsPushed] = useState(!isMobile)
@@ -229,13 +229,7 @@ export default function Header() {
   useEffect(() => {
     if (!account) return;
     getBalance()
-<<<<<<< HEAD
-  }, [account])
-
-=======
   }, [account, chainID])
-  console.log('chainID', chainID)
->>>>>>> 752aee01 (minor)
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
 
@@ -263,7 +257,7 @@ export default function Header() {
               onClick={() => urlClick(path.toLowerCase())}
               id={`${path}-nav-link`}
               className={`items-left rounded-xl cursor-pointer text-md font-normal flex text-gray-300 ${selected && 'font-semibold rounded-xl text-white'}`}
-              style={{ backgroundColor: selected ? 'rgb(44, 47, 54)' : 'transparent', padding: '10px 14px' }}>
+              style={{ backgroundColor: selected ? 'rgb(44, 47, 54)' : 'transparent', padding: '8px 14px' }}>
               <h6>{path}</h6>
             </a>
           )
@@ -323,7 +317,7 @@ export default function Header() {
               <>
                 {/* <QuestionHelper text='Buy ZOO' show={show} /> */}
                 <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} pl='0.5rem' pr='0.5rem' fontWeight={500}>
-                  {numberWithCommas(balance) || 0} { NETWORK_SYMBOL[chainID] }
+                  {numberWithCommas(balance) || 0} {NETWORK_SYMBOL[chainId]}
                 </BalanceText>
               </>
             ) : null}
