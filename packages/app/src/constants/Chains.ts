@@ -1,4 +1,6 @@
 export enum ChainId {
+  HARDHAT = 1337,
+  HARDHAT2 = 1338,
   MAINNET = 1,
   ROPSTEN = 3,
   RINKEBY = 4,
