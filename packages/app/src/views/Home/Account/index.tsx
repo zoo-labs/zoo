@@ -8,6 +8,8 @@ import { useHistory } from 'react-router-dom'
 import styles from 'styled-components'
 import Metamask from '../../../components/WalletModal/icons/Metamask'
 
+import ToastListener from '../../../components/ToastListener'
+
 import { Label, Text } from 'components/Text'
 import { Flex, Heading, useMatchBreakpoints } from 'components'
 import Body from 'components/layout/Body'
@@ -212,6 +214,8 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
           })
           .catch((err) => {
             console.log('Error in buyEgg', err)
+            toastClear()
+            toastError('Error buying an egg')
             setDisable(false)
           })
       } catch (error) {
@@ -355,6 +359,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
           )} */}
         </div>
       </div>
+      <ToastListener />
     </>
   )
 }
