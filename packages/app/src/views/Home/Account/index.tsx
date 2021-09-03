@@ -201,31 +201,31 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
 
   const buyEgg = async () => {
     setDisable(true)
-    if (currentEggsOwned < 3) {
-      try {
-        await zooKeeper.methods
-          .buyEgg(1) // buy from first drop
-          .send({ from: account, gasPrice: gasPrice })
-          .then((res) => {
-            toastClear()
-            toastInfo('Transaction submitted.')
-            console.log('bought egg', res)
-            setDisable(false)
-          })
-          .catch((err) => {
-            console.log('Error in buyEgg', err)
-            toastClear()
-            toastError('Error buying an egg')
-            setDisable(false)
-          })
-      } catch (error) {
-        setDisable(false)
-        console.log(error)
-        toastClear()
+    try {
+      await zooKeeper.methods
+        .buyEgg(1) // buy from first drop
+        .send({ from: account, gasPrice: gasPrice })
+        .then((res) => {
+          toastClear()
+          toastInfo('Transaction submitted.')
+          console.log('bought egg', res)
+          setDisable(false)
+        })
+        .catch((err) => {
+          console.log('Error in buyEgg', err)
+          toastClear()
+          toastError('Unable to purchase egg')
+          setDisable(false)
+        })
+    } catch (err) {
+      console.error(err)
+      toastClear()
+      setDisable(false)
+      if (currentEggsOwned < 3) {
+        toastError('Already purchased maximum eggs from drop. Check the market for more eggs')
+      } else {
         toastError('Unable to purchase eggs. Try again later.')
       }
-    } else {
-      history.push('/feed/market')
     }
   }
 
@@ -251,7 +251,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
             <div style={{ flex: 1 }} className='p-5 rounded'>
               <div className='flex items-end'>
                 <div>
-                  <div className='text-base font-bold currentColor mb-2 text-lg'>Wallet Balance</div>
+                  <div className='text-base font-bold currentColor mb-2 text-xl'>Wallet Balance</div>
                   <div className='text-base font-bold currentColor text-2xl'>
                     <span className='text-2xl'>{numberWithCommas(balance.toFixed(3))} </span>ZOO
                   </div>
@@ -259,10 +259,10 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
                 <div className='ml-4 relative inline-flex rounded-md shadow-sm'>
                   <div className='flex items-center  cursor-pointer' onClick={() => handleFunds()}>
                     <span
-                      className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-xl text-high-emphesis bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary ${
+                      className={`flex items-center justify-center ml-2 px-5 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-xl text-high-emphesis bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary ${
                         balance === 0 && 'gradient-border'
                       }`}
-                      style={{ minHeight: 40 }}>
+                      style={{ marginBottom: '-2px', minHeight: 36 }}>
                       {wait ? 'Processing' : 'Get ZOO'}
                     </span>
                   </div>
@@ -274,8 +274,9 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
                   )}
                 </div>
               </div>
-              <div className='my-8'>
-                <Label style={{ fontSize: '20px' }}>{currentEggsOwned} Eggs Owned</Label>
+
+              <div className='text-base font-bold currentColor pt-8 text-xl'>
+                {currentEggsOwned} Eggs Owned
               </div>
               <Eggs />
             </div>

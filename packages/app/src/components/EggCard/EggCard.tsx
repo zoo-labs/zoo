@@ -217,7 +217,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
     <>
       <Card
         onClick={() => buttonActions()}
-        style={{ backgroundColor: '#000000', height: '80%', width: 128 }}
+        style={{ backgroundColor: '#000000', height: '80%', width: 111 }}
         timedOut={egg.timeRemaining > 0 ? true : false}
         interactive={egg.interactive}
         hatching={hatching}
@@ -228,7 +228,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             width: '100%',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
-            backgroundPosition: '0% 65%',
+            backgroundPosition: '0% 80%',
             borderRadius: 16,
             height: '100%',
             transition: 'background-image 1000ms linear',
