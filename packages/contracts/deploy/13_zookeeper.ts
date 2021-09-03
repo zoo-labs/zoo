@@ -7,7 +7,7 @@ export default Deploy(
   {
     proxy: {
       methodName: 'initialize',
-      deployIndex: 1,
+      deployIndex: 0,
       proxyContract: 'OpenZeppelinTransparentProxy',
     },
     dependencies: ['Bridge', 'Media', 'ZOO', 'Market'],
