@@ -23,7 +23,7 @@ contract ZooKeeperV2 is Initializable, OwnableUpgradeable {
     }
 
     function initialize() public initializer {
-        __Ownable_init();
+        __Ownable_init_unchained();
     }
 
     using SafeMath for uint256;
