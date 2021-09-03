@@ -449,6 +449,7 @@ function App(props) {
             </Link>
           </Menu.Item>
 
+
           <Menu.Item key="/bridge">
             <Link
               onClick={() => {
@@ -471,6 +472,51 @@ function App(props) {
             </Link>
           </Menu.Item>
 
+          <Menu.Item key="/faucet">
+            <Link
+              onClick={() => {
+                setRoute("/faucet");
+              }}
+              to="/faucet"
+            >
+              Faucet
+            </Link>
+          </Menu.Item>
+
+          <Menu.Item key="/keeper">
+            <Link
+              onClick={() => {
+                setRoute("/keeper");
+              }}
+              to="/keeper"
+            >
+              Keeper
+            </Link>
+          </Menu.Item>
+
+          <Menu.Item key="/market">
+            <Link
+              onClick={() => {
+                setRoute("/market");
+              }}
+              to="/market"
+            >
+              Market
+            </Link>
+          </Menu.Item>
+
+          <Menu.Item key="/media">
+            <Link
+              onClick={() => {
+                setRoute("/media");
+              }}
+              to="/media"
+            >
+              Media
+            </Link>
+          </Menu.Item>
+
+          /*
           <Menu.Item key="/factory">
             <Link
               onClick={() => {
@@ -490,17 +536,6 @@ function App(props) {
               to="/router"
             >
               Router
-            </Link>
-          </Menu.Item>
-
-          <Menu.Item key="/savage">
-            <Link
-              onClick={() => {
-                setRoute("/savage");
-              }}
-              to="/savage"
-            >
-              Savage
             </Link>
           </Menu.Item>
 
@@ -525,7 +560,20 @@ function App(props) {
               Z1
             </Link>
           </Menu.Item>
+
+          <Menu.Item key="/savage">
+            <Link
+              onClick={() => {
+                setRoute("/savage");
+              }}
+              to="/savage"
+            >
+              Savage
+            </Link>
+          */
+          </Menu.Item>
         </Menu>
+
 
         <Switch>
           <Route exact path="/">
@@ -594,6 +642,42 @@ function App(props) {
           <Route exact path="/bridge">
             <Contract
               name="Bridge"
+              signer={userSigner}
+              provider={localProvider}
+              address={address}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+          <Route exact path="/faucet">
+            <Contract
+              name="Faucet"
+              signer={userSigner}
+              provider={localProvider}
+              address={address}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+          <Route exact path="/zookeeper">
+            <Contract
+              name="ZooKeeper"
+              signer={userSigner}
+              provider={localProvider}
+              address={address}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+          <Route exact path="/market">
+            <Contract
+              name="Market"
+              signer={userSigner}
+              provider={localProvider}
+              address={address}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+          <Route exact path="/media">
+            <Contract
+              name="Media"
               signer={userSigner}
               provider={localProvider}
               address={address}
