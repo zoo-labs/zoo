@@ -63,6 +63,8 @@
     "compile": "hardhat compile",
     "console": "hardhat console --network hardhat",
     "deploy": "mkdirp deployments && hardhat deploy --network hardhat --export-all ../app/src/contracts.json",
+    "deploy:testnet": "mkdirp deployments && hardhat deploy --network testnet --export-all ../app/src/contracts.json",
+    "deploy:mainnet": "mkdirp deployments && hardhat deploy --network mainnet --export-all ../app/src/contracts.json",
     "deploy:pool": "hardhat run --network hardhat scripts/deployPool.ts",
     "deploy:game": "hardhat run --network hardhat scripts/configureGame.js",
     "export": "mkdirp deployments && hardhat deploy --network hardhat --export-all ../app/src/contracts.json && cp ../app/src/contracts.json ../lab/src/contracts.json",
