@@ -213,9 +213,10 @@ const Bank: React.FC = () => {
   })
 
   const getBalance = async () => {
+    if (!web3.account) return;
     try {
       const decimals = await zooToken.methods.decimals().call()
-      const rawBalance = await zooToken.methods.balanceOf(account).call()
+      const rawBalance = await zooToken.methods.balanceOf(web3.account).call()
       const divisor = parseFloat(Math.pow(10, decimals).toString())
       const balance = rawBalance / divisor
       setBalance(balance)
@@ -230,8 +231,8 @@ const Bank: React.FC = () => {
   }, [account])
 
   useEffect(() => {
-    getBalance()
-  }, [])
+    if (web3.account) getBalance()
+  }, [account])
 
   const handleFaucet = () => {
     try {
