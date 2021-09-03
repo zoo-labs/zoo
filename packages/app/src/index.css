@@ -59,6 +59,10 @@ body {
     border-color: rgba(32,34,49,1);
 }
 
+.border-gray-600 {
+    border: 2px solid rgb(52, 54,59) !important;
+}
+
 .border-gray-500 {
     border-color: rgba(32,34,49,1);
 }
@@ -174,4 +178,8 @@ body {
     0%   { border-color: rgba(0, 255, 255, 1); }
     50% { border-color: rgba(0, 255, 255, 0); }
     100%   { border-color: rgba(0, 255, 255, 1); }
+}
+
+.font-bold {
+  font-weight: 600 !important;
 }
