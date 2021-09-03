@@ -90,7 +90,7 @@ export default function CurrencyInputPanel({
                     currency.chainId === 1 ? (
                       <img src='https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fbsc-network.jpg&w=64&q=75' className='rounded' style={{ width: 54, height: 54 }} />
                     ) : (
-                      <img src='/images/networks/eth.jpg' className='rounded' style={{ width: 54, height: 54 }} />
+                      <img src='/static/images/networks/eth.jpg' className='rounded' style={{ width: 54, height: 54 }} />
                     )
                   ) : (
                     <CurrencyLogo currency={currency} size={'54px'} className='rounded' />

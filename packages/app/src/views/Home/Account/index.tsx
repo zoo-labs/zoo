@@ -263,7 +263,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
                 <div className='ml-4 relative inline-flex rounded-md shadow-sm'>
                   <div className='flex items-center  cursor-pointer' onClick={() => handleFunds()}>
                     <span
-                      className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-xl text-high-emphesis  bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2`}
+                      className={`flex items-center justify-center px-4 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-xl text-high-emphesis  bg-gradient-to-r from-btn1 to-btn2 hover:from-primary hover:to-primary`}
                       style={{ minHeight: 40, animation: 'border-pulsate 2s infinite;' }}>
                       {chainID !== 97 && chainID !== 1337 ? 'Add Funds' : wait ? 'Processing' : 'Get ZOO'}
                     </span>
@@ -288,7 +288,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
                   <button
                     disabled={disableApprove || allowance}
                     style={{ width: '140px', fontSize: '16px', fontWeight: 550 }}
-                    className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100  disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full  bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2`}
+                    className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100  disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full  bg-gradient-to-r from-btn1 to-btn2 hover:from-primary hover:to-primary`}
                     onClick={approve}>
                     {allowance ? 'Approved' : disableApprove ? 'Processing' : 'Approve'}
                   </button>
@@ -298,7 +298,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait }) => {
                 <button
                   disabled={disable || !allowance}
                   className={` rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full ${
-                    !allowance ? 'border border-gray-600' : 'bg-gradient-to-r from-primary to-primary hover:from-btn1 hover:to-btn2'
+                    !allowance ? 'border border-gray-600' : 'bg-gradient-to-r from-btn1 to-btn2 hover:from-primary hover:to-primary'
                   }`}
                   style={{ width: '140px', fontSize: '16px', fontWeight: 550 }}
                   onClick={buyEgg}>

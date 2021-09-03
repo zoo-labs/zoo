@@ -40,7 +40,7 @@ export default function Modal({ isOpen, onDismiss, minHeight = 0, maxHeight = 90
                   width: isMobile ? `100%` : isMax ? '100vw' : '65vw',
                   maxWidth: isMax ? '100%' : `${maxWidth}px`,
                 }}>
-                <div className='w-full p-px rounded bg-gradient-to-r from-blue-500 via-blue-800 to-pink-500'>
+                <div className='w-full p-px rounded bg-gradient-to-r from-btn1  to-btn2'>
                   <div className='flex flex-col w-full h-full p-6 overflow-y-hidden rounded bg-dark-900' style={{ backgroundColor }}>
                     <div style={{ minHeight: `${minHeight}vh`, maxHeight: `${maxHeight}vh` }}>{children}</div>
                   </div>
