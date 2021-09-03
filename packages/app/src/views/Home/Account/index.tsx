@@ -151,7 +151,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     setZooKeeper(getZooKeeper(web3))
     setZooDrop(getDrop(web3))
     setAccount(web3.account)
-  }, [web3])
+  }, [account, chainID])
 
   const mount = async () => {
     try {

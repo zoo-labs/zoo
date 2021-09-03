@@ -41,7 +41,7 @@ export const useWeb3 = () => {
       setWeb3(library ? new Web3(library) : getWeb3NoAccount())
       ref.current = library
     }
-  }, [library])
+  }, [library, account, chainID])
 
   async function getGasPrice() {
     const weiPrice = Number(await web3.eth.getGasPrice())
