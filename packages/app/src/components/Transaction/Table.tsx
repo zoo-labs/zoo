@@ -254,17 +254,17 @@ export default function TransactionTable(props: { Transactions: any }) {
                 return (
                   <div
                     className='flex justify-between hover:shadow my-2 bg-white items-center py-4 px-3 lg:px-8
-                  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 
+                  transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-102
                   text-grey-500 rounded-xl'
                     style={{ backgroundColor: '#1f2125' }}>
-                    <div className='flex items-center' id={labelId} style={{ flex: !sm || !md ? 0 : 1 }}>
+                    <div className='flex items-center' id={labelId} style={{ flex: !sm || !md ? 1 : 1 }}>
                       <CheckmarkCircleIcon fill='white' />
                       <h6 style={{ marginLeft: 10 }} className=' text-xs uppercase hidden md:inline-block font-semibold'>
                         {row.action}
                       </h6>
                     </div>
                     <div className='flex-1'>
-                      <h6 style={{}} className=' text-xs uppercase hidden lg:inline-block font-semibold'>
+                      <h6 style={{}} className='text-xs uppercase lg:inline-block font-semibold'>
                         {row.blockNumber}
                       </h6>
                     </div>
