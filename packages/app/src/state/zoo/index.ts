@@ -7,6 +7,7 @@ import { Animal, Egg } from 'types/zoo'
 const initialState: ZooState = {
   animals: {},
   eggs: {},
+  zooBalance:0
 }
 
 export const ZooSlice = createSlice({
@@ -48,6 +49,10 @@ export const ZooSlice = createSlice({
       delete newState.animals[toRemove.tokenID]
       state = newState
     },
+    updatZooBalnce:(state: ZooState, action) => {
+      const zooBalance = action.payload
+      state.zooBalance = zooBalance
+    },
     clearZoo: () => {
       return initialState
     },
@@ -55,6 +60,6 @@ export const ZooSlice = createSlice({
 })
 
 // Actions
-export const { addEgg, addAnimal, addEggs, addAnimals, burnEgg, burnAnimal, clearZoo } = ZooSlice.actions
+export const { addEgg, addAnimal, addEggs, addAnimals, burnEgg, burnAnimal,updatZooBalnce, clearZoo } = ZooSlice.actions
 
 export default ZooSlice.reducer

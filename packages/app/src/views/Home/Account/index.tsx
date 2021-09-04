@@ -6,7 +6,7 @@ import { AppState } from 'state'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import styles, { useTheme } from 'styled-components'
-import Metamask from '../../../components/WalletModal/icons/Metamask'
+import Metamask from '../../../components/modals/icons/Metamask'
 
 import ToastListener from '../../../components/ToastListener'
 

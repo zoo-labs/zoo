@@ -8,12 +8,12 @@ import ResetCSS from './components/ResetCSS'
 import GlobalStyle from './components/style/Global'
 import SuspenseWithChunkError from './components/SuspenseWithChunkError'
 import { useDispatch } from 'react-redux'
-import { clearZoo } from 'state/zoo'
-import { addEggs, addAnimals, addEgg, addAnimal, burnEgg, burnAnimal } from 'state/actions'
+import { clearZoo, updatZooBalnce } from 'state/zoo'
+import { addEggs, addAnimals, addEgg, addAnimal, burnEgg, burnAnimal, getZooBalance } from 'state/zoo/actions'
 import Moralis from 'moralis'
 import { useMoralisSubscription } from 'react-moralis'
 import { Egg, Animal } from 'types/zoo'
-import { getZooKeeper } from 'util/contracts'
+import { getToken, getZooKeeper } from 'util/contracts'
 import useWeb3 from 'hooks/useWeb3'
 import myVideo from './components/EggCard/media/spinning_egg_animation.mov'
 
@@ -21,58 +21,13 @@ import { mapEgg, mapAnimal, queryEggs, queryAnimals } from 'util/moralis'
 import Header from 'components/Header'
 import indexRoutes from 'routes'
 
-import { createBrowserHistory } from 'history'
-import ToastListener from 'components/ToastListener'
-// import 'swiper/swiper.min.css'
-// import 'swiper/components/pagination/pagination.min.css'
-
 const Login = lazy(() => import('./views/Login'))
-const Home = lazy(() => import('./views/Home'))
-// const Bank    = lazy(() => import('./views/Bank'))
-const Feed = lazy(() => import('./views/Feed'))
 
 // This config is required for number formating
 BigNumber.config({
   EXPONENTIAL_AT: 1000,
   DECIMAL_PLACES: 80,
 })
-
-const AppWrapper = styled.div`
-  display: flex;
-  flex-flow: column;
-  align-items: flex-start;
-  overflow-x: hidden;
-`
-
-const BodyWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  z-index: 1;
-  justify-content: center;
-  background-repeat: no-repeat;
-  background-position: bottom 24px center;
-  background-size: 90%;
-
-  ${({ theme }) => theme.mediaQueries.xs} {
-    background-size: auto;
-  }
-
-  ${({ theme }) => theme.mediaQueries.lg} {
-    background-repeat: no-repeat;
-    background-position: center 420px, 10% 230px, 90% 230px;
-    background-size: contain, 266px, 266px;
-    min-height: 90vh;
-  }
-`
-
-const Marginer = styled.div`
-  margin-top: 5rem;
-`
 
 const App: React.FC = () => {
   useEagerConnect()
@@ -82,6 +37,7 @@ const App: React.FC = () => {
 
   /* Set signedIn to true if chainID and window.localStorage.getItem('connectorId') exist */
   const signedIn = chainID !== undefined && window.localStorage.getItem('connectorId') !== undefined
+  const zooToken = getToken(web3)
 
   const getEggs = async () => {
     try {
@@ -177,9 +133,10 @@ const App: React.FC = () => {
 
   useEffect(() => {
     dispatch(clearZoo())
+    dispatch(getZooBalance(web3.account, zooToken))
     getEggs()
     getAnimals()
-  }, [chainID])
+  }, [chainID, web3.account])
   const history = useHistory()
   return (
     <Suspense
