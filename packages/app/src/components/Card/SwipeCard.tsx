@@ -1,14 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Flex, Text, useMatchBreakpoints, Heading, Card as Existing, CardHeader, CardBody, CardFooter, VideoPlayer } from 'components'
-import { useModal } from 'components/Modal'
-import { useWeb3React } from '@web3-react/core'
-import HatchModal from 'components/ZooModals/HatchModal'
-import { Animal } from 'types/zoo'
-// import { EggCardType } from './types'
-import { burnEgg, addAnimal } from 'state/actions'
-import { useDispatch } from 'react-redux'
-import { NewAnimalCard } from 'components/NewAnimal'
+
 import { Link } from 'react-router-dom'
 
 const InfoBlock = styled.div`

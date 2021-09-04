@@ -8,8 +8,9 @@ import multicallReducer from './multicall/reducer'
 import applicationReducer from './application/reducer'
 import userReducer from './user/reducer'
 import transactionsReducer from './transactions/reducer'
-import { Iterable } from 'immutable'
-// import { Iterable } from 'immutable/dist/immutable.es.js'
+import { Iterable } from 'immutable/dist/immutable.es.js'
+import thunkMiddleware from "redux-thunk";
+
 
 // Augment middleware to consider Immutable.JS iterables serializable
 const isSerializable = (value: any) => Iterable.isIterable(value) || isPlain(value) || value instanceof Date
@@ -28,7 +29,7 @@ const store = configureStore({
     user: userReducer,
     transactions: transactionsReducer,
   },
-  middleware: [serializableMiddleware],
+  middleware: [thunkMiddleware,serializableMiddleware],
 })
 
 export type AppDispatch = typeof store.dispatch

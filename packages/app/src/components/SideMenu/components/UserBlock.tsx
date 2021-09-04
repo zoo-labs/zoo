@@ -1,20 +1,15 @@
-import BorderButton from 'components/Button/BorderButton'
 import React from 'react'
-import { useHistory } from 'react-router-dom'
-import Button from '../../../components/Button/Button'
-import { useWalletModal } from '../../WalletModal'
-import { Login } from '../../WalletModal/types'
+import { Login } from '../../modals/types'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { injected, walletconnect, walletlink } from '../../../connectors'
-import Metamask from '../../WalletModal/icons/Metamask'
-import WalletConnect from '../../WalletModal/icons/WalletConnect'
+import Metamask from '../../modals/icons/Metamask'
+import WalletConnect from '../../modals/icons/WalletConnect'
 import styled from 'styled-components'
-import { useWeb3React } from '@web3-react/core'
 import { useWeb3 } from 'hooks'
 import { useConnectModalToggle, useAccountModalToggle } from 'state/application/hooks'
-import ConnectModal from '../../../modals/ConnectModal'
-import AccountModal from '../../../modals/AccountModal'
-import WalletModal from 'modals/WalletModal.tsx'
+import ConnectModal from '../../modals/ConnectModal'
+import AccountModal from '../../modals/AccountModal'
+import WalletModal from 'components/modals/WalletModal.tsx'
 interface Props {
   account?: string
   login: Login
@@ -60,9 +55,9 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
     <>
       <div>
         {account ? (
-          <div className='flex flex-nowrap p-2 rounded-xl  bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary border-primary'>
+          <div className='flex items-center px-3 py-2 text-sm rounded-lg text-secondary bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'>
             <button
-              className='font-semibold mr-2 ml-2 rounded-lg'
+              className='font-semibold mr-2'
               onClick={() => {
                 toggleAccountModal()
               }}>
@@ -71,7 +66,7 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
             {connector && <StatusIcon connector={connector} />}
           </div>
         ) : (
-          <div className='font-semibold flex flex-nowrap p-2 rounded-lg bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary border-primary'>
+          <div className='flex items-center px-3 py-2 text-sm rounded-lg text-secondary bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'>
             <button className='font-semiold rounded-lg' onClick={() => toggleConnectModal()}>
               Connect to wallet
             </button>
