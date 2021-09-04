@@ -1,5 +1,5 @@
 import { Colors } from '../../theme/types'
-import { Login } from '../WalletModal/types'
+import { Login } from '../modals/types'
 
 export interface LangType {
   code: string

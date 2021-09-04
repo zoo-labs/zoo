@@ -15,9 +15,6 @@ import { EggCreatedNotify } from './EggCreatedNotify'
 import { AnimalCardProps, SubAnimalCommonProps } from './types'
 import useWeb3 from 'hooks/useWeb3'
 import { getZooKeeper } from 'util/contracts'
-import BreedConfirmationModal from '../../modals/BreedConfirmation'
-import { useOpenModal } from 'state/application/hooks'
-import { ApplicationModal } from 'state/application/actions'
 
 const InfoBlock = styled.div`
   padding: 4px;

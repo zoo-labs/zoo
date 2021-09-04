@@ -4,7 +4,7 @@ import { formatCurrencyAmount } from '../../functions'
 import selectCoinAnimation from '../../assets/animations/select-coin.json'
 
 import CurrencyLogo from './CurrencyLogo'
-import CurrencySearchModal from '../../modals/SearchModal/CurrencySearchModal'
+import CurrencySearchModal from '../modals/SearchModal/CurrencySearchModal'
 import DoubleCurrencyLogo from './DoubleLogo'
 import { FiatValue } from './FiatValue'
 // import { useCurrencyBalance } from '../../state/wallet/hooks'
