@@ -1,0 +1,87 @@
+import config, { connectorLocalStorageKey } from '../config'
+import React from 'react'
+import { ApplicationModal } from 'state/application/actions'
+import { useModalOpen, useNetworkModalToggle } from 'state/application/hooks'
+import Modal from '../../components/NewModal'
+import ModalHeader from '../../components/NewModal/Header'
+import useAuth from 'hooks/useAuth'
+import { NETWORK_ICON, NETWORK_LABEL, SUPPORTED_NETWORKS } from '../../constants/networks'
+import { useWeb3React } from '@web3-react/core'
+import { ImGithub } from 'react-icons/im'
+import { ChainId } from '../../constants/Chains'
+import { CloseIcon } from 'components/Svg'
+
+interface NetworkModalProps {}
+
+const NetworkModal: React.FC<NetworkModalProps> = ({}) => {
+  const { chainId, library, account } = useWeb3React()
+  const networkModal = useModalOpen(ApplicationModal.NETWORK)
+  const toggleNetworkModal = useNetworkModalToggle()
+  if (!chainId) return null
+
+  return (
+    <Modal isOpen={networkModal} onDismiss={() => null} maxWidth={672}>
+      <ModalHeader onClose={() => toggleNetworkModal()} title='Select a Network' />
+      <div className='mb-6 text-lg'>
+        You are currently browsing <span className='font-bold text-pink-500'>ZOO</span>
+        <br /> on the <span className='font-bold primary'>{NETWORK_LABEL[chainId]}</span> network
+      </div>
+
+      <div className='grid grid-flow-row-dense grid-cols-1 gap-5 overflow-y-auto md:grid-cols-2'>
+        {[
+          ChainId.MAINNET,
+          ChainId.BSC,
+          // ChainId.ROPSTEN,
+          ChainId.RINKEBY,
+          // ChainId.GÖRLI,
+          // ChainId.KOVAN,
+          // ChainId.FANTOM,
+          // ChainId.ARBITRUM,
+          // ChainId.OKEX,
+          // ChainId.HECO,
+
+          ChainId.BSC_TESTNET,
+          // ChainId.XDAI,
+          // ChainId.HARMONY,
+          // ChainId.AVALANCHE,
+          // ChainId.CELO,
+          // ChainId.PALM,
+          // ChainId.MATIC,
+        ].map((key: ChainId, i: number) => {
+          if (chainId === key) {
+            return (
+              <button key={i} className='w-full col-span-1 p-px rounded bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'>
+                <div className='flex items-center w-full h-full p-3 space-x-3 rounded bg-dark-1000'>
+                  <img src={NETWORK_ICON[key]} alt={`Switch to ${NETWORK_LABEL[key]} Network`} className='rounded-md' width='32px' height='32px' />
+                  <div className='font-bold text-primary'>{NETWORK_LABEL[key]}</div>
+                </div>
+              </button>
+            )
+          }
+          return (
+            <button
+              key={i}
+              onClick={() => {
+                toggleNetworkModal()
+                const params = SUPPORTED_NETWORKS[key]
+                if (key === ChainId.MAINNET) {
+                  console.log('1')
+                  library?.send('wallet_switchEthereumChain', [{ chainId: '0x1' }, account])
+                } else {
+                  console.log('2', params)
+
+                  library?.send('wallet_addEthereumChain', [params, account])
+                }
+              }}
+              className='flex items-center w-full col-span-1 p-3 space-x-3 rounded cursor-pointer bg-dark-800 hover:bg-dark-700'>
+              <img src={NETWORK_ICON[key]} alt={`Switch to ${NETWORK_LABEL[key]} Network`} className='rounded-md' width='32px' height='32px' />
+              <div className='font-bold text-primary'>{NETWORK_LABEL[key]}</div>
+            </button>
+          )
+        })}
+      </div>
+    </Modal>
+  )
+}
+
+export default NetworkModal
