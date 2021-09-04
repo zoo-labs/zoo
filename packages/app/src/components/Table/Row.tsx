@@ -138,7 +138,6 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
         {Object.keys(props).map((key) => {
           const value = props[key][key] ? props[key][key] : props[key]
           console.log(value)
-          console.log('props key:', props[key])
           const columnIndex = columnNames.indexOf(key)
           if (columnIndex === -1) {
             return null
