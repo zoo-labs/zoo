@@ -261,7 +261,7 @@ export default function Header() {
                   // style={{ width: 40, height: 40 }}
                   className='grid items-center grid-flow-col p-1 space-x-1 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'
                   onClick={() => {
-                    const tokenAddress = '0x34f3F270B85532f32c6F8039B960c569816Fc67a'
+                    const tokenAddress = '0x19263f2b4693da0991c4df046e4baa5386f5735e'
                     const tokenSymbol = 'ZOO'
                     const tokenDecimals = 18
                     const tokenImage = window.location.origin + '/static/images/token.png'
@@ -275,6 +275,7 @@ export default function Header() {
                       },
                     }
                     try {
+                      console.log('adding zoo', library)
                       if (library && library.isMetaMask && library.request) {
                         library
                           .request({
