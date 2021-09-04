@@ -136,7 +136,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
               // sortDirection={orderBy === headCell.id ? order : false}
             >
               <TableSortLabel active={orderBy === headCell.id} direction={orderBy === headCell.id ? order : 'asc'} onClick={createSortHandler(headCell.id)}>
-                <h6 className='text-white text-xs uppercase  lg:inline-block font-bold'>{headCell.label}</h6>
+                <h6 className='text-white text-xs uppercase  md:inline-block font-bold'>{headCell.label}</h6>
                 {orderBy === headCell.id ? <span className={classes.visuallyHidden}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</span> : null}
               </TableSortLabel>
             </div>
@@ -259,7 +259,7 @@ export default function TransactionTable(props: { Transactions: any }) {
                     style={{ backgroundColor: '#1f2125' }}>
                     <div className='flex items-center' id={labelId} style={{ flex: !sm || !md ? 1 : 1 }}>
                       <CheckmarkCircleIcon fill='white' />
-                      <h6 style={{ marginLeft: 10 }} className=' text-xs uppercase g:inline-block font-semibold'>
+                      <h6 style={{ marginLeft: 10 }} className=' text-xs uppercase hidden md:inline-block font-semibold'>
                         {row.action}
                       </h6>
                     </div>
@@ -269,12 +269,12 @@ export default function TransactionTable(props: { Transactions: any }) {
                       </h6>
                     </div>
                     <div className='flex-1'>
-                      <h6 style={{}} className=' text-xs uppercase lg:inline-block font-semibold'>
+                      <h6 style={{}} className=' text-xs uppercase hidden md:inline-block font-semibold'>
                         {row.tokenID}
                       </h6>
                     </div>
-                    <div className='flex-1' style={{ flex: !sm || !md ? 2 : 1 }}>
-                      <a href={`${row.url.toString()}`} target='_blank' className=' text-xs uppercase  lg:inline-block font-semibold'>
+                    <div className='flex-1' style={{ flex: !sm ? 8 : 1 }}>
+                      <a href={`${row.url.toString()}`} target='_blank' className=' text-xs uppercase  md:inline-block font-semibold'>
                         {row.hash.toString().slice(0, 20)} ↗
                       </a>
                     </div>
