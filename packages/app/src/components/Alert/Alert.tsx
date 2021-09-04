@@ -54,23 +54,32 @@ const IconLabel = styled.div<ThemedIconLabel>`
 const withHandlerSpacing = 32 + 12 + 8 // button size + inner spacing + handler position
 const Details = styled.div<{ hasHandler: boolean }>`
   flex: 1;
+  margin-right: 5px;
   padding-bottom: 12px;
   padding-left: 12px;
   padding-right: ${({ hasHandler }) => (hasHandler ? `${withHandlerSpacing}px` : '12px')};
   padding-top: 12px;
+  border-radius: 0 16px 16px 0;
   background: ${({ theme }) => theme.colors.primaryLight};
 `
 
 const CloseHandler = styled.div`
+  position: relative;
   border-radius: 0 16px 16px 0;
-  right: 16px;
-  position: absolute;
-  top: 12px;
+  margin: auto;
+  right: 48px;
+`
+
+const VerticalCenter = styled.div`
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 
 const StyledAlert = styled(Flex)`
   position: relative;
-  background-color: ${({ theme }) => theme.alert.background};
+  background-color: transparent;
   border-radius: 16px;
   box-shadow: 0px 20px 36px -8px rgba(14, 14, 44, 0.1), 0px 1px 1px rgba(0, 0, 0, 0.05);
 `
@@ -88,11 +97,13 @@ const Alert: React.FC<AlertProps> = ({ title, children, variant, onClick }) => {
         {typeof children === 'string' ? <Text as='p'>{children}</Text> : children}
       </Details>
       {onClick && (
-        <CloseHandler>
-          <IconButton width='32px' variant='text' onClick={onClick}>
-            <CloseIcon width='24px' color='currentColor' />
-          </IconButton>
-        </CloseHandler>
+        <VerticalCenter>
+          <CloseHandler>
+            <IconButton width='32px' variant='text' onClick={onClick}>
+              <CloseIcon width='24px' color='currentColor' />
+            </IconButton>
+          </CloseHandler>
+        </VerticalCenter>
       )}
     </StyledAlert>
   )

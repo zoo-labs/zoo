@@ -185,14 +185,15 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
       toastInfo('Account not connected yet')
       return
     }
+
     toastClear()
     setDisableApprove(true)
     toastInfo('Processing approval...')
 
     // Increase allowance
-    const eggPrice = await zooDrop.methods.eggPrice().call({ from: web3.account })
-    const allowance = web3.utils.toBN(eggPrice).mul(web3.utils.toBN(100))
-    const tx = zooToken.methods.approve(zooKeeper.options.address, allowance).send({ from: web3.account })
+    const eggPrice = await zooDrop.methods.eggPrice().call()
+    const allowance = web3.utils.toBN(eggPrice).mul(web3.utils.toBN(3))
+    const tx = zooToken.methods.approve(zooKeeper.options.address, allowance).send({ from: account })
 
     tx.then(() => {
       setAllowance(true)
