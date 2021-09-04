@@ -376,7 +376,7 @@ function Swap() {
   //   }
   // }, [chainId, previousChainId, history]);
   useEffect(() => {
-    console.log('chainIdsssssssss', chainId)
+    // console.log('chainIdsssssssss', chainId)
     if (chainId === 56) {
       handleOutputSelect({
         _checksummedAddress: '0x2170Ed0880ac9A755fd29B2688956BD959F933F8',

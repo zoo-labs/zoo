@@ -162,78 +162,82 @@ function Feed<FeedPagePops>({ match }) {
   }
 
   return (
-    <Container className='feed-container' onClick={handleContainerClick} isMobile={isMobile}>
-      {/* <ButtonMenu activeIndex={activeIndex} onItemClick={onItemClick} scale='sm'>
+    // <Container className='feed-container' onClick={handleContainerClick} isMobile={isMobile}>
+
+    <>
+      <main className='flex flex-col items-center justify-start flex-grow w-full h-full'>
+        {/* <ButtonMenu activeIndex={activeIndex} onItemClick={onItemClick} scale='sm'>
         <ButtonMenu activeIndex={activeIndex} onItemClick={onItemClick} scale='sm'>
           <ButtonMenuItem as='a'>My Zoo</ButtonMenuItem>
           <ButtonMenuItem as='a'>Market</ButtonMenuItem>
         </ButtonMenu> */}
-      <div className='w-full items-center justify-center absolute z-10 mt-4 flex'>
-        <div className={`grid rounded-md p-1 grid-cols-2 justify-self-start`} style={{ backgroundColor: 'rgb(44, 47, 54)', height: 46 }}>
-          {['My Zoo', 'Market'].map((item: string, index: number) => {
-            const active = activeIndex == index
-            return (
-              <a
-                onClick={() => onItemClick(index)}
-                className={`rounded-md flex justify-center items-center cursor-pointer font-normal flex text-gray-300 text-center px-8 text-base ${
-                  active && 'font-semibold text-white'
-                }`}
-                style={{ backgroundColor: active ? '#212429' : 'transparent' }}>
-                <h6>{item}</h6>
-              </a>
-            )
-          })}
+        <div className='w-full items-center justify-center absolute z-10 mt-4 flex'>
+          <div className={`grid rounded-md p-1 grid-cols-2 justify-self-start`} style={{ backgroundColor: 'rgb(44, 47, 54)', height: 46 }}>
+            {['My Zoo', 'Market'].map((item: string, index: number) => {
+              const active = activeIndex == index
+              return (
+                <a
+                  onClick={() => onItemClick(index)}
+                  className={`rounded-md flex justify-center items-center cursor-pointer font-normal flex text-gray-300 text-center px-8 text-base ${
+                    active && 'font-semibold text-white'
+                  }`}
+                  style={{ backgroundColor: active ? '#212429' : 'transparent' }}>
+                  <h6>{item}</h6>
+                </a>
+              )
+            })}
+          </div>
         </div>
-      </div>
 
-      <Swiper
-        className='swiper-wrapper'
-        onSwiper={setSwiperRef}
-        onActiveIndexChange={handleIndexChange}
-        centeredSlides={isMobile ? true : false}
-        spaceBetween={30}
-        slidesPerView={1}
-        direction='horizontal'>
-        <Slide key={0}>
-          {animals.length ? (
-            <Swiper mousewheel={{ releaseOnEdges: true }} speed={900} initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
-              {animals.map((data) => {
-                return (
-                  <Slide className='swiper-wrapper' key={data.tokenID + 'slide'}>
-                    <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={animalGroup} hideBid={activeIndex === 0} />
+        <Swiper
+          className='swiper-wrapper'
+          onSwiper={setSwiperRef}
+          onActiveIndexChange={handleIndexChange}
+          centeredSlides={isMobile ? true : false}
+          spaceBetween={30}
+          slidesPerView={1}
+          direction='horizontal'>
+          <Slide key={0}>
+            {animals.length ? (
+              <Swiper mousewheel={{ releaseOnEdges: true }} speed={900} initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
+                {animals.map((data) => {
+                  return (
+                    <Slide className='swiper-wrapper' key={data.tokenID + 'slide'}>
+                      <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={animalGroup} hideBid={activeIndex === 0} />
+                    </Slide>
+                  )
+                })}
+              </Swiper>
+            ) : (
+              <EmptyZoo>
+                <Text textAlign='center'>You do not currently own any animals</Text>
+                <BorderButton scale='md' onClick={HomeClick}>
+                  Buy Egg
+                </BorderButton>
+              </EmptyZoo>
+            )}
+          </Slide>
+          <Slide key={1}>
+            <Swiper speed={900} initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
+              {animals.map((data, index) => {
+                return data.listed ? (
+                  <Slide key={data.tokenID + 'slide'}>
+                    <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={{}} />
                   </Slide>
+                ) : (
+                  <EmptyZoo>
+                    <Text textAlign='center'>There are currently no animals up for auction</Text>
+                    <BorderButton scale='md' onClick={HomeClick}>
+                      Home
+                    </BorderButton>
+                  </EmptyZoo>
                 )
               })}
             </Swiper>
-          ) : (
-            <EmptyZoo>
-              <Text textAlign='center'>You do not currently own any animals</Text>
-              <BorderButton scale='md' onClick={HomeClick}>
-                Buy Egg
-              </BorderButton>
-            </EmptyZoo>
-          )}
-        </Slide>
-        <Slide key={1}>
-          <Swiper speed={900} initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
-            {animals.map((data, index) => {
-              return data.listed ? (
-                <Slide key={data.tokenID + 'slide'}>
-                  <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={{}} />
-                </Slide>
-              ) : (
-                <EmptyZoo>
-                  <Text textAlign='center'>There are currently no animals up for auction</Text>
-                  <BorderButton scale='md' onClick={HomeClick}>
-                    Home
-                  </BorderButton>
-                </EmptyZoo>
-              )
-            })}
-          </Swiper>
-        </Slide>
-      </Swiper>
-    </Container>
+          </Slide>
+        </Swiper>
+      </main>
+    </>
   )
 }
 

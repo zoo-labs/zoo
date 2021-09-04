@@ -63,7 +63,6 @@ export function CurrencySearch({
   const [invertSearchOrder] = useState<boolean>(false)
 
   let allTokens = useAllTokens()
-  console.log('allTokens', allTokens)
   const history = useHistory()
 
   if (history.location.pathname.startsWith('/kashi/create')) {

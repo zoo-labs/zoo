@@ -64,7 +64,6 @@ export default function CurrencyInputPanel({
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false)
   }, [setModalOpen])
-  console.log('currency', currency)
 
   const newCurrency = currency && currency.symbol === ('ETH' || 'SUSHI') ? { ...currency, symbol: 'ZOO' } : { ...currency, symbol: 'ZOO' }
   return (

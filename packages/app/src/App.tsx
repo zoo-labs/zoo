@@ -146,7 +146,7 @@ const App: React.FC = () => {
   }
 
   const deleteAnimal = async (data) => {
-    console.log('DELETING ANIMAL', mapAnimal(data))
+    // console.log('DELETING ANIMAL', mapAnimal(data))
     try {
       dispatch(burnAnimal(mapAnimal(data)))
     } catch (e) {
@@ -155,7 +155,7 @@ const App: React.FC = () => {
   }
 
   const deleteEgg = async (data) => {
-    console.log('DELETING EGG', mapEgg(data))
+    // console.log('DELETING EGG', mapEgg(data))
     try {
       dispatch(burnEgg(mapEgg(data)))
     } catch (e) {

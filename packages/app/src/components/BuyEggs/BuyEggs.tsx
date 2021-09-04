@@ -164,7 +164,6 @@ const BuyEggs: React.FC<EggModalProps> = ({ onDismiss, headerColor }) => {
 
   const handleSubmit = async () => {
     const testEggs = []
-    console.log('value', value)
     for (let i = 0; i < value; i++) {
       const toSet: Egg = { ...emptyEgg }
       const tokenID = Math.floor(Math.random() * 100000000) + 1
