@@ -272,7 +272,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
                       className={`flex items-center justify-center ml-2 py-2 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-xl text-high-emphesis bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary ${
                         balance === 0 && 'gradient-border'
                       }`}
-                      style={{ width: '120px', marginBottom: '-4px' }}>
+                      style={{ width: '120px', minHeight: '36px', marginBottom: '-2px' }}>
                       {wait ? 'Processing' : 'Get ZOO'}
                     </span>
                   </div>
