@@ -208,8 +208,6 @@ export default function Header() {
       })
     } catch (e) {
       console.error('ISSUE LOADING ZOO BALANCE \n', e)
-      toastClear()
-      toastError('Failed to load ZOO balance')
     }
   }
 

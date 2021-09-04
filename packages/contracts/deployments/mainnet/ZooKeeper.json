@@ -1,5 +1,5 @@
 {
-  "address": "0x08da816daE39B180bBB3243Da7c85be0185c74C7",
+  "address": "0x24d4B6Ba0726Ec6Ba0297084be938278247e046B",
   "abi": [
     {
       "anonymous": false,
@@ -834,6 +834,11 @@
           "internalType": "address",
           "name": "_bridge",
           "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "_unlocked",
+          "type": "bool"
         }
       ],
       "name": "configure",
@@ -1689,6 +1694,19 @@
       "name": "transferOwnership",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "unlocked",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
