@@ -104,6 +104,24 @@ export default function More({}) {
                   <div
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
                     style={{}}
+                    onClick={() => window.open('https://app.gitbook.com/@cryptozoo-1/s/cryptozoo/tokenomics')}>
+                    Docs
+                    <div className='ml-4 sm:ml-14'>
+                      <RiChat1Line />
+                    </div>
+                  </div>
+                  <div
+                    className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
+                    style={{}}
+                    onClick={() => window.open('https://opensea.io/collection/cryptozoo-co')}>
+                    OpenSea
+                    <div className='ml-4 sm:ml-14'>
+                      <RiChat1Line />
+                    </div>
+                  </div>
+                  <div
+                    className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
+                    style={{}}
                     onClick={() => window.open('https://poocoin.app/tokens/0x19263f2b4693da0991c4df046e4baa5386f5735e')}>
                     Analytics
                     <div className='ml-4 sm:ml-14'>

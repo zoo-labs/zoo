@@ -301,9 +301,9 @@ export default function Header() {
           </>
         )}
         <HeaderElement>
-          <AccountElement active={!!account} style={{ pointerEvents: 'auto' }} className='p-1 rounded-xl  hover:bg-gray-800 bg-secondary'>
+          <AccountElement active={!!account} style={{ pointerEvents: 'auto', height: '40px' }} className='p-1 rounded-xl hover:bg-gray-800 bg-secondary'>
             {account ? (
-              <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} ml='0.25rem' mr='0.25rem' pl='0.5rem' pr='0.5rem' fontWeight={500}>
+              <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} ml='0.1rem' mr='0.1rem' pl='0.5rem' pr='0.5rem' fontWeight={500}>
                 {numberWithCommas(balance) || 0} {NETWORK_SYMBOL[chainID]}
               </BalanceText>
             ) : null}
