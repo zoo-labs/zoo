@@ -79,12 +79,12 @@ const Eggs: React.FC<EggsProps> = ({}) => {
 
     const animalObject = Moralis.Object.extend('Animals')
     const animalQuery = new Moralis.Query(animalObject)
-    console.log('QUERY ANIMAL', egg.animalID)
+    // console.log('QUERY ANIMAL', egg.animalID)
     animalQuery.equalTo('tokenID', egg.animalID)
     const animalResults = await animalQuery.find()
     const foundAnimal = animalResults[0]
 
-    console.log('ANIMAL', foundAnimal)
+    // console.log('ANIMAL', foundAnimal)
     setHatched(mapAnimal(foundAnimal))
     foundAnimal.set('revealed', true)
     foundAnimal.save()
