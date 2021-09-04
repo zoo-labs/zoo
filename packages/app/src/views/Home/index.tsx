@@ -30,6 +30,7 @@ const Index: React.FC<indexProps> = ({}) => {
       setBalance(0.0)
       return
     }
+
     try {
       const decimals = await zooToken.methods.decimals().call()
       const rawBalance = await zooToken.methods.balanceOf(web3.account).call()
@@ -38,8 +39,6 @@ const Index: React.FC<indexProps> = ({}) => {
       setBalance(parseFloat(balance.toFixed(4)))
     } catch (e) {
       console.error('ISSUE LOADING ZOO BALANCE \n', e)
-      toastClear()
-      toastError('Failed to load ZOO balance')
     }
   }
 
