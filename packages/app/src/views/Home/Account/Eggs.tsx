@@ -64,7 +64,6 @@ const Eggs: React.FC<EggsProps> = ({}) => {
   const toggleVideoPlayerModal = useVideoPlayerModalToggle()
 
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
-  console.log('allEggs', allEggs)
   const hatchEggReady = async (egg) => {
     const eggObject = Moralis.Object.extend('Eggs')
     const eggQuery = new Moralis.Query(eggObject)
@@ -150,7 +149,6 @@ const Eggs: React.FC<EggsProps> = ({}) => {
     if (!account) {
       return
     }
-
     const eggType = egg.basic ? 'EGG' : 'HYBRID'
     if ((egg.owner || '').toLowerCase() !== account.toLowerCase()) {
       //console.log(account, egg)
@@ -162,7 +160,6 @@ const Eggs: React.FC<EggsProps> = ({}) => {
     const timeRemaining = hatchTimeout - elapsedTime
     const timeRemainingDaysHours = getDaysHours(timeRemaining)
     const barwidth = [100 * (elapsedTime / hatchTimeout), '%'].join('')
-
     if (egg.owner.toLowerCase() === account.toLowerCase() && !egg.burned) {
       eggData.push({
         id: index,
@@ -173,6 +170,8 @@ const Eggs: React.FC<EggsProps> = ({}) => {
       })
     }
   })
+  console.log('eggData', eggData)
+
   eggData = sortData(eggData, 'hybrid')
   // SwiperCore.use([Pagination])
   useEffect(() => {
