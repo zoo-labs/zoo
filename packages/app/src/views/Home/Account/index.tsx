@@ -208,6 +208,14 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     })
   }
 
+  const formatError = (err) => {
+    if (err.code) {
+      return `Purchase failed: ${err.message}`
+    } else {
+      return `Purchase failed: ${(err).toString().replace(/Error: Returned error: /, '')}`
+    }
+  }
+
   const buyEgg = async () => {
     setDisable(true)
     try {
@@ -221,10 +229,11 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
           setDisable(false)
         })
         .catch((err) => {
-          console.log('Error in buyEgg', err)
-          toastClear()
-          toastError(`Purchase failed: ${err.toString().replace(/Error: Returned error: /, '')}`)
+          const message = formatError(err)
           setDisable(false)
+          toastClear()
+          toastError(message)
+          console.error(message)
         })
     } catch (err) {
       console.error(err)
