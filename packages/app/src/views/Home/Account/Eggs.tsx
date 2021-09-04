@@ -64,7 +64,7 @@ const Eggs: React.FC<EggsProps> = ({}) => {
   const toggleVideoPlayerModal = useVideoPlayerModalToggle()
 
   const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
-
+  console.log('allEggs', allEggs)
   const hatchEggReady = async (egg) => {
     const eggObject = Moralis.Object.extend('Eggs')
     const eggQuery = new Moralis.Query(eggObject)
@@ -180,6 +180,7 @@ const Eggs: React.FC<EggsProps> = ({}) => {
       toggleVideoPlayerModal()
     }
   }, [eggType])
+
   return (
     <>
       <RowLayout style={{ marginBottom: -8 }}>
