@@ -40,7 +40,6 @@ const TableHeaderRow: React.FunctionComponent<TableHeaderRowProps> = (props) => 
     <>
       <HeaderOutline current={labels.length === 2} fromTop={scrollingUp ? (isMobile ? '15%' : '8%') : '0'}>
         {labels.map((col) => {
-          console.log('col', col)
           return col.label.length > 0 || actionColumnName === col.name ? (
             <th
               style={{
