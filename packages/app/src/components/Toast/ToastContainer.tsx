@@ -5,7 +5,7 @@ import Toast from './Toast'
 import { ToastContainerProps } from './types'
 
 const ZINDEX = 1000
-const TOP_POSITION = 500 // Initial position from the top
+const TOP_POSITION = 0 // Initial position from the top
 
 const StyledToastContainer = styled.div`
   .enter,
@@ -29,7 +29,7 @@ const StyledToastContainer = styled.div`
   }
 `
 
-const ToastContainer: React.FC<ToastContainerProps> = ({ toasts, onRemove, ttl = 6000, stackSpacing = 24 }) => {
+const ToastContainer: React.FC<ToastContainerProps> = ({ toasts, onRemove, ttl = 60000, stackSpacing = 24 }) => {
   return (
     <StyledToastContainer>
       <TransitionGroup>
@@ -38,7 +38,7 @@ const ToastContainer: React.FC<ToastContainerProps> = ({ toasts, onRemove, ttl =
           const top = TOP_POSITION + index * stackSpacing
           const bottom = 0
 
-          return <Toast key={toast.id} toast={toast} onRemove={onRemove} ttl={ttl} style={{ bottom: `${bottom}px`, zIndex }} />
+          return <Toast key={toast.id} toast={toast} onRemove={onRemove} ttl={ttl} style={{ top: `${top}px`, zIndex }} />
         })}
       </TransitionGroup>
     </StyledToastContainer>

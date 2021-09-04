@@ -1,7 +1,7 @@
 import { Colors } from './types'
 
 export const baseColors = {
-  failure: '#B10058',
+  failure: '#ec1f85',
   primary: 'rgb(118 204 204)',
   primaryBright: '#B1DCFF',
   primaryLight: '#B1DCFF',
@@ -14,7 +14,7 @@ export const baseColors = {
   accent2: '#12ECE7',
   accent3: '#F5F775',
   success: '#28D7FD',
-  warning: '#B10058',
+  warning: '#ec1f85',
   white: '#ffffff',
 }
 
@@ -73,7 +73,7 @@ export const darkColors: Colors = {
   primaryDark: '#AA3866',
   primaryLight: '#222',
   primaryPop: '#28D7FD',
-  secondary: '#9FC554',
+  secondary: '#58d6bf',
   accent: 'rgb(195 0 168)', // "#DFDE4E",
   background: '#000000',
   backgroundDisabled: '#333333',
