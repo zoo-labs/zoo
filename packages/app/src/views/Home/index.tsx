@@ -91,7 +91,7 @@ const Index: React.FC<indexProps> = ({}) => {
 
   useEffect(() => {
     getBalance()
-  }, [chainID, web3.account])
+  }, [chainID, account])
   let location = useLocation()
   useEffect(() => {
     setTab(location.pathname.split('/')[1])
