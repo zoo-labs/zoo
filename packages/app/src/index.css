@@ -159,7 +159,7 @@ body {
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
 }
 .hover\:from-primary:hover {
-    --tw-gradient-from:  rgb(140, 79, 248);
+    --tw-gradient-from:  rgb(255, 101, 218);
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
 }
 .from-secondary-dark {
@@ -185,11 +185,11 @@ body {
     --tw-gradient-to:rgba(243,56,195,1);;
 }
 .from-btn1 {
-    --tw-gradient-from: rgba(243,56,195,0.8);
+    --tw-gradient-from: rgba(255, 64, 205, 0.9);
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
 }
 .to-btn2 {
-    --tw-gradient-to: rgba(54, 146, 244, 0.9);
+    --tw-gradient-to: rgba(26, 175, 221, 0.9);
 }
 .hover\:from-btn1:hover {
     --tw-gradient-from: rgba(243,56,195,0.8);
@@ -213,7 +213,7 @@ body {
 
 /* animated gradient border */
 .gradient-border {
-    --borderWidth: 1px;
+    --borderWidth: 2px;
     background: #1D1F20;
     position: relative;
     border-radius: 0.75rem;

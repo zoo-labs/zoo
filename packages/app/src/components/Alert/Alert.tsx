@@ -51,13 +51,13 @@ const IconLabel = styled.div<ThemedIconLabel>`
   padding: 12px;
 `
 
-const withHandlerSpacing = 32 + 12 + 8 // button size + inner spacing + handler position
+const withHandlerSpacing = 32 + 16 + 8 // button size + inner spacing + handler position
 const Details = styled.div<{ hasHandler: boolean }>`
   flex: 1;
   margin-right: 5px;
   padding-bottom: 12px;
-  padding-left: 12px;
-  padding-right: ${({ hasHandler }) => (hasHandler ? `${withHandlerSpacing}px` : '12px')};
+  padding-left: 16px;
+  padding-right: ${({ hasHandler }) => (hasHandler ? `${withHandlerSpacing}px` : '16px')};
   padding-top: 12px;
   border-radius: 0 16px 16px 0;
   background: ${({ theme }) => theme.colors.primaryLight};
