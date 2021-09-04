@@ -151,7 +151,6 @@ const Eggs: React.FC<EggsProps> = ({}) => {
     }
     const eggType = egg.basic ? 'EGG' : 'HYBRID'
     if ((egg.owner || '').toLowerCase() !== account.toLowerCase()) {
-      //console.log(account, egg)
       return
     }
     const now = new Date().getTime()
@@ -170,7 +169,6 @@ const Eggs: React.FC<EggsProps> = ({}) => {
       })
     }
   })
-  console.log('eggData', eggData)
 
   eggData = sortData(eggData, 'hybrid')
   // SwiperCore.use([Pagination])
