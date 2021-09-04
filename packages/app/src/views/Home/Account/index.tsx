@@ -223,7 +223,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
         .catch((err) => {
           console.log('Error in buyEgg', err)
           toastClear()
-          toastError('Unable to purchase egg')
+          toastError(`Purchase failed: ${err.toString().replace(/Error: Returned error: /, '')}`)
           setDisable(false)
         })
     } catch (err) {
