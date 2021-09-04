@@ -36,7 +36,7 @@ export const useWeb3 = () => {
   customObject.chainID = Number(chainID)
   customObject.gasPrice = gasPrice
   customObject.connector = connector
-  customObject.library = library
+  customObject.library = web3
 
   const [custom, setCustom] = useState(
     Object.assign({}, customObject, {
@@ -62,7 +62,9 @@ export const useWeb3 = () => {
   useEffect(() => {
     if (library !== ref.current) {
       setWeb3(library ? new Web3(library) : getWeb3NoAccount())
+      setCustom(Object.assign({}, { library: web3 }, custom))
       ref.current = library
+      
     }
   }, [library, account, chainID])
 

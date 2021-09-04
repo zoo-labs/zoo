@@ -84,13 +84,18 @@ const App: React.FC = () => {
   const signedIn = chainID !== undefined && window.localStorage.getItem('connectorId') !== undefined
 
   const getEggs = async () => {
+    console.log('getting eggs here')
     try {
       const eggs = []
+
       for (const egg of await queryEggs()) {
+        console.log('eggsssss', egg)
+
         eggs.push(mapEgg(egg))
       }
       dispatch(addEggs(eggs))
     } catch (e) {
+      console.log('issue gett')
       console.error('ISSUE GETTING EGGS \n', e)
     }
   }
