@@ -7,7 +7,8 @@ import { Animal, Egg } from 'types/zoo'
 const initialState: ZooState = {
   animals: {},
   eggs: {},
-  zooBalance:0
+  zooBalance:0,
+  myEggs:[]
 }
 
 export const ZooSlice = createSlice({
@@ -53,6 +54,10 @@ export const ZooSlice = createSlice({
       const zooBalance = action.payload
       state.zooBalance = zooBalance
     },
+    updatMyEggs:(state: ZooState, action) => {
+      const myEggs = action.payload
+      state.myEggs = myEggs
+    },
     clearZoo: () => {
       return initialState
     },
@@ -60,6 +65,6 @@ export const ZooSlice = createSlice({
 })
 
 // Actions
-export const { addEgg, addAnimal, addEggs, addAnimals, burnEgg, burnAnimal,updatZooBalnce, clearZoo } = ZooSlice.actions
+export const { addEgg, addAnimal, addEggs, addAnimals, burnEgg, burnAnimal,updatZooBalnce,updatMyEggs, clearZoo } = ZooSlice.actions
 
 export default ZooSlice.reducer

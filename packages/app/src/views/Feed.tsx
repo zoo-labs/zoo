@@ -16,88 +16,19 @@ import BorderButton from 'components/Button/BorderButton'
 import { ChevronLeftIcon } from 'components/Svg'
 import '@splidejs/splide/dist/css/themes/splide-default.min.css'
 import EggFeedCard from './EggFeedCard'
+import { getDaysHours, getMilliseconds } from 'util/timeHelpers'
+import { eggTimeout } from 'constants/index'
+import { sortData } from 'functions'
+import AssetModal from 'components/modals/AssetModal'
 interface ButtonProp extends ButtonMenuItemProps {
   activeIndex: number
 }
-
-const Container = styled.div<{ isMobile?: boolean }>`
-  height: ${({ isMobile }) => (isMobile ? `100vh` : null)};
-  display: ${({ isMobile }) => (isMobile ? null : 'flex')};
-  flex-direction: ${({ isMobile }) => (isMobile ? `column` : 'row')};
-  flex-wrap: wrap;
-  & .swiper-container {
-    height: 100vh;
-  }
-  z-index: 4;
-`
-
-const StyledMenuButton = styled.button`
-  position: relative;
-  top: -8px;
-  left: -12px;
-  border: none;
-  background: white;
-  box-shadow: none;
-  color: transparant;
-`
-
-const ToggleContainer = styled.div`
-  div {
-    width: 100%;
-    border-radius: 0;
-    justify-content: center;
-    z-index: 1000;
-    position: absolute;
-    padding-top: 15px;
-    // background: linear-gradient(#3d3d3d, transparent);
-  }
-  a {
-    border: none;
-
-    font-size: 20px;
-    box-shadow: none;
-    cursor: pointer;
-  }
-`
-
-const EmptyZoo = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  padding: 80px 0;
-  width: 100%;
-  height: 100%;
-  background: ${({ theme }) => theme.colors.background};
-
-  button {
-    margin-top: 24px;
-  }
-  * {
-    color: ${({ theme }) => theme.colors.text};
-  }
-`
-
-const MaxHeightLogo = styled.img`
-  height: ${32 / 1.6}px;
-  position: absolute;
-  bottom: 20px;
-  right: 10px;
-  z-index: 100;
-`
-
-const LogoContainer = styled.div`
-  height: 100%;
-  ${({ theme }) => theme.mediaQueries.md || theme.mediaQueries.lg || theme.mediaQueries.xl} {
-    left: 50%;
-  }
-`
 
 export interface FeedPagePops extends RouteComponentProps<{ key?: string }> {}
 
 function Feed<FeedPagePops>({ match }) {
   const animalsState = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
-  const eggsState = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
+  const myEggs = useSelector<AppState, AppState['zoo']['myEggs']>((state) => state.zoo.myEggs)
 
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
@@ -106,8 +37,7 @@ function Feed<FeedPagePops>({ match }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const swiperRef = useRef(null)
   let animals = Object.values(animalsState)
-  let eggs = Object.values(eggsState).filter((egg) => !egg.burned)
-  const myEggs = eggs.filter((egg) => egg.owner === account)
+
   const { pathname, state } = useLocation()
   //  Reroute to homes
   const HomeClick = () => {
@@ -187,25 +117,29 @@ function Feed<FeedPagePops>({ match }) {
             drag: false,
           }}>
           <SplideSlide>
-            <div className='flex justify-center'>
+            <div className='flex justify-center w-full'>
               <Splide
                 options={{
                   direction: 'ttb',
                   height: '100vh',
-                  autoWidth: true,
                   arrows: false,
                   pagination: false,
                   perPage: 1,
                   perMove: 1,
                   gap: '5em',
                   focus: 'center',
+                  breakpoints: {
+                    640: {
+                      fixedWidth: '100vw',
+                    },
+                  },
                 }}>
-                {myEggs.length ? (
+                {myEggs.length > 0 ? (
                   myEggs.map((data) => {
                     return (
                       <SplideSlide>
-                        <div className='w-full p-px  bg-gradient-to-b from-btn1  to-btn2'>
-                          <div className='flex flex-col p-1  bg-dark-900'>
+                        <div className='w-full p-px   gradient-border' style={{ background: 'none' }}>
+                          <div className='flex flex-col p-1 w-full'>
                             {/* <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={animalGroup} hideBid={activeIndex === 0} /> */}
                             <EggFeedCard item={data} key={data.tokenID + 'card'} />
                           </div>
@@ -272,6 +206,7 @@ function Feed<FeedPagePops>({ match }) {
           </SplideSlide>
         </Splide>
       </main>
+      <AssetModal />
     </>
   )
 }

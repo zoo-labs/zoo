@@ -62,7 +62,8 @@ export interface AnimalState {
 export interface ZooState {
   eggs: { [key: string]: Egg }
   animals: { [key: string]: Animal }
-  zooBalance:number
+  zooBalance:number;
+  myEggs:Array<Egg>
 }
 
 // Global state
