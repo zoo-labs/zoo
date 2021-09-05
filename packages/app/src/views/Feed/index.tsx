@@ -132,6 +132,9 @@ function Feed<FeedPagePops>({ match }) {
                     640: {
                       fixedWidth: '100vw',
                     },
+                    780: {
+                      fixedWidth: '80vw',
+                    },
                   },
                 }}>
                 {myEggs.length > 0 ? (
