@@ -101,7 +101,7 @@ const Card = styled(Existing)<{ url?: string; isMobile?: boolean }>`
   background-repeat: no-repeat;
   background-size: cover;
   // max-height: 773px;
-  max-width: 425px;
+  // max-width: 425px;
   min-width: ${({ isMobile }) => (isMobile ? `325px` : `490px`)};
   display: block;
 `
