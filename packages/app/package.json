@@ -45,6 +45,7 @@
     "@react-hook/window-scroll": "^1.3.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@splidejs/react-splide": "^0.4.4",
+    "@splidejs/splide-extension-url-hash": "^0.1.5",
     "@sushiswap/chainlink-whitelist": "^0.2.2",
     "@sushiswap/core": "^1.4.2",
     "@sushiswap/default-token-list": "^14.9.0",

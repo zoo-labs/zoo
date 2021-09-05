@@ -27,87 +27,10 @@ import Eggs from './Eggs'
 import Animals from './Animals'
 import AccountHeader from './AccountHeader'
 
-const HeadingContainer = styles.div`
-    width: 200%;
-    display: flex;
-    justify-content: start;
-    margin: 0px 8px;
-`
-
-const MyZooContainer = styles.div`
-    width: 100%;
-    display: flex;
-    padding: 16px;
-`
-
-const StyledButton = styles.button`
-    cursor: pointer;
-    margin-top: 1px;
-    margin-left: 16px;
-    text-decoration: none;
-    text-transform: uppercase;
-`
-
-const LabelWrapper = styles.div`
-    display: flex;
-    width: 100%;
-    justify-content: space-evenly;
-    align-items: center;
-`
-
-const ValueWrapper = styles(Text)`
-    color: ${({ theme }) => theme.colors.text};
-    width: 100%;
-    display: flex;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 550;
-`
-
-const RowWrapper = styles.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    margin: 16px;
-`
-
-const StyledHeading = styles(Heading)`
-    color: ${({ theme }) => theme.colors.text};
-`
-
 function numberWithCommas(num) {
   const values = num.toString().split('.')
   return values[0].replace(/.(?=(?:.{3})+$)/g, '$&,') + (values.length == 2 ? '.' + values[1] : '')
 }
-
-const IconWrapper = styles.div<{ size?: number }>`
-  align-items: center;
-  justify-content: center;
-  & > * {
-    height: ${({ size }) => (size ? size + 'px' : '32px')};
-    width: ${({ size }) => (size ? size + 'px' : '32px')};
-  }
-`
-const HeaderFrame = styles.div<{ isSm: boolean }>`
-  grid-template-columns: 1fr 120px;
-  -moz-box-pack: justify;
-  -moz-box-align: center;
-  flex-direction: row;
-  top: 0px;
-  padding: 1rem;
-  z-index: 21;
-  position: relative;
-  background-image: linear-gradient(transparent 50%, rgb(25, 27, 31) 50%);
-  background-position: 0px 0px;
-  background-size: 100% 200%;
-  box-shadow: transparent 0px 0px 0px 1px;
-  transition: background-position 0.1s ease 0s, box-shadow 0.1s ease 0s;
-  background-blend-mode: hard-light;
-  display: grid;
-  width: 100%;
-  ${({ isSm }) => (isSm ? 'grid-template-columns: 1fr; padding: 1rem' : '')};
-`
 
 interface AccountProps {
   handleFunds: () => void
@@ -212,7 +135,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     if (err.code) {
       return `Purchase failed: ${err.message}`
     } else {
-      return `Purchase failed: ${(err).toString().replace(/Error: Returned error: /, '')}`
+      return `Purchase failed: ${err.toString().replace(/Error: Returned error: /, '')}`
     }
   }
 
