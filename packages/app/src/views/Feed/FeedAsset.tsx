@@ -1,6 +1,7 @@
 import { ArrowForwardIcon, CopyIcon, HeartIcon } from 'components'
 import CopyHelper from 'components/Copy/Copy'
 import { CardEgg } from 'components/EggCard/types'
+import TransactionTable from 'components/Transaction/Table'
 import React from 'react'
 import { ArrowUpRight } from 'react-feather'
 import { ImArrowUpRight2 } from 'react-icons/im'
@@ -22,6 +23,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
     return (
       <div className=''>
         <video
+          className='rounded'
           autoPlay
           loop
           muted
@@ -35,26 +37,35 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
     )
   }
   const item = history.location.state.item
-  const accountEllipsis = item && item.owner ? `${item.owner.substring(0, 6)}...${item.owner.substring(item.owner.length - 4)}` : null
+  const txHash = '0x82f982a0ac33cfb8b34bcdffa7547dff9a2ba49be0bfbab9b7823e437d01ce64'
+  const accountEllipsis = `${txHash.substring(0, 6)}...${txHash.substring(txHash.length - 4)}`
 
   return (
     <main className='flex flex-col  flex-grow w-full h-full lg:p-16 lg:m-4 p-0 m-0 lg:pr-0 lg:mr-0 space-y-4 rounded-lg  flex flex-col relative filter drop-shadow z-10'>
-      <div className='flex flex-1'>
-        <div className='flex flex-1 justify-center relative'>
-          <div className=' p-px h-full bg-gradient-to-b from-btn1  to-btn2'>
-            <div style={{}}>{getVideo()}</div>
-          </div>
-          <div className='absolute right-20'>
-            {[0, 1, 2].map((value) => (
-              <div className='cursor-pointer rounded-full p-3 bg-dark-800 mb-4 flex justify-center items-center'>
-                {value === 0 ? <HeartIcon fill='white' /> : value === 1 ? <RiShareFill fill='white' /> : <CopyIcon fill='white' />}
-              </div>
-            ))}
+      <div className='flex flex-1 flex-wrap md:flex-nowrap'>
+        <div className='flex w:1/2 justify-center  md:flex-1'>
+          <div className=' p-px h-full bg-gradient-to-b from-btn1  to-btn2 rounded flex relative'>
+            <div className='h-full' style={{}}>
+              {getVideo()}
+            </div>
+            <div className='absolute top-5 xs:left-10 pl-4 lg:pl-0 lg:right-5 '>
+              {[0, 1, 2].map((value) => (
+                <div className='cursor-pointer rounded-full p-2 bg-dark-800 mb-4 flex justify-center items-center'>
+                  {value === 0 ? (
+                    <HeartIcon fill='white' style={{ fontSize: 8 }} />
+                  ) : value === 1 ? (
+                    <RiShareFill fill='white' size={20} />
+                  ) : (
+                    <CopyIcon fill='white' style={{ fontSize: 8 }} />
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-        <div className='flex-1' style={{ flex: 1.5 }}>
-          <div className='flex px-4'>
-            <div className='flex-1 flex flex-col'>
+        <div className='w:1/2 my-8 mb-16 md:m-0 md:flex-1'>
+          <div className='flex '>
+            <div className=' flex flex-col items-start px-4 w-full lg:w-2/3 '>
               <h2 className='text-2xl font-semibold'>MY ZOO EGG</h2>
               <div className='flex my-4'>
                 <div className='rounded-full p-px h-full bg-gradient-to-b from-btn1  to-btn2 mr-4'>
@@ -68,12 +79,35 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
                 Contains 1 of 16 Generation One Base Animals. To hatch or to hold… Air is a trip through a serene yet alien world. It is a journey that is blissful, meditative and
                 at times intense.
               </p>
-              <div className='mb-4'>
-                <div className=' border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
+              <div className='w-full mb-4'>
+                <div className='rounded border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
+                  <h2 className='text-sm font-bold mb-2'>Reserve Price</h2>
+                  <div className=''>
+                    <span className='mr-2 text-xl  font-semibold'>0.25 ETH</span>
+                    <span className='font-light'>$975.00 USD</span>
+                  </div>
+                </div>
+              </div>
+              <div className='w-full  grid  mb-8' style={{ gridTemplateColumns: '1fr 54px', gap: '10px' }}>
+                <a
+                  style={{ pointerEvents: 'unset', padding: '11px 0px', borderRadius: 4 }}
+                  className='rounded bg-white text-black flex items-center justify-center font-bold text-sm'
+                  href='#'>
+                  Place Bid
+                </a>
+                <button style={{ paddingLeft: 0, paddingRight: 0, padding: '11px 20px', backgroundColor: '#f2f2f2', borderRadius: 4 }} className=''>
+                  <RiShareFill fill='black' />
+                </button>
+              </div>
+
+              <div className='w-full mb-4'>
+                <div className=' rounded border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
                   <h2 className='text-sm font-bold mb-4'>Details</h2>
                   <div className='flex justify-between items-center'>
-                    <span className='text-md  font-semibold'>Contract Address</span>
-                    <span className='font-semibold text-sm primary cursor-pointer' onClick={() => window.open(`https://testnet.bscscan.com/address/${item.owner || ''}`, '_blank')}>
+                    <span className='text-md  font-semibold'>Transaction Hash</span>
+                    <span
+                      className='font-semibold text-sm primary cursor-pointer'
+                      onClick={() => window.open(`https://testnet.bscscan.com/address/${accountEllipsis || ''}`, '_blank')}>
                       {accountEllipsis}
                     </span>
                   </div>
@@ -87,13 +121,9 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
                     <span className='text-md  font-semibold'>Token Standard</span>
                     <span className='font-semibold text-sm '>ERC-721</span>
                   </div>
-                  <div className='flex justify-between items-center'>
-                    <span className='text-md  font-semibold'>Blockchain</span>
-                    <span className='font-semibold text-sm '>Ethereum</span>
-                  </div>
                 </div>
               </div>
-              <div className='flex flex-col  border-2 border-gray-400 border-solid' style={{ borderWidth: 1 }}>
+              <div className='w-full rounded flex flex-col  border-2 border-gray-400 border-solid' style={{ borderWidth: 1 }}>
                 <div className='my-6 px-4'>
                   <h2 className='text-sm font-bold'>Proof of Authenticity</h2>
                 </div>
@@ -111,7 +141,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
                   <a
                     href='https://ipfs.io/ipfs/bafybeicrjczyjyr35qgtgsfqecumvtr24cnv7j23cfwmiqcmu67px26feu'
                     target='_blank'
-                    className='p-4 flex justify-between items-center hover:bg-dark-800'>
+                    className='p-4 flex justify-between items-center hover:bg-dark-800 rounded-b-lg'>
                     <div className='text-sm font-medium primary'>View on IPFS</div>
                     <div>
                       <ImArrowUpRight2 fill='#f2f2f2' size={12} />
@@ -120,32 +150,23 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
                 </div>
               </div>
             </div>
-            <div className='flex-1 px-4'>
-              <div className=' px-8 grid  mb-4' style={{ gridTemplateColumns: '1fr 54px', gap: '10px' }}>
-                <a
-                  style={{ pointerEvents: 'unset', padding: '11px 0px', borderRadius: 4 }}
-                  className='rounded bg-white text-black flex items-center justify-center font-bold text-sm'
-                  href='#'>
-                  Place Bid
-                </a>
-                <button style={{ paddingLeft: 0, paddingRight: 0, padding: '11px 20px', backgroundColor: '#f2f2f2', borderRadius: 4 }} className=''>
-                  <RiShareFill fill='black' />
-                </button>
-              </div>
-              <div className='px-8'>
-                <div className=' border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
-                  <h2 className='text-sm font-bold mb-2'>Reserve Price</h2>
-                  <div className=''>
-                    <span className='mr-2 text-xl  font-semibold'>0.25 ETH</span>
-                    <span className='font-light'>$975.00 USD</span>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
-      <div className='flex flex-1'></div>
+
+      <div className='flex flex-1 flex-col'>
+        <h6>Trading History</h6>
+        {[].length === 0 ? (
+          <div className='flex items-center h-full justify-center'>
+            {' '}
+            <h6> No Transaction Data </h6>
+          </div>
+        ) : (
+          <div>
+            <TransactionTable Transactions={[]} />
+          </div>
+        )}
+      </div>
       <div
         style={{
           width: '50vw',
