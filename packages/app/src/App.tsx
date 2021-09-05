@@ -173,7 +173,9 @@ const App: React.FC = () => {
               </div>
 
               <Switch>
-                {indexRoutes.map((prop, key) => (signedIn ? <Route path={prop.path} key={prop.path} component={prop.component} /> : <Redirect key={key} to='/login' />))}
+                {indexRoutes.map((prop, key) =>
+                  signedIn ? <Route exact={prop.exact} path={prop.path} key={prop.path} component={prop.component} /> : <Redirect key={key} to='/login' />,
+                )}
                 <Redirect from='/' to={signedIn ? '/account' : '/login'} />
                 <Redirect from='' to={signedIn ? '/account' : '/login'} />
               </Switch>

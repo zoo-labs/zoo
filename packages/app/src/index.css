@@ -19,6 +19,11 @@ body {
 .to-bg-dark-1000 {
     --tw-gradient-to: rgba(13,4,21,1);
 }
+.hover\:bg-dark-1000:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgba(13,4,21,1)
+}
+
 
 .bg-dark-900 {
     background-color: rgba(22,21,34,1);
@@ -30,6 +35,10 @@ body {
 .to-bg-dark-900 {
     --tw-gradient-to:rgba(22,21,34,1);
 }
+.hover\:bg-dark-900:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgba(22,21,34,1);
+}
 
 .bg-dark-800 {
     background-color: rgba(32,34,49,1);
@@ -40,6 +49,10 @@ body {
 }
 .to-bg-dark-800 {
     --tw-gradient-to:rgba(32,34,49,1);
+}
+.hover\:bg-dark-800:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgba(32,34,49,1);
 }
 .bg-dark-700 {
     background-color: rgba(46,51,72,1);

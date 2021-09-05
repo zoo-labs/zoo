@@ -57,16 +57,13 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   const { chainID, gasPrice } = web3
   const { isXl, isSm, isMd } = useMatchBreakpoints()
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
-  const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
+  const myEggs = useSelector<AppState, AppState['zoo']['myEggs']>((state) => state.zoo.myEggs)
   const history = useHistory()
   const toastClear = () => {
     clear()
   }
 
-  let currentEggsOwned = 0
-  if (account) {
-    currentEggsOwned = Object.values(allEggs).filter((egg) => (egg.owner || '').toLowerCase() === account.toLowerCase() && !egg.burned).length
-  }
+  const currentEggsOwned = myEggs.length
 
   const zooDrop = getDrop(web3)
   const zooKeeper = getZooKeeper(web3)
@@ -218,7 +215,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
               </div>
 
               <div className='text-base font-bold currentColor pt-8 pb-2 text-xl'>{currentEggsOwned} Eggs Owned</div>
-              <Eggs />
+              <Eggs myEggs={myEggs} />
             </div>
 
             <div className={`m-4 flex flex-wrap justify-center`}>
