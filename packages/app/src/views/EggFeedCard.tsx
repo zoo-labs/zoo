@@ -11,7 +11,7 @@ import YieldModal from 'components/MarketModals/YieldModal'
 import { RarityColor } from 'enums/rarity-color'
 import { ChevronLeftIcon } from 'components/Svg'
 import ZooHomeButton from 'components/SideMenu/components/ZooHomeButton'
-import myVideo from './spinning_egg_animation.mov'
+import { useAssetModalToggle } from 'state/application/hooks'
 
 interface Props {
   item: Egg
@@ -133,6 +133,7 @@ const EggFeedCard: React.FC<Props> = ({ item }) => {
   const isMobile = !isXl
   const date = new Date(item.createdAt)
   const StringDate = date.toLocaleDateString('en-US')
+  const toggleAssetModal = useAssetModalToggle()
   const getVideo = () => {
     return (
       <div style={{ margin: 0, position: 'absolute', width: '100%', height: '100%' }}>
@@ -144,7 +145,7 @@ const EggFeedCard: React.FC<Props> = ({ item }) => {
             height: '100%',
             alignSelf: 'center',
           }}>
-          <source src={myVideo} type='video/mp4'></source>
+          <source src={'/static/video/egg.mp4'} type='video/mp4'></source>
         </video>
       </div>
     )
@@ -181,7 +182,7 @@ const EggFeedCard: React.FC<Props> = ({ item }) => {
               <Flex flexDirection='column'>
                 <ActionButtonContainer>
                   <Flex width='100%' height='100%' flexDirection='column'>
-                    <IconButton style={{ padding: '10px 0px' }}>
+                    <IconButton onClick={() => toggleAssetModal()} style={{ padding: '10px 0px' }}>
                       <FaMoneyBillWave />
                     </IconButton>
                     {buyButton} <ZooHomeButton />

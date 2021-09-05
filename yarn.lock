@@ -2945,6 +2945,11 @@
   dependencies:
     "@splidejs/splide" "^2.4.13"
 
+"@splidejs/splide-extension-url-hash@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@splidejs/splide-extension-url-hash/-/splide-extension-url-hash-0.1.5.tgz#85cc7f8038e92677e520392d51414b81aabe9bb2"
+  integrity sha512-Koo6EN4uQjgXLCyjYUnjW9XUJKQS2lA48gRM4pCE+oOrUd1P4Hdcv0soISofmVuvPm8y47WS+hm3Ky7RvRhBXw==
+
 "@splidejs/splide@^2.4.13":
   version "2.4.21"
   resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-2.4.21.tgz#ad1954d8d8822c9bfea0d3dc6a119358b88581ad"

@@ -9,7 +9,7 @@ import GlobalStyle from './components/style/Global'
 import SuspenseWithChunkError from './components/SuspenseWithChunkError'
 import { useDispatch } from 'react-redux'
 import { clearZoo, updatZooBalnce } from 'state/zoo'
-import { addEggs, addAnimals, addEgg, addAnimal, burnEgg, burnAnimal, getZooBalance } from 'state/zoo/actions'
+import { addEggs, addAnimals, addEgg, addAnimal, burnEgg, burnAnimal, getZooBalance, getMyEggs } from 'state/zoo/actions'
 import Moralis from 'moralis'
 import { useMoralisSubscription } from 'react-moralis'
 import { Egg, Animal } from 'types/zoo'
@@ -47,6 +47,7 @@ const App: React.FC = () => {
         eggs.push(mapEgg(egg))
       }
       dispatch(addEggs(eggs))
+      dispatch(getMyEggs(web3.account, eggs))
     } catch (e) {
       console.log('issue gett')
       console.error('ISSUE GETTING EGGS \n', e)

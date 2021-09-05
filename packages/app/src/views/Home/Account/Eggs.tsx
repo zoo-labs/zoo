@@ -14,11 +14,13 @@ import useWeb3 from 'hooks/useWeb3'
 import { Text, Card as Existing, EggCard, VideoPlayer, useMatchBreakpoints } from 'components'
 import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
 import { eggTimeout } from 'constants/index'
-import { addEgg } from 'state/zoo/actions'
+import { addEgg, getMyEggs } from 'state/zoo/actions'
 import { getZooKeeper } from 'util/contracts'
 import NewAnimalCard from '../../../components/modals/NewAnimal'
 import { mapEgg, mapAnimal } from 'util/moralis'
 import { useHatchDisabledModalToggle, useNewAnimalModalToggle, useVideoPlayerModalToggle } from 'state/application/hooks'
+import { sortData } from 'functions'
+import { CardEgg } from 'components/EggCard/types'
 interface EggsProps {}
 const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.text};
@@ -58,12 +60,12 @@ const Eggs: React.FC<EggsProps> = ({}) => {
     boost: 0,
     yield: 0,
   })
-  let eggData = []
   const { isXl, isSm, isMd } = useMatchBreakpoints()
   const toggleNewAnimalModal = useNewAnimalModalToggle()
   const toggleVideoPlayerModal = useVideoPlayerModalToggle()
 
-  const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
+  const myEggs = useSelector<AppState, AppState['zoo']['myEggs']>((state) => state.zoo.myEggs)
+
   const hatchEggReady = async (egg) => {
     const eggObject = Moralis.Object.extend('Eggs')
     const eggQuery = new Moralis.Query(eggObject)
@@ -141,36 +143,6 @@ const Eggs: React.FC<EggsProps> = ({}) => {
       clearTimeout(timeout)
     }
   }, [elapsedTimeOnPage])
-
-  const sortData = (data: Array<any>, byType: string) => {
-    return data.sort((a, b) => Number(b.tokenID) - Number(a.tokenID))
-  }
-  Object.values(allEggs).forEach((egg, index) => {
-    if (!account) {
-      return
-    }
-    const eggType = egg.basic ? 'EGG' : 'HYBRID'
-    if ((egg.owner || '').toLowerCase() !== account.toLowerCase()) {
-      return
-    }
-    const now = new Date().getTime()
-    const elapsedTime = now - egg.createdAt.getTime()
-    const hatchTimeout = egg.basic ? 0 : getMilliseconds(eggTimeout)
-    const timeRemaining = hatchTimeout - elapsedTime
-    const timeRemainingDaysHours = getDaysHours(timeRemaining)
-    const barwidth = [100 * (elapsedTime / hatchTimeout), '%'].join('')
-    if (egg.owner.toLowerCase() === account.toLowerCase() && !egg.burned) {
-      eggData.push({
-        id: index,
-        ...egg,
-        name: eggType,
-        timeRemaining: !egg.basic ? (elapsedTime < hatchTimeout ? timeRemaining : 0) : 0,
-        CTAOverride: !egg.basic ? (elapsedTime < hatchTimeout ? { barwidth, timeRemainingDaysHours } : null) : null,
-      })
-    }
-  })
-
-  eggData = sortData(eggData, 'hybrid')
   // SwiperCore.use([Pagination])
   useEffect(() => {
     if (eggType !== '') {
@@ -182,7 +154,7 @@ const Eggs: React.FC<EggsProps> = ({}) => {
     <>
       <RowLayout style={{ marginBottom: -8 }}>
         <Route exact path={`${path}`}>
-          {eggData.length === 0 ? (
+          {myEggs.length === 0 ? (
             <StyledText textAlign='center' fontSize='16px'>
               No eggs
             </StyledText>
@@ -203,7 +175,7 @@ const Eggs: React.FC<EggsProps> = ({}) => {
                 clickable: true,
               }}
               className='mySwiper'>
-              {eggData.map((egg) => {
+              {myEggs.map((egg: CardEgg) => {
                 return (
                   <SwiperSlide key={egg.tokenID} style={{ minWidth: 123 }}>
                     <div className='flex items-center' style={{ height: 200, width: '100%' }}>
