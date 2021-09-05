@@ -19,8 +19,13 @@ import { getZooKeeper } from 'util/contracts'
 import NewAnimalCard from '../../../components/modals/NewAnimal'
 import { mapEgg, mapAnimal } from 'util/moralis'
 import { useHatchDisabledModalToggle, useNewAnimalModalToggle, useVideoPlayerModalToggle } from 'state/application/hooks'
+import { Splide, SplideSlide } from '@splidejs/react-splide'
+
+import '@splidejs/splide/dist/css/themes/splide-default.min.css'
+
 import { sortData } from 'functions'
 import { CardEgg } from 'components/EggCard/types'
+import { t } from '@lingui/macro'
 interface EggsProps {}
 const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.text};
@@ -159,32 +164,44 @@ const Eggs: React.FC<EggsProps> = ({}) => {
               No eggs
             </StyledText>
           ) : (
-            // <Swiper slidesPerView={isSm ? 2 : isMd ? 6 : 12} spaceBetween={30} pagination={{ clickable: true }} style={{ marginBottom: 0 }}>
-            //   {eggData.map((egg) => (
-            //     <SwiperSlide className='account__animal-slide' style={{ display: 'flex', minWidth: 130, minHeight: 180 }} key={egg.tokenID}>
-            //       <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
-            //     </SwiperSlide>
-            //   ))}
-
+            // <Swiper
+            //   slidesPerView={isSm ? 3 : isMd ? 9 : 12}
+            //   // spaceBetween={isSm ? 4 : isMd ? 15 : 30}
+            //   spaceBetween={8}
+            //   pagination={{
+            //     clickable: true,
+            //   }}
+            //   className='mySwiper'>
+            //   {myEggs.map((egg: CardEgg) => {
+            //     return (
+            //       <SwiperSlide key={egg.tokenID} style={{ minWidth: 123 }}>
+            //         <div className='flex items-center' style={{ height: 200, width: '100%' }}>
+            //           <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
+            //         </div>
+            //       </SwiperSlide>
+            //     )
+            //   })}
             // </Swiper>
-            <Swiper
-              slidesPerView={isSm ? 3 : isMd ? 9 : 12}
-              // spaceBetween={isSm ? 4 : isMd ? 15 : 30}
-              spaceBetween={8}
-              pagination={{
-                clickable: true,
+            <Splide
+              options={{
+                direction: 'ltr',
+                arrows: false,
+                autoWidth: true,
+                autoHeight: true,
+                pagination: false,
+                gap: '1rem',
               }}
-              className='mySwiper'>
-              {myEggs.map((egg: CardEgg) => {
-                return (
-                  <SwiperSlide key={egg.tokenID} style={{ minWidth: 123 }}>
-                    <div className='flex items-center' style={{ height: 200, width: '100%' }}>
-                      <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
-                    </div>
-                  </SwiperSlide>
-                )
-              })}
-            </Swiper>
+              onMoved={(splide, newIndex) => {
+                console.log('moved', newIndex)
+              }}>
+              {myEggs.map((egg: CardEgg) => (
+                <SplideSlide key={egg.tokenID}>
+                  <div className='flex items-center' style={{ height: 200, width: '100%' }}>
+                    <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
+                  </div>
+                </SplideSlide>
+              ))}
+            </Splide>
           )}
         </Route>
         <Route exact path={`${path}/history`}>
