@@ -166,7 +166,7 @@ export default function Header() {
 
   const open = useCallback(() => setShow(true), [setShow])
 
-  const [active, setActive] = useState('home')
+  const [active, setActive] = useState('account')
   const { isXl, isXs, isSm, isMd, isLg } = useMatchBreakpoints()
   const web3 = useWeb3()
   const { chainID, gasPrice } = web3
@@ -175,12 +175,12 @@ export default function Header() {
   const isMobile = isXl === false
   let location = useLocation()
   useEffect(() => {
-    setActive(location.pathname.split('/')[1])
+    setActive(location.pathname.split('/')[location.pathname.split('/').length - 1])
   }, [location])
 
   const scrollY = useScrollPosition()
   const urlClick = (url) => {
-    history.push(`${url}`)
+    history.push(`/${url}`)
     toastClear()
   }
   const zooToken = getToken(web3)
@@ -223,6 +223,7 @@ export default function Header() {
         }`}
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
         {['Account', 'Bank', 'Feed', 'Bridge'].map((path: string) => {
+          console.log('active', active)
           const selected = path == 'Bridge' ? active == 'bridge' || active == 'limit-order' : active === path.toLowerCase()
           return (
             <a
