@@ -3,7 +3,8 @@ import { eggTimeout } from 'constants/index'
 import { sortData } from 'functions'
 import { Egg } from 'types/zoo'
 import { getDaysHours, getMilliseconds } from 'util/timeHelpers'
-import { updatZooBalnce,updatMyEggs } from '.'
+import { updatZooBalnce,updateMyEggs ,updateMyTransactions} from '.'
+import Moralis from 'moralis'
 
 export { clear, remove, push } from '../toasts'
 export { addEgg, addAnimal, addEggs, addAnimals, burnEgg, burnAnimal,updatZooBalnce, clearZoo } from '.'
@@ -52,5 +53,42 @@ export  const getZooBalance =  (account,zooToken) => async dispatch =>{
   
   console.log('myEggs length',eggData.length)
   
-  dispatch(updatMyEggs(eggData))  
+  dispatch(updateMyEggs(eggData))  
+  }
+  export const getMyTransactions =  (account) =>async dispatch=>{
+    console.log('GETTING TRANSACTIONS for account', account)
+    try {
+      const Transactions = Moralis.Object.extend('Transactions')
+      const query = new Moralis.Query(Transactions)
+      query.limit(1000)
+      query.descending('createdAt')
+      query.equalTo('from', account.toLowerCase())
+      const results = await query.find()
+      let transactions = []
+      for (const tx of results) {
+        const action = tx.get('action')
+        const txHash = tx.get('transactionHash')
+        const url = `https://testnet.bscscan.com/tx/${txHash}`
+
+        // Filter out Burned Tokens
+        if (action == 'Burned Token') continue
+
+        console.log('tx', tx)
+        transactions.push({
+          id: tx.get('objectId'),
+          from: tx.get('from'),
+          action: action,
+          hash: txHash,
+          url: url,
+          createdAt: tx.get('createdAt').toLocaleDateString(),
+          blockNumber: tx.get('blockNumber'),
+          timestamp: tx.get('timestamp'),
+          tokenID: tx.get('tokenID'),
+        })
+      }
+      console.log('transactions', transactions)
+      dispatch(updateMyTransactions(transactions))
+    } catch (e) {
+      console.error('ISSUE GETTING TRANSACTIONS \n', e)
+    }
   }

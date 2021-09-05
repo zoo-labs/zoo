@@ -6,6 +6,8 @@ import React from 'react'
 import { ArrowUpRight } from 'react-feather'
 import { ImArrowUpRight2 } from 'react-icons/im'
 import { RiShareCircleLine, RiShareFill, RiUploadCloudFill, RiUploadCloudLine } from 'react-icons/ri'
+import { useSelector } from 'react-redux'
+import { AppState } from 'state'
 import EggFeedCard from './EggFeedCard'
 
 interface FeedAssetProps {
@@ -39,6 +41,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
   const item = history.location.state.item
   const txHash = '0x82f982a0ac33cfb8b34bcdffa7547dff9a2ba49be0bfbab9b7823e437d01ce64'
   const accountEllipsis = `${txHash.substring(0, 6)}...${txHash.substring(txHash.length - 4)}`
+  const myTransactions = useSelector<AppState, AppState['zoo']['myTransactions']>((state) => state.zoo.myTransactions)
 
   return (
     <main className='flex flex-col  flex-grow w-full h-full lg:p-16 lg:m-4 p-0 m-0 lg:pr-0 lg:mr-0 space-y-4 rounded-lg  flex flex-col relative filter drop-shadow z-10'>
@@ -154,18 +157,20 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
         </div>
       </div>
 
-      <div className='flex flex-1 flex-col'>
-        <h6>Trading History</h6>
-        {[].length === 0 ? (
-          <div className='flex items-center h-full justify-center'>
-            {' '}
-            <h6> No Transaction Data </h6>
-          </div>
-        ) : (
-          <div>
-            <TransactionTable Transactions={[]} />
-          </div>
-        )}
+      <div className=' flex-1  flex justify-center'>
+        <div className='flex flex-col px-4 w-full lg:w-2/3'>
+          <h6 className='my-8 font-semibold text-xl'>Trading History</h6>
+          {myTransactions.length === 0 ? (
+            <div className='flex items-center h-full justify-center'>
+              {' '}
+              <h6> No Transaction Data </h6>
+            </div>
+          ) : (
+            <div>
+              <TransactionTable Transactions={myTransactions.slice(0, 5)} />
+            </div>
+          )}
+        </div>
       </div>
       <div
         style={{

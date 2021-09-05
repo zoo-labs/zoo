@@ -21,6 +21,7 @@ import { resourceLimits } from 'worker_threads'
 import { Link } from 'react-router-dom'
 import Transaction from 'components/Transaction'
 import TransactionTable from 'components/Transaction/Table'
+import { getMyTransactions } from 'state/zoo/actions'
 
 const HeaderFrame = styles.div<{ isSm: boolean }>`
   grid-template-columns: 1fr 120px;
@@ -195,56 +196,13 @@ const Bank: React.FC = () => {
   const web3 = useWeb3()
   const { account } = web3
   const animalsState = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
+  const myTransactions = useSelector<AppState, AppState['zoo']['myTransactions']>((state) => state.zoo.myTransactions)
 
-  const [transactions, setTransactions] = useState([])
-  const [waitTx, setWaitTx] = useState(true)
   const accountAnimals = Object.values(animalsState).filter((animal) => {
     if (!animal.owner || !account) return false
     return animal.owner && animal.owner.toLowerCase() === account.toLowerCase()
   })
-
-  useEffect(() => {
-    getTransactions()
-  }, [account])
-
-  const getTransactions = async () => {
-    console.log('GETTING TRANSACTIONS for account', account)
-    try {
-      const Transactions = Moralis.Object.extend('Transactions')
-      const query = new Moralis.Query(Transactions)
-      query.limit(1000)
-      query.descending('createdAt')
-      query.equalTo('from', account.toLowerCase())
-      const results = await query.find()
-      let transactions = []
-      for (const tx of results) {
-        const action = tx.get('action')
-        const txHash = tx.get('transactionHash')
-        const url = `https://testnet.bscscan.com/tx/${txHash}`
-
-        // Filter out Burned Tokens
-        if (action == 'Burned Token') continue
-
-        console.log('tx', tx)
-        transactions.push({
-          id: tx.get('objectId'),
-          from: tx.get('from'),
-          action: action,
-          hash: txHash,
-          url: url,
-          createdAt: tx.get('createdAt').toLocaleDateString(),
-          blockNumber: tx.get('blockNumber'),
-          timestamp: tx.get('timestamp'),
-          tokenID: tx.get('tokenID'),
-        })
-      }
-      console.log('transactions', transactions)
-      setTransactions(transactions)
-      setWaitTx(false)
-    } catch (e) {
-      console.error('ISSUE GETTING TRANSACTIONS \n', e)
-    }
-  }
+  const dispatch = useDispatch()
 
   // Calculate yield
   const dailyYield = accountAnimals.reduce((acc, x) => acc + Number(x.yield), 0)
@@ -275,13 +233,11 @@ const Bank: React.FC = () => {
             </EarnerValueWrapper>
           )}
           <Label>Recent Tansactions</Label>
-          {waitTx ? (
-            <TableText> Loading Transactions... </TableText>
-          ) : transactions.length === 0 ? (
+          {myTransactions.length === 0 ? (
             <TableText> No Transaction Data </TableText>
           ) : (
             <Container>
-              <TransactionTable Transactions={transactions} />
+              <TransactionTable Transactions={myTransactions} />
               {/* <TableContainer>
                 <TableWrapper>
                   <StyledTable>
