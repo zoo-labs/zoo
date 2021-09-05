@@ -8,7 +8,8 @@ const initialState: ZooState = {
   animals: {},
   eggs: {},
   zooBalance:0,
-  myEggs:[]
+  myEggs:[],
+  myTransactions:[]
 }
 
 export const ZooSlice = createSlice({
@@ -54,9 +55,13 @@ export const ZooSlice = createSlice({
       const zooBalance = action.payload
       state.zooBalance = zooBalance
     },
-    updatMyEggs:(state: ZooState, action) => {
+    updateMyEggs:(state: ZooState, action) => {
       const myEggs = action.payload
       state.myEggs = myEggs
+    },
+    updateMyTransactions:(state: ZooState, action) => {
+      const myTransactions = action.payload
+      state.myTransactions = myTransactions
     },
     clearZoo: () => {
       return initialState
@@ -65,6 +70,6 @@ export const ZooSlice = createSlice({
 })
 
 // Actions
-export const { addEgg, addAnimal, addEggs, addAnimals, burnEgg, burnAnimal,updatZooBalnce,updatMyEggs, clearZoo } = ZooSlice.actions
+export const { addEgg, addAnimal, addEggs, addAnimals, burnEgg, burnAnimal,updatZooBalnce,updateMyEggs,updateMyTransactions, clearZoo } = ZooSlice.actions
 
 export default ZooSlice.reducer
