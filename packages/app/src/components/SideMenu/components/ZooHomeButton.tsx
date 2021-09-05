@@ -12,7 +12,7 @@ const LogoContainer = styled.button<{ width?: string }>`
 `
 
 const MaxHeightLogo = styled.img`
-  height: 20px;
+  height: 100%;
   z-index: 100;
 `
 
