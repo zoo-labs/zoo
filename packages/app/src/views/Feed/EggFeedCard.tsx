@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { Text } from 'components'
 import { FaMoneyBillWave, FaDollarSign } from 'react-icons/fa'
-import { useMatchBreakpoints } from 'hooks'
+import { useMatchBreakpoints, useWeb3 } from 'hooks'
 import { useModal } from 'components/Modal'
 import { Card as Existing, Flex } from 'components'
 import BidModal from 'components/MarketModals/BidModal'
@@ -12,6 +12,7 @@ import { RarityColor } from 'enums/rarity-color'
 import { ChevronLeftIcon } from 'components/Svg'
 import ZooHomeButton from 'components/SideMenu/components/ZooHomeButton'
 import { useAssetModalToggle } from 'state/application/hooks'
+import { useHistory } from 'react-router'
 
 interface Props {
   item: Egg
@@ -158,10 +159,17 @@ const EggFeedCard: React.FC<Props> = ({ item }) => {
       <FaDollarSign />
     </IconButton>
   )
+  const history = useHistory()
 
   return (
     <>
-      <Card isMobile={isMobile}>
+      <Card
+        isMobile={isMobile}
+        onClick={() =>
+          history.push(`/feed/${item.owner}/${item.tokenID}`, {
+            item,
+          })
+        }>
         <CardOverlay>
           {getVideo()}
           <FirstThird />

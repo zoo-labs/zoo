@@ -26,7 +26,10 @@ import '@splidejs/splide/dist/css/themes/splide-default.min.css'
 import { sortData } from 'functions'
 import { CardEgg } from 'components/EggCard/types'
 import { t } from '@lingui/macro'
-interface EggsProps {}
+import { Egg } from 'types/zoo'
+interface EggsProps {
+  myEggs: Array<Egg>
+}
 const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.text};
 `
@@ -43,7 +46,7 @@ const RowLayout = styled.div`
     margin-bottom: 32px;
   }
 `
-const Eggs: React.FC<EggsProps> = ({}) => {
+const Eggs: React.FC<EggsProps> = ({ myEggs }) => {
   const { account, chainId } = useWeb3React()
   const { path } = useRouteMatch()
   const dispatch = useDispatch()
@@ -68,8 +71,6 @@ const Eggs: React.FC<EggsProps> = ({}) => {
   const { isXl, isSm, isMd } = useMatchBreakpoints()
   const toggleNewAnimalModal = useNewAnimalModalToggle()
   const toggleVideoPlayerModal = useVideoPlayerModalToggle()
-
-  const myEggs = useSelector<AppState, AppState['zoo']['myEggs']>((state) => state.zoo.myEggs)
 
   const hatchEggReady = async (egg) => {
     const eggObject = Moralis.Object.extend('Eggs')
@@ -190,9 +191,6 @@ const Eggs: React.FC<EggsProps> = ({}) => {
                 autoHeight: true,
                 pagination: false,
                 gap: '1rem',
-              }}
-              onMoved={(splide, newIndex) => {
-                console.log('moved', newIndex)
               }}>
               {myEggs.map((egg: CardEgg) => (
                 <SplideSlide key={egg.tokenID}>

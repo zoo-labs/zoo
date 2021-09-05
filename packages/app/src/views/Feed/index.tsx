@@ -150,7 +150,7 @@ function Feed<FeedPagePops>({ match }) {
                 ) : (
                   <SplideSlide>
                     <div className='w-full h-full p-px rounded bg-gradient-to-b from-btn1  to-btn2'>
-                      <div className='flex h-full flex-col p-1 rounded bg-dark-900 justify-center items-center px-8'>
+                      <div className='flex h-full flex-col p-1 rounded bg-dark-900 justify-center items-center px-12'>
                         <Text textAlign='center'>You do not currently own any animals</Text>
                         <BorderButton scale='md' onClick={HomeClick}>
                           Buy Egg
@@ -211,52 +211,3 @@ function Feed<FeedPagePops>({ match }) {
   )
 }
 export default withRouter(Feed)
-{
-  /* <Swiper
-className='swiper-wrapper'
-onSwiper={setSwiperRef}
-onActiveIndexChange={handleIndexChange}
-centeredSlides={isMobile ? true : false}
-spaceBetween={30}
-slidesPerView={1}
-direction='horizontal'>
-<Slide key={0}>
-  {animals.length ? (
-    <Swiper mousewheel={{ releaseOnEdges: true }} speed={900} initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
-      {animals.map((data) => {
-        return (
-          <Slide className='swiper-wrapper' key={data.tokenID + 'slide'}>
-            <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={animalGroup} hideBid={activeIndex === 0} />
-          </Slide>
-        )
-      })}
-    </Swiper>
-  ) : (
-    <EmptyZoo>
-      <Text textAlign='center'>You do not currently own any animals</Text>
-      <BorderButton scale='md' onClick={HomeClick}>
-        Buy Egg
-      </BorderButton>
-    </EmptyZoo>
-  )}
-</Slide>
-<Slide key={1}>
-  <Swiper speed={900} initialSlide={animalIndex} spaceBetween={30} slidesPerView={1} direction='vertical'>
-    {animals.map((data, index) => {
-      return data.listed ? (
-        <Slide key={data.tokenID + 'slide'}>
-          <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={{}} />
-        </Slide>
-      ) : (
-        <EmptyZoo>
-          <Text textAlign='center'>There are currently no animals up for auction</Text>
-          <BorderButton scale='md' onClick={HomeClick}>
-            Home
-          </BorderButton>
-        </EmptyZoo>
-      )
-    })}
-  </Swiper>
-</Slide>
-</Swiper> */
-}
