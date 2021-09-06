@@ -76,7 +76,7 @@ const App: React.FC = () => {
   const createEgg = async (data) => {
     console.log('CREATING EGG', mapEgg(data))
     try {
-      dispatch(addEgg(mapEgg(data)))
+      dispatch(addEgg({ data: mapEgg(data), account }))
     } catch (e) {
       console.error('ISSUE CREATING EGG:', e)
     }
@@ -85,7 +85,7 @@ const App: React.FC = () => {
   const updateEgg = async (data) => {
     console.log('UPDATING EGG', mapEgg(data))
     try {
-      dispatch(addEgg(mapEgg(data)))
+      dispatch(addEgg({ data: mapEgg(data), account }))
     } catch (e) {
       console.error('ISSUE UPDATING EGG:', e)
     }
