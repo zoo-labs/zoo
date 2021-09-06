@@ -21,10 +21,6 @@ export const useEagerConnectAlt = () => {
   }, [login])
 }
 
-
-
-
-
 function useEagerConnect() {
   const { activate, active } = useWeb3ReactCore() // specifically using useWeb3ReactCore because of what this hook does
   const [tried, setTried] = useState(false)

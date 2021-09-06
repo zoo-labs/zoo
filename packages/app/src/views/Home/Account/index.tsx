@@ -64,7 +64,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     clear()
   }
 
-  const currentEggsOwned = myEggs.length
+  const currentEggsOwned = Object.values(myEggs).length
 
   const zooDrop = getDrop(web3)
   const zooKeeper = getZooKeeper(web3)
@@ -213,7 +213,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
               </div>
 
               <div className='text-base font-bold currentColor pt-8 pb-2 text-xl'>{currentEggsOwned} Eggs Owned</div>
-              <Eggs myEggs={myEggs} />
+              <Eggs myEggs={Object.values(myEggs)} />
             </div>
 
             <div className={`m-4 flex flex-wrap justify-center`}>

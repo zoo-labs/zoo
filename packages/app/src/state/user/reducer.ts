@@ -15,6 +15,7 @@ import {
   updateUserArcherTipManualOverride,
   updateUserArcherUseRelay,
   updateUserDarkMode,
+  updateUserAnimationMode,
   updateUserDeadline,
   updateUserExpertMode,
   updateUserSingleHopOnly,
@@ -32,7 +33,7 @@ export interface UserState {
 
   userDarkMode: boolean | null // the user's choice for dark mode or light mode
   matchesDarkMode: boolean // whether the dark mode media query matches
-
+  userAnimationMode:boolean // whether the animations should play on cards
   userExpertMode: boolean
 
   userSingleHopOnly: boolean // only allow swaps on direct pairs
@@ -72,6 +73,7 @@ function pairKey(token0Address: string, token1Address: string) {
 
 export const initialState: UserState = {
   userDarkMode: null,
+  userAnimationMode: null,
   matchesDarkMode: false,
   userExpertMode: false,
   userSingleHopOnly: false,
@@ -107,6 +109,10 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(updateUserDarkMode, (state, action) => {
       state.userDarkMode = action.payload.userDarkMode
+      state.timestamp = currentTimestamp()
+    })
+    .addCase(updateUserAnimationMode, (state, action) => {
+      state.userAnimationMode = action.payload.userAnimationMode
       state.timestamp = currentTimestamp()
     })
     .addCase(updateMatchesDarkMode, (state, action) => {
