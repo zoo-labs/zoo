@@ -13,7 +13,9 @@ import { ChevronLeftIcon } from 'components/Svg'
 import ZooHomeButton from 'components/SideMenu/components/ZooHomeButton'
 import { useAssetModalToggle } from 'state/application/hooks'
 import { useHistory } from 'react-router'
-
+import { useIsAnimationMode } from 'state/user/hooks'
+const basicEggURL = window.location.origin + '/static/images/basic.jpg'
+const hybridEggURL = window.location.origin + '/static/images/hybrid.jpg'
 interface Props {
   item: Egg
   url?: string
@@ -166,12 +168,13 @@ const EggFeedCard: React.FC<Props> = ({ item }) => {
     </IconButton>
   )
   const history = useHistory()
+  const animationMode = useIsAnimationMode()
 
   return (
     <>
-      <Card isMobile={isMobile}>
+      <Card isMobile={isMobile} url={!animationMode && (item.basic ? basicEggURL : hybridEggURL)}>
         <CardOverlay>
-          {getVideo()}
+          {animationMode && getVideo()}
           <FirstThird />
           <SecondThird></SecondThird>
           <FinalThird>
