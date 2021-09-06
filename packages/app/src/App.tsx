@@ -30,7 +30,7 @@ BigNumber.config({
 })
 
 const App: React.FC = () => {
-  useEagerConnect()
+  // useEagerConnect()
   const web3 = useWeb3()
   const dispatch = useDispatch()
   const { library, chainID, account } = web3
