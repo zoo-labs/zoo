@@ -19,7 +19,7 @@ import { getZooKeeper } from 'util/contracts'
 import NewAnimalCard from '../../../components/modals/NewAnimal'
 import { mapEgg, mapAnimal } from 'util/moralis'
 import { useHatchDisabledModalToggle, useNewAnimalModalToggle, useVideoPlayerModalToggle } from 'state/application/hooks'
-import { Splide, SplideSlide } from '@splidejs/react-splide'
+import { Splide, SplideSlide } from 'components/Splide'
 
 import '@splidejs/splide/dist/css/themes/splide-default.min.css'
 
