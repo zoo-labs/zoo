@@ -29,8 +29,8 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
           autoPlay
           loop
           muted
-          controls
           style={{
+            pointerEvents: 'none',
             maxHeight: 700,
             alignSelf: 'center',
           }}>

@@ -149,6 +149,7 @@ const EggFeedCard: React.FC<Props> = ({ item }) => {
           loop
           muted
           style={{
+            pointerEvents: 'none',
             height: '100%',
             alignSelf: 'center',
           }}>
