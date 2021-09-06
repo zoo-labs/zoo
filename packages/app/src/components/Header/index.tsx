@@ -174,8 +174,6 @@ export default function Header() {
   const { account, chainId, library } = useWeb3React()
   const { login, logout } = useAuth()
   const isMobile = isXl === false
-  const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
-  console.log('userEthBalance', userEthBalance)
   let location = useLocation()
   useEffect(() => {
     setActive(location.pathname.split('/')[location.pathname.split('/').length - 1])
@@ -301,9 +299,6 @@ export default function Header() {
           ) : null}
           <UserBlock account={account} login={login} logout={logout} />
         </div>
-        {/* <AccountElement active={!!account} style={{ pointerEvents: 'auto' }} className='p-1 rounded-xl  hover:bg-gray-800 bg-secondary'>
-          
-          </AccountElement> */}
         <More />
       </div>
     </HeaderFrame>

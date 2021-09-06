@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from 're
 
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
-import useEagerConnect from 'hooks/useEagerConnect'
+import useEagerConnect, { useEagerConnectAlt } from 'hooks/useEagerConnect'
 import ResetCSS from './components/ResetCSS'
 import GlobalStyle from './components/style/Global'
 import SuspenseWithChunkError from './components/SuspenseWithChunkError'
@@ -31,6 +31,7 @@ BigNumber.config({
 
 const App: React.FC = () => {
   // useEagerConnect()
+  useEagerConnectAlt()
   const web3 = useWeb3()
   const dispatch = useDispatch()
   const { library, chainID, account } = web3
