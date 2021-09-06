@@ -26,6 +26,7 @@ const Index: React.FC<indexProps> = ({}) => {
   const dispatch = useDispatch()
   const zooToken = getToken(web3)
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
+
   const handleFaucet = () => {
     try {
       const acc = web3.account

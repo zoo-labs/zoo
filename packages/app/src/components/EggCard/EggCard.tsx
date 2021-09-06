@@ -205,6 +205,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
           loop
           muted
           style={{
+            pointerEvents: 'none',
             height: '235%',
             width: '235%',
             alignSelf: 'center',
