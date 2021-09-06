@@ -20,6 +20,7 @@ export default function LoginMain() {
 
   const metamaskLogin = () => {
     login(ConnectorNames.Injected)
+    console.log('logged in')
     window.localStorage.setItem(connectorLocalStorageKey, ConnectorNames.Injected)
   }
 

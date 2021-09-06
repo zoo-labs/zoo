@@ -55,7 +55,7 @@ export const useWeb3 = () => {
       setChainID(Number(chainID))
       custom.chainID = Number(chainID)
       setCustom(Object.assign({}, { chainID: Number(chainID) }, custom))
-      // window.location.reload()
+       window.location.reload()
 
     })
     ethereum.on('accountsChanged', (accounts) =>{
