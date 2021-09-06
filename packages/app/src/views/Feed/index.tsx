@@ -5,7 +5,7 @@ import { ButtonMenu, ButtonMenuItem, ButtonMenuItemProps } from 'components/Butt
 
 import { Swiper, Slide } from 'components/Swiper'
 import { useRouteMatch, Link, useLocation, useHistory, RouteComponentProps, withRouter } from 'react-router-dom'
-import { Splide, SplideSlide } from '@splidejs/react-splide'
+import { Splide, SplideSlide } from 'components/Splide'
 import { useWeb3 } from 'hooks/useWeb3'
 import { useSelector } from 'react-redux'
 import { useMatchBreakpoints } from 'hooks'
