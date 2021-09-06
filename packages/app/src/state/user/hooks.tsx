@@ -18,6 +18,7 @@ import {
   updateUserExpertMode,
   updateUserSingleHopOnly,
   updateUserSlippageTolerance,
+  updateUserAnimationMode,
 } from './actions'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { useAppDispatch, useAppSelector } from '../hooks'
@@ -62,6 +63,19 @@ export function useDarkModeManager(): [boolean, () => void] {
   }, [darkMode, dispatch])
 
   return [darkMode, toggleSetDarkMode]
+}
+export function useIsAnimationMode(): boolean {
+  return useAppSelector((state) => state.user.userAnimationMode)
+}
+export function useAnimationModeManager(): [boolean, () => void] {
+  const dispatch = useAppDispatch()
+  const animationMode = useIsAnimationMode()
+
+  const toggleSetAnimationMode = useCallback(() => {
+    dispatch(updateUserAnimationMode({ userAnimationMode: !animationMode }))
+  }, [animationMode, dispatch])
+
+  return [animationMode, toggleSetAnimationMode]
 }
 
 export function useIsExpertMode(): boolean {

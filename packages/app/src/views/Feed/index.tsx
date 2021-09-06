@@ -28,7 +28,11 @@ export interface FeedPagePops extends RouteComponentProps<{ key?: string }> {}
 
 function Feed<FeedPagePops>({ match }) {
   const animalsState = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
-  const myEggs = useSelector<AppState, AppState['zoo']['myEggs']>((state) => state.zoo.myEggs)
+  const eggsState = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
+
+  const eggs = useSelector<AppState, AppState['zoo']['myEggs']>((state) => state.zoo.myEggs)
+  const myEggs = Object.values(eggs)
+  const allEggs = Object.values(eggsState)
 
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
@@ -178,21 +182,31 @@ function Feed<FeedPagePops>({ match }) {
                 options={{
                   direction: 'ttb',
                   height: '100vh',
-                  autoWidth: true,
                   arrows: false,
                   pagination: false,
                   perPage: 1,
                   perMove: 1,
                   gap: '5em',
                   focus: 'center',
+                  breakpoints: {
+                    640: {
+                      fixedWidth: '100vw',
+                    },
+                    780: {
+                      fixedWidth: '80vw',
+                    },
+                  },
+                  lazyLoad: 'nearby',
+                  preloadPages: 10,
                 }}>
-                {animals.length ? (
-                  animals.map((data) => {
+                {allEggs.length ? (
+                  allEggs.map((data) => {
                     return (
                       <SplideSlide>
-                        <div className='w-full p-px  bg-gradient-to-b from-btn1  to-btn2'>
-                          <div className='flex flex-col p-1  bg-dark-900'>
-                            <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={{}} />
+                        <div className='w-full p-px   gradient-border' style={{ background: 'none' }}>
+                          <div className='flex flex-col p-1 w-full'>
+                            <EggFeedCard item={data} key={data.tokenID + 'card'} />
+                            {/* <FeedCard item={data} key={data.tokenID + 'card'} animalGroup={{}} /> */}
                           </div>
                         </div>
                       </SplideSlide>

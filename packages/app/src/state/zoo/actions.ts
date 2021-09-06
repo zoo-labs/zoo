@@ -28,32 +28,37 @@ export  const getZooBalance =  (account,zooToken) => async dispatch =>{
     if (!account) {
       return
     }
-    const eggType = egg.basic ? 'EGG' : 'HYBRID'
     if ((egg.owner || '').toLowerCase() !== account.toLowerCase()) {
       return
     }
-    const now = new Date().getTime()
-    const elapsedTime = now - egg.createdAt.getTime()
-    const hatchTimeout = egg.basic ? 0 : getMilliseconds(eggTimeout)
-    const timeRemaining = hatchTimeout - elapsedTime
-    const timeRemainingDaysHours = getDaysHours(timeRemaining)
-    const barwidth = [100 * (elapsedTime / hatchTimeout), '%'].join('')
-    if (egg.owner.toLowerCase() === account.toLowerCase() && !egg.burned) {
-      eggData.push({
-        id: index,
-        ...egg,
-        name: eggType,
-        timeRemaining: !egg.basic ? (elapsedTime < hatchTimeout ? timeRemaining : 0) : 0,
-        CTAOverride: !egg.basic ? (elapsedTime < hatchTimeout ? { barwidth, timeRemainingDaysHours } : null) : null,
-      })
-    }
+    eggData.push(eggConverter(egg,account))
+
   })
 
   eggData = sortData(eggData, 'hybrid')
-  
+
   console.log('myEggs length',eggData.length)
   
   dispatch(updateMyEggs(eggData))  
+  }
+
+  export const eggConverter = (egg,account) => {
+    if (egg.owner.toLowerCase() === account.toLowerCase() && !egg.burned) {
+      const eggType = egg.basic ? 'EGG' : 'HYBRID'
+      const now = new Date().getTime()
+      const elapsedTime = now - egg.createdAt.getTime()
+      const hatchTimeout = egg.basic ? 0 : getMilliseconds(eggTimeout)
+      const timeRemaining = hatchTimeout - elapsedTime
+      const timeRemainingDaysHours = getDaysHours(timeRemaining)
+      const barwidth = [100 * (elapsedTime / hatchTimeout), '%'].join('')
+    return  {
+          id: egg.tokenID,
+          ...egg,
+          name: eggType,
+          timeRemaining: !egg.basic ? (elapsedTime < hatchTimeout ? timeRemaining : 0) : 0,
+          CTAOverride: !egg.basic ? (elapsedTime < hatchTimeout ? { barwidth, timeRemainingDaysHours } : null) : null,
+        }
+      }
   }
   export const getMyTransactions =  (account) =>async dispatch=>{
     console.log('GETTING TRANSACTIONS for account', account)
