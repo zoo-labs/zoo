@@ -10,11 +10,13 @@ import { RiChat1Fill, RiChat1Line, RiCodeLine, RiLogoutBoxLine, RiLogoutCircleLi
 import { GiPieChart } from 'react-icons/gi'
 import { MoonIcon, SunIcon } from 'components/SideMenu/icons'
 import useAuth from 'hooks/useAuth'
+import Toggle from '../NewToggle'
+import { useAnimationModeManager, useIsAnimationMode } from 'state/user/hooks'
 
 export default function More({}) {
   const { isDark, toggleTheme } = useTheme()
   const { logout } = useAuth()
-
+  const [animationMode, toggleSetAnimationMode] = useAnimationModeManager()
   return (
     <Popover className='relative m-0 p-0'>
       {({ open }) => (
@@ -110,7 +112,7 @@ export default function More({}) {
                       <RiChat1Line />
                     </div>
                   </div>
-                  <div
+                  {/* <div
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
                     style={{}}
                     onClick={() => window.open('https://opensea.io/collection/cryptozoo-co')}>
@@ -118,7 +120,7 @@ export default function More({}) {
                     <div className='ml-4 sm:ml-14'>
                       <RiChat1Line />
                     </div>
-                  </div>
+                  </div> */}
                   <div
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
                     style={{}}
@@ -137,6 +139,15 @@ export default function More({}) {
                       {isDark ? <SunIcon fill={isDark ? 'white' : 'text'} width='18px' /> : <MoonIcon fill={isDark ? 'white' : 'textDisabled'} width='18px' />}
                     </div>
                   </div> */}
+                  <div className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer' style={{}}>
+                    Animation Toggle
+                    <div className='ml-4 sm:ml-14'>
+                      <Toggle id='toggle-disable-multihop-button' isActive={animationMode} toggle={() => toggleSetAnimationMode()} />
+                    </div>
+                    {/* <div className='ml-4 sm:ml-14'>
+                      {isDark ? <SunIcon fill={isDark ? 'white' : 'text'} width='18px' /> : <MoonIcon fill={isDark ? 'white' : 'textDisabled'} width='18px' />}
+                    </div> */}
+                  </div>
                   <div
                     onClick={() => logout()}
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
