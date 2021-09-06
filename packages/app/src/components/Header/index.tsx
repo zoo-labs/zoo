@@ -24,6 +24,7 @@ import { useModalOpen } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 import { NETWORK_SYMBOL } from 'constants/networks'
 import UserBlock from 'components/SideMenu/components/UserBlock'
+import { useETHBalances } from 'hooks/useWallet'
 
 const logoURL = window.location.origin + '/static/images/logo-white.png'
 
@@ -173,6 +174,8 @@ export default function Header() {
   const { account, chainId, library } = useWeb3React()
   const { login, logout } = useAuth()
   const isMobile = isXl === false
+  const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
+  console.log('userEthBalance', userEthBalance)
   let location = useLocation()
   useEffect(() => {
     setActive(location.pathname.split('/')[location.pathname.split('/').length - 1])

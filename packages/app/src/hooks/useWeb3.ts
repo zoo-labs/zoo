@@ -49,10 +49,18 @@ export const useWeb3 = () => {
   )
 
   useEffect(() => {
+    console.log('iitializing web3')
     ethereum.on('chainChanged', (chainID) => {
+      console.log('chainChanged to',chainID)
       setChainID(Number(chainID))
       custom.chainID = Number(chainID)
       setCustom(Object.assign({}, { chainID: Number(chainID) }, custom))
+      // window.location.reload()
+
+    })
+    ethereum.on('accountsChanged', (accounts) =>{
+      console.log('hitting accountsChanged',accounts)
+      getAccounts(accounts)
     })
     return () => {
       ethereum.removeAllListeners()
@@ -68,18 +76,20 @@ export const useWeb3 = () => {
     }
   }, [library, account, chainID])
 
-  async function getAccounts() {
-    if (custom.account && custom.account.length > 0) return
-    const accounts = web3Account ? [web3Account] : await web3.eth.getAccounts()
-    if (accounts.length > 0) {
-      setAccount(accounts[0])
-      setCustom(Object.assign({}, custom, { account: accounts[0] }))
-    }
+  async function getAccounts(accounts) {
+console.log('custom.account',custom.account)
+    // if (custom.account && custom.account.length > 0) return
+    const newAccounts = accounts||(web3Account ? [web3Account] : await web3.eth.getAccounts())
+    const account = newAccounts[0]
+    console.log('changing account in web3 to',account)
+    setAccount(account)
+      setCustom(Object.assign({}, custom, { account: account }))
+
   }
 
-  useEffect(() => {
-    getAccounts()
-  }, [account, chainID, library])
+  // useEffect(() => {
+  //   getAccounts()
+  // }, [account, chainID, library])
 
   async function getGasPrice() {
     const weiPrice = Number(await web3.eth.getGasPrice())
