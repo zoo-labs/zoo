@@ -15,6 +15,9 @@ import Modal from 'components/NewModal'
 import { useModalOpen, useWalletModalToggle } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 import connectors from 'components/modals/config'
+import { Config, ConnectorNames } from 'components/modals/types'
+import { connectorLocalStorageKey } from 'components/modals/config'
+declare let window: any
 
 const CloseIcon = styled.div`
   position: absolute;
@@ -66,35 +69,33 @@ export default function WalletModal({ onDismiss = () => null }: { onDismiss?: ()
   const [pendingError, setPendingError] = useState<boolean>()
   const isModalOpen = useModalOpen(ApplicationModal.WALLET)
   const toggleWalletModal = useWalletModalToggle()
-  //   const walletModalOpen = useModalOpen(ApplicationModal.WALLET)
-
-  //   const toggleWalletModal = useWalletModalToggle()
+  const walletModalOpen = useModalOpen(ApplicationModal.WALLET)
 
   const previousAccount = usePrevious(account)
 
-  //   // close on connection, when logged out before
-  //   useEffect(() => {
-  //     if (account && !previousAccount && walletModalOpen) {
-  //       toggleWalletModal()
-  //     }
-  //   }, [account, previousAccount, toggleWalletModal, walletModalOpen])
+  // close on connection, when logged out before
+  useEffect(() => {
+    if (account && !previousAccount && walletModalOpen) {
+      toggleWalletModal()
+    }
+  }, [account, previousAccount, toggleWalletModal, walletModalOpen])
 
-  //   // always reset to account view
-  //   useEffect(() => {
-  //     if (walletModalOpen) {
-  //       setPendingError(false)
-  //       setWalletView(WALLET_VIEWS.ACCOUNT)
-  //     }
-  //   }, [walletModalOpen])
+  // always reset to account view
+  useEffect(() => {
+    if (walletModalOpen) {
+      setPendingError(false)
+      setWalletView(WALLET_VIEWS.ACCOUNT)
+    }
+  }, [walletModalOpen])
 
-  //   // close modal when a connection is successful
-  //   const activePrevious = usePrevious(active)
-  //   const connectorPrevious = usePrevious(connector)
-  //   useEffect(() => {
-  //     if (walletModalOpen && ((active && !activePrevious) || (connector && connector !== connectorPrevious && !error))) {
-  //       setWalletView(WALLET_VIEWS.ACCOUNT)
-  //     }
-  //   }, [setWalletView, active, error, connector, walletModalOpen, activePrevious, connectorPrevious])
+  // close modal when a connection is successful
+  const activePrevious = usePrevious(active)
+  const connectorPrevious = usePrevious(connector)
+  useEffect(() => {
+    if (walletModalOpen && ((active && !activePrevious) || (connector && connector !== connectorPrevious && !error))) {
+      setWalletView(WALLET_VIEWS.ACCOUNT)
+    }
+  }, [setWalletView, active, error, connector, walletModalOpen, activePrevious, connectorPrevious])
 
   const tryActivation = async (connector: (() => Promise<AbstractConnector>) | AbstractConnector | undefined) => {
     let name = ''
@@ -119,76 +120,73 @@ export default function WalletModal({ onDismiss = () => null }: { onDismiss?: ()
       activate(conn, undefined, true).catch((error) => {
         if (error instanceof UnsupportedChainIdError) {
           activate(conn) // a little janky...can't use setError because the connector isn't set
+          // window.localStorage.setItem(connectorLocalStorageKey, connector)
         } else {
           setPendingError(true)
         }
       })
   }
 
-  // close wallet modal if fortmatic modal is active
-  //   useEffect(() => {
-  //     if (connector?.constructor?.name === 'FormaticConnector') {
-  //       connector.on(OVERLAY_READY, () => {
-  //         toggleWalletModal()
-  //       })
-  //     }
-  //   }, [toggleWalletModal, connector])
+  //  close wallet modal if fortmatic modal is active
+  useEffect(() => {
+    if (connector?.constructor?.name === 'FormaticConnector') {
+      connector.on('OVERLAY_READY', () => {
+        toggleWalletModal()
+      })
+    }
+  }, [toggleWalletModal, connector])
 
   // get wallets user can switch too, depending on device/browser
   function getOptions() {
-    // const isMetamask = window.ethereum && window.ethereum.isMetaMask
+    const isMetamask = window.ethereum && window.ethereum.isMetaMask
     return Object.keys(connectors).map((key) => {
       const option = connectors[key]
-      // check for mobile options
-      //   if (isMobile) {
-      //     // disable portis on mobile for now
-      //     if (option.name === 'Portis') {
-      //       return null
-      //     }
+      //check for mobile options
+      if (isMobile) {
+        // disable portis on mobile for now
+        if (option.name === 'Portis') {
+          return null
+        }
 
-      //     if (!window.web3 && !window.ethereum && option.mobile) {
-      //       return (
-      //         <Option
-      //           onClick={() => {
-      //             tryActivation(option.connectorId)
-      //           }}
-      //           id={`connect-${key}`}
-      //           key={key}
-      //           active={option.connectorId && option.connectorId === connector}
-      //           color={option.color}
-      //           link={option.href}
-      //           header={option.title}
-      //           subheader={null}
-      //           Icon={ option.icon}
-      //         />
-      //       )
-      //     }
-      //     return null
-      //   }
+        if (!window.web3 && !window.ethereum && option.mobile) {
+          return (
+            <Option
+              onClick={() => {
+                tryActivation(option.connectorId)
+              }}
+              id={`connect-${key}`}
+              key={key}
+              active={option.connectorId && option.connectorId === connector}
+              color={option.color}
+              link={option.href}
+              header={option.title}
+              subheader={null}
+              Icon={option.icon}
+            />
+          )
+        }
+        return null
+      }
 
       // overwrite injected when needed
       if (option.connector === injected) {
         // don't show injected if there's no injected provider
-        if (
-          // !(window.web3 || window.ethereum)
-          false
-        ) {
-          if (option.title === 'Metamask') {
+        if (!(window.web3 || window.ethereum)) {
+          if (option.name === 'MetaMask') {
             return <Option id={`connect-${key}`} key={key} color={'#E8831D'} header={'Install Metamask'} subheader={null} link={'https://metamask.io/'} Icon={MetamaskIcon} />
           } else {
             return null // dont want to return install twice
           }
         }
         // don't return metamask if injected provider isn't metamask
-        // else if (option.name === 'MetaMask' && !isMetamask) {
-        //   return null
-        // }
+        else if (option.name === 'MetaMask' && !isMetamask) {
+          return null
+        }
         // likewise for generic
-        // else if (option.name === 'Injected' && isMetamask) {
-        //   return null
-        // }
+        else if (option.name === 'Injected' && isMetamask) {
+          return null
+        }
       }
-
       // return rest of options
       return (
         !isMobile &&

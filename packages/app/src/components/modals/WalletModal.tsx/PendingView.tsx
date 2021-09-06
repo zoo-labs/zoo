@@ -6,6 +6,7 @@ import Option from './Option'
 import React from 'react'
 import { darken } from 'polished'
 import styled from 'styled-components'
+declare let window: any
 
 const PendingSection = styled.div`
   align-items: center;
@@ -59,7 +60,7 @@ export default function PendingView({
   setPendingError: (error: boolean) => void
   tryActivation: (connector: AbstractConnector) => void
 }) {
-  //    const isMetamask = window?.ethereum?.isMetaMask
+  const isMetamask = window?.ethereum?.isMetaMask
 
   return (
     <PendingSection>
@@ -85,12 +86,12 @@ export default function PendingView({
         const option = connectors[key]
         if (option.connector === connector) {
           if (option.connector === injected) {
-            // if (isMetamask && option.name !== 'MetaMask') {
-            //   return null
-            // }
-            // if (!isMetamask && option.name === 'MetaMask') {
-            //   return null
-            // }
+            if (isMetamask && option.name !== 'MetaMask') {
+              return null
+            }
+            if (!isMetamask && option.name === 'MetaMask') {
+              return null
+            }
           }
           return <Option id={`connect-${key}`} key={key} clickable={false} color={option.color} header={option.name} subheader={option.description} Icon={option.icon} />
         }

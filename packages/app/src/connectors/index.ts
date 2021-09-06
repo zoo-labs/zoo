@@ -5,6 +5,7 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 import { BscConnector } from '@binance-chain/bsc-connector'
 import { NetworkConnector } from './NetworkConnector'
+import { ChainId } from 'constants/Chains'
 
 const NETWORK_URL = process.env.REACT_APP_NETWORK_URL ?? 'https://mainnet.infura.io/v3/98d552bbb2fd4f0d90af238597ba1002'
 
@@ -23,10 +24,11 @@ export function getNetworkLibrary(): Web3Provider {
   // eslint-disable-next-line no-return-assign
   return (networkLibrary = networkLibrary ?? new Web3Provider(network.provider as any))
 }
+const supportedChainIds = Object.values(ChainId) as number[]
 
 export const injected = new InjectedConnector({
   //// 1337, 1338, 1, 3, 56, 97
-  supportedChainIds: [ 1337, 1338, 1, 3, 56, 97],
+  supportedChainIds
 })
 
 export const bscConnector = new BscConnector({ supportedChainIds: [56, 97] })
