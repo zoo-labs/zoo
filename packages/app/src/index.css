@@ -183,7 +183,7 @@ body {
     --tw-gradient-to:rgb(140, 79, 248);
 }
 .hover\:to-primary:hover {
-    --tw-gradient-to:rgba(59, 130, 246, 0)
+    --tw-gradient-to:rgb(44, 190, 247);
 }
 .to-gold {
     --tw-gradient-to:#f2c282;
