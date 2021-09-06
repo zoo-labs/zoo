@@ -155,9 +155,15 @@ function Feed<FeedPagePops>({ match }) {
                     <div className='w-full h-full p-px rounded bg-gradient-to-b from-btn1  to-btn2'>
                       <div className='flex h-full flex-col p-1 rounded bg-dark-900 justify-center items-center px-12'>
                         <Text textAlign='center'>You do not currently own any animals</Text>
-                        <BorderButton scale='md' onClick={HomeClick}>
-                          Buy Egg
-                        </BorderButton>
+                        <button onClick={HomeClick} className='col-span-1 p-px rounded mt-4'>
+                          <div className='w-full p-px rounded bg-gradient-to-b from-btn1  to-btn2'>
+                            <div className='flex flex-col w-full h-full overflow-y-hidden rounded bg-dark-900'>
+                              <div className='flex items-center w-full h-full py-3 px-4 rounded bg-gradient-to-b from-bg-dark-1000 to-bg-dark-1000 hover:from-btn1 hover:to-btn2 '>
+                                <div className='font-bold text-primary'>Buy Eggs</div>
+                              </div>
+                            </div>
+                          </div>
+                        </button>
                       </div>
                     </div>
                   </SplideSlide>

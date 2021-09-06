@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, lazy } from 'react'
+import React, { Suspense, useEffect, lazy, useMemo } from 'react'
 import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from 'react-router-dom'
 
 import styled from 'styled-components'
@@ -15,11 +15,11 @@ import { useMoralisSubscription } from 'react-moralis'
 import { Egg, Animal } from 'types/zoo'
 import { getToken, getZooKeeper } from 'util/contracts'
 import useWeb3 from 'hooks/useWeb3'
-import myVideo from './components/EggCard/media/spinning_egg_animation.mov'
 
 import { mapEgg, mapAnimal, queryEggs, queryAnimals } from 'util/moralis'
 import Header from 'components/Header'
 import indexRoutes from 'routes'
+import { useWeb3React } from '@web3-react/core'
 
 const Login = lazy(() => import('./views/Login'))
 
@@ -32,14 +32,20 @@ BigNumber.config({
 const App: React.FC = () => {
   useEagerConnect()
   const web3 = useWeb3()
-  const { chainID } = web3
   const dispatch = useDispatch()
+  const { library, chainID, account } = web3
 
+  const valid = useMemo(() => {
+    if (library && chainID) {
+      return true
+    }
+    return false
+  }, [library, chainID])
   /* Set signedIn to true if chainID and window.localStorage.getItem('connectorId') exist */
   const signedIn = chainID !== undefined && window.localStorage.getItem('connectorId') !== undefined
   const zooToken = getToken(web3)
 
-  const getEggs = async () => {
+  const getEggs = async (account) => {
     try {
       const eggs = []
 
@@ -47,7 +53,7 @@ const App: React.FC = () => {
         eggs.push(mapEgg(egg))
       }
       dispatch(addEggs(eggs))
-      dispatch(getMyEggs(web3.account, eggs))
+      dispatch(getMyEggs(account, eggs))
     } catch (e) {
       console.log('issue gett')
       console.error('ISSUE GETTING EGGS \n', e)
@@ -131,40 +137,25 @@ const App: React.FC = () => {
     onUpdate: (data) => updateAnimal(data),
     onDelete: (data) => deleteAnimal(data),
   })
-
-  useEffect(() => {
+  const getValues = (account) => {
     dispatch(clearZoo())
-    dispatch(getZooBalance(web3.account, zooToken))
-    dispatch(getMyTransactions(web3.account))
-    getEggs()
+    dispatch(getZooBalance(account, zooToken))
+    dispatch(getMyTransactions(account))
+    getEggs(account)
     getAnimals()
-  }, [chainID, web3.account])
-  const history = useHistory()
+  }
+  useEffect(() => {
+    console.log('account passing from useffect is', account)
+    getValues(account)
+  }, [chainID, account, valid])
   return (
-    <Suspense
-      fallback={
-        <div className='h-full flex justify-center items-center' style={{ height: '100vh' }}>
-          <div style={{ margin: 0, position: 'absolute', width: '108%' }}>
-            <video
-              autoPlay
-              loop
-              muted
-              style={{
-                height: '235%',
-                width: '235%',
-                alignSelf: 'center',
-              }}>
-              <source src={myVideo} type='video/mp4'></source>
-            </video>
-          </div>
-        </div>
-      }>
+    <Suspense fallback={<></>}>
       <Router>
         <ResetCSS />
         <GlobalStyle />
         <Switch>
           <Route exact path='/login'>
-            {signedIn ? <Redirect to='/account' /> : <Login />}
+            {signedIn && valid ? <Redirect to='/account' /> : <Login />}
           </Route>
 
           <SuspenseWithChunkError fallback={<></>}>

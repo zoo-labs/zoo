@@ -29,6 +29,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
           autoPlay
           loop
           muted
+          controls
           style={{
             maxHeight: 700,
             alignSelf: 'center',
@@ -40,7 +41,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
   }
   const item = history.location.state.item
   const txHash = '0x82f982a0ac33cfb8b34bcdffa7547dff9a2ba49be0bfbab9b7823e437d01ce64'
-  const accountEllipsis = `${txHash.substring(0, 6)}...${txHash.substring(txHash.length - 4)}`
+  const accountEllipsis = `${txHash.substring(0, 10)}...${txHash.substring(txHash.length - 6)}`
   const myTransactions = useSelector<AppState, AppState['zoo']['myTransactions']>((state) => state.zoo.myTransactions)
 
   return (
@@ -78,7 +79,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
                   <div className='text-xs font-semibold bg-dark-800 px-6 py-2 rounded-full'>{item.basic ? 'BASIC' : 'HYBRID'}</div>
                 </div>
               </div>
-              <p className='text-xs text-justify text-gray-500 my-4 font-semibold' style={{ color: '#f2f2f2' }}>
+              <p className='text-sm text-justify text-gray-500 my-4 font-semibold' style={{ color: '#f2f2f2' }}>
                 Contains 1 of 16 Generation One Base Animals. To hatch or to hold… Air is a trip through a serene yet alien world. It is a journey that is blissful, meditative and
                 at times intense.
               </p>

@@ -73,7 +73,6 @@ export  const getZooBalance =  (account,zooToken) => async dispatch =>{
         // Filter out Burned Tokens
         if (action == 'Burned Token') continue
 
-        console.log('tx', tx)
         transactions.push({
           id: tx.get('objectId'),
           from: tx.get('from'),
@@ -86,7 +85,6 @@ export  const getZooBalance =  (account,zooToken) => async dispatch =>{
           tokenID: tx.get('tokenID'),
         })
       }
-      console.log('transactions', transactions)
       dispatch(updateMyTransactions(transactions))
     } catch (e) {
       console.error('ISSUE GETTING TRANSACTIONS \n', e)

@@ -137,7 +137,13 @@ const EggFeedCard: React.FC<Props> = ({ item }) => {
   const toggleAssetModal = useAssetModalToggle()
   const getVideo = () => {
     return (
-      <div style={{ margin: 0, position: 'absolute', width: '100%', height: '100%' }}>
+      <div
+        onClick={() =>
+          history.push(`/feed/${item.owner}/${item.tokenID}`, {
+            item,
+          })
+        }
+        style={{ margin: 0, position: 'absolute', width: '100%', height: '100%' }}>
         <video
           autoPlay
           loop
@@ -163,13 +169,7 @@ const EggFeedCard: React.FC<Props> = ({ item }) => {
 
   return (
     <>
-      <Card
-        isMobile={isMobile}
-        onClick={() =>
-          history.push(`/feed/${item.owner}/${item.tokenID}`, {
-            item,
-          })
-        }>
+      <Card isMobile={isMobile}>
         <CardOverlay>
           {getVideo()}
           <FirstThird />
@@ -187,7 +187,7 @@ const EggFeedCard: React.FC<Props> = ({ item }) => {
                 <Subheading>{`Laid: ${StringDate}`}</Subheading>
                 <Subheading>{`ID: ${item.tokenID}`}</Subheading>
               </Flex>
-              <Flex flexDirection='column'>
+              <Flex flexDirection='column' className='z-10'>
                 <ActionButtonContainer>
                   <Flex width='100%' height='100%' flexDirection='column'>
                     <IconButton onClick={() => toggleAssetModal()} style={{ padding: '10px 0px' }}>

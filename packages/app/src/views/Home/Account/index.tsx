@@ -1,7 +1,7 @@
 import BorderButton from 'components/Button/BorderButton'
 import StickyBottomMenu from 'components/Button/StickyBottomMenu'
 import Page from 'components/layout/Page'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { AppState } from 'state'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
@@ -26,6 +26,7 @@ import Header from 'components/Header'
 import Eggs from './Eggs'
 import Animals from './Animals'
 import AccountHeader from './AccountHeader'
+import { useWeb3React } from '@web3-react/core'
 
 function numberWithCommas(num) {
   const values = num.toString().split('.')
@@ -48,7 +49,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   // const [balance, setBalance] = useState(0)
   const [keepApprove, setKeepApprove] = useState(true)
   const web3 = useWeb3()
-  const [account, setAccount] = useState(web3.account)
+  const { account } = useWeb3React()
 
   // const [zooToken, setZooToken] = useState(getToken(web3))
   // const [zooKeeper, setZooKeeper] = useState(getZooKeeper(web3))
@@ -70,9 +71,6 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   const zooToken = getToken(web3)
   // const zooToken = getToken(web3)
   // const zooKeeper = getZooKeeper(web3)
-  useEffect(() => {
-    setAccount(web3.account)
-  }, [web3])
 
   const mount = async () => {
     if (!zooToken || !zooKeeper || !zooDrop || !web3.account) return false
@@ -100,7 +98,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   }
 
   const approve = async () => {
-    if (!web3.account) {
+    if (!account) {
       toastClear()
       toastInfo('Account not connected yet')
       return
@@ -138,6 +136,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
 
   const buyEgg = async () => {
     setDisable(true)
+    console.log('web3 account in buyEgg', account)
     try {
       await zooKeeper.methods
         .buyEgg(1) // buy from first drop
@@ -167,7 +166,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     }
   }
 
-  useEffect(() => {
+  useMemo(() => {
     let mounted = true
     if (mounted) {
       mount()
@@ -176,7 +175,6 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
       mounted = false
     }
   }, [account, chainID])
-  const theme = useTheme()
 
   return (
     <
@@ -238,10 +236,16 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
                     disabled={disable || !allowance}
                     className={` rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full ${
                       !allowance ? 'border border-gray-600' : 'bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'
-                    }`}
+                    } ${balance !== 0 && currentEggsOwned < 1 && 'gradient-border'}`}
                     style={{ width: '120px', fontSize: '16px', fontWeight: 550 }}
                     onClick={buyEgg}>
                     {currentEggsOwned > 2 ? 'Market' : disable ? 'Processing' : 'Buy Eggs'}
+                    {balance !== 0 && currentEggsOwned < 1 && (
+                      <span className='flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1'>
+                        <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75'></span>
+                        <span className='relative inline-flex rounded-full h-3 w-3 bg-white'></span>
+                      </span>
+                    )}
                   </button>
                 </div>
               )}
