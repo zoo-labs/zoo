@@ -190,7 +190,7 @@ export default function Header() {
     try {
       // const decimals = await zooToken.methods.decimals().call()
       await web3.eth.getBalance(account).then((val) => {
-        console.log('CHAIN-ID '+ chainID)
+        console.log('CHAIN-ID ' + chainID)
         const divisor = parseFloat(Math.pow(10, 18).toString())
         const balance = parseFloat(val) / divisor
         setBalance(parseFloat(balance.toFixed(4)))
@@ -203,7 +203,7 @@ export default function Header() {
   useEffect(() => {
     if (!account) return
     getBalance()
-  }, [account, chainID, getBalance])
+  }, [account, chainID])
 
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
@@ -224,7 +224,7 @@ export default function Header() {
           isMobile ? 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
         }`}
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
-        {['Account', 'Bank', 'Feed', 'Bridge'].map((path: string) => {
+        {['Account', 'Bank', 'Marketplace', 'Bridge'].map((path: string) => {
           console.log('active', active)
           const selected = path == 'Bridge' ? active == 'bridge' || active == 'limit-order' : active === path.toLowerCase()
           return (
@@ -266,8 +266,8 @@ export default function Header() {
                     }
                     try {
                       console.log('adding zoo', library)
-                      if(library === undefined){
-                        toastError("Connect Your Wallet First To Add Zoo")
+                      if (library === undefined) {
+                        toastError('Connect Your Wallet First To Add Zoo')
                       }
                       if (library && library.isMetaMask && library.request) {
                         library
