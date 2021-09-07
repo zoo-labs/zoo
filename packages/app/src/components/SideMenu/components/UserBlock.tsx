@@ -59,7 +59,7 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
     <>
       <div>
         {account ? (
-          <div className='flex items-center px-3 py-2 text-sm rounded-lg text-secondary bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'>
+          <div style={{ paddingTop: '6px', paddingBottom: '6px', marginTop: '2px', marginRight: '2px', marginBottom: '2px' }} className='flex items-center px-3 text-sm rounded-lg text-secondary bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'>
             <button
               className='font-semibold mr-2'
               onClick={() => {
