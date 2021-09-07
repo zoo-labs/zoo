@@ -190,6 +190,7 @@ export default function Header() {
     try {
       // const decimals = await zooToken.methods.decimals().call()
       await web3.eth.getBalance(account).then((val) => {
+        console.log('CHAIN-ID '+ chainID)
         const divisor = parseFloat(Math.pow(10, 18).toString())
         const balance = parseFloat(val) / divisor
         setBalance(parseFloat(balance.toFixed(4)))
@@ -202,7 +203,7 @@ export default function Header() {
   useEffect(() => {
     if (!account) return
     getBalance()
-  }, [account, chainID])
+  }, [account, chainID, getBalance])
 
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
@@ -265,6 +266,9 @@ export default function Header() {
                     }
                     try {
                       console.log('adding zoo', library)
+                      if(library === undefined){
+                        toastError("Connect Your Wallet First To Add Zoo")
+                      }
                       if (library && library.isMetaMask && library.request) {
                         library
                           .request({
