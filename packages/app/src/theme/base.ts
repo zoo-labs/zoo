@@ -4,8 +4,8 @@ export const breakpointMap: { [key: string]: number } = {
   xs: 370,
   sm: 576,
   md: 852,
-  lg: 968,
-  xl: 1080,
+  lg: 1400,
+  xl: 1960,
 }
 
 const breakpoints: Breakpoints = Object.values(breakpointMap).map((breakpoint) => `${breakpoint}px`)

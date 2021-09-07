@@ -57,7 +57,7 @@ import { useWeb3React } from '@web3-react/core'
 import { AlertTriangle } from 'react-feather'
 import { warningSeverity } from '../../functions/prices'
 import { Alert } from 'components'
-import ConfirmSwapModal from 'modals/ConfirmSwap'
+import ConfirmSwapModal from 'components/modals/ConfirmSwap'
 import { useHistory } from 'react-router'
 import NetworkGuard from 'components/guards/Network'
 

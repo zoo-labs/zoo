@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
-import { connectorLocalStorageKey } from '../../WalletModal/config'
+import { connectorLocalStorageKey } from '../../modals/config'
 import Logo from './Logo'
 import { SvgProps } from '../types'
 import Page from '../../layout/Page'

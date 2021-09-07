@@ -1,12 +1,12 @@
 import BorderButton from 'components/Button/BorderButton'
 import StickyBottomMenu from 'components/Button/StickyBottomMenu'
 import Page from 'components/layout/Page'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { AppState } from 'state'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import styles, { useTheme } from 'styled-components'
-import Metamask from '../../../components/WalletModal/icons/Metamask'
+import Metamask from '../../../components/modals/icons/Metamask'
 
 import ToastListener from '../../../components/ToastListener'
 
@@ -26,88 +26,12 @@ import Header from 'components/Header'
 import Eggs from './Eggs'
 import Animals from './Animals'
 import AccountHeader from './AccountHeader'
-
-const HeadingContainer = styles.div`
-    width: 200%;
-    display: flex;
-    justify-content: start;
-    margin: 0px 8px;
-`
-
-const MyZooContainer = styles.div`
-    width: 100%;
-    display: flex;
-    padding: 16px;
-`
-
-const StyledButton = styles.button`
-    cursor: pointer;
-    margin-top: 1px;
-    margin-left: 16px;
-    text-decoration: none;
-    text-transform: uppercase;
-`
-
-const LabelWrapper = styles.div`
-    display: flex;
-    width: 100%;
-    justify-content: space-evenly;
-    align-items: center;
-`
-
-const ValueWrapper = styles(Text)`
-    color: ${({ theme }) => theme.colors.text};
-    width: 100%;
-    display: flex;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 550;
-`
-
-const RowWrapper = styles.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    margin: 16px;
-`
-
-const StyledHeading = styles(Heading)`
-    color: ${({ theme }) => theme.colors.text};
-`
+import { useWeb3React } from '@web3-react/core'
 
 function numberWithCommas(num) {
   const values = num.toString().split('.')
   return values[0].replace(/.(?=(?:.{3})+$)/g, '$&,') + (values.length == 2 ? '.' + values[1] : '')
 }
-
-const IconWrapper = styles.div<{ size?: number }>`
-  align-items: center;
-  justify-content: center;
-  & > * {
-    height: ${({ size }) => (size ? size + 'px' : '32px')};
-    width: ${({ size }) => (size ? size + 'px' : '32px')};
-  }
-`
-const HeaderFrame = styles.div<{ isSm: boolean }>`
-  grid-template-columns: 1fr 120px;
-  -moz-box-pack: justify;
-  -moz-box-align: center;
-  flex-direction: row;
-  top: 0px;
-  padding: 1rem;
-  z-index: 21;
-  position: relative;
-  background-image: linear-gradient(transparent 50%, rgb(25, 27, 31) 50%);
-  background-position: 0px 0px;
-  background-size: 100% 200%;
-  box-shadow: transparent 0px 0px 0px 1px;
-  transition: background-position 0.1s ease 0s, box-shadow 0.1s ease 0s;
-  background-blend-mode: hard-light;
-  display: grid;
-  width: 100%;
-  ${({ isSm }) => (isSm ? 'grid-template-columns: 1fr; padding: 1rem' : '')};
-`
 
 interface AccountProps {
   handleFunds: () => void
@@ -125,7 +49,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   // const [balance, setBalance] = useState(0)
   const [keepApprove, setKeepApprove] = useState(true)
   const web3 = useWeb3()
-  const [account, setAccount] = useState(web3.account)
+  const { account } = useWeb3React()
 
   // const [zooToken, setZooToken] = useState(getToken(web3))
   // const [zooKeeper, setZooKeeper] = useState(getZooKeeper(web3))
@@ -134,25 +58,19 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   const { chainID, gasPrice } = web3
   const { isXl, isSm, isMd } = useMatchBreakpoints()
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
-  const allEggs = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
+  const myEggs = useSelector<AppState, AppState['zoo']['myEggs']>((state) => state.zoo.myEggs)
   const history = useHistory()
   const toastClear = () => {
     clear()
   }
 
-  let currentEggsOwned = 0
-  if (account) {
-    currentEggsOwned = Object.values(allEggs).filter((egg) => (egg.owner || '').toLowerCase() === account.toLowerCase() && !egg.burned).length
-  }
+  const currentEggsOwned = Object.values(myEggs).length
 
   const zooDrop = getDrop(web3)
   const zooKeeper = getZooKeeper(web3)
   const zooToken = getToken(web3)
   // const zooToken = getToken(web3)
   // const zooKeeper = getZooKeeper(web3)
-  useEffect(() => {
-    setAccount(web3.account)
-  }, [web3])
 
   const mount = async () => {
     if (!zooToken || !zooKeeper || !zooDrop || !web3.account) return false
@@ -180,7 +98,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   }
 
   const approve = async () => {
-    if (!web3.account) {
+    if (!account) {
       toastClear()
       toastInfo('Account not connected yet')
       return
@@ -212,12 +130,13 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     if (err.code) {
       return `Purchase failed: ${err.message}`
     } else {
-      return `Purchase failed: ${(err).toString().replace(/Error: Returned error: /, '')}`
+      return `Purchase failed: ${err.toString().replace(/Error: Returned error: /, '')}`
     }
   }
 
   const buyEgg = async () => {
     setDisable(true)
+    console.log('web3 account in buyEgg', account)
     try {
       await zooKeeper.methods
         .buyEgg(1) // buy from first drop
@@ -247,7 +166,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     }
   }
 
-  useEffect(() => {
+  useMemo(() => {
     let mounted = true
     if (mounted) {
       mount()
@@ -256,7 +175,6 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
       mounted = false
     }
   }, [account, chainID])
-  const theme = useTheme()
 
   return (
     <
@@ -295,7 +213,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
               </div>
 
               <div className='text-base font-bold currentColor pt-8 pb-2 text-xl'>{currentEggsOwned} Eggs Owned</div>
-              <Eggs />
+              <Eggs myEggs={Object.values(myEggs)} />
             </div>
 
             <div className={`m-4 flex flex-wrap justify-center`}>
@@ -318,10 +236,16 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
                     disabled={disable || !allowance}
                     className={` rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full ${
                       !allowance ? 'border border-gray-600' : 'bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'
-                    }`}
+                    } ${balance !== 0 && currentEggsOwned < 1 && 'gradient-border'}`}
                     style={{ width: '120px', fontSize: '16px', fontWeight: 550 }}
                     onClick={buyEgg}>
                     {currentEggsOwned > 2 ? 'Market' : disable ? 'Processing' : 'Buy Eggs'}
+                    {balance !== 0 && currentEggsOwned < 1 && (
+                      <span className='flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1'>
+                        <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75'></span>
+                        <span className='relative inline-flex rounded-full h-3 w-3 bg-white'></span>
+                      </span>
+                    )}
                   </button>
                 </div>
               )}

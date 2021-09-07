@@ -17,7 +17,7 @@ import Paper from '@material-ui/core/Paper'
 import { useMediaQuery } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import { CheckmarkCircleIcon } from 'components/Svg'
-import CopyHelper from 'components/WalletModal/Copy'
+import CopyHelper from 'components/Copy/Copy'
 interface Data {
   hash: string
   action: string
