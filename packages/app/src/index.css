@@ -257,3 +257,11 @@ body {
           background-position: 0% 50%;
       }
   }
+
+  .parent:hover > div {
+    opacity: 1;
+    visibility: visible;
+  }
+  .parent:hover > img {
+    transform:scale(1.1)
+  }
