@@ -6,11 +6,12 @@ import Metamask from '../../modals/icons/Metamask'
 import WalletConnect from '../../modals/icons/WalletConnect'
 import styled from 'styled-components'
 import { useWeb3 } from 'hooks'
-import { useConnectModalToggle, useAccountModalToggle } from 'state/application/hooks'
+import { useConnectModalToggle, useAccountModalToggle, useWalletModalToggle } from 'state/application/hooks'
 import ConnectModal from '../../modals/ConnectModal'
 import AccountModal from '../../modals/AccountModal'
 import WalletModal from 'components/modals/WalletModal.tsx'
-import { useWeb3React } from '@web3-react/core'
+import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
+import { RiPulseLine } from 'react-icons/ri'
 interface Props {
   account?: string
   login: Login
@@ -47,9 +48,11 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
   return <h6>nil</h6>
 }
 const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
-  const { connector } = useWeb3React()
+  const { connector, error } = useWeb3React()
   const toggleConnectModal = useConnectModalToggle()
   const toggleAccountModal = useAccountModalToggle()
+  const toggleWalletModal = useWalletModalToggle()
+
   const accountEllipsis = account ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}` : null
   console.log('connector', connector)
   return (
@@ -65,6 +68,17 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
               {accountEllipsis}
             </button>
             {connector && <StatusIcon connector={connector} />}
+          </div>
+        ) : error ? (
+          <div className='flex items-center px-3 py-2 text-sm rounded-lg text-secondary bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'>
+            <button
+              className='font-semibold mr-2 flex items-center'
+              onClick={() => {
+                toggleWalletModal()
+              }}>
+              <RiPulseLine />
+              <h6 className='pl-2'>{error instanceof UnsupportedChainIdError ? `Wrong Network` : `Error connecting`}</h6>
+            </button>
           </div>
         ) : (
           <div className='flex items-center px-3 py-2 text-sm rounded-lg text-secondary bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'>

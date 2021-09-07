@@ -219,8 +219,11 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
   // const hue = hashEgg(egg) % 9
   const basicEggURL = window.location.origin + '/static/images/basic.jpg'
   const hybridEggURL = window.location.origin + '/static/images/hybrid.jpg'
+  const animatedBasicEggURL = window.location.origin + '/static/video/egg.gif'
+  const animatedHybridEggURL = window.location.origin + '/static/video/spinning.gif'
   const transparentEggURL = window.location.origin + '/static/images/transparent.jpg'
   const backgroundImage = !egg.interactive && !hatching ? transparentEggURL : egg.basic ? basicEggURL : hybridEggURL
+  const animatedBackgroundImage = !egg.interactive && !hatching ? transparentEggURL : egg.basic ? animatedBasicEggURL : animatedHybridEggURL
   const animationMode = useIsAnimationMode()
   return (
     <>
@@ -231,8 +234,13 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
         hatching={hatching}
         hatched={hatched}>
         <CardBody
+          onClick={() =>
+            history.push(`/feed/${egg.owner}/${egg.tokenID}`, {
+              item: egg,
+            })
+          }
           style={{
-            backgroundImage: !animationMode ? `url('${backgroundImage}')` : null,
+            backgroundImage: !animationMode ? `url('${backgroundImage}')` : `url('${animatedBackgroundImage}')`,
             width: '100%',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
@@ -245,7 +253,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             alignItems: 'center',
             // filter: (!egg.hatched && !egg.interactive) ? null : `hue-rotate(0.${hue}turn)`,
           }}>
-          {!egg.hatched && !egg.interactive ? getVideo('/static/video/spinning.mp4') : animationMode ? getVideo('/static/video/egg.mp4') : null}
+          {/* {!egg.hatched && !egg.interactive ? getVideo('/static/video/spinning.gif') : animationMode ? getVideo('/static/video/egg.gif') : null} */}
           <TextWrapper
             style={{
               position: 'absolute',
