@@ -58,7 +58,10 @@ export function useNetworkModalToggle(): () => void {
 
   return useToggleModal(ApplicationModal.NETWORK)
 }
+export function useAssetModalToggle(): () => void {
 
+  return useToggleModal(ApplicationModal.ASSET)
+}
 export function useToggleSettingsMenu(): () => void {
   return useToggleModal(ApplicationModal.SETTINGS)
 }

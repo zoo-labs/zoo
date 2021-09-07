@@ -1,8 +1,12 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { connectorLocalStorageKey, ConnectorNames } from 'components'
 import useAuth from './useAuth'
+import { injected } from '../config/wallets'
+import { isMobile } from 'react-device-detect'
+import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
+declare let window: any;
 
-const useEagerConnect = () => {
+export const useEagerConnectAlt = () => {
   const { login } = useAuth()
 
   useEffect(() => {
@@ -15,6 +19,47 @@ const useEagerConnect = () => {
       login(connectorId)
     }
   }, [login])
+}
+
+function useEagerConnect() {
+  const { activate, active } = useWeb3ReactCore() // specifically using useWeb3ReactCore because of what this hook does
+  const [tried, setTried] = useState(false)
+
+  useEffect(() => {
+    injected.isAuthorized().then((isAuthorized) => {
+      if (isAuthorized) {
+        console.log('hitting this bast 1',injected)
+
+        activate(injected, undefined, true).catch(() => {
+          console.log('hitting this bast 1.5')
+
+          setTried(true)
+        })
+      } else {
+        console.log('hitting this bast 2')
+
+        if (isMobile && window.ethereum) {
+          console.log('hitting this bast 3')
+          activate(injected, undefined, true).catch(() => {
+            setTried(true)
+          })
+        } else {
+          console.log('hitting this bast 4')
+
+          setTried(true)
+        }
+      }
+    })
+  }, [activate]) // intentionally only running on mount (make sure it's only mounted once :))
+
+  // if the connection worked, wait until we get confirmation of that to flip the flag
+  useEffect(() => {
+    if (active) {
+      setTried(true)
+    }
+  }, [active])
+
+  return tried
 }
 
 export default useEagerConnect

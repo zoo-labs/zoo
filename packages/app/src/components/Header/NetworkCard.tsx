@@ -3,10 +3,9 @@ import { NETWORK_ICON, NETWORK_LABEL } from '../../constants/networks'
 // import Image from 'next/image'
 import React from 'react'
 import { useWeb3React } from '@web3-react/core'
-import { useWalletModal } from 'components/WalletModal'
 // import { HardHatIcon } from 'components/SideMenu/icons'
-import HardHatIcon from '../../modals/icons/HardHat'
-import NetworkModal from '../../modals/NetworkModal'
+import HardHatIcon from '../modals/icons/HardHat'
+import NetworkModal from '../modals/NetworkModal'
 // import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { useNetworkModalToggle } from '../../state/application/hooks'
 
@@ -19,11 +18,9 @@ function NetworkCard(): JSX.Element | null {
 
   return (
     <div
-      className='flex items-center rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'
+      className='flex items-center rounded bg-secondary hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto hover:bg-gray-800'
       onClick={() => toggleNetworkModal()}>
-      <div
-        className='grid items-center grid-flow-col mr-2 ml-1 px-2 py-1 space-x-2 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'
-        style={{ padding: '6px' }}>
+      <div className='grid items-center grid-flow-col mr-2 ml-1 px-2 py-1 space-x-2 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'>
         {chainId === 1337 || chainId === 1338 ? (
           <>
             <HardHatIcon />

@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/swiper.min.css'
 import 'swiper/components/pagination/pagination.min.css'
-import BreedConfirmationModal from '../../../modals/BreedConfirmation'
+import BreedConfirmationModal from '../../../components/modals/BreedConfirmation'
 import Moralis from 'moralis'
 import { getZooKeeper } from 'util/contracts'
 
@@ -60,7 +60,7 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
 
   const dispatch = useDispatch()
   Object.values(allAnimals).forEach((animal, index) => {
-    if (animal && animal.owner && account && animal.owner.toLowerCase() !== account.toLowerCase() || animal.freed || !animal.revealed) {
+    if ((animal && animal.owner && account && animal.owner.toLowerCase() !== account.toLowerCase()) || animal.freed || !animal.revealed) {
       return
     }
     const lastBred = animal.lastBred ? new Date(Number(animal.lastBred)).getTime() : new Date().getTime()

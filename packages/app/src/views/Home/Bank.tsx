@@ -4,7 +4,7 @@ import StickyBottomMenu from 'components/Button/StickyBottomMenu'
 import Page from 'components/layout/Page'
 import React, { useState, useEffect } from 'react'
 import { AppState } from 'state'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useWeb3 } from 'hooks/useWeb3'
 import { useHistory } from 'react-router-dom'
 import styles from 'styled-components'
@@ -21,6 +21,7 @@ import { resourceLimits } from 'worker_threads'
 import { Link } from 'react-router-dom'
 import Transaction from 'components/Transaction'
 import TransactionTable from 'components/Transaction/Table'
+import { getMyTransactions } from 'state/zoo/actions'
 
 const HeaderFrame = styles.div<{ isSm: boolean }>`
   grid-template-columns: 1fr 120px;
@@ -193,119 +194,15 @@ function numberWithCommas(num) {
 
 const Bank: React.FC = () => {
   const web3 = useWeb3()
-  const { account, chainID } = web3
-  const history = useHistory()
-  const { isXl, isSm } = useMatchBreakpoints()
-
+  const { account } = web3
   const animalsState = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
-
-  const [zooBalance, setBalance] = useState(0.0)
-  const [wait, setWait] = useState(false)
-  const [transactions, setTransactions] = useState([])
-  const [waitTx, setWaitTx] = useState(true)
-
-  const zooToken = getToken(web3)
-  const faucet = getFaucet(web3)
+  const myTransactions = useSelector<AppState, AppState['zoo']['myTransactions']>((state) => state.zoo.myTransactions)
 
   const accountAnimals = Object.values(animalsState).filter((animal) => {
     if (!animal.owner || !account) return false
     return animal.owner && animal.owner.toLowerCase() === account.toLowerCase()
   })
-
-  const getBalance = async () => {
-    if (!web3.account) return;
-    try {
-      const decimals = await zooToken.methods.decimals().call()
-      const rawBalance = await zooToken.methods.balanceOf(web3.account).call()
-      const divisor = parseFloat(Math.pow(10, decimals).toString())
-      const balance = rawBalance / divisor
-      setBalance(balance)
-    } catch (e) {
-      console.error('ISSUE LOADING ZOO BALANCE \n', e)
-    }
-  }
-
-  useEffect(() => {
-    getBalance()
-    getTransactions()
-  }, [account])
-
-  useEffect(() => {
-    if (web3.account) getBalance()
-  }, [account])
-
-  const handleFaucet = () => {
-    try {
-      setWait(true)
-      faucet.methods
-        .fund(account)
-        .send({ gas: 21000, from: account })
-        .then(() => {
-          setWait(false)
-          getBalance()
-        })
-        .catch((e) => {
-          console.error('ISSUE USING FAUCET \n', e)
-          setWait(false)
-        })
-      getBalance() // update balance
-    } catch (e) {
-      console.error('ISSUE USING FAUCET \n', e)
-    }
-  }
-
-  const handleFunds = () => {
-    switch (chainID) {
-      case 1337:
-        handleFaucet()
-        break
-      case 97:
-        handleFaucet()
-        break
-      default:
-        // eslint-disable-next-line no-restricted-globals
-        location.href = 'https://pancakeswap.info/token/0x19263f2b4693da0991c4df046e4baa5386f5735e'
-    }
-  }
-
-  const getTransactions = async () => {
-    console.log('GETTING TRANSACTIONS for account', account)
-    try {
-      const Transactions = Moralis.Object.extend('Transactions')
-      const query = new Moralis.Query(Transactions)
-      query.limit(1000)
-      query.descending('createdAt')
-      query.equalTo('from', account.toLowerCase())
-      const results = await query.find()
-      let transactions = []
-      for (const tx of results) {
-        const action = tx.get('action')
-        const txHash = tx.get('transactionHash')
-        const url = `https://testnet.bscscan.com/tx/${txHash}`
-
-        // Filter out Burned Tokens
-        if (action == 'Burned Token') continue
-
-        console.log('tx', tx)
-        transactions.push({
-          id: tx.get('objectId'),
-          from: tx.get('from'),
-          action: action,
-          hash: txHash,
-          url: url,
-          createdAt: tx.get('createdAt').toLocaleDateString(),
-          blockNumber: tx.get('blockNumber'),
-          timestamp: tx.get('timestamp'),
-          tokenID: tx.get('tokenID'),
-        })
-      }
-      console.log('transactions', transactions)
-      setTransactions(transactions)
-      setWaitTx(false)
-    } catch (e) {
-      console.error('ISSUE GETTING TRANSACTIONS \n', e)
-    }
-  }
+  const dispatch = useDispatch()
 
   // Calculate yield
   const dailyYield = accountAnimals.reduce((acc, x) => acc + Number(x.yield), 0)
@@ -313,20 +210,13 @@ const Bank: React.FC = () => {
   // Get top ten animals
   const topTenAnimals = accountAnimals.sort((a, b) => Number(b.yield) - Number(a.yield)).slice(0, 10)
 
-  const pageHeading = (
-    <HeadingContainer>
-      <StyledHeading>My Bank</StyledHeading>
-      <StyledButton onClick={() => history.push('/account')}>View Account</StyledButton>
-    </HeadingContainer>
-  )
-
   return (
     <>
       <div className='w-full m-8'>
         <Body>
           <Label className='text-base font-bold currentColor mb-2 text-xl'>Total Daily Yield</Label>
           <Flex width='100%' alignItems='center' justifyContent='space-around'>
-            <ValueWrapper> {dailyYield} ZOO </ValueWrapper>
+            <ValueWrapper> {dailyYield} ZOO Daily Yield</ValueWrapper>
           </Flex>
           <Label>Top Earners</Label>
           {topTenAnimals.length === 0 ? (
@@ -343,13 +233,11 @@ const Bank: React.FC = () => {
             </EarnerValueWrapper>
           )}
           <Label>Recent Tansactions</Label>
-          {waitTx ? (
-            <TableText> Loading Transactions... </TableText>
-          ) : transactions.length === 0 ? (
+          {myTransactions.length === 0 ? (
             <TableText> No Transaction Data </TableText>
           ) : (
             <Container>
-              <TransactionTable Transactions={transactions} />
+              <TransactionTable Transactions={myTransactions} />
               {/* <TableContainer>
                 <TableWrapper>
                   <StyledTable>

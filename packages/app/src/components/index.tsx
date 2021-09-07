@@ -38,7 +38,7 @@ export * from '../hooks'
 export * from './Modal'
 export * from './Menu'
 export * from './Toast'
-export * from './WalletModal'
+export * from './modals'
 
 // Theme
 export { default as ResetCSS } from './ResetCSS'

@@ -7,6 +7,7 @@ export const rarityTable = {
   10: 'EPIC',
   1: 'LEGENDARY',
 }
+export const NetworkContextName = 'NETWORK'
 
 export const breedTimeouts = {
   0: { days: 0, hours: 0 },
