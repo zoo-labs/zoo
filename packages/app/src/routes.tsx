@@ -5,12 +5,12 @@ import Feed from './views/Feed'
 import FeedAsset from './views/Feed/FeedAsset'
 import Swap from './views/Swap'
 import Pool from './views/Pool'
-import Marketplace from './views/Marketplace'
+import Market from './views/Market'
 let indexRoutes = [
   { path: '/account', name: 'Account', component: Home },
   // { path: '/home', name: 'Home', component: Home },
   { path: '/bank', name: 'Bank', component: Home },
-  { path: '/marketplace', name: 'Marketplace', component: Marketplace },
+  { path: '/market', name: 'Market', component: Market },
 
   { path: '/feed', name: 'Feed', component: Feed, exact: true },
   { path: '/feed/:account/:tokenId', name: 'Feed Asset', component: FeedAsset },
