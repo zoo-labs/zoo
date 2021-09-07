@@ -16,6 +16,7 @@ import { useHistory } from 'react-router'
 import { useIsAnimationMode } from 'state/user/hooks'
 const basicEggURL = window.location.origin + '/static/images/basic.jpg'
 const hybridEggURL = window.location.origin + '/static/images/hybrid.jpg'
+const animatedBasicEggURL = window.location.origin + '/static/video/egg.gif'
 interface Props {
   item: Egg
   url?: string
@@ -172,9 +173,14 @@ const EggFeedCard: React.FC<Props> = ({ item }) => {
 
   return (
     <>
-      <Card isMobile={isMobile} url={!animationMode && (item.basic ? basicEggURL : hybridEggURL)}>
-        <CardOverlay>
-          {animationMode && getVideo()}
+      <Card isMobile={isMobile} url={item.basic ? (animationMode ? animatedBasicEggURL : basicEggURL) : hybridEggURL}>
+        <CardOverlay
+          onClick={() =>
+            history.push(`/feed/${item.owner}/${item.tokenID}`, {
+              item,
+            })
+          }>
+          {/* {animationMode && getVideo()} */}
           <FirstThird />
           <SecondThird></SecondThird>
           <FinalThird>

@@ -28,26 +28,7 @@ const NetworkModal: React.FC<NetworkModalProps> = ({}) => {
       </div>
 
       <div className='grid grid-flow-row-dense grid-cols-1 gap-5 overflow-y-auto md:grid-cols-2'>
-        {[
-          ChainId.MAINNET,
-          ChainId.BSC,
-          // ChainId.ROPSTEN,
-          ChainId.RINKEBY,
-          // ChainId.GÖRLI,
-          // ChainId.KOVAN,
-          // ChainId.FANTOM,
-          // ChainId.ARBITRUM,
-          // ChainId.OKEX,
-          // ChainId.HECO,
-
-          ChainId.BSC_TESTNET,
-          // ChainId.XDAI,
-          // ChainId.HARMONY,
-          // ChainId.AVALANCHE,
-          // ChainId.CELO,
-          // ChainId.PALM,
-          // ChainId.MATIC,
-        ].map((key: ChainId, i: number) => {
+        {[ChainId.MAINNET, ChainId.BSC, ChainId.RINKEBY, ChainId.BSC_TESTNET].map((key: ChainId, i: number) => {
           //
           if (chainId === key) {
             return (
