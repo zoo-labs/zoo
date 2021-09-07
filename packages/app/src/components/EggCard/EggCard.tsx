@@ -4,7 +4,10 @@ import { Card as Existing, CardBody } from 'components'
 import { useModal } from 'components/Modal'
 import HatchModal from 'components/ZooModals/HatchModal'
 import { EggCardType } from './types'
-import myVideo from './media/spinning_egg_animation.mov'
+import { useHistory } from 'react-router'
+import { useIsAnimationMode } from 'state/user/hooks'
+// import myVideo1 from './media/spinning_egg_animation.mov'
+// import myVideo2 from './media/spinning_egg_animation.mov'
 
 const wiggle = keyframes`
   0% {
@@ -188,20 +191,27 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
     if (egg.hatched && egg.interactive) return 'READY'
     return ''
   }
-
-  const getVideo = () => {
+  const history = useHistory()
+  const getVideo = (url) => {
     return (
-      <div style={{ margin: 0, position: 'absolute', width: '108%' }}>
+      <div
+        onClick={() =>
+          history.push(`/feed/${egg.owner}/${egg.tokenID}`, {
+            item: egg,
+          })
+        }
+        style={{ margin: 0, position: 'absolute', width: '108%' }}>
         <video
           autoPlay
           loop
           muted
           style={{
+            pointerEvents: 'none',
             height: '235%',
             width: '235%',
             alignSelf: 'center',
           }}>
-          <source src={myVideo} type='video/mp4'></source>
+          <source src={url} type='video/mp4'></source>
         </video>
       </div>
     )
@@ -212,11 +222,10 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
   const hybridEggURL = window.location.origin + '/static/images/hybrid.jpg'
   const transparentEggURL = window.location.origin + '/static/images/transparent.jpg'
   const backgroundImage = !egg.interactive && !hatching ? transparentEggURL : egg.basic ? basicEggURL : hybridEggURL
-
+  const animationMode = useIsAnimationMode()
   return (
     <>
       <Card
-        onClick={() => buttonActions()}
         style={{ backgroundColor: '#000000', height: '90%', width: 111 }}
         timedOut={egg.timeRemaining > 0 ? true : false}
         interactive={egg.interactive}
@@ -224,7 +233,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
         hatched={hatched}>
         <CardBody
           style={{
-            backgroundImage: `url('${backgroundImage}')`,
+            backgroundImage: !animationMode ? `url('${backgroundImage}')` : null,
             width: '100%',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
@@ -237,7 +246,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             alignItems: 'center',
             // filter: (!egg.hatched && !egg.interactive) ? null : `hue-rotate(0.${hue}turn)`,
           }}>
-          {!egg.interactive && hatching ? getVideo() : null}
+          {!egg.hatched && !egg.interactive ? getVideo('/static/video/spinning.mp4') : animationMode ? getVideo('/static/video/egg.mp4') : null}
           <TextWrapper
             style={{
               position: 'absolute',
@@ -245,6 +254,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
               left: 0,
               width: '100%',
               textAlign: 'center',
+              zIndex: 10,
             }}>
             {egg.name}
           </TextWrapper>
@@ -254,10 +264,12 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             </TimeoutWrapper>
           ) : (
             <InfoBlock
+              onClick={() => buttonActions()}
               style={{
                 position: 'absolute',
                 textAlign: 'center',
                 padding: 8,
+                zIndex: 10,
               }}>
               <TextWrapper>{buttonLabel(egg)}</TextWrapper>
             </InfoBlock>

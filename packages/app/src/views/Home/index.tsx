@@ -3,7 +3,10 @@ import { useWeb3 } from 'hooks'
 import useToast from 'hooks/useToast'
 import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
+import { AppState } from 'state'
+import { getZooBalance } from 'state/zoo/actions'
 import { getFaucet, getToken } from 'util/contracts'
 import Account from './Account'
 import Bank from './Bank'
@@ -14,33 +17,15 @@ const Index: React.FC<indexProps> = ({}) => {
   const [tab, setTab] = useState('account')
   const web3 = useWeb3()
   const { chainID, account } = web3
-  const [balance, setBalance] = useState(0.0)
-
   const [wait, setWait] = useState(false)
   const faucet = getFaucet(web3)
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const toastClear = () => {
     clear()
   }
+  const dispatch = useDispatch()
   const zooToken = getToken(web3)
-
-  const getBalance = async () => {
-    const acc = web3.account
-    if (!acc) {
-      setBalance(0.0)
-      return
-    }
-
-    try {
-      const decimals = await zooToken.methods.decimals().call()
-      const rawBalance = await zooToken.methods.balanceOf(web3.account).call()
-      const divisor = parseFloat(Math.pow(10, decimals).toString())
-      const balance = rawBalance / divisor
-      setBalance(parseFloat(balance.toFixed(4)))
-    } catch (e) {
-      console.error('ISSUE LOADING ZOO BALANCE \n', e)
-    }
-  }
+  const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
 
   const handleFaucet = () => {
     try {
@@ -53,7 +38,7 @@ const Index: React.FC<indexProps> = ({}) => {
         .send({ from: acc })
         .then(async () => {
           setWait(false)
-          await getBalance()
+          dispatch(getZooBalance(account, zooToken))
           toastClear()
           toastSuccess('Got ZOO!')
         })
@@ -69,7 +54,6 @@ const Index: React.FC<indexProps> = ({}) => {
       toastError('Unable to process transaction. Try again later.')
     }
   }
-
   const handleFunds = () => {
     switch (chainID) {
       case 1338:
@@ -89,15 +73,11 @@ const Index: React.FC<indexProps> = ({}) => {
     }
   }
 
-  useEffect(() => {
-    getBalance()
-  }, [chainID, account])
   let location = useLocation()
   useEffect(() => {
     setTab(location.pathname.split('/')[1])
   }, [location])
   return (
-    // className='lg:p-16 p-4 pr-0 lg:pr-0 mr-0 space-y-4 rounded-lg  m-4 flex flex-col relative filter drop-shadow z-10'
     <main className='flex flex-col  flex-grow w-full h-full lg:p-16 lg:m-4 p-0 m-0 lg:pr-0 lg:mr-0 space-y-4 rounded-lg  flex flex-col relative filter drop-shadow z-10'>
       {/* <div className='flex lg:p-0 p-4 justify-center lg:justify-start items-end flex-wrap'>
         <div>
@@ -126,25 +106,20 @@ const Index: React.FC<indexProps> = ({}) => {
           </div>
         </div>
       </div> */}
-      <div className='flex'>{tab === 'account' ? <Account handleFunds={() => handleFunds()} wait={wait} balance={balance} /> : <Bank />}</div>
+      <div className='flex'>{tab === 'account' ? <Account handleFunds={() => handleFunds()} wait={wait} balance={zooBalance} /> : <Bank />}</div>
       <div
         style={{
-          // background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
           width: '50vw',
           height: '50vh',
-          // transform: 'translate(-50vw, -100vh)',
           top: '0%',
-
           right: '-15%',
           zIndex: -1,
         }}
         className='absolute  bg-primary opacity-10  rounded-full z-0 filter  blur-3xl'></div>
       <div
         style={{
-          // background: 'radial-gradient(50% 50% at 50% 50%,#fc077d10 0,rgba(255,255,255,0) 100%)',
           width: '50vw',
           height: '50vh',
-          // transform: 'translate(-50vw, -100vh)',
           left: '-15%',
           right: 0,
           bottom: '0%',

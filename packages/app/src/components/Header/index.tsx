@@ -24,6 +24,7 @@ import { useModalOpen } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 import { NETWORK_SYMBOL } from 'constants/networks'
 import UserBlock from 'components/SideMenu/components/UserBlock'
+import { useETHBalances } from 'hooks/useWallet'
 
 const logoURL = window.location.origin + '/static/images/logo-white.png'
 
@@ -65,15 +66,6 @@ const HeaderControls = styled.div`
   justify-self: flex-end;
   flex-direction: row;
   display: flex;
-`
-
-const HeaderElement = styled.div`
-  display: flex;
-  align-items: center;
-  /* addresses safari's lack of support for "gap" */
-  & > *:not(:first-child) {
-    margin-left: 8px;
-  }
 `
 
 const AccountElement = styled.div<{ active: boolean }>`
@@ -175,25 +167,21 @@ export default function Header() {
 
   const open = useCallback(() => setShow(true), [setShow])
 
-  const [active, setActive] = useState('home')
+  const [active, setActive] = useState('account')
   const { isXl, isXs, isSm, isMd, isLg } = useMatchBreakpoints()
-  const { isDark, toggleTheme } = useTheme()
   const web3 = useWeb3()
   const { chainID, gasPrice } = web3
   const { account, chainId, library } = useWeb3React()
   const { login, logout } = useAuth()
   const isMobile = isXl === false
-  const [isPushed, setIsPushed] = useState(!isMobile)
-  const [showMenu, setShowMenu] = useState(true)
-  const [wait, setWait] = useState(false)
   let location = useLocation()
   useEffect(() => {
-    setActive(location.pathname.split('/')[1])
+    setActive(location.pathname.split('/')[location.pathname.split('/').length - 1])
   }, [location])
 
   const scrollY = useScrollPosition()
   const urlClick = (url) => {
-    history.push(`${url}`)
+    history.push(`/${url}`)
     toastClear()
   }
   const zooToken = getToken(web3)
@@ -236,6 +224,7 @@ export default function Header() {
         }`}
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
         {['Account', 'Bank', 'Feed', 'Bridge'].map((path: string) => {
+          console.log('active', active)
           const selected = path == 'Bridge' ? active == 'bridge' || active == 'limit-order' : active === path.toLowerCase()
           return (
             <a
@@ -245,18 +234,18 @@ export default function Header() {
               className={`items-left rounded-xl cursor-pointer text-md font-normal flex text-gray-300 ${
                 selected && 'font-semibold rounded-xl text-white bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'
               }`}
-              style={{ backgroundColor: selected ? 'rgb(44, 47, 54)' : 'transparent', padding: '10px 16px' }}>
+              style={{ backgroundColor: selected ? 'rgb(44, 47, 54)' : 'transparent', padding: '8px 16px' }}>
               <h6>{path}</h6>
             </a>
           )
         })}
       </div>
 
-      <HeaderControls>
+      <div className='flex items-center justify-between w-full space-x-2 sm:justify-end'>
         {!isSm && (
           <>
             <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
-              <div className='flex items-center mr-2 rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary mr-2 hover:bg-gray-800'>
+              <div className='flex items-center rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary hover:bg-gray-800'>
                 <div
                   // style={{ width: 40, height: 40 }}
                   className='grid items-center grid-flow-col p-1 space-x-1 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'
@@ -297,21 +286,21 @@ export default function Header() {
                 </div>
               </div>
             </Tooltip>
-            <NetworkCard />
+            <div className='hidden sm:inline-block'>
+              <NetworkCard />
+            </div>
           </>
         )}
-        <HeaderElement>
-          <AccountElement active={!!account} style={{ pointerEvents: 'auto', height: '40px' }} className='p-1 rounded-xl hover:bg-gray-800 bg-secondary'>
-            {account ? (
-              <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} ml='0.1rem' mr='0.1rem' pl='0.5rem' pr='0.5rem' fontWeight={500}>
-                {numberWithCommas(balance) || 0} {NETWORK_SYMBOL[chainID]}
-              </BalanceText>
-            ) : null}
-            <UserBlock account={account} login={login} logout={logout} />
-          </AccountElement>
-          <More />
-        </HeaderElement>
-      </HeaderControls>
+        <div className='w-auto flex items-center rounded bg-secondary hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto hover:bg-gray-800'>
+          {account ? (
+            <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} ml='0.25rem' mr='0.25rem' pl='0.5rem' pr='0.5rem' fontWeight={500}>
+              {numberWithCommas(balance) || 0} {NETWORK_SYMBOL[chainID]}
+            </BalanceText>
+          ) : null}
+          <UserBlock account={account} login={login} logout={logout} />
+        </div>
+        <More />
+      </div>
     </HeaderFrame>
   )
 }
