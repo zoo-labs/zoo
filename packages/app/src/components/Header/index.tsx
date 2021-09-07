@@ -223,7 +223,7 @@ export default function Header() {
           isMobile ? 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
         }`}
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
-        {['Account', 'Bank', 'Feed', 'Bridge'].map((path: string) => {
+        {['Account', 'Bank', 'Marketplace', 'Bridge'].map((path: string) => {
           console.log('active', active)
           const selected = path == 'Bridge' ? active == 'bridge' || active == 'limit-order' : active === path.toLowerCase()
           return (
