@@ -9,7 +9,7 @@ import { WNATIVE } from '@sushiswap/sdk'
 
 const BLOCKCHAIN = {
   [ChainId.MAINNET]: 'ethereum',
-  [ChainId.BSC]: 'binanace',
+  [ChainId.BSC]:     'binanace'
 }
 
 function getCurrencySymbol(currency) {
