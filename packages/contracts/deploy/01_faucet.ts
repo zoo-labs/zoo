@@ -11,14 +11,14 @@ export default Deploy('Faucet', { dependencies: ['ZOO'] }, async({ ethers, deplo
 
   // 100B ZOO to faucet
   const exp = ethers.BigNumber.from('10').pow(18)
-  const amount = ethers.BigNumber.from('100000000000').mul(exp)
+  const amount = ethers.BigNumber.from('1000000000000').mul(exp)
   await token.mint(tx.address, amount)
 
   // Get signers to fund
   const signers = await ethers.getSigners()
 
   // 100M ZOO to each signer
-  const signerAmount = ethers.BigNumber.from('100000000').mul(exp)
+  const signerAmount = ethers.BigNumber.from('1000000000').mul(exp)
 
   // Mint new tokens
   for (var i = 0; i < signers.length; i++) {
