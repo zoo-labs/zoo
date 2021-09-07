@@ -220,7 +220,7 @@ export default function WalletModal({ onDismiss = () => null }: { onDismiss?: ()
           </CloseButton>
           <HeaderRow style={{ paddingLeft: 0, paddingRight: 0 }}>{error instanceof UnsupportedChainIdError ? `Wrong Network` : `Error connecting`}</HeaderRow>
           <div>
-            {error instanceof UnsupportedChainIdError ? <h5>Please connect to the appropriate Ethereum network.</h5> : `Error connecting. Try refreshing the page.`}
+            {error instanceof UnsupportedChainIdError ? <h5>Please connect to Ethereum or Binance Smart Chain.</h5> : `Error connecting. Try refreshing the page.`}
             <div style={{ marginTop: '1rem' }} />
             <button onClick={deactivate}>Disconnect</button>
           </div>
