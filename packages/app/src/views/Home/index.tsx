@@ -8,6 +8,7 @@ import { useLocation } from 'react-router'
 import { AppState } from 'state'
 import { getZooBalance } from 'state/zoo/actions'
 import { getFaucet, getToken } from 'util/contracts'
+import { useWeb3React } from '@web3-react/core'
 import Account from './Account'
 import Bank from './Bank'
 
@@ -16,7 +17,7 @@ interface indexProps {}
 const Index: React.FC<indexProps> = ({}) => {
   const [tab, setTab] = useState('account')
   const web3 = useWeb3()
-  const { chainID, account } = web3
+  const { account, chainId: chainID } = useWeb3React()
   const [wait, setWait] = useState(false)
   const faucet = getFaucet(web3)
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
@@ -30,6 +31,7 @@ const Index: React.FC<indexProps> = ({}) => {
   const handleFaucet = () => {
     try {
       const acc = web3.account
+      console.log(acc)
       setWait(true)
       toastClear()
       toastInfo('Sending ZOO...')

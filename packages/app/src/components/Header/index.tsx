@@ -187,6 +187,7 @@ export default function Header() {
   const zooToken = getToken(web3)
 
   const getBalance = async () => {
+    if (!account) return;
     try {
       // const decimals = await zooToken.methods.decimals().call()
       await web3.eth.getBalance(account).then((val) => {
