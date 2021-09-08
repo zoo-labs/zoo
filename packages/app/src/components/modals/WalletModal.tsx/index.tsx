@@ -17,9 +17,11 @@ import { ApplicationModal } from 'state/application/actions'
 import connectors from 'components/modals/config'
 import { Config, ConnectorNames } from 'components/modals/types'
 import { connectorLocalStorageKey } from 'components/modals/config'
+import { CloseIcon } from 'components/Svg'
+
 declare let window: any
 
-const CloseIcon = styled.div`
+const CloseButton = styled.div`
   position: absolute;
   right: 0;
   top: 0;
@@ -213,14 +215,12 @@ export default function WalletModal({ onDismiss = () => null }: { onDismiss?: ()
     if (error) {
       return (
         <UpperSection>
-          {/* <CloseIcon onClick={toggleWalletModal}>
-            <XIcon width='24px' height='24px' />
-          </CloseIcon> */}
+          <CloseButton onClick={toggleWalletModal}>
+            <CloseIcon fill='white' />
+          </CloseButton>
           <HeaderRow style={{ paddingLeft: 0, paddingRight: 0 }}>{error instanceof UnsupportedChainIdError ? `Wrong Network` : `Error connecting`}</HeaderRow>
           <div>
-            {error instanceof UnsupportedChainIdError ? <h5>Please connect to the appropriate Ethereum network.</h5> : `Error connecting. Try refreshing the page.`}
-            <div style={{ marginTop: '1rem' }} />
-            <button onClick={deactivate}>Disconnect</button>
+            {error instanceof UnsupportedChainIdError ? <h5>Please connect to a supported network.</h5> : `Error connecting. Try refreshing the page.`}
           </div>
         </UpperSection>
       )

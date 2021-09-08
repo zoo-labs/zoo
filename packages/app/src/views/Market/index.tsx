@@ -1,0 +1,291 @@
+import { CloseIcon, HeartIcon } from 'components'
+import React, { useEffect, useRef, useState } from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import { RiArrowDownCircleLine, RiFilter2Line } from 'react-icons/ri'
+import Slider from '@material-ui/core/Slider'
+import { useSelector } from 'react-redux'
+import { AppState } from 'state'
+import DiscoverCard from 'components/DiscoverCard'
+import '@splidejs/splide/dist/css/themes/splide-default.min.css'
+import { Splide, SplideSlide } from 'components/Splide'
+import { ArrowLeft, ArrowRight } from 'react-feather'
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
+import { ImArrowRight } from 'react-icons/im'
+import DoubleGlowShadow from 'components/DoubleGlowShadow'
+import { wait } from 'functions'
+
+interface IndexProps {}
+const PrettoSlider = withStyles({
+  root: {
+    color: '#52af77',
+    height: 8,
+  },
+  thumb: {
+    height: 24,
+    width: 24,
+    backgroundColor: 'rgb(140, 79, 248)',
+    border: '2px solid currentColor',
+    marginTop: -8,
+    marginLeft: -12,
+    '&:focus, &:hover, &$active': {
+      boxShadow: 'inherit',
+    },
+  },
+  active: {},
+  valueLabel: {
+    left: 'calc(-50% + 4px)',
+    '& *': {
+      background: 'white',
+      color: 'rgb(140, 79, 248)',
+    },
+  },
+  track: {
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: 'rgb(140, 79, 248)',
+  },
+  rail: {
+    height: 8,
+    borderRadius: 4,
+  },
+})(Slider)
+
+const Index: React.FC<IndexProps> = ({}) => {
+  const [category, setCategory] = useState(0)
+  const [filtering, setFiltering] = useState(false)
+  const [fetching, setFetching] = useState(false)
+  const [loadingMore, setLoadingMore] = useState(false)
+  const [page, setPage] = useState(1)
+  const [data, setData] = useState([])
+  const [hotData, setHotData] = useState([])
+  const animalsState = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
+  const eggsState = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
+  const swiperRef = useRef(null)
+  const allAnimls = Object.values(animalsState)
+  const allEggs = Object.values(eggsState)
+  const allData = {
+    0: allEggs,
+    1: allAnimls,
+  }
+  useEffect(() => {
+    setData([...Object.values(allData)].flat(1).slice(0, 8 * page))
+    setHotData([allData[1]].flat(1).slice(0, 8))
+  }, [])
+  const loadMore = () => {
+    setPage(page + 1)
+
+    setLoadingMore(true)
+    if (category === 0) {
+      setData([...Object.values(allData)].flat(1).slice(0, 8 * page))
+    } else if (category === 3) {
+      console.log('is hybrid filter')
+    } else {
+      setData([allData[category - 1]].flat(1).slice(0, 8 * page))
+    }
+    setLoadingMore(false)
+  }
+
+  return (
+    <main className='w-full h-full'>
+      <div className='py-32 '>
+        <div className='w-full px-16 '>
+          <div className=' text-center mx-auto max-w-xl'>
+            <DoubleGlowShadow>
+              <div className='mb-2 text-gray-600 font-bold text-sm'>Buy, List, & Bid on Generation One Based Animals.</div>
+              <h3 className='mb-6 text-4xl'>
+                The new <span className='primary font-semibold text-3xl'>ZOO</span> Market
+              </h3>
+              <a
+                href='#market-section'
+                className='cursor-pointer font-semibold rounded-full shadow-lg text-white h-12 items-center border-solid border px-6 inline-flex hover:bg-primary hover:border-0'
+                style={{ borderColor: 'gray' }}>
+                Start your search
+              </a>
+            </DoubleGlowShadow>
+          </div>
+        </div>
+      </div>
+      <div className='pb-16'>
+        <div className='w-full px-16 max-w-screen-xl mx-auto'>
+          <div className='relative'>
+            <div className='flex mb-16 justify-between items-center'>
+              <h3 className=' font-bold text-4xl'>Hot bid</h3>
+              <div className='flex'>
+                <div
+                  onClick={() => swiperRef.current.splide.go('<')}
+                  style={{ borderColor: 'rgb(94, 98, 111)' }}
+                  className='h-10 mr-2 w-10 rounded-full  border-solid hover:border-2 flex items-center justify-center cursor-pointer'>
+                  <FaArrowLeft fill='rgb(94, 98, 111)' />
+                </div>
+                <div
+                  onClick={() => swiperRef.current.splide.go('>')}
+                  style={{ borderColor: 'rgb(94, 98, 111)' }}
+                  className='h-10 ml-2 w-10 rounded-full  border-solid hover:border-2 flex items-center justify-center cursor-pointer'>
+                  <FaArrowRight fill='rgb(94, 98, 111)' />
+                </div>
+              </div>
+            </div>
+            <div className='-mx-4'>
+              <Splide
+                ref={swiperRef}
+                options={{
+                  perPage: 4,
+                  perMove: 1,
+                  fiexdWidth: 'calc(25% - 32px)',
+                  arrows: false,
+                  pagination: false,
+                  gap: '1rem',
+                  breakpoints: {
+                    640: {
+                      fixedWidth: '100%',
+                      perPage: 1,
+                    },
+                    780: {
+                      fixedWidth: 'calc(50% - 32px)',
+                      perPage: 2,
+                    },
+                  },
+                }}>
+                {hotData.length > 0 ? (
+                  hotData.map((datum, index) => {
+                    return (
+                      <SplideSlide key={index}>
+                        <div className='w-full h-full'>
+                          <DiscoverCard datum={datum} applyMaxWidth={false} />
+                        </div>
+                      </SplideSlide>
+                    )
+                  })
+                ) : (
+                  <SplideSlide>
+                    <div className='w-full h-full p-px rounded bg-gradient-to-b from-btn1  to-btn2'>
+                      <div className='flex h-full flex-col p-1 rounded bg-dark-900 justify-center items-center px-12'>
+                        <h6 className='text-center'>No Eggs available in the market</h6>
+                      </div>
+                    </div>
+                  </SplideSlide>
+                )}
+              </Splide>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='py-32 ' id='market-section'>
+        <div className='w-full px-16 max-w-screen-xl mx-auto'>
+          <h3 className='mb-16 text-4xl font-semibold'>Discover</h3>
+          <div className='relative flex justify-between mb-8'>
+            <div className='cursor-pointer text-sm w-44 h-12 pl-4 pr-1 items-center rounded-lg border border-solid border-gray-600 flex justify-between'>
+              Recently added
+              <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} />
+            </div>
+            <div className='absolute transform left-2/4 flex justify-center -translate-x-2/4' style={{ top: 10 }}>
+              {['All Items', 'Eggs', 'Animals', 'Hybrid'].map((value, index) => {
+                const active = category === index
+                return (
+                  <a
+                    onClick={() => {
+                      setCategory(index)
+                      setPage(1)
+                      if (index === 0) {
+                        setData([...Object.values(allData)].flat(1).slice(0, 8))
+                      } else if (index === 3) {
+                        console.log('is hybrid filter')
+                      } else {
+                        setData([])
+                        setFetching(true)
+                        wait(1500).then(() => setData([allData[index - 1]].flat(1).slice(0, 8)))
+                      }
+                    }}
+                    className={`${active ? 'bg-white text-gray-900' : 'text-gray-600'} text-sm rounded-full font-bold py-1 px-4 cursor-pointer`}
+                    key={index}>
+                    {value}
+                  </a>
+                )
+              })}
+            </div>
+            <div className='hidden'>show on tablet viewport</div>
+            <button
+              onClick={() => setFiltering(!filtering)}
+              className='font-bold relative flex items-center justify-center rounded-full pl-6 bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary leading-3'>
+              Filter
+              <div className='flex items-center justify-center w-14 pr-2'>{!filtering ? <RiFilter2Line /> : <CloseIcon fill='white' />}</div>
+            </button>
+          </div>
+          <div className={`${!filtering ? 'hidden' : 'block'} border-t border-solid  py-8`} style={{ borderColor: 'rgb(107, 114, 128)' }}>
+            <div className='flex flex-wrap -mt-8 -mx-4 '>
+              <div className='' style={{ flex: ' 0 0 calc(25% - 32px)', maxWidth: 'calc(25% - 32px)', margin: '32px 16px 0' }}>
+                <div>
+                  <div className='mb-4 font-bold uppercase text-gray-400 text-xs'>Price</div>
+                  <div className='relative'>
+                    <div className='w-full cursor-pointer text-sm text-white font-semibold w-44 h-12 pl-4 pr-1 items-center rounded-lg border border-solid border-gray-600 flex justify-between'>
+                      Highest Price
+                      <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className='' style={{ flex: ' 0 0 calc(25% - 32px)', maxWidth: 'calc(25% - 32px)', margin: '32px 16px 0' }}>
+                <div>
+                  <div className='mb-4 font-bold uppercase text-gray-400 text-xs'>Yields</div>
+                  <div className='relative'>
+                    <div className='w-full cursor-pointer text-sm text-white font-semibold w-44 h-12 pl-4 pr-1 items-center rounded-lg border border-solid border-gray-600 flex justify-between'>
+                      Highest Yields
+                      <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className='' style={{ flex: ' 0 0 calc(25% - 32px)', maxWidth: 'calc(25% - 32px)', margin: '32px 16px 0' }}>
+                <div>
+                  <div className='mb-4 font-bold uppercase text-gray-400 text-xs'>Rarity</div>
+                  <div className='relative'>
+                    <div className='w-full cursor-pointer text-sm text-white font-semibold w-44 h-12 pl-4 pr-1 items-center rounded-lg border border-solid border-gray-600 flex justify-between'>
+                      Epic
+                      <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className='' style={{ flex: ' 0 0 calc(25% - 32px)', maxWidth: 'calc(25% - 32px)', margin: '32px 16px 0' }}>
+                <div>
+                  <div className='mb-2 font-bold uppercase text-gray-400 text-xs'>Price Range</div>
+                  <PrettoSlider valueLabelDisplay='auto' aria-label='slider' step={0.01} defaultValue={2} min={0.01} max={10} />
+                  <div className='flex justify-between text-xs'>
+                    <div className='font-semibold'>0.01 ETH</div>
+                    <div className='font-semibold'>10 ETH</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className='flex flex-wrap mt-8 -mx-4'>
+              {data.length > 0 ? (
+                data.map((datum, index) => {
+                  return (
+                    <div key={index} className='w-full md:w-1/2 xl:w-1/4 p-2'>
+                      <DiscoverCard datum={datum} applyMaxWidth={false} />
+                    </div>
+                  )
+                })
+              ) : (
+                <div>None</div>
+              )}
+            </div>
+          </div>
+          <div className='mt-8 text-center'>
+            <button
+              onClick={() => loadMore()}
+              className='cursor-pointer font-semibold rounded-full shadow-lg text-white h-12 items-center border-solid border px-6 inline-flex hover:bg-primary hover:border-0'
+              style={{ borderColor: 'gray' }}>
+              Load More
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className=''></div>
+    </main>
+  )
+}
+
+export default Index
