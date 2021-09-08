@@ -1,6 +1,6 @@
 // Global constants injected during build
-const ZK = ZOOKEEPER
-const CHAIN = 'CHAIN_ID'
+const ZK = { }
+const CHAIN = '0x38'
 
 // Get this enviroment's ZK contract
 async function getZooToken() {
@@ -19,7 +19,7 @@ async function getAnimal(tokenID) {
   const Animals = Moralis.Object.extend('Animals')
   const query = new Moralis.Query(Animals)
   query.equalTo('tokenID', tokenID)
-  return (await query.find())[0]
+  return await query.first();
 }
 
 // Query for a specific Egg
@@ -27,7 +27,7 @@ async function getEgg(eggID) {
   const Eggs = Moralis.Object.extend('Eggs')
   const query = new Moralis.Query(Eggs)
   query.equalTo('tokenID', eggID)
-  return (await query.find())[0]
+  return await query.first();
 }
 
 // Get latest token information from ZK
@@ -76,34 +76,28 @@ function newTransaction(request) {
 Moralis.Cloud.afterSave('BuyEgg', async (request) => {
   const logger = Moralis.Cloud.getLogger()
   const eggID = parseInt(request.object.get('eggID')) // new Token ID
-
-  if (!confirmed(request)) {
-    const egg = newEgg(request)
-    egg.set('tokenID', eggID)
-    egg.set('kind', 0)
-    egg.set('type', 'basic')
-    egg.set('interactive', false)
-    egg.set('hatched', false)
-    await egg.save()
-    logger.info(`Egg ${eggID} saved at ${Date.now()}`)
-    return
-  }
-
-  const egg = await getEgg(eggID)
-  const tok = await getToken(eggID)
-
+  const egg = newEgg(request)
+  egg.set('tokenID', eggID)
+  egg.set('kind', 0)
+  egg.set('type', 'basic')
   egg.set('interactive', true)
+  egg.set('hatched', false)
+
+  const tok = await getToken(tokenID)
+  if (!tok){
+      logger.error(`Hatch, No tok found for id: ${tokenID}`)
+      return;
+  }
   egg.set('tokenURI', tok.data.tokenURI)
   egg.set('metadataURI', tok.data.metadataURI)
   egg.set('rarity', tok.rarity.name)
   await egg.save()
+  logger.info(`Egg ${eggID} saved at ${Date.now()}`)
 
   const tx = newTransaction(request)
   tx.set('action', 'Bought Egg')
   tx.set('tokenID', eggID)
   await tx.save()
-
-  logger.info(`Egg ${eggID} saved at ${Date.now()}`)
 })
 
 Moralis.Cloud.afterSave('Hatch', async (request) => {
@@ -112,7 +106,10 @@ Moralis.Cloud.afterSave('Hatch', async (request) => {
   const tokenID = parseInt(request.object.get('tokenID')) // New Animal minted
 
   const egg = await getEgg(eggID)
-
+  if (!egg){
+      logger.error(`Hatch, No egg found for id: ${eggID}`)
+      return;
+  }
   if (!confirmed(request)) {
     // Update egg state
     egg.set('animalID', tokenID)
@@ -137,7 +134,15 @@ Moralis.Cloud.afterSave('Hatch', async (request) => {
 
   // Update Animal with confirmed state
   const animal = await getAnimal(tokenID)
+  if (!animal){
+      logger.error(`Hatch, No animal found for id: ${tokenID}`)
+      return;
+  }
   const tok = await getToken(tokenID)
+  if (!tok){
+      logger.error(`Hatch, No tok found for id: ${tokenID}`)
+      return;
+  }
   animal.set('kind', parseInt(tok.kind))
   animal.set('tokenURI', tok.data.tokenURI)
   animal.set('metadataURI', tok.data.metadataURI)
@@ -206,6 +211,10 @@ Moralis.Cloud.afterSave('Breed', async (request) => {
 
   // confirmed, set to interactive
   const egg = await getEgg(eggID)
+  if (!egg){
+      logger.error(`No egg found for id: ${eggID}`)
+      return;
+  }
   // const tok = await getToken(eggID)
   egg.set('interactive', true)
   // egg.set('tokenURI', tok.data.tokenURI)
@@ -246,6 +255,10 @@ Moralis.Cloud.afterSave('Free', async (request) => {
   const tokenID = parseInt(request.object.get('tokenID')) // Animal being freed
 
   const animal = await getAnimal(tokenID)
+  if (!animal){
+      logger.error(`Free, No animal found for id: ${tokenID}`)
+      return;
+  }
   animal.set('burned', true)
   animal.set('freed', true)
   await animal.save()

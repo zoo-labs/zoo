@@ -17,7 +17,7 @@ const useAuth = () => {
   const isMobile = isXs || isSm
 
   const login = useCallback((connectorID: ConnectorNames) => {
-    
+    console.log("Use Auth Function")
     const connector = connectorsByName[connectorID]
     console.log('LOGGING IN.....',connector)
 
