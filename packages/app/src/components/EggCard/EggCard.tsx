@@ -264,7 +264,6 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
               textAlign: 'center',
               zIndex: 10,
             }}>
-            {egg.name}
           </TextWrapper>
           {egg.timeRemaining > 0 ? (
             <TimeoutWrapper barwidth={egg.CTAOverride ? egg.CTAOverride.barwidth : 0}>
@@ -279,7 +278,6 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
                 padding: 8,
                 zIndex: 10,
               }}>
-              <TextWrapper>{buttonLabel(egg)}</TextWrapper>
             </InfoBlock>
           )}
         </CardBody>
