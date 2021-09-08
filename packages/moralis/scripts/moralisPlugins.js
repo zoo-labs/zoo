@@ -121,6 +121,7 @@ const ABI_PATH = `${__dirname}/../../contracts/deployments/${DEPLOYMENT}/ZooKeep
           path: './evm/events',
           order: 5,
           options: {
+            sync_historical: true,
             description: description,
             abi: event,
             topic: topic,
