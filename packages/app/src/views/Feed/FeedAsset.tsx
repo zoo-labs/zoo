@@ -31,7 +31,6 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
           muted
           style={{
             pointerEvents: 'none',
-            maxHeight: 700,
             alignSelf: 'center',
           }}>
           <source src={'/static/video/egg.mp4'} type='video/mp4'></source>
@@ -50,63 +49,19 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
         <div className='flex w-full lg:w:1/2 justify-center  md:flex-1'>
           <div className=' p-px lg:w-1/2 w-full  h-full bg-gradient-to-b from-btn1  to-btn2 rounded flex relative'>
             <div className='h-full w-full bg-cover rounded bg-no-repeat'>
-              <img
-                style={{ verticalAlign: 'middle' }}
-                src={`${item.imageUrl || '/static/video/egg.gif'}`}
-                className='h-full transition-transform w-full duration-1000 rounded h-full'
-              />
+              {  getVideo() }
             </div>
-            <div className='absolute top-5 xs:left-10 pl-4 lg:pl-0 lg:right-5 '>
-              {[0, 1, 2].map((value) => (
-                <div className='cursor-pointer rounded-full p-2 bg-dark-800 mb-4 flex justify-center items-center'>
-                  {value === 0 ? (
-                    <HeartIcon fill='white' style={{ fontSize: 8 }} />
-                  ) : value === 1 ? (
-                    <RiShareFill fill='white' size={20} />
-                  ) : (
-                    <CopyIcon fill='white' style={{ fontSize: 8 }} />
-                  )}
-                </div>
-              ))}
-            </div>
+            <div className='absolute top-5 xs:left-10 pl-4 lg:pl-0 lg:right-5 '></div>
           </div>
         </div>
         <div className='w:1/2 my-8 mb-16 md:m-0 md:flex-1'>
           <div className='flex '>
             <div className=' flex flex-col items-start px-4 w-full lg:w-2/3 '>
-              <h2 className='text-2xl font-semibold'>MY ZOO EGG</h2>
-              <div className='flex my-4'>
-                <div className='rounded-full p-px h-full bg-gradient-to-b from-btn1  to-btn2 mr-4'>
-                  <div className='text-xs font-semibold bg-dark-800 px-6 py-2 rounded-full'>🔥 {'  '}Highest Bid</div>
-                </div>
-                <div className='rounded-full p-px h-full bg-gradient-to-b from-btn1  to-btn2 mr-4'>
-                  <div className='text-xs font-semibold bg-dark-800 px-6 py-2 rounded-full'>{item.basic ? 'BASIC' : 'HYBRID'}</div>
-                </div>
-              </div>
+              <h2 className='text-2xl font-semibold'>Egg #{item.id}</h2>
               <p className='text-sm text-justify text-gray-500 my-4 font-semibold' style={{ color: '#f2f2f2' }}>
                 Contains 1 of 16 Generation One Base Animals. To hatch or to hold… Air is a trip through a serene yet alien world. It is a journey that is blissful, meditative and
                 at times intense.
               </p>
-              <div className='w-full mb-4'>
-                <div className='rounded border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
-                  <h2 className='text-sm font-bold mb-2'>Reserve Price</h2>
-                  <div className=''>
-                    <span className='mr-2 text-xl  font-semibold'>0.25 ETH</span>
-                    <span className='font-light'>$975.00 USD</span>
-                  </div>
-                </div>
-              </div>
-              <div className='w-full  grid  mb-8' style={{ gridTemplateColumns: '1fr 54px', gap: '10px' }}>
-                <a
-                  style={{ pointerEvents: 'unset', padding: '11px 0px', borderRadius: 4 }}
-                  className='rounded bg-white text-black flex items-center justify-center font-bold text-sm'
-                  href='#'>
-                  Place Bid
-                </a>
-                <button style={{ paddingLeft: 0, paddingRight: 0, padding: '11px 20px', backgroundColor: '#f2f2f2', borderRadius: 4 }} className=''>
-                  <RiShareFill fill='black' />
-                </button>
-              </div>
 
               <div className='w-full mb-4'>
                 <div className=' rounded border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
@@ -132,10 +87,8 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
                 </div>
               </div>
               <div className='w-full rounded flex flex-col  border-2 border-gray-400 border-solid' style={{ borderWidth: 1 }}>
-                <div className='my-6 px-4'>
-                  <h2 className='text-sm font-bold'>Proof of Authenticity</h2>
-                </div>
                 <div className='flex flex-col'>
+                  <h2 className='ml-4 mt-4 mb-4 text-sm font-bold'>Proof of Authenticity</h2>
                   <a
                     href={`https://testnet.bscscan.com/address/${item.owner || ''}`}
                     target='_blank'
@@ -164,7 +117,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
 
       <div className=' flex-1  flex justify-center'>
         <div className='flex flex-col px-4 w-full lg:w-2/3'>
-          <h6 className='my-8 font-semibold text-xl'>Trading History</h6>
+          <h6 className='my-8 font-semibold text-xl'>History</h6>
           {myTransactions.length === 0 ? (
             <div className='flex items-center h-full justify-center'>
               {' '}
