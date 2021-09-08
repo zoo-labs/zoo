@@ -18,7 +18,7 @@ import { IZoo } from './interfaces/IZoo.sol';
 
 import './console.sol';
 
-contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
+contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
   using SafeMath for uint256;
   using Counters for Counters.Counter;
 
