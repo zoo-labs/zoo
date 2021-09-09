@@ -9,6 +9,7 @@ import { RiShareCircleLine, RiShareFill, RiUploadCloudFill, RiUploadCloudLine } 
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
 import EggFeedCard from './EggFeedCard'
+import { useIsAnimationMode } from 'state/user/hooks'
 
 interface FeedAssetProps {
   history: {
@@ -21,21 +22,23 @@ interface FeedAssetProps {
 }
 
 const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
-  const getVideo = () => {
-    return (
-      <div className=''>
-        <video
-          className='rounded'
-          autoPlay
-          loop
-          muted
-          style={{
-            pointerEvents: 'none',
-            alignSelf: 'center',
-          }}>
-          <source src={'/static/video/egg.mp4'} type='video/mp4'></source>
-        </video>
-      </div>
+  const animationMode = useIsAnimationMode()
+  const getVideo = (animated: boolean) => {
+    return animated ? (
+      <video
+        className='rounded'
+        playsInline
+        autoPlay
+        loop
+        muted
+        style={{
+          pointerEvents: 'none',
+          alignSelf: 'center',
+        }}>
+        <source src={'/static/video/egg.mp4'} type='video/mp4'></source>
+      </video>
+    ) : (
+      <img src={window.location.origin + '/static/images/basic.jpg'} />
     )
   }
   const item = history.location.state.item
@@ -49,7 +52,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
         <div className='flex w-full lg:w:1/2 justify-center  md:flex-1'>
           <div className=' p-px lg:w-1/2 w-full  h-full bg-gradient-to-b from-btn1  to-btn2 rounded flex relative'>
             <div className='h-full w-full bg-cover rounded bg-no-repeat'>
-              {  getVideo() }
+              { getVideo(true) }
             </div>
             <div className='absolute top-5 xs:left-10 pl-4 lg:pl-0 lg:right-5 '></div>
           </div>
