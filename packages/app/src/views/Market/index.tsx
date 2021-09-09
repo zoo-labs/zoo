@@ -131,7 +131,7 @@ const Index: React.FC<IndexProps> = ({}) => {
             <DoubleGlowShadow>
               <div className='mb-2 text-gray-600 font-bold text-sm'>Buy, List, & Bid on Generation One Based Animals.</div>
               <h3 className='mb-6 text-4xl'>
-                The new <span className='primary font-semibold text-3xl'>ZOO</span> marketplace
+                The new <span className='primary font-semibold text-3xl'>ZOO</span> Market
               </h3>
               <a
                 href='#market-section'

@@ -137,6 +137,9 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   const buyEgg = async () => {
     setDisable(true)
     console.log('web3 account in buyEgg', account)
+
+    if (balance === 0) return toastError('You do not have sufficient zoo to perform this transaction!')
+
     try {
       await zooKeeper.methods
         .buyEgg(1) // buy from first drop
