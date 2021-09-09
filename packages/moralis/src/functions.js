@@ -74,22 +74,23 @@ function newTransaction(request) {
 }
 
 Moralis.Cloud.afterSave('BuyEgg', async (request) => {
-  // put back exactly the way it was 
-  // should it be here insteaf
-  // if (!confirmed(request)) {
   const logger = Moralis.Cloud.getLogger()
   const eggID = parseInt(request.object.get('eggID')) // new Token ID
+
+  // Pending confirmation on chain
   if (!confirmed(request)) {
     const egg = newEgg(request)
     egg.set('tokenID', eggID)
     egg.set('kind', 0)
     egg.set('type', 'basic')
-    egg.set('interactive', true)
+    egg.set('interactive', false)
     egg.set('hatched', false)
     await egg.save()
     logger.info(`Egg ${eggID} saved at ${Date.now()}`)
+    return
   }
 
+  // Confirmed on chain, update with token data
   const egg = await getEgg(eggID)
   if (!egg){
       logger.error(`BuyEgg, No egg found for id: ${eggID}`)
