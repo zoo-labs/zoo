@@ -62,8 +62,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
             <div className=' flex flex-col items-start px-4 w-full lg:w-2/3 '>
               <h2 className='text-2xl font-semibold'>Egg #{item.id}</h2>
               <p className='text-sm text-justify text-gray-500 my-4 font-semibold' style={{ color: '#f2f2f2' }}>
-                Contains 1 of 16 Generation One Base Animals. To hatch or to hold… Air is a trip through a serene yet alien world. It is a journey that is blissful, meditative and
-                at times intense.
+                Contains 1 of 16 Generation One Base Animals. To hatch or to hold…
               </p>
 
               <div className='w-full mb-4'>

@@ -22,7 +22,8 @@ export  const getZooBalance =  (account,zooToken) => async dispatch =>{
     }
   }
 
-  export const getMyEggs = (account,allEggs) =>async dispatch =>{
+  export const getMyEggs = (account, allEggs) =>async dispatch =>{
+    console.log('getMyEggs', account, allEggs.length)
   let eggData = []
   Object.values(allEggs).forEach((egg:CardEgg, index) => {
     if (!account) {
@@ -38,8 +39,8 @@ export  const getZooBalance =  (account,zooToken) => async dispatch =>{
   eggData = sortData(eggData, 'hybrid')
 
   console.log('myEggs length',eggData.length)
-  
-  dispatch(updateMyEggs(eggData))  
+
+  dispatch(updateMyEggs(eggData))
   }
 
   export const eggConverter = (egg,account) => {
