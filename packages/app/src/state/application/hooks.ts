@@ -58,6 +58,11 @@ export function useNetworkModalToggle(): () => void {
 
   return useToggleModal(ApplicationModal.NETWORK)
 }
+
+export function useBidModalToggle(): () => void {
+
+  return useToggleModal(ApplicationModal.BID)
+}
 export function useAssetModalToggle(): () => void {
 
   return useToggleModal(ApplicationModal.ASSET)
