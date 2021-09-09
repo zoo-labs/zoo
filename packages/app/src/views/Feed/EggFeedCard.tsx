@@ -181,7 +181,7 @@ const EggFeedCard: React.FC<Props> = ({ item }) => {
               item,
             })
           }>
-          {/* {animationMode && getVideo()} */}
+          { animationMode && getVideo() }
           <FirstThird />
           <SecondThird></SecondThird>
           <FinalThird>
