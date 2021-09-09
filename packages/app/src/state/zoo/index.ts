@@ -7,6 +7,8 @@ import { eggConverter } from './actions'
 
 const initialState: ZooState = {
   animals: {},
+  myBids:{},
+  myAuctions:{},
   eggs: {},
   zooBalance:0,
   myEggs:{},
@@ -20,25 +22,8 @@ export const ZooSlice = createSlice({
     addEgg: (state: ZooState, action) => {
       const toAdd: Egg = action.payload.data
       const account: string = action.payload.account
-      const foundIndex =  Object.values(state.eggs).findIndex(egg => egg.tokenID ===  toAdd.tokenID);
-
       state.eggs[toAdd.tokenID] = toAdd;
       state.myEggs[toAdd.tokenID] = eggConverter(toAdd,account);
-// console.log('myEggs',Object.assign({}, state.myEggs))
-// console.log('toAdd',toAdd)
-
-//       if(foundIndex){
-//         console.log('egg exist',toAdd)
-//         state.myEggs[foundIndex] = toAdd;
-//       }else{
-//         console.log('egg doesnt exist',toAdd)
-
-//         state.myEggs.push(eggConverter(toAdd,account))
-//       }
-
-    //   const found = Object.values(state.eggs).some(el => el.tokenID === toAdd.tokenID);
-    //  if (!found) state.myEggs.push(eggConverter(toAdd,account))
-      
     },
     addAnimal: (state: ZooState, action) => {
       const toAdd: Animal = action.payload
@@ -46,9 +31,13 @@ export const ZooSlice = createSlice({
     },
     addEggs: (state: ZooState, action) => {
       const toAdd: Egg[] = action.payload
-
+      console.log('eggs length',toAdd.length)
       for (let i = 0; i < toAdd.length; i += 1) {
         const curr = toAdd[i]
+        if(curr.owner === '0x0770ACd6CF3Fc622148b1514066dD5A9147E08cb        '){
+          console.log('exists')
+        }
+     
         state.eggs[curr.tokenID] = curr
       }
     },
