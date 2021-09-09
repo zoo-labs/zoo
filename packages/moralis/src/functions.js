@@ -1,6 +1,6 @@
 // Global constants injected during build
-const ZK = { }
-const CHAIN = '0x38'
+const ZK={}
+const CHAIN='0x38'
 
 // Get this enviroment's ZK contract
 async function getZooToken() {
@@ -155,11 +155,13 @@ Moralis.Cloud.afterSave('Hatch', async (request) => {
       logger.error(`Hatch, No animal found for id: ${tokenID}`)
       return;
   }
+
   const tok = await getToken(tokenID)
   if (!tok){
       logger.error(`Hatch, No tok found for id: ${tokenID}`)
       return;
   }
+
   animal.set('kind', parseInt(tok.kind))
   animal.set('tokenURI', tok.data.tokenURI)
   animal.set('metadataURI', tok.data.metadataURI)
