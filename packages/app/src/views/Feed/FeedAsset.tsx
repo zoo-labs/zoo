@@ -84,8 +84,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
                 </div>
               </div>
               <p className='text-sm text-justify text-gray-500 my-4 font-semibold' style={{ color: '#f2f2f2' }}>
-                Contains 1 of 16 Generation One Base Animals. To hatch or to hold… Air is a trip through a serene yet alien world. It is a journey that is blissful, meditative and
-                at times intense.
+                Contains 1 of 16 Generation One Base Animals. To hatch or to hold…
               </p>
               <div className='w-full mb-4'>
                 <div className='rounded border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
