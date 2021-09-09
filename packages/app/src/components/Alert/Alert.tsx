@@ -9,11 +9,13 @@ import { IconButton } from '../Button'
 import { CloseIcon } from '../Svg'
 import Flex from '../Box/Flex'
 import { AlertProps, variants } from './types'
+import { useMatchBreakpoints } from 'hooks'
 
 interface ThemedIconLabel {
   variant: AlertProps['variant']
   theme: DefaultTheme
   hasDescription: boolean
+  small: boolean
 }
 
 const getThemeColor = ({ theme, variant = variants.INFO }: ThemedIconLabel) => {
@@ -48,7 +50,12 @@ const IconLabel = styled.div<ThemedIconLabel>`
   background-color: ${getThemeColor};
   border-radius: 16px 0 0 16px;
   color: ${({ theme }) => theme.alert.background};
-  padding: 12px;
+  padding: ${({ small }) => (small ? '5px' : '12px')};
+  display: flex;
+
+  & svg {
+    width: ${({ small }) => (small ? '20px' : '100%')};
+  }
 `
 
 const withHandlerSpacing = 32 + 16 + 8 // button size + inner spacing + handler position
@@ -82,25 +89,39 @@ const StyledAlert = styled(Flex)`
   background-color: transparent;
   border-radius: 16px;
   box-shadow: 0px 20px 36px -8px rgba(14, 14, 44, 0.1), 0px 1px 1px rgba(0, 0, 0, 0.05);
+  max-width: ${({ small }) => (small ? '350px' : 'auto')};
+`
+
+const SizableText = styled(Text)`
+  font-size: ${({ small }) => (small ? '15px' : '20px')};
 `
 
 const Alert: React.FC<AlertProps> = ({ title, children, variant, onClick }) => {
   const Icon = getIcon(variant)
+  const { isSm, isMd, isXs } = useMatchBreakpoints()
 
   return (
-    <StyledAlert>
-      <IconLabel variant={variant} hasDescription={!!children}>
+    <StyledAlert small={isMd || isSm || isXs}>
+      <IconLabel variant={variant} hasDescription={!!children} small={isMd || isSm || isXs}>
         <Icon color='currentColor' width='32px' />
       </IconLabel>
       <Details hasHandler={!!onClick}>
-        <Text bold>{title}</Text>
-        {typeof children === 'string' ? <Text as='p'>{children}</Text> : children}
+        <SizableText bold small={isMd || isSm || isXs}>
+          {title}
+        </SizableText>
+        {typeof children === 'string' ? (
+          <SizableText as='p' small={isMd || isSm || isXs}>
+            {children}
+          </SizableText>
+        ) : (
+          children
+        )}
       </Details>
       {onClick && (
         <VerticalCenter>
           <CloseHandler>
-            <IconButton width='32px' variant='text' onClick={onClick}>
-              <CloseIcon width='24px' color='currentColor' />
+            <IconButton width={isMd || isSm || isXs ? '24px' : '32px'} height={isMd || isSm || isXs ? '24px' : '32px'} variant='text' onClick={onClick}>
+              <CloseIcon width={isMd || isSm || isXs ? '16px' : '24px'} color='currentColor' />
             </IconButton>
           </CloseHandler>
         </VerticalCenter>
