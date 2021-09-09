@@ -54,7 +54,7 @@ const IconLabel = styled.div<ThemedIconLabel>`
   display: flex;
 
   & svg {
-    width: ${({ small }) => (small ? '20px' : 'auto')};
+    width: ${({ small }) => (small ? '20px' : '100%')};
   }
 `
 
@@ -89,6 +89,7 @@ const StyledAlert = styled(Flex)`
   background-color: transparent;
   border-radius: 16px;
   box-shadow: 0px 20px 36px -8px rgba(14, 14, 44, 0.1), 0px 1px 1px rgba(0, 0, 0, 0.05);
+  max-width: ${({ small }) => (small ? '350px' : 'auto')};
 `
 
 const SizableText = styled(Text)`
@@ -97,11 +98,10 @@ const SizableText = styled(Text)`
 
 const Alert: React.FC<AlertProps> = ({ title, children, variant, onClick }) => {
   const Icon = getIcon(variant)
-  const { isSm, isMd, isLg, isXl, isXs } = useMatchBreakpoints()
-  console.log('is small: ', isSm, 'is medium: ', isMd, 'is large: ', isLg, 'is extra large: ', isXl, 'is extra small: ', isXs)
+  const { isSm, isMd, isXs } = useMatchBreakpoints()
 
   return (
-    <StyledAlert>
+    <StyledAlert small={isMd || isSm || isXs}>
       <IconLabel variant={variant} hasDescription={!!children} small={isMd || isSm || isXs}>
         <Icon color='currentColor' width='32px' />
       </IconLabel>
