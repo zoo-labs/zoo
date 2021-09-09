@@ -344,3 +344,12 @@ Moralis.Cloud.define('dropTables', async (request) => {
     }
   }
 })
+
+Moralis.Cloud.define('refreshEggs', async (request) => {
+  const BuyEgg = Moralis.Object.extend('BuyEgg')
+  const query = new Moralis.Query(BuyEgg)
+  const results = await query.limit(10000).find()
+  for (let i = 0; i < results.length; i++) {
+    await results[i].save()
+  }
+})
