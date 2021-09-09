@@ -52,7 +52,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
             <div className='h-full w-full bg-cover rounded bg-no-repeat'>
               <img
                 style={{ verticalAlign: 'middle' }}
-                src={`${item.imageUrl || '/static/video/egg.gif'}`}
+                src={`${item.imageUrl || 'https://gateway.pinata.cloud/ipfs/QmXBYuBHhqNm1zhWZcRbHENSd5XesHqv4AqeFed1z3xVBn/egg.mp4'}`}
                 className='h-full transition-transform w-full duration-1000 rounded h-full'
               />
             </div>

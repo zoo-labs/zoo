@@ -240,6 +240,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
               item: egg,
             })
           }
+          className='transform hover:scale-125'
           style={{
             backgroundImage: !animationMode ? `url('${backgroundImage}')` : `url('${animatedBackgroundImage}')`,
             width: '100%',
@@ -255,7 +256,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             // filter: (!egg.hatched && !egg.interactive) ? null : `hue-rotate(0.${hue}turn)`,
           }}>
           {/* {!egg.hatched && !egg.interactive ? getVideo('/static/video/spinning.gif') : animationMode ? getVideo('/static/video/egg.gif') : null} */}
-          <TextWrapper
+          {/* <TextWrapper
             style={{
               position: 'absolute',
               top: 8,
@@ -265,7 +266,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
               zIndex: 10,
             }}>
             {egg.name}
-          </TextWrapper>
+          </TextWrapper> */}
           {egg.timeRemaining > 0 ? (
             <TimeoutWrapper barwidth={egg.CTAOverride ? egg.CTAOverride.barwidth : 0}>
               <TimeoutDisplay>{`${egg.CTAOverride.timeRemainingDaysHours.days}D ${egg.CTAOverride.timeRemainingDaysHours.hours}H`}</TimeoutDisplay>
@@ -279,7 +280,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
                 padding: 8,
                 zIndex: 10,
               }}>
-              <TextWrapper>{buttonLabel(egg)}</TextWrapper>
+              {/* <TextWrapper>{buttonLabel(egg)}</TextWrapper> */}
             </InfoBlock>
           )}
         </CardBody>
