@@ -3,4 +3,6 @@ import { BackgroundProps, BorderProps, FlexboxProps, LayoutProps, PositionProps,
 
 export interface BoxProps extends BackgroundProps, BorderProps, LayoutProps, PositionProps, SpaceProps, HTMLAttributes<HTMLDivElement> {}
 
-export interface FlexProps extends BoxProps, FlexboxProps {}
+export interface FlexProps extends BoxProps, FlexboxProps {
+  small?: boolean
+}
