@@ -7,6 +7,7 @@ const { BASE_URI } = require('moralis-admin-cli/config')
 const { restartServer } = require('moralis-admin-cli/commands/common')
 
 const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'hardhat'
+
 const CHAIN_IDS = {
   hardhat:  '0x539',
   testnet:  '0x61',
@@ -14,13 +15,14 @@ const CHAIN_IDS = {
   ethereum: '0x1',
   ropsten:  '0x3',
 }
+
 const CHAIN_ID = CHAIN_IDS[NETWORK]
 const SERVER_NAME = {
   hardhat:  'Hardhat',
-  testnet:    'Zoo Testnet',
-  mainnet:    'Zoo Mainnet',
-  ethereum:   'Zoo ETH Mainnet',
-  ropsten:    'Zoo ETH (Ropsten)',
+  testnet:  'Zoo Testnet',
+  mainnet:  'Zoo Mainnet',
+  ethereum: 'Zoo ETH Mainnet',
+  ropsten:  'Zoo ETH (Ropsten)',
 }[NETWORK]
 
 const DEPLOYMENT = {
@@ -51,8 +53,10 @@ const ABI_PATH = `${__dirname}/../../contracts/deployments/${DEPLOYMENT}/ZooKeep
       return
     }
 
+    console.log(servers)
+
     // Get the server to apply the event syncs to
-    const server = servers.filter((item) => item.updateCloudError === 0 && item.update === 0 && item.enabledEvms && item.name == SERVER_NAME)[0]
+    const server = servers.filter((item) => item.name == SERVER_NAME)[0]
 
     // read the abi
     fs.readFile(ABI_PATH, 'utf8', async function read(err, data) {
@@ -121,6 +125,7 @@ const ABI_PATH = `${__dirname}/../../contracts/deployments/${DEPLOYMENT}/ZooKeep
           path: './evm/events',
           order: 5,
           options: {
+            sync_historical: true,
             description: description,
             abi: event,
             topic: topic,
