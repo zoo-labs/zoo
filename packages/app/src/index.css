@@ -9,6 +9,9 @@ html {
 body {
     /* background-color: #0d0415; */
 }
+a {
+    cursor: pointer;
+}
 .bg-dark-1000 {
     background-color: rgba(13,4,21,1)
 }
@@ -61,7 +64,10 @@ body {
     background-color: rgb(140, 79, 248);
 }
 .bg-primary-light {
-    background-color: rgba(140, 79, 248,0.1);
+    background-color:rgb(165, 124, 236)
+}
+.hover\:bg-primary-light:hover {
+    background-color:rgb(165, 124, 236)
 }
 .primary {
     color:rgb(140, 79, 248)
@@ -119,11 +125,9 @@ body {
     width: 100%;
     height: 100%;
   }
-
   .swiper-slide {
     text-align: center;
     font-size: 18px;
-
     /* Center slide text vertically */
     display: -webkit-box;
     display: -ms-flexbox;
@@ -265,3 +269,10 @@ body {
   .parent:hover > img {
     transform:scale(1.1)
   }
+
+  .hoverdiv:hover > div > h6 {
+      color:white
+  }
+  .hoverdiv:hover > div > div > .svg {
+    stroke:white
+}

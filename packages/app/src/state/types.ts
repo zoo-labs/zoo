@@ -65,6 +65,8 @@ export interface ZooState {
   zooBalance:number;
   myEggs:{ [key: string]: Egg }
   myTransactions:Array<Object>
+  myBids:{ [key: string]: Egg }
+myAuctions:{ [key: string]: Egg }
 }
 
 // Global state
