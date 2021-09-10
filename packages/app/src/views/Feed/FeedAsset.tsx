@@ -53,6 +53,8 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
   const txHash = item.transactionHash || '0x000000000000000000000000000000000000000'
   const accountEllipsis = `${txHash.substring(0, 10)}...${txHash.substring(txHash.length - 6)}`
   const myTransactions = useSelector<AppState, AppState['zoo']['myTransactions']>((state) => state.zoo.myTransactions)
+  console.log(item)
+
   return (
     <main className='flex flex-col  flex-grow w-full h-full lg:p-16 lg:m-4 p-0 m-0 lg:pr-0 lg:mr-0 space-y-4 rounded-lg  flex flex-col relative filter drop-shadow z-10'>
       <div className='flex flex-1 flex-wrap md:flex-nowrap'>
@@ -81,7 +83,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
         <div className='w:1/2 my-8 mb-16 md:m-0 md:flex-1'>
           <div className='flex '>
             <div className=' flex flex-col items-start px-4 w-full lg:w-2/3 '>
-              <h2 className='text-2xl font-semibold'>Egg #{item.id}</h2>
+              <h2 className='text-2xl font-semibold'>Egg #{item.tokenID}</h2>
               {/*
               <div className='flex my-4'>
                 <div className='rounded-full p-px h-full bg-gradient-to-b from-btn1  to-btn2 mr-4'>
