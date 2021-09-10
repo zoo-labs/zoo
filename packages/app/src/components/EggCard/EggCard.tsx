@@ -217,7 +217,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
     )
   }
 
-  // const hue = hashEgg(egg) % 9
+  const hue = hashEgg(egg) % 9
   const basicEggURL = window.location.origin + '/static/images/basic.jpg'
   const hybridEggURL = window.location.origin + '/static/images/hybrid.jpg'
   const animatedBasicEggURL = window.location.origin + '/static/video/egg.gif'
