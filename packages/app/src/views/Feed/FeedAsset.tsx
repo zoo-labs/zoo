@@ -9,6 +9,7 @@ import { RiShareCircleLine, RiShareFill, RiUploadCloudFill, RiUploadCloudLine } 
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
 import EggFeedCard from './EggFeedCard'
+import { useIsAnimationMode } from 'state/user/hooks'
 
 interface FeedAssetProps {
   history: {
@@ -21,26 +22,36 @@ interface FeedAssetProps {
 }
 
 const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
+  const isAnimated = useIsAnimationMode()
   const getVideo = () => {
-    return (
+    return isAnimated ? (
       <div className=''>
         <video
           className='rounded'
           autoPlay
+          playsInline
           loop
           muted
           style={{
             pointerEvents: 'none',
-            maxHeight: 700,
+            maxHeight: 600,
             alignSelf: 'center',
           }}>
           <source src={'/static/video/egg.mp4'} type='video/mp4'></source>
         </video>
       </div>
+    ) : (
+      <img
+        style={{ verticalAlign: 'middle' }}
+        src={`${item.imageUrl || window.location.origin + '/static/images/basic.jpg'}`}
+        className='h-full transition-transform w-full duration-1000 rounded h-full'
+      />
     )
   }
+
   const item = history.location.state.item
-  const txHash = '0x82f982a0ac33cfb8b34bcdffa7547dff9a2ba49be0bfbab9b7823e437d01ce64'
+  console.log('ITEM', item)
+  const txHash = item.transactionHash || '0x000000000000000000000000000000000000000'
   const accountEllipsis = `${txHash.substring(0, 10)}...${txHash.substring(txHash.length - 6)}`
   const myTransactions = useSelector<AppState, AppState['zoo']['myTransactions']>((state) => state.zoo.myTransactions)
 
@@ -50,12 +61,9 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
         <div className='flex w-full lg:w:1/2 justify-center  md:flex-1'>
           <div className=' p-px lg:w-1/2 w-full  h-full bg-gradient-to-b from-btn1  to-btn2 rounded flex relative'>
             <div className='h-full w-full bg-cover rounded bg-no-repeat'>
-              <img
-                style={{ verticalAlign: 'middle' }}
-                src={`${item.imageUrl || 'https://gateway.pinata.cloud/ipfs/QmXBYuBHhqNm1zhWZcRbHENSd5XesHqv4AqeFed1z3xVBn/egg.mp4'}`}
-                className='h-full transition-transform w-full duration-1000 rounded h-full'
-              />
+              {getVideo()}
             </div>
+            {/*
             <div className='absolute top-5 xs:left-10 pl-4 lg:pl-0 lg:right-5 '>
               {[0, 1, 2].map((value) => (
                 <div className='cursor-pointer rounded-full p-2 bg-dark-800 mb-4 flex justify-center items-center'>
@@ -69,12 +77,14 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
                 </div>
               ))}
             </div>
+            */}
           </div>
         </div>
         <div className='w:1/2 my-8 mb-16 md:m-0 md:flex-1'>
           <div className='flex '>
             <div className=' flex flex-col items-start px-4 w-full lg:w-2/3 '>
-              <h2 className='text-2xl font-semibold'>MY ZOO EGG</h2>
+              <h2 className='text-2xl font-semibold'>Egg #{item.id}</h2>
+              {/*
               <div className='flex my-4'>
                 <div className='rounded-full p-px h-full bg-gradient-to-b from-btn1  to-btn2 mr-4'>
                   <div className='text-xs font-semibold bg-dark-800 px-6 py-2 rounded-full'>🔥 {'  '}Highest Bid</div>
@@ -83,9 +93,11 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
                   <div className='text-xs font-semibold bg-dark-800 px-6 py-2 rounded-full'>{item.basic ? 'BASIC' : 'HYBRID'}</div>
                 </div>
               </div>
+              */}
               <p className='text-sm text-justify text-gray-500 my-4 font-semibold' style={{ color: '#f2f2f2' }}>
                 Contains 1 of 16 Generation One Base Animals. To hatch or to hold…
               </p>
+              {/*
               <div className='w-full mb-4'>
                 <div className='rounded border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
                   <h2 className='text-sm font-bold mb-2'>Reserve Price</h2>
@@ -106,6 +118,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
                   <RiShareFill fill='black' />
                 </button>
               </div>
+              */}
 
               <div className='w-full mb-4'>
                 <div className=' rounded border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
@@ -114,7 +127,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
                     <span className='text-md  font-semibold'>Transaction Hash</span>
                     <span
                       className='font-semibold text-sm primary cursor-pointer'
-                      onClick={() => window.open(`https://testnet.bscscan.com/address/${accountEllipsis || ''}`, '_blank')}>
+                      onClick={() => window.open(`https://testnet.bscscan.com/tx/${txHash}`, '_blank')}>
                       {accountEllipsis}
                     </span>
                   </div>
