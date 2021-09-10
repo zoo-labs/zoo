@@ -1,19 +1,22 @@
 import React from 'react'
 import { StopCircle } from 'react-feather'
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
+import { FaArrowLeft, FaArrowRight, FaMoneyBill } from 'react-icons/fa'
 import Countdown from 'react-countdown'
 import { useBidModalToggle } from 'state/application/hooks'
+import { useHistory } from 'react-router'
+import { accountEllipsis, getEmoji } from 'functions'
 
 interface MyBidProps {
   bidRef: any
   showArrow: boolean
   showLeftArrow: boolean
   showRightArrow: boolean
+  datum: any
 }
 
-const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRightArrow }) => {
+const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRightArrow, datum }) => {
   const toggleBidModal = useBidModalToggle()
-
+  const history = useHistory()
   return (
     <div className='flex flex-start items-center px-4' style={{ width: 1114 }}>
       <div className=' relative w-1/2 flex justify-center'>
@@ -21,22 +24,19 @@ const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRig
           <div className='h-full w-full bg-cover rounded bg-no-repeat parent'>
             <img src='/static/video/egg.gif' className='w-full rounded-lg h-full transition-transform duration-1000' style={{ verticalAlign: 'middle' }} />
           </div>
-          {/* <div className='absolute left-2 right-2 bottom-2 z-10 flex items-center h-10 px-8 rounded-2xl bg-dark-900'>
-                  <button className='mr-4 '>
-                    <RiPlayMiniFill scale={20} size={30} className='text-gray-500' />
-                  </button>
-                </div> */}
         </div>
       </div>
-      <div className='i ml-20 flex-shrink-0 pb-24 w-full lg:w-1/3 md:w-1/2'>
-        <h1 className='mb-4 font-bold text-6xl'>Egg</h1>
+      <div className='i ml-20 flex-shrink-0 pb-24 w-full lg:w-1/3 md:w-1/2 py-4'>
+        <h1 className='mb-4 font-bold text-5xl'>
+          {datum.name || 'Egg'} <span className='text-lg'>{datum.tokenID}</span>
+        </h1>
         <div className='flex -mx-4 mb-8'>
           <div className='flex items-center mx-4' style={{ flex: '0 0 calc(50% - 32px)', width: 'calc(50% - 32px)' }}>
             <div className='h-10 w-10 rounded-full bg-gradient-to-b from-btn1 to-btn2 mr-2'></div>
             {/* <Avatar alt='Remy Sharp' src='/static/images/avatar.jpg' className='mr-2' style={{ width: 40, height: 40 }} /> */}
             <div className='flex-grow'>
               <div className='text-sm text-gray-500'>Owner</div>
-              <div className='font-semibold'>0x0770...08cb</div>
+              <div className='font-semibold'>{accountEllipsis(datum.owner || '')}</div>
             </div>
           </div>
           <div className='flex items-center mx-4' style={{ flex: '0 0 calc(50% - 32px)', width: 'calc(50% - 32px)' }}>
@@ -54,9 +54,18 @@ const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRig
         <div
           className=' bg-dark-800 mb-10 py-10 px-4 rounded-xl text-center'
           style={{ boxShadow: '0px 64px 64px -48px rgba(31, 47, 70, 0.12)', border: '2px solid #E6E8EC', borderColor: '#23262F' }}>
-          <div className='font-semibold text-sm leading-normal'>Current Bid</div>
-          <div className='text-5xl font-bold leading-tight'>1.00 ETH</div>
-          <div className='mb-4 text-xl font-semibold text-gray-500 leading-snug'>$3,618.36</div>
+          <div className='flex'>
+            <div className='flex flex-1 items-center flex-col'>
+              <div className='font-semibold text-sm leading-normal'>Current Bid</div>
+              <div className='text-3xl font-bold leading-tight'>1.00 ETH</div>
+              <div className='mb-4 text-lg font-semibold text-gray-500 leading-snug'>$3,618.36</div>
+            </div>
+            <div className='flex flex-1 items-center flex-col'>
+              <div className='font-semibold text-sm leading-normal'>My Bid</div>
+              <div className='text-3xl font-bold leading-tight'>0.56 ETH</div>
+              <div className='mb-4 text-lg font-semibold text-gray-500 leading-snug'>$1,618.36</div>
+            </div>
+          </div>
           <div className='font-semibold text-sm leading-snug'>Auction ending in</div>
           <div className='flex mt-2 justify-center'>
             <Countdown
@@ -104,6 +113,11 @@ const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRig
             Place a bid
           </a>
           <a
+            onClick={() =>
+              history.push(`/feed/${datum.owner}/${datum.tokenID}`, {
+                item: datum,
+              })
+            }
             className='text-white mb-4 w-full inline-flex justify-center hover:bg-primary-light items-center h-10 px-6 border border-solid border-gray-300 rounded-full font-bold text-lg leading-none  '
             style={{ transition: 'all .2s', borderColor: '#353945' }}>
             View Item

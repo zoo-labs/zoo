@@ -43,18 +43,23 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
   const txHash = '0x82f982a0ac33cfb8b34bcdffa7547dff9a2ba49be0bfbab9b7823e437d01ce64'
   const accountEllipsis = `${txHash.substring(0, 10)}...${txHash.substring(txHash.length - 6)}`
   const myTransactions = useSelector<AppState, AppState['zoo']['myTransactions']>((state) => state.zoo.myTransactions)
-
+  console.log('item.imageUrl', item.imageUrl)
   return (
     <main className='flex flex-col  flex-grow w-full h-full lg:p-16 lg:m-4 p-0 m-0 lg:pr-0 lg:mr-0 space-y-4 rounded-lg  flex flex-col relative filter drop-shadow z-10'>
       <div className='flex flex-1 flex-wrap md:flex-nowrap'>
         <div className='flex w-full lg:w:1/2 justify-center  md:flex-1'>
           <div className=' p-px lg:w-1/2 w-full  h-full bg-gradient-to-b from-btn1  to-btn2 rounded flex relative'>
             <div className='h-full w-full bg-cover rounded bg-no-repeat'>
-              <img
-                style={{ verticalAlign: 'middle' }}
-                src={`${item.imageUrl || 'https://gateway.pinata.cloud/ipfs/QmXBYuBHhqNm1zhWZcRbHENSd5XesHqv4AqeFed1z3xVBn/egg.mp4'}`}
-                className='h-full transition-transform w-full duration-1000 rounded h-full'
-              />
+              {item.imageUrl ? (
+                <img style={{ verticalAlign: 'middle' }} src={`${item.imageUrl}`} className='h-full transition-transform w-full duration-1000 rounded h-full' />
+              ) : (
+                <video
+                  autoPlay
+                  style={{ verticalAlign: 'middle' }}
+                  src={'https://gateway.pinata.cloud/ipfs/QmXBYuBHhqNm1zhWZcRbHENSd5XesHqv4AqeFed1z3xVBn/egg.mp4'}
+                  className='h-full transition-transform w-full duration-1000 rounded h-full'
+                />
+              )}
             </div>
             <div className='absolute top-5 xs:left-10 pl-4 lg:pl-0 lg:right-5 '>
               {[0, 1, 2].map((value) => (

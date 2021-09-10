@@ -32,3 +32,22 @@ const  x = setInterval(function() {
   + minutes + "m " + seconds + "s ";
 }, 1000);
   }
+
+ export const accountEllipsis = (account) => `${account.substring(0, 6)}...${account.substring(account.length - 4)}`
+
+ export const getEmoji = (rarity) => {
+  switch (rarity) {
+    case 'Common':
+      return '🌕'
+    case 'Uncommon':
+      return '🌓'
+    case 'Rare':
+      return '🔥'
+    case 'Super Rare':
+      return '☄️'
+    case 'Epic':
+      return '🌟'
+    default:
+      return ''
+  }
+}
