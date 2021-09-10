@@ -35,7 +35,8 @@ export enum ApplicationModal {
   HATCHDISABLED,
   CONNECT,
   ACCOUNT,
-  ASSET
+  ASSET,
+  BID
 }
 
 export const updateBlockNumber = createAction<{
