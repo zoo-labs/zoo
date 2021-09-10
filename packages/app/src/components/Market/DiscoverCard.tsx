@@ -3,6 +3,7 @@ import { FaHeart, FaMoneyBill, FaMoneyBillWave } from 'react-icons/fa'
 import { GiCandlestickPhone } from 'react-icons/gi'
 import { CloseIcon, HeartIcon } from 'components'
 import { useHistory } from 'react-router'
+import { accountEllipsis, getEmoji } from 'functions'
 
 interface IndexProps {
   datum: any
@@ -10,23 +11,6 @@ interface IndexProps {
 }
 
 const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth }) => {
-  const accountEllipsis = (account) => `${account.substring(0, 6)}...${account.substring(account.length - 4)}`
-  const getEmoji = (rarity) => {
-    switch (rarity) {
-      case 'Common':
-        return '🌕'
-      case 'Uncommon':
-        return '🌓'
-      case 'Rare':
-        return '🔥'
-      case 'Super Rare':
-        return '☄️'
-      case 'Epic':
-        return '🌟'
-      default:
-        return ''
-    }
-  }
   const history = useHistory()
   return (
     <div className='flex flex-col '>

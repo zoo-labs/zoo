@@ -5,7 +5,7 @@ import { RiArrowDownCircleLine, RiFilter2Line, RiPlayMiniFill } from 'react-icon
 import Slider from '@material-ui/core/Slider'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
-import DiscoverCard from 'components/DiscoverCard'
+import DiscoverCard from 'components/Market/DiscoverCard'
 import '@splidejs/splide/dist/css/themes/splide-default.min.css'
 import { Splide, SplideSlide } from 'components/Splide'
 import { ArrowLeft, ArrowRight, StopCircle } from 'react-feather'
@@ -65,7 +65,7 @@ const Index: React.FC<IndexProps> = ({}) => {
   const [bidView, setBidView] = useState(0)
   const animalsState = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
   const eggsState = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
-  const myBids = [0, 1, 2, 3]
+
   const myAuctions = [0, 1]
 
   const swiperRef = useRef(null)
@@ -78,6 +78,12 @@ const Index: React.FC<IndexProps> = ({}) => {
     0: allEggs,
     1: allAnimls,
   }
+
+  const myBids = [...Object.values(allData)]
+    .flat(1)
+    .sort((a, b) => a.tokenID - b.tokenID)
+    .slice(0, 3)
+
   useEffect(() => {
     console.log(
       'hjhjh',
@@ -176,14 +182,14 @@ const Index: React.FC<IndexProps> = ({}) => {
                     arrows: false,
                     pagination: false,
                   }}>
-                  {myBids.map((value, index) => {
+                  {myBids.map((datum, index) => {
                     const showArrow = myBids.length > 0
                     const showLeftArrow = index > 0
                     const showRightArrow = index < myBids.length - 1
 
                     return (
                       <SplideSlide key={index} className='flex items-center flex-col'>
-                        <MyBid showArrow={showArrow} showLeftArrow={showLeftArrow} showRightArrow={showRightArrow} bidRef={splideBidRef} />
+                        <MyBid datum={datum} showArrow={showArrow} showLeftArrow={showLeftArrow} showRightArrow={showRightArrow} bidRef={splideBidRef} />
                       </SplideSlide>
                     )
                   })}
