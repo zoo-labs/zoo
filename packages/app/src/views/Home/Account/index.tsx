@@ -134,11 +134,17 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     }
   }
 
+  const isBalanceSufficient = (): boolean => {
+    if ((chainID === 56 || chainID === 1) && balance < 500000) return false
+    else if (balance < 300000) return false
+    else return true
+  }
+
   const buyEgg = async () => {
     setDisable(true)
     console.log('web3 account in buyEgg', account)
 
-    if (balance === 0) return toastError('You do not have sufficient zoo to perform this transaction!')
+    if (balance === 0 || !isBalanceSufficient()) return toastError('You do not have sufficient zoo to perform this transaction!')
 
     try {
       await zooKeeper.methods
@@ -236,7 +242,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
               ) : (
                 <div className={'ml-2'}>
                   <button
-                    disabled={disable || !allowance}
+                    disabled={false}
                     className={` rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full ${
                       !allowance ? 'border border-gray-600' : 'bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'
                     } ${balance !== 0 && currentEggsOwned < 1 && 'gradient-border'}`}
