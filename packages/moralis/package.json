@@ -9,6 +9,7 @@
     "logs": "node ./scripts/moralisLogs.js",
     "plugins": "node ./scripts/moralisPlugins.js",
     "proxy": "frpc -c frpc.ini",
+    "refresh": "node ./scripts/moralisRefresh.js",
     "watch": "node ./scripts/moralisWatch.js"
   },
   "dependencies": {

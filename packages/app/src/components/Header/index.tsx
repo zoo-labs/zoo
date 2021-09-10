@@ -243,7 +243,7 @@ export default function Header() {
       <div className='flex items-center justify-between w-full space-x-2 sm:justify-end'>
         {!isSm && (
           <>
-            <Tooltip title='Add ZOO to your MetaMask wallet' placement='bottom'>
+            <Tooltip title='Add ZOO to MetaMask' placement='bottom'>
               <div className='flex items-center rounded-xl whitespace-nowrap text-sm font-medium cursor-pointer select-none pointer-events-auto bg-secondary hover:bg-gray-800'>
                 <div
                   // style={{ width: 40, height: 40 }}
