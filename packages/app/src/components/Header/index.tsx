@@ -184,8 +184,6 @@ export default function Header() {
     history.push(`/${url}`)
     toastClear()
   }
-  const zooToken = getToken(web3)
-
   const getBalance = async () => {
     try {
       // const decimals = await zooToken.methods.decimals().call()
