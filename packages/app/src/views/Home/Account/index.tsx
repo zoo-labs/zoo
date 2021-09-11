@@ -242,7 +242,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
               ) : (
                 <div className={'ml-2'}>
                   <button
-                    disabled={false}
+                    disabled={disable || !allowance}
                     className={` rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full ${
                       !allowance ? 'border border-gray-600' : 'bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'
                     } ${balance !== 0 && currentEggsOwned < 1 && 'gradient-border'}`}
