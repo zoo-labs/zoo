@@ -8,7 +8,7 @@ import { useLocation } from 'react-router'
 import { AppState } from 'state'
 import { getZooBalance } from 'state/zoo/actions'
 import { getFaucet, getToken } from 'util/contracts'
-import { NETWORK_SYMBOL } from 'constants/networks'
+import { NETWORK_SYMBOL, NETWORK_URL } from 'constants/networks'
 import Account from './Account'
 import Bank from './Bank'
 
@@ -60,13 +60,7 @@ const Index: React.FC<indexProps> = ({}) => {
     if (balance == 0)
       return toastError(
         `You do not have sufficient ${NETWORK_SYMBOL[chainID]} to get Zoo`,
-        `<a href='${
-          chainID === 1
-            ? 'https://pancakeswap.finance/info/token/0x2170ed0880ac9a755fd29b2688956bd959f933f8'
-            : chainID === 56
-            ? 'https://pancakeswap.finance/info/token/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
-            : 'https://testnet.binance.org/faucet-smart/'
-        }' target='__blank'>Click here to buy ${NETWORK_SYMBOL[chainID]}</a>`,
+        `<a href='${NETWORK_URL[chainID]}' target='__blank'>Click here to buy ${NETWORK_SYMBOL[chainID]}</a>`,
       )
 
     switch (chainID) {
