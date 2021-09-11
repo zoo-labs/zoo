@@ -8,6 +8,7 @@ import { useLocation } from 'react-router'
 import { AppState } from 'state'
 import { getZooBalance } from 'state/zoo/actions'
 import { getFaucet, getToken } from 'util/contracts'
+import { NETWORK_SYMBOL } from 'constants/networks'
 import Account from './Account'
 import Bank from './Bank'
 
@@ -19,6 +20,7 @@ const Index: React.FC<indexProps> = ({}) => {
   const { chainID, account } = web3
   const [wait, setWait] = useState(false)
   const faucet = getFaucet(web3)
+  const [balance, setBalance] = useState(0.0)
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const toastClear = () => {
     clear()
@@ -55,6 +57,18 @@ const Index: React.FC<indexProps> = ({}) => {
     }
   }
   const handleFunds = () => {
+    if (balance == 0)
+      return toastError(
+        `You do not have sufficient ${NETWORK_SYMBOL[chainID]} to get Zoo`,
+        `<a href='${
+          chainID === 1
+            ? 'https://pancakeswap.finance/info/token/0x2170ed0880ac9a755fd29b2688956bd959f933f8'
+            : chainID === 56
+            ? 'https://pancakeswap.finance/info/token/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
+            : 'https://testnet.binance.org/faucet-smart/'
+        }' target='__blank'>Click here to buy ${NETWORK_SYMBOL[chainID]}</a>`,
+      )
+
     switch (chainID) {
       case 1338:
         handleFaucet()
@@ -73,10 +87,30 @@ const Index: React.FC<indexProps> = ({}) => {
     }
   }
 
+  const getBalance = async () => {
+    try {
+      // const decimals = await zooToken.methods.decimals().call()
+      await web3.eth.getBalance(account).then((val) => {
+        console.log('CHAIN-ID ' + chainID)
+        const divisor = parseFloat(Math.pow(10, 18).toString())
+        const balance = parseFloat(val) / divisor
+        setBalance(parseFloat(balance.toFixed(4)))
+      })
+    } catch (e) {
+      console.error('ISSUE LOADING ZOO BALANCE \n', e)
+    }
+  }
+
   let location = useLocation()
   useEffect(() => {
     setTab(location.pathname.split('/')[1])
   }, [location])
+
+  useEffect(() => {
+    if (!account) return
+    getBalance()
+  }, [account, chainID])
+
   return (
     <main className='flex flex-col  flex-grow w-full h-full lg:p-16 lg:m-4 p-0 m-0 lg:pr-0 lg:mr-0 space-y-4 rounded-lg  flex flex-col relative filter drop-shadow z-10'>
       {/* <div className='flex lg:p-0 p-4 justify-center lg:justify-start items-end flex-wrap'>
