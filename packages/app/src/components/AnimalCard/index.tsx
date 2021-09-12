@@ -7,11 +7,9 @@ import { useWeb3React } from '@web3-react/core'
 import { Card as Existing, CardBody } from 'components'
 import { Animal, Egg } from 'types/zoo'
 import { addAnimal, addEgg } from 'state/zoo'
-import { Modal, useModal } from 'components/Modal'
 import { Flex } from 'components/Box'
 import { Text } from 'components/Text'
 import BorderButton from 'components/Button/BorderButton'
-import { EggCreatedNotify } from './EggCreatedNotify'
 import { AnimalCardProps, SubAnimalCommonProps } from './types'
 import useWeb3 from 'hooks/useWeb3'
 import { getZooKeeper } from 'util/contracts'
@@ -131,77 +129,75 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
     listed: false,
   }
 
-  const Confirmation: React.FC<SubAnimalCommonProps> = ({ onDismiss = () => null, breed }) => {
-    const animal1 = array[0]
-    const animal2 = array[1]
-    const cancel = () => {
-      console.log()
-      animal1.selected = false
-      animal2.selected = false
-      dispatch(addAnimal(animal1))
-      dispatch(addAnimal(animal2))
-      onDismiss()
-    }
+  // const Confirmation: React.FC<SubAnimalCommonProps> = ({ onDismiss = () => null, breed }) => {
+  //   const animal1 = array[0]
+  //   const animal2 = array[1]
+  //   const cancel = () => {
+  //     console.log()
+  //     animal1.selected = false
+  //     animal2.selected = false
+  //     dispatch(addAnimal(animal1))
+  //     dispatch(addAnimal(animal2))
+  //     onDismiss()
+  //   }
 
-    return (
-      <Modal title='Confirm Breed' onDismiss={onDismiss}>
-        <StyledText color='text'>{`Do you want to breed ${animal1.name} with ${animal2.name}?`}</StyledText>
-        <Flex style={{ marginTop: 15 }} width='100%' alignItems='center' justifyContent='space-around'>
-          <BorderButton scale='sm' onClick={() => breed(onDismiss)}>
-            YES
-          </BorderButton>
-          <BorderButton scale='sm' onClick={cancel}>
-            NO
-          </BorderButton>
-        </Flex>
-      </Modal>
-    )
-  }
+  //   return (
+  //     <Modal title='Confirm Breed' onDismiss={onDismiss}>
+  //       <StyledText color='text'>{`Do you want to breed ${animal1.name} with ${animal2.name}?`}</StyledText>
+  //       <Flex style={{ marginTop: 15 }} width='100%' alignItems='center' justifyContent='space-around'>
+  //         <BorderButton scale='sm' onClick={() => breed(onDismiss)}>
+  //           YES
+  //         </BorderButton>
+  //         <BorderButton scale='sm' onClick={cancel}>
+  //           NO
+  //         </BorderButton>
+  //       </Flex>
+  //     </Modal>
+  //   )
+  // }
 
-  const sell = async (onDismiss) => {
-    const animal: Animal = sellAnimal
-    const animalObject = Moralis.Object.extend('Animals')
-    const query = new Moralis.Query(animalObject)
-    query.equalTo('tokenID', animal.tokenID)
-    const results = await query.find()
-    const animalM = results[0]
-    animalM.set('listed', true)
-    animalM.set('startBid', String(bid.current))
-    animalM.set('currentBid', String(bid.current - 1))
-    animalM.set('buyNow', String(bid.current + 100))
-    await animalM.save()
-    // animal.listed = true;
-    // dispatch(addAnimal(animal));
-    bid.current = 100
+  // const sell = async (onDismiss) => {
+  //   const animal: Animal = sellAnimal
+  //   const animalObject = Moralis.Object.extend('Animals')
+  //   const query = new Moralis.Query(animalObject)
+  //   query.equalTo('tokenID', animal.tokenID)
+  //   const results = await query.find()
+  //   const animalM = results[0]
+  //   animalM.set('listed', true)
+  //   animalM.set('startBid', String(bid.current))
+  //   animalM.set('currentBid', String(bid.current - 1))
+  //   animalM.set('buyNow', String(bid.current + 100))
+  //   await animalM.save()
+  //   // animal.listed = true;
+  //   // dispatch(addAnimal(animal));
+  //   bid.current = 100
 
-    onDismiss()
-  }
+  //   onDismiss()
+  // }
 
-  const SellConfirm: React.FC<SubAnimalCommonProps> = ({ onDismiss = () => null }) => {
-    return (
-      <Modal title='Confirm Listing' onDismiss={onDismiss}>
-        <StyledText style={{ textAlign: 'center' }}>{`Do you want to list ${sellAnimal.name}?`}</StyledText>
-        <Flex width='100%' alignItems='center' justifyContent='space-evenly' flexDirection='row' mt='16px'>
-          <StyledText fontSize='18px' style={{ whiteSpace: 'nowrap', marginTop: '5px' }}>
-            LIST PRICE (ZOO)
-          </StyledText>
-          <BidPriceInput type='number' style={{ color: 'black' }} />
-        </Flex>
-        <Flex width='100%' alignItems='center' justifyContent='space-evenly' flexDirection='row' mt='16px'>
-          <BorderButton style={{ fontSize: 14 }} scale='md' onClick={() => sell(onDismiss)}>
-            Confirm
-          </BorderButton>
-          <BorderButton style={{ fontSize: 14 }} scale='md' onClick={() => onDismiss()}>
-            Cancel
-          </BorderButton>
-        </Flex>
-      </Modal>
-    )
-  }
+  // const SellConfirm: React.FC<SubAnimalCommonProps> = ({ onDismiss = () => null }) => {
+  //   return (
+  //     <Modal title='Confirm Listing' onDismiss={onDismiss}>
+  //       <StyledText style={{ textAlign: 'center' }}>{`Do you want to list ${sellAnimal.name}?`}</StyledText>
+  //       <Flex width='100%' alignItems='center' justifyContent='space-evenly' flexDirection='row' mt='16px'>
+  //         <StyledText fontSize='18px' style={{ whiteSpace: 'nowrap', marginTop: '5px' }}>
+  //           LIST PRICE (ZOO)
+  //         </StyledText>
+  //         <BidPriceInput type='number' style={{ color: 'black' }} />
+  //       </Flex>
+  //       <Flex width='100%' alignItems='center' justifyContent='space-evenly' flexDirection='row' mt='16px'>
+  //         <BorderButton style={{ fontSize: 14 }} scale='md' onClick={() => sell(onDismiss)}>
+  //           Confirm
+  //         </BorderButton>
+  //         <BorderButton style={{ fontSize: 14 }} scale='md' onClick={() => onDismiss()}>
+  //           Cancel
+  //         </BorderButton>
+  //       </Flex>
+  //     </Modal>
+  //   )
+  // }
 
-  const [onSell] = useModal(<SellConfirm onDismiss={() => null} breed={sell} />)
-
-  const [onEggCreated] = useModal(<EggCreatedNotify onDismiss={() => null} />)
+  // const [onSell] = useModal(<SellConfirm onDismiss={() => null} breed={sell} />)
 
   const breed = async (onDismiss) => {
     var an1 = parseInt(array[0].tokenID)
@@ -276,7 +272,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
 
   const list = (animal: Animal) => {
     sellAnimal = { ...animal }
-    onSell()
+    // onSell()
   }
 
   // const [onConfirm] = useModal(<BreedConfirmationModal breed={(arrayValues) => breed(() => null)} />)

@@ -8,9 +8,10 @@ import { accountEllipsis, getEmoji } from 'functions'
 interface IndexProps {
   datum: any
   applyMaxWidth: boolean
+  placeBid: () => void
 }
 
-const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth }) => {
+const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
   const history = useHistory()
   return (
     <div className='flex flex-col '>
@@ -21,7 +22,9 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth }) => {
           <div className=' cursor-pointer absolute top-6 right-3 w-8 h-8 bg-dark-800 rounded-full flex items-center justify-center'>
             <FaHeart fill='white' style={{ fontSize: 10 }} />
           </div>
-          <a className='cursor-pointer absolute left-1/2 bottom-6 min-w-max h-10 bg-primary px-4 rounded-full text-sm items-center justify-center inline-flex transition-all duration-300 transform -translate-x-2/4'>
+          <a
+            onClick={() => placeBid()}
+            className='cursor-pointer absolute left-1/2 bottom-6 min-w-max h-10 bg-primary px-4 rounded-full text-sm items-center justify-center inline-flex transition-all duration-300 transform -translate-x-2/4'>
             <span>Place a bid</span>
           </a>
         </div>
@@ -42,7 +45,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth }) => {
             <div
               className='flex-shrink-0 ml-2 px-2 uppercase primary font-bold rounded-sm text-xs flex items-center justify-center'
               style={{ boxShadow: 'inset 0 0 0 1px rgb(140, 79, 248)' }}>
-              2.45 ETH
+              500K Z00
             </div>
           </div>
           <div className=' flex '>
@@ -58,7 +61,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth }) => {
             <div className='mr-1'>
               <FaMoneyBillWave />
             </div>
-            Highest bid <span className='ml-1'>0.01 ETH</span>
+            Highest bid <span className='ml-1'>1M ZOO</span>
           </div>
           <div className='text-xs text-gray-500 font-semibold'>{datum.yield ? `${datum.yield} Yields/Day ${getEmoji(datum.rarity)}` : ''} </div>
         </div>

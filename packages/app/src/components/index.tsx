@@ -8,7 +8,6 @@ export * from './Button'
 export * from './Card'
 // export * from "./Checkbox";
 // export * from "./Dropdown";
-export * from './Heading'
 // export * from "./Image";
 export * from './Input'
 // export * from "./Textarea";

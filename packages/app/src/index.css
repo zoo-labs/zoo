@@ -276,3 +276,6 @@ a {
   .hoverdiv:hover > div > div > .svg {
     stroke:white
 }
+.bg-modal-dark {
+    background-color: #0e0d15;
+}
