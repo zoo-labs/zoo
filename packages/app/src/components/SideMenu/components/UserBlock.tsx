@@ -13,8 +13,6 @@ import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { RiPulseLine } from 'react-icons/ri'
 interface Props {
   account?: string
-  login: Login
-  logout: () => void
 }
 const IconWrapper = styled.div<{ size?: number }>`
   align-items: center;
@@ -46,7 +44,7 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
   }
   return <h6></h6>
 }
-const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
+const UserBlock: React.FC<Props> = ({ account }) => {
   const { connector, error } = useWeb3React()
   const toggleConnectModal = useConnectModalToggle()
   const toggleAccountModal = useAccountModalToggle()

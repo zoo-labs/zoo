@@ -9,65 +9,9 @@ import { useWeb3 } from 'hooks/useWeb3'
 import { useHistory } from 'react-router-dom'
 import styles from 'styled-components'
 import { Label, Text } from 'components/Text'
-import { CheckmarkCircleIcon, Flex, Heading } from 'components'
+import { Flex } from 'components'
 import Body from 'components/layout/Body'
-import { useModal } from 'components/Modal'
-import BuyEggs from 'components/BuyEggs'
-import { getToken, getFaucet } from 'util/contracts'
-import { useMatchBreakpoints } from 'components'
-import { FaHome } from 'react-icons/fa'
-import Moralis from 'moralis'
-import { resourceLimits } from 'worker_threads'
-import { Link } from 'react-router-dom'
-import Transaction from 'components/Transaction'
 import TransactionTable from 'components/Transaction/Table'
-import { getMyTransactions } from 'state/zoo/actions'
-
-const HeaderFrame = styles.div<{ isSm: boolean }>`
-  grid-template-columns: 1fr 120px;
-  -moz-box-pack: justify;
-  -moz-box-align: center;
-  flex-direction: row;
-  top: 0px;
-  padding: 1rem;
-  z-index: 21;
-  position: relative;
-  background-image: linear-gradient(transparent 50%, rgb(25, 27, 31) 50%);
-  background-position: 0px 0px;
-  background-size: 100% 200%;
-  box-shadow: transparent 0px 0px 0px 1px;
-  transition: background-position 0.1s ease 0s, box-shadow 0.1s ease 0s;
-  background-blend-mode: hard-light;
-  display: grid;
-  width: 100%;
-  ${({ isSm }) => (isSm ? 'grid-template-columns: 1fr; padding: 1rem' : '')};
-`
-
-const HeadingContainer = styles.div`
-    width: 100%;
-    display: flex;
-    justify-content: start;
-    margin: 0px 8px;
-`
-
-const StyledButton = styles.button`
-    cursor: pointer;
-    text-decoration: none;
-    text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.text};
-    background: transparent;
-    border: none;
-    margin-top: 1px;
-    margin-left: 16px;
-`
-
-const LabelWrapper = styles.div`
-    display: flex;
-    width: 100%;
-    justify-content: space-evenly;
-    align-items: center;
-    color: ${({ theme }) => theme.colors.text};
-`
 
 const ValueWrapper = styles(Text)`
     color: ${({ theme }) => theme.colors.text};
@@ -102,95 +46,12 @@ const Container = styled.div`
   min-width: 280px;
 `
 
-const TableWrapper = styled.div`
-  flex-direction: row;
-  flex: 1 1 auto;
-  -webkit-box-pack: start;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`
-
-const StyledTable = styled.table`
-  display: flex;
-  border-collapse: collapse;
-  font-size: 14px;
-  border-radius: 16px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  position: relative;
-  overflow-x: scroll;
-  &::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px ${({ theme }) => theme.colors.primaryPop};
-    border-radius: 10px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.primaryPop};
-  }
-  &::-webkit-scrollbar {
-    height: 7px;
-  }
-`
-
-const TableBody = styled.tbody`
-  width: fit-content;
-  & tr {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    td {
-      font-size: 16px;
-      vertical-align: left;
-    }
-    th {
-      vertical-align: left;
-    }
-  }
-`
-
-const TableRow = styled.tr`
-  color: white;
-`
-
-const TableContainer = styled.div`
-  position: relative;
-`
-
-const TableData = styled.td`
-  width: 100px;
-  margin: 5px 10px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`
-
-const TableHeader = styled.th`
-  width: 100px;
-  margin: 15px 0px;
-  font-weight: 600;
-  text-align: left;
-  font-size: 18px;
-`
-
 const TableText = styled(Text)`
   width: 100%;
   text-align: center;
   margin: 20px 0px;
   font-size: 16px;
 `
-
-const StyledHeading = styled(Heading)`
-  color: ${({ theme }) => theme.colors.text};
-`
-
-const StyledText = styled(Text)`
-  color: ${({ theme }) => theme.colors.text};
-`
-
-function numberWithCommas(num) {
-  const values = num.toString().split('.')
-  return values[0].replace(/.(?=(?:.{3})+$)/g, '$&,') + (values.length == 2 ? '.' + values[1] : '')
-}
 
 const Bank: React.FC = () => {
   const web3 = useWeb3()

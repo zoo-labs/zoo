@@ -71,7 +71,10 @@ export const ZooSlice = createSlice({
 
       for (let i = 0; i < myEggs.length; i += 1) {
         const curr = myEggs[i]
-        state.myEggs[curr.tokenID] = curr
+        if(curr){
+          state.myEggs[curr.tokenID] = curr
+
+        }
       }
     },
     updateMyTransactions:(state: ZooState, action) => {
