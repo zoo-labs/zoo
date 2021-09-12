@@ -3,6 +3,7 @@ import { TransitionGroup } from 'react-transition-group'
 import styled from 'styled-components'
 import Toast from './Toast'
 import { ToastContainerProps } from './types'
+import { useMatchBreakpoints } from 'hooks'
 
 const ZINDEX = 1000
 const TOP_POSITION = 0 // Initial position from the top
@@ -30,6 +31,8 @@ const StyledToastContainer = styled.div`
 `
 
 const ToastContainer: React.FC<ToastContainerProps> = ({ toasts, onRemove, ttl = 4000, stackSpacing = 24 }) => {
+  const { isSm, isMd, isXs } = useMatchBreakpoints()
+
   return (
     <StyledToastContainer>
       <TransitionGroup>
@@ -38,7 +41,7 @@ const ToastContainer: React.FC<ToastContainerProps> = ({ toasts, onRemove, ttl =
           const top = TOP_POSITION + index * stackSpacing
           const bottom = 0
 
-          return <Toast key={toast.id} toast={toast} onRemove={onRemove} ttl={ttl} style={{ top: `${top}px`, zIndex }} />
+          return <Toast key={toast.id} toast={toast} onRemove={onRemove} ttl={ttl} style={{ [isXs || isSm || isMd ? 'bottom' : 'top']: `${top}px`, zIndex }} />
         })}
       </TransitionGroup>
     </StyledToastContainer>
