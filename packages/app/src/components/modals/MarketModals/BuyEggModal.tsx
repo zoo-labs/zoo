@@ -32,13 +32,13 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   }, [amount])
   useEffect(() => {
     const newEggs = []
-    // Object.values(myEggs).forEach((egg) => {
-    //   newEggs.push(egg)
-    // })
-    const fakeEggs = [{ original: 'true' }]
-    fakeEggs.forEach((egg) => {
+    Object.values(myEggs).forEach((egg) => {
       newEggs.push(egg)
     })
+    // const fakeEggs = [{ original: 'true' }]
+    // fakeEggs.forEach((egg) => {
+    //   newEggs.push(egg)
+    // })
     const emptyLength = 3 - newEggs.length
     for (let index = 0; index < emptyLength; index++) {
       newEggs.push({})
