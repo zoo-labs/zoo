@@ -12,10 +12,10 @@ interface MyBidProps {
   showLeftArrow: boolean
   showRightArrow: boolean
   datum: any
+  placeBid: () => void
 }
 
-const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRightArrow, datum }) => {
-  const toggleBidModal = useBidModalToggle()
+const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRightArrow, datum, placeBid }) => {
   const history = useHistory()
   return (
     <div className='flex flex-start items-center px-4' style={{ width: 1114 }}>
@@ -107,8 +107,8 @@ const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRig
         </div>
         <div className='flex flex-col '>
           <a
-            onClick={() => toggleBidModal()}
-            className='text-white mb-4 w-full inline-flex justify-center items-center h-10 px-6 bg-primary-light hover:bg-primary rounded-full font-bold text-lg leading-none  '
+            onClick={() => placeBid()}
+            className='text-white mb-4 w-full inline-flex justify-center items-center h-10 px-6 bg-primary-light hover:bg-primary rounded-lg font-bold text-lg leading-none  '
             style={{ transition: 'all .2s' }}>
             Place a bid
           </a>
@@ -118,7 +118,7 @@ const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRig
                 item: datum,
               })
             }
-            className='text-white mb-4 w-full inline-flex justify-center hover:bg-primary-light items-center h-10 px-6 border border-solid border-gray-300 rounded-full font-bold text-lg leading-none  '
+            className='text-white mb-4 w-full inline-flex justify-center hover:bg-primary-light items-center h-10 px-6 border border-solid border-gray-300 rounded-lg font-bold text-lg leading-none  '
             style={{ transition: 'all .2s', borderColor: '#353945' }}>
             View Item
           </a>
