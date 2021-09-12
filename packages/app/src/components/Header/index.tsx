@@ -170,9 +170,8 @@ export default function Header() {
   const [active, setActive] = useState('account')
   const { isXl, isXs, isSm, isMd, isLg } = useMatchBreakpoints()
   const web3 = useWeb3()
-  const { chainID, gasPrice } = web3
-  const { account, chainId, library } = useWeb3React()
-  const { login, logout } = useAuth()
+  const { chainID } = web3
+  const { account, library } = useWeb3React()
   const isMobile = isXl === false
   let location = useLocation()
   useEffect(() => {
@@ -205,13 +204,14 @@ export default function Header() {
 
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
+  const bidModalOpen = useModalOpen(ApplicationModal.BID)
 
   const route_to_homepage = () => {
     history.push('/home')
   }
 
   return (
-    <HeaderFrame showBackground={scrollY > 45} isMobile={isMobile} isFeed={active == 'feed'} modalOpen={newAnimalModalOpen || videoPlayerModalOpen}>
+    <HeaderFrame showBackground={scrollY > 45} isMobile={isMobile} isFeed={active == 'feed'} modalOpen={newAnimalModalOpen || videoPlayerModalOpen || bidModalOpen}>
       <Title>
         <LogoIcon>
           <img src={logoURL} alt='logo' onClick={() => route_to_homepage()} />
@@ -299,7 +299,7 @@ export default function Header() {
               {numberWithCommas(balance) || 0} {NETWORK_SYMBOL[chainID]}
             </BalanceText>
           ) : null}
-          <UserBlock account={account} login={login} logout={logout} />
+          <UserBlock account={account} />
         </div>
         <More />
       </div>

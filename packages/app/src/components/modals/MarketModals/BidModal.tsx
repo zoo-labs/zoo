@@ -2,19 +2,25 @@ import React, { useState, useEffect } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useBidModalToggle } from 'state/application/hooks'
 import Modal from '../../NewModal'
-import ModalHeader from '../../NewModal/Header'
+import BidModalHeader from '../../NewModal/BidModalHeader'
 import { numberWithCommas } from 'components/Functions'
 import { AppState } from 'state'
 import { useSelector } from 'react-redux'
+import { useIsAnimationMode } from 'state/user/hooks'
+import { FaMoneyBill } from 'react-icons/fa'
+import { accountEllipsis, getEmoji } from 'functions'
 
-interface BidModalProps {}
+interface BidModalProps {
+  item: any
+}
 
-const BidModal: React.FC<BidModalProps> = ({}) => {
+const BidModal: React.FC<BidModalProps> = ({ item }) => {
   const bidModal = useModalOpen(ApplicationModal.BID)
   const toggleBidModal = useBidModalToggle()
-  const [amount, setAmount] = useState('0.45')
+  const [amount, setAmount] = useState('300000')
   const [error, setError] = useState('')
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
+  const isAnimated = useIsAnimationMode()
 
   const inputCheck = () => {}
   useEffect(() => {
@@ -24,43 +30,115 @@ const BidModal: React.FC<BidModalProps> = ({}) => {
       setError('')
     }
   }, [amount])
+
+  const getVideo = () => {
+    return isAnimated ? (
+      <div className=''>
+        <video
+          controls
+          className='rounded'
+          autoPlay
+          playsInline
+          loop
+          muted
+          style={{
+            pointerEvents: 'none',
+            maxHeight: 600,
+            alignSelf: 'center',
+          }}>
+          <source src={'/static/video/egg.mp4'} type='video/mp4'></source>
+        </video>
+      </div>
+    ) : (
+      <img
+        style={{ verticalAlign: 'middle' }}
+        src={`${item.imageUrl || window.location.origin + '/static/video/egg.gif'}`}
+        className='h-full transition-transform w-full duration-1000 rounded h-full'
+      />
+    )
+  }
   return (
-    <Modal isOpen={bidModal} onDismiss={() => null} maxWidth={440}>
-      <ModalHeader onClose={() => toggleBidModal()} title='Place a bid' />
-      <div className='mb-8'>
-        <h6 className='leading-normal text-xs'>
-          You are about to purchase an <span className='pink font-semibold text-lg'>EGG</span> from <span className='primary font-semibold  text-lg'>0x0770...08cb</span>
-        </h6>
+    <Modal isOpen={bidModal} onDismiss={() => null} isMax>
+      <BidModalHeader onBack={() => toggleBidModal()} className='absolute p-6 w-full ' />
+      <div className='flex flex-wrap h-full'>
+        <div className='flex flex-col flex-1 bg-modal-dark items-center justify-center'>
+          <div className='lg:w-1/3 w-full'>
+            <div className=' p-px   bg-gradient-to-b from-btn1  to-btn2 rounded flex relative'>
+              <div className='h-full w-full bg-cover rounded bg-no-repeat'>{getVideo()}</div>
+            </div>
+            <div className='py-4 flex flex-col no-underline cursor-pointer'>
+              <div className='py-2 flex flex-grow flex-col no-underline cursor-pointer'>
+                <div className='flex flex-grow flex-col'>
+                  <div className='mb-2 flex '>
+                    <div className='mr-auto mt-1 font-semibold'>
+                      {item.name || 'Egg'} <span className='text-xs text-gray-500'>({item.tokenID || ''})</span>
+                    </div>
+                    <div
+                      className='flex-shrink-0 ml-2 px-2 uppercase primary font-bold rounded-sm text-xs flex items-center justify-center'
+                      style={{ boxShadow: 'inset 0 0 0 1px rgb(140, 79, 248)' }}>
+                      2.45 ETH
+                    </div>
+                  </div>
+                  <div className=' flex '>
+                    <div className='mr-auto mt-1 font-semibold flex text-xs text-gray-500'>
+                      <div className='h-4 w-4 rounded-full bg-gradient-to-b from-btn1 to-btn2 mr-1'></div>
+                      {accountEllipsis(item.owner || '')}
+                    </div>
+                    <div className='flex-shrink-0 ml-2  uppercase font-bold rounded-sm text-xs flex items-center justify-center'>3 days Left</div>
+                  </div>
+                </div>
+                <div className=' border-t border-solid border-gray-700 flex items-center justify-between mt-2 pt-2 text-sm text-gray-800'>
+                  <div className='flex items-center text-xs text-gray-500 font-semibold'>
+                    <div className='mr-1'>
+                      <FaMoneyBill />
+                    </div>
+                    Highest bid <span className='ml-1'>0.01 ETH</span>
+                  </div>
+                  <div className='text-xs text-gray-500 font-semibold'>{item.yield ? `${item.yield} Yields/Day ${getEmoji(item.rarity)}` : ''} </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='flex flex-col flex-1  justify-center items-center'>
+          <div className='max-w-2xl w-1/2 p-4'>
+            {/* <div className='mb-8'>
+              <h6 className='leading-normal text-xs'>
+                You are about to purchase an <span className='pink font-semibold text-lg'>EGG</span> from <span className='primary font-semibold  text-lg'>0x0770...08cb</span>
+              </h6>
+            </div> */}
+            <div className='flex justify-between mb-4'>
+              <label className='leading-snug text-md font-semibold'>Your Bid</label>
+              <h5 className='text-sm text-gray-400'>
+                Your balance: <span className='text-white font-bold'> {numberWithCommas(zooBalance.toFixed(2)) || 0} ZOO</span>
+              </h5>
+            </div>
+            <div className='relative mb-3 w-full'>
+              <input
+                onChange={(e) => (setAmount(e.target.value), inputCheck())}
+                value={amount}
+                className=' w-full border border-solid rounded-md py-2 px-3 focus:outline-none font-semibold leading-snug text-md bg-dark-800 '
+              />
+              <h6 className='absolute top-1/2 right-4 leading-normal font-semibold transform -translate-y-2/4 '>ZOO</h6>
+            </div>
+            {error && <div className='text-red-500 mb-1 text-xs font-semibold'>{error}</div>}
+            <h6 className='my-1 text-xs text-gray-400 font-semibold'>
+              You must bid at least <span className='font-bold text-white'>300,000 ZOO</span>
+            </h6>
+            <h6 className='mb-2 text-xs text-gray-400 font-semibold'>The next bid must be 5% more than the current bid</h6>
+            <div>
+              <button
+                onClick={() => toggleBidModal()}
+                className='text-white my-4 w-full inline-flex justify-center items-center h-10 px-6 bg-primary-light hover:bg-primary rounded-lg font-bold text-lg leading-none  '
+                style={{ transition: 'all .2s' }}>
+                Place a bid
+              </button>
+              <h6 className='mb-4 text-xs text-gray-300 font-semibold text-center'>You cannot withdraw a bid once submitted.</h6>
+            </div>
+            <a className=' text-xs primary font-semibold text-center underline'>How do auctions work ?</a>
+          </div>
+        </div>
       </div>
-      <div className='flex justify-between mb-4'>
-        <label className='leading-snug text-md font-semibold'>Your Bid</label>
-        <h5 className='text-md'>
-          Your balance: <span className='text-xs text-gray-400 font-semibold'> {numberWithCommas(zooBalance) || 0} ZOO</span>
-        </h5>
-      </div>
-      <div className='relative mb-3 w-full'>
-        <input
-          onChange={(e) => (setAmount(e.target.value), inputCheck())}
-          value={amount || '0'}
-          className='w-full border border-solid rounded-md py-2 px-3 focus:outline-none font-semibold leading-snug text-md bg-dark-800 '
-        />
-        <h6 className='absolute top-1/2 right-4 leading-normal font-semibold transform -translate-y-2/4 '>ZOO</h6>
-      </div>
-      {error && <div className='text-red-500 mb-1 text-xs font-semibold'>{error}</div>}
-      <h6 className='mb-1 text-xs text-gray-400 font-semibold'>
-        You must bid at least <span className='font-bold text-white'>0.45 ZOO</span>
-      </h6>
-      <h6 className='mb-2 text-xs text-gray-400 font-semibold'>The next bid must be 5% more than the current bid</h6>
-      <div>
-        <button
-          onClick={() => toggleBidModal()}
-          className='text-white my-4 w-full inline-flex justify-center items-center h-10 px-6 bg-primary-light hover:bg-primary rounded-full font-bold text-lg leading-none  '
-          style={{ transition: 'all .2s' }}>
-          Place a bid
-        </button>
-        <h6 className='mb-4 text-xs text-gray-300 font-semibold text-center'>You cannot withdraw a bid once submitted.</h6>
-      </div>
-      <a className=' text-xs text-gray-500 font-semibold text-center underline'>How do auctions work ?</a>
     </Modal>
   )
 }
