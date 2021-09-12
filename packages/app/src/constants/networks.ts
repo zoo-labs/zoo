@@ -98,3 +98,10 @@ export const NETWORK_SYMBOL: { [chainId in ChainId]?: string } = {
   [ChainId.BSC]: 'BNB',
   [ChainId.BSC_TESTNET]: 'BNB',
 }
+
+export const NETWORK_URL: { [chainId in ChainId]?: string } = {
+  [ChainId.MAINNET]: 'https://pancakeswap.finance/info/token/0x2170ed0880ac9a755fd29b2688956bd959f933f8',
+  [ChainId.RINKEBY]: 'https://testnet.binance.org/faucet-smart/',
+  [ChainId.BSC]: 'https://pancakeswap.finance/info/token/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
+  [ChainId.BSC_TESTNET]: 'https://testnet.binance.org/faucet-smart/',
+}
