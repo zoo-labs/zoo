@@ -20,6 +20,9 @@ import Eggs from './Eggs'
 import Animals from './Animals'
 import AccountHeader from './AccountHeader'
 import { useWeb3React } from '@web3-react/core'
+import { useBidModalToggle, useBuyEggModalToggle } from 'state/application/hooks'
+import BidModal from 'components/modals/MarketModals/BidModal'
+import BuyEggModal from 'components/modals/MarketModals/BuyEggModal'
 
 function numberWithCommas(num) {
   const values = num.toString().split('.')
@@ -132,40 +135,40 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     else if (balance < 300000) return false
     else return true
   }
-
+  const toggleBuyEggModal = useBuyEggModalToggle()
   const buyEgg = async () => {
-    setDisable(true)
+    // setDisable(true)
     console.log('web3 account in buyEgg', account)
+    toggleBuyEggModal()
+    // if (balance === 0 || !isBalanceSufficient()) return toastError('You do not have sufficient zoo to perform this transaction!')
 
-    if (balance === 0 || !isBalanceSufficient()) return toastError('You do not have sufficient zoo to perform this transaction!')
-
-    try {
-      await zooKeeper.methods
-        .buyEgg(1) // buy from first drop
-        .send({ from: account, gasPrice: gasPrice })
-        .then((res) => {
-          toastClear()
-          toastInfo('Transaction submitted.')
-          console.log('bought egg', res)
-          setDisable(false)
-        })
-        .catch((err) => {
-          const message = formatError(err)
-          setDisable(false)
-          toastClear()
-          toastError(message)
-          console.error(message)
-        })
-    } catch (err) {
-      console.error(err)
-      toastClear()
-      setDisable(false)
-      if (currentEggsOwned < 3) {
-        toastError('Already purchased maximum eggs from drop. Check the market for more eggs')
-      } else {
-        toastError('Unable to purchase eggs. Try again later.')
-      }
-    }
+    // try {
+    //   await zooKeeper.methods
+    //     .buyEgg(1) // buy from first drop
+    //     .send({ from: account, gasPrice: gasPrice })
+    //     .then((res) => {
+    //       toastClear()
+    //       toastInfo('Transaction submitted.')
+    //       console.log('bought egg', res)
+    //       setDisable(false)
+    //     })
+    //     .catch((err) => {
+    //       const message = formatError(err)
+    //       setDisable(false)
+    //       toastClear()
+    //       toastError(message)
+    //       console.error(message)
+    //     })
+    // } catch (err) {
+    //   console.error(err)
+    //   toastClear()
+    //   setDisable(false)
+    //   if (currentEggsOwned < 3) {
+    //     toastError('Already purchased maximum eggs from drop. Check the market for more eggs')
+    //   } else {
+    //     toastError('Unable to purchase eggs. Try again later.')
+    //   }
+    // }
   }
 
   useMemo(() => {
@@ -183,6 +186,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
       // style={{ height: '100vh' }} className='flex items-center'
     >
       {/* pr-0 lg:pr-0 mr-0  */}
+
       <div className='flex flex-col relative filter drop-shadow z-10 w-full'>
         <div className='flex flex-col h-full'>
           <AccountHeader />
@@ -307,6 +311,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
         </div>
       </div>
       <ToastListener />
+      <BuyEggModal />
     </>
   )
 }

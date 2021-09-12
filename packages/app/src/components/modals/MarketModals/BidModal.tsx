@@ -57,9 +57,11 @@ const BidModal: React.FC<BidModalProps> = ({ item }) => {
       />
     )
   }
+
   return (
     <Modal isOpen={bidModal} onDismiss={() => null} isMax>
       <BidModalHeader onBack={() => toggleBidModal()} className='absolute p-6 w-full ' />
+
       <div className='flex flex-wrap h-full'>
         <div className='flex flex-col flex-1 bg-modal-dark items-center justify-center'>
           <div className='lg:w-1/3 w-full'>
