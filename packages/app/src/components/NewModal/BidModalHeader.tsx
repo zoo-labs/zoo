@@ -12,8 +12,8 @@ const BidModalHeader: FC<BidModalHeaderProps> = ({ className = '', onBack = unde
 
   return (
     <div className={`flex items-center justify-between mb-4 ${className}`}>
-      <div className='h-14 w-14 flex items-center justify-center rounded-full bg-dark-900 shadow-2xl'>
-        <ChevronLeftIcon onClick={onBack} width={30} height={30} className='cursor-pointer text-white' fill='#f2f2f2' />
+      <div onClick={onBack} className='h-14 w-14 flex items-center justify-center rounded-full bg-dark-900 shadow-2xl cursor-pointer'>
+        <ChevronLeftIcon width={30} height={30} className=' text-white' fill='#f2f2f2' />
       </div>
       <UserBlock account={account} />
     </div>

@@ -65,6 +65,10 @@ export function useBidModalToggle(): () => void {
   return useToggleModal(ApplicationModal.BID)
 }
 
+export function useBuyEggModalToggle(): () => void {
+
+  return useToggleModal(ApplicationModal.BUYEGG)
+}
 export function useAssetModalToggle(): () => void {
 
   return useToggleModal(ApplicationModal.ASSET)

@@ -48,40 +48,6 @@ const HeaderFrame = styled.div<{ showBackground: boolean; isMobile: boolean; isF
   ${({ isFeed, modalOpen }) => (isFeed || modalOpen ? 'display: none' : 'display: grid')};
 `
 
-const HeaderLinks = styled.div`
-  justify-self: center;
-  width: fit-content;
-  padding: 4px;
-  border-radius: 16px;
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 10px;
-  overflow: auto;
-  align-items: center;
-`
-
-const HeaderControls = styled.div`
-  -moz-box-align: center;
-  align-items: center;
-  justify-self: flex-end;
-  flex-direction: row;
-  display: flex;
-`
-
-const AccountElement = styled.div<{ active: boolean }>`
-  font-size: 14px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  white-space: nowrap;
-  width: 100%;
-  cursor: pointer;
-
-  :focus {
-    border: 1px solid blue;
-  }
-`
-
 const Title = styled.a`
   display: flex;
   align-items: center;
@@ -105,55 +71,6 @@ const LogoIcon = styled.div`
 `
 
 const activeClassName = 'ACTIVE'
-
-// const StyledExternalLink = styled().attrs({
-//   activeClassName,
-// })<{ isActive?: boolean }>`
-//   ${({ theme }) => theme.flexRowNoWrap}
-//   align-items: left;
-//   border-radius: 3rem;
-//   outline: none;
-//   cursor: pointer;
-//   text-decoration: none;
-//   font-size: 1rem;
-//   width: fit-content;
-//   margin: 0 12px;
-//   font-weight: 500;
-
-//   &.${activeClassName} {
-//     border-radius: 12px;
-//     font-weight: 600;
-//   }
-
-//   :hover,
-//   :focus {
-//     text-decoration: none;
-//   }
-// `
-const StyledNavLink = styled(NavLink).attrs({
-  activeClassName,
-})`
-  align-items: left;
-  border-radius: 3rem;
-  outline: none;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 500;
-  padding: 8px 12px;
-  word-break: break-word;
-  overflow: hidden;
-  white-space: nowrap;
-  &.${activeClassName} {
-    border-radius: 12px;
-    font-weight: 600;
-    justify-content: center;
-  }
-
-  :hover,
-  :focus {
-  }
-`
 const BalanceText = styled(Text)``
 
 export default function Header() {
@@ -205,13 +122,14 @@ export default function Header() {
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
   const bidModalOpen = useModalOpen(ApplicationModal.BID)
+  const buyEggModal = useModalOpen(ApplicationModal.BUYEGG)
 
   const route_to_homepage = () => {
     history.push('/home')
   }
 
   return (
-    <HeaderFrame showBackground={scrollY > 45} isMobile={isMobile} isFeed={active == 'feed'} modalOpen={newAnimalModalOpen || videoPlayerModalOpen || bidModalOpen}>
+    <HeaderFrame showBackground={scrollY > 45} isMobile={isMobile} isFeed={active == 'feed'} modalOpen={newAnimalModalOpen || videoPlayerModalOpen || bidModalOpen || buyEggModal}>
       <Title>
         <LogoIcon>
           <img src={logoURL} alt='logo' onClick={() => route_to_homepage()} />
@@ -295,9 +213,9 @@ export default function Header() {
         )}
         <div className='w-auto flex items-center rounded bg-secondary hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto hover:bg-gray-800'>
           {account ? (
-            <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} ml='0.25rem' mr='0.25rem' pl='0.5rem' pr='0.5rem' fontWeight={500}>
+            <h6 className='mx-1 px-2' style={{ fontSize: '14px', flexShrink: 0 }}>
               {numberWithCommas(balance) || 0} {NETWORK_SYMBOL[chainID]}
-            </BalanceText>
+            </h6>
           ) : null}
           <UserBlock account={account} />
         </div>
