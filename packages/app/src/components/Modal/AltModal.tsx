@@ -1,5 +1,4 @@
 import React from 'react'
-import Heading from '../../components/Heading/Heading'
 import { ModalBody, ModalHeader, ModalTitle, ModalCloseButton, ModalBackButton } from './styles'
 import { ModalProps } from './types'
 import styled from 'styled-components'

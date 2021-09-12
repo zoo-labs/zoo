@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
-import { Modal as Existing, Text, Flex, Label, Button } from 'components'
+import { Text, Flex, Label, Button } from 'components'
 import BorderButton from 'components/Button/BorderButton'
 import { useModal, BottomModal } from 'components/Modal'
 import Confirmation from './ConfirmationModal'

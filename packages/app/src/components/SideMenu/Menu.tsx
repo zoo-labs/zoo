@@ -181,7 +181,7 @@ const Menu: React.FC<NavProps> = ({ providerTitle, account, chainId, login, logo
           <MaxHeightLogo src={logoURL} alt='zoo-logo' onClick={() => handleClick()} />
         </LogoContainer>
         <Flex alignItems='center'>
-          <UserBlock account={account} login={login} logout={logout} />
+          <UserBlock account={account} />
           {!isXs && !isSm && account && <StyledProviderTitle>{providerTitle}</StyledProviderTitle>}
           {/* {profile && <Avatar profile={profile} />} */}
         </Flex>
