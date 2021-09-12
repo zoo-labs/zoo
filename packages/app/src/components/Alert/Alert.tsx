@@ -9,13 +9,12 @@ import { IconButton } from '../Button'
 import { CloseIcon } from '../Svg'
 import Flex from '../Box/Flex'
 import { AlertProps, variants } from './types'
-import { useMatchBreakpoints } from 'hooks'
 
 interface ThemedIconLabel {
   variant: AlertProps['variant']
   theme: DefaultTheme
   hasDescription: boolean
-  small: boolean
+  small?: boolean
 }
 
 const getThemeColor = ({ theme, variant = variants.INFO }: ThemedIconLabel) => {
@@ -98,20 +97,18 @@ const SizableText = styled(Text)`
 
 const Alert: React.FC<AlertProps> = ({ title, children, variant, onClick }) => {
   const Icon = getIcon(variant)
-  const { isSm, isMd, isXs } = useMatchBreakpoints()
 
   return (
-    <StyledAlert small={isMd || isSm || isXs}>
-      <IconLabel variant={variant} hasDescription={!!children} small={isMd || isSm || isXs}>
+    <StyledAlert>
+      <IconLabel variant={variant} hasDescription={!!children}>
         <Icon color='currentColor' width='32px' />
       </IconLabel>
       <Details hasHandler={!!onClick}>
-        <SizableText bold small={isMd || isSm || isXs}>
+        <SizableText bold>
           {title}
         </SizableText>
         {typeof children === 'string' ? (
-          <SizableText as='p' small={isMd || isSm || isXs}>
-            {children}
+          <SizableText as='p' dangerouslySetInnerHTML={{ __html: children }}>
           </SizableText>
         ) : (
           children
@@ -120,8 +117,8 @@ const Alert: React.FC<AlertProps> = ({ title, children, variant, onClick }) => {
       {onClick && (
         <VerticalCenter>
           <CloseHandler>
-            <IconButton width={isMd || isSm || isXs ? '24px' : '32px'} height={isMd || isSm || isXs ? '24px' : '32px'} variant='text' onClick={onClick}>
-              <CloseIcon width={isMd || isSm || isXs ? '16px' : '24px'} color='currentColor' />
+            <IconButton width={'32px'} height={'32px'} variant='text' onClick={onClick}>
+              <CloseIcon width={'24px'} color='currentColor' />
             </IconButton>
           </CloseHandler>
         </VerticalCenter>
