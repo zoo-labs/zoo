@@ -96,8 +96,8 @@ const Title = styled.a`
 
 const LogoIcon = styled.div`
   margin-left: 0px;
-  margin-top: 0px;
-  width: 64px;
+  margin-top: 8px;
+  width: 72px;
   transition: transform 0.3s ease;
   :hover {
     transform: rotate(-5deg);
@@ -296,7 +296,7 @@ export default function Header() {
         <div className='w-auto flex items-center rounded bg-secondary hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto hover:bg-gray-800'>
           {account ? (
             <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} ml='0.25rem' mr='0.25rem' pl='0.5rem' pr='0.5rem' fontWeight={500}>
-              {numberWithCommas(balance) || 0} {NETWORK_SYMBOL[chainID]}
+              {numberWithCommas('0.4200') || 0} {NETWORK_SYMBOL[1]}
             </BalanceText>
           ) : null}
           <UserBlock account={account} />
