@@ -135,7 +135,7 @@ const Index: React.FC<IndexProps> = ({}) => {
   return (
     <main className='w-full h-full'>
       <div className='py-32 '>
-        <div className='w-full px-16 '>
+        <div className='w-full md:px-8 lg:px-16 px-4'>
           <div className='mb-36 text-center mx-auto max-w-xl'>
             <DoubleGlowShadow>
               <div className='mb-2 text-gray-600 font-bold text-sm'>Buy, List, & Bid on Generation One Based Animals.</div>
@@ -151,12 +151,12 @@ const Index: React.FC<IndexProps> = ({}) => {
             </DoubleGlowShadow>
           </div>
           <div className='relative -mt-6 '>
-            <div className='flex mb-8 justify-between items-center px-16 max-w-screen-xl mx-auto'>
-              <h3 className=' font-bold text-4xl'>My {bidView === 0 ? 'Bids' : 'Auctions'}</h3>
+            <div className='flex mb-8 justify-between items-center px-2 lg:px-16 max-w-screen-xl mx-auto'>
+              <h3 className=' font-bold text-xl md:text-2xl lg:text-4xl'>My {bidView === 0 ? 'Bids' : 'Auctions'}</h3>
               <div
                 onClick={() => splideparentRef.current.splide.go('>')}
                 style={{ borderWidth: 1 }}
-                className='hoverdiv hover:border-white cursor-pointer border-gray-500 border-solid  shadow-xl w-60 rounded  flex justify-between items-center '>
+                className='hoverdiv hover:border-white cursor-pointer border-gray-500 border-solid  shadow-xl w-30 md:w-40 lg:w-60 rounded  flex justify-between items-center '>
                 <div className='flex flex-col px-4 py-2 '>
                   <h6 className='text-xs text-gray-500  font-semibold'>{bidView === 0 ? myAuctions.length : myBids.length}</h6>
                   <h6 className=' text-xl text-gray-500  font-bold'>{bidView === 0 ? 'Auctions' : 'Bids'}</h6>
@@ -171,10 +171,15 @@ const Index: React.FC<IndexProps> = ({}) => {
               ref={splideparentRef}
               options={{
                 width: '100%',
-                fixedWidth: '100%',
+                fixedWidth: '100vw',
                 arrows: false,
                 pagination: false,
                 rewind: true,
+                breakpoints: {
+                  640: {
+                    fixedWidth: '100%',
+                  },
+                },
               }}>
               <SplideSlide>
                 <Splide
@@ -298,7 +303,7 @@ const Index: React.FC<IndexProps> = ({}) => {
       <div className='py-32 ' id='market-section'>
         <div className='w-full px-16 max-w-screen-xl mx-auto'>
           <h3 className='mb-16 text-4xl font-semibold'>Discover</h3>
-          <div className='relative flex justify-between mb-8'>
+          <div className='hidden lg:flex relative justify-between mb-8'>
             <div className='cursor-pointer text-sm w-44 h-12 pl-4 pr-1 items-center rounded-lg border border-solid border-gray-600 flex justify-between'>
               Recently added
               <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} />
