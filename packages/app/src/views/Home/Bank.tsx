@@ -20,7 +20,6 @@ const ValueWrapper = styles(Text)`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding: 16px;
     font-size: 18px;
 `
 
@@ -73,80 +72,38 @@ const Bank: React.FC = () => {
 
   return (
     <>
-      <div className='w-full m-8'>
-        <Body>
-          <Label className='text-base font-bold currentColor mb-2 text-xl'>Total Daily Yield</Label>
-          <Flex width='100%' alignItems='center' justifyContent='space-around'>
-            <ValueWrapper> {dailyYield} ZOO Daily Yield</ValueWrapper>
-          </Flex>
-          <Label>Top Earners</Label>
-          {topTenAnimals.length === 0 ? (
-            <ValueWrapper style={{ justifyContent: 'center' }}> No animals </ValueWrapper>
-          ) : (
-            <EarnerValueWrapper style={{ marginLeft: -16 }}>
-              {topTenAnimals.map((animal) => {
-                return (
-                  <EarnerValue key={animal.tokenID + '_earner_'}>
-                    {animal.name} - {animal.yield}/day
-                  </EarnerValue>
-                )
-              })}
-            </EarnerValueWrapper>
-          )}
+      <div className='flex flex-col relative filter drop-shadow z-10 w-full'>
+        <div className='flex flex-col h-full'>
+          <div className='p-5 flex flex-col'>
+            <Label className='text-base font-bold currentColor mb-2 text-xl'>Total Daily Yield</Label>
+            <Flex width='100%' alignItems='center' justifyContent='space-around'>
+              <ValueWrapper>{dailyYield} ZOO Daily Yield</ValueWrapper>
+            </Flex>
+            <Label>Top Earners</Label>
+            {topTenAnimals.length === 0 ? (
+              <ValueWrapper style={{ justifyContent: 'center' }}> No animals </ValueWrapper>
+            ) : (
+              <EarnerValueWrapper style={{ marginLeft: -16 }}>
+                {topTenAnimals.map((animal) => {
+                  return (
+                    <EarnerValue key={animal.tokenID + '_earner_'}>
+                      {animal.name} - {animal.yield}/day
+                    </EarnerValue>
+                  )
+                })}
+              </EarnerValueWrapper>
+            )}
+          </div>
           <Label>Recent Tansactions</Label>
           {myTransactions.length === 0 ? (
             <TableText> No Transaction Data </TableText>
           ) : (
             <Container>
               <TransactionTable Transactions={myTransactions} />
-              {/* <TableContainer>
-                <TableWrapper>
-                  <StyledTable>
-                    <TableBody className='w-full'>
-                      <TableRow className='w-full'>
-                        <TableHeader style={{ fontWeight: 400, width: isSm ? '100%' : '50%' }} className={`${isSm ? 'w-full' : 'w-1/2'}`}>
-                          Tx Hash
-                        </TableHeader>
-                        <TableHeader style={{ fontWeight: 400 }}>Action</TableHeader>
-                        <TableHeader style={{ fontWeight: 400 }}>Block</TableHeader>
-                        <TableHeader style={{ fontWeight: 400 }}>Token ID</TableHeader>
-                      </TableRow>
-                      {transactions.map((tx: { hash: string; action: string; blockNumber: string; tokenID: string; url: string; id: string }) => {
-                        console.log('tx', tx)
-                        return (
-                          <TableRow key={tx.id} className='w-full'>
-                            <TableData style={{ width: `${isSm ? '100%' : '50%'}` }}>
-                              <a href={`${tx.url}`} className='flex items-center gap-2'>
-                                <h6 className='flex items-center hover:underline py-0.5'>{tx.hash.slice(0, 35)} ↗</h6>
-                                <div className='text-green'>
-                                  <CheckmarkCircleIcon width={16} height={16} />
-                                </div>
-                              </a>
-                            </TableData>
-                            <TableData>{tx.action}</TableData>
-                            <TableData>{tx.blockNumber}</TableData>
-                            <TableData>
-                              <Link to={`/feed/myzoo/${tx.tokenID}`}>{tx.tokenID}</Link>
-                            </TableData>
-                          </TableRow>
-                        )
-                      })}
-                    </TableBody>
-                  </StyledTable>
-                </TableWrapper>
-              </TableContainer>
-             */}
             </Container>
           )}
-        </Body>
+        </div>
       </div>
-      {/* <div>
-      <div className="flex flex-col gap-2 flex-nowrap">
-      {transactions.map((hash, i) => {
-        return <Transaction transaction={tx} />
-      })}
-    </div>
-      </div> */}
     </>
   )
 }
