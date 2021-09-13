@@ -5,7 +5,7 @@ import Toast from './Toast'
 import { ToastContainerProps } from './types'
 import { useMatchBreakpoints } from 'hooks'
 
-const ZINDEX = 1000
+const ZINDEX = 9000
 const TOP_POSITION = 0 // Initial position from the top
 
 const StyledToastContainer = styled.div`

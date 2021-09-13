@@ -131,10 +131,10 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   }
 
   const isBalanceSufficient = (): boolean => {
-    if ((chainID === 56 || chainID === 1) && balance < 500000) return false
-    else if (balance < 300000) return false
-    else return true
+    if (balance == 0) return false
+    return true
   }
+
   const toggleBuyEggModal = useBuyEggModalToggle()
   const buyEgg = async () => {
     // setDisable(true)
@@ -196,7 +196,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
                 <div>
                   <div className='text-base font-bold currentColor mb-2 text-xl'>Wallet Balance</div>
                   <div className='text-base font-bold currentColor text-2xl'>
-                    <span className='text-2xl'>11,010,000,110.1001 ZOO</span>
+                    <span className='text-2xl'>{ numberWithCommas(balance.toFixed(2)) } ZOO</span>
                   </div>
                 </div>
                 <div className='ml-4 relative inline-flex rounded-md shadow-sm'>
