@@ -161,11 +161,11 @@ const hashEgg = (egg) => {
 const Card = styled(Existing)<{ timedOut?: boolean; interactive?: boolean; hatching?: boolean; hatched?: boolean }>`
   animation: ${({ interactive, hatching, hatched }) => cardAnimation(interactive, hatching, hatched)};
   cursor: pointer;
-  width: 100%;
+  width: 111px;
   background-color: ${({ theme }) => theme.colors.background};
-  border-radius: 8px;
+  border-radius: 12px;
   display: block;
-  height: 100%;
+  height: 85%;
   // opacity: ${({ interactive, hatching }) => (!interactive && !hatching ? '0.8' : null)};
   transition: all 1s ease-in-out;
 `
@@ -229,7 +229,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
   return (
     <>
       <Card
-        style={{ backgroundColor: '#000000', height: '100%', width: 123 }}
+        style={{ backgroundColor: '#000000' }}
         timedOut={egg.timeRemaining > 0 ? true : false}
         interactive={egg.interactive}
         hatching={hatching}
