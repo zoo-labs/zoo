@@ -62,8 +62,8 @@ const Title = styled.a`
 
 const LogoIcon = styled.div`
   margin-left: 0px;
-  margin-top: 0px;
-  width: 64px;
+  margin-top: 8px;
+  width: 72px;
   transition: transform 0.3s ease;
   :hover {
     transform: rotate(-5deg);
