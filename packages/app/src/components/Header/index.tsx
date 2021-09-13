@@ -129,7 +129,12 @@ export default function Header() {
   }
 
   return (
-    <HeaderFrame showBackground={scrollY > 45} isMobile={isMobile} isFeed={active == 'feed'} modalOpen={newAnimalModalOpen || videoPlayerModalOpen || bidModalOpen || buyEggModal}>
+    <HeaderFrame
+      showBackground={scrollY > 45}
+      isMobile={isMobile}
+      isFeed={active == 'feed'}
+      modalOpen={newAnimalModalOpen || videoPlayerModalOpen || bidModalOpen || buyEggModal}
+      style={{ paddingRight: 0 }}>
       <Title>
         <LogoIcon>
           <img src={logoURL} alt='logo' onClick={() => route_to_homepage()} />
@@ -140,9 +145,9 @@ export default function Header() {
           isMobile ? 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
         }`}
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
-        {['Account', 'Bank', 'Market', 'Bridge'].map((path: string) => {
+        {['Home', 'Bank', 'Market', 'Swap'].map((path: string) => {
           console.log('active', active)
-          const selected = path == 'Bridge' ? active == 'bridge' || active == 'limit-order' : active === path.toLowerCase()
+          const selected = path == 'Swap' ? active == 'bridge' || active == 'limit-order' : active === path.toLowerCase()
           return (
             <a
               key={path}
@@ -158,7 +163,7 @@ export default function Header() {
         })}
       </div>
 
-      <div className='flex items-center justify-between w-full space-x-2 sm:justify-end'>
+      <div className='flex items-center justify-end w-full space-x-2 sm:justify-end'>
         {!isSm && (
           <>
             <Tooltip title='Add ZOO to MetaMask' placement='bottom'>
@@ -206,7 +211,7 @@ export default function Header() {
                 </div>
               </div>
             </Tooltip>
-            <div className='hidden sm:inline-block'>
+            <div className=''>
               <NetworkCard />
             </div>
           </>

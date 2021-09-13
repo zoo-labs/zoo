@@ -15,7 +15,7 @@ import Bank from './Bank'
 interface indexProps {}
 
 const Index: React.FC<indexProps> = ({}) => {
-  const [tab, setTab] = useState('account')
+  const [tab, setTab] = useState('home')
   const web3 = useWeb3()
   const { chainID, account } = web3
   const [wait, setWait] = useState(false)
@@ -134,7 +134,7 @@ const Index: React.FC<indexProps> = ({}) => {
           </div>
         </div>
       </div> */}
-      <div className='flex'>{tab === 'account' ? <Account handleFunds={() => handleFunds()} wait={wait} balance={zooBalance} /> : <Bank />}</div>
+      <div className='flex'>{tab === 'home' ? <Account handleFunds={() => handleFunds()} wait={wait} balance={zooBalance} /> : <Bank />}</div>
       <div
         style={{
           width: '50vw',

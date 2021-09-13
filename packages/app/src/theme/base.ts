@@ -4,7 +4,7 @@ export const breakpointMap: { [key: string]: number } = {
   xs: 370,
   sm: 576,
   md: 852,
-  lg: 1400,
+  lg: 1480,
   xl: 1960,
 }
 
