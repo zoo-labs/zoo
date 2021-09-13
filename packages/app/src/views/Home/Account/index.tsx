@@ -189,7 +189,6 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
 
       <div className='flex flex-col relative filter drop-shadow z-10 w-full'>
         <div className='flex flex-col h-full'>
-          <AccountHeader />
           <div className='flex flex-col justify-between h-full'>
             <div style={{ flex: 1 }} className='p-5 rounded'>
               <div className='flex items-end'>
@@ -257,57 +256,6 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
               )}
             </div>
           </div>
-          {/* <div style={{ flex: 1 }} className='p-5 rounded my-4'>
-            <Animals hybrid='pure' />
-          </div>
-          <div style={{ flex: 1 }} className='p-5 rounded my-4'>
-            <Animals hybrid='hybrid' />
-          </div> */}
-          {/* {tab === 0 ? (
-            <div className='flex flex-col justify-between h-full'>
-              <div style={{ backgroundColor: '#212429', flex: 1 }} className='p-5 rounded'>
-                <div className='mb-2'>
-                  <Label style={{ fontSize: '20px' }}>{currentEggsOwned} Eggs Owned</Label>
-                </div>
-                <Eggs />
-              </div>
-
-              <div className='my-4 flex justify-between flex-wrap'>
-                {(keepApprove || !allowance) && (
-                  <div className={` ${isSm ? 'w-full' : 'w-1/4'} px-2`}>
-                    <button
-                      disabled={disableApprove || allowance}
-                      style={{ color: 'rgb(255,255,255)', backgroundColor: '#8C4FF8', border: '1px solid rgba(21, 61, 111, 0.44)' }}
-                      className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-gray-700 bg-opacity-80  text-primary border-gray-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80  py-4 text-base rounded  font-semibold disabled:cursor-not-allowed focus:outline-none w-full`}
-                      onClick={approve}>
-                      {allowance ? 'APPROVED' : disableApprove ? 'PROCESSING' : 'APPROVE'}
-                    </button>
-                  </div>
-                )}
-                <div className={` ${isSm || allowance ? 'w-full' : 'w-3/4'} px-2`}>
-                  <button
-                    disabled={disable || !allowance}
-                    className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80 px-6 py-4 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full`}
-                    style={{ backgroundColor: allowance ? '#8C4FF8' : 'rgb(44, 47, 54)' }}
-                    onClick={buyEgg}>
-                    {disable ? 'PROCESSING' : 'BUY EGGS'}
-                  </button>
-                </div>
-              </div>
-            </div>
-          ) : tab === 1 ? (
-            <>
-              <div style={{ backgroundColor: '#212429', flex: 1 }} className='p-5 rounded'>
-                <Animals hybrid='pure' />
-              </div>
-            </>
-          ) : (
-            <>
-              <div style={{ backgroundColor: '#212429', flex: 1 }} className='p-5 rounded'>
-                <Animals hybrid='hybrid' />
-              </div>
-            </>
-          )} */}
         </div>
       </div>
       <ToastListener />

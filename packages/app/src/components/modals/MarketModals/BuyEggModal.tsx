@@ -1,14 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useBuyEggModalToggle } from 'state/application/hooks'
 import Modal from '../../NewModal'
 import BidModalHeader from '../../NewModal/BidModalHeader'
 import { AppState } from 'state'
 import { useSelector } from 'react-redux'
-import { useIsAnimationMode } from 'state/user/hooks'
-import { MinusCircle, PlusCircle } from 'react-feather'
+import { ArrowDown, Minus, MinusCircle, Plus, PlusCircle } from 'react-feather'
 import { numberWithCommas } from 'components/Functions'
 import { isEmpty } from 'lodash'
+import { ArrowDownIcon, ArrowDropDownIcon, CloseIcon } from 'components'
+import { RiArrowDropDownLine } from 'react-icons/ri'
+import { wait } from 'functions'
 interface BuyEggModalProps {}
 
 const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
@@ -17,12 +19,10 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const [amount, setAmount] = useState(0)
   const [error, setError] = useState('')
   const [eggs, setEggs] = useState([])
+  const [quantitySwitch, setQuantitySwitch] = useState(false)
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
   const myEggs = useSelector<AppState, AppState['zoo']['myEggs']>((state) => state.zoo.myEggs)
 
-  const isAnimated = useIsAnimationMode()
-  const tinderRef = useRef(null)
-  const inputCheck = () => {}
   useEffect(() => {
     if (amount > zooBalance) {
       setError(`You dont have enough ZOO`)
@@ -32,25 +32,25 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   }, [amount])
   useEffect(() => {
     const newEggs = []
-    Object.values(myEggs).forEach((egg) => {
-      newEggs.push(egg)
-    })
-    // const fakeEggs = [{ original: 'true' }]
-    // fakeEggs.forEach((egg) => {
+    // Object.values(myEggs).forEach((egg) => {
     //   newEggs.push(egg)
     // })
+    const fakeEggs = [{ original: 'true' }]
+    fakeEggs.forEach((egg) => {
+      newEggs.push(egg)
+    })
     const emptyLength = 3 - newEggs.length
     for (let index = 0; index < emptyLength; index++) {
       newEggs.push({})
     }
     setEggs(newEggs)
+    wait(1500).then(() => addEgg())
   }, [])
   const addEgg = () => {
     const newEggs = [...eggs]
     const foundIndex = newEggs.findIndex((x) => isEmpty(x))
     newEggs[foundIndex] = { temporary: true }
     setAmount(300000 * newEggs.filter((egg) => !isEmpty(egg) && egg.temporary).length)
-
     setEggs(newEggs)
   }
   const removeEgg = () => {
@@ -65,61 +65,30 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     <Modal isOpen={buyEggModal} onDismiss={() => null} isMax>
       <BidModalHeader onBack={() => toggleBuyEggModal()} className='absolute p-6 w-full ' />
       <div className='flex flex-wrap h-full'>
-        <div className='flex flex-col flex-1 bg-modal-dark items-center justify-center'>
-          <div className='lg:w-1/3 w-full'>
-            <div className=' p-px   bg-gradient-to-b from-btn1  to-btn2 rounded flex relative'>
-              <div className='h-full w-full bg-cover rounded bg-no-repeat'>
-                <div className=''>
-                  <img style={{ verticalAlign: 'middle' }} src={`/static/video/egg.gif`} className='h-full transition-transform w-full duration-1000 rounded h-full' />
-                </div>
-              </div>
-            </div>
-            <div className='py-4 flex flex-col no-underline cursor-pointer'>
-              <div className='py-2 flex flex-grow flex-col no-underline cursor-pointer'>
-                <div className='flex flex-grow flex-col'>
-                  <div className='mb-2 flex '>
-                    <div className='mr-auto mt-1 font-semibold'>Egg</div>
-                    <div
-                      className='flex-shrink-0 ml-2 px-2 uppercase primary font-bold rounded-sm text-xs flex items-center justify-center'
-                      style={{ boxShadow: 'inset 0 0 0 1px rgb(140, 79, 248)' }}>
-                      300000 ZOO
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className='flex flex-col flex-1  justify-center items-center'>
-          <div className='max-w-2xl w-2/3 p-4'>
-            <div className='flex justify-between mb-4'>
-              <label className='leading-snug text-md font-semibold'>Buy Eggs with ZOO</label>
-              <h5 className='text-sm text-gray-400'>
-                Your balance: <span className='text-white font-bold'> {numberWithCommas(zooBalance.toFixed(2)) || 0} ZOO</span>
-              </h5>
+        <div className='flex flex-col flex-1  justify-center items-center shadow-lg'>
+          <div className='max-w-2xl w-1/2 p-4'>
+            <div className='w-full flex MB-6 flex-col'>
+              <div className='text-gray-500 font-semibold text-sm'>BUY EGGS</div>
+              <div className='text-4xl font-bold'>{numberWithCommas(amount)} ZOO</div>
             </div>
             <div className=' my-8 w-full'>
-              <div className='flex justify-between items-center'>
-                <div className='flex justify-around w-1/3'>
-                  <div className='cursor-pointer' onClick={() => addEgg()}>
-                    <PlusCircle size={60} />
-                  </div>
-                  <div className='cursor-pointer ' onClick={() => removeEgg()}>
-                    <MinusCircle size={60} />
-                  </div>
+              <div className='flex h-20 '>
+                <div className=' mr-2 w-14 rounded flex justify-center items-center'>
+                  <img style={{ verticalAlign: 'middle' }} src={`/static/images/basic.jpg`} className='h-full transition-transform w-full duration-1000 rounded h-full' />
                 </div>
-                <div className='flex  items-center flex-wrap'>
-                  {eggs.map((egg) => {
-                    return (
-                      <div className={`${isEmpty(egg) ? 'border border-gray-300 border-dashed' : 'bg-dark-1000'} h-40 mr-4 w-24  rounded flex justify-center items-center`}>
-                        {egg.temporary || isEmpty(egg) ? (
-                          <div></div>
-                        ) : (
-                          <img style={{ verticalAlign: 'middle' }} src={`/static/images/basic.jpg`} className='h-full transition-transform w-full duration-1000 rounded h-full' />
-                        )}
-                      </div>
-                    )
-                  })}
+                <div className='w-full h-full flex px-4 justify-between'>
+                  <div className='flex flex-col justify-center'>
+                    <div className='mb-2'>Egg</div>
+                    <div className='text-gray-400 flex mt-2 items-center'>
+                      Qty
+                      <button onClick={() => setQuantitySwitch(true)} className='ml-2 text-gray-300 hover:bg-dark-800 p-1 rounded-md' type='button'>
+                        <span className='font-semibold tex-gray-900 flex'>
+                          {eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length} <RiArrowDropDownLine />
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                  <div className='flex w-auto items-center text-gray-400 font-semibold'>300,000 ZOO each</div>
                 </div>
               </div>
             </div>
@@ -128,24 +97,64 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
               One egg costs <span className='font-bold text-white'>300,000 ZOO</span>
             </h6>
             <h6 className='mb-2 text-xs text-gray-400 font-semibold'>A maximum of 3 eggs are allowed per account</h6>
+          </div>
+        </div>
+        <div className='flex flex-col flex-1 bg-modal-dark items-center justify-center'>
+          <div className='w-1/2'>
             <div className='flex'>
               <button
                 onClick={() => toggleBuyEggModal()}
-                className='text-white my-4 w-1/2 inline-flex justify-center items-center h-10 px-6 bg-dark-1000 font-bold text-lg leading-none  '
+                className='text-white my-4 w-full inline-flex justify-center items-center h-10 px-6 bg-primary-light hover:bg-primary rounded-lg font-bold text-lg leading-none'
                 style={{ transition: 'all .2s' }}>
-                {numberWithCommas(amount)} ZOO
-              </button>
-              <button
-                onClick={() => toggleBuyEggModal()}
-                className='text-white my-4 w-full inline-flex justify-center items-center h-10 px-6 bg-primary-light hover:bg-primary rounded-lg font-bold text-lg leading-none  '
-                style={{ transition: 'all .2s' }}>
-                Buy
+                Pay
               </button>
             </div>
-            {/* <a className=' text-xs primary font-semibold text-center underline'>How do auctions work ?</a> */}
           </div>
         </div>
       </div>
+      <Modal isOpen={quantitySwitch} onDismiss={() => setQuantitySwitch(false)}>
+        <div className='w-full mb-4'>
+          <div className='flex h-20 '>
+            <div className=' mr-2 w-14 rounded flex justify-center items-center'>
+              <img style={{ verticalAlign: 'middle' }} src={`/static/images/basic.jpg`} className='h-full transition-transform w-full duration-1000 rounded h-full' />
+            </div>
+            <div className='w-full h-full flex px-4 justify-between'>
+              <div className='flex flex-col justify-center'>
+                <div className='mb-1'>Update Quantity</div>
+                <div className='text-gray-400 flex mt-1 font-semibold items-center'>Egg</div>
+              </div>
+              <div className='flex w-auto items-center text-gray-400 font-semibold'>
+                <div className='p-1 bg-white rounded-full cursor-pointer' onClick={() => setQuantitySwitch(false)}>
+                  <CloseIcon color='white' />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className='flex justify-center  items-center'>
+            <div
+              className={`cursor-pointer h-10 w-10 rounded-full ${
+                eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length > 0 ? 'bg-dark-700' : 'bg-dark-800'
+              }  flex justify-center items-center`}
+              onClick={() => removeEgg()}>
+              <Minus size={25} />
+            </div>
+            <div className='mx-6 px-4 py-3 rounded border border-solid'>{eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length}</div>
+            <div className='cursor-pointer h-10 w-10 rounded-full bg-dark-700 flex justify-center items-center' onClick={() => addEgg()}>
+              <Plus size={25} />
+            </div>
+          </div>
+          <div className='flex'>
+            <button
+              onClick={() => setQuantitySwitch(false)}
+              className='text-white mt-4 w-full inline-flex justify-center items-center h-10 px-6 bg-primary-light hover:bg-primary rounded-lg font-bold text-lg leading-none'
+              style={{ transition: 'all .2s' }}>
+              Update
+            </button>
+          </div>
+        </div>
+      </Modal>
     </Modal>
   )
 }
