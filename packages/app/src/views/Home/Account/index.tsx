@@ -196,7 +196,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
                 <div>
                   <div className='text-base font-bold currentColor mb-2 text-xl'>Wallet Balance</div>
                   <div className='text-base font-bold currentColor text-2xl'>
-                    <span className='text-2xl'>{numberWithCommas(balance.toFixed(3))} </span>ZOO
+                    <span className='text-2xl'>11,010,000,110.1001 ZOO</span>
                   </div>
                 </div>
                 <div className='ml-4 relative inline-flex rounded-md shadow-sm'>
