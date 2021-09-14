@@ -229,7 +229,7 @@ function Feed<FeedPagePops>({ match }) {
           </SplideSlide>
         </Splide>
       </main>
-      <AssetModal />
+      {/* <AssetModal /> */}
     </>
   )
 }

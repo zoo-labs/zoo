@@ -19,6 +19,7 @@ import MyBid from 'components/Market/MyBid'
 import MyAuction from 'components/Market/MyAuction'
 import BidModal from 'components/modals/MarketModals/BidModal'
 import { useBidModalToggle } from 'state/application/hooks'
+import AssetModal from 'components/modals/AssetModal'
 interface IndexProps {}
 const PrettoSlider = withStyles({
   root: {
@@ -427,6 +428,7 @@ const Index: React.FC<IndexProps> = ({}) => {
       </div>
       <div className=''></div>
       <BidModal item={activeBid} />
+      {/* <AssetModal item={activeBid} /> */}
     </main>
   )
 }

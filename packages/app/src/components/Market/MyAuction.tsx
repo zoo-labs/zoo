@@ -2,6 +2,9 @@ import React from 'react'
 import { StopCircle } from 'react-feather'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import Countdown from 'react-countdown'
+import { useAssetModalToggle, useToggleModal } from 'state/application/hooks'
+import { ApplicationModal } from 'state/application/actions'
+import { useHistory } from 'react-router'
 
 interface MyAuctionProps {
   bidRef: any
@@ -11,6 +14,8 @@ interface MyAuctionProps {
 }
 
 const MyAuction: React.FC<MyAuctionProps> = ({ bidRef, showArrow, showLeftArrow, showRightArrow }) => {
+  const toggleAssetModal = useAssetModalToggle()
+  const history = useHistory()
   return (
     <div className='flex flex-start flex-wrap jusrify-center items-center px-4 w-full lg:w-2/3 md:w-full '>
       <div className='hidden md:inline-flex relative md:w-1/3 lg:w-1/2 flex justify-center'>
@@ -92,6 +97,11 @@ const MyAuction: React.FC<MyAuctionProps> = ({ bidRef, showArrow, showLeftArrow,
             Edit Auction
           </a>
           <a
+            // onClick={() =>
+            //   history.push(`/feed/${datum.owner}/${datum.tokenID}`, {
+            //     item: datum,
+            //   })
+            // }
             className='text-white mb-4 w-full inline-flex justify-center hover:bg-primary-light items-center h-10 px-6 border border-solid border-gray-300 rounded-lg font-bold text-lg leading-none  '
             style={{ transition: 'all .2s', borderColor: '#353945' }}>
             View Item
