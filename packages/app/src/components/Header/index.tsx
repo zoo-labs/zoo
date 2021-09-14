@@ -48,40 +48,6 @@ const HeaderFrame = styled.div<{ showBackground: boolean; isMobile: boolean; isF
   ${({ isFeed, modalOpen }) => (isFeed || modalOpen ? 'display: none' : 'display: grid')};
 `
 
-const HeaderLinks = styled.div`
-  justify-self: center;
-  width: fit-content;
-  padding: 4px;
-  border-radius: 16px;
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 10px;
-  overflow: auto;
-  align-items: center;
-`
-
-const HeaderControls = styled.div`
-  -moz-box-align: center;
-  align-items: center;
-  justify-self: flex-end;
-  flex-direction: row;
-  display: flex;
-`
-
-const AccountElement = styled.div<{ active: boolean }>`
-  font-size: 14px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  white-space: nowrap;
-  width: 100%;
-  cursor: pointer;
-
-  :focus {
-    border: 1px solid blue;
-  }
-`
-
 const Title = styled.a`
   display: flex;
   align-items: center;
@@ -96,8 +62,8 @@ const Title = styled.a`
 
 const LogoIcon = styled.div`
   margin-left: 0px;
-  margin-top: 0px;
-  width: 64px;
+  margin-top: 8px;
+  width: 72px;
   transition: transform 0.3s ease;
   :hover {
     transform: rotate(-5deg);
@@ -105,55 +71,6 @@ const LogoIcon = styled.div`
 `
 
 const activeClassName = 'ACTIVE'
-
-// const StyledExternalLink = styled().attrs({
-//   activeClassName,
-// })<{ isActive?: boolean }>`
-//   ${({ theme }) => theme.flexRowNoWrap}
-//   align-items: left;
-//   border-radius: 3rem;
-//   outline: none;
-//   cursor: pointer;
-//   text-decoration: none;
-//   font-size: 1rem;
-//   width: fit-content;
-//   margin: 0 12px;
-//   font-weight: 500;
-
-//   &.${activeClassName} {
-//     border-radius: 12px;
-//     font-weight: 600;
-//   }
-
-//   :hover,
-//   :focus {
-//     text-decoration: none;
-//   }
-// `
-const StyledNavLink = styled(NavLink).attrs({
-  activeClassName,
-})`
-  align-items: left;
-  border-radius: 3rem;
-  outline: none;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 500;
-  padding: 8px 12px;
-  word-break: break-word;
-  overflow: hidden;
-  white-space: nowrap;
-  &.${activeClassName} {
-    border-radius: 12px;
-    font-weight: 600;
-    justify-content: center;
-  }
-
-  :hover,
-  :focus {
-  }
-`
 const BalanceText = styled(Text)``
 
 export default function Header() {
@@ -170,9 +87,8 @@ export default function Header() {
   const [active, setActive] = useState('account')
   const { isXl, isXs, isSm, isMd, isLg } = useMatchBreakpoints()
   const web3 = useWeb3()
-  const { chainID, gasPrice } = web3
-  const { account, chainId, library } = useWeb3React()
-  const { login, logout } = useAuth()
+  const { chainID } = web3
+  const { account, library } = useWeb3React()
   const isMobile = isXl === false
   let location = useLocation()
   useEffect(() => {
@@ -184,8 +100,6 @@ export default function Header() {
     history.push(`/${url}`)
     toastClear()
   }
-  const zooToken = getToken(web3)
-
   const getBalance = async () => {
     if (!account) return;
     try {
@@ -208,13 +122,20 @@ export default function Header() {
 
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
+  const bidModalOpen = useModalOpen(ApplicationModal.BID)
+  const buyEggModal = useModalOpen(ApplicationModal.BUYEGG)
 
   const route_to_homepage = () => {
     history.push('/home')
   }
 
   return (
-    <HeaderFrame showBackground={scrollY > 45} isMobile={isMobile} isFeed={active == 'feed'} modalOpen={newAnimalModalOpen || videoPlayerModalOpen}>
+    <HeaderFrame
+      showBackground={scrollY > 45}
+      isMobile={isMobile}
+      isFeed={active == 'feed'}
+      modalOpen={newAnimalModalOpen || videoPlayerModalOpen || bidModalOpen || buyEggModal}
+      style={{ paddingRight: 0 }}>
       <Title>
         <LogoIcon>
           <img src={logoURL} alt='logo' onClick={() => route_to_homepage()} />
@@ -225,9 +146,9 @@ export default function Header() {
           isMobile ? 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
         }`}
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
-        {['Account', 'Bank', 'Market', 'Bridge'].map((path: string) => {
+        {['Home', 'Bank', 'Market', 'Swap'].map((path: string) => {
           console.log('active', active)
-          const selected = path == 'Bridge' ? active == 'bridge' || active == 'limit-order' : active === path.toLowerCase()
+          const selected = path == 'Swap' ? active == 'bridge' || active == 'limit-order' : active === path.toLowerCase()
           return (
             <a
               key={path}
@@ -243,7 +164,7 @@ export default function Header() {
         })}
       </div>
 
-      <div className='flex items-center justify-between w-full space-x-2 sm:justify-end'>
+      <div className='flex items-center justify-end w-full space-x-2 sm:justify-end'>
         {!isSm && (
           <>
             <Tooltip title='Add ZOO to MetaMask' placement='bottom'>
@@ -291,18 +212,18 @@ export default function Header() {
                 </div>
               </div>
             </Tooltip>
-            <div className='hidden sm:inline-block'>
+            <div className=''>
               <NetworkCard />
             </div>
           </>
         )}
         <div className='w-auto flex items-center rounded bg-secondary hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto hover:bg-gray-800'>
           {account ? (
-            <BalanceText onMouseEnter={open} style={{ fontSize: '14px', flexShrink: 0 }} ml='0.25rem' mr='0.25rem' pl='0.5rem' pr='0.5rem' fontWeight={500}>
+            <h6 className='mx-1 px-2' style={{ fontSize: '14px', flexShrink: 0 }}>
               {numberWithCommas(balance) || 0} {NETWORK_SYMBOL[chainID]}
-            </BalanceText>
+            </h6>
           ) : null}
-          <UserBlock account={account} login={login} logout={logout} />
+          <UserBlock account={account} />
         </div>
         <More />
       </div>
