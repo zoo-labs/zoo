@@ -7,7 +7,7 @@ declare type QueryPromise = Promise<Moralis.Object<Moralis.Attributes>[]>
 export function queryEggs(): QueryPromise {
   const Eggs = Moralis.Object.extend('Eggs')
   const query = new Moralis.Query(Eggs)
-  query.limit(1000)
+  query.limit(6000)
   // query.find()
   return query.find()
 }

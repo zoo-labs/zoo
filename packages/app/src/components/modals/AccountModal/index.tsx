@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { connectorLocalStorageKey } from '../config'
-import useWeb3 from 'hooks/useWeb3'
-import { getFaucet, getToken } from 'util/contracts'
-import AltModal from 'components/Modal/AltModal'
 import { numberWithCommas } from 'components/Functions'
 import HeaderModal from 'components/Modal/HeaderModal'
 import { ApplicationModal } from 'state/application/actions'
@@ -15,6 +12,8 @@ import { useHistory } from 'react-router'
 import CopyHelper from 'components/Copy/Copy'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
+import { injected, walletconnect, walletlink } from 'connectors'
+import { AbstractConnector } from '@web3-react/abstract-connector'
 
 interface AccountModalProps {}
 
@@ -23,22 +22,19 @@ const AccountModal: React.FC<AccountModalProps> = ({}) => {
   const toggleccountModal = useAccountModalToggle()
   const toggleWalletModal = useWalletModalToggle()
   const { logout } = useAuth()
-  const { chainId, account } = useWeb3React()
+  const { chainId, account, connector } = useWeb3React()
   const history = useHistory()
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
-  const getNetwork = (chainId: number) => {
-    switch (chainId) {
-      case 56:
-        return 'BSC'
-      case 97:
-        return 'BSC-TEST'
-      case 1:
-        return 'ETH'
-      case 4:
-        return 'ETH-TEST'
-      default:
-        return ''
+
+  function getConnector(connector: AbstractConnector) {
+    if (connector === injected) {
+      return 'Metamask'
+    } else if (connector === walletconnect) {
+      return 'WalletConnect '
+    } else if (connector === walletlink) {
+      return 'WalletConnect '
     }
+    return <h6></h6>
   }
 
   return (
@@ -48,7 +44,9 @@ const AccountModal: React.FC<AccountModalProps> = ({}) => {
           <HeaderModal onDismiss={() => toggleccountModal()} title='Account' />
           <div className='space-y-3'>
             <div className='flex items-center justify-between'>
-              <div className='font-medium text-baseline text-secondary'>Connected with {getNetwork(chainId)}</div>
+              <div className='font-medium text-baseline text-secondary'>
+                Connected with <span className='text-pink-500 font-semibold'>{connector && getConnector(connector)}</span>
+              </div>
               <div className='flex space-x-3'>
                 <button
                   //  chainId !== 56 ? bscSwith('bsc') : null, chainId !== 97 ? bscSwith('chapel')

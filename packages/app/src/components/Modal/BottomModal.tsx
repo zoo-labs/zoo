@@ -1,4 +1,4 @@
-import { CloseIcon, Flex, Heading, IconButton, Label } from 'components'
+import { CloseIcon, Flex, IconButton, Label } from 'components'
 import useTheme from 'hooks/useTheme'
 import React from 'react'
 import Sheet from 'react-modal-sheet'

@@ -1,4 +1,3 @@
-import { Modal } from 'components/Modal'
 import { Text, Flex } from 'components'
 import BorderButton from 'components/Button/BorderButton'
 import { SellConfirmProps } from './types'
@@ -15,7 +14,7 @@ const BidPriceInput = styled.input.attrs({
 
 export const SellConfirm: React.FC<SellConfirmProps> = ({ onDismiss = () => null, breed, sellAnimal }) => {
   return (
-    <Modal title='Confirm Listing' onDismiss={onDismiss}>
+    <>
       <Text style={{ textAlign: 'center' }}>{`Do you want to list ${sellAnimal.name}?`}</Text>
       <Flex width='100%' alignItems='center' justifyContent='space-evenly' flexDirection='row' mt='16px'>
         <Text fontSize='16px' style={{ whiteSpace: 'nowrap', marginTop: '5px' }}>
@@ -31,6 +30,6 @@ export const SellConfirm: React.FC<SellConfirmProps> = ({ onDismiss = () => null
           Cancel
         </BorderButton>
       </Flex>
-    </Modal>
+    </>
   )
 }
