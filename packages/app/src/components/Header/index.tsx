@@ -123,6 +123,7 @@ export default function Header() {
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
   const bidModalOpen = useModalOpen(ApplicationModal.BID)
   const buyEggModal = useModalOpen(ApplicationModal.BUYEGG)
+  const assetModal = useModalOpen(ApplicationModal.ASSET)
 
   const route_to_homepage = () => {
     history.push('/home')
@@ -133,7 +134,7 @@ export default function Header() {
       showBackground={scrollY > 45}
       isMobile={isMobile}
       isFeed={active == 'feed'}
-      modalOpen={newAnimalModalOpen || videoPlayerModalOpen || bidModalOpen || buyEggModal}
+      modalOpen={newAnimalModalOpen || videoPlayerModalOpen || bidModalOpen || buyEggModal || assetModal}
       style={{ paddingRight: 0 }}>
       <Title>
         <LogoIcon>

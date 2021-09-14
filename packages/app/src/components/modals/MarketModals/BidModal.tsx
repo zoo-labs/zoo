@@ -62,48 +62,48 @@ const BidModal: React.FC<BidModalProps> = ({ item }) => {
     <Modal isOpen={bidModal} onDismiss={() => null} isMax>
       <BidModalHeader onBack={() => toggleBidModal()} className='absolute p-6 w-full ' />
 
-      <div className='flex flex-wrap h-full'>
-        <div className='flex flex-col flex-1 bg-modal-dark items-center justify-center'>
-          <div className='lg:w-1/3 w-full'>
-            <div className=' p-px   bg-gradient-to-b from-btn1  to-btn2 rounded flex relative'>
-              <div className='h-full w-full bg-cover rounded bg-no-repeat'>{getVideo()}</div>
+      <div className='flex md:flex-wrap h-full flex-wrap-reverse md:pt-0 pt-16'>
+        <div className='flex flex-col w-full md:w-1/2 bg-modal-dark items-center justify-center'>
+          <div className='lg:w-1/3 w-1/3 md:w-2/3'>
+            <div className=' p-px   bg-gradient-to-b from-btn1  to-btn2 rounded  relative'>
+              <div className=' bg-cover rounded bg-no-repeat'>{getVideo()}</div>
             </div>
-            <div className='py-4 flex flex-col no-underline cursor-pointer'>
-              <div className='py-2 flex flex-grow flex-col no-underline cursor-pointer'>
-                <div className='flex flex-grow flex-col'>
-                  <div className='mb-2 flex '>
-                    <div className='mr-auto mt-1 font-semibold'>
-                      {item.name || 'Egg'} <span className='text-xs text-gray-500'>({item.tokenID || ''})</span>
-                    </div>
-                    <div
-                      className='flex-shrink-0 ml-2 px-2 uppercase primary font-bold rounded-sm text-xs flex items-center justify-center'
-                      style={{ boxShadow: 'inset 0 0 0 1px rgb(140, 79, 248)' }}>
-                      2.45 ETH
-                    </div>
+          </div>
+          <div className='py-4 flex flex-col no-underline cursor-pointer lg:w-1/3 md:w-2/3'>
+            <div className='py-2 flex flex-grow flex-col no-underline cursor-pointer'>
+              <div className='flex flex-grow flex-col'>
+                <div className='mb-2 flex '>
+                  <div className='mr-auto mt-1 font-semibold'>
+                    {item.name || 'Egg'} <span className='text-xs text-gray-500'>({item.tokenID || ''})</span>
                   </div>
-                  <div className=' flex '>
-                    <div className='mr-auto mt-1 font-semibold flex text-xs text-gray-500'>
-                      <div className='h-4 w-4 rounded-full bg-gradient-to-b from-btn1 to-btn2 mr-1'></div>
-                      {accountEllipsis(item.owner || '')}
-                    </div>
-                    <div className='flex-shrink-0 ml-2  uppercase font-bold rounded-sm text-xs flex items-center justify-center'>3 days Left</div>
+                  <div
+                    className='flex-shrink-0 ml-2 px-2 uppercase primary font-bold rounded-sm text-xs flex items-center justify-center'
+                    style={{ boxShadow: 'inset 0 0 0 1px rgb(140, 79, 248)' }}>
+                    300k ZOO
                   </div>
                 </div>
-                <div className=' border-t border-solid border-gray-700 flex items-center justify-between mt-2 pt-2 text-sm text-gray-800'>
-                  <div className='flex items-center text-xs text-gray-500 font-semibold'>
-                    <div className='mr-1'>
-                      <FaMoneyBill />
-                    </div>
-                    Highest bid <span className='ml-1'>0.01 ETH</span>
+                <div className=' flex '>
+                  <div className='mr-auto mt-1 font-semibold flex text-xs text-gray-500'>
+                    <div className='h-4 w-4 rounded-full bg-gradient-to-b from-btn1 to-btn2 mr-1'></div>
+                    {accountEllipsis(item.owner || '')}
                   </div>
-                  <div className='text-xs text-gray-500 font-semibold'>{item.yield ? `${item.yield} Yields/Day ${getEmoji(item.rarity)}` : ''} </div>
+                  <div className='flex-shrink-0 ml-2  uppercase font-bold rounded-sm text-xs flex items-center justify-center'>3 days Left</div>
                 </div>
+              </div>
+              <div className=' border-t border-solid border-gray-700 flex items-center justify-between mt-2 pt-2 text-sm text-gray-800'>
+                <div className='flex items-center text-xs text-gray-500 font-semibold'>
+                  <div className='mr-1'>
+                    <FaMoneyBill />
+                  </div>
+                  Highest bid <span className='ml-1'>0.01 ETH</span>
+                </div>
+                <div className='text-xs text-gray-500 font-semibold'>{item.yield ? `${item.yield} Yields/Day ${getEmoji(item.rarity)}` : ''} </div>
               </div>
             </div>
           </div>
         </div>
-        <div className='flex flex-col flex-1  justify-center items-center'>
-          <div className='max-w-2xl w-1/2 p-4'>
+        <div className='flex flex-col w-full md:w-1/2 justify-center items-center'>
+          <div className='max-w-2xl w-3/4 lg:w-1/2  p-4'>
             {/* <div className='mb-8'>
               <h6 className='leading-normal text-xs'>
                 You are about to purchase an <span className='pink font-semibold text-lg'>EGG</span> from <span className='primary font-semibold  text-lg'>0x0770...08cb</span>
