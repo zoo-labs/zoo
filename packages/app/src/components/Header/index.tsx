@@ -148,7 +148,7 @@ export default function Header() {
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
         {['Home', 'Bank', 'Market', 'Swap'].map((path: string) => {
           console.log('active', active)
-          const selected = path == 'Swap' ? active == 'bridge' || active == 'limit-order' : active === path.toLowerCase()
+          const selected = path == 'Swap' ? active == 'swap' || active == 'limit-order' : active === path.toLowerCase()
           return (
             <a
               key={path}

@@ -28,7 +28,7 @@ function NetworkCard(): JSX.Element | null {
           </>
         ) : (
           <>
-            <img src={NETWORK_ICON[1]} alt='Switch Network' className='rounded-md' width='28px' height='28px' /> <div className='text-primary'>{NETWORK_LABEL[1]}</div>
+            <img src={NETWORK_ICON[chainId]} alt='Switch Network' className='rounded-md' width='28px' height='28px' /> <div className='text-primary'>{NETWORK_LABEL[chainId]}</div>
           </>
         )}
       </div>
