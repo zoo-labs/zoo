@@ -5,7 +5,6 @@ import { injected, walletconnect, walletlink } from '../../../connectors'
 import Metamask from '../../modals/icons/Metamask'
 import WalletConnect from '../../modals/icons/WalletConnect'
 import styled from 'styled-components'
-import { useWeb3 } from 'hooks'
 import { useConnectModalToggle, useAccountModalToggle, useWalletModalToggle } from 'state/application/hooks'
 import ConnectModal from '../../modals/ConnectModal'
 import AccountModal from '../../modals/AccountModal'
@@ -14,8 +13,6 @@ import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { RiPulseLine } from 'react-icons/ri'
 interface Props {
   account?: string
-  login: Login
-  logout: () => void
 }
 const IconWrapper = styled.div<{ size?: number }>`
   align-items: center;
@@ -45,9 +42,9 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
       </IconWrapper>
     )
   }
-  return <h6>nil</h6>
+  return <h6></h6>
 }
-const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
+const UserBlock: React.FC<Props> = ({ account }) => {
   const { connector, error } = useWeb3React()
   const toggleConnectModal = useConnectModalToggle()
   const toggleAccountModal = useAccountModalToggle()
@@ -59,7 +56,9 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
     <>
       <div>
         {account ? (
-          <div style={{ paddingTop: '6px', paddingBottom: '6px', marginTop: '2px', marginRight: '2px', marginBottom: '2px' }} className='flex items-center px-3 text-sm rounded-lg text-secondary bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'>
+          <div
+            style={{ paddingTop: '6px', paddingBottom: '6px', marginTop: '2px', marginRight: '2px', marginBottom: '2px' }}
+            className='flex items-center px-3 text-sm rounded-lg text-secondary bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'>
             <button
               className='font-semibold mr-2'
               onClick={() => {

@@ -1,6 +1,6 @@
 // Global constants injected during build
-const ZK = { }
-const CHAIN = '0x38'
+const ZK={}
+const CHAIN='0x38'
 
 // Get this enviroment's ZK contract
 async function getZooToken() {
@@ -36,7 +36,7 @@ async function getToken(tokenID) {
   return await zooKeeper.methods.tokens(tokenID).call()
 }
 
-// Is current request confirmed?
+// Is current request confirmed
 function confirmed(request) {
   return request.object.get('confirmed')
 }
@@ -76,18 +76,33 @@ function newTransaction(request) {
 Moralis.Cloud.afterSave('BuyEgg', async (request) => {
   const logger = Moralis.Cloud.getLogger()
   const eggID = parseInt(request.object.get('eggID')) // new Token ID
-  const egg = newEgg(request)
-  egg.set('tokenID', eggID)
-  egg.set('kind', 0)
-  egg.set('type', 'basic')
-  egg.set('interactive', true)
-  egg.set('hatched', false)
 
-  const tok = await getToken(tokenID)
+  // Pending confirmation on chain
+  if (!confirmed(request)) {
+    const egg = newEgg(request)
+    egg.set('tokenID', eggID)
+    egg.set('kind', 0)
+    egg.set('type', 'basic')
+    egg.set('interactive', false)
+    egg.set('hatched', false)
+    await egg.save()
+    logger.info(`Egg ${eggID} saved at ${Date.now()}`)
+    return
+  }
+
+  // Confirmed on chain, update with token data
+  const egg = await getEgg(eggID)
+  if (!egg){
+      logger.error(`BuyEgg, No egg found for id: ${eggID}`)
+      return;
+  }
+
+  const tok = await getToken(eggID)
   if (!tok){
       logger.error(`Hatch, No tok found for id: ${tokenID}`)
       return;
   }
+
   egg.set('tokenURI', tok.data.tokenURI)
   egg.set('metadataURI', tok.data.metadataURI)
   egg.set('rarity', tok.rarity.name)
@@ -98,6 +113,8 @@ Moralis.Cloud.afterSave('BuyEgg', async (request) => {
   tx.set('action', 'Bought Egg')
   tx.set('tokenID', eggID)
   await tx.save()
+
+  logger.info(`Egg ${eggID} saved at ${Date.now()}`)
 })
 
 Moralis.Cloud.afterSave('Hatch', async (request) => {
@@ -138,11 +155,13 @@ Moralis.Cloud.afterSave('Hatch', async (request) => {
       logger.error(`Hatch, No animal found for id: ${tokenID}`)
       return;
   }
+
   const tok = await getToken(tokenID)
   if (!tok){
       logger.error(`Hatch, No tok found for id: ${tokenID}`)
       return;
   }
+
   animal.set('kind', parseInt(tok.kind))
   animal.set('tokenURI', tok.data.tokenURI)
   animal.set('metadataURI', tok.data.metadataURI)
@@ -323,5 +342,14 @@ Moralis.Cloud.define('dropTables', async (request) => {
     for (let i = 0; i < results.length; i++) {
       await results[i].destroy()
     }
+  }
+})
+
+Moralis.Cloud.define('refreshEggs', async (request) => {
+  const BuyEgg = Moralis.Object.extend('BuyEgg')
+  const query = new Moralis.Query(BuyEgg)
+  const results = await query.limit(10000).find()
+  for (let i = 0; i < results.length; i++) {
+    await results[i].save()
   }
 })
