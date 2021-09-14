@@ -18,29 +18,29 @@ interface MyBidProps {
 const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRightArrow, datum, placeBid }) => {
   const history = useHistory()
   return (
-    <div className='flex flex-start items-center px-4' style={{ width: 1114 }}>
-      <div className=' relative w-1/2 flex justify-center'>
+    <div className='flex flex-start flex-wrap jusrify-center items-center px-4 w-full lg:w-2/3 md:w-full '>
+      <div className='hidden md:inline-flex relative md:w-1/3 lg:w-1/2 flex justify-center'>
         <div className=' p-px lg:w-3/4 w-full  h-full bg-gradient-to-b from-btn1  to-btn2 rounded-lg flex relative'>
           <div className='h-full w-full bg-cover rounded bg-no-repeat parent'>
             <img src='/static/video/egg.gif' className='w-full rounded-lg h-full transition-transform duration-1000' style={{ verticalAlign: 'middle' }} />
           </div>
         </div>
       </div>
-      <div className='i ml-20 flex-shrink-0 pb-24 w-full lg:w-1/3 md:w-1/2 py-4'>
+      <div className=' md:ml-20 flex-shrink-0 pb-24 w-full lg:w-1/3 md:w-1/3 py-4'>
         <h1 className='mb-4 font-bold text-5xl'>
           {datum.name || 'Egg'} <span className='text-lg'>{datum.tokenID}</span>
         </h1>
-        <div className='flex -mx-4 mb-8'>
-          <div className='flex items-center mx-4' style={{ flex: '0 0 calc(50% - 32px)', width: 'calc(50% - 32px)' }}>
-            <div className='h-10 w-10 rounded-full bg-gradient-to-b from-btn1 to-btn2 mr-2'></div>
+        <div className='flex -mx-4 mb-4 lg:mb-8 flex-wrap'>
+          <div className='flex flex-1 items-center mx-4 my-1'>
+            <div className='h-8 lg:h-10 w-8 lg:w-10 rounded-full bg-gradient-to-b from-btn1 to-btn2 mr-2'></div>
             {/* <Avatar alt='Remy Sharp' src='/static/images/avatar.jpg' className='mr-2' style={{ width: 40, height: 40 }} /> */}
             <div className='flex-grow'>
               <div className='text-sm text-gray-500'>Owner</div>
               <div className='font-semibold'>{accountEllipsis(datum.owner || '')}</div>
             </div>
           </div>
-          <div className='flex items-center mx-4' style={{ flex: '0 0 calc(50% - 32px)', width: 'calc(50% - 32px)' }}>
-            <div className='flex items-center justify-center rounded-full h-10 w-10 mr-2 bg-pink'>
+          <div className='flex  flex-1 items-center mx-4 my-1'>
+            <div className='flex items-center justify-center rounded-full h-8 lg:h-10 w-8 lg:w-10 mr-2 bg-pink'>
               <StopCircle />
             </div>
             <div className='flex-grow'>
@@ -52,18 +52,18 @@ const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRig
           </div>
         </div>
         <div
-          className=' bg-dark-800 mb-10 py-10 px-4 rounded-xl text-center'
+          className=' bg-dark-800 mb-5 lg:mb-10 py-10 px-4 rounded-xl text-center'
           style={{ boxShadow: '0px 64px 64px -48px rgba(31, 47, 70, 0.12)', border: '2px solid #E6E8EC', borderColor: '#23262F' }}>
           <div className='flex'>
             <div className='flex flex-1 items-center flex-col'>
               <div className='font-semibold text-sm leading-normal'>Current Bid</div>
-              <div className='text-3xl font-bold leading-tight'>1.00 ETH</div>
-              <div className='mb-4 text-lg font-semibold text-gray-500 leading-snug'>$3,618.36</div>
+              <div className='text-xl lg:text-3xl font-bold leading-tight'>1.00 ETH</div>
+              <div className='mb-4 text-md lg:text-lg font-semibold text-gray-500 leading-snug'>$3,618.36</div>
             </div>
             <div className='flex flex-1 items-center flex-col'>
               <div className='font-semibold text-sm leading-normal'>My Bid</div>
-              <div className='text-3xl font-bold leading-tight'>0.56 ETH</div>
-              <div className='mb-4 text-lg font-semibold text-gray-500 leading-snug'>$1,618.36</div>
+              <div className='text-xl lg:text-3xl font-bold leading-tight'>0.56 ETH</div>
+              <div className='mb-4 text-md lg:text-lg font-semibold text-gray-500 leading-snug'>$1,618.36</div>
             </div>
           </div>
           <div className='font-semibold text-sm leading-snug'>Auction ending in</div>
@@ -77,22 +77,22 @@ const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRig
                 } else {
                   return (
                     <>
-                      <span className='mr-4 flex flex-col items-center flex-shrink w-16'>
-                        <span className='text-4xl tracking-tight leading-tight font-bold'>
+                      <span className='mr-2 lg:mr-4 flex flex-col items-center flex-shrink w-8 lg:w-16'>
+                        <span className='text-2xl lg:text-4xl tracking-tight leading-tight font-bold'>
                           {hours < 10 ? '0' : ''}
                           {hours}
                         </span>
                         <span className='text-gray-500 font-semibold leading-normal'>Hrs</span>
                       </span>
-                      <span className='mr-4 flex flex-col items-center flex-shrink w-16'>
-                        <span className='text-4xl tracking-tight leading-tight font-bold'>
+                      <span className='mr-2 lg:mr-4 flex flex-col items-center flex-shrink w-8 lg:w-16'>
+                        <span className='text-2xl lg:text-4xl tracking-tight leading-tight font-bold'>
                           {minutes < 10 ? '0' : ''}
                           {minutes}
                         </span>
                         <span className='text-gray-500 font-semibold leading-normal'>Min</span>
                       </span>
-                      <span className='mr-4 flex flex-col items-center flex-shrink w-16'>
-                        <span className='text-4xl tracking-tight leading-tight font-bold'>
+                      <span className='mr-2 lg:mr-4 flex flex-col items-center flex-shrink w-8 lg:w-16'>
+                        <span className='text-2xl lg:text-4xl tracking-tight leading-tight font-bold'>
                           {seconds < 10 ? '0' : ''}
                           {seconds}
                         </span>
