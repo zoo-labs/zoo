@@ -18,3 +18,4 @@ export function queryAnimals(): QueryPromise {
   query.limit(1000)
   return query.find()
 }
+

@@ -44,3 +44,25 @@ export interface Egg {
   createdAt?: Date
   updatedAt?: Date
 }
+
+export interface  Bid {
+  // Amount of the currency being bid
+  amount:number ;
+  // Address to the ERC20 token being used to bid
+  currency:string;
+  // Address of the bidder
+  bidder :string;
+  // Address of the recipient
+ recipient:string;
+  // % of the next sale to award the previous owner
+   sellOnFee:number;
+}
+
+export interface Ask {
+  // Amount of the currency being asked
+   amount:number;
+  // Address to the ERC20 token being asked
+   currency:string;
+  // % of the next sale to award the seller
+sellOnFee:number;
+}
