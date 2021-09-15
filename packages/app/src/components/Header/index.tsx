@@ -124,6 +124,7 @@ export default function Header() {
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
   const bidModalOpen = useModalOpen(ApplicationModal.BID)
   const buyEggModal = useModalOpen(ApplicationModal.BUYEGG)
+  const assetModal = useModalOpen(ApplicationModal.ASSET)
 
   const route_to_homepage = () => {
     history.push('/home')
@@ -134,7 +135,7 @@ export default function Header() {
       showBackground={scrollY > 45}
       isMobile={isMobile}
       isFeed={active == 'feed'}
-      modalOpen={newAnimalModalOpen || videoPlayerModalOpen || bidModalOpen || buyEggModal}
+      modalOpen={newAnimalModalOpen || videoPlayerModalOpen || bidModalOpen || buyEggModal || assetModal}
       style={{ paddingRight: 0 }}>
       <Title>
         <LogoIcon>
@@ -148,7 +149,7 @@ export default function Header() {
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
         {['Home', 'Bank', 'Market', 'Swap'].map((path: string) => {
           console.log('active', active)
-          const selected = path == 'Swap' ? active == 'bridge' || active == 'limit-order' : active === path.toLowerCase()
+          const selected = path == 'Swap' ? active == 'swap' || active == 'limit-order' : active === path.toLowerCase()
           return (
             <a
               key={path}
