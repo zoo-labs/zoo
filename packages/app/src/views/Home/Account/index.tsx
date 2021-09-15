@@ -55,6 +55,8 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   const { isXl, isSm, isMd } = useMatchBreakpoints()
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const myEggs = useSelector<AppState, AppState['zoo']['myEggs']>((state) => state.zoo.myEggs)
+  const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
+
   const history = useHistory()
   const toastClear = () => {
     clear()
@@ -195,7 +197,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
                 <div>
                   <div className='text-base font-bold currentColor mb-2 text-xl'>Wallet Balance</div>
                   <div className='text-base font-bold currentColor text-2xl'>
-                    <span className='text-2xl'>{ numberWithCommas(balance.toFixed(2)) } ZOO</span>
+                    <span className='text-2xl'>{numberWithCommas(zooBalance.toFixed(2))} ZOO</span>
                   </div>
                 </div>
                 <div className='ml-4 relative inline-flex rounded-md shadow-sm'>
