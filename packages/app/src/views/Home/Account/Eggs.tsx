@@ -190,11 +190,11 @@ const Eggs: React.FC<EggsProps> = ({ myEggs }) => {
                 autoWidth: true,
                 autoHeight: true,
                 pagination: false,
-                gap: '1rem',
+                gap: '2rem',
               }}>
               {myEggs.map((egg: CardEgg) => (
                 <SplideSlide key={egg.tokenID}>
-                  <div className='flex items-center' style={{ height: 200, width: '100%' }}>
+                  <div className='flex items-center' style={{ height: 300, width: '100%' }}>
                     <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
                   </div>
                 </SplideSlide>
