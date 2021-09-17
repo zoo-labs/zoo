@@ -12,6 +12,7 @@ export type Extra = {
   gasPrice: number
   connector: AbstractConnector
   library: any
+  web3: any
 }
 
 export type CustomWeb3 = Web3 & Extra
@@ -37,6 +38,7 @@ export const useWeb3 = () => {
   customObject.gasPrice = gasPrice
   customObject.connector = connector
   customObject.library = web3
+  customObject.web3 = web3
 
   const [custom, setCustom] = useState(
     Object.assign({}, customObject, {

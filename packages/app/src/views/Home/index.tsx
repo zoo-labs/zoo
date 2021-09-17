@@ -16,8 +16,7 @@ interface indexProps {}
 
 const Index: React.FC<indexProps> = ({}) => {
   const [tab, setTab] = useState('home')
-  const web3 = useWeb3()
-  const { account, chainId: chainID } = useWeb3React()
+  const { account, chainID, web3 } = useWeb3()
   const [wait, setWait] = useState(false)
   const faucet = getFaucet(web3)
   const [balance, setBalance] = useState(0.0)
