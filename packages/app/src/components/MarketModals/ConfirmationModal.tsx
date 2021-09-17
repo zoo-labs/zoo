@@ -1,10 +1,10 @@
 import React from 'react'
-import { Modal as Existing, Text as Standard } from 'components'
+import { Text as Standard } from 'components'
 import BorderButton from 'components/Button/BorderButton'
 import CustomModal from 'components/CustomizedModal'
 
 import { Flex } from 'components'
-import { Modal } from 'components/Modal'
+import Modal from 'components/NewModal'
 
 interface Props {
   onDismiss?: () => void
@@ -17,7 +17,7 @@ interface Props {
 
 const Confirmation: React.FC<Props> = ({ onDismiss = () => null, confirmation, action, amount, submission, name }) => {
   return (
-    <Modal title={`Confirm ${action}`} onDismiss={onDismiss}>
+    <Modal isOpen={false} onDismiss={onDismiss}>
       <Standard color='text'>{`Do you want to ${action === 'Buy' ? 'Buy' : 'Bid on'} ${name} for $${submission ? submission : amount}`}</Standard>
       <Flex mt='16px' mb='16px' width='100%' justifyContent='space-between'>
         <BorderButton mr='16px' scale='sm' onClick={() => confirmation()}>

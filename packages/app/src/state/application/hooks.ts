@@ -1,6 +1,7 @@
 import { useWeb3React } from '@web3-react/core'
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useAppDispatch } from 'state/hooks'
 import { AppDispatch, AppState } from '../index'
 import { addPopup, ApplicationModal, PopupContent, removePopup, setOpenModal } from './actions'
 
@@ -62,6 +63,11 @@ export function useNetworkModalToggle(): () => void {
 export function useBidModalToggle(): () => void {
 
   return useToggleModal(ApplicationModal.BID)
+}
+
+export function useBuyEggModalToggle(): () => void {
+
+  return useToggleModal(ApplicationModal.BUYEGG)
 }
 export function useAssetModalToggle(): () => void {
 
