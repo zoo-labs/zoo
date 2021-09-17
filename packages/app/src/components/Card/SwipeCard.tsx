@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Flex, Text, useMatchBreakpoints, Heading, Card as Existing, CardHeader, CardBody, CardFooter, VideoPlayer } from 'components'
+import { Flex, Text, useMatchBreakpoints, Card as Existing, CardHeader, CardBody, CardFooter, VideoPlayer } from 'components'
 
 import { Link } from 'react-router-dom'
 
