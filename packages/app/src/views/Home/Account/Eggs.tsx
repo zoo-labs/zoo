@@ -98,11 +98,11 @@ const Eggs: React.FC<EggsProps> = ({ myEggs }) => {
     foundAnimal.save()
     startAnimationTimer()
   }
-  const toggleHatchDisabledModalModal = useHatchDisabledModalToggle()
+  const hatchDisabledModal = useHatchDisabledModalToggle()
 
   const hatchEgg = async (egg) => {
     //disable egg hatching and show modal here
-    toggleHatchDisabledModalModal()
+    hatchDisabledModal()
     // egg.hatching = true
     // dispatch(addEgg(mapEgg(egg)))
     // try {

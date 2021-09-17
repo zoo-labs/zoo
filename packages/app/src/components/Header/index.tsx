@@ -61,8 +61,8 @@ const Title = styled.a`
 `
 
 const LogoIcon = styled.div`
-  margin-left: 0px;
-  margin-top: 8px;
+  margin-left: -12px;
+  margin-top: 0px;
   width: 72px;
   transition: transform 0.3s ease;
   :hover {
@@ -147,7 +147,7 @@ export default function Header() {
           isMobile ? 'justify-between z-10 fixed -bottom-0 right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
         }`}
         style={{ backgroundColor: 'rgb(25, 27, 31)' }}>
-        {['Home', 'Bank', 'Market', 'Swap'].map((path: string) => {
+        {['Home', 'Bank', 'Market', 'Bridge'].map((path: string) => {
           console.log('active', active)
           const selected = path == 'Swap' ? active == 'swap' || active == 'limit-order' : active === path.toLowerCase()
           return (

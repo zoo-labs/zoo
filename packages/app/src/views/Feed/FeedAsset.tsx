@@ -144,10 +144,8 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
                 </div>
               </div>
               <div className='w-full rounded flex flex-col  border-2 border-gray-400 border-solid' style={{ borderWidth: 1 }}>
-                <div className='my-6 px-4'>
-                  <h2 className='text-sm font-bold'>Proof of Authenticity</h2>
-                </div>
                 <div className='flex flex-col'>
+                  <h2 className='ml-4 mt-4 mb-4 text-sm font-bold'>Proof of Authenticity</h2>
                   <a
                     href={`https://testnet.bscscan.com/address/${item.owner || ''}`}
                     target='_blank'
@@ -159,7 +157,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
                     </div>
                   </a>
                   <a
-                    href='https://ipfs.io/ipfs/bafybeicrjczyjyr35qgtgsfqecumvtr24cnv7j23cfwmiqcmu67px26feu'
+                    href='https://bafybeidq6egcuxafoo2i2pvyp7cgajf6iewzfiq24owfhrgrezyokygvwq.ipfs.dweb.link'
                     target='_blank'
                     className='p-4 flex justify-between items-center hover:bg-dark-800 rounded-b-lg'>
                     <div className='text-sm font-medium primary'>View on IPFS</div>
@@ -176,7 +174,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
 
       <div className=' flex-1  flex justify-center'>
         <div className='flex flex-col px-4 w-full lg:w-2/3'>
-          <h6 className='my-8 font-semibold text-xl'>Trading History</h6>
+          <h6 className='my-8 font-semibold text-xl'>History</h6>
           {myTransactions.length === 0 ? (
             <div className='flex items-center h-full justify-center'>
               {' '}
