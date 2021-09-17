@@ -30,7 +30,7 @@ const Index: React.FC<indexProps> = ({ videoPath }) => {
   //   }, [videoPlayerModalOpen])
   return (
     <Modal
-      isMax
+      isFullWidth
       backgroundColor='black'
       isOpen={videoPlayerModalOpen}
       onDismiss={() => {

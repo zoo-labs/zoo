@@ -11,14 +11,7 @@ import Metamask from '../../../components/modals/icons/Metamask'
 import ToastListener from '../../../components/ToastListener'
 
 import { Label, Text } from 'components/Text'
-import { Flex, Heading, useMatchBreakpoints } from 'components'
-import Body from 'components/layout/Body'
-import { useModal } from 'components/Modal'
-import BuyEggs from 'components/BuyEggs'
-import { Egg } from 'types/zoo'
-import { useDispatch } from 'react-redux'
-import { breedTimeouts, eggTimeout } from 'constants/index'
-import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
+import { useMatchBreakpoints } from 'components'
 import { getToken, getDrop, getFaucet, getMedia, getZooKeeper } from 'util/contracts'
 import useWeb3 from 'hooks/useWeb3'
 import useToast from 'hooks/useToast'
@@ -27,6 +20,9 @@ import Eggs from './Eggs'
 import Animals from './Animals'
 import AccountHeader from './AccountHeader'
 import { useWeb3React } from '@web3-react/core'
+import { useBidModalToggle, useBuyEggModalToggle } from 'state/application/hooks'
+import BidModal from 'components/modals/MarketModals/BidModal'
+import BuyEggModal from 'components/modals/MarketModals/BuyEggModal'
 
 function numberWithCommas(num) {
   const values = num.toString().split('.')
@@ -59,6 +55,8 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   const { isXl, isSm, isMd } = useMatchBreakpoints()
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const myEggs = useSelector<AppState, AppState['zoo']['myEggs']>((state) => state.zoo.myEggs)
+  const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
+
   const history = useHistory()
   const toastClear = () => {
     clear()
@@ -135,44 +133,44 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   }
 
   const isBalanceSufficient = (): boolean => {
-    if ((chainID === 56 || chainID === 1) && balance < 500000) return false
-    else if (balance < 300000) return false
-    else return true
+    if (balance == 0) return false
+    return true
   }
 
+  const toggleBuyEggModal = useBuyEggModalToggle()
   const buyEgg = async () => {
-    setDisable(true)
+    // setDisable(true)
     console.log('web3 account in buyEgg', account)
+    toggleBuyEggModal()
+    // if (balance === 0 || !isBalanceSufficient()) return toastError('You do not have sufficient zoo to perform this transaction!')
 
-    if (balance === 0 || !isBalanceSufficient()) return toastError('You do not have sufficient zoo to perform this transaction!')
-
-    try {
-      await zooKeeper.methods
-        .buyEgg(1) // buy from first drop
-        .send({ from: account, gasPrice: gasPrice })
-        .then((res) => {
-          toastClear()
-          toastInfo('Transaction submitted.')
-          console.log('bought egg', res)
-          setDisable(false)
-        })
-        .catch((err) => {
-          const message = formatError(err)
-          setDisable(false)
-          toastClear()
-          toastError(message)
-          console.error(message)
-        })
-    } catch (err) {
-      console.error(err)
-      toastClear()
-      setDisable(false)
-      if (currentEggsOwned < 3) {
-        toastError('Already purchased maximum eggs from drop. Check the market for more eggs')
-      } else {
-        toastError('Unable to purchase eggs. Try again later.')
-      }
-    }
+    // try {
+    //   await zooKeeper.methods
+    //     .buyEgg(1) // buy from first drop
+    //     .send({ from: account, gasPrice: gasPrice })
+    //     .then((res) => {
+    //       toastClear()
+    //       toastInfo('Transaction submitted.')
+    //       console.log('bought egg', res)
+    //       setDisable(false)
+    //     })
+    //     .catch((err) => {
+    //       const message = formatError(err)
+    //       setDisable(false)
+    //       toastClear()
+    //       toastError(message)
+    //       console.error(message)
+    //     })
+    // } catch (err) {
+    //   console.error(err)
+    //   toastClear()
+    //   setDisable(false)
+    //   if (currentEggsOwned < 3) {
+    //     toastError('Already purchased maximum eggs from drop. Check the market for more eggs')
+    //   } else {
+    //     toastError('Unable to purchase eggs. Try again later.')
+    //   }
+    // }
   }
 
   useMemo(() => {
@@ -190,16 +188,16 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
       // style={{ height: '100vh' }} className='flex items-center'
     >
       {/* pr-0 lg:pr-0 mr-0  */}
+
       <div className='flex flex-col relative filter drop-shadow z-10 w-full'>
         <div className='flex flex-col h-full'>
-          <AccountHeader />
           <div className='flex flex-col justify-between h-full'>
             <div style={{ flex: 1 }} className='p-5 rounded'>
               <div className='flex items-end'>
                 <div>
                   <div className='text-base font-bold currentColor mb-2 text-xl'>Wallet Balance</div>
                   <div className='text-base font-bold currentColor text-2xl'>
-                    <span className='text-2xl'>{numberWithCommas(balance.toFixed(3))} </span>ZOO
+                    <span className='text-2xl'>{numberWithCommas(zooBalance.toFixed(2))} ZOO</span>
                   </div>
                 </div>
                 <div className='ml-4 relative inline-flex rounded-md shadow-sm'>
@@ -242,7 +240,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
               ) : (
                 <div className={'ml-2'}>
                   <button
-                    disabled={false}
+                    disabled={disable || !allowance}
                     className={` rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full ${
                       !allowance ? 'border border-gray-600' : 'bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'
                     } ${balance !== 0 && currentEggsOwned < 1 && 'gradient-border'}`}
@@ -260,60 +258,10 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
               )}
             </div>
           </div>
-          {/* <div style={{ flex: 1 }} className='p-5 rounded my-4'>
-            <Animals hybrid='pure' />
-          </div>
-          <div style={{ flex: 1 }} className='p-5 rounded my-4'>
-            <Animals hybrid='hybrid' />
-          </div> */}
-          {/* {tab === 0 ? (
-            <div className='flex flex-col justify-between h-full'>
-              <div style={{ backgroundColor: '#212429', flex: 1 }} className='p-5 rounded'>
-                <div className='mb-2'>
-                  <Label style={{ fontSize: '20px' }}>{currentEggsOwned} Eggs Owned</Label>
-                </div>
-                <Eggs />
-              </div>
-
-              <div className='my-4 flex justify-between flex-wrap'>
-                {(keepApprove || !allowance) && (
-                  <div className={` ${isSm ? 'w-full' : 'w-1/4'} px-2`}>
-                    <button
-                      disabled={disableApprove || allowance}
-                      style={{ color: 'rgb(255,255,255)', backgroundColor: '#8C4FF8', border: '1px solid rgba(21, 61, 111, 0.44)' }}
-                      className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-gray-700 bg-opacity-80  text-primary border-gray-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80  py-4 text-base rounded  font-semibold disabled:cursor-not-allowed focus:outline-none w-full`}
-                      onClick={approve}>
-                      {allowance ? 'APPROVED' : disableApprove ? 'PROCESSING' : 'APPROVE'}
-                    </button>
-                  </div>
-                )}
-                <div className={` ${isSm || allowance ? 'w-full' : 'w-3/4'} px-2`}>
-                  <button
-                    disabled={disable || !allowance}
-                    className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80 px-6 py-4 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full`}
-                    style={{ backgroundColor: allowance ? '#8C4FF8' : 'rgb(44, 47, 54)' }}
-                    onClick={buyEgg}>
-                    {disable ? 'PROCESSING' : 'BUY EGGS'}
-                  </button>
-                </div>
-              </div>
-            </div>
-          ) : tab === 1 ? (
-            <>
-              <div style={{ backgroundColor: '#212429', flex: 1 }} className='p-5 rounded'>
-                <Animals hybrid='pure' />
-              </div>
-            </>
-          ) : (
-            <>
-              <div style={{ backgroundColor: '#212429', flex: 1 }} className='p-5 rounded'>
-                <Animals hybrid='hybrid' />
-              </div>
-            </>
-          )} */}
         </div>
       </div>
       <ToastListener />
+      <BuyEggModal />
     </>
   )
 }

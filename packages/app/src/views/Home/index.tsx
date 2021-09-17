@@ -8,17 +8,18 @@ import { useLocation } from 'react-router'
 import { AppState } from 'state'
 import { getZooBalance } from 'state/zoo/actions'
 import { getFaucet, getToken } from 'util/contracts'
+import { NETWORK_SYMBOL, NETWORK_URL } from 'constants/networks'
 import Account from './Account'
 import Bank from './Bank'
 
 interface indexProps {}
 
 const Index: React.FC<indexProps> = ({}) => {
-  const [tab, setTab] = useState('account')
-  const web3 = useWeb3()
-  const { chainID, account } = web3
+  const [tab, setTab] = useState('home')
+  const { account, chainID, web3 } = useWeb3()
   const [wait, setWait] = useState(false)
   const faucet = getFaucet(web3)
+  const [balance, setBalance] = useState(0.0)
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const toastClear = () => {
     clear()
@@ -30,6 +31,7 @@ const Index: React.FC<indexProps> = ({}) => {
   const handleFaucet = () => {
     try {
       const acc = web3.account
+      console.log(acc)
       setWait(true)
       toastClear()
       toastInfo('Sending ZOO...')
@@ -55,6 +57,12 @@ const Index: React.FC<indexProps> = ({}) => {
     }
   }
   const handleFunds = () => {
+    if (balance == 0)
+      return toastError(
+        `You do not have sufficient ${NETWORK_SYMBOL[chainID]} to get Zoo`,
+        `<a href='${NETWORK_URL[chainID]}' target='__blank'>Click here to buy ${NETWORK_SYMBOL[chainID]}</a>`,
+      )
+
     switch (chainID) {
       case 1338:
         handleFaucet()
@@ -73,10 +81,30 @@ const Index: React.FC<indexProps> = ({}) => {
     }
   }
 
+  const getBalance = async () => {
+    try {
+      // const decimals = await zooToken.methods.decimals().call()
+      await web3.eth.getBalance(account).then((val) => {
+        console.log('CHAIN-ID ' + chainID)
+        const divisor = parseFloat(Math.pow(10, 18).toString())
+        const balance = parseFloat(val) / divisor
+        setBalance(parseFloat(balance.toFixed(4)))
+      })
+    } catch (e) {
+      console.error('ISSUE LOADING ZOO BALANCE \n', e)
+    }
+  }
+
   let location = useLocation()
   useEffect(() => {
     setTab(location.pathname.split('/')[1])
   }, [location])
+
+  useEffect(() => {
+    if (!account) return
+    getBalance()
+  }, [account, chainID])
+
   return (
     <main className='flex flex-col  flex-grow w-full h-full lg:p-16 lg:m-4 p-0 m-0 lg:pr-0 lg:mr-0 space-y-4 rounded-lg  flex flex-col relative filter drop-shadow z-10'>
       {/* <div className='flex lg:p-0 p-4 justify-center lg:justify-start items-end flex-wrap'>
@@ -106,7 +134,7 @@ const Index: React.FC<indexProps> = ({}) => {
           </div>
         </div>
       </div> */}
-      <div className='flex'>{tab === 'account' ? <Account handleFunds={() => handleFunds()} wait={wait} balance={zooBalance} /> : <Bank />}</div>
+      <div className='flex'>{tab === 'home' ? <Account handleFunds={() => handleFunds()} wait={wait} balance={zooBalance} /> : <Bank />}</div>
       <div
         style={{
           width: '50vw',

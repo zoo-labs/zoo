@@ -5,7 +5,7 @@ import { RiArrowDownCircleLine, RiFilter2Line, RiPlayMiniFill } from 'react-icon
 import Slider from '@material-ui/core/Slider'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
-import DiscoverCard from 'components/DiscoverCard'
+import DiscoverCard from 'components/Market/DiscoverCard'
 import '@splidejs/splide/dist/css/themes/splide-default.min.css'
 import { Splide, SplideSlide } from 'components/Splide'
 import { ArrowLeft, ArrowRight, StopCircle } from 'react-feather'
@@ -18,6 +18,8 @@ import { GiPlayButton } from 'react-icons/gi'
 import MyBid from 'components/Market/MyBid'
 import MyAuction from 'components/Market/MyAuction'
 import BidModal from 'components/modals/MarketModals/BidModal'
+import { useBidModalToggle } from 'state/application/hooks'
+import AssetModal from 'components/modals/AssetModal'
 interface IndexProps {}
 const PrettoSlider = withStyles({
   root: {
@@ -63,9 +65,11 @@ const Index: React.FC<IndexProps> = ({}) => {
   const [data, setData] = useState([])
   const [hotData, setHotData] = useState([])
   const [bidView, setBidView] = useState(0)
+  const [activeBid, setActiveBid] = useState({})
   const animalsState = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
   const eggsState = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
-  const myBids = [0, 1, 2, 3]
+  const toggleBidModal = useBidModalToggle()
+
   const myAuctions = [0, 1]
 
   const swiperRef = useRef(null)
@@ -78,6 +82,12 @@ const Index: React.FC<IndexProps> = ({}) => {
     0: allEggs,
     1: allAnimls,
   }
+
+  const myBids = [...Object.values(allData)]
+    .flat(1)
+    .sort((a, b) => a.tokenID - b.tokenID)
+    .slice(0, 3)
+
   useEffect(() => {
     console.log(
       'hjhjh',
@@ -126,7 +136,7 @@ const Index: React.FC<IndexProps> = ({}) => {
   return (
     <main className='w-full h-full'>
       <div className='py-32 '>
-        <div className='w-full px-16 '>
+        <div className='w-full md:px-8 lg:px-16 px-4'>
           <div className='mb-36 text-center mx-auto max-w-xl'>
             <DoubleGlowShadow>
               <div className='mb-2 text-gray-600 font-bold text-sm'>Buy, List, & Bid on Generation One Based Animals.</div>
@@ -142,12 +152,12 @@ const Index: React.FC<IndexProps> = ({}) => {
             </DoubleGlowShadow>
           </div>
           <div className='relative -mt-6 '>
-            <div className='flex mb-8 justify-between items-center px-16 max-w-screen-xl mx-auto'>
-              <h3 className=' font-bold text-4xl'>My {bidView === 0 ? 'Bids' : 'Auctions'}</h3>
+            <div className='flex mb-8 justify-between items-center px-2 lg:px-16 max-w-screen-xl mx-auto'>
+              <h3 className=' font-bold text-xl md:text-2xl lg:text-4xl'>My {bidView === 0 ? 'Bids' : 'Auctions'}</h3>
               <div
                 onClick={() => splideparentRef.current.splide.go('>')}
                 style={{ borderWidth: 1 }}
-                className='hoverdiv hover:border-white cursor-pointer border-gray-500 border-solid  shadow-xl w-60 rounded  flex justify-between items-center '>
+                className='hoverdiv hover:border-white cursor-pointer border-gray-500 border-solid  shadow-xl w-30 md:w-40 lg:w-60 rounded  flex justify-between items-center '>
                 <div className='flex flex-col px-4 py-2 '>
                   <h6 className='text-xs text-gray-500  font-semibold'>{bidView === 0 ? myAuctions.length : myBids.length}</h6>
                   <h6 className=' text-xl text-gray-500  font-bold'>{bidView === 0 ? 'Auctions' : 'Bids'}</h6>
@@ -162,10 +172,15 @@ const Index: React.FC<IndexProps> = ({}) => {
               ref={splideparentRef}
               options={{
                 width: '100%',
-                fixedWidth: '100%',
+                fixedWidth: '100vw',
                 arrows: false,
                 pagination: false,
                 rewind: true,
+                breakpoints: {
+                  640: {
+                    fixedWidth: '100%',
+                  },
+                },
               }}>
               <SplideSlide>
                 <Splide
@@ -176,14 +191,21 @@ const Index: React.FC<IndexProps> = ({}) => {
                     arrows: false,
                     pagination: false,
                   }}>
-                  {myBids.map((value, index) => {
+                  {myBids.map((datum, index) => {
                     const showArrow = myBids.length > 0
                     const showLeftArrow = index > 0
                     const showRightArrow = index < myBids.length - 1
 
                     return (
                       <SplideSlide key={index} className='flex items-center flex-col'>
-                        <MyBid showArrow={showArrow} showLeftArrow={showLeftArrow} showRightArrow={showRightArrow} bidRef={splideBidRef} />
+                        <MyBid
+                          datum={datum}
+                          showArrow={showArrow}
+                          showLeftArrow={showLeftArrow}
+                          showRightArrow={showRightArrow}
+                          bidRef={splideBidRef}
+                          placeBid={() => (setActiveBid(datum), toggleBidModal())}
+                        />
                       </SplideSlide>
                     )
                   })}
@@ -262,7 +284,7 @@ const Index: React.FC<IndexProps> = ({}) => {
                     return (
                       <SplideSlide key={index}>
                         <div className='w-full h-full'>
-                          <DiscoverCard datum={datum} applyMaxWidth={false} />
+                          <DiscoverCard datum={datum} applyMaxWidth={false} placeBid={() => (setActiveBid(datum), toggleBidModal())} />
                         </div>
                       </SplideSlide>
                     )
@@ -282,7 +304,7 @@ const Index: React.FC<IndexProps> = ({}) => {
       <div className='py-32 ' id='market-section'>
         <div className='w-full px-16 max-w-screen-xl mx-auto'>
           <h3 className='mb-16 text-4xl font-semibold'>Discover</h3>
-          <div className='relative flex justify-between mb-8'>
+          <div className='hidden lg:flex relative justify-between mb-8'>
             <div className='cursor-pointer text-sm w-44 h-12 pl-4 pr-1 items-center rounded-lg border border-solid border-gray-600 flex justify-between'>
               Recently added
               <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} />
@@ -385,7 +407,7 @@ const Index: React.FC<IndexProps> = ({}) => {
                 data.map((datum, index) => {
                   return (
                     <div key={index} className='w-full md:w-1/2 xl:w-1/4 p-2'>
-                      <DiscoverCard datum={datum} applyMaxWidth={false} />
+                      <DiscoverCard datum={datum} applyMaxWidth={false} placeBid={() => (setActiveBid(datum), toggleBidModal())} />
                     </div>
                   )
                 })
@@ -405,7 +427,8 @@ const Index: React.FC<IndexProps> = ({}) => {
         </div>
       </div>
       <div className=''></div>
-      <BidModal />
+      <BidModal item={activeBid} />
+      {/* <AssetModal item={activeBid} /> */}
     </main>
   )
 }
