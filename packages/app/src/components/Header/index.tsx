@@ -61,8 +61,8 @@ const Title = styled.a`
 `
 
 const LogoIcon = styled.div`
-  margin-left: 0px;
-  margin-top: 8px;
+  margin-left: -12px;
+  margin-top: 0px;
   width: 72px;
   transition: transform 0.3s ease;
   :hover {
