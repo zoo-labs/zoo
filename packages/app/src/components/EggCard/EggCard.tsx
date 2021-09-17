@@ -229,7 +229,7 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
   return (
     <>
       <Card
-        style={{ backgroundColor: '#000000', height: '100%', width: 200 }}
+        style={{ borderRadius: 12, backgroundColor: '#000000', width: 136, height: 242 }}
         timedOut={egg.timeRemaining > 0 ? true : false}
         interactive={egg.interactive}
         hatching={hatching}
