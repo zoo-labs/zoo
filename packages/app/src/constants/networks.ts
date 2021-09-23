@@ -18,6 +18,7 @@ const Ropsten = '/static/images/networks/eth.jpg'
 const xDai = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fxdai-network.jpg&w=64&q=75'
 const Celo = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Fcelo-network.jpg&w=64&q=75'
 const Palm = 'https://raw.githubusercontent.com/sushiswap/icons/master/network/palm.jpg'
+const Hardhat = 'https://raw.githubusercontent.com/nomiclabs/hardhat/master/docs/.vuepress/public/favicon-32x32.png'
 
 export const SUPPORTED_NETWORKS: {
   [chainId in ChainId]?: {
@@ -76,6 +77,28 @@ export const SUPPORTED_NETWORKS: {
     rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
     blockExplorerUrls: ['https://testnet.bscscan.com/'],
   },
+  [ChainId.HARDHAT]: {
+    chainId: '0x539', // 1337
+    chainName: 'Hardhat',
+    nativeCurrency: {
+      name: 'Hardhat Ethereum',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    rpcUrls: ['http://localhost:8545/'],
+    blockExplorerUrls: ['https://admin.moralis.io/servers'],
+  },
+  [ChainId.HARDHAT2]: {
+    chainId: '0x53A', // 1338
+    chainName: 'Hardhat 2',
+    nativeCurrency: {
+      name: 'Hardhat Ethereum',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    rpcUrls: ['http://localhost:8546/'],
+    blockExplorerUrls: ['https://admin.moralis.io/servers'],
+  },
 }
 
 export const NETWORK_ICON = {
@@ -83,6 +106,8 @@ export const NETWORK_ICON = {
   [ChainId.RINKEBY]: Rinkeby,
   [ChainId.BSC]: Bsc,
   [ChainId.BSC_TESTNET]: Bsc,
+  [ChainId.HARDHAT]: Hardhat,
+  [ChainId.HARDHAT2]: Hardhat,
 }
 
 export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {
@@ -90,6 +115,8 @@ export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {
   [ChainId.RINKEBY]: 'Rinkeby',
   [ChainId.BSC]: 'BSC',
   [ChainId.BSC_TESTNET]: 'BSC Testnet',
+  [ChainId.HARDHAT]: 'Hardhat',
+  [ChainId.HARDHAT2]: 'Hardhat 2',
 }
 
 export const NETWORK_SYMBOL: { [chainId in ChainId]?: string } = {
@@ -97,6 +124,8 @@ export const NETWORK_SYMBOL: { [chainId in ChainId]?: string } = {
   [ChainId.RINKEBY]: 'ETH',
   [ChainId.BSC]: 'BNB',
   [ChainId.BSC_TESTNET]: 'BNB',
+  [ChainId.HARDHAT]: 'ETH',
+  [ChainId.HARDHAT2]: 'ETH',
 }
 
 export const NETWORK_URL: { [chainId in ChainId]?: string } = {
@@ -104,4 +133,6 @@ export const NETWORK_URL: { [chainId in ChainId]?: string } = {
   [ChainId.RINKEBY]: 'https://testnet.binance.org/faucet-smart/',
   [ChainId.BSC]: 'https://pancakeswap.finance/info/token/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
   [ChainId.BSC_TESTNET]: 'https://testnet.binance.org/faucet-smart/',
+  [ChainId.HARDHAT]: 'https://testnet.binance.org/faucet-smart/',
+  [ChainId.HARDHAT2]: 'https://testnet.binance.org/faucet-smart/',
 }
