@@ -23,7 +23,7 @@ export default Deploy('ZooKeeperV2', {
     // Configure contracts to talk to each other
     market.configure(keeper.address, media.address)
     media.configure(keeper.address, market.address)
-    keeper.configure(market.address, media.address, token.address, bridge.address, false)
+    keeper.configure(market.address, media.address, token.address, bridge.address, true)
 
     if (hre.network.name != 'hardhat') return
 
