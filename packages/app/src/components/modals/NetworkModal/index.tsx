@@ -13,7 +13,21 @@ import { CloseIcon } from 'components/Svg'
 
 interface NetworkModalProps {}
 
+const chainIds = [
+  ChainId.MAINNET,
+  ChainId.BSC,
+  ChainId.RINKEBY, 
+  ChainId.BSC_TESTNET,
+]
+
+if (window.location.host.startsWith('localhost:')) {
+  chainIds.push(ChainId.HARDHAT)
+  chainIds.push(ChainId.HARDHAT2)
+}
+
 const NetworkModal: React.FC<NetworkModalProps> = ({}) => {
+
+  
   const { chainId, library, account } = useWeb3React()
   const networkModal = useModalOpen(ApplicationModal.NETWORK)
   const toggleNetworkModal = useNetworkModalToggle()
@@ -28,7 +42,7 @@ const NetworkModal: React.FC<NetworkModalProps> = ({}) => {
       </div>
 
       <div className='grid grid-flow-row-dense grid-cols-1 gap-5 overflow-y-auto md:grid-cols-2'>
-        {[ChainId.MAINNET, ChainId.BSC, ChainId.RINKEBY, ChainId.BSC_TESTNET].map((key: ChainId, i: number) => {
+        {chainIds.map((key: ChainId, i: number) => {
           //
           if (chainId === key) {
             return (
