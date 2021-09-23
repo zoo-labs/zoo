@@ -24,7 +24,9 @@ import { useModalOpen } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 import { NETWORK_SYMBOL } from 'constants/networks'
 import UserBlock from 'components/SideMenu/components/UserBlock'
+import { addresses } from 'constants/contracts'
 import { useETHBalances } from 'hooks/useWallet'
+import { ChainId } from 'constants/Chains'
 
 const logoURL = window.location.origin + '/static/images/logo-white.png'
 
@@ -88,6 +90,8 @@ export default function Header() {
   const { isXl, isXs, isSm, isMd, isLg } = useMatchBreakpoints()
   const web3 = useWeb3()
   const { chainID } = web3
+  const chainAddresses = addresses[chainID] as any || addresses[ChainId.BSC] as any
+  console.log('chainAddresses.ZOO', chainAddresses.ZOO)
   const { account, library } = useWeb3React()
   const isMobile = isXl === false
   let location = useLocation()
@@ -101,6 +105,7 @@ export default function Header() {
     toastClear()
   }
   const getBalance = async () => {
+    console.log('account', account)
     if (!account) return;
     try {
       // const decimals = await zooToken.methods.decimals().call()
@@ -174,7 +179,7 @@ export default function Header() {
                   // style={{ width: 40, height: 40 }}
                   className='grid items-center grid-flow-col p-1 space-x-1 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'
                   onClick={() => {
-                    const tokenAddress = '0x19263f2b4693da0991c4df046e4baa5386f5735e'
+                    const tokenAddress = chainAddresses.ZOO
                     const tokenSymbol = 'ZOO'
                     const tokenDecimals = 18
                     const tokenImage = window.location.origin + '/static/images/token.png'
