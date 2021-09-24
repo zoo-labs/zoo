@@ -18,7 +18,7 @@ const CHAIN_IDS = {
 
 const CHAIN_ID = CHAIN_IDS[NETWORK]
 const SERVER_NAME = {
-  hardhat:  'Hardhat',
+  hardhat:  'Local Dev Chain',
   testnet:  'Zoo Testnet',
   mainnet:  'Zoo Mainnet',
   ethereum: 'Zoo ETH Mainnet',
