@@ -69,5 +69,8 @@
       "**/@zoolabs/framework",
       "**/@zoolabs/solidity"
     ]
+  },
+  "resolutions": {
+    "node-hid": "./packages/resolutions/node-hid"
   }
 }
