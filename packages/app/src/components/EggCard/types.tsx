@@ -10,5 +10,6 @@ export type EggCardType = {
   hatchEgg: (egg) => void
   hatchEggReady: (egg) => void
   hatching?: boolean
+  viewItem: () => void
   // eggGroup: {BASIC: number, HYBRID: number}
 }
