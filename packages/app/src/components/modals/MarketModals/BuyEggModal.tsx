@@ -10,7 +10,7 @@ import { numberWithCommas } from 'components/Functions'
 import { isEmpty } from 'lodash'
 import { ArrowDownIcon, ArrowDropDownIcon, CloseIcon } from 'components'
 import { RiArrowDropDownLine } from 'react-icons/ri'
-import { wait } from 'functions'
+import { formatError, wait } from 'functions'
 import Moralis from 'moralis/types'
 import { useWeb3React } from '@web3-react/core'
 import { Egg } from 'types/zoo'
@@ -95,13 +95,6 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     clear()
   }
 
-  const formatError = (err) => {
-    if (err.code) {
-      return `Purchase failed: ${err.message}`
-    } else {
-      return `Purchase failed: ${err.toString().replace(/Error: Returned error: /, '')}`
-    }
-  }
   const dispatch = useDispatch()
   const buyEggs = async () => {
     const eggsLength = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
