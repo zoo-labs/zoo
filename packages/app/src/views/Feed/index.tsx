@@ -19,7 +19,6 @@ import EggFeedCard from './EggFeedCard'
 import { getDaysHours, getMilliseconds } from 'util/timeHelpers'
 import { eggTimeout } from 'constants/index'
 import { sortData } from 'functions'
-import AssetModal from 'components/modals/AssetModal'
 interface ButtonProp extends ButtonMenuItemProps {
   activeIndex: number
 }
