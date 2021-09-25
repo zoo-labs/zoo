@@ -40,7 +40,7 @@ async function main() {
 
   // Configure game for our Gen 0 drop
   console.log('keeper.configure', Market.address, Media.address, ZOO.address)
-  await keeper.configure(Market.address, Media.address, ZOO.address, bridge.address, false)
+  await keeper.configure(Market.address, Media.address, ZOO.address, bridge.address, true)
 
   // Configure Drop
   console.log('drop.configure', ZooKeeper.address)
