@@ -247,7 +247,7 @@ export default function TransactionTable(props: { Transactions: any }) {
           />
           <div style={{ width: '100%' }}>
             {stableSort(rows, getComparator(order, orderBy))
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => {
                 const labelId = `enhanced-table-checkbox-${index}`
 
@@ -284,15 +284,10 @@ export default function TransactionTable(props: { Transactions: any }) {
                   </div>
                 )
               })}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
           </div>
         </Table>
       </TableContainer>
-      <TablePagination
+      {/* <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component='div'
         count={rows.length}
@@ -300,7 +295,7 @@ export default function TransactionTable(props: { Transactions: any }) {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      /> */}
     </Paper>
   )
 }
