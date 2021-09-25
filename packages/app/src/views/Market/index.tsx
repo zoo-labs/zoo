@@ -236,7 +236,7 @@ const Index: React.FC<IndexProps> = ({}) => {
           </div>
         </div>
       </div>
-      <div className='pb-16'>
+      {/* <div className='pb-16'>
         <div className='w-full px-16 max-w-screen-xl mx-auto'>
           <div className='relative'>
             <div className='flex mb-16 justify-between items-center'>
@@ -300,7 +300,7 @@ const Index: React.FC<IndexProps> = ({}) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className='py-32 ' id='market-section'>
         <div className='w-full px-16 max-w-screen-xl mx-auto'>
           <h3 className='mb-16 text-4xl font-semibold'>Discover</h3>
