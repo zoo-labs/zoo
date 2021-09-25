@@ -92,7 +92,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
             className={` w-full  justify-center  md:flex-1  items-center bg-modal-dark flex  ${fullView ? 'w-screen fixed z-20 h-screen' : 'lg:w-1/2'}`}
             style={{ minHeight: '80vh' }}>
             <div className={`flex   w-full items-center justify-center ${fullView ? 'fixed h-screen' : 'relative h-full'}`}>
-              <div className={`${fullView ? 'w-10/12 lg:w-1/4' : 'w-2/3 lg:w-1/2'}   p-px   bg-gradient-to-b from-btn1  to-btn2  rounded bg-no-repeat`}>
+              <div className={`${fullView ? 'w-10/12 lg:w-1/4 md:w-2/3' : 'w-2/3 lg:w-1/2'}   p-px   bg-gradient-to-b from-btn1  to-btn2  rounded bg-no-repeat`}>
                 <div className='bg-cover '>{getVideo()}</div>
               </div>
               {/*
@@ -246,7 +246,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
 export default AssetModal
 
 const transactions = [
-  { date: 'September 25, 12:21 AM', description: 'listed this NFT with a reserve price of', amount: '350 ETH', account: '0x36de990133D36d7E3DF9a820aA3eDE5a2320De71' },
+  { date: 'September 25, 12:21 AM', description: 'listed this NFT with a reserve price of', amount: '35K ZOO', account: '0x36de990133D36d7E3DF9a820aA3eDE5a2320De71' },
   { date: 'September 25, 12:17 AM', description: 'minted this NFT', amount: '', account: '0x36de990133D36d7E3DF9a820aA3eDE5a2320De71' },
 ]
 
