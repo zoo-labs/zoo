@@ -332,4 +332,13 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   function zooWithdraw(address receiver, uint256 amount) public onlyOwner returns (bool) {
     return zoo.transfer(receiver, amount);
   }
+
+    function setAsk(uint256 tokenID, IMarket.Ask memory ask) public{
+    media.setAsk(tokenID, ask);
+        
+        }
+  function setBid(uint256 tokenID, IMarket.Bid memory bid) public{
+   
+   media.setBid(tokenID, bid);
+ }
 }

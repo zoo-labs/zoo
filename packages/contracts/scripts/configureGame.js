@@ -10,6 +10,7 @@ const Market = require('../deployments/testnet/Market.json')
 const Media = require('../deployments/testnet/Media.json')
 const Drop = require('../deployments/testnet/Drop.json')
 const ZooKeeper = require('../deployments/testnet/ZooKeeper.json')
+const bridge =  require('../deployments/testnet/Bridge.json');
 
 // Split game data into deploy-sized chunks
 function chunks(arr, size) {
@@ -24,7 +25,7 @@ function chunks(arr, size) {
 async function main() {
   const [signer] = await ethers.getSigners()
 
-  // const keeper = await (await ethers.getContractAt('ZooKeeper', ZooKeeper.address)).connect(signer)
+  const keeper = await (await ethers.getContractAt('ZooKeeper', ZooKeeper.address)).connect(signer)
   const drop = await (await ethers.getContractAt('Drop', Drop.address)).connect(signer)
   const media = await (await ethers.getContractAt('Media', Media.address)).connect(signer)
   const market = await (await ethers.getContractAt('Market', Market.address)).connect(signer)
@@ -39,7 +40,7 @@ async function main() {
 
   // Configure game for our Gen 0 drop
   console.log('keeper.configure', Market.address, Media.address, ZOO.address)
-  await keeper.configure(Market.address, Media.address, ZOO.address)
+  await keeper.configure(Market.address, Media.address, ZOO.address, bridge.address, false)
 
   // Configure Drop
   console.log('drop.configure', ZooKeeper.address)
