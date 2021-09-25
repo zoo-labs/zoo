@@ -51,3 +51,11 @@ const  x = setInterval(function() {
       return ''
   }
 }
+
+export const formatError = (err) => {
+  if (err.code) {
+    return `Purchase failed: ${err.message}`
+  } else {
+    return `Purchase failed: ${err.toString().replace(/Error: Returned error: /, '')}`
+  }
+}
