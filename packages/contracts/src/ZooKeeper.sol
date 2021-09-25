@@ -5,7 +5,7 @@ pragma experimental ABIEncoderV2;
 
 import { Counters } from '@openzeppelin/contracts/utils/Counters.sol';
 import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
-import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import { IERC721 } from '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 import { Initializable } from '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
 import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
 import { SafeMath } from '@openzeppelin/contracts/utils/math/SafeMath.sol';
@@ -59,7 +59,7 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
     _;
   }
 
-  function _authorizeUpgrade(address newImplementation) internal override onlyOwner { }
+  function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 
   function initialize() public initializer {
     __Ownable_init_unchained();
@@ -143,8 +143,8 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
 
   // Accept ZOO and return Egg NFT
   function buyEgg(uint256 dropID) public returns (IZoo.Token memory) {
-    require(unlocked, "Game is not unlocked yet");
-    require(media.balanceOf(msg.sender) < 3, "Only 3 eggs allowed");
+    require(unlocked, 'Game is not unlocked yet');
+    require(media.balanceOf(msg.sender) < 3, 'Only 3 eggs allowed');
 
     console.log('buyEgg', dropID);
 
@@ -170,7 +170,7 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
 
   // Burn egg and randomly return an animal NFT
   function hatchEgg(uint256 dropID, uint256 eggID) public returns (IZoo.Token memory) {
-    require(unlocked, "Game is not unlocked yet");
+    require(unlocked, 'Game is not unlocked yet');
 
     console.log('hatchEgg', dropID, eggID);
 
@@ -333,12 +333,11 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
     return zoo.transfer(receiver, amount);
   }
 
-    function setAsk(uint256 tokenID, IMarket.Ask memory ask) public{
+  function setAsk(uint256 tokenID, IMarket.Ask memory ask) public {
     media.setAsk(tokenID, ask);
-        
-        }
-  function setBid(uint256 tokenID, IMarket.Bid memory bid) public{
-   
-   media.setBid(tokenID, bid);
- }
+  }
+
+  function setBid(uint256 tokenID, IMarket.Bid memory bid) public {
+    media.setBid(tokenID, bid);
+  }
 }
