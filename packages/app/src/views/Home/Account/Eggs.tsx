@@ -18,7 +18,7 @@ import { addEgg, getMyEggs } from 'state/zoo/actions'
 import { getZooKeeper } from 'util/contracts'
 import NewAnimalCard from '../../../components/modals/NewAnimal'
 import { mapEgg, mapAnimal } from 'util/moralis'
-import { useHatchDisabledModalToggle, useNewAnimalModalToggle, useVideoPlayerModalToggle } from 'state/application/hooks'
+import { useAssetModalToggle, useHatchDisabledModalToggle, useNewAnimalModalToggle, useVideoPlayerModalToggle } from 'state/application/hooks'
 import { Splide, SplideSlide } from 'components/Splide'
 
 import '@splidejs/splide/dist/css/themes/splide-default.min.css'
@@ -27,6 +27,7 @@ import { sortData } from 'functions'
 import { CardEgg } from 'components/EggCard/types'
 import { t } from '@lingui/macro'
 import { Egg } from 'types/zoo'
+import AssetModal from 'components/modals/MarketModals/AssetModal'
 interface EggsProps {
   myEggs: Array<Egg>
 }
@@ -71,7 +72,8 @@ const Eggs: React.FC<EggsProps> = ({ myEggs }) => {
   const { isXl, isSm, isMd } = useMatchBreakpoints()
   const toggleNewAnimalModal = useNewAnimalModalToggle()
   const toggleVideoPlayerModal = useVideoPlayerModalToggle()
-
+  const toggleAssetModal = useAssetModalToggle()
+  const [activeItem, setActiveItem] = useState({})
   const hatchEggReady = async (egg) => {
     const eggObject = Moralis.Object.extend('Eggs')
     const eggQuery = new Moralis.Query(eggObject)
@@ -195,7 +197,7 @@ const Eggs: React.FC<EggsProps> = ({ myEggs }) => {
               {myEggs.map((egg: CardEgg) => (
                 <SplideSlide key={egg.tokenID}>
                   <div className='flex items-center' style={{ height: 300, width: '100%' }}>
-                    <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} />
+                    <EggCard egg={egg} hatchEgg={hatchEgg} hatchEggReady={hatchEggReady} viewItem={() => (setActiveItem(egg), toggleAssetModal())} />
                   </div>
                 </SplideSlide>
               ))}
@@ -211,6 +213,7 @@ const Eggs: React.FC<EggsProps> = ({ myEggs }) => {
       <VideoPlayerModal videoPath={eggType === 'basic' ? 'hatch_mobile_basic.mp4' : 'hatch_mobile_hybrid.mp4'} />
       <NewAnimalModal animal={hatched} onDismiss={() => setEggType('')} />
       <HatchDisabledModal />
+      <AssetModal item={activeItem} />
     </>
   )
 }
