@@ -195,7 +195,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                       <span className='pr-2'>
                         <i className={`${disabled && 'animate-spin'} fas fa-circle-notch `}></i>
                       </span>
-                    ) : account.toLowerCase() == ownerAccount.toString() ? (
+                    ) : account?.toLowerCase() == ownerAccount?.toString() ? (
                       'Set Ask'
                     ) : (
                       'Place Bid'
