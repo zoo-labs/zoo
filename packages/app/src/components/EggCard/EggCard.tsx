@@ -170,7 +170,7 @@ const Card = styled(Existing)<{ timedOut?: boolean; interactive?: boolean; hatch
   transition: all 1s ease-in-out;
 `
 
-export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady }) => {
+export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady, viewItem }) => {
   const onHatch = () => hatchEgg(egg)
   const onReveal = () => hatchEggReady(egg)
 
@@ -235,14 +235,9 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
         hatching={hatching}
         hatched={hatched}>
         <CardBody
-          onClick={() =>
-            history.push(`/feed/${egg.owner}/${egg.tokenID}`, {
-              item: egg,
-            })
-          }
-          className='transform hover:scale-110'
+          className=''
           style={{
-            backgroundImage: !animationMode ? `url('${backgroundImage}')` : `url('${animatedBackgroundImage}')`,
+            //backgroundImage: !animationMode ? `url('${backgroundImage}')` : `url('${animatedBackgroundImage}')`
             width: '100%',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
@@ -255,33 +250,26 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady })
             alignItems: 'center',
             // filter: (!egg.hatched && !egg.interactive) ? null : `hue-rotate(0.${hue}turn)`,
           }}>
+          <div
+            onClick={
+              () => viewItem()
+              // history.push(`/feed/${egg.owner}/${egg.tokenID}`, {
+              //   item: egg,
+              // })
+            }
+            className='transform hover:scale-110 w-full h-full absolute'>
+            <img src={!animationMode ? backgroundImage : animatedBackgroundImage} />
+          </div>
           {/* {!egg.hatched && !egg.interactive ? getVideo('/static/video/spinning.gif') : animationMode ? getVideo('/static/video/egg.gif') : null} */}
-          {/* <TextWrapper
-            style={{
-              position: 'absolute',
-              top: 8,
-              left: 0,
-              width: '100%',
-              textAlign: 'center',
-              zIndex: 10,
-            }}>
-            {egg.name}
-          </TextWrapper> */}
+          <h6 className='absolute z-10 text-center top-4 w-full text-sm font-semibold'>{egg.name}</h6>
           {egg.timeRemaining > 0 ? (
             <TimeoutWrapper barwidth={egg.CTAOverride ? egg.CTAOverride.barwidth : 0}>
               <TimeoutDisplay>{`${egg.CTAOverride.timeRemainingDaysHours.days}D ${egg.CTAOverride.timeRemainingDaysHours.hours}H`}</TimeoutDisplay>
             </TimeoutWrapper>
           ) : (
-            <InfoBlock
-              onClick={() => buttonActions()}
-              style={{
-                position: 'absolute',
-                textAlign: 'center',
-                padding: 8,
-                zIndex: 10,
-              }}>
-              {/* <TextWrapper>{buttonLabel(egg)}</TextWrapper> */}
-            </InfoBlock>
+            <div className='absolute z-10 text-center bottom-4 w-full' onClick={() => buttonActions()}>
+              <h6 className=' text-sm font-semibold'>{buttonLabel(egg)}</h6>
+            </div>
           )}
         </CardBody>
       </Card>
