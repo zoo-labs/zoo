@@ -15,6 +15,7 @@ interface ModalProps {
   isMax?: boolean
   isFullWidth?: boolean
   backgroundColor?: string
+  scrollable?: boolean
 }
 
 export default function Modal({
@@ -29,6 +30,7 @@ export default function Modal({
   isMax,
   isFullWidth,
   backgroundColor,
+  scrollable,
 }: ModalProps) {
   // console.log({ maxHeight: `${maxHeight}vh` })
   let refDiv = useRef(null)
@@ -36,9 +38,9 @@ export default function Modal({
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog initialFocus={refDiv} as='div' onClose={onDismiss} className='fixed inset-0 z-10 overflow-y-hidden backdrop-blur-md'>
+        <Dialog initialFocus={refDiv} as='div' onClose={onDismiss} className={`fixed inset-0 z-10 ${!scrollable ? 'overflow-y-hidden' : 'overflow-y-auto'} backdrop-blur-md`}>
           <Dialog.Overlay className='fixed inset-0 bg-black backdrop-blur-md opacity-30' />
-          <div className={`flex items-center justify-center h-screen ${!isMax && 'px-4'}`} ref={refDiv}>
+          <div className={`flex items-center justify-center ${!scrollable && 'h-screen'} ${!isMax && 'px-4'}`} ref={refDiv}>
             <Transition.Child
               as={Fragment}
               enter='ease-out duration-300'
@@ -55,7 +57,7 @@ export default function Modal({
                 }}>
                 <div className={` ${isMax ? 'h-full' : 'p-px'}  w-full rounded bg-gradient-to-b from-btn1  to-btn2`}>
                   <div className={`${!isMax && 'rounded p-6'} flex flex-col w-full h-full  overflow-y-hidden  bg-dark-900`} style={{ backgroundColor }}>
-                    <div style={{ minHeight: isMax ? '100vh' : `${minHeight}vh`, maxHeight: `${maxHeight}vh` }}>{children}</div>
+                    <div style={{ minHeight: isMax ? '100vh' : `${minHeight}vh`, maxHeight: scrollable ? 'auto' : `${maxHeight}vh` }}>{children}</div>
                   </div>
                 </div>
               </div>

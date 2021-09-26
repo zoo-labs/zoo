@@ -14,9 +14,10 @@ interface MyBidProps {
   showRightArrow: boolean
   datum: any
   placeBid: () => void
+  viewItem: () => void
 }
 
-const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRightArrow, datum, placeBid }) => {
+const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRightArrow, datum, placeBid, viewItem }) => {
   const [data, setdata] = React.useState<any>({})
   const history = useHistory()
   React.useEffect(() => {
@@ -133,11 +134,7 @@ const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRig
             Place a bid
           </a>
           <a
-            onClick={() =>
-              history.push(`/feed/${datum.owner}/${datum.tokenID}`, {
-                item: datum,
-              })
-            }
+            onClick={() => viewItem()}
             className='text-white mb-4 w-full inline-flex justify-center hover:bg-primary-light items-center h-10 px-6 border border-solid border-gray-300 rounded-lg font-bold text-lg leading-none  '
             style={{ transition: 'all .2s', borderColor: '#353945' }}>
             View Item

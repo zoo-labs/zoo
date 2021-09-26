@@ -16,6 +16,7 @@ module.exports = {
       borderSolid: ['hover', 'focus'],
       transform: ['hover', 'focus'],
       visibility: ['hover', 'focus'],
+      scale: ['active', 'group-hover'],
     },
   },
   plugins: [],
