@@ -16,6 +16,8 @@ import { useMatchBreakpoints } from 'hooks'
 import useToast from 'hooks/useToast'
 import { formatError } from 'functions'
 
+import { addresses } from 'constants/contracts'
+import { ChainId } from 'constants/Chains'
 
 interface BidModalProps {
   item: any
@@ -41,11 +43,19 @@ const BidModal: React.FC<BidModalProps> = ({ item }) => {
   const { isSm } = useMatchBreakpoints()
   const zooKeeper = getZooKeeper(web3)
   const zooToken = getToken(web3)
+  const { chainID } = web3
 
+  const chainAddresses = addresses[chainID] as any || addresses[ChainId.BSC] as any
+  
   const setBid = async () => {
+        // .setBid(item.tokenID, { amount: Number(amount), currency: item.owner }) //set Ask price for token
+// console.log("account===============", account)
+console.log("account===============", item)
+console.log("chainaddress===============", chainAddresses)
+// console.log("parameters==================", {amount: Number(amount), currency: item.owner , from: account, receipient: "" ,decimal: 18})
     try {
       await zooKeeper.methods
-        .setBid(item.tokenID, { amount: Number(amount), currency: item.owner }) //set Ask price for token
+        .setBid(item.tokenID, {amount: Number(amount), currency: chainAddresses.ZOO , bidder: account, recipient: "0xd0aef8b960d43418dc0a83dd0cac04a3793de3e0", sellOnShare: {value: 18} }) //set Ask price for token
         .send({ from: account, gasPrice: gasPrice })
         .then((res) => {
           clear()
