@@ -222,8 +222,8 @@ const Index: React.FC<IndexProps> = ({}) => {
                           showLeftArrow={showLeftArrow}
                           showRightArrow={showRightArrow}
                           bidRef={splideBidRef}
-                          placeBid={() => (setActiveItem(datum), toggleBidModal())}
-                          viewItem={() => (setActiveItem(datum), toggleAssetModal())}
+                          placeBid={() => (setActiveBid(datum), toggleBidModal())}
+                          viewItem={() => (setActiveBid(datum), toggleAssetModal())}
                         />
                       </SplideSlide>
                     )
@@ -451,7 +451,7 @@ const Index: React.FC<IndexProps> = ({}) => {
                 data.map((datum, index) => {
                   return (
                     <div key={index} className='w-full md:w-1/2 xl:w-1/4 p-2'>
-                      <DiscoverCard datum={datum} applyMaxWidth={false} placeBid={() => (setActiveItem(datum), toggleBidModal())} />
+                      <DiscoverCard datum={datum} applyMaxWidth={false} placeBid={() => (setActiveBid(datum), toggleBidModal())} />
                     </div>
                   )
                 })
@@ -471,8 +471,8 @@ const Index: React.FC<IndexProps> = ({}) => {
         </div>
       </div>
       <div className=''></div>
-      <BidModal item={activeItem} />
-      <AssetModal item={activeItem} />
+      <BidModal item={activeBid} />
+      <AssetModal item={activeBid} />
     </main>
   )
 }
