@@ -22,7 +22,12 @@ const BidModal: React.FC<BidModalProps> = ({ item }) => {
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
   const isAnimated = useIsAnimationMode()
 
-  const inputCheck = () => {}
+  const handleOnChange = (e) => {
+    console.log('value======', e.target.value)
+    if(e.target.value != '-'){
+      setAmount(e.target.value)
+    }
+  }
   useEffect(() => {
     if (parseFloat(amount) > zooBalance) {
       setError(`You dont have enough ZOO`)
@@ -117,8 +122,10 @@ const BidModal: React.FC<BidModalProps> = ({ item }) => {
             </div>
             <div className='relative mb-3 w-full'>
               <input
-                onChange={(e) => (setAmount(e.target.value), inputCheck())}
-                value={amount}
+              type="number"
+              min="0"
+                onChange={(e) => handleOnChange(e)}
+                value={amount }
                 className=' w-full border border-solid rounded-md py-2 px-3 focus:outline-none font-semibold leading-snug text-md bg-dark-800 '
               />
               <h6 className='absolute top-1/2 right-4 leading-normal font-semibold transform -translate-y-2/4 '>ZOO</h6>
@@ -130,9 +137,10 @@ const BidModal: React.FC<BidModalProps> = ({ item }) => {
             <h6 className='mb-2 text-xs text-gray-400 font-semibold'>The next bid must be 5% more than the current bid</h6>
             <div>
               <button
-                onClick={() => toggleBidModal()}
+                onClick={() => Number(amount) < 0 ? null : toggleBidModal()}
+                disabled={Number(amount) < 0 ? true: false}
                 className='text-white my-4 w-full inline-flex justify-center items-center h-10 px-6 bg-primary-light hover:bg-primary rounded-lg font-bold text-lg leading-none  '
-                style={{ transition: 'all .2s' }}>
+                style={{ transition: 'all .2s' , cursor: Number(amount) < 0 ? "default": "pointer"}}>
                 Place a bid
               </button>
               <h6 className='mb-4 text-xs text-gray-300 font-semibold text-center'>You cannot withdraw a bid once submitted.</h6>
