@@ -9,18 +9,63 @@ import { useSelector } from 'react-redux'
 import { useIsAnimationMode } from 'state/user/hooks'
 import { FaMoneyBill } from 'react-icons/fa'
 import { accountEllipsis, getEmoji } from 'functions'
+import { useWeb3React } from '@web3-react/core'
+import useWeb3 from 'hooks/useWeb3'
+import {  getToken, getZooKeeper } from 'util/contracts'
+import { useMatchBreakpoints } from 'hooks'
+import useToast from 'hooks/useToast'
+import { formatError } from 'functions'
+
 
 interface BidModalProps {
   item: any
 }
 
 const BidModal: React.FC<BidModalProps> = ({ item }) => {
+
+  
+  const {  account } = useWeb3React()
+  const web3 = useWeb3()
+  const { gasPrice } = web3
+
   const bidModal = useModalOpen(ApplicationModal.BID)
   const toggleBidModal = useBidModalToggle()
   const [amount, setAmount] = useState('300000')
   const [error, setError] = useState('')
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
   const isAnimated = useIsAnimationMode()
+
+  
+  const { toastError, toastInfo, clear } = useToast()
+  console.log(item)
+  const { isSm } = useMatchBreakpoints()
+  const zooKeeper = getZooKeeper(web3)
+  const zooToken = getToken(web3)
+
+  const setBid = async () => {
+    try {
+      await zooKeeper.methods
+        .setBid(item.tokenID, { amount: Number(amount), currency: item.owner }) //set Ask price for token
+        .send({ from: account, gasPrice: gasPrice })
+        .then((res) => {
+          clear()
+          toastInfo('Ask Price Set.')
+          console.log('Set Ask Price', res)
+          toggleBidModal()
+
+        })
+        .catch((err) => {
+          const message = formatError(err)
+          toastError(message)
+          console.error(message)
+        })
+    } catch (err) {
+      console.error(err)
+      toastError('Unable to purchase eggs. Try again later.')
+    }
+    // console.log(testEggs)
+    // dispatch(addEggs(testEggs))
+  }
 
   const inputCheck = () => {}
   useEffect(() => {
@@ -130,7 +175,7 @@ const BidModal: React.FC<BidModalProps> = ({ item }) => {
             <h6 className='mb-2 text-xs text-gray-400 font-semibold'>The next bid must be 5% more than the current bid</h6>
             <div>
               <button
-                onClick={() => toggleBidModal()}
+                onClick={setBid}
                 className='text-white my-4 w-full inline-flex justify-center items-center h-10 px-6 bg-primary-light hover:bg-primary rounded-lg font-bold text-lg leading-none  '
                 style={{ transition: 'all .2s' }}>
                 Place a bid
