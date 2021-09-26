@@ -18,7 +18,6 @@ import { GiPlayButton } from 'react-icons/gi'
 import MyBid from 'components/Market/MyBid'
 import MyAuction from 'components/Market/MyAuction'
 import BidModal from 'components/modals/MarketModals/BidModal'
-import { useBidModalToggle } from 'state/application/hooks'
 import Box from '@mui/material/Box'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -26,8 +25,12 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import { Input } from '@mui/material'
 import Dropdown from 'react-dropdown'
-import AssetModal from 'components/modals/AssetModal'
+// import AssetModal from 'components/modals/AssetModal'
 import { color } from 'styled-system'
+
+import AssetModal from 'components/modals/MarketModals/AssetModal'
+
+import { useBidModalToggle, useAssetModalToggle } from 'state/application/hooks'
 
 interface IndexProps {}
 const PrettoSlider = withStyles({
@@ -83,7 +86,7 @@ const Index: React.FC<IndexProps> = ({}) => {
   const animalsState = useSelector<AppState, AppState['zoo']['animals']>((state) => state.zoo.animals)
   const eggsState = useSelector<AppState, AppState['zoo']['eggs']>((state) => state.zoo.eggs)
   const toggleBidModal = useBidModalToggle()
-
+  const toggleAssetModal = useAssetModalToggle()
   const myAuctions = [0, 1]
   const options = ['Common 🌕', 'Uncommon 🌓', 'Rare 🔥', 'Super Rare ☄️', 'Epic 🌟']
   const swiperRef = useRef(null)
@@ -147,6 +150,7 @@ const Index: React.FC<IndexProps> = ({}) => {
         setBidView(0)
       }
     })
+
   return (
     <main className='w-full h-full'>
       <div className='py-32 '>
@@ -218,7 +222,8 @@ const Index: React.FC<IndexProps> = ({}) => {
                           showLeftArrow={showLeftArrow}
                           showRightArrow={showRightArrow}
                           bidRef={splideBidRef}
-                          placeBid={() => (setActiveBid(datum), toggleBidModal())}
+                          placeBid={() => (setActiveItem(datum), toggleBidModal())}
+                          viewItem={() => (setActiveItem(datum), toggleAssetModal())}
                         />
                       </SplideSlide>
                     )
@@ -446,7 +451,7 @@ const Index: React.FC<IndexProps> = ({}) => {
                 data.map((datum, index) => {
                   return (
                     <div key={index} className='w-full md:w-1/2 xl:w-1/4 p-2'>
-                      <DiscoverCard datum={datum} applyMaxWidth={false} placeBid={() => (setActiveBid(datum), toggleBidModal())} />
+                      <DiscoverCard datum={datum} applyMaxWidth={false} placeBid={() => (setActiveItem(datum), toggleBidModal())} />
                     </div>
                   )
                 })
@@ -466,8 +471,8 @@ const Index: React.FC<IndexProps> = ({}) => {
         </div>
       </div>
       <div className=''></div>
-      <BidModal item={activeBid} />
-      {/* <AssetModal item={activeBid} /> */}
+      <BidModal item={activeItem} />
+      <AssetModal item={activeItem} />
     </main>
   )
 }
