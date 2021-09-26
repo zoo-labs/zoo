@@ -50,7 +50,7 @@ const FeedAsset: React.FC<FeedAssetProps> = ({ history }) => {
   }
 
   const item = history.location.state.item
-  const txHash = item.transactionHash || '0x000000000000000000000000000000000000000'
+  const txHash = item.owner || '0x000000000000000000000000000000000000000'
   const accountEllipsis = `${txHash.substring(0, 10)}...${txHash.substring(txHash.length - 6)}`
   const myTransactions = useSelector<AppState, AppState['zoo']['myTransactions']>((state) => state.zoo.myTransactions)
   console.log(item)
