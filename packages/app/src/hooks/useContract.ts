@@ -1,4 +1,5 @@
 import {
+  AddressMap,
   ARCHER_ROUTER_ADDRESS,
   BAR_ADDRESS,
   BENTOBOX_ADDRESS,
@@ -64,13 +65,13 @@ export function useEIP2612Contract(tokenAddress?: string): Contract | null {
 }
 
 // returns null on errors
-export function useContract(address: string | undefined, ABI: any, withSignerIfPossible = true): Contract | null {
+export function useContract(address: string | AddressMap| undefined, ABI: any, withSignerIfPossible = true): Contract | null {
   const { library, account } = useWeb3()
 
   return useMemo(() => {
     if (!address || !ABI || !library) return null
     try {
-      return getContract(address, ABI, library, withSignerIfPossible && account ? account : undefined)
+      return getContract(address.toString(), ABI, library, withSignerIfPossible && account ? account : undefined)
     } catch (error) {
       console.error('Failed to get contract', error)
       return null
