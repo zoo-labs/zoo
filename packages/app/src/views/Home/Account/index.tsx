@@ -112,12 +112,19 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
       const allowance = web3.utils.toBN(eggPrice).mul(web3.utils.toBN(3))
       const tx = zooToken.methods.approve(zooKeeper.options.address, allowance).send({ from: account })
 
-      tx.then(() => {
+      if (tx) {
         setAllowance(true)
         setDisableApprove(false)
         toastClear()
         toastSuccess('Approval success!')
-      })
+      }
+
+      // tx.then(() => {
+      //   setAllowance(true)
+      //   setDisableApprove(false)
+      //   toastClear()
+      //   toastSuccess('Approval success!')
+      // })
     } catch (error) {
       console.error('APPROVE ERROR', error)
       setDisableApprove(false)
