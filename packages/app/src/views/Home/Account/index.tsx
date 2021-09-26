@@ -118,13 +118,6 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
         toastClear()
         toastSuccess('Approval success!')
       }
-
-      // tx.then(() => {
-      //   setAllowance(true)
-      //   setDisableApprove(false)
-      //   toastClear()
-      //   toastSuccess('Approval success!')
-      // })
     } catch (error) {
       console.error('APPROVE ERROR', error)
       setDisableApprove(false)
