@@ -23,7 +23,6 @@ const BidModal: React.FC<BidModalProps> = ({ item }) => {
   const isAnimated = useIsAnimationMode()
 
   const handleOnChange = (e) => {
-    console.log('value======', e.target.value)
     if(e.target.value != '-'){
       setAmount(e.target.value)
     }
