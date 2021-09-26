@@ -9,24 +9,81 @@ import { useSelector } from 'react-redux'
 import { useIsAnimationMode } from 'state/user/hooks'
 import { FaMoneyBill } from 'react-icons/fa'
 import { accountEllipsis, getEmoji } from 'functions'
+import { useWeb3React } from '@web3-react/core'
+import useWeb3 from 'hooks/useWeb3'
+import {  getToken, getZooKeeper } from 'util/contracts'
+import { useMatchBreakpoints } from 'hooks'
+import useToast from 'hooks/useToast'
+import { formatError } from 'functions'
+
+import { addresses } from 'constants/contracts'
+import { ChainId } from 'constants/Chains'
 
 interface BidModalProps {
   item: any
 }
 
 const BidModal: React.FC<BidModalProps> = ({ item }) => {
+
+  
+  const {  account } = useWeb3React()
+  const web3 = useWeb3()
+  const { gasPrice } = web3
+
   const bidModal = useModalOpen(ApplicationModal.BID)
   const toggleBidModal = useBidModalToggle()
   const [amount, setAmount] = useState('300000')
   const [error, setError] = useState('')
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
   const isAnimated = useIsAnimationMode()
+  
+  const { toastError, toastInfo, clear } = useToast()
+  console.log(item)
+  const { isSm } = useMatchBreakpoints()
+  const zooKeeper = getZooKeeper(web3)
+  const zooToken = getToken(web3)
+  const { chainID } = web3
+
+  const chainAddresses = addresses[chainID] as any || addresses[ChainId.BSC] as any
+  
+  const setBid = async () => {
+        // .setBid(item.tokenID, { amount: Number(amount), currency: item.owner }) //set Ask price for token
+// console.log("account===============", account)
+console.log("account===============", item)
+console.log("chainaddress===============", chainAddresses)
+// console.log("parameters==================", {amount: Number(amount), currency: item.owner , from: account, receipient: "" ,decimal: 18})
+    try {
+      await zooKeeper.methods
+        .setBid(item.tokenID, {amount: Number(amount), currency: chainAddresses.ZOO , bidder: account, recipient: "0xd0aef8b960d43418dc0a83dd0cac04a3793de3e0", sellOnShare: {value: 18} }) //set Ask price for token
+        .send({ from: account, gasPrice: gasPrice })
+        .then((res) => {
+          clear()
+          toastInfo('Ask Price Set.')
+          console.log('Set Ask Price', res)
+          toggleBidModal()
+
+        })
+        .catch((err) => {
+          const message = formatError(err)
+          toastError(message)
+          console.error(message)
+        })
+    } catch (err) {
+      console.error(err)
+      toastError('Unable to purchase eggs. Try again later.')
+    }
+    // console.log(testEggs)
+    // dispatch(addEggs(testEggs))
+  }
+
+  const inputCheck = () => {}
 
   const handleOnChange = (e) => {
     if(e.target.value != '-'){
       setAmount(e.target.value)
     }
   }
+
   useEffect(() => {
     if (parseFloat(amount) > zooBalance) {
       setError(`You dont have enough ZOO`)
@@ -136,8 +193,7 @@ const BidModal: React.FC<BidModalProps> = ({ item }) => {
             <h6 className='mb-2 text-xs text-gray-400 font-semibold'>The next bid must be 5% more than the current bid</h6>
             <div>
               <button
-                onClick={() => Number(amount) < 0 ? null : toggleBidModal()}
-                disabled={Number(amount) < 0 ? true: false}
+                onClick={setBid}
                 className='text-white my-4 w-full inline-flex justify-center items-center h-10 px-6 bg-primary-light hover:bg-primary rounded-lg font-bold text-lg leading-none  '
                 style={{ transition: 'all .2s' , cursor: Number(amount) < 0 ? "default": "pointer"}}>
                 Place a bid
