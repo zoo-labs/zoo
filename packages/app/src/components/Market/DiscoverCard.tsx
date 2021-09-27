@@ -19,9 +19,9 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
         <img style={{ verticalAlign: 'middle' }} src={`${datum.imageUrl || '/static/video/egg.gif'}`} className='transition-transform w-full duration-1000 ' />
         <div className='absolute top-0 left-0 w-full h-full invisible opacity-0 rounded transition-all duration-300 hover:visible hover:opacity-100'>
           <div className='absolute top-6 left-3 bg-primary px-2 py-1 rounded text-xs font-bold uppercase '>{datum.bloodline || (datum.basic ? 'BASIC' : 'HYBRID')}</div>
-          <div className=' cursor-pointer absolute top-6 right-3 w-8 h-8 bg-dark-800 rounded-full flex items-center justify-center'>
+          {/* <div className=' cursor-pointer absolute top-6 right-3 w-8 h-8 bg-dark-800 rounded-full flex items-center justify-center'>
             <FaHeart fill='white' style={{ fontSize: 10 }} />
-          </div>
+          </div> */}
           <a
             onClick={() => placeBid()}
             className='cursor-pointer absolute left-1/2 bottom-6 min-w-max h-10 bg-primary px-4 rounded-full text-sm items-center justify-center inline-flex transition-all duration-300 transform -translate-x-2/4'>

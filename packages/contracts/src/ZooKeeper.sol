@@ -5,7 +5,7 @@ pragma experimental ABIEncoderV2;
 
 import { Counters } from '@openzeppelin/contracts/utils/Counters.sol';
 import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
-import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import { IERC721 } from '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 import { Initializable } from '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
 import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
 import { SafeMath } from '@openzeppelin/contracts/utils/math/SafeMath.sol';
@@ -53,15 +53,17 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   IERC20 public zoo;
   address public bridge;
   bool public unlocked;
+  // string public dev;
 
   modifier onlyBridge() {
     require(msg.sender == bridge);
     _;
   }
 
-  function _authorizeUpgrade(address newImplementation) internal override onlyOwner { }
+  function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 
   function initialize() public initializer {
+    // dev = '01001001 01010100 00100111 01010011 00100000 01000100 01000101 01000110 01001001 00100000 01000010 01010010 01001111 00100001 00001101 00001010 00101101 01001110 01001111 00100000 01001001 01000100 01000101 01000001 00101101 00001101 00001010 00001101 00001010 01101000 01110100 01110100 01110000 01110011 00111010 00101111 00101111 01111001 01101111 01110101 01110100 01110101 00101110 01100010 01100101 00101111 01100010 01011010 00110100 01010001 01010000 01000011 01100111 01011010 01100110 01101100 01101011';
     __Ownable_init_unchained();
   }
 
@@ -143,8 +145,8 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
 
   // Accept ZOO and return Egg NFT
   function buyEgg(uint256 dropID) public returns (IZoo.Token memory) {
-    require(unlocked, "Game is not unlocked yet");
-    require(media.balanceOf(msg.sender) < 3, "Only 3 eggs allowed");
+    require(unlocked, 'Game is not unlocked yet');
+    require(media.balanceOf(msg.sender) < 3, 'Only 3 eggs allowed');
 
     console.log('buyEgg', dropID);
 
@@ -170,7 +172,7 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
 
   // Burn egg and randomly return an animal NFT
   function hatchEgg(uint256 dropID, uint256 eggID) public returns (IZoo.Token memory) {
-    require(unlocked, "Game is not unlocked yet");
+    require(unlocked, 'Game is not unlocked yet');
 
     console.log('hatchEgg', dropID, eggID);
 
@@ -331,5 +333,13 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   // Enable owner to withdraw ZOO if necessary
   function zooWithdraw(address receiver, uint256 amount) public onlyOwner returns (bool) {
     return zoo.transfer(receiver, amount);
+  }
+
+  function setAsk(uint256 tokenID, IMarket.Ask memory ask) public {
+    media.setAsk(tokenID, ask);
+  }
+
+  function setBid(uint256 tokenID, IMarket.Bid memory bid) public {
+    media.setBid(tokenID, bid);
   }
 }
