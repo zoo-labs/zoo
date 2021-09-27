@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { connectorLocalStorageKey } from '../config'
 import useWeb3 from 'hooks/useWeb3'
-import { getFaucet, getToken, getZooKeeper } from 'util/contracts'
+import { getFaucet, getToken, getZooKeeper, getMarket } from 'util/contracts'
 import AltModal from 'components/Modal/AltModal'
 import { numberWithCommas } from 'components/Functions'
 import HeaderModal from 'components/Modal/HeaderModal'
@@ -24,6 +24,8 @@ import { RiShareFill } from 'react-icons/ri'
 import Web3 from 'web3'
 import useToast from 'hooks/useToast'
 import { formatError } from 'functions'
+import { addresses } from 'constants/contracts'
+import { ChainId } from 'constants/Chains'
 
 interface AssetModalProps {
   item: any
@@ -33,6 +35,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const assetModal = useModalOpen(ApplicationModal.ASSET)
   const toggleAssetModal = useAssetModalToggle()
   const [fullView, setFullView] = useState(false)
+  const [itemAsk, setItemAsk] = useState(null)
   const [amount, setAmount] = useState(0)
   const { logout } = useAuth()
   const { chainId, account } = useWeb3React()
@@ -40,6 +43,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
   const web3 = useWeb3()
   const { chainID, gasPrice } = web3
+  const chainAddresses = (addresses[chainID] as any) || (addresses[ChainId.BSC] as any)
   const getNetwork = (chainId: number) => {
     switch (chainId) {
       case 56:
@@ -91,12 +95,13 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   console.log(item)
   const { isSm } = useMatchBreakpoints()
   const zooKeeper = getZooKeeper(web3)
+  const market = getMarket(web3)
   const zooToken = getToken(web3)
   const setAsk = async () => {
     setDisabled(true)
     try {
       await zooKeeper.methods
-        .setAsk(item.tokenID, { amount: 200, currency: ownerAccount }) //set Ask price for token
+        .setAsk(item.tokenID, { amount: 200, currency: chainAddresses.ZOO }) //set Ask price for token
         .send({ from: account, gasPrice: gasPrice })
         .then((res) => {
           clear()
@@ -123,6 +128,16 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
     // console.log(testEggs)
     // dispatch(addEggs(testEggs))
   }
+
+  useEffect(() => {
+    market
+      .methods.currentAskForToken(Number(item.tokenID))
+      .call()
+      .then((res) => {
+        // setItemAsk(ask)
+      })
+  }, [])
+
   return (
     <Modal isOpen={assetModal} onDismiss={() => null} isMax scrollable={isSm}>
       <BidModalHeader onBack={() => toggleAssetModal()} className='absolute p-6 w-full z-10' />
