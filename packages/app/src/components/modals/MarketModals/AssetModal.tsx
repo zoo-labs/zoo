@@ -16,7 +16,7 @@ import CopyHelper from 'components/Copy/Copy'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
 import BidModalHeader from 'components/NewModal/BidModalHeader'
-import { useIsAnimationMode } from 'state/user/hooks'
+import { useAnimationModeManager, useIsAnimationMode } from 'state/user/hooks'
 import { ImArrowRight2, ImArrowUpRight2 } from 'react-icons/im'
 import { useMatchBreakpoints } from 'hooks'
 import { FaCompress, FaCompressAlt, FaExpand } from 'react-icons/fa'
@@ -34,6 +34,8 @@ interface AssetModalProps {
 
 const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const assetModal = useModalOpen(ApplicationModal.ASSET)
+  const [animationMode, toggleSetAnimationMode] = useAnimationModeManager()
+
   const toggleAssetModal = useAssetModalToggle()
   const [fullView, setFullView] = useState(false)
   const [askItem, setAskItem] = useState(null)
@@ -62,17 +64,18 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const isAnimated = useIsAnimationMode()
   const getVideo = () => {
     return isAnimated ? (
-      <div className=''>
+      <div>
         <video
-          className='rounded'
+          className={`${fullView ? ' h-screen' : 'rounded h-1/2'}`}
           autoPlay
           playsInline
           loop
           muted
           style={{
             pointerEvents: 'none',
-            maxHeight: 600,
+            maxHeight: '100vh',
             alignSelf: 'center',
+            // width: '100%',
           }}>
           <source src={'/static/video/egg.mp4'} type='video/mp4'></source>
         </video>
@@ -166,7 +169,10 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
         <div className={`flex flex-1 flex-wrap ${!fullView && 'self-center'}`}>
           <div className={` w-full  md:flex-1  bg-modal-dark flex   ${fullView ? 'w-screen fixed z-20 h-screen' : ' lg:w-1/2 '}`} style={{ minHeight: isSm ? '80vh' : '100vh' }}>
             <div className={`flex   w-full items-center justify-center ${fullView ? 'fixed h-screen' : 'relative h-full'}`}>
-              <div className={`${fullView ? ' h-screen ' : 'w-2/3 lg:w-1/2  p-px'}     bg-gradient-to-b from-btn1  to-btn2  rounded bg-no-repeat`}>
+              <div
+                className={` ${animationMode ? (fullView ? 'bg-none h-full' : 'w-2/3  lg:w-1/2 p-px') : fullView ? ' h-screen ' : 'w-2/3 lg:w-1/2  p-px'}   ${
+                  animationMode && fullView ? 'bg-none' : ' bg-gradient-to-b from-btn1  to-btn2'
+                }  rounded bg-no-repeat `}>
                 <div className='bg-cover '>{getVideo()}</div>
               </div>
               {/*
