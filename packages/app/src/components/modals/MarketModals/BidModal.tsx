@@ -11,11 +11,10 @@ import { FaMoneyBill } from 'react-icons/fa'
 import { accountEllipsis, getEmoji } from 'functions'
 import { useWeb3React } from '@web3-react/core'
 import useWeb3 from 'hooks/useWeb3'
-import {  getToken, getZooKeeper } from 'util/contracts'
+import { getToken, getZooKeeper } from 'util/contracts'
 import { useMatchBreakpoints } from 'hooks'
 import useToast from 'hooks/useToast'
 import { formatError } from 'functions'
-
 import { addresses } from 'constants/contracts'
 import { ChainId } from 'constants/Chains'
 
@@ -24,9 +23,7 @@ interface BidModalProps {
 }
 
 const BidModal: React.FC<BidModalProps> = ({ item }) => {
-
-  
-  const {  account } = useWeb3React()
+  const { account } = useWeb3React()
   const web3 = useWeb3()
   const { gasPrice } = web3
 
@@ -36,7 +33,7 @@ const BidModal: React.FC<BidModalProps> = ({ item }) => {
   const [error, setError] = useState('')
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
   const isAnimated = useIsAnimationMode()
-  
+
   const { toastError, toastInfo, clear } = useToast()
   console.log(item)
   const { isSm } = useMatchBreakpoints()
@@ -44,24 +41,23 @@ const BidModal: React.FC<BidModalProps> = ({ item }) => {
   const zooToken = getToken(web3)
   const { chainID } = web3
 
-  const chainAddresses = addresses[chainID] as any || addresses[ChainId.BSC] as any
-  
+  const chainAddresses = (addresses[chainID] as any) || (addresses[ChainId.BSC] as any)
+
   const setBid = async () => {
-        // .setBid(item.tokenID, { amount: Number(amount), currency: item.owner }) //set Ask price for token
-// console.log("account===============", account)
-console.log("account===============", item)
-console.log("chainaddress===============", chainAddresses)
-// console.log("parameters==================", {amount: Number(amount), currency: item.owner , from: account, receipient: "" ,decimal: 18})
+    // .setBid(item.tokenID, { amount: Number(amount), currency: item.owner }) //set Ask price for token
+    // console.log("account===============", account)
+    // console.log('account===============', item)
+    // console.log('chainaddress===============', chainAddresses)
+    // console.log("parameters==================", {amount: Number(amount), currency: item.owner , from: account, receipient: "" ,decimal: 18})
     try {
-      await zooKeeper.methods
-        .setBid(item.tokenID, {amount: Number(amount), currency: chainAddresses.ZOO , bidder: account, recipient: "0xd0aef8b960d43418dc0a83dd0cac04a3793de3e0", sellOnShare: {value: 18} }) //set Ask price for token
+      zooKeeper.methods
+        .setBid(item.tokenID, { amount: Number(amount), currency: chainAddresses.ZOO, bidder: account, recipient: account, sellOnShare: { value: 0 } }) //set Ask price for token
         .send({ from: account, gasPrice: gasPrice })
         .then((res) => {
           clear()
           toastInfo('Ask Price Set.')
           console.log('Set Ask Price', res)
           toggleBidModal()
-
         })
         .catch((err) => {
           const message = formatError(err)
@@ -79,7 +75,7 @@ console.log("chainaddress===============", chainAddresses)
   const inputCheck = () => {}
 
   const handleOnChange = (e) => {
-    if(e.target.value != '-'){
+    if (e.target.value != '-') {
       setAmount(e.target.value)
     }
   }
@@ -178,10 +174,10 @@ console.log("chainaddress===============", chainAddresses)
             </div>
             <div className='relative mb-3 w-full'>
               <input
-              type="number"
-              min="0"
+                type='number'
+                min='0'
                 onChange={(e) => handleOnChange(e)}
-                value={amount }
+                value={amount}
                 className=' w-full border border-solid rounded-md py-2 px-3 focus:outline-none font-semibold leading-snug text-md bg-dark-800 '
               />
               <h6 className='absolute top-1/2 right-4 leading-normal font-semibold transform -translate-y-2/4 '>ZOO</h6>
@@ -195,7 +191,7 @@ console.log("chainaddress===============", chainAddresses)
               <button
                 onClick={setBid}
                 className='text-white my-4 w-full inline-flex justify-center items-center h-10 px-6 bg-primary-light hover:bg-primary rounded-lg font-bold text-lg leading-none  '
-                style={{ transition: 'all .2s' , cursor: Number(amount) < 0 ? "default": "pointer"}}>
+                style={{ transition: 'all .2s', cursor: Number(amount) < 0 ? 'default' : 'pointer' }}>
                 Place a bid
               </button>
               <h6 className='mb-4 text-xs text-gray-300 font-semibold text-center'>You cannot withdraw a bid once submitted.</h6>
