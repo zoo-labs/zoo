@@ -1,0 +1,18 @@
+.is-open{
+    padding-top:10px;
+    margin-top:110px;
+    width: 510px;
+
+   
+    
+}
+/* .dropdown {
+    margin-top:180px;
+} */
+.menu{
+    margin-top:20px;
+    margin-left:-11px;
+    border-radius: 5%;
+    border: 1px solid;
+    border-color: rgb(52, 54,59);
+}
