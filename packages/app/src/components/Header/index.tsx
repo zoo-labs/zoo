@@ -90,7 +90,7 @@ export default function Header() {
   const { isXl, isXs, isSm, isMd, isLg } = useMatchBreakpoints()
   const web3 = useWeb3()
   const { chainID } = web3
-  const chainAddresses = addresses[chainID] as any || addresses[ChainId.BSC] as any
+  const chainAddresses = (addresses[chainID] as any) || (addresses[ChainId.BSC] as any)
   console.log('chainAddresses.ZOO', chainAddresses.ZOO)
   const { account, library } = useWeb3React()
   const isMobile = isXl === false
@@ -106,7 +106,7 @@ export default function Header() {
   }
   const getBalance = async () => {
     console.log('account', account)
-    if (!account) return;
+    if (!account) return
     try {
       // const decimals = await zooToken.methods.decimals().call()
       await web3.eth.getBalance(account).then((val) => {
@@ -151,7 +151,7 @@ export default function Header() {
         className={`self-center items-center grid grid-flow-col w-max rounded-xl p-1 justify-self-center ${
           isMobile ? 'justify-between z-10 fixed right-2/4 transform translate-x-2/4 -translate-y-1/2 gap-0' : 'gap-6'
         }`}
-        style={{ backgroundColor: 'rgb(25, 27, 31)' , top: "35px"}}>
+        style={{ backgroundColor: 'rgb(25, 27, 31)', bottom: '35px' }}>
         {['Home', 'Bank', 'Market', 'Bridge'].map((path: string) => {
           console.log('active', active)
           const selected = path == 'Swap' ? active == 'swap' || active == 'limit-order' : active === path.toLowerCase()

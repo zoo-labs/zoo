@@ -152,7 +152,7 @@ const BidModal: React.FC<BidModalProps> = ({ item }) => {
                   <div className='mr-1'>
                     <FaMoneyBill />
                   </div>
-                  Highest bid <span className='ml-1'>0.01 ETH</span>
+                  Highest bid <span className='ml-1'>200k ZOO</span>
                 </div>
                 <div className='text-xs text-gray-500 font-semibold'>{item.yield ? `${item.yield} Yields/Day ${getEmoji(item.rarity)}` : ''} </div>
               </div>
