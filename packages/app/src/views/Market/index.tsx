@@ -28,7 +28,7 @@ import { Input } from '@mui/material'
 import Dropdown from 'react-dropdown'
 import AssetModal from 'components/modals/MarketModals/AssetModal'
 import { color } from 'styled-system'
-
+import './index.css'
 interface IndexProps {}
 const PrettoSlider = withStyles({
   root: {
@@ -76,6 +76,7 @@ const Index: React.FC<IndexProps> = ({}) => {
   const [bidView, setBidView] = useState(0)
   const [activeBid, setActiveBid] = useState({})
   const [priceRange, setPriceRange] = useState<any>(0.0)
+  const [breedRange, setBreedRange] = useState<any>(0.0)
   const [age, setAge] = useState(0)
   const [breedCount, setBreadCount] = useState(0)
   const [rarity, setRarity] = useState('')
@@ -377,24 +378,6 @@ const Index: React.FC<IndexProps> = ({}) => {
             <div className='flex flex-wrap -mt-8 -mx-4 '>
               <div className='' style={{ flex: ' 0 0 calc(25% - 32px)', maxWidth: 'calc(25% - 32px)', margin: '32px 16px 0' }}>
                 <div>
-                  <div className='mb-4 font-bold uppercase text-gray-400 text-xs'>Breed</div>
-                  <div className='relative'>
-                    <div className='w-full cursor-pointer text-sm text-white font-semibold w-44 h-12 pl-4 pr-1 items-center rounded-lg border border-solid border-gray-600 flex justify-between'>
-                      {/* Highest Price */}
-                      {/* <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} /> */}
-                      <Input
-                        type={'number'}
-                        onChange={(e) => {
-                          setBreadCount(parseInt(e.target.value))
-                        }}
-                        style={{ color: '#fff' }}
-                        placeholder='Breed Count'></Input>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className='' style={{ flex: ' 0 0 calc(25% - 32px)', maxWidth: 'calc(25% - 32px)', margin: '32px 16px 0' }}>
-                <div>
                   <div className='mb-4 font-bold uppercase text-gray-400 text-xs'>Age</div>
                   <div className='relative'>
                     <div className='w-full cursor-pointer text-sm text-white font-semibold w-44 h-12 pl-4 pr-1 items-center rounded-lg border border-solid border-gray-600 flex justify-between'>
@@ -416,9 +399,31 @@ const Index: React.FC<IndexProps> = ({}) => {
                   <div className='mb-4 font-bold uppercase text-gray-400 text-xs'>Rarity</div>
                   <div className='relative'>
                     <div className='w-full cursor-pointer text-sm text-white font-semibold w-44 h-12 pl-4 pr-1 items-center rounded-lg border border-solid border-gray-600 flex justify-between'>
-                      <Dropdown options={options} value={''} placeholder='Select an option' />
+                      <Dropdown menuClassName="menu" className='dropdown' options={options} value={''} placeholder='Select an option' />
                       {/* <RiArrowDownCircleLine values={"dfghj"} fill='gray' style={{ fontSize: 25, color: 'red' }} /> */}
                     </div>
+                  </div>
+                </div>
+              </div>
+              ``
+              <div className='' style={{ flex: ' 0 0 calc(25% - 32px)', maxWidth: 'calc(25% - 32px)', margin: '32px 16px 0' }}>
+                <div>
+                  <div className='mb-2 font-bold uppercase text-gray-400 text-xs'>Breed Range</div>
+                  <PrettoSlider
+                    onChange={(value, number) => {
+                      setBreedRange(number)
+                    }}
+                    value={breedRange}
+                    valueLabelDisplay='auto'
+                    aria-label='slider'
+                    step={1}
+                    defaultValue={2}
+                    min={0}
+                    max={9}
+                  />
+                  <div className='flex justify-between text-xs'>
+                    <div className='font-semibold'>0</div>
+                    <div className='font-semibold'>9</div>
                   </div>
                 </div>
               </div>

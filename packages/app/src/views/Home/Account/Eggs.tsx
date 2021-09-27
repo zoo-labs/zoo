@@ -111,10 +111,12 @@ const Eggs: React.FC<EggsProps> = ({ myEggs }) => {
   const hatchEgg = async (egg) => {
     //disable egg hatching and show modal here
     if (chainId === ChainId.BSC_TESTNET) {
-      egg.hatching = true
-      dispatch(addEgg(mapEgg(egg)))
+      console.log('egg', egg)
+      const newEgg = { ...egg, hatching: true }
+      // egg.hatching = true
+      dispatch(addEgg({ data: mapEgg(newEgg), account }))
       try {
-        await zooKeeper.methods.hatchEgg(1, egg.tokenID).send({
+        await zooKeeper.methods.hatchEgg(1, newEgg.tokenID).send({
           from: account,
           gasPrice: gasPrice,
         })
