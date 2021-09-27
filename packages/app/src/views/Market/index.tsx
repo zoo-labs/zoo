@@ -75,7 +75,7 @@ const Index: React.FC<IndexProps> = ({}) => {
   const [hotData, setHotData] = useState([])
   const [bidView, setBidView] = useState(0)
   const [activeBid, setActiveBid] = useState({})
-  const [priceRange, setPriceRange] = useState(0.0)
+  const [priceRange, setPriceRange] = useState<any>(0.0)
   const [age, setAge] = useState(0)
   const [breedCount, setBreadCount] = useState(0)
   const [rarity, setRarity] = useState('')
@@ -427,7 +427,7 @@ const Index: React.FC<IndexProps> = ({}) => {
                   <div className='mb-2 font-bold uppercase text-gray-400 text-xs'>Price Range</div>
                   <PrettoSlider
                     onChange={(value, number) => {
-                      // setPriceRange(number)
+                      setPriceRange(number)
                     }}
                     value={priceRange}
                     valueLabelDisplay='auto'
