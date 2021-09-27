@@ -20,6 +20,7 @@ import NewAnimalCard from '../../../components/modals/NewAnimal'
 import { mapEgg, mapAnimal } from 'util/moralis'
 import { useAssetModalToggle, useHatchDisabledModalToggle, useNewAnimalModalToggle, useVideoPlayerModalToggle } from 'state/application/hooks'
 import { Splide, SplideSlide } from 'components/Splide'
+import { ChainId } from '../../../constants/Chains'
 
 import '@splidejs/splide/dist/css/themes/splide-default.min.css'
 
@@ -101,20 +102,28 @@ const Eggs: React.FC<EggsProps> = ({ myEggs }) => {
     startAnimationTimer()
   }
   const hatchDisabledModal = useHatchDisabledModalToggle()
-
+  // const chainIds = [
+  //   ChainId.MAINNET,
+  //   ChainId.BSC,
+  //   ChainId.RINKEBY,
+  //   ChainId.BSC_TESTNET,
+  // ]
   const hatchEgg = async (egg) => {
     //disable egg hatching and show modal here
-    hatchDisabledModal()
-    // egg.hatching = true
-    // dispatch(addEgg(mapEgg(egg)))
-    // try {
-    //   await zooKeeper.methods.hatchEgg(1, egg.tokenID).send({
-    //     from: account,
-    //     gasPrice: gasPrice,
-    //   })
-    // } catch (error) {
-    //   console.error(error)
-    // }
+    if (chainId === ChainId.BSC_TESTNET) {
+      egg.hatching = true
+      dispatch(addEgg(mapEgg(egg)))
+      try {
+        await zooKeeper.methods.hatchEgg(1, egg.tokenID).send({
+          from: account,
+          gasPrice: gasPrice,
+        })
+      } catch (error) {
+        console.error(error)
+      }
+    } else {
+      hatchDisabledModal()
+    }
   }
 
   const startAnimationTimer = useCallback(() => {
