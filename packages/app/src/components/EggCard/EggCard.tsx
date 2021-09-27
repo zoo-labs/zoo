@@ -145,7 +145,6 @@ const TimeoutDisplay = styled.span`
 `
 
 const cardAnimation = (interactive, hatching, hatched) => {
-  console.log('')
   if (!interactive && !hatching) return pulseAnimation
   if (hatched) return glowAnimation
   // if (hatching) return spinAnimation
