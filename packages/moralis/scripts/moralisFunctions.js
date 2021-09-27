@@ -1,5 +1,6 @@
 const fs = require('fs')
 const spawn = require('child_process').spawn
+require('dotenv').config()
 
 const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'hardhat'
 
