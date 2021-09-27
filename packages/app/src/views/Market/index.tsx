@@ -187,6 +187,7 @@ const Index: React.FC<IndexProps> = ({}) => {
             <Splide
               ref={splideparentRef}
               options={{
+                drag: false,
                 width: '100%',
                 fixedWidth: '100vw',
                 arrows: false,
