@@ -43,12 +43,12 @@ async function main() {
   await keeper.configure(Market.address, Media.address, ZOO.address, bridge.address, true)
 
   // Configure Drop
-  console.log('drop.configure', ZooKeeper.address)
-  await drop.configureKeeper(ZooKeeper.address)
+  console.log('drop.configure', keeper.address)
+  await drop.configureKeeper(keeper.address)
 
   // Setup Gen 0 drop
-  console.log('keeper.setDrop', ZooDrop.address)
-  await keeper.setDrop(ZooDrop.address)
+  console.log('keeper.setDrop', drop.address)
+  await keeper.setDrop(drop.address)
 
   // Base Price for Egg / Names
   // const exp = ethers.BigNumber.from('10').pow(18)
