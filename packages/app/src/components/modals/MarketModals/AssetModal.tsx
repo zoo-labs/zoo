@@ -172,7 +172,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
               {/*
 
               w-10/12  md:w-2/3
-             
+
             <div className='absolute top-5 xs:left-10 pl-4 lg:pl-0 lg:right-5 '>
               {[0, 1, 2].map((value) => (
                 <div className='cursor-pointer rounded-full p-2 bg-dark-800 mb-4 flex justify-center items-center'>
