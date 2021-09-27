@@ -26,12 +26,13 @@ import useToast from 'hooks/useToast'
 import { formatError } from 'functions'
 import { addresses } from 'constants/contracts'
 import { ChainId } from 'constants/Chains'
-
+import {Moralis} from "moralis"
 interface AssetModalProps {
   item: any
 }
 
 const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
+  console.log("itemm=================", item)
   const assetModal = useModalOpen(ApplicationModal.ASSET)
   const toggleAssetModal = useAssetModalToggle()
   const [fullView, setFullView] = useState(false)
@@ -41,6 +42,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const { chainId, account } = useWeb3React()
   const history = useHistory()
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
+  const [transactions, setTransactions] = useState<any>(null)
   const web3 = useWeb3()
   const { chainID, gasPrice } = web3
   const chainAddresses = (addresses[chainID] as any) || (addresses[ChainId.BSC] as any)
@@ -58,6 +60,19 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
         return ''
     }
   }
+
+  React.useEffect(() => {
+    async function getHistory () {
+     try {
+      const transfers = await Moralis.Web3API.token.getWalletTokenIdTransfers({ address: "0x19263F2b4693da0991c4Df046E4bAA5386F5735E", token_id: `${item.tokenID}`, chain: "bsc" });   
+      console.log("transfer==================", transfers)   
+      setTransactions(transfers.result)
+     } catch (error) {
+       console.log("error========", error)
+     }
+    };
+    getHistory()
+     }, [item])
   const isAnimated = useIsAnimationMode()
   const getVideo = () => {
     return isAnimated ? (
@@ -193,7 +208,16 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                 <p className='text-sm text-justify text-gray-500 my-4 font-semibold' style={{ color: '#f2f2f2' }}>
                   Contains 1 of 16 Generation One Base Animals. To hatch or to hold…
                 </p>
-
+                <div className='w-full mb-4'>
+                  <div style={{ borderWidth: 1 }}>
+                    {/* <h2 className='text-sm font-bold mb-2'>Reserve Price</h2>
+                    <div className=''>
+                      <span className='mr-2 text-xl  font-semibold'>25K ZOO</span>
+                      <span className='font-light'>$975.00 USD</span>
+                    </div> */}
+                    <input className='rounded border-2 text-center border-gray-400 border-solid py-4 px-40 bg-white text-black ' type='number' placeholder='Enter Reserve Price' />
+                  </div>
+                </div>
                 <div className='w-full mb-4'>
                   <div className='rounded border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
                     <h2 className='text-sm font-bold mb-2'>Reserve Price</h2>
@@ -227,10 +251,10 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                   <div className=' rounded border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
                     <h2 className='text-sm font-bold mb-4'>Details</h2>
                     <div className='flex justify-between items-center'>
-                      <span className='text-md  font-semibold'>Transaction Hash</span>
+                      {/* <span className='text-md  font-semibold'>Transaction Hash</span>
                       <span className='font-semibold text-sm primary cursor-pointer' onClick={() => window.open(`https://testnet.bscscan.com/tx/${txHash}`, '_blank')}>
                         {txHashEllipsis}
-                      </span>
+                      </span> */}
                     </div>
                     <div className='flex justify-between items-center'>
                       <span className=' text-md  font-semibold'>Token ID</span>
@@ -276,8 +300,8 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                     <h2 className='text-sm font-bold'>History</h2>
                   </div>
                   <div className='flex flex-col'>
-                    {transactions.map((transaction, index) => {
-                      const { account, amount, description, date } = transaction
+                    {transactions && transactions.map((transaction, index) => {
+                      const { from_address: account, amount, block_timestamp: date } = transaction
                       return (
                         <div className='flex mb-4 items-center '>
                           <a className='' href='/'>
@@ -286,9 +310,9 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                           <div className='ml-2'>
                             <div className='text-sm'>
                               <a className='font-semibold primary '>
-                                {account.substring(0, 6)}...${account.substring(txHash.length - 4)}
+                                {account?.substring(0, 6)}...${account?.substring(txHash.length - 4)}
                               </a>{' '}
-                              {description}
+                              {/* {description} */}
                               <a className='font-bold'> {amount}</a>
                             </div>
                             <span className='text-sm font-semibold text-gray-400'>{date}</span>
@@ -309,10 +333,10 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
 
 export default AssetModal
 
-const transactions = [
-  { date: 'September 25, 12:21 AM', description: 'listed this NFT with a reserve price of', amount: '35K ZOO', account: '0x36de990133D36d7E3DF9a820aA3eDE5a2320De71' },
-  { date: 'September 25, 12:17 AM', description: 'minted this NFT', amount: '', account: '0x36de990133D36d7E3DF9a820aA3eDE5a2320De71' },
-]
+// const transactions = [
+//   { date: 'September 25, 12:21 AM', description: 'listed this NFT with a reserve price of', amount: '35K ZOO', account: '0x36de990133D36d7E3DF9a820aA3eDE5a2320De71' },
+//   { date: 'September 25, 12:17 AM', description: 'minted this NFT', amount: '', account: '0x36de990133D36d7E3DF9a820aA3eDE5a2320De71' },
+// ]
 
 // box-sizing: border-box;
 // margin: -80px 0px 0px;

@@ -196,7 +196,7 @@ const BidModal: React.FC<BidModalProps> = ({ item }) => {
               </button>
               <h6 className='mb-4 text-xs text-gray-300 font-semibold text-center'>You cannot withdraw a bid once submitted.</h6>
             </div>
-            <a className=' text-xs primary font-semibold text-center underline'>How do auctions work ?</a>
+            {/* <a className=' text-xs primary font-semibold text-center underline'>How do auctions work ?</a> */}
           </div>
         </div>
       </div>

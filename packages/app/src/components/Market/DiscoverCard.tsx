@@ -56,7 +56,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
             <div className='flex-shrink-0 ml-2  uppercase font-bold rounded-sm text-xs flex items-center justify-center'>3 days Left</div>
           </div>
         </div>
-        <div className=' border-t border-solid border-gray-700 flex items-center justify-between mt-4 pt-4 text-sm text-gray-800'>
+        {/* <div className=' border-t border-solid border-gray-700 flex items-center justify-between mt-4 pt-4 text-sm text-gray-800'>
           <div className='flex items-center text-xs text-gray-500 font-semibold'>
             <div className='mr-1'>
               <FaMoneyBillWave />
@@ -64,7 +64,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
             Highest bid <span className='ml-1'>1M ZOO</span>
           </div>
           <div className='text-xs text-gray-500 font-semibold'>{datum.yield ? `${datum.yield} Yields/Day ${getEmoji(datum.rarity)}` : ''} </div>
-        </div>
+        </div> */}
       </a>
     </div>
   )
