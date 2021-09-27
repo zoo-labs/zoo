@@ -5,6 +5,7 @@ import Countdown from 'react-countdown'
 import { useBidModalToggle } from 'state/application/hooks'
 import { useHistory } from 'react-router'
 import { accountEllipsis, getEmoji } from 'functions'
+import Moralis from 'moralis'
 
 interface MyBidProps {
   bidRef: any
@@ -17,7 +18,26 @@ interface MyBidProps {
 }
 
 const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRightArrow, datum, placeBid, viewItem }) => {
+  const [data, setdata] = React.useState<any>({})
   const history = useHistory()
+  React.useEffect(() => {
+    async function findPrice(){
+      try {
+        const options = {
+          address: datum.owner
+        };
+        console.log("Price0======================")
+        const price = await Moralis.Web3API.token.getTokenPrice(options);
+        setdata(price)
+        console.log("Price======================",price)
+      } catch (error) {
+        console.log("ërror=========================",error)
+      }
+
+    }
+    findPrice()
+  }, [datum])
+  console.log("data =====================================", data)
   return (
     <div className='flex flex-start flex-wrap jusrify-center items-center px-4 w-full lg:w-2/3 md:w-full '>
       <div className='hidden md:inline-flex relative md:w-1/3 lg:w-1/2 flex justify-center'>

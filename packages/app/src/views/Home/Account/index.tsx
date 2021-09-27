@@ -96,32 +96,34 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   }
 
   const approve = async () => {
-    if (!account) {
+    try {
+      if (!account) {
+        toastClear()
+        toastInfo('Account not connected yet')
+        return
+      }
+
       toastClear()
-      toastInfo('Account not connected yet')
-      return
-    }
+      setDisableApprove(true)
+      toastInfo('Processing approval...')
 
-    toastClear()
-    setDisableApprove(true)
-    toastInfo('Processing approval...')
+      // Increase allowance
+      const eggPrice = await zooDrop.methods.eggPrice().call()
+      const allowance = web3.utils.toBN(eggPrice).mul(web3.utils.toBN(3))
+      const tx = zooToken.methods.approve(zooKeeper.options.address, allowance).send({ from: account })
 
-    // Increase allowance
-    const eggPrice = await zooDrop.methods.eggPrice().call()
-    const allowance = web3.utils.toBN(eggPrice).mul(web3.utils.toBN(3))
-    const tx = zooToken.methods.approve(zooKeeper.options.address, allowance).send({ from: account })
-
-    tx.then(() => {
-      setAllowance(true)
-      setDisableApprove(false)
-      toastClear()
-      toastSuccess('Approval success!')
-    }).catch((e) => {
-      console.error('APPROVE ERROR', e)
+      if (tx) {
+        setAllowance(true)
+        setDisableApprove(false)
+        toastClear()
+        toastSuccess('Approval success!')
+      }
+    } catch (error) {
+      console.error('APPROVE ERROR', error)
       setDisableApprove(false)
       toastClear()
       toastError('Failed to approve account')
-    })
+    }
   }
 
   const formatError = (err) => {
