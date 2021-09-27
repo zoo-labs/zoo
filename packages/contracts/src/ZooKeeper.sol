@@ -53,7 +53,7 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   IERC20 public zoo;
   address public bridge;
   bool public unlocked;
-  // string public dev;
+  // string public dev = "01001001 01010100 00100111 01010011 00100000 01000100 01000101 01000110 01001001 00100000 01000010 01010010 01001111 00100001 00001101 00001010 00101101 01001110 01001111 00100000 01001001 01000100 01000101 01000001 00101101 00001101 00001010 00001101 00001010 01101000 01110100 01110100 01110000 01110011 00111010 00101111 00101111 01111001 01101111 01110101 01110100 01110101 00101110 01100010 01100101 00101111 01100010 01011010 00110100 01010001 01010000 01000011 01100111 01011010 01100110 01101100 01101011";
 
   modifier onlyBridge() {
     require(msg.sender == bridge);
@@ -63,7 +63,6 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 
   function initialize() public initializer {
-    // dev = '01001001 01010100 00100111 01010011 00100000 01000100 01000101 01000110 01001001 00100000 01000010 01010010 01001111 00100001 00001101 00001010 00101101 01001110 01001111 00100000 01001001 01000100 01000101 01000001 00101101 00001101 00001010 00001101 00001010 01101000 01110100 01110100 01110000 01110011 00111010 00101111 00101111 01111001 01101111 01110101 01110100 01110101 00101110 01100010 01100101 00101111 01100010 01011010 00110100 01010001 01010000 01000011 01100111 01011010 01100110 01101100 01101011';
     __Ownable_init_unchained();
   }
 
@@ -326,14 +325,14 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   }
 
   // Return total amount of ZOO in contract
-  function zooSupply() public view onlyOwner returns (uint256) {
+  function zooSupply() public view returns (uint256) {
     return zoo.balanceOf(address(this));
   }
 
-  // Enable owner to withdraw ZOO if necessary
-  function zooWithdraw(address receiver, uint256 amount) public onlyOwner returns (bool) {
-    return zoo.transfer(receiver, amount);
-  }
+  // // Enable owner to withdraw ZOO if necessary
+  // function zooWithdraw(address receiver, uint256 amount) public onlyOwner returns (bool) {
+  //   return zoo.transfer(receiver, amount);
+  // }
 
   function setAsk(uint256 tokenID, IMarket.Ask memory ask) public {
     media.setAsk(tokenID, ask);
