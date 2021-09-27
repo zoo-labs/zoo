@@ -432,7 +432,7 @@ const Index: React.FC<IndexProps> = ({}) => {
                   <div className='mb-2 font-bold uppercase text-gray-400 text-xs'>Price Range</div>
                   <PrettoSlider
                     onChange={(value, number) => {
-                      // setPriceRange(number)
+                      setPriceRange(number)
                     }}
                     value={priceRange}
                     valueLabelDisplay='auto'
