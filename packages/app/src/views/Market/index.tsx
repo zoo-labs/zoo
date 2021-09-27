@@ -305,10 +305,11 @@ const Index: React.FC<IndexProps> = ({}) => {
         <div className='w-full px-16 max-w-screen-xl mx-auto'>
           <h3 className='mb-16 text-4xl font-semibold'>Discover</h3>
           <div className='hidden lg:flex relative justify-between mb-8'>
-            <div className='cursor-pointer text-sm w-44 h-12 pl-4 pr-1 items-center rounded-lg border border-solid border-gray-600 flex justify-between'>
+            <div className='cursor-pointer text-sm w-44 h-12 pl-4 pr-1 items-center rounded-lg flex justify-between'></div>
+            {/* <div className='cursor-pointer text-sm w-44 h-12 pl-4 pr-1 items-center rounded-lg border border-solid border-gray-600 flex justify-between'>
               Recently added
               <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} />
-            </div>
+            </div> */}
             <div className='absolute transform left-2/4 flex justify-center -translate-x-2/4' style={{ top: 10 }}>
               {['All Items', 'Eggs', 'Animals', 'Hybrid'].map((value, index) => {
                 const active = category === index
