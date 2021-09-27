@@ -130,12 +130,14 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   }
 
   useEffect(() => {
-    market
-      .methods.currentAskForToken(Number(item.tokenID))
-      .call()
-      .then((res) => {
-        // setItemAsk(ask)
-      })
+    if (item.tokenID) {
+      market
+        .methods.currentAskForToken(Number(item.tokenID))
+        .call()
+        .then((res) => {
+          // setItemAsk(ask)
+        })
+    }
   }, [])
 
   return (
