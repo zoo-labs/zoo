@@ -26,6 +26,7 @@ import useToast from 'hooks/useToast'
 import { formatError } from 'functions'
 import { addresses } from 'constants/contracts'
 import { ChainId } from 'constants/Chains'
+import Moralis from 'moralis'
 
 interface AssetModalProps {
   item: any
@@ -35,7 +36,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const assetModal = useModalOpen(ApplicationModal.ASSET)
   const toggleAssetModal = useAssetModalToggle()
   const [fullView, setFullView] = useState(false)
-  const [itemAsk, setItemAsk] = useState(null)
+  const [askItem, setAskItem] = useState(null)
   const [amount, setAmount] = useState(0)
   const { logout } = useAuth()
   const { chainId, account } = useWeb3React()
@@ -80,7 +81,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
       <img
         style={{ verticalAlign: 'middle' }}
         src={`${item.imageUrl || window.location.origin + '/static/images/basic.jpg'}`}
-        className='h-full transition-transform w-full duration-1000 rounded h-full'
+        className={` transition-transform duration-1000 ${fullView ? ' h-screen' : 'rounded h-full'}`}
       />
     )
   }
@@ -130,30 +131,48 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   }
 
   useEffect(() => {
-    if (item.tokenID) {
-      market
-        .methods.currentAskForToken(Number(item.tokenID))
-        .call()
-        .then((res) => {
-          // setItemAsk(ask)
-        })
+    getAskValue()
+  }, [item])
+  const getAskValue = () => {
+    const tokenID = item.tokenID || 0
+    console.log('tokenID', tokenID)
+    try {
+      market &&
+        market.methods
+          .currentAskForToken(tokenID)
+          .call()
+          .then(async (res) => {
+            console.log('res in getAsk', chainAddresses.ZOO)
+            // const price = await Moralis.Web3API.token.getTokenPrice({
+            //   address: chainAddresses.ZOO,
+            //   chain: '0x61',
+            // })
+            // console.log('price 1!!', price)
+            setAskItem({
+              amount: res[0],
+              usdAmount: 1,
+              currecy: res[1],
+            })
+          })
+          .catch((err) => console.log('error in getAsk', err))
+    } catch (error) {
+      console.log('error in getAsk 2', error)
     }
-  }, [])
-
+  }
   return (
-    <Modal isOpen={assetModal} onDismiss={() => null} isMax scrollable={isSm}>
-      <BidModalHeader onBack={() => toggleAssetModal()} className='absolute p-6 w-full z-10' />
+    <Modal isOpen={assetModal} onDismiss={() => null} isMax scrollable>
+      <BidModalHeader onBack={() => toggleAssetModal()} className={`absolute p-6 w-full z-10 ${fullView && 'hidden'}`} />
       <div className='h-full  flex'>
-        <div className='flex flex-1 flex-wrap'>
-          <div
-            className={` w-full  justify-center  md:flex-1  items-center bg-modal-dark flex  ${fullView ? 'w-screen fixed z-20 h-screen' : 'lg:w-1/2'}`}
-            style={{ minHeight: '80vh' }}>
+        <div className={`flex flex-1 flex-wrap ${!fullView && 'self-center'}`}>
+          <div className={` w-full  md:flex-1  bg-modal-dark flex   ${fullView ? 'w-screen fixed z-20 h-screen' : ' lg:w-1/2 '}`} style={{ minHeight: isSm ? '80vh' : '100vh' }}>
             <div className={`flex   w-full items-center justify-center ${fullView ? 'fixed h-screen' : 'relative h-full'}`}>
-              <div className={`${fullView ? 'w-10/12 lg:w-1/4 md:w-2/3' : 'w-2/3 lg:w-1/2'}   p-px   bg-gradient-to-b from-btn1  to-btn2  rounded bg-no-repeat`}>
+              <div className={`${fullView ? ' h-screen ' : 'w-2/3 lg:w-1/2  p-px'}     bg-gradient-to-b from-btn1  to-btn2  rounded bg-no-repeat`}>
                 <div className='bg-cover '>{getVideo()}</div>
               </div>
               {/*
-             
+
+              w-10/12  md:w-2/3
+
             <div className='absolute top-5 xs:left-10 pl-4 lg:pl-0 lg:right-5 '>
               {[0, 1, 2].map((value) => (
                 <div className='cursor-pointer rounded-full p-2 bg-dark-800 mb-4 flex justify-center items-center'>
@@ -176,7 +195,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
             </div>
           </div>
 
-          <div className='w:1/2 my-8 mb-16 md:m-0 md:flex-1 flex items-center justify-center'>
+          <div className={`w:1/2 my-8 mb-16 md:m-0 md:flex-1 flex items-center justify-center lg:min-h-full   overflow-y-scroll ${fullView && 'hidden'}`}>
             <div className='flex '>
               <div className=' flex flex-col items-start px-4 w-full  '>
                 <h2 className='text-2xl font-semibold'>Egg #{item.tokenID}</h2>
@@ -198,8 +217,8 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                   <div className='rounded border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
                     <h2 className='text-sm font-bold mb-2'>Reserve Price</h2>
                     <div className=''>
-                      <span className='mr-2 text-xl  font-semibold'>25K ZOO</span>
-                      <span className='font-light'>$975.00 USD</span>
+                      <span className='mr-2 text-xl  font-semibold'>{askItem?.amount} ZOO</span>
+                      <span className='font-light'>${askItem?.amount * askItem?.usdAmount} USD</span>
                     </div>
                   </div>
                 </div>

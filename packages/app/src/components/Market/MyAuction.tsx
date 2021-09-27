@@ -40,7 +40,7 @@ const MyAuction: React.FC<MyAuctionProps> = ({ bidRef, showArrow, showLeftArrow,
             <div className='flex-grow'>
               <div className='text-sm text-gray-500'>Reserve Price</div>
               <div className='font-semibold'>
-                3.5 ETH <span className='text-xs text-gray-500'>$6800</span>
+                35K ZOO <span className='text-xs text-gray-500'>$6800</span>
               </div>
             </div>
           </div>
@@ -49,7 +49,7 @@ const MyAuction: React.FC<MyAuctionProps> = ({ bidRef, showArrow, showLeftArrow,
           className=' bg-dark-800 mb-10 py-10 px-4 rounded-xl text-center'
           style={{ boxShadow: '0px 64px 64px -48px rgba(31, 47, 70, 0.12)', border: '2px solid #E6E8EC', borderColor: '#23262F' }}>
           <div className='font-semibold text-sm leading-normal'>Current Bid</div>
-          <div className='text-xl lg:text-3xlfont-bold leading-tight'>1.00 ETH</div>
+          <div className='text-xl lg:text-3xlfont-bold leading-tight'>100K ZOO</div>
           <div className='mb-4 text-md lg:text-lg font-semibold text-gray-500 leading-snug'>$3,618.36</div>
           <div className='font-semibold text-sm leading-snug'>Auction ending in</div>
           <div className='flex mt-2 justify-center'>
