@@ -81,7 +81,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
       <img
         style={{ verticalAlign: 'middle' }}
         src={`${item.imageUrl || window.location.origin + '/static/images/basic.jpg'}`}
-        className='h-full transition-transform w-full duration-1000 rounded h-full'
+        className={` transition-transform duration-1000 ${fullView ? ' h-screen' : 'rounded h-full'}`}
       />
     )
   }
@@ -160,18 +160,18 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
     }
   }
   return (
-    <Modal isOpen={assetModal} onDismiss={() => null} isMax scrollable={isSm}>
-      <BidModalHeader onBack={() => toggleAssetModal()} className='absolute p-6 w-full z-10' />
+    <Modal isOpen={assetModal} onDismiss={() => null} isMax scrollable>
+      <BidModalHeader onBack={() => toggleAssetModal()} className={`absolute p-6 w-full z-10 ${fullView && 'hidden'}`} />
       <div className='h-full  flex'>
-        <div className='flex flex-1 flex-wrap'>
-          <div
-            className={` w-full  justify-center  md:flex-1  items-center bg-modal-dark flex  ${fullView ? 'w-screen fixed z-20 h-screen' : 'lg:w-1/2'}`}
-            style={{ minHeight: '80vh' }}>
+        <div className={`flex flex-1 flex-wrap ${!fullView && 'self-center'}`}>
+          <div className={` w-full  md:flex-1  bg-modal-dark flex   ${fullView ? 'w-screen fixed z-20 h-screen' : ' lg:w-1/2 '}`} style={{ minHeight: isSm ? '80vh' : '100vh' }}>
             <div className={`flex   w-full items-center justify-center ${fullView ? 'fixed h-screen' : 'relative h-full'}`}>
-              <div className={`${fullView ? 'w-10/12 lg:w-1/4 md:w-2/3' : 'w-2/3 lg:w-1/2'}   p-px   bg-gradient-to-b from-btn1  to-btn2  rounded bg-no-repeat`}>
+              <div className={`${fullView ? ' h-screen ' : 'w-2/3 lg:w-1/2  p-px'}     bg-gradient-to-b from-btn1  to-btn2  rounded bg-no-repeat`}>
                 <div className='bg-cover '>{getVideo()}</div>
               </div>
               {/*
+
+              w-10/12  md:w-2/3
              
             <div className='absolute top-5 xs:left-10 pl-4 lg:pl-0 lg:right-5 '>
               {[0, 1, 2].map((value) => (
@@ -195,7 +195,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
             </div>
           </div>
 
-          <div className='w:1/2 my-8 mb-16 md:m-0 md:flex-1 flex items-center justify-center'>
+          <div className={`w:1/2 my-8 mb-16 md:m-0 md:flex-1 flex items-center justify-center lg:min-h-full   overflow-y-scroll ${fullView && 'hidden'}`}>
             <div className='flex '>
               <div className=' flex flex-col items-start px-4 w-full  '>
                 <h2 className='text-2xl font-semibold'>Egg #{item.tokenID}</h2>

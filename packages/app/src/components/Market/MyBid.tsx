@@ -66,7 +66,7 @@ const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRig
             <div className='flex-grow'>
               <div className='text-sm text-gray-500'>Reserve Price</div>
               <div className='font-semibold'>
-                3.5 ETH <span className='text-xs text-gray-500'>$6800</span>
+                3.5k ZOO <span className='text-xs text-gray-500'>$6800</span>
               </div>
             </div>
           </div>
@@ -77,12 +77,12 @@ const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRig
           <div className='flex'>
             <div className='flex flex-1 items-center flex-col'>
               <div className='font-semibold text-sm leading-normal'>Current Bid</div>
-              <div className='text-xl lg:text-3xl font-bold leading-tight'>1.00 ETH</div>
+              <div className='text-xl lg:text-3xl font-bold leading-tight'>100K ZOO</div>
               <div className='mb-4 text-md lg:text-lg font-semibold text-gray-500 leading-snug'>$3,618.36</div>
             </div>
             <div className='flex flex-1 items-center flex-col'>
               <div className='font-semibold text-sm leading-normal'>My Bid</div>
-              <div className='text-xl lg:text-3xl font-bold leading-tight'>0.56 ETH</div>
+              <div className='text-xl lg:text-3xl font-bold leading-tight'>20K ZOO</div>
               <div className='mb-4 text-md lg:text-lg font-semibold text-gray-500 leading-snug'>$1,618.36</div>
             </div>
           </div>
