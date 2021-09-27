@@ -43,6 +43,7 @@ export interface Egg {
   animalID?: number
   createdAt?: Date
   updatedAt?: Date
+  hatching?:boolean
 }
 
 export interface  Bid {
