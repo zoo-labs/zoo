@@ -26,6 +26,7 @@ import useToast from 'hooks/useToast'
 import { formatError } from 'functions'
 import { addresses } from 'constants/contracts'
 import { ChainId } from 'constants/Chains'
+import Moralis from 'moralis'
 
 interface AssetModalProps {
   item: any
@@ -35,7 +36,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const assetModal = useModalOpen(ApplicationModal.ASSET)
   const toggleAssetModal = useAssetModalToggle()
   const [fullView, setFullView] = useState(false)
-  const [itemAsk, setItemAsk] = useState(null)
+  const [askItem, setAskItem] = useState(null)
   const [amount, setAmount] = useState(0)
   const { logout } = useAuth()
   const { chainId, account } = useWeb3React()
@@ -130,14 +131,34 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   }
 
   useEffect(() => {
-    market
-      .methods.currentAskForToken(Number(item.tokenID))
-      .call()
-      .then((res) => {
-        // setItemAsk(ask)
-      })
-  }, [])
-
+    getAskValue()
+  }, [item])
+  const getAskValue = () => {
+    const tokenID = item.tokenID || 0
+    console.log('tokenID', tokenID)
+    try {
+      market &&
+        market.methods
+          .currentAskForToken(tokenID)
+          .call()
+          .then(async (res) => {
+            console.log('res in getAsk', chainAddresses.ZOO)
+            // const price = await Moralis.Web3API.token.getTokenPrice({
+            //   address: chainAddresses.ZOO,
+            //   chain: '0x61',
+            // })
+            // console.log('price 1!!', price)
+            setAskItem({
+              amount: res[0],
+              usdAmount: 1,
+              currecy: res[1],
+            })
+          })
+          .catch((err) => console.log('error in getAsk', err))
+    } catch (error) {
+      console.log('error in getAsk 2', error)
+    }
+  }
   return (
     <Modal isOpen={assetModal} onDismiss={() => null} isMax scrollable={isSm}>
       <BidModalHeader onBack={() => toggleAssetModal()} className='absolute p-6 w-full z-10' />
@@ -196,8 +217,8 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                   <div className='rounded border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
                     <h2 className='text-sm font-bold mb-2'>Reserve Price</h2>
                     <div className=''>
-                      <span className='mr-2 text-xl  font-semibold'>25K ZOO</span>
-                      <span className='font-light'>$975.00 USD</span>
+                      <span className='mr-2 text-xl  font-semibold'>{askItem?.amount} ZOO</span>
+                      <span className='font-light'>${askItem?.amount * askItem?.usdAmount} USD</span>
                     </div>
                   </div>
                 </div>
