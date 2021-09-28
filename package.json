@@ -56,7 +56,8 @@
     "run-graph-node": "yarn workspace @zoolabs/graph-node run-graph-node",
     "remove-graph-node": "yarn workspace @zoolabs/graph-node remove-graph-node",
     "clean-graph-node": "yarn workspace @zoolabs/graph-node clean-graph-node",
-    "format": "yarn workspace @zoolabs/app format && yarn workspace @zoolabs/contracts format && yarn workspace @zoolabs/moralis format"
+    "format": "yarn workspace @zoolabs/app format && yarn workspace @zoolabs/contracts format && yarn workspace @zoolabs/moralis format",
+    "postinstall": "rimraf node_modules/babel-loader"
   },
   "workspaces": {
     "packages": [
