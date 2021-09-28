@@ -119,7 +119,8 @@ const Index: React.FC<IndexProps> = ({}) => {
   }, [])
   const loadMore = () => {
     setPage(page + 1)
-
+  }
+  React.useEffect(() => {
     setLoadingMore(true)
     if (category === 0) {
       setData(
@@ -139,7 +140,7 @@ const Index: React.FC<IndexProps> = ({}) => {
       )
     }
     setLoadingMore(false)
-  }
+  }, [page])
   splideparentRef.current &&
     splideparentRef.current.splide.on('moved', function (data, index) {
       console.log('index', index)
@@ -399,7 +400,7 @@ const Index: React.FC<IndexProps> = ({}) => {
                   <div className='mb-4 font-bold uppercase text-gray-400 text-xs'>Rarity</div>
                   <div className='relative'>
                     <div className='w-full cursor-pointer text-sm text-white font-semibold w-44 h-12 pl-4 pr-1 items-center rounded-lg border border-solid border-gray-600 flex justify-between'>
-                      <Dropdown menuClassName="menu" className='dropdown' options={options} value={''} placeholder='Select an option' />
+                      <Dropdown menuClassName='menu' className='dropdown' options={options} value={''} placeholder='Select an option' />
                       {/* <RiArrowDownCircleLine values={"dfghj"} fill='gray' style={{ fontSize: 25, color: 'red' }} /> */}
                     </div>
                   </div>
