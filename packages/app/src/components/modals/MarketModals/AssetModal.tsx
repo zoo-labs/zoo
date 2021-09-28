@@ -96,7 +96,6 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const [disabled, setDisabled] = useState(false)
   const myTransactions = useSelector<AppState, AppState['zoo']['myTransactions']>((state) => state.zoo.myTransactions)
-  console.log(item)
   const { isSm } = useMatchBreakpoints()
   const zooKeeper = getZooKeeper(web3)
   const market = getMarket(web3)
@@ -194,7 +193,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
             </div>
             */}
               <div
-                className='cursor-pointer absolute rounded-full bg-dark-900 shadow-2xl h-12 w-12 bottom-8 right-8 lg:right-20 flex items-center justify-center'
+                className='cursor-pointer absolute rounded-full bg-dark-900 shadow-2xl h-12 w-12 top-8 right-8 lg:right-20 flex items-center justify-center'
                 onClick={() => setFullView(!fullView)}>
                 {fullView ? <FaCompressAlt fill='white' /> : <FaExpand fill='white' />}
               </div>

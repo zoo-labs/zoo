@@ -377,19 +377,22 @@ const Index: React.FC<IndexProps> = ({}) => {
             <div className='flex flex-wrap -mt-8 -mx-4 '>
               <div className='' style={{ flex: ' 0 0 calc(25% - 32px)', maxWidth: 'calc(25% - 32px)', margin: '32px 16px 0' }}>
                 <div>
-                  <div className='mb-4 font-bold uppercase text-gray-400 text-xs'>Breed</div>
-                  <div className='relative'>
-                    <div className='w-full cursor-pointer text-sm text-white font-semibold w-44 h-12 pl-4 pr-1 items-center rounded-lg border border-solid border-gray-600 flex justify-between'>
-                      {/* Highest Price */}
-                      {/* <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} /> */}
-                      <Input
-                        type={'number'}
-                        onChange={(e) => {
-                          setBreadCount(parseInt(e.target.value))
-                        }}
-                        style={{ color: '#fff' }}
-                        placeholder='Breed Count'></Input>
-                    </div>
+                  <div className='mb-2 font-bold uppercase text-gray-400 text-xs'>Breed Count</div>
+                  <PrettoSlider
+                    onChange={(value, number) => {
+                      setBreadCount(Number(number))
+                    }}
+                    value={breedCount}
+                    valueLabelDisplay='auto'
+                    aria-label='slider'
+                    step={1}
+                    defaultValue={10}
+                    min={1}
+                    max={100}
+                  />
+                  <div className='flex justify-between text-xs'>
+                    <div className='font-semibold'>0.01 ETH</div>
+                    <div className='font-semibold'>10 ETH</div>
                   </div>
                 </div>
               </div>
@@ -427,7 +430,7 @@ const Index: React.FC<IndexProps> = ({}) => {
                   <div className='mb-2 font-bold uppercase text-gray-400 text-xs'>Price Range</div>
                   <PrettoSlider
                     onChange={(value, number) => {
-                      // setPriceRange(number)
+                      setPriceRange(Number(number))
                     }}
                     value={priceRange}
                     valueLabelDisplay='auto'
