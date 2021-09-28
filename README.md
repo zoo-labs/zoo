@@ -42,7 +42,7 @@ contract. For Zoo, we Moralis watches the `ZooKeeper` contract for any new game
 events and updates various game tables accordingly.
 
 ```shell
-yarn moralis:plugins
+yarn plugins
 ```
 
 ### Cloud Functions
@@ -50,14 +50,14 @@ Moralis Cloud Functions are used to update cached game state when key events are
 fired.
 
 ```shell
-yarn moralis:functions
+yarn functions
 ```
 
 ## Running Local Devchain Proxy
 To connect your local blockchain to Moralis:
 
 ```shell
-yarn moralis:proxy
+yarn proxy
 ```
 
 This requires `frpc`, which can be installed with `brew install frpc` on macOS.
