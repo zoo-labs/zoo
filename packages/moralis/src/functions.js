@@ -353,3 +353,28 @@ Moralis.Cloud.define('refreshEggs', async (request) => {
     await results[i].save()
   }
 })
+
+// Helper to return latest price from CMC
+Moralis.Cloud.define('zooPrice', async (request) => {
+  const ZooPrice = Moralis.Object.extend('ZooPrice')
+  const query = new Moralis.Query(ZooPrice)
+  let price = await query.first()
+
+  // Only check every 30 seconds
+  if (price && price.timestamp + (1000 * 30) < Date.now()) return price
+
+  // Fetch latest zoo price
+  const res = await Moralis.Cloud.httpRequest({
+    url: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest',
+    params: 'slug=zoo&convert=USD',
+    headers: {
+      'X-CMC_PRO_API_KEY': '0ebe5b28-b584-4a39-b292-e0b3e639fd58',
+      'Accept': 'application/json',
+    }
+  })
+
+  // Save price
+  price = new ZooPrice(JSON.parse(res.text))
+  price.timestamp = Date.now()
+  return price
+})
