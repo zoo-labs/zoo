@@ -147,7 +147,7 @@ const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRig
                   onClick={() => bidRef.current.splide.go('<')}
                   style={{ borderColor: 'rgb(94, 98, 111)' }}
                   className='h-10 mr-2 w-10 rounded-full  border-solid hover:border-2 flex items-center justify-center cursor-pointer'>
-                  <FaArrowLeft fill='rgb(94, 98, 111)' />
+                  <FaArrowLeft fill='rgb(94, 98, 111)' size='30' />
                 </div>
               )}
               {showRightArrow && (
@@ -155,7 +155,7 @@ const MyBid: React.FC<MyBidProps> = ({ bidRef, showArrow, showLeftArrow, showRig
                   onClick={() => bidRef.current.splide.go('>')}
                   style={{ borderColor: 'rgb(94, 98, 111)' }}
                   className='h-10 ml-2 w-10 rounded-full  border-solid hover:border-2 flex items-center justify-center cursor-pointer'>
-                  <FaArrowRight fill='rgb(94, 98, 111)' />
+                  <FaArrowRight fill='rgb(94, 98, 111)' size='30' />
                 </div>
               )}
             </div>

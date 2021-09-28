@@ -61,7 +61,7 @@
     "@web3-react/types": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.4",
     "@web3-react/walletlink-connector": "^6.2.3",
-    "babel-loader": "^8.2.2",
+    "babel-loader": "8.1.0",
     "bignumber.js": "^9.0.1",
     "cids": "^1.1.8",
     "copy-to-clipboard": "^3.3.1",

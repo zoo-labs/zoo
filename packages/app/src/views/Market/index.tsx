@@ -176,11 +176,11 @@ const Index: React.FC<IndexProps> = ({}) => {
                 style={{ borderWidth: 1 }}
                 className='hoverdiv hover:border-white cursor-pointer border-gray-500 border-solid  shadow-xl w-30 md:w-40 lg:w-60 rounded  flex justify-between items-center '>
                 <div className='flex flex-col px-4 py-2 '>
-                  <h6 className='text-xs text-gray-500  font-semibold'>{bidView === 0 ? myAuctions.length : myBids.length}</h6>
+                  {/* <h6 className='text-xs text-gray-500  font-semibold'>{bidView === 0 ? myAuctions.length : myBids.length}</h6> */}
                   <h6 className=' text-xl text-gray-500  font-bold'>{bidView === 0 ? 'Auctions' : 'Bids'}</h6>
                 </div>
                 <div className='pr-4 py-2'>
-                  <ArrowRight color='gray' className='svg' />
+                  <ArrowRight color='gray' className='svg'  />
                 </div>
               </div>
             </div>
@@ -399,7 +399,7 @@ const Index: React.FC<IndexProps> = ({}) => {
                   <div className='mb-4 font-bold uppercase text-gray-400 text-xs'>Rarity</div>
                   <div className='relative'>
                     <div className='w-full cursor-pointer text-sm text-white font-semibold w-44 h-12 pl-4 pr-1 items-center rounded-lg border border-solid border-gray-600 flex justify-between'>
-                      <Dropdown menuClassName="menu" className='dropdown' options={options} value={''} placeholder='Select an option' />
+                      <Dropdown menuClassName='menu' className='dropdown' options={options} value={''} placeholder='Select an option' />
                       {/* <RiArrowDownCircleLine values={"dfghj"} fill='gray' style={{ fontSize: 25, color: 'red' }} /> */}
                     </div>
                   </div>
