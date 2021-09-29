@@ -145,6 +145,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
           .currentAskForToken(tokenID)
           .call()
           .then((res) => {
+            console.log('currentAskForToken', res)
             // @todo - set ask amount
             const amount = 300000
             Moralis.Cloud.run("zooPrice", { amount })
