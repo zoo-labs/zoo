@@ -1,16 +1,27 @@
 const hre = require('hardhat')
 const ethers = hre.ethers
 
+const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'hardhat'
+
+const DEPLOYMENT = {
+  hardhat:  'localhost',
+  testnet:  'testnet',
+  mainnet:  'mainnet',
+  ethereum: 'ethereum',
+  rinkeby:  'rinkeby',
+  ropsten:  'ropsten',
+}[NETWORK]
+
 const rarities = require('../utils/rarities.json')
 const animals = require('../utils/animals.json')
 const hybrids = require('../utils/hybrids.json')
 
-const ZOO = require('../deployments/testnet/ZOO.json')
-const Market = require('../deployments/testnet/Market.json')
-const Media = require('../deployments/testnet/Media.json')
-const Drop = require('../deployments/testnet/Drop.json')
-const ZooKeeper = require('../deployments/testnet/ZooKeeper.json')
-const bridge =  require('../deployments/testnet/Bridge.json');
+const ZOO = require(`../deployments/${DEPLOYMENT}/ZOO.json`)
+const Market = require(`../deployments/${DEPLOYMENT}/Market.json`)
+const Media = require(`../deployments/${DEPLOYMENT}/Media.json`)
+const Drop = require(`../deployments/${DEPLOYMENT}/Drop.json`)
+const ZooKeeper = require(`../deployments/${DEPLOYMENT}/ZooKeeper.json`)
+const bridge =  require(`../deployments/${DEPLOYMENT}/Bridge.json`)
 
 // Split game data into deploy-sized chunks
 function chunks(arr, size) {
