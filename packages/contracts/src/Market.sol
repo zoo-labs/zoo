@@ -114,10 +114,10 @@ contract Market is IMarket {
 
         console.log("bidamount", bidAmount);
 
-        // require(
-        //     isValidBidShares(bidShares),
-        //     "Market: Invalid bid shares for token"
-        // );
+        require(
+            isValidBidShares(bidShares),
+            "Market: Invalid bid shares for token"
+        );
         return
             bidAmount != 0 &&
             (bidAmount ==
