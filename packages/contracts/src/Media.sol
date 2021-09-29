@@ -396,14 +396,14 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
     /**
      * @notice see IMedia
      */
-    function setBid(uint256 tokenID, IMarket.Bid memory bid)
+    function setBid(uint256 tokenID, IMarket.Bid memory bid, address spender)
         public
         override
         nonReentrant
+        onlyZoo
         onlyExistingToken(tokenID)
     {
-        require(msg.sender == bid.bidder, "Market: Bidder must be msg sender");
-        IMarket(marketAddress).setBid(tokenID, bid, msg.sender);
+        IMarket(marketAddress).setBid(tokenID, bid, spender);
     }
 
     /**

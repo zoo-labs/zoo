@@ -339,6 +339,6 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   }
 
   function setBid(uint256 tokenID, IMarket.Bid memory bid) public {
-    media.setBid(tokenID, bid);
+    media.setBid(tokenID, bid, msg.sender);
   }
 }
