@@ -10939,7 +10939,7 @@
           ]
         },
         "Bridge": {
-          "address": "0x0fE2450156ad838fD8EcF9A50E3D28c103b36cE4",
+          "address": "0x46a82Dc251901355f3A8E755d0Ef72ac1126E484",
           "abi": [
             {
               "inputs": [
@@ -11500,7 +11500,7 @@
           ]
         },
         "DAO": {
-          "address": "0x29dBCF87A024CA69fdb57a0Ce3B324237Ffc6999",
+          "address": "0xe2d1Ce342911e9fB50f0Edbb7E516348016C056F",
           "abi": [
             {
               "anonymous": false,
@@ -11805,7 +11805,7 @@
           ]
         },
         "Drop": {
-          "address": "0xfaC7c2c52A798067ADEC3765E09B4bd160ebB390",
+          "address": "0xC1Fd304B01c17D4Ea5ac202e6B8091b2D075dEc0",
           "abi": [
             {
               "inputs": [
@@ -13864,7 +13864,7 @@
           ]
         },
         "Farm": {
-          "address": "0x5C6B2738472f4A82e393ec6C939d722fF8AE331B",
+          "address": "0xDf4769F75da4605778e73552E26cbEB4C5c93620",
           "abi": [
             {
               "inputs": [
@@ -14540,7 +14540,7 @@
           ]
         },
         "Market": {
-          "address": "0x4135cD5F5D653b02419C0112deB88c04C99Cc2A9",
+          "address": "0xFCc5b13CEC9808cbF41eAB4C489dBb8034ed6B06",
           "abi": [
             {
               "inputs": [],
@@ -20529,7 +20529,7 @@
           ]
         },
         "ZooKeeper": {
-          "address": "0x93d1c9f756Ba966Bd142f8C32A91588f6E19bBe0",
+          "address": "0x468666df26e489696FB2504cdD3FF0bf6B7331A6",
           "abi": [
             {
               "anonymous": false,
@@ -35429,19 +35429,6 @@
               "type": "function"
             },
             {
-              "inputs": [],
-              "name": "dev",
-              "outputs": [
-                {
-                  "internalType": "string",
-                  "name": "",
-                  "type": "string"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
               "inputs": [
                 {
                   "internalType": "address",
@@ -36441,30 +36428,6 @@
                 }
               ],
               "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "address",
-                  "name": "receiver",
-                  "type": "address"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "amount",
-                  "type": "uint256"
-                }
-              ],
-              "name": "zooWithdraw",
-              "outputs": [
-                {
-                  "internalType": "bool",
-                  "name": "",
-                  "type": "bool"
-                }
-              ],
-              "stateMutability": "nonpayable",
               "type": "function"
             }
           ]
