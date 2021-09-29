@@ -10,8 +10,8 @@ export default Deploy('ZooKeeperV2', {
   },
   async ({ ethers, deploy, deployments, deps, hre, upgrades }) => {
     const ZK = await deployments.get('ZooKeeper')
-    const ZK2 = await ethers.getContractFactory('ZooKeeperV2')
-    const upgraded = await upgrades.upgradeProxy(ZK.address, ZK2)
+    // const ZK2 = await ethers.getContractFactory('ZooKeeperV2')
+    // const upgraded = await upgrades.upgradeProxy(ZK.address, ZK2)
 
 
     const keeper = await ethers.getContractAt('ZooKeeper', ZK.address)

@@ -1,7 +1,9 @@
 const hre = require('hardhat')
 const ethers = hre.ethers
 
-const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'hardhat'
+const NETWORK = process.env.HARDHAT_NETWORK ? process.env.HARDHAT_NETWORK : 'hardhat'
+
+console.log(`Configure game on ${NETWORK}`)
 
 const DEPLOYMENT = {
   hardhat:  'localhost',
@@ -47,7 +49,7 @@ async function main() {
 
   // Configure Media
   console.log('media.configure', ZooKeeper.address, Market.address)
-  await market.configure(ZooKeeper.address, Market.address)
+  await media.configure(ZooKeeper.address, Market.address)
 
   // Configure game for our Gen 0 drop
   console.log('keeper.configure', Market.address, Media.address, ZOO.address)
@@ -109,14 +111,14 @@ async function main() {
   }
 
   // Add animals
-  for (const chunk of chunks(animals, 100)) {
+  for (const chunk of chunks(animals, 25)) {
     console.log('setAnimals', chunk)
     const tx = await drop.setAnimals(chunk)
     await tx.wait()
   }
 
   // Add hybrids
-  for (const chunk of chunks(hybrids, 100)) {
+  for (const chunk of chunks(hybrids, 25)) {
     console.log('setHybrids', chunk)
     const tx = await drop.setHybrids(chunk)
     await tx.wait()
