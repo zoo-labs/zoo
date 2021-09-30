@@ -108,7 +108,7 @@ describe('Media', () => {
     const keeper = await (await new ZooKeeper__factory(deployerWallet).deploy()).deployed()
     keeperAddress = keeper.address
 
-    await market.configure(mediaAddress, keeper.address)
+    await market.configure(mediaAddress)
   }
 
   async function mint(media: Media, metadataURI: string, tokenURI: string, contentHash: Bytes, metadataHash: Bytes, shares: BidShares) {

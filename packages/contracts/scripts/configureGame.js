@@ -44,16 +44,16 @@ async function main() {
   const market = await (await ethers.getContractAt('Market', Market.address)).connect(signer)
 
   // Configure Market
-  console.log('market.configure', ZooKeeper.address, Media.address)
-  await market.configure(ZooKeeper.address, Media.address)
+  console.log('market.configure', Media.address)
+  await market.configure(Media.address)
 
   // Configure Media
-  console.log('media.configure', ZooKeeper.address, Market.address)
-  await media.configure(ZooKeeper.address, Market.address)
+  console.log('media.configure', Market.address)
+  await media.configure(Market.address)
 
   // Configure game for our Gen 0 drop
-  console.log('keeper.configure', Market.address, Media.address, ZOO.address)
-  await keeper.configure(Market.address, Media.address, ZOO.address, bridge.address, true)
+  console.log('keeper.configure', Media.address, ZOO.address)
+  await keeper.configure(Media.address, ZOO.address, bridge.address, true)
 
   // Configure Drop
   console.log('drop.configure', keeper.address)

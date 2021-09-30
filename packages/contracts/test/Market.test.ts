@@ -87,11 +87,11 @@ describe('Market', () => {
   }
 
   async function configure() {
-    return Market__factory.connect(marketAddress, deployerWallet).configure(mediaAddress, zookeeperAddress)
+    return Market__factory.connect(marketAddress, deployerWallet).configure(mediaAddress)
   }
 
   async function readMedia() {
-    return Market__factory.connect(marketAddress, deployerWallet).mediaAddress()
+    return Market__factory.connect(marketAddress, deployerWallet).mediaContract()
   }
 
   async function setBidShares(maket: Market, tokenId: number, bidShares?: BidShares) {
@@ -140,7 +140,7 @@ describe('Market', () => {
     })
 
     it('should revert if not called by the owner', async () => {
-      await expect(Market__factory.connect(marketAddress, otherWallet).configure(mediaAddress, zookeeperAddress)).eventually.rejectedWith('Market: Only owner')
+      await expect(Market__factory.connect(marketAddress, otherWallet).configure(mediaAddress)).eventually.rejectedWith('Market: Only owner')
     })
 
     it('should be callable by the owner', async () => {
