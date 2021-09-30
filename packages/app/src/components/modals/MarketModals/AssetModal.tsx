@@ -27,7 +27,8 @@ import { formatError } from 'functions'
 import { addresses } from 'constants/contracts'
 import { ChainId } from 'constants/Chains'
 import Moralis from 'moralis'
-
+import { CloseIcon } from 'components'
+import CircularProgress from '@material-ui/core/CircularProgress'
 interface AssetModalProps {
   item: any
 }
@@ -38,11 +39,12 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const { chainId, account } = useWeb3React()
   const assetModal = useModalOpen(ApplicationModal.ASSET)
   const [animationMode, toggleSetAnimationMode] = useAnimationModeManager()
-  const chainAddresses = (addresses[chainId] as any) || (addresses[ChainId.BSC] as any)  
+  const chainAddresses = (addresses[chainId] as any) || (addresses[ChainId.BSC] as any)
   const toggleAssetModal = useAssetModalToggle()
   const [fullView, setFullView] = useState(false)
   const [askItem, setAskItem] = useState({ amount: 0, usdAmount: 0, currency: chainAddresses.ZOO })
   const [amount, setAmount] = useState(0)
+  const [askModal, setAskModal] = useState(false)
   const { logout } = useAuth()
   const history = useHistory()
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
@@ -95,16 +97,15 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const [disabled, setDisabled] = useState(false)
   const myTransactions = useSelector<AppState, AppState['zoo']['myTransactions']>((state) => state.zoo.myTransactions)
-  console.log(item)
   const { isSm } = useMatchBreakpoints()
   const zooKeeper = getZooKeeper(web3)
   const market = getMarket(web3)
   const zooToken = getToken(web3)
-  const setAsk = async () => {
+  const setAsk = async (amount) => {
     setDisabled(true)
     try {
       await zooKeeper.methods
-        .setAsk(item.tokenID, { amount: 200, currency: chainAddresses.ZOO }) //set Ask price for token
+        .setAsk(item.tokenID, { amount, currency: chainAddresses.ZOO }) //set Ask price for token
         .send({ from: account, gasPrice: gasPrice })
         .then((res) => {
           clear()
@@ -112,7 +113,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
           console.log('Set Ask Price', res)
 
           setDisabled(false)
-          toggleAssetModal()
+          setAskModal(false)
         })
         .catch((err) => {
           const message = formatError(err)
@@ -147,9 +148,9 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
           .then((res) => {
             console.log('currentAskForToken', res)
             // @todo - set ask amount
-            const amount = 300000
-            Moralis.Cloud.run("zooPrice", { amount })
-              .then(res => {
+            const amount = res[0]
+            Moralis.Cloud.run('zooPrice', { amount })
+              .then((res) => {
                 const ask = {
                   amount,
                   usdAmount: res.usdAmount,
@@ -197,7 +198,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
             </div>
             */}
               <div
-                className='cursor-pointer absolute rounded-full bg-dark-900 shadow-2xl h-12 w-12 bottom-8 right-8 lg:right-20 flex items-center justify-center'
+                className='cursor-pointer absolute rounded-full bg-dark-900 shadow-2xl h-12 w-12 top-8 right-8 lg:right-20 flex items-center justify-center'
                 onClick={() => setFullView(!fullView)}>
                 {fullView ? <FaCompressAlt fill='white' /> : <FaExpand fill='white' />}
               </div>
@@ -235,16 +236,8 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                   <a
                     style={{ pointerEvents: 'unset', padding: '11px 0px', borderRadius: 4 }}
                     className='rounded bg-white text-black flex items-center justify-center font-bold text-sm transform active:scale-95'
-                    onClick={() => setAsk()}>
-                    {disabled ? (
-                      <span className='pr-2'>
-                        <i className={`${disabled && 'animate-spin'} fas fa-circle-notch `}></i>
-                      </span>
-                    ) : account?.toLowerCase() == ownerAccount?.toString() ? (
-                      'Set Ask'
-                    ) : (
-                      'Place Bid'
-                    )}
+                    onClick={() => setAskModal(true)}>
+                    {account?.toLowerCase() == ownerAccount?.toString() ? 'Set Ask' : 'Place Bid'}
                   </a>
                   <button style={{ paddingLeft: 0, paddingRight: 0, padding: '11px 20px', backgroundColor: '#f2f2f2', borderRadius: 4 }} className=''>
                     <RiShareFill fill='black' />
@@ -331,6 +324,37 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
           </div>
         </div>
       </div>
+      <Modal isOpen={askModal} onDismiss={() => setAskModal(false)}>
+        <div className='w-full mb-8 flex justify-between items-center'>
+          <div className=''>Set Ask Amount</div>
+          <div className='p-1 bg-white rounded-full cursor-pointer' onClick={() => setAskModal(false)}>
+            <CloseIcon color='white' />
+          </div>
+        </div>
+        <div>
+          <div className='flex justify-center  items-center'>
+            <div className='relative mb-3 w-full'>
+              <input
+                type='number'
+                min='0'
+                onChange={(e) => setAmount(parseFloat(e.target.value))}
+                value={amount}
+                className=' w-full border border-solid rounded-md py-2 px-3 focus:outline-none font-semibold leading-snug text-md bg-dark-800 '
+              />
+              <h6 className='absolute top-1/2 right-4 leading-normal font-semibold transform -translate-y-2/4 '>ZOO</h6>
+            </div>
+          </div>
+          <div className='flex'>
+            <button
+              disabled={disabled}
+              onClick={() => setAsk(amount)}
+              className='text-white mt-4 w-full inline-flex justify-center items-center h-10 px-6 bg-primary-light hover:bg-primary rounded-lg font-bold text-lg leading-none'
+              style={{ transition: 'all .2s' }}>
+              {disabled ? <CircularProgress color='secondary' size={20} thickness={4} /> : account?.toLowerCase() == ownerAccount?.toString() ? 'Ask' : 'Bid'}
+            </button>
+          </div>
+        </div>
+      </Modal>
     </Modal>
   )
 }
