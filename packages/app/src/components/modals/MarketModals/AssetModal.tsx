@@ -45,6 +45,8 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const [askItem, setAskItem] = useState({ amount: 0, usdAmount: 0, currency: chainAddresses.ZOO })
   const [amount, setAmount] = useState(0)
   const [askModal, setAskModal] = useState(false)
+  const [hasRequestedAsk, setHasRequestedAsk] = useState(false);
+
   const { logout } = useAuth()
   const history = useHistory()
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
@@ -114,6 +116,9 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
 
           setDisabled(false)
           setAskModal(false)
+          getAskValue()
+          setHasRequestedAsk(false)
+
         })
         .catch((err) => {
           const message = formatError(err)
@@ -158,6 +163,8 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                 }
                 console.log('zooPrice', ask)
                 setAskItem(ask)
+                setAmount(ask?.amount)
+
               })
               .catch((err) => console.log('error in zooPrice', err))
           })
@@ -166,17 +173,22 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
       console.log('error in getAsk 2', error)
     }
   }
+
+
+
   return (
     <Modal isOpen={assetModal} onDismiss={() => null} isMax scrollable>
-      <BidModalHeader onBack={() => toggleAssetModal()} className={`absolute p-6 w-full z-10 ${fullView && 'hidden'}`} />
+      <BidModalHeader onBack={() => {
+         toggleAssetModal() 
+         setAskItem({ amount: 0, usdAmount: 0, currency: chainAddresses.ZOO } ) 
+         }} className={`absolute p-6 w-full z-10 ${fullView && 'hidden'}`} />
       <div className='h-full  flex'>
         <div className={`flex flex-1 flex-wrap ${!fullView && 'self-center'}`}>
           <div className={` w-full  md:flex-1  bg-modal-dark flex   ${fullView ? 'w-screen fixed z-20 h-screen' : ' lg:w-1/2 '}`} style={{ minHeight: isSm ? '80vh' : '100vh' }}>
             <div className={`flex   w-full items-center justify-center ${fullView ? 'fixed h-screen' : 'relative h-full'}`}>
               <div
-                className={` ${animationMode ? (fullView ? 'bg-none h-full' : 'w-2/3  lg:w-1/2 p-px') : fullView ? ' h-screen ' : 'w-2/3 lg:w-1/2  p-px'}   ${
-                  animationMode && fullView ? 'bg-none' : ' bg-gradient-to-b from-btn1  to-btn2'
-                }  rounded bg-no-repeat `}>
+                className={` ${animationMode ? (fullView ? 'bg-none h-full' : 'w-2/3  lg:w-1/2 p-px') : fullView ? ' h-screen ' : 'w-2/3 lg:w-1/2  p-px'}   ${animationMode && fullView ? 'bg-none' : ' bg-gradient-to-b from-btn1  to-btn2'
+                  }  rounded bg-no-repeat `}>
                 <div className='bg-cover '>{getVideo()}</div>
               </div>
               {/*
@@ -198,7 +210,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
             </div>
             */}
               <div
-                className='cursor-pointer absolute rounded-full bg-dark-900 shadow-2xl h-12 w-12 top-8 right-8 lg:right-20 flex items-center justify-center'
+                className='cursor-pointer absolute rounded-full z-50 bg-dark-900 shadow-2xl h-12 w-12 top-8 right-8 lg:right-20 flex items-center justify-center'
                 onClick={() => setFullView(!fullView)}>
                 {fullView ? <FaCompressAlt fill='white' /> : <FaExpand fill='white' />}
               </div>
@@ -237,7 +249,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                     style={{ pointerEvents: 'unset', padding: '11px 0px', borderRadius: 4 }}
                     className='rounded bg-white text-black flex items-center justify-center font-bold text-sm transform active:scale-95'
                     onClick={() => setAskModal(true)}>
-                    {account?.toLowerCase() == ownerAccount?.toString() ? 'Set Ask' : 'Place Bid'}
+                    {account?.toLowerCase() == ownerAccount?.toString() && hasRequestedAsk === true ? 'Pending Request...' : account?.toLowerCase() == ownerAccount?.toString() ? 'Set Ask' : 'Place Bid'}
                   </a>
                   <button style={{ paddingLeft: 0, paddingRight: 0, padding: '11px 20px', backgroundColor: '#f2f2f2', borderRadius: 4 }} className=''>
                     <RiShareFill fill='black' />
@@ -247,12 +259,12 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                 <div className='w-full mb-4'>
                   <div className=' rounded border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
                     <h2 className='text-sm font-bold mb-4'>Details</h2>
-                    <div className='flex justify-between items-center'>
+                    {/* <div className='flex justify-between items-center'>
                       <span className='text-md  font-semibold'>Transaction Hash</span>
                       <span className='font-semibold text-sm primary cursor-pointer' onClick={() => window.open(`https://testnet.bscscan.com/tx/${txHash}`, '_blank')}>
                         {txHashEllipsis}
                       </span>
-                    </div>
+                    </div> */}
                     <div className='flex justify-between items-center'>
                       <span className=' text-md  font-semibold'>Token ID</span>
                       <CopyHelper toCopy={item.tokenID ? item.tokenID.toString() : ''}>
@@ -324,7 +336,8 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
           </div>
         </div>
       </div>
-      <Modal isOpen={askModal} onDismiss={() => setAskModal(false)}>
+      <Modal isOpen={askModal} onDismiss={() => {setAskModal(false)
+      setAmount(0)}}>
         <div className='w-full mb-8 flex justify-between items-center'>
           <div className=''>Set Ask Amount</div>
           <div className='p-1 bg-white rounded-full cursor-pointer' onClick={() => setAskModal(false)}>
@@ -347,7 +360,13 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
           <div className='flex'>
             <button
               disabled={disabled}
-              onClick={() => setAsk(amount)}
+              onClick={() => {
+                setAsk(amount);
+                // console.log("amount:" ,amount);
+                setHasRequestedAsk(true);
+                setAskModal(false)
+              }
+              }
               className='text-white mt-4 w-full inline-flex justify-center items-center h-10 px-6 bg-primary-light hover:bg-primary rounded-lg font-bold text-lg leading-none'
               style={{ transition: 'all .2s' }}>
               {disabled ? <CircularProgress color='secondary' size={20} thickness={4} /> : account?.toLowerCase() == ownerAccount?.toString() ? 'Ask' : 'Bid'}
