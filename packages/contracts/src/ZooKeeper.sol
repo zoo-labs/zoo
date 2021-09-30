@@ -11,7 +11,6 @@ import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/O
 import { SafeMath } from '@openzeppelin/contracts/utils/math/SafeMath.sol';
 import { UUPSUpgradeable } from '@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol';
 
-import { IMarket } from './interfaces/IMarket.sol';
 import { IDrop } from './interfaces/IDrop.sol';
 import { IMedia } from './interfaces/IMedia.sol';
 import { IZoo } from './interfaces/IZoo.sol';
@@ -48,7 +47,6 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   uint256 public namePrice;
 
   // External contracts
-  IMarket public market;
   IMedia public media;
   IERC20 public zoo;
   address public bridge;
@@ -67,13 +65,11 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   }
 
   function configure(
-    address _market,
     address _media,
     address _zoo,
     address _bridge,
     bool _unlocked
   ) public onlyOwner {
-    market = IMarket(_market);
     media = IMedia(_media);
     zoo = IERC20(_zoo);
     bridge = _bridge;
@@ -97,7 +93,6 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   function mint(address owner, IZoo.Token memory token) private returns (IZoo.Token memory) {
     console.log('mint', owner, token.name);
     token = media.mintToken(owner, token);
-    market.setBidShares(token.id, token.bidShares);
     tokens[token.id] = token;
     emit Mint(owner, token.id);
     return token;
@@ -334,11 +329,4 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   //   return zoo.transfer(receiver, amount);
   // }
 
-  function setAsk(uint256 tokenID, IMarket.Ask memory ask) public {
-    media.setAsk(tokenID, ask);
-  }
-
-  function setBid(uint256 tokenID, IMarket.Bid memory bid) public {
-    media.setBid(tokenID, bid);
-  }
 }

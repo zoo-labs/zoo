@@ -6,24 +6,28 @@ pragma experimental ABIEncoderV2;
 
 import { ERC721Burnable } from './ERC721Burnable.sol';
 import { ERC721 } from './ERC721.sol';
-import { EnumerableSet } from '@openzeppelin/contracts/utils/EnumerableSet.sol';
+import { EnumerableSet } from '@openzeppelin/contracts/utils/structs/EnumerableSet.sol';
 import { Counters } from '@openzeppelin/contracts/utils/Counters.sol';
-import { SafeMath } from '@openzeppelin/contracts/math/SafeMath.sol';
-import { Math } from '@openzeppelin/contracts/math/Math.sol';
+import { SafeMath } from '@openzeppelin/contracts/utils/math/SafeMath.sol';
+import { Math } from '@openzeppelin/contracts/utils/math/Math.sol';
 import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
-import { ReentrancyGuard } from '@openzeppelin/contracts/utils/ReentrancyGuard.sol';
+import { ReentrancyGuard } from '@openzeppelin/contracts/security/ReentrancyGuard.sol';
+import { Ownable } from '@openzeppelin/contracts/access/Ownable.sol';
 import { Decimal } from './Decimal.sol';
 import { IMarket } from './interfaces/IMarket.sol';
 import './interfaces/IMedia.sol';
+
+import './console.sol';
 
 /**
  * @title A media value system, with perpetual equity to creators
  * @notice This contract provides an interface to mint media with a market
  * owned by the creator.
  */
-contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
+contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
   using Counters for Counters.Counter;
   using SafeMath for uint256;
+  using EnumerableSet for EnumerableSet.UintSet;
 
   /* *******
    * Globals
@@ -218,6 +222,15 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
   /**
    * @notice see IMedia
    */
+  function getRecentToken(address creator) public view returns (uint256) {
+    uint256 length = EnumerableSet.length(_creatorTokens[creator]) - 1;
+
+    return EnumerableSet.at(_creatorTokens[creator], length);
+  }
+
+  /**
+   * @notice see IMedia
+   */
   function auctionTransfer(uint256 tokenId, address recipient) external override {
     require(msg.sender == marketContract, 'Media: only market contract');
     previousTokenOwners[tokenId] = ownerOf(tokenId);
@@ -287,16 +300,16 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
    * @notice see IMedia
    * @dev only callable by approved or owner
    */
-  function updateTokenURI(uint256 tokenId, string calldata tokenURI)
+  function updateTokenURI(uint256 tokenId, string calldata _tokenURI)
     external
     override
     nonReentrant
     onlyApprovedOrOwner(msg.sender, tokenId)
     onlyTokenWithContentHash(tokenId)
-    onlyValidURI(tokenURI)
+    onlyValidURI(_tokenURI)
   {
-    _setTokenURI(tokenId, tokenURI);
-    emit TokenURIUpdated(tokenId, msg.sender, tokenURI);
+    _setTokenURI(tokenId, _tokenURI);
+    emit TokenURIUpdated(tokenId, msg.sender, _tokenURI);
   }
 
   /**
@@ -404,12 +417,12 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
    * previous token owner from the piece
    */
   function _burn(uint256 tokenId) internal override {
-    string memory tokenURI = _tokenURIs[tokenId];
+    string memory _tokenURI = _tokenURIs[tokenId];
 
     super._burn(tokenId);
 
-    if (bytes(tokenURI).length != 0) {
-      _tokenURIs[tokenId] = tokenURI;
+    if (bytes(_tokenURI).length != 0) {
+      _tokenURIs[tokenId] = _tokenURI;
     }
 
     delete previousTokenOwners[tokenId];
@@ -450,10 +463,17 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
       );
   }
 
+  function _hashToken(address owner, IZoo.Token memory token) private view returns (IZoo.Token memory) {
+    console.log('_hashToken', token.data.tokenURI, token.data.metadataURI);
+    token.data.contentHash = keccak256(abi.encodePacked(token.data.tokenURI, block.number, owner));
+    token.data.metadataHash = keccak256(abi.encodePacked(token.data.metadataURI, block.number, owner));
+    return token;
+  }
+
   function mintToken(address owner, IZoo.Token memory token) external override nonReentrant returns (IZoo.Token memory) {
     console.log('mintToken', owner, token.name);
     token = _hashToken(owner, token);
-    _mintForCreator(owner, token.data, token.bidShares, '');
+    _mintForCreator(owner, token.data, token.bidShares);
     uint256 id = getRecentToken(owner);
     token.id = id;
     return token;

@@ -122,7 +122,7 @@ describe('ZooKeeper', () => {
       } = await setupTest()
       const ZK = await ethers.getContractFactory('ZooKeeper')
       const inst = await upgrades.deployProxy(ZK, [])
-      await inst.configure(Market.address, Media.address, ZOO.address, Bridge.address)
+      await inst.configure(Media.address, ZOO.address, Bridge.address)
 
       expect(await inst.market()).to.equal(Market.address)
       expect(await inst.media()).to.equal(Media.address)
@@ -149,7 +149,7 @@ describe('ZooKeeper', () => {
       const inst = await upgrades.deployProxy(ZK, [])
       expect(inst.newMethod).to.undefined;
 
-      await inst.configure(Market.address, Media.address, ZOO.address, Bridge.address)
+      await inst.configure(Media.address, ZOO.address, Bridge.address)
 
       const upgraded = await upgrades.upgradeProxy(inst.address, ZK2)
       await expect(upgraded.newMethod).not.to.be.undefined;

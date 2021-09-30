@@ -4,10 +4,11 @@
 pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
-import { SafeMath } from '@openzeppelin/contracts/math/SafeMath.sol';
+import { SafeMath } from '@openzeppelin/contracts/utils/math/SafeMath.sol';
 import { IERC721 } from '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
-import { SafeERC20 } from '@openzeppelin/contracts/token/ERC20/SafeERC20.sol';
+import { SafeERC20 } from '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol';
+import { Ownable } from '@openzeppelin/contracts/access/Ownable.sol';
 import { Decimal } from './Decimal.sol';
 import { Media } from './Media.sol';
 import { IMarket } from './interfaces/IMarket.sol';
@@ -16,7 +17,7 @@ import { IMarket } from './interfaces/IMarket.sol';
  * @title A Market for pieces of media
  * @notice This contract contains all of the market logic for Media
  */
-contract Market is IMarket {
+contract Market is IMarket, Ownable {
   using SafeMath for uint256;
   using SafeERC20 for IERC20;
 
@@ -95,20 +96,11 @@ contract Market is IMarket {
     return Decimal.mul(amount, sharePercentage).div(100);
   }
 
-  /* ****************
-   * Public Functions
-   * ****************
-   */
-
-  constructor() {
-    _owner = msg.sender;
-  }
-
   /**
    * @notice Sets the media contract address. This address is the only permitted address that
    * can call the mutable functions. This method can only be called once.
    */
-  function configure(address mediaContractAddress) external onlyOwner {
+  function configure(address mediaContractAddress) external override onlyOwner {
     require(mediaContractAddress != address(0), 'Market: cannot set media contract as zero address');
 
     mediaContract = mediaContractAddress;
