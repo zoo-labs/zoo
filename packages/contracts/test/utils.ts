@@ -243,8 +243,8 @@ export const deployProtocol = async (tokenAddress) => {
   const market = await (await new Market__factory(deployer).deploy()).deployed()
   const media = await (await new Media__factory(deployer).deploy('ANML', 'ZooAnimals')).deployed()
   const zookeeper = await (await new ZooKeeper__factory(deployer).deploy()).deployed()
-  await market.configure(zookeeper.address, media.address)
-  await media.configure(zookeeper.address, market.address)
+  await market.configure(media.address)
+  await media.configure(market.address)
   // await drop.configure(zookepeer, media);
   return { market, media }
 }
