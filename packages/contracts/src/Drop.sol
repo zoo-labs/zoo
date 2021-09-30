@@ -377,9 +377,9 @@ contract Drop is Ownable {
     // Helper to construct IMarket.BidShares struct
     function getBidShares() private pure returns (IMarket.BidShares memory) {
         return IMarket.BidShares({
-            creator: Decimal.D256(10),
-            owner: Decimal.D256(80),
-            prevOwner: Decimal.D256(10)
+            creator: Decimal.D256(uint256(10).mul(Decimal.BASE)),
+            owner: Decimal.D256(uint256(80).mul(Decimal.BASE)),
+            prevOwner: Decimal.D256(uint256(10).mul(Decimal.BASE))
         });
     }
 

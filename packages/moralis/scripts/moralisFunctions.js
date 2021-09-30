@@ -14,7 +14,7 @@ const chainID = {
 }[NETWORK]
 
 const subdomain = {
-  hardhat:  'c1edput5nphx.grandmoralis.com',
+  hardhat:  'crkoxpwp0jgk.moralishost.com',
   testnet:  'dblpeaqbqk32.usemoralis.com',
   mainnet:  'j0ixlvmwc1kz.usemoralis.com',
   ethereum: 'csiwdg4boaa8.usemoralis.com',
