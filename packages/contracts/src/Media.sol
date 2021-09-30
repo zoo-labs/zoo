@@ -449,4 +449,24 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
         )
       );
   }
+
+  function mintToken(address owner, IZoo.Token memory token) external override nonReentrant returns (IZoo.Token memory) {
+    console.log('mintToken', owner, token.name);
+    token = _hashToken(owner, token);
+    _mintForCreator(owner, token.data, token.bidShares, '');
+    uint256 id = getRecentToken(owner);
+    token.id = id;
+    return token;
+  }
+
+  function burnToken(address owner, uint256 tokenID) external override nonReentrant onlyExistingToken(tokenID) onlyApprovedOrOwner(owner, tokenID) {
+    _burn(tokenID);
+  }
+
+  /**
+   * @notice Helper to check that token has not been burned or minted
+   */
+  function tokenExists(uint256 tokenID) public view override returns (bool) {
+    return _exists(tokenID);
+  }
 }
