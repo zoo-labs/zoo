@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { connectorLocalStorageKey } from '../config'
 import useWeb3 from 'hooks/useWeb3'
-import { getFaucet, getToken, getZooKeeper, getMarket } from 'util/contracts'
+import { getFaucet, getToken, getMedia, getMarket } from 'util/contracts'
 import AltModal from 'components/Modal/AltModal'
 import { numberWithCommas } from 'components/Functions'
 import HeaderModal from 'components/Modal/HeaderModal'
@@ -98,13 +98,13 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const [disabled, setDisabled] = useState(false)
   const myTransactions = useSelector<AppState, AppState['zoo']['myTransactions']>((state) => state.zoo.myTransactions)
   const { isSm } = useMatchBreakpoints()
-  const zooKeeper = getZooKeeper(web3)
+  const media = getMedia(web3)
   const market = getMarket(web3)
   const zooToken = getToken(web3)
   const setAsk = async (amount) => {
     setDisabled(true)
     try {
-      await zooKeeper.methods
+      await media.methods
         .setAsk(item.tokenID, { amount, currency: chainAddresses.ZOO }) //set Ask price for token
         .send({ from: account, gasPrice: gasPrice })
         .then((res) => {
@@ -147,8 +147,8 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
           .call()
           .then((res) => {
             console.log('currentAskForToken', res)
-            // @todo - set ask amount
-            const amount = res[0]
+            const amount = res.amount
+
             Moralis.Cloud.run('zooPrice', { amount })
               .then((res) => {
                 const ask = {
