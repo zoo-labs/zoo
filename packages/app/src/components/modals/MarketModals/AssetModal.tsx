@@ -33,20 +33,19 @@ interface AssetModalProps {
 }
 
 const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
+  const web3 = useWeb3()
+  const { gasPrice } = web3
+  const { chainId, account } = useWeb3React()
   const assetModal = useModalOpen(ApplicationModal.ASSET)
   const [animationMode, toggleSetAnimationMode] = useAnimationModeManager()
-
+  const chainAddresses = (addresses[chainId] as any) || (addresses[ChainId.BSC] as any)  
   const toggleAssetModal = useAssetModalToggle()
   const [fullView, setFullView] = useState(false)
-  const [askItem, setAskItem] = useState(null)
+  const [askItem, setAskItem] = useState({ amount: 0, usdAmount: 0, currency: chainAddresses.ZOO })
   const [amount, setAmount] = useState(0)
   const { logout } = useAuth()
-  const { chainId, account } = useWeb3React()
   const history = useHistory()
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
-  const web3 = useWeb3()
-  const { chainID, gasPrice } = web3
-  const chainAddresses = (addresses[chainID] as any) || (addresses[ChainId.BSC] as any)
   const getNetwork = (chainId: number) => {
     switch (chainId) {
       case 56:
@@ -138,23 +137,27 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const getAskValue = () => {
     const tokenID = item.tokenID || 0
     console.log('tokenID', tokenID)
+
     try {
       market &&
         market.methods
           .currentAskForToken(tokenID)
           .call()
-          .then(async (res) => {
-            console.log('res in getAsk', chainAddresses.ZOO)
-            // const price = await Moralis.Web3API.token.getTokenPrice({
-            //   address: chainAddresses.ZOO,
-            //   chain: '0x61',
-            // })
-            // console.log('price 1!!', price)
-            setAskItem({
-              amount: res[0],
-              usdAmount: 1,
-              currecy: res[1],
-            })
+          .then((res) => {
+            console.log('currentAskForToken', res)
+            // @todo - set ask amount
+            const amount = 300000
+            Moralis.Cloud.run("zooPrice", { amount })
+              .then(res => {
+                const ask = {
+                  amount,
+                  usdAmount: res.usdAmount,
+                  currency: chainAddresses.ZOO,
+                }
+                console.log('zooPrice', ask)
+                setAskItem(ask)
+              })
+              .catch((err) => console.log('error in zooPrice', err))
           })
           .catch((err) => console.log('error in getAsk', err))
     } catch (error) {
@@ -223,7 +226,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                     <h2 className='text-sm font-bold mb-2'>Reserve Price</h2>
                     <div className=''>
                       <span className='mr-2 text-xl  font-semibold'>{askItem?.amount} ZOO</span>
-                      <span className='font-light'>${askItem?.amount * askItem?.usdAmount} USD</span>
+                      <span className='font-light'>${askItem?.usdAmount} USD</span>
                     </div>
                   </div>
                 </div>

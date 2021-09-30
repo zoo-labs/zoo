@@ -356,12 +356,21 @@ Moralis.Cloud.define('refreshEggs', async (request) => {
 
 // Helper to return latest price from CMC
 Moralis.Cloud.define('zooPrice', async (request) => {
+  let zooPrice
+  const CMC_ZOO_TOKEN_ID = 11556
+  const amount = parseInt(request.params.amount || 0);
   const ZooPrice = Moralis.Object.extend('ZooPrice')
   const query = new Moralis.Query(ZooPrice)
-  let price = await query.first()
-
+  zooPrice = await query.first()
   // Only check every 30 seconds
-  if (price && price.timestamp + (1000 * 30) < Date.now()) return price
+  if (zooPrice && zooPrice.get('timestamp') + (1000 * 30) < Date.now()) {
+    const usdPrice = zooPrice.get('quote')?.USD?.price || 0
+    return {
+      ...zooPrice,
+      ...zooPrice.attributes,
+      usdAmount: (amount * parseFloat(usdPrice)).toFixed(2),
+    }
+  }
 
   // Fetch latest zoo price
   const res = await Moralis.Cloud.httpRequest({
@@ -373,8 +382,15 @@ Moralis.Cloud.define('zooPrice', async (request) => {
     }
   })
 
-  // Save price
-  price = new ZooPrice(JSON.parse(res.text))
-  price.timestamp = Date.now()
-  return price
+  const { data } = JSON.parse(res.text)
+  zooPrice = data[CMC_ZOO_TOKEN_ID]
+  const usdPrice = zooPrice?.quote?.USD?.price || 0
+  zooPrice = new ZooPrice({...zooPrice, usdPrice })
+  zooPrice.set('timestamp', Date.now())
+  await zooPrice.save()
+  return {
+    ...zooPrice,
+    ...zooPrice.attributes,
+    usdAmount: (amount * parseFloat(usdPrice)).toFixed(2),
+  }
 })

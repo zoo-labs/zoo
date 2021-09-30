@@ -1,16 +1,29 @@
 const hre = require('hardhat')
 const ethers = hre.ethers
 
+const NETWORK = process.env.HARDHAT_NETWORK ? process.env.HARDHAT_NETWORK : 'hardhat'
+
+console.log(`Configure game on ${NETWORK}`)
+
+const DEPLOYMENT = {
+  hardhat:  'localhost',
+  testnet:  'testnet',
+  mainnet:  'mainnet',
+  ethereum: 'ethereum',
+  rinkeby:  'rinkeby',
+  ropsten:  'ropsten',
+}[NETWORK]
+
 const rarities = require('../utils/rarities.json')
 const animals = require('../utils/animals.json')
 const hybrids = require('../utils/hybrids.json')
 
-const ZOO = require('../deployments/testnet/ZOO.json')
-const Market = require('../deployments/testnet/Market.json')
-const Media = require('../deployments/testnet/Media.json')
-const Drop = require('../deployments/testnet/Drop.json')
-const ZooKeeper = require('../deployments/testnet/ZooKeeper.json')
-const bridge =  require('../deployments/testnet/Bridge.json');
+const ZOO = require(`../deployments/${DEPLOYMENT}/ZOO.json`)
+const Market = require(`../deployments/${DEPLOYMENT}/Market.json`)
+const Media = require(`../deployments/${DEPLOYMENT}/Media.json`)
+const Drop = require(`../deployments/${DEPLOYMENT}/Drop.json`)
+const ZooKeeper = require(`../deployments/${DEPLOYMENT}/ZooKeeper.json`)
+const bridge =  require(`../deployments/${DEPLOYMENT}/Bridge.json`)
 
 // Split game data into deploy-sized chunks
 function chunks(arr, size) {
@@ -36,7 +49,7 @@ async function main() {
 
   // Configure Media
   console.log('media.configure', ZooKeeper.address, Market.address)
-  await market.configure(ZooKeeper.address, Market.address)
+  await media.configure(ZooKeeper.address, Market.address)
 
   // Configure game for our Gen 0 drop
   console.log('keeper.configure', Market.address, Media.address, ZOO.address)
@@ -98,14 +111,14 @@ async function main() {
   }
 
   // Add animals
-  for (const chunk of chunks(animals, 100)) {
+  for (const chunk of chunks(animals, 25)) {
     console.log('setAnimals', chunk)
     const tx = await drop.setAnimals(chunk)
     await tx.wait()
   }
 
   // Add hybrids
-  for (const chunk of chunks(hybrids, 100)) {
+  for (const chunk of chunks(hybrids, 25)) {
     console.log('setHybrids', chunk)
     const tx = await drop.setHybrids(chunk)
     await tx.wait()
