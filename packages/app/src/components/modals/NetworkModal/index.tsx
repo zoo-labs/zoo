@@ -13,12 +13,7 @@ import { CloseIcon } from 'components/Svg'
 
 interface NetworkModalProps {}
 
-const chainIds = [
-  ChainId.MAINNET,
-  ChainId.BSC,
-  ChainId.RINKEBY, 
-  ChainId.BSC_TESTNET,
-]
+const chainIds = [ChainId.MAINNET, ChainId.BSC, ChainId.RINKEBY, ChainId.BSC_TESTNET]
 
 if (window.location.host.startsWith('localhost:')) {
   chainIds.push(ChainId.HARDHAT)
@@ -26,8 +21,6 @@ if (window.location.host.startsWith('localhost:')) {
 }
 
 const NetworkModal: React.FC<NetworkModalProps> = ({}) => {
-
-  
   const { chainId, library, account } = useWeb3React()
   const networkModal = useModalOpen(ApplicationModal.NETWORK)
   const toggleNetworkModal = useNetworkModalToggle()
@@ -71,6 +64,7 @@ const NetworkModal: React.FC<NetworkModalProps> = ({}) => {
                 if (key === ChainId.MAINNET) {
                   library?.send('wallet_switchEthereumChain', [{ chainId: '0x1' }, account])
                 } else {
+                  console.log('switching here to', params)
                   library?.send('wallet_addEthereumChain', [params, account])
                 }
               }}

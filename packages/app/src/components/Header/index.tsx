@@ -1,23 +1,16 @@
 import useScrollPosition from '@react-hook/window-scroll'
 import { useMatchBreakpoints } from 'hooks'
 import { useCallback, useEffect, useState } from 'react'
-import { NavLink, useHistory, useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import Menu from '../Menu'
-import { Label, Text } from 'components/Text'
-import { getDrop, getFaucet, getMedia, getToken, getZooKeeper } from 'util/contracts'
+import { Text } from 'components/Text'
 import Tooltip from '@material-ui/core/Tooltip'
 // import Modal from '../Modal'
-import useTheme from 'hooks/useTheme'
-import useAuth from 'hooks/useAuth'
 import { useWeb3React } from '@web3-react/core'
 import useToast from 'hooks/useToast'
-import ThemeSwitcher from 'components/SideMenu/components/ThemeSwitcher'
-import { MENU_ENTRY_HEIGHT } from 'components/SideMenu/config'
 import useWeb3 from 'hooks/useWeb3'
 // import { MoreIcon } from 'components/SideMenu/icons'
 import More from './More'
-import QuestionHelper from './QuestionHelper'
 import { numberWithCommas } from 'components/Functions'
 import NetworkCard from './NetworkCard'
 import { useModalOpen } from 'state/application/hooks'
@@ -25,7 +18,6 @@ import { ApplicationModal } from 'state/application/actions'
 import { NETWORK_SYMBOL } from 'constants/networks'
 import UserBlock from 'components/SideMenu/components/UserBlock'
 import { addresses } from 'constants/contracts'
-import { useETHBalances } from 'hooks/useWallet'
 import { ChainId } from 'constants/Chains'
 
 const logoURL = window.location.origin + '/static/images/logo-white.png'
@@ -72,9 +64,6 @@ const LogoIcon = styled.div`
   }
 `
 
-const activeClassName = 'ACTIVE'
-const BalanceText = styled(Text)``
-
 export default function Header() {
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const history = useHistory()
@@ -91,7 +80,6 @@ export default function Header() {
   const web3 = useWeb3()
   const { chainID } = web3
   const chainAddresses = (addresses[chainID] as any) || (addresses[ChainId.BSC] as any)
-  console.log('chainAddresses.ZOO', chainAddresses.ZOO)
   const { account, library } = useWeb3React()
   const isMobile = isXl === false
   let location = useLocation()
