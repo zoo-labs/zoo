@@ -5,9 +5,10 @@ import React, { FC } from 'react'
 interface BidModalHeaderProps {
   className?: string
   onBack: () => void
+  showAccount?: boolean
 }
 
-const BidModalHeader: FC<BidModalHeaderProps> = ({ className = '', onBack = undefined }) => {
+const BidModalHeader: FC<BidModalHeaderProps> = ({ className = '', onBack = undefined, showAccount }) => {
   const { account } = useWeb3React()
 
   return (
@@ -15,7 +16,7 @@ const BidModalHeader: FC<BidModalHeaderProps> = ({ className = '', onBack = unde
       <div onClick={onBack} className='h-14 w-14 flex items-center justify-center rounded-full bg-dark-900 shadow-2xl cursor-pointer'>
         <ChevronLeftIcon width={30} height={30} className=' text-white' fill='#f2f2f2' />
       </div>
-      <UserBlock account={account} />
+      {showAccount && <UserBlock account={account} />}
     </div>
   )
 }
