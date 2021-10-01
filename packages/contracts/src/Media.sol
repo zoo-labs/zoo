@@ -379,7 +379,7 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
     IMarket.BidShares memory bidShares
   ) internal onlyValidURI(data.tokenURI) onlyValidURI(data.metadataURI) {
     require(data.contentHash != 0, 'Media: content hash must be non-zero');
-    require(_contentHashes[data.contentHash] == false, 'Media: a token has already been created with this content hash');
+    // require(_contentHashes[data.contentHash] == false, 'Media: a token has already been created with this content hash');
     require(data.metadataHash != 0, 'Media: metadata hash must be non-zero');
 
     uint256 tokenId = _tokenIdTracker.current();
