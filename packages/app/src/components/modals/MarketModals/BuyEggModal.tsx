@@ -18,6 +18,7 @@ import { useWeb3 } from 'hooks'
 import { getToken, getZooKeeper } from 'util/contracts'
 import useToast from 'hooks/useToast'
 import { getZooBalance } from 'state/zoo/actions'
+import { CircularProgress } from '@material-ui/core'
 interface BuyEggModalProps {}
 
 const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
@@ -97,6 +98,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
 
   const dispatch = useDispatch()
   const buyEggs = async () => {
+    setDisabled(true)
     const eggsLength = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
     try {
       zooKeeper.methods
@@ -119,12 +121,10 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
           console.error(message)
           toggleBuyEggModal()
         })
-        
     } catch (err) {
       console.error(err)
       toastClear()
       setDisabled(false)
-
       toastError('Unable to purchase eggs. Try again later.')
     }
     // console.log(testEggs)
@@ -177,7 +177,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                 onClick={() => buyEggs()}
                 className='text-white my-4 w-full inline-flex justify-center items-center h-10 px-6 bg-primary-light hover:bg-primary rounded-lg font-bold text-lg leading-none'
                 style={{ transition: 'all .2s' }}>
-                Pay
+                {disabled ? <CircularProgress color='secondary' size={20} thickness={4} /> : 'Pay'}
               </button>
             </div>
           </div>
