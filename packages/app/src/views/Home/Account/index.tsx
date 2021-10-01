@@ -115,8 +115,10 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
       if (tx) {
         setAllowance(true)
         setDisableApprove(false)
+        setKeepApprove(false)
         toastClear()
         toastSuccess('Approval success!')
+        console.log('approved', tx)
       }
     } catch (error) {
       console.error('APPROVE ERROR', error)
@@ -225,9 +227,17 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
                       <button
                         disabled={disableApprove || allowance}
                         style={{ width: '120px', minHeight: '36px', marginBottom: '-2px' }}
-                        className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100  disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full  bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary`}
+                        className={`border rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primary border-gray-800 hover:bg-opacity-100  disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full  bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary ${
+                          balance !== 0 && 'gradient-border'
+                        }`}
                         onClick={approve}>
                         {allowance ? 'Approved' : disableApprove ? 'Processing' : 'Approve'}
+                        {balance !== 0 && (
+                          <span className='flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1'>
+                            <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75'></span>
+                            <span className='relative inline-flex rounded-full h-3 w-3 bg-white'></span>
+                          </span>
+                        )}
                       </button>
                     </div>
                   ) : currentEggsOwned > 2 ? (
@@ -236,9 +246,9 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
                     <div className={'ml-2'}>
                       <button
                         disabled={disable || !allowance}
-                        className={` rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full ${
-                          !allowance ? 'border border-gray-600' : 'bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary'
-                        } ${balance !== 0 && currentEggsOwned < 1 && 'gradient-border'}`}
+                        className={` rounded-xl shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary ${
+                          balance !== 0 && currentEggsOwned < 1 && 'gradient-border'
+                        }`}
                         style={{ width: '120px', minHeight: '36px', marginBottom: '-2px' }}
                         onClick={buyEgg}>
                         {currentEggsOwned > 2 ? 'Market' : disable ? 'Processing' : 'Buy Eggs'}
