@@ -2,6 +2,16 @@
 const ZK={}
 const CHAIN='0x38'
 
+const actions = {
+  BOUGHT_EGG: 'Bought Egg',
+  BREED_ANIMALS: 'Breed Animals',
+  BURNED_TOKEN: 'Burned Token',
+  FREE_ANIMAL: 'Free Animal',
+  HATCHED_EGG: 'Hatched Egg',
+  ASK_CREATED: 'Ask Created',
+  PLACE_BID: 'Placed Bid',
+}
+
 // Get this enviroment's ZK contract
 async function getZooToken() {
   const web3 = Moralis.web3ByChain(CHAIN)
@@ -83,7 +93,7 @@ Moralis.Cloud.afterSave('BuyEgg', async (request) => {
     egg.set('tokenID', eggID)
     egg.set('kind', 0)
     egg.set('type', 'basic')
-    egg.set('interactive', false)
+    egg.set('interactive', true)
     egg.set('hatched', false)
     await egg.save()
     logger.info(`Egg ${eggID} saved at ${Date.now()}`)
@@ -110,7 +120,7 @@ Moralis.Cloud.afterSave('BuyEgg', async (request) => {
   logger.info(`Egg ${eggID} saved at ${Date.now()}`)
 
   const tx = newTransaction(request)
-  tx.set('action', 'Bought Egg')
+  tx.set('action', actions.BOUGHT_EGG)
   tx.set('tokenID', eggID)
   await tx.save()
 
@@ -174,7 +184,7 @@ Moralis.Cloud.afterSave('Hatch', async (request) => {
   await animal.save()
 
   const tx = newTransaction(request)
-  tx.set('action', 'Hatched Egg')
+  tx.set('action', actions.HATCHED_EGG)
   tx.set('eggID', eggID)
   tx.set('tokenID', tokenID)
   await tx.save()
@@ -242,7 +252,7 @@ Moralis.Cloud.afterSave('Breed', async (request) => {
   await egg.save()
 
   const tx = newTransaction(request)
-  tx.set('action', 'Breed Animals')
+  tx.set('action', actions.BREED_ANIMALS)
   tx.set('parentA', parentA)
   tx.set('parentB', parentB)
   tx.set('tokenID', eggID)
@@ -259,7 +269,7 @@ Moralis.Cloud.afterSave('Burn', async (request) => {
   const tokenID = parseInt(request.object.get('tokenID')) // Token burning
 
   const tx = newTransaction(request)
-  tx.set('action', 'Burned Token')
+  tx.set('action', actions.BURNED_TOKEN)
   tx.set('tokenID', tokenID)
   await tx.save()
 
@@ -283,7 +293,7 @@ Moralis.Cloud.afterSave('Free', async (request) => {
   await animal.save()
 
   const tx = newTransaction(request)
-  tx.set('action', 'Free Animal')
+  tx.set('action', actions.FREE_ANIMAL)
   tx.set('tokenID', tokenID)
   await tx.save()
 
@@ -304,6 +314,16 @@ Moralis.Cloud.afterSave('Swap', async (request) => {
   }
 
   logger.info(`Swap ${from} ${to} ${amount} ${chainID}`)
+})
+
+Moralis.Cloud.afterSave('AskCreated', async (request) => {
+  const logger = Moralis.Cloud.getLogger()
+  logger.into(request);
+
+  const tx = newTransaction(request)
+  tx.set('action', actions.ASK_CREATED)
+  tx.set('tokenID', tokenID)
+  await tx.save()
 })
 
 Moralis.Cloud.define('getAverageGasPrice', async function (request) {
@@ -352,6 +372,48 @@ Moralis.Cloud.define('refreshEggs', async (request) => {
   for (let i = 0; i < results.length; i++) {
     await results[i].save()
   }
+})
+
+Moralis.Cloud.define('transactions', async (request) => {
+  const logger = Moralis.Cloud.getLogger()
+  const { account, tokenID, excludeBurned, limit } = request.params
+
+  const Transactions = Moralis.Object.extend('Transactions')
+  const query = new Moralis.Query(Transactions)
+
+  query.limit(!limit || limit > 1000 ? 1000 : limit)
+  query.descending('createdAt')
+
+  if (account) {
+    query.equalTo('from', account.toLowerCase())
+  }
+
+  logger.info('transactions param tokenID', tokenID)
+
+  if (tokenID) {
+    query.equalTo('tokenID', tokenID)
+  }
+
+  const results = await query.find()
+
+  return results.filter(tx => {
+    return excludeBurned ? tx.get('action') !== actions.BURNED_TOKEN : true
+  }).map(tx => {
+    const action = tx.get('action')
+    const txHash = tx.get('transactionHash')
+    const url = `https://testnet.bscscan.com/tx/${txHash}`
+    return {
+      id: tx.get('objectId'),
+      from: tx.get('from'),
+      action: action,
+      hash: txHash,
+      url: url,
+      createdAt: tx.get('createdAt').toISOString(),
+      blockNumber: tx.get('blockNumber'),
+      timestamp: tx.get('timestamp'),
+      tokenID: tx.get('tokenID'),
+    }
+  })
 })
 
 // Helper to return latest price from CMC
