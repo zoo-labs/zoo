@@ -29,6 +29,7 @@ import { ChainId } from 'constants/Chains'
 import Moralis from 'moralis'
 import { CloseIcon } from 'components'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import { getTokenTransactions, getZooPrice } from 'functions/moralis'
 interface AssetModalProps {
   item: any
 }
@@ -44,6 +45,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const [fullView, setFullView] = useState(false)
   const [askItem, setAskItem] = useState({ amount: 0, usdAmount: 0, currency: chainAddresses.ZOO })
   const [amount, setAmount] = useState(0)
+  const [transactions, setTransactions] = useState([])
   const [askModal, setAskModal] = useState(false)
   const [hasRequestedAsk, setHasRequestedAsk] = useState(false);
 
@@ -140,6 +142,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
 
   useEffect(() => {
     getAskValue()
+    getTokenTransactions({ tokenID: item.tokenID }).then(setTransactions)
   }, [item])
   const getAskValue = () => {
     const tokenID = item.tokenID || 0
@@ -154,7 +157,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
             console.log('currentAskForToken', res)
             const amount = res.amount
 
-            Moralis.Cloud.run('zooPrice', { amount })
+            getZooPrice(amount)
               .then((res) => {
                 const ask = {
                   amount,
@@ -166,7 +169,6 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                 setAmount(ask?.amount)
 
               })
-              .catch((err) => console.log('error in zooPrice', err))
           })
           .catch((err) => console.log('error in getAsk', err))
     } catch (error) {
@@ -310,7 +312,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                   </div>
                   <div className='flex flex-col'>
                     {transactions.map((transaction, index) => {
-                      const { account, amount, description, date } = transaction
+                      const { from, amount, description, date, hash, createdAt } = transaction
                       return (
                         <div className='flex mb-4 items-center '>
                           <a className='' href='/'>
@@ -319,12 +321,12 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                           <div className='ml-2'>
                             <div className='text-sm'>
                               <a className='font-semibold primary '>
-                                {account.substring(0, 6)}...${account.substring(txHash.length - 4)}
+                                {hash.substring(0, 6)}...${hash.substring(hash.length - 4)}
                               </a>{' '}
                               {description}
                               <a className='font-bold'> {amount}</a>
                             </div>
-                            <span className='text-sm font-semibold text-gray-400'>{date}</span>
+                            <span className='text-sm font-semibold text-gray-400'>{createdAt}</span>
                           </div>
                         </div>
                       )
@@ -380,10 +382,10 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
 
 export default AssetModal
 
-const transactions = [
-  { date: 'September 25, 12:21 AM', description: 'listed this NFT with a reserve price of', amount: '35K ZOO', account: '0x36de990133D36d7E3DF9a820aA3eDE5a2320De71' },
-  { date: 'September 25, 12:17 AM', description: 'minted this NFT', amount: '', account: '0x36de990133D36d7E3DF9a820aA3eDE5a2320De71' },
-]
+// const transactions = [
+//   { date: 'September 25, 12:21 AM', description: 'listed this NFT with a reserve price of', amount: '35K ZOO', account: '0x36de990133D36d7E3DF9a820aA3eDE5a2320De71' },
+//   { date: 'September 25, 12:17 AM', description: 'minted this NFT', amount: '', account: '0x36de990133D36d7E3DF9a820aA3eDE5a2320De71' },
+// ]
 
 // box-sizing: border-box;
 // margin: -80px 0px 0px;
