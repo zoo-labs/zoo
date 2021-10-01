@@ -29,6 +29,7 @@ import { CardEgg } from 'components/EggCard/types'
 import { t } from '@lingui/macro'
 import { Egg } from 'types/zoo'
 import AssetModal from 'components/modals/MarketModals/AssetModal'
+import useToast from 'hooks/useToast'
 interface EggsProps {
   myEggs: Array<Egg>
 }
@@ -53,6 +54,7 @@ const Eggs: React.FC<EggsProps> = ({ myEggs }) => {
   const { path } = useRouteMatch()
   const dispatch = useDispatch()
   const [eggType, setEggType] = useState('')
+  const { toastInfo, clear } = useToast()
   const [isOpen, setOpen] = useState(false)
   const [_, setShowBoth] = useState(false)
   const web3 = useWeb3()
@@ -110,6 +112,10 @@ const Eggs: React.FC<EggsProps> = ({ myEggs }) => {
   // ]
   const hatchEgg = async (egg) => {
     //disable egg hatching and show modal here
+
+    toastInfo('Game features will be enabled soon. Stay tunned for updates.')
+    return
+
     if (chainId === ChainId.BSC_TESTNET) {
       console.log('egg', egg)
       const newEgg = { ...egg, hatching: true }
