@@ -73,7 +73,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     const foundIndex = newEggs.findIndex((x) => isEmpty(x))
     console.log('foundIndex', foundIndex)
     newEggs[foundIndex] = { temporary: true }
-    setAmount(300000 * newEggs.filter((egg) => !isEmpty(egg) && egg.temporary).length)
+    setAmount(360000 * newEggs.filter((egg) => !isEmpty(egg) && egg.temporary).length)
     console.log('adding egg', newEggs)
 
     setEggs(newEggs)
@@ -83,7 +83,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     const foundIndex = newEggs.reverse().findIndex((x) => x.temporary)
     newEggs[foundIndex] = {}
     const finalEggs = newEggs.reverse()
-    setAmount(300000 * finalEggs.filter((egg) => !isEmpty(egg) && egg.temporary).length)
+    setAmount(360000 * finalEggs.filter((egg) => !isEmpty(egg) && egg.temporary).length)
     setEggs(finalEggs)
   }
   const zooKeeper = getZooKeeper(web3)
@@ -99,7 +99,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const buyEggs = async () => {
     const eggsLength = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
     try {
-      await zooKeeper.methods
+      zooKeeper.methods
         .buyEggs(1, eggsLength) // buy from first drop
         .send({ from: account, gasPrice: gasPrice })
         .then((res) => {
@@ -108,8 +108,8 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
           console.log('bought egg', res)
 
           setDisabled(false)
-          toggleBuyEggModal()
           dispatch(getZooBalance(account, zooToken))
+          toggleBuyEggModal()
         })
         .catch((err) => {
           const message = formatError(err)
@@ -117,7 +117,9 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
           toastClear()
           toastError(message)
           console.error(message)
+          toggleBuyEggModal()
         })
+        
     } catch (err) {
       console.error(err)
       toastClear()
@@ -127,7 +129,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     }
     // console.log(testEggs)
     // dispatch(addEggs(testEggs))
-    toggleBuyEggModal()
+    // toggleBuyEggModal()
   }
   const quantity = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
   return (
@@ -157,13 +159,13 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                       </button>
                     </div>
                   </div>
-                  <div className='flex w-auto items-center text-gray-400 font-semibold'>300,000 ZOO each</div>
+                  <div className='flex w-auto items-center text-gray-400 font-semibold'>360,000 ZOO each</div>
                 </div>
               </div>
             </div>
             {error && <div className='text-red-500 mb-1 text-xs font-semibold'>{error}</div>}
             <h6 className='my-1 text-xs text-gray-400 font-semibold'>
-              One egg costs <span className='font-bold text-white'>300,000 ZOO</span>
+              One egg costs <span className='font-bold text-white'>360,000 ZOO</span>
             </h6>
             <h6 className='mb-2 text-xs text-gray-400 font-semibold'>A maximum of 3 eggs are allowed per account</h6>
           </div>
