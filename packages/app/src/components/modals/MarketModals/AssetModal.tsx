@@ -46,6 +46,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const [askItem, setAskItem] = useState({ amount: 0, usdAmount: 0, currency: chainAddresses.ZOO })
   const [amount, setAmount] = useState(0)
   const [transactions, setTransactions] = useState([])
+  const [transactionHash, setTransactionHash] = useState(null)
   const [askModal, setAskModal] = useState(false)
   const [hasRequestedAsk, setHasRequestedAsk] = useState(false)
 
@@ -66,6 +67,11 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
         return ''
     }
   }
+
+  const getBrowserUrl = (chainId: number)  => {
+    return chainId === 56 ? 'https://bscscan.com' : 'https://testnet.bscscan.com'
+  }
+
   const isAnimated = useIsAnimationMode()
   const getVideo = () => {
     return isAnimated ? (
@@ -140,9 +146,13 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   // }
 
   useEffect(() => {
-    getZooUsdPrice(300000)
-    // getAskValue()
-    getTokenTransactions({ tokenID: item.tokenID }).then(setTransactions)
+    getZooUsdPrice(360000)
+    getTokenTransactions({ tokenID: item.tokenID }).then(transactions => {
+      if (transactions.length > 0) {
+        setTransactions(transactions)
+        setTransactionHash(transactions[0].hash)
+      } 
+    })
   }, [item])
   // const getAskValue = () => {
   //   const tokenID = item.tokenID || 0
@@ -257,7 +267,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
 
                 <div className='w-full mb-4'>
                   <div className='rounded border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
-                    <h2 className='text-sm font-bold mb-2'>Bought Price</h2>
+                    <h2 className='text-sm font-bold mb-2'>Price</h2>
                     <div className=''>
                       <span className='mr-2 text-xl  font-semibold'>{askItem?.amount} ZOO</span>
                       <span className='font-light'>${askItem?.usdAmount} USD</span>
@@ -287,9 +297,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                     </div> */}
                     <div className='flex justify-between items-center'>
                       <span className=' text-md  font-semibold'>Token ID</span>
-                      <CopyHelper toCopy={item.tokenID ? item.tokenID.toString() : ''}>
                         <div className='text-sm font-medium'>{item.tokenID}</div>
-                      </CopyHelper>
                     </div>
                     <div className='flex justify-between items-center'>
                       <span className='text-md  font-semibold'>Token Standard</span>
@@ -298,21 +306,21 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                   </div>
                 </div>
                 <div className='w-full rounded flex flex-col  border-2 border-gray-400 border-solid mb-6 pt-4' style={{ borderWidth: 1 }}>
-                  <div className='my-6 px-4'>
+                  <div className='px-4'>
                     <h2 className='text-sm font-bold'>Proof of Authenticity</h2>
                   </div>
                   <div className='flex flex-col'>
-                    <a
-                      href={`https://testnet.bscscan.com/address/${item.owner || ''}`}
+                    {transactionHash && <a
+                      href={`${getBrowserUrl(chainId)}/tx/${transactionHash}`}
                       target='_blank'
-                      className='p-4 justify-between items-center flex border-b-2 border-gray-400 border-solid hover:bg-dark-800'
+                      className='p-4 justify-between items-center flex hover:bg-dark-800'
                       style={{ borderBottomWidth: 1 }}>
-                      <div className='text-sm font-medium primary'>Etherscan transaction</div>
+                      <div className='text-sm font-medium primary'>Transaction {transactionHash.substring(0, 6)}...${transactionHash.substring(transactionHash.length - 4)}</div>
                       <div>
                         <ImArrowUpRight2 fill='#f2f2f2' size={12} />
                       </div>
-                    </a>
-                    <a
+                    </a>}
+                    {/* <a
                       href='https://ipfs.io/ipfs/bafybeicrjczyjyr35qgtgsfqecumvtr24cnv7j23cfwmiqcmu67px26feu'
                       target='_blank'
                       className='p-4 flex justify-between items-center hover:bg-dark-800 rounded-b-lg'>
@@ -320,11 +328,11 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                       <div>
                         <ImArrowUpRight2 fill='#f2f2f2' size={12} />
                       </div>
-                    </a>
+                    </a> */}
                   </div>
                 </div>
 
-                <div className='w-full rounded flex flex-col  border-2 border-gray-400 border-solid mb-6 px-4 pt-4 ' style={{ borderWidth: 1 }}>
+                {/* <div className='w-full rounded flex flex-col  border-2 border-gray-400 border-solid mb-6 px-4 pt-4 ' style={{ borderWidth: 1 }}>
                   <div className='mb-6 mt-2'>
                     <h2 className='text-sm font-bold'>History</h2>
                   </div>
@@ -350,7 +358,8 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                       )
                     })}
                   </div>
-                </div>
+                </div> */}
+
               </div>
             </div>
           </div>
