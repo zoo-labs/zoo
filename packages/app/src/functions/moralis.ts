@@ -47,9 +47,7 @@ export const getTokenTransactions = async (params: GetTransactionsInput) => {
     return []
   }
   const transactions = await getTransactions(params)
-
   console.log('getTokenTransactions', transactions)
-
   return transactions.map(tx => {
     return {
       ...tx,
