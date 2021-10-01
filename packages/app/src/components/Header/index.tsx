@@ -55,13 +55,12 @@ const Title = styled.a`
 `
 
 const LogoIcon = styled.div`
-  margin-left: -12px;
-  margin-top: 0px;
-  width: 72px;
-  transition: transform 0.3s ease;
-  :hover {
-    transform: rotate(-5deg);
-  }
+  font-family: 'Open Sans', sans-serif, Arial, Helvetica;
+  font-size: 28px;
+  margin-top: 10px;
+  margin-right: 10px;
+  font-weight: 900;
+  padding: 0;
 `
 
 export default function Header() {
@@ -132,7 +131,8 @@ export default function Header() {
       style={{ paddingRight: 0 }}>
       <Title>
         <LogoIcon>
-          <img src={logoURL} alt='logo' onClick={() => route_to_homepage()} />
+          <div id="zoo">ZOO</div>
+          {/* <img src={logoURL} alt='logo' onClick={() => route_to_homepage()} /> */}
         </LogoIcon>
       </Title>
       <div
