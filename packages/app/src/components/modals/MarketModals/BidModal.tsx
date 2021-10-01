@@ -29,7 +29,7 @@ const BidModal: React.FC<BidModalProps> = ({ item }) => {
 
   const bidModal = useModalOpen(ApplicationModal.BID)
   const toggleBidModal = useBidModalToggle()
-  const [amount, setAmount] = useState('300000')
+  const [amount, setAmount] = useState('360000')
   const [error, setError] = useState('')
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
   const isAnimated = useIsAnimationMode()
@@ -179,7 +179,7 @@ const BidModal: React.FC<BidModalProps> = ({ item }) => {
             </div>
             {error && <div className='text-red-500 mb-1 text-xs font-semibold'>{error}</div>}
             <h6 className='my-1 text-xs text-gray-400 font-semibold'>
-              You must bid at least <span className='font-bold text-white'>300,000 ZOO</span>
+              You must bid at least <span className='font-bold text-white'>360,000 ZOO</span>
             </h6>
             <h6 className='mb-2 text-xs text-gray-400 font-semibold'>The next bid must be 5% more than the current bid</h6>
             <div>

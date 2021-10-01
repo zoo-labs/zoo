@@ -320,15 +320,15 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                         <ImArrowUpRight2 fill='#f2f2f2' size={12} />
                       </div>
                     </a>}
-                    {/* <a
-                      href='https://ipfs.io/ipfs/bafybeicrjczyjyr35qgtgsfqecumvtr24cnv7j23cfwmiqcmu67px26feu'
+                    <a
+                      href='https://bafybeidq6egcuxafoo2i2pvyp7cgajf6iewzfiq24owfhrgrezyokygvwq.ipfs.dweb.link/'
                       target='_blank'
                       className='p-4 flex justify-between items-center hover:bg-dark-800 rounded-b-lg'>
                       <div className='text-sm font-medium primary'>View on IPFS</div>
                       <div>
                         <ImArrowUpRight2 fill='#f2f2f2' size={12} />
                       </div>
-                    </a> */}
+                    </a>
                   </div>
                 </div>
 
