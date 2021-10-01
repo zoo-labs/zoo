@@ -108,8 +108,8 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
       toastInfo('Processing approval...')
 
       // Increase allowance
-      const eggPrice = await zooDrop.methods.eggPrice().call()
-      const allowance = web3.utils.toBN(eggPrice).mul(web3.utils.toBN(3))
+      const supply = await zooKeeper.methods.zooSupply().call()
+      const allowance = web3.utils.toBN(supply)
       const tx = zooToken.methods.approve(zooKeeper.options.address, allowance).send({ from: account })
 
       if (tx) {
