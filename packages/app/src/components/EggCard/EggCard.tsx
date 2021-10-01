@@ -176,7 +176,9 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady, v
   const buttonActions = () => {
     if (egg.timeRemaining > 0) return null
     if (!egg.interactive) return null
-    if (!egg.hatched) return onHatch()
+    // if (!egg.hatched) return onHatch()
+    if (!egg.hatched) return null
+
     if (egg.hatched) return onReveal()
   }
 
@@ -185,7 +187,9 @@ export const EggCard: React.FC<EggCardType> = ({ egg, hatchEgg, hatchEggReady, v
 
   const buttonLabel = (egg) => {
     if (!egg.hatched && !egg.interactive) return 'PENDING'
-    if (!egg.hatched && egg.interactive) return 'HATCH'
+    if (!egg.hatched && egg.interactive) return ''
+    // if (!egg.hatched && egg.interactive) return 'HATCH'
+
     if (egg.hatched && !egg.interactive) return 'MINTING'
     if (egg.hatched && egg.interactive) return 'READY'
     return ''

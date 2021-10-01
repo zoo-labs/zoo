@@ -47,7 +47,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const [amount, setAmount] = useState(0)
   const [transactions, setTransactions] = useState([])
   const [askModal, setAskModal] = useState(false)
-  const [hasRequestedAsk, setHasRequestedAsk] = useState(false);
+  const [hasRequestedAsk, setHasRequestedAsk] = useState(false)
 
   const { logout } = useAuth()
   const history = useHistory()
@@ -105,92 +105,110 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const media = getMedia(web3)
   const market = getMarket(web3)
   const zooToken = getToken(web3)
-  const setAsk = async (amount) => {
-    setDisabled(true)
-    try {
-      await media.methods
-        .setAsk(item.tokenID, { amount, currency: chainAddresses.ZOO }) //set Ask price for token
-        .send({ from: account, gasPrice: gasPrice })
-        .then((res) => {
-          clear()
-          toastInfo('Ask Price Set.')
-          console.log('Set Ask Price', res)
+  // const setAsk = async (amount) => {
+  //   setDisabled(true)
+  //   try {
+  //     await media.methods
+  //       .setAsk(item.tokenID, { amount, currency: chainAddresses.ZOO }) //set Ask price for token
+  //       .send({ from: account, gasPrice: gasPrice })
+  //       .then((res) => {
+  //         clear()
+  //         toastInfo('Ask Price Set.')
+  //         console.log('Set Ask Price', res)
 
-          setDisabled(false)
-          setAskModal(false)
-          getAskValue()
-          setHasRequestedAsk(false)
+  //         setDisabled(false)
+  //         setAskModal(false)
+  //         getAskValue()
+  //         setHasRequestedAsk(false)
+  //       })
+  //       .catch((err) => {
+  //         const message = formatError(err)
+  //         setDisabled(false)
+  //         clear()
+  //         toastError(message)
+  //         console.error(message)
+  //       })
+  //   } catch (err) {
+  //     console.error(err)
+  //     clear()
+  //     setDisabled(false)
 
-        })
-        .catch((err) => {
-          const message = formatError(err)
-          setDisabled(false)
-          clear()
-          toastError(message)
-          console.error(message)
-        })
-    } catch (err) {
-      console.error(err)
-      clear()
-      setDisabled(false)
-
-      toastError('Unable to purchase eggs. Try again later.')
-    }
-    // console.log(testEggs)
-    // dispatch(addEggs(testEggs))
-  }
+  //     toastError('Unable to purchase eggs. Try again later.')
+  //   }
+  //   // console.log(testEggs)
+  //   // dispatch(addEggs(testEggs))
+  // }
 
   useEffect(() => {
-    getAskValue()
+    getZooUsdPrice(300000)
+    // getAskValue()
     getTokenTransactions({ tokenID: item.tokenID }).then(setTransactions)
   }, [item])
-  const getAskValue = () => {
-    const tokenID = item.tokenID || 0
-    console.log('tokenID', tokenID)
+  // const getAskValue = () => {
+  //   const tokenID = item.tokenID || 0
+  //   console.log('tokenID', tokenID)
 
-    try {
-      market &&
-        market.methods
-          .currentAskForToken(tokenID)
-          .call()
-          .then((res) => {
-            console.log('currentAskForToken', res)
-            const amount = res.amount
+  //   try {
+  //     market &&
+  //       market.methods
+  //         .currentAskForToken(tokenID)
+  //         .call()
+  //         .then((res) => {
+  //           console.log('currentAskForToken', res)
+  //           const amount = res.amount
 
-            getZooPrice(amount)
-              .then((res) => {
-                const ask = {
-                  amount,
-                  usdAmount: res.usdAmount,
-                  currency: chainAddresses.ZOO,
-                }
-                console.log('zooPrice', ask)
-                setAskItem(ask)
-                setAmount(ask?.amount)
+  //           Moralis.Cloud.run('zooPrice', { amount })
+  //             .then((res) => {
+  //               const ask = {
+  //                 amount,
+  //                 usdAmount: res.usdAmount,
+  //                 currency: chainAddresses.ZOO,
+  //               }
+  //               console.log('zooPrice', ask)
+  //               setAskItem(ask)
+  //               setAmount(ask?.amount)
 
-              })
-          })
-          .catch((err) => console.log('error in getAsk', err))
-    } catch (error) {
-      console.log('error in getAsk 2', error)
-    }
+  //             })
+  //             .catch((err) => console.log('error in zooPrice', err))
+  //         })
+  //         .catch((err) => console.log('error in getAsk', err))
+  //   } catch (error) {
+  //     console.log('error in getAsk 2', error)
+  //   }
+  // }
+
+  const getZooUsdPrice = (amount) => {
+    Moralis.Cloud.run('zooPrice', { amount })
+      .then((res) => {
+        const ask = {
+          amount,
+          usdAmount: res.usdAmount,
+          currency: chainAddresses.ZOO,
+        }
+        console.log('zooPrice', ask)
+        setAskItem(ask)
+        setAmount(ask?.amount)
+      })
+      .catch((err) => console.log('error in zooPrice', err))
   }
-
-
 
   return (
     <Modal isOpen={assetModal} onDismiss={() => null} isMax scrollable>
-      <BidModalHeader onBack={() => {
-         toggleAssetModal() 
-         setAskItem({ amount: 0, usdAmount: 0, currency: chainAddresses.ZOO } ) 
-         }} className={`absolute p-6 w-full z-10 ${fullView && 'hidden'}`} />
+      <BidModalHeader
+        onBack={() => {
+          toggleAssetModal()
+          setAskItem({ amount: 0, usdAmount: 0, currency: chainAddresses.ZOO })
+        }}
+        className={`absolute p-6 w-full z-10 ${fullView && 'hidden'}`}
+      />
       <div className='h-full  flex'>
         <div className={`flex flex-1 flex-wrap ${!fullView && 'self-center'}`}>
           <div className={` w-full  md:flex-1  bg-modal-dark flex   ${fullView ? 'w-screen fixed z-20 h-screen' : ' lg:w-1/2 '}`} style={{ minHeight: isSm ? '80vh' : '100vh' }}>
             <div className={`flex   w-full items-center justify-center ${fullView ? 'fixed h-screen' : 'relative h-full'}`}>
               <div
-                className={` ${animationMode ? (fullView ? 'bg-none h-full' : 'w-2/3  lg:w-1/2 p-px') : fullView ? ' h-screen ' : 'w-2/3 lg:w-1/2  p-px'}   ${animationMode && fullView ? 'bg-none' : ' bg-gradient-to-b from-btn1  to-btn2'
-                  }  rounded bg-no-repeat `}>
+                className={` ${animationMode ? (fullView ? 'bg-none h-full' : 'w-2/3  lg:w-1/2 p-px') : fullView ? ' h-screen ' : 'w-2/3 lg:w-1/2  p-px'}   ${
+                  animationMode && fullView ? 'bg-none' : ' bg-gradient-to-b from-btn1  to-btn2'
+                }  rounded bg-no-repeat `}>
                 <div className='bg-cover '>{getVideo()}</div>
               </div>
               {/*
@@ -239,14 +257,14 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
 
                 <div className='w-full mb-4'>
                   <div className='rounded border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
-                    <h2 className='text-sm font-bold mb-2'>Reserve Price</h2>
+                    <h2 className='text-sm font-bold mb-2'>Bought Price</h2>
                     <div className=''>
                       <span className='mr-2 text-xl  font-semibold'>{askItem?.amount} ZOO</span>
                       <span className='font-light'>${askItem?.usdAmount} USD</span>
                     </div>
                   </div>
                 </div>
-                <div className='w-full  grid  mb-8' style={{ gridTemplateColumns: '1fr 54px', gap: '10px' }}>
+                {/* <div className='w-full  grid  mb-8' style={{ gridTemplateColumns: '1fr 54px', gap: '10px' }}>
                   <a
                     style={{ pointerEvents: 'unset', padding: '11px 0px', borderRadius: 4 }}
                     className='rounded bg-white text-black flex items-center justify-center font-bold text-sm transform active:scale-95'
@@ -256,7 +274,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                   <button style={{ paddingLeft: 0, paddingRight: 0, padding: '11px 20px', backgroundColor: '#f2f2f2', borderRadius: 4 }} className=''>
                     <RiShareFill fill='black' />
                   </button>
-                </div>
+                </div> */}
 
                 <div className='w-full mb-4'>
                   <div className=' rounded border-2 border-gray-400 border-solid p-4' style={{ borderWidth: 1 }}>
@@ -338,8 +356,12 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
           </div>
         </div>
       </div>
-      <Modal isOpen={askModal} onDismiss={() => {setAskModal(false)
-      setAmount(0)}}>
+      {/* <Modal
+        isOpen={askModal}
+        onDismiss={() => {
+          setAskModal(false)
+          setAmount(0)
+        }}>
         <div className='w-full mb-8 flex justify-between items-center'>
           <div className=''>Set Ask Amount</div>
           <div className='p-1 bg-white rounded-full cursor-pointer' onClick={() => setAskModal(false)}>
@@ -363,12 +385,11 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
             <button
               disabled={disabled}
               onClick={() => {
-                setAsk(amount);
+                setAsk(amount)
                 // console.log("amount:" ,amount);
-                setHasRequestedAsk(true);
+                setHasRequestedAsk(true)
                 setAskModal(false)
-              }
-              }
+              }}
               className='text-white mt-4 w-full inline-flex justify-center items-center h-10 px-6 bg-primary-light hover:bg-primary rounded-lg font-bold text-lg leading-none'
               style={{ transition: 'all .2s' }}>
               {disabled ? <CircularProgress color='secondary' size={20} thickness={4} /> : account?.toLowerCase() == ownerAccount?.toString() ? 'Ask' : 'Bid'}
@@ -376,6 +397,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
           </div>
         </div>
       </Modal>
+     */}
     </Modal>
   )
 }
