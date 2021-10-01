@@ -15,8 +15,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     log: true,
   })
 
-  if (network.name != 'hardhat') return
-
   const tokenAddress = (await deployments.get('ZOO')).address
   const mediaAddress = (await deployments.get('Media')).address
 

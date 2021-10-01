@@ -11,11 +11,11 @@ import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/O
 import { SafeMath } from '@openzeppelin/contracts/utils/math/SafeMath.sol';
 import { UUPSUpgradeable } from '@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol';
 
-import { IDrop } from './interfaces/IDrop.sol';
-import { IMedia } from './interfaces/IMedia.sol';
-import { IZoo } from './interfaces/IZoo.sol';
+import { IDrop } from '../interfaces/IDrop.sol';
+import { IMedia } from '../interfaces/IMedia.sol';
+import { IZoo } from '../interfaces/IZoo.sol';
 
-import './console.sol';
+import '../console.sol';
 
 contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
   using SafeMath for uint256;

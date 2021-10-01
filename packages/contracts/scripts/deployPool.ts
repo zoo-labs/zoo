@@ -18,11 +18,11 @@ async function main() {
   console.log('BNB', BNB.address)
 
   const tril = ethers.utils.parseEther('1000000000000')
-  // const txn = await Factory.createPair(Z1.address, BNB.address);
-  // await txn.wait();
+  const txn = await Factory.createPair(Z1.address, BNB.address);
+  await txn.wait();
 
-  // const pair = await Factory.getPair(Z1.address, BNB.address);
-  // console.log('Pair', pair)
+  const pair = await Factory.getPair(Z1.address, BNB.address);
+  console.log('Pair', pair)
 
   const amountZoo = ethers.utils.parseUnits('2180913677.035819786465972231', 18)
   const amountBNB = ethers.utils.parseUnits('2019.717141295805250967', 18)
