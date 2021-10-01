@@ -8,7 +8,7 @@ export default Deploy('UniswapV2Pair', {dependencies: ['BNB', 'ZOO', 'ZooKeeper'
   const factory = await ethers.getContract('UniswapV2Factory')
   const router = await ethers.getContract('UniswapV2Router02')
 
-  if (hre.network.name != 'hardhat') return
+  if (hre.network.name == 'mainnet') return
 
   const signer = signers[0]
   const amountZOO = ethers.utils.parseUnits('2400000', 18)
