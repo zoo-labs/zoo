@@ -58,17 +58,17 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     })
     console.log('')
     const emptyLength = 3 - newEggs.length
-    console.log('emptyLength', emptyLength)
     for (let index = 0; index < emptyLength; index++) {
       newEggs.push({})
     }
     console.log('newEggs', newEggs)
+    const eggsLength = newEggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
+    console.log('eggsLength', eggsLength)
 
-    wait(3000).then(() => setEggs(newEggs))
+    wait(3000).then(() => (setEggs(newEggs), eggsLength === 0 && addEgg(newEggs)))
   }
-  const addEgg = () => {
-    const newEggs = [...eggs]
-    console.log('eggs', eggs)
+  const addEgg = (altEggs: any) => {
+    const newEggs = [...altEggs]
 
     const foundIndex = newEggs.findIndex((x) => isEmpty(x))
     console.log('foundIndex', foundIndex)
@@ -129,6 +129,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     // dispatch(addEggs(testEggs))
     toggleBuyEggModal()
   }
+  const quantity = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
   return (
     <Modal isOpen={buyEggModal} onDismiss={() => null} isMax>
       <BidModalHeader onBack={() => toggleBuyEggModal()} className='absolute p-6 w-full ' />
@@ -151,7 +152,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                       Qty
                       <button onClick={() => setQuantitySwitch(true)} className='ml-2 text-gray-300 hover:bg-dark-800 p-1 rounded-md' type='button'>
                         <span className='font-semibold tex-gray-900 flex'>
-                          {eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length} <RiArrowDropDownLine />
+                          {quantity} <RiArrowDropDownLine />
                         </span>
                       </button>
                     </div>
@@ -209,7 +210,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
               <Minus size={25} />
             </div>
             <div className='mx-6 px-4 py-3 rounded border border-solid'>{eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length}</div>
-            <div className='cursor-pointer h-10 w-10 rounded-full bg-dark-700 flex justify-center items-center' onClick={() => addEgg()}>
+            <div className='cursor-pointer h-10 w-10 rounded-full bg-dark-700 flex justify-center items-center' onClick={() => addEgg(eggs)}>
               <Plus size={25} />
             </div>
           </div>

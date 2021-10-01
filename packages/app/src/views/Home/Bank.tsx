@@ -74,7 +74,7 @@ const Bank: React.FC = () => {
     <>
       <div className='flex flex-col relative filter drop-shadow z-10 w-full'>
         <div className='flex flex-col h-full'>
-          <div className='p-5 flex flex-col'>
+          {/* <div className='p-5 flex flex-col'>
             <Label className='text-base font-bold currentColor mb-2 text-xl'>Total Daily Yield</Label>
             <Flex width='100%' alignItems='center' justifyContent='space-around'>
               <ValueWrapper>{dailyYield} ZOO Daily Yield</ValueWrapper>
@@ -93,7 +93,7 @@ const Bank: React.FC = () => {
                 })}
               </EarnerValueWrapper>
             )}
-          </div>
+          </div> */}
           <Label>Recent Tansactions</Label>
           {myTransactions.length === 0 ? (
             <TableText> No Transaction Data </TableText>
