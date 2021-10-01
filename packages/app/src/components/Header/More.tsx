@@ -77,7 +77,7 @@ export default function More({}) {
                     ),
                   )} */}
 
-                  <div
+                  {/* <div
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
                     style={{}}
                     onClick={() => window.open('https://app.gitbook.com/@cryptozoo-1/s/cryptozoo/tokenomics')}>
@@ -85,8 +85,8 @@ export default function More({}) {
                     <div className='ml-4 sm:ml-14'>
                       <InfoIcon fill='gray' />
                     </div>
-                  </div>
-                  <div
+                  </div> */}
+                  {/* <div
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
                     style={{}}
                     onClick={() => window.open('https://github.com/zoo-labs/zoo')}>
@@ -94,8 +94,8 @@ export default function More({}) {
                     <div className='ml-4 sm:ml-14'>
                       <RiCodeLine fill='gray' />
                     </div>
-                  </div>
-                  <div
+                  </div> */}
+                  {/* <div
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
                     style={{}}
                     onClick={() => window.open('https://discord.com/channels/@me/878753766248177685/880493331010945095')}>
@@ -103,7 +103,7 @@ export default function More({}) {
                     <div className='ml-4 sm:ml-14'>
                       <RiChat1Line fill='gray' />
                     </div>
-                  </div>
+                  </div> */}
                   {/* <div
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
                     style={{}}
@@ -116,7 +116,7 @@ export default function More({}) {
                   <div
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
                     style={{}}
-                    onClick={() => window.open('https://poocoin.app/tokens/0x19263f2b4693da0991c4df046e4baa5386f5735e')}>
+                    onClick={() => window.open('https://poocoin.app/tokens/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13')}>
                     Analytics
                     <div className='ml-4 sm:ml-14'>
                       <RiPieChart2Line fill='gray' />
