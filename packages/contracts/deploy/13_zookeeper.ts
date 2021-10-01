@@ -20,7 +20,7 @@ export default Deploy('ZooKeeper', {
     // Configure contracts to talk to each other
     await market.configure(media.address)
     await media.configure(market.address)
-    await keeper.configure(media.address, token.address, bridge.address, true)
+    await keeper.configure(media.address, token.address, 0x0, bridge.address, true)
 
     // Mint ZOO to keeper for yield
     await token.mint(keeper.address, 1000000000000)
