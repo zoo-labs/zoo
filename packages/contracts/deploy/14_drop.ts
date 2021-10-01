@@ -7,9 +7,7 @@ import configureGame from '../utils/configureGame'
 export default Deploy('Drop', {}, async({ hre, ethers, deploy, deployments, deps }) => {
   const tx = await deploy(['Gen 0'])
 
-  console.log(Object.keys(deps))
-
-  if (hre.network.name != 'hardhat') return
+  if (hre.network.name == 'mainnet') return
 
   const drop = await ethers.getContractAt('Drop', tx.address)
   const keeper = await ethers.getContract('ZooKeeper')

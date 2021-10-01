@@ -6,12 +6,10 @@ import hybrids from './hybrids.json'
 // Configure game for our Gen 0 drop
 export default async function configureGame(keeper: any, drop: any) {
   // Add Drop to ZooKeeper
-  await keeper.setDrop(drop.address)
-
-  const basePrice = 300000
+  await keeper.addDrop(drop.address)
 
   // Set name price
-  await keeper.setNamePrice(basePrice) // about $40 / name
+  await keeper.setNamePrice(18000)
 
   // Configure Drop
   await drop.configureKeeper(keeper.address)
@@ -20,8 +18,8 @@ export default async function configureGame(keeper: any, drop: any) {
   const eggs = [
     {
       name: 'Base Egg',
-      price: basePrice * 10, // about $300 / egg
-      supply: 16000,
+      price: 360000,
+      supply: 18000,
       tokenURI: 'https://db.zoolabs/egg.jpg',
       metadataURI: 'https://db.zoolabs.org/egg.json',
     },
