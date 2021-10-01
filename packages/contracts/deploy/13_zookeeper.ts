@@ -25,7 +25,7 @@ export default Deploy('ZooKeeper', {
     await media.configure(market.address)
     await keeper.configure(media.address, zoo.address, pair, bridge.address, true)
 
-    if (hre.network.name != 'hardhat') return
+    if (hre.network.name == 'mainnet') return
 
     // Mint ZOO to keeper for yield
     await zoo.mint(keeper.address, 1000000000000)
