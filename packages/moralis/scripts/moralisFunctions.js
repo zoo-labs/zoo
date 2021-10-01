@@ -15,8 +15,8 @@ const chainID = {
 
 const subdomain = {
   hardhat:  'crkoxpwp0jgk.moralishost.com',
-  testnet:  'bv47r2tczd0v.moralishost.com',
-  // testnet:  'dblpeaqbqk32.usemoralis.com',
+  // testnet:  'bv47r2tczd0v.moralishost.com',
+  testnet:  'dblpeaqbqk32.usemoralis.com',
   mainnet:  'j0ixlvmwc1kz.usemoralis.com',
   ethereum: 'csiwdg4boaa8.usemoralis.com',
   ropsten:  '8sebtwlhn2ic.moralisweb3.com',
