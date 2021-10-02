@@ -209,7 +209,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                     </div>
                   </div>
                   <div className='flex w-auto items-center text-gray-400 font-semibold'>
-                    {numberWithCommas(checked ? (zooBnbPrice * 360000 * quantity).toFixed(2) : 360000.0 * quantity)} {checked ? 'BNB' : 'ZOO'}
+                    {numberWithCommas(checked ? (10 ** 18 / zooBnbPrice) * 420000 * quantity : 360000.0 * quantity)} {checked ? 'BNB' : 'ZOO'}
                   </div>
                 </div>
               </div>
@@ -224,7 +224,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
             </h6>
             <h6 className='mb-2 text-xs text-gray-400 font-semibold'>A maximum of 3 eggs are allowed per account</h6>
           </div>
-          <div className='absolute lg:bottom-60 bottom-10 left-50'>
+          <div className='absolute lg:bottom-1/4 bottom-10 left-50'>
             <CurrencySwitch checked={checked} checkFunc={() => setChecked(!checked)} />
           </div>
         </div>
