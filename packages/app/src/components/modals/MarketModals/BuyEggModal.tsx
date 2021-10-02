@@ -41,14 +41,27 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const { account } = useWeb3React()
   const web3 = useWeb3()
   const { chainID, gasPrice } = web3
+  const quantity = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
+  const eggPriceBNBQty = new BigNumber(10 ** 18)
+    .times(420000 * quantity)
+    .div(zooBnbPrice)
+    .div(10 ** 20)
+    .toFixed(4)
+  const eggPriceBNB = new BigNumber(10 ** 18)
+    .times(420000)
+    .div(zooBnbPrice)
+    .div(10 ** 20)
+    .toFixed(4)
 
   useEffect(() => {
-    if (amount > zooBalance) {
+    if (checked && parseFloat(eggPriceBNBQty) > bnbBalance) {
+      setError(`You dont have enough BNB`)
+    } else if (!checked && amount > zooBalance) {
       setError(`You dont have enough ZOO`)
     } else if (error) {
       setError('')
     }
-  }, [amount])
+  }, [amount, checked])
 
   useEffect(() => {
     mount()
@@ -190,18 +203,6 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     // toggleBuyEggModal()
   }
 
-  const quantity = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
-  const eggPriceBNBQty = new BigNumber(10 ** 18)
-    .times(420000 * quantity)
-    .div(zooBnbPrice)
-    .div(10 ** 20)
-    .toFixed(4)
-  const eggPriceBNB = new BigNumber(10 ** 18)
-    .times(420000)
-    .div(zooBnbPrice)
-    .div(10 ** 20)
-    .toFixed(4)
-
   return (
     <Modal isOpen={buyEggModal} onDismiss={() => null} isMax>
       <BidModalHeader onBack={() => toggleBuyEggModal()} className='absolute p-6 w-full ' />
@@ -241,7 +242,6 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
             <h6 className='my-1 text-xs text-gray-400 font-semibold'>
               One egg costs{' '}
               <span className='font-bold text-white'>
-                {' '}
                 {numberWithCommas(checked ? eggPriceBNB : 360000.0)} {checked ? 'BNB' : 'ZOO'} each
               </span>
             </h6>
