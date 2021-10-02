@@ -3,7 +3,7 @@
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
 export default Deploy('ZooKeeper', {
-    dependencies: ['Bridge', 'Media', 'ZOO', 'BNB', 'Market', 'UniswapV2Factory'],
+    dependencies: ['Bridge', 'Media', 'ZOO', 'BNB', 'Market', 'UniswapV2Factory', 'UniswapV2Pair'],
     proxy: { kind: 'uups' },
   },
   async ({ ethers, deploy, deployments, deps, hre }) => {
@@ -19,6 +19,7 @@ export default Deploy('ZooKeeper', {
 
     // Get pair address from Factory
     const pair = await factory.getPair(zoo.address, bnb.address)
+    console.log(pair)
 
     // Configure contracts to talk to each other
     await market.configure(media.address)
