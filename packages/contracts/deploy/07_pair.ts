@@ -2,7 +2,7 @@
 
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-export default Deploy('UniswapV2Pair', {dependencies: ['BNB', 'ZOO', 'ZooKeeper', 'UniswapV2Factory', 'UniswapV2Router02']}, async({ ethers, hre, deploy, deployments, deps, signers }) => {
+export default Deploy('UniswapV2Pair', {dependencies: ['BNB', 'ZOO', 'UniswapV2Factory', 'UniswapV2Router02']}, async({ ethers, hre, deploy, deployments, deps, signers }) => {
   // Import so we have the JSON
   if (hre.network.name == 'hardhat') await deploy()
 
