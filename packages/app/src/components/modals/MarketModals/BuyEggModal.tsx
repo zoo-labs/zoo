@@ -41,27 +41,14 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const { account } = useWeb3React()
   const web3 = useWeb3()
   const { chainID, gasPrice } = web3
-  const quantity = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
-  const eggPriceBNBQty = new BigNumber(10 ** 18)
-    .times(420000 * quantity)
-    .div(zooBnbPrice)
-    .div(10 ** 20)
-    .toFixed(4)
-  const eggPriceBNB = new BigNumber(10 ** 18)
-    .times(420000)
-    .div(zooBnbPrice)
-    .div(10 ** 20)
-    .toFixed(4)
 
   useEffect(() => {
-    if (checked && parseFloat(eggPriceBNBQty) > bnbBalance) {
-      setError(`You dont have enough BNB`)
-    } else if (!checked && amount > zooBalance) {
+    if (amount > zooBalance) {
       setError(`You dont have enough ZOO`)
     } else if (error) {
       setError('')
     }
-  }, [amount, checked])
+  }, [amount])
 
   useEffect(() => {
     mount()
@@ -120,6 +107,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
       await web3.eth.getBalance(account).then((val) => {
         const divisor = parseFloat(Math.pow(10, 18).toString())
         const balance = parseFloat(val) / divisor
+        console.log('balance', balance)
         setBnbBalance(parseFloat(balance.toFixed(4)))
       })
     } catch (e) {
@@ -137,11 +125,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const buyEggs = async () => {
     setDisabled(true)
     const eggsLength = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
-    const eggPriceBNB = new BigNumber(10 ** 18)
-      .times(420000 * quantity)
-      .div(zooBnbPrice)
-      .div(10 ** 20)
-      .toFixed(4)
+    const eggPriceBNB = (new BigNumber(10**18)).times(420000*quantity).div(zooBnbPrice).div(10**18).toFixed(4)
 
     if (checked) {
       try {
@@ -163,6 +147,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
             toastClear()
             toastError(message)
             console.error(message)
+            toggleBuyEggModal()
           })
       } catch (err) {
         console.error(err)
@@ -190,6 +175,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
             toastClear()
             toastError(message)
             console.error(message)
+            toggleBuyEggModal()
           })
       } catch (err) {
         console.error(err)
@@ -202,6 +188,9 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     // dispatch(addEggs(testEggs))
     // toggleBuyEggModal()
   }
+
+  const quantity = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
+  const eggPriceBNB = (new BigNumber(10**18)).times(420000*quantity).div(zooBnbPrice).div(10**18).toFixed(4)
 
   return (
     <Modal isOpen={buyEggModal} onDismiss={() => null} isMax>
@@ -233,7 +222,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                     </div>
                   </div>
                   <div className='flex w-auto items-center text-gray-400 font-semibold'>
-                    {checked ? eggPriceBNBQty : numberWithCommas(360000.0 * quantity)} {checked ? 'BNB' : 'ZOO'}
+                    {checked ? eggPriceBNB : numberWithCommas(360000.0 * quantity)} {checked ? 'BNB' : 'ZOO'}
                   </div>
                 </div>
               </div>
@@ -242,12 +231,13 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
             <h6 className='my-1 text-xs text-gray-400 font-semibold'>
               One egg costs{' '}
               <span className='font-bold text-white'>
-                {numberWithCommas(checked ? eggPriceBNB : 360000.0)} {checked ? 'BNB' : 'ZOO'} each
+                {' '}
+                {numberWithCommas(checked ? (zooBnbPrice * 360000).toFixed(2) : 360000.0)} {checked ? 'BNB' : 'ZOO'} each
               </span>
             </h6>
             <h6 className='mb-2 text-xs text-gray-400 font-semibold'>A maximum of 3 eggs are allowed per account</h6>
           </div>
-          <div className='absolute lg:bottom-1/4 bottom-10 left-50'>
+          <div className='absolute lg:bottom-60 bottom-10 left-50'>
             <CurrencySwitch checked={checked} checkFunc={() => setChecked(!checked)} />
           </div>
         </div>

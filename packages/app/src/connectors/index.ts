@@ -24,10 +24,17 @@ export function getNetworkLibrary(): Web3Provider {
   // eslint-disable-next-line no-return-assign
   return (networkLibrary = networkLibrary ?? new Web3Provider(network.provider as any))
 }
-const supportedChainIds = Object.values(ChainId) as number[]
+
+const supportedChainIds = [
+  1337,
+  1338,
+  1,
+  4,
+  56,
+  97,
+]
 
 export const injected = new InjectedConnector({
-  //// 1337, 1338, 1, 3, 56, 97
   supportedChainIds
 })
 
