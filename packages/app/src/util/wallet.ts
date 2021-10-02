@@ -29,7 +29,7 @@ export const setupNetwork = async (network) => {
             symbol: 'BNB',
             decimals: 18,
           },
-          rpcUrls: main ? rpcURLs.mainnet : rpcURLs.testnet,
+          rpcUrls: [main ? rpcURLs.mainnet : rpcURLs.testnet],
           blockExplorerUrls: [main ? 'https://bscscan.com/' : 'https://testnet.bscscan.com/'],
         },
       ],
