@@ -108,7 +108,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
       toastInfo('Processing approval...')
 
       // Increase allowance
-      const supply = await zooKeeper.methods.zooSupply().call()
+      const supply = await zooKeeper.methods.supplyZOO().call()
       const allowance = web3.utils.toBN(supply)
       const tx = zooToken.methods.approve(zooKeeper.options.address, allowance).send({ from: account })
 
