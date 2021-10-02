@@ -174,48 +174,50 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   }
 
   // Accept ZOO and return Egg NFT
-  function buyEgg(uint256 dropID) public returns (IZoo.Token memory) {
+  function buyEgg(uint256 dropID, address buyer) private returns (IZoo.Token memory) {
     console.log('buyEgg', dropID);
 
     // Check egg price
     IDrop drop = IDrop(drops[dropID]);
-    require(zoo.balanceOf(msg.sender) >= drop.eggPrice(), 'Not enough ZOO');
+    require(zoo.balanceOf(buyer) >= drop.eggPrice(), 'Not enough ZOO');
 
     // Transfer funds
-    console.log('Transfer ZOO', msg.sender, address(this), drop.eggPrice());
-    zoo.transferFrom(msg.sender, address(this), drop.eggPrice());
+    console.log('Transfer ZOO', buyer, address(this), drop.eggPrice());
+    zoo.transferFrom(buyer, address(this), drop.eggPrice());
 
-    return mintEgg(dropID, msg.sender);
+    // Mint and return NFT
+    return mintEgg(dropID, buyer);
+  }
+
+  // Accept ZOO and return Egg NFT
+  function buyEggBNB(uint256 dropID, address buyer) private returns (IZoo.Token memory) {
+    console.log('buyEggBNB', dropID);
+
+    // Check egg price
+    IDrop drop = IDrop(drops[dropID]);
+    uint256 bnbPrice = zooPriceBNB() * (drop.eggPrice() + (18000 * (10 ** 18))); // 420k ZOO in BNB
+    require(buyer.balance >= bnbPrice, 'Not enough BNB');
+
+    // Transfer funds
+    console.log('Transfer BNB', buyer, address(this), bnbPrice);
+    payable(buyer).transfer(bnbPrice);
+
+    // Mint and return NFT
+    return mintEgg(dropID, buyer);
   }
 
   // Accept ZOO and return Egg NFT
   function buyEggs(uint256 dropID, uint256 quantity) public {
     console.log('buyEggs', dropID, quantity);
     for (uint8 i = 0; i < quantity; i++) {
-      buyEgg(dropID);
+      buyEgg(dropID, msg.sender);
     }
-  }
-
-  // Accept ZOO and return Egg NFT
-  function buyEggBNB(uint256 dropID) public payable returns (IZoo.Token memory) {
-    console.log('buyEggBNB', dropID);
-
-    // Check egg price
-    IDrop drop = IDrop(drops[dropID]);
-    uint256 bnbPrice = zooPriceBNB() * (drop.eggPrice() + (18000 * (10 ** 18))); // 420k ZOO in BNB
-    require(msg.sender.balance >= bnbPrice, 'Not enough BNB');
-
-    // Transfer funds
-    console.log('Transfer BNB', msg.sender, address(this), bnbPrice);
-    payable(msg.sender).transfer(bnbPrice);
-
-    return mintEgg(dropID, msg.sender);
   }
 
   function buyEggsBNB(uint256 dropID, uint256 quantity) public payable {
     console.log('buyEggsBNB', dropID, quantity);
     for (uint8 i = 0; i < quantity; i++) {
-      buyEggBNB(dropID);
+      buyEggBNB(dropID, msg.sender);
     }
   }
 
