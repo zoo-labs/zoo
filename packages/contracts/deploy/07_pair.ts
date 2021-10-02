@@ -1,8 +1,11 @@
-//// 08_pool.ts
+//// 07_pair.ts
 
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
 export default Deploy('UniswapV2Pair', {dependencies: ['BNB', 'ZOO', 'ZooKeeper', 'UniswapV2Factory', 'UniswapV2Router02']}, async({ ethers, hre, deploy, deployments, deps, signers }) => {
+  // Import so we have the JSON
+  if (hre.network.name == 'hardhat') await deploy()
+
   const bnb = await ethers.getContract('BNB')
   const zoo = await ethers.getContract('ZOO')
   const factory = await ethers.getContract('UniswapV2Factory')
@@ -15,11 +18,11 @@ export default Deploy('UniswapV2Pair', {dependencies: ['BNB', 'ZOO', 'ZooKeeper'
   const amountBNB = ethers.utils.parseUnits('100.8', 18)
 
   // Create new LP pair
-  const tx = await factory.createPair(zoo.address, bnb.address);
-  await tx.wait();
+  const tx = await factory.createPair(zoo.address, bnb.address)
+  await tx.wait()
 
   // Get pair
-  const pair = await factory.getPair(zoo.address, bnb.address);
+  const pair = await factory.getPair(zoo.address, bnb.address)
   console.log('UniswapV2Pair', pair)
 
   // Mint token for Liquidity Pool
