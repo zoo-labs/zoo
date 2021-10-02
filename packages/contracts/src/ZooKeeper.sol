@@ -374,7 +374,7 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   // }
 
   // Calculate price of ZOO denominted in BNB based on pair reserves
-  function zooPriceBNB() public view returns(uint) {
+  function zooPriceBNB() public view returns (uint256) {
     (uint zooAmount, uint bnbAmount,) = pair.getReserves();
     return zooAmount / bnbAmount;
   }

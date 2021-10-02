@@ -36,13 +36,12 @@ const NetworkModal: React.FC<NetworkModalProps> = ({}) => {
 
       <div className='grid grid-flow-row-dense grid-cols-1 gap-5 overflow-y-auto md:grid-cols-2'>
         {chainIds.map((key: ChainId, i: number) => {
-          //
           if (chainId === key) {
             return (
               <button
                 key={i}
-                className='w-full col-span-1 p-px rounded 
-              
+                className='w-full col-span-1 p-px rounded
+
               '>
                 <div className='w-full p-px rounded bg-gradient-to-b from-btn1  to-btn2'>
                   <div className='flex flex-col w-full h-full overflow-y-hidden rounded bg-dark-900'>
@@ -61,10 +60,9 @@ const NetworkModal: React.FC<NetworkModalProps> = ({}) => {
               onClick={() => {
                 toggleNetworkModal()
                 const params = SUPPORTED_NETWORKS[key]
-                if (key === ChainId.MAINNET) {
-                  library?.send('wallet_switchEthereumChain', [{ chainId: '0x1' }, account])
+                if (key === ChainId.MAINNET || key == ChainId.RINKEBY) {
+                  library?.send('wallet_switchEthereumChain', [params, account])
                 } else {
-                  console.log('switching here to', params)
                   library?.send('wallet_addEthereumChain', [params, account])
                 }
               }}
