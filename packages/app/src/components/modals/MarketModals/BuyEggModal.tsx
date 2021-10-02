@@ -150,7 +150,6 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
             toastClear()
             toastError(message)
             console.error(message)
-            toggleBuyEggModal()
           })
       } catch (err) {
         console.error(err)
@@ -178,7 +177,6 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
             toastClear()
             toastError(message)
             console.error(message)
-            toggleBuyEggModal()
           })
       } catch (err) {
         console.error(err)
