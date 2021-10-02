@@ -5,7 +5,6 @@ pragma experimental ABIEncoderV2;
 
 import { Counters } from '@openzeppelin/contracts/utils/Counters.sol';
 import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
-import { IERC721 } from '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 import { Initializable } from '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
 import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
 import { SafeMath } from '@openzeppelin/contracts/utils/math/SafeMath.sol';
@@ -14,6 +13,7 @@ import { UUPSUpgradeable } from '@openzeppelin/contracts-upgradeable/proxy/utils
 import { IDrop } from './interfaces/IDrop.sol';
 import { IMedia } from './interfaces/IMedia.sol';
 import { IZoo } from './interfaces/IZoo.sol';
+import { IERC721Burnable } from './interfaces/IERC721Burnable.sol';
 import { IUniswapV2Pair } from './uniswapv2/interfaces/IUniswapV2Pair.sol';
 
 import './console.sol';
@@ -152,6 +152,27 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
     return egg;
   }
 
+
+  // Import Egg for V2 users
+  function importEgg(address mediaV2, uint256 tokenID, uint256 dropID) public payable returns (IZoo.Token memory) {
+    console.log('importEgg', mediaV2, tokenID, dropID);
+    IERC721Burnable v2 = IERC721Burnable(mediaV2); // V2 Eggs
+
+    // Import V2 Egg
+    require(v2.ownerOf(tokenID) == msg.sender, "Not owner of NFT");
+    v2.burn(tokenID);
+
+    // Collect Fee
+    IDrop drop = IDrop(drops[dropID]);
+    uint256 bnbPrice = zooPriceBNB() * drop.eggPrice() - (36000 * (10 ** 18)); // 10% off
+    console.log('Transfer BNB', msg.sender, address(this), bnbPrice);
+    require(msg.sender.balance >= bnbPrice, 'Not enough BNB');
+    payable(msg.sender).transfer(bnbPrice);
+
+    // Mint them a shiny new egg
+    return mintEgg(dropID, msg.sender);
+  }
+
   // Accept ZOO and return Egg NFT
   function buyEgg(uint256 dropID) public returns (IZoo.Token memory) {
     console.log('buyEgg', dropID);
@@ -181,21 +202,14 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
 
     // Check egg price
     IDrop drop = IDrop(drops[dropID]);
-    uint256 bnbPrice = zooPriceBNB() * drop.eggPrice() * 1.66667 // 420
+    uint256 bnbPrice = zooPriceBNB() * (drop.eggPrice() + (60000 * (10 ** 18))); // 420k ZOO in BNB
     require(msg.sender.balance >= bnbPrice, 'Not enough BNB');
 
     // Transfer funds
     console.log('Transfer BNB', msg.sender, address(this), bnbPrice);
     payable(msg.sender).transfer(bnbPrice);
 
-    // Get Egg from this drop
-    IZoo.Token memory egg = drop.newEgg();
-
-    // Mint Egg Token
-    egg = mint(msg.sender, egg);
-    console.log('minted egg', egg.id);
-    emit BuyEgg(msg.sender, egg.id);
-    return egg;
+    return mintEgg(dropID, msg.sender);
   }
 
   function buyEggsBNB(uint256 dropID, uint256 quantity) public payable {
@@ -381,6 +395,11 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   // Enable owner to withdraw ZOO if necessary
   function withdrawZOO(address receiver, uint256 amount) public onlyOwner {
     require(zoo.transfer(receiver, amount));
+  }
+
+  // Helper to do fractional math
+  function mul(uint x, uint y) internal pure returns (uint z) {
+    require(y == 0 || (z = x * y) / y == x, "Math overflow");
   }
 
   // Payable fallback functions
