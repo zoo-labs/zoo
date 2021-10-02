@@ -124,11 +124,13 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const buyEggs = async () => {
     setDisabled(true)
     const eggsLength = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
+    const eggPriceBNB = (new BigNumber(10**18)).times(420000*quantity).div(zooBnbPrice).div(10**20).toFixed(4)
+
     if (checked) {
       try {
         zooKeeper.methods
           .buyEggsBNB(1, eggsLength) // buy from first drop
-          .send({ from: account, gasPrice: gasPrice })
+          .send({ from: account, gasPrice: gasPrice, value: web3.utils.toWei(eggPriceBNB) })
           .then((res) => {
             toastClear()
             toastInfo('Transaction submitted.')
