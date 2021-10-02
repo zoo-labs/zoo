@@ -21,6 +21,8 @@ import { getZooBalance } from 'state/zoo/actions'
 import { CircularProgress } from '@material-ui/core'
 import Switch from '../../CurrencySwitch'
 import CurrencySwitch from '../../CurrencySwitch'
+import BigNumber from 'bignumber.js'
+
 interface BuyEggModalProps {}
 
 const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
@@ -47,11 +49,13 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
       setError('')
     }
   }, [amount])
+
   useEffect(() => {
     mount()
     getBnbBalance()
     getZooBnbPrice()
   }, [myEggs])
+
   const mount = async () => {
     const newEggs = []
     await Object.values(myEggs).forEach((egg) => {
@@ -65,20 +69,19 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     console.log('newEggs', newEggs)
     const eggsLength = newEggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
     console.log('eggsLength', eggsLength)
-
     wait(3000).then(() => (setEggs(newEggs), eggsLength === 0 && addEgg(newEggs)))
   }
+
   const addEgg = (altEggs: any) => {
     const newEggs = [...altEggs]
-
     const foundIndex = newEggs.findIndex((x) => isEmpty(x))
     console.log('foundIndex', foundIndex)
     newEggs[foundIndex] = { temporary: true }
     setAmount(360000 * newEggs.filter((egg) => !isEmpty(egg) && egg.temporary).length)
     console.log('adding egg', newEggs)
-
     setEggs(newEggs)
   }
+
   const removeEgg = () => {
     const newEggs = [...eggs]
     const foundIndex = newEggs.reverse().findIndex((x) => x.temporary)
@@ -87,6 +90,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     setAmount(360000 * finalEggs.filter((egg) => !isEmpty(egg) && egg.temporary).length)
     setEggs(finalEggs)
   }
+
   const zooKeeper = getZooKeeper(web3)
   const zooToken = getToken(web3)
 
@@ -95,6 +99,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const toastClear = () => {
     clear()
   }
+
   const getBnbBalance = async () => {
     console.log('account', account)
     if (!account) return
@@ -108,11 +113,13 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
       console.error('ISSUE LOADING BNB BALANCE \n', e)
     }
   }
+
   const getZooBnbPrice = async () => {
     const price = await zooKeeper.methods.zooPriceBNB().call()
     console.log('zooBnbPrice', price)
     setZooBnbPrice(price)
   }
+
   const dispatch = useDispatch()
   const buyEggs = async () => {
     setDisabled(true)
@@ -178,7 +185,10 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     // dispatch(addEggs(testEggs))
     // toggleBuyEggModal()
   }
+
   const quantity = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
+  const eggPriceBNB = (new BigNumber(10**18)).times(420000*quantity).div(zooBnbPrice).div(10**20).toFixed(4)
+
   return (
     <Modal isOpen={buyEggModal} onDismiss={() => null} isMax>
       <BidModalHeader onBack={() => toggleBuyEggModal()} className='absolute p-6 w-full ' />
@@ -209,7 +219,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                     </div>
                   </div>
                   <div className='flex w-auto items-center text-gray-400 font-semibold'>
-                    {numberWithCommas(checked ? (zooBnbPrice * 360000 * quantity).toFixed(2) : 360000.0 * quantity)} {checked ? 'BNB' : 'ZOO'}
+                    {checked ? eggPriceBNB : numberWithCommas(360000.0 * quantity)} {checked ? 'BNB' : 'ZOO'}
                   </div>
                 </div>
               </div>
