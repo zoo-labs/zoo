@@ -19,6 +19,8 @@ import { getToken, getZooKeeper } from 'util/contracts'
 import useToast from 'hooks/useToast'
 import { getZooBalance } from 'state/zoo/actions'
 import { CircularProgress } from '@material-ui/core'
+import Switch from '../../CurrencySwitch'
+import CurrencySwitch from '../../CurrencySwitch'
 interface BuyEggModalProps {}
 
 const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
@@ -28,9 +30,12 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const [disabled, setDisabled] = useState(false)
   const [error, setError] = useState('')
   const [eggs, setEggs] = useState<Array<any>>([])
+  const [checked, setChecked] = useState(true)
   const [quantitySwitch, setQuantitySwitch] = useState(false)
+  const [bnbBalance, setBnbBalance] = useState(0)
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
   const myEggs = useSelector<AppState, AppState['zoo']['myEggs']>((state) => state.zoo.myEggs)
+  const [zooBnbPrice, setZooBnbPrice] = useState(0)
   const { account } = useWeb3React()
   const web3 = useWeb3()
   const { chainID, gasPrice } = web3
@@ -43,14 +48,9 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     }
   }, [amount])
   useEffect(() => {
-    console.log('hiiii')
-
     mount()
-
-    // const fakeEggs = [{ original: 'true' }]
-    // fakeEggs.forEach((egg) => {
-    //   newEggs.push(egg)
-    // })
+    getBnbBalance()
+    getZooBnbPrice()
   }, [myEggs])
   const mount = async () => {
     const newEggs = []
@@ -95,37 +95,84 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const toastClear = () => {
     clear()
   }
-
+  const getBnbBalance = async () => {
+    console.log('account', account)
+    if (!account) return
+    try {
+      await web3.eth.getBalance(account).then((val) => {
+        const divisor = parseFloat(Math.pow(10, 18).toString())
+        const balance = parseFloat(val) / divisor
+        setBnbBalance(parseFloat(balance.toFixed(4)))
+      })
+    } catch (e) {
+      console.error('ISSUE LOADING BNB BALANCE \n', e)
+    }
+  }
+  const getZooBnbPrice = async () => {
+    const price = await zooKeeper.methods.zooPriceBNB().call()
+    console.log('zooBnbPrice', price)
+    setZooBnbPrice(price)
+  }
   const dispatch = useDispatch()
   const buyEggs = async () => {
     setDisabled(true)
     const eggsLength = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
-    try {
-      zooKeeper.methods
-        .buyEggs(1, eggsLength) // buy from first drop
-        .send({ from: account, gasPrice: gasPrice })
-        .then((res) => {
-          toastClear()
-          toastInfo('Transaction submitted.')
-          console.log('bought egg', res)
+    if (checked) {
+      try {
+        zooKeeper.methods
+          .buyEggsBNB(1, eggsLength) // buy from first drop
+          .send({ from: account, gasPrice: gasPrice })
+          .then((res) => {
+            toastClear()
+            toastInfo('Transaction submitted.')
+            console.log('bought egg in bnb', res)
 
-          setDisabled(false)
-          dispatch(getZooBalance(account, zooToken))
-          toggleBuyEggModal()
-        })
-        .catch((err) => {
-          const message = formatError(err)
-          setDisabled(false)
-          toastClear()
-          toastError(message)
-          console.error(message)
-          toggleBuyEggModal()
-        })
-    } catch (err) {
-      console.error(err)
-      toastClear()
-      setDisabled(false)
-      toastError('Unable to purchase eggs. Try again later.')
+            setDisabled(false)
+            dispatch(getZooBalance(account, zooToken))
+            toggleBuyEggModal()
+          })
+          .catch((err) => {
+            const message = formatError(err)
+            setDisabled(false)
+            toastClear()
+            toastError(message)
+            console.error(message)
+            toggleBuyEggModal()
+          })
+      } catch (err) {
+        console.error(err)
+        toastClear()
+        setDisabled(false)
+        toastError('Unable to purchase eggs. Try again later.')
+      }
+    } else {
+      try {
+        zooKeeper.methods
+          .buyEggs(1, eggsLength) // buy from first drop
+          .send({ from: account, gasPrice: gasPrice })
+          .then((res) => {
+            toastClear()
+            toastInfo('Transaction submitted.')
+            console.log('bought egg', res)
+
+            setDisabled(false)
+            dispatch(getZooBalance(account, zooToken))
+            toggleBuyEggModal()
+          })
+          .catch((err) => {
+            const message = formatError(err)
+            setDisabled(false)
+            toastClear()
+            toastError(message)
+            console.error(message)
+            toggleBuyEggModal()
+          })
+      } catch (err) {
+        console.error(err)
+        toastClear()
+        setDisabled(false)
+        toastError('Unable to purchase eggs. Try again later.')
+      }
     }
     // console.log(testEggs)
     // dispatch(addEggs(testEggs))
@@ -136,11 +183,13 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     <Modal isOpen={buyEggModal} onDismiss={() => null} isMax>
       <BidModalHeader onBack={() => toggleBuyEggModal()} className='absolute p-6 w-full ' />
       <div className='flex flex-wrap h-full'>
-        <div className='flex flex-col flex-1  justify-center items-center shadow-lg'>
-          <div className='max-w-2xl w-1/2 p-4'>
+        <div className='flex flex-col w-full md:w-1/2  justify-center items-center shadow-lg relative'>
+          <div className='max-w-2xl w-4/5 lg:w-1/2 p-4'>
             <div className='w-full flex MB-6 flex-col'>
               <div className='text-gray-500 font-semibold text-sm'>BUY EGGS</div>
-              <div className='text-4xl font-bold'>{numberWithCommas(zooBalance.toFixed(2))} ZOO</div>
+              <div className='text-2xl lg:text-4xl font-bold'>
+                {numberWithCommas(checked ? bnbBalance.toFixed(2) : zooBalance.toFixed(2))} {checked ? 'BNB' : 'ZOO'}
+              </div>
             </div>
             <div className=' my-8 w-full'>
               <div className='flex h-20 '>
@@ -159,18 +208,27 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                       </button>
                     </div>
                   </div>
-                  <div className='flex w-auto items-center text-gray-400 font-semibold'>360,000 ZOO each</div>
+                  <div className='flex w-auto items-center text-gray-400 font-semibold'>
+                    {numberWithCommas(checked ? (zooBnbPrice * 360000 * quantity).toFixed(2) : 360000.0 * quantity)} {checked ? 'BNB' : 'ZOO'}
+                  </div>
                 </div>
               </div>
             </div>
             {error && <div className='text-red-500 mb-1 text-xs font-semibold'>{error}</div>}
             <h6 className='my-1 text-xs text-gray-400 font-semibold'>
-              One egg costs <span className='font-bold text-white'>360,000 ZOO</span>
+              One egg costs{' '}
+              <span className='font-bold text-white'>
+                {' '}
+                {numberWithCommas(checked ? (zooBnbPrice * 360000).toFixed(2) : 360000.0)} {checked ? 'BNB' : 'ZOO'} each
+              </span>
             </h6>
             <h6 className='mb-2 text-xs text-gray-400 font-semibold'>A maximum of 3 eggs are allowed per account</h6>
           </div>
+          <div className='absolute lg:bottom-60 bottom-10 left-50'>
+            <CurrencySwitch checked={checked} checkFunc={() => setChecked(!checked)} />
+          </div>
         </div>
-        <div className='flex flex-col flex-1 bg-modal-dark items-center justify-center'>
+        <div className='flex flex-col w-full md:w-1/2 bg-modal-dark items-center justify-center'>
           <div className='w-1/2'>
             <div className='flex'>
               <button
