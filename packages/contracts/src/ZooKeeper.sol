@@ -181,7 +181,7 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
 
     // Check egg price
     IDrop drop = IDrop(drops[dropID]);
-    uint256 bnbPrice = zooPriceBNB() * drop.eggPrice();
+    uint256 bnbPrice = zooPriceBNB() * drop.eggPrice() * 1.66667 // 420
     require(msg.sender.balance >= bnbPrice, 'Not enough BNB');
 
     // Transfer funds
