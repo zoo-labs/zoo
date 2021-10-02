@@ -103,6 +103,7 @@
     "swiper": "6.8.4",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.7",
     "web3": "^1.5.2",
+    "web3-eth-contract": "^1.6.0",
     "web3-utils": "^1.5.2"
   },
   "devDependencies": {
