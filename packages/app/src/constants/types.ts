@@ -1,7 +1,10 @@
 import { TranslatableText } from 'state/types'
 
 export interface Address {
-  1337?: string // Localhost
+  1?: string // ETH Mainnet
+  4?: string // Rinkeby
+  1337?: string // Hardhat
+  1338?: string // Hardhat2
   97?: string // BSC Testnet
   56?: string // BSC Mainnet
 }

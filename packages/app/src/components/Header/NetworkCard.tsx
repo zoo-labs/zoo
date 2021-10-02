@@ -21,16 +21,7 @@ function NetworkCard(): JSX.Element | null {
       className='flex items-center rounded bg-secondary hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto hover:bg-gray-800'
       onClick={() => toggleNetworkModal()}>
       <div className='grid items-center grid-flow-col mr-2 ml-1 px-2 py-1 space-x-2 text-sm rounded-lg pointer-events-auto auto-cols-max bg-transparent text-secondary'>
-        {chainId === 1337 || chainId === 1338 ? (
-          <>
-            <HardHatIcon />
-            <div className='text-primary'>HardHat</div>
-          </>
-        ) : (
-          <>
-            <img src={NETWORK_ICON[chainId]} alt='Switch Network' className='rounded-md' width='28px' height='28px' /> <div className='text-primary'>{NETWORK_LABEL[chainId]}</div>
-          </>
-        )}
+        <img src={NETWORK_ICON[chainId]} alt='Switch Network' className='rounded-md' width='28px' height='28px' /> <div className='text-primary'>{NETWORK_LABEL[chainId]}</div>
       </div>
       <NetworkModal />
     </div>

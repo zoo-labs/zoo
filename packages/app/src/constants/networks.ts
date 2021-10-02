@@ -41,8 +41,19 @@ export const SUPPORTED_NETWORKS: {
       symbol: 'ETH',
       decimals: 18,
     },
-    rpcUrls: ['https://mainnet.infura.io/v3'],
+    rpcUrls: ['https://mainnet.infura.io/v3/c5a8cc9d0fa04c2f9bfa881a9538fac0'],
     blockExplorerUrls: ['https://etherscan.com'],
+  },
+  [ChainId.RINKEBY]: {
+    chainId: '0x4',
+    chainName: 'Rinkeby',
+    nativeCurrency: {
+      name: 'Rinkeby',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    rpcUrls: ['https://rinkeby.infura.io/v3/c5a8cc9d0fa04c2f9bfa881a9538fac0'],
+    blockExplorerUrls: ['https://rinkeby.etherscan.io/'],
   },
   [ChainId.BSC]: {
     chainId: '0x38',
@@ -52,29 +63,18 @@ export const SUPPORTED_NETWORKS: {
       symbol: 'BNB',
       decimals: 18,
     },
-    rpcUrls: ['https://bsc-dataseed.binance.org'],
+    rpcUrls: ['https://speedy-nodes-nyc.moralis.io/1afec1fde198890860916a06/bsc/mainnet'],
     blockExplorerUrls: ['https://bscscan.com'],
-  },
-  [ChainId.RINKEBY]: {
-    chainId: '0x539',
-    chainName: 'Rinkberry',
-    nativeCurrency: {
-      name: 'Rinkberry',
-      symbol: 'ETH',
-      decimals: 18,
-    },
-    rpcUrls: ['http://localhost:8545/'],
-    blockExplorerUrls: ['https://admin.moralis.io/servers'],
   },
   [ChainId.BSC_TESTNET]: {
     chainId: '0x61',
-    chainName: 'BSCTESTNET',
+    chainName: 'BSC Testnet',
     nativeCurrency: {
-      name: 'BINANCE COIN',
+      name: 'Binance Coin',
       symbol: 'BNB',
       decimals: 18,
     },
-    rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
+    rpcUrls: ['https://speedy-nodes-nyc.moralis.io/1afec1fde198890860916a06/bsc/testnet'],
     blockExplorerUrls: ['https://testnet.bscscan.com/'],
   },
   [ChainId.HARDHAT]: {
@@ -130,7 +130,7 @@ export const NETWORK_SYMBOL: { [chainId in ChainId]?: string } = {
 
 export const NETWORK_URL: { [chainId in ChainId]?: string } = {
   [ChainId.MAINNET]: 'https://pancakeswap.finance/info/token/0x2170ed0880ac9a755fd29b2688956bd959f933f8',
-  [ChainId.RINKEBY]: 'https://testnet.binance.org/faucet-smart/',
+  [ChainId.RINKEBY]: 'https://faucet.rinkeby.io/',
   [ChainId.BSC]: 'https://pancakeswap.finance/info/token/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
   [ChainId.BSC_TESTNET]: 'https://testnet.binance.org/faucet-smart/',
   [ChainId.HARDHAT]: 'https://testnet.binance.org/faucet-smart/',
