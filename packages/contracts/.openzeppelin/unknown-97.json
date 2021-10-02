@@ -60,6 +60,11 @@
       "address": "0xCD603942De2D36384f644D6bEDA97461F2f6ab12",
       "txHash": "0xf4f252a913f1c1c55babf85c972339ffd8c3e7c89206f44aa18cba1ad9bc1087",
       "kind": "uups"
+    },
+    {
+      "address": "0x42d4df97896e7988A022f1FB38b6DdfaF4cc5A5F",
+      "txHash": "0x0f05d8dabf671cd18a2c342870ba68a3c14d997ca3f2cb2f37b96434fcdf82ff",
+      "kind": "uups"
     }
   ],
   "impls": {
@@ -1159,6 +1164,351 @@
     "40d466321647dff9ded089a3270ae3b7ff2ba10258dee62a47e2230618f0321f": {
       "address": "0x83f8f18B85A9e112175Ce3974888eD150F676D9e",
       "txHash": "0x293e72b83a117bf62d725249743bdbd14e4ea6a3ced3105a788f741631fa6fdb",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "ZooKeeper",
+            "label": "dropIDs",
+            "type": "t_struct(Counter)3922_storage",
+            "src": "src/ZooKeeper.sol:26"
+          },
+          {
+            "contract": "ZooKeeper",
+            "label": "drops",
+            "type": "t_mapping(t_uint256,t_address)",
+            "src": "src/ZooKeeper.sol:39"
+          },
+          {
+            "contract": "ZooKeeper",
+            "label": "dropAddresses",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "src/ZooKeeper.sol:42"
+          },
+          {
+            "contract": "ZooKeeper",
+            "label": "tokens",
+            "type": "t_mapping(t_uint256,t_struct(Token)23474_storage)",
+            "src": "src/ZooKeeper.sol:45"
+          },
+          {
+            "contract": "ZooKeeper",
+            "label": "namePrice",
+            "type": "t_uint256",
+            "src": "src/ZooKeeper.sol:48"
+          },
+          {
+            "contract": "ZooKeeper",
+            "label": "media",
+            "type": "t_contract(IMedia)23399",
+            "src": "src/ZooKeeper.sol:51"
+          },
+          {
+            "contract": "ZooKeeper",
+            "label": "zoo",
+            "type": "t_contract(IERC20)2278",
+            "src": "src/ZooKeeper.sol:52"
+          },
+          {
+            "contract": "ZooKeeper",
+            "label": "pair",
+            "type": "t_contract(IUniswapV2Pair)25245",
+            "src": "src/ZooKeeper.sol:53"
+          },
+          {
+            "contract": "ZooKeeper",
+            "label": "bridge",
+            "type": "t_address",
+            "src": "src/ZooKeeper.sol:54"
+          },
+          {
+            "contract": "ZooKeeper",
+            "label": "unlocked",
+            "type": "t_bool",
+            "src": "src/ZooKeeper.sol:55"
+          }
+        ],
+        "types": {
+          "t_struct(Counter)3922_storage": {
+            "label": "struct Counters.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_mapping(t_uint256,t_struct(Token)23474_storage)": {
+            "label": "mapping(uint256 => struct IZoo.Token)"
+          },
+          "t_struct(Token)23474_storage": {
+            "label": "struct IZoo.Token",
+            "members": [
+              {
+                "label": "rarity",
+                "type": "t_struct(Rarity)23419_storage"
+              },
+              {
+                "label": "kind",
+                "type": "t_enum(Type)23410"
+              },
+              {
+                "label": "name",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "id",
+                "type": "t_uint256"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint256"
+              },
+              {
+                "label": "birthday",
+                "type": "t_uint256"
+              },
+              {
+                "label": "customName",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "parents",
+                "type": "t_struct(Parents)23433_storage"
+              },
+              {
+                "label": "breed",
+                "type": "t_struct(Breed)23424_storage"
+              },
+              {
+                "label": "meta",
+                "type": "t_struct(Meta)23442_storage"
+              },
+              {
+                "label": "data",
+                "type": "t_struct(MediaData)23245_storage"
+              },
+              {
+                "label": "bidShares",
+                "type": "t_struct(BidShares)23068_storage"
+              }
+            ]
+          },
+          "t_struct(Rarity)23419_storage": {
+            "label": "struct IZoo.Rarity",
+            "members": [
+              {
+                "label": "name",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "probability",
+                "type": "t_uint256"
+              },
+              {
+                "label": "yield",
+                "type": "t_uint256"
+              },
+              {
+                "label": "boost",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_enum(Type)23410": {
+            "label": "enum IZoo.Type",
+            "members": [
+              "BASE_EGG",
+              "BASE_ANIMAL",
+              "HYBRID_EGG",
+              "HYBRID_ANIMAL"
+            ]
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_struct(Parents)23433_storage": {
+            "label": "struct IZoo.Parents",
+            "members": [
+              {
+                "label": "animalA",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "animalB",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "tokenA",
+                "type": "t_uint256"
+              },
+              {
+                "label": "tokenB",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_struct(Breed)23424_storage": {
+            "label": "struct IZoo.Breed",
+            "members": [
+              {
+                "label": "count",
+                "type": "t_uint256"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_struct(Meta)23442_storage": {
+            "label": "struct IZoo.Meta",
+            "members": [
+              {
+                "label": "eggID",
+                "type": "t_uint256"
+              },
+              {
+                "label": "dropID",
+                "type": "t_uint256"
+              },
+              {
+                "label": "burned",
+                "type": "t_bool"
+              },
+              {
+                "label": "swapped",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_struct(MediaData)23245_storage": {
+            "label": "struct IMedia.MediaData",
+            "members": [
+              {
+                "label": "tokenURI",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "metadataURI",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "contentHash",
+                "type": "t_bytes32"
+              },
+              {
+                "label": "metadataHash",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(BidShares)23068_storage": {
+            "label": "struct IMarket.BidShares",
+            "members": [
+              {
+                "label": "prevOwner",
+                "type": "t_struct(D256)7698_storage"
+              },
+              {
+                "label": "creator",
+                "type": "t_struct(D256)7698_storage"
+              },
+              {
+                "label": "owner",
+                "type": "t_struct(D256)7698_storage"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(D256)7698_storage": {
+            "label": "struct Decimal.D256",
+            "members": [
+              {
+                "label": "value",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_contract(IMedia)23399": {
+            "label": "contract IMedia"
+          },
+          "t_contract(IERC20)2278": {
+            "label": "contract IERC20"
+          },
+          "t_contract(IUniswapV2Pair)25245": {
+            "label": "contract IUniswapV2Pair"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "a5863ba2d7e29d9f4f7f7c2490645eb801a01875a2a4e8603d559f7daf6bf534": {
+      "address": "0x9aB2C0b90BA82789c83B97E92E5b77781378bEAE",
+      "txHash": "0x85367c3211fe52485b9221cfdc1acc95b179a96781db2e54cf50dc4f719c1c8f",
       "layout": {
         "storage": [
           {
