@@ -77,49 +77,46 @@ export default function More({}) {
                     ),
                   )} */}
 
-                  {/* <div
+                  <div
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
                     style={{}}
-                    onClick={() => window.open('https://app.gitbook.com/@cryptozoo-1/s/cryptozoo/tokenomics')}>
+                    onClick={() => window.open('https://t.me/Zoolabs')}>
                     About
                     <div className='ml-4 sm:ml-14'>
                       <InfoIcon fill='gray' />
                     </div>
-                  </div> */}
-                  {/* <div
+                  </div>
+                  <div
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
                     style={{}}
-                    onClick={() => window.open('https://github.com/zoo-labs/zoo')}>
+                    onClick={() => window.open('https://charts.bogged.finance/0x09E2b83Fe5485a7c8BeAa5DffD1D324A2B2D5c13')}>
+                    Analytics
+                    <div className='ml-4 sm:ml-14'>
+                      <RiPieChart2Line fill='gray' />
+                    </div>
+                  </div>
+                  <div className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer' style={{}}>
+                    Animation
+                    <div className='ml-4 sm:ml-14'>
+                      <Toggle id='toggle-disable-multihop-button' isActive={animationMode} toggle={() => toggleSetAnimationMode()} />
+                    </div>
+                  </div>
+                  <div
+                    className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
+                    style={{}}
+                    onClick={() => window.open('https://github.com/zoo-labs')}>
                     Code
                     <div className='ml-4 sm:ml-14'>
                       <RiCodeLine fill='gray' />
                     </div>
-                  </div> */}
-                  {/* <div
+                  </div>
+                  <div
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
                     style={{}}
                     onClick={() => window.open('https://discord.com/channels/@me/878753766248177685/880493331010945095')}>
                     Discord
                     <div className='ml-4 sm:ml-14'>
                       <RiChat1Line fill='gray' />
-                    </div>
-                  </div> */}
-                  {/* <div
-                    className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
-                    style={{}}
-                    onClick={() => window.open('https://opensea.io/collection/cryptozoo-co')}>
-                    OpenSea
-                    <div className='ml-4 sm:ml-14'>
-                      <RiChat1Line />
-                    </div>
-                  </div> */}
-                  <div
-                    className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
-                    style={{}}
-                    onClick={() => window.open('https://poocoin.app/tokens/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13')}>
-                    Analytics
-                    <div className='ml-4 sm:ml-14'>
-                      <RiPieChart2Line fill='gray' />
                     </div>
                   </div>
                   {/* <div
@@ -131,15 +128,6 @@ export default function More({}) {
                       {isDark ? <SunIcon fill={isDark ? 'white' : 'text'} width='18px' /> : <MoonIcon fill={isDark ? 'white' : 'textDisabled'} width='18px' />}
                     </div>
                   </div> */}
-                  <div className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer' style={{}}>
-                    Animation
-                    <div className='ml-4 sm:ml-14'>
-                      <Toggle id='toggle-disable-multihop-button' isActive={animationMode} toggle={() => toggleSetAnimationMode()} />
-                    </div>
-                    {/* <div className='ml-4 sm:ml-14'>
-                      {isDark ? <SunIcon fill={isDark ? 'white' : 'text'} width='18px' /> : <MoonIcon fill={isDark ? 'white' : 'textDisabled'} width='18px' />}
-                    </div> */}
-                  </div>
                   <div
                     onClick={() => logout()}
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
@@ -148,9 +136,6 @@ export default function More({}) {
                     <div className='ml-4 sm:ml-14'>
                       <RiLogoutCircleLine fill='gray' />
                     </div>
-                    {/* <div className='ml-4 sm:ml-14'>
-                      {isDark ? <SunIcon fill={isDark ? 'white' : 'text'} width='18px' /> : <MoonIcon fill={isDark ? 'white' : 'textDisabled'} width='18px' />}
-                    </div> */}
                   </div>
                 </div>
               </div>
