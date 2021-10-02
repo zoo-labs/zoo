@@ -1,7 +1,6 @@
 import { addresses, abis } from 'constants/contracts'
 import { Address } from 'constants/types'
 import { CustomWeb3 as Web3 } from 'hooks/useWeb3'
-import Contract from 'web3-eth-contract'
 
 // Get Address for any contract
 export const getAddress = (contractName: string, chainID: number): string => {
@@ -18,12 +17,12 @@ export const getABI = (name: string, chainID: number | null) => {
   // return abi
 }
 
+
 // Get instance of Contract
 export const getContract = (name: string, web3?: Web3) => {
-  if (!web3) return null
   const abi = getABI(name, web3.chainID)
   const address = getAddress(name, web3.chainID);
-  return abi && address ? new Contract(abi, address) : null
+  return abi && address ? new web3.eth.Contract(abi, address) : null
 }
 
 // Helpers
