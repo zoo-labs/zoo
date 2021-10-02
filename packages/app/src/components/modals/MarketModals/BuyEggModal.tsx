@@ -124,7 +124,11 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const buyEggs = async () => {
     setDisabled(true)
     const eggsLength = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
-    const eggPriceBNB = (new BigNumber(10**18)).times(420000*quantity).div(zooBnbPrice).div(10**20).toFixed(4)
+    const eggPriceBNB = new BigNumber(10 ** 18)
+      .times(420000 * quantity)
+      .div(zooBnbPrice)
+      .div(10 ** 20)
+      .toFixed(4)
 
     if (checked) {
       try {
@@ -146,7 +150,6 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
             toastClear()
             toastError(message)
             console.error(message)
-            toggleBuyEggModal()
           })
       } catch (err) {
         console.error(err)
@@ -174,7 +177,6 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
             toastClear()
             toastError(message)
             console.error(message)
-            toggleBuyEggModal()
           })
       } catch (err) {
         console.error(err)
@@ -189,7 +191,16 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   }
 
   const quantity = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
-  const eggPriceBNB = (new BigNumber(10**18)).times(420000*quantity).div(zooBnbPrice).div(10**20).toFixed(4)
+  const eggPriceBNBQty = new BigNumber(10 ** 18)
+    .times(420000 * quantity)
+    .div(zooBnbPrice)
+    .div(10 ** 20)
+    .toFixed(4)
+  const eggPriceBNB = new BigNumber(10 ** 18)
+    .times(420000)
+    .div(zooBnbPrice)
+    .div(10 ** 20)
+    .toFixed(4)
 
   return (
     <Modal isOpen={buyEggModal} onDismiss={() => null} isMax>
@@ -221,7 +232,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                     </div>
                   </div>
                   <div className='flex w-auto items-center text-gray-400 font-semibold'>
-                    {checked ? eggPriceBNB : numberWithCommas(360000.0 * quantity)} {checked ? 'BNB' : 'ZOO'}
+                    {checked ? eggPriceBNBQty : numberWithCommas(360000.0 * quantity)} {checked ? 'BNB' : 'ZOO'}
                   </div>
                 </div>
               </div>
@@ -231,12 +242,12 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
               One egg costs{' '}
               <span className='font-bold text-white'>
                 {' '}
-                {numberWithCommas(checked ? (zooBnbPrice * 360000).toFixed(2) : 360000.0)} {checked ? 'BNB' : 'ZOO'} each
+                {numberWithCommas(checked ? eggPriceBNB : 360000.0)} {checked ? 'BNB' : 'ZOO'} each
               </span>
             </h6>
             <h6 className='mb-2 text-xs text-gray-400 font-semibold'>A maximum of 3 eggs are allowed per account</h6>
           </div>
-          <div className='absolute lg:bottom-60 bottom-10 left-50'>
+          <div className='absolute lg:bottom-1/4 bottom-10 left-50'>
             <CurrencySwitch checked={checked} checkFunc={() => setChecked(!checked)} />
           </div>
         </div>
