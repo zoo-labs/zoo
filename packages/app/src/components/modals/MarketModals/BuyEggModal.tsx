@@ -35,6 +35,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const [bnbBalance, setBnbBalance] = useState(0)
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
   const myEggs = useSelector<AppState, AppState['zoo']['myEggs']>((state) => state.zoo.myEggs)
+  const [zooBnbPrice, setZooBnbPrice] = useState(0)
   const { account } = useWeb3React()
   const web3 = useWeb3()
   const { chainID, gasPrice } = web3
@@ -49,7 +50,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   useEffect(() => {
     mount()
     getBnbBalance()
-    // getZooBnbPrice()
+    getZooBnbPrice()
   }, [myEggs])
   const mount = async () => {
     const newEggs = []
@@ -108,8 +109,9 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     }
   }
   const getZooBnbPrice = async () => {
-    const zooBnbPrice = await zooKeeper.methods.zooPriceBNB().call()
-    console.log('zooBnbPrice', zooBnbPrice)
+    const price = await zooKeeper.methods.zooPriceBNB().call()
+    console.log('zooBnbPrice', price)
+    setZooBnbPrice(price)
   }
   const dispatch = useDispatch()
   const buyEggs = async () => {
@@ -206,13 +208,19 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                       </button>
                     </div>
                   </div>
-                  <div className='flex w-auto items-center text-gray-400 font-semibold'>360,000 ZOO each</div>
+                  <div className='flex w-auto items-center text-gray-400 font-semibold'>
+                    {numberWithCommas(checked ? (zooBnbPrice * 360000 * quantity).toFixed(2) : 360000.0 * quantity)} {checked ? 'BNB' : 'ZOO'}
+                  </div>
                 </div>
               </div>
             </div>
             {error && <div className='text-red-500 mb-1 text-xs font-semibold'>{error}</div>}
             <h6 className='my-1 text-xs text-gray-400 font-semibold'>
-              One egg costs <span className='font-bold text-white'>360,000 ZOO</span>
+              One egg costs{' '}
+              <span className='font-bold text-white'>
+                {' '}
+                {numberWithCommas(checked ? (zooBnbPrice * 360000).toFixed(2) : 360000.0)} {checked ? 'BNB' : 'ZOO'} each
+              </span>
             </h6>
             <h6 className='mb-2 text-xs text-gray-400 font-semibold'>A maximum of 3 eggs are allowed per account</h6>
           </div>
