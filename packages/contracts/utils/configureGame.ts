@@ -5,6 +5,7 @@ import hybrids from './hybrids.json'
 
 // Configure game for our Gen 0 drop
 export default async function configureGame(keeper: any, drop: any) {
+
   // Add Drop to ZooKeeper
   await keeper.addDrop(drop.address)
 
@@ -38,21 +39,21 @@ export default async function configureGame(keeper: any, drop: any) {
 
   await drop.configureEggs('Base Egg', 'Hybrid Egg')
 
-  // Add rarities
-  rarities.sort(function (a, b) {
-    return a.probability - b.probability
-  })
-  rarities.map(async (v) => {
-    await drop.setRarity(v.name, v.probability, v.yield, v.boost)
-  })
+  // // Add rarities
+  // rarities.sort(function (a, b) {
+  //   return a.probability - b.probability
+  // })
+  // rarities.map(async (v) => {
+  //   await drop.setRarity(v.name, v.probability, v.yield, v.boost)
+  // })
 
-  // Add animals
-  animals.map(async (v) => {
-    await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
-  })
+  // // Add animals
+  // animals.map(async (v) => {
+  //   await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
+  // })
 
-  // Add hybrids
-  hybrids.map(async (v) => {
-    await drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
-  })
+  // // Add hybrids
+  // hybrids.map(async (v) => {
+  //   await drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
+  // })
 }
