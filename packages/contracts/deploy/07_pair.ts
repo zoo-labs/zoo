@@ -14,8 +14,8 @@ export default Deploy('UniswapV2Pair', {dependencies: ['BNB', 'ZOO', 'UniswapV2F
   if (hre.network.name == 'mainnet') return
 
   const signer = signers[0]
-  const amountZOO = ethers.utils.parseUnits('2400000', 18)
-  const amountBNB = ethers.utils.parseUnits('100.8', 18)
+  const amountZOO = ethers.utils.parseUnits('420000000', 18)
+  const amountBNB = ethers.utils.parseUnits('150', 18)
 
   // Create new LP pair
   const tx = await factory.createPair(zoo.address, bnb.address)

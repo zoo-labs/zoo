@@ -4,7 +4,7 @@ import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
 export default Deploy('ZooKeeper', {
     dependencies: ['Bridge', 'Media', 'ZOO', 'BNB', 'Market', 'UniswapV2Factory', 'UniswapV2Pair'],
-    proxy: { kind: 'uups' },
+    // proxy: { kind: 'uups' },
   },
   async ({ ethers, deploy, deployments, deps, hre }) => {
     const tx = await deploy()
