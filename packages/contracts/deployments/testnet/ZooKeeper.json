@@ -1,5 +1,5 @@
 {
-  "address": "0xA17fa2e5e96649Bfcf665EE457A4606c42FaBEB5",
+  "address": "0x0ea5Fdf15e4354A8Dc6ED49E95dC8aB4dfabD2CD",
   "abi": [
     {
       "anonymous": false,
@@ -237,31 +237,6 @@
           "type": "uint256"
         }
       ],
-      "name": "Remint",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "tokenID",
-          "type": "uint256"
-        },
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "chainID",
-          "type": "uint256"
-        }
-      ],
       "name": "Swap",
       "type": "event"
     },
@@ -279,270 +254,26 @@
       "type": "event"
     },
     {
+      "stateMutability": "payable",
+      "type": "fallback"
+    },
+    {
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "dropID",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "tokenA",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "tokenB",
-          "type": "uint256"
+          "internalType": "address",
+          "name": "dropAddress",
+          "type": "address"
         }
       ],
-      "name": "breedAnimals",
+      "name": "addDrop",
       "outputs": [
         {
-          "components": [
-            {
-              "components": [
-                {
-                  "internalType": "string",
-                  "name": "name",
-                  "type": "string"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "probability",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "yield",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "boost",
-                  "type": "uint256"
-                }
-              ],
-              "internalType": "struct IZoo.Rarity",
-              "name": "rarity",
-              "type": "tuple"
-            },
-            {
-              "internalType": "enum IZoo.Type",
-              "name": "kind",
-              "type": "uint8"
-            },
-            {
-              "internalType": "string",
-              "name": "name",
-              "type": "string"
-            },
-            {
-              "internalType": "uint256",
-              "name": "id",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "timestamp",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "birthday",
-              "type": "uint256"
-            },
-            {
-              "internalType": "string",
-              "name": "customName",
-              "type": "string"
-            },
-            {
-              "components": [
-                {
-                  "internalType": "string",
-                  "name": "animalA",
-                  "type": "string"
-                },
-                {
-                  "internalType": "string",
-                  "name": "animalB",
-                  "type": "string"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "tokenA",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "tokenB",
-                  "type": "uint256"
-                }
-              ],
-              "internalType": "struct IZoo.Parents",
-              "name": "parents",
-              "type": "tuple"
-            },
-            {
-              "components": [
-                {
-                  "internalType": "uint256",
-                  "name": "count",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "timestamp",
-                  "type": "uint256"
-                }
-              ],
-              "internalType": "struct IZoo.Breed",
-              "name": "breed",
-              "type": "tuple"
-            },
-            {
-              "components": [
-                {
-                  "internalType": "uint256",
-                  "name": "eggID",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "dropID",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "bool",
-                  "name": "burned",
-                  "type": "bool"
-                },
-                {
-                  "internalType": "bool",
-                  "name": "swapped",
-                  "type": "bool"
-                }
-              ],
-              "internalType": "struct IZoo.Meta",
-              "name": "meta",
-              "type": "tuple"
-            },
-            {
-              "components": [
-                {
-                  "internalType": "string",
-                  "name": "tokenURI",
-                  "type": "string"
-                },
-                {
-                  "internalType": "string",
-                  "name": "metadataURI",
-                  "type": "string"
-                },
-                {
-                  "internalType": "bytes32",
-                  "name": "contentHash",
-                  "type": "bytes32"
-                },
-                {
-                  "internalType": "bytes32",
-                  "name": "metadataHash",
-                  "type": "bytes32"
-                }
-              ],
-              "internalType": "struct IMedia.MediaData",
-              "name": "data",
-              "type": "tuple"
-            },
-            {
-              "components": [
-                {
-                  "components": [
-                    {
-                      "internalType": "uint256",
-                      "name": "value",
-                      "type": "uint256"
-                    }
-                  ],
-                  "internalType": "struct Decimal.D256",
-                  "name": "prevOwner",
-                  "type": "tuple"
-                },
-                {
-                  "components": [
-                    {
-                      "internalType": "uint256",
-                      "name": "value",
-                      "type": "uint256"
-                    }
-                  ],
-                  "internalType": "struct Decimal.D256",
-                  "name": "creator",
-                  "type": "tuple"
-                },
-                {
-                  "components": [
-                    {
-                      "internalType": "uint256",
-                      "name": "value",
-                      "type": "uint256"
-                    }
-                  ],
-                  "internalType": "struct Decimal.D256",
-                  "name": "owner",
-                  "type": "tuple"
-                }
-              ],
-              "internalType": "struct IMarket.BidShares",
-              "name": "bidShares",
-              "type": "tuple"
-            }
-          ],
-          "internalType": "struct IZoo.Token",
+          "internalType": "uint256",
           "name": "",
-          "type": "tuple"
+          "type": "uint256"
         }
       ],
       "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "tokenID",
-          "type": "uint256"
-        }
-      ],
-      "name": "breedNext",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "tokenID",
-          "type": "uint256"
-        }
-      ],
-      "name": "breedReady",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -783,135 +514,9 @@
           "internalType": "uint256",
           "name": "dropID",
           "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "quantity",
-          "type": "uint256"
         }
       ],
-      "name": "buyEggs",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "tokenID",
-          "type": "uint256"
-        },
-        {
-          "internalType": "string",
-          "name": "customName",
-          "type": "string"
-        }
-      ],
-      "name": "buyName",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_media",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_zoo",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_bridge",
-          "type": "address"
-        },
-        {
-          "internalType": "bool",
-          "name": "_unlocked",
-          "type": "bool"
-        }
-      ],
-      "name": "configure",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "dropAddresses",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "drops",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "tokenID",
-          "type": "uint256"
-        }
-      ],
-      "name": "freeAnimal",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "yield",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "dropID",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "eggID",
-          "type": "uint256"
-        }
-      ],
-      "name": "hatchEgg",
+      "name": "buyEggBNB",
       "outputs": [
         {
           "components": [
@@ -1119,7 +724,114 @@
           "type": "tuple"
         }
       ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "dropID",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "quantity",
+          "type": "uint256"
+        }
+      ],
+      "name": "buyEggs",
+      "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "dropID",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "quantity",
+          "type": "uint256"
+        }
+      ],
+      "name": "buyEggsBNB",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_media",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_zoo",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_pair",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_bridge",
+          "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "_unlocked",
+          "type": "bool"
+        }
+      ],
+      "name": "configure",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "dropAddresses",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "drops",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1161,6 +873,19 @@
       "outputs": [
         {
           "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pair",
+      "outputs": [
+        {
+          "internalType": "contract IUniswapV2Pair",
           "name": "",
           "type": "address"
         }
@@ -1379,11 +1104,6 @@
           "internalType": "struct IZoo.Token",
           "name": "token",
           "type": "tuple"
-        },
-        {
-          "internalType": "uint256",
-          "name": "chainID",
-          "type": "uint256"
         }
       ],
       "name": "remint",
@@ -1401,25 +1121,6 @@
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "dropAddress",
-          "type": "address"
-        }
-      ],
-      "name": "setDrop",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "uint256",
           "name": "price",
           "type": "uint256"
@@ -1428,6 +1129,32 @@
       "name": "setNamePrice",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "supplyBNB",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "supplyZOO",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1723,6 +1450,42 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "receiver",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawBNB",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "receiver",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawZOO",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "zoo",
       "outputs": [
@@ -1737,7 +1500,7 @@
     },
     {
       "inputs": [],
-      "name": "zooSupply",
+      "name": "zooPriceBNB",
       "outputs": [
         {
           "internalType": "uint256",
@@ -1747,6 +1510,10 @@
       ],
       "stateMutability": "view",
       "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
     }
   ]
 }
