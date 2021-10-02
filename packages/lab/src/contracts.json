@@ -19623,7 +19623,7 @@
       "chainId": "1337",
       "contracts": {
         "Auction": {
-          "address": "0x2fe21D0623a4D34684C0C504679a071129685621",
+          "address": "0x467D568DaAA074417630cd5e3a27Fb754F363bBe",
           "abi": [
             {
               "anonymous": false,
@@ -21255,7 +21255,7 @@
           ]
         },
         "Drop": {
-          "address": "0xaD9F1489D8C1E3bED6655370700b84Da00577230",
+          "address": "0xe9F83A376B152F242444B89570aa7513C3E9D957",
           "abi": [
             {
               "inputs": [
@@ -23314,7 +23314,7 @@
           ]
         },
         "Farm": {
-          "address": "0x1Db023A9759005C25e94EC41F08fD19B3974B5a1",
+          "address": "0x37813e4d1CA5C3509A6dFd2CB608D5B3962Fa915",
           "abi": [
             {
               "inputs": [
@@ -29738,7 +29738,7 @@
           ]
         },
         "ZooKeeper": {
-          "address": "0x4931907558f26Ff8865D4a111E86F094230D14Bf",
+          "address": "0x4Dcb572d8cB14f07f85EDE038486b412Cf48E849",
           "abi": [
             {
               "anonymous": false,
@@ -29763,38 +29763,6 @@
                 }
               ],
               "name": "AddDrop",
-              "type": "event"
-            },
-            {
-              "anonymous": false,
-              "inputs": [
-                {
-                  "indexed": false,
-                  "internalType": "address",
-                  "name": "previousAdmin",
-                  "type": "address"
-                },
-                {
-                  "indexed": false,
-                  "internalType": "address",
-                  "name": "newAdmin",
-                  "type": "address"
-                }
-              ],
-              "name": "AdminChanged",
-              "type": "event"
-            },
-            {
-              "anonymous": false,
-              "inputs": [
-                {
-                  "indexed": true,
-                  "internalType": "address",
-                  "name": "beacon",
-                  "type": "address"
-                }
-              ],
-              "name": "BeaconUpgraded",
               "type": "event"
             },
             {
@@ -29977,19 +29945,6 @@
                 }
               ],
               "name": "Swap",
-              "type": "event"
-            },
-            {
-              "anonymous": false,
-              "inputs": [
-                {
-                  "indexed": true,
-                  "internalType": "address",
-                  "name": "implementation",
-                  "type": "address"
-                }
-              ],
-              "name": "Upgraded",
               "type": "event"
             },
             {
@@ -30362,13 +30317,6 @@
                 }
               ],
               "stateMutability": "payable",
-              "type": "function"
-            },
-            {
-              "inputs": [],
-              "name": "initialize",
-              "outputs": [],
-              "stateMutability": "nonpayable",
               "type": "function"
             },
             {
@@ -30946,37 +30894,6 @@
                 }
               ],
               "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "address",
-                  "name": "newImplementation",
-                  "type": "address"
-                }
-              ],
-              "name": "upgradeTo",
-              "outputs": [],
-              "stateMutability": "nonpayable",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "address",
-                  "name": "newImplementation",
-                  "type": "address"
-                },
-                {
-                  "internalType": "bytes",
-                  "name": "data",
-                  "type": "bytes"
-                }
-              ],
-              "name": "upgradeToAndCall",
-              "outputs": [],
-              "stateMutability": "payable",
               "type": "function"
             },
             {
@@ -37953,7 +37870,7 @@
           ]
         },
         "ZooKeeper": {
-          "address": "0x4931907558f26Ff8865D4a111E86F094230D14Bf",
+          "address": "0x4Dcb572d8cB14f07f85EDE038486b412Cf48E849",
           "abi": [
             {
               "anonymous": false,
@@ -37978,38 +37895,6 @@
                 }
               ],
               "name": "AddDrop",
-              "type": "event"
-            },
-            {
-              "anonymous": false,
-              "inputs": [
-                {
-                  "indexed": false,
-                  "internalType": "address",
-                  "name": "previousAdmin",
-                  "type": "address"
-                },
-                {
-                  "indexed": false,
-                  "internalType": "address",
-                  "name": "newAdmin",
-                  "type": "address"
-                }
-              ],
-              "name": "AdminChanged",
-              "type": "event"
-            },
-            {
-              "anonymous": false,
-              "inputs": [
-                {
-                  "indexed": true,
-                  "internalType": "address",
-                  "name": "beacon",
-                  "type": "address"
-                }
-              ],
-              "name": "BeaconUpgraded",
               "type": "event"
             },
             {
@@ -38192,19 +38077,6 @@
                 }
               ],
               "name": "Swap",
-              "type": "event"
-            },
-            {
-              "anonymous": false,
-              "inputs": [
-                {
-                  "indexed": true,
-                  "internalType": "address",
-                  "name": "implementation",
-                  "type": "address"
-                }
-              ],
-              "name": "Upgraded",
               "type": "event"
             },
             {
@@ -38577,13 +38449,6 @@
                 }
               ],
               "stateMutability": "payable",
-              "type": "function"
-            },
-            {
-              "inputs": [],
-              "name": "initialize",
-              "outputs": [],
-              "stateMutability": "nonpayable",
               "type": "function"
             },
             {
@@ -39166,37 +39031,6 @@
             {
               "inputs": [
                 {
-                  "internalType": "address",
-                  "name": "newImplementation",
-                  "type": "address"
-                }
-              ],
-              "name": "upgradeTo",
-              "outputs": [],
-              "stateMutability": "nonpayable",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "address",
-                  "name": "newImplementation",
-                  "type": "address"
-                },
-                {
-                  "internalType": "bytes",
-                  "name": "data",
-                  "type": "bytes"
-                }
-              ],
-              "name": "upgradeToAndCall",
-              "outputs": [],
-              "stateMutability": "payable",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
                   "internalType": "address payable",
                   "name": "receiver",
                   "type": "address"
@@ -39263,7 +39097,7 @@
           ]
         },
         "Drop": {
-          "address": "0xaD9F1489D8C1E3bED6655370700b84Da00577230",
+          "address": "0xe9F83A376B152F242444B89570aa7513C3E9D957",
           "abi": [
             {
               "inputs": [
@@ -41322,7 +41156,7 @@
           ]
         },
         "Auction": {
-          "address": "0x2fe21D0623a4D34684C0C504679a071129685621",
+          "address": "0x467D568DaAA074417630cd5e3a27Fb754F363bBe",
           "abi": [
             {
               "anonymous": false,
@@ -41955,7 +41789,7 @@
           ]
         },
         "Farm": {
-          "address": "0x1Db023A9759005C25e94EC41F08fD19B3974B5a1",
+          "address": "0x37813e4d1CA5C3509A6dFd2CB608D5B3962Fa915",
           "abi": [
             {
               "inputs": [

@@ -7,6 +7,7 @@ import { Counters } from '@openzeppelin/contracts/utils/Counters.sol';
 import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import { Initializable } from '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
 import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+import { Ownable } from '@openzeppelin/contracts/access/Ownable.sol';
 import { SafeMath } from '@openzeppelin/contracts/utils/math/SafeMath.sol';
 import { UUPSUpgradeable } from '@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol';
 
@@ -19,7 +20,8 @@ import { IUniswapV2Pair } from './uniswapv2/interfaces/IUniswapV2Pair.sol';
 import './console.sol';
 
 
-contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
+contract ZooKeeper is Ownable {
+// contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
   using SafeMath for uint256;
   using Counters for Counters.Counter;
 
@@ -60,13 +62,13 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
     _;
   }
 
-  // Ensure only owner can upgrade contract
-  function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
+  // // Ensure only owner can upgrade contract
+  // function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 
-  // Initialize upgradeable contract
-  function initialize() public initializer {
-    __Ownable_init_unchained();
-  }
+  // // Initialize upgradeable contract
+  // function initialize() public initializer {
+  //   __Ownable_init_unchained();
+  // }
 
   // Configure ZooKeeper
   function configure(
@@ -182,7 +184,11 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
 
     // Ensure enough BNB was sent
     IDrop drop = IDrop(drops[dropID]);
-    uint256 bnbPrice = zooPriceBNB() * (drop.eggPrice() + (18000 * (10 ** 18))); // 420k ZOO in BNB
+    uint256 bnbPrice = (drop.eggPrice() + (18000 * (10 ** 18))) / zooPriceBNB(); // 420k ZOO in BNB
+    console.log('msg.value', msg.value);
+    console.log('bnbPrice', bnbPrice);
+    console.log('drop.eggPrice', drop.eggPrice());
+    console.log('zooPriceBNB()', zooPriceBNB());
     require(msg.value >= bnbPrice * quantity, "Not enough BNB");
 
     for (uint8 i = 0; i < quantity; i++) {
@@ -202,6 +208,10 @@ contract ZooKeeper is UUPSUpgradeable, OwnableUpgradeable {
     // Ensure enough BNB was sent
     IDrop drop = IDrop(drops[dropID]);
     uint256 bnbPrice = zooPriceBNB() * (drop.eggPrice() + (18000 * (10 ** 18))); // 378k ZOO in BNB
+    console.log("zooPriceBNB()", zooPriceBNB());
+    console.log("drop.eggPrice()", drop.eggPrice());
+    console.log("bnbPrice", bnbPrice);
+    console.log("msg.value", msg.value);
     require(msg.value >= bnbPrice, "Not enough BNB");
 
     // Mint them a shiny new egg
