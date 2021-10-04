@@ -31,8 +31,8 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
   event Free(address indexed from, uint256 indexed tokenID, uint256 indexed yield);
   event Hatch(address indexed from, uint256 eggID, uint256 indexed tokenID);
   event Mint(address indexed from, uint256 indexed tokenID);
-  event Swap(address indexed owner, uint256 indexed tokenID, uint256 indexed chainID);
-  event Remint(address indexed owner, uint256 indexed tokenID, uint256 indexed chainID);
+  event Swap(address indexed owner, uint256 indexed tokenID, uint256 indexed chainId);
+  event Remint(address indexed owner, uint256 indexed tokenID, uint256 indexed chainId);
 
   // Mapping of Address to Drop ID
   mapping(uint256 => address) public drops;
@@ -110,23 +110,23 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
   function swap(
     address owner,
     uint256 tokenID,
-    uint256 chainID
+    uint256 chainId
   ) external onlyBridge {
     console.log('swap', owner, tokenID);
     burn(owner, tokenID);
     tokens[tokenID].meta.swapped = true;
-    emit Swap(owner, tokenID, chainID);
+    emit Swap(owner, tokenID, chainId);
   }
 
   // Swap from new chain requested
   function remint(
     address owner,
     IZoo.Token memory token,
-    uint256 chainID
+    uint256 chainId
   ) external onlyBridge {
-    console.log('remint', owner, token.id, chainID);
+    console.log('remint', owner, token.id, chainId);
     token = mint(owner, token);
-    emit Remint(owner, token.id, chainID);
+    emit Remint(owner, token.id, chainId);
   }
 
   // Accept ZOO and return Egg NFT

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { useWeb3React } from '@web3-react/core'
-import useWeb3 from 'hooks/useWeb3'
-import { Label, Text, Flex } from 'components'
+import { Flex, Label, Text } from 'components'
 import BorderButton from 'components/Button/BorderButton'
 import { BottomModal } from 'components/Modal'
-import { getZooKeeper } from 'util/contracts'
+import { useZooKeeper } from 'hooks/useContract'
+import useWeb3 from 'hooks/useWeb3'
+import React, { useEffect, useState } from 'react'
 
 interface Props {
   onDismiss?: () => null
@@ -14,9 +13,8 @@ interface Props {
 // rgb(254 29 135) Darker PINK
 const YieldModal: React.FC<Props> = ({ item, onDismiss, animalGroup }) => {
   const [pendingTsx, setPending] = useState(false)
-  const { account, chainId } = useWeb3React()
-  const web3 = useWeb3()
-  const zooKeeper = getZooKeeper(web3)
+  const { account, chainId, library: web3 } = useWeb3()
+  const zooKeeper = useZooKeeper()
   const multiplier = animalGroup[item.name]
   const canFree = item.owner.toLowerCase() === account.toLowerCase()
 

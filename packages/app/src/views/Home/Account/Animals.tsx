@@ -1,25 +1,24 @@
 import { useWeb3React } from '@web3-react/core'
-import React, { useCallback, useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { AppState } from 'state'
-import { Route, useRouteMatch } from 'react-router-dom'
-import styled from 'styled-components'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/swiper.min.css'
-import 'swiper/components/pagination/pagination.min.css'
-import BreedConfirmationModal from '../../../components/modals/BreedConfirmation'
-import Moralis from 'moralis'
-import { getZooKeeper } from 'util/contracts'
-
-import { Text, Card as Existing, useMatchBreakpoints, useWeb3 } from 'components'
-import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
+import { Card as Existing, Text, useMatchBreakpoints, useWeb3 } from 'components'
+import { AnimalCard } from 'components/AnimalCard'
 import { breedTimeouts } from 'constants/index'
 import { RarityColor } from 'enums/rarity-color'
-import { Animal } from 'types/zoo'
-import { AnimalCard } from 'components/AnimalCard'
+import { useZooKeeper } from 'hooks/useContract'
+import Moralis from 'moralis'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Route, useRouteMatch } from 'react-router-dom'
+import { AppState } from 'state'
+import { useBreedConfirmModalToggle } from 'state/application/hooks'
 import { addAnimal } from 'state/zoo'
-import { useOpenModal, useBreedConfirmModalToggle } from 'state/application/hooks'
-import { ApplicationModal } from 'state/application/actions'
+import styled from 'styled-components'
+import 'swiper/components/pagination/pagination.min.css'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/swiper.min.css'
+import { Animal } from 'types/zoo'
+import { getDaysHours, getMilliseconds } from 'util/timeHelpers'
+import BreedConfirmationModal from '../../../components/modals/BreedConfirmation'
+
 interface AnimalsProps {
   hybrid: string
 }
@@ -56,7 +55,7 @@ const Animals: React.FC<AnimalsProps> = ({ hybrid }) => {
   const animalGroup = {}
   const animalData = []
   const web3 = useWeb3()
-  const zooKeeper = getZooKeeper(web3)
+  const zooKeeper = useZooKeeper()
 
   const dispatch = useDispatch()
   Object.values(allAnimals).forEach((animal, index) => {

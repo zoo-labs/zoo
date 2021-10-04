@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
-
 import { AbstractConnector } from '@web3-react/abstract-connector'
-import Option from './Option'
-import PendingView from './PendingView'
+import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+import HeaderModal from 'components/Modal/HeaderModal'
+import connectors from 'components/modals/config'
+import Modal from 'components/NewModal'
+import { CloseIcon, MetamaskIcon } from 'components/Svg'
+import { injected } from 'connectors'
+import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
+import { ApplicationModal } from 'state/application/actions'
+import { useModalOpen, useWalletModalToggle } from 'state/application/hooks'
 import styled from 'styled-components'
 import usePrevious from '../../../hooks/usePrevious'
-import { injected } from 'connectors'
-import { MetamaskIcon } from 'components/Svg'
-import HeaderModal from 'components/Modal/HeaderModal'
-import Modal from 'components/NewModal'
-import { useModalOpen, useWalletModalToggle } from 'state/application/hooks'
-import { ApplicationModal } from 'state/application/actions'
-import connectors from 'components/modals/config'
-import { Config, ConnectorNames } from 'components/modals/types'
-import { connectorLocalStorageKey } from 'components/modals/config'
-import { CloseIcon } from 'components/Svg'
+import Option from './Option'
+import PendingView from './PendingView'
 
 declare let window: any
 
@@ -62,7 +58,7 @@ const WALLET_VIEWS = {
 export default function WalletModal({ onDismiss = () => null }: { onDismiss?: () => void }) {
   // console.log({ ENSName })
   // important that these are destructed from the account-specific web3-react context
-  const { active, account, connector, activate, error, deactivate } = useWeb3React()
+  const { active, account, connector, activate, error } = useWeb3React()
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
 
@@ -219,9 +215,7 @@ export default function WalletModal({ onDismiss = () => null }: { onDismiss?: ()
             <CloseIcon fill='white' />
           </CloseButton>
           <HeaderRow style={{ paddingLeft: 0, paddingRight: 0 }}>{error instanceof UnsupportedChainIdError ? `Wrong Network` : `Error connecting`}</HeaderRow>
-          <div>
-            {error instanceof UnsupportedChainIdError ? <h5>Please connect to a supported network.</h5> : `Error connecting. Try refreshing the page.`}
-          </div>
+          <div>{error instanceof UnsupportedChainIdError ? <h5>Please connect to a supported network.</h5> : `Error connecting. Try refreshing the page.`}</div>
         </UpperSection>
       )
     }

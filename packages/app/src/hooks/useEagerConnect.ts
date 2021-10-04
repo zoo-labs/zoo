@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
-import { connectorLocalStorageKey, ConnectorNames } from 'components'
-import useAuth from './useAuth'
-import { injected } from '../config/wallets'
-import { isMobile } from 'react-device-detect'
 import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
-declare let window: any;
+import { connectorLocalStorageKey, ConnectorNames } from 'components'
+import { useEffect, useState } from 'react'
+import { isMobile } from 'react-device-detect'
+import { injected } from '../config/wallets'
+import useAuth from './useAuth'
+declare let window: any
 
-export const useEagerConnectAlt = () => {
+export function useEagerConnectAlt() {
   const { login } = useAuth()
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function useEagerConnect() {
   useEffect(() => {
     injected.isAuthorized().then((isAuthorized) => {
       if (isAuthorized) {
-        console.log('hitting this bast 1',injected)
+        console.log('hitting this bast 1', injected)
 
         activate(injected, undefined, true).catch(() => {
           console.log('hitting this bast 1.5')
