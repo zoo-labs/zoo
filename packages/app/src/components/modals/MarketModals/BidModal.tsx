@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import { useWeb3React } from '@web3-react/core'
+import { numberWithCommas } from 'components/Functions'
+import { ChainId } from 'constants/Chains'
+import { addresses } from 'constants/contracts'
+import { accountEllipsis, formatError, getEmoji } from 'functions'
+import { useMatchBreakpoints } from 'hooks'
+import { useMedia, useZooToken } from 'hooks/useContract'
+import useToast from 'hooks/useToast'
+import useWeb3 from 'hooks/useWeb3'
+import React, { useEffect, useState } from 'react'
+import { FaMoneyBill } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
+import { AppState } from 'state'
 import { ApplicationModal } from 'state/application/actions'
-import { useModalOpen, useBidModalToggle } from 'state/application/hooks'
+import { useBidModalToggle, useModalOpen } from 'state/application/hooks'
+import { useGasPrice } from 'state/network/hooks'
+import { useIsAnimationMode } from 'state/user/hooks'
 import Modal from '../../NewModal'
 import BidModalHeader from '../../NewModal/BidModalHeader'
-import { numberWithCommas } from 'components/Functions'
-import { AppState } from 'state'
-import { useSelector } from 'react-redux'
-import { useIsAnimationMode } from 'state/user/hooks'
-import { FaMoneyBill } from 'react-icons/fa'
-import { accountEllipsis, getEmoji } from 'functions'
-import { useWeb3React } from '@web3-react/core'
-import useWeb3 from 'hooks/useWeb3'
-import { getToken, getMedia } from 'util/contracts'
-import { useMatchBreakpoints } from 'hooks'
-import useToast from 'hooks/useToast'
-import { formatError } from 'functions'
-import { addresses } from 'constants/contracts'
-import { ChainId } from 'constants/Chains'
 
 interface BidModalProps {
   item: any
@@ -24,24 +24,23 @@ interface BidModalProps {
 
 const BidModal: React.FC<BidModalProps> = ({ item }) => {
   const { account } = useWeb3React()
-  const web3 = useWeb3()
-  const { gasPrice } = web3
+  const { library, chainId } = useWeb3()
 
   const bidModal = useModalOpen(ApplicationModal.BID)
   const toggleBidModal = useBidModalToggle()
   const [amount, setAmount] = useState('360000')
   const [error, setError] = useState('')
+  const gasPrice = useGasPrice()
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
   const isAnimated = useIsAnimationMode()
 
   const { toastError, toastInfo, clear } = useToast()
   console.log(item)
   const { isSm } = useMatchBreakpoints()
-  const media = getMedia(web3)
-  const zooToken = getToken(web3)
-  const { chainID } = web3
+  const media = useMedia()
+  const zooToken = useZooToken()
 
-  const chainAddresses = (addresses[chainID] as any) || (addresses[ChainId.BSC] as any)
+  const chainAddresses = (addresses[chainId] as any) || (addresses[ChainId.BSC] as any)
 
   const setBid = async () => {
     try {

@@ -1,25 +1,20 @@
-import React, { Suspense, useEffect, lazy, useMemo } from 'react'
-import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from 'react-router-dom'
-
-import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
-import useEagerConnect, { useEagerConnectAlt } from 'hooks/useEagerConnect'
+import Header from 'components/Header'
+import { useZooToken } from 'hooks/useContract'
+import { useEagerConnectAlt } from 'hooks/useEagerConnect'
+import useWeb3 from 'hooks/useWeb3'
+import React, { lazy, Suspense, useCallback, useEffect, useMemo } from 'react'
+import { useMoralisSubscription } from 'react-moralis'
+import { useDispatch } from 'react-redux'
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import indexRoutes from 'routes'
+import { updateGasPrice } from 'state/network/actions'
+import { clearZoo } from 'state/zoo'
+import { addAnimal, addAnimals, addEgg, addEggs, burnAnimal, burnEgg, getMyEggs, getMyTransactions, getZooBalance } from 'state/zoo/actions'
+import { mapAnimal, mapEgg, queryAnimals, queryEggs } from 'util/moralis'
 import ResetCSS from './components/ResetCSS'
 import GlobalStyle from './components/style/Global'
 import SuspenseWithChunkError from './components/SuspenseWithChunkError'
-import { useDispatch } from 'react-redux'
-import { clearZoo, updatZooBalnce } from 'state/zoo'
-import { addEggs, addAnimals, addEgg, addAnimal, burnEgg, burnAnimal, getZooBalance, getMyEggs, getMyTransactions } from 'state/zoo/actions'
-import Moralis from 'moralis'
-import { useMoralisSubscription } from 'react-moralis'
-import { Egg, Animal } from 'types/zoo'
-import { getToken, getZooKeeper } from 'util/contracts'
-import useWeb3 from 'hooks/useWeb3'
-
-import { mapEgg, mapAnimal, queryEggs, queryAnimals } from 'util/moralis'
-import Header from 'components/Header'
-import indexRoutes from 'routes'
-import { useWeb3React } from '@web3-react/core'
 
 const Login = lazy(() => import('./views/Login'))
 
@@ -32,19 +27,20 @@ BigNumber.config({
 const App: React.FC = () => {
   // useEagerConnect()
   useEagerConnectAlt()
-  const web3 = useWeb3()
+  const { library, chainId, account } = useWeb3()
   const dispatch = useDispatch()
-  const { library, chainID, account } = web3
 
   const valid = useMemo(() => {
-    if (library && chainID) {
+    if (library && chainId) {
       return true
     }
     return false
-  }, [library, chainID])
-  /* Set signedIn to true if chainID and window.localStorage.getItem('connectorId') exist */
-  const signedIn = chainID !== undefined && window.localStorage.getItem('connectorId') !== undefined
-  const zooToken = getToken(web3)
+  }, [library, chainId])
+  /* Set signedIn to true if chainId and window.localStorage.getItem('connectorId') exist */
+  const signedIn = chainId !== undefined && window.localStorage.getItem('connectorId') !== undefined
+  // const zooToken = useContract('ZOO')
+  const zooToken = useZooToken()
+  // const zooToken = getToken(web3)
 
   const getEggs = async (account) => {
     try {
@@ -138,17 +134,23 @@ const App: React.FC = () => {
     onUpdate: (data) => updateAnimal(data),
     onDelete: (data) => deleteAnimal(data),
   })
-  const getValues = (account) => {
-    dispatch(clearZoo())
-    dispatch(getZooBalance(account, zooToken))
-    dispatch(getMyTransactions(account))
-    getEggs(account)
-    getAnimals()
-  }
+  const getValues = useCallback(
+    (account) => {
+      dispatch(updateGasPrice(library))
+      dispatch(clearZoo())
+      dispatch(getZooBalance(account, zooToken))
+      dispatch(getMyTransactions(account))
+      getEggs(account)
+      getAnimals()
+    },
+    [dispatch, getAnimals, getEggs, library, zooToken],
+  )
+
   useEffect(() => {
     console.log('account passing from useffect is', account)
     getValues(account)
-  }, [chainID, account, valid])
+  }, [chainId, account, getValues])
+
   return (
     <Suspense fallback={<></>}>
       <Router>

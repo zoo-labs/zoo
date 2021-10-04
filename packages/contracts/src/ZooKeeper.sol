@@ -35,7 +35,7 @@ contract ZooKeeper is Ownable {
   event Free(address indexed from, uint256 indexed tokenID, uint256 indexed yield);
   event Hatch(address indexed from, uint256 eggID, uint256 indexed tokenID);
   event Mint(address indexed from, uint256 indexed tokenID);
-  event Swap(address indexed owner, uint256 indexed tokenID, uint256 indexed chainID);
+  event Swap(address indexed owner, uint256 indexed tokenID, uint256 indexed chainId);
 
   // Mapping of Address to Drop ID
   mapping(uint256 => address) public drops;
@@ -123,12 +123,12 @@ contract ZooKeeper is Ownable {
   function swap(
     address owner,
     uint256 tokenID,
-    uint256 chainID
+    uint256 chainId
   ) external onlyBridge {
     console.log('swap', owner, tokenID);
     burn(owner, tokenID);
     tokens[tokenID].meta.swapped = true;
-    emit Swap(owner, tokenID, chainID);
+    emit Swap(owner, tokenID, chainId);
   }
 
   // Remint token swapped from another chain

@@ -1,6 +1,6 @@
 // Global constants injected during build
-const ZK={}
-const CHAIN='0x38'
+const ZK = {}
+const CHAIN = '0x38'
 
 const actions = {
   BOUGHT_EGG: 'Bought Egg',
@@ -29,7 +29,7 @@ async function getAnimal(tokenID) {
   const Animals = Moralis.Object.extend('Animals')
   const query = new Moralis.Query(Animals)
   query.equalTo('tokenID', tokenID)
-  return await query.first();
+  return await query.first()
 }
 
 // Query for a specific Egg
@@ -37,7 +37,7 @@ async function getEgg(eggID) {
   const Eggs = Moralis.Object.extend('Eggs')
   const query = new Moralis.Query(Eggs)
   query.equalTo('tokenID', eggID)
-  return await query.first();
+  return await query.first()
 }
 
 // Get latest token information from ZK
@@ -102,15 +102,15 @@ Moralis.Cloud.afterSave('BuyEgg', async (request) => {
 
   // Confirmed on chain, update with token data
   const egg = await getEgg(eggID)
-  if (!egg){
-      logger.error(`BuyEgg, No egg found for id: ${eggID}`)
-      return;
+  if (!egg) {
+    logger.error(`BuyEgg, No egg found for id: ${eggID}`)
+    return
   }
 
   const tok = await getToken(eggID)
-  if (!tok){
-      logger.error(`Hatch, No tok found for id: ${tokenID}`)
-      return;
+  if (!tok) {
+    logger.error(`Hatch, No tok found for id: ${tokenID}`)
+    return
   }
 
   egg.set('tokenURI', tok.data.tokenURI)
@@ -133,9 +133,9 @@ Moralis.Cloud.afterSave('Hatch', async (request) => {
   const tokenID = parseInt(request.object.get('tokenID')) // New Animal minted
 
   const egg = await getEgg(eggID)
-  if (!egg){
-      logger.error(`Hatch, No egg found for id: ${eggID}`)
-      return;
+  if (!egg) {
+    logger.error(`Hatch, No egg found for id: ${eggID}`)
+    return
   }
   if (!confirmed(request)) {
     // Update egg state
@@ -161,15 +161,15 @@ Moralis.Cloud.afterSave('Hatch', async (request) => {
 
   // Update Animal with confirmed state
   const animal = await getAnimal(tokenID)
-  if (!animal){
-      logger.error(`Hatch, No animal found for id: ${tokenID}`)
-      return;
+  if (!animal) {
+    logger.error(`Hatch, No animal found for id: ${tokenID}`)
+    return
   }
 
   const tok = await getToken(tokenID)
-  if (!tok){
-      logger.error(`Hatch, No tok found for id: ${tokenID}`)
-      return;
+  if (!tok) {
+    logger.error(`Hatch, No tok found for id: ${tokenID}`)
+    return
   }
 
   animal.set('kind', parseInt(tok.kind))
@@ -240,9 +240,9 @@ Moralis.Cloud.afterSave('Breed', async (request) => {
 
   // confirmed, set to interactive
   const egg = await getEgg(eggID)
-  if (!egg){
-      logger.error(`No egg found for id: ${eggID}`)
-      return;
+  if (!egg) {
+    logger.error(`No egg found for id: ${eggID}`)
+    return
   }
   // const tok = await getToken(eggID)
   egg.set('interactive', true)
@@ -284,9 +284,9 @@ Moralis.Cloud.afterSave('Free', async (request) => {
   const tokenID = parseInt(request.object.get('tokenID')) // Animal being freed
 
   const animal = await getAnimal(tokenID)
-  if (!animal){
-      logger.error(`Free, No animal found for id: ${tokenID}`)
-      return;
+  if (!animal) {
+    logger.error(`Free, No animal found for id: ${tokenID}`)
+    return
   }
   animal.set('burned', true)
   animal.set('freed', true)
@@ -303,22 +303,22 @@ Moralis.Cloud.afterSave('Free', async (request) => {
 Moralis.Cloud.afterSave('Swap', async (request) => {
   if (!confirmed(request)) return
 
-  const logger  = Moralis.Cloud.getLogger()
-  const chainID = parseInt(request.object.get('chainID'))
-  const from    = request.object.get('from')
-  const to      = request.object.get('to')
-  const amount  = parseInt(request.object.get('amount'))
+  const logger = Moralis.Cloud.getLogger()
+  const chainId = parseInt(request.object.get('chainId'))
+  const from = request.object.get('from')
+  const to = request.object.get('to')
+  const amount = parseInt(request.object.get('amount'))
 
-  if (chainID == CHAIN) {
+  if (chainId == CHAIN) {
     logger.info(`Minting ${amount} -> ${to}`)
   }
 
-  logger.info(`Swap ${from} ${to} ${amount} ${chainID}`)
+  logger.info(`Swap ${from} ${to} ${amount} ${chainId}`)
 })
 
 Moralis.Cloud.afterSave('AskCreated', async (request) => {
   const logger = Moralis.Cloud.getLogger()
-  logger.into(request);
+  logger.into(request)
 
   const tx = newTransaction(request)
   tx.set('action', actions.ASK_CREATED)
@@ -396,36 +396,38 @@ Moralis.Cloud.define('transactions', async (request) => {
 
   const results = await query.find()
 
-  return results.filter(tx => {
-    return excludeBurned ? tx.get('action') !== actions.BURNED_TOKEN : true
-  }).map(tx => {
-    const action = tx.get('action')
-    const txHash = tx.get('transactionHash')
-    const url = `https://testnet.bscscan.com/tx/${txHash}`
-    return {
-      id: tx.get('objectId'),
-      from: tx.get('from'),
-      action: action,
-      hash: txHash,
-      url: url,
-      createdAt: tx.get('createdAt').toISOString(),
-      blockNumber: tx.get('blockNumber'),
-      timestamp: tx.get('timestamp'),
-      tokenID: tx.get('tokenID'),
-    }
-  })
+  return results
+    .filter((tx) => {
+      return excludeBurned ? tx.get('action') !== actions.BURNED_TOKEN : true
+    })
+    .map((tx) => {
+      const action = tx.get('action')
+      const txHash = tx.get('transactionHash')
+      const url = `https://testnet.bscscan.com/tx/${txHash}`
+      return {
+        id: tx.get('objectId'),
+        from: tx.get('from'),
+        action: action,
+        hash: txHash,
+        url: url,
+        createdAt: tx.get('createdAt').toISOString(),
+        blockNumber: tx.get('blockNumber'),
+        timestamp: tx.get('timestamp'),
+        tokenID: tx.get('tokenID'),
+      }
+    })
 })
 
 // Helper to return latest price from CMC
 Moralis.Cloud.define('zooPrice', async (request) => {
   let zooPrice
   const CMC_ZOO_TOKEN_ID = 11556
-  const amount = parseInt(request.params.amount || 0);
+  const amount = parseInt(request.params.amount || 0)
   const ZooPrice = Moralis.Object.extend('ZooPrice')
   const query = new Moralis.Query(ZooPrice)
   zooPrice = await query.first()
   // Only check every 30 seconds
-  if (zooPrice && zooPrice.get('timestamp') + (1000 * 30) < Date.now()) {
+  if (zooPrice && zooPrice.get('timestamp') + 1000 * 30 < Date.now()) {
     const usdPrice = zooPrice.get('quote')?.USD?.price || 0
     return {
       ...zooPrice,
@@ -440,14 +442,14 @@ Moralis.Cloud.define('zooPrice', async (request) => {
     params: 'slug=zoo&convert=USD',
     headers: {
       'X-CMC_PRO_API_KEY': '0ebe5b28-b584-4a39-b292-e0b3e639fd58',
-      'Accept': 'application/json',
-    }
+      Accept: 'application/json',
+    },
   })
 
   const { data } = JSON.parse(res.text)
   zooPrice = data[CMC_ZOO_TOKEN_ID]
   const usdPrice = zooPrice?.quote?.USD?.price || 0
-  zooPrice = new ZooPrice({...zooPrice, usdPrice })
+  zooPrice = new ZooPrice({ ...zooPrice, usdPrice })
   zooPrice.set('timestamp', Date.now())
   await zooPrice.save()
   return {

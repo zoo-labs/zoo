@@ -1,25 +1,24 @@
-import React, { useEffect, useState } from 'react'
-import Moralis from 'moralis'
-import { MoralisProvider as MProvider } from 'react-moralis'
 import { moralisConfig } from 'constants/moralis'
-import { useWeb3React } from '@web3-react/core'
+import Moralis from 'moralis'
+import React, { useEffect, useState } from 'react'
+import { MoralisProvider as MProvider } from 'react-moralis'
 
 const ethereum = (window as any).ethereum || { chainId: null, on: () => {} }
 
 export const MoralisProvider: React.FC = ({ children }) => {
-  const [chainID, setChainID] = useState(Number(ethereum.chainId))
+  const [chainId, setChainID] = useState(Number(ethereum.chainId))
 
   // We only have servers for Local Dev, BSC Testnet and Mainnet
-  if (chainID != 56 && chainID != 97 && chainID != 1337) setChainID(97) // Default to Testnet
+  if (chainId != 56 && chainId != 97 && chainId != 1337) setChainID(97) // Default to Testnet
 
   useEffect(() => {
-    ethereum.on('chainChanged', (chainID) => {
-      setChainID(Number(chainID))
+    ethereum.on('chainChanged', (chainId) => {
+      setChainID(Number(chainId))
       // window.location.reload()
     })
   })
 
-  const { applicationID, serverURL } = moralisConfig(chainID)
+  const { applicationID, serverURL } = moralisConfig(chainId)
   console.log(`Moralis.initialize appID: ${applicationID} serverURL: ${serverURL}`)
   Moralis.initialize(applicationID)
   Moralis.serverURL = serverURL

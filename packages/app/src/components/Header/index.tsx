@@ -1,24 +1,22 @@
-import useScrollPosition from '@react-hook/window-scroll'
-import { useMatchBreakpoints } from 'hooks'
-import { useCallback, useEffect, useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
-import styled from 'styled-components'
-import { Text } from 'components/Text'
 import Tooltip from '@material-ui/core/Tooltip'
-// import Modal from '../Modal'
-import { useWeb3React } from '@web3-react/core'
+import useScrollPosition from '@react-hook/window-scroll'
+import { numberWithCommas } from 'components/Functions'
+import UserBlock from 'components/SideMenu/components/UserBlock'
+import { ChainId } from 'constants/Chains'
+import { addresses } from 'constants/contracts'
+import { NETWORK_SYMBOL } from 'constants/networks'
+import { useMatchBreakpoints } from 'hooks'
 import useToast from 'hooks/useToast'
 import useWeb3 from 'hooks/useWeb3'
+import { useCallback, useEffect, useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
+import { ApplicationModal } from 'state/application/actions'
+import { useModalOpen } from 'state/application/hooks'
+import { useEthBalance } from 'state/user/hooks'
+import styled from 'styled-components'
 // import { MoreIcon } from 'components/SideMenu/icons'
 import More from './More'
-import { numberWithCommas } from 'components/Functions'
 import NetworkCard from './NetworkCard'
-import { useModalOpen } from 'state/application/hooks'
-import { ApplicationModal } from 'state/application/actions'
-import { NETWORK_SYMBOL } from 'constants/networks'
-import UserBlock from 'components/SideMenu/components/UserBlock'
-import { addresses } from 'constants/contracts'
-import { ChainId } from 'constants/Chains'
 
 const logoURL = window.location.origin + '/static/images/logo-white.png'
 
@@ -69,17 +67,15 @@ export default function Header() {
   const toastClear = () => {
     clear()
   }
-  const [balance, setBalance] = useState(0.0)
   const [show, setShow] = useState<boolean>(false)
 
   const open = useCallback(() => setShow(true), [setShow])
 
   const [active, setActive] = useState('account')
   const { isXl, isXs, isSm, isMd, isLg } = useMatchBreakpoints()
-  const web3 = useWeb3()
-  const { chainID } = web3
-  const chainAddresses = (addresses[chainID] as any) || (addresses[ChainId.BSC] as any)
-  const { account, library } = useWeb3React()
+  const { account, chainId, library } = useWeb3()
+  const chainAddresses = (addresses[chainId] as any) || (addresses[ChainId.BSC] as any)
+
   const isMobile = isXl === false
   let location = useLocation()
   useEffect(() => {
@@ -91,27 +87,8 @@ export default function Header() {
     history.push(`/${url}`)
     toastClear()
   }
-  const getBalance = async () => {
-    console.log('account', account)
-    if (!account) return
-    try {
-      // const decimals = await zooToken.methods.decimals().call()
-      await web3.eth.getBalance(account).then((val) => {
-        console.log('CHAIN-ID ' + chainID)
-        const divisor = parseFloat(Math.pow(10, 18).toString())
-        const balance = parseFloat(val) / divisor
-        setBalance(parseFloat(balance.toFixed(4)))
-      })
-    } catch (e) {
-      console.error('ISSUE LOADING ZOO BALANCE \n', e)
-    }
-  }
 
-  useEffect(() => {
-    if (!account) return
-    getBalance()
-  }, [account, chainID])
-
+  const balance = useEthBalance(account, library)
   const newAnimalModalOpen = useModalOpen(ApplicationModal.NEWANIMAL)
   const videoPlayerModalOpen = useModalOpen(ApplicationModal.VIDEOPLAYER)
   const bidModalOpen = useModalOpen(ApplicationModal.BID)
@@ -131,7 +108,7 @@ export default function Header() {
       style={{ paddingRight: 0 }}>
       <Title>
         <LogoIcon>
-          <div id="zoo">ZOO</div>
+          <div id='zoo'>ZOO</div>
           {/* <img src={logoURL} alt='logo' onClick={() => route_to_homepage()} /> */}
         </LogoIcon>
       </Title>
@@ -218,7 +195,7 @@ export default function Header() {
         <div className='w-auto flex items-center rounded bg-secondary hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto hover:bg-gray-800'>
           {account ? (
             <h6 className='mx-1 px-2' style={{ fontSize: '14px', flexShrink: 0 }}>
-              {numberWithCommas(balance) || 0} {NETWORK_SYMBOL[chainID]}
+              {numberWithCommas(balance) || 0} {NETWORK_SYMBOL[chainId]}
             </h6>
           ) : null}
           <UserBlock account={account} />
