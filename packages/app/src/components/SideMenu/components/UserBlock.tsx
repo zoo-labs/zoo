@@ -1,16 +1,16 @@
-import React from 'react'
-import { Login } from '../../modals/types'
 import { AbstractConnector } from '@web3-react/abstract-connector'
+import { UnsupportedChainIdError } from '@web3-react/core'
+import WalletModal from 'components/modals/WalletModal.tsx'
+import { useWeb3 } from 'hooks'
+import React from 'react'
+import { RiPulseLine } from 'react-icons/ri'
+import { useAccountModalToggle, useConnectModalToggle, useWalletModalToggle } from 'state/application/hooks'
+import styled from 'styled-components'
 import { injected, walletconnect, walletlink } from '../../../connectors'
+import AccountModal from '../../modals/AccountModal'
+import ConnectModal from '../../modals/ConnectModal'
 import Metamask from '../../modals/icons/Metamask'
 import WalletConnect from '../../modals/icons/WalletConnect'
-import styled from 'styled-components'
-import { useConnectModalToggle, useAccountModalToggle, useWalletModalToggle } from 'state/application/hooks'
-import ConnectModal from '../../modals/ConnectModal'
-import AccountModal from '../../modals/AccountModal'
-import WalletModal from 'components/modals/WalletModal.tsx'
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
-import { RiPulseLine } from 'react-icons/ri'
 interface Props {
   account?: string
 }
@@ -44,8 +44,8 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
   }
   return <h6></h6>
 }
-const UserBlock: React.FC<Props> = ({ account }) => {
-  const { connector, error } = useWeb3React()
+function UserBlock({ account }: Props) {
+  const { connector, error } = useWeb3()
   const toggleConnectModal = useConnectModalToggle()
   const toggleAccountModal = useAccountModalToggle()
   const toggleWalletModal = useWalletModalToggle()

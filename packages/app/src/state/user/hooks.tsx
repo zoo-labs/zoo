@@ -1,13 +1,20 @@
+import { computePairAddress, FACTORY_ADDRESS, JSBI, Pair, Percent, Token } from '@sushiswap/sdk'
+import { useWeb3React } from '@web3-react/core'
+import flatMap from 'lodash/flatMap'
+import { useCallback, useMemo } from 'react'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from '..'
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../config/routing'
-import { ChainId, FACTORY_ADDRESS, JSBI, Pair, Percent, Token, computePairAddress } from '@sushiswap/sdk'
+import { useAllTokens } from '../../hooks/Tokens'
+import { useAppDispatch, useAppSelector } from '../hooks'
 import {
-  SerializedPair,
-  SerializedToken,
   addSerializedPair,
   addSerializedToken,
   removeSerializedToken,
+  SerializedPair,
+  SerializedToken,
   toggleURLWarning,
+  updateUserAnimationMode,
   updateUserArcherETHTip,
   updateUserArcherGasEstimate,
   updateUserArcherGasPrice,
@@ -18,15 +25,8 @@ import {
   updateUserExpertMode,
   updateUserSingleHopOnly,
   updateUserSlippageTolerance,
-  updateUserAnimationMode,
 } from './actions'
-import { shallowEqual, useDispatch, useSelector } from 'react-redux'
-import { useAppDispatch, useAppSelector } from '../hooks'
-import { useCallback, useMemo } from 'react'
-
-import flatMap from 'lodash/flatMap'
-import { useAllTokens } from '../../hooks/Tokens'
-import { useWeb3React } from '@web3-react/core'
+import { UserState } from './reducer'
 
 function serializeToken(token: Token): SerializedToken {
   return {
@@ -388,4 +388,8 @@ export function useUserArcherTipManualOverride(): [boolean, (newManualOverride: 
 export function useUserSlippageToleranceWithDefault(defaultSlippageTolerance: Percent): Percent {
   const allowedSlippage = useUserSlippageTolerance()
   return useMemo(() => (allowedSlippage === 'auto' ? defaultSlippageTolerance : allowedSlippage), [allowedSlippage, defaultSlippageTolerance])
+}
+
+export function useEthBalance(account: string, library: any): number {
+  return useSelector((state: UserState) => state.ethBalance)
 }

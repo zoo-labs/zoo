@@ -1,27 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import { CircularProgress } from '@material-ui/core'
+import { useWeb3React } from '@web3-react/core'
+import BigNumber from 'bignumber.js'
+import { CloseIcon } from 'components'
+import { numberWithCommas } from 'components/Functions'
+import { formatError, wait } from 'functions'
+import { useWeb3 } from 'hooks'
+import { useZooKeeper, useZooToken } from 'hooks/useContract'
+import useToast from 'hooks/useToast'
+import { isEmpty } from 'lodash'
+import React, { useEffect, useState } from 'react'
+import { Minus, Plus } from 'react-feather'
+import { RiArrowDropDownLine } from 'react-icons/ri'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppState } from 'state'
 import { ApplicationModal } from 'state/application/actions'
-import { useModalOpen, useBuyEggModalToggle } from 'state/application/hooks'
+import { useBuyEggModalToggle, useModalOpen } from 'state/application/hooks'
+import { useGasPrice } from 'state/network/hooks'
+import { getZooBalance } from 'state/zoo/actions'
+import CurrencySwitch from '../../CurrencySwitch'
 import Modal from '../../NewModal'
 import BidModalHeader from '../../NewModal/BidModalHeader'
-import { AppState } from 'state'
-import { useDispatch, useSelector } from 'react-redux'
-import { ArrowDown, Minus, MinusCircle, Plus, PlusCircle } from 'react-feather'
-import { numberWithCommas } from 'components/Functions'
-import { isEmpty } from 'lodash'
-import { ArrowDownIcon, ArrowDropDownIcon, CloseIcon } from 'components'
-import { RiArrowDropDownLine } from 'react-icons/ri'
-import { formatError, wait } from 'functions'
-import Moralis from 'moralis/types'
-import { useWeb3React } from '@web3-react/core'
-import { Egg } from 'types/zoo'
-import { useWeb3 } from 'hooks'
-import { getToken, getZooKeeper } from 'util/contracts'
-import useToast from 'hooks/useToast'
-import { getZooBalance } from 'state/zoo/actions'
-import { CircularProgress } from '@material-ui/core'
-import Switch from '../../CurrencySwitch'
-import CurrencySwitch from '../../CurrencySwitch'
-import BigNumber from 'bignumber.js'
 
 interface BuyEggModalProps {}
 
@@ -29,6 +27,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const buyEggModal = useModalOpen(ApplicationModal.BUYEGG)
   const toggleBuyEggModal = useBuyEggModalToggle()
   const [amount, setAmount] = useState(0)
+  const gasPrice = useGasPrice()
   const [disabled, setDisabled] = useState(false)
   const [error, setError] = useState('')
   const [eggs, setEggs] = useState<Array<any>>([])
@@ -39,8 +38,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const myEggs = useSelector<AppState, AppState['zoo']['myEggs']>((state) => state.zoo.myEggs)
   const [zooBnbPrice, setZooBnbPrice] = useState(0)
   const { account } = useWeb3React()
-  const web3 = useWeb3()
-  const { chainID, gasPrice } = web3
+  const { library } = useWeb3()
 
   useEffect(() => {
     if (amount > zooBalance) {
@@ -91,8 +89,9 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     setEggs(finalEggs)
   }
 
-  const zooKeeper = getZooKeeper(web3)
-  const zooToken = getToken(web3)
+  const zooKeeper = useZooKeeper()
+  console.log('zooKEeper --->', zooKeeper)
+  const zooToken = useZooToken()
 
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
 
@@ -104,7 +103,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     console.log('account', account)
     if (!account) return
     try {
-      await web3.eth.getBalance(account).then((val) => {
+      await library.eth.getBalance(account).then((val) => {
         const divisor = parseFloat(Math.pow(10, 18).toString())
         const balance = parseFloat(val) / divisor
         console.log('balance', balance)
@@ -116,7 +115,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   }
 
   const getZooBnbPrice = async () => {
-    const price = await zooKeeper.methods.zooPriceBNB().call()
+    const price = await zooKeeper.zooPriceBNB()
     console.log('zooBnbPrice', price)
     setZooBnbPrice(price)
   }
@@ -125,13 +124,17 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const buyEggs = async () => {
     setDisabled(true)
     const eggsLength = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
-    const eggPriceBNB = (new BigNumber(10**18)).times(420000*quantity).div(zooBnbPrice).div(10**18).toFixed(4)
+    const eggPriceBNB = new BigNumber(10 ** 18)
+      .times(420000 * quantity)
+      .div(zooBnbPrice)
+      .div(10 ** 18)
+      .toFixed(4)
 
     if (checked) {
       try {
         zooKeeper.methods
           .buyEggsBNB(1, eggsLength) // buy from first drop
-          .send({ from: account, gasPrice: gasPrice, value: web3.utils.toWei(eggPriceBNB) })
+          .send({ from: account, gasPrice: gasPrice, value: library.utils.toWei(eggPriceBNB) })
           .then((res) => {
             toastClear()
             toastInfo('Transaction submitted.')
@@ -190,7 +193,11 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   }
 
   const quantity = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
-  const eggPriceBNB = (new BigNumber(10**18)).times(420000*quantity).div(zooBnbPrice).div(10**18).toFixed(4)
+  const eggPriceBNB = new BigNumber(10 ** 18)
+    .times(420000 * quantity)
+    .div(zooBnbPrice)
+    .div(10 ** 18)
+    .toFixed(4)
 
   return (
     <Modal isOpen={buyEggModal} onDismiss={() => null} isMax>

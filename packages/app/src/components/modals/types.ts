@@ -1,6 +1,6 @@
-import { FC } from 'react'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { SvgProps } from 'components'
+import { FC } from 'react'
 
 export enum ConnectorNames {
   Injected = 'injected',

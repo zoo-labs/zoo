@@ -1,12 +1,12 @@
+import { BscConnector } from '@binance-chain/bsc-connector'
+import { Web3Provider } from '@ethersproject/providers'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
-import { BscConnector } from '@binance-chain/bsc-connector'
-import Web3 from 'web3'
 import { ConnectorNames } from 'components'
 import { getRandomNode } from './getRandomNode'
 
 const POLLING_INTERVAL = 12000
-const chainID = parseInt(process.env.REACT_APP_CHAIN_ID, 97)
+const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 97)
 
 const supportedChainIds = [
   1337, // Hardhat
@@ -17,7 +17,7 @@ const supportedChainIds = [
 const injected = new InjectedConnector({ supportedChainIds })
 
 const walletConnect = new WalletConnectConnector({
-  rpc: { [chainID]: getRandomNode(chainID) },
+  rpc: { [chainId]: getRandomNode(chainId) },
   bridge: 'https://bridge.walletconnect.org',
   qrcode: true,
   pollingInterval: POLLING_INTERVAL,
@@ -31,6 +31,8 @@ export const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.BSC]: bscConnector,
 }
 
-export const getLibrary = (provider): Web3 => {
-  return provider
+export const getLibrary = (provider): Web3Provider => {
+  const library = new Web3Provider(provider)
+  library.pollingInterval = 12000
+  return library
 }

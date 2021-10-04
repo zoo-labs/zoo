@@ -1,10 +1,10 @@
+import { i18n } from '@lingui/core'
+import { I18nProvider } from '@lingui/react'
+import App from 'App'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
-import Providers from './Providers'
 import './index.css'
-import { I18nProvider } from '@lingui/react'
-import { i18n } from '@lingui/core'
+import Providers from './Providers'
 
 ReactDOM.render(
   <React.StrictMode>

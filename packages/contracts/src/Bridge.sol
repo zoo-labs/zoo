@@ -26,7 +26,7 @@ contract Bridge is Ownable {
     struct Token {
         Type kind;
         uint256 id;
-        uint chainID;
+        uint chainId;
         address tokenAddress;
         bool enabled;
     }
@@ -49,10 +49,10 @@ contract Bridge is Ownable {
     mapping (uint256 => Transaction) public transactions;
 
     // Events
-    event AddToken(uint chainID, address tokenAddress);
-    event RemoveToken(uint chainID, address tokenAddress);
-    event Mint(uint chainID, address tokenAddress, address to, uint256 amount);
-    event Burn(uint chainID, address tokenAddress, address from, uint256 amount);
+    event AddToken(uint chainId, address tokenAddress);
+    event RemoveToken(uint chainId, address tokenAddress);
+    event Mint(uint chainId, address tokenAddress, address to, uint256 amount);
+    event Burn(uint chainId, address tokenAddress, address from, uint256 amount);
     event Swap(uint256 tokenA, uint256 tokenB, uint256 txID, address sender, address recipient, uint256 amount);
 
     // DAO address
@@ -68,7 +68,7 @@ contract Bridge is Ownable {
 
     // Hash chain, address to a unique identifier
     function tokenID(Token memory token) internal pure returns (uint256) {
-        return uint256(keccak256(abi.encodePacked(token.chainID, token.tokenAddress)));
+        return uint256(keccak256(abi.encodePacked(token.chainId, token.tokenAddress)));
     }
 
     // Hash TX to unique identifier
@@ -82,16 +82,16 @@ contract Bridge is Ownable {
     }
 
     // Compare chain ID to local chain ID
-    function currentChain(uint _chainID) internal view returns (bool) {
-        return keccak256(abi.encodePacked(block.chainid)) == keccak256(abi.encodePacked(_chainID));
+    function currentChain(uint _chainId) internal view returns (bool) {
+        return keccak256(abi.encodePacked(block.chainid)) == keccak256(abi.encodePacked(_chainId));
     }
 
     // Enable swapping a new ERC20 token
     function setToken(Token memory token) public onlyOwner {
-        console.log("setToken", token.chainID, token.tokenAddress);
+        console.log("setToken", token.chainId, token.tokenAddress);
         require(token.tokenAddress != address(0), "Token address must not be zero");
 
-        require(token.chainID != 0, "Chain ID must not be zero");
+        require(token.chainId != 0, "Chain ID must not be zero");
 
         // Update token configuration save ID
         token.id = tokenID(token);
@@ -101,16 +101,16 @@ contract Bridge is Ownable {
         console.log("Check enabled Token");
         if (enabledToken(token)) {
             console.log("AddToken");
-            emit AddToken(token.chainID, token.tokenAddress);
+            emit AddToken(token.chainId, token.tokenAddress);
         } else {
             console.log("RemoveToken");
-            emit RemoveToken(token.chainID, token.tokenAddress);
+            emit RemoveToken(token.chainId, token.tokenAddress);
         }
     }
 
     // Swap from tokenA to tokenB on another chain. User initiated function, relies on msg.sender
     function swap(Token memory tokenA, Token memory tokenB, address recipient, uint256 amount, uint256 nonce) public {
-        require(currentChain(tokenA.chainID) || currentChain(tokenB.chainID), "Wrong chain");
+        require(currentChain(tokenA.chainId) || currentChain(tokenB.chainId), "Wrong chain");
         console.log("swap", msg.sender, recipient, nonce);
         require(enabledToken(tokenA), "Swap from token not enabled");
         require(enabledToken(tokenB), "Swap to token not enabled");
@@ -132,13 +132,13 @@ contract Bridge is Ownable {
         emit Swap(tokenID(tokenA), tokenID(tokenB), t.id, msg.sender, recipient, amount);
 
         // Burn original tokens
-        if (currentChain(tokenA.chainID)) {
+        if (currentChain(tokenA.chainId)) {
             console.log("burn", msg.sender, amount);
             burn(tokenA, msg.sender, amount);
         } else
 
         // Mint new tokens
-        if (currentChain(tokenB.chainID)) {
+        if (currentChain(tokenB.chainId)) {
             console.log("mint", msg.sender, amount);
             mint(tokenB, msg.sender, amount);
         }
@@ -154,22 +154,22 @@ contract Bridge is Ownable {
             // ZooKeeper(token.tokenAddress).swap(owner, token.id);
         }
 
-        emit Burn(token.chainID, token.tokenAddress, owner, token.id);
+        emit Burn(token.chainId, token.tokenAddress, owner, token.id);
     }
 
     // Mint new tokens for user after burn + swap on alternate chain
     function mint(Token memory token, address owner, uint256 amount) public onlyOwner {
         require(owner != address(0));
         require(amount > 0);
-        require(currentChain(token.chainID), "Token not on chain");
+        require(currentChain(token.chainId), "Token not on chain");
 
         if (token.kind == Type.ERC20) {
             uint256 fee = daoShare.div(10000).mul(amount);
             IERC20Bridgable(token.tokenAddress).bridgeMint(owner, amount.sub(fee));
             IERC20Bridgable(token.tokenAddress).bridgeMint(daoAddress, fee);
         } else {
-            // ZooKeeper(token.id).remint(owner, token, token.chainID);
+            // ZooKeeper(token.id).remint(owner, token, token.chainId);
         }
-        emit Mint(token.chainID, token.tokenAddress, owner, amount);
+        emit Mint(token.chainId, token.tokenAddress, owner, amount);
     }
 }

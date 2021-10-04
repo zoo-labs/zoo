@@ -1,18 +1,17 @@
 /* eslint-disable no-param-reassign */
-import { Toast } from '../../components/Toast'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ZooState } from '../types'
+import { createSlice } from '@reduxjs/toolkit'
 import { Animal, Egg } from 'types/zoo'
+import { ZooState } from '../types'
 import { eggConverter } from './actions'
 
 const initialState: ZooState = {
   animals: {},
-  myBids:{},
-  myAuctions:{},
+  myBids: {},
+  myAuctions: {},
   eggs: {},
-  zooBalance:0,
-  myEggs:{},
-  myTransactions:[]
+  zooBalance: 0,
+  myEggs: {},
+  myTransactions: [],
 }
 
 export const ZooSlice = createSlice({
@@ -22,8 +21,9 @@ export const ZooSlice = createSlice({
     addEgg: (state: ZooState, action) => {
       const toAdd: Egg = action.payload.data
       const account: string = action.payload.account
-      state.eggs[toAdd.tokenID] = toAdd;
-      state.myEggs[toAdd.tokenID] = eggConverter(toAdd,account);
+
+      state.eggs[toAdd.tokenID] = toAdd
+      state.myEggs[toAdd.tokenID] = eggConverter(toAdd, account)
     },
     addAnimal: (state: ZooState, action) => {
       const toAdd: Animal = action.payload
@@ -31,13 +31,13 @@ export const ZooSlice = createSlice({
     },
     addEggs: (state: ZooState, action) => {
       const toAdd: Egg[] = action.payload
-      console.log('eggs length',toAdd.length)
+      console.log('eggs length', toAdd.length)
       for (let i = 0; i < toAdd.length; i += 1) {
         const curr = toAdd[i]
-        if(curr.owner === '0x0770ACd6CF3Fc622148b1514066dD5A9147E08cb        '){
+        if (curr.owner === '0x0770ACd6CF3Fc622148b1514066dD5A9147E08cb        ') {
           console.log('exists')
         }
-     
+
         state.eggs[curr.tokenID] = curr
       }
     },
@@ -61,23 +61,21 @@ export const ZooSlice = createSlice({
       delete newState.animals[toRemove.tokenID]
       state = newState
     },
-    updatZooBalnce:(state: ZooState, action) => {
+    updatZooBalnce: (state: ZooState, action) => {
       const zooBalance = action.payload
       state.zooBalance = zooBalance
     },
-    updateMyEggs:(state: ZooState, action) => {
-
+    updateMyEggs: (state: ZooState, action) => {
       const myEggs: Egg[] = action.payload
 
       for (let i = 0; i < myEggs.length; i += 1) {
         const curr = myEggs[i]
-        if(curr){
+        if (curr) {
           state.myEggs[curr.tokenID] = curr
-
         }
       }
     },
-    updateMyTransactions:(state: ZooState, action) => {
+    updateMyTransactions: (state: ZooState, action) => {
       const myTransactions = action.payload
       state.myTransactions = myTransactions
     },
@@ -88,6 +86,6 @@ export const ZooSlice = createSlice({
 })
 
 // Actions
-export const { addEgg, addAnimal, addEggs, addAnimals, burnEgg, burnAnimal,updatZooBalnce,updateMyEggs,updateMyTransactions, clearZoo } = ZooSlice.actions
+export const { addEgg, addAnimal, addEggs, addAnimals, burnEgg, burnAnimal, updatZooBalnce, updateMyEggs, updateMyTransactions, clearZoo } = ZooSlice.actions
 
 export default ZooSlice.reducer

@@ -1,35 +1,26 @@
-import { useWeb3React } from '@web3-react/core'
-import React, { useCallback, useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { AppState } from 'state'
-import { Route, useRouteMatch } from 'react-router-dom'
-import Moralis from 'moralis'
-import styled from 'styled-components'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import SwiperCore, { Pagination } from 'swiper'
-import VideoPlayerModal from '../../../components/modals/VideoPlayer'
-import NewAnimalModal from '../../../components/modals/NewAnimal'
-import HatchDisabledModal from '../../../components/modals/HatchDisabled'
-import useWeb3 from 'hooks/useWeb3'
-import { Text, Card as Existing, EggCard, VideoPlayer, useMatchBreakpoints } from 'components'
-import { getMilliseconds, getDaysHours } from 'util/timeHelpers'
-import { eggTimeout } from 'constants/index'
-import { addEgg, getMyEggs } from 'state/zoo/actions'
-import { getZooKeeper } from 'util/contracts'
-import NewAnimalCard from '../../../components/modals/NewAnimal'
-import { mapEgg, mapAnimal } from 'util/moralis'
-import { useAssetModalToggle, useHatchDisabledModalToggle, useNewAnimalModalToggle, useVideoPlayerModalToggle } from 'state/application/hooks'
+import '@splidejs/splide/dist/css/themes/splide-default.min.css'
+import { EggCard, Text, useMatchBreakpoints } from 'components'
+import { CardEgg } from 'components/EggCard/types'
+import AssetModal from 'components/modals/MarketModals/AssetModal'
 import { Splide, SplideSlide } from 'components/Splide'
+import { useZooKeeper } from 'hooks/useContract'
+import useToast from 'hooks/useToast'
+import useWeb3 from 'hooks/useWeb3'
+import Moralis from 'moralis'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { Route, useRouteMatch } from 'react-router-dom'
+import { useAssetModalToggle, useHatchDisabledModalToggle, useNewAnimalModalToggle, useVideoPlayerModalToggle } from 'state/application/hooks'
+import { useGasPrice } from 'state/network/hooks'
+import { addEgg } from 'state/zoo/actions'
+import styled from 'styled-components'
+import { Egg } from 'types/zoo'
+import { mapAnimal, mapEgg } from 'util/moralis'
+import HatchDisabledModal from '../../../components/modals/HatchDisabled'
+import NewAnimalModal from '../../../components/modals/NewAnimal'
+import VideoPlayerModal from '../../../components/modals/VideoPlayer'
 import { ChainId } from '../../../constants/Chains'
 
-import '@splidejs/splide/dist/css/themes/splide-default.min.css'
-
-import { sortData } from 'functions'
-import { CardEgg } from 'components/EggCard/types'
-import { t } from '@lingui/macro'
-import { Egg } from 'types/zoo'
-import AssetModal from 'components/modals/MarketModals/AssetModal'
-import useToast from 'hooks/useToast'
 interface EggsProps {
   myEggs: Array<Egg>
 }
@@ -50,16 +41,16 @@ const RowLayout = styled.div`
   }
 `
 const Eggs: React.FC<EggsProps> = ({ myEggs }) => {
-  const { account, chainId } = useWeb3React()
+  const { account, chainId, library } = useWeb3()
   const { path } = useRouteMatch()
   const dispatch = useDispatch()
   const [eggType, setEggType] = useState('')
   const { toastInfo, clear } = useToast()
   const [isOpen, setOpen] = useState(false)
   const [_, setShowBoth] = useState(false)
-  const web3 = useWeb3()
-  const { gasPrice } = web3
-  const zooKeeper = getZooKeeper(web3)
+  const gasPrice = useGasPrice()
+
+  const zooKeeper = useZooKeeper()
   const videoTimeout = []
   const [hatched, setHatched] = useState({
     tokenID: 0,

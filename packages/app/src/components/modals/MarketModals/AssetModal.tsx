@@ -1,43 +1,31 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import { useWeb3React } from '@web3-react/core'
-import { connectorLocalStorageKey } from '../config'
-import useWeb3 from 'hooks/useWeb3'
-import { getFaucet, getToken, getMedia, getMarket } from 'util/contracts'
-import AltModal from 'components/Modal/AltModal'
-import { numberWithCommas } from 'components/Functions'
-import HeaderModal from 'components/Modal/HeaderModal'
-import { ApplicationModal } from 'state/application/actions'
-import { useModalOpen, useAssetModalToggle } from 'state/application/hooks'
-import Modal from '../../NewModal'
-import useAuth from 'hooks/useAuth'
-import { useHistory } from 'react-router'
-import CopyHelper from 'components/Copy/Copy'
-import { useSelector } from 'react-redux'
-import { AppState } from 'state'
 import BidModalHeader from 'components/NewModal/BidModalHeader'
-import { useAnimationModeManager, useIsAnimationMode } from 'state/user/hooks'
-import { ImArrowRight2, ImArrowUpRight2 } from 'react-icons/im'
-import { useMatchBreakpoints } from 'hooks'
-import { FaCompress, FaCompressAlt, FaExpand } from 'react-icons/fa'
-import { RiShareFill } from 'react-icons/ri'
-import Web3 from 'web3'
-import useToast from 'hooks/useToast'
-import { formatError } from 'functions'
-import { addresses } from 'constants/contracts'
 import { ChainId } from 'constants/Chains'
+import { addresses } from 'constants/contracts'
+import { getTokenTransactions } from 'functions/moralis'
+import { useMatchBreakpoints } from 'hooks'
+import useAuth from 'hooks/useAuth'
+import { useMarket, useMedia, useZooToken } from 'hooks/useContract'
+import useToast from 'hooks/useToast'
+import useWeb3 from 'hooks/useWeb3'
 import Moralis from 'moralis'
-import { CloseIcon } from 'components'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import { getTokenTransactions, getZooPrice } from 'functions/moralis'
+import React, { useEffect, useState } from 'react'
+import { FaCompressAlt, FaExpand } from 'react-icons/fa'
+import { ImArrowUpRight2 } from 'react-icons/im'
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
+import { AppState } from 'state'
+import { ApplicationModal } from 'state/application/actions'
+import { useAssetModalToggle, useModalOpen } from 'state/application/hooks'
+import { useGasPrice } from 'state/network/hooks'
+import { useAnimationModeManager, useIsAnimationMode } from 'state/user/hooks'
+import Modal from '../../NewModal'
 interface AssetModalProps {
   item: any
 }
 
 const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
-  const web3 = useWeb3()
-  const { gasPrice } = web3
-  const { chainId, account } = useWeb3React()
+  const { chainId, account, library } = useWeb3()
+
   const assetModal = useModalOpen(ApplicationModal.ASSET)
   const [animationMode, toggleSetAnimationMode] = useAnimationModeManager()
   const chainAddresses = (addresses[chainId] as any) || (addresses[ChainId.BSC] as any)
@@ -49,6 +37,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const [transactionHash, setTransactionHash] = useState(null)
   const [askModal, setAskModal] = useState(false)
   const [hasRequestedAsk, setHasRequestedAsk] = useState(false)
+  const gasPrice = useGasPrice()
 
   const { logout } = useAuth()
   const history = useHistory()
@@ -68,7 +57,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
     }
   }
 
-  const getBrowserUrl = (chainId: number)  => {
+  const getBrowserUrl = (chainId: number) => {
     return chainId === 56 ? 'https://bscscan.com' : 'https://testnet.bscscan.com'
   }
 
@@ -108,9 +97,9 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
   const [disabled, setDisabled] = useState(false)
   const myTransactions = useSelector<AppState, AppState['zoo']['myTransactions']>((state) => state.zoo.myTransactions)
   const { isSm } = useMatchBreakpoints()
-  const media = getMedia(web3)
-  const market = getMarket(web3)
-  const zooToken = getToken(web3)
+  const media = useMedia()
+  const market = useMarket()
+  const zooToken = useZooToken()
   // const setAsk = async (amount) => {
   //   setDisabled(true)
   //   try {
@@ -147,11 +136,11 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
 
   useEffect(() => {
     getZooUsdPrice(360000)
-    getTokenTransactions({ tokenID: item.tokenID }).then(transactions => {
+    getTokenTransactions({ tokenID: item.tokenID }).then((transactions) => {
       if (transactions.length > 0) {
         setTransactions(transactions)
         setTransactionHash(transactions[0].hash)
-      } 
+      }
     })
   }, [item])
   // const getAskValue = () => {
@@ -297,7 +286,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                     </div> */}
                     <div className='flex justify-between items-center'>
                       <span className=' text-md  font-semibold'>Token ID</span>
-                        <div className='text-sm font-medium'>{item.tokenID}</div>
+                      <div className='text-sm font-medium'>{item.tokenID}</div>
                     </div>
                     <div className='flex justify-between items-center'>
                       <span className='text-md  font-semibold'>Token Standard</span>
@@ -310,16 +299,20 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                     <h2 className='text-sm font-bold'>Proof of Authenticity</h2>
                   </div>
                   <div className='flex flex-col'>
-                    {transactionHash && <a
-                      href={`${getBrowserUrl(chainId)}/tx/${transactionHash}`}
-                      target='_blank'
-                      className='p-4 justify-between items-center flex hover:bg-dark-800'
-                      style={{ borderBottomWidth: 1 }}>
-                      <div className='text-sm font-medium primary'>Transaction {transactionHash.substring(0, 6)}...${transactionHash.substring(transactionHash.length - 4)}</div>
-                      <div>
-                        <ImArrowUpRight2 fill='#f2f2f2' size={12} />
-                      </div>
-                    </a>}
+                    {transactionHash && (
+                      <a
+                        href={`${getBrowserUrl(chainId)}/tx/${transactionHash}`}
+                        target='_blank'
+                        className='p-4 justify-between items-center flex hover:bg-dark-800'
+                        style={{ borderBottomWidth: 1 }}>
+                        <div className='text-sm font-medium primary'>
+                          Transaction {transactionHash.substring(0, 6)}...${transactionHash.substring(transactionHash.length - 4)}
+                        </div>
+                        <div>
+                          <ImArrowUpRight2 fill='#f2f2f2' size={12} />
+                        </div>
+                      </a>
+                    )}
                     <a
                       href='https://bafybeidq6egcuxafoo2i2pvyp7cgajf6iewzfiq24owfhrgrezyokygvwq.ipfs.dweb.link/'
                       target='_blank'
@@ -359,7 +352,6 @@ const AssetModal: React.FC<AssetModalProps> = ({ item }) => {
                     })}
                   </div>
                 </div> */}
-
               </div>
             </div>
           </div>

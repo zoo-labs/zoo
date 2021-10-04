@@ -1,14 +1,12 @@
-import { numberWithCommas } from 'components/Functions'
+import { NETWORK_SYMBOL, NETWORK_URL } from 'constants/networks'
 import { useWeb3 } from 'hooks'
+import { useFaucet, useZooToken } from 'hooks/useContract'
 import useToast from 'hooks/useToast'
 import React, { useEffect, useState } from 'react'
-import { isMobile } from 'react-device-detect'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
 import { AppState } from 'state'
 import { getZooBalance } from 'state/zoo/actions'
-import { getFaucet, getToken } from 'util/contracts'
-import { NETWORK_SYMBOL, NETWORK_URL } from 'constants/networks'
 import Account from './Account'
 import Bank from './Bank'
 
@@ -16,21 +14,21 @@ interface indexProps {}
 
 const Index: React.FC<indexProps> = ({}) => {
   const [tab, setTab] = useState('home')
-  const { account, chainID, web3 } = useWeb3()
+  const { account, chainId, library } = useWeb3()
   const [wait, setWait] = useState(false)
-  const faucet = getFaucet(web3)
+  const faucet = useFaucet()
   const [balance, setBalance] = useState(0.0)
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const toastClear = () => {
     clear()
   }
   const dispatch = useDispatch()
-  const zooToken = getToken(web3)
+  const zooToken = useZooToken()
   const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>((state) => state.zoo.zooBalance)
 
   const handleFaucet = () => {
     try {
-      const acc = web3.account
+      const acc = library.account
       console.log(acc)
       setWait(true)
       toastClear()
@@ -59,11 +57,11 @@ const Index: React.FC<indexProps> = ({}) => {
   const handleFunds = () => {
     if (balance == 0)
       return toastError(
-        `You do not have sufficient ${NETWORK_SYMBOL[chainID]} to get Zoo`,
-        `<a href='${NETWORK_URL[chainID]}' target='__blank'>Click here to buy ${NETWORK_SYMBOL[chainID]}</a>`,
+        `You do not have sufficient ${NETWORK_SYMBOL[chainId]} to get Zoo`,
+        `<a href='${NETWORK_URL[chainId]}' target='__blank'>Click here to buy ${NETWORK_SYMBOL[chainId]}</a>`,
       )
 
-    switch (chainID) {
+    switch (chainId) {
       case 1338:
         handleFaucet()
         break
@@ -84,8 +82,8 @@ const Index: React.FC<indexProps> = ({}) => {
   const getBalance = async () => {
     try {
       // const decimals = await zooToken.methods.decimals().call()
-      await web3.eth.getBalance(account).then((val) => {
-        console.log('CHAIN-ID ' + chainID)
+      await library.eth.getBalance(account).then((val) => {
+        console.log('CHAIN-ID ' + chainId)
         const divisor = parseFloat(Math.pow(10, 18).toString())
         const balance = parseFloat(val) / divisor
         setBalance(parseFloat(balance.toFixed(4)))
@@ -103,7 +101,7 @@ const Index: React.FC<indexProps> = ({}) => {
   useEffect(() => {
     if (!account) return
     getBalance()
-  }, [account, chainID])
+  }, [account, chainId])
 
   return (
     <main className='flex flex-col  flex-grow w-full h-full lg:p-16 lg:m-4 p-0 m-0 lg:pr-0 lg:mr-0 space-y-4 rounded-lg  flex flex-col relative filter drop-shadow z-10'>

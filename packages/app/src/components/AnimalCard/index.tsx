@@ -1,18 +1,16 @@
-import { useRef, useState } from 'react'
-import styled from 'styled-components'
-import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
-import Moralis from 'moralis'
 import { useWeb3React } from '@web3-react/core'
 import { Card as Existing, CardBody } from 'components'
-import { Animal, Egg } from 'types/zoo'
-import { addAnimal, addEgg } from 'state/zoo'
-import { Flex } from 'components/Box'
 import { Text } from 'components/Text'
-import BorderButton from 'components/Button/BorderButton'
-import { AnimalCardProps, SubAnimalCommonProps } from './types'
+import { useZooKeeper } from 'hooks/useContract'
 import useWeb3 from 'hooks/useWeb3'
-import { getZooKeeper } from 'util/contracts'
+import Moralis from 'moralis'
+import { useRef } from 'react'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { addAnimal } from 'state/zoo'
+import styled from 'styled-components'
+import { Animal } from 'types/zoo'
+import { AnimalCardProps } from './types'
 
 const InfoBlock = styled.div`
   padding: 4px;
@@ -113,7 +111,7 @@ export const AnimalCard = ({ animal, animalGroup, hybrid, allAnimals, account, e
   let array = []
   const web3 = useWeb3()
   const { chainId } = useWeb3React()
-  const zooKeeper = getZooKeeper(web3)
+  const zooKeeper = useZooKeeper()
 
   let sellAnimal: Animal = {
     owner: '',

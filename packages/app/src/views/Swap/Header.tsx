@@ -1,14 +1,11 @@
-import { ChainId, Currency, Percent } from '@sushiswap/sdk'
-import React, { FC, useState, useEffect } from 'react'
-
+import { Currency, Percent } from '@sushiswap/sdk'
+import { useWeb3 } from 'hooks'
+import { useZooToken } from 'hooks/useContract'
+import React, { FC, useEffect, useState } from 'react'
+import { useGasPrice } from 'state/network/hooks'
 // import MyOrders from '../exchange-v1/limit-order/MyOrders'
 // import NavLink from '../../components/NavLink'
 import Settings from '../../components/Settings'
-import { currencyId } from '../../functions'
-import { useWeb3React } from '@web3-react/core'
-import { NavLink } from 'react-router-dom'
-import { useWeb3 } from 'hooks'
-import { getToken } from 'util/contracts'
 
 const getQuery = (input: any, output: any) => {
   if (!input && !output) return null
@@ -30,14 +27,13 @@ interface ExchangeHeaderProps {
 
 const ExchangeHeader: FC<ExchangeHeaderProps> = ({ input, output, allowedSlippage }) => {
   const [balance, setBalance] = useState(0)
-  const { chainId } = useWeb3React()
-  const { gasPrice, account, eth } = useWeb3()
-  const web3 = useWeb3()
+  const gasPrice = useGasPrice()
+  const { account, library } = useWeb3()
   //   const router = useRouter()
   const [animateWallet, setAnimateWallet] = useState(false)
   //   const isRemove = router.asPath.startsWith('/remove')
   //   const isLimitOrder = router.asPath.startsWith('/limit-order')
-  const zooToken = getToken(web3)
+  const zooToken = useZooToken()
 
   const getBalance = async () => {
     try {

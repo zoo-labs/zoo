@@ -1,12 +1,11 @@
-import { useMemo } from 'react'
 import { kebabCase } from 'lodash'
-import { Toast, toastTypes } from '../components/Toast'
+import { useMemo } from 'react'
 import { useDispatch } from 'react-redux'
-
-import { push as pushToast, remove as removeToast, clear as clearToast } from '../state/zoo/actions'
+import { Toast, toastTypes } from '../components/Toast'
+import { clear as clearToast, push as pushToast, remove as removeToast } from '../state/zoo/actions'
 
 // Toasts
-const useToast = () => {
+const useToast = function () {
   const dispatch = useDispatch()
   const helpers = useMemo(() => {
     const push = (toast: Toast) => dispatch<any>(pushToast(toast))

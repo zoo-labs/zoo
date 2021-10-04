@@ -445,10 +445,10 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
    * @dev Calculates EIP712 DOMAIN_SEPARATOR based on the current contract and chain ID.
    */
   function _calculateDomainSeparator() internal view returns (bytes32) {
-    uint256 chainID;
+    uint256 chainId;
     /* solium-disable-next-line */
     assembly {
-      chainID := chainid()
+      chainId := chainid()
     }
 
     return
@@ -457,7 +457,7 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
           keccak256('EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)'),
           keccak256(bytes('ZOO')),
           keccak256(bytes('1')),
-          chainID,
+          chainId,
           address(this)
         )
       );

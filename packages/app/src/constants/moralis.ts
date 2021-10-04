@@ -13,10 +13,10 @@ const config = {
   },
 }
 
-export function moralisConfig(chainID) {
+export function moralisConfig(chainId) {
   return {
-    applicationID: config.applicationID[chainID],
-    serverURL: config.serverURL[chainID],
+    applicationID: config.applicationID[chainId],
+    serverURL: config.serverURL[chainId],
   }
 }
 

@@ -1,6 +1,5 @@
-import { Toast } from 'components'
 import BigNumber from 'bignumber.js'
-import { Token } from 'constants/types'
+import { Toast } from 'components'
 import { Animal, Egg } from 'types/zoo'
 
 export type TranslatableText =
@@ -62,11 +61,11 @@ export interface AnimalState {
 export interface ZooState {
   eggs: { [key: string]: Egg }
   animals: { [key: string]: Animal }
-  zooBalance:number;
-  myEggs:{ [key: string]: Egg }
-  myTransactions:Array<Object>
-  myBids:{ [key: string]: Egg }
-myAuctions:{ [key: string]: Egg }
+  zooBalance: number
+  myEggs: { [key: string]: Egg }
+  myTransactions: Array<Object>
+  myBids: { [key: string]: Egg }
+  myAuctions: { [key: string]: Egg }
 }
 
 // Global state

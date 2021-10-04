@@ -1,28 +1,17 @@
-import BorderButton from 'components/Button/BorderButton'
-import StickyBottomMenu from 'components/Button/StickyBottomMenu'
-import Page from 'components/layout/Page'
-import React, { useState, useEffect, useMemo } from 'react'
-import { AppState } from 'state'
+import { useWeb3React } from '@web3-react/core'
+import { useMatchBreakpoints } from 'components'
+import BuyEggModal from 'components/modals/MarketModals/BuyEggModal'
+import { useDrop, useZooKeeper, useZooToken } from 'hooks/useContract'
+import useToast from 'hooks/useToast'
+import useWeb3 from 'hooks/useWeb3'
+import React, { useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import styles, { useTheme } from 'styled-components'
-import Metamask from '../../../components/modals/icons/Metamask'
-
+import { AppState } from 'state'
+import { useBuyEggModalToggle } from 'state/application/hooks'
+import { useGasPrice } from 'state/network/hooks'
 import ToastListener from '../../../components/ToastListener'
-
-import { Label, Text } from 'components/Text'
-import { useMatchBreakpoints } from 'components'
-import { getToken, getDrop, getFaucet, getMedia, getZooKeeper } from 'util/contracts'
-import useWeb3 from 'hooks/useWeb3'
-import useToast from 'hooks/useToast'
-import Header from 'components/Header'
 import Eggs from './Eggs'
-import Animals from './Animals'
-import AccountHeader from './AccountHeader'
-import { useWeb3React } from '@web3-react/core'
-import { useBidModalToggle, useBuyEggModalToggle } from 'state/application/hooks'
-import BidModal from 'components/modals/MarketModals/BidModal'
-import BuyEggModal from 'components/modals/MarketModals/BuyEggModal'
 
 function numberWithCommas(num) {
   const values = num.toString().split('.')
@@ -37,21 +26,19 @@ interface AccountProps {
 
 const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
   const [isInitial, setIsInitial] = useState(true)
-  const [tab, setTab] = useState(0)
   const [allowance, setAllowance] = useState(false)
   const [disable, setDisable] = useState(false)
   const [disableApprove, setDisableApprove] = useState(false)
   const [isApproving, setIsApproving] = useState(false)
   // const [balance, setBalance] = useState(0)
   const [keepApprove, setKeepApprove] = useState(true)
-  const web3 = useWeb3()
+  const { chainId, library } = useWeb3()
   const { account } = useWeb3React()
-
+  const gasPrice = useGasPrice()
   // const [zooToken, setZooToken] = useState(getToken(web3))
   // const [zooKeeper, setZooKeeper] = useState(getZooKeeper(web3))
   // const [zooDrop, setZooDrop] = useState(getDrop(web3))
 
-  const { chainID, gasPrice } = web3
   const { isXl, isSm, isMd } = useMatchBreakpoints()
   const { toastSuccess, toastError, toastInfo, clear } = useToast()
   const myEggs = useSelector<AppState, AppState['zoo']['myEggs']>((state) => state.zoo.myEggs)
@@ -64,17 +51,17 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
 
   const currentEggsOwned = Object.values(myEggs).length
 
-  const zooDrop = getDrop(web3)
-  const zooKeeper = getZooKeeper(web3)
-  const zooToken = getToken(web3)
+  const zooDrop = useDrop()
+  const zooKeeper = useZooKeeper()
+  const zooToken = useZooToken()
   // const zooToken = getToken(web3)
   // const zooKeeper = getZooKeeper(web3)
 
   const mount = async () => {
-    if (!zooToken || !zooKeeper || !zooDrop || !web3.account) return false
+    if (!zooToken || !zooKeeper || !zooDrop || !library.account) return false
     if (!isInitial) return false
     try {
-      const allowance = await zooToken.methods.allowance(web3.account, zooKeeper.options.address).call({ from: web3.account })
+      const allowance = await zooToken.methods.allowance(library.account, zooKeeper.options.address).call({ from: library.account })
       if (allowance > 0) {
         setAllowance(true)
         setKeepApprove(false)
@@ -110,7 +97,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
       // Increase allowance
       const supply = await zooToken.methods.totalSupply().call()
       console.log('zooToken.totalSupply', supply)
-      const allowance = web3.utils.toBN(supply)
+      const allowance = library.utils.toBN(supply)
       const tx = zooToken.methods.approve(zooKeeper.options.address, allowance).send({ from: account })
 
       if (tx) {
@@ -186,7 +173,7 @@ const Account: React.FC<AccountProps> = ({ handleFunds, wait, balance }) => {
     return () => {
       mounted = false
     }
-  }, [account, chainID])
+  }, [account, chainId])
 
   return (
     <
