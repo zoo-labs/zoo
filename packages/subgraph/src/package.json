@@ -1,0 +1,17 @@
+{
+  "name": "token-subgraph",
+  "description": "Token Test Subgraph",
+  "version": "1.0.0",
+  "author": "Isaac Frank",
+  "license": "MIT",
+  "scripts": {
+    "codegen": "graph codegen ./subgraph.yaml",
+    "build": "graph build ./subgraph.yaml",
+    "deploy": "graph deploy --product hosted-service --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ DATTARAJ24/Zoo ./subgraph.yaml --access-token"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "0.34.9",
+    "@graphprotocol/graph-ts": "^0.24.0",
+    "typescript": "^4.2.4"
+  }
+}
