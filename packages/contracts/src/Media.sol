@@ -265,7 +265,29 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
   function removeBid(uint256 tokenId) external override nonReentrant onlyTokenCreated(tokenId) {
     IMarket(marketContract).removeBid(tokenId, msg.sender);
   }
+   
 
+   function setAskFromApp(uint256 tokenId, IMarket.Ask memory ask) public override nonReentrant onlyExistingToken(tokenId) onlyAuthorizedCaller {
+    IMarket(marketContract).setAsk(tokenId, ask);
+  }
+
+  function setBidFromApp(uint256 tokenId, IMarket.Bid memory bid, address sender) external override nonReentrant onlyExistingToken(tokenId) onlyAuthorizedCaller {
+    require(sender == bid.bidder, 'Market: Bidder must be msg sender');
+    IMarket(marketContract).setBid(tokenId, bid, sender);
+  }
+
+  function setLazyBidFromApp(uint256 dropId, IDrop.TokenType memory tokenType, IMarket.Bid memory bid, address sender) external override nonReentrant onlyAuthorizedCaller {
+    require(sender == bid.bidder, 'Market: Bidder must be msg sender');
+    IMarket(marketContract).setLazyBidFromApp(dropId, tokenType, bid, sender);
+  }
+
+  function removeLazyBidFromApp(uint256 dropId, string memory name, address sender) external override nonReentrant onlyAuthorizedCaller {
+    IMarket(marketContract).removeLazyBidFromApp(dropId, name, sender);
+  }
+
+   function acceptLazyBidFromApp(uint256 dropId, IDrop.TokenType memory tokenType, ILux.Token memory token, IMarket.Bid memory bid) external override nonReentrant onlyAuthorizedCaller {
+    IMarket(marketContract).acceptLazyBidFromApp(dropId, tokenType, token, bid);
+  }
   /**
    * @notice see IMedia
    */
@@ -469,9 +491,8 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
     token.data.metadataHash = keccak256(abi.encodePacked(token.data.metadataURI, block.number, owner));
     return token;
   }
-
-  function mintToken(address owner, IZoo.Token memory token) external override nonReentrant returns (IZoo.Token memory) {
-    console.log('mintToken', owner, token.name);
+ function mintToken(address owner, ILux.Token memory token) external override onlyAuthorizedCaller returns (ILux.Token memory) {
+    console.log('mintToken', owner, token.name, token.data.tokenURI);
     token = _hashToken(owner, token);
     _mintForCreator(owner, token.data, token.bidShares);
     uint256 id = getRecentToken(owner);
