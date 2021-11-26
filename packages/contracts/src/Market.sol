@@ -195,6 +195,222 @@ contract Market is IMarket, Ownable {
     delete _tokenBidders[tokenId][bidder];
     token.safeTransfer(bidder, bidAmount);
   }
+  function setBid(
+    uint256 tokenId,
+    Bid memory bid,
+    address spender
+  ) public override onlyMediaCaller {
+    BidShares memory bidShares = _bidShares[tokenId];
+    require(bidShares.creator.value.add(bid.sellOnShare.value) <= uint256(100).mul(Decimal.BASE), 'Market: Sell on fee invalid for share splitting');
+    require(bid.bidder != address(0), 'Market: bidder cannot be 0 address');
+    require(!bid.offline || (bid.offline && isOfflineBidder(bid.bidder)), 'Market: Only whitelisted offline bidder');
+    require(bid.amount != 0, 'Market: cannot bid amount of 0');
+    // require(bid.currency != address(0), 'Market: bid currency cannot be 0 address');
+    require(bid.recipient != address(0), 'Market: bid recipient cannot be 0 address');
+
+    Bid storage existingBid = _tokenBidders[tokenId][bid.bidder];
+
+    // If there is an existing bid, refund it before continuing
+    if (existingBid.amount > 0) {
+      removeBid(tokenId, bid.bidder);
+    }
+
+    uint256 bidAmount = bid.amount;
+
+    if (bid.currency != address(0) && !bid.offline) {
+      IERC20 token = IERC20(bid.currency);
+      // We must check the balance that was actually transferred to the market,
+      // as some tokens impose a transfer fee and would not actually transfer the
+      // full amount to the market, resulting in locked funds for refunds & bid acceptance
+      uint256 beforeBalance = token.balanceOf(address(this));
+      token.safeTransferFrom(spender, address(this), bid.amount);
+      uint256 afterBalance = token.balanceOf(address(this));
+      bidAmount = afterBalance.sub(beforeBalance);
+    }
+
+    _tokenBidders[tokenId][bid.bidder] = Bid(bidAmount, bid.currency, bid.bidder, bid.recipient, bid.sellOnShare, bid.offline);
+
+    emit BidCreated(tokenId, bid);
+
+    // DO NOT automatically accept bids
+    // if (_tokenAsks[tokenId].currency != address(0) && bid.currency == _tokenAsks[tokenId].currency && bid.amount >= _tokenAsks[tokenId].amount) {
+    //   // Finalize exchange
+    //   _finalizeNFTTransfer(tokenId, bid.bidder);
+    // }
+  }
+  
+  /**
+   * @notice Sets the bid on a particular media for a bidder. The token being used to bid
+   * is transferred from the spender to this contract to be held until removed or accepted.
+   * If another bid already exists for the bidder, it is refunded.
+   */
+  function setLazyBidFromApp(
+    uint256 dropId,
+    IDrop.TokenType memory tokenType,
+    Bid memory bid,
+    address spender
+  ) external override onlyMediaCaller {
+    require(tokenType.bidShares.creator.value.add(bid.sellOnShare.value) <= uint256(100).mul(Decimal.BASE), 'Market: Sell on fee invalid for share splitting');
+    require(bid.bidder != address(0), 'Market: bidder cannot be 0 address');
+    require(!bid.offline || (bid.offline && isOfflineBidder(bid.bidder)), 'Market: Only whitelisted offline bidder');
+    require(bid.amount != 0, 'Market: cannot bid amount of 0');
+    // require(bid.currency != address(0), 'Market: bid currency cannot be 0 address');
+    require(bid.recipient != address(0), 'Market: bid recipient cannot be 0 address');
+
+    uint256 bidAmount = bid.amount;
+
+    if (bid.currency != address(0) && !bid.offline) {
+      IERC20 token = IERC20(bid.currency);
+      // We must check the balance that was actually transferred to the market,
+      // as some tokens impose a transfer fee and would not actually transfer the
+      // full amount to the market, resulting in locked funds for refunds & bid acceptance
+      uint256 beforeBalance = token.balanceOf(address(this));
+      token.safeTransferFrom(spender, address(this), bid.amount);
+      uint256 afterBalance = token.balanceOf(address(this));
+      bidAmount = afterBalance.sub(beforeBalance);
+    }
+
+    string memory dropTokenTypeName = getDropTokenTypeName(dropId, tokenType.name);
+
+    _lazyTokenBidders[dropTokenTypeName][bid.bidder] = Bid(bidAmount, bid.currency, bid.bidder, bid.recipient, bid.sellOnShare, bid.offline);
+
+    emit LazyBidCreated(dropId, tokenType.name, bid); 
+  }
+
+  function getDropTokenTypeName(uint256 tokenId, string memory name) internal pure returns(string memory) {
+    return string(abi.encodePacked(tokenId, '-', name));
+  }
+
+  /**
+   * @notice Removes the bid on a particular media for a bidder. The bid amount
+   * is transferred from this contract to the bidder, if they have a bid placed.
+   */
+  function removeBid(uint256 tokenId, address bidder) public override onlyMediaCaller {
+    Bid storage bid = _tokenBidders[tokenId][bidder];
+    address bidCurrency = bid.currency;
+    uint256 bidAmount = bid.amount;
+    bool bidOffline = bid.offline;
+
+    require(bid.amount > 0, 'Market: cannot remove bid amount of 0');
+
+    emit BidRemoved(tokenId, bid);
+    delete _tokenBidders[tokenId][bidder];
+
+    console.log('Market.removeBid', tokenId, bidCurrency, bidOffline);
+
+    if (bidCurrency != address(0) && !bidOffline) {
+      IERC20 token = IERC20(bidCurrency);
+      token.safeTransfer(bidder, bidAmount);
+    }
+  }
+
+  /**
+   * @notice Removes the bid on a particular media for a bidder. The bid amount
+   * is transferred from this contract to the bidder, if they have a bid placed.
+   */
+  function removeLazyBidFromApp(uint256 dropId, string memory name, address bidder) public override onlyMediaCaller {
+    string memory dropTokenTypeName = getDropTokenTypeName(dropId, name);
+    Bid storage bid = _lazyTokenBidders[dropTokenTypeName][bidder];
+    address bidCurrency = bid.currency;
+    uint256 bidAmount = bid.amount;
+    bool bidOffline = bid.offline;
+
+    require(bid.amount > 0, 'Market: cannot remove bid amount of 0');
+
+    emit LazyBidRemoved(dropId, name, bid);
+    delete _lazyTokenBidders[dropTokenTypeName][bidder];
+
+    console.log('Market.removeLazyBidFromApp', dropTokenTypeName, bidCurrency, bidOffline);
+
+    if (bidCurrency != address(0) && !bidOffline) {
+      IERC20 token = IERC20(bidCurrency);
+      token.safeTransfer(bidder, bidAmount);
+    }
+  }
+
+  function acceptLazyBidFromApp(uint256 dropId, IDrop.TokenType memory tokenType, ILux.Token memory token, Bid calldata expectedBid) external override onlyMediaCaller {
+    string memory dropTokenTypeName = getDropTokenTypeName(dropId, tokenType.name);
+    Bid memory bid = _lazyTokenBidders[dropTokenTypeName][expectedBid.bidder];
+    require(bid.amount > 0, 'Market: cannot accept bid of 0');
+    require(
+      bid.amount == expectedBid.amount && bid.currency == expectedBid.currency && bid.sellOnShare.value == expectedBid.sellOnShare.value && bid.recipient == expectedBid.recipient,
+      'Market: Unexpected bid found.'
+    );
+    require(isValidLazyBid(tokenType, bid.amount), 'Market: Bid invalid for share splitting');
+
+    _finalizeLazyMint(dropId, tokenType, token, bid.bidder);    
+  }
+
+  /**
+   * @notice Given a token ID and a bidder, this method transfers the value of
+   * the bid to the shareholders. It also transfers the ownership of the media
+   * to the bid recipient. Finally, it removes the accepted bid and the current ask.
+   */
+  function _finalizeNFTTransfer(uint256 tokenId, address bidder) private {
+    Bid memory bid = _tokenBidders[tokenId][bidder];
+    BidShares storage bidShares = _bidShares[tokenId];
+
+    if (bid.currency != address(0) && !bid.offline) {
+      IERC20 token = IERC20(bid.currency);
+
+      // Transfer bid share to owner of media
+      token.safeTransfer(IERC721(mediaContract).ownerOf(tokenId), splitShare(bidShares.owner, bid.amount));
+      // Transfer bid share to creator of media
+      token.safeTransfer(owner(), splitShare(bidShares.creator, bid.amount));
+      // Transfer bid share to previous owner of media (if applicable)
+      token.safeTransfer(Media(mediaContract).previousTokenOwners(tokenId), splitShare(bidShares.prevOwner, bid.amount));
+    }
+
+    // Transfer media to bid recipient
+    Media(mediaContract).auctionTransfer(tokenId, bid.recipient);
+
+    // Calculate the bid share for the new owner,
+    // equal to 100 - creatorShare - sellOnShare
+    bidShares.owner = Decimal.D256(uint256(100).mul(Decimal.BASE).sub(_bidShares[tokenId].creator.value).sub(bid.sellOnShare.value));
+    // Set the previous owner share to the accepted bid's sell-on fee
+    bidShares.prevOwner = bid.sellOnShare;
+
+    // Remove the accepted bid
+    delete _tokenBidders[tokenId][bidder];
+
+    emit BidShareUpdated(tokenId, bidShares);
+    emit BidFinalized(tokenId, bid);
+  }
+
+  /**
+   * @notice Given a token ID and a bidder, this method transfers the value of
+   * the bid to the shareholders. It also transfers the ownership of the media
+   * to the bid recipient. Finally, it removes the accepted bid and the current ask.
+   */
+  function _finalizeLazyMint(uint256 dropId, IDrop.TokenType memory tokenType, ILux.Token memory token, address bidder) private {
+
+    string memory dropTokenTypeName = getDropTokenTypeName(dropId, tokenType.name);
+
+    Bid memory bid = _lazyTokenBidders[dropTokenTypeName][bidder];
+
+    BidShares memory bidShares = tokenType.bidShares;
+
+    if (bid.currency != address(0) && !bid.offline) {
+      IERC20 erc20Token = IERC20(bid.currency);
+
+      erc20Token.safeTransfer(owner(), bid.amount); // Transfer 100%
+    }
+
+    // Transfer media to bid recipient
+    Media(mediaContract).mintToken(bid.recipient, token);
+
+    // Calculate the bid share for the new owner,
+    // equal to 100 - creatorShare - sellOnShare
+    bidShares.owner = Decimal.D256(uint256(100).mul(Decimal.BASE).sub(bidShares.creator.value).sub(bid.sellOnShare.value));
+    // Set the previous owner share to the accepted bid's sell-on fee
+    bidShares.prevOwner = bid.sellOnShare;
+
+    // Remove the accepted bid
+    delete _lazyTokenBidders[dropTokenTypeName][bidder];
+
+    emit BidShareUpdated(token.id, bidShares);
+    emit LazyBidFinalized(dropId, tokenType.name, token.id, bid);
+  }
 
   /**
    * @notice Accepts a bid from a particular bidder. Can only be called by the media contract.
