@@ -1,0 +1,42 @@
+specVersion: 0.0.2
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ZooKeeper
+    network: bsc-mainet
+    source:
+      address: "0x24d4B6Ba0726Ec6Ba0297084be938278247e046B"
+      abi: ZooKeeper
+      startBlock: 1
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ZooKeeper\ZooKeeper.wasm
+      entities:
+        - AddDrop
+        - Breed
+        - BuyEgg
+        - Free
+        - Hatch
+        - Mint
+        - Swap
+      abis:
+        - name: ZooKeeper
+          file: ZooKeeper\abis\ZooKeeper.json
+      eventHandlers:
+        - event: AddDrop(indexed address,string,uint256)
+          handler: handleAddDrop
+        - event: Breed(indexed address,uint256,uint256,indexed uint256)
+          handler: handleBreed
+        - event: Burn(indexed address,indexed uint256)
+          handler: handleBurn
+        - event: BuyEgg(indexed address,indexed uint256)
+          handler: handleBuyEgg
+        - event: Hatch(indexed address,uint256,indexed uint256)
+          handler: handleHatch
+        - event: Mint(indexed address,indexed uint256)
+          handler: handleMint
+        - event: Swap(indexed address,indexed uint256,indexed uint256)
+          handler: handleSwap
