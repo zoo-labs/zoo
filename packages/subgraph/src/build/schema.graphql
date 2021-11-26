@@ -1,0 +1,53 @@
+type Adddrop @entity {
+  id: ID!
+  DropAddress: String!
+  Title: String!
+  Eggsupply: BigInt!
+  transactionHash: String!
+}
+
+type breed @entity {
+  id: ID!
+  from: String!
+  ParentA: BigInt!
+  ParentB: BigInt!
+  eggId: BigInt!
+  transactionHash: String!
+}
+
+type burn @entity {
+  id: ID!
+  from: String!
+  TokenId: BigInt!
+  transactionHash: String!
+}
+
+type buyEgg @entity {
+  id: ID!
+  from: String!
+  eggId: BigInt!
+  transactionHash: String!
+}
+
+type hatch @entity {
+  id: ID!
+  from: String!
+  eggId: BigInt!
+  TokenId: BigInt!
+  transactionHash: String!
+}
+
+type mint @entity {
+  id: ID!
+  from: String!
+  TokenId: BigInt!
+  transactionHash: String!
+}
+
+type swap @entity {
+  id: ID!
+  Owner: String!
+  tokenId: BigInt!
+  ChainId: BigInt!
+  transactionHash: String!
+}
