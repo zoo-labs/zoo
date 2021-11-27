@@ -1,15 +1,53 @@
-type Purpose @entity {
+type Adddrop @entity {
   id: ID!
-  sender: Sender!
-  purpose: String!
-  createdAt: BigInt!
+  DropAddress: String!
+  Title: String!
+  Eggsupply: BigInt!
   transactionHash: String!
 }
 
-type Sender @entity {
+type breed @entity {
   id: ID!
-  address: Bytes!
-  purposes: [Purpose!] @derivedFrom(field: "sender")
-  createdAt: BigInt!
-  purposeCount: BigInt!
+  from: String!
+  ParentA: BigInt!
+  ParentB: BigInt!
+  eggId: BigInt!
+  transactionHash: String!
+}
+
+type burn @entity {
+  id: ID!
+  from: String!
+  TokenId: BigInt!
+  transactionHash: String!
+}
+
+type buyEgg @entity {
+  id: ID!
+  from: String!
+  eggId: BigInt!
+  transactionHash: String!
+}
+
+type hatch @entity {
+  id: ID!
+  from: String!
+  eggId: BigInt!
+  TokenId: BigInt!
+  transactionHash: String!
+}
+
+type mint @entity {
+  id: ID!
+  from: String!
+  TokenId: BigInt!
+  transactionHash: String!
+}
+
+type swap @entity {
+  id: ID!
+  Owner: String!
+  tokenId: BigInt!
+  ChainId: BigInt!
+  transactionHash: String!
 }

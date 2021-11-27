@@ -171,7 +171,6 @@ export class Free__Params {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  
 }
 
 export class Hatch extends ethereum.Event {
@@ -1248,7 +1247,6 @@ export class RemintCallTokenRarityStruct extends ethereum.Tuple {
     return this[1].toBigInt();
   }
 
-  
 
   get boost(): BigInt {
     return this[3].toBigInt();

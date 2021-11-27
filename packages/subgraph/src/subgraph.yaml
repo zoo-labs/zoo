@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 schema:
-  file: schema.graphql
+  file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: ZooKeeper
@@ -13,7 +13,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: ZooKeeper\ZooKeeper.wasm
+      file: ./mapping/mapping.ts
       entities:
         - Adddrop
         - breed
@@ -22,10 +22,10 @@ dataSources:
         - free
         - hatch
         - mint
-        - swap
+        - swap 
       abis:
         - name: ZooKeeper
-          file: ZooKeeper\abis\ZooKeeper.json
+          file: ./abis/ZooKeeper.json
       eventHandlers:
         - event: AddDrop(indexed address,string,uint256)
           handler: handleAddDrop
@@ -34,10 +34,12 @@ dataSources:
         - event: Burn(indexed address,indexed uint256)
           handler: handleBurn
         - event: BuyEgg(indexed address,indexed uint256)
-          handler: handleBuyEgg
+          handler: handleBuyEgg 
         - event: Hatch(indexed address,uint256,indexed uint256)
           handler: handleHatch
         - event: Mint(indexed address,indexed uint256)
           handler: handleMint
         - event: Swap(indexed address,indexed uint256,indexed uint256)
-          handler: handleSwap
+          handler: handleSwap   
+
+  
