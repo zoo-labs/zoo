@@ -499,7 +499,8 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
             currency: currency,
             bidder: address(this),
             recipient: auctions[auctionID].bidder,
-            sellOnShare: Decimal.D256(0)
+            sellOnShare: Decimal.D256(0),
+            offline: false
         });
 
         IERC20(currency).approve(

@@ -16,6 +16,7 @@ import { Ownable } from '@openzeppelin/contracts/access/Ownable.sol';
 import { Decimal } from './Decimal.sol';
 import { IMarket } from './interfaces/IMarket.sol';
 import './interfaces/IMedia.sol';
+import './interfaces/IDrop.sol';
 
 import './console.sol';
 
@@ -36,6 +37,9 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
 
   // Address for the market
   address public marketContract;
+
+    // Address for the app
+  address public appContract;
 
   // Mapping from token to previous owner of the token
   mapping(uint256 => address) public previousTokenOwners;
@@ -137,6 +141,14 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
   }
 
   /**
+   * @notice require that the msg.sender is the configured app, market or contract owner
+   */
+  modifier onlyAuthorizedCaller() {
+    require(appContract == msg.sender || marketContract == msg.sender || owner() == msg.sender, 'Media: Only app contract, market contract or owner');
+    _;
+  }
+
+  /**
    * @notice On deployment, set the market contract address and register the
    * ERC721 metadata interface
    */
@@ -148,8 +160,10 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
    * @notice Sets the market contract address. This address is the only permitted address that
    * can call the mutable functions.
    */
-  function configure(address marketContractAddr) external onlyOwner {
-    require(marketContractAddr != address(0), 'Market: cannot set market contract as zero address');
+  function configure(address appContractAddr, address marketContractAddr) external onlyOwner {
+    require(appContractAddr != address(0), 'Media: cannot set app contract as zero address');
+    appContract = appContractAddr;
+    require(marketContractAddr != address(0), 'Media: cannot set market contract as zero address');
     marketContract = marketContractAddr;
   }
 
@@ -266,8 +280,14 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
     IMarket(marketContract).removeBid(tokenId, msg.sender);
   }
    
+  /**
+   * @notice see IMedia
+   */
+  function removeBidFromApp(uint256 tokenId, address sender) external override nonReentrant onlyTokenCreated(tokenId) onlyAuthorizedCaller {
+    IMarket(marketContract).removeBid(tokenId, sender);
+  }
 
-   function setAskFromApp(uint256 tokenId, IMarket.Ask memory ask) public override nonReentrant onlyExistingToken(tokenId) onlyAuthorizedCaller {
+  function setAskFromApp(uint256 tokenId, IMarket.Ask memory ask) public override nonReentrant onlyExistingToken(tokenId) onlyAuthorizedCaller {
     IMarket(marketContract).setAsk(tokenId, ask);
   }
 
@@ -276,22 +296,30 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
     IMarket(marketContract).setBid(tokenId, bid, sender);
   }
 
-  function setLazyBidFromApp(uint256 dropId, IDrop.TokenType memory tokenType, IMarket.Bid memory bid, address sender) external override nonReentrant onlyAuthorizedCaller {
+  function setLazyBidFromApp(uint256 dropId, IDrop.Egg memory egg, IMarket.Bid memory bid, address sender) external override nonReentrant onlyAuthorizedCaller {
     require(sender == bid.bidder, 'Market: Bidder must be msg sender');
-    IMarket(marketContract).setLazyBidFromApp(dropId, tokenType, bid, sender);
+    IMarket(marketContract).setLazyBidFromApp(dropId, egg, bid, sender);
   }
 
   function removeLazyBidFromApp(uint256 dropId, string memory name, address sender) external override nonReentrant onlyAuthorizedCaller {
     IMarket(marketContract).removeLazyBidFromApp(dropId, name, sender);
   }
 
-   function acceptLazyBidFromApp(uint256 dropId, IDrop.TokenType memory tokenType, ILux.Token memory token, IMarket.Bid memory bid) external override nonReentrant onlyAuthorizedCaller {
-    IMarket(marketContract).acceptLazyBidFromApp(dropId, tokenType, token, bid);
+  function acceptLazyBidFromApp(uint256 dropId, IDrop.Egg memory egg, IZoo.Token memory token, IMarket.Bid memory bid) external override nonReentrant onlyAuthorizedCaller {
+    IMarket(marketContract).acceptLazyBidFromApp(dropId, egg, token, bid);
   }
+  
   /**
    * @notice see IMedia
    */
   function acceptBid(uint256 tokenId, IMarket.Bid memory bid) public override nonReentrant onlyApprovedOrOwner(msg.sender, tokenId) {
+    IMarket(marketContract).acceptBid(tokenId, bid);
+  }
+
+  /**
+   * @notice see IMedia
+   */
+  function acceptBidFromApp(uint256 tokenId, IMarket.Bid memory bid, address sender) external override nonReentrant onlyApprovedOrOwner(sender, tokenId) onlyAuthorizedCaller {
     IMarket(marketContract).acceptBid(tokenId, bid);
   }
 
@@ -491,7 +519,8 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
     token.data.metadataHash = keccak256(abi.encodePacked(token.data.metadataURI, block.number, owner));
     return token;
   }
- function mintToken(address owner, ILux.Token memory token) external override onlyAuthorizedCaller returns (ILux.Token memory) {
+
+  function mintToken(address owner, IZoo.Token memory token) external override onlyAuthorizedCaller returns (IZoo.Token memory) {
     console.log('mintToken', owner, token.name, token.data.tokenURI);
     token = _hashToken(owner, token);
     _mintForCreator(owner, token.data, token.bidShares);
@@ -510,4 +539,13 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
   function tokenExists(uint256 tokenID) public view override returns (bool) {
     return _exists(tokenID);
   }
+
+  function tokenCreator(uint256 tokenID) public view override returns (address) {
+    return tokenCreators[tokenID];
+  }
+
+  function previousTokenOwner(uint256 tokenID) public view override returns (address) {
+    return previousTokenOwners[tokenID];
+  }
+
 }
