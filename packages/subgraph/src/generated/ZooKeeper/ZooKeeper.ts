@@ -171,6 +171,9 @@ export class Free__Params {
     return this._event.parameters[1].value.toBigInt();
   }
 
+  get yield(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
 }
 
 export class Hatch extends ethereum.Event {
@@ -296,6 +299,9 @@ export class ZooKeeper__tokensResultRarityStruct extends ethereum.Tuple {
     return this[1].toBigInt();
   }
 
+  get yield(): BigInt {
+    return this[2].toBigInt();
+  }
 
   get boost(): BigInt {
     return this[3].toBigInt();
@@ -1018,6 +1024,9 @@ export class ImportEggCallValue0RarityStruct extends ethereum.Tuple {
     return this[1].toBigInt();
   }
 
+  get yield(): BigInt {
+    return this[2].toBigInt();
+  }
 
   get boost(): BigInt {
     return this[3].toBigInt();
@@ -1247,6 +1256,9 @@ export class RemintCallTokenRarityStruct extends ethereum.Tuple {
     return this[1].toBigInt();
   }
 
+  get yield(): BigInt {
+    return this[2].toBigInt();
+  }
 
   get boost(): BigInt {
     return this[3].toBigInt();
