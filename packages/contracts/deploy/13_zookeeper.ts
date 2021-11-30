@@ -23,7 +23,7 @@ export default Deploy('ZooKeeper', {
 
     // Configure contracts to talk to each other
     await market.configure(media.address)
-    await media.configure(market.address)
+    await media.configure(keeper.address, market.address)
     await keeper.configure(media.address, zoo.address, pair, bridge.address, true)
 
     if (hre.network.name == 'mainnet') return
