@@ -70,6 +70,12 @@ dataSources:
           handler: handleAskRemoved
         - event: BidCreated(indexed uint256,(uint256,address,address,address,(uint256)))
           handler: handleBidCreated
+        - event: LazyBidCreated(uint256,string,(uint256,address,address,address,(uint256)))
+          handler: handleLazyBidCreated
+        - event: LazyBidFinalized(uint256,string,indexed uint256,(uint256,address,address,address,(uint256)))
+          handler: handleLazyBidFinalized
+        - event: LazyBidRemoved(uint256,string,(uint256,address,address,address,(uint256)))
+          handler: handleLazyBidRemoved
         - event: BidRemoved(indexed uint256,(uint256,address,address,address,(uint256)))
           handler: handleBidRemoved
         - event: BidFinalized(indexed uint256,(uint256,address,address,address,(uint256)))

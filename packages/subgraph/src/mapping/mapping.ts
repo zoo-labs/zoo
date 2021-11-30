@@ -5,20 +5,6 @@ import {
 
 import { Adddrop,breed,hatch,burn,buyEgg,mint, swap } from "../generated/schema"
 
-import {
-  AskCreated,
-  AskRemoved,
-  BidCreated,
-  BidFinalized,
-  BidRemoved,
-  BidShareUpdated,
-} from '../generated/Market/Market'
-import { BigInt, log, store } from '@graphprotocol/graph-ts'
-import { Ask, Bid, Media, Transfer } from '../generated/schema'
-
-const REMOVED = 'Removed'
-const FINALIZED = 'Finalized'
-
 export function handleAddDrop(event: AddDrop): void {
   let AddDrop = Adddrop.load(event.transaction.hash.toHex());
   if(AddDrop == null)
@@ -99,554 +85,522 @@ export function handleSwap(event: Swap): void {
   Swap.save();
   };
 }
+type Media @entity {
+  "The tokenId on the Zora Media Contract"
+  id: ID!
 
-/**
- * Handler called when a `BidShareUpdated` Event is emitted on the Zora Market Contract
- * @param event
- */
-export function handleBidShareUpdated(event: BidShareUpdated): void {
-  let tokenId = event.params.tokenID.toString()
-  let bidShares = event.params.bidShares
+  "The transaction hash the media was created at"
+  transactionHash: String!
 
-  log.info(`Starting handler for BidShareUpdated Event for tokenId: {}, bidShares: {}`, [
-    tokenId,
-    bidShares.toString(),
-  ])
+  "The current owner of the Media"
+  owner: User!
 
-  let media = Media.load(tokenId)
-  if (media == null) {
-    log.error('Media is null for tokenId: {}', [tokenId])
-  } else {
-    media.creatorBidShare = bidShares.creator.value
-    media.ownerBidShare = bidShares.owner.value
-    media.prevOwnerBidShare = bidShares.prevOwner.value
-    media.save()
-  }
+  "The creator of the Media"
+  creator: User!
 
-  log.info(`Completed handler for BidShareUpdated Event for tokenId: {}, bidShares: {}`, [
-    tokenId,
-    bidShares.toString(),
-  ])
+  "The previous owner of the Zora Media's Market"
+  prevOwner: User!
+
+  "The approved user of the Media"
+  approved: User
+
+  "The sha256 hash of the media's content"
+  contentHash: Bytes!
+
+  "The sha256 hash of the media's metadata"
+  metadataHash: Bytes!
+
+  "The uri of the content"
+  contentURI: String!
+
+  "The uri of the metadata"
+  metadataURI: String!
+
+  "The bid share for the current owner of the Media"
+  ownerBidShare: BigInt!
+
+  "The bid share for the creator of the Media"
+  creatorBidShare: BigInt!
+
+  "The bid share for the previous owner of the Media's market"
+  prevOwnerBidShare: BigInt!
+
+  "The timestamp of the block the Media was minted in"
+  createdAtTimestamp: BigInt!
+
+  "The number of the block the Media was minted in"
+  createdAtBlockNumber: BigInt!
+
+  "The timestamp of the block the Media was burned in"
+  burnedAtTimeStamp: BigInt
+
+  "The number of the block the Media was burned in"
+  burnedAtBlockNumber: BigInt
+
+  "The current Ask of the Media"
+  currentAsk: Ask @derivedFrom(field: "media")
+
+  "The current Bids on the Media"
+  currentBids: [Bid!] @derivedFrom(field: "media")
+
+  "The InactiveAsks of the Media"
+  inactiveAsks: [InactiveAsk!] @derivedFrom(field: "media")
+
+  "The InactiveBids of the Media"
+  inactiveBids: [InactiveBid!] @derivedFrom(field: "media")
+
+  "The transfers of the Media"
+  transfers: [Transfer!] @derivedFrom(field: "media")
+
+  "The ReserveAuctions of the Media"
+  reserveAuctions: [ReserveAuction!] @derivedFrom(field: "media")
+
+  "Lux: The owner is allowed to set the token name"
+  name: String
 }
 
-/**
- * Handler called when the `AskCreated` Event is emitted on the Zora Market Contract
- * @param event
- */
-export function handleAskCreated(event: AskCreated): void {
-  let tokenId = event.params.tokenID.toString()
-  let onchainAsk = event.params.ask
+type User @entity {
+  "Ethereum Address"
+  id: ID!
 
-  log.info(`Starting handler for AskCreated Event for tokenId: {}, ask: {}`, [
-    tokenId,
-    onchainAsk.toString(),
-  ])
+  "Users that have been granted `ApprovalForAll` Media of the User's Collection"
+  authorizedUsers: [User!]
 
-  let media = Media.load(tokenId)
-  if (media == null) {
-    log.error('Media is null for tokenId: {}', [tokenId])
-    return
-  }
+  "The Media the User owns"
+  collection: [Media!]! @derivedFrom(field: "owner")
 
-  let currency = findOrCreateCurrency(onchainAsk.currency.toHexString())
-  let askId = media.id.concat('-').concat(media.owner)
-  let ask = Ask.load(askId)
+  "The Media the User created"
+  creations: [Media!]! @derivedFrom(field: "creator")
 
-  if (ask == null) {
-    createAsk(
-      askId,
-      event.transaction.hash.toHexString(),
-      onchainAsk.amount,
-      currency,
-      media as Media,
-      event.block.timestamp,
-      event.block.number
-    )
-  } else {
-    let inactiveAskId = tokenId
-      .concat('-')
-      .concat(event.transaction.hash.toHexString())
-      .concat('-')
-      .concat(event.transactionLogIndex.toString())
-
-    // create an inactive ask
-    createInactiveAsk(
-      inactiveAskId,
-      event.transaction.hash.toHexString(),
-      media as Media,
-      REMOVED,
-      ask.amount,
-      currency,
-      ask.owner,
-      ask.createdAtTimestamp,
-      ask.createdAtBlockNumber,
-      event.block.timestamp,
-      event.block.number
-    )
-
-    // update the fields on the original ask object
-    ask.amount = onchainAsk.amount
-    ask.currency = currency.id
-    ask.createdAtTimestamp = event.block.timestamp
-    ask.createdAtBlockNumber = event.block.number
-    ask.save()
-  }
-
-  log.info(`Completed handler for AskCreated Event for tokenId: {}, ask: {}`, [
-    tokenId,
-    onchainAsk.toString(),
-  ])
+  "The active Bids made by the User"
+  currentBids: [Bid!] @derivedFrom(field: "bidder")
 }
 
-/**
- * Handler called when the `AskRemoved` Event is emitted on the Zora Market Contract
- * @param event
- */
-export function handleAskRemoved(event: AskRemoved): void {
-  let tokenId = event.params.tokenId.toString()
-  let onChainAsk = event.params.ask
-  let askId: string
+type Ask @entity {
+  "<tokenId>-<ownerAddress>"
+  id: ID!
 
-  log.info(`Starting handler for AskRemoved Event for tokenId: {}`, [tokenId])
+  "The Media associated with the Ask"
+  media: Media!
 
-  let zero = BigInt.fromI32(0)
-  // asks must be > 0 and evenly split by bidshares
-  if (onChainAsk.amount.equals(zero)) {
-    log.info(
-      `AskRemoved Event has a 0 amount, returning early and not updating state`,
-      []
-    )
-    askId = AddressZero
-  } else {
-    let media = Media.load(tokenId)
-    if (media == null) {
-      log.error('Media is null for tokenId: {}', [tokenId])
-    }
+  # tokenType: TokenType!
 
-    let currency = findOrCreateCurrency(onChainAsk.currency.toHexString())
+  "Transaction hash the ask was created at"
+  transactionHash: String!
 
-    askId = tokenId.concat('-').concat(media.owner)
-    let ask = Ask.load(askId)
-    if (ask == null) {
-      log.error('Ask is null for askId: {}', [askId])
-    }
+  "The Currency of the Ask"
+  currency: Currency!
 
-    let inactiveAskId = tokenId
-      .concat('-')
-      .concat(event.transaction.hash.toHexString())
-      .concat('-')
-      .concat(event.transactionLogIndex.toString())
+  "The amount of Currency of the Ask"
+  amount: BigInt!
 
-    createInactiveAsk(
-      inactiveAskId,
-      event.transaction.hash.toHexString(),
-      media as Media,
-      REMOVED,
-      ask.amount,
-      currency,
-      ask.owner,
-      ask.createdAtTimestamp,
-      ask.createdAtBlockNumber,
-      event.block.timestamp,
-      event.block.number
-    )
+  "The owner of the Ask"
+  owner: User!
 
-    store.remove('Ask', askId)
-  }
+  "The timestamp of the block the Ask was created in"
+  createdAtTimestamp: BigInt!
 
-  log.info(`Completed handler for AskRemoved Event for tokenId: {}, askId: {}`, [
-    tokenId,
-    askId,
-  ])
+  "The number of the block the Ask created in"
+  createdAtBlockNumber: BigInt!
+
+  "Is this a sale lazy mint ask"
+  lazy: Boolean!
+
+  "Drop id"
+  dropId: BigInt!
+  
+  "Token type name"
+  tokenTypeName: String!
 }
 
-/**
- * Handler called `BidCreated` Event is emitted on the Zora Market Contract
- * @param event
- */
-export function handleBidCreated(event: BidCreated): void {
-  let tokenId = event.params.tokenId.toString()
-  let media = Media.load(tokenId)
-  let bid = event.params.bid
+type Bid @entity {
+  "<token-id>-<bidderAddress>"
+  id: ID!
 
-  log.info(`Starting handler for BidCreated Event for tokenId: {}, bid: {}`, [
-    tokenId,
-    bid.toString(),
-  ])
+  "Transaction hash the bid was created at"
+  transactionHash: String!
 
-  if (media == null) {
-    log.error('Media is null for tokenId: {}', [tokenId])
-  }
+  "The Media associated with the Bid"
+  media: Media!
 
-  let bidId = media.id.concat('-').concat(bid.bidder.toHexString())
+  "The Currency of the Bid"
+  currency: Currency!
 
-  let bidder = findOrCreateUser(bid.bidder.toHexString())
-  let recipient = findOrCreateUser(bid.recipient.toHexString())
+  "The amount of Currency of the Bid"
+  amount: BigInt!
 
-  let currency = findOrCreateCurrency(bid.currency.toHexString())
+  "The sellOnShare of the Bid"
+  sellOnShare: BigInt!
 
-  createBid(
-    bidId,
-    event.transaction.hash.toHexString(),
-    bid.amount,
-    currency,
-    bid.sellOnShare.value,
-    bidder,
-    recipient,
-    media as Media,
-    event.block.timestamp,
-    event.block.number
-  )
+  "The bidder of the Bid"
+  bidder: User!
 
-  // Update Currency Liquidity
-  currency.liquidity = currency.liquidity.plus(bid.amount)
-  currency.save()
+  "The recipient of Media if the Bid is accepted"
+  recipient: User!
 
-  log.info(`Completed handler for BidCreated Event for tokenId: {}, bid: {}`, [
-    tokenId,
-    bid.toString(),
-  ])
+  "The timestamp of the block the Bid was created in"
+  createdAtTimestamp: BigInt!
+
+  "The number of the block the Bid was created in"
+  createdAtBlockNumber: BigInt!
+
+  "Is this a sale lazy mint bid"
+  lazy: Boolean!
+
+  "Drop id"
+  dropId: BigInt!
+  
+  "Token type name"
+  tokenTypeName: String!
 }
 
-/**
- * Handler called `LazyBidCreated` Event is emitted on the Zora Market Contract
- * @param event
- */
- export function handleLazyBidCreated(event: LazyBidCreated): void {
-  let dropId = event.params.dropId
-  let name = event.params.name
-  let bid = event.params.bid
-
-  log.info(`Starting handler for LazyBidCreated Event for dropId: {}, bid: {}`, [
-    dropId.toString(),
-    name,
-    bid.toString(),
-  ])
-
-  let bidId = dropId.toString().concat('-').concat(name).concat('-').concat(bid.bidder.toHexString())
-
-  let bidder = findOrCreateUser(bid.bidder.toHexString())
-  let recipient = findOrCreateUser(bid.recipient.toHexString())
-
-  let currency = findOrCreateCurrency(bid.currency.toHexString())
-
-  createLazyBid(
-    bidId,
-    event.params.dropId,
-    name,
-    event.transaction.hash.toHexString(),
-    bid.amount,
-    currency,
-    bid.sellOnShare.value,
-    bidder,
-    recipient,
-    event.block.timestamp,
-    event.block.number
-  )
-
-  // Update Currency Liquidity
-  if (!bid.offline) {
-    currency.liquidity = currency.liquidity.plus(bid.amount)
-    currency.save()
-  }
-
-  log.info(`Completed handler for LazyBidCreated Event for dropId: {}, bid: {}`, [
-    dropId.toString(),
-    name,
-    bid.toString(),
-  ])
+"The Types for MarketEvents (Asks, Bids)"
+enum MarketEventType {
+  Finalized
+  Removed
 }
 
-/**
- * Handler called when the `BidRemoved` Event is emitted on the Zora Market Contract
- * @param event
- */
-export function handleBidRemoved(event: BidRemoved): void {
-  let tokenId = event.params.tokenId.toString()
-  let media = Media.load(tokenId)
-  let onChainBid = event.params.bid
+type InactiveBid @entity {
+  "<tokenId>-<transactionHash>-<logIndex>"
+  id: ID!
 
-  let bidId = tokenId.concat('-').concat(onChainBid.bidder.toHexString())
+  "Transaction hash the bid was created at"
+  transactionHash: String!
 
-  log.info(`Starting handler for BidRemoved Event for tokenId: {}, bid: {}`, [
-    tokenId,
-    bidId,
-  ])
+  "The Media associated with the InactiveBid"
+  media: Media!
 
-  if (media == null) {
-    log.error('Media is null for tokenId: {}', [tokenId])
-  }
+  "The reason why this Bid is Inactive"
+  type: MarketEventType!
 
-  let bid = Bid.load(bidId)
-  if (bid == null) {
-    log.error('Bid is null for bidId: {}', [bidId])
-  }
+  "The Currency of the InactiveBid"
+  currency: Currency!
 
-  let inactiveBidId = tokenId
-    .concat('-')
-    .concat(event.transaction.hash.toHexString())
-    .concat('-')
-    .concat(event.transactionLogIndex.toString())
+  "The amount of Currency of the InactiveBid"
+  amount: BigInt!
 
-  let bidder = findOrCreateUser(onChainBid.bidder.toHexString())
-  let recipient = findOrCreateUser(onChainBid.recipient.toHexString())
-  let currency = findOrCreateCurrency(onChainBid.currency.toHexString())
+  "The sellOnShare of the InactiveBid"
+  sellOnShare: BigInt!
 
-  // Create Inactive Bid
-  createInactiveBid(
-    inactiveBidId,
-    event.transaction.hash.toHexString(),
-    REMOVED,
-    media as Media,
-    onChainBid.amount,
-    currency,
-    onChainBid.sellOnShare.value,
-    bidder,
-    recipient,
-    bid.createdAtTimestamp,
-    bid.createdAtBlockNumber,
-    event.block.timestamp,
-    event.block.number
-  )
+  "The bidder of the InactiveBid"
+  bidder: User!
 
-  // Update Currency Liquidity
-  currency.liquidity = currency.liquidity.minus(bid.amount)
-  currency.save()
+  "The recipient of the InactiveBid"
+  recipient: User!
 
-  // Remove Bid
-  store.remove('Bid', bidId)
-  log.info(`Completed handler for BidRemoved Event for tokenId: {}, bid: {}`, [
-    tokenId,
-    bidId,
-  ])
+  "The timestamp of the block the original Bid was created in"
+  createdAtTimestamp: BigInt!
+
+  "The number of the block the original Bid was created in"
+  createdAtBlockNumber: BigInt!
+
+ "The timestamp of the block the original Bid was inactivated in"
+  inactivatedAtTimestamp: BigInt!
+
+  "The number of the block the original Bid was inactivated in"
+  inactivatedAtBlockNumber: BigInt!
+
+  "Is this a sale lazy mint bid"
+  lazy: Boolean!
+
+  "Drop id"
+  dropId: BigInt!
+  
+  "Token type name"
+  tokenTypeName: String!
 }
 
-/**
- * Handler called when the `BidRemoved` Event is emitted on the Zora Market Contract
- * @param event
- */
-export function handleLazyBidRemoved(event: LazyBidRemoved): void {
-  let dropId = event.params.dropId
-  let name = event.params.name
-  let onChainBid = event.params.bid
-  let bidderHex = onChainBid.bidder.toHexString()
+type InactiveAsk @entity {
+  "<tokenId>-<transactionHash>-<logIndex>"
+  id: ID!
 
-  let bidId = dropId.toString().concat('-').concat(name).concat('-').concat(bidderHex)
+  "Transaction hash the ask was created at"
+  transactionHash: String!
 
-  log.info(`Starting handler for LazyBidRemoved Event for tokenId: {}, bid: {}`, [
-    dropId.toString(),
-    name,
-    bidderHex,
-    bidId,
-  ])
+  "The Media associated with the InactiveAsk"
+  media: Media!
 
-  let bid = Bid.load(bidId)
-  if (bid == null) {
-    log.error('Bid is null for bidId: {}', [bidId])
-  }
+  "The why this Ask is Inactive"
+  type: MarketEventType!
 
-  let inactiveBidId = dropId
-    .toString()
-    .concat('-')
-    .concat(name)
-    .concat(event.transaction.hash.toHexString())
-    .concat('-')
-    .concat(event.transactionLogIndex.toString())
+  "The Currency of the InactiveAsk"
+  currency: Currency!
 
-  let bidder = findOrCreateUser(onChainBid.bidder.toHexString())
-  let recipient = findOrCreateUser(onChainBid.recipient.toHexString())
-  let currency = findOrCreateCurrency(onChainBid.currency.toHexString())
+  "The amount of Currency of the InactiveAsk"
+  amount: BigInt!
 
-  // Create Inactive Bid
-  createInactiveLazyBid(
-    inactiveBidId,
-    dropId,
-    name,
-    event.transaction.hash.toHexString(),
-    REMOVED,
-    onChainBid.amount,
-    currency,
-    onChainBid.sellOnShare.value,
-    bidder,
-    recipient,
-    bid.createdAtTimestamp,
-    bid.createdAtBlockNumber,
-    event.block.timestamp,
-    event.block.number
-  )
+  "The owner of the InactiveAsk"
+  owner: User!
 
-  // Update Currency Liquidity
-  currency.liquidity = currency.liquidity.minus(bid.amount)
-  currency.save()
+  "The timestamp of the block the original Ask was created in"
+  createdAtTimestamp: BigInt!
 
-  // Remove Bid
-  store.remove('Bid', bidId)
-  log.info(`Completed handler for BidRemoved Event for name: {}, bid: {}`, [
-    dropId.toString(),
-    name,
-    bidderHex,
-    bidId,
-  ])
+  "The number of the block the original Ask was created in"
+  createdAtBlockNumber: BigInt!
+
+  "The timestamp of the block the original Ask was inactivated in"
+  inactivatedAtTimestamp: BigInt!
+
+  "The number of the block the original Ask was inactivated in"
+  inactivatedAtBlockNumber: BigInt!
+  
+  "Is this a sale lazy mint ask"
+  lazy: Boolean!
+
+  "Drop id"
+  dropId: BigInt!
+  
+  "Token type name"
+  tokenTypeName: String!
 }
 
-/**
- * Handler called when the `BidFinalized` Event is emitted on the Zora Market Contract
- * @param event
- */
-export function handleBidFinalized(event: BidFinalized): void {
-  let tokenId = event.params.tokenId.toString()
-  let media = Media.load(tokenId)
-  let onChainBid = event.params.bid
+type Currency @entity {
+  "The address of the Currency"
+  id: ID!
 
-  let bidId = tokenId.concat('-').concat(onChainBid.bidder.toHexString())
-  log.info(`Starting handler for BidFinalized Event for tokenId: {}, bid: {}`, [
-    tokenId,
-    bidId,
-  ])
+  "The name of the Currency"
+  name: String!
 
-  if (media == null) {
-    log.error('Media is null for tokenId: {}', [tokenId])
-  }
+  "The symbol of the Currency"
+  symbol: String!
 
-  let bid = Bid.load(bidId)
-  if (bid == null) {
-    log.error('Bid is null for bidId: {}', [bidId])
-  }
+  "The decimals of the Currency"
+  decimals: Int
 
-  let inactiveBidId = tokenId
-    .concat('-')
-    .concat(event.transaction.hash.toHexString())
-    .concat('-')
-    .concat(event.transactionLogIndex.toString())
+  "Total Bid Liquidity of the Currency on all Zora Media"
+  liquidity: BigInt!
 
-  let bidder = findOrCreateUser(onChainBid.bidder.toHexString())
-  let recipient = findOrCreateUser(onChainBid.recipient.toHexString())
-  let currency = findOrCreateCurrency(onChainBid.currency.toHexString())
+  "The active Bids denominated in the Currency"
+  activeBids: [Bid!] @derivedFrom(field: "currency")
 
-  // BidFinalized is always **two** events after transfer
-  // https://github.com/ourzora/core/blob/master/contracts/Market.sol#L349
-  // Find the transfer by id and set the from address as the prevOwner of the media
-  let transferId = event.params.tokenId
-    .toString()
-    .concat('-')
-    .concat(event.transaction.hash.toHexString())
-    .concat('-')
-    .concat(event.transactionLogIndex.minus(BigInt.fromI32(2)).toString())
-  let transfer = Transfer.load(transferId)
-  if (transfer == null) {
-    log.error('Transfer is null for transfer id: {}', [transferId])
-  }
+  "The active Asks denominated in the Currency"
+  activeAsks: [Ask!] @derivedFrom(field: "currency")
 
-  media.prevOwner = transfer.from
-  media.save()
+  "The InactiveBids denominated in the Currency"
+  inactiveBids: [InactiveBid!] @derivedFrom(field: "currency")
 
-  // Create Inactive Bid
-  createInactiveBid(
-    inactiveBidId,
-    event.transaction.hash.toHexString(),
-    FINALIZED,
-    media as Media,
-    onChainBid.amount,
-    currency,
-    onChainBid.sellOnShare.value,
-    bidder,
-    recipient,
-    bid.createdAtTimestamp,
-    bid.createdAtBlockNumber,
-    event.block.timestamp,
-    event.block.number
-  )
-
-  // Update Currency Liquidity
-  currency.liquidity = currency.liquidity.minus(bid.amount)
-  currency.save()
-
-  // Remove Bid
-  store.remove('Bid', bidId)
-  log.info(`Completed handler for BidFinalized Event for tokenId: {}, bid: {}`, [
-    tokenId,
-    bidId,
-  ])
+  "The InactiveAsks denominated in the Currency"
+  inactiveAsks: [InactiveAsk!] @derivedFrom(field: "currency")
 }
 
-/**
- * Handler called when the `BidFinalized` Event is emitted on the Zora Market Contract
- * @param event
- */
-export function handleLazyBidFinalized(event: LazyBidFinalized): void {
-  let tokenId = event.params.tokenId.toString()
-  let dropId = event.params.dropId.toString()
-  let name = event.params.name.toString()
-  let media = Media.load(tokenId)
-  let onChainBid = event.params.bid
+type Transfer @entity {
+  "<tokenId>-<transactionHash>-<logIndex>"
+  id: ID!
 
-  let bidId = dropId.concat('-').concat(name).concat('-').concat(onChainBid.bidder.toHexString())
-  log.info(`Starting handler for BidFinalized Event for tokenId: {}, bid: {}`, [
-    tokenId,
-    bidId,
-  ])
+  "Transaction hash for the transfer"
+  transactionHash: String!
 
-  if (media == null) {
-    log.error('Media is null for tokenId: {}', [tokenId])
-  }
+  "The Media associated with the Transfer"
+  media: Media!
 
-  let bid = Bid.load(bidId)
-  if (bid == null) {
-    log.error('Bid is null for bidId: {}', [bidId])
-  }
+  "The User transferring the Media"
+  from: User!
 
-  let inactiveBidId = tokenId
-    .concat('-')
-    .concat(event.transaction.hash.toHexString())
-    .concat('-')
-    .concat(event.transactionLogIndex.toString())
+  "The User receiving the Media"
+  to: User!
 
-  let bidder = findOrCreateUser(onChainBid.bidder.toHexString())
-  let recipient = findOrCreateUser(onChainBid.recipient.toHexString())
-  let currency = findOrCreateCurrency(onChainBid.currency.toHexString())
+  "The timestamp of the block the Transfer was created in"
+  createdAtTimestamp: BigInt!
 
-  // BidFinalized is always **two** events after transfer
-  // https://github.com/ourzora/core/blob/master/contracts/Market.sol#L349
-  // Find the transfer by id and set the from address as the prevOwner of the media
-  let transferId = event.params.tokenId
-    .toString()
-    .concat('-')
-    .concat(event.transaction.hash.toHexString())
-    .concat('-')
-    .concat(event.transactionLogIndex.minus(BigInt.fromI32(2)).toString())
-  let transfer = Transfer.load(transferId)
-  if (transfer == null) {
-    log.error('Transfer is null for transfer id: {}', [transferId])
-  }
-
-  media.prevOwner = transfer.from
-  // media.save()
-
-  // Create Inactive Bid
-  // createInactiveBid(
-  //   inactiveBidId,
-  //   event.transaction.hash.toHexString(),
-  //   FINALIZED,
-  //   media as Media,
-  //   onChainBid.amount,
-  //   currency,
-  //   onChainBid.sellOnShare.value,
-  //   bidder,
-  //   recipient,
-  //   bid.createdAtTimestamp,
-  //   bid.createdAtBlockNumber,
-  //   event.block.timestamp,
-  //   event.block.number
-  // )
-
-  // Update Currency Liquidity
-  currency.liquidity = currency.liquidity.minus(bid.amount)
-  currency.save()
-
-  // Remove Bid
-  store.remove('Bid', bidId)
-  log.info(`Completed handler for BidFinalized Event for tokenId: {}, bid: {}`, [
-    tokenId,
-    bidId,
-  ])
+  "The number of the block the Transfer was created in"
+  createdAtBlockNumber: BigInt!
 }
+
+"The Types of URI Updates"
+enum URIUpdateType {
+  Content
+  Metadata
+}
+
+type URIUpdate @entity {
+  "<tokenId>-<transactionHash>-<logIndex>"
+  id: ID!
+
+  "The transaction has the uri update happened at"
+  transactionHash: String!
+
+  "The Type of URIUpdate"
+  type: URIUpdateType!
+
+  "The previous uri"
+  from: String!
+
+  "The new uri"
+  to: String!
+
+  "The Media associated with the URIUpdate"
+  media: Media!
+
+  "The owner of the Media"
+  owner: User!
+
+  "The updater of the Media's URI"
+  updater: User!
+
+  "The timestamp of the block the URIUpdate was created in"
+  createdAtTimestamp: BigInt!
+
+  "The number of the block the URIUpdate was created in"
+  createdAtBlockNumber: BigInt!
+}
+
+enum ReserveAuctionBidType {
+  Active
+  Refunded
+  Final
+}
+
+type ReserveAuctionBid @entity {
+  "<auctionId>-<txHash>-<logIndex>"
+  id: ID!
+
+  "The transaction hash the reserve auction big was created at"
+  transactionHash: String!
+
+  "The Reserve auction associated with the Bid"
+  reserveAuction: ReserveAuction!
+
+  "The amount of the Bid"
+  amount: BigInt!
+
+  "The bidder of the Bid"
+  bidder: User!
+
+  "The type of bid (active, refunded, final)"
+  bidType: ReserveAuctionBidType!
+
+  "The timestamp of the block the Bid was created in"
+  createdAtTimestamp: BigInt!
+
+  "The number of the block the Bid was created in"
+  createdAtBlockNumber: BigInt!
+}
+
+type InactiveReserveAuctionBid @entity {
+  "<auctionId>-<txHash>-<logIndex>"
+  id: ID!
+
+  "The transaction hash the reserve auction big was created at"
+  transactionHash: String!
+
+  "The Reserve auction associated with the Bid"
+  reserveAuction: ReserveAuction!
+
+  "The amount of the Bid"
+  amount: BigInt!
+
+  "The bidder of the Bid"
+  bidder: User!
+
+  "The type of bid (active, refunded, final)"
+  bidType: ReserveAuctionBidType!
+
+  "The timestamp of the block the bid was inactivated at (via outbid, cancellation, winning bid)"
+  bidInactivatedAtTimestamp: BigInt!
+
+  "The number of the block the bid was inactivated at (via outbid, cancellation, winning bid)"
+  bidInactivatedAtBlockNumber: BigInt!
+
+  "The timestamp of the block the Bid was created in"
+  createdAtTimestamp: BigInt!
+
+  "The number of the block the Bid was created in"
+  createdAtBlockNumber: BigInt!
+}
+
+enum ReserveAuctionStatus {
+  Pending
+  Active
+  Canceled
+  Finished
+}
+
+type ReserveAuction @entity {
+  "ID of the auction from contract, autoincrementing int"
+  id: ID!
+
+  "Transaction hash where the reserve auction was created"
+  transactionHash: String!
+
+  "The originating token contract for this auction"
+  tokenContract: String!
+
+  "The token ID for this auction"
+  tokenId: BigInt!
+
+  "<tokenContract>-<tokenId>"
+  token: String!
+
+  "The media for the auction, if it is a zora NFT"
+  media: Media
+  "Whether or not the auction has been approved by the curator"
+  approved: Boolean!
+  "The length of time the auction is intended to run for, after the first bid is made"
+  duration: BigInt!
+  "The expected end of auction timestamp, which can change if bids were placed within the last 15 minutes, and is not set until the first bid is placed"
+  expectedEndTimestamp: BigInt
+  "The time the first bid was placed"
+  firstBidTime: BigInt
+  "The minimum price of the first bid"
+  reservePrice: BigInt!
+  "The sale percentage to send to the curator"
+  curatorFeePercentage: Int!
+  "The address that should receive the funds once the NFT is sold"
+  tokenOwner: User!
+  "The address of the auction's curator"
+  curator: User!
+  "The address of the ERC-20 currency to run the auction with, or 0x0 for ETH"
+  auctionCurrency: Currency!
+  status: ReserveAuctionStatus!
+  "The current bid on this auction"
+  currentBid: ReserveAuctionBid
+  "The previous bids on this auction"
+  previousBids: [InactiveReserveAuctionBid!]  @derivedFrom(field: "reserveAuction")
+  "The time the auction was approved"
+  approvedTimestamp: BigInt
+  "The number of the block the auction was Approved"
+  approvedBlockNumber: BigInt
+  "The timestamp of the block the Transfer was created in"
+  createdAtTimestamp: BigInt!
+  "The number of the block the Transfer was created in"
+  createdAtBlockNumber: BigInt!
+  "The timestamp at which the auction end function was called"
+  finalizedAtTimestamp: BigInt
+  "The block number at which the auction end function was called"
+  finalizedAtBlockNumber: BigInt
+}
+enum TokenKind {
+  ATM
+  Cash
+  Validator
+  Wallet
+}
+type TokenType @entity {
+  "The token type name"
+  id: ID!
+  "The token type kind"
+  kind: TokenKind!
+  # "The suggested ask for the token type"
+  # ask: Ask! @derivedFrom(field: "tokenType")
+  "The maximum number of tokens that can be minted for this type"
+  supply: BigInt!
+   "The sha256 hash of the media's content"
+  contentHash: Bytes!
+  "The sha256 hash of the media's metadata"
+  metadataHash: Bytes!
+  "The uri of the content"
+  contentURI: String!
+  "The uri of the metadata"
+  metadataURI: String! 
+  "The bid share for the current owner of the Media"
+  ownerBidShare: BigInt!
+  "The bid share for the creator of the Media"
+  creatorBidShare: BigInt!
+  "The bid share for the previous owner of the Media's market"
+  prevOwnerBidShare: BigInt!
+  "The timestamp of the block the Bid was created in"
+  createdAtTimestamp: BigInt!
+  "The transaction hash the media was created at"
+  transactionHash: String!
+}
+
