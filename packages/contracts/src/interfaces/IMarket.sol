@@ -5,6 +5,8 @@ pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
 import { Decimal } from '../Decimal.sol';
+import { IDrop } from './IDrop.sol';
+import { IZoo } from './IZoo.sol';
 
 /**
  * @title Interface for Zoo Protocol's Market
@@ -21,6 +23,8 @@ interface IMarket {
     address recipient;
     // % of the next sale to award the current owner
     Decimal.D256 sellOnShare;
+    // Flag bid as offline for OTC sale
+    bool offline;
   }
 
   struct Ask {
@@ -28,6 +32,8 @@ interface IMarket {
     uint256 amount;
     // Address to the ERC20 token being asked
     address currency;
+    // Flag ask as offline for OTC sale
+    bool offline;
   }
 
   struct BidShares {
@@ -45,8 +51,13 @@ interface IMarket {
   event AskCreated(uint256 indexed tokenId, Ask ask);
   event AskRemoved(uint256 indexed tokenId, Ask ask);
   event BidShareUpdated(uint256 indexed tokenId, BidShares bidShares);
+  event LazyBidFinalized(uint256 dropId, string name, uint256 indexed tokenId, Bid bid);
+  event LazyBidCreated(uint256 dropId, string name, Bid bid);
+  event LazyBidRemoved(uint256 dropId, string name, Bid bid);
 
   function bidForTokenBidder(uint256 tokenId, address bidder) external view returns (Bid memory);
+
+  function lazyBidForTokenBidder(uint256 dropId, string memory name, address bidder) external view returns (Bid memory);
 
   function currentAskForToken(uint256 tokenId) external view returns (Ask memory);
 
@@ -72,7 +83,22 @@ interface IMarket {
     address spender
   ) external;
 
+  function setLazyBidFromApp(
+    uint256 dropId,
+    IDrop.Egg memory egg,
+    Bid memory bid,
+    address spender
+  ) external;
+
   function removeBid(uint256 tokenId, address bidder) external;
 
+  function removeLazyBidFromApp(uint256 dropId, string memory name, address sender) external;
+
   function acceptBid(uint256 tokenId, Bid calldata expectedBid) external;
+
+  function acceptLazyBidFromApp(uint256 dropId, IDrop.Egg memory egg, IZoo.Token memory token, Bid calldata expectedBid) external;
+
+  function isOfflineBidder(address bidder) external returns (bool);
+
+  function setOfflineBidder(address bidder, bool authorized) external;
 }

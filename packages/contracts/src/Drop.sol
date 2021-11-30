@@ -8,46 +8,16 @@ import { Decimal } from "./Decimal.sol";
 import { IMarket } from "./interfaces/IMarket.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 import { IZoo } from "./interfaces/IZoo.sol";
+import { IDrop } from "./interfaces/IDrop.sol";
 
 import "./console.sol";
 
 
-contract Drop is Ownable {
+contract Drop is IDrop, Ownable {
     using SafeMath for uint256;
 
-    struct Egg {
-        IZoo.Type kind;
-        string  name;
-        uint256 supply;
-        uint256 price;
-        uint256 timestamp;    // time created
-        uint256 birthday;     // birth block
-        uint256 minted;       // amount minted
-        IMedia.MediaData data;
-        IMarket.BidShares bidShares;
-    }
-
-    struct Animal {
-        IZoo.Type kind;
-        IZoo.Rarity rarity;
-        string name;
-        IMedia.MediaData data;
-        IMarket.BidShares bidShares;
-    }
-
-    struct Hybrid {
-        IZoo.Type kind;
-        IZoo.Rarity rarity;
-        string name;
-        uint256 yield;
-        string parentA;
-        string parentB;
-        IMedia.MediaData data;
-        IMarket.BidShares bidShares;
-    }
-
     // Title of drop
-    string public title;
+    string override public title;
 
     // Name of default base egg
     string public baseEgg;
@@ -229,11 +199,11 @@ contract Drop is Ownable {
     }
 
     // Return price for current EggDrop
-    function eggPrice() public view returns (uint256) {
+    function eggPrice() public override view returns (uint256) {
         return getEgg(baseEgg).price;
     }
 
-    function eggSupply() public view returns (uint256) {
+    function eggSupply() public override view returns (uint256) {
         return getEgg(baseEgg).supply;
     }
 
@@ -242,7 +212,7 @@ contract Drop is Ownable {
     }
 
     // Return a new Egg Token
-    function newEgg() external onlyZoo returns (IZoo.Token memory) {
+    function newEgg() override external onlyZoo returns (IZoo.Token memory) {
         Egg memory egg = getEgg(baseEgg);
         require(eggSupply() == 0 || egg.minted < eggSupply(), "Out of eggs");
 
@@ -270,7 +240,7 @@ contract Drop is Ownable {
     }
 
     // Return a new Hybrid Egg Token
-    function newHybridEgg(IZoo.Parents memory parents) external view onlyZoo returns (IZoo.Token memory) {
+    function newHybridEgg(IZoo.Parents memory parents) override external view onlyZoo returns (IZoo.Token memory) {
         Egg memory egg = getEgg(hybridEgg);
         require(hybridSupply() == 0 || egg.minted < hybridSupply(), "Out of hybrid eggs");
 
@@ -314,7 +284,7 @@ contract Drop is Ownable {
     }
 
     // Chooses animal based on random number generated from(0-999)
-    function getRandomAnimal(uint256 random) external view returns (IZoo.Token memory token) {
+    function getRandomAnimal(uint256 random) override external view returns (IZoo.Token memory token) {
         Animal memory animal;
 
         console.log('getRandomAnimal', random);
@@ -352,7 +322,7 @@ contract Drop is Ownable {
         return token;
     }
 
-    function getRandomHybrid(uint256 random, IZoo.Parents memory parents) external view returns (IZoo.Token memory token) {
+    function getRandomHybrid(uint256 random, IZoo.Parents memory parents) override external view returns (IZoo.Token memory token) {
         Hybrid[2] memory possible = [
             parentsToHybrid(parents.animalA, parents.animalB),
             parentsToHybrid(parents.animalB, parents.animalA)

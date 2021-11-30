@@ -7,6 +7,7 @@ pragma experimental ABIEncoderV2;
 import { IERC721 } from '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 import { IMarket } from './IMarket.sol';
 import { IZoo } from './IZoo.sol';
+import { IDrop } from './IDrop.sol';
 
 /**
  * @title Interface for Zoo Protocol's Media
@@ -106,10 +107,44 @@ interface IMedia is IERC721 {
     EIP712Signature calldata sig
   ) external;
 
-  // Added for Zoo
+  // Added for App
+
+  /**
+   * @notice Set the ask on a piece of media
+   */
+  function setAskFromApp(uint256 tokenId, IMarket.Ask calldata ask) external;
+
+  /**
+   * @notice Set the bid on a piece of media
+   */
+  function setBidFromApp(uint256 tokenId, IMarket.Bid memory bid, address sender) external;
+
+  /**
+   * @notice Remove the bid on a piece of media
+   */
+  function removeBidFromApp(uint256 tokenId, address sender) external;
+
+  function removeLazyBidFromApp(uint256 dropId, string memory name, address sender) external;
+
+  function acceptBidFromApp(uint256 tokenId, IMarket.Bid memory bid, address sender) external;
+
+  function acceptLazyBidFromApp(uint256 dropId, IDrop.Egg memory egg, IZoo.Token memory token, IMarket.Bid memory bid) external;
+
   function mintToken(address owner, IZoo.Token memory tokenID) external returns (IZoo.Token memory);
 
   function burnToken(address owner, uint256 tokenID) external;
 
   function tokenExists(uint256 tokenID) external returns (bool);
+
+  function tokenCreator(uint256 tokenID) external returns (address);
+  
+  function previousTokenOwner(uint256 tokenID) external returns (address);
+
+  function setLazyBidFromApp(
+    uint256 dropId,
+    IDrop.Egg memory egg,
+    IMarket.Bid memory bid,
+    address spender
+  ) external;
+
 }
