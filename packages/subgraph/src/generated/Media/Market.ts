@@ -1409,7 +1409,7 @@ export class AcceptLazyBidFromAppCallTokenRarityStruct extends ethereum.Tuple {
     return this[1].toBigInt();
   }
 
-  get yields(): BigInt {
+  get yield(): BigInt {
     return this[2].toBigInt();
   }
 
