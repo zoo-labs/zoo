@@ -1,0 +1,83 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ZooKeeper
+    network: bsc
+    source:
+      address: "0x24d4B6Ba0726Ec6Ba0297084be938278247e046B"
+      abi: ZooKeeper
+      startBlock: 1
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./mapping/mapping.ts
+      entities:
+        - Adddrop
+        - breed
+        - burn
+        - buyEgg
+        - free
+        - hatch
+        - mint
+        - swap 
+      abis:
+        - name: ZooKeeper
+          file: ./abis/ZooKeeper.json
+      eventHandlers:
+        - event: AddDrop(indexed address,string,uint256)
+          handler: handleAddDrop
+        - event: Breed(indexed address,uint256,uint256,indexed uint256)
+          handler: handleBreed
+        - event: Burn(indexed address,indexed uint256)
+          handler: handleBurn
+        - event: BuyEgg(indexed address,indexed uint256)
+          handler: handleBuyEgg 
+        - event: Hatch(indexed address,uint256,indexed uint256)
+          handler: handleHatch
+        - event: Mint(indexed address,indexed uint256)
+          handler: handleMint
+        - event: Swap(indexed address,indexed uint256,indexed uint256)
+          handler: handleSwap   
+
+
+  - kind: ethereum/contract
+    name: Market
+    network: bsc
+    source:
+      address: "0x24d4B6Ba0726Ec6Ba0297084be938278247e046B"
+      abi: Market
+      startBlock: 1
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./mapping/mapping.ts
+      entities:
+        - Ask
+        - Bid
+      abis:
+        - name: Market
+          file: ./abis/Market.json
+      eventHandlers:
+        - event: BidShareUpdated(indexed uint256,((uint256),(uint256),(uint256)))
+          handler: handleBidShareUpdated
+        - event: AskCreated(indexed uint256,(uint256,address))
+          handler: handleAskCreated
+        - event: AskRemoved(indexed uint256,(uint256,address))
+          handler: handleAskRemoved
+        - event: BidCreated(indexed uint256,(uint256,address,address,address,(uint256)))
+          handler: handleBidCreated
+        - event: LazyBidCreated(uint256,string,(uint256,address,address,address,(uint256)))
+          handler: handleLazyBidCreated
+        - event: LazyBidFinalized(uint256,string,indexed uint256,(uint256,address,address,address,(uint256)))
+          handler: handleLazyBidFinalized
+        - event: LazyBidRemoved(uint256,string,(uint256,address,address,address,(uint256)))
+          handler: handleLazyBidRemoved
+        - event: BidRemoved(indexed uint256,(uint256,address,address,address,(uint256)))
+          handler: handleBidRemoved
+        - event: BidFinalized(indexed uint256,(uint256,address,address,address,(uint256)))
+          handler: handleBidFinalized
+  
