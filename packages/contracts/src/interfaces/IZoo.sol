@@ -16,7 +16,7 @@ interface IZoo {
     struct Rarity {
         string  name;
         uint256 probability;
-        uint256 yield;
+        uint256 yields;
         uint256 boost;
     }
 
