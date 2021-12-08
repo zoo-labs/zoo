@@ -4,7 +4,7 @@
     "name": "Puggy",
     "parentA": "Pug",
     "parentB": "Pug",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/puggy.jpg",
     "metadataURI": "https://db.zoolabs.io/puggy.json"
   },
@@ -13,7 +13,7 @@
     "name": "Puggerfly",
     "parentA": "Pug",
     "parentB": "Butterfly",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/puggerfly.jpg",
     "metadataURI": "https://db.zoolabs.io/puggerfly.json"
   },
@@ -22,7 +22,7 @@
     "name": "Pugitten",
     "parentA": "Pug",
     "parentB": "Kitten",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/pugitten.jpg",
     "metadataURI": "https://db.zoolabs.io/pugitten.json"
   },
@@ -31,7 +31,7 @@
     "name": "Pugurtle",
     "parentA": "Pug",
     "parentB": "Turtle",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/pugurtle.jpg",
     "metadataURI": "https://db.zoolabs.io/pugurtle.json"
   },
@@ -40,7 +40,7 @@
     "name": "Butterpug",
     "parentA": "Butterfly",
     "parentB": "Pug",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/butterpug.jpg",
     "metadataURI": "https://db.zoolabs.io/butterpug.json"
   },
@@ -49,7 +49,7 @@
     "name": "Caterpillar",
     "parentA": "Butterfly",
     "parentB": "Butterfly",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/caterpillar.jpg",
     "metadataURI": "https://db.zoolabs.io/caterpillar.json"
   },
@@ -58,7 +58,7 @@
     "name": "Butterflitten",
     "parentA": "Butterfly",
     "parentB": "Kitten",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/butterflitten.jpg",
     "metadataURI": "https://db.zoolabs.io/butterflitten.json"
   },
@@ -67,7 +67,7 @@
     "name": "Butturtle",
     "parentA": "Butterfly",
     "parentB": "Turtle",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/butturtle.jpg",
     "metadataURI": "https://db.zoolabs.io/butturtle.json"
   },
@@ -76,7 +76,7 @@
     "name": "Kitty Pug",
     "parentA": "Kitten",
     "parentB": "Pug",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/kittypug.jpg",
     "metadataURI": "https://db.zoolabs.io/kittypug.json"
   },
@@ -85,7 +85,7 @@
     "name": "Kitterfly",
     "parentA": "Kitten",
     "parentB": "Butterfly",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/kitterfly.jpg",
     "metadataURI": "https://db.zoolabs.io/kitterfly.json"
   },
@@ -94,7 +94,7 @@
     "name": "Kitten",
     "parentA": "Kitten",
     "parentB": "Kitten",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/kitten.jpg",
     "metadataURI": "https://db.zoolabs.io/kitten.json"
   },
@@ -103,7 +103,7 @@
     "name": "Kitturtle",
     "parentA": "Kitten",
     "parentB": "Turtle",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/kitturtle.jpg",
     "metadataURI": "https://db.zoolabs.io/kitturtle.json"
   },
@@ -112,7 +112,7 @@
     "name": "Turtpug",
     "parentA": "Turtle",
     "parentB": "Pug",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/turtpug.jpg",
     "metadataURI": "https://db.zoolabs.io/turtpug.json"
   },
@@ -121,7 +121,7 @@
     "name": "Turtterfly",
     "parentA": "Turtle",
     "parentB": "Butterfly",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/turtterfly.jpg",
     "metadataURI": "https://db.zoolabs.io/turtterfly.json"
   },
@@ -130,7 +130,7 @@
     "name": "Turkitten",
     "parentA": "Turtle",
     "parentB": "Kitten",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/turkitten.jpg",
     "metadataURI": "https://db.zoolabs.io/turkitten.json"
   },
@@ -139,7 +139,7 @@
     "name": "Tiny Turtle",
     "parentA": "Turtle",
     "parentB": "Turtle",
-    "yield": 120,
+    "yields": 120,
     "tokenURI": "https://db.zoolabs.io/tinyturtle.jpg",
     "metadataURI": "https://db.zoolabs.io/tinyturtle.json"
   },
@@ -148,7 +148,7 @@
     "name": "Pengpug",
     "parentA": "Penguin",
     "parentB": "Pug",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/pengpug.jpg",
     "metadataURI": "https://db.zoolabs.io/pengpug.json"
   },
@@ -157,7 +157,7 @@
     "name": "Penggerfly",
     "parentA": "Penguin",
     "parentB": "Butterfly",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/penggerfly.jpg",
     "metadataURI": "https://db.zoolabs.io/penggerfly.json"
   },
@@ -166,7 +166,7 @@
     "name": "Pengkitty",
     "parentA": "Penguin",
     "parentB": "Kitten",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/pengkitty.jpg",
     "metadataURI": "https://db.zoolabs.io/pengkitty.json"
   },
@@ -175,7 +175,7 @@
     "name": "Pengurtle",
     "parentA": "Penguin",
     "parentB": "Turtle",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/pengurtle.jpg",
     "metadataURI": "https://db.zoolabs.io/pengurtle.json"
   },
@@ -184,7 +184,7 @@
     "name": "DuckPug",
     "parentA": "Duckling",
     "parentB": "Pug",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/duckpug.jpg",
     "metadataURI": "https://db.zoolabs.io/duckpug.json"
   },
@@ -193,7 +193,7 @@
     "name": "Duckerfly",
     "parentA": "Duckling",
     "parentB": "Butterfly",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/duckerfly.jpg",
     "metadataURI": "https://db.zoolabs.io/duckerfly.json"
   },
@@ -202,7 +202,7 @@
     "name": "Duckitten",
     "parentA": "Duckling",
     "parentB": "Kitten",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/duckitten.jpg",
     "metadataURI": "https://db.zoolabs.io/duckitten.json"
   },
@@ -211,7 +211,7 @@
     "name": "Durtle",
     "parentA": "Duckling",
     "parentB": "Turtle",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/durtle.jpg",
     "metadataURI": "https://db.zoolabs.io/durtle.json"
   },
@@ -220,7 +220,7 @@
     "name": "Orcapug",
     "parentA": "Orca",
     "parentB": "Pug",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/orcapug.jpg",
     "metadataURI": "https://db.zoolabs.io/orcapug.json"
   },
@@ -229,7 +229,7 @@
     "name": "Orcafly",
     "parentA": "Orca",
     "parentB": "Butterfly",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/orcafly.jpg",
     "metadataURI": "https://db.zoolabs.io/orcafly.json"
   },
@@ -238,7 +238,7 @@
     "name": "Orkitten",
     "parentA": "Orca",
     "parentB": "Kitten",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/orkitten.jpg",
     "metadataURI": "https://db.zoolabs.io/orkitten.json"
   },
@@ -247,7 +247,7 @@
     "name": "Orcaturtle",
     "parentA": "Orca",
     "parentB": "Turtle",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/orcaturtle.jpg",
     "metadataURI": "https://db.zoolabs.io/orcaturtle.json"
   },
@@ -256,7 +256,7 @@
     "name": "Elkpug",
     "parentA": "Elk",
     "parentB": "Pug",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/elkpug.jpg",
     "metadataURI": "https://db.zoolabs.io/elkpug.json"
   },
@@ -265,7 +265,7 @@
     "name": "Elkerfly",
     "parentA": "Elk",
     "parentB": "Butterfly",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/elkerfly.jpg",
     "metadataURI": "https://db.zoolabs.io/elkerfly.json"
   },
@@ -274,7 +274,7 @@
     "name": "Elkitten",
     "parentA": "Elk",
     "parentB": "Kitten",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/elkitten.jpg",
     "metadataURI": "https://db.zoolabs.io/elkitten.json"
   },
@@ -283,7 +283,7 @@
     "name": "Elkurtle",
     "parentA": "Elk",
     "parentB": "Turtle",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/elkurtle.jpg",
     "metadataURI": "https://db.zoolabs.io/elkurtle.json"
   },
@@ -292,7 +292,7 @@
     "name": "Pandapug",
     "parentA": "Panda",
     "parentB": "Pug",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/pandapug.jpg",
     "metadataURI": "https://db.zoolabs.io/pandapug.json"
   },
@@ -301,7 +301,7 @@
     "name": "Pandafly",
     "parentA": "Panda",
     "parentB": "Butterfly",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/pandafly.jpg",
     "metadataURI": "https://db.zoolabs.io/pandafly.json"
   },
@@ -310,7 +310,7 @@
     "name": "Pandacat",
     "parentA": "Panda",
     "parentB": "Kitten",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/pandacat.jpg",
     "metadataURI": "https://db.zoolabs.io/pandacat.json"
   },
@@ -319,7 +319,7 @@
     "name": "Pandaturtle",
     "parentA": "Panda",
     "parentB": "Turtle",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/pandaturtle.jpg",
     "metadataURI": "https://db.zoolabs.io/pandaturtle.json"
   },
@@ -328,7 +328,7 @@
     "name": "Gug",
     "parentA": "Gorilla",
     "parentB": "Pug",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/gug.jpg",
     "metadataURI": "https://db.zoolabs.io/gug.json"
   },
@@ -337,7 +337,7 @@
     "name": "Gorillafly",
     "parentA": "Gorilla",
     "parentB": "Butterfly",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/gorillafly.jpg",
     "metadataURI": "https://db.zoolabs.io/gorillafly.json"
   },
@@ -346,7 +346,7 @@
     "name": "Gorkitten",
     "parentA": "Gorilla",
     "parentB": "Kitten",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/gorkitten.jpg",
     "metadataURI": "https://db.zoolabs.io/gorkitten.json"
   },
@@ -355,7 +355,7 @@
     "name": "Gorturtle",
     "parentA": "Gorilla",
     "parentB": "Turtle",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/gorturtle.jpg",
     "metadataURI": "https://db.zoolabs.io/gorturtle.json"
   },
@@ -364,7 +364,7 @@
     "name": "Elepug",
     "parentA": "Elephant",
     "parentB": "Pug",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/elepug.jpg",
     "metadataURI": "https://db.zoolabs.io/elepug.json"
   },
@@ -373,7 +373,7 @@
     "name": "Elephantterfly",
     "parentA": "Elephant",
     "parentB": "Butterfly",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/elephantterfly.jpg",
     "metadataURI": "https://db.zoolabs.io/elephantterfly.json"
   },
@@ -382,7 +382,7 @@
     "name": "Elephitten",
     "parentA": "Elephant",
     "parentB": "Kitten",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/elephitten.jpg",
     "metadataURI": "https://db.zoolabs.io/elephitten.json"
   },
@@ -391,7 +391,7 @@
     "name": "Elephanturtle",
     "parentA": "Elephant",
     "parentB": "Turtle",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/elephanturtle.jpg",
     "metadataURI": "https://db.zoolabs.io/elephanturtle.json"
   },
@@ -400,7 +400,7 @@
     "name": "Lionpug",
     "parentA": "Lion",
     "parentB": "Pug",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/lionpug.jpg",
     "metadataURI": "https://db.zoolabs.io/lionpug.json"
   },
@@ -409,7 +409,7 @@
     "name": "Lionfly",
     "parentA": "Lion",
     "parentB": "Butterfly",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/lionfly.jpg",
     "metadataURI": "https://db.zoolabs.io/lionfly.json"
   },
@@ -418,7 +418,7 @@
     "name": "Litten",
     "parentA": "Lion",
     "parentB": "Kitten",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/litten.jpg",
     "metadataURI": "https://db.zoolabs.io/litten.json"
   },
@@ -427,7 +427,7 @@
     "name": "Lionturtle",
     "parentA": "Lion",
     "parentB": "Turtle",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/lionturtle.jpg",
     "metadataURI": "https://db.zoolabs.io/lionturtle.json"
   },
@@ -436,7 +436,7 @@
     "name": "Bearpug",
     "parentA": "Bear",
     "parentB": "Pug",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/bearpug.jpg",
     "metadataURI": "https://db.zoolabs.io/bearpug.json"
   },
@@ -445,7 +445,7 @@
     "name": "Beartterfly",
     "parentA": "Bear",
     "parentB": "Butterfly",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/beartterfly.jpg",
     "metadataURI": "https://db.zoolabs.io/beartterfly.json"
   },
@@ -454,7 +454,7 @@
     "name": "Beartten",
     "parentA": "Bear",
     "parentB": "Kitten",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/beartten.jpg",
     "metadataURI": "https://db.zoolabs.io/beartten.json"
   },
@@ -463,7 +463,7 @@
     "name": "Beartle",
     "parentA": "Bear",
     "parentB": "Turtle",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/beartle.jpg",
     "metadataURI": "https://db.zoolabs.io/beartle.json"
   },
@@ -472,7 +472,7 @@
     "name": "Shug",
     "parentA": "Shark",
     "parentB": "Pug",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/shug.jpg",
     "metadataURI": "https://db.zoolabs.io/shug.json"
   },
@@ -481,7 +481,7 @@
     "name": "Sharkerfly",
     "parentA": "Shark",
     "parentB": "Butterfly",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/sharkerfly.jpg",
     "metadataURI": "https://db.zoolabs.io/sharkerfly.json"
   },
@@ -490,7 +490,7 @@
     "name": "Sharkitten",
     "parentA": "Shark",
     "parentB": "Kitten",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/sharkitten.jpg",
     "metadataURI": "https://db.zoolabs.io/sharkitten.json"
   },
@@ -499,7 +499,7 @@
     "name": "Shurtle",
     "parentA": "Shark",
     "parentB": "Turtle",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/shurtle.jpg",
     "metadataURI": "https://db.zoolabs.io/shurtle.json"
   },
@@ -508,7 +508,7 @@
     "name": "Blobpug",
     "parentA": "Blobfish",
     "parentB": "Pug",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/blobpug.jpg",
     "metadataURI": "https://db.zoolabs.io/blobpug.json"
   },
@@ -517,7 +517,7 @@
     "name": "Blobberfly",
     "parentA": "Blobfish",
     "parentB": "Butterfly",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/blobberfly.jpg",
     "metadataURI": "https://db.zoolabs.io/blobberfly.json"
   },
@@ -526,7 +526,7 @@
     "name": "Blob kitten",
     "parentA": "Blobfish",
     "parentB": "Kitten",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/blobkitten.jpg",
     "metadataURI": "https://db.zoolabs.io/blobkitten.json"
   },
@@ -535,7 +535,7 @@
     "name": "Bloburtle",
     "parentA": "Blobfish",
     "parentB": "Turtle",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/bloburtle.jpg",
     "metadataURI": "https://db.zoolabs.io/bloburtle.json"
   },
@@ -544,7 +544,7 @@
     "name": "Naked Mole Pug",
     "parentA": "Naked Mole Rat",
     "parentB": "Pug",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/nakedmolepug.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedmolepug.json"
   },
@@ -553,7 +553,7 @@
     "name": "Naked Butterfly",
     "parentA": "Naked Mole Rat",
     "parentB": "Butterfly",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/nakedbutterfly.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedbutterfly.json"
   },
@@ -562,7 +562,7 @@
     "name": "Naked Mole Kitten",
     "parentA": "Naked Mole Rat",
     "parentB": "Kitten",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/nakedmolekitten.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedmolekitten.json"
   },
@@ -571,7 +571,7 @@
     "name": "Naked Turtle",
     "parentA": "Naked Mole Rat",
     "parentB": "Turtle",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/nakedturtle.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedturtle.json"
   },
@@ -580,7 +580,7 @@
     "name": "Pugguin",
     "parentA": "Pug",
     "parentB": "Penguin",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/pugguin.jpg",
     "metadataURI": "https://db.zoolabs.io/pugguin.json"
   },
@@ -589,7 +589,7 @@
     "name": "Pugling",
     "parentA": "Pug",
     "parentB": "Duckling",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/pugling.jpg",
     "metadataURI": "https://db.zoolabs.io/pugling.json"
   },
@@ -598,7 +598,7 @@
     "name": "Pugorca",
     "parentA": "Pug",
     "parentB": "Orca",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/pugorca.jpg",
     "metadataURI": "https://db.zoolabs.io/pugorca.json"
   },
@@ -607,7 +607,7 @@
     "name": "Pelk",
     "parentA": "Pug",
     "parentB": "Elk",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/pelk.jpg",
     "metadataURI": "https://db.zoolabs.io/pelk.json"
   },
@@ -616,7 +616,7 @@
     "name": "Butterflenguin",
     "parentA": "Butterfly",
     "parentB": "Penguin",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/butterflenguin.jpg",
     "metadataURI": "https://db.zoolabs.io/butterflenguin.json"
   },
@@ -625,7 +625,7 @@
     "name": "Butterfling",
     "parentA": "Butterfly",
     "parentB": "Duckling",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/butterfling.jpg",
     "metadataURI": "https://db.zoolabs.io/butterfling.json"
   },
@@ -634,7 +634,7 @@
     "name": "Buttorca",
     "parentA": "Butterfly",
     "parentB": "Orca",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/buttorca.jpg",
     "metadataURI": "https://db.zoolabs.io/buttorca.json"
   },
@@ -643,7 +643,7 @@
     "name": "Butterflelk",
     "parentA": "Butterfly",
     "parentB": "Elk",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/butterflelk.jpg",
     "metadataURI": "https://db.zoolabs.io/butterflelk.json"
   },
@@ -652,7 +652,7 @@
     "name": "Kittypenguin",
     "parentA": "Kitten",
     "parentB": "Penguin",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/kittypenguin.jpg",
     "metadataURI": "https://db.zoolabs.io/kittypenguin.json"
   },
@@ -661,7 +661,7 @@
     "name": "Kittyling",
     "parentA": "Kitten",
     "parentB": "Duckling",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/kittyling.jpg",
     "metadataURI": "https://db.zoolabs.io/kittyling.json"
   },
@@ -670,7 +670,7 @@
     "name": "Kittorca",
     "parentA": "Kitten",
     "parentB": "Orca",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/kittorca.jpg",
     "metadataURI": "https://db.zoolabs.io/kittorca.json"
   },
@@ -679,7 +679,7 @@
     "name": "Kittelk",
     "parentA": "Kitten",
     "parentB": "Elk",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/kittelk.jpg",
     "metadataURI": "https://db.zoolabs.io/kittelk.json"
   },
@@ -688,7 +688,7 @@
     "name": "Turtlepeng",
     "parentA": "Turtle",
     "parentB": "Penguin",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/turtlepeng.jpg",
     "metadataURI": "https://db.zoolabs.io/turtlepeng.json"
   },
@@ -697,7 +697,7 @@
     "name": "Turtling",
     "parentA": "Turtle",
     "parentB": "Duckling",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/turtling.jpg",
     "metadataURI": "https://db.zoolabs.io/turtling.json"
   },
@@ -706,7 +706,7 @@
     "name": "Turtorca",
     "parentA": "Turtle",
     "parentB": "Orca",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/turtorca.jpg",
     "metadataURI": "https://db.zoolabs.io/turtorca.json"
   },
@@ -715,7 +715,7 @@
     "name": "Turtelk",
     "parentA": "Turtle",
     "parentB": "Elk",
-    "yield": 320,
+    "yields": 320,
     "tokenURI": "https://db.zoolabs.io/turtelk.jpg",
     "metadataURI": "https://db.zoolabs.io/turtelk.json"
   },
@@ -724,7 +724,7 @@
     "name": "Penguin Chick",
     "parentA": "Penguin",
     "parentB": "Penguin",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/penguinchick.jpg",
     "metadataURI": "https://db.zoolabs.io/penguinchick.json"
   },
@@ -733,7 +733,7 @@
     "name": "Pengling",
     "parentA": "Penguin",
     "parentB": "Duckling",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/pengling.jpg",
     "metadataURI": "https://db.zoolabs.io/pengling.json"
   },
@@ -742,7 +742,7 @@
     "name": "Penguorca",
     "parentA": "Penguin",
     "parentB": "Orca",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/penguorca.jpg",
     "metadataURI": "https://db.zoolabs.io/penguorca.json"
   },
@@ -751,7 +751,7 @@
     "name": "Penguelk",
     "parentA": "Penguin",
     "parentB": "Elk",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/penguelk.jpg",
     "metadataURI": "https://db.zoolabs.io/penguelk.json"
   },
@@ -760,7 +760,7 @@
     "name": "Ducklinguin",
     "parentA": "Duckling",
     "parentB": "Penguin",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/ducklinguin.jpg",
     "metadataURI": "https://db.zoolabs.io/ducklinguin.json"
   },
@@ -769,7 +769,7 @@
     "name": "Duckling Chick",
     "parentA": "Duckling",
     "parentB": "Duckling",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/ducklingchick.jpg",
     "metadataURI": "https://db.zoolabs.io/ducklingchick.json"
   },
@@ -778,7 +778,7 @@
     "name": "Dorca",
     "parentA": "Duckling",
     "parentB": "Orca",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/dorca.jpg",
     "metadataURI": "https://db.zoolabs.io/dorca.json"
   },
@@ -787,7 +787,7 @@
     "name": "Duckelk",
     "parentA": "Duckling",
     "parentB": "Elk",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/duckelk.jpg",
     "metadataURI": "https://db.zoolabs.io/duckelk.json"
   },
@@ -796,7 +796,7 @@
     "name": "Orcapeng",
     "parentA": "Orca",
     "parentB": "Penguin",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/orcapeng.jpg",
     "metadataURI": "https://db.zoolabs.io/orcapeng.json"
   },
@@ -805,7 +805,7 @@
     "name": "Orcling",
     "parentA": "Orca",
     "parentB": "Duckling",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/orcling.jpg",
     "metadataURI": "https://db.zoolabs.io/orcling.json"
   },
@@ -814,7 +814,7 @@
     "name": "Baby Orca",
     "parentA": "Orca",
     "parentB": "Orca",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/babyorca.jpg",
     "metadataURI": "https://db.zoolabs.io/babyorca.json"
   },
@@ -823,7 +823,7 @@
     "name": "Orcelk",
     "parentA": "Orca",
     "parentB": "Elk",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/orcelk.jpg",
     "metadataURI": "https://db.zoolabs.io/orcelk.json"
   },
@@ -832,7 +832,7 @@
     "name": "Elkenguin",
     "parentA": "Elk",
     "parentB": "Penguin",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/elkenguin.jpg",
     "metadataURI": "https://db.zoolabs.io/elkenguin.json"
   },
@@ -841,7 +841,7 @@
     "name": "Elkling",
     "parentA": "Elk",
     "parentB": "Duckling",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/elkling.jpg",
     "metadataURI": "https://db.zoolabs.io/elkling.json"
   },
@@ -850,7 +850,7 @@
     "name": "Elka",
     "parentA": "Elk",
     "parentB": "Orca",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/elka.jpg",
     "metadataURI": "https://db.zoolabs.io/elka.json"
   },
@@ -859,7 +859,7 @@
     "name": "Baby Elk",
     "parentA": "Elk",
     "parentB": "Elk",
-    "yield": 400,
+    "yields": 400,
     "tokenURI": "https://db.zoolabs.io/babyelk.jpg",
     "metadataURI": "https://db.zoolabs.io/babyelk.json"
   },
@@ -868,7 +868,7 @@
     "name": "Panduin",
     "parentA": "Panda",
     "parentB": "Penguin",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/panduin.jpg",
     "metadataURI": "https://db.zoolabs.io/panduin.json"
   },
@@ -877,7 +877,7 @@
     "name": "Pandaling",
     "parentA": "Panda",
     "parentB": "Duckling",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/pandaling.jpg",
     "metadataURI": "https://db.zoolabs.io/pandaling.json"
   },
@@ -886,7 +886,7 @@
     "name": "Pandorca",
     "parentA": "Panda",
     "parentB": "Orca",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/pandorca.jpg",
     "metadataURI": "https://db.zoolabs.io/pandorca.json"
   },
@@ -895,7 +895,7 @@
     "name": "Pandelk",
     "parentA": "Panda",
     "parentB": "Elk",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/pandelk.jpg",
     "metadataURI": "https://db.zoolabs.io/pandelk.json"
   },
@@ -904,7 +904,7 @@
     "name": "Gorillaguin",
     "parentA": "Gorilla",
     "parentB": "Penguin",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/gorillaguin.jpg",
     "metadataURI": "https://db.zoolabs.io/gorillaguin.json"
   },
@@ -913,7 +913,7 @@
     "name": "Gorilling",
     "parentA": "Gorilla",
     "parentB": "Duckling",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/gorilling.jpg",
     "metadataURI": "https://db.zoolabs.io/gorilling.json"
   },
@@ -922,7 +922,7 @@
     "name": "Gorca",
     "parentA": "Gorilla",
     "parentB": "Orca",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/gorca.jpg",
     "metadataURI": "https://db.zoolabs.io/gorca.json"
   },
@@ -931,7 +931,7 @@
     "name": "Gorillelk",
     "parentA": "Gorilla",
     "parentB": "Elk",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/gorillelk.jpg",
     "metadataURI": "https://db.zoolabs.io/gorillelk.json"
   },
@@ -940,7 +940,7 @@
     "name": "Elepenguin",
     "parentA": "Elephant",
     "parentB": "Penguin",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/elepenguin.jpg",
     "metadataURI": "https://db.zoolabs.io/elepenguin.json"
   },
@@ -949,7 +949,7 @@
     "name": "Elephling",
     "parentA": "Elephant",
     "parentB": "Duckling",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/elephling.jpg",
     "metadataURI": "https://db.zoolabs.io/elephling.json"
   },
@@ -958,7 +958,7 @@
     "name": "Elephorca",
     "parentA": "Elephant",
     "parentB": "Orca",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/elephorca.jpg",
     "metadataURI": "https://db.zoolabs.io/elephorca.json"
   },
@@ -967,7 +967,7 @@
     "name": "Elkephant",
     "parentA": "Elephant",
     "parentB": "Elk",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/elkephant.jpg",
     "metadataURI": "https://db.zoolabs.io/elkephant.json"
   },
@@ -976,7 +976,7 @@
     "name": "Lionguin",
     "parentA": "Lion",
     "parentB": "Penguin",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/lionguin.jpg",
     "metadataURI": "https://db.zoolabs.io/lionguin.json"
   },
@@ -985,7 +985,7 @@
     "name": "Lionling",
     "parentA": "Lion",
     "parentB": "Duckling",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/lionling.jpg",
     "metadataURI": "https://db.zoolabs.io/lionling.json"
   },
@@ -994,7 +994,7 @@
     "name": "Lionorca",
     "parentA": "Lion",
     "parentB": "Orca",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/lionorca.jpg",
     "metadataURI": "https://db.zoolabs.io/lionorca.json"
   },
@@ -1003,7 +1003,7 @@
     "name": "Lionelk",
     "parentA": "Lion",
     "parentB": "Elk",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/lionelk.jpg",
     "metadataURI": "https://db.zoolabs.io/lionelk.json"
   },
@@ -1012,7 +1012,7 @@
     "name": "Benguin",
     "parentA": "Bear",
     "parentB": "Penguin",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/benguin.jpg",
     "metadataURI": "https://db.zoolabs.io/benguin.json"
   },
@@ -1021,7 +1021,7 @@
     "name": "Bearling",
     "parentA": "Bear",
     "parentB": "Duckling",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/bearling.jpg",
     "metadataURI": "https://db.zoolabs.io/bearling.json"
   },
@@ -1030,7 +1030,7 @@
     "name": "Bearca",
     "parentA": "Bear",
     "parentB": "Orca",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/bearca.jpg",
     "metadataURI": "https://db.zoolabs.io/bearca.json"
   },
@@ -1039,7 +1039,7 @@
     "name": "Belk",
     "parentA": "Bear",
     "parentB": "Elk",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/belk.jpg",
     "metadataURI": "https://db.zoolabs.io/belk.json"
   },
@@ -1048,7 +1048,7 @@
     "name": "Shanguin",
     "parentA": "Shark",
     "parentB": "Penguin",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/shanguin.jpg",
     "metadataURI": "https://db.zoolabs.io/shanguin.json"
   },
@@ -1057,7 +1057,7 @@
     "name": "Sharkling",
     "parentA": "Shark",
     "parentB": "Duckling",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/sharkling.jpg",
     "metadataURI": "https://db.zoolabs.io/sharkling.json"
   },
@@ -1066,7 +1066,7 @@
     "name": "Shorca",
     "parentA": "Shark",
     "parentB": "Orca",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/shorca.jpg",
     "metadataURI": "https://db.zoolabs.io/shorca.json"
   },
@@ -1075,7 +1075,7 @@
     "name": "Shelk",
     "parentA": "Shark",
     "parentB": "Elk",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/shelk.jpg",
     "metadataURI": "https://db.zoolabs.io/shelk.json"
   },
@@ -1084,7 +1084,7 @@
     "name": "Blob Penguin",
     "parentA": "Blobfish",
     "parentB": "Penguin",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/blobpenguin.jpg",
     "metadataURI": "https://db.zoolabs.io/blobpenguin.json"
   },
@@ -1093,7 +1093,7 @@
     "name": "Blobling",
     "parentA": "Blobfish",
     "parentB": "Duckling",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/blobling.jpg",
     "metadataURI": "https://db.zoolabs.io/blobling.json"
   },
@@ -1102,7 +1102,7 @@
     "name": "Bloborca",
     "parentA": "Blobfish",
     "parentB": "Orca",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/bloborca.jpg",
     "metadataURI": "https://db.zoolabs.io/bloborca.json"
   },
@@ -1111,7 +1111,7 @@
     "name": "Blobelk",
     "parentA": "Blobfish",
     "parentB": "Elk",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/blobelk.jpg",
     "metadataURI": "https://db.zoolabs.io/blobelk.json"
   },
@@ -1120,7 +1120,7 @@
     "name": "Naked Penguin",
     "parentA": "Naked Mole Rat",
     "parentB": "Penguin",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/nakedpenguin.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedpenguin.json"
   },
@@ -1129,7 +1129,7 @@
     "name": "Naked Duckling",
     "parentA": "Naked Mole Rat",
     "parentB": "Duckling",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/nakedduckling.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedduckling.json"
   },
@@ -1138,7 +1138,7 @@
     "name": "Naked Mole Orca",
     "parentA": "Naked Mole Rat",
     "parentB": "Orca",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/nakedmoleorca.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedmoleorca.json"
   },
@@ -1147,7 +1147,7 @@
     "name": "Naked Mole Elk",
     "parentA": "Naked Mole Rat",
     "parentB": "Elk",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/nakedmoleelk.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedmoleelk.json"
   },
@@ -1156,7 +1156,7 @@
     "name": "Pugda",
     "parentA": "Pug",
     "parentB": "Panda",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/pugda.jpg",
     "metadataURI": "https://db.zoolabs.io/pugda.json"
   },
@@ -1165,7 +1165,7 @@
     "name": "Pugorilla",
     "parentA": "Pug",
     "parentB": "Gorilla",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/pugorilla.jpg",
     "metadataURI": "https://db.zoolabs.io/pugorilla.json"
   },
@@ -1174,7 +1174,7 @@
     "name": "Puggerphant",
     "parentA": "Pug",
     "parentB": "Elephant",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/puggerphant.jpg",
     "metadataURI": "https://db.zoolabs.io/puggerphant.json"
   },
@@ -1183,7 +1183,7 @@
     "name": "Puglion",
     "parentA": "Pug",
     "parentB": "Lion",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/puglion.jpg",
     "metadataURI": "https://db.zoolabs.io/puglion.json"
   },
@@ -1192,7 +1192,7 @@
     "name": "Butterflanda",
     "parentA": "Butterfly",
     "parentB": "Panda",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/butterflanda.jpg",
     "metadataURI": "https://db.zoolabs.io/butterflanda.json"
   },
@@ -1201,7 +1201,7 @@
     "name": "Butterla",
     "parentA": "Butterfly",
     "parentB": "Gorilla",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/butterla.jpg",
     "metadataURI": "https://db.zoolabs.io/butterla.json"
   },
@@ -1210,7 +1210,7 @@
     "name": "Butterphant",
     "parentA": "Butterfly",
     "parentB": "Elephant",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/butterphant.jpg",
     "metadataURI": "https://db.zoolabs.io/butterphant.json"
   },
@@ -1219,7 +1219,7 @@
     "name": "Butterflion",
     "parentA": "Butterfly",
     "parentB": "Lion",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/butterflion.jpg",
     "metadataURI": "https://db.zoolabs.io/butterflion.json"
   },
@@ -1228,7 +1228,7 @@
     "name": "Kittypan",
     "parentA": "Kitten",
     "parentB": "Panda",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/kittypan.jpg",
     "metadataURI": "https://db.zoolabs.io/kittypan.json"
   },
@@ -1237,7 +1237,7 @@
     "name": "Kittorilla",
     "parentA": "Kitten",
     "parentB": "Gorilla",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/kittorilla.jpg",
     "metadataURI": "https://db.zoolabs.io/kittorilla.json"
   },
@@ -1246,7 +1246,7 @@
     "name": "Kittyphant",
     "parentA": "Kitten",
     "parentB": "Elephant",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/kittyphant.jpg",
     "metadataURI": "https://db.zoolabs.io/kittyphant.json"
   },
@@ -1255,7 +1255,7 @@
     "name": "Lion Kitty",
     "parentA": "Kitten",
     "parentB": "Lion",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/lionkitty.jpg",
     "metadataURI": "https://db.zoolabs.io/lionkitty.json"
   },
@@ -1264,7 +1264,7 @@
     "name": "Turtanda",
     "parentA": "Turtle",
     "parentB": "Panda",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/turtanda.jpg",
     "metadataURI": "https://db.zoolabs.io/turtanda.json"
   },
@@ -1273,7 +1273,7 @@
     "name": "Turtilla",
     "parentA": "Turtle",
     "parentB": "Gorilla",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/turtilla.jpg",
     "metadataURI": "https://db.zoolabs.io/turtilla.json"
   },
@@ -1282,7 +1282,7 @@
     "name": "Turtelephant",
     "parentA": "Turtle",
     "parentB": "Elephant",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/turtelephant.jpg",
     "metadataURI": "https://db.zoolabs.io/turtelephant.json"
   },
@@ -1291,7 +1291,7 @@
     "name": "Turtlion",
     "parentA": "Turtle",
     "parentB": "Lion",
-    "yield": 1050,
+    "yields": 1050,
     "tokenURI": "https://db.zoolabs.io/turtlion.jpg",
     "metadataURI": "https://db.zoolabs.io/turtlion.json"
   },
@@ -1300,7 +1300,7 @@
     "name": "Penda",
     "parentA": "Penguin",
     "parentB": "Panda",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/penda.jpg",
     "metadataURI": "https://db.zoolabs.io/penda.json"
   },
@@ -1309,7 +1309,7 @@
     "name": "Penguilla",
     "parentA": "Penguin",
     "parentB": "Gorilla",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/penguilla.jpg",
     "metadataURI": "https://db.zoolabs.io/penguilla.json"
   },
@@ -1318,7 +1318,7 @@
     "name": "Pelephant",
     "parentA": "Penguin",
     "parentB": "Elephant",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/pelephant.jpg",
     "metadataURI": "https://db.zoolabs.io/pelephant.json"
   },
@@ -1327,7 +1327,7 @@
     "name": "Penguilion",
     "parentA": "Penguin",
     "parentB": "Lion",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/penguilion.jpg",
     "metadataURI": "https://db.zoolabs.io/penguilion.json"
   },
@@ -1336,7 +1336,7 @@
     "name": "Duckda",
     "parentA": "Duckling",
     "parentB": "Panda",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/duckda.jpg",
     "metadataURI": "https://db.zoolabs.io/duckda.json"
   },
@@ -1345,7 +1345,7 @@
     "name": "Duckorilla",
     "parentA": "Duckling",
     "parentB": "Gorilla",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/duckorilla.jpg",
     "metadataURI": "https://db.zoolabs.io/duckorilla.json"
   },
@@ -1354,7 +1354,7 @@
     "name": "Ducklephant",
     "parentA": "Duckling",
     "parentB": "Elephant",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/ducklephant.jpg",
     "metadataURI": "https://db.zoolabs.io/ducklephant.json"
   },
@@ -1363,7 +1363,7 @@
     "name": "Ducklion",
     "parentA": "Duckling",
     "parentB": "Lion",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/ducklion.jpg",
     "metadataURI": "https://db.zoolabs.io/ducklion.json"
   },
@@ -1372,7 +1372,7 @@
     "name": "Orcanda",
     "parentA": "Orca",
     "parentB": "Panda",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/orcanda.jpg",
     "metadataURI": "https://db.zoolabs.io/orcanda.json"
   },
@@ -1381,7 +1381,7 @@
     "name": "Orcilla",
     "parentA": "Orca",
     "parentB": "Gorilla",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/orcilla.jpg",
     "metadataURI": "https://db.zoolabs.io/orcilla.json"
   },
@@ -1390,7 +1390,7 @@
     "name": "Orcaphant",
     "parentA": "Orca",
     "parentB": "Elephant",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/orcaphant.jpg",
     "metadataURI": "https://db.zoolabs.io/orcaphant.json"
   },
@@ -1399,7 +1399,7 @@
     "name": "Orclion",
     "parentA": "Orca",
     "parentB": "Lion",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/orclion.jpg",
     "metadataURI": "https://db.zoolabs.io/orclion.json"
   },
@@ -1408,7 +1408,7 @@
     "name": "Elkanda",
     "parentA": "Elk",
     "parentB": "Panda",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/elkanda.jpg",
     "metadataURI": "https://db.zoolabs.io/elkanda.json"
   },
@@ -1417,7 +1417,7 @@
     "name": "Elkorilla",
     "parentA": "Elk",
     "parentB": "Gorilla",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/elkorilla.jpg",
     "metadataURI": "https://db.zoolabs.io/elkorilla.json"
   },
@@ -1426,7 +1426,7 @@
     "name": "Elkephant",
     "parentA": "Elk",
     "parentB": "Elephant",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/elkephant.jpg",
     "metadataURI": "https://db.zoolabs.io/elkephant.json"
   },
@@ -1435,7 +1435,7 @@
     "name": "Elkion",
     "parentA": "Elk",
     "parentB": "Lion",
-    "yield": 1250,
+    "yields": 1250,
     "tokenURI": "https://db.zoolabs.io/elkion.jpg",
     "metadataURI": "https://db.zoolabs.io/elkion.json"
   },
@@ -1444,7 +1444,7 @@
     "name": "Panda Cub",
     "parentA": "Panda",
     "parentB": "Panda",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/pandacub.jpg",
     "metadataURI": "https://db.zoolabs.io/pandacub.json"
   },
@@ -1453,7 +1453,7 @@
     "name": "Pandalla",
     "parentA": "Panda",
     "parentB": "Gorilla",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/pandalla.jpg",
     "metadataURI": "https://db.zoolabs.io/pandalla.json"
   },
@@ -1462,7 +1462,7 @@
     "name": "Pandaphant",
     "parentA": "Panda",
     "parentB": "Elephant",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/pandaphant.jpg",
     "metadataURI": "https://db.zoolabs.io/pandaphant.json"
   },
@@ -1471,7 +1471,7 @@
     "name": "Pandalion",
     "parentA": "Panda",
     "parentB": "Lion",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/pandalion.jpg",
     "metadataURI": "https://db.zoolabs.io/pandalion.json"
   },
@@ -1480,7 +1480,7 @@
     "name": "Goranda",
     "parentA": "Gorilla",
     "parentB": "Panda",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/goranda.jpg",
     "metadataURI": "https://db.zoolabs.io/goranda.json"
   },
@@ -1489,7 +1489,7 @@
     "name": "Baby Gorilla",
     "parentA": "Gorilla",
     "parentB": "Gorilla",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/babygorilla.jpg",
     "metadataURI": "https://db.zoolabs.io/babygorilla.json"
   },
@@ -1498,7 +1498,7 @@
     "name": "Gorillaphant",
     "parentA": "Gorilla",
     "parentB": "Elephant",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/gorillaphant.jpg",
     "metadataURI": "https://db.zoolabs.io/gorillaphant.json"
   },
@@ -1507,7 +1507,7 @@
     "name": "Gorillion",
     "parentA": "Gorilla",
     "parentB": "Lion",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/gorillion.jpg",
     "metadataURI": "https://db.zoolabs.io/gorillion.json"
   },
@@ -1516,7 +1516,7 @@
     "name": "Elepanda",
     "parentA": "Elephant",
     "parentB": "Panda",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/elepanda.jpg",
     "metadataURI": "https://db.zoolabs.io/elepanda.json"
   },
@@ -1525,7 +1525,7 @@
     "name": "Elephantilla",
     "parentA": "Elephant",
     "parentB": "Gorilla",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/elephantilla.jpg",
     "metadataURI": "https://db.zoolabs.io/elephantilla.json"
   },
@@ -1534,7 +1534,7 @@
     "name": "Baby Elephant",
     "parentA": "Elephant",
     "parentB": "Elephant",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/babyelephant.jpg",
     "metadataURI": "https://db.zoolabs.io/babyelephant.json"
   },
@@ -1543,7 +1543,7 @@
     "name": "Elephlion",
     "parentA": "Elephant",
     "parentB": "Lion",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/elephlion.jpg",
     "metadataURI": "https://db.zoolabs.io/elephlion.json"
   },
@@ -1552,7 +1552,7 @@
     "name": "Lionda",
     "parentA": "Lion",
     "parentB": "Panda",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/lionda.jpg",
     "metadataURI": "https://db.zoolabs.io/lionda.json"
   },
@@ -1561,7 +1561,7 @@
     "name": "Lionilla",
     "parentA": "Lion",
     "parentB": "Gorilla",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/lionilla.jpg",
     "metadataURI": "https://db.zoolabs.io/lionilla.json"
   },
@@ -1570,7 +1570,7 @@
     "name": "Lelephant",
     "parentA": "Lion",
     "parentB": "Elephant",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/lelephant.jpg",
     "metadataURI": "https://db.zoolabs.io/lelephant.json"
   },
@@ -1579,7 +1579,7 @@
     "name": "Lion Cub",
     "parentA": "Lion",
     "parentB": "Lion",
-    "yield": 1500,
+    "yields": 1500,
     "tokenURI": "https://db.zoolabs.io/lioncub.jpg",
     "metadataURI": "https://db.zoolabs.io/lioncub.json"
   },
@@ -1588,7 +1588,7 @@
     "name": "Banda",
     "parentA": "Bear",
     "parentB": "Panda",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/banda.jpg",
     "metadataURI": "https://db.zoolabs.io/banda.json"
   },
@@ -1597,7 +1597,7 @@
     "name": "Bearilla",
     "parentA": "Bear",
     "parentB": "Gorilla",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/bearilla.jpg",
     "metadataURI": "https://db.zoolabs.io/bearilla.json"
   },
@@ -1606,7 +1606,7 @@
     "name": "Belephant",
     "parentA": "Bear",
     "parentB": "Elephant",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/belephant.jpg",
     "metadataURI": "https://db.zoolabs.io/belephant.json"
   },
@@ -1615,7 +1615,7 @@
     "name": "Bearlion",
     "parentA": "Bear",
     "parentB": "Lion",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/bearlion.jpg",
     "metadataURI": "https://db.zoolabs.io/bearlion.json"
   },
@@ -1624,7 +1624,7 @@
     "name": "Sharnda",
     "parentA": "Shark",
     "parentB": "Panda",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/sharnda.jpg",
     "metadataURI": "https://db.zoolabs.io/sharnda.json"
   },
@@ -1633,7 +1633,7 @@
     "name": "Sharkorilla",
     "parentA": "Shark",
     "parentB": "Gorilla",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/sharkorilla.jpg",
     "metadataURI": "https://db.zoolabs.io/sharkorilla.json"
   },
@@ -1642,7 +1642,7 @@
     "name": "Sharkephant",
     "parentA": "Shark",
     "parentB": "Elephant",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/sharkephant.jpg",
     "metadataURI": "https://db.zoolabs.io/sharkephant.json"
   },
@@ -1651,7 +1651,7 @@
     "name": "Shlion",
     "parentA": "Shark",
     "parentB": "Lion",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/shlion.jpg",
     "metadataURI": "https://db.zoolabs.io/shlion.json"
   },
@@ -1660,7 +1660,7 @@
     "name": "Blobda",
     "parentA": "Blobfish",
     "parentB": "Panda",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/blobda.jpg",
     "metadataURI": "https://db.zoolabs.io/blobda.json"
   },
@@ -1669,7 +1669,7 @@
     "name": "Blobilla",
     "parentA": "Blobfish",
     "parentB": "Gorilla",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/blobilla.jpg",
     "metadataURI": "https://db.zoolabs.io/blobilla.json"
   },
@@ -1678,7 +1678,7 @@
     "name": "Blobaphant",
     "parentA": "Blobfish",
     "parentB": "Elephant",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/blobaphant.jpg",
     "metadataURI": "https://db.zoolabs.io/blobaphant.json"
   },
@@ -1687,7 +1687,7 @@
     "name": "Bloblion",
     "parentA": "Blobfish",
     "parentB": "Lion",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/bloblion.jpg",
     "metadataURI": "https://db.zoolabs.io/bloblion.json"
   },
@@ -1696,7 +1696,7 @@
     "name": "Naked Panda",
     "parentA": "Naked Mole Rat",
     "parentB": "Panda",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/nakedpanda.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedpanda.json"
   },
@@ -1705,7 +1705,7 @@
     "name": "Naked Mole Gorilla",
     "parentA": "Naked Mole Rat",
     "parentB": "Gorilla",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/nakedmolegorilla.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedmolegorilla.json"
   },
@@ -1714,7 +1714,7 @@
     "name": "Naked Elephant",
     "parentA": "Naked Mole Rat",
     "parentB": "Elephant",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/nakedelephant.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedelephant.json"
   },
@@ -1723,7 +1723,7 @@
     "name": "Naked Lion",
     "parentA": "Naked Mole Rat",
     "parentB": "Lion",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/nakedlion.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedlion.json"
   },
@@ -1732,7 +1732,7 @@
     "name": "Pugbear",
     "parentA": "Pug",
     "parentB": "Bear",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/pugbear.jpg",
     "metadataURI": "https://db.zoolabs.io/pugbear.json"
   },
@@ -1741,7 +1741,7 @@
     "name": "Pugshark",
     "parentA": "Pug",
     "parentB": "Shark",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/pugshark.jpg",
     "metadataURI": "https://db.zoolabs.io/pugshark.json"
   },
@@ -1750,7 +1750,7 @@
     "name": "Butterbear",
     "parentA": "Butterfly",
     "parentB": "Bear",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/butterbear.jpg",
     "metadataURI": "https://db.zoolabs.io/butterbear.json"
   },
@@ -1759,7 +1759,7 @@
     "name": "Buttershark",
     "parentA": "Butterfly",
     "parentB": "Shark",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/buttershark.jpg",
     "metadataURI": "https://db.zoolabs.io/buttershark.json"
   },
@@ -1768,7 +1768,7 @@
     "name": "Kittybear",
     "parentA": "Kitten",
     "parentB": "Bear",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/kittybear.jpg",
     "metadataURI": "https://db.zoolabs.io/kittybear.json"
   },
@@ -1777,7 +1777,7 @@
     "name": "Shark Kitty",
     "parentA": "Kitten",
     "parentB": "Shark",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/sharkkitty.jpg",
     "metadataURI": "https://db.zoolabs.io/sharkkitty.json"
   },
@@ -1786,7 +1786,7 @@
     "name": "Turtle Bear",
     "parentA": "Turtle",
     "parentB": "Bear",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/turtlebear.jpg",
     "metadataURI": "https://db.zoolabs.io/turtlebear.json"
   },
@@ -1795,7 +1795,7 @@
     "name": "Turtleshark",
     "parentA": "Turtle",
     "parentB": "Shark",
-    "yield": 6100,
+    "yields": 6100,
     "tokenURI": "https://db.zoolabs.io/turtleshark.jpg",
     "metadataURI": "https://db.zoolabs.io/turtleshark.json"
   },
@@ -1804,7 +1804,7 @@
     "name": "Pengbear",
     "parentA": "Penguin",
     "parentB": "Bear",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/pengbear.jpg",
     "metadataURI": "https://db.zoolabs.io/pengbear.json"
   },
@@ -1813,7 +1813,7 @@
     "name": "Penguin Shark",
     "parentA": "Penguin",
     "parentB": "Shark",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/penguinshark.jpg",
     "metadataURI": "https://db.zoolabs.io/penguinshark.json"
   },
@@ -1822,7 +1822,7 @@
     "name": "Duckbear",
     "parentA": "Duckling",
     "parentB": "Bear",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/duckbear.jpg",
     "metadataURI": "https://db.zoolabs.io/duckbear.json"
   },
@@ -1831,7 +1831,7 @@
     "name": "Duckshark",
     "parentA": "Duckling",
     "parentB": "Shark",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/duckshark.jpg",
     "metadataURI": "https://db.zoolabs.io/duckshark.json"
   },
@@ -1840,7 +1840,7 @@
     "name": "Orca Bear",
     "parentA": "Orca",
     "parentB": "Bear",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/orcabear.jpg",
     "metadataURI": "https://db.zoolabs.io/orcabear.json"
   },
@@ -1849,7 +1849,7 @@
     "name": "Orcashark",
     "parentA": "Orca",
     "parentB": "Shark",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/orcashark.jpg",
     "metadataURI": "https://db.zoolabs.io/orcashark.json"
   },
@@ -1858,7 +1858,7 @@
     "name": "Elkbear",
     "parentA": "Elk",
     "parentB": "Bear",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/elkbear.jpg",
     "metadataURI": "https://db.zoolabs.io/elkbear.json"
   },
@@ -1867,7 +1867,7 @@
     "name": "Elkshark",
     "parentA": "Elk",
     "parentB": "Shark",
-    "yield": 6500,
+    "yields": 6500,
     "tokenURI": "https://db.zoolabs.io/elkshark.jpg",
     "metadataURI": "https://db.zoolabs.io/elkshark.json"
   },
@@ -1876,7 +1876,7 @@
     "name": "Pearda",
     "parentA": "Panda",
     "parentB": "Bear",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/pearda.jpg",
     "metadataURI": "https://db.zoolabs.io/pearda.json"
   },
@@ -1885,7 +1885,7 @@
     "name": "Pandashark",
     "parentA": "Panda",
     "parentB": "Shark",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/pandashark.jpg",
     "metadataURI": "https://db.zoolabs.io/pandashark.json"
   },
@@ -1894,7 +1894,7 @@
     "name": "Gorillabear",
     "parentA": "Gorilla",
     "parentB": "Bear",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/gorillabear.jpg",
     "metadataURI": "https://db.zoolabs.io/gorillabear.json"
   },
@@ -1903,7 +1903,7 @@
     "name": "Gorillark",
     "parentA": "Gorilla",
     "parentB": "Shark",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/gorillark.jpg",
     "metadataURI": "https://db.zoolabs.io/gorillark.json"
   },
@@ -1912,7 +1912,7 @@
     "name": "Elebear",
     "parentA": "Elephant",
     "parentB": "Bear",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/elebear.jpg",
     "metadataURI": "https://db.zoolabs.io/elebear.json"
   },
@@ -1921,7 +1921,7 @@
     "name": "Eleshark",
     "parentA": "Elephant",
     "parentB": "Shark",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/eleshark.jpg",
     "metadataURI": "https://db.zoolabs.io/eleshark.json"
   },
@@ -1930,7 +1930,7 @@
     "name": "Lionbear",
     "parentA": "Lion",
     "parentB": "Bear",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/lionbear.jpg",
     "metadataURI": "https://db.zoolabs.io/lionbear.json"
   },
@@ -1939,7 +1939,7 @@
     "name": "Lionshark",
     "parentA": "Lion",
     "parentB": "Shark",
-    "yield": 7000,
+    "yields": 7000,
     "tokenURI": "https://db.zoolabs.io/lionshark.jpg",
     "metadataURI": "https://db.zoolabs.io/lionshark.json"
   },
@@ -1948,7 +1948,7 @@
     "name": "Bear Cub",
     "parentA": "Bear",
     "parentB": "Bear",
-    "yield": 11000,
+    "yields": 11000,
     "tokenURI": "https://db.zoolabs.io/bearcub.jpg",
     "metadataURI": "https://db.zoolabs.io/bearcub.json"
   },
@@ -1957,7 +1957,7 @@
     "name": "Bearshark",
     "parentA": "Bear",
     "parentB": "Shark",
-    "yield": 11000,
+    "yields": 11000,
     "tokenURI": "https://db.zoolabs.io/bearshark.jpg",
     "metadataURI": "https://db.zoolabs.io/bearshark.json"
   },
@@ -1966,7 +1966,7 @@
     "name": "Sharkbear",
     "parentA": "Shark",
     "parentB": "Bear",
-    "yield": 11000,
+    "yields": 11000,
     "tokenURI": "https://db.zoolabs.io/sharkbear.jpg",
     "metadataURI": "https://db.zoolabs.io/sharkbear.json"
   },
@@ -1975,7 +1975,7 @@
     "name": "Baby Shark",
     "parentA": "Shark",
     "parentB": "Shark",
-    "yield": 11000,
+    "yields": 11000,
     "tokenURI": "https://db.zoolabs.io/babyshark.jpg",
     "metadataURI": "https://db.zoolabs.io/babyshark.json"
   },
@@ -1984,7 +1984,7 @@
     "name": "Blob Bear",
     "parentA": "Blobfish",
     "parentB": "Bear",
-    "yield": 24000,
+    "yields": 24000,
     "tokenURI": "https://db.zoolabs.io/blobbear.jpg",
     "metadataURI": "https://db.zoolabs.io/blobbear.json"
   },
@@ -1993,7 +1993,7 @@
     "name": "Blobshark",
     "parentA": "Blobfish",
     "parentB": "Shark",
-    "yield": 24000,
+    "yields": 24000,
     "tokenURI": "https://db.zoolabs.io/blobshark.jpg",
     "metadataURI": "https://db.zoolabs.io/blobshark.json"
   },
@@ -2002,7 +2002,7 @@
     "name": "Naked Mole Bear",
     "parentA": "Naked Mole Rat",
     "parentB": "Bear",
-    "yield": 24000,
+    "yields": 24000,
     "tokenURI": "https://db.zoolabs.io/nakedmolebear.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedmolebear.json"
   },
@@ -2011,7 +2011,7 @@
     "name": "Naked Mole Shark",
     "parentA": "Naked Mole Rat",
     "parentB": "Shark",
-    "yield": 24000,
+    "yields": 24000,
     "tokenURI": "https://db.zoolabs.io/nakedmoleshark.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedmoleshark.json"
   },
@@ -2020,7 +2020,7 @@
     "name": "Plobfish",
     "parentA": "Pug",
     "parentB": "Blobfish",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/plobfish.jpg",
     "metadataURI": "https://db.zoolabs.io/plobfish.json"
   },
@@ -2029,7 +2029,7 @@
     "name": "Pugrat",
     "parentA": "Pug",
     "parentB": "Naked Mole Rat",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/pugrat.jpg",
     "metadataURI": "https://db.zoolabs.io/pugrat.json"
   },
@@ -2038,7 +2038,7 @@
     "name": "Butterblob",
     "parentA": "Butterfly",
     "parentB": "Blobfish",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/butterblob.jpg",
     "metadataURI": "https://db.zoolabs.io/butterblob.json"
   },
@@ -2047,7 +2047,7 @@
     "name": "Butterrat",
     "parentA": "Butterfly",
     "parentB": "Naked Mole Rat",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/butterrat.jpg",
     "metadataURI": "https://db.zoolabs.io/butterrat.json"
   },
@@ -2056,7 +2056,7 @@
     "name": "Kitty Blob",
     "parentA": "Kitten",
     "parentB": "Blobfish",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/kittyblob.jpg",
     "metadataURI": "https://db.zoolabs.io/kittyblob.json"
   },
@@ -2065,7 +2065,7 @@
     "name": "Kitty Rat",
     "parentA": "Kitten",
     "parentB": "Naked Mole Rat",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/kittyrat.jpg",
     "metadataURI": "https://db.zoolabs.io/kittyrat.json"
   },
@@ -2074,7 +2074,7 @@
     "name": "Turtleblob",
     "parentA": "Turtle",
     "parentB": "Blobfish",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/turtleblob.jpg",
     "metadataURI": "https://db.zoolabs.io/turtleblob.json"
   },
@@ -2083,7 +2083,7 @@
     "name": "Turtlerat",
     "parentA": "Turtle",
     "parentB": "Naked Mole Rat",
-    "yield": 16650,
+    "yields": 16650,
     "tokenURI": "https://db.zoolabs.io/turtlerat.jpg",
     "metadataURI": "https://db.zoolabs.io/turtlerat.json"
   },
@@ -2092,7 +2092,7 @@
     "name": "Penguinfish",
     "parentA": "Penguin",
     "parentB": "Blobfish",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/penguinfish.jpg",
     "metadataURI": "https://db.zoolabs.io/penguinfish.json"
   },
@@ -2101,7 +2101,7 @@
     "name": "Penguinrat",
     "parentA": "Penguin",
     "parentB": "Naked Mole Rat",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/penguinrat.jpg",
     "metadataURI": "https://db.zoolabs.io/penguinrat.json"
   },
@@ -2110,7 +2110,7 @@
     "name": "Duckblob",
     "parentA": "Duckling",
     "parentB": "Blobfish",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/duckblob.jpg",
     "metadataURI": "https://db.zoolabs.io/duckblob.json"
   },
@@ -2119,7 +2119,7 @@
     "name": "Duckrat",
     "parentA": "Duckling",
     "parentB": "Naked Mole Rat",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/duckrat.jpg",
     "metadataURI": "https://db.zoolabs.io/duckrat.json"
   },
@@ -2128,7 +2128,7 @@
     "name": "Orcablob",
     "parentA": "Orca",
     "parentB": "Blobfish",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/orcablob.jpg",
     "metadataURI": "https://db.zoolabs.io/orcablob.json"
   },
@@ -2137,7 +2137,7 @@
     "name": "Orcarat",
     "parentA": "Orca",
     "parentB": "Naked Mole Rat",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/orcarat.jpg",
     "metadataURI": "https://db.zoolabs.io/orcarat.json"
   },
@@ -2146,7 +2146,7 @@
     "name": "Elkfish",
     "parentA": "Elk",
     "parentB": "Blobfish",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/elkfish.jpg",
     "metadataURI": "https://db.zoolabs.io/elkfish.json"
   },
@@ -2155,7 +2155,7 @@
     "name": "Elk Rat",
     "parentA": "Elk",
     "parentB": "Naked Mole Rat",
-    "yield": 17250,
+    "yields": 17250,
     "tokenURI": "https://db.zoolabs.io/elkrat.jpg",
     "metadataURI": "https://db.zoolabs.io/elkrat.json"
   },
@@ -2164,7 +2164,7 @@
     "name": "Pandablob",
     "parentA": "Panda",
     "parentB": "Blobfish",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/pandablob.jpg",
     "metadataURI": "https://db.zoolabs.io/pandablob.json"
   },
@@ -2173,7 +2173,7 @@
     "name": "Pandarat",
     "parentA": "Panda",
     "parentB": "Naked Mole Rat",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/pandarat.jpg",
     "metadataURI": "https://db.zoolabs.io/pandarat.json"
   },
@@ -2182,7 +2182,7 @@
     "name": "Gorillablob",
     "parentA": "Gorilla",
     "parentB": "Blobfish",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/gorillablob.jpg",
     "metadataURI": "https://db.zoolabs.io/gorillablob.json"
   },
@@ -2191,7 +2191,7 @@
     "name": "Gorilla Rat",
     "parentA": "Gorilla",
     "parentB": "Naked Mole Rat",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/gorillarat.jpg",
     "metadataURI": "https://db.zoolabs.io/gorillarat.json"
   },
@@ -2200,7 +2200,7 @@
     "name": "Eleblob",
     "parentA": "Elephant",
     "parentB": "Blobfish",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/eleblob.jpg",
     "metadataURI": "https://db.zoolabs.io/eleblob.json"
   },
@@ -2209,7 +2209,7 @@
     "name": "Elephrat",
     "parentA": "Elephant",
     "parentB": "Naked Mole Rat",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/elephrat.jpg",
     "metadataURI": "https://db.zoolabs.io/elephrat.json"
   },
@@ -2218,7 +2218,7 @@
     "name": "Lionfish",
     "parentA": "Lion",
     "parentB": "Blobfish",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/lionfish.jpg",
     "metadataURI": "https://db.zoolabs.io/lionfish.json"
   },
@@ -2227,7 +2227,7 @@
     "name": "Lion Rat",
     "parentA": "Lion",
     "parentB": "Naked Mole Rat",
-    "yield": 18000,
+    "yields": 18000,
     "tokenURI": "https://db.zoolabs.io/lionrat.jpg",
     "metadataURI": "https://db.zoolabs.io/lionrat.json"
   },
@@ -2236,7 +2236,7 @@
     "name": "Bearblob",
     "parentA": "Bear",
     "parentB": "Blobfish",
-    "yield": 24000,
+    "yields": 24000,
     "tokenURI": "https://db.zoolabs.io/bearblob.jpg",
     "metadataURI": "https://db.zoolabs.io/bearblob.json"
   },
@@ -2245,7 +2245,7 @@
     "name": "Bearrat",
     "parentA": "Bear",
     "parentB": "Naked Mole Rat",
-    "yield": 24000,
+    "yields": 24000,
     "tokenURI": "https://db.zoolabs.io/bearrat.jpg",
     "metadataURI": "https://db.zoolabs.io/bearrat.json"
   },
@@ -2254,7 +2254,7 @@
     "name": "Shlobfish",
     "parentA": "Shark",
     "parentB": "Blobfish",
-    "yield": 24000,
+    "yields": 24000,
     "tokenURI": "https://db.zoolabs.io/shlobfish.jpg",
     "metadataURI": "https://db.zoolabs.io/shlobfish.json"
   },
@@ -2263,7 +2263,7 @@
     "name": "Shark Rat",
     "parentA": "Shark",
     "parentB": "Naked Mole Rat",
-    "yield": 24000,
+    "yields": 24000,
     "tokenURI": "https://db.zoolabs.io/sharkrat.jpg",
     "metadataURI": "https://db.zoolabs.io/sharkrat.json"
   },
@@ -2272,7 +2272,7 @@
     "name": "Baby Blob",
     "parentA": "Blobfish",
     "parentB": "Blobfish",
-    "yield": 31500,
+    "yields": 31500,
     "tokenURI": "https://db.zoolabs.io/babyblob.jpg",
     "metadataURI": "https://db.zoolabs.io/babyblob.json"
   },
@@ -2281,7 +2281,7 @@
     "name": "Blobrat",
     "parentA": "Blobfish",
     "parentB": "Naked Mole Rat",
-    "yield": 31500,
+    "yields": 31500,
     "tokenURI": "https://db.zoolabs.io/blobrat.jpg",
     "metadataURI": "https://db.zoolabs.io/blobrat.json"
   },
@@ -2290,7 +2290,7 @@
     "name": "Naked Blobfish",
     "parentA": "Naked Mole Rat",
     "parentB": "Blobfish",
-    "yield": 31500,
+    "yields": 31500,
     "tokenURI": "https://db.zoolabs.io/nakedblobfish.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedblobfish.json"
   },
@@ -2299,7 +2299,7 @@
     "name": "Naked Rat Baby",
     "parentA": "Naked Mole Rat",
     "parentB": "Naked Mole Rat",
-    "yield": 31500,
+    "yields": 31500,
     "tokenURI": "https://db.zoolabs.io/nakedratbaby.jpg",
     "metadataURI": "https://db.zoolabs.io/nakedratbaby.json"
   }

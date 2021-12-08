@@ -32,7 +32,7 @@ contract ZooKeeper is Ownable {
   event Breed(address indexed from, uint256 parentA, uint256 parentB, uint256 indexed eggID);
   event Burn(address indexed from, uint256 indexed tokenID);
   event BuyEgg(address indexed from, uint256 indexed eggID);
-  event Free(address indexed from, uint256 indexed tokenID, uint256 indexed yield);
+  event Free(address indexed from, uint256 indexed tokenID, uint256 indexed yields);
   event Hatch(address indexed from, uint256 eggID, uint256 indexed tokenID);
   event Mint(address indexed from, uint256 indexed tokenID);
   event Swap(address indexed owner, uint256 indexed tokenID, uint256 indexed chainId);
@@ -276,7 +276,7 @@ contract ZooKeeper is Ownable {
   // }
 
   // // Freeing an animal burns the animal NFT and returns the ZOO to the owner
-  // function freeAnimal(uint256 tokenID) public returns (uint256 yield) {
+  // function freeAnimal(uint256 tokenID) public returns (uint256 yields) {
   //   console.log('freeAnimal', tokenID);
 
   //   IZoo.Token memory token = tokens[tokenID];
@@ -288,16 +288,16 @@ contract ZooKeeper is Ownable {
   //   uint256 blockAge = block.number - token.birthday;
   //   uint256 daysOld = blockAge.div(28800);
 
-  //   // Calculate yield
-  //   yield = daysOld.mul(token.rarity.yield.mul(10**18));
-  //   console.log('calculateYield', blockAge, daysOld, yield);
+  //   // Calculate yields
+  //   yields = daysOld.mul(token.rarity.yields.mul(10**18));
+  //   console.log('calculateYield', blockAge, daysOld, yields);
 
-  //   // Transfer yield
-  //   zoo.transfer(msg.sender, yield);
+  //   // Transfer yields
+  //   zoo.transfer(msg.sender, yields);
 
-  //   emit Free(msg.sender, tokenID, yield);
+  //   emit Free(msg.sender, tokenID, yields);
 
-  //   return yield;
+  //   return yields;
   // }
 
   // // Buy a custom name for your NFT

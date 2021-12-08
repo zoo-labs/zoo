@@ -77,13 +77,13 @@ contract Drop is IDrop, Ownable {
     }
 
     // Add or configure a given rarity
-    function setRarity(string memory name, uint256 probability, uint256 yield, uint256 boost) public onlyOwner returns (bool) {
+    function setRarity(string memory name, uint256 probability, uint256 yields, uint256 boost) public onlyOwner returns (bool) {
         require(probability > 0, "Rarity must be over zero");
 
         IZoo.Rarity memory rarity = IZoo.Rarity({
             name: name,
             probability: probability,
-            yield: yield,
+            yields: yields,
             boost: boost
         });
 
@@ -126,12 +126,12 @@ contract Drop is IDrop, Ownable {
     }
 
     // Add or configure a given hybrid
-    function setHybrid(string memory name, string memory rarity, uint256 yield, string memory parentA, string memory parentB, string memory tokenURI, string memory metadataURI) public onlyOwner returns (bool) {
+    function setHybrid(string memory name, string memory rarity, uint256 yields, string memory parentA, string memory parentB, string memory tokenURI, string memory metadataURI) public onlyOwner returns (bool) {
         Hybrid memory hybrid = Hybrid({
             kind: IZoo.Type.HYBRID_ANIMAL,
             name: name,
             rarity: getRarity(rarity),
-            yield: yield,
+            yields: yields,
             parentA: parentA,
             parentB: parentB,
             data: getMediaData(tokenURI, metadataURI),
@@ -161,7 +161,7 @@ contract Drop is IDrop, Ownable {
     struct _Hybrid {
         string rarity;
         string name;
-        uint256 yield;
+        uint256 yields;
         string parentA;
         string parentB;
         string tokenURI;
@@ -173,7 +173,7 @@ contract Drop is IDrop, Ownable {
     function setHybrids(_Hybrid[] calldata _hybrids) public onlyOwner {
         for (uint256 i = 0; i < _hybrids.length; i++) {
             _Hybrid calldata hybrid = _hybrids[i];
-            setHybrid(hybrid.name, hybrid.rarity, hybrid.yield, hybrid.parentA, hybrid.parentB, hybrid.tokenURI, hybrid.metadataURI);
+            setHybrid(hybrid.name, hybrid.rarity, hybrid.yields, hybrid.parentA, hybrid.parentB, hybrid.tokenURI, hybrid.metadataURI);
         }
     }
 
@@ -316,7 +316,7 @@ contract Drop is IDrop, Ownable {
         token.timestamp = block.timestamp;
         token.birthday = block.number;
 
-        console.log('randomAnimal', animal.name, animal.rarity.name, animal.rarity.yield);
+        console.log('randomAnimal', animal.name, animal.rarity.name, animal.rarity.yields);
         console.log('randomAnimal.data.tokenURI', animal.data.tokenURI);
         console.log('randomAnimal.data.metadataURI', animal.data.metadataURI);
         return token;
@@ -336,7 +336,7 @@ contract Drop is IDrop, Ownable {
         token.name = hybrid.name;
         token.data = hybrid.data;
         token.rarity = hybrid.rarity;
-        token.rarity.yield = hybrid.yield; // Hybrid rarity overrides default
+        token.rarity.yields = hybrid.yields; // Hybrid rarity overrides default
         token.bidShares = hybrid.bidShares;
         token.timestamp = block.timestamp;
         token.birthday = block.number;
