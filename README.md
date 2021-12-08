@@ -53,11 +53,72 @@ fired.
 yarn functions
 ```
 
-## Running Local Devchain Proxy
-To connect your local blockchain to Moralis:
+# Zoo Subgraph
 
-```shell
-yarn proxy
+### Pre Requisites
+
+- Docker
+
+### Local Setup
+
+```bash
+yarn chain
 ```
 
-This requires `frpc`, which can be installed with `brew install frpc` on macOS.
+> Start Docker and Local Graph Node
+
+- The Docker container provides PostgreSQL and IPFS
+- Make sure you Docker engine is running
+- The first command spins up the container
+- The second command builds and starts Graph Node separately
+- The Graph Node connects to PostgreSQL and IPFS
+- This will take a lot of time to build the first time
+
+```bash
+// On a new tab
+yarn graphnode:docker
+// On a new tab
+yarn graphnode:start
+```
+
+> Successful Docker output
+> ![](success-docker.png)
+
+> Successful Graph Node output
+> ![](success-graphnode.png)
+
+> Start the Lux Town Subgraph
+
+```bash
+// On a new tab
+yarn subgraph:prepare-local
+yarn configure
+yarn subgraph:start
+```
+
+> Successful Subgraph output
+> ![](success-subgraph.png)
+
+> Build the SDK and Configure
+
+- Running configure will mint a small number of NFTs for testing
+
+```bash
+// On a new tab
+yarn build:sdk
+yarn configure
+```
+
+> Start the App
+
+```bash
+yarn dev
+```
+
+
+# TS-Node Error
+If you encounter a typescript compilation error when running `yarn configure`, try running the following command and then try again.
+
+```bash
+yarn workspace @luxdefi/contracts add ts-node@10.3 --dev
+```
