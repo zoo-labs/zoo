@@ -1,0 +1,13 @@
+{
+  "network": "mainnet",
+  "deployment": "localhost",
+  "zooKeeperAddress": "0x4Dcb572d8cB14f07f85EDE038486b412Cf48E849",
+  "zooKeeperStartBlock": 1,
+  "marketAddress": "0xfd75D16d5aA898E71E66586d65357e16b77bd1C0",
+  "marketStartBlock": 1,
+  "mediaAddress": "0x0dAe99f1aF69DCF2922d8f6b213F825F17780562",
+  "mediaStartBlock": 1,
+  "wethAddress": "0x805989Eeec7C876BDEBB4aE2841CC9B1F8c845D1",
+  "dropAddress": "0xe9F83A376B152F242444B89570aa7513C3E9D957",
+  "dropStartBlock": 1
+}
