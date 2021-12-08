@@ -222,7 +222,7 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
     uint256 daysOld = blockAge.div(28800);
 
     // Calculate yield
-    yield = daysOld.mul(token.rarity.yield.mul(10**18));
+    yield = daysOld.mul(token.rarity.yields.mul(10**18));
     console.log('calculateYield', blockAge, daysOld, yield);
 
     // Transfer yield

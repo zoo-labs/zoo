@@ -31,7 +31,7 @@ interface IDrop {
         IZoo.Type kind;
         IZoo.Rarity rarity;
         string name;
-        uint256 yield;
+        uint256 yields;
         string parentA;
         string parentB;
         IMedia.MediaData data;
