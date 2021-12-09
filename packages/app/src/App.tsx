@@ -15,6 +15,7 @@ import { mapAnimal, mapEgg, queryAnimals, queryEggs } from 'util/moralis'
 import ResetCSS from './components/ResetCSS'
 import GlobalStyle from './components/style/Global'
 import SuspenseWithChunkError from './components/SuspenseWithChunkError'
+import { useQuery, gql } from "@apollo/client";
 
 const Login = lazy(() => import('./views/Login'))
 
@@ -29,6 +30,17 @@ const App: React.FC = () => {
   useEagerConnectAlt()
   const { library, chainId, account } = useWeb3()
   const dispatch = useDispatch()
+
+  // Test hitting subgraph
+  const GET_MEDIAS = gql`
+  query GetMedias {
+    medias {
+      id
+    }
+  }
+  `;
+  const { loading, error, data } = useQuery(GET_MEDIAS);
+  console.log('Subgraph Data', data);
 
   const valid = useMemo(() => {
     if (library && chainId) {
@@ -52,7 +64,6 @@ const App: React.FC = () => {
       dispatch(addEggs(eggs))
       dispatch(getMyEggs(account, eggs))
     } catch (e) {
-      console.log('issue gett')
       console.error('ISSUE GETTING EGGS \n', e)
     }
   }
@@ -70,7 +81,6 @@ const App: React.FC = () => {
   }
 
   const createEgg = async (data) => {
-    console.log('CREATING EGG', mapEgg(data))
     try {
       dispatch(addEgg({ data: mapEgg(data), account }))
     } catch (e) {
@@ -79,7 +89,6 @@ const App: React.FC = () => {
   }
 
   const updateEgg = async (data) => {
-    console.log('UPDATING EGG', mapEgg(data))
     try {
       dispatch(addEgg({ data: mapEgg(data), account }))
     } catch (e) {
@@ -88,7 +97,6 @@ const App: React.FC = () => {
   }
 
   const createAnimal = async (data) => {
-    console.log('CREATING ANIMAL', mapAnimal(data))
     try {
       dispatch(addAnimal(mapAnimal(data)))
     } catch (e) {
@@ -97,7 +105,6 @@ const App: React.FC = () => {
   }
 
   const updateAnimal = async (data) => {
-    console.log('UPDATING ANIMAL', mapAnimal(data))
     try {
       dispatch(addAnimal(mapAnimal(data)))
     } catch (e) {
@@ -106,7 +113,6 @@ const App: React.FC = () => {
   }
 
   const deleteAnimal = async (data) => {
-    // console.log('DELETING ANIMAL', mapAnimal(data))
     try {
       dispatch(burnAnimal(mapAnimal(data)))
     } catch (e) {
@@ -115,7 +121,6 @@ const App: React.FC = () => {
   }
 
   const deleteEgg = async (data) => {
-    // console.log('DELETING EGG', mapEgg(data))
     try {
       dispatch(burnEgg(mapEgg(data)))
     } catch (e) {
@@ -138,16 +143,17 @@ const App: React.FC = () => {
     (account) => {
       dispatch(updateGasPrice(library))
       dispatch(clearZoo())
-      dispatch(getZooBalance(account, zooToken))
-      dispatch(getMyTransactions(account))
-      getEggs(account)
-      getAnimals()
+      // @TODO the following calls are using moralis.
+      // re-enable them after the changeover to subgraph
+      // dispatch(getZooBalance(account, zooToken))
+      // dispatch(getMyTransactions(account))
+      // getEggs(account)
+      // getAnimals()
     },
     [dispatch, getAnimals, getEggs, library, zooToken],
   )
 
   useEffect(() => {
-    console.log('account passing from useffect is', account)
     getValues(account)
   }, [chainId, account, getValues])
 
