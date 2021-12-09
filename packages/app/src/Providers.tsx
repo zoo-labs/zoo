@@ -9,7 +9,9 @@ import { Provider } from 'react-redux'
 import store from 'state'
 import { MoralisProvider } from 'util/moralis/provider'
 import { getLibrary } from 'util/web3React'
+import { getApolloClient } from 'util/getApolloClient'
 import { ModalProvider } from './components'
+import { ApolloProvider } from "@apollo/client";
 
 const Providers: React.FC = ({ children }) => {
   return (
@@ -17,15 +19,17 @@ const Providers: React.FC = ({ children }) => {
       <Web3ProviderNetwork getLibrary={getLibrary}>
         <Web3ReactManager>
           <MoralisProvider>
-            <Provider store={store}>
-              <HelmetProvider>
-                <ThemeContextProvider>
-                  <RefreshContextProvider>
-                    <ModalProvider>{children}</ModalProvider>
-                  </RefreshContextProvider>
-                </ThemeContextProvider>
-              </HelmetProvider>
-            </Provider>
+            <ApolloProvider client={getApolloClient}>
+              <Provider store={store}>
+                <HelmetProvider>
+                  <ThemeContextProvider>
+                    <RefreshContextProvider>
+                      <ModalProvider>{children}</ModalProvider>
+                    </RefreshContextProvider>
+                  </ThemeContextProvider>
+                </HelmetProvider>
+              </Provider>
+            </ApolloProvider>
           </MoralisProvider>
         </Web3ReactManager>
       </Web3ProviderNetwork>

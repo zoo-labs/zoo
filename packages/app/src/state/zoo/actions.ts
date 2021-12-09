@@ -25,7 +25,6 @@ export function getZooBalance(account, zooToken) {
 
 export function getMyEggs(account, allEggs) {
   return async (dispatch) => {
-    console.log('getMyEggs', account, allEggs.length)
     let eggData = []
     Object.values(allEggs).forEach((egg: CardEgg, index) => {
       if (!account) {
@@ -38,9 +37,6 @@ export function getMyEggs(account, allEggs) {
     })
 
     eggData = sortData(eggData, 'hybrid')
-
-    console.log('myEggs length', eggData.length)
-
     dispatch(updateMyEggs(eggData))
   }
 }
@@ -64,7 +60,6 @@ export function eggConverter(egg, account) {
   }
 }
 export const getMyTransactions = (account) => async (dispatch) => {
-  console.log('GETTING TRANSACTIONS for account', account)
   const transactions = await getTransactions({ account })
   dispatch(updateMyTransactions(transactions))
 }
