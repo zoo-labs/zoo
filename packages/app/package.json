@@ -15,6 +15,7 @@
     "generate:config": "ts-node --compiler-options '{\"module\":\"commonjs\"}' scripts/generateConfig"
   },
   "dependencies": {
+    "@apollo/client": "^3.5.6",
     "@binance-chain/bsc-connector": "^1.0.0",
     "@craco/craco": "^6.2.0",
     "@emotion/react": "^11.4.1",
@@ -71,6 +72,7 @@
     "ethers": "^5.4.5",
     "framer-motion": "^4.1.17",
     "fuse.js": "^6.4.6",
+    "graphql": "^16.1.0",
     "history": "^5.0.1",
     "immutable": "^4.0.0-rc.14",
     "lodash": "^4.17.21",
