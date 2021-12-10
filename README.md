@@ -57,7 +57,7 @@ yarn functions
 
 ### Pre Requisites
 
-- Docker
+- Docker 4.1 and up
 
 ### Local Setup
 
@@ -75,9 +75,6 @@ yarn chain
 - This will take a lot of time to build the first time
 
 ```bash
-// On a new tab
-yarn graphnode:docker
-// On a new tab
 yarn graphnode:start
 ```
 
@@ -87,7 +84,7 @@ yarn graphnode:start
 > Successful Graph Node output
 > ![](success-graphnode.png)
 
-> Start the Lux Town Subgraph
+> Start the Zoo Subgraph
 
 ```bash
 // On a new tab
@@ -120,5 +117,5 @@ yarn dev
 If you encounter a typescript compilation error when running `yarn configure`, try running the following command and then try again.
 
 ```bash
-yarn workspace @luxdefi/contracts add ts-node@10.3 --dev
+yarn workspace @zoolabs/contracts add ts-node@10.3 --dev
 ```
