@@ -1,4 +1,4 @@
-import { ChainId, Currency, CurrencyAmount, Price, Token } from '@sushiswap/sdk'
+import { ChainId, Currency, CurrencyAmount, Price, Token } from '@zoolabs/sdk'
 import { useWeb3React } from '@web3-react/core'
 
 import { useMemo } from 'react'

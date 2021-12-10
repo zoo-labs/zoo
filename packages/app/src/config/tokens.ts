@@ -1,4 +1,4 @@
-import { Ether,ChainId, SUSHI_ADDRESS, Token, WETH9, WNATIVE } from '@sushiswap/sdk'
+import { Ether,ChainId, SUSHI_ADDRESS, Token, WETH9, WNATIVE } from '@zoolabs/sdk'
 
 export const BSC: { [key: string]: Token } = {
   DAI: new Token(ChainId.BSC, '0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3', 18, 'DAI', 'Dai Stablecoin'),

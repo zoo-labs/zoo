@@ -1,7 +1,7 @@
 import React, { FC, Fragment } from 'react'
 import { Trans, useLingui } from '@lingui/react'
 
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '@zoolabs/sdk'
 import HeadlessUIModal from '../../NewModal/HeadlessUIModal'
 import { t } from '@lingui/macro'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'

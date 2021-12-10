@@ -1,6 +1,6 @@
 // CONVENTION formatFoo -> string
 
-import {BigintIsh, Currency, CurrencyAmount, Fraction, JSBI, Price } from '@sushiswap/sdk'
+import {BigintIsh, Currency, CurrencyAmount, Fraction, JSBI, Price } from '@zoolabs/sdk'
 
 import { BigNumberish } from '@ethersproject/bignumber'
 import { formatUnits } from '@ethersproject/units'

@@ -3,7 +3,7 @@ import { useRemoveUserAddedToken, useUserAddedTokens } from '../../../state/user
 
 import CurrencyModalView from './CurrencyModalView'
 import ImportRow from './ImportRow'
-import { Token } from '@sushiswap/sdk'
+import { Token } from '@zoolabs/sdk'
 import { Trash } from 'react-feather'
 import { getExplorerLink } from '../../../functions/explorer'
 import { isAddress } from '../../../functions/validate'
