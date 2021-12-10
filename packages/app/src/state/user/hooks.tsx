@@ -1,4 +1,4 @@
-import { computePairAddress, FACTORY_ADDRESS, JSBI, Pair, Percent, Token } from '@sushiswap/sdk'
+import { computePairAddress, FACTORY_ADDRESS, JSBI, Pair, Percent, Token } from '@zoolabs/sdk'
 import { useWeb3React } from '@web3-react/core'
 import flatMap from 'lodash/flatMap'
 import { useCallback, useMemo } from 'react'

@@ -1,4 +1,4 @@
-import { ChainId, Currency, CurrencyAmount, Ether, SwapParameters, Trade, TradeOptions, TradeOptionsDeadline, TradeType } from '@sushiswap/sdk'
+import { ChainId, Currency, CurrencyAmount, Ether, SwapParameters, Trade, TradeOptions, TradeOptionsDeadline, TradeType } from '@zoolabs/sdk'
 
 import { getAddress } from '@ethersproject/address'
 import invariant from 'tiny-invariant'

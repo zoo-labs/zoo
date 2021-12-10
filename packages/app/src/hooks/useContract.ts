@@ -20,7 +20,7 @@ import {
   SUSHI_ADDRESS,
   TIMELOCK_ADDRESS,
   WNATIVE_ADDRESS,
-} from '@sushiswap/sdk'
+} from '@zoolabs/sdk'
 import { useWeb3 } from 'components'
 import { abis, addresses } from 'constants/contracts'
 import { isAddress } from 'functions'
@@ -70,9 +70,11 @@ export function useContract(nameOrAddress: string | AddressMap | undefined, ABI:
 
   let address: string | AddressMap | undefined = nameOrAddress
   let chainIdStr = chainId ? chainId.toString() : '1337'
+  console.log('addresses',addresses)
+  console.log('chainIdStr',chainIdStr)
 
   if (!isAddress(nameOrAddress) || nameOrAddress === AddressZero) {
-    address = addresses[chainIdStr][nameOrAddress.toString()]
+    address = addresses[chainIdStr][nameOrAddress.toString()]||''
     ABI = ABI || abis[chainIdStr] ? abis[chainIdStr][nameOrAddress.toString()] : null
   }
 
