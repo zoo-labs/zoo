@@ -1,4 +1,4 @@
-import { Currency, Token } from '@sushiswap/sdk'
+import { Currency, Token } from '@zoolabs/sdk'
 
 import { AlertTriangle } from 'react-feather'
 import { Button } from '../../Button'

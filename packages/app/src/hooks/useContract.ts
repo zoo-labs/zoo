@@ -20,7 +20,7 @@ import {
   SUSHI_ADDRESS,
   TIMELOCK_ADDRESS,
   WNATIVE_ADDRESS,
-} from '@sushiswap/sdk'
+} from '@zoolabs/sdk'
 import { useWeb3 } from 'components'
 import { abis, addresses } from 'constants/contracts'
 import { isAddress } from 'functions'

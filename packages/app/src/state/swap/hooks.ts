@@ -1,5 +1,5 @@
 import { AppDispatch, AppState } from '../index'
-import { ChainId, Currency, CurrencyAmount, JSBI, Percent, SUSHI_ADDRESS, TradeType, Trade as V2Trade, WNATIVE_ADDRESS } from '@sushiswap/sdk'
+import { ChainId, Currency, CurrencyAmount, JSBI, Percent, SUSHI_ADDRESS, TradeType, Trade as V2Trade, WNATIVE_ADDRESS } from '@zoolabs/sdk'
 import { DEFAULT_ARCHER_ETH_TIP, DEFAULT_ARCHER_GAS_ESTIMATE } from '../../config/archer'
 import { EstimatedSwapCall, SuccessfulCall, swapErrorToUserReadableMessage, useSwapCallArguments } from '../../hooks/useSwapCallback'
 // import {

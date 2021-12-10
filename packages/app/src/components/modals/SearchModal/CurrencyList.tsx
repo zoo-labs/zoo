@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Token } from '@sushiswap/sdk'
+import { Currency, CurrencyAmount, Token } from '@zoolabs/sdk'
 import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
 
 import { FixedSizeList } from 'react-window'
