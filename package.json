@@ -14,6 +14,7 @@
   "scripts": {
     "build": "yarn workspace @zoolabs/app build --max-old-space-size=12288",
     "build:lab": "yarn workspace @zoolabs/lab build --max-old-space-size=12288",
+    "build:sdk": "yarn workspace @zoolabs/sdk build",
     "clean": "rm -rf packages/app/build && rm -rf packages/contracts/artifacts && rm -rf packages/contracts/cache && rm -rf packages/contracts/types",
     "start": "yarn workspace @zoolabs/app start",
     "start:lab": "yarn workspace @zoolabs/lab start",
