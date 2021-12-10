@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { useSetUserSlippageTolerance, useUserSlippageTolerance, useUserTransactionTTL } from '../../state/user/hooks'
 
 import { DEFAULT_DEADLINE_FROM_NOW } from '../../constants'
-import { Percent } from '@sushiswap/sdk'
+import { Percent } from '@zoolabs/sdk'
 import { t } from '@lingui/macro'
 import { useLingui } from '@lingui/react'
 import { Button } from '../Button'

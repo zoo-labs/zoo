@@ -1,4 +1,4 @@
-import { ChainId, JSBI, Percent } from '@sushiswap/sdk'
+import { ChainId, JSBI, Percent } from '@zoolabs/sdk'
 
 export const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigInt(10000))
 export const rarityTable = {

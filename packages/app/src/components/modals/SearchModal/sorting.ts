@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Token } from '@sushiswap/sdk'
+import { Currency, CurrencyAmount, Token } from '@zoolabs/sdk'
 import { useAllTokenBalances } from 'hooks/useWallet'
 
 import { useMemo } from 'react'
