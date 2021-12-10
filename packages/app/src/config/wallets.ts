@@ -1,5 +1,5 @@
 import { AbstractConnector } from '@web3-react/abstract-connector'
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '@zoolabs/sdk'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import RPC from './rpc'
 import NetworkConnector from 'connectors/NetworkConnector'

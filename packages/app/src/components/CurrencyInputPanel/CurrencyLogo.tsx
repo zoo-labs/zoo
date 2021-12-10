@@ -1,15 +1,15 @@
-import { Currency } from '@sushiswap/sdk'
+import { Currency } from '@zoolabs/sdk'
 import React, { FunctionComponent, useMemo } from 'react'
 import { ChainId } from '../../constants/Chains'
 
 import Logo from '../Logo'
 import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
 import useHttpLocations from '../../hooks/useHttpLocations'
-import { WNATIVE } from '@sushiswap/sdk'
+import { WNATIVE } from '@zoolabs/sdk'
 
 const BLOCKCHAIN = {
   [ChainId.MAINNET]: 'ethereum',
-  [ChainId.BSC]:     'binanace'
+  [ChainId.BSC]: 'binanace',
 }
 
 function getCurrencySymbol(currency) {

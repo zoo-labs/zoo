@@ -5,7 +5,7 @@ import { useAddPopup, useBlockNumber } from '../application/hooks'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { useCallback, useEffect, useMemo } from 'react'
 
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '@zoolabs/sdk'
 import { updateBlockNumber } from '../application/actions'
 import { useWeb3React } from '@web3-react/core'
 
