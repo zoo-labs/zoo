@@ -1,4 +1,4 @@
-import { ChainId, Currency, NATIVE, WNATIVE } from '@sushiswap/sdk'
+import { ChainId, Currency, NATIVE, WNATIVE } from '@zoolabs/sdk'
 
 import { tryParseAmount } from '../functions/parse'
 import { useMemo } from 'react'

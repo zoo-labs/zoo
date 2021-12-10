@@ -1,4 +1,4 @@
-import { Currency, Token } from '@sushiswap/sdk'
+import { Currency, Token } from '@zoolabs/sdk'
 import React, { useState } from 'react'
 import { getExplorerLink } from '../../functions/explorer'
 import styled from 'styled-components'

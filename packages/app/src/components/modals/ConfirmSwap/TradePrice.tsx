@@ -1,4 +1,4 @@
-import { Currency, Price } from '@sushiswap/sdk'
+import { Currency, Price } from '@zoolabs/sdk'
 import React, { useCallback } from 'react'
 
 import { t } from '@lingui/macro'

@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Pair, Percent, Token } from '@sushiswap/sdk'
+import { Currency, CurrencyAmount, Pair, Percent, Token } from '@zoolabs/sdk'
 import React, { ReactNode, useCallback, useState } from 'react'
 import { formatCurrencyAmount } from '../../functions'
 import selectCoinAnimation from '../../assets/animations/select-coin.json'

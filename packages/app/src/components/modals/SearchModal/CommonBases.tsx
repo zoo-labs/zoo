@@ -1,4 +1,4 @@
-import { ChainId, Currency, Token, currencyEquals } from '@sushiswap/sdk'
+import { ChainId, Currency, Token, currencyEquals } from '@zoolabs/sdk'
 
 import { Button } from '../../Button'
 import { COMMON_BASES } from '../../../config/routing'

@@ -1,4 +1,4 @@
-import { Currency, Trade, TradeType } from '@sushiswap/sdk'
+import { Currency, Trade, TradeType } from '@zoolabs/sdk'
 import { ChevronRightIcon } from 'components'
 import React, { Fragment, memo } from 'react'
 

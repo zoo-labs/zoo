@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Percent } from '@sushiswap/sdk'
+import { Currency, CurrencyAmount, Percent } from '@zoolabs/sdk'
 import React, { useMemo } from 'react'
 
 // import { warningSeverity } from '../../functions/prices'

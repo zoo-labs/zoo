@@ -1,4 +1,5 @@
 # ZOO
+
 ![App CI](https://github.com/zoo-labs/zoo/actions/workflows/app.yml/badge.svg)
 ![Contracts CI](https://github.com/zoo-labs/zoo/actions/workflows/contracts.yml/badge.svg)
 
@@ -31,12 +32,13 @@ yarn start
 
 You should now have a local blockchain, with contracts deployed, and your app running on https://localhost:3000.
 
-
 ## Moralis integration
+
 Zoo builds on top of Moralis, which provides both cloud functions and a realtime
 API for the React frontend.
 
 ### Plugins
+
 Moralis servers support plugins which can listen to and respond to events on a given
 contract. For Zoo, we Moralis watches the `ZooKeeper` contract for any new game
 events and updates various game tables accordingly.
@@ -46,6 +48,7 @@ yarn plugins
 ```
 
 ### Cloud Functions
+
 Moralis Cloud Functions are used to update cached game state when key events are
 fired.
 
@@ -112,8 +115,8 @@ yarn configure
 yarn dev
 ```
 
-
 # TS-Node Error
+
 If you encounter a typescript compilation error when running `yarn configure`, try running the following command and then try again.
 
 ```bash

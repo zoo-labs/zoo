@@ -1,5 +1,5 @@
 import { EIP_1559_ACTIVATION_BLOCK } from '../constants'
-import { ChainId, Currency, CurrencyAmount, Ether, JSBI, Percent, Router, TradeType, Trade as V2Trade } from '@sushiswap/sdk'
+import { ChainId, Currency, CurrencyAmount, Ether, JSBI, Percent, Router, TradeType, Trade as V2Trade } from '@zoolabs/sdk'
 import { arrayify, hexlify, splitSignature } from '@ethersproject/bytes'
 import { isAddress, isZero } from '../functions/validate'
 import { useFactoryContract, useRouterContract } from './useContract'

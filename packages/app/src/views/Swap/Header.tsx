@@ -1,4 +1,4 @@
-import { Currency, Percent } from '@sushiswap/sdk'
+import { Currency, Percent } from '@zoolabs/sdk'
 import { useWeb3 } from 'hooks'
 import { useZooToken } from 'hooks/useContract'
 import React, { FC, useEffect, useState } from 'react'

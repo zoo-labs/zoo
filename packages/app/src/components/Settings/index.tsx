@@ -1,4 +1,4 @@
-import { ChainId, Percent } from '@sushiswap/sdk'
+import { ChainId, Percent } from '@zoolabs/sdk'
 import React, { useRef, useState } from 'react'
 import { useExpertModeManager, useUserArcherUseRelay, useUserSingleHopOnly, useUserTransactionTTL } from '../../state/user/hooks'
 import { useModalOpen, useToggleSettingsMenu } from '../../state/application/hooks'

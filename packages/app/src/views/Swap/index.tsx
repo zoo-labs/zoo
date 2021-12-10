@@ -1,4 +1,4 @@
-import { ARCHER_ROUTER_ADDRESS, ChainId, Currency, CurrencyAmount, JSBI, Token, TradeType, Trade as V2Trade } from '@sushiswap/sdk'
+import { ARCHER_ROUTER_ADDRESS, ChainId, Currency, CurrencyAmount, JSBI, Token, TradeType, Trade as V2Trade } from '@zoolabs/sdk'
 import { ApprovalState, useApproveCallbackFromTrade } from '../../hooks/useApproveCallback'
 // import { ArrowWrapper, div, SwapCallbackError } from '../../../features/exchange-v1/swap/styleds'
 // import { div, div } from '../../../components/div'
