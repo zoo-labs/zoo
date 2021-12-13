@@ -60,8 +60,6 @@
     "subgraph:deploy-mainnet": "yarn workspace @zoolabs/subgraph deploy:mainnet",
     "subgraph:start": "yarn workspace @zoolabs/subgraph start",
     "graphnode:start": "yarn workspace @zoolabs/graphnode start",
-    "graphnode:docker": "yarn workspace @zoolabs/graphnode docker",
-    "graphnode:clean": "yarn workspace @zoolabs/graphnode clean",
     "format": "yarn workspace @zoolabs/app format && yarn workspace @zoolabs/contracts format && yarn workspace @zoolabs/moralis format",
     "postinstall": "rimraf node_modules/babel-loader"
   },
