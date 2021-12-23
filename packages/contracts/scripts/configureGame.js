@@ -6,12 +6,12 @@ const NETWORK = process.env.HARDHAT_NETWORK ? process.env.HARDHAT_NETWORK : 'har
 console.log(`Configure game on ${NETWORK}`)
 
 const DEPLOYMENT = {
-  hardhat:  'localhost',
-  testnet:  'testnet',
-  mainnet:  'mainnet',
+  hardhat: 'localhost',
+  testnet: 'testnet',
+  mainnet: 'mainnet',
   ethereum: 'ethereum',
-  rinkeby:  'rinkeby',
-  ropsten:  'ropsten',
+  rinkeby: 'rinkeby',
+  ropsten: 'ropsten',
 }[NETWORK]
 
 const rarities = require('../utils/rarities.json')
@@ -23,7 +23,8 @@ const Market = require(`../deployments/${DEPLOYMENT}/Market.json`)
 const Media = require(`../deployments/${DEPLOYMENT}/Media.json`)
 const Drop = require(`../deployments/${DEPLOYMENT}/Drop.json`)
 const ZooKeeper = require(`../deployments/${DEPLOYMENT}/ZooKeeper.json`)
-const bridge =  require(`../deployments/${DEPLOYMENT}/Bridge.json`)
+const bridge = require(`../deployments/${DEPLOYMENT}/Bridge.json`)
+const Pair = require(`../deployments/${DEPLOYMENT}/UniswapV2Pair.json`)
 
 // Split game data into deploy-sized chunks
 function chunks(arr, size) {
@@ -49,19 +50,19 @@ async function main() {
 
   // Configure Media
   console.log('media.configure', Market.address)
-  await media.configure(Market.address)
+  await media.configure(keeper.address, Market.address)
 
   // Configure game for our Gen 0 drop
   console.log('keeper.configure', Media.address, ZOO.address)
-  await keeper.configure(Media.address, ZOO.address, bridge.address, true)
+  await keeper.configure(Media.address, ZOO.address, Pair.address, bridge.address, true)
 
   // Configure Drop
   console.log('drop.configure', keeper.address)
   await drop.configureKeeper(keeper.address)
 
   // Setup Gen 0 drop
-  console.log('keeper.setDrop', drop.address)
-  await keeper.setDrop(drop.address)
+  // console.log('keeper.setDrop', drop.address)
+  // await keeper.setDrop(drop.address)
 
   // Base Price for Egg / Names
   // const exp = ethers.BigNumber.from('10').pow(18)
@@ -100,19 +101,27 @@ async function main() {
   await drop.configureEggs('Base Egg', 'Hybrid Egg')
 
   // Add rarities
-  rarities.sort(function (a, b) {
-    return a.probability - b.probability
-  })
+  await rarities
+    .sort(function (a, b) {
+      return a.probability - b.probability
+    })
+    .reduce(async (prior, v) => {
+      await prior
+      let name = v.name
+      let prob = ethers.BigNumber.from(v.probability)
+      let vyield = ethers.BigNumber.from(v.yields)
+      let boost = ethers.BigNumber.from(v.boost)
+      const tx = await drop.setRarity(name, prob, vyield, boost)
+      return tx.wait()
+    }, Promise.resolve())
 
-  for (const v of rarities) {
-    console.log('setRarity', v)
-    const tx = await drop.setRarity(v.name, v.probability, v.yield, v.boost)
-    await tx.wait()
-  }
+  // for (const v of rarities) {
+  //   console.log('setRarity', v)
+
+  // }
 
   // Add animals
   for (const chunk of chunks(animals, 25)) {
-    console.log('setAnimals', chunk)
     const tx = await drop.setAnimals(chunk)
     await tx.wait()
   }
