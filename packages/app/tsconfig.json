@@ -1,15 +1,5 @@
 {
   "compilerOptions": {
-    "types": ["node"],
-    "baseUrl": "src",
-    "alwaysStrict": true,
-    "strictNullChecks": false,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": false,
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
-    "allowSyntheticDefaultImports": true,
-    "typeRoots": ["./node_modules/@types", "./src/types"],
     "target": "es5",
     "lib": [
       "dom",
@@ -28,9 +18,16 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "downlevelIteration": true,
-    "incremental": true
+    "incremental": true,
+      "baseUrl": "./src"
   },
-  "include": ["./src/types", "src", "scripts"],
-  "exclude": ["node_modules", "build"],
-  "rootDir": "src"
+  "include": [
+    "next-env.d.ts",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
