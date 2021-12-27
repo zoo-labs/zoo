@@ -182,7 +182,8 @@ export default function CurrencyList({
   showImportView: () => void
   setImportToken: (token: Token) => void
 }) {
-  const itemData: (Currency | BreakLine)[] = useMemo(() => {
+  const itemData: any = useMemo(() => {
+    // const itemData: (Currency | BreakLine)[] = useMemo(() => {
     if (otherListTokens && otherListTokens?.length > 0) {
       return [...currencies, BREAK_LINE, ...otherListTokens]
     }
