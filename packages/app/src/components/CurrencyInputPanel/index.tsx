@@ -129,7 +129,7 @@ export default function CurrencyInputPanel({
           </button>
         </div>
         {!hideInput && (
-          <div className='flex items-center w-full space-x-3 rounded bg-dark-900 focus:bg-dark-700 p-3 sm:w-3/5'>
+          <div className='flex items-center w-full p-3 space-x-3 rounded bg-dark-900 focus:bg-dark-700 sm:w-3/5'>
             <>
               {showMaxButton && selectedCurrencyBalance && (
                 <button onClick={onMax} className='text-xs font-medium bg-transparent border rounded-full hover:bg-primary border-low-emphesis text-secondary whitespace-nowrap'>
@@ -140,7 +140,7 @@ export default function CurrencyInputPanel({
                 id='token-amount-input'
                 value={value}
                 onChange={(e) => onUserInput(e.target.value)}
-                className='relative font-bold outline-none border-none flex-auto overflow-hidden overflow-ellipsis placeholder-low-emphesis focus:placeholder-primary w-0 p-0 text-2xl bg-transparent'
+                className='relative flex-auto w-0 p-0 overflow-hidden text-2xl font-bold bg-transparent border-none outline-none overflow-ellipsis placeholder-low-emphesis focus:placeholder-primary'
                 placeholder='0.0'
                 min={1}
                 max={79}
@@ -168,7 +168,7 @@ export default function CurrencyInputPanel({
           </div>
         )}
       </div>
-      {!disableCurrencySelect && onCurrencySelect && (
+      {/* {!disableCurrencySelect && onCurrencySelect && (
         <CurrencySearchModal
           isOpen={modalOpen}
           onDismiss={handleDismissSearch}
@@ -177,7 +177,7 @@ export default function CurrencyInputPanel({
           otherSelectedCurrency={otherCurrency}
           showCommonBases={showCommonBases}
         />
-      )}
+      )} */}
     </div>
   )
 }
