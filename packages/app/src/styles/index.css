@@ -1,0 +1,281 @@
+/* ./src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    overflow: scroll !important
+}
+body {
+    /* background-color: #0d0415; */
+}
+a {
+    cursor: pointer;
+}
+.bg-dark-1000 {
+    background-color: rgba(13,4,21,1)
+}
+.from-bg-dark-1000 {
+    --tw-gradient-from: rgba(13,4,21,1);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
+.to-bg-dark-1000 {
+    --tw-gradient-to: rgba(13,4,21,1);
+}
+.hover\:bg-dark-1000:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgba(13,4,21,1)
+}
+
+
+.bg-dark-900 {
+    background-color: rgba(22,21,34,1);
+}
+.from-bg-dark-900 {
+    --tw-gradient-from: rgba(22,21,34,1);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
+.to-bg-dark-900 {
+    --tw-gradient-to:rgba(22,21,34,1);
+}
+.hover\:bg-dark-900:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgba(22,21,34,1);
+}
+
+.bg-dark-800 {
+    background-color: rgba(32,34,49,1);
+}
+.from-bg-dark-800 {
+    --tw-gradient-from: rgba(32,34,49,1);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
+.to-bg-dark-800 {
+    --tw-gradient-to:rgba(32,34,49,1);
+}
+.hover\:bg-dark-800:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgba(32,34,49,1);
+}
+.bg-dark-700 {
+    background-color: rgba(46,51,72,1);
+}
+.bg-primary {
+    background-color: rgb(140, 79, 248);
+}
+.bg-primary-light {
+    background-color:rgb(165, 124, 236)
+}
+.hover\:bg-primary-light:hover {
+    background-color:rgb(165, 124, 236)
+}
+.primary {
+    color:rgb(140, 79, 248)
+}
+.secondary {
+    color: #212429;
+}
+.bg-pink-light {
+    background-color: rgba(236, 72, 153, 0.1);
+}
+.bg-pink {
+    background-color: rgba(243,56,195,1);
+}
+.blur-\[150px\] {
+    --tw-blur: blur(150px);
+}
+.blur-\[400px\] {
+    --tw-blur: blur(400px);
+}
+.opaque-pink {
+    color:rgba(243,56,195,0.50196)
+}
+.bg-black {
+    background-color: rgba(0,0,0,var(--tw-bg-opacity));
+}
+.opaque-blue{
+    color:rgba(9,147,236,0.50196)
+}
+.bg-secondary {
+    background-color: #212429;
+}
+
+.border-dark-800 {
+    border-color: rgba(32,34,49,1);
+}
+
+.border-gray-600 {
+    border: 2px solid rgb(52, 54,59) !important;
+}
+
+.border-gray-500 {
+    border-color: rgba(32,34,49,1);
+}
+
+.min-h-empty {
+    min-height: 128px;
+}
+
+.hover\:bg-primary:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(140, 79, 248);
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+  }
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+  }
+
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .disabled\:cursor-not-allowed:disabled{
+      cursor: not-allowed;
+  }
+  .disabled\:bg-opacity-80:disabled {
+    --tw-bg-opacity: 0.8;
+}
+.border-blue {
+    --tw-border-opacity: 1;
+    border-color: rgba(9,147,236,var(--tw-border-opacity));
+}
+.rounded {
+    border-radius: 0.625rem;
+}
+.bg-gold {
+    background-color: #f2c282;
+}
+.bg-gold-light {
+    background-color: #F8E0C0 ;
+}
+
+.from-primary {
+    --tw-gradient-to: rgba(243,56,195,1);
+    /* --tw-gradient-from:  rgb(140, 79, 248); */
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
+.hover\:from-primary:hover {
+    --tw-gradient-from:  rgb(255, 101, 218);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
+.from-secondary-dark {
+    --tw-gradient-from:  #6c7464;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
+.to-primary {
+    --tw-gradient-to:rgb(140, 79, 248);
+}
+.hover\:to-primary:hover {
+    --tw-gradient-to:rgb(44, 190, 247);
+}
+.to-gold {
+    --tw-gradient-to:#f2c282;
+}
+.to-pink {
+    --tw-gradient-to:rgba(243,56,195,1);;
+}
+.bg-secondary-dark {
+    background-color: #6c7464;
+}
+.hover\:to-pink:hover {
+    --tw-gradient-to:rgba(243,56,195,1);;
+}
+.from-btn1 {
+    --tw-gradient-from: rgba(255, 64, 205, 0.9);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
+.to-btn2 {
+    --tw-gradient-to: rgba(26, 175, 221, 0.9);
+}
+.hover\:from-btn1:hover {
+    --tw-gradient-from: rgba(243,56,195,0.8);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
+
+.hover\:to-btn2:hover {
+    --tw-gradient-to: rgba(54, 146, 244, 0.9);
+}
+
+@keyframes border-pulsate {
+    0%   { border-color: rgba(0, 255, 255, 1); }
+    50% { border-color: rgba(0, 255, 255, 0); }
+    100%   { border-color: rgba(0, 255, 255, 1); }
+}
+
+.font-bold {
+  font-weight: 600 !important;
+}
+
+
+/* animated gradient border */
+.gradient-border {
+    --borderWidth: 2px;
+    background: #1D1F20;
+    position: relative;
+    border-radius: 0.75rem;
+  }
+  .gradient-border:after {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--borderWidth));
+    left: calc(-1 * var(--borderWidth));
+    height: calc(100% + var(--borderWidth) * 2);
+    width: calc(100% + var(--borderWidth) * 2);
+    background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+    border-radius: 0.75rem;
+    z-index: -1;
+    animation: animatedgradient 3s ease alternate infinite;
+    background-size: 300% 300%;
+  }
+
+
+  @keyframes animatedgradient {
+      0% {
+          background-position: 0% 50%;
+      }
+      50% {
+          background-position: 100% 50%;
+      }
+      100% {
+          background-position: 0% 50%;
+      }
+  }
+
+  .parent:hover > div {
+    opacity: 1;
+    visibility: visible;
+  }
+  .parent:hover > img {
+    transform:scale(1.1)
+  }
+
+  .hoverdiv:hover > div > h6 {
+      color:white
+  }
+  .hoverdiv:hover > div > div > .svg {
+    stroke:white
+}
+.bg-modal-dark {
+    background-color: #0e0d15;
+}

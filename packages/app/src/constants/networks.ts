@@ -1,4 +1,4 @@
-import { ChainId } from '../constants/Chains'
+import { ChainId } from './Chains'
 
 const Arbitrum = '/static/images/networks/arbitrum-network.jpg'
 const Avalanche = 'https://app.sushi.com/_next/image?url=%2Fimages%2Fnetworks%2Favalanche-network.jpg&w=64&q=75'
