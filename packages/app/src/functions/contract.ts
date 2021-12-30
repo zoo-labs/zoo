@@ -8,7 +8,7 @@ import ArcherSwapRouterABI from '../constants/abis/archer-router.json'
 import { Contract } from '@ethersproject/contracts'
 import IUniswapV2Router02ABI from '../constants/abis/uniswap-v2-router-02.json'
 import IUniswapV2Router02NoETHABI from '../constants/abis/uniswap-v2-router-02-no-eth.json'
-import { isAddress } from '../functions/validate'
+import { isAddress } from './validate'
 
 // account is not optional
 export function getSigner(library: Web3Provider, account: string): JsonRpcSigner {

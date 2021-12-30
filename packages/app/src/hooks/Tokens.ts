@@ -1,9 +1,9 @@
 import { ChainId, Currency, NATIVE, Token, WNATIVE, WNATIVE_ADDRESS, currencyEquals } from '@zoolabs/sdk'
 import { NEVER_RELOAD, useSingleCallResult } from '../state/multicall/hooks'
-import { TokenAddressMap, useAllLists, useInactiveListUrls, useUnsupportedTokenList } from './../state/lists/hooks'
+import { TokenAddressMap, useAllLists, useInactiveListUrls, useUnsupportedTokenList } from '../state/lists/hooks'
 import { useBytes32TokenContract, useTokenContract } from './useContract'
 
-import { WrappedTokenInfo } from './../state/lists/wrappedTokenInfo'
+import { WrappedTokenInfo } from '../state/lists/wrappedTokenInfo'
 import { arrayify } from '@ethersproject/bytes'
 import { createTokenFilterFunction } from '../functions/filtering'
 import { isAddress } from '../functions/validate'
@@ -121,8 +121,8 @@ function parseStringOrBytes32(str: string | undefined, bytes32: string | undefin
     ? str
     : // need to check for proper bytes string and valid terminator
     bytes32 && BYTES32_REGEX.test(bytes32) && arrayify(bytes32)[31] === 0
-    ? parseBytes32String(bytes32)
-    : defaultValue
+      ? parseBytes32String(bytes32)
+      : defaultValue
 }
 
 // undefined if invalid or does not exist

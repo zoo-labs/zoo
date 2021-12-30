@@ -1,7 +1,6 @@
 // Set of helper functions to facilitate wallet setup
 
-import getRandomNode from '../util/getRandomNode'
-import useToast from 'hooks/useToast'
+import getRandomNode from './getRandomNode'
 
 const rpcURLs = {
   mainnet: [getRandomNode(56)],

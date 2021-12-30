@@ -4,7 +4,7 @@ import { useMultipleContractSingleData, useSingleContractMultipleData } from '..
 import ERC20_ABI from '../constants/abis/erc20.json'
 import { Interface } from '@ethersproject/abi'
 import { isAddress } from '../functions/validate'
-import { useAllTokens } from '../hooks/Tokens'
+import { useAllTokens } from './Tokens'
 import { useMemo } from 'react'
 import { useMulticall2Contract } from './useContract'
 import { useWeb3React } from '@web3-react/core'
@@ -22,9 +22,9 @@ export function useETHBalances(uncheckedAddresses?: (string | undefined)[]): {
     () =>
       uncheckedAddresses
         ? uncheckedAddresses
-            .map(isAddress)
-            .filter((a): a is string => a !== false)
-            .sort()
+          .map(isAddress)
+          .filter((a): a is string => a !== false)
+          .sort()
         : [],
     [uncheckedAddresses],
   )
@@ -63,15 +63,15 @@ export function useTokenBalancesWithLoadingIndicator(address?: string, tokens?: 
       () =>
         address && validatedTokens.length > 0
           ? validatedTokens.reduce<{
-              [tokenAddress: string]: CurrencyAmount<Token> | undefined
-            }>((memo, token, i) => {
-              const value = balances?.[i]?.result?.[0]
-              const amount = value ? JSBI.BigInt(value.toString()) : undefined
-              if (amount) {
-                memo[token.address] = CurrencyAmount.fromRawAmount(token, amount)
-              }
-              return memo
-            }, {})
+            [tokenAddress: string]: CurrencyAmount<Token> | undefined
+          }>((memo, token, i) => {
+            const value = balances?.[i]?.result?.[0]
+            const amount = value ? JSBI.BigInt(value.toString()) : undefined
+            if (amount) {
+              memo[token.address] = CurrencyAmount.fromRawAmount(token, amount)
+            }
+            return memo
+          }, {})
           : {},
       [address, validatedTokens, balances],
     ),
