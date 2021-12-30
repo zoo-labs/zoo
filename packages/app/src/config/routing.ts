@@ -35,7 +35,7 @@ import {
   UST,
   WBTC,
   XSUSHI,
-} from '../config/tokens'
+} from './tokens'
 // a list of tokens by chain
 import { ChainId, Currency, Token, WNATIVE } from '@zoolabs/sdk'
 
