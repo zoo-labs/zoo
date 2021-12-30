@@ -1,5 +1,7 @@
 {
-  "name": "zoo-app",
+  "name": "@zoolabs/app",
+  "license": "MIT",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
