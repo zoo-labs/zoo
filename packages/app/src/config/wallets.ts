@@ -51,7 +51,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
         rpc: RPC,
         bridge: 'https://bridge.walletconnect.org',
         qrcode: true,
-        pollingInterval: 15000,
+        // pollingInterval: 15000,
       })
     },
     name: 'WalletConnect',
