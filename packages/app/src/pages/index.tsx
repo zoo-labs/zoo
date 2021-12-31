@@ -23,7 +23,7 @@ export default function Dashboard(props) {
     <div>
       <Head>
         <title>ZOO</title>
-        <meta name="description" content="Lux Town" />
+        <meta name="description" content="Zoo" />
       </Head>
       <Home />
     </div>
