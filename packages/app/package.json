@@ -58,6 +58,7 @@
     "@web3-react/torus-connector": "^6.1.9",
     "@web3-react/walletconnect-connector": "^6.2.8",
     "@web3-react/walletlink-connector": "^6.2.8",
+    "@welldone-software/why-did-you-render": "^6.2.3",
     "autoprefixer": "^10.4.0",
     "cookie-cutter": "^0.2.0",
     "fuse.js": "^6.5.3",
