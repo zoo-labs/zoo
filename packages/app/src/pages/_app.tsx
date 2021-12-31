@@ -108,7 +108,7 @@ function MyApp({
           name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
-        <title key="title">LUX</title>
+        <title key="title">ZOO</title>
 
         <meta
           key="description"
@@ -135,7 +135,7 @@ function MyApp({
         <meta
           key="twitter:url"
           name="twitter:url"
-          content="https://lux.financial/"
+          content="https://zoo.financial/"
         />
         <meta
           key="twitter:description"
@@ -145,7 +145,7 @@ function MyApp({
         <meta
           key="twitter:image"
           name="twitter:image"
-          content="https://lux.financial/lux.png"
+          content="https://zoo.financial/zoo.png"
         />
         <meta
           key="twitter:creator"
@@ -154,11 +154,11 @@ function MyApp({
         />
         <meta key="og:type" property="og:type" content="website" />
         <meta key="og:site_name" property="og:site_name" content="Lux Defi" />
-        <meta key="og:url" property="og:url" content="https://lux.financial" />
+        <meta key="og:url" property="og:url" content="https://zoo.financial" />
         <meta
           key="og:image"
           property="og:image"
-          content="https://lux.financial/lux.png"
+          content="https://zoo.financial/zoo.png"
         />
         <meta
           key="og:description"
