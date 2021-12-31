@@ -31,25 +31,3 @@ export default function Mint() {
     </div>
   );
 }
-
-/*
-
-<Container
-      id="dashboard-page"
-      className="py-4 md:py-8 lg:py-12 "
-      maxWidth="6xl"
-    >
-      <div>
-        <HeroSection />
-        <PartnersSection />
-        <OpportunitySection />
-        <PopularNftsSection />
-        <MarketPlaceSection />
-        <GetStartedSection />
-        <ZooNewsSection />
-        <AnimalFamilySection />
-        <JoinZooSection />
-        <FaqSection />
-      </div>
-    </Container>
-*/
