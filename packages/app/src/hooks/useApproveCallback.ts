@@ -16,7 +16,7 @@ import { calculateGasMargin } from '../functions/trade'
 import { useActiveWeb3React } from './useActiveWeb3React'
 import { useTokenAllowance } from './useTokenAllowance'
 import { useTokenContract } from './useContract'
-import { wait } from '../functions/lux'
+import { wait } from '../functions/zoo'
 import { ChainId } from '@zoolabs/sdk'
 
 export enum ApprovalState {
