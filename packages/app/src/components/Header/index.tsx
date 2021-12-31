@@ -32,14 +32,14 @@ function AppBar(): JSX.Element {
 
   return (
     //     // <header className="flex flex-row justify-between w-screen flex-nowrap">
-    <header className="flex-shrink-0 w-full">
+    <header className="flex-shrink-0 w-full bg-black">
       <Popover as="nav" className="z-10 w-full bg-transparent header-border-b">
         {({ open }) => (
           <>
-            <div className="px-4 py-4">
+            <div className="px-4 py-4 max-w-7xl mx-auto">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  {/* <Image src="/logo.png" alt="Sushi" width="32px" height="32px" /> */}
+                  <Image src="/img/logo.png" height={24} width={60} alt="zoo" />
 
                   <NavLink href="/">
                     <div className="pl-2 cursor-pointer logo">
@@ -55,28 +55,44 @@ function AppBar(): JSX.Element {
                   <div className="hidden sm:block sm:ml-4">
                     <div className="flex space-x-2">
                       {/* <Buy /> */}
-                      <NavLink href="/dashboard">
+                      <NavLink href="/marketplace">
                         <a
                           id={`mint-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
-                          {i18n._(t`Dashboard`)}
+                          {i18n._(t`Marketplace`)}
                         </a>
                       </NavLink>
-                      <NavLink href="/market">
+                      <NavLink href="/chart">
                         <a
                           id={`market-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
-                          {i18n._(t`Market`)}
+                          {i18n._(t`Chart`)}
                         </a>
                       </NavLink>
-                      <NavLink href="/mint">
+                      <NavLink href="/community">
                         <a
                           id={`mint-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
-                          {i18n._(t`Mint`)}
+                          {i18n._(t`Community`)}
+                        </a>
+                      </NavLink>
+                      <NavLink href="/press">
+                        <a
+                          id={`mint-nav-link`}
+                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                        >
+                          {i18n._(t`Press`)}
+                        </a>
+                      </NavLink>
+                      <NavLink href="/learn">
+                        <a
+                          id={`mint-nav-link`}
+                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                        >
+                          {i18n._(t`Learn`)}
                         </a>
                       </NavLink>
                       {/* <NavLink href="/swap">
