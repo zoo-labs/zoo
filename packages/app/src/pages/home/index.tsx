@@ -17,23 +17,17 @@ import FaqSection from "sections/Home/FaqSection";
 export default function Mint() {
   const router = useRouter();
   return (
-    <Container
-      id="dashboard-page"
-      className="py-4 md:py-8 lg:py-12 "
-      maxWidth="6xl"
-    >
-      <div>
-        <HeroSection />
-        <PartnersSection />
-        <OpportunitySection />
-        <PopularNftsSection />
-        <MarketPlaceSection />
-        <GetStartedSection />
-        <ZooNewsSection />
-        <AnimalFamilySection />
-        <JoinZooSection />
-        <FaqSection />
-      </div>
-    </Container>
+    <div>
+      <HeroSection />
+      <PartnersSection />
+      <OpportunitySection />
+      <PopularNftsSection />
+      <MarketPlaceSection />
+      <GetStartedSection />
+      <ZooNewsSection />
+      <AnimalFamilySection />
+      <JoinZooSection />
+      <FaqSection />
+    </div>
   );
 }
