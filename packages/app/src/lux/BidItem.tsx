@@ -46,7 +46,7 @@ const BidItem = ({ bid, showToken, summary, onClick }: BidProps) => {
           <div>
             <div>
               Bid for {given_name || type}
-              <span className="px-2 py-1 ml-2 text-xs font-bold text-black bg-gray-300 rounded-full lux-font Asset__token-id">
+              <span className="px-2 py-1 ml-2 text-xs font-bold text-black bg-gray-300 rounded-full zoo-font Asset__token-id">
                 {tokenId}
               </span>
             </div>

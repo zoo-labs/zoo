@@ -1,6 +1,6 @@
 import { Currency, Token, ZERO_ADDRESS } from "@zoolabs/sdk";
 import { formatCurrencyFromRawAmount } from "../functions";
-import { formatError } from "../functions/lux";
+import { formatError } from "../functions/zoo";
 import { useActiveWeb3React, useContract } from "../hooks";
 import { useAsset } from "./state";
 import { Ask } from "./types";
@@ -49,7 +49,7 @@ const SetAsk = ({ tokenId, children }) => {
         <>
           <h2 className="mb-10 text-xl text-center">
             Set Ask for {type}{" "}
-            <span className="px-2 py-1 ml-1 text-xs font-bold text-black bg-gray-300 rounded-full lux-font AssetModal__token-id">
+            <span className="px-2 py-1 ml-1 text-xs font-bold text-black bg-gray-300 rounded-full zoo-font AssetModal__token-id">
               {tokenId}
             </span>
           </h2>
