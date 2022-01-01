@@ -17,6 +17,7 @@ import { t } from "@lingui/macro";
 import { useActiveWeb3React } from "../../hooks/useActiveWeb3React";
 import { useETHBalances } from "../../state/wallet/hooks";
 import { useLingui } from "@lingui/react";
+import { useZoobalance } from "state/zoo/hooks";
 // import { ChainId } from '../../config/networks'
 
 // import { ExternalLink, NavLink } from "./Link";
@@ -25,10 +26,14 @@ import { useLingui } from "@lingui/react";
 function AppBar(): JSX.Element {
   const { i18n } = useLingui();
   const { account, chainId, library } = useActiveWeb3React();
-
+  const getZooBalance = useZoobalance();
+  useEffect(() => {
+    getZooBalance();
+  }, [account]);
   const userEthBalance = useETHBalances(account ? [account] : [])?.[
     account ?? ""
   ];
+  console.log("userEthBalance", userEthBalance);
   const chainAddresses =
     (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
 
@@ -55,7 +60,7 @@ function AppBar(): JSX.Element {
                   <div className="hidden sm:block sm:ml-4">
                     <div className="flex space-x-2">
                       {/* <Buy /> */}
-                      <NavLink href="/marketplace">
+                      <NavLink href="/market">
                         <a
                           id={`mint-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
@@ -241,7 +246,7 @@ function AppBar(): JSX.Element {
                       {account && chainId && userEthBalance && (
                         <>
                           <div className="px-3 py-2 text-primary text-bold">
-                            {userEthBalance?.toFixed(0)}{" "}
+                            {userEthBalance?.toFixed(3)}{" "}
                             {NATIVE[chainId]?.symbol || "ETH"}
                           </div>
                         </>

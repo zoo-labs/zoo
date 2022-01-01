@@ -252,3 +252,9 @@ export function useInariContract(withSignerIfPossible?: boolean): Contract | nul
 export function useZenkoContract(withSignerIfPossible?: boolean): Contract | null {
   return useContract('0xa8f676c49f91655ab3b7c3ea2b73bb3088b2bc1f', ZENKO_ABI, withSignerIfPossible)
 }
+export function useZooToken(): Contract | null {
+  return useContract('ZOO')
+}
+export function useFaucet(): Contract | null {
+  return useContract('Faucet')
+}

@@ -10,7 +10,9 @@ const BuyZooSection = () => {
           public proof of ownership. This establishes credibility for each NFT
           and its unchangeable nature.
         </p>
-				<button className="Button Button__outline Button--default">Buy $Zoo</button>
+        <button className="Button Button__outline Button--default">
+          Buy $Zoo
+        </button>
       </div>
     </section>
   );

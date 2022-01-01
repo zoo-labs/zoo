@@ -11,6 +11,7 @@ import network from './network/reducer'
 import swap from './swap/reducer'
 import transactions from './transactions/reducer'
 import user from './user/reducer'
+import zoo from './zoo/reducer'
 
 const reducer = combineReducers({
   application,
@@ -25,6 +26,7 @@ const reducer = combineReducers({
   limitOrder,
   create,
   inari,
+  zoo
 })
 
 export default reducer
