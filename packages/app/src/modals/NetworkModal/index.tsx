@@ -46,20 +46,21 @@ export default function NetworkModal(): JSX.Element | null {
         {AVAILABLE_NETWORKS.map((key: number, i: number) => {
           if (chainId === key) {
             return (
-              <button
-                key={i}
-                className="w-full col-span-1 p-px rounded bg-gradient-to-r from-blue to-indigo"
-              >
-                <div className="flex items-center w-full h-full p-3 space-x-3 rounded bg-dark-1000">
-                  <Image
-                    src={NETWORK_ICON[key]}
-                    alt={`Switch to ${NETWORK_LABEL[key]} Network`}
-                    className="rounded-md"
-                    width="32px"
-                    height="32px"
-                  />
-                  <div className="font-bold text-primary">
-                    {NETWORK_LABEL[key]}
+              <button key={i} className="w-full col-span-1 p-px rounded">
+                <div className="w-full p-px rounded bg-gradient-to-b from-btn1 to-btn2">
+                  <div className="flex flex-col w-full h-full overflow-y-hidden rounded bg-dark-900">
+                    <div className="flex items-center w-full h-full p-3 px-3 py-2 space-x-3 rounded-lg bg-gradient-to-b from-bg-dark-1000 to-bg-dark-1000 hover:from-btn1 hover:to-btn2 border-balticsea-400 bg-balticsea-700">
+                      <Image
+                        src={NETWORK_ICON[key]}
+                        alt={`Switch to ${NETWORK_LABEL[key]} Network`}
+                        className="rounded-md"
+                        width="32px"
+                        height="32px"
+                      />
+                      <div className="font-bold text-primary">
+                        {NETWORK_LABEL[key]}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </button>
@@ -84,7 +85,7 @@ export default function NetworkModal(): JSX.Element | null {
                   library?.send("wallet_addEthereumChain", [params, account]);
                 }
               }}
-              className="flex items-center w-full col-span-1 p-3 space-x-3 rounded cursor-pointer bg-dark-800 hover:bg-dark-700"
+              className="flex items-center w-full col-span-1 p-3 space-x-3 rounded cursor-pointer from-bg-dark-800 to-bg-dark-800 bg-gradient-to-b hover:from-btn1 hover:to-btn2"
             >
               <Image
                 src={NETWORK_ICON[key]}

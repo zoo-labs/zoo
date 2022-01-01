@@ -8,6 +8,9 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 const nextConfig = {
   env: {},
+  images: {
+    domains: ["raw.githubusercontent.com"],
+  },
   // async redirects() {
   //   return [
   //     {
