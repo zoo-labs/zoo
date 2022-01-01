@@ -94,7 +94,7 @@ export const AVAILABLE_NETWORKS: number[] = [
   // ChainId.ARBITRUM,
   // ChainId.OKEX,
   // ChainId.HECO,
-  // ChainId.BSC,
+  ChainId.BSC,
   // ChainId.XDAI,
   // ChainId.HARMONY,
   // ChainId.AVALANCHE,
