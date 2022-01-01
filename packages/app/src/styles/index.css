@@ -1,4 +1,6 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @import '@fontsource/dm-sans/index.css';
 @import 'react-virtualized/styles.css';
@@ -6,9 +8,6 @@
 
 @import './variables.css';
 
-@tailwind components;
-
-@tailwind utilities;
 
 @import './react-morphing-modal.css';
 
