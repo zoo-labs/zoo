@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import Image from 'next/image';
+import React, { FC } from "react";
+import Image from "next/image";
 
 interface Props {
   name: string;
@@ -12,18 +12,18 @@ const AnimalFamilyInfo: FC<Props> = ({
   name,
   image,
   descriptionHead,
-  description
+  description,
 }) => {
   return (
     <section className="AnimalFamily">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="AnimalFamily__nfts flex flex-col items-center">
-          <div className="AnimalFamily__nft flex flex-col lg:flex-row justify-center items-center">
+      <div className="px-6 mx-auto max-w-7xl ">
+        <div className="flex flex-col items-center AnimalFamily__nfts">
+          <div className="flex flex-col items-center justify-center AnimalFamily__nft lg:flex-row">
             <div
-              className="p-1 bg-white rounded-3xl mb-8"
+              className="p-1 mb-8 bg-white rounded-3xl"
               style={{
                 background:
-                  'linear-gradient(180deg, #73205D 0%, #3772FF 100%, #FFFFFF 100%)'
+                  "linear-gradient(180deg, #73205D 0%, #3772FF 100%, #FFFFFF 100%)",
               }}
             >
               <div className="AnimalFamily__image w-full bg-[#000] border border-[#000] rounded-3xl	 h-auto flex flex-col items-center lg:basis-1/3">
@@ -36,24 +36,24 @@ const AnimalFamilyInfo: FC<Props> = ({
                 />
               </div>
             </div>
-            <div className="AnimalFamily__name text-center lg:basis-1/3 ">
-              <h2 className="text-3xl font-semibold mb-4">{name}</h2>
+            <div className="text-center AnimalFamily__name lg:basis-1/3 ">
+              <h2 className="mb-4 text-3xl font-semibold">{name}</h2>
             </div>
             <div
-              className="py-6 px-2 lg:basis-1/3 lg:bg-black lg:rounded-3xl flex items-center justify-center px-5"
+              className="flex items-center justify-center px-5 py-6 lg:basis-1/3 lg:bg-black lg:rounded-3xl"
               style={{ width: 373, height: 373 }}
             >
               <div className="">
                 <h3 className="text-xl font-[600] text-[16]  mb-4">
                   {descriptionHead}
                 </h3>
-                <p className="text-white text-opacity-70 text-sm mb-3">
-                  {description}{' '}
+                <p className="mb-3 text-sm text-white text-opacity-70">
+                  {description}{" "}
                 </p>
                 <a
                   href=""
                   rel="noreferrer"
-                  className="underline text-orange-500"
+                  className="text-orange-500 underline"
                 >
                   Learn more
                 </a>
