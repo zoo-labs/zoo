@@ -1,8 +1,8 @@
-import { Currency, NATIVE, SUSHI_ADDRESS } from "@zoolabs/sdk";
+import { ChainId, Currency, NATIVE, SUSHI_ADDRESS } from "@zoolabs/sdk";
 import { Feature, featureEnabled } from "../../functions/feature";
 import React, { useEffect, useState } from "react";
 
-import { ANALYTICS_URL } from "../../constants";
+import { addresses, ANALYTICS_URL } from "../../constants";
 import ExternalLink from "../ExternalLink";
 import Image from "next/image";
 import LanguageSwitch from "../LanguageSwitch";
@@ -29,6 +29,8 @@ function AppBar(): JSX.Element {
   const userEthBalance = useETHBalances(account ? [account] : [])?.[
     account ?? ""
   ];
+  const chainAddresses =
+    (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
 
   return (
     //     // <header className="flex flex-row justify-between w-screen flex-nowrap">
@@ -36,19 +38,17 @@ function AppBar(): JSX.Element {
       <Popover as="nav" className="z-10 w-full bg-transparent header-border-b">
         {({ open }) => (
           <>
-            <div className="px-4 py-4 max-w-7xl mx-auto">
+            <div className="px-4 py-4 mx-auto max-w-7xl">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <Image src="/img/logo.png" height={24} width={60} alt="zoo" />
-
                   <NavLink href="/">
                     <div className="pl-2 cursor-pointer logo">
                       <Image
-                        src="/logo.svg"
+                        src="/img/logo.png"
                         className="w-10"
                         alt="Logo"
-                        width={32}
-                        height={32}
+                        height={24}
+                        width={60}
                       />
                     </div>
                   </NavLink>
@@ -168,97 +168,68 @@ function AppBar(): JSX.Element {
 
                 <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
                   <div className="flex items-center justify-between w-full space-x-2 sm:justify-end">
-                    {/* {chainId && [ChainId.MAINNET].includes(chainId) && library && library.provider.isMetaMask && (
-                      <>
-                        <QuestionHelper text={i18n._(t`Add xSUSHI to your MetaMask wallet`)}>
-                          <div
-                            className="hidden p-0.5 rounded-md cursor-pointer sm:inline-flex bg-dark-900 hover:bg-dark-800"
-                            onClick={() => {
-                              if (library && library.provider.isMetaMask && library.provider.request) {
-                                const params: any = {
-                                  type: 'ERC20',
-                                  options: {
-                                    address: '0x8798249c2e607446efb7ad49ec89dd1865ff4272',
-                                    symbol: 'XSUSHI',
-                                    decimals: 18,
-                                    image:
-                                      'https://raw.githubusercontent.com/sushiswap/assets/master/blockchains/ethereum/assets/0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272/logo.png',
-                                  },
+                    {chainId &&
+                      [ChainId.MAINNET].includes(chainId) &&
+                      library &&
+                      library.provider.isMetaMask && (
+                        <div className="hidden md:inline-flex">
+                          <QuestionHelper
+                            text={i18n._(t`Add ZOO to your MetaMask wallet`)}
+                          >
+                            <div
+                              className="hidden p-0.5 rounded-md cursor-pointer sm:inline-flex bg-dark-900 hover:bg-dark-800"
+                              onClick={() => {
+                                const tokenAddress = chainAddresses.ZOO;
+                                const tokenSymbol = "ZOO";
+                                const tokenDecimals = 18;
+                                const tokenImage =
+                                  window.location.origin + "/icons/egg.svg";
+                                if (
+                                  library &&
+                                  library.provider.isMetaMask &&
+                                  library.provider.request
+                                ) {
+                                  const params: any = {
+                                    type: "ERC20",
+                                    options: {
+                                      address: tokenAddress,
+                                      symbol: tokenSymbol,
+                                      decimals: tokenDecimals,
+                                      image: tokenImage,
+                                    },
+                                  };
+                                  library.provider
+                                    .request({
+                                      method: "wallet_watchAsset",
+                                      params,
+                                    })
+                                    .then((success) => {
+                                      if (success) {
+                                        console.log(
+                                          "Successfully added ZOO to MetaMask"
+                                        );
+                                      } else {
+                                        throw new Error(
+                                          "Something went wrong."
+                                        );
+                                      }
+                                    })
+                                    .catch(console.error);
                                 }
-                                library.provider
-                                  .request({
-                                    method: 'wallet_watchAsset',
-                                    params,
-                                  })
-                                  .then((success) => {
-                                    if (success) {
-                                      console.log('Successfully added XSUSHI to MetaMask')
-                                    } else {
-                                      throw new Error('Something went wrong.')
-                                    }
-                                  })
-                                  .catch(console.error)
-                              }
-                            }}
-                          >
-                            <Image
-                              src="/images/tokens/xsushi-square.jpg"
-                              alt="xSUSHI"
-                              width="38px"
-                              height="38px"
-                              objectFit="contain"
-                              className="rounded-md"
-                            />
-                          </div>
-                        </QuestionHelper>
-                      </>
-                    )}
-
-                    {chainId && chainId in SUSHI_ADDRESS && library && library.provider.isMetaMask && (
-                      <>
-                        <QuestionHelper text={i18n._(t`Add SUSHI to your MetaMask wallet`)}>
-                          <div
-                            className="hidden rounded-md cursor-pointer sm:inline-flex bg-dark-900 hover:bg-dark-800 p-0.5"
-                            onClick={() => {
-                              const params: any = {
-                                type: 'ERC20',
-                                options: {
-                                  address: SUSHI_ADDRESS[chainId],
-                                  symbol: 'SUSHI',
-                                  decimals: 18,
-                                  image:
-                                    'https://raw.githubusercontent.com/sushiswap/assets/master/blockchains/ethereum/assets/0x6B3595068778DD592e39A122f4f5a5cF09C90fE2/logo.png',
-                                },
-                              }
-                              if (library && library.provider.isMetaMask && library.provider.request) {
-                                library.provider
-                                  .request({
-                                    method: 'wallet_watchAsset',
-                                    params,
-                                  })
-                                  .then((success) => {
-                                    if (success) {
-                                      console.log('Successfully added SUSHI to MetaMask')
-                                    } else {
-                                      throw new Error('Something went wrong.')
-                                    }
-                                  })
-                                  .catch(console.error)
-                              }
-                            }}
-                          >
-                            <Image
-                              src="/images/tokens/sushi-square.jpg"
-                              alt="SUSHI"
-                              width="38px"
-                              height="38px"
-                              objectFit="contain"
-                              className="rounded-md"
-                            />
-                          </div>
-                        </QuestionHelper>
-                      </>
-                    )} */}
+                              }}
+                            >
+                              <Image
+                                src="/icons/egg.svg"
+                                alt="zoo"
+                                width="30px"
+                                height="30px"
+                                objectFit="contain"
+                                className="rounded-md"
+                              />
+                            </div>
+                          </QuestionHelper>
+                        </div>
+                      )}
 
                     {library && library.provider.isMetaMask && (
                       <div className="hidden sm:inline-block">
