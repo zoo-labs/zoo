@@ -13,7 +13,7 @@ export default function Web3Connect({
   className = "",
   title = "Connect to a wallet",
   ...rest
-}: ButtonProps) {
+}: ButtonProps) { 
   const { i18n } = useLingui();
   const toggleWalletModal = useWalletModalToggle();
   const { error } = useWeb3React();
