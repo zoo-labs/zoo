@@ -2,14 +2,14 @@ import React from "react";
 
 const FaqSection = () => {
   return (
-    <section>
+    <section id="faq">
       <div className="max-w-7xl px-6 py-20 mx-auto">
         <h2 className="text-3xl lg:text-4xl font-bold text-center mb-6">
           Game FAQ
         </h2>
         <div className="flex flex-col items-center lg:flex-row lg:flex-wrap lg:items-start lg:justify-between">
           <div className="flex flex-col mb-6 lg:basis-1/2">
-            <h3 className="text-blue font-bold text-2xl lg:text-3xl mb-4">
+            <h3 className="text-green font-bold text-2xl lg:text-3xl mb-4">
               What is ZOO?
             </h3>
             <p className="text-white text-opacity-70 lg:max-w-xl">
@@ -22,7 +22,7 @@ const FaqSection = () => {
           </div>
 
           <div className="flex flex-col mb-6 lg:basis-1/2">
-            <h3 className=" text-blue font-bold text-2xl lg:text-3xl mb-4">
+            <h3 className=" text-green font-bold text-2xl lg:text-3xl mb-4">
               What are the Key features in ZOO?
             </h3>
             <p className="text-white text-opacity-70 lg:max-w-xl">
@@ -37,7 +37,7 @@ const FaqSection = () => {
           </div>
 
           <div className="flex flex-col mb-6 lg:basis-1/2">
-            <h3 className="text-blue font-bold text-2xl lg:text-3xl mb-4">
+            <h3 className="text-green font-bold text-2xl lg:text-3xl mb-4">
               What is the $ZOO token?
             </h3>
             <p className="text-white text-opacity-70 lg:max-w-xl">
@@ -48,7 +48,7 @@ const FaqSection = () => {
           </div>
 
           <div className="flex flex-col mb-6 lg:basis-1/2">
-            <h3 className="text-blue font-bold text-2xl lg:text-3xl mb-4">
+            <h3 className="text-green font-bold text-2xl lg:text-3xl mb-4">
               How do i get Onboarded?
             </h3>
             <p className="text-white text-opacity-70 lg:max-w-xl">
@@ -58,10 +58,10 @@ const FaqSection = () => {
           </div>
 
           <div className="flex flex-col mb-6 lg:basis-1/2">
-            <h3 className="text-blue font-bold text-2xl lg:text-3xl mb-4">
+            <h3 className="text-green font-bold text-2xl lg:text-3xl mb-4">
               How do i buy $ZOO?
             </h3>
-            <ul className="list-disc pl-8">
+            <ul className="list-disc pl-8 text-white text-opacity-70">
               <li>Buy BNB</li>
               <li>Get a Binance coin wallet(Ledger, Coinomi).</li>
               <li>Locate your BNB address.</li>
@@ -77,7 +77,7 @@ const FaqSection = () => {
           </div>
 
           <div className="flex flex-col mb-6 lg:basis-1/2">
-            <h3 className="text-blue font-bold text-2xl lg:text-3xl mb-4">
+            <h3 className="text-green font-bold text-2xl lg:text-3xl mb-4">
               You need help?
             </h3>
             <p className="text-white text-opacity-70 lg:max-w-xl">
@@ -87,7 +87,7 @@ const FaqSection = () => {
             </p>
             <p className="text-white text-opacity-70 lg:max-w-xl">
               In addition, a complete list of guides can be found{" "}
-              <a href="#" className="text-blue underline">here</a>.
+              <a href="#" className="text-green underline">here</a>.
             </p>
           </div>
         </div>

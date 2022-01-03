@@ -19,12 +19,17 @@ const GetStartedSection = () => {
             your game interactions users make more or less $ZOO.
           </p>
           {account ? (
-            <button className="px-5 py-3 text-sm text-white rounded-full bg-blue md:text-base md:px-6 md:py-4 lg:px-10">
+            <a
+              href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
+              target="_blank"
+              rel="noreferrer"
+              className="px-5 py-3 text-sm text-white rounded-full bg-blue md:text-base md:px-6 md:py-4 lg:px-10"
+            >
               Buy $Zoo
-            </button>
+            </a>
           ) : (
-            <button className="px-5 py-3 text-sm text-white rounded-full bg-blue md:text-base md:px-6 md:py-4 lg:px-10">
-              Connect Wallet
+            <button className="px-5 py-3 text-sm text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10">
+              Get Started
             </button>
           )}
         </div>

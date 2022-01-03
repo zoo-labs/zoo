@@ -16,7 +16,7 @@ const MarketPlaceSection = () => {
             <Image src="/img/iphone-2.png" width={363} height={675} alt="" />
           </div>
         </div>
-        <div className="flex flex-col items-center basis-1/2">
+        <div className="flex flex-col items-center basis-1/2 bg-[url('/img/leaves.png')]">
           <h2 className="mb-8 text-3xl font-bold text-center">
             Buy, list and bid on our NFT marketplace.
           </h2>
@@ -24,16 +24,16 @@ const MarketPlaceSection = () => {
             {!account ? (
               <a
                 href="#"
-                className="px-5 py-3 text-sm text-white rounded-full bg-blue md:text-base md:px-6 md:py-4 lg:px-10"
+                className="px-5 py-3 text-sm text-white bg-gradient-to-b from-purple to-blue rounded-full font-bold bg-gradient-tr-purple-blue md:text-base md:px-6 md:py-4 lg:px-10"
               >
                 Connect Wallet
               </a>
             ) : (
               <a
-                href="#"
+                href="/market"
                 target="_blank"
                 rel="noreferrer"
-                className="px-5 py-3 text-sm text-white border border-gray-100 rounded-full md:text-base md:px-6 md:py-4 lg:px-10"
+                className="px-5 py-3 text-sm text-black bg-white border font-bold border-gray-100 rounded-full md:text-base md:px-6 md:py-4 lg:px-10"
               >
                 Marketplace
               </a>
