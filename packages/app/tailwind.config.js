@@ -43,6 +43,12 @@ module.exports = {
         green: "#1EE9B6",
         blue: "#007EFF",
         black: "#1F2030",
+        "dark-gray": "#23262F",
+        muted: "#777E91",
+        "dark-pink": "#EF466F",
+        orange: "#FF592C",
+        "dark-blue": "#020F2C",
+        "butter-white": "#FCFCFD",
 
         // "opaque-blue": "#0993ec80",
         // "opaque-pink": "#f338c380",
@@ -71,6 +77,12 @@ module.exports = {
         sans: ["DM Sans", ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
+        label: [
+          "12px",
+          {
+            fontWeight: "bold",
+          },
+        ],
         hero: [
           "48px",
           {
