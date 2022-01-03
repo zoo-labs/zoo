@@ -37,8 +37,7 @@ import {
 import { useActiveWeb3React } from "../hooks";
 import { SubgraphProvider } from "../providers/SubgraphProvider";
 import { initTranslation, loadTranslation } from "../entities";
-import { mapAnimal, mapEgg, queryAnimals, queryEggs } from "functions/moralis";
-import { useGetEggs } from "state/zoo/hooks";
+import Main from "./main";
 
 const Web3ProviderNetwork = dynamic(
   () => import("../components/Web3ProviderNetwork"),
@@ -99,21 +98,6 @@ function MyApp({
 
   // Allows for conditionally setting a guard to be hoisted per page
   const Guard = Component.Guard || Fragment;
-  const dispatch = useDispatch();
-  const addEggs = useGetEggs();
-  const getEggs = async (account) => {
-    try {
-      const eggs = [];
-
-      for (const egg of await queryEggs()) {
-        eggs.push(mapEgg(egg));
-      }
-      dispatch(addEggs(eggs));
-      // dispatch(getMyEggs(account, eggs));
-    } catch (e) {
-      console.error("ISSUE GETTING EGGS \n", e);
-    }
-  };
 
   // const getAnimals = async () => {
   //   try {
