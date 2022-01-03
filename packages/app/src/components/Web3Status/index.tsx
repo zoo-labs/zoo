@@ -184,9 +184,10 @@ function Web3StatusInner() {
         style={{
           paddingTop: "6px",
           paddingBottom: "6px",
-          border: "1px solid #007EFF",
-          color: "#007EFF",
-          borderRadius: '24px'
+          border: "1px solid #14F195",
+          color: "#14F195",
+          borderRadius: '24px',
+          fontWeight: 'bold'
         }}
       />
     );

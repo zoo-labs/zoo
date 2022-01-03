@@ -19,31 +19,31 @@ const AnimalFamilySection = () => {
               />
             </div>
             <div className="text-center AnimalFamily__name lg:basis-2/3">
-              <h2 className="mb-4 text-3xl font-semibold">Sumatran Elephant</h2>
+              <h2 className="mb-4 text-3xl font-bold lg:4xl">Sumatran Elephant</h2>
               <button className="px-5 py-3 text-sm text-white rounded-full AnimalFamily__buy-nft md:text-base md:px-6 md:py-4 lg:px-10">
                 Buy NFT
               </button>
             </div>
-            <div className="px-2 py-6 text-center lg:basis-1/3 lg:bg-black lg:rounded-3xl">
-              <h3 className="mb-4 text-xl font-bold text-center">
+            <div className="px-2 py-6  lg:px-6 lg:basis-1/3 lg:bg-black100 lg:rounded-3xl">
+              <h3 className="mb-4 text-xl font-bold ">
                 Elephas Maximus Sumatranus
               </h3>
-              <p className="mb-3 text-white text-opacity-70">
+              <p className="mb-3 text-grey text-opacity-70">
                 Sumatran elephants feed on a variety of plants and deposit seeds
                 wherever they go, contributing to a healthy forest ecosystem.
                 They also share their lush forest habitat with other endangered
                 species.{" "}
               </p>
-              <a href="" rel="noreferrer" className="text-orange-500 underline">
+              <a href="" rel="noreferrer" className="text-green font-bold underline">
                 Learn more
               </a>
             </div>
           </div>
         </div>
         <div className="flex items-center justify-center">
-          <button className="px-5 py-3 text-sm border rounded-full border-blue md:text-base text-blue md:px-6 md:py-4 lg:px-16">
+          <a href="/animal-list" className="px-5 py-3 text-sm border rounded-full font-bold border-green md:text-base text-green md:px-6 md:py-4 lg:px-16">
             See All
-          </button>
+          </a>
         </div>
       </div>
     </section>

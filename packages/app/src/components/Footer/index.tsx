@@ -5,11 +5,12 @@ import { ChainId } from "@zoolabs/sdk";
 import ExternalLink from "../ExternalLink";
 import Polling from "../Polling";
 import { t } from "@lingui/macro";
-import useActiveWeb3React from "../../hooks/useActiveWeb3React";
+// import useActiveWeb3React from "../../hooks/useActiveWeb3React";
 import { useLingui } from "@lingui/react";
+import { useActiveWeb3React } from "hooks";
 
 const Footer = () => {
-  const { chainId } = useActiveWeb3React();
+  const { account, chainId, library } = useActiveWeb3React();
   const { i18n } = useLingui();
   return (
     // <footer className="absolute bottom-0 flex items-center justify-between w-screen h-20 p-4 mx-auto text-center text-low-emphesis">
@@ -17,13 +18,19 @@ const Footer = () => {
       <div className="border-t border-b py-16 hidden lg:block">
         <div className="flex items-start justify-between px-4 max-w-7xl mx-auto flex-auto">
           <div className="flex justify-between items-start basis-2/3 px-6">
-            <Image src="/img/logo.png" width={80} height={24} alt="Zoo" />
-            <div className="flex flex-col">
+            <Image src="/img/logo.svg" width={80} height={24} alt="Zoo" />
+            <div className="flex flex-col text-grey">
               <div className="mb-4">
                 <Link href="/market">Marketplace</Link>
               </div>
               <div className="mb-2">
-                <Link href="/chart">Chart</Link>
+                <a
+                  href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Chart
+                </a>
               </div>
               <div className="mb-2">
                 <Link href="/community">Community</Link>
@@ -36,18 +43,22 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-end basis-1/3 px-6">
+          <div className="flex flex-col items-end basis-1/3 px-6 text-grey">
             <div className="mb-2">
               <Link href="/">My Profile</Link>
             </div>
             <div className="mb-2">
-              <Link href="/">Connect Wallet</Link>
+              {!account ? (
+                <Link href="/">Connect Wallet</Link>
+              ) : (
+                <Link href="/market">Market place</Link>
+              )}
             </div>
             <div className="mb-2">
               <Link href="/">Whitepaper</Link>
             </div>
             <div className="mb-2">
-              <Link href="/">FAQ</Link>
+              <a href="#faq">FAQ</a>
             </div>
             <div className="mb-2">
               <Link href="/">Connect us</Link>
@@ -55,10 +66,27 @@ const Footer = () => {
           </div>
           <div className="flex flex-col items-start basis-2/3 px-6">
             <p className="text-white uppercase font-bold mb-4">Newsletter</p>
-            <p>
+            <p className="mb-4 text-white">
               Subscribe to our newsletter to get the first notice on upgrades,
               new features and events!
             </p>
+            <form>
+              <div className="flex items-center border rounded-full py-2 px-2">
+                <input
+                  type="email"
+                  placeholder="enter your email"
+                  className="bg-transparent"
+                />
+                <button type="submit" className="flex">
+                  <Image
+                    src="/img/small-circle-button.png"
+                    width={24}
+                    height={24}
+                    alt=""
+                  />
+                </button>
+              </div>
+            </form>
           </div>
           {/* {chainId && chainId in ANALYTICS_URL && (
           <ExternalLink
