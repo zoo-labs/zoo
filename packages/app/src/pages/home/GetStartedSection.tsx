@@ -1,11 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import { useActiveWeb3React } from "hooks";
-import Web3Connect from "components/Web3Connect";
 
 const GetStartedSection = () => {
-  const { account, chainId, library } = useActiveWeb3React();
-
   return (
     <section className="GetStarted">
       <div className="px-6 pb-20 mx-auto max-w-7xl lg:flex lg:items-center lg:justify-between">
@@ -18,20 +14,13 @@ const GetStartedSection = () => {
             representative of endangered species in the real world. Based on
             your game interactions users make more or less $ZOO.
           </p>
-          {account ? (
-            <a
-              href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
-              target="_blank"
-              rel="noreferrer"
-              className="px-5 py-3 text-sm text-white rounded-full bg-blue md:text-base md:px-6 md:py-4 lg:px-10"
-            >
-              Buy $Zoo
-            </a>
-          ) : (
-            <button className="px-5 py-3 text-sm text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10">
-              Get Started
-            </button>
-          )}
+
+          <a
+            href="/blog"
+            className="px-5 py-3 text-sm text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10"
+          >
+            Get Started
+          </a>
         </div>
         <div className="flex flex-col items-center">
           <Image src="/img/zoo-hippo.png" width={603} height={450} alt="" />

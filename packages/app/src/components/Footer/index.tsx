@@ -8,6 +8,7 @@ import { t } from "@lingui/macro";
 // import useActiveWeb3React from "../../hooks/useActiveWeb3React";
 import { useLingui } from "@lingui/react";
 import { useActiveWeb3React } from "hooks";
+import Web3Status from "../Web3Status";
 
 const Footer = () => {
   const { account, chainId, library } = useActiveWeb3React();
@@ -44,18 +45,30 @@ const Footer = () => {
             </div>
           </div>
           <div className="flex flex-col items-end basis-1/3 px-6 text-grey">
-            <div className="mb-2">
-              <Link href="/">My Profile</Link>
+            <div className="mb-0">
+              {!account ? (
+                <a href="#">
+                  <Web3Status title="My Profile" className="px-0" />
+                </a>
+              ) : null}
             </div>
             <div className="mb-2">
               {!account ? (
-                <Link href="/">Connect Wallet</Link>
+                <a href="#">
+                  <Web3Status title="Connect Wallet" className="px-0" />
+                </a>
               ) : (
                 <Link href="/market">Market place</Link>
               )}
             </div>
             <div className="mb-2">
-              <Link href="/">Whitepaper</Link>
+              <a
+                href="https://zoolabs.gitbook.io/whitepaper/introduction/introduction"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Whitepaper
+              </a>
             </div>
             <div className="mb-2">
               <a href="#faq">FAQ</a>
@@ -154,13 +167,28 @@ const Footer = () => {
           Copyright &copy; 2021 ZOO Labs INC. Allrights reserved
         </p>
         <div>
-          <a href="https://twitter.com" className="mr-2">
+          <a
+            href="https://mobile.twitter.com/zoo_labs"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-2"
+          >
             <Image src="/img/twitter.svg" height={16} width={16} alt="" />{" "}
           </a>
-          <a href="https://telegram.org" className="mr-2">
+          <a
+            href="https://t.me/RealZoolabs"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-2"
+          >
             <Image src="/img/telegram.svg" height={16} width={16} alt="" />{" "}
           </a>
-          <a href="https://instagram.com" className="mr-2">
+          <a
+            href="https://instagram.com/zoolabs.io?utm_medium=copy_link"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-2"
+          >
             <Image src="/img/instagram.svg" height={16} width={16} alt="" />{" "}
           </a>
         </div>

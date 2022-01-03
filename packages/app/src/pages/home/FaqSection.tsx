@@ -87,7 +87,7 @@ const FaqSection = () => {
             </p>
             <p className="text-white text-opacity-70 lg:max-w-xl">
               In addition, a complete list of guides can be found{" "}
-              <a href="#" className="text-green underline">here</a>.
+              <a href="/blog" className="text-green underline">here</a>.
             </p>
           </div>
         </div>

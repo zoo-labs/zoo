@@ -12,10 +12,19 @@ const JoinZooSection = () => {
         </h2>
         <p className="mb-4 text-xl">Follow our social media</p>
         <div className="flex items-center mb-6">
-          <a href="" className="mr-8">
+          <a
+            href="https://mobile.twitter.com/zoo_labs"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-8"
+          >
             <TwitterIcon color="white" />
           </a>
-          <a href="">
+          <a
+            href="https://instagram.com/zoolabs.io?utm_medium=copy_link"
+            target="_blank"
+            rel="noreferrer"
+          >
             <InstagramIcon color="white" />
           </a>
         </div>
