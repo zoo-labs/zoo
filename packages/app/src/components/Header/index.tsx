@@ -49,7 +49,7 @@ function AppBar(): JSX.Element {
                   <NavLink href="/">
                     <div className="pl-2 cursor-pointer logo">
                       <Image
-                        src="/img/logo.png"
+                        src="/img/logo.svg"
                         className="w-10"
                         alt="Logo"
                         height={24}
@@ -68,14 +68,17 @@ function AppBar(): JSX.Element {
                           {i18n._(t`Marketplace`)}
                         </a>
                       </NavLink>
-                      <NavLink href="/chart">
-                        <a
-                          id={`market-nav-link`}
-                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                        >
-                          {i18n._(t`Chart`)}
-                        </a>
-                      </NavLink>
+
+                      <a
+                        href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
+                        target="_blank"
+                        rel="noreferrer"
+                        id={`market-nav-link`}
+                        className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                      >
+                        {i18n._(t`Chart`)}
+                      </a>
+
                       <NavLink href="/community">
                         <a
                           id={`mint-nav-link`}
@@ -237,10 +240,10 @@ function AppBar(): JSX.Element {
                       )}
                       <Web3Status />
                     </div>
-                    {/* <div className="hidden md:block">
+                    <div className="hidden md:block">
                       <LanguageSwitch />
-                    </div> */}
-                    {/* <More /> */}
+                    </div>
+                    <More />
                   </div>
                 </div>
                 <div className="flex -mr-2 sm:hidden">
