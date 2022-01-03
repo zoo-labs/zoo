@@ -49,7 +49,7 @@ function AppBar(): JSX.Element {
                   <NavLink href="/">
                     <div className="pl-2 cursor-pointer logo">
                       <Image
-                        src="/img/logo.png"
+                        src="/img/logo.svg"
                         className="w-10"
                         alt="Logo"
                         height={24}
