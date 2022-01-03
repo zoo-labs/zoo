@@ -29,7 +29,6 @@ export async function loadTranslation(locale: string, sessionId: string, isProdu
             `https://d3l928w2mi7nub.cloudfront.net/${locale}.json?q=${sessionId}`
         );
         const remoteMessages = await resp.json();
-        console.log('remoteMessages', remoteMessages)
         const messages = remoteLoader({
             messages: remoteMessages,
             format: "minimal",
