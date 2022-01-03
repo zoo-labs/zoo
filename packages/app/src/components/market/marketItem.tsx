@@ -37,7 +37,7 @@ const MarketItem: FC<Props> = ({ market }) => {
       </div>
       <hr className="h-px border-gray-500 mb-2.5 " />
       <div className="flex justify-between items-center text-sm">
-        <p>Highets bid</p>
+        <p>Highest bid</p>
         <p className="text-white font-bold">1M ZOO</p>
         <p>200 Yields/Day</p>
       </div>

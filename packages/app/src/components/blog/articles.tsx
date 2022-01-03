@@ -27,7 +27,7 @@ const Article: FC<Props> = ({ article: { name, image } }) => {
         </div>
         <p>Feb 03, 2021</p>
       </div>
-      <hr />
+      <hr className="h-px border-gray-300 mb-2.5 mt-[60px]" />
     </div>
   );
 };
