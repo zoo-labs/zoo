@@ -10,32 +10,32 @@ const MarketItem: FC<Props> = ({ market }) => {
   return (
     <div className="">
       <div
-        className=" p-[1px] rounded-[12px]"
+        className=" p-px rounded-xl"
         style={{
           background: 'linear-gradient(180deg, #3772FF 0%, #9757D7 100%)'
         }}
       >
-        <div className="bg-[#000] h-[420px] rounded-[12px] flex justify-center items-center">
-          <img src={market.image} alt="An NFT" height={'100%'} />
+        <div className="bg-dark h-[420px] rounded-xl flex justify-center items-center">
+          <img src={market.image} alt="An NFT" />
         </div>
       </div>
-      <div className="flex justify-between mt-[11px]">
-        <p className="text-[21px] text-white">
+      <div className="flex justify-between mt-2.5 ">
+        <p className="text-xl text-white">
           {market.name}
-          <span className="text-[14px] text-[#6D7278]">(182)</span>
+          <span className="text-sm text-dark-gray">(182)</span>
         </p>
-        <p className="flex items-center px-1 bg-[#000] border-2 border-purple rounded text-purple font-bold text-sm">
+        <p className="flex items-center px-1 bg-dark border-2 border-purple rounded text-purple font-bold text-sm">
           500K ZOO
         </p>
       </div>
-      <div className="flex justify-between  items-center my-[18px]">
+      <div className="flex justify-between  items-center my-5">
         <div className="flex items-center gap-1 text-sm">
           <img src="/img/Oval.svg" alt="" width={20} height={20} />
           <p>0xd0ae…e3e0</p>
         </div>
         <p className="text-white text-base font-medium">3 DAYS LEFT</p>
       </div>
-      <hr className="h-[1px] border-[grey] mb-[11px]" />
+      <hr className="h-px border-gray-500 mb-2.5 " />
       <div className="flex justify-between items-center text-sm">
         <p>Highets bid</p>
         <p className="text-white font-bold">1M ZOO</p>
