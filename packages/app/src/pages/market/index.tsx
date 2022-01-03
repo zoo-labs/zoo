@@ -17,10 +17,10 @@ const Market: React.FC<MarketProps> = ({}) => {
     <div>
       <div className="flex items-end">
         <div>
-          <div className="mb-2 text-xl font-bold  currentColor">
+          <div className="mb-2 text-xl font-bold currentColor">
             Wallet Balance
           </div>
-          <div className="text-2xl font-bold  currentColor">
+          <div className="text-2xl font-bold currentColor">
             <span className="text-2xl">
               {numberWithCommas(zooBalance.toFixed(2))} ZOO
             </span>
