@@ -55,10 +55,23 @@ const Footer = () => {
           </div>
           <div className="flex flex-col items-start basis-2/3 px-6">
             <p className="text-white uppercase font-bold mb-4">Newsletter</p>
-            <p>
+            <p className="mb-4 text-white">
               Subscribe to our newsletter to get the first notice on upgrades,
               new features and events!
             </p>
+            <form>
+              <div className="flex items-center border rounded-full py-2 px-2">
+                <input type="email" placeholder="enter your email" className="bg-transparent"/>
+                <button type="submit">
+                  <Image
+                    src="/img/small-circle-button.png"
+                    width={24}
+                    height={24}
+                    alt=""
+                  />
+                </button>
+              </div>
+            </form>
           </div>
           {/* {chainId && chainId in ANALYTICS_URL && (
           <ExternalLink
