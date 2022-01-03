@@ -1,21 +1,69 @@
-import { numberWithCommas } from "functions";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { AppState } from "state";
-import { useBuyZoo } from "state/zoo/hooks";
+import { numberWithCommas } from 'functions';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { AppState } from 'state';
+import { useBuyZoo } from 'state/zoo/hooks';
+import MarketItem from '../../components/market/marketItem';
+import markets from '../../components/market/marketitem.json';
 
 interface MarketProps {}
 
 const Market: React.FC<MarketProps> = ({}) => {
-  const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
+  const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>(
     (state) => state.zoo.zooBalance
   );
   const [wait, setWait] = useState(false);
 
   const buyZoo = useBuyZoo();
   return (
-    <div>
-      <div className="flex items-end">
+    <div className="md:px-[98px] md:py-[70px]">
+      <div className="w-100 flex justify-between items-end text-white">
+        <div>
+          <p className="mb-2 text-xl font-bold ">Wallet Balance</p>
+          <div className="flex items-center">
+            <p className="text-xl font-bold ">
+              {numberWithCommas(zooBalance.toFixed(2))} ZOO
+            </p>
+            <div className="relative inline-flex ml-4 rounded-md shadow-sm">
+              <div
+                className="flex items-center cursor-pointer"
+                onClick={() => buyZoo()}
+              >
+                <span
+                  className={`flex items-center justify-center ml-2 py-2 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold  rounded-xl text-high-emphesis bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary w-[120px] min-h-[36px] mb-[-2px] ${
+                    zooBalance === 0 && 'gradient-border'
+                  }`}
+                  style={{
+                    background:
+                      'linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)'
+                  }}
+                >
+                  {wait ? 'Processing' : 'Get ZOO'}
+                </span>
+              </div>
+              {zooBalance === 0 && (
+                <span className="absolute top-0 right-0 flex w-3 h-3 -mt-1 -mr-1">
+                  <span className="absolute inline-flex w-full h-full bg-purple-400 rounded-full opacity-75 animate-ping"></span>
+                  <span className="relative inline-flex w-3 h-3 bg-white rounded-full"></span>
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+        <p className="currentColor flex items-center text-sm gap-2 cursor-pointer">
+          Discover <span className="text-2xl text-white">+</span>
+        </p>
+      </div>
+      {/* <div className="mt-[58px]"> */}
+      <div className="mt-[58px] grid grid-cols-4 gap-[10px] gap-y-[80px] mb-20">
+        {markets.map((market) => (
+          <MarketItem key={market.name} market={market} />
+        ))}
+      </div>
+      {/* </div> */}
+
+      {/*  */}
+      {/* <div className="flex items-end">
         <div>
           <div className="mb-2 text-xl font-bold  currentColor">
             Wallet Balance
@@ -33,15 +81,15 @@ const Market: React.FC<MarketProps> = ({}) => {
           >
             <span
               className={`flex items-center justify-center ml-2 py-2 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold border rounded-xl text-high-emphesis bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary ${
-                zooBalance === 0 && "gradient-border"
+                zooBalance === 0 && 'gradient-border'
               }`}
               style={{
-                width: "120px",
-                minHeight: "36px",
-                marginBottom: "-2px",
+                width: '120px',
+                minHeight: '36px',
+                marginBottom: '-2px'
               }}
             >
-              {wait ? "Processing" : "Get ZOO"}
+              {wait ? 'Processing' : 'Get ZOO'}
             </span>
           </div>
           {zooBalance === 0 && (
@@ -50,8 +98,8 @@ const Market: React.FC<MarketProps> = ({}) => {
               <span className="relative inline-flex w-3 h-3 bg-white rounded-full"></span>
             </span>
           )}
-        </div>
-        {/*
+        </div> */}
+      {/*
                 <div className={`flex flex-wrap justify-center`}>
                   {keepApprove || !allowance ? (
                     <div className={'ml-2'}>
@@ -93,7 +141,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                     </div>
                   )}
                 </div> */}
-      </div>
+      {/* </div> */}
     </div>
   );
 };
