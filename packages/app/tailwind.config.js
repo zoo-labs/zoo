@@ -55,6 +55,7 @@ module.exports = {
         "butter-white": "#FCFCFD",
         dark: "#000",
         "dark-gray": "#6D7278",
+        "grey-300": "#353945",
 
         // "opaque-blue": "#0993ec80",
         // "opaque-pink": "#f338c380",
