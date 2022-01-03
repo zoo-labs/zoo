@@ -17,7 +17,7 @@ const Footer = () => {
       <div className="border-t border-b py-16 hidden lg:block">
         <div className="flex items-start justify-between px-4 max-w-7xl mx-auto flex-auto">
           <div className="flex justify-between items-start basis-2/3 px-6">
-            <Image src="/img/logo.png" width={80} height={24} alt="Zoo" />
+            <Image src="/img/logo.svg" width={80} height={24} alt="Zoo" />
             <div className="flex flex-col">
               <div className="mb-4">
                 <Link href="/market">Marketplace</Link>
