@@ -238,7 +238,7 @@ function AppBar(): JSX.Element {
                           </div>
                         </>
                       )}
-                      <Web3Status />
+                      <Web3Status title="My Wallet" className="border-green border text-green font-bold"/>
                     </div>
                     <div className="hidden md:block">
                       <LanguageSwitch />

@@ -126,7 +126,7 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
   return null;
 }
 
-function Web3StatusInner() {
+function Web3StatusInner({title, className}) {
   const { i18n } = useLingui();
   const { account, connector } = useWeb3React();
 
@@ -180,21 +180,22 @@ function Web3StatusInner() {
   } else {
     return (
       <Web3Connect
-        title="My Wallet"
-        style={{
-          paddingTop: "6px",
-          paddingBottom: "6px",
-          border: "1px solid #14F195",
-          color: "#14F195",
-          borderRadius: '24px',
-          fontWeight: 'bold'
-        }}
+        title={title}
+        className={className}
+        // style={{
+        //   paddingTop: "6px",
+        //   paddingBottom: "6px",
+        //   border: "1px solid #14F195",
+        //   color: "#14F195",
+        //   borderRadius: '24px',
+        //   fontWeight: 'bold'
+        // }}
       />
     );
   }
 }
 
-export default function Web3Status() {
+export default function Web3Status({title, className}) {
   const { active, account } = useWeb3React();
   const contextNetwork = useWeb3React(NetworkContextName);
 
@@ -220,7 +221,7 @@ export default function Web3Status() {
 
   return (
     <>
-      <Web3StatusInner />
+      <Web3StatusInner title={title} className={className} />
       <WalletModal
         ENSName={ENSName ?? undefined}
         pendingTransactions={pending}

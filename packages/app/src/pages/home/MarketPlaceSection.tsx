@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { useActiveWeb3React } from "hooks";
+import Web3Status from "../../components/Web3Status";
 
 const MarketPlaceSection = () => {
   const { account, chainId, library } = useActiveWeb3React();
@@ -22,11 +23,12 @@ const MarketPlaceSection = () => {
           </h2>
           <div className="flex items-center gap-3">
             {!account ? (
-              <a
-                href="#"
-                className="px-5 py-3 text-sm text-white bg-gradient-to-b from-purple to-blue rounded-full font-bold bg-gradient-tr-purple-blue md:text-base md:px-6 md:py-4 lg:px-10"
-              >
-                Connect Wallet
+              <a>
+                
+                <Web3Status
+                  title="Connect Wallet"
+                  className="px-5 py-3 text-sm text-white bg-gradient-to-b from-purple to-blue rounded-full font-bold bg-gradient-tr-purple-blue md:text-base md:px-6 md:py-4 lg:px-10"
+                />
               </a>
             ) : (
               <a
