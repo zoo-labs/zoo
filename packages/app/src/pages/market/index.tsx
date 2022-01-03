@@ -54,15 +54,12 @@ const Market: React.FC<MarketProps> = ({}) => {
           Discover <span className="text-2xl text-white">+</span>
         </p>
       </div>
-      {/* <div className="mt-[58px]"> */}
-      <div className="mt-[58px] grid grid-cols-4 gap-[10px] gap-y-[80px] mb-20">
+      <div className="mt-[58px] grid grid-cols-4 gap-2.5 gap-y-[80px] mb-20">
         {markets.map((market) => (
           <MarketItem key={market.name} market={market} />
         ))}
       </div>
-      {/* </div> */}
 
-      {/*  */}
       {/* <div className="flex items-end">
         <div>
           <div className="mb-2 text-xl font-bold  currentColor">
