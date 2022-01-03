@@ -56,6 +56,40 @@ const FaqSection = () => {
               Metamask App as well as ZOO Labs official website.
             </p>
           </div>
+
+          <div className="flex flex-col mb-6 lg:basis-1/2">
+            <h3 className="text-blue font-bold text-2xl lg:text-3xl mb-4">
+              How do i buy $ZOO?
+            </h3>
+            <ul className="list-disc pl-8">
+              <li>Buy BNB</li>
+              <li>Get a Binance coin wallet(Ledger, Coinomi).</li>
+              <li>Locate your BNB address.</li>
+              <li>Sign up to Binance</li>
+              <li>Buy BNB with another crypto or a credit card.</li>
+              <li>Go to Pancake swap or another trusted exchange.</li>
+              <li>
+                Swap BNB for $XOO use this token address as their are many
+                scammers
+              </li>
+              <li>0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13</li>
+            </ul>
+          </div>
+
+          <div className="flex flex-col mb-6 lg:basis-1/2">
+            <h3 className="text-blue font-bold text-2xl lg:text-3xl mb-4">
+              You need help?
+            </h3>
+            <p className="text-white text-opacity-70 lg:max-w-xl">
+              If you're having difficulty, please join our Discord server and
+              post in the #new-player-help channel and our community will be
+              happy to help!
+            </p>
+            <p className="text-white text-opacity-70 lg:max-w-xl">
+              In addition, a complete list of guides can be found{" "}
+              <a href="#" className="text-blue underline">here</a>.
+            </p>
+          </div>
         </div>
       </div>
     </section>
