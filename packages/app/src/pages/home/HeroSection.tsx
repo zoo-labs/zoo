@@ -19,7 +19,9 @@ const HeroSection = () => {
           </p>
           <div className="flex gap-3 items-center">
             <a
-              href="#"
+              href="https://metamask.io/"
+              target="_blank"
+              rel="noreferrer"
               className="bg-gradient-to-b from-purple to-blue text-white text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full"
             >
               Download App
