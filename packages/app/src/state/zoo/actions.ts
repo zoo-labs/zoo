@@ -8,6 +8,7 @@
 // export { addAnimal, addAnimals, addEgg, addEggs, burnAnimal, burnEgg, clearZoo, updatZooBalnce } from '.'
 // export { clear, push, remove } from '../toasts'
 import { createAction } from '@reduxjs/toolkit'
+import { Egg } from 'types'
 
 export interface SerializedToken {
   chainId: number
@@ -23,6 +24,7 @@ export interface SerializedPair {
 }
 
 export const getZooBalance = createAction<{ balance: number }>('zoo/getZooBalance')
+export const getEggs = createAction<{ curr: any }>('zoo/getEggs')
 // export function getZooBalance(account, zooToken) {
 //   return async (dispatch) => {
 //     if (!account) return
