@@ -45,6 +45,8 @@ module.exports = {
         black: "#1F2030",
         dark: "#000",
         "dark-gray": "#6D7278",
+        "trading-history": "#1F2126",
+        "trading-history-border-b": "#E6E8EC",
 
         // "opaque-blue": "#0993ec80",
         // "opaque-pink": "#f338c380",
