@@ -73,13 +73,13 @@ const ZooItem: NextPage<Props> = ({
             padding: "9px 25px",
           }}
         >
-          <h4 className="zooItem__details--title">details</h4>
+          <h4 className="zooItem__details--title mb-3">details</h4>
           <ul className="zooItem__details--info">
-            <li>
+            <li className="mb-3">
               Transaction Hash{" "}
               <small className="right">0x00000000…000000</small>
             </li>
-            <li>
+            <li className="mb-3">
               Token ID <small className="right">4</small>
             </li>
             <li>
