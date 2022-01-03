@@ -62,13 +62,13 @@ export const getEmoji = (rarity) => {
   }
 }
 
-export const formatError = (err) => {
-  console.log(err)
-  if (err?.data?.message) {
-    return err?.data?.message?.replace(/Error: Returned error: /, '')
-  } else if (err.code) {
-    return err.message
-  } else {
-    return err.toString().replace(/Error: Returned error: /, '')
-  }
-}
+// export const formatError = (err) => {
+//   console.log(err)
+//   if (err?.data?.message) {
+//     return err?.data?.message?.replace(/Error: Returned error: /, '')
+//   } else if (err.code) {
+//     return err.message
+//   } else {
+//     return err.toString().replace(/Error: Returned error: /, '')
+//   }
+// }

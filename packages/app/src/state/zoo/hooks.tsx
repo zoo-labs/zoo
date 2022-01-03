@@ -24,6 +24,7 @@ export function useZoobalance(): () => void {
 export function useBuyZoo(): () => void {
   const { chainId, account } = useActiveWeb3React();
   const faucet = useFaucet();
+
   const dispatch = useAppDispatch();
   const zooToken = useZooToken();
   const getZooBalance = useZoobalance();
@@ -31,6 +32,7 @@ export function useBuyZoo(): () => void {
     if (!account) return;
     if (!chainId) return;
 
+    console.log("faucet", faucet);
     try {
       console.log(account);
       faucet.methods
