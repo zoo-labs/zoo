@@ -75,6 +75,7 @@ export function useContract(
   withSignerIfPossible = true
 ): Contract | null {
   const { library, account, chainId } = useActiveWeb3React()
+  console.log('useing contract')
 
   let address: string | AddressMap | undefined = nameOrAddress
   let chainIdStr = chainId ? chainId.toString() : '1337'
@@ -82,11 +83,13 @@ export function useContract(
   if (!isAddress(nameOrAddress) || nameOrAddress === AddressZero) {
     try {
       address = addresses[chainIdStr][nameOrAddress.toString()]
+      console.log('address 0000', address, nameOrAddress)
       ABI = ABI || abis[chainIdStr] ? abis[chainIdStr][nameOrAddress.toString()] : null
     } catch (e) {
-      // console.error(`Unable to fetch contract ${nameOrAddress} on ${chainId}`)
+      console.error(`Unable to fetch contract ${nameOrAddress} on ${chainId}`)
     }
   }
+  console.log('useCOntract', address)
 
   return useMemo(() => {
     if (!address || !ABI || !library) return null
@@ -256,5 +259,7 @@ export function useZooToken(): Contract | null {
   return useContract('ZOO')
 }
 export function useFaucet(): Contract | null {
-  return useContract('Faucet')
+  const faucetContrac = useContract('Faucet')
+  console.log('faucetContrac', faucetContrac)
+  return faucetContrac
 }

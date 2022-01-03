@@ -1,7 +1,8 @@
 import { useActiveWeb3React, useFaucet, useZooToken } from "hooks";
 import { useCallback } from "react";
 import { useAppDispatch } from "state/hooks";
-import { getZooBalance } from "./actions";
+import { Egg } from "types";
+import { getEggs, getZooBalance } from "./actions";
 
 // helper that can take a ethers library transaction response and add it to the list of transactions
 export function useZoobalance(): () => void {
@@ -24,6 +25,7 @@ export function useZoobalance(): () => void {
 export function useBuyZoo(): () => void {
   const { chainId, account } = useActiveWeb3React();
   const faucet = useFaucet();
+
   const dispatch = useAppDispatch();
   const zooToken = useZooToken();
   const getZooBalance = useZoobalance();
@@ -31,6 +33,7 @@ export function useBuyZoo(): () => void {
     if (!account) return;
     if (!chainId) return;
 
+    console.log("faucet", faucet);
     try {
       console.log(account);
       faucet.methods
@@ -48,6 +51,23 @@ export function useBuyZoo(): () => void {
     }
   }, [dispatch, chainId, account]);
 }
+export function useGetEggs(): (eggs) => void {
+  const dispatch = useAppDispatch();
+  return useCallback(
+    (eggs: Egg[]) => {
+      for (let i = 0; i < eggs.length; i += 1) {
+        const curr = eggs[i];
+        if (curr.owner === "0x0770ACd6CF3Fc622148b1514066dD5A9147E08cb") {
+          console.log("exists");
+        }
+
+        dispatch(getEggs({ curr }));
+      }
+    },
+    [dispatch]
+  );
+}
+
 // export function getZooBalance(account, zooToken) {
 //   return async (dispatch) => {
 //     if (!account) return
