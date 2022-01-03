@@ -47,6 +47,7 @@ module.exports = {
         "dark-gray": "#6D7278",
         "trading-history": "#1F2126",
         "trading-history-border-b": "#E6E8EC",
+        "nft-card-border": "#A67CED"
 
         // "opaque-blue": "#0993ec80",
         // "opaque-pink": "#f338c380",
