@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import articles from '../../components/blog/articles.json';
 import Article from 'components/blog/articles';
 
 const Blog = () => {
+  const [activeNav, setActiveNav] = useState('all');
   return (
     <div className="mt-[80px] text-center">
       <div className="flex items-center flex-col">
@@ -17,7 +18,7 @@ const Blog = () => {
           <div className="overflow-hidden  lg:basis-1/2">
             <img src="/img/story-image.png" width={565} height={516} alt="" />
           </div>
-          <div className="flex flex-col justify-center lg:text-left px-4 lg:px-14 py-8 -mt-4 lg:py-0 bg-dark-gray rounded-b-2xl lg:rounded-l-none lg:rounded-r-2xl lg:-ml-1 lg:basis-1/2">
+          <div className="flex flex-col justify-center lg:text-left px-4 lg:px-14 py-8 -mt-4 lg:py-0 bg-deep-gray rounded-b-2xl lg:rounded-l-none lg:rounded-r-2xl lg:-ml-1 lg:basis-1/2">
             <div className="mb-5">
               <p className="text-label text-white px-2 py-1 bg-dark-pink rounded inline">
                 New
@@ -43,11 +44,45 @@ const Blog = () => {
           </div>
         </div>
       </div>
-      <div className="mb-[79px]">all</div>
-      <div className="grid grid-cols-3 gap-10 mb-20">
+      <div className="mb-[79px] flex justify-center">
+        <ul className="flex gap-2">
+          <li
+            className={`${
+              activeNav === 'all' && 'border bg-white rounded-full '
+            } text-dark px-4 cursor-pointer`}
+            onClick={() => setActiveNav('all')}
+          >
+            All
+          </li>
+          <li
+            className={`${
+              activeNav === 'news' &&
+              'border bg-white rounded-full  cursor-pointer'
+            } px-4 text-dark cursor-pointer`}
+            onClick={() => setActiveNav('news')}
+          >
+            News
+          </li>
+          <li
+            className={`${
+              activeNav === 'zoo-guides' &&
+              'border bg-white rounded-full cursor-pointer'
+            } px-4 text-dark cursor-pointer`}
+            onClick={() => setActiveNav('zoo-guides')}
+          >
+            ZOO Guides
+          </li>
+        </ul>
+      </div>
+      <div className="grid grid-cols-3 gap-10 mb-20 px-[137px]">
         {articles.map((article) => (
           <Article key={article.name} article={article} />
         ))}
+      </div>
+      <div className="my-[63px]">
+        <p className="font-bold border-b-2 text-white inline cursor-pointer">
+          Load all
+        </p>
       </div>
     </div>
   );
