@@ -100,22 +100,6 @@ function AppBar(): JSX.Element {
                           {i18n._(t`Learn`)}
                         </a>
                       </NavLink>
-                      {/* <NavLink href="/swap">
-                        <a
-                          id={`swap-nav-link`}
-                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                        >
-                          {i18n._(t`Swap`)}
-                        </a>
-                      </NavLink> */}
-                      {/* <NavLink href="/pool">
-                        <a
-                          id={`pool-nav-link`}
-                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                        >
-                          {i18n._(t`Pool`)}
-                        </a>
-                      </NavLink> */}
                       {chainId && featureEnabled(Feature.MIGRATE, chainId) && (
                         <NavLink href={"/migrate"}>
                           <a
@@ -241,7 +225,7 @@ function AppBar(): JSX.Element {
                         <Web3Network />
                       </div>
                     )}
-
+                    {/* My Wallet Button */}
                     <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                       {account && chainId && userEthBalance && (
                         <>
@@ -253,10 +237,10 @@ function AppBar(): JSX.Element {
                       )}
                       <Web3Status />
                     </div>
-                    <div className="hidden md:block">
+                    {/* <div className="hidden md:block">
                       <LanguageSwitch />
-                    </div>
-                    <More />
+                    </div> */}
+                    {/* <More /> */}
                   </div>
                 </div>
                 <div className="flex -mr-2 sm:hidden">
@@ -301,33 +285,60 @@ function AppBar(): JSX.Element {
                 </div>
               </div>
             </div>
-
+            {/* Mobile View Navbar Dropdown */}
             <Popover.Panel className="sm:hidden">
               <div className="flex flex-col px-4 pt-2 pb-3 space-y-1">
-                <Link href="/">
-                  <a
-                    id={`mint`}
-                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  >
-                    {i18n._(t`Mint`)}
-                  </a>
-                </Link>
-                <Link href="/dashboard">
-                  <a
-                    id={`dashboard`}
-                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  >
-                    {i18n._(t`Dashboard`)}
-                  </a>
-                </Link>
                 <Link href="/market">
                   <a
-                    id={`market`}
+                    id={`marketplace`}
                     className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   >
-                    {i18n._(t`Market`)}
+                    {i18n._(t`Marketplace`)}
                   </a>
                 </Link>
+                <Link href="/chart">
+                  <a
+                    id={`chart`}
+                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  >
+                    {i18n._(t`Chart`)}
+                  </a>
+                </Link>
+                <Link href="/community">
+                  <a
+                    id={`community`}
+                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  >
+                    {i18n._(t`Community`)}
+                  </a>
+                </Link>
+                <Link href="/press">
+                  <a
+                    id={`press`}
+                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  >
+                    {i18n._(t`Press`)}
+                  </a>
+                </Link>
+                <Link href="/learn">
+                  <a
+                    id={`learn`}
+                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  >
+                    {i18n._(t`Learn`)}
+                  </a>
+                </Link>
+                <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
+                  {account && chainId && userEthBalance && (
+                    <>
+                      <div className="px-3 py-2 text-primary text-bold">
+                        {userEthBalance?.toFixed(3)}{" "}
+                        {NATIVE[chainId]?.symbol || "ETH"}
+                      </div>
+                    </>
+                  )}
+                  <Web3Status />
+                </div>
 
                 {chainId && featureEnabled(Feature.LIQUIDITY_MINING, chainId) && (
                   <Link href={"/farm"}>
