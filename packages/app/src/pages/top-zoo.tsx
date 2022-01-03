@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 
 // layouts
-import ZooItem from "../sections/top-zoo/ZooItem";
+import ZooItem from "../components/ZooItem";
 
 // sections
 

@@ -3,15 +3,9 @@ import Image from "next/image";
 
 const AllMyNfts = () => {
   return (
-    <div
-      className="allMyNfts"
-      style={{
-        marginBottom: "5rem",
-      }}
-    >
-      <h2
+    <div className="allMyNfts mb-20">
+      <h2 className="mb-8"
         style={{
-          marginBottom: "33px",
           fontSize: "36px",
           fontWeight: "500",
           lineHeight: "54px",
@@ -20,63 +14,50 @@ const AllMyNfts = () => {
       >
         All My Nfts
       </h2>
-      <div
-        className="allMyNfts__items"
-        style={{
-          display: "flex",
-        }}
-      >
+      <div className="allMyNfts__items flex">
         <div
-          className="allMyNfts__item"
+          className="allMyNfts__item grid place-content-center"
           style={{
             height: "265px",
             width: "156px",
             borderRadius: "13px",
             border: "1px solid #A67CED",
-            display: "grid",
-            placeContent: "center",
             marginRight: "25px",
           }}
         >
           <Image src="/img/rhinovid.png" width={160} height={200} alt="" />
         </div>
         <div
-          className="allMyNfts__item"
+          className="allMyNfts__item grid place-content-center"
           style={{
             height: "265px",
             width: "156px",
             borderRadius: "13px",
             border: "1px solid #A67CED",
-            display: "grid",
-            placeContent: "center",
             marginRight: "25px",
           }}
         >
           <Image src="/img/plasma.png" width={160} height={200} alt="" />
         </div>
         <div
-          className="allMyNfts__item"
+          className="allMyNfts__item  grid place-content-center"
           style={{
             height: "265px",
             width: "156px",
             borderRadius: "13px",
             border: "1px solid #A67CED",
-            display: "grid",
-            placeContent: "center",
             marginRight: "25px",
           }}
         >
           <Image src="/img/egg1.png" width={160} height={200} alt="" />
         </div>
         <div
-          className="allMyNfts__item"
+          className="allMyNfts__item  grid place-content-center"
           style={{
             height: "265px",
             width: "156px",
             borderRadius: "13px",
             border: "1px solid #A67CED",
-            display: "grid",
-            placeContent: "center",
             marginRight: "25px",
           }}
         >
