@@ -80,7 +80,7 @@ const Blog = () => {
         ))}
       </div>
       <div className="my-[63px]">
-        <p className="font-bold border-b-2 text-white inline cursor-pointer">
+        <p className="font-semibold border-b-2 text-white inline cursor-pointer">
           Load all
         </p>
       </div>
