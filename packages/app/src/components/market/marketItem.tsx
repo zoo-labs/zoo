@@ -23,6 +23,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
           <div className="absolute px-2 py-1 text-xs font-bold uppercase rounded top-6 left-3 bg-primary ">
             {datum.bloodline || (datum.basic ? 'BASIC' : 'HYBRID')}
           </div>
+
           {/* <div className='absolute flex items-center justify-center w-8 h-8 rounded-full cursor-pointer  top-6 right-3 bg-dark-800'>
             <FaHeart fill='white' style={{ fontSize: 10 }} />
           </div> */}
