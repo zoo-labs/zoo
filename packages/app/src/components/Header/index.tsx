@@ -238,7 +238,10 @@ function AppBar(): JSX.Element {
                           </div>
                         </>
                       )}
-                      <Web3Status title="My Wallet" className="border-green border text-green font-bold"/>
+                      <Web3Status
+                        title="My Wallet"
+                        className="border-green border text-green font-bold"
+                      />
                     </div>
                     <div className="hidden md:block">
                       <LanguageSwitch />
@@ -299,14 +302,17 @@ function AppBar(): JSX.Element {
                     {i18n._(t`Marketplace`)}
                   </a>
                 </Link>
-                <Link href="/chart">
-                  <a
-                    id={`chart`}
-                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  >
-                    {i18n._(t`Chart`)}
-                  </a>
-                </Link>
+
+                <a
+                  id={`chart`}
+                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {i18n._(t`Chart`)}
+                </a>
+
                 <Link href="/community">
                   <a
                     id={`community`}
@@ -340,7 +346,7 @@ function AppBar(): JSX.Element {
                       </div>
                     </>
                   )}
-                  <Web3Status />
+                  <Web3Status title="My Wallet" className="border-green border text-green font-bold"/>
                 </div>
 
                 {chainId && featureEnabled(Feature.LIQUIDITY_MINING, chainId) && (
