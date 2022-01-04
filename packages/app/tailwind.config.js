@@ -38,6 +38,9 @@ module.exports = {
           4: "4px",
         },
       },
+      backgroundImage: {
+        'marketplace-section': "url(/img/leaves.png)"
+      },
       colors: {
         purple: "#462CA9",
         purple100: '#8C4FF8;',

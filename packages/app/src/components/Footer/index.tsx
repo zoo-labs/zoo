@@ -163,7 +163,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="flex flex-col iterms-center lg:flex-row justify-between items-center max-w-7xl mx-auto px-4 py-6">
-        <p className="text-center mb:0 lg:mb-0 lg:text-left">
+        <p className="text-center mb-4 lg:mb-0 lg:text-left">
           Copyright &copy; 2021 ZOO Labs INC. Allrights reserved
         </p>
         <div>
