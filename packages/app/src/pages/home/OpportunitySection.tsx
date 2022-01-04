@@ -1,6 +1,8 @@
 import React from "react";
 import Image from "next/image";
 
+import EndangeredSpecies from "components/EndangeredSpecies";
+
 const OpportunitySection = () => {
   return (
     <section className="relative">
@@ -12,14 +14,15 @@ const OpportunitySection = () => {
           <Image src="/img/word-animation.svg" width={1200} height={700} alt="" />
         </div> */}
         <div className="flex flex-col lg:flex-row justify-between items-center max-w-7xl px-6 mx-auto">
-          <div>
+          {/* <div>
             <Image
               src="/img/save-species.png"
               width={497}
               height={737}
               alt=""
             />
-          </div>
+          </div> */}
+          <EndangeredSpecies />
           <div>
             <Image src="/img/life-cycle.png" width={824} height={805} alt="" />
           </div>
@@ -38,7 +41,7 @@ const OpportunitySection = () => {
             href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
             target="_blank"
             rel="noreferrer"
-            className="border border-green text-green text-sm md:text-base  font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full"
+            className="border border-green text-green text-sm md:text-base font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full"
           >
             Buy $ZOO
           </a>
