@@ -1,15 +1,15 @@
 import type { NextPage } from "next";
 
 // layouts
-import ZooItem from "../sections/top-zoo/ZooItem";
+import ZooItem from "../components/ZooItem";
 
 // sections
 
 const Topzoo: NextPage = () => {
   return (
     <>
-      <div className="topzoo">
-        <div className="topzoo__container">
+      <div className="topzoo my-40 mx-0">
+        <div className="topzoo__container grid place-content-center">
           <ZooItem
             src="/img/egg1.png"
             infoTitle="Egg #4"
