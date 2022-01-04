@@ -191,6 +191,13 @@ const Footer = () => {
           >
             <Image src="/img/instagram.svg" height={16} width={16} alt="" />{" "}
           </a>
+          <a
+            href="https://discord.com/invite/FZzWUbMUK5"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Image src="/img/discord.svg" height={16} width={16} alt="" />{" "}
+          </a>
         </div>
       </div>
     </footer>
