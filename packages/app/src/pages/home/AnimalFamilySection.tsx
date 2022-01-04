@@ -24,7 +24,7 @@ const AnimalFamilySection = () => {
               </h2>
               <a
                 href="/nft"
-                className="bg-gradient-to-b from-purple to-blue text-white text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full"
+                className="bg-gradient-to-b from-purple to-blue text-white  text-sm md:text-base  font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full"
               >
                 Buy NFT
               </a>
