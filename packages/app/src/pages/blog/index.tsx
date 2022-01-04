@@ -5,10 +5,10 @@ import Article from 'components/blog/articles';
 const Blog = () => {
   const [activeNav, setActiveNav] = useState('all');
   return (
-    <div className="mt-[80px] text-center">
+    <div className="mt-5em text-center">
       <div className="flex items-center flex-col">
-        <p className="text-[96px] text-white font-bold">ZOO Blog</p>
-        <p className="w-[400px] mb-[80px] ">
+        <p className="text-8xl text-white font-bold">ZOO Blog</p>
+        <p className="w-96 mb-20 ">
           Track your workouts, get better results, and be the best version of
           you. Less thinking, more lifting.
         </p>
@@ -44,7 +44,7 @@ const Blog = () => {
           </div>
         </div>
       </div>
-      <div className="mb-[79px] flex justify-center">
+      <div className="mb-20 flex justify-center">
         <ul className="flex gap-2">
           <li
             className={`${
@@ -74,12 +74,12 @@ const Blog = () => {
           </li>
         </ul>
       </div>
-      <div className="grid grid-cols-3 gap-10 mb-20 px-[137px]">
+      <div className="grid grid-cols-3 gap-10 mb-20 px-32">
         {articles.map((article) => (
           <Article key={article.name} article={article} />
         ))}
       </div>
-      <div className="my-[63px]">
+      <div className="my-16">
         <p className="font-semibold border-b-2 text-white inline cursor-pointer">
           Load all
         </p>
