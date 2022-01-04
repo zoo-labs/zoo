@@ -17,6 +17,9 @@ module.exports = {
   darkMode: false,
   theme: {
     extend: {
+      margin: {
+        "5em": "5em",
+      },
       linearBorderGradients: {
         directions: {
           tr: "to top right",
@@ -143,6 +146,9 @@ module.exports = {
       },
       minWidth: {
         5: "1.25rem",
+      },
+      maxWidth: {
+        22: "22.06rem",
       },
       dropShadow: {
         currencyLogo: "0px 3px 6px rgba(15, 15, 15, 0.25)",
