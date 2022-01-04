@@ -46,11 +46,42 @@ module.exports = {
         pink: "#f338c3",
         red: "crimson",
         yellow: "#ffd166",
+<<<<<<< HEAD
+        green: "#1EE9B6",
+        blue: "#007EFF",
+        black: "#1F2030",
+        dark: "#000",
+        "dark-gray": "#6D7278",
+        "trading-history": "#1F2126",
+        "trading-history-border-b": "#E6E8EC",
+        "nft-card-border": "#A67CED"
+
+        // "opaque-blue": "#0993ec80",
+        // "opaque-pink": "#f338c380",
+        // "pink-red": "#FE5A75",
+        // "light-brown": "#FEC464",
+        // "light-yellow": "#FFD166",
+        // "cyan-blue": "#0993EC",
+        // "dark-pink": "#221825",
+        // "dark-blue": "#0F182A",
+        // "dark-1000": "#0D0415",
+        // "dark-900": "#161522",
+        // "dark-850": "#1d1e2c",
+        // "dark-800": "#202231",
+        // "dark-700": "#2E3348",
+        // "dark-600": "#1C2D49",
+        // "dark-500": "#223D5E",
+        // "low-emphesis": "#575757",
+        // primary: "#BFBFBF",
+        // secondary: "#7F7F7F",
+        // "high-emphesis": "#E3E3E3",
+=======
         green: "#14F195",
         blue: "#2517FF",
         black: "#000000",
         black100: '#1F2030',
         white: "#fff"
+>>>>>>> 9d407d2189527e3edfaa21e2247ecda2e9014085
       },
       lineHeight: {
         "48px": "48px",
