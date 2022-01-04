@@ -238,7 +238,10 @@ function AppBar(): JSX.Element {
                           </div>
                         </>
                       )}
-                      <Web3Status title="My Wallet" className="border-green border text-green font-bold"/>
+                      <Web3Status
+                        title="My Wallet"
+                        className="font-bold border border-green text-green"
+                      />
                     </div>
                     <div className="hidden md:block">
                       <LanguageSwitch />
@@ -340,7 +343,10 @@ function AppBar(): JSX.Element {
                       </div>
                     </>
                   )}
-                  <Web3Status />
+                  <Web3Status
+                    title="My Wallet"
+                    className="font-bold border border-green text-green"
+                  />
                 </div>
 
                 {chainId && featureEnabled(Feature.LIQUIDITY_MINING, chainId) && (
