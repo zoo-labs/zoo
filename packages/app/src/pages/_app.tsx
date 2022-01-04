@@ -15,7 +15,7 @@ import ListsUpdater from "../state/lists/updater";
 import MulticallUpdater from "../state/multicall/updater";
 import { PersistGate } from "redux-persist/integration/react";
 import ReactGA from "react-ga";
-import { Provider as ReduxProvider } from "react-redux";
+import { Provider as ReduxProvider, useDispatch } from "react-redux";
 import TransactionUpdater from "../state/transactions/updater";
 import UserUpdater from "../state/user/updater";
 import Web3ReactManager from "../components/Web3ReactManager";
@@ -37,6 +37,7 @@ import {
 import { useActiveWeb3React } from "../hooks";
 import { SubgraphProvider } from "../providers/SubgraphProvider";
 import { initTranslation, loadTranslation } from "../entities";
+import Main from "./main";
 
 const Web3ProviderNetwork = dynamic(
   () => import("../components/Web3ProviderNetwork"),
@@ -97,6 +98,18 @@ function MyApp({
 
   // Allows for conditionally setting a guard to be hoisted per page
   const Guard = Component.Guard || Fragment;
+
+  // const getAnimals = async () => {
+  //   try {
+  //     const animals = [];
+  //     for (const animal of await queryAnimals()) {
+  //       animals.push(mapAnimal(animal));
+  //     }
+  //     dispatch(addAnimals(animals));
+  //   } catch (e) {
+  //     console.error("ISSUE GETTING ANIMAL \n", e);
+  //   }
+  // };
 
   return (
     <Fragment>

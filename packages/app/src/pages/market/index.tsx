@@ -7,11 +7,10 @@ import MarketItem from '../../components/market/marketItem';
 import markets from '../../components/market/marketitem.json';
 import { wait } from 'functions';
 import { withStyles } from '@mui/styles';
-import Slider from '@mui/material/Slider';
 import CloseIcon from 'components/CloseIcon';
-
 import ReactDropdown from 'react-dropdown';
-
+import { Filter } from 'react-feather';
+import { Slider } from '@mui/material';
 const PrettoSlider = withStyles({
   root: {
     color: '#52af77',
@@ -91,18 +90,7 @@ const Market: React.FC<MarketProps> = ({}) => {
     1: allAnimls
   };
 
-  const myBids = [...Object.values(allData)]
-    .flat(1)
-    .sort((a: any, b: any) => a.tokenID - b.tokenID)
-    .slice(0, 3);
-
   useEffect(() => {
-    console.log(
-      'hjhjh',
-      [...Object.values(allData)]
-        .flat(1)
-        .sort((a: any, b: any) => a.tokenID - b.tokenID)
-    );
     setData(
       [...Object.values(allData)]
         .flat(1)
@@ -159,7 +147,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                       'linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)'
                   }}
                 >
-                  {wait ? 'Processing' : 'Get ZOO'}
+                  {fetching ? 'Processing' : 'Get ZOO'}
                 </span>
               </div>
               {zooBalance === 0 && (
@@ -239,21 +227,10 @@ const Market: React.FC<MarketProps> = ({}) => {
               <button
                 onClick={() => setFiltering(!filtering)}
                 className="relative flex items-center justify-center pl-6 font-bold leading-3 rounded-full bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary"
-                style={{
-                  background:
-                    'linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)'
-                }}
               >
                 Filter
                 <div className="flex items-center justify-center pr-2 w-14">
-                  {!filtering ? (
-                    <CloseIcon
-                      fill="white"
-                      style={{ transform: 'rotate(45deg)' }}
-                    />
-                  ) : (
-                    <CloseIcon fill="white" />
-                  )}
+                  {!filtering ? <Filter /> : <CloseIcon fill="white" />}
                 </div>
               </button>
             </div>
@@ -433,7 +410,7 @@ const Market: React.FC<MarketProps> = ({}) => {
             )}
           </div>
         </div>
-        <div className="mt-8 text-center">
+        {/* <div className="mt-8 text-center">
           <button
             onClick={() => loadMore()}
             className="inline-flex items-center h-12 px-6 font-semibold text-white border border-solid rounded-full shadow-lg cursor-pointer hover:bg-primary hover:border-0"
@@ -441,7 +418,7 @@ const Market: React.FC<MarketProps> = ({}) => {
           >
             Load More
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
