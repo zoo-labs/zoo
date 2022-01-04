@@ -294,14 +294,13 @@ function AppBar(): JSX.Element {
             {/* Mobile View Navbar Dropdown */}
             <Popover.Panel className="sm:hidden">
               <div className="flex flex-col px-4 pt-2 pb-3 space-y-1">
-                <Link href="/market">
-                  <a
-                    id={`marketplace`}
-                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  >
-                    {i18n._(t`Marketplace`)}
-                  </a>
-                </Link>
+                <a
+                  id={`marketplace`}
+                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  href="/market"
+                >
+                  {i18n._(t`Marketplace`)}
+                </a>
 
                 <a
                   id={`chart`}
@@ -313,30 +312,30 @@ function AppBar(): JSX.Element {
                   {i18n._(t`Chart`)}
                 </a>
 
-                <Link href="/community">
-                  <a
-                    id={`community`}
-                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  >
-                    {i18n._(t`Community`)}
-                  </a>
-                </Link>
-                <Link href="/press">
-                  <a
-                    id={`press`}
-                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  >
-                    {i18n._(t`Press`)}
-                  </a>
-                </Link>
-                <Link href="/learn">
-                  <a
-                    id={`learn`}
-                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  >
-                    {i18n._(t`Learn`)}
-                  </a>
-                </Link>
+                <a
+                  id={`community`}
+                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  href="/community"
+                >
+                  {i18n._(t`Community`)}
+                </a>
+
+                <a
+                  id={`press`}
+                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  href="/press"
+                >
+                  {i18n._(t`Press`)}
+                </a>
+
+                <a
+                  id={`learn`}
+                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  href="learn"
+                >
+                  {i18n._(t`Learn`)}
+                </a>
+
                 <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                   {account && chainId && userEthBalance && (
                     <>
@@ -346,7 +345,10 @@ function AppBar(): JSX.Element {
                       </div>
                     </>
                   )}
-                  <Web3Status title="My Wallet" className="border-green border text-green font-bold"/>
+                  <Web3Status
+                    title="My Wallet"
+                    className="border-green border text-green font-bold"
+                  />
                 </div>
 
                 {chainId && featureEnabled(Feature.LIQUIDITY_MINING, chainId) && (
