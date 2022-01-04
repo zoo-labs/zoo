@@ -24,10 +24,6 @@
   },
   "dependencies": {
     "@binance-chain/bsc-connector": "^1.0.0",
-<<<<<<< HEAD
-    "@emotion/is-prop-valid": "^1.1.1",
-=======
->>>>>>> 9d407d2189527e3edfaa21e2247ecda2e9014085
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@fontsource/dm-sans": "^4.5.0",
