@@ -21,10 +21,13 @@ module.exports = {
         directions: {
           tr: "to top right",
           r: "to right",
+          t: "to top",
+          b: "to bottom",
         },
         colors: {
           "blue-pink": ["#27B0E6", "#FA52A0"],
           "pink-red-light-brown": ["#FE5A75", "#FEC464"],
+          "purple-blue": ["#462CA9", "#2517FF"],
         },
         background: {
           "dark-1000": "#0D0415",
@@ -40,7 +43,10 @@ module.exports = {
         },
       },
       colors: {
-        purple: "#a755dd",
+        purple: "#462CA9",
+        purple100: "#8C4FF8;",
+        grey: "#777E91",
+        grey100: "#F7F8FC",
         pink: "#f338c3",
         red: "crimson",
         yellow: "#ffd166",
@@ -56,6 +62,9 @@ module.exports = {
         dark: "#000",
         "dark-gray": "#6D7278",
         "grey-300": "#353945",
+        "trading-history": "#1F2126",
+        "trading-history-border-b": "#E6E8EC",
+        "nft-card-border": "#A67CED",
 
         // "opaque-blue": "#0993ec80",
         // "opaque-pink": "#f338c380",
@@ -76,6 +85,11 @@ module.exports = {
         // primary: "#BFBFBF",
         // secondary: "#7F7F7F",
         // "high-emphesis": "#E3E3E3",
+        green: "#14F195",
+        blue: "#2517FF",
+        black: "#000000",
+        black100: "#1F2030",
+        white: "#fff",
       },
       lineHeight: {
         "48px": "48px",
