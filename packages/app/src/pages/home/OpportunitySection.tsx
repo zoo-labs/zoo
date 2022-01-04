@@ -35,10 +35,12 @@ const OpportunitySection = () => {
             NFT and its unchangeable nature.
           </p>
           <a
-            href=""
-            className="border border-blue text-sm md:text-base text-blue px-8 py-3 md:px-6 lg:px-16 rounded-full"
+            href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
+            target="_blank"
+            rel="noreferrer"
+            className="border border-green text-sm md:text-base text-green font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full"
           >
-            Buy $Zoo
+            Buy $ZOO
           </a>
         </div>
       </div>
