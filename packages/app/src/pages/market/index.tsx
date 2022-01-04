@@ -69,7 +69,6 @@ const Market: React.FC<MarketProps> = ({}) => {
   ];
   const [fetching, setFetching] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [showDiscover, setShowDiscover] = useState(false);
   const [bidView, setBidView] = useState(0);
   const [activeBid, setActiveBid] = useState({});
   const [priceRange, setPriceRange] = useState<any>(0.0);
@@ -159,83 +158,76 @@ const Market: React.FC<MarketProps> = ({}) => {
             </div>
           </div>
         </div>
-        {!showDiscover && (
-          <p
-            className="currentColor flex items-center text-sm gap-2 cursor-pointer"
-            onClick={() => setShowDiscover(true)}
-          >
-            Discover <span className="text-2xl text-white">+</span>
-          </p>
-        )}
+        {/* <p className="currentColor flex items-center text-sm gap-2 cursor-pointer">
+          Discover <span className="text-2xl text-white">+</span>
+        </p> */}
       </div>
       <div className="w-full max-w-screen-xl mx-auto mt-20">
-        {showDiscover && (
-          <>
-            <h3 className="mb-16 text-4xl font-semibold">Discover</h3>
-            <div className="relative justify-between hidden mb-8 lg:flex">
-              <div className="flex items-center justify-between h-12 pl-4 pr-1 text-sm rounded-lg cursor-pointer w-44"></div>
-              {/* <div className='flex items-center justify-between h-12 pl-4 pr-1 text-sm border border-gray-600 border-solid rounded-lg cursor-pointer w-44'>
+        <h3 className="mb-16 text-4xl font-semibold">Discover</h3>
+        <div className="relative justify-between hidden mb-8 lg:flex">
+          <div className="flex items-center justify-between h-12 pl-4 pr-1 text-sm rounded-lg cursor-pointer w-44"></div>
+          {/* <div className='flex items-center justify-between h-12 pl-4 pr-1 text-sm border border-gray-600 border-solid rounded-lg cursor-pointer w-44'>
               Recently added
               <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} />
             </div> */}
-              <div
-                className="absolute flex justify-center transform left-2/4 -translate-x-2/4"
-                style={{ top: 10 }}
-              >
-                {['All Items', 'Eggs', 'Animals', 'Hybrid'].map(
-                  (value, index) => {
-                    const active = category === index;
-                    return (
-                      <a
-                        onClick={() => {
-                          setCategory(index);
-                          setPage(1);
-                          if (index === 0) {
-                            setData(
-                              [...Object.values(allData)]
-                                .flat(1)
-                                .sort((a: any, b: any) => a.tokenID - b.tokenID)
-                                .slice(0, 8)
-                            );
-                          } else if (index === 3) {
-                            console.log('is hybrid filter');
-                          } else {
-                            setData([]);
-                            setFetching(true);
-                            wait(1500).then(() =>
-                              setData(
-                                [allData[index - 1]]
-                                  .flat(1)
-                                  .sort((a, b) => a.tokenID - b.tokenID)
-                                  .slice(0, 8)
-                              )
-                            );
-                          }
-                        }}
-                        className={`${
-                          active ? 'bg-white text-gray-900' : 'text-gray-600'
-                        } text-sm rounded-full font-bold py-1 px-4 cursor-pointer`}
-                        key={index}
-                      >
-                        {value}
-                      </a>
-                    );
-                  }
-                )}
-              </div>
-              <div className="hidden">show on tablet viewport</div>
-              <button
-                onClick={() => setFiltering(!filtering)}
-                className="relative flex items-center justify-center pl-6 font-bold leading-3 rounded-full bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary"
-              >
-                Filter
-                <div className="flex items-center justify-center pr-2 w-14">
-                  {!filtering ? <Filter /> : <CloseIcon fill="white" />}
-                </div>
-              </button>
+          <div
+            className="absolute flex justify-center transform left-2/4 -translate-x-2/4"
+            style={{ top: 10 }}
+          >
+            {['All Items', 'Eggs', 'Animals', 'Hybrid'].map((value, index) => {
+              const active = category === index;
+              return (
+                <a
+                  onClick={() => {
+                    setCategory(index);
+                    setPage(1);
+                    if (index === 0) {
+                      setData(
+                        [...Object.values(allData)]
+                          .flat(1)
+                          .sort((a: any, b: any) => a.tokenID - b.tokenID)
+                          .slice(0, 8)
+                      );
+                    } else if (index === 3) {
+                      console.log('is hybrid filter');
+                    } else {
+                      setData([]);
+                      setFetching(true);
+                      wait(1500).then(() =>
+                        setData(
+                          [allData[index - 1]]
+                            .flat(1)
+                            .sort((a, b) => a.tokenID - b.tokenID)
+                            .slice(0, 8)
+                        )
+                      );
+                    }
+                  }}
+                  className={`${
+                    active ? 'bg-white text-gray-900' : 'text-gray-600'
+                  } text-sm rounded-full font-bold py-1 px-4 cursor-pointer`}
+                  key={index}
+                >
+                  {value}
+                </a>
+              );
+            })}
+          </div>
+          <div className="hidden">show on tablet viewport</div>
+          <button
+            onClick={() => setFiltering(!filtering)}
+            className="relative flex items-center justify-center pl-6 font-bold leading-3 rounded-full bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary"
+            style={{
+              background: 'linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)'
+            }}
+          >
+            Filter
+            <div className="flex items-center justify-center pr-2 w-14">
+              {!filtering ? <Filter /> : <CloseIcon fill="white" />}
             </div>
-          </>
-        )}
+          </button>
+        </div>
+
         <div
           className={`${
             !filtering ? 'hidden' : 'block'
