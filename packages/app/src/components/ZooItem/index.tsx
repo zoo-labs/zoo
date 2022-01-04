@@ -16,15 +16,14 @@ const ZooItem: NextPage<Props> = ({
   authenticityPrice,
 }) => {
   return (
-    <div style={{ display: "flex", marginBottom: "72px" }}>
+    <div className="flex mb-20">
       <div
-        className="zooItem__nft"
+        className="zooItem__nft flex h-124"
         style={{
-          height: "500px",
+          // height: "500px",
           width: "300px",
           border: "1px solid #9757D7",
           borderRadius: "14px",
-          display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
@@ -37,8 +36,6 @@ const ZooItem: NextPage<Props> = ({
           style={{
             height: "40px",
             width: "122px",
-            left: "0px",
-            top: "0px",
             borderRadius: "90px",
             background: "#9757D7",
           }}
@@ -76,13 +73,13 @@ const ZooItem: NextPage<Props> = ({
             padding: "9px 25px",
           }}
         >
-          <h4 className="zooItem__details--title">details</h4>
+          <h4 className="zooItem__details--title mb-3">details</h4>
           <ul className="zooItem__details--info">
-            <li>
+            <li className="mb-3">
               Transaction Hash{" "}
               <small className="right">0x00000000…000000</small>
             </li>
-            <li>
+            <li className="mb-3">
               Token ID <small className="right">4</small>
             </li>
             <li>
@@ -100,13 +97,13 @@ const ZooItem: NextPage<Props> = ({
           }}
         >
           <h4
-            className="zooItem__authenticity--title"
+            className="zooItem__authenticity--title pl-6"
             style={{ marginBottom: "9px" }}
           >
             Proof of Authenticity
           </h4>
           <p
-            className="zooItem__authenticity--price"
+            className="zooItem__authenticity--price pl-6"
             style={{
               fontSize: "21px",
               fontWeight: "500",
@@ -116,7 +113,9 @@ const ZooItem: NextPage<Props> = ({
           >
             {authenticityPrice}
           </p>
-          <Link href="/">Etherscan transaction</Link>
+          <p className="pl-6">
+            <Link href="/">Etherscan transaction</Link>
+          </p>
           <div
             className="zooItem__authenticity--bottom"
             style={{ borderTop: "1px solid #462AF4", padding: "20px" }}

@@ -242,7 +242,7 @@ export default function WalletModal({
       )
     }
     return (
-      <div className="flex flex-col space-y-4">
+      <div className="flex flex-col space-y-4 text-grey">
         <ModalHeader title="Select a Wallet" onClose={toggleWalletModal} />
         <div className="flex flex-col space-y-6">
           {walletView === WALLET_VIEWS.PENDING ? (
@@ -257,7 +257,7 @@ export default function WalletModal({
           )}
           {walletView !== WALLET_VIEWS.PENDING && (
             <div className="flex flex-col text-center">
-              <div className="text-secondary">{i18n._(t`New to Ethereum?`)}</div>
+              <div className="text-grey">{i18n._(t`New to Ethereum?`)}</div>
               <ExternalLink href="https://ethereum.org/wallets/" color="blue">
                 {i18n._(t`Learn more about wallets`)}
               </ExternalLink>

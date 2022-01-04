@@ -40,7 +40,7 @@ export default function Modal({
               leaveTo="opacity-0"
             >
               <div
-                className="transition-all transform"
+                className="transition-all transform text-grey"
                 style={{
                   width: isMobile ? `100%` : '65vw',
                   maxWidth: `${maxWidth}px`,
