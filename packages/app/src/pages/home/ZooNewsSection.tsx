@@ -19,15 +19,15 @@ const ZooNewsSection = () => {
             <Image src="/img/story-image.png" width={565} height={512} alt="" />
           </div>
           <div className="flex flex-col justify-center px-4 py-4 -mt-4 lg:py-0 bg-black100 rounded-b-2xl lg:rounded-2xl lg:-ml-1 lg:basis-1/2">
-            <div className="max-w-sm mx-auto">
-              <h2 className="mb-3 text-3xl font-bold">
+            <div className="max-w-sm mx-auto py-8 lg:py-0">
+              <h2 className="mb-3 text-2xl lg:text-3xl font-bold">
                 Stories From Our Community: Kohaku &amp; Moyo Shiro
               </h2>
               <p className="mb-6">
                 How the ZOO foundation helped save over 100,000 acres of
                 elephant habitat to date.{" "}
               </p>
-              <a className="bg-gradient-to-b from-purple to-blue text-white text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full" href="/blog">
+              <a className="bg-gradient-to-b from-purple to-blue text-white  text-sm md:text-base font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full" href="/blog">
                 Blog
               </a>
             </div>
