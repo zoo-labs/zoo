@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import InstagramIcon from "components/Icons/instagram-icon";
 
 import TwitterIcon from "components/Icons/twitter-icon";
@@ -13,19 +14,38 @@ const JoinZooSection = () => {
         <p className="mb-4 text-xl">Follow our social media</p>
         <div className="flex items-center mb-6">
           <a
-            href="https://mobile.twitter.com/zoo_labs"
+            href="https://discord.com/invite/FZzWUbMUK5"
             target="_blank"
             rel="noreferrer"
             className="mr-8"
           >
-            <TwitterIcon color="white" />
+            <Image src="/img/discord-large.svg" width={32} height={32} alt="" />
           </a>
           <a
             href="https://instagram.com/zoolabs.io?utm_medium=copy_link"
             target="_blank"
             rel="noreferrer"
+            className="mr-8"
           >
-            <InstagramIcon color="white" />
+            <Image
+              src="/img/instagram-large.svg"
+              width={32}
+              height={32}
+              alt=""
+            />
+          </a>
+          <a
+            href="https://t.me/RealZoolabs"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-8"
+          >
+            <Image
+              src="/img/telegram-large.svg"
+              width={32}
+              height={32}
+              alt=""
+            />
           </a>
         </div>
 
