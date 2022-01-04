@@ -5,17 +5,26 @@ import TwitterIcon from "components/Icons/twitter-icon";
 
 const JoinZooSection = () => {
   return (
-    <section className="bg-blue">
+    <section className="bg-purple100">
       <div className="flex flex-col items-center justify-center px-6 py-16 mx-auto max-w-7xl">
         <h2 className="mb-6 text-3xl font-semibold text-center lg:text-5xl">
           Join the ZOO family!
         </h2>
         <p className="mb-4 text-xl">Follow our social media</p>
         <div className="flex items-center mb-6">
-          <a href="" className="mr-8">
+          <a
+            href="https://mobile.twitter.com/zoo_labs"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-8"
+          >
             <TwitterIcon color="white" />
           </a>
-          <a href="">
+          <a
+            href="https://instagram.com/zoolabs.io?utm_medium=copy_link"
+            target="_blank"
+            rel="noreferrer"
+          >
             <InstagramIcon color="white" />
           </a>
         </div>

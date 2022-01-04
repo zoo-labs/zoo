@@ -7,10 +7,10 @@ import MarketItem from "../../components/market/marketItem";
 import markets from "../../components/market/marketitem.json";
 import { wait } from "functions";
 import { withStyles } from "@mui/styles";
-import Slider from "@mui/material/Slider";
 import CloseIcon from "components/CloseIcon";
 import ReactDropdown from "react-dropdown";
-
+import { Filter } from "react-feather";
+import { Slider } from "@mui/material";
 const PrettoSlider = withStyles({
   root: {
     color: "#52af77",
@@ -89,20 +89,11 @@ const Market: React.FC<MarketProps> = ({}) => {
     1: allAnimls,
   };
 
-  const myBids = [...Object.values(allData)]
-    .flat(1)
-    .sort((a, b) => a.tokenID - b.tokenID)
-    .slice(0, 3);
-
   useEffect(() => {
-    console.log(
-      "hjhjh",
-      [...Object.values(allData)].flat(1).sort((a, b) => a.tokenID - b.tokenID)
-    );
     setData(
       [...Object.values(allData)]
         .flat(1)
-        .sort((a, b) => a.tokenID - b.tokenID)
+        .sort((a: any, b: any) => a.tokenID - b.tokenID)
         .slice(0, 8 * page)
     );
     setHotData([allData[1]].flat(1).slice(0, 8));
@@ -115,7 +106,7 @@ const Market: React.FC<MarketProps> = ({}) => {
       setData(
         [...Object.values(allData)]
           .flat(1)
-          .sort((a, b) => a.tokenID - b.tokenID)
+          .sort((a: any, b: any) => a.tokenID - b.tokenID)
           .slice(0, 8 * page)
       );
     } else if (category === 3) {
@@ -155,7 +146,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                       "linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)",
                   }}
                 >
-                  {/* {wait ? 'Processing' : 'Get ZOO'} */}
+                  {fetching ? "Processing" : "Get ZOO"}
                 </span>
               </div>
               {zooBalance === 0 && (
@@ -191,7 +182,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                       setData(
                         [...Object.values(allData)]
                           .flat(1)
-                          .sort((a, b) => a.tokenID - b.tokenID)
+                          .sort((a: any, b: any) => a.tokenID - b.tokenID)
                           .slice(0, 8)
                       );
                     } else if (index === 3) {
@@ -403,7 +394,7 @@ const Market: React.FC<MarketProps> = ({}) => {
             )}
           </div>
         </div>
-        <div className="mt-8 text-center">
+        {/* <div className="mt-8 text-center">
           <button
             onClick={() => loadMore()}
             className="inline-flex items-center h-12 px-6 font-semibold text-white border border-solid rounded-full shadow-lg cursor-pointer hover:bg-primary hover:border-0"
@@ -411,7 +402,7 @@ const Market: React.FC<MarketProps> = ({}) => {
           >
             Load More
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
