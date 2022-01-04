@@ -241,6 +241,7 @@ function AppBar(): JSX.Element {
                       <Web3Status
                         title="My Wallet"
                         className="border-green border text-green font-bold"
+
                       />
                     </div>
                     <div className="hidden md:block">
@@ -347,7 +348,7 @@ function AppBar(): JSX.Element {
                   )}
                   <Web3Status
                     title="My Wallet"
-                    className="border-green border text-green font-bold"
+                    className="font-bold border border-green text-green"
                   />
                 </div>
 
