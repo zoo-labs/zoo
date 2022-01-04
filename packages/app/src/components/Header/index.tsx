@@ -49,7 +49,7 @@ function AppBar(): JSX.Element {
                   <NavLink href="/">
                     <div className="pl-2 cursor-pointer logo">
                       <Image
-                        src="/img/logo.png"
+                        src="/img/logo.svg"
                         className="w-10"
                         alt="Logo"
                         height={24}
@@ -68,14 +68,17 @@ function AppBar(): JSX.Element {
                           {i18n._(t`Marketplace`)}
                         </a>
                       </NavLink>
-                      <NavLink href="/chart">
-                        <a
-                          id={`market-nav-link`}
-                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                        >
-                          {i18n._(t`Chart`)}
-                        </a>
-                      </NavLink>
+
+                      <a
+                        href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
+                        target="_blank"
+                        rel="noreferrer"
+                        id={`market-nav-link`}
+                        className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                      >
+                        {i18n._(t`Chart`)}
+                      </a>
+
                       <NavLink href="/community">
                         <a
                           id={`mint-nav-link`}
@@ -100,22 +103,6 @@ function AppBar(): JSX.Element {
                           {i18n._(t`Learn`)}
                         </a>
                       </NavLink>
-                      {/* <NavLink href="/swap">
-                        <a
-                          id={`swap-nav-link`}
-                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                        >
-                          {i18n._(t`Swap`)}
-                        </a>
-                      </NavLink> */}
-                      {/* <NavLink href="/pool">
-                        <a
-                          id={`pool-nav-link`}
-                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                        >
-                          {i18n._(t`Pool`)}
-                        </a>
-                      </NavLink> */}
                       {chainId && featureEnabled(Feature.MIGRATE, chainId) && (
                         <NavLink href={"/migrate"}>
                           <a
@@ -241,7 +228,7 @@ function AppBar(): JSX.Element {
                         <Web3Network />
                       </div>
                     )}
-
+                    {/* My Wallet Button */}
                     <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                       {account && chainId && userEthBalance && (
                         <>
@@ -251,7 +238,7 @@ function AppBar(): JSX.Element {
                           </div>
                         </>
                       )}
-                      <Web3Status />
+                      <Web3Status title="My Wallet" className="border-green border text-green font-bold"/>
                     </div>
                     <div className="hidden md:block">
                       <LanguageSwitch />
@@ -301,33 +288,60 @@ function AppBar(): JSX.Element {
                 </div>
               </div>
             </div>
-
+            {/* Mobile View Navbar Dropdown */}
             <Popover.Panel className="sm:hidden">
               <div className="flex flex-col px-4 pt-2 pb-3 space-y-1">
-                <Link href="/">
-                  <a
-                    id={`mint`}
-                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  >
-                    {i18n._(t`Mint`)}
-                  </a>
-                </Link>
-                <Link href="/dashboard">
-                  <a
-                    id={`dashboard`}
-                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  >
-                    {i18n._(t`Dashboard`)}
-                  </a>
-                </Link>
                 <Link href="/market">
                   <a
-                    id={`market`}
+                    id={`marketplace`}
                     className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   >
-                    {i18n._(t`Market`)}
+                    {i18n._(t`Marketplace`)}
                   </a>
                 </Link>
+                <Link href="/chart">
+                  <a
+                    id={`chart`}
+                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  >
+                    {i18n._(t`Chart`)}
+                  </a>
+                </Link>
+                <Link href="/community">
+                  <a
+                    id={`community`}
+                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  >
+                    {i18n._(t`Community`)}
+                  </a>
+                </Link>
+                <Link href="/press">
+                  <a
+                    id={`press`}
+                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  >
+                    {i18n._(t`Press`)}
+                  </a>
+                </Link>
+                <Link href="/learn">
+                  <a
+                    id={`learn`}
+                    className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  >
+                    {i18n._(t`Learn`)}
+                  </a>
+                </Link>
+                <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
+                  {account && chainId && userEthBalance && (
+                    <>
+                      <div className="px-3 py-2 text-primary text-bold">
+                        {userEthBalance?.toFixed(3)}{" "}
+                        {NATIVE[chainId]?.symbol || "ETH"}
+                      </div>
+                    </>
+                  )}
+                  <Web3Status />
+                </div>
 
                 {chainId && featureEnabled(Feature.LIQUIDITY_MINING, chainId) && (
                   <Link href={"/farm"}>
