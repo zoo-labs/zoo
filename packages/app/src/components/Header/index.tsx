@@ -8,6 +8,7 @@ import Image from "next/image";
 import LanguageSwitch from "../LanguageSwitch";
 import Link from "next/link";
 import More from "./More";
+import Community from "./Community";
 import NavLink from "../NavLink";
 import { Popover } from "@headlessui/react";
 import QuestionHelper from "../QuestionHelper";
@@ -78,14 +79,8 @@ function AppBar(): JSX.Element {
                         {i18n._(t`Chart`)}
                       </a>
 
-                      <NavLink href="/community">
-                        <a
-                          id={`mint-nav-link`}
-                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                        >
-                          {i18n._(t`Community`)}
-                        </a>
-                      </NavLink>
+                      <Community />
+
                       <NavLink href="/press">
                         <a
                           id={`mint-nav-link`}
@@ -311,13 +306,15 @@ function AppBar(): JSX.Element {
                   {i18n._(t`Chart`)}
                 </a>
 
-                <a
+                <Community />
+
+                {/* <a
                   id={`community`}
                   className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="/community"
                 >
                   {i18n._(t`Community`)}
-                </a>
+                </a> */}
 
                 <a
                   id={`press`}

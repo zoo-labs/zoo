@@ -8,7 +8,7 @@ const MarketPlaceSection = () => {
 
   return (
     <section className="MarketPlace">
-      <div className="flex flex-col items-center px-6 py-20 mx-auto lg:flex-row max-w-7xl">
+      <div className="flex flex-col items-center px-6 py-28 mx-auto lg:flex-row max-w-7xl">
         <div className="flex mb-8 basis-1/2 relative z-30">
           <div>
             <Image src="/img/iphone-1.png" width={363} height={675} alt="" />
@@ -17,11 +17,11 @@ const MarketPlaceSection = () => {
             <Image src="/img/iphone-2.png" width={363} height={675} alt="" />
           </div>
         </div>
-        <div className="flex flex-col items-center basis-1/2">
-          <h2 className="mb-8 text-3xl font-bold text-center">
+        <div className="flex flex-col items-center lg:items-start basis-1/2 lg:max-w-lg lg:mx-auto">
+          <h2 className="mb-8 text-3xl lg:text-5xl font-bold text-center lg:text-left">
             Buy, list and bid on our NFT marketplace.
           </h2>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center lg:items-start gap-3">
             {!account ? (
               <a>
                 <Web3Status

@@ -5,7 +5,7 @@ const EndangeredSpecies = () => {
     <div className="border rounded-lg py-12 px-6 bg-black100 w-full max-w-lg">
       <div className="text-center mb-8">
         <h2 className="font-bold text-3xl mb-4">Save Endangered Species</h2>
-        <p className="text-grey">
+        <p className="text-grey text-base">
           10% of all gaming fees will be donated to non-profit organizations.
           Grow your animals, view yield earned per animal, and breed mature
           animals to mint more NFTs!
@@ -15,8 +15,8 @@ const EndangeredSpecies = () => {
         <div className="flex items-start">
           <Image src="/img/hatch.png" width={32} height={32} alt="" />
           <div className="ml-6">
-            <p className="text-white font-bold">Hatch</p>
-            <p className="max-w-sm text-grey">
+            <p className="text-white font-medium">Hatch</p>
+            <p className="max-w-sm text-grey text-sm">
               Your NFT Egg to reveal the animal within and learn about it.
             </p>
           </div>
@@ -26,8 +26,8 @@ const EndangeredSpecies = () => {
         <div className="flex items-start">
           <Image src="/img/feed.png" width={32} height={32} alt="" />
           <div className="ml-6">
-            <p className="text-white font-bold">Feed</p>
-            <p className="max-w-sm text-grey">
+            <p className="text-white font-medium">Feed</p>
+            <p className="max-w-sm text-grey text-sm">
               Your animal $ZOO to increase the value of your animal NFT.
             </p>
           </div>
@@ -37,8 +37,8 @@ const EndangeredSpecies = () => {
         <div className="flex items-start">
           <Image src="/img/grow.png" width={32} height={32} alt="" />
           <div className="ml-6">
-            <p className="text-white font-bold">Grow</p>
-            <p className="max-w-sm text-grey">
+            <p className="text-white font-medium">Grow</p>
+            <p className="max-w-sm text-grey text-sm">
               Your animal and watch it transition through its different stages
               of maturity.
             </p>
@@ -49,26 +49,29 @@ const EndangeredSpecies = () => {
         <div className="flex items-start">
           <Image src="/img/breed.png" width={32} height={32} alt="" />
           <div className="ml-6">
-            <p className="text-white font-bold">Breed</p>
-            <p className="max-w-sm text-grey">
+            <p className="text-white font-medium">Breed</p>
+            <p className="max-w-sm text-grey text-sm">
               Your fully mature animal to mint new Egg NFT’s. Breed the animals
               up to 6x.
             </p>
           </div>
         </div>
       </div>
-      <p className="text-center mb-4">
+      <p className="text-center mb-4 text-sm text-grey">
         <span className="text-green">Earn yield</span> while you play{" "}
-        <span className="text-white">Zoo</span> on our Metamask App.
+        <span className="text-white">ZOO</span> on our Metamask App.
       </p>
       <div className="flex justify-end">
         <a
           href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
           target="_blank"
           rel="noreferrer"
-          className="bg-gradient-to-b from-purple to-blue text-white text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full"
+          className="bg-gradient-to-b from-purple to-blue text-white text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full flex items-center"
         >
-          Buy $ZOO
+          Buy $ZOO{" "}
+          <span className="ml-2">
+            <Image src="/img/star.svg" width={16} height={16} alt="" />
+          </span>
         </a>
       </div>
     </div>
