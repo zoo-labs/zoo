@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
-import { XIcon } from '@heroicons/react/solid'
-import { classNames } from '../../functions'
+import { XIcon } from "@heroicons/react/solid";
+import { classNames } from "../../functions";
 
-const TYPE = {
+export const TYPE = {
   information: {
-    color: 'bg-purple bg-opacity-20 text-high-emphesis',
+    color: "bg-purple bg-opacity-20 text-high-emphesis",
     icon: (
       <svg
         width="33"
@@ -25,7 +25,7 @@ const TYPE = {
     ),
   },
   warning: {
-    color: 'bg-yellow bg-opacity-25 text-high-emphesis',
+    color: "bg-yellow bg-opacity-25 text-high-emphesis",
     icon: (
       <svg
         className="w-5 h-5 text-yellow"
@@ -43,7 +43,7 @@ const TYPE = {
     ),
   },
   error: {
-    color: 'bg-red bg-opacity-25 text-high-emphesis',
+    color: "bg-red bg-opacity-25 text-high-emphesis",
     icon: (
       <svg
         className="w-5 h-5 text-red"
@@ -60,33 +60,40 @@ const TYPE = {
       </svg>
     ),
   },
-}
+};
 
 export interface AlertProps {
-  title?: string
-  message?: string | React.ReactChild | React.ReactChild[]
-  type?: 'warning' | 'error' | 'information'
-  showIcon?: boolean
-  dismissable?: boolean
+  title?: string;
+  message?: string | React.ReactChild | React.ReactChild[];
+  type?: "warning" | "error" | "information";
+  showIcon?: boolean;
+  dismissable?: boolean;
 }
 
 export default function Alert({
   title,
   message,
-  type = 'warning',
-  className = '',
+  type = "warning",
+  className = "",
   showIcon = false,
   dismissable = true,
 }: AlertProps & React.HTMLAttributes<HTMLDivElement>): JSX.Element | null {
   // TODO: Persist this...
-  const [show, setShow] = useState(true)
-  const { color, icon } = TYPE[type]
+  const [show, setShow] = useState(true);
+  const { color, icon } = TYPE[type];
   return message && show ? (
-    <div className={classNames('block relative w-full rounded text-sm p-4', show && 'pr-10', color, className)}>
+    <div
+      className={classNames(
+        "block relative w-full rounded text-sm p-4",
+        show && "pr-10",
+        color,
+        className
+      )}
+    >
       {title && <div className="mb-1 text-2xl font-medium">{title}</div>}
       <div className="flex items-center">
         {showIcon && <div className="flex-shrink-0">{icon}</div>}
-        <div className={!showIcon ? 'ml-0' : 'ml-3'}>
+        <div className={!showIcon ? "ml-0" : "ml-3"}>
           <p className="text-base">{message}</p>
         </div>
       </div>
@@ -103,5 +110,5 @@ export default function Alert({
         </div>
       )}
     </div>
-  ) : null
+  ) : null;
 }
