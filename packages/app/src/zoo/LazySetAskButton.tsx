@@ -34,7 +34,6 @@ export const LazySetAskButton = ({
           amount: ethers.utils.parseUnits(`${amount}`, currencyToken.decimals),
           offline,
         };
-        console.log("Drop.setAsk", ask);
         const tx = await drop.setTokenTypeAsk(name, ask, {
           from: account,
           gasPrice,

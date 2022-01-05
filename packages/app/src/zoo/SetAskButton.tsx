@@ -35,7 +35,6 @@ export const SetAskButton = ({
           amount: ethers.utils.parseUnits(`${amount}`, currencyToken.decimals),
           offline,
         };
-        console.log("setAsk", ask);
         const tx = await media.setAsk(tokenId, ask, {
           from: account,
           gasPrice,
