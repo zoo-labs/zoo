@@ -3,16 +3,16 @@ import React from "react";
 const FaqSection = () => {
   return (
     <section id="faq">
-      <div className="max-w-7xl px-6 py-20 mx-auto">
-        <h2 className="text-3xl lg:text-4xl font-bold text-center mb-10 lg:mb-20">
+      <div className="px-6 py-20 mx-auto max-w-7xl">
+        <h2 className="mb-10 text-3xl font-bold text-center lg:text-4xl lg:mb-20">
           Game FAQ
         </h2>
         <div className="flex flex-col items-center lg:flex-row lg:flex-wrap lg:items-start lg:justify-between">
           <div className="flex flex-col mb-8 lg:basis-1/2 lg:max-w-sm">
-            <h3 className="text-green font-bold text-xl lg:text-2xl mb-4">
+            <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
               What is ZOO?
             </h3>
-            <p className="text-white lg:max-w-xl leading-6">
+            <p className="leading-6 text-white lg:max-w-xl">
               ZOO is a Liquidity Protocol that exists to bridge tokens and NFTs
               at the intersection of Defi and gaming. Each of our NFTs (animal
               or egg) yield our native currency, $ZOO. Each Nft is
@@ -22,7 +22,7 @@ const FaqSection = () => {
           </div>
 
           <div className="flex flex-col mb-12 lg:basis-1/2 ">
-            <h3 className=" text-green font-bold text-xl lg:text-2xl mb-4">
+            <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
               What are the Key features in ZOO?
             </h3>
             <p className="text-white lg:max-w-sm ">
@@ -37,7 +37,7 @@ const FaqSection = () => {
           </div>
 
           <div className="flex flex-col mb-12 lg:basis-1/2">
-            <h3 className="text-green font-bold text-xl lg:text-2xl mb-4">
+            <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
               What is the $ZOO token?
             </h3>
             <p className="text-white lg:max-w-sm">
@@ -48,7 +48,7 @@ const FaqSection = () => {
           </div>
 
           <div className="flex flex-col mb-12 lg:basis-1/2">
-            <h3 className="text-green font-bold text-xl lg:text-2xl mb-4">
+            <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
               How do i get Onboarded?
             </h3>
             <p className="text-white lg:max-w-sm">
@@ -57,11 +57,11 @@ const FaqSection = () => {
             </p>
           </div>
 
-          <div className="flex flex-col text-left mb-12 lg:basis-1/2">
-            <h3 className="text-green font-bold text-xl lg:text-2xl mb-4 pl-4 lg:pl-0 text-left">
+          <div className="flex flex-col mb-12 text-left lg:basis-1/2">
+            <h3 className="pl-4 mb-4 text-xl font-bold text-left text-green lg:text-2xl lg:pl-0">
               How do i buy $ZOO?
             </h3>
-            <ul className="list-disc pl-8 text-white max-w-sm mx-auto px-4 lg:mx-0">
+            <ul className="max-w-sm px-4 pl-8 mx-auto text-white list-disc lg:mx-0">
               <li>Buy BNB</li>
               <li>Get a Binance coin wallet(Ledger, Coinomi).</li>
               <li>Locate your BNB address.</li>
@@ -77,17 +77,17 @@ const FaqSection = () => {
           </div>
 
           <div className="flex flex-col mb-12 lg:basis-1/2">
-            <h3 className="text-green font-bold text-xl lg:text-2xl mb-4">
+            <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
               You need help?
             </h3>
-            <p className="text-white lg:max-w-sm mb-4">
-              If you're having difficulty, please join our Discord server and
+            <p className="mb-4 text-white lg:max-w-sm">
+              If you are having difficulty, please join our Discord server and
               post in the #new-player-help channel and our community will be
               happy to help!
             </p>
             <p className="text-white lg:max-w-sm">
               In addition, a complete list of guides can be found{" "}
-              <a href="/blog" className="text-green underline">
+              <a href="/blog" className="underline text-green">
                 here
               </a>
               .
