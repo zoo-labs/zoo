@@ -16,12 +16,14 @@ const Footer = () => {
   return (
     // <footer className="absolute bottom-0 flex items-center justify-between w-screen h-20 p-4 mx-auto text-center text-low-emphesis">
     <footer className="flex-shrink-0 w-full bg-black">
-      <div className="border-t border-b py-16 hidden lg:block">
+      <div className="border-t border-b border-grey  hidden lg:block">
         <div className="flex items-start justify-between px-4 max-w-7xl mx-auto flex-auto">
-          <div className="flex justify-between items-start basis-2/3 px-6">
+          <div className="flex justify-between items-start basis-2/3 px-6 py-16 border-r border-grey">
+            <div>
             <Image src="/img/logo.svg" width={80} height={24} alt="Zoo" />
+            </div>
             <div className="flex flex-col text-grey">
-              <div className="mb-4">
+              <div className="mb-2">
                 <Link href="/market">Marketplace</Link>
               </div>
               <div className="mb-2">
@@ -39,12 +41,13 @@ const Footer = () => {
               <div className="mb-2">
                 <Link href="/press">Press</Link>
               </div>
-              <div className="mb-2">
+              <div className="mb-0">
                 <Link href="/learn">Learn</Link>
               </div>
             </div>
+            
           </div>
-          <div className="flex flex-col items-end basis-1/3 px-6 text-grey">
+          <div className="flex flex-col items-end basis-1/3 px-6 text-grey border-r py-16 border-grey">
             <div className="mb-0">
               {!account ? (
                 <a href="#">
@@ -73,13 +76,13 @@ const Footer = () => {
             <div className="mb-2">
               <a href="#faq">FAQ</a>
             </div>
-            <div className="mb-2">
+            <div className="mb-0">
               <Link href="/">Connect us</Link>
             </div>
           </div>
-          <div className="flex flex-col items-start basis-2/3 px-6">
+          <div className="flex flex-col items-start basis-2/3 px-6 py-16">
             <p className="text-white uppercase font-bold mb-4">Newsletter</p>
-            <p className="mb-4 text-white">
+            <p className="mb-4 text-white text-opacity-70">
               Subscribe to our newsletter to get the first notice on upgrades,
               new features and events!
             </p>
@@ -92,7 +95,7 @@ const Footer = () => {
                 />
                 <button type="submit" className="flex">
                   <Image
-                    src="/img/small-circle-button.png"
+                    src="/img/small-circle-button.svg"
                     width={24}
                     height={24}
                     alt=""
@@ -163,7 +166,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="flex flex-col iterms-center lg:flex-row justify-between items-center max-w-7xl mx-auto px-4 py-6">
-        <p className="text-center mb-4 lg:mb-0 lg:text-left">
+        <p className="text-center mb-4 lg:mb-0 lg:text-left text-grey">
           Copyright &copy; 2021 ZOO Labs INC. Allrights reserved
         </p>
         <div>

@@ -18,7 +18,7 @@ const AnimalFamilySection = () => {
                 alt=""
               />
             </div>
-            <div className="text-center AnimalFamily__name lg:basis-2/3">
+            <div className="text-center AnimalFamily__name lg:basis-1/3">
               <h2 className="mb-6 text-3xl font-bold lg:4xl">
                 Sumatran Elephant
               </h2>
@@ -60,7 +60,7 @@ const AnimalFamilySection = () => {
                 alt=""
               />
             </div>
-            <div className="text-center AnimalFamily__name lg:basis-2/3">
+            <div className="text-center AnimalFamily__name lg:basis-1/3">
               <h2 className="mb-6 text-3xl font-bold lg:4xl">Javan Rhino</h2>
               <a
                 href="/nft"
@@ -100,7 +100,7 @@ const AnimalFamilySection = () => {
                 alt=""
               />
             </div>
-            <div className="text-center AnimalFamily__name lg:basis-2/3">
+            <div className="text-center AnimalFamily__name lg:basis-1/3">
               <h2 className="mb-6 text-3xl font-bold lg:4xl">Siberian Tiger</h2>
               <a
                 href="/nft"
