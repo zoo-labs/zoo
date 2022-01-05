@@ -14,12 +14,25 @@ const JoinZooSection = () => {
         <p className="mb-4 text-xl">Follow our social media</p>
         <div className="flex items-center mb-6">
           <a
-            href="https://discord.com/invite/FZzWUbMUK5"
+            href="https://mobile.twitter.com/zoo_labs"
             target="_blank"
             rel="noreferrer"
             className="mr-8"
           >
-            <Image src="/img/discord-large.svg" width={32} height={32} alt="" />
+            <Image src="/img/twitter-large.svg" width={32} height={32} alt="" />
+          </a>
+          <a
+            href="https://t.me/RealZoolabs"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-8"
+          >
+            <Image
+              src="/img/telegram-large.svg"
+              width={32}
+              height={32}
+              alt=""
+            />
           </a>
           <a
             href="https://instagram.com/zoolabs.io?utm_medium=copy_link"
@@ -35,17 +48,12 @@ const JoinZooSection = () => {
             />
           </a>
           <a
-            href="https://t.me/RealZoolabs"
+            href="https://discord.com/invite/FZzWUbMUK5"
             target="_blank"
             rel="noreferrer"
             className="mr-8"
           >
-            <Image
-              src="/img/telegram-large.svg"
-              width={32}
-              height={32}
-              alt=""
-            />
+            <Image src="/img/discord-large.svg" width={32} height={32} alt="" />
           </a>
         </div>
 
@@ -54,7 +62,7 @@ const JoinZooSection = () => {
             <input
               type="email"
               placeholder="your-email@example.com"
-              className="max-w-2xl px-2 py-3 placeholder-white bg-transparent border border-white rounded-tl-lg rounded-bl-lg"
+              className="max-w-2xl px-2 py-3 placeholder-white bg-transparent border border-white rounded-tl-lg rounded-bl-lg lg:w-80"
             />
             <button
               type="submit"

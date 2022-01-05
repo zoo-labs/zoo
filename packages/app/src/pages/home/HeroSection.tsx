@@ -22,7 +22,7 @@ const HeroSection = () => {
               href="https://metamask.io/"
               target="_blank"
               rel="noreferrer"
-              className="bg-gradient-to-b from-purple to-blue text-white text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full"
+              className="bg-gradient-to-b from-purple to-blue text-white font-semibold text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full"
             >
               Download App
             </a>
@@ -30,13 +30,13 @@ const HeroSection = () => {
               href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
               target="_blank"
               rel="noreferrer"
-              className="border border-gray-100 text-sm md:text-base text-white px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full"
+              className="border border-gray-100 text-sm md:text-base font-semibold text-white px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full"
             >
               Buy $ZOO
             </a>
           </div>
         </div>
-        <div className="Hero__image max-w-md lg:max-w-lg lg:basis-1/2">
+        <div className="Hero__image max-w-md lg:max-w-xl lg:basis-1/2">
           <Image
             src="/img/amur-leopard.png"
             width={700}
