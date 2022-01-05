@@ -6,7 +6,6 @@
 // import { updateMyEggs, updateMyTransactions, updatZooBalnce } from '.'
 
 // export { addAnimal, addAnimals, addEgg, addEggs, burnAnimal, burnEgg, clearZoo, updatZooBalnce } from '.'
-// export { clear, push, remove } from '../toasts'
 import { createAction } from '@reduxjs/toolkit'
 import { Egg } from 'types'
 
@@ -80,3 +79,4 @@ export const getEggs = createAction<{ curr: any }>('zoo/getEggs')
 //   const transactions = await getTransactions({ account })
 //   dispatch(updateMyTransactions(transactions))
 // }
+export { clear, push, remove } from '../toasts'

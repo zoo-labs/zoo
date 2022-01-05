@@ -33,7 +33,6 @@ export function useBuyZoo(): () => void {
     if (!account) return;
     if (!chainId) return;
 
-    console.log("faucet", faucet);
     try {
       console.log(account);
       faucet.methods

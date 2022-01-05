@@ -34,7 +34,6 @@ function AppBar(): JSX.Element {
   const userEthBalance = useETHBalances(account ? [account] : [])?.[
     account ?? ""
   ];
-  console.log("userEthBalance", userEthBalance);
   const chainAddresses =
     (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
 
@@ -235,7 +234,7 @@ function AppBar(): JSX.Element {
                       )}
                       <Web3Status
                         title="My Wallet"
-                        className="border-green border text-green font-bold"
+                        className="font-bold border border-green text-green"
                       />
                     </div>
                     <div className="hidden md:block">

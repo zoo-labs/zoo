@@ -1,3 +1,5 @@
+import { Toast } from 'components/Toast'
+
 export interface Animal {
   owner?: string
   kind?: number
@@ -89,4 +91,7 @@ export type EggCardType = {
   hatching?: boolean
   viewItem: () => void
   // eggGroup: {BASIC: number, HYBRID: number}
+}
+export interface ToastsState {
+  data: Toast[]
 }

@@ -39,7 +39,6 @@ export const LazyAcceptBidButton = ({
           offline: marketBid.offline,
           sellOnShare: { value: 0 },
         };
-        console.log("lazyBidForTokenBidder", bid, dropId, name, bidder);
         setBid(bid);
       });
     }

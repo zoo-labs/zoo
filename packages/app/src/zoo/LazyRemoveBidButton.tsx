@@ -31,7 +31,6 @@ export const LazyRemoveBidButton = ({
     try {
       const txSummary = `Removed Bid for ${name}`;
 
-      console.log("app.removeLazyBid", dropId, { from: account, gasPrice });
       const tx = await app.removeLazyBid(dropId, name, {
         from: account,
         gasPrice,
