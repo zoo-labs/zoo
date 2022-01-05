@@ -1,17 +1,18 @@
-import { Dialog, Transition } from '@headlessui/react'
-import React, { Fragment } from 'react'
-import { isMobile } from 'react-device-detect'
+import { Dialog, Transition } from "@headlessui/react";
+import React, { Fragment } from "react";
+import { isMobile } from "react-device-detect";
 
 interface ModalProps {
-  isOpen: boolean
-  onDismiss: () => void
-  minHeight?: number
-  maxHeight?: number
-  initialFocusRef?: React.RefObject<any>
-  children?: React.ReactNode
-  padding?: number
-  maxWidth?: number
-  className?: string
+  isOpen: boolean;
+  onDismiss: () => void;
+  minHeight?: number;
+  maxHeight?: number;
+  initialFocusRef?: React.RefObject<any>;
+  children?: React.ReactNode;
+  padding?: number;
+  maxWidth?: number;
+  className?: string;
+  isMax?: boolean;
 }
 
 export default function Modal({
@@ -23,11 +24,16 @@ export default function Modal({
   children,
   padding = 5,
   maxWidth = 420,
+  isMax,
 }: ModalProps) {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" onClose={onDismiss} className="fixed inset-0 overflow-y-hidden Modal z-10001 backdrop-blur-md">
+        <Dialog
+          as="div"
+          onClose={onDismiss}
+          className="fixed inset-0 overflow-y-hidden Modal z-10001 backdrop-blur-md"
+        >
           <Dialog.Overlay className="fixed inset-0 bg-black backdrop-blur-md opacity-30" />
           <div className="flex items-center justify-center h-screen px-4">
             <Transition.Child
@@ -42,13 +48,20 @@ export default function Modal({
               <div
                 className="transition-all transform text-grey"
                 style={{
-                  width: isMobile ? `100%` : '65vw',
+                  width: isMobile ? `100%` : "65vw",
                   maxWidth: `${maxWidth}px`,
                 }}
               >
                 <div className="w-full p-px rounded bg-gradient-to-r from-white to-white">
                   <div className="flex flex-col w-full h-full p-6 overflow-y-hidden rounded bg-dark-900">
-                    <div style={{ minHeight: `${minHeight}vh`, maxHeight: `${maxHeight}vh` }}>{children}</div>
+                    <div
+                      style={{
+                        minHeight: `${minHeight}vh`,
+                        maxHeight: `${maxHeight}vh`,
+                      }}
+                    >
+                      {children}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -57,5 +70,5 @@ export default function Modal({
         </Dialog>
       </Transition>
     </>
-  )
+  );
 }

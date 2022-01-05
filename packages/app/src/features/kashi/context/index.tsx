@@ -236,7 +236,6 @@ export function KashiProvider({ children }) {
   // console.log({ info })
 
   const updatePairs = useCallback(async () => {
-    console.log("update pairs");
     if (
       !account ||
       !chainId ||
@@ -282,8 +281,6 @@ export function KashiProvider({ children }) {
           return oracle.valid;
         })
         .map((pair) => pair.address);
-
-      console.log("invalidOracles", invalidOracles);
 
       // Get full info on all the verified pairs
       const pairs = rpcToObj(

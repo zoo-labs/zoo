@@ -1,54 +1,58 @@
-import { numberWithCommas } from 'functions';
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { AppState } from 'state';
-import { useBuyZoo } from 'state/zoo/hooks';
-import MarketItem from '../../components/market/marketItem';
-import markets from '../../components/market/marketitem.json';
-import { wait } from 'functions';
-import { withStyles } from '@mui/styles';
-import CloseIcon from 'components/CloseIcon';
-import ReactDropdown from 'react-dropdown';
-import { Filter } from 'react-feather';
-import { Slider } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { numberWithCommas } from "functions";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { AppState } from "state";
+import { useBuyZoo } from "state/zoo/hooks";
+import MarketItem from "../../components/market/marketItem";
+import markets from "../../components/market/marketitem.json";
+import { wait } from "functions";
+import { withStyles } from "@mui/styles";
+import CloseIcon from "components/CloseIcon";
+import ReactDropdown from "react-dropdown";
+import { Filter } from "react-feather";
+import { Slider } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { useModal } from "react-morphing-modal";
+import { useRouter } from "next/router";
+import Wallet from "./wallet";
+import { useTokenTypes } from "zoo/state";
 const PrettoSlider = styled(Slider)({
-  color: '#8c4ff8',
+  color: "#8c4ff8",
   height: 8,
-  '& .MuiSlider-track': {
-    border: 'none'
+  "& .MuiSlider-track": {
+    border: "none",
   },
-  '& .MuiSlider-thumb': {
+  "& .MuiSlider-thumb": {
     height: 24,
     width: 24,
-    backgroundColor: '#8c4ff8',
-    border: '2px solid #fff',
-    '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
-      boxShadow: 'inherit'
+    backgroundColor: "#8c4ff8",
+    border: "2px solid #fff",
+    "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {
+      boxShadow: "inherit",
     },
-    '&:before': {
-      display: 'none'
-    }
+    "&:before": {
+      display: "none",
+    },
   },
-  '& .MuiSlider-valueLabel': {
+  "& .MuiSlider-valueLabel": {
     lineHeight: 1.2,
     fontSize: 12,
-    background: 'unset',
+    background: "unset",
     padding: 0,
     width: 32,
     height: 32,
-    borderRadius: '50% 50% 50% 0',
-    backgroundColor: '#8c4ff8',
-    transformOrigin: 'bottom left',
-    transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
-    '&:before': { display: 'none' },
-    '&.MuiSlider-valueLabelOpen': {
-      transform: 'translate(50%, -100%) rotate(-45deg) scale(1)'
+    borderRadius: "50% 50% 50% 0",
+    backgroundColor: "#8c4ff8",
+    transformOrigin: "bottom left",
+    transform: "translate(50%, -100%) rotate(-45deg) scale(0)",
+    "&:before": { display: "none" },
+    "&.MuiSlider-valueLabelOpen": {
+      transform: "translate(50%, -100%) rotate(-45deg) scale(1)",
     },
-    '& > *': {
-      transform: 'rotate(45deg)'
-    }
-  }
+    "& > *": {
+      transform: "rotate(45deg)",
+    },
+  },
 });
 
 // const PrettoSlider = withStyles({
@@ -88,24 +92,24 @@ const PrettoSlider = styled(Slider)({
 interface MarketProps {}
 
 const Market: React.FC<MarketProps> = ({}) => {
-  const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>(
+  const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
     (state) => state.zoo.zooBalance
   );
-  const animalsState = useSelector<AppState, AppState['zoo']['animals']>(
+  const animalsState = useSelector<AppState, AppState["zoo"]["animals"]>(
     (state) => state.zoo.animals
   );
-  const eggsState = useSelector<AppState, AppState['zoo']['eggs']>(
+  const eggsState = useSelector<AppState, AppState["zoo"]["eggs"]>(
     (state) => state.zoo.eggs
   );
   // const toggleBidModal = useBidModalToggle()
   // const toggleAssetModal = useAssetModalToggle()
   const myAuctions = [0, 1];
   const options = [
-    'Common 🌕',
-    'Uncommon 🌓',
-    'Rare 🔥',
-    'Super Rare ☄️',
-    'Epic 🌟'
+    "Common 🌕",
+    "Uncommon 🌓",
+    "Rare 🔥",
+    "Super Rare ☄️",
+    "Epic 🌟",
   ];
   const [fetching, setFetching] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -126,9 +130,10 @@ const Market: React.FC<MarketProps> = ({}) => {
   const allEggs = Object.values(eggsState);
   const allData = {
     0: allEggs,
-    1: allAnimls
+    1: allAnimls,
   };
-
+  const { tokenTypes } = useTokenTypes();
+  console.log("tokenTypes", tokenTypes);
   useEffect(() => {
     setData(
       [...Object.values(allData)]
@@ -150,7 +155,7 @@ const Market: React.FC<MarketProps> = ({}) => {
           .slice(0, 8 * page)
       );
     } else if (category === 3) {
-      console.log('is hybrid filter');
+      console.log("is hybrid filter");
     } else {
       setData(
         [allData[category - 1]]
@@ -161,46 +166,22 @@ const Market: React.FC<MarketProps> = ({}) => {
     }
     setLoadingMore(false);
   };
+  const { modalProps, open: openModal } = useModal({
+    background: "black",
+  });
+  const router = useRouter();
 
+  const onClickTokenType = (name: string) => {
+    console.log("name", name);
+    router.push(`${router.pathname}?name=${name}`, undefined, {
+      shallow: true,
+    });
+  };
   const buyZoo = useBuyZoo();
   return (
     <div className="md:px-[98px] md:py-[70px]">
       <div className="flex items-end justify-between text-white w-100">
-        <div>
-          <p className="mb-2 text-xl font-bold ">Wallet Balance</p>
-          <div className="flex items-center">
-            <p className="text-xl font-bold ">
-              {numberWithCommas(zooBalance.toFixed(2))} ZOO
-            </p>
-            <div className="relative inline-flex ml-4 rounded-md shadow-sm">
-              <div
-                className="flex items-center cursor-pointer"
-                onClick={() => buyZoo()}
-              >
-                <span
-                  className={`flex items-center justify-center ml-2 py-2 text-base font-medium text-center rounded-md text-secondary hover:text-high-emphesis font-bold  rounded-xl text-high-emphesis bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary w-[120px] min-h-[36px] mb-[-2px] ${
-                    zooBalance === 0 && 'gradient-border'
-                  }`}
-                  style={{
-                    background:
-                      'linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)'
-                  }}
-                >
-                  {fetching ? 'Processing' : 'Get ZOO'}
-                </span>
-              </div>
-              {zooBalance === 0 && (
-                <span className="absolute top-0 right-0 flex w-3 h-3 -mt-1 -mr-1">
-                  <span className="absolute inline-flex w-full h-full bg-purple-400 rounded-full opacity-75 animate-ping"></span>
-                  <span className="relative inline-flex w-3 h-3 bg-white rounded-full"></span>
-                </span>
-              )}
-            </div>
-          </div>
-        </div>
-        {/* <p className="currentColor flex items-center text-sm gap-2 cursor-pointer">
-          Discover <span className="text-2xl text-white">+</span>
-        </p> */}
+        <Wallet />
       </div>
       <div className="w-full max-w-screen-xl mx-auto mt-20">
         <h3 className="mb-16 text-4xl font-semibold">Discover</h3>
@@ -214,7 +195,7 @@ const Market: React.FC<MarketProps> = ({}) => {
             className="absolute flex justify-center transform left-2/4 -translate-x-2/4"
             style={{ top: 10 }}
           >
-            {['All Items', 'Eggs', 'Animals', 'Hybrid'].map((value, index) => {
+            {["All Items", "Eggs", "Animals", "Hybrid"].map((value, index) => {
               const active = category === index;
               return (
                 <a
@@ -229,7 +210,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                           .slice(0, 8)
                       );
                     } else if (index === 3) {
-                      console.log('is hybrid filter');
+                      console.log("is hybrid filter");
                     } else {
                       setData([]);
                       setFetching(true);
@@ -244,7 +225,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                     }
                   }}
                   className={`${
-                    active ? 'bg-white text-gray-900' : 'text-gray-600'
+                    active ? "bg-white text-gray-900" : "text-gray-600"
                   } text-sm rounded-full font-bold py-1 px-4 cursor-pointer`}
                   key={index}
                 >
@@ -258,7 +239,7 @@ const Market: React.FC<MarketProps> = ({}) => {
             onClick={() => setFiltering(!filtering)}
             className="relative flex items-center justify-center pl-6 font-bold leading-3 rounded-full bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary"
             style={{
-              background: 'linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)'
+              background: "linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)",
             }}
           >
             Filter
@@ -270,17 +251,17 @@ const Market: React.FC<MarketProps> = ({}) => {
 
         <div
           className={`${
-            !filtering ? 'hidden' : 'block'
+            !filtering ? "hidden" : "block"
           } border-t border-solid  py-8`}
-          style={{ borderColor: 'rgb(107, 114, 128)' }}
+          style={{ borderColor: "rgb(107, 114, 128)" }}
         >
           <div className="flex flex-wrap -mx-4 -mt-8 ">
             <div
               className=""
               style={{
-                flex: ' 0 0 calc(25% - 32px)',
-                maxWidth: 'calc(25% - 32px)',
-                margin: '32px 16px 0'
+                flex: " 0 0 calc(25% - 32px)",
+                maxWidth: "calc(25% - 32px)",
+                margin: "32px 16px 0",
               }}
             >
               <div>
@@ -308,9 +289,9 @@ const Market: React.FC<MarketProps> = ({}) => {
             <div
               className=""
               style={{
-                flex: ' 0 0 calc(25% - 32px)',
-                maxWidth: 'calc(25% - 32px)',
-                margin: '32px 16px 0'
+                flex: " 0 0 calc(25% - 32px)",
+                maxWidth: "calc(25% - 32px)",
+                margin: "32px 16px 0",
               }}
             >
               <div>
@@ -322,12 +303,12 @@ const Market: React.FC<MarketProps> = ({}) => {
                     {/* Highest Yields */}
                     {/* <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} /> */}
                     <input
-                      type={'number'}
+                      type={"number"}
                       onChange={(e) => {
                         setAge(parseInt(e.target.value));
                       }}
                       placeholder="Age"
-                      className="w-full h-12 bg-transparent text-white border-none border-solid"
+                      className="w-full h-12 text-white bg-transparent border-solid border-none"
                     ></input>
                   </div>
                 </div>
@@ -336,9 +317,9 @@ const Market: React.FC<MarketProps> = ({}) => {
             <div
               className=""
               style={{
-                flex: ' 0 0 calc(25% - 32px)',
-                maxWidth: 'calc(25% - 32px)',
-                margin: '32px 16px 0'
+                flex: " 0 0 calc(25% - 32px)",
+                maxWidth: "calc(25% - 32px)",
+                margin: "32px 16px 0",
               }}
             >
               <div>
@@ -351,7 +332,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                       menuClassName="menu absolute top-full"
                       className="dropdown"
                       options={options}
-                      value={''}
+                      value={""}
                       placeholder="Select an option"
                     />
                     {/* <RiArrowDownCircleLine values={"dfghj"} fill='gray' style={{ fontSize: 25, color: 'red' }} /> */}
@@ -363,9 +344,9 @@ const Market: React.FC<MarketProps> = ({}) => {
             <div
               className=""
               style={{
-                flex: ' 0 0 calc(25% - 32px)',
-                maxWidth: 'calc(25% - 32px)',
-                margin: '32px 16px 0'
+                flex: " 0 0 calc(25% - 32px)",
+                maxWidth: "calc(25% - 32px)",
+                margin: "32px 16px 0",
               }}
             >
               <div>
@@ -393,9 +374,9 @@ const Market: React.FC<MarketProps> = ({}) => {
             <div
               className=""
               style={{
-                flex: ' 0 0 calc(25% - 32px)',
-                maxWidth: 'calc(25% - 32px)',
-                margin: '32px 16px 0'
+                flex: " 0 0 calc(25% - 32px)",
+                maxWidth: "calc(25% - 32px)",
+                margin: "32px 16px 0",
               }}
             >
               <div>
@@ -432,7 +413,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                     <MarketItem
                       datum={datum}
                       applyMaxWidth={false}
-                      placeBid={() => (setActiveItem(datum), console.log(''))}
+                      placeBid={() => (setActiveItem(datum), console.log(""))}
                     />
                   </div>
                 );
@@ -452,6 +433,7 @@ const Market: React.FC<MarketProps> = ({}) => {
           </button>
         </div> */}
       </div>
+      {/* <AssetSaleModal modalProps={modalProps} openModal={openModal} /> */}
     </div>
   );
 };
