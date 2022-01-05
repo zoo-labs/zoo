@@ -31,6 +31,7 @@ module.exports = {
           "blue-pink": ["#27B0E6", "#FA52A0"],
           "pink-red-light-brown": ["#FE5A75", "#FEC464"],
           "purple-blue": ["#462CA9", "#2517FF"],
+          "blue-green": ["#2517FF", "#15F195"]
         },
         background: {
           "dark-1000": "#0D0415",
@@ -57,7 +58,7 @@ module.exports = {
         red: "crimson",
         yellow: "#ffd166",
         green: "#1EE9B6",
-        blue: "#007EFF",
+        blue: "#2517ff",
         black: "#1F2030",
         "deep-gray": "#23262F",
         muted: "#777E91",
