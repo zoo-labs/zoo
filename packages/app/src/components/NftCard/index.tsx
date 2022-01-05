@@ -19,7 +19,7 @@ const NftCard = ({image, name, price, address, days, highestBid, yields}:NftCard
       <div className="PopularNfts__nft-info px-8 py-8">
         <div className="flex justify-between items-center mb-4">
           <p>{name}</p>
-          <p className="text-uppercase border px-2 py-2">{price} Zoo</p>
+          <p className="text-uppercase border border-blue px-2 py-2">{price} Zoo</p>
         </div>
         <div className="flex items-center justify-between mb-6">
           <p className="flex items-center ">
