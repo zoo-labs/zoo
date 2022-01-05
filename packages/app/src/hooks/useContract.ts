@@ -75,7 +75,6 @@ export function useContract(
   withSignerIfPossible = true
 ): Contract | null {
   const { library, account, chainId } = useActiveWeb3React()
-  console.log('useing contract')
 
   let address: string | AddressMap | undefined = nameOrAddress
   let chainIdStr = chainId ? chainId.toString() : '1337'
@@ -89,7 +88,6 @@ export function useContract(
       console.error(`Unable to fetch contract ${nameOrAddress} on ${chainId}`)
     }
   }
-  console.log('useCOntract', address)
 
   return useMemo(() => {
     if (!address || !ABI || !library) return null
@@ -258,8 +256,10 @@ export function useZenkoContract(withSignerIfPossible?: boolean): Contract | nul
 export function useZooToken(): Contract | null {
   return useContract('ZOO')
 }
+export function useZooKeeper(): Contract | null {
+  return useContract('ZooKeeper')
+}
 export function useFaucet(): Contract | null {
   const faucetContrac = useContract('Faucet')
-  console.log('faucetContrac', faucetContrac)
   return faucetContrac
 }

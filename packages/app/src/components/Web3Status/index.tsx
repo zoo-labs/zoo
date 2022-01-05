@@ -126,7 +126,7 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
   return null;
 }
 
-function Web3StatusInner({title, className}) {
+function Web3StatusInner({ title, className }) {
   const { i18n } = useLingui();
   const { account, connector } = useWeb3React();
 
@@ -195,7 +195,13 @@ function Web3StatusInner({title, className}) {
   }
 }
 
-export default function Web3Status({title, className}) {
+export default function Web3Status({
+  title,
+  className,
+}: {
+  title?: string;
+  className?: string;
+}) {
   const { active, account } = useWeb3React();
   const contextNetwork = useWeb3React(NetworkContextName);
 
