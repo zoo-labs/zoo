@@ -3,53 +3,92 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AppState } from "state";
 import { useBuyZoo } from "state/zoo/hooks";
-import MarketItem from "components/market/marketItem";
+import MarketItem from "../../components/market/marketItem";
+import markets from "../../components/market/marketitem.json";
 import { wait } from "functions";
 import { withStyles } from "@mui/styles";
 import CloseIcon from "components/CloseIcon";
 import ReactDropdown from "react-dropdown";
 import { Filter } from "react-feather";
 import { Slider } from "@mui/material";
-// import AssetSaleModal from "zoo/AssetSaleModal";
+import { styled } from "@mui/material/styles";
 import { useModal } from "react-morphing-modal";
 import { useRouter } from "next/router";
-import { useTokenTypes } from "zoo/state";
 import Wallet from "./wallet";
-
-const PrettoSlider = withStyles({
-  root: {
-    color: "#52af77",
-    height: 8,
+import { useTokenTypes } from "zoo/state";
+const PrettoSlider = styled(Slider)({
+  color: "#8c4ff8",
+  height: 8,
+  "& .MuiSlider-track": {
+    border: "none",
   },
-  thumb: {
+  "& .MuiSlider-thumb": {
     height: 24,
     width: 24,
-    backgroundColor: "rgb(140, 79, 248)",
-    border: "2px solid currentColor",
-    marginTop: -8,
-    marginLeft: -12,
-    "&:focus, &:hover, &$active": {
+    backgroundColor: "#8c4ff8",
+    border: "2px solid #fff",
+    "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {
       boxShadow: "inherit",
     },
-  },
-  active: {},
-  valueLabel: {
-    left: "calc(-50% + 4px)",
-    "& *": {
-      background: "white",
-      color: "rgb(140, 79, 248)",
+    "&:before": {
+      display: "none",
     },
   },
-  track: {
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "rgb(140, 79, 248)",
+  "& .MuiSlider-valueLabel": {
+    lineHeight: 1.2,
+    fontSize: 12,
+    background: "unset",
+    padding: 0,
+    width: 32,
+    height: 32,
+    borderRadius: "50% 50% 50% 0",
+    backgroundColor: "#8c4ff8",
+    transformOrigin: "bottom left",
+    transform: "translate(50%, -100%) rotate(-45deg) scale(0)",
+    "&:before": { display: "none" },
+    "&.MuiSlider-valueLabelOpen": {
+      transform: "translate(50%, -100%) rotate(-45deg) scale(1)",
+    },
+    "& > *": {
+      transform: "rotate(45deg)",
+    },
   },
-  rail: {
-    height: 8,
-    borderRadius: 4,
-  },
-})(Slider);
+});
+
+// const PrettoSlider = withStyles({
+//   root: {
+//     color: '#52af77',
+//     height: 8
+//   },
+//   thumb: {
+//     height: 24,
+//     width: 24,
+//     backgroundColor: 'rgb(140, 79, 248)',
+//     border: '2px solid currentColor',
+//     marginTop: -8,
+//     marginLeft: -12,
+//     '&:focus, &:hover, &$active': {
+//       boxShadow: 'inherit'
+//     }
+//   },
+//   active: {},
+//   valueLabel: {
+//     left: 'calc(-50% + 4px)',
+//     '& *': {
+//       background: 'white',
+//       color: 'rgb(140, 79, 248)'
+//     }
+//   },
+//   track: {
+//     height: 8,
+//     borderRadius: 4,
+//     backgroundColor: 'rgb(140, 79, 248)'
+//   },
+//   rail: {
+//     height: 8,
+//     borderRadius: 4
+//   }
+// })(Slider);
 interface MarketProps {}
 
 const Market: React.FC<MarketProps> = ({}) => {
@@ -268,8 +307,8 @@ const Market: React.FC<MarketProps> = ({}) => {
                       onChange={(e) => {
                         setAge(parseInt(e.target.value));
                       }}
-                      style={{ color: "#fff" }}
                       placeholder="Age"
+                      className="w-full h-12 text-white bg-transparent border-solid border-none"
                     ></input>
                   </div>
                 </div>
@@ -290,7 +329,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                 <div className="relative">
                   <div className="flex items-center justify-between w-full h-12 pl-4 pr-1 text-sm font-semibold text-white border border-gray-600 border-solid rounded-lg cursor-pointer w-44">
                     <ReactDropdown
-                      menuClassName="menu"
+                      menuClassName="menu absolute top-full"
                       className="dropdown"
                       options={options}
                       value={""}
