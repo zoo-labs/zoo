@@ -183,7 +183,7 @@ const Market: React.FC<MarketProps> = ({}) => {
   
   const buyZoo = useBuyZoo();
   return (
-    <div className="md:px-[98px] md:py-[70px]">
+    <div className="pt-16 pb-16 px-6 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
       <div className="flex items-end justify-between text-white w-100">
         <Wallet />
       </div>
