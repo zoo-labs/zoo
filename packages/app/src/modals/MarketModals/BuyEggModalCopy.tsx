@@ -18,8 +18,6 @@ import { CircularProgress } from "@mui/material";
 import CloseIcon from "components/CloseIcon";
 import { useZoobalance } from "state/zoo/hooks";
 import CurrencySwitch from "components/CurrencySwitch";
-import Image from "next/image";
-import NftCard from "../../components/NftCard";
 
 interface BuyEggModalProps {}
 
@@ -209,67 +207,164 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     .toFixed(4);
 
   return (
-    <Modal
-      isOpen={buyEggModal}
-      onDismiss={() => null}
-      isMax
-      maxWidth={1200}
-      maxHeight={80}
-    >
-      <div className="flex flex-col items-center">
-        {/* Head */}
-        <div className="flex items-center justify-between mb-8 w-full">
-          <div className="text-xl">&lt;</div>
-          <button className="bg-gradient-to-b from-pink via-blue to-purple px-4 py-2 rounded text-white">
-            0x8733...94483
-          </button>
-        </div>
-        {/* Body */}
-       <div className="flex flex-col lg:flex-row justify-between items-center w-full lg:gap-4 ">
-          <div className="flex flex-col items-center max-w-sm mx-auto lg:basis-1/2">
-            <NftCard
-              image={
-                <Image
-                  src="/img/egg-dark.png"
-                  width={300}
-                  height={400}
-                  alt=""
-                  className="object-fit"
-                />
-              }
-              name="Egg"
-              price="2.45"
-              days="3"
-              address="0x8733...94483"
-              highestBid="0.01 ETH"
-              currency="ETH"
+    <Modal isOpen={buyEggModal} onDismiss={() => null} isMax>
+      <BidModalHeader
+        onBack={() => toggleBuyEggModal()}
+        className="absolute w-full p-6 "
+      />
+      <div className="flex flex-wrap h-full">
+        <div className="relative flex flex-col items-center justify-center w-full shadow-lg md:w-1/2">
+          <div className="w-4/5 max-w-2xl p-4 lg:w-1/2">
+            <div className="flex flex-col w-full MB-6">
+              <div className="text-sm font-semibold text-gray-500">
+                BUY EGGS
+              </div>
+              <div className="text-2xl font-bold lg:text-4xl">
+                {numberWithCommas(
+                  checked ? bnbBalance.toFixed(2) : zooBalance.toFixed(2)
+                )}{" "}
+                {checked ? "BNB" : "ZOO"}
+              </div>
+            </div>
+            <div className="w-full my-8 ">
+              <div className="flex h-20 ">
+                <div className="flex items-center justify-center mr-2 rounded w-14">
+                  <img
+                    style={{ verticalAlign: "middle" }}
+                    src={`/static/images/basic.jpg`}
+                    className="w-full h-full transition-transform duration-1000 rounded"
+                  />
+                </div>
+                <div className="flex justify-between w-full h-full px-4">
+                  <div className="flex flex-col justify-center">
+                    <div className="mb-2">Egg</div>
+                    <div className="flex items-center mt-2 text-gray-400">
+                      Qty
+                      <button
+                        onClick={() => setQuantitySwitch(true)}
+                        className="p-1 ml-2 text-gray-300 rounded-md hover:bg-dark-800"
+                        type="button"
+                      >
+                        <span className="flex font-semibold tex-gray-900">
+                          {quantity} <RiArrowDropDownLine />
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex items-center w-auto font-semibold text-gray-400">
+                    {checked
+                      ? eggPriceBNB
+                      : numberWithCommas(360000.0 * quantity)}{" "}
+                    {checked ? "BNB" : "ZOO"}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {error && (
+              <div className="mb-1 text-xs font-semibold text-red-500">
+                {error}
+              </div>
+            )}
+            <h6 className="my-1 text-xs font-semibold text-gray-400">
+              One egg costs{" "}
+              <span className="font-bold text-white">
+                {" "}
+                {numberWithCommas(
+                  checked ? (zooBnbPrice * 360000).toFixed(2) : 360000.0
+                )}{" "}
+                {checked ? "BNB" : "ZOO"} each
+              </span>
+            </h6>
+            <h6 className="mb-2 text-xs font-semibold text-gray-400">
+              A maximum of 3 eggs are allowed per account
+            </h6>
+          </div>
+          <div className="absolute lg:bottom-60 bottom-10 left-50">
+            <CurrencySwitch
+              checked={checked}
+              checkFunc={() => setChecked(!checked)}
             />
           </div>
-          
-          <div className="flex flex-col lg:basis-1/2">
-            <div className="flex flex-col justify-between items-start mb-4">
-              <p className="text-grey">Your balance:</p>
-              <p className="text-white font-bold">101,300,000.00 ZOO</p>
-            </div>
-            <div className="flex justify-between border border-white w-64 rounded bg-transparent px-2 py-2 font-bold mb-4">
-              <p>300000</p>
-              <p>ZOO</p>
-            </div>
-            <div>
-              <p className="text-grey max-w-sm mb-4">
-                You must bid at least{" "}
-                <span className="text-white">300,000 ZOO</span> The next bid
-                must be 5% more than the current bid
-              </p>
-              <button className="mb-4 bg-purple text-white rounded px-4 py-2">
-                Place Bid
+        </div>
+        <div className="flex flex-col items-center justify-center w-full md:w-1/2 bg-modal-dark">
+          <div className="w-1/2">
+            <div className="flex">
+              <button
+                onClick={() => buyEggs()}
+                className="inline-flex items-center justify-center w-full h-10 px-6 my-4 text-lg font-bold leading-none text-white rounded-lg bg-primary-light hover:bg-primary"
+                style={{ transition: "all .2s" }}
+              >
+                {disabled ? (
+                  <CircularProgress color="secondary" size={20} thickness={4} />
+                ) : (
+                  "Pay"
+                )}
               </button>
-              <p>You cannot withdraw a bid once submitted.</p>
             </div>
-            <a className="text-purple font-bold">How do auctions work?</a>
           </div>
-        </div> 
+        </div>
       </div>
+      <Modal isOpen={quantitySwitch} onDismiss={() => setQuantitySwitch(false)}>
+        <div className="w-full mb-4">
+          <div className="flex h-20 ">
+            <div className="flex items-center justify-center mr-2 rounded w-14">
+              <img
+                style={{ verticalAlign: "middle" }}
+                src={`/static/images/basic.jpg`}
+                className="w-full h-full transition-transform duration-1000 rounded"
+              />
+            </div>
+            <div className="flex justify-between w-full h-full px-4">
+              <div className="flex flex-col justify-center">
+                <div className="mb-1">Update Quantity</div>
+                <div className="flex items-center mt-1 font-semibold text-gray-400">
+                  Egg
+                </div>
+              </div>
+              <div className="flex items-center w-auto font-semibold text-gray-400">
+                <div
+                  className="p-1 bg-white rounded-full cursor-pointer"
+                  onClick={() => setQuantitySwitch(false)}
+                >
+                  <CloseIcon color="white" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="flex items-center justify-center">
+            <div
+              className={`cursor-pointer h-10 w-10 rounded-full ${
+                eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length > 0
+                  ? "bg-dark-700"
+                  : "bg-dark-800"
+              }  flex justify-center items-center`}
+              onClick={() => removeEgg()}
+            >
+              <Minus size={25} />
+            </div>
+            <div className="px-4 py-3 mx-6 border border-solid rounded">
+              {eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length}
+            </div>
+            <div
+              className="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer bg-dark-700"
+              onClick={() => addEgg(eggs)}
+            >
+              <Plus size={25} />
+            </div>
+          </div>
+          <div className="flex">
+            <button
+              onClick={() => setQuantitySwitch(false)}
+              className="inline-flex items-center justify-center w-full h-10 px-6 mt-4 text-lg font-bold leading-none text-white rounded-lg bg-primary-light hover:bg-primary"
+              style={{ transition: "all .2s" }}
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      </Modal>
     </Modal>
   );
 };

@@ -157,7 +157,6 @@ const Wallet: React.FC<WalletProps> = ({}) => {
                 Buy Eggs
               </button>
             </div>
-            {/* )} */}
           </div>
         </div>
       </div>

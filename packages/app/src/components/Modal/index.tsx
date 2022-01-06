@@ -32,10 +32,10 @@ export default function Modal({
         <Dialog
           as="div"
           onClose={onDismiss}
-          className="fixed inset-0 overflow-y-hidden Modal z-10001 backdrop-blur-md"
+          className="fixed inset-0 overflow-y-auto Modal z-10001 backdrop-blur-md"
         >
           <Dialog.Overlay className="fixed inset-0 bg-black backdrop-blur-md opacity-30" />
-          <div className="flex items-center justify-center h-screen px-4">
+          <div className="flex items-center justify-center h-screen px-4 w-full">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -52,8 +52,8 @@ export default function Modal({
                   maxWidth: `${maxWidth}px`,
                 }}
               >
-                <div className="w-full p-px rounded bg-gradient-to-r from-white to-white">
-                  <div className="flex flex-col w-full h-full p-6 overflow-y-hidden rounded bg-dark-900">
+                <div className="w-full p-px rounded bg-black100">
+                  <div className="flex flex-col w-full h-full p-6 overflow-y-auto rounded bg-dark-900">
                     <div
                       style={{
                         minHeight: `${minHeight}vh`,
