@@ -219,7 +219,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
       <div className="flex flex-col items-center">
         {/* Head */}
         <div className="flex items-center justify-between mb-8 w-full">
-          <div className="text-xl">&lt;</div>
+          <div className="text-xl hover:cursor-pointer" onClick={() => toggleBuyEggModal()}>&lt;</div>
           <button className="bg-gradient-to-b from-pink via-blue to-purple px-4 py-2 rounded text-white">
             0x8733...94483
           </button>
