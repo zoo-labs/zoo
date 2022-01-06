@@ -29,7 +29,8 @@ export enum ApplicationModal {
   VOTE,
   LANGUAGE,
   NETWORK,
-  BUYEGG
+  BUYEGG,
+  BUYZOO
 }
 
 export const updateBlockNumber = createAction<{
