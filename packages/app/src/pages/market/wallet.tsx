@@ -9,9 +9,10 @@ import { useRouter } from "next/router";
 import { useTokenTypes } from "zoo/state";
 import { useActiveWeb3React, useZooKeeper, useZooToken } from "hooks";
 import { useWeb3React } from "@web3-react/core";
-import { useBuyEggModalToggle } from "state/application/hooks";
+import { useBuyEggModalToggle, useBuyZooModalToggle } from "state/application/hooks";
 import useAllowance from "hooks/useBentoBoxAllowance";
 import BuyEggModal from "modals/MarketModals/BuyEggModal";
+import BuyZooModal from "modals/MarketModals/BuyEggModal";
 
 interface WalletProps {}
 
@@ -80,6 +81,7 @@ const Wallet: React.FC<WalletProps> = ({}) => {
     }
   };
   const toggleBuyEggModal = useBuyEggModalToggle();
+  const toggleBuyZooModal = useBuyZooModalToggle();
   // const buyEggs = () => {
   //   router.push(`${router.pathname}?tokenId=egg`, undefined, { shallow: true });
   // };
@@ -93,7 +95,7 @@ const Wallet: React.FC<WalletProps> = ({}) => {
         <div className="relative inline-flex ml-4 rounded-md shadow-sm">
           <div
             className="flex items-center cursor-pointer"
-            onClick={() => buyZoo()}
+            onClick={() => toggleBuyZooModal()}
           >
             <span
               className={`flex items-center justify-center ml-2 py-2 text-base text-center text-secondary hover:text-high-emphesis font-bold  rounded-xl text-high-emphesis bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary w-[120px] min-h-[36px] mb-[-2px] ${
@@ -161,6 +163,7 @@ const Wallet: React.FC<WalletProps> = ({}) => {
         </div>
       </div>
       <BuyEggModal />
+      <BuyZooModal />
     </div>
   );
 };
