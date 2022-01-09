@@ -35,7 +35,7 @@ export function useBuyZoo(): () => void {
 
     try {
       console.log(account);
-      faucet.methods
+      faucet
         .fund(account)
         .send({ from: account })
         .then(async () => {
