@@ -67,6 +67,12 @@ export function useBuyEggModalToggle(): () => void {
 
   return useToggleModal(ApplicationModal.BUYEGG)
 }
+
+export function useBuyZooModalToggle(): () => void {
+
+  return useToggleModal(ApplicationModal.BUYZOO)
+}
+
 // returns a function that allows adding a popup
 export function useAddPopup(): (content: PopupContent, key?: string) => void {
   const dispatch = useDispatch()
