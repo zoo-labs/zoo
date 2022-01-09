@@ -143,6 +143,7 @@ const Market: React.FC<MarketProps> = ({}) => {
     );
     setHotData([allData[1]].flat(1).slice(0, 8));
   }, []);
+
   const loadMore = () => {
     setPage(page + 1);
 
@@ -166,9 +167,11 @@ const Market: React.FC<MarketProps> = ({}) => {
     }
     setLoadingMore(false);
   };
+
   const { modalProps, open: openModal } = useModal({
     background: "black",
   });
+
   const router = useRouter();
 
   const onClickTokenType = (name: string) => {
@@ -177,9 +180,10 @@ const Market: React.FC<MarketProps> = ({}) => {
       shallow: true,
     });
   };
+  
   const buyZoo = useBuyZoo();
   return (
-    <div className="md:px-[98px] md:py-[70px]">
+    <div className="pt-16 pb-16 px-6 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
       <div className="flex items-end justify-between text-white w-100">
         <Wallet />
       </div>
