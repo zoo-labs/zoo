@@ -7,7 +7,6 @@ const networkNames = networkIds.reduce(
 )
 
 const contractsByChainIdAndNetwork = networkIds.reduce((sum: any, id: string) => {
-  console.log('contractsByChainIdAndNetwork', id, sum)
   sum[id] = networkNames.reduce((contracts: any, name: string) => {
     contracts[name] = contractsJSON[id][name] ? contractsJSON[id][name]['contracts'] : null
     return contracts

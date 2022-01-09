@@ -34,6 +34,7 @@ function AppBar(): JSX.Element {
   const userEthBalance = useETHBalances(account ? [account] : [])?.[
     account ?? ""
   ];
+  console.log("userEthBalance", userEthBalance);
   const chainAddresses =
     (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
 

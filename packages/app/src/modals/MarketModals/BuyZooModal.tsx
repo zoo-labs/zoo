@@ -19,7 +19,7 @@ const BuyZooModal: React.FC<BuyZooModalProps> = ({}) => {
     >
       <div className="flex flex-col items-center" onClick={toggleBuyZooModal}>
         <h1>Buy Zoo Modal</h1>
-              </div>
+      </div>
     </Modal>
   );
 };

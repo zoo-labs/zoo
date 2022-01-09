@@ -9,10 +9,15 @@ import { useRouter } from "next/router";
 import { useTokenTypes } from "zoo/state";
 import { useActiveWeb3React, useZooKeeper, useZooToken } from "hooks";
 import { useWeb3React } from "@web3-react/core";
-import { useBuyEggModalToggle, useBuyZooModalToggle } from "state/application/hooks";
+import {
+  useBuyEggModalToggle,
+  useBuyZooModalToggle,
+} from "state/application/hooks";
 import useAllowance from "hooks/useBentoBoxAllowance";
 import BuyEggModal from "modals/MarketModals/BuyEggModal";
-import BuyZooModal from "modals/MarketModals/BuyEggModal";
+import BuyZooModal from "modals/MarketModals/BuyZooModal";
+import { useETHBalances } from "state/wallet/hooks";
+import { NETWORK_LABEL } from "config/networks";
 
 interface WalletProps {}
 
@@ -20,7 +25,7 @@ const Wallet: React.FC<WalletProps> = ({}) => {
   const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
     (state) => state.zoo.zooBalance
   );
-  const { account, library } = useWeb3React();
+  const { account, library, chainId } = useWeb3React();
   // const toggleBidModal = useBidModalToggle()
   // const toggleAssetModal = useAssetModalToggle()
   const [fetching, setFetching] = useState(false);
@@ -85,6 +90,33 @@ const Wallet: React.FC<WalletProps> = ({}) => {
   // const buyEggs = () => {
   //   router.push(`${router.pathname}?tokenId=egg`, undefined, { shallow: true });
   // };
+  const userEthBalance = useETHBalances(account ? [account] : [])?.[
+    account ?? ""
+  ];
+  const handleFunds = () => {
+    // if (userEthBalance?.toFixed(3) == 0)
+    //   return console.log(`You do not have sufficient ${NETWORK_LABEL[chainId]} to get Zoo`);
+
+    switch (chainId) {
+      case 1338:
+        buyZoo();
+        break;
+      case 1337:
+        buyZoo();
+        break;
+      case 97:
+        buyZoo();
+        break;
+      case 4:
+        buyZoo();
+        break;
+      default:
+        window.open(
+          "https://pancakeswap.info/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13",
+          "_blank"
+        );
+    }
+  };
   return (
     <div>
       <p className="mb-2 text-xl font-bold ">Wallet Balance</p>
@@ -95,7 +127,7 @@ const Wallet: React.FC<WalletProps> = ({}) => {
         <div className="relative inline-flex ml-4 rounded-md shadow-sm">
           <div
             className="flex items-center cursor-pointer"
-            onClick={() => toggleBuyZooModal()}
+            onClick={() => handleFunds()}
           >
             <span
               className={`flex items-center justify-center ml-2 py-2 text-base text-center text-secondary hover:text-high-emphesis font-bold  rounded-xl text-high-emphesis bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary w-[120px] min-h-[36px] mb-[-2px] ${

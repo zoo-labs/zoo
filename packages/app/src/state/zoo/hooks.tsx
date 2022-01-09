@@ -19,11 +19,13 @@ export function useZoobalance(): () => void {
     const rawBalance = await zooToken.balanceOf(account);
     const divisor = parseFloat(Math.pow(10, decimals).toString());
     const balance = rawBalance / divisor;
+    console.log("rawBalance", balance);
     dispatch(getZooBalance({ balance }));
   }, [dispatch, chainId, account]);
 }
 export function useBuyZoo(): () => void {
   const { chainId, account } = useActiveWeb3React();
+  console.log("buying zoo");
   const faucet = useFaucet();
 
   const dispatch = useAppDispatch();
