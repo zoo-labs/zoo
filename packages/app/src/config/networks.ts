@@ -105,6 +105,8 @@ export const AVAILABLE_NETWORKS: number[] = [
 
 if (!isEnvironment('prod')) {
   AVAILABLE_NETWORKS.push(ChainId.HARDHAT)
+  AVAILABLE_NETWORKS.push(ChainId.BSC_TESTNET)
+
 }
 
 export const SUPPORTED_NETWORKS: {
