@@ -220,14 +220,14 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     >
       <div className="flex flex-col items-center">
         {/* Head */}
-        <div className="flex items-center justify-between mb-8 w-full">
-          <div className="text-xl hover:cursor-pointer" onClick={() => toggleBuyEggModal()}>&lt;</div>
-          <button className="bg-gradient-to-b from-pink via-blue to-purple px-4 py-2 rounded text-white">
-            0x8733...94483
-          </button>
-        </div>
+        <BidModalHeader
+          onBack={() => toggleBuyEggModal()}
+          className="absolute w-full p-6 "
+          showAccount
+        />
+
         {/* Body */}
-       <div className="flex flex-col lg:flex-row justify-between items-center w-full lg:gap-4 ">
+        <div className="flex flex-col items-center justify-between w-full lg:flex-row lg:gap-4 ">
           <div className="flex flex-col items-center max-w-sm mx-auto lg:basis-1/2">
             <NftCard
               image={
@@ -247,30 +247,30 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
               currency="ETH"
             />
           </div>
-          
+
           <div className="flex flex-col lg:basis-1/2">
-            <div className="flex flex-col justify-between items-start mb-4">
+            <div className="flex flex-col items-start justify-between mb-4">
               <p className="text-grey">Your balance:</p>
-              <p className="text-white font-bold">101,300,000.00 ZOO</p>
+              <p className="font-bold text-white">101,300,000.00 ZOO</p>
             </div>
-            <div className="flex justify-between border border-white w-64 rounded bg-transparent px-2 py-2 font-bold mb-4">
+            <div className="flex justify-between w-64 px-2 py-2 mb-4 font-bold bg-transparent border border-white rounded">
               <p>300000</p>
               <p>ZOO</p>
             </div>
             <div>
-              <p className="text-grey max-w-sm mb-4">
+              <p className="max-w-sm mb-4 text-grey">
                 You must bid at least{" "}
                 <span className="text-white">300,000 ZOO</span> The next bid
                 must be 5% more than the current bid
               </p>
-              <button className="mb-4 bg-purple text-white rounded px-4 py-2">
+              <button className="px-4 py-2 mb-4 text-white rounded bg-purple">
                 Place Bid
               </button>
               <p>You cannot withdraw a bid once submitted.</p>
             </div>
-            <a className="text-purple font-bold">How do auctions work?</a>
+            <a className="font-bold text-purple">How do auctions work?</a>
           </div>
-        </div> 
+        </div>
       </div>
     </Modal>
   );
