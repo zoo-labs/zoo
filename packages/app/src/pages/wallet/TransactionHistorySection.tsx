@@ -128,6 +128,7 @@ const TransactionHistory = () => {
                       width={24}
                       height={24}
                       alt=""
+                      onClick={() => copyToClipboard(item.hash)}
                     />
                   </td>
                 </tr>
