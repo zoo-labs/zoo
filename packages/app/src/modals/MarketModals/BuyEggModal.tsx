@@ -109,6 +109,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
       await library.eth.getBalance(account).then((val) => {
         const divisor = parseFloat(Math.pow(10, 18).toString());
         const balance = parseFloat(val) / divisor;
+        console.log("bnb balance is", balance);
         setBnbBalance(parseFloat(balance.toFixed(4)));
       });
     } catch (e) {
@@ -118,6 +119,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
 
   const getZooBnbPrice = async () => {
     const price = await zooKeeper.zooPriceBNB();
+    console.log("getZooBnbPrice", price);
     setZooBnbPrice(price);
   };
 
@@ -205,7 +207,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     .div(zooBnbPrice)
     .div(10 ** 18)
     .toFixed(4);
-
+  console.log("eggPriceBNB", eggPriceBNB);
   return (
     <Modal isOpen={buyEggModal} onDismiss={() => null} isMax>
       <BidModalHeader
