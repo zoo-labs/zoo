@@ -257,9 +257,13 @@ export function useZooToken(): Contract | null {
   return useContract('ZOO')
 }
 export function useZooKeeper(): Contract | null {
-  return useContract('ZooKeeper')
+  const zooKeeperContract = useContract('ZooKeeper')
+  console.log('zooKeeperContract', zooKeeperContract)
+  return zooKeeperContract
 }
 export function useFaucet(): Contract | null {
   const faucetContrac = useContract('Faucet')
+  console.log('faucetContrac', faucetContrac)
+
   return faucetContrac
 }
