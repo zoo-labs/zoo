@@ -1,7 +1,37 @@
 import React from "react";
 import Image from "next/image";
 
+import { useBuyZoo } from "state/zoo/hooks";
+import { useWeb3React } from "@web3-react/core";
+
 const HeroSection = () => {
+  const { account, library, chainId } = useWeb3React();
+  const buyZoo = useBuyZoo();
+
+  const handleFunds = () => {
+    // if (userEthBalance?.toFixed(3) == 0)
+    //   return console.log(`You do not have sufficient ${NETWORK_LABEL[chainId]} to get Zoo`);
+
+    switch (chainId) {
+      case 1338:
+        buyZoo();
+        break;
+      case 1337:
+        buyZoo();
+        break;
+      case 97:
+        buyZoo();
+        break;
+      case 4:
+        buyZoo();
+        break;
+      default:
+        window.open(
+          "https://pancakeswap.info/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13",
+          "_blank"
+        );
+    }
+  };
   return (
     <section className="Hero">
       <div className="Hero__inner pt-16 pb-16 px-6 md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-between">
@@ -26,14 +56,12 @@ const HeroSection = () => {
             >
               Download App
             </a>
-            <a
-              href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
-              target="_blank"
-              rel="noreferrer"
-              className="border border-gray-100 text-sm md:text-base font-semibold text-white px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full"
+            <div
+              className="border border-gray-100 text-sm md:text-base font-semibold text-white px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full hover:cursor-pointer"
+              onClick={() => handleFunds()}
             >
               Buy $ZOO
-            </a>
+            </div>
           </div>
         </div>
         <div className="Hero__image max-w-md lg:max-w-xl lg:basis-1/2">
