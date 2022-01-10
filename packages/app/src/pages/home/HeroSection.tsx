@@ -1,17 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 
+import { useDispatch, useSelector } from "react-redux";
 import { useBuyZoo } from "state/zoo/hooks";
 import { useWeb3React } from "@web3-react/core";
+import { useFaucet } from "hooks";
+import { getZooBalance } from "state/zoo/actions";
+import Notification from "../../modals/NotificationModal";
+
 
 const HeroSection = () => {
   const { account, library, chainId } = useWeb3React();
   const buyZoo = useBuyZoo();
+  const [fetching, setFetching] = useState(false);
+  const [confirmation, setConfirmation] = useState(false);
+  const [rejection, setRejection] = useState(false);
+  const faucet = useFaucet();
+  const dispatch = useDispatch();
 
   const handleFunds = () => {
     // if (userEthBalance?.toFixed(3) == 0)
-    //   return console.log(`You do not have sufficient ${NETWORK_LABEL[chainId]} to get Zoo`);
+    //   return console.log(`You do not have sufficient ${NETWORK_LABEL[chainId]} to get Zoo`)
+    setFetching(true);
+    faucet
+      .fund(account)
+      .send({ from: account })
+      .then(async () => {
+        setFetching(false);
+        dispatch(getZooBalance());
+        setConfirmation(true);
+      })
+      .catch((e) => {
+        console.error("ISSUE USING FAUCET \n", e);
+        setFetching(false);
+        setRejection(true);
+      });
 
+    setFetching(false);
+    
     switch (chainId) {
       case 1338:
         buyZoo();
@@ -34,6 +60,16 @@ const HeroSection = () => {
   };
   return (
     <section className="Hero">
+      {fetching && <Notification title="Processing" hideOpenButton={true} />}
+      {confirmation && (
+        <Notification title="Payment Confirmed" hideOpenButton={true} />
+      )}
+      {rejection && (
+        <Notification
+          title="Payment Cancelled Successfully"
+          hideOpenButton={true}
+        />
+      )}
       <div className="Hero__inner pt-16 pb-16 px-6 md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-between">
         <div className="Hero__content mb-6 md:mb-12 md:flex md:flex-col md:items-center md:text-center md:max-w-7xl lg:items-start lg:text-left lg:basis-1/2">
           <p className="uppercase text-green mb-2">Nfts made Fun.</p>

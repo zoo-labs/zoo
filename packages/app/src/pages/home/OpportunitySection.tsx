@@ -1,19 +1,44 @@
-import React from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 
 import EndangeredSpecies from "components/EndangeredSpecies";
 
+import { useDispatch } from "react-redux";
 import { useBuyZoo } from "state/zoo/hooks";
 import { useWeb3React } from "@web3-react/core";
+import { useFaucet } from "hooks";
+import { getZooBalance } from "state/zoo/actions";
+import Notification from "../../modals/NotificationModal";
 
 const OpportunitySection = () => {
   const { account, library, chainId } = useWeb3React();
   const buyZoo = useBuyZoo();
+  const [fetching, setFetching] = useState(false);
+  const [confirmation, setConfirmation] = useState(false);
+  const [rejection, setRejection] = useState(false);
+  const faucet = useFaucet();
+  const dispatch = useDispatch();
 
   const handleFunds = () => {
     // if (userEthBalance?.toFixed(3) == 0)
     //   return console.log(`You do not have sufficient ${NETWORK_LABEL[chainId]} to get Zoo`);
+    setFetching(true);
+    faucet
+      .fund(account)
+      .send({ from: account })
+      .then(async () => {
+        setFetching(false);
+        dispatch(getZooBalance());
+        setConfirmation(true);
+      })
+      .catch((e) => {
+        console.error("ISSUE USING FAUCET \n", e);
+        setFetching(false);
+        setRejection(true);
+      });
 
+    setFetching(false);
+    
     switch (chainId) {
       case 1338:
         buyZoo();
@@ -37,6 +62,16 @@ const OpportunitySection = () => {
 
   return (
     <section className="relative">
+      {fetching && <Notification title="Processing" hideOpenButton={true} />}
+      {confirmation && (
+        <Notification title="Payment Confirmed" hideOpenButton={true} />
+      )}
+      {rejection && (
+        <Notification
+          title="Payment Cancelled Successfully"
+          hideOpenButton={true}
+        />
+      )}
       <div className="px-6 py-16 lg:py-28">
         <h2 className="text-2xl md:text-2xl  lg:text-4xl text-center mb-16 font-semibold">
           Endless Yield Opportunity
