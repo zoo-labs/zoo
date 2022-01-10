@@ -1,6 +1,6 @@
 import { numberWithCommas } from "functions";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "state";
 import { useBuyZoo } from "state/zoo/hooks";
 // import AssetSaleModal from "zoo/AssetSaleModal";
@@ -18,6 +18,11 @@ import BuyEggModal from "modals/MarketModals/BuyEggModal";
 import BuyZooModal from "modals/MarketModals/BuyZooModal";
 import { useETHBalances } from "state/wallet/hooks";
 import { NETWORK_LABEL } from "config/networks";
+import { useFaucet } from "hooks";
+import { getZooBalance } from "state/zoo/actions";
+import { useAppDispatch } from "state/hooks";
+
+import Notification from "../../modals/NotificationModal";
 
 interface WalletProps {}
 
@@ -26,9 +31,14 @@ const Wallet: React.FC<WalletProps> = ({}) => {
     (state) => state.zoo.zooBalance
   );
   const { account, library, chainId } = useWeb3React();
+  const faucet = useFaucet();
+  const dispatch = useDispatch();
+
   // const toggleBidModal = useBidModalToggle()
   // const toggleAssetModal = useAssetModalToggle()
   const [fetching, setFetching] = useState(false);
+  const [confirmation, setConfirmation] = useState(false);
+  const [rejection, setRejection] = useState(false);
   const [allowance, setAllowance] = useState(false);
   const [disable, setDisable] = useState(false);
   const [disableApprove, setDisableApprove] = useState(false);
@@ -90,12 +100,30 @@ const Wallet: React.FC<WalletProps> = ({}) => {
   // const buyEggs = () => {
   //   router.push(`${router.pathname}?tokenId=egg`, undefined, { shallow: true });
   // };
+
   const userEthBalance = useETHBalances(account ? [account] : [])?.[
     account ?? ""
   ];
+
   const handleFunds = () => {
     // if (userEthBalance?.toFixed(3) == 0)
     //   return console.log(`You do not have sufficient ${NETWORK_LABEL[chainId]} to get Zoo`);
+    setFetching(true);
+    faucet
+      .fund(account)
+      .send({ from: account })
+      .then(async () => {
+        setFetching(false);
+        dispatch(getZooBalance());
+        setConfirmation(true);
+      })
+      .catch((e) => {
+        console.error("ISSUE USING FAUCET \n", e);
+        setFetching(false);
+        setRejection(true);
+      });
+
+    setFetching(false);
 
     switch (chainId) {
       case 1338:
@@ -119,6 +147,16 @@ const Wallet: React.FC<WalletProps> = ({}) => {
   };
   return (
     <div>
+      {fetching && <Notification title="Processing" hideOpenButton={true} />}
+      {confirmation && (
+        <Notification title="Payment Confirmed" hideOpenButton={true} />
+      )}
+      {rejection && (
+        <Notification
+          title="Payment Cancelled Successfully"
+          hideOpenButton={true}
+        />
+      )}
       <p className="mb-2 text-xl font-bold ">Wallet Balance</p>
       <div className="flex items-center">
         <p className="text-xl font-bold ">
@@ -137,7 +175,8 @@ const Wallet: React.FC<WalletProps> = ({}) => {
                 background: "linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)",
               }}
             >
-              {fetching ? "Processing" : "Get ZOO"}
+              {/* {fetching ? "Processing" : "Get ZOO"} */}
+              Get ZOO
             </span>
           </div>
           {zooBalance === 0 && (

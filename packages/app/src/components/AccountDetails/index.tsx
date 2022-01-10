@@ -171,7 +171,7 @@ const AccountDetails: FC<AccountDetailsProps> = ({
               </div>
             )}
             <div>
-              <p>Balance: {numberWithCommas(zooBalance.toFixed(2))} ZOO</p>
+              <p className="font-bold">Balance: {numberWithCommas(zooBalance.toFixed(2))} ZOO</p>
             </div>
             <div className="flex items-center gap-2 space-x-3">
               {chainId && account && (
