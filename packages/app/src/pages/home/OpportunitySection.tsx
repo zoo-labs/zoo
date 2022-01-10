@@ -3,7 +3,38 @@ import Image from "next/image";
 
 import EndangeredSpecies from "components/EndangeredSpecies";
 
+import { useBuyZoo } from "state/zoo/hooks";
+import { useWeb3React } from "@web3-react/core";
+
 const OpportunitySection = () => {
+  const { account, library, chainId } = useWeb3React();
+  const buyZoo = useBuyZoo();
+
+  const handleFunds = () => {
+    // if (userEthBalance?.toFixed(3) == 0)
+    //   return console.log(`You do not have sufficient ${NETWORK_LABEL[chainId]} to get Zoo`);
+
+    switch (chainId) {
+      case 1338:
+        buyZoo();
+        break;
+      case 1337:
+        buyZoo();
+        break;
+      case 97:
+        buyZoo();
+        break;
+      case 4:
+        buyZoo();
+        break;
+      default:
+        window.open(
+          "https://pancakeswap.info/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13",
+          "_blank"
+        );
+    }
+  };
+
   return (
     <section className="relative">
       <div className="px-6 py-16 lg:py-28">
@@ -26,14 +57,12 @@ const OpportunitySection = () => {
             and public proof of ownership. This establishes credibility for each
             NFT and its unchangeable nature.
           </p>
-          <a
-            href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
-            target="_blank"
-            rel="noreferrer"
-            className="border border-green text-green text-sm md:text-base font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full"
+          <div
+            onClick={() => handleFunds()}
+            className="border border-green text-green text-sm md:text-base font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full hover:cursor-pointer"
           >
             Buy $ZOO
-          </a>
+          </div>
         </div>
       </div>
     </section>
