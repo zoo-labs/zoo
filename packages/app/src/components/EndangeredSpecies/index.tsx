@@ -1,6 +1,37 @@
 import Image from "next/image";
 
+import { useBuyZoo } from "state/zoo/hooks";
+import { useWeb3React } from "@web3-react/core";
+
 const EndangeredSpecies = () => {
+  const { account, library, chainId } = useWeb3React();
+  const buyZoo = useBuyZoo();
+
+  const handleFunds = () => {
+    // if (userEthBalance?.toFixed(3) == 0)
+    //   return console.log(`You do not have sufficient ${NETWORK_LABEL[chainId]} to get Zoo`);
+
+    switch (chainId) {
+      case 1338:
+        buyZoo();
+        break;
+      case 1337:
+        buyZoo();
+        break;
+      case 97:
+        buyZoo();
+        break;
+      case 4:
+        buyZoo();
+        break;
+      default:
+        window.open(
+          "https://pancakeswap.info/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13",
+          "_blank"
+        );
+    }
+  };
+
   return (
     <div className="border rounded-lg py-12 px-6 bg-black100 w-full max-w-lg">
       <div className="text-center mb-8">
@@ -62,17 +93,15 @@ const EndangeredSpecies = () => {
         <span className="text-white">ZOO</span> on our Metamask App.
       </p>
       <div className="flex justify-end">
-        <a
-          href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
-          target="_blank"
-          rel="noreferrer"
-          className="bg-gradient-to-b from-purple to-blue text-white text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full flex items-center"
+        <div
+          onClick={() => handleFunds()}
+          className="bg-gradient-to-b from-purple to-blue text-white text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full flex items-center hover:cursor-pointer"
         >
           Buy $ZOO{" "}
           <span className="ml-2">
             <Image src="/img/star.svg" width={16} height={16} alt="" />
           </span>
-        </a>
+        </div>
       </div>
     </div>
   );
