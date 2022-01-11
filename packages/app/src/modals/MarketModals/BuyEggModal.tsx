@@ -37,12 +37,16 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
     (state) => state.zoo.zooBalance
   );
+
   const myEggs = useSelector<AppState, AppState["zoo"]["myEggs"]>(
     (state) => state.zoo.myEggs
   );
+
   const [zooBnbPrice, setZooBnbPrice] = useState(0);
   const { account, library } = useWeb3React();
   const getZooBalance = useZoobalance();
+
+  // check if user has enough ZOO balance
   useEffect(() => {
     if (amount > zooBalance) {
       setError(`You dont have enough ZOO`);
@@ -210,6 +214,9 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     .div(10 ** 18)
     .toFixed(4);
   console.log("eggPriceBNB", eggPriceBNB);
+
+  console.log('ZOO BnB price!!!',zooBnbPrice)
+
   return (
     <Modal
       isOpen={buyEggModal}
@@ -252,11 +259,17 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
 
             <div className="flex flex-col lg:basis-1/2 py-12">
               <div className="flex flex-col items-start justify-between mb-4">
-                <p className="text-grey">Your balance:</p>
-                <p className="font-bold text-white">101,300,000.00 ZOO</p>
+                <p className="text-grey">
+                  Your balance:{" "}
+                  <span className="text-white font-bold">
+                    {numberWithCommas(zooBalance.toFixed(2))}
+                  </span>{" "}
+                  ZOO
+                  {console.log("EGGG PRICE!",myEggs)}
+                </p>
               </div>
               <div className="flex justify-between w-64 px-2 py-2 mb-4 font-bold bg-transparent border border-white rounded">
-                <p>300000</p>
+                <p>{numberWithCommas(zooBalance.toFixed(2))}</p>
                 <p>ZOO</p>
               </div>
               <div>
