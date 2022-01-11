@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 
+import { useDispatch, useSelector } from "react-redux";
+import { useBuyZoo } from "state/zoo/hooks";
+import { useWeb3React } from "@web3-react/core";
+import { useFaucet } from "hooks";
+import { getZooBalance } from "state/zoo/actions";
+import {handleFunds} from 'utils/handleFunds';
+
+
 const HeroSection = () => {
+  const { account, library, chainId } = useWeb3React();
+  const buyZoo = useBuyZoo();
+  const faucet = useFaucet();
+  const dispatch = useDispatch();
+
   return (
     <section className="Hero">
+
       <div className="Hero__inner pt-16 pb-16 px-6 md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-between">
         <div className="Hero__content mb-6 md:mb-12 md:flex md:flex-col md:items-center md:text-center md:max-w-7xl lg:items-start lg:text-left lg:basis-1/2">
           <p className="uppercase text-green mb-2">Nfts made Fun.</p>
@@ -26,14 +40,12 @@ const HeroSection = () => {
             >
               Download App
             </a>
-            <a
-              href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
-              target="_blank"
-              rel="noreferrer"
-              className="border border-gray-100 text-sm md:text-base font-semibold text-white px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full"
+            <div
+              className="border border-gray-100 text-sm md:text-base font-semibold text-white px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full hover:cursor-pointer"
+              onClick={() => handleFunds(chainId, buyZoo)}
             >
               Buy $ZOO
-            </a>
+            </div>
           </div>
         </div>
         <div className="Hero__image max-w-md lg:max-w-xl lg:basis-1/2">
