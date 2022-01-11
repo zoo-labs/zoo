@@ -19,7 +19,7 @@ import CloseIcon from "components/CloseIcon";
 import { useZoobalance } from "state/zoo/hooks";
 import CurrencySwitch from "components/CurrencySwitch";
 import Image from "next/image";
-import NftCard from "../../components/NftCard";
+import BuyNftCard from "../../components/BuyNftCard";
 
 interface BuyEggModalProps {}
 
@@ -215,7 +215,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     .toFixed(4);
   console.log("eggPriceBNB", eggPriceBNB);
 
-  console.log('ZOO BnB price!!!',zooBnbPrice)
+  console.log("ZOO BnB price!!!", zooBnbPrice);
 
   return (
     <Modal
@@ -238,7 +238,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
           {/* Body */}
           <div className="flex flex-col items-center justify-between w-full lg:flex-row lg:gap-4 mt-24">
             <div className="flex flex-col items-center max-w-sm mx-auto lg:basis-1/2">
-              <NftCard
+              <BuyNftCard
                 image={
                   <Image
                     src="/img/egg-dark.png"
@@ -252,7 +252,6 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                 price="2.45"
                 days="3"
                 address="0x8733...94483"
-                highestBid="0.01 ETH"
                 currency="ETH"
               />
             </div>
@@ -265,24 +264,14 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                     {numberWithCommas(zooBalance.toFixed(2))}
                   </span>{" "}
                   ZOO
-                  {console.log("EGGG PRICE!",myEggs)}
+                  {console.log("EGGG PRICE!", myEggs)}
                 </p>
               </div>
               <div className="flex justify-between w-64 px-2 py-2 mb-4 font-bold bg-transparent border border-white rounded">
                 <p>{numberWithCommas(zooBalance.toFixed(2))}</p>
                 <p>ZOO</p>
               </div>
-              <div>
-                <p className="max-w-sm mb-4 text-grey">
-                  You must bid at least{" "}
-                  <span className="text-white">300,000 ZOO</span> The next bid
-                  must be 5% more than the current bid
-                </p>
-                <button className="px-4 py-2 mb-4 text-white rounded bg-purple">
-                  Place Bid
-                </button>
-                <p>You cannot withdraw a bid once submitted.</p>
-              </div>
+              <div></div>
               <a className="font-bold text-purple">How do auctions work?</a>
             </div>
           </div>
