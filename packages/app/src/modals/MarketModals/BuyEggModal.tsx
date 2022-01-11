@@ -19,7 +19,7 @@ import CloseIcon from "components/CloseIcon";
 import { useZoobalance } from "state/zoo/hooks";
 import CurrencySwitch from "components/CurrencySwitch";
 import Image from "next/image";
-import NftCard from "../../components/NftCard";
+import BuyNftCard from "../../components/BuyNftCard";
 
 interface BuyEggModalProps {}
 
@@ -37,12 +37,16 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
     (state) => state.zoo.zooBalance
   );
+
   const myEggs = useSelector<AppState, AppState["zoo"]["myEggs"]>(
     (state) => state.zoo.myEggs
   );
+
   const [zooBnbPrice, setZooBnbPrice] = useState(0);
   const { account, library } = useWeb3React();
   const getZooBalance = useZoobalance();
+
+  // check if user has enough ZOO balance
   useEffect(() => {
     if (amount > zooBalance) {
       setError(`You dont have enough ZOO`);
@@ -210,6 +214,9 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     .div(10 ** 18)
     .toFixed(4);
   console.log("eggPriceBNB", eggPriceBNB);
+
+  console.log("ZOO BnB price!!!", zooBnbPrice);
+
   return (
     <Modal
       isOpen={buyEggModal}
@@ -217,58 +224,56 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
       isMax
       maxWidth={1200}
       maxHeight={80}
+      scrollable={true}
     >
-      <div className="flex flex-col items-center">
-        {/* Head */}
-        <BidModalHeader
-          onBack={() => toggleBuyEggModal()}
-          className="absolute w-full p-6 "
-          showAccount
-        />
+      <div>
+        <div className="flex flex-col items-center overflow-y-scroll">
+          {/* Head */}
+          <BidModalHeader
+            onBack={() => toggleBuyEggModal()}
+            className="absolute w-full p-6 "
+            showAccount
+          />
 
-        {/* Body */}
-        <div className="flex flex-col items-center justify-between w-full lg:flex-row lg:gap-4 ">
-          <div className="flex flex-col items-center max-w-sm mx-auto lg:basis-1/2">
-            <NftCard
-              image={
-                <Image
-                  src="/img/egg-dark.png"
-                  width={300}
-                  height={400}
-                  alt=""
-                  className="object-fit"
-                />
-              }
-              name="Egg"
-              price="2.45"
-              days="3"
-              address="0x8733...94483"
-              highestBid="0.01 ETH"
-              currency="ETH"
-            />
-          </div>
+          {/* Body */}
+          <div className="flex flex-col items-center justify-between w-full lg:flex-row lg:gap-4 mt-24">
+            <div className="flex flex-col items-center max-w-sm mx-auto lg:basis-1/2">
+              <BuyNftCard
+                image={
+                  <Image
+                    src="/img/egg-dark.png"
+                    width={300}
+                    height={400}
+                    alt=""
+                    className="object-fit"
+                  />
+                }
+                name="Egg"
+                price="2.45"
+                days="3"
+                address="0x8733...94483"
+                currency="ETH"
+              />
+            </div>
 
-          <div className="flex flex-col lg:basis-1/2">
-            <div className="flex flex-col items-start justify-between mb-4">
-              <p className="text-grey">Your balance:</p>
-              <p className="font-bold text-white">101,300,000.00 ZOO</p>
+            <div className="flex flex-col lg:basis-1/2 py-12">
+              <div className="flex flex-col items-start justify-between mb-4">
+                <p className="text-grey">
+                  Your balance:{" "}
+                  <span className="text-white font-bold">
+                    {numberWithCommas(zooBalance.toFixed(2))}
+                  </span>{" "}
+                  ZOO
+                  {console.log("EGGG PRICE!", myEggs)}
+                </p>
+              </div>
+              <div className="flex justify-between w-64 px-2 py-2 mb-4 font-bold bg-transparent border border-white rounded">
+                <p>{numberWithCommas(zooBalance.toFixed(2))}</p>
+                <p>ZOO</p>
+              </div>
+              <div></div>
+              <a className="font-bold text-purple">How do auctions work?</a>
             </div>
-            <div className="flex justify-between w-64 px-2 py-2 mb-4 font-bold bg-transparent border border-white rounded">
-              <p>300000</p>
-              <p>ZOO</p>
-            </div>
-            <div>
-              <p className="max-w-sm mb-4 text-grey">
-                You must bid at least{" "}
-                <span className="text-white">300,000 ZOO</span> The next bid
-                must be 5% more than the current bid
-              </p>
-              <button className="px-4 py-2 mb-4 text-white rounded bg-purple">
-                Place Bid
-              </button>
-              <p>You cannot withdraw a bid once submitted.</p>
-            </div>
-            <a className="font-bold text-purple">How do auctions work?</a>
           </div>
         </div>
       </div>
