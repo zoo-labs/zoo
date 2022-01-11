@@ -1,5 +1,7 @@
 import { numberWithCommas } from "functions";
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "state";
 import { useBuyZoo } from "state/zoo/hooks";
@@ -23,6 +25,7 @@ import { getZooBalance } from "state/zoo/actions";
 import { useAppDispatch } from "state/hooks";
 
 import Notification from "../../modals/NotificationModal";
+import {handleFunds} from '../../utils/handleFunds';
 
 interface WalletProps {}
 
@@ -37,8 +40,6 @@ const Wallet: React.FC<WalletProps> = ({}) => {
   // const toggleBidModal = useBidModalToggle()
   // const toggleAssetModal = useAssetModalToggle()
   const [fetching, setFetching] = useState(false);
-  const [confirmation, setConfirmation] = useState(false);
-  const [rejection, setRejection] = useState(false);
   const [allowance, setAllowance] = useState(false);
   const [disable, setDisable] = useState(false);
   const [disableApprove, setDisableApprove] = useState(false);
@@ -105,58 +106,8 @@ const Wallet: React.FC<WalletProps> = ({}) => {
     account ?? ""
   ];
 
-  const handleFunds = () => {
-    // if (userEthBalance?.toFixed(3) == 0)
-    //   return console.log(`You do not have sufficient ${NETWORK_LABEL[chainId]} to get Zoo`);
-    setFetching(true);
-    faucet
-      .fund(account)
-      .send({ from: account })
-      .then(async () => {
-        setFetching(false);
-        dispatch(getZooBalance());
-        setConfirmation(true);
-      })
-      .catch((e) => {
-        console.error("ISSUE USING FAUCET \n", e);
-        setFetching(false);
-        setRejection(true);
-      });
-
-    setFetching(false);
-
-    switch (chainId) {
-      case 1338:
-        buyZoo();
-        break;
-      case 1337:
-        buyZoo();
-        break;
-      case 97:
-        buyZoo();
-        break;
-      case 4:
-        buyZoo();
-        break;
-      default:
-        window.open(
-          "https://pancakeswap.info/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13",
-          "_blank"
-        );
-    }
-  };
   return (
     <div>
-      {fetching && <Notification title="Processing" hideOpenButton={true} />}
-      {confirmation && (
-        <Notification title="Payment Confirmed" hideOpenButton={true} />
-      )}
-      {rejection && (
-        <Notification
-          title="Payment Cancelled Successfully"
-          hideOpenButton={true}
-        />
-      )}
       <p className="mb-2 text-xl font-bold ">Wallet Balance</p>
       <div className="flex items-center">
         <p className="text-xl font-bold ">
@@ -165,7 +116,7 @@ const Wallet: React.FC<WalletProps> = ({}) => {
         <div className="relative inline-flex ml-4 rounded-md shadow-sm">
           <div
             className="flex items-center cursor-pointer"
-            onClick={() => handleFunds()}
+            onClick={() => handleFunds(chainId, buyZoo)}
           >
             <span
               className={`flex items-center justify-center ml-2 py-2 text-base text-center text-secondary hover:text-high-emphesis font-bold  rounded-xl text-high-emphesis bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary w-[120px] min-h-[36px] mb-[-2px] ${
@@ -175,7 +126,6 @@ const Wallet: React.FC<WalletProps> = ({}) => {
                 background: "linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)",
               }}
             >
-              {/* {fetching ? "Processing" : "Get ZOO"} */}
               Get ZOO
             </span>
           </div>
@@ -235,6 +185,7 @@ const Wallet: React.FC<WalletProps> = ({}) => {
       </div>
       <BuyEggModal />
       <BuyZooModal />
+      <ToastContainer />
     </div>
   );
 };

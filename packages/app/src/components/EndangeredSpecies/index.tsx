@@ -6,7 +6,7 @@ import { useBuyZoo } from "state/zoo/hooks";
 import { useWeb3React } from "@web3-react/core";
 import { useFaucet } from "hooks";
 import { getZooBalance } from "state/zoo/actions";
-import Notification from "../../modals/NotificationModal";
+import { handleFunds } from "utils/handleFunds";
 
 const EndangeredSpecies = () => {
   const { account, library, chainId } = useWeb3React();
@@ -17,59 +17,8 @@ const EndangeredSpecies = () => {
   const faucet = useFaucet();
   const dispatch = useDispatch();
 
-  const handleFunds = () => {
-    // if (userEthBalance?.toFixed(3) == 0)
-    //   return console.log(`You do not have sufficient ${NETWORK_LABEL[chainId]} to get Zoo`);
-    setFetching(true);
-    faucet
-      .fund(account)
-      .send({ from: account })
-      .then(async () => {
-        setFetching(false);
-        dispatch(getZooBalance());
-        setConfirmation(true);
-      })
-      .catch((e) => {
-        console.error("ISSUE USING FAUCET \n", e);
-        setFetching(false);
-        setRejection(true);
-      });
-
-    setFetching(false);
-
-    switch (chainId) {
-      case 1338:
-        buyZoo();
-        break;
-      case 1337:
-        buyZoo();
-        break;
-      case 97:
-        buyZoo();
-        break;
-      case 4:
-        buyZoo();
-        break;
-      default:
-        window.open(
-          "https://pancakeswap.info/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13",
-          "_blank"
-        );
-    }
-  };
-
   return (
     <div className="border rounded-lg py-12 px-6 bg-black100 w-full max-w-lg">
-      {fetching && <Notification title="Processing" hideOpenButton={true} />}
-      {confirmation && (
-        <Notification title="Payment Confirmed" hideOpenButton={true} />
-      )}
-      {rejection && (
-        <Notification
-          title="Payment Cancelled Successfully"
-          hideOpenButton={true}
-        />
-      )}
       <div className="text-center mb-8">
         <h2 className="font-bold text-3xl mb-4">Save Endangered Species</h2>
         <p className="text-grey text-base">
@@ -130,7 +79,7 @@ const EndangeredSpecies = () => {
       </p>
       <div className="flex justify-end">
         <div
-          onClick={() => handleFunds()}
+          onClick={() => handleFunds(chainId, buyZoo)}
           className="bg-gradient-to-b from-purple to-blue text-white text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full flex items-center hover:cursor-pointer"
         >
           Buy $ZOO{" "}

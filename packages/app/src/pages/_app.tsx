@@ -1,5 +1,6 @@
 import "../bootstrap";
 import "styles/index.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Fragment, FunctionComponent } from "react";
 import { GetStaticProps, NextComponentType, NextPageContext } from "next";
