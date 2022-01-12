@@ -9,6 +9,7 @@ import LanguageSwitch from "../LanguageSwitch";
 import Link from "next/link";
 import More from "./More";
 import Community from "./Community";
+import Learn from './Learn';
 import NavLink from "../NavLink";
 import { Popover } from "@headlessui/react";
 import QuestionHelper from "../QuestionHelper";
@@ -90,14 +91,15 @@ function AppBar(): JSX.Element {
                           {i18n._(t`Press`)}
                         </a>
                       </NavLink>
-                      <NavLink href="/learn">
+                      <Learn />
+                      {/* <NavLink href="/learn">
                         <a
                           id={`mint-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
                           {i18n._(t`Learn`)}
                         </a>
-                      </NavLink>
+                      </NavLink> */}
                       {chainId && featureEnabled(Feature.MIGRATE, chainId) && (
                         <NavLink href={"/migrate"}>
                           <a
@@ -309,6 +311,8 @@ function AppBar(): JSX.Element {
 
                 <Community />
 
+                <Learn />
+
                 {/* <a
                   id={`community`}
                   className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
@@ -317,7 +321,7 @@ function AppBar(): JSX.Element {
                   {i18n._(t`Community`)}
                 </a> */}
 
-                <a
+                {/* <a
                   id={`press`}
                   className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="/press"
@@ -331,7 +335,7 @@ function AppBar(): JSX.Element {
                   href="learn"
                 >
                   {i18n._(t`Learn`)}
-                </a>
+                </a> */}
 
                 <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                   {account && chainId && userEthBalance && (
