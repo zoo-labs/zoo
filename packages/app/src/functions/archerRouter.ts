@@ -1,4 +1,14 @@
-import { ChainId, Currency, CurrencyAmount, Ether, SwapParameters, Trade, TradeOptions, TradeOptionsDeadline, TradeType } from '@zoolabs/sdk'
+import {
+  ChainId,
+  Currency,
+  CurrencyAmount,
+  Ether,
+  SwapParameters,
+  Trade,
+  TradeOptions,
+  TradeOptionsDeadline,
+  TradeType,
+} from '@zoolabs/sdk'
 
 import { getAddress } from '@ethersproject/address'
 import invariant from 'tiny-invariant'
@@ -17,6 +27,9 @@ export interface ArcherTradeOptions extends TradeOptions {
    * ETH tip for miners
    */
   ethTip?: CurrencyAmount<Currency>
+  ttl: any
+  recipient: any
+  allowedSlippage: any
 }
 
 export interface ArcherSwapParameters extends Omit<SwapParameters, 'args'> {
@@ -48,13 +61,17 @@ export abstract class ArcherRouter {
    * Cannot be constructed.
    */
 
-  private constructor() {}
+  private constructor() { }
   /**
    * Produces the on-chain method name to call and the hex encoded parameters to pass as arguments for a given trade.
    * @param trade to produce call parameters for
    * @param options options for the call parameters
    */
-  public static swapCallParameters(factoryAddress: string, trade: Trade<Currency, Currency, TradeType>, options: ArcherTradeOptions): ArcherSwapParameters {
+  public static swapCallParameters(
+    factoryAddress: string,
+    trade: Trade<Currency, Currency, TradeType>,
+    options: ArcherTradeOptions
+  ): ArcherSwapParameters {
     const etherIn = trade.inputAmount.currency === Ether.onChain(ChainId.MAINNET)
     const etherOut = trade.outputAmount.currency === Ether.onChain(ChainId.MAINNET)
     // the router does not support both ether in and out

@@ -4,6 +4,7 @@ import { isZero } from '../functions'
 import { namehash } from '@ethersproject/hash'
 import { useMemo } from 'react'
 import { useSingleCallResult } from '../state/multicall/hooks'
+
 /**
  * Does a lookup for an ENS name to find its contenthash.
  */
@@ -22,7 +23,10 @@ export default function useENSContentHash(ensName?: string | null): {
   const registrarContract = useENSRegistrarContract(false)
   const resolverAddressResult = useSingleCallResult(registrarContract, 'resolver', ensNodeArgument)
   const resolverAddress = resolverAddressResult.result?.[0]
-  const resolverContract = useENSResolverContract(resolverAddress && isZero(resolverAddress) ? undefined : resolverAddress, false)
+  const resolverContract = useENSResolverContract(
+    resolverAddress && isZero(resolverAddress) ? undefined : resolverAddress,
+    false
+  )
   const contenthash = useSingleCallResult(resolverContract, 'contenthash', ensNodeArgument)
 
   return {

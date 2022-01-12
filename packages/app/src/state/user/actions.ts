@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { createAction } from '@reduxjs/toolkit'
 
 export interface SerializedToken {
   chainId: number
@@ -55,15 +55,3 @@ export const updateUserArcherGasEstimate = createAction<{
 export const updateUserArcherTipManualOverride = createAction<{
   userArcherTipManualOverride: boolean
 }>('user/updateUserArcherTipManualOverride')
-export const setEthBalance = createAsyncThunk('user/setEthBalance', async (account: any, library: any) => {
-  if (!account) return { balance: 0 }
-  try {
-    const val = await library.eth.getBalance(account)
-    const divisor = parseFloat(Math.pow(10, 18).toString())
-    const balance = parseFloat(val) / divisor
-    return { balance }
-  } catch (e) {
-    console.error(`ISSUE LOADING ETH BALANCE`, e)
-    return { balance: 0 }
-  }
-})

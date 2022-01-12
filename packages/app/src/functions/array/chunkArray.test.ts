@@ -20,7 +20,11 @@ describe('#chunkArray', () => {
   it('evenly distributes', () => {
     const chunked = chunkArray([...Array(100).keys()], 40)
 
-    expect(chunked).toEqual([[...Array(34).keys()], [...Array(34).keys()].map((i) => i + 34), [...Array(32).keys()].map((i) => i + 68)])
+    expect(chunked).toEqual([
+      [...Array(34).keys()],
+      [...Array(34).keys()].map((i) => i + 34),
+      [...Array(32).keys()].map((i) => i + 68),
+    ])
 
     expect(chunked[0][0]).toEqual(0)
     expect(chunked[2][31]).toEqual(99)

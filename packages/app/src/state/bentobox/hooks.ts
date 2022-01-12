@@ -130,8 +130,8 @@ export function useBentoBalance(tokenAddress: string): {
     const amount = BigNumber.from(balances[0].bentoShare).isZero()
       ? BigNumber.from(0)
       : BigNumber.from(balances[0].bentoBalance)
-          .mul(BigNumber.from(balances[0].bentoAmount))
-          .div(BigNumber.from(balances[0].bentoShare))
+        .mul(BigNumber.from(balances[0].bentoAmount))
+        .div(BigNumber.from(balances[0].bentoShare))
 
     setBalance({
       value: amount,

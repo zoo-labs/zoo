@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { TransactionDetails } from './reducer'
 import { TransactionResponse } from '@ethersproject/providers'
 import { addTransaction } from './actions'
-import { useWeb3React } from '@web3-react/core'
-import { useAddPopup } from 'state/application/hooks'
-import { formatError } from 'functions'
+import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
+import { useAddPopup } from '../application/hooks'
+import { formatError } from '../../functions'
 
 export interface TransactionResponseLight {
   hash: string
@@ -27,9 +27,9 @@ export function useTransactionAdder(): (
       nonce: number
       ethTip: string
     }
-  },
+  }
 ) => void {
-  const { chainId, account } = useWeb3React()
+  const { chainId, account } = useActiveWeb3React()
   const dispatch = useAppDispatch()
 
   return useCallback(
@@ -50,7 +50,7 @@ export function useTransactionAdder(): (
           nonce: number
           ethTip: string
         }
-      } = {},
+      } = {}
     ) => {
       if (!account) return
       if (!chainId) return
@@ -68,16 +68,16 @@ export function useTransactionAdder(): (
           summary,
           claim,
           archer,
-        }),
+        })
       )
     },
-    [dispatch, chainId, account],
+    [dispatch, chainId, account]
   )
 }
 
 // returns all the transactions for the current chain
 export function useAllTransactions(): { [txHash: string]: TransactionDetails } {
-  const { chainId } = useWeb3React()
+  const { chainId } = useActiveWeb3React()
 
   const state = useAppSelector((state) => state.transactions)
 
@@ -118,7 +118,7 @@ export function useHasPendingApproval(tokenAddress: string | undefined, spender:
           return approval.spender === spender && approval.tokenAddress === tokenAddress && isTransactionRecent(tx)
         }
       }),
-    [allTransactions, spender, tokenAddress],
+    [allTransactions, spender, tokenAddress]
   )
 }
 
@@ -171,16 +171,13 @@ export function useTransactionPopups({ onPendingTx, onTransactionReceipt }: UseT
     })
   }
 
-  const addTransactionPopup = useCallback(
-    async (tx: any, summary: string) => {
-      onPendingTx && onPendingTx(tx.hash)
-      addTransaction(tx, { summary })
-      // await waitOnHardhat(chainId, 100000)
-      const receipt = await tx.wait()
-      onTransactionReceipt && onTransactionReceipt(receipt)
-    },
-    [onPendingTx, onTransactionReceipt],
-  )
+  const addTransactionPopup = useCallback(async (tx: any, summary: string) => {
+    onPendingTx && onPendingTx(tx.hash)
+    addTransaction(tx, { summary })
+    // await waitOnHardhat(chainId, 100000)
+    const receipt = await tx.wait()
+    onTransactionReceipt && onTransactionReceipt(receipt)
+  }, [onPendingTx, onTransactionReceipt])
 
   return {
     addErrorPopup,

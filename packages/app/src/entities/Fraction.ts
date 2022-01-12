@@ -24,8 +24,8 @@ class Fraction {
     return value === ''
       ? Fraction.NAN
       : isEmptyValue(value)
-      ? Fraction.ZERO
-      : new Fraction(parseBalance(value, 18), Fraction.BASE)
+        ? Fraction.ZERO
+        : new Fraction(parseBalance(value, 18), Fraction.BASE)
   }
 
   numerator: BigNumber

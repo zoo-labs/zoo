@@ -3,11 +3,11 @@ import { DAI, SUSHI, USDC } from '../config/tokens'
 import { useMemo, useState } from 'react'
 
 import { splitSignature } from '@ethersproject/bytes'
+import { useActiveWeb3React } from './useActiveWeb3React'
 import { useEIP2612Contract } from './useContract'
 import useIsArgentWallet from './useIsArgentWallet'
 import { useSingleCallResult } from '../state/multicall/hooks'
 import useTransactionDeadline from './useTransactionDeadline'
-import { useWeb3React } from '@web3-react/core'
 
 enum PermitType {
   AMOUNT = 1,
@@ -126,20 +126,21 @@ const PERMIT_ALLOWED_TYPE = [
 export function useERC20Permit(
   currencyAmount: CurrencyAmount<Currency> | null | undefined,
   spender: string | null | undefined,
-  overridePermitInfo: PermitInfo | undefined | null,
+  overridePermitInfo: PermitInfo | undefined | null
 ): {
   signatureData: SignatureData | null
   state: UseERC20PermitState
   gatherPermitSignature: null | (() => Promise<void>)
 } {
-  const { account, chainId, library } = useWeb3React()
+  const { account, chainId, library } = useActiveWeb3React()
   const transactionDeadline = useTransactionDeadline()
   const tokenAddress = currencyAmount?.currency?.isToken ? currencyAmount.currency.address : undefined
   const eip2612Contract = useEIP2612Contract(tokenAddress)
   const isArgentWallet = useIsArgentWallet()
   const nonceInputs = useMemo(() => [account ?? undefined], [account])
   const tokenNonceState = useSingleCallResult(eip2612Contract, 'nonces', nonceInputs)
-  const permitInfo = overridePermitInfo ?? (chainId && tokenAddress ? PERMITTABLE_TOKENS[chainId]?.[tokenAddress] : undefined)
+  const permitInfo =
+    overridePermitInfo ?? (chainId && tokenAddress ? PERMITTABLE_TOKENS[chainId]?.[tokenAddress] : undefined)
 
   const [signatureData, setSignatureData] = useState<SignatureData | null>(null)
 
@@ -192,31 +193,31 @@ export function useERC20Permit(
 
         const message = allowed
           ? {
-              holder: account,
-              spender,
-              allowed,
-              nonce: nonceNumber,
-              expiry: signatureDeadline,
-            }
+            holder: account,
+            spender,
+            allowed,
+            nonce: nonceNumber,
+            expiry: signatureDeadline,
+          }
           : {
-              owner: account,
-              spender,
-              value,
-              nonce: nonceNumber,
-              deadline: signatureDeadline,
-            }
+            owner: account,
+            spender,
+            value,
+            nonce: nonceNumber,
+            deadline: signatureDeadline,
+          }
         const domain = permitInfo.version
           ? {
-              name: permitInfo.name,
-              version: permitInfo.version,
-              verifyingContract: tokenAddress,
-              chainId,
-            }
+            name: permitInfo.name,
+            version: permitInfo.version,
+            verifyingContract: tokenAddress,
+            chainId,
+          }
           : {
-              name: permitInfo.name,
-              verifyingContract: tokenAddress,
-              chainId,
-            }
+            name: permitInfo.name,
+            verifyingContract: tokenAddress,
+            chainId,
+          }
         const data = JSON.stringify({
           types: {
             EIP712Domain: permitInfo.version ? EIP712_DOMAIN_TYPE : EIP712_DOMAIN_TYPE_NO_VERSION,
@@ -271,19 +272,28 @@ const REMOVE_V2_LIQUIDITY_PERMIT_INFO: PermitInfo = {
   type: PermitType.AMOUNT,
 }
 
-export function useV2LiquidityTokenPermit(liquidityAmount: CurrencyAmount<Token> | null | undefined, spender: string | null | undefined) {
+export function useV2LiquidityTokenPermit(
+  liquidityAmount: CurrencyAmount<Token> | null | undefined,
+  spender: string | null | undefined
+) {
   return useERC20Permit(liquidityAmount, spender, REMOVE_V2_LIQUIDITY_PERMIT_INFO)
 }
 
-export function useERC20PermitFromTrade(trade: V2Trade<Currency, Currency, TradeType> | undefined, allowedSlippage: Percent) {
-  const { chainId } = useWeb3React()
+export function useERC20PermitFromTrade(
+  trade: V2Trade<Currency, Currency, TradeType> | undefined,
+  allowedSlippage: Percent
+) {
+  const { chainId } = useActiveWeb3React()
 
-  const amountToApprove = useMemo(() => (trade ? trade.maximumAmountIn(allowedSlippage) : undefined), [trade, allowedSlippage])
+  const amountToApprove = useMemo(
+    () => (trade ? trade.maximumAmountIn(allowedSlippage) : undefined),
+    [trade, allowedSlippage]
+  )
 
   return useERC20Permit(
     amountToApprove,
     // v2 router does not support
     trade instanceof V2Trade ? undefined : trade,
-    null,
+    null
   )
 }

@@ -383,8 +383,6 @@ export const useTokenTypes = () => {
   })
   const drop = useContract('Drop')
   const transformTokenType = (tokenType: any): TokenType => {
-    console.log('transformTokenType', { tokenType })
-
     return {
       name: tokenType.name,
       kind: tokenType.kind,
@@ -395,21 +393,21 @@ export const useTokenTypes = () => {
       metadataURI: tokenType.data.metadataURI,
     }
   }
-  useEffect(() => {
-    drop
-      ?.getTokenTypes()
-      ?.then((tokenTypes) => {
-        const transformed: any[] = tokenTypes.map(transformTokenType)
-        setTokenTypes(transformed)
-        setTokenAggregates({
-          minted: _.reduce(
-            transformed.map(({ minted }) => minted),
-            (sum: number, minted) => sum + minted,
-            0
-          ),
-        })
-      })
-      .catch(console.log)
-  }, [])
+  // useEffect(() => {
+  //   drop
+  //     ?.getTokenTypes()
+  //     ?.then((tokenTypes) => {
+  //       const transformed: any[] = tokenTypes.map(transformTokenType)
+  //       setTokenTypes(transformed)
+  //       setTokenAggregates({
+  //         minted: _.reduce(
+  //           transformed.map(({ minted }) => minted),
+  //           (sum: number, minted) => sum + minted,
+  //           0
+  //         ),
+  //       })
+  //     })
+  //     .catch(console.log)
+  // }, [])
   return { tokenTypes, tokenAggregates }
 }

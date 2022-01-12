@@ -1,21 +1,21 @@
 import { ChainId, Currency, NATIVE, Token, WNATIVE, WNATIVE_ADDRESS, currencyEquals } from '@zoolabs/sdk'
 import { NEVER_RELOAD, useSingleCallResult } from '../state/multicall/hooks'
-import { TokenAddressMap, useAllLists, useInactiveListUrls, useUnsupportedTokenList } from '../state/lists/hooks'
+import { TokenAddressMap, useAllLists, useInactiveListUrls, useUnsupportedTokenList } from './../state/lists/hooks'
 import { useBytes32TokenContract, useTokenContract } from './useContract'
 
-import { WrappedTokenInfo } from '../state/lists/wrappedTokenInfo'
+import { WrappedTokenInfo } from './../state/lists/wrappedTokenInfo'
 import { arrayify } from '@ethersproject/bytes'
 import { createTokenFilterFunction } from '../functions/filtering'
 import { isAddress } from '../functions/validate'
 import { parseBytes32String } from '@ethersproject/strings'
+import { useActiveWeb3React } from './useActiveWeb3React'
 import { useCombinedActiveList } from '../state/lists/hooks'
 import { useMemo } from 'react'
 import { useUserAddedTokens } from '../state/user/hooks'
-import { useWeb3React } from '@web3-react/core'
 
 // reduce token map into standard address <-> Token mapping, optionally include user added tokens
 function useTokensFromMap(tokenMap: TokenAddressMap, includeUserAdded: boolean): { [address: string]: Token } {
-  const { chainId } = useWeb3React()
+  const { chainId } = useActiveWeb3React()
   const userAddedTokens = useUserAddedTokens()
 
   return useMemo(() => {
@@ -40,7 +40,7 @@ function useTokensFromMap(tokenMap: TokenAddressMap, includeUserAdded: boolean):
             },
             // must make a copy because reduce modifies the map, and we do not
             // want to make a copy in every iteration
-            { ...mapWithoutUrls },
+            { ...mapWithoutUrls }
           )
       )
     }
@@ -68,7 +68,7 @@ export function useSearchInactiveTokenLists(search: string | undefined, minResul
   
   const lists = useAllLists()
   const inactiveUrls = useInactiveListUrls()
-  const { chainId } = useWeb3React()
+  const { chainId } = useActiveWeb3React()
   const activeTokens = useAllTokens()
   return useMemo(() => {
     if (!search || search.trim().length === 0) return []
@@ -130,7 +130,7 @@ function parseStringOrBytes32(str: string | undefined, bytes32: string | undefin
 // null if loading
 // otherwise returns the token
 export function useToken(tokenAddress?: string): Token | undefined | null {
-  const { chainId } = useWeb3React()
+  const { chainId } = useActiveWeb3React()
   const tokens = useAllTokens()
 
   const address = isAddress(tokenAddress)
@@ -140,7 +140,12 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
   const token: Token | undefined = address ? tokens[address] : undefined
 
   const tokenName = useSingleCallResult(token ? undefined : tokenContract, 'name', undefined, NEVER_RELOAD)
-  const tokenNameBytes32 = useSingleCallResult(token ? undefined : tokenContractBytes32, 'name', undefined, NEVER_RELOAD)
+  const tokenNameBytes32 = useSingleCallResult(
+    token ? undefined : tokenContractBytes32,
+    'name',
+    undefined,
+    NEVER_RELOAD
+  )
   const symbol = useSingleCallResult(token ? undefined : tokenContract, 'symbol', undefined, NEVER_RELOAD)
   const symbolBytes32 = useSingleCallResult(token ? undefined : tokenContractBytes32, 'symbol', undefined, NEVER_RELOAD)
   const decimals = useSingleCallResult(token ? undefined : tokenContract, 'decimals', undefined, NEVER_RELOAD)
@@ -155,7 +160,7 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
         address,
         decimals.result[0],
         parseStringOrBytes32(symbol.result?.[0], symbolBytes32.result?.[0], 'UNKNOWN'),
-        parseStringOrBytes32(tokenName.result?.[0], tokenNameBytes32.result?.[0], 'Unknown Token'),
+        parseStringOrBytes32(tokenName.result?.[0], tokenNameBytes32.result?.[0], 'Unknown Token')
       )
     }
     return undefined
@@ -175,12 +180,14 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
 }
 
 export function useCurrency(currencyId: string | undefined): Currency | null | undefined {
-  const { chainId } = useWeb3React()
+  const { chainId } = useActiveWeb3React()
+
   const isETH = currencyId?.toUpperCase() === 'ETH'
 
   const isDual = [ChainId.CELO].includes(chainId)
 
   const useNative = isETH && !isDual
+
   if (isETH && isDual) {
     currencyId = WNATIVE_ADDRESS[chainId]
   }
@@ -194,8 +201,7 @@ export function useCurrency(currencyId: string | undefined): Currency | null | u
 
   const wnative = chainId ? WNATIVE[chainId] : undefined
 
-
   if (wnative?.address?.toLowerCase() === currencyId?.toLowerCase()) return wnative
-  // useNative ? native : token
+
   return useNative ? native : token
 }

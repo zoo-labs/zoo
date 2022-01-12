@@ -1,18 +1,14 @@
-import { createReducer } from '@reduxjs/toolkit'
 import { DEFAULT_ARCHER_ETH_TIP, DEFAULT_ARCHER_GAS_ESTIMATE, DEFAULT_ARCHER_GAS_PRICES } from '../../config/archer'
 import { DEFAULT_DEADLINE_FROM_NOW, INITIAL_ALLOWED_SLIPPAGE } from '../../constants'
-import { updateVersion } from '../global/actions'
 import {
+  SerializedPair,
+  SerializedToken,
   addSerializedPair,
   addSerializedToken,
   removeSerializedPair,
   removeSerializedToken,
-  SerializedPair,
-  SerializedToken,
-  setEthBalance,
   toggleURLWarning,
   updateMatchesDarkMode,
-  updateUserAnimationMode,
   updateUserArcherETHTip,
   updateUserArcherGasEstimate,
   updateUserArcherGasPrice,
@@ -23,7 +19,11 @@ import {
   updateUserExpertMode,
   updateUserSingleHopOnly,
   updateUserSlippageTolerance,
+  updateUserAnimationMode,
 } from './actions'
+
+import { createReducer } from '@reduxjs/toolkit'
+import { updateVersion } from '../global/actions'
 
 const currentTimestamp = () => new Date().getTime()
 
@@ -33,7 +33,7 @@ export interface UserState {
 
   userDarkMode: boolean | null // the user's choice for dark mode or light mode
   matchesDarkMode: boolean // whether the dark mode media query matches
-  userAnimationMode: boolean // whether the animations should play on cards
+  userAnimationMode: boolean
   userExpertMode: boolean
 
   userSingleHopOnly: boolean // only allow swaps on direct pairs
@@ -65,8 +65,6 @@ export interface UserState {
   userArcherETHTip: string // ETH tip for relay, as full BigInt string
   userArcherGasEstimate: string // Gas estimate for trade
   userArcherTipManualOverride: boolean // is user manually entering tip
-
-  ethBalance: number
 }
 
 function pairKey(token0Address: string, token1Address: string) {
@@ -83,7 +81,6 @@ export const initialState: UserState = {
   userDeadline: DEFAULT_DEADLINE_FROM_NOW,
   tokens: {},
   pairs: {},
-  ethBalance: 0,
   timestamp: currentTimestamp(),
   URLWarningVisible: true,
   userArcherUseRelay: false,
@@ -148,7 +145,10 @@ export default createReducer(initialState, (builder) =>
       state.timestamp = currentTimestamp()
     })
     .addCase(addSerializedPair, (state, { payload: { serializedPair } }) => {
-      if (serializedPair.token0.chainId === serializedPair.token1.chainId && serializedPair.token0.address !== serializedPair.token1.address) {
+      if (
+        serializedPair.token0.chainId === serializedPair.token1.chainId &&
+        serializedPair.token0.address !== serializedPair.token1.address
+      ) {
         const chainId = serializedPair.token0.chainId
         state.pairs[chainId] = state.pairs[chainId] || {}
         state.pairs[chainId][pairKey(serializedPair.token0.address, serializedPair.token1.address)] = serializedPair
@@ -181,7 +181,4 @@ export default createReducer(initialState, (builder) =>
     .addCase(updateUserArcherTipManualOverride, (state, action) => {
       state.userArcherTipManualOverride = action.payload.userArcherTipManualOverride
     })
-    .addCase(setEthBalance.fulfilled, (state, action) => {
-      state.ethBalance = action.payload.balance
-    }),
 )

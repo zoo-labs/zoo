@@ -8,11 +8,12 @@ import { AppState } from '../index'
 import { Contract } from '@ethersproject/contracts'
 import { chunkArray } from '../../functions/array'
 import { updateBlockNumber } from '../application/actions'
+import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { useBlockNumber } from '../application/hooks'
 import useDebounce from '../../hooks/useDebounce'
-import { useWeb3 } from 'hooks'
-import { useWeb3React } from '@web3-react/core'
 import { useMulticall2Contract } from '../../hooks/useContract'
+
+const DEFAULT_GAS_REQUIRED = 1_000_000
 
 /**
  * Fetches a chunk of calls, enforcing a minimum block number constraint
@@ -23,32 +24,40 @@ import { useMulticall2Contract } from '../../hooks/useContract'
 async function fetchChunk(
   multicall: Contract,
   chunk: Call[],
-  minBlockNumber: number,
-): Promise<{
-  results: { success: boolean; returnData: string }[]
   blockNumber: number
-}> {
-  console.debug('Fetching chunk', chunk, minBlockNumber)
-  let resultsBlockNumber: number
-  let results: { success: boolean; returnData: string }[]
+): Promise<{ success: boolean; returnData: string }[]> {
+  console.debug('Fetching chunk', chunk, blockNumber)
   try {
-    const { blockNumber, returnData } = await multicall.callStatic.tryBlockAndAggregate(
+    const { returnData } = await multicall.callStatic.tryBlockAndAggregate(
       false,
       chunk.map((obj) => ({ target: obj.address, callData: obj.callData, gasLimit: obj.gasRequired ?? 1_000_000 })),
-      { blockTag: minBlockNumber },
+      { blockTag: blockNumber }
     )
-    resultsBlockNumber = blockNumber.toNumber()
-    results = returnData
+
+    if (process.env.NODE_ENV === 'development') {
+      returnData.forEach(({ gasUsed, returnData, success }, i) => {
+        if (
+          !success &&
+          returnData.length === 2 &&
+          gasUsed.gte(Math.floor((chunk[i].gasRequired ?? DEFAULT_GAS_REQUIRED) * 0.95))
+        ) {
+          console.warn(
+            `A call failed due to requiring ${gasUsed.toString()} vs. allowed ${
+              chunk[i].gasRequired ?? DEFAULT_GAS_REQUIRED
+            }`,
+            chunk[i]
+          )
+        }
+      })
+    }
+    return returnData
   } catch (error) {
-    console.debug('Failed to fetch chunk', error)
+    if (error.code === -32000 || error.message?.indexOf('header not found') !== -1) {
+      throw new RetryableError(`header not found for block number ${blockNumber}`)
+    }
+    console.error('Failed to fetch chunk', error)
     throw error
   }
-  if (resultsBlockNumber < minBlockNumber) {
-    const retryMessage = `Fetched results for old block number: ${resultsBlockNumber.toString()} vs. ${minBlockNumber}`
-    console.debug(retryMessage)
-    throw new RetryableError(retryMessage)
-  }
-  return { results, blockNumber: resultsBlockNumber }
 }
 
 /**
@@ -57,7 +66,10 @@ async function fetchChunk(
  * @param allListeners the all listeners state
  * @param chainId the current chain id
  */
-export function activeListeningKeys(allListeners: AppState['multicall']['callListeners'], chainId?: number): { [callKey: string]: number } {
+export function activeListeningKeys(
+  allListeners: AppState['multicall']['callListeners'],
+  chainId?: number
+): { [callKey: string]: number } {
   if (!allListeners || !chainId) return {}
   const listeners = allListeners[chainId]
   if (!listeners) return {}
@@ -89,7 +101,7 @@ export function outdatedListeningKeys(
   callResults: AppState['multicall']['callResults'],
   listeningKeys: { [callKey: string]: number },
   chainId: number | undefined,
-  latestBlockNumber: number | undefined,
+  latestBlockNumber: number | undefined
 ): string[] {
   if (!chainId || !latestBlockNumber) return []
   const results = callResults[chainId]
@@ -119,7 +131,7 @@ export default function Updater(): null {
   // wait for listeners to settle before triggering updates
   const debouncedListeners = useDebounce(state.callListeners, 100)
   const latestBlockNumber = useBlockNumber()
-  const { chainId } = useWeb3React()
+  const { chainId } = useActiveWeb3React()
   const multicall2Contract = useMulticall2Contract()
   const cancellations = useRef<{ blockNumber: number; cancellations: (() => void)[] }>()
 
@@ -131,7 +143,10 @@ export default function Updater(): null {
     return outdatedListeningKeys(state.callResults, listeningKeys, chainId, latestBlockNumber)
   }, [chainId, state.callResults, listeningKeys, latestBlockNumber])
 
-  const serializedOutdatedCallKeys = useMemo(() => JSON.stringify(unserializedOutdatedCallKeys.sort()), [unserializedOutdatedCallKeys])
+  const serializedOutdatedCallKeys = useMemo(
+    () => JSON.stringify(unserializedOutdatedCallKeys.sort()),
+    [unserializedOutdatedCallKeys]
+  )
 
   useEffect(() => {
     if (!latestBlockNumber || !chainId || !multicall2Contract) return
@@ -151,7 +166,7 @@ export default function Updater(): null {
         calls,
         chainId,
         fetchingBlockNumber: latestBlockNumber,
-      }),
+      })
     )
 
     cancellations.current = {
@@ -163,7 +178,7 @@ export default function Updater(): null {
           maxWait: 2500,
         })
         promise
-          .then(({ results: returnData, blockNumber: fetchBlockNumber }) => {
+          .then((returnData) => {
             // accumulates the length of all previous indices
             const firstCallKeyIndex = chunkedCalls.slice(0, index).reduce<number>((memo, curr) => memo + curr.length, 0)
             const lastCallKeyIndex = firstCallKeyIndex + returnData.length
@@ -183,7 +198,7 @@ export default function Updater(): null {
                 }
                 return memo
               },
-              { erroredCalls: [], results: {} },
+              { erroredCalls: [], results: {} }
             )
 
             // dispatch any new results
@@ -192,8 +207,8 @@ export default function Updater(): null {
                 updateMulticallResults({
                   chainId,
                   results,
-                  blockNumber: fetchBlockNumber,
-                }),
+                  blockNumber: latestBlockNumber,
+                })
               )
 
             // dispatch any errored calls
@@ -203,13 +218,9 @@ export default function Updater(): null {
                 errorFetchingMulticallResults({
                   calls: erroredCalls,
                   chainId,
-                  fetchingBlockNumber: fetchBlockNumber,
-                }),
+                  fetchingBlockNumber: latestBlockNumber,
+                })
               )
-            }
-
-            if (fetchBlockNumber > latestBlockNumber) {
-              dispatch(updateBlockNumber({ chainId, blockNumber: fetchBlockNumber }))
             }
           })
           .catch((error: any) => {
@@ -223,7 +234,7 @@ export default function Updater(): null {
                 calls: chunk,
                 chainId,
                 fetchingBlockNumber: latestBlockNumber,
-              }),
+              })
             )
           })
         return cancel

@@ -1,61 +1,86 @@
-import { Currency, Token, ZERO_ADDRESS } from '@zoolabs/sdk'
-import { formatCurrencyFromRawAmount } from '../functions'
-import { useActiveWeb3React, useContract } from '../hooks'
-import { useAsset, useTokenType } from './state'
-import { Input } from '../components/Input'
-import { useEffect, useState } from 'react'
-import { Button } from '../components/Button'
-import SelectCurrency from './SelectCurrency'
-import CurrencyLogo from './CurrencyLogo'
-import { LazySetAskButton } from './LazySetAskButton'
+import { Currency, Token, ZERO_ADDRESS } from "@zoolabs/sdk";
+import { formatCurrencyFromRawAmount } from "../functions";
+import { useActiveWeb3React, useContract } from "../hooks";
+import { useAsset, useTokenType } from "./state";
+import { Ask } from "./types";
+import { ethers } from "ethers";
+import { useGasPrice } from "../state/network/hooks";
+import Input from "../components/Input";
+import { useEffect, useState } from "react";
+import Button from "../components/Button";
+import SelectCurrency from "./SelectCurrency";
+import CurrencyLogo from "./CurrencyLogo";
+import Checkbox from "../components/Checkbox";
+import { Switch } from "@headlessui/react";
+import Typography from "../components/Typography";
+import { CheckIcon, MinusIcon, PlusIcon } from "@heroicons/react/solid";
+import { t } from "@lingui/macro";
+import { i18n } from "@lingui/core";
+import { LazySetAskButton } from "./LazySetAskButton";
 
 const LazySetAsk = ({ dropId, name, children }) => {
-  const { account } = useActiveWeb3React()
-  const { ask, currencyToken, type } = useTokenType(dropId, name)
-  const [value, setValue] = useState('')
-  const [offline, setOffline] = useState(false)
-  const [selectedCurrencyToken, setSelectedCurrencyToken] = useState(null)
-  const [showSelectCurrency, setShowSelectCurrecy] = useState(false)
+  const { account } = useActiveWeb3React();
+  const { ask, currencyToken, type } = useTokenType(dropId, name);
+  const [value, setValue] = useState("");
+  const [offline, setOffline] = useState(false);
+  const [selectedCurrencyToken, setSelectedCurrencyToken] = useState(null);
+  const [showSelectCurrency, setShowSelectCurrecy] = useState(false);
 
   useEffect(() => {
     if (ask && currencyToken) {
-      setSelectedCurrencyToken(currencyToken)
-      setValue(formatCurrencyFromRawAmount(currencyToken, ask.amount))
-      setOffline(ask.offline)
+      setSelectedCurrencyToken(currencyToken);
+      setValue(formatCurrencyFromRawAmount(currencyToken, ask.amount));
+      setOffline(ask.offline);
     }
-  }, [ask, currencyToken])
+  }, [ask, currencyToken]);
 
   const onSelectCurrency = (currencyToken) => {
-    setSelectedCurrencyToken(currencyToken)
-    setShowSelectCurrecy(false)
-    setValue('')
-  }
+    setSelectedCurrencyToken(currencyToken);
+    setShowSelectCurrecy(false);
+    setValue("");
+  };
 
   return (
-    <div className='sm:p-4 md:p-0'>
+    <div className="sm:p-4 md:p-0">
       {showSelectCurrency ? (
         <SelectCurrency onSelect={onSelectCurrency} />
       ) : (
         <>
-          <h2 className='mb-10 text-xl text-center'>Set Ask for {name}</h2>
-          <div className='relative flex items-center w-full mb-4'>
-            <Input
-              className='w-full p-3 text-2xl rounded bg-dark-700 focus:ring focus:ring-indigo-600'
+          <h2 className="mb-10 text-xl text-center">Set Ask for {name}</h2>
+          <div className="relative flex items-center w-full mb-4">
+            <Input.Numeric
+              className="w-full p-3 text-2xl rounded bg-dark-700 focus:ring focus:ring-indigo-600"
               value={value}
-              onChange={(e) => {
-                setValue(e.target.value)
+              onUserInput={(value) => {
+                setValue(value);
               }}
             />
             {selectedCurrencyToken && (
-              <Button variant='outlined' color='gray' size='sm' onClick={() => setShowSelectCurrecy(true)} className='absolute right-2 focus:ring focus:ring-indigo-600'>
-                <div className='relative flex items-center'>
-                  <CurrencyLogo symbol={selectedCurrencyToken?.symbol} size={20} />
-                  <div className='ml-2 font-bold'>{selectedCurrencyToken?.symbol}</div>
+              <Button
+                variant="outlined"
+                color="gray"
+                size="sm"
+                onClick={() => setShowSelectCurrecy(true)}
+                className="absolute right-2 focus:ring focus:ring-indigo-600"
+              >
+                <div className="relative flex items-center">
+                  <CurrencyLogo
+                    symbol={selectedCurrencyToken?.symbol}
+                    size={20}
+                  />
+                  <div className="ml-2 font-bold">
+                    {selectedCurrencyToken?.symbol}
+                  </div>
                 </div>
               </Button>
             )}
           </div>
-          <LazySetAskButton name={name} amount={value} currencyToken={selectedCurrencyToken} offline={offline} />
+          <LazySetAskButton
+            name={name}
+            amount={value}
+            currencyToken={selectedCurrencyToken}
+            offline={offline}
+          />
           {/* <div className="pt-3">
             <Switch.Group>
               <div className="flex items-center justify-center">
@@ -82,7 +107,7 @@ const LazySetAsk = ({ dropId, name, children }) => {
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default LazySetAsk
+export default LazySetAsk;

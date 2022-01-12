@@ -37,7 +37,7 @@ describe('actions', () => {
         toCallKey({
           address: '0x6b175474e89094c44da98b954eedeac495271d0f',
           callData: 'abc',
-        }),
+        })
       ).toThrow('Invalid hex: abc')
     })
     it('throws for uppercase hex', () => {
@@ -45,7 +45,7 @@ describe('actions', () => {
         toCallKey({
           address: '0x6b175474e89094c44da98b954eedeac495271d0f',
           callData: '0xabcD',
-        }),
+        })
       ).toThrow('Invalid hex: 0xabcD')
     })
     it('concatenates address to data', () => {
@@ -53,7 +53,7 @@ describe('actions', () => {
         toCallKey({
           address: '0x6b175474e89094c44da98b954eedeac495271d0f',
           callData: '0xabcd',
-        }),
+        })
       ).toEqual('0x6b175474e89094c44da98b954eedeac495271d0f-0xabcd')
     })
   })

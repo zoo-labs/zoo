@@ -1,4 +1,5 @@
 import React from 'react'
+import { classNames } from '../../functions'
 
 interface ProgressCirclesProps {
   steps: boolean[]
@@ -17,32 +18,38 @@ interface ProgressCirclesProps {
  */
 export default function ProgressCircles({ steps, disabled = false, ...rest }: ProgressCirclesProps) {
   return (
-    <div className='flex justify-center' {...rest}>
-      <div className='flex justify-between w-1/2'>
+    <div className="flex justify-center" {...rest}>
+      <div className="flex justify-between w-1/2">
         {steps.map((step, i) => {
           return (
-            <div className='flex items-center w-full' key={i}>
+            <div className="flex items-center w-full" key={i}>
               <div
-                className={`
-                ${step ? 'bg-green' : 'bg-pink'} ${(disabled || (!steps[i - 1] && i !== 0)) && 'bg-dark-800'} min-w-5 min-h-5 rounded-full flex justify-center items-center text-xs
-                `}>
+                className={classNames(
+                  step ? 'bg-green' : 'bg-pink',
+                  (disabled || (!steps[i - 1] && i !== 0)) && 'bg-dark-800',
+                  'min-w-5 min-h-5 rounded-full flex justify-center items-center text-xs'
+                )}
+              >
                 {step ? '✓' : i + 1}
               </div>
               <div
-                className={`
-                ${disabled && 'bg-dark-1000'} ${step && 'bg-gradient-to-b from-green to-pink'} ${
-                  steps[i - 1] ? 'bg-gradient-to-b from-pink to-dark-1000' : 'bg-dark-900'
-                } w-full h-0.5 opacity-60
-                `}
+                className={classNames(
+                  disabled && 'bg-dark-1000',
+                  step && 'bg-gradient-to-r from-green to-pink',
+                  steps[i - 1] ? 'bg-gradient-to-r from-pink to-dark-1000' : 'bg-dark-900',
+                  'w-full h-0.5 opacity-60'
+                )}
               />
               {/* <Connector prevConfirmed={step} disabled={disabled} /> */}
             </div>
           )
         })}
         <div
-          className={`
-          ${(disabled || !steps[steps.length - 1]) && 'bg-dark-800'} min-w-5 min-h-5 rounded-full flex justify-center items-center text-xs
-          `}>
+          className={classNames(
+            (disabled || !steps[steps.length - 1]) && 'bg-dark-800',
+            'min-w-5 min-h-5 rounded-full flex justify-center items-center text-xs'
+          )}
+        >
           {steps.length + 1}
         </div>
       </div>

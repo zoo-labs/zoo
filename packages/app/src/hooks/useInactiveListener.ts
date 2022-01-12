@@ -1,7 +1,7 @@
 import { injected } from '../config/wallets'
 import { useEffect } from 'react'
 import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
-declare let window: any;
+
 /**
  * Use for network and injected - logs user in
  * and out after checking what network theyre on

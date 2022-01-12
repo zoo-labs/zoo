@@ -1,4 +1,10 @@
-import { SerializableTransactionReceipt, addTransaction, checkedTransaction, clearAllTransactions, finalizeTransaction } from './actions'
+import {
+  SerializableTransactionReceipt,
+  addTransaction,
+  checkedTransaction,
+  clearAllTransactions,
+  finalizeTransaction,
+} from './actions'
 
 import { createReducer } from '@reduxjs/toolkit'
 
@@ -70,5 +76,5 @@ export default createReducer(initialState, (builder) =>
       }
       tx.receipt = receipt
       tx.confirmedTime = now()
-    }),
+    })
 )

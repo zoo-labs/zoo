@@ -13,9 +13,11 @@ import { useHasPendingApproval, useTransactionAdder } from '../state/transaction
 import { MaxUint256 } from '@ethersproject/constants'
 import { TransactionResponse } from '@ethersproject/providers'
 import { calculateGasMargin } from '../functions/trade'
+import { useActiveWeb3React } from './useActiveWeb3React'
 import { useTokenAllowance } from './useTokenAllowance'
 import { useTokenContract } from './useContract'
-import { useWeb3React } from '@web3-react/core'
+import { wait } from '../functions/zoo'
+import { ChainId } from '@zoolabs/sdk'
 
 export enum ApprovalState {
   UNKNOWN = 'UNKNOWN',
@@ -29,7 +31,7 @@ export function useApproveCallback(
   amountToApprove?: CurrencyAmount<Currency>,
   spender?: string
 ): [ApprovalState, () => Promise<void>] {
-  const { account } = useWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const token = amountToApprove?.currency?.isToken ? amountToApprove.currency : undefined
   const currentAllowance = useTokenAllowance(token, account ?? undefined, spender)
   const pendingApproval = useHasPendingApproval(token?.address, spender)
@@ -93,6 +95,7 @@ export function useApproveCallback(
           summary: 'Approve ' + amountToApprove.currency.symbol,
           approval: { tokenAddress: token.address, spender: spender },
         })
+        return response
       })
       .catch((error: Error) => {
         console.debug('Failed to approve token', error)
@@ -109,7 +112,7 @@ export function useApproveCallbackFromTrade(
   allowedSlippage: Percent,
   doArcher: boolean = false
 ) {
-  const { chainId } = useWeb3React()
+  const { chainId } = useActiveWeb3React()
   const amountToApprove = useMemo(
     () => (trade && trade.inputAmount.currency.isToken ? trade.maximumAmountIn(allowedSlippage) : undefined),
     [trade, allowedSlippage]

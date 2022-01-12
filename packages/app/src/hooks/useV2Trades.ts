@@ -9,8 +9,8 @@ import { useMemo } from 'react'
 function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
   const allCurrencyCombinations = useAllCurrencyCombinations(currencyA, currencyB)
 
-
   const allPairs = useV2Pairs(allCurrencyCombinations)
+
   // only pass along valid pairs, non-duplicated pairs
   return useMemo(
     () =>
@@ -22,9 +22,9 @@ function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
           .reduce<{ [pairAddress: string]: Pair }>((memo, [, curr]) => {
             memo[curr.liquidityToken.address] = memo[curr.liquidityToken.address] ?? curr
             return memo
-          }, {}),
+          }, {})
       ),
-    [allPairs],
+    [allPairs]
   )
 }
 
@@ -36,12 +36,12 @@ const MAX_HOPS = 3
 export function useV2TradeExactIn(
   currencyAmountIn?: CurrencyAmount<Currency>,
   currencyOut?: Currency,
-  { maxHops = MAX_HOPS } = {},
+  { maxHops = MAX_HOPS } = {}
 ): Trade<Currency, Currency, TradeType.EXACT_INPUT> | null {
   const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut)
+
   return useMemo(() => {
     if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {
-
       if (maxHops === 1) {
         return (
           Trade.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, {
@@ -76,7 +76,7 @@ export function useV2TradeExactIn(
 export function useV2TradeExactOut(
   currencyIn?: Currency,
   currencyAmountOut?: CurrencyAmount<Currency>,
-  { maxHops = MAX_HOPS } = {},
+  { maxHops = MAX_HOPS } = {}
 ): Trade<Currency, Currency, TradeType.EXACT_OUTPUT> | null {
   const allowedPairs = useAllCommonPairs(currencyIn, currencyAmountOut?.currency)
 
