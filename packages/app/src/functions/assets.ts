@@ -1,3 +1,4 @@
+import { ChainId } from '@zoolabs/sdk'
 import _ from 'lodash'
 
 export const TYPE_VALIDATOR = 'Validator'

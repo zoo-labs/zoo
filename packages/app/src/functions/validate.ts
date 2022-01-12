@@ -1,9 +1,9 @@
 // CONVENTION isFoo -> boolean
 
-import { ChainId, Currency, Token } from '@zoolabs/sdk'
+import { Token } from '@zoolabs/sdk'
 
 import { BigNumber } from '@ethersproject/bignumber'
- import { TokenAddressMap } from '../state/lists/hooks'
+import { TokenAddressMap } from '../state/lists/hooks'
 import { getAddress } from '@ethersproject/address'
 
 /**
@@ -14,12 +14,16 @@ export function isZero(hexNumberString: string): boolean {
   return /^0x0*$/.test(hexNumberString)
 }
 
-export const isEmptyValue = (text: string) => (BigNumber.isBigNumber(text) ? BigNumber.from(text).isZero() : text === '' || text.replace(/0/g, '').replace(/\./, '') === '')
+export const isEmptyValue = (text: string) =>
+  BigNumber.isBigNumber(text)
+    ? BigNumber.from(text).isZero()
+    : text === '' || text.replace(/0/g, '').replace(/\./, '') === ''
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
   try {
-    return getAddress(value)
+    const address = getAddress(value)
+    return address
   } catch {
     return false
   }
@@ -28,6 +32,7 @@ export function isAddress(value: any): string | false {
 export function isTokenOnList(tokenAddressMap: TokenAddressMap, token?: Token): boolean {
   return Boolean(token?.isToken && tokenAddressMap[token.chainId]?.[token.address])
 }
+
 export function isSameAddress(address1: string, address2: string): boolean {
   return getAddress(address1) === getAddress(address2)
 }

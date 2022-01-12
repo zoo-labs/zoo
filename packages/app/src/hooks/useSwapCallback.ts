@@ -1,5 +1,15 @@
-import { EIP_1559_ACTIVATION_BLOCK } from '../constants'
-import { ChainId, Currency, CurrencyAmount, Ether, JSBI, Percent, Router, TradeType, Trade as V2Trade } from '@zoolabs/sdk'
+import { BIPS_BASE, EIP_1559_ACTIVATION_BLOCK } from '../constants'
+import {
+  ChainId,
+  Currency,
+  CurrencyAmount,
+  Ether,
+  JSBI,
+  Percent,
+  Router,
+  TradeType,
+  Trade as V2Trade,
+} from '@zoolabs/sdk'
 import { arrayify, hexlify, splitSignature } from '@ethersproject/bytes'
 import { isAddress, isZero } from '../functions/validate'
 import { useFactoryContract, useRouterContract } from './useContract'
@@ -16,6 +26,7 @@ import { calculateGasMargin } from '../functions/trade'
 import { keccak256 } from '@ethersproject/keccak256'
 import { shortenAddress } from '../functions/format'
 import { t } from '@lingui/macro'
+import { useActiveWeb3React } from './useActiveWeb3React'
 import { useArgentWalletContract } from './useArgentWalletContract'
 import { useBlockNumber } from '../state/application/hooks'
 import useENS from './useENS'
@@ -23,7 +34,6 @@ import { useMemo } from 'react'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import useTransactionDeadline from './useTransactionDeadline'
 import { useUserArcherETHTip } from '../state/user/hooks'
-import { useWeb3React } from '@web3-react/core'
 
 export enum SwapCallbackState {
   INVALID,
@@ -65,9 +75,9 @@ export function useSwapCallArguments(
   allowedSlippage: Percent, // in bips
   recipientAddressOrName: string | null, // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
   signatureData: SignatureData | null | undefined,
-  useArcher: boolean = false,
+  useArcher: boolean = false
 ): SwapCall[] {
-  const { account, chainId, library } = useWeb3React()
+  const { account, chainId, library } = useActiveWeb3React()
 
   const { address: recipientAddress } = useENS(recipientAddressOrName)
   const recipient = recipientAddressOrName === null ? account : recipientAddress
@@ -93,7 +103,7 @@ export function useSwapCallArguments(
             allowedSlippage,
             recipient,
             deadline: deadline.toNumber(),
-          }),
+          })
         )
 
         if (trade.tradeType === TradeType.EXACT_INPUT) {
@@ -103,7 +113,7 @@ export function useSwapCallArguments(
               allowedSlippage,
               recipient,
               deadline: deadline.toNumber(),
-            }),
+            })
           )
         }
       } else {
@@ -113,7 +123,7 @@ export function useSwapCallArguments(
             recipient,
             ttl: deadline.toNumber(),
             ethTip: CurrencyAmount.fromRawAmount(Ether.onChain(ChainId.MAINNET), archerETHTip),
-          }),
+          })
         )
       }
       return swapMethods.map(({ methodName, args, value }) => {
@@ -142,8 +152,20 @@ export function useSwapCallArguments(
         }
       })
     }
-    return null
-  }, [account, allowedSlippage, archerETHTip, argentWalletContract, chainId, deadline, library, factoryContract, recipient, routerContract, trade, useArcher])
+  }, [
+    account,
+    allowedSlippage,
+    archerETHTip,
+    argentWalletContract,
+    chainId,
+    deadline,
+    library,
+    factoryContract,
+    recipient,
+    routerContract,
+    trade,
+    useArcher,
+  ])
 }
 
 /**
@@ -195,17 +217,18 @@ export function useSwapCallback(
   allowedSlippage: Percent, // in bips
   recipientAddressOrName: string | null, // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
   signatureData: SignatureData | undefined | null,
-  archerRelayDeadline?: number, // deadline to use for archer relay -- set to undefined for no relay
+  archerRelayDeadline?: number // deadline to use for archer relay -- set to undefined for no relay
 ): {
   state: SwapCallbackState
   callback: null | (() => Promise<string>)
   error: string | null
 } {
-  const { account, chainId, library } = useWeb3React()
+  const { account, chainId, library } = useActiveWeb3React()
 
   const blockNumber = useBlockNumber()
 
-  const eip1559 = EIP_1559_ACTIVATION_BLOCK[chainId] == undefined ? false : blockNumber >= EIP_1559_ACTIVATION_BLOCK[chainId]
+  const eip1559 =
+    EIP_1559_ACTIVATION_BLOCK[chainId] == undefined ? false : blockNumber >= EIP_1559_ACTIVATION_BLOCK[chainId]
 
   const useArcher = archerRelayDeadline !== undefined
 
@@ -256,11 +279,11 @@ export function useSwapCallback(
               !value || isZero(value)
                 ? { from: account, to: address, data: calldata }
                 : {
-                    from: account,
-                    to: address,
-                    data: calldata,
-                    value,
-                  }
+                  from: account,
+                  to: address,
+                  data: calldata,
+                  value,
+                }
 
             // console.log('Estimate gas for valid swap')
 
@@ -294,19 +317,22 @@ export function useSwapCallback(
                     }
                   })
               })
-          }),
+          })
         )
 
         // a successful estimation is a bignumber gas estimate and the next call is also a bignumber gas estimate
         let bestCallOption: SuccessfulCall | SwapCallEstimate | undefined = estimatedCalls.find(
-          (el, ix, list): el is SuccessfulCall => 'gasEstimate' in el && (ix === list.length - 1 || 'gasEstimate' in list[ix + 1]),
+          (el, ix, list): el is SuccessfulCall =>
+            'gasEstimate' in el && (ix === list.length - 1 || 'gasEstimate' in list[ix + 1])
         )
 
         // check if any calls errored with a recognizable error
         if (!bestCallOption) {
           const errorCalls = estimatedCalls.filter((call): call is FailedCall => 'error' in call)
           if (errorCalls.length > 0) throw errorCalls[errorCalls.length - 1].error
-          const firstNoErrorCall = estimatedCalls.find<SwapCallEstimate>((call): call is SwapCallEstimate => !('error' in call))
+          const firstNoErrorCall = estimatedCalls.find<SwapCallEstimate>(
+            (call): call is SwapCallEstimate => !('error' in call)
+          )
           if (!firstNoErrorCall) throw new Error('Unexpected error. Could not estimate gas for the swap.')
           bestCallOption = firstNoErrorCall
         }
@@ -318,8 +344,10 @@ export function useSwapCallback(
         // console.log({ bestCallOption })
 
         if (!useArcher) {
-          // console.log('SWAP WITHOUT ARCHER')
-          // console.log('gasEstimate' in bestCallOption ? { gasLimit: calculateGasMargin(bestCallOption.gasEstimate) } : {})
+          console.log('SWAP WITHOUT ARCHER')
+          console.log(
+            'gasEstimate' in bestCallOption ? { gasLimit: calculateGasMargin(bestCallOption.gasEstimate) } : {}
+          )
           return library
             .getSigner()
             .sendTransaction({
@@ -341,7 +369,10 @@ export function useSwapCallback(
               const withRecipient =
                 recipient === account
                   ? base
-                  : `${base} to ${recipientAddressOrName && isAddress(recipientAddressOrName) ? shortenAddress(recipientAddressOrName) : recipientAddressOrName}`
+                  : `${base} to ${recipientAddressOrName && isAddress(recipientAddressOrName)
+                    ? shortenAddress(recipientAddressOrName)
+                    : recipientAddressOrName
+                  }`
 
               addTransaction(response, {
                 summary: withRecipient,
@@ -423,8 +454,8 @@ export function useSwapCallback(
                 nonce:
                   fullTx.nonce !== undefined
                     ? hexlify(fullTx.nonce, {
-                        hexPad: 'left',
-                      })
+                      hexPad: 'left',
+                    })
                     : undefined,
                 gasPrice: fullTx.gasPrice !== undefined ? hexlify(fullTx.gasPrice, { hexPad: 'left' }) : undefined,
                 gasLimit: fullTx.gasLimit !== undefined ? hexlify(fullTx.gasLimit, { hexPad: 'left' }) : undefined,
@@ -432,8 +463,8 @@ export function useSwapCallback(
                 value:
                   fullTx.value !== undefined
                     ? hexlify(fullTx.value, {
-                        hexPad: 'left',
-                      })
+                      hexPad: 'left',
+                    })
                     : undefined,
                 data: fullTx.data?.toString(),
                 chainId: fullTx.chainId !== undefined ? hexlify(fullTx.chainId) : undefined,
@@ -445,17 +476,23 @@ export function useSwapCallback(
               const unsignedTx = tx.getMessageToSign()
               // console.log('unsignedTx', unsignedTx)
 
-              return library.provider.request({ method: 'eth_sign', params: [account, hexlify(unsignedTx)] }).then((signature) => {
-                const signatureParts = splitSignature(signature)
-                // really crossing the streams here
-                // eslint-disable-next-line
-                // @ts-ignore
-                const txWithSignature = tx._processSignature(signatureParts.v, arrayify(signatureParts.r), arrayify(signatureParts.s))
-                return {
-                  signedTx: hexlify(txWithSignature.serialize()),
-                  fullTx,
-                }
-              })
+              return library.provider
+                .request({ method: 'eth_sign', params: [account, hexlify(unsignedTx)] })
+                .then((signature) => {
+                  const signatureParts = splitSignature(signature)
+                  // really crossing the streams here
+                  // eslint-disable-next-line
+                  // @ts-ignore
+                  const txWithSignature = tx._processSignature(
+                    signatureParts.v,
+                    arrayify(signatureParts.r),
+                    arrayify(signatureParts.s)
+                  )
+                  return {
+                    signedTx: hexlify(txWithSignature.serialize()),
+                    fullTx,
+                  }
+                })
             })
           } else {
             signedTxPromise = fullTxPromise.then((fullTx) => {
@@ -479,23 +516,26 @@ export function useSwapCallback(
               const withRecipient =
                 (recipient === account
                   ? base
-                  : `${base} to ${recipientAddressOrName && isAddress(recipientAddressOrName) ? shortenAddress(recipientAddressOrName) : recipientAddressOrName}`) +
-                (archerRelayDeadline ? ' 🏹' : '')
+                  : `${base} to ${recipientAddressOrName && isAddress(recipientAddressOrName)
+                    ? shortenAddress(recipientAddressOrName)
+                    : recipientAddressOrName
+                  }`) + (archerRelayDeadline ? ' 🏹' : '')
               const archer =
                 useArcher && archerRelayDeadline
                   ? {
-                      rawTransaction: signedTx,
-                      deadline: Math.floor(archerRelayDeadline + new Date().getTime() / 1000),
-                      nonce: BigNumber.from(fullTx.nonce).toNumber(),
-                      ethTip: archerETHTip,
-                    }
+                    rawTransaction: signedTx,
+                    deadline: Math.floor(archerRelayDeadline + new Date().getTime() / 1000),
+                    nonce: BigNumber.from(fullTx.nonce).toNumber(),
+                    ethTip: archerETHTip,
+                  }
                   : undefined
+              // console.log('archer', archer)
               addTransaction(
                 { hash },
                 {
                   summary: withRecipient,
                   archer,
-                },
+                }
               )
               return archer ? postToRelay(archer.rawTransaction, archer.deadline).then(() => hash) : hash
             })

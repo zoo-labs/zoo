@@ -1,13 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { GetTriggerProps, OpenModal, TriggerProps } from 'react-morphing-modal/dist/types'
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'
+import Link from 'next/link'
 import { useContract } from '../hooks'
 import Asset from './Asset'
 import _ from 'lodash'
+import { newNft } from '../functions/assets'
 import { useQuery, gql } from '@apollo/client'
+import { useRouter } from 'next/router'
 import { ethers } from 'ethers'
 import { useTokenTypes } from './state'
-import { Link, useHistory } from 'react-router-dom'
 
 const getPages = (total: number, perPage: number) => {
   var chunks: number[] = Array(Math.floor(total / perPage)).fill(perPage)
@@ -38,14 +40,9 @@ const GET_ASSETS = gql`
   }
 `
 
-const Empty = ({ empty }) =>
-  empty ? (
-    empty
-  ) : (
-    <div className='py-3'>
-      <Link to='/mint'>Mint and list the first.</Link>
-    </div>
-  )
+const Empty = ({ empty }) => (
+  empty ? empty : <div className="py-3"><Link href="/mint">Mint and list the first.</Link></div>
+)
 
 export type AssetListProps = {
   title: string
@@ -67,8 +64,19 @@ export type AssetListProps = {
   openModal?: OpenModal
 } & React.HTMLAttributes<HTMLDivElement>
 
-const AssetList = ({ animate, cols, totalMinted, title, large = false, empty, where = {}, perPage = 6, orderBy = 'id', showPageNumbers = true }: AssetListProps) => {
-  const history = useHistory()
+const AssetList = ({
+  animate,
+  cols,
+  totalMinted,
+  title,
+  large = false,
+  empty,
+  where = {},
+  perPage = 6,
+  orderBy = 'id',
+  showPageNumbers = true,
+}: AssetListProps) => {
+  const router = useRouter()
   const [totalPages, setTotalPages] = useState(1)
   const [assets, setAssets] = useState([])
   const [page, setPage] = useState(1)
@@ -122,33 +130,45 @@ const AssetList = ({ animate, cols, totalMinted, title, large = false, empty, wh
   }, [data])
 
   const onClick = (tokenId: number | string) => {
-    history.push(`${history.location}?tokenId=${tokenId}`)
+    router.push(`${router.pathname}?tokenId=${tokenId}`, undefined, { shallow: true })
   }
 
   return (
     <div className={`AssetList pb-10 mb-10 border-b-gray-900 border-b-2`}>
-      <div className='grid grid-cols-2 gap-5'>
-        <div className='text-2xl text-indigo-600'>{title}</div>
-        {totalPages > 1 && (
-          <div className='flex justify-end'>
-            <div onClick={previousPage} className={`p-2 mr-3 rounded-full cursor-pointer ${page > 1 ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'}`}>
-              <HiOutlineChevronLeft size={16} />
-            </div>
-            {showPageNumbers && (
-              <div className='pt-1 text-lg'>
-                Page {page} of {totalPages}
-              </div>
-            )}
-            <div onClick={nextPage} className={`p-2 ml-3 rounded-full cursor-pointer ${page < totalPages ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'}`}>
-              <HiOutlineChevronRight size={16} />
-            </div>
+      <div className="grid grid-cols-2 gap-5">
+        <div className="text-2xl text-indigo-600">{title}</div>
+        {totalPages > 1 && <div className="flex justify-end">
+          <div
+            onClick={previousPage}
+            className={`p-2 mr-3 rounded-full cursor-pointer ${page > 1 ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'}`}
+          >
+            <HiOutlineChevronLeft size={16} />
           </div>
-        )}
+          {showPageNumbers && <div className="pt-1 text-lg">
+            Page {page} of {totalPages}
+          </div>}
+          <div
+            onClick={nextPage}
+            className={`p-2 ml-3 rounded-full cursor-pointer ${
+              page < totalPages ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'
+            }`}
+          >
+            <HiOutlineChevronRight size={16} />
+          </div>
+        </div>}
       </div>
       {assets.length > 0 ? (
         <div className={`grid grid-cols-1 gap-5 md:grid-cols-${cols || 6}`}>
           {assets.map((asset, i) => (
-            <Asset key={asset.id} tokenId={asset.id} contentURI={asset.contentURI} showPrice={false} animate={animate} large={large} onClick={() => onClick(asset.id)} />
+            <Asset
+              key={asset.id}
+              tokenId={asset.id}
+              contentURI={asset.contentURI}
+              showPrice={false}
+              animate={animate}
+              large={large}
+              onClick={() => onClick(asset.id)}
+            />
           ))}
         </div>
       ) : (

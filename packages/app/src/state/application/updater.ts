@@ -1,12 +1,12 @@
-import { useWeb3React } from '@web3-react/core'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import useDebounce from '../../hooks/useDebounce'
 import useIsWindowVisible from '../../hooks/useIsWindowVisible'
 import { updateBlockNumber } from './actions'
 
 export default function Updater(): null {
-  const { library, chainId } = useWeb3React()
+  const { library, chainId } = useActiveWeb3React()
   const dispatch = useDispatch()
 
   const windowVisible = useIsWindowVisible()
@@ -32,7 +32,7 @@ export default function Updater(): null {
         return state
       })
     },
-    [chainId, setState],
+    [chainId, setState]
   )
 
   // attach/detach listeners
@@ -60,7 +60,7 @@ export default function Updater(): null {
       updateBlockNumber({
         chainId: debouncedState.chainId,
         blockNumber: debouncedState.blockNumber,
-      }),
+      })
     )
   }, [windowVisible, dispatch, debouncedState.blockNumber, debouncedState.chainId])
 

@@ -1,5 +1,9 @@
-import { IconProps } from 'react-feather'
 import React, { FC, useState } from 'react'
+
+import { IconProps } from 'react-feather'
+import Image from '../Image'
+import { classNames } from '../../functions'
+import { cloudinaryLoader } from '../../functions/cloudinary'
 
 const BAD_SRCS: { [tokenAddress: string]: true } = {}
 
@@ -17,18 +21,20 @@ const Logo: FC<LogoProps> = ({ srcs, width, height, style, alt = '', className, 
   const [, refresh] = useState<number>(0)
   const src = srcs.find((src) => !BAD_SRCS[src])
   return (
-    <div className='rounded' style={{ width, height }}>
-      <img
+    <div className="rounded" style={{ width, height, ...style }}>
+      <Image
         src={src || 'https://raw.githubusercontent.com/sushiswap/icons/master/token/unknown.png'}
-        // onError={() => {
-        //   if (src) BAD_SRCS[src] = true
-        //   refresh((i) => i + 1)
-        // }}
+        loader={cloudinaryLoader}
+        onError={() => {
+          if (src) BAD_SRCS[src] = true
+          refresh((i) => i + 1)
+        }}
         width={width}
         height={height}
         alt={alt}
-        className={`rounded ${className}`}
-        style={style}
+        layout="fixed"
+        className={classNames('rounded', className)}
+        {...rest}
       />
     </div>
   )

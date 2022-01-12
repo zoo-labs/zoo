@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { Toast } from '../../components/Toast'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ToastsState } from '../types'
+import { ToastsState } from 'types'
 
 const initialState: ToastsState = {
   data: [],

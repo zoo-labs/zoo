@@ -14,7 +14,8 @@ export type TokenAddressMap = Readonly<{
   }>
 }>
 
-const listCache: WeakMap<TokenList, TokenAddressMap> | null = typeof WeakMap !== 'undefined' ? new WeakMap<TokenList, TokenAddressMap>() : null
+const listCache: WeakMap<TokenList, TokenAddressMap> | null =
+  typeof WeakMap !== 'undefined' ? new WeakMap<TokenList, TokenAddressMap>() : null
 
 export function listToTokenMap(list: TokenList): TokenAddressMap {
   const result = listCache?.get(list)
@@ -75,6 +76,7 @@ function combineMaps(map1: TokenAddressMap, map2: TokenAddressMap): TokenAddress
     42220: { ...map1[42220], ...map2[42220] }, // celo
     11297108109: { ...map1[11297108109], ...map2[11297108109] }, // palm
     11297108099: { ...map1[11297108099], ...map2[11297108099] }, // palm testnet
+    1285: { ...map1[1285], ...map2[1285] }, // moonriver
   }
 }
 
@@ -129,7 +131,10 @@ export function useUnsupportedTokenList(): TokenAddressMap {
   const loadedUnsupportedListMap = useCombinedTokenMapFromUrls(UNSUPPORTED_LIST_URLS)
 
   // format into one token address map
-  return useMemo(() => combineMaps(localUnsupportedListMap, loadedUnsupportedListMap), [localUnsupportedListMap, loadedUnsupportedListMap])
+  return useMemo(
+    () => combineMaps(localUnsupportedListMap, loadedUnsupportedListMap),
+    [localUnsupportedListMap, loadedUnsupportedListMap]
+  )
 }
 
 export function useIsListActive(url: string): boolean {

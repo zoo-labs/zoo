@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { Modal } from 'react-morphing-modal'
 import { HiOutlineChevronLeft } from 'react-icons/hi'
 import Asset from './Asset'
@@ -10,7 +11,6 @@ import HowOffline from './HowOffline'
 import BidList from './BidList'
 import { Bid, GraphBid } from './types'
 import BidModal from './BidModal'
-import { useHistory, useParams } from 'react-router'
 
 const defaultShow = {
   setAsk: false,
@@ -24,10 +24,9 @@ const NoBids = () => <div>Be the first to place a bid.</div>
 const NoAsks = () => <div>Be the first to place a bid.</div>
 
 const AssetModal = (props: any) => {
-  const history = useHistory()
-  const params = useParams()
+  const router = useRouter()
   const assetModalRef = useRef(null)
-  const { tokenId: routerTokenId }: any = params
+  const { tokenId: routerTokenId } = router.query
   const { modalProps } = props
   const [tokenId, setTokenId] = useState(null)
   const { ask, highest, getUsdAmount, contentURI, formattedAmount, isOwner, symbol, usdAmount } = useAsset(tokenId)
@@ -40,7 +39,7 @@ const AssetModal = (props: any) => {
   }
 
   const onClose = () => {
-    history.push(history.location)
+    router.push(router.pathname)
     modalProps.close()
   }
 
@@ -61,13 +60,16 @@ const AssetModal = (props: any) => {
     <>
       <BidModal bid={modalBid} isOpen={showBidModal} onClose={() => setShowBidModal(!showBidModal)} />
       <Modal {...props.modalProps} padding={0} closeButton={false}>
-        <div ref={assetModalRef} className='grid md:grid-cols-2 gap-30 sm:grid-cols-1'>
-          <div className=''>
-            <div onClick={onClose} className='flex items-center justify-center mt-5 ml-5 bg-gray-800 rounded-full shadow-2xl cursor-pointer md:absolute h-14 w-14'>
+        <div ref={assetModalRef} className="grid md:grid-cols-2 gap-30 sm:grid-cols-1">
+          <div className="">
+            <div
+              onClick={onClose}
+              className="flex items-center justify-center mt-5 ml-5 bg-gray-800 rounded-full shadow-2xl cursor-pointer md:absolute h-14 w-14"
+            >
               <HiOutlineChevronLeft />
             </div>
-            <div className='flex items-stretch md:h-screen'>
-              <div className='self-center m-auto w-96'>
+            <div className="flex items-stretch md:h-screen">
+              <div className="self-center m-auto w-96">
                 <Asset
                   ask={ask}
                   tokenId={tokenId}
@@ -85,8 +87,8 @@ const AssetModal = (props: any) => {
               </div>
             </div>
           </div>
-          <div className='flex items-stretch bg-gray-900 md:h-screen'>
-            <div className='self-center m-auto w-96'>
+          <div className="flex items-stretch bg-gray-900 md:h-screen">
+            <div className="self-center m-auto w-96">
               {isOwner ? (
                 <div>
                   {show.howOffline ? (
@@ -95,11 +97,14 @@ const AssetModal = (props: any) => {
                     <>
                       <SetAsk tokenId={tokenId}>
                         {/* <p className="text-center">You cannot withdraw a reservation once submitted.</p> */}
-                        <p className='pt-8 text-center text-gray-500 cursor-pointer' onClick={() => showSection('howOffline')}>
+                        <p
+                          className="pt-8 text-center text-gray-500 cursor-pointer"
+                          onClick={() => showSection('howOffline')}
+                        >
                           How do offline asks work?
                         </p>
                       </SetAsk>
-                      <div className='pt-8 text-indigo-500'>Bids</div>
+                      <div className="pt-8 text-indigo-500">Bids</div>
                       <BidList where={{ media: tokenId }} onClick={onClickBid} />
                     </>
                   )}
@@ -111,11 +116,14 @@ const AssetModal = (props: any) => {
                   ) : (
                     <>
                       <SetBid tokenId={tokenId}>
-                        <p className='pt-8 text-center text-gray-500 cursor-pointer' onClick={() => showSection('howReservations')}>
+                        <p
+                          className="pt-8 text-center text-gray-500 cursor-pointer"
+                          onClick={() => showSection('howReservations')}
+                        >
                           How do reservations work?
                         </p>
                       </SetBid>
-                      <div className='pt-8 text-indigo-500'>Bids</div>
+                      <div className="pt-8 text-indigo-500">Bids</div>
                       <BidList empty={<NoBids />} where={{ media: tokenId }} onClick={onClickBid} />
                     </>
                   )}

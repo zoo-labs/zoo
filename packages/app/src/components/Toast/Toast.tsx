@@ -1,16 +1,14 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
-import { Alert, alertVariants } from "../Alert";
-import { Text } from "../Text";
+import Alert, { TYPE } from "../Alert";
 import ToastAction from "./ToastAction";
 import { ToastProps, types } from "./types";
 
 const alertTypeMap = {
-  [types.INFO]: alertVariants.INFO,
-  [types.SUCCESS]: alertVariants.SUCCESS,
-  [types.DANGER]: alertVariants.DANGER,
-  [types.WARNING]: alertVariants.WARNING,
+  [types.INFO]: TYPE.information,
+  [types.DANGER]: TYPE.error,
+  [types.WARNING]: TYPE.warning,
 };
 
 const StyledToast = styled.div`
@@ -81,14 +79,12 @@ const Toast: React.FC<ToastProps> = ({
       >
         <Alert
           title={title}
-          variant={alertTypeMap[type]}
+          // variant={'warning'}
           onClick={handleRemove}
         >
           {action ? (
             <>
-              <Text as="p" mb="8px">
-                {description}
-              </Text>
+              <p style={{ marginBottom: "8px" }}>{description}</p>
               <ToastAction action={action} />
             </>
           ) : (

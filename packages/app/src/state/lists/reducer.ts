@@ -152,7 +152,10 @@ export default createReducer(initialState, (builder) =>
         state.byUrl = initialState.byUrl
         state.activeListUrls = initialState.activeListUrls
       } else if (state.lastInitializedDefaultListOfLists) {
-        const lastInitializedSet = state.lastInitializedDefaultListOfLists.reduce<Set<string>>((s, l) => s.add(l), new Set())
+        const lastInitializedSet = state.lastInitializedDefaultListOfLists.reduce<Set<string>>(
+          (s, l) => s.add(l),
+          new Set()
+        )
         const newListOfListsSet = DEFAULT_LIST_OF_LISTS.reduce<Set<string>>((s, l) => s.add(l), new Set())
 
         DEFAULT_LIST_OF_LISTS.forEach((listUrl) => {
@@ -182,5 +185,5 @@ export default createReducer(initialState, (builder) =>
           return true
         })
       }
-    }),
+    })
 )

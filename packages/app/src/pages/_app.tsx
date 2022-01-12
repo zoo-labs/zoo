@@ -1,9 +1,9 @@
 import "../bootstrap";
-import "../styles/index.css";
+import "styles/index.css";
+import "react-toastify/dist/ReactToastify.css";
 
-import { Fragment, FunctionComponent, useCallback, useMemo } from "react";
+import { Fragment, FunctionComponent } from "react";
 import { GetStaticProps, NextComponentType, NextPageContext } from "next";
-import { PersistGate } from "redux-persist/integration/react";
 import store, { persistor } from "../state";
 
 import type { AppProps } from "next/app";
@@ -14,6 +14,7 @@ import Head from "next/head";
 import { I18nProvider } from "@lingui/react";
 import ListsUpdater from "../state/lists/updater";
 import MulticallUpdater from "../state/multicall/updater";
+import { PersistGate } from "redux-persist/integration/react";
 import ReactGA from "react-ga";
 import { Provider as ReduxProvider, useDispatch } from "react-redux";
 import TransactionUpdater from "../state/transactions/updater";
@@ -21,7 +22,10 @@ import UserUpdater from "../state/user/updater";
 import Web3ReactManager from "../components/Web3ReactManager";
 import { Web3ReactProvider } from "@web3-react/core";
 import dynamic from "next/dynamic";
+import getLibrary from "../functions/getLibrary";
 import { i18n } from "@lingui/core";
+import { nanoid } from "@reduxjs/toolkit";
+import { remoteLoader } from "@lingui/remote-loader";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import {
@@ -31,29 +35,9 @@ import {
   useQuery,
   gql,
 } from "@apollo/client";
-import { useActiveWeb3React, useWeb3, useZooToken } from "../hooks";
-
-import { updateGasPrice } from "state/network/actions";
-import { clearZoo } from "state/zoo";
-import {
-  addAnimal,
-  addAnimals,
-  addEgg,
-  addEggs,
-  burnAnimal,
-  burnEgg,
-  getMyEggs,
-  getMyTransactions,
-  getZooBalance,
-} from "state/zoo/actions";
-import { mapAnimal, mapEgg, queryAnimals, queryEggs } from "util/moralis";
-import { getLibrary } from "util/web3React";
-import { useMoralisSubscription } from "react-moralis";
-import { SubgraphProvider } from "providers/SubgraphProvider";
-const client = new ApolloClient({
-  uri: "http://127.0.0.1:8000/subgraphs/name/luxdefi/luxtown",
-  cache: new InMemoryCache(),
-});
+import { useActiveWeb3React } from "../hooks";
+import { SubgraphProvider } from "../providers/SubgraphProvider";
+import { initTranslation, loadTranslation } from "../entities";
 
 const Web3ProviderNetwork = dynamic(
   () => import("../components/Web3ProviderNetwork"),
@@ -65,6 +49,7 @@ const Web3ProviderNetwork = dynamic(
 if (typeof window !== "undefined" && !!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false;
 }
+initTranslation(i18n);
 function MyApp({
   Component,
   pageProps,
@@ -98,6 +83,13 @@ function MyApp({
     ReactGA.pageview(`${pathname}${query}`);
   }, [pathname, query]);
 
+  useEffect(() => {
+    if (pageProps.messages) {
+      i18n.load(locale, pageProps.messages);
+      i18n.activate(locale);
+    }
+  }, [locale, pageProps.messages]);
+
   // Allows for conditionally setting a provider to be hoisted per page
   const Provider = Component.Provider || Fragment;
 
@@ -107,136 +99,17 @@ function MyApp({
   // Allows for conditionally setting a guard to be hoisted per page
   const Guard = Component.Guard || Fragment;
 
-  const { library, chainId, account } = useWeb3();
-  const dispatch = useDispatch();
-
-  // Test hitting subgraph
-  const GET_MEDIAS = gql`
-    query GetMedias {
-      medias {
-        id
-      }
-    }
-  `;
-  const { loading, error, data } = useQuery(GET_MEDIAS);
-  console.log("Subgraph Data", data);
-
-  const valid = useMemo(() => {
-    if (library && chainId) {
-      return true;
-    }
-    return false;
-  }, [library, chainId]);
-  /* Set signedIn to true if chainId and window.localStorage.getItem('connectorId') exist */
-  const signedIn =
-    chainId !== undefined &&
-    window.localStorage.getItem("connectorId") !== undefined;
-  // const zooToken = useContract('ZOO')
-  const zooToken = useZooToken();
-  // const zooToken = getToken(web3)
-
-  const getEggs = async (account) => {
-    try {
-      const eggs = [];
-
-      for (const egg of await queryEggs()) {
-        eggs.push(mapEgg(egg));
-      }
-      dispatch(addEggs(eggs));
-      dispatch(getMyEggs(account, eggs));
-    } catch (e) {
-      console.error("ISSUE GETTING EGGS \n", e);
-    }
-  };
-
-  const getAnimals = async () => {
-    try {
-      const animals = [];
-      for (const animal of await queryAnimals()) {
-        animals.push(mapAnimal(animal));
-      }
-      dispatch(addAnimals(animals));
-    } catch (e) {
-      console.error("ISSUE GETTING ANIMAL \n", e);
-    }
-  };
-
-  const createEgg = async (data) => {
-    try {
-      dispatch(addEgg({ data: mapEgg(data), account }));
-    } catch (e) {
-      console.error("ISSUE CREATING EGG:", e);
-    }
-  };
-
-  const updateEgg = async (data) => {
-    try {
-      dispatch(addEgg({ data: mapEgg(data), account }));
-    } catch (e) {
-      console.error("ISSUE UPDATING EGG:", e);
-    }
-  };
-
-  const createAnimal = async (data) => {
-    try {
-      dispatch(addAnimal(mapAnimal(data)));
-    } catch (e) {
-      console.error("ISSUE CREATING ANIMAL:", e);
-    }
-  };
-
-  const updateAnimal = async (data) => {
-    try {
-      dispatch(addAnimal(mapAnimal(data)));
-    } catch (e) {
-      console.error("ISSUE UPDATING ANIMAL:", e);
-    }
-  };
-
-  const deleteAnimal = async (data) => {
-    try {
-      dispatch(burnAnimal(mapAnimal(data)));
-    } catch (e) {
-      console.error("ISSUE DELETING ANIMAL:", e);
-    }
-  };
-
-  const deleteEgg = async (data) => {
-    try {
-      dispatch(burnEgg(mapEgg(data)));
-    } catch (e) {
-      console.error("ISSUE DELETING EGG:", e);
-    }
-  };
-
-  useMoralisSubscription("Eggs", (q) => q, [], {
-    onCreate: (data) => createEgg(data),
-    onUpdate: (data) => updateEgg(data),
-    onDelete: (data) => deleteEgg(data),
-  });
-
-  useMoralisSubscription("Animals", (q) => q, [], {
-    onCreate: (data) => createAnimal(data),
-    onUpdate: (data) => updateAnimal(data),
-    onDelete: (data) => deleteAnimal(data),
-  });
-  const getValues = useCallback(
-    (account) => {
-      dispatch(updateGasPrice(library));
-      dispatch(clearZoo());
-      // @TODO the following calls are using moralis.
-      // re-enable them after the changeover to subgraph
-      // dispatch(getZooBalance(account, zooToken))
-      // dispatch(getMyTransactions(account))
-      // getEggs(account)
-      // getAnimals()
-    },
-    [dispatch, getAnimals, getEggs, library, zooToken]
-  );
-
-  useEffect(() => {
-    getValues(account);
-  }, [chainId, account, getValues]);
+  // const getAnimals = async () => {
+  //   try {
+  //     const animals = [];
+  //     for (const animal of await queryAnimals()) {
+  //       animals.push(mapAnimal(animal));
+  //     }
+  //     dispatch(addAnimals(animals));
+  //   } catch (e) {
+  //     console.error("ISSUE GETTING ANIMAL \n", e);
+  //   }
+  // };
 
   return (
     <Fragment>
@@ -248,7 +121,7 @@ function MyApp({
           name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
-        <title key="title">LUX</title>
+        <title key="title">ZOO</title>
 
         <meta
           key="description"
@@ -275,7 +148,7 @@ function MyApp({
         <meta
           key="twitter:url"
           name="twitter:url"
-          content="https://lux.financial/"
+          content="https://zoo.financial/"
         />
         <meta
           key="twitter:description"
@@ -285,7 +158,7 @@ function MyApp({
         <meta
           key="twitter:image"
           name="twitter:image"
-          content="https://lux.financial/lux.png"
+          content="https://zoo.financial/zoo.png"
         />
         <meta
           key="twitter:creator"
@@ -294,11 +167,11 @@ function MyApp({
         />
         <meta key="og:type" property="og:type" content="website" />
         <meta key="og:site_name" property="og:site_name" content="Lux Defi" />
-        <meta key="og:url" property="og:url" content="https://lux.financial" />
+        <meta key="og:url" property="og:url" content="https://zoo.financial" />
         <meta
           key="og:image"
           property="og:image"
-          content="https://lux.financial/lux.png"
+          content="https://zoo.financial/zoo.png"
         />
         <meta
           key="og:description"

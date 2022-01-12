@@ -1,6 +1,6 @@
 // CONVENTION formatFoo -> string
 
-import {BigintIsh, Currency, CurrencyAmount, Fraction, JSBI, Price } from '@zoolabs/sdk'
+import { BigintIsh, Currency, CurrencyAmount, Fraction, JSBI, Price } from '@zoolabs/sdk'
 
 import { BigNumberish } from '@ethersproject/bignumber'
 import { formatUnits } from '@ethersproject/units'
@@ -67,14 +67,14 @@ export function formatPercent(percentString: any) {
   }
 }
 
-export const formatNumber = (number: any, usd = false, scale = true) => {
+export const formatNumber = (number: any, usd = false, scale = true, decimals = 0) => {
   if (isNaN(number) || number === '' || number === undefined) {
     return usd ? '$0.00' : '0'
   }
   const num = parseFloat(number)
 
   if (num > 500000000 && scale) {
-    return (usd ? '$' : '') + formatK(num.toFixed(0))
+    return (usd ? '$' : '') + formatK(num.toFixed(decimals))
   }
 
   if (num === 0) {
@@ -88,8 +88,12 @@ export const formatNumber = (number: any, usd = false, scale = true) => {
     return usd ? '< $0.0001' : '< 0.0001'
   }
 
-  if (num > 1000) {
-    return usd ? '$' + Number(parseFloat(String(num)).toFixed(0)).toLocaleString() : '' + Number(parseFloat(String(num)).toFixed(0)).toLocaleString()
+  if (num > 1000 || num < -1000) {
+    return (
+      (num > 1000 ? '' : '-') +
+      (usd ? '$' : '') +
+      Number(parseFloat(String(Math.abs(num))).toFixed(decimals)).toLocaleString()
+    )
   }
 
   if (usd) {
@@ -174,7 +178,8 @@ export function formatDateAgo(date: Date) {
   if (secondsAgo < 3600) return `${Math.floor(secondsAgo / 60)} Minute${secondsAgo / 120 >= 1 ? 's' : ''} Ago`
   if (secondsAgo < 86400) return `${Math.floor(secondsAgo / 3600)} Hour${secondsAgo / 7200 >= 1 ? 's' : ''} Ago`
   if (secondsAgo < 2592000) return `${Math.floor(secondsAgo / 86400)} Day${secondsAgo / 172800 >= 1 ? 's' : ''} Ago`
-  if (secondsAgo < 31536000) return `${Math.floor(secondsAgo / 2592000)} Month${secondsAgo / 5184000 >= 1 ? 's' : ''} Ago`
+  if (secondsAgo < 31536000)
+    return `${Math.floor(secondsAgo / 2592000)} Month${secondsAgo / 5184000 >= 1 ? 's' : ''} Ago`
 
   return `${Math.floor(secondsAgo / 31536000)} Year${secondsAgo / 63072000 >= 1 ? 's' : ''} Ago`
 }
@@ -187,6 +192,17 @@ export const numberWithCommas = (num: number | string) => {
   const values = num.toString().split('.')
   return values[0].replace(/.(?=(?:.{3})+$)/g, '$&,') + (values.length == 2 ? '.' + values[1] : '')
 }
+
 export const formatCurrencyAmountWithCommas = (token: Currency, amount: BigintIsh) => {
   return numberWithCommas(formatCurrencyFromRawAmount(token, amount))
+}
+
+export const formatError = (err: any) => {
+  if (err?.data?.message) {
+    return err?.data?.message?.replace(/Error: Returned error: /, '')
+  } else if (err.code) {
+    return err.message
+  } else {
+    return err.toString().replace(/Error: Returned error: /, '')
+  }
 }
