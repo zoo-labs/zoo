@@ -1,8 +1,7 @@
 export const types = {
-  SUCCESS: 'success',
-  DANGER: 'danger',
+  DANGER: 'error',
   WARNING: 'warning',
-  INFO: 'info',
+  INFO: 'information',
 }
 
 export type Types = typeof types[keyof typeof types]

@@ -2,16 +2,16 @@ import { AppDispatch } from '../state'
 import { ChainId } from '@zoolabs/sdk'
 import { TokenList } from '@uniswap/token-lists'
 import { fetchTokenList } from '../state/lists/actions'
-import { getNetworkLibrary } from '../connectors'
+import { getNetworkLibrary } from '../functions/getNetworkLibrary'
 import { getTokenList } from '../functions/list'
 import { nanoid } from '@reduxjs/toolkit'
 import { resolveENSContentHash } from '../functions/ens'
+import { useActiveWeb3React } from './useActiveWeb3React'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { useWeb3React } from '@web3-react/core'
 
 export function useFetchListCallback(): (listUrl: string, sendDispatch?: boolean) => Promise<TokenList> {
-  const { chainId, library } = useWeb3React()
+  const { chainId, library } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
 
   const ensResolver = useCallback(
@@ -27,7 +27,7 @@ export function useFetchListCallback(): (listUrl: string, sendDispatch?: boolean
       }
       return resolveENSContentHash(ensName, library)
     },
-    [chainId, library],
+    [chainId, library]
   )
 
   // note: prevent dispatch if using for list search or unsupported list
@@ -48,11 +48,11 @@ export function useFetchListCallback(): (listUrl: string, sendDispatch?: boolean
                 url: listUrl,
                 requestId,
                 errorMessage: error.message,
-              }),
+              })
             )
           throw error
         })
     },
-    [dispatch, ensResolver],
+    [dispatch, ensResolver]
   )
 }

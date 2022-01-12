@@ -36,7 +36,10 @@ export interface RetryOptions {
  * @param minWait min wait between retries in ms
  * @param maxWait max wait between retries in ms
  */
-export function retry<T>(fn: () => Promise<T>, { n, minWait, maxWait }: RetryOptions): { promise: Promise<T>; cancel: () => void } {
+export function retry<T>(
+  fn: () => Promise<T>,
+  { n, minWait, maxWait }: RetryOptions
+): { promise: Promise<T>; cancel: () => void } {
   let completed = false
   let rejectCancelled: (error: Error) => void
   const promise = new Promise<T>(async (resolve, reject) => {

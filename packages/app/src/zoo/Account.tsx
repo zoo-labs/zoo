@@ -1,9 +1,15 @@
 import React, { FC } from 'react'
+import Copy from '../components/AccountDetails/Copy'
+import ExternalLink from '../components/ExternalLink'
+import Image from 'next/image'
+import { ExternalLink as LinkIcon } from 'react-feather'
 import Typography from '../components/Typography'
+import { getExplorerLink } from '../functions/explorer'
+import { shortenAddress } from '../functions'
+import { t } from '@lingui/macro'
 import { useActiveWeb3React } from '../hooks/useActiveWeb3React'
 import { useLingui } from '@lingui/react'
 import useENSName from '../hooks/useENSName'
-import { shortenAddress } from 'functions'
 
 interface AccountProps {
   label?: string
@@ -19,16 +25,16 @@ const Account: FC<AccountProps> = ({ label, account: overrideAccount }) => {
   const { ENSName } = useENSName(account ?? undefined)
 
   return (
-    <div className='flex flex-col justify-center space-y-3'>
+    <div className="flex flex-col justify-center space-y-3">
       {ENSName ? (
-        <div className='bg-dark-800'>
+        <div className="bg-dark-800">
           <Typography>
             {label} {ENSName}
           </Typography>
         </div>
       ) : (
-        <div className='py-2'>
-          <div className='flex items-center gap-2 space-x-3'>
+        <div className="py-2">
+          <div className="flex items-center gap-2 space-x-3">
             <Typography>
               {label} {account && shortenAddress(account)}
             </Typography>

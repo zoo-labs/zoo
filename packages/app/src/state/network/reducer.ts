@@ -13,5 +13,5 @@ export default createReducer(initialState, (builder) =>
   builder.addCase(updateGasPrice.fulfilled, (state, action) => {
     const { gasPrice } = action.payload
     state.gasPrice = gasPrice
-  }),
+  })
 )

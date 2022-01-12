@@ -46,7 +46,7 @@ function Typography({
       onClick,
       ...rest,
     },
-    children,
+    children
   )
 }
 
