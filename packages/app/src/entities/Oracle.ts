@@ -1,9 +1,10 @@
 import { CHAINLINK_ORACLE_ADDRESS, ChainId, Token } from '@zoolabs/sdk'
 
 import { AddressZero } from '@ethersproject/constants'
-import { CHAINLINK_PRICE_FEED_MAP } from '../config/oracles/chainlink'
+import { CHAINLINK_PRICE_FEED_MAP } from '../config/chainlink'
 import { defaultAbiCoder } from '@ethersproject/abi'
 import { e10 } from '../functions/math'
+
 
 export interface Oracle {
   address: string
