@@ -20,7 +20,15 @@ const Footer = () => {
         <div className="flex items-start justify-between px-4 max-w-7xl mx-auto flex-auto">
           <div className="flex justify-between items-start basis-2/3 px-6 py-16 border-r border-grey">
             <div>
-            <Image src="/img/logo.svg" width={80} height={24} alt="Zoo" />
+              <Link href="/" passHref>
+                <Image
+                  src="/img/logo.svg"
+                  width={80}
+                  height={24}
+                  alt="Zoo"
+                  className="hover:cursor-pointer"
+                />
+              </Link>
             </div>
             <div className="flex flex-col text-grey">
               <div className="mb-2">
@@ -45,7 +53,6 @@ const Footer = () => {
                 <Link href="/learn">Learn</Link>
               </div>
             </div>
-            
           </div>
           <div className="flex flex-col items-end basis-1/3 px-6 text-grey border-r py-16 border-grey">
             <div className="mb-0">
@@ -74,7 +81,7 @@ const Footer = () => {
               </a>
             </div>
             <div className="mb-2">
-              <a href="#faq">FAQ</a>
+              <a href="/#faqs">FAQ</a>
             </div>
             <div className="mb-0">
               <Link href="/">Connect us</Link>
