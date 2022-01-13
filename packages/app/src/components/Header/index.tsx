@@ -226,7 +226,7 @@ function AppBar(): JSX.Element {
                       </div>
                     )}
                     {/* My Wallet Button */}
-                    <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
+                    <div className="w-auto flex items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                       {account && chainId && userEthBalance && (
                         <>
                           <div className="px-3 py-2 text-primary text-bold">
@@ -237,7 +237,7 @@ function AppBar(): JSX.Element {
                       )}
                       <Web3Status
                         title="My Wallet"
-                        className="font-bold border border-green text-green"
+                        className="font-bold border border-green text-green bg-black"
                       />
                     </div>
                     <div className="hidden md:block">
