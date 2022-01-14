@@ -29,7 +29,7 @@ export default function Community() {
               <Menu.Item>
                 {({ active }) => (
                   <a
-                    href="/leaderboard"
+                    href="/global-leaderboard"
                     className={`${
                       active ? "bg-black text-white" : "text-white"
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
