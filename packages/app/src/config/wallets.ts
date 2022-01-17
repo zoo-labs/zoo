@@ -3,13 +3,14 @@ import { ChainId } from '@zoolabs/sdk'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { NetworkConnector } from '../entities/NetworkConnector'
 import RPC from './rpc'
+import { AVAILABLE_NETWORKS, SUPPORTED_NETWORKS } from './networks'
 
 export const network = new NetworkConnector({
   defaultChainId: 1,
   urls: RPC,
 })
 
-const supportedChainIds = Object.values(ChainId) as number[]
+const supportedChainIds = Object.values(AVAILABLE_NETWORKS) as number[]
 
 export const injected = new InjectedConnector({
   supportedChainIds,
