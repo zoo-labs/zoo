@@ -1,6 +1,7 @@
 import { ChainId, Currency, NATIVE, SUSHI_ADDRESS } from "@zoolabs/sdk";
 import { Feature, featureEnabled } from "../../functions/feature";
 import React, { useEffect, useState } from "react";
+import {useRouter} from 'next/router';
 
 import { addresses, ANALYTICS_URL } from "../../constants";
 import ExternalLink from "../ExternalLink";
@@ -29,6 +30,9 @@ function AppBar(): JSX.Element {
   const { i18n } = useLingui();
   const { account, chainId, library } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
+  const router = useRouter();
+  let linkStyle = "p-2 text-baseline hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap"
+
   useEffect(() => {
     getZooBalance();
   }, [account]);
@@ -65,7 +69,7 @@ function AppBar(): JSX.Element {
                       <NavLink href="/market">
                         <a
                           id={`mint-nav-link`}
-                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                          className={router.pathname == "/market" ? `${linkStyle} text-green text-bold` : `${linkStyle} text-white`}
                         >
                           {i18n._(t`Marketplace`)}
                         </a>
@@ -76,7 +80,7 @@ function AppBar(): JSX.Element {
                         target="_blank"
                         rel="noreferrer"
                         id={`market-nav-link`}
-                        className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                        className="p-2 text-baseline text-primary hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap"
                       >
                         {i18n._(t`Chart`)}
                       </a>
@@ -86,7 +90,7 @@ function AppBar(): JSX.Element {
                       <NavLink href="/press">
                         <a
                           id={`mint-nav-link`}
-                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                          className={router.pathname == "/press" ? `${linkStyle} text-grey` : `${linkStyle} text-white`}
                         >
                           {i18n._(t`Press`)}
                         </a>
