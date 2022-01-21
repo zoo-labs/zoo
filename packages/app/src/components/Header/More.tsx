@@ -1,68 +1,85 @@
-import { Popover, Transition } from '@headlessui/react'
-import React, { Fragment } from 'react'
+import { Popover, Transition } from "@headlessui/react";
+import React, { Fragment } from "react";
+import { useGif } from "context/GifContext";
+import { toggleImage, toggleGif } from "context/GifContext";
 
-import ExternalLink from '../ExternalLink'
-import { I18n } from '@lingui/core'
-import Image from 'next/image'
-import { classNames } from '../../functions/styling'
-import { t } from '@lingui/macro'
-import { useLingui } from '@lingui/react'
-import NavLink from '../NavLink'
-import Toggle from '../Toggle'
-import { useAnimationModeManager } from '../../state/user/hooks'
+import ExternalLink from "../ExternalLink";
+import { I18n } from "@lingui/core";
+import Image from "next/image";
+import { classNames } from "../../functions/styling";
+import { t } from "@lingui/macro";
+import { useLingui } from "@lingui/react";
+import NavLink from "../NavLink";
+import Toggle from "../Toggle";
+import { useAnimationModeManager } from "../../state/user/hooks";
 
 const items = (i18n: I18n) => [
   {
     name: i18n._(t`About`),
     description: i18n._(t`Documentation for users of Sushi.`),
-    href: 'https://docs.sushi.com',
+    href: "https://docs.sushi.com",
     external: true,
   },
   {
     name: i18n._(t`Dev`),
     description: i18n._(t`Documentation for developers of Sushi.`),
-    href: 'https://dev.sushi.com',
+    href: "https://dev.sushi.com",
     external: true,
   },
   {
     name: i18n._(t`Open Source`),
     description: i18n._(t`Sushi is a supporter of Open Source.`),
-    href: 'https://github.com/sushiswap',
+    href: "https://github.com/sushiswap",
     external: true,
   },
   {
     name: i18n._(t`Tools`),
     description: i18n._(t`Tools to optimize your workflow.`),
-    href: '/tools',
+    href: "/tools",
     external: false,
   },
   {
     name: i18n._(t`Discord`),
     description: i18n._(t`Join the community on Discord.`),
-    href: 'https://discord.gg/NVPXN4e',
+    href: "https://discord.gg/NVPXN4e",
     external: true,
   },
   {
     name: i18n._(t`Vesting`),
     description: i18n._(t`Weekly unlocks from the vesting period.`),
-    href: '/vesting',
+    href: "/vesting",
     external: false,
   },
-]
+];
 
 export default function Menu() {
-  const { i18n } = useLingui()
-  const solutions = items(i18n)
-  const [animationMode, toggleSetAnimationMode] = useAnimationModeManager()
-  console.log('animationMode', animationMode)
+  const { i18n } = useLingui();
+  const solutions = items(i18n);
+  const [animationMode, toggleSetAnimationMode] = useAnimationModeManager();
+  console.log("animationMode", animationMode);
+  const { state, dispatch } = useGif();
+  console.log("VICTOR", state.gifMode);
+
+  const toggleGifMode = () => {
+    if (state.gifMode === "gif") {
+      toggleImage(dispatch);
+    } else {
+      toggleGif(dispatch);
+    }
+  };
+
+  const handleToggleImage = () => {
+    toggleImage(dispatch);
+  };
+
   return (
     <Popover className="relative ml-auto md:m-0">
       {({ open }) => (
         <>
           <Popover.Button
             className={classNames(
-              open ? 'text-primary' : 'text-secondary',
-              'focus:outline-none hover:text-high-emphesis'
+              open ? "text-primary" : "text-secondary",
+              "focus:outline-none hover:text-high-emphesis"
             )}
           >
             <svg
@@ -116,29 +133,24 @@ export default function Menu() {
                   <div
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
                     style={{}}
-                    onClick={() => window.open('https://t.me/Zoolabs')}
                   >
-                    About
+                    {state.gifMode.toUpperCase()} Mode
                     <div className="ml-4 sm:ml-14">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+                      <Toggle
+                        id="toggle-disable-multihop-button"
+                        isActive={state.gifMode === "gif"}
+                        toggle={() => toggleGifMode()}
+                      />
                     </div>
                   </div>
+
                   <div
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
                     style={{}}
                     onClick={() =>
-                      window.open('https://charts.bogged.finance/0x09E2b83Fe5485a7c8BeAa5DffD1D324A2B2D5c13')
+                      window.open(
+                        "https://charts.bogged.finance/0x09E2b83Fe5485a7c8BeAa5DffD1D324A2B2D5c13"
+                      )
                     }
                   >
                     Analytics
@@ -170,7 +182,7 @@ export default function Menu() {
                   <div
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
                     style={{}}
-                    onClick={() => window.open('https://github.com/zoo-labs')}
+                    onClick={() => window.open("https://github.com/zoo-labs")}
                   >
                     Code
                     <div className="ml-4 sm:ml-14">
@@ -192,7 +204,9 @@ export default function Menu() {
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
                     style={{}}
                     onClick={() =>
-                      window.open('https://discord.com/channels/@me/878753766248177685/880493331010945095')
+                      window.open(
+                        "https://discord.com/channels/@me/878753766248177685/880493331010945095"
+                      )
                     }
                   >
                     Discord
@@ -232,5 +246,5 @@ export default function Menu() {
         </>
       )}
     </Popover>
-  )
+  );
 }
