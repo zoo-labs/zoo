@@ -1,8 +1,15 @@
+import { CircularProgress } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 import BigNumber from "bignumber.js";
+import CloseIcon from "components/CloseIcon";
+import CurrencySwitch from "components/CurrencySwitch";
+import Modal from "components/Modal";
+import BidModalHeader from "components/ModalHeader/BidModalHeader";
 import { formatError, numberWithCommas, wait } from "functions";
-import { useZooKeeper, useZooToken } from "hooks/useContract";
+import { useZooKeeper, useZooToken, useDrop } from "hooks/useContract";
+import useToast from "hooks/useToast";
 import { isEmpty } from "lodash";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Minus, Plus } from "react-feather";
 import { RiArrowDropDownLine } from "react-icons/ri";
@@ -11,16 +18,9 @@ import { AppState } from "state";
 import { ApplicationModal } from "state/application/actions";
 import { useBuyEggModalToggle, useModalOpen } from "state/application/hooks";
 import { useGasPrice } from "state/network/hooks";
-import Modal from "components/Modal";
-import BidModalHeader from "components/ModalHeader/BidModalHeader";
-import useToast from "hooks/useToast";
-import { CircularProgress } from "@mui/material";
-import CloseIcon from "components/CloseIcon";
+import { useETHBalances } from "state/wallet/hooks";
 import { useZoobalance } from "state/zoo/hooks";
-import CurrencySwitch from "components/CurrencySwitch";
-import Image from "next/image";
-import BuyNftCard from "../../components/BuyNftCard";
-
+import web3 from "web3";
 interface BuyEggModalProps {}
 
 const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
@@ -33,20 +33,19 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const [eggs, setEggs] = useState<Array<any>>([]);
   const [checked, setChecked] = useState(true);
   const [quantitySwitch, setQuantitySwitch] = useState(false);
-  const [bnbBalance, setBnbBalance] = useState(0);
   const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
     (state) => state.zoo.zooBalance
   );
-
   const myEggs = useSelector<AppState, AppState["zoo"]["myEggs"]>(
     (state) => state.zoo.myEggs
   );
-
   const [zooBnbPrice, setZooBnbPrice] = useState(0);
+  const [eggPrice, setEggPrice] = useState(0);
   const { account, library } = useWeb3React();
-  const getZooBalance = useZoobalance();
+  const userEthBalance = useETHBalances(account ? [account] : [])?.[
+    account ?? ""
+  ];
 
-  // check if user has enough ZOO balance
   useEffect(() => {
     if (amount > zooBalance) {
       setError(`You dont have enough ZOO`);
@@ -57,8 +56,8 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
 
   useEffect(() => {
     mount();
-    getBnbBalance();
     getZooBnbPrice();
+    getEggPrice();
   }, [myEggs]);
 
   const mount = async () => {
@@ -71,9 +70,11 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     for (let index = 0; index < emptyLength; index++) {
       newEggs.push({});
     }
+    console.log("newEggs", newEggs);
     const eggsLength = newEggs.filter(
       (egg) => !isEmpty(egg) && egg.temporary
     ).length;
+    console.log("eggsLength", eggsLength);
     wait(3000).then(
       () => (setEggs(newEggs), eggsLength === 0 && addEgg(newEggs))
     );
@@ -82,10 +83,12 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const addEgg = (altEggs: any) => {
     const newEggs = [...altEggs];
     const foundIndex = newEggs.findIndex((x) => isEmpty(x));
+    console.log("foundIndex", foundIndex);
     newEggs[foundIndex] = { temporary: true };
     setAmount(
       360000 * newEggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
     );
+    console.log("adding egg", newEggs);
     setEggs(newEggs);
   };
 
@@ -101,6 +104,9 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   };
 
   const zooKeeper = useZooKeeper();
+  const drop = useDrop();
+  const getZooBalance = useZoobalance();
+  console.log("zooKEeper --->", zooKeeper);
   const zooToken = useZooToken();
 
   const { toastError, toastInfo, clear } = useToast();
@@ -109,26 +115,25 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     clear();
   };
 
-  const getBnbBalance = async () => {
-    if (!account) return;
+  const getZooBnbPrice = async () => {
+    // console.log("zooBnbPrice", zooKeeper);
+
+    const price = await zooKeeper.zooPriceBNB();
+    const value = web3.utils.fromWei(price.toString(), "ether");
+    console.log("zooBnbPrice", value);
+    setZooBnbPrice(parseFloat(value));
+  };
+  const getEggPrice = async () => {
+    console.log("eggPrice drooop", drop);
     try {
-      await library.eth.getBalance(account).then((val) => {
-        const divisor = parseFloat(Math.pow(10, 18).toString());
-        const balance = parseFloat(val) / divisor;
-        console.log("bnb balance is", balance);
-        setBnbBalance(parseFloat(balance.toFixed(4)));
-      });
-    } catch (e) {
-      console.error("ISSUE LOADING BNB BALANCE \n", e);
+      const price = await drop?.eggPrice();
+      const value = web3.utils.fromWei(price.toString(), "ether");
+      console.log("eggPrice here", value);
+      setEggPrice(parseFloat(value));
+    } catch (error) {
+      console.log("errro in eggPrice", error);
     }
   };
-
-  const getZooBnbPrice = async () => {
-    const price = await zooKeeper.zooPriceBNB();
-    console.log("getZooBnbPrice", price);
-    setZooBnbPrice(price);
-  };
-
   const dispatch = useDispatch();
   const buyEggs = async () => {
     setDisabled(true);
@@ -208,75 +213,176 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   };
 
   const quantity = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length;
-  const eggPriceBNB = new BigNumber(10 ** 18)
-    .times(420000 * quantity)
-    .div(zooBnbPrice)
-    .div(10 ** 18)
-    .toFixed(4);
-  console.log("eggPriceBNB", eggPriceBNB);
-
-  console.log("ZOO BnB price!!!", zooBnbPrice);
+  const eggPriceBNB = zooBnbPrice * 500000;
+  console.log("eggPriceBNB", eggPriceBNB.toFixed(8));
 
   return (
-    <Modal
-      isOpen={buyEggModal}
-      onDismiss={() => null}
-      isMax
-      maxWidth={1200}
-      maxHeight={80}
-      scrollable={true}
-    >
-      <div>
-        <div className="flex flex-col items-center overflow-y-scroll">
-          {/* Head */}
-          <BidModalHeader
-            onBack={() => toggleBuyEggModal()}
-            className="absolute w-full p-6 "
-            showAccount
-          />
-
-          {/* Body */}
-          <div className="flex flex-col items-center justify-between w-full lg:flex-row lg:gap-4 mt-24">
-            <div className="flex flex-col items-center max-w-sm mx-auto lg:basis-1/2">
-              <BuyNftCard
-                image={
-                  <Image
-                    src="/img/egg-dark.png"
-                    width={300}
-                    height={400}
-                    alt=""
-                    className="object-fit"
-                  />
-                }
-                name="Egg"
-                price="2.45"
-                days="3"
-                address="0x8733...94483"
-                currency="ETH"
-              />
+    <Modal isOpen={buyEggModal} onDismiss={() => null} isMax>
+      <BidModalHeader
+        onBack={() => toggleBuyEggModal()}
+        className="absolute w-full p-6 "
+        showAccount
+      />
+      <div className="flex flex-wrap h-full">
+        <div className="relative flex flex-col items-center justify-center w-full shadow-lg md:w-1/2">
+          <div className="w-4/5 max-w-2xl p-4 lg:w-1/2">
+            <div className="flex flex-col w-full MB-6">
+              <div className="text-sm font-semibold text-gray-500">
+                BUY EGGS
+              </div>
+              <div className="text-2xl font-bold lg:text-4xl">
+                {numberWithCommas(
+                  checked
+                    ? userEthBalance
+                      ? userEthBalance.toFixed(2)
+                      : 0
+                    : zooBalance.toFixed(2)
+                )}{" "}
+                {checked ? "BNB" : "ZOO"}
+              </div>
             </div>
-
-            <div className="flex flex-col lg:basis-1/2 py-12">
-              <div className="flex flex-col items-start justify-between mb-4">
-                <p className="text-grey">
-                  Your balance:{" "}
-                  <span className="text-white font-bold">
-                    {numberWithCommas(zooBalance.toFixed(2))}
-                  </span>{" "}
-                  ZOO
-                  {console.log("EGGG PRICE!", myEggs)}
-                </p>
+            <div className="w-full my-8 ">
+              <div className="flex ">
+                <div className="flex items-center justify-center w-full rounded">
+                  <Image
+                    src={`/img/egg.png`}
+                    width={300}
+                    height={300}
+                    className="w-full h-full transition-transform duration-1000 rounded"
+                  />
+                </div>
+                {/* <div className="flex justify-between w-full h-full px-4">
+                  <div className="flex flex-col justify-center">
+                    <div className="mb-2">Egg</div>
+                    <div className="flex items-center mt-2 text-gray-400">
+                      Qty
+                      <button
+                        onClick={() => setQuantitySwitch(true)}
+                        className="p-1 ml-2 text-gray-300 rounded-md hover:bg-dark-800"
+                        type="button"
+                      >
+                        <span className="flex font-semibold tex-gray-900">
+                          {quantity} <RiArrowDropDownLine />
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex items-center w-auto font-semibold text-gray-400">
+                    {checked
+                      ? eggPriceBNB
+                      : numberWithCommas(360000.0 * quantity)}{" "}
+                    {checked ? "BNB" : "ZOO"}
+                  </div>
+                </div> */}
               </div>
-              <div className="flex justify-between w-64 px-2 py-2 mb-4 font-bold bg-transparent border border-white rounded">
-                <p>{numberWithCommas(zooBalance.toFixed(2))}</p>
-                <p>ZOO</p>
+            </div>
+            {error && (
+              <div className="mb-1 text-xs font-semibold text-red-500">
+                {error}
               </div>
-              <div></div>
-              <a className="font-bold text-purple">How do auctions work?</a>
+            )}
+            <h6 className="my-1 text-xs font-semibold text-center text-gray-400">
+              One egg costs{" "}
+              <span className="font-bold text-white">
+                {" "}
+                {numberWithCommas(checked ? eggPriceBNB : eggPrice)}{" "}
+                {checked ? "BNB" : "ZOO"} each
+              </span>
+            </h6>
+            <h6 className="mb-2 text-xs font-semibold text-center text-gray-400">
+              A maximum of 3 eggs are allowed per account
+            </h6>
+          </div>
+          <div className="absolute lg:bottom-52 bottom-10 left-50">
+            <CurrencySwitch
+              checked={checked}
+              checkFunc={() => setChecked(!checked)}
+            />
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center w-full md:w-1/2 bg-modal-dark">
+          <div className="w-1/2">
+            <div className="flex">
+              <button
+                onClick={() => buyEggs()}
+                className="inline-flex items-center justify-center w-full h-10 px-6 my-4 text-lg font-bold leading-none text-white rounded-lg bg-dark-800 hover:bg-primary"
+                style={{ transition: "all .2s" }}
+              >
+                {disabled ? (
+                  <CircularProgress color="secondary" size={20} thickness={4} />
+                ) : (
+                  `Pay ${
+                    checked
+                      ? eggPriceBNB
+                      : numberWithCommas(eggPrice * quantity)
+                  } ${checked ? "BNB" : "ZOO"}`
+                )}
+              </button>
             </div>
           </div>
         </div>
       </div>
+      {/* <Modal isOpen={quantitySwitch} onDismiss={() => setQuantitySwitch(false)}>
+        <div className="w-full mb-4">
+          <div className="flex h-20 ">
+            <div className="flex items-center justify-center mr-2 rounded w-14">
+              <img
+                style={{ verticalAlign: "middle" }}
+                src={`/static/images/basic.jpg`}
+                className="w-full h-full transition-transform duration-1000 rounded"
+              />
+            </div>
+            <div className="flex justify-between w-full h-full px-4">
+              <div className="flex flex-col justify-center">
+                <div className="mb-1">Update Quantity</div>
+                <div className="flex items-center mt-1 font-semibold text-gray-400">
+                  Egg
+                </div>
+              </div>
+              <div className="flex items-center w-auto font-semibold text-gray-400">
+                <div
+                  className="p-1 bg-white rounded-full cursor-pointer"
+                  onClick={() => setQuantitySwitch(false)}
+                >
+                  <CloseIcon color="white" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="flex items-center justify-center">
+            <div
+              className={`cursor-pointer h-10 w-10 rounded-full ${
+                eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length > 0
+                  ? "bg-dark-700"
+                  : "bg-dark-800"
+              }  flex justify-center items-center`}
+              onClick={() => removeEgg()}
+            >
+              <Minus size={25} />
+            </div>
+            <div className="px-4 py-3 mx-6 border border-solid rounded">
+              {eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length}
+            </div>
+            <div
+              className="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer bg-dark-700"
+              onClick={() => addEgg(eggs)}
+            >
+              <Plus size={25} />
+            </div>
+          </div>
+          <div className="flex">
+            <button
+              onClick={() => setQuantitySwitch(false)}
+              className="inline-flex items-center justify-center w-full h-10 px-6 mt-4 text-lg font-bold leading-none text-white rounded-lg bg-primary-light hover:bg-primary"
+              style={{ transition: "all .2s" }}
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      </Modal> */}
     </Modal>
   );
 };
