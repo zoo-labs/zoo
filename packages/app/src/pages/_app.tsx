@@ -1,5 +1,6 @@
 import "../bootstrap";
 import "styles/index.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Fragment, FunctionComponent } from "react";
 import { GetStaticProps, NextComponentType, NextPageContext } from "next";
@@ -37,7 +38,6 @@ import {
 import { useActiveWeb3React } from "../hooks";
 import { SubgraphProvider } from "../providers/SubgraphProvider";
 import { initTranslation, loadTranslation } from "../entities";
-import Main from "./main";
 
 const Web3ProviderNetwork = dynamic(
   () => import("../components/Web3ProviderNetwork"),
