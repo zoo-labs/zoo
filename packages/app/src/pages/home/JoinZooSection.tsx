@@ -6,7 +6,7 @@ import TwitterIcon from "components/Icons/twitter-icon";
 
 const JoinZooSection = () => {
   return (
-    <section className="bg-purple100">
+    <section className="bg-purple100" id="newsletter">
       <div className="flex flex-col items-center justify-center px-6 py-16 mx-auto max-w-7xl">
         <h2 className="mb-6 text-3xl font-semibold text-center lg:text-5xl">
           Join the ZOO family!

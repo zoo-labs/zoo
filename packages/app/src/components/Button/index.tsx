@@ -28,7 +28,7 @@ const OUTLINED = {
   indigo:
     "bg-indigo-600 bg-opacity-25 outline-indigo-600 rounded-full text-indigo-gray-300 hover:bg-opacity-50 disabled:bg-opacity-20",
   pink: "bg-pink bg-opacity-20 outline-pink rounded-full text-pink hover:bg-opacity-40 disabled:bg-opacity-20",
-  gray: "bg-dark-900 bg-opacity-50 outline-gray rounded-full text-gray hover:bg-opacity-100 disabled:bg-opacity-20",
+  gray: "bg-black bg-opacity-50 outline-gray rounded-full text-gray hover:bg-opacity-100 disabled:bg-opacity-20",
   green:
     "bg-green bg-opacity-20 border border-green rounded-full text-green hover:bg-opacity-40 disabled:bg-opacity-20",
   gradient:

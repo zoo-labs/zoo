@@ -23,7 +23,7 @@ import {
 import { useActiveWeb3React, useContract } from '../hooks'
 import { useCurrencyBalance } from '../state/wallet/hooks'
 import { Ask, CoingeckoPrices, HighestBid } from './types'
-
+import web3 from 'web3'
 const symbolMap = {
   [CurrencySymbol.ETH]: 'ethereum',
   [CurrencySymbol.WETH]: 'weth',
@@ -393,6 +393,9 @@ export const useTokenTypes = () => {
       metadataURI: tokenType.data.metadataURI,
     }
   }
+
+  drop?.eggPrice().then(price => console.log('getTokenTypes drop', web3.utils.fromWei(price.toString(), "ether")))
+  // drop?.getRandomAnimal(24).then((eggs) => console.log('drop getTokenTypes', eggs)).catch(err => console.log('err in drop getTokenTypes', err))
   // useEffect(() => {
   //   drop
   //     ?.getTokenTypes()

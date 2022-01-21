@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const PartnersSection = () => {
   return (
-    <section className="bg-green">
+    <section className="bg-green" id="partnerships">
       <div className="flex py-6 items-center justify-between max-w-7xl mx-auto px-6">
         <div className="flex flex-col gap-2 justify-between">
           <Image src="/img/wcs.svg" width={147} height={104} alt="" />
