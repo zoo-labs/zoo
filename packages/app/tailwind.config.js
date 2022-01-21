@@ -177,6 +177,9 @@ module.exports = {
           "100%": { opacity: 100 },
         },
       },
+      zIndex: {
+        '999': '999'
+      }
     },
   },
   variants: {
