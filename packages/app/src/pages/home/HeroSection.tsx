@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+
+// animation
+import { fadeInFromLeft, fadeInFromRight } from "animation";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useBuyZoo } from "state/zoo/hooks";
 import { useWeb3React } from "@web3-react/core";
 import { useFaucet } from "hooks";
 import { getZooBalance } from "state/zoo/actions";
-import {handleFunds} from 'utils/handleFunds';
-
+import { handleFunds } from "utils/handleFunds";
 
 const HeroSection = () => {
   const { account, library, chainId } = useWeb3React();
@@ -15,10 +17,20 @@ const HeroSection = () => {
   const faucet = useFaucet();
   const dispatch = useDispatch();
 
+  const heroContent = useRef();
+  const heroImage = useRef();
+
+  useEffect(() => {
+    fadeInFromLeft(heroContent.current);
+    fadeInFromRight(heroImage.current);
+  }, []);
+
   return (
     <section className="Hero">
-
-      <div className="Hero__inner pt-16 pb-16 px-6 md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-between">
+      <div
+        className="Hero__inner pt-16 pb-16 px-6 md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-between"
+        ref={heroContent}
+      >
         <div className="Hero__content mb-6 md:mb-12 md:flex md:flex-col md:items-center md:text-center md:max-w-7xl lg:items-start lg:text-left lg:basis-1/2">
           <p className="uppercase text-green mb-2">Nfts made Fun.</p>
           <h1 className="font-bold text-4xl mb-3 lg:text-7xl lg:mb-6">
@@ -48,7 +60,10 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-        <div className="Hero__image max-w-md lg:max-w-xl lg:basis-1/2">
+        <div
+          className="Hero__image max-w-md lg:max-w-xl lg:basis-1/2"
+          ref={heroImage}
+        >
           <Image
             src="/img/amur-leopard.png"
             width={700}

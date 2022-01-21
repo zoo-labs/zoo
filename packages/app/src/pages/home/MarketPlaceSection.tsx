@@ -1,13 +1,23 @@
-import React from "react";
+import React, {useRef, useEffect} from "react";
 import Image from "next/image";
 import { useActiveWeb3React } from "hooks";
 import Web3Status from "../../components/Web3Status";
 
+// animation
+import { fadeInOnScroll } from "animation";
+
 const MarketPlaceSection = () => {
   const { account, chainId, library } = useActiveWeb3React();
 
+  const marketRef = useRef();
+
+  useEffect(() => {
+    fadeInOnScroll(marketRef.current);
+  }, []);
+
+
   return (
-    <section className="MarketPlace">
+    <section className="MarketPlace" ref={marketRef}>
       <div className="flex flex-col items-center px-6 py-28 mx-auto lg:flex-row max-w-7xl">
         <div className="flex mb-8 basis-1/2 relative z-30">
           <div>

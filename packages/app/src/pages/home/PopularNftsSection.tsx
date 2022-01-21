@@ -1,12 +1,21 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Image from "next/image";
 import NftCard from "../../components/NftCard";
 
+// animation
+import { fadeInOnScroll } from "animation";
+
 const PopularNftsSection = () => {
+  const popularRef = React.useRef();
+
+  useEffect(() => {
+    fadeInOnScroll(popularRef.current)
+  }, []);
+
   return (
     <section>
       <div className="max-w-7xl mx-auto px-6 lg:pb-20">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center" ref={popularRef}>
           <h2 className="text-2xl md:text-2xl lg:text-5xl text-center mb-4 font-semibold">
             Popular NFTs
           </h2>
