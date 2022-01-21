@@ -2,6 +2,9 @@ import { numberWithCommas } from "functions";
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
+// animation
+import { fadeInOnScroll } from "animation";
+
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "state";
 import { useBuyZoo } from "state/zoo/hooks";
@@ -96,8 +99,15 @@ const Wallet: React.FC<WalletProps> = ({}) => {
       console.log("Failed to approve account");
     }
   };
+
   const toggleBuyEggModal = useBuyEggModalToggle();
   const toggleBuyZooModal = useBuyZooModalToggle();
+
+  const walletRef = React.useRef();
+
+  useEffect(() => {
+    fadeInOnScroll(walletRef.current);
+  }, [])
   // const buyEggs = () => {
   //   router.push(`${router.pathname}?tokenId=egg`, undefined, { shallow: true });
   // };
@@ -107,7 +117,7 @@ const Wallet: React.FC<WalletProps> = ({}) => {
   ];
 
   return (
-    <div>
+    <div ref={walletRef}>
       <p className="mb-2 text-xl font-bold ">Wallet Balance</p>
       <div className="flex items-center">
         <p className="text-xl font-bold ">
