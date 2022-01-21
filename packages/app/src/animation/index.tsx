@@ -86,10 +86,11 @@ export const fadeInOnScrollAndStagger = (element: string, trigger?: string) => {
       ease: "back4",
     },
     scrollTrigger: {
+      fastScrollEnd: true,
       trigger: trigger,
       start: "top 90%",
       end: "bottom center",
-      toggleActions: "play none none reverse",
+      toggleActions: "play none none none",
     },
   });
 };
