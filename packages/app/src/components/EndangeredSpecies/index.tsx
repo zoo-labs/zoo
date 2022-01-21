@@ -1,6 +1,22 @@
+import React, { useState } from "react";
 import Image from "next/image";
 
+import { useDispatch, useSelector } from "react-redux";
+import { useBuyZoo } from "state/zoo/hooks";
+import { useWeb3React } from "@web3-react/core";
+import { useFaucet } from "hooks";
+import { getZooBalance } from "state/zoo/actions";
+import { handleFunds } from "utils/handleFunds";
+
 const EndangeredSpecies = () => {
+  const { account, library, chainId } = useWeb3React();
+  const buyZoo = useBuyZoo();
+  const [fetching, setFetching] = useState(false);
+  const [confirmation, setConfirmation] = useState(false);
+  const [rejection, setRejection] = useState(false);
+  const faucet = useFaucet();
+  const dispatch = useDispatch();
+
   return (
     <div className="border rounded-lg py-12 px-6 bg-black100 w-full max-w-lg">
       <div className="text-center mb-8">
@@ -62,17 +78,15 @@ const EndangeredSpecies = () => {
         <span className="text-white">ZOO</span> on our Metamask App.
       </p>
       <div className="flex justify-end">
-        <a
-          href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
-          target="_blank"
-          rel="noreferrer"
-          className="bg-gradient-to-b from-purple to-blue text-white text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full flex items-center"
+        <div
+          onClick={() => handleFunds(chainId, buyZoo)}
+          className="bg-gradient-to-b from-purple to-blue text-white text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full flex items-center hover:cursor-pointer"
         >
           Buy $ZOO{" "}
           <span className="ml-2">
             <Image src="/img/star.svg" width={16} height={16} alt="" />
           </span>
-        </a>
+        </div>
       </div>
     </div>
   );

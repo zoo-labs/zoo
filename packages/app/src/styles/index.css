@@ -2,14 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-@import '@fontsource/dm-sans/index.css';
-@import 'react-virtualized/styles.css';
-@import 'rc-slider/assets/index.css';
+@import "@fontsource/dm-sans/index.css";
+@import "react-virtualized/styles.css";
+@import "rc-slider/assets/index.css";
 
-@import './variables.css';
+@import "./variables.css";
 
-
-@import './react-morphing-modal.css';
+@import "./react-morphing-modal.css";
 
 *,
 *:before,
@@ -21,10 +20,11 @@ html {
   height: 100%;
   box-sizing: border-box;
   touch-action: manipulation;
-  font-feature-settings: 'case' 1, 'rlig' 1, 'calt' 0;
+  font-feature-settings: "case" 1, "rlig" 1, "calt" 0;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 html,
@@ -59,7 +59,13 @@ input:focus {
 }
 
 .striped-background {
-  background: repeating-linear-gradient(45deg, #161522, #161522 10px, #0d0415 10px, #0d0415 20px);
+  background: repeating-linear-gradient(
+    45deg,
+    #161522,
+    #161522 10px,
+    #0d0415 10px,
+    #0d0415 20px
+  );
 }
 
 /* *::-webkit-scrollbar {
@@ -83,7 +89,7 @@ input:focus {
 
 .logo,
 .lux-font {
-  font-family: 'Open Sans', sans-serif, Arial, Helvetica;
+  font-family: "Open Sans", sans-serif, Arial, Helvetica;
   font-weight: 900;
 }
 
@@ -100,7 +106,7 @@ video {
   position: relative;
   bottom: 2px;
   font-weight: bold;
-  font-family: 'Open Sans', sans-serif, Arial, Helvetica;
+  font-family: "Open Sans", sans-serif, Arial, Helvetica;
 }
 
 .AssetList__heading {
@@ -115,3 +121,38 @@ video {
 .z-10001 {
   z-index: 10;
 }
+.from-btn1 {
+  --tw-gradient-from: rgba(255, 64, 205, 0.9);
+  --tw-gradient-stops: var(--tw-gradient-from),
+    var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
+.to-btn2 {
+  --tw-gradient-to: rgba(26, 175, 221, 0.9);
+}
+.bg-dark-900 {
+  background-color: rgba(22, 21, 34, 1);
+}
+
+.from-blue {
+  --tw-gradient-from: #2517FF;
+  --tw-gradient-stops: #27B0E6;
+}
+
+.to-green {
+  --tw-gradient-to: #15F195;
+}
+
+.MarketPlace {
+  background: url("/img/leaves.png");
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: 50%;
+}
+
+@media screen and (min-width: 1200px) {
+  .MarketPlace {
+    background-position: center right;
+  }
+}
+
+
