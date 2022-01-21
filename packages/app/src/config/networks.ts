@@ -105,6 +105,8 @@ export const AVAILABLE_NETWORKS: number[] = [
 
 if (!isEnvironment('prod')) {
   AVAILABLE_NETWORKS.push(ChainId.HARDHAT)
+  AVAILABLE_NETWORKS.push(ChainId.BSC_TESTNET)
+
 }
 
 export const SUPPORTED_NETWORKS: {
@@ -174,6 +176,17 @@ export const SUPPORTED_NETWORKS: {
     },
     rpcUrls: ['https://bsc-dataseed.binance.org'],
     blockExplorerUrls: ['https://bscscan.com'],
+  },
+  [ChainId.BSC_TESTNET]: {
+    chainId: '0x61',
+    chainName: 'BSC Testnet',
+    nativeCurrency: {
+      name: 'Binance Coin',
+      symbol: 'BNB',
+      decimals: 18,
+    },
+    rpcUrls: ['https://speedy-nodes-nyc.moralis.io/1afec1fde198890860916a06/bsc/testnet'],
+    blockExplorerUrls: ['https://testnet.bscscan.com/'],
   },
   [ChainId.MATIC]: {
     chainId: '0x89',

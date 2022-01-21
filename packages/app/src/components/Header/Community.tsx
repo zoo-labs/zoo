@@ -7,7 +7,7 @@ export default function Community() {
     <div className="text-right relative flex flex-col justify-center">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex w-full px-2 text-base font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+          <Menu.Button className="inline-flex w-full px-2 text-base font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 mb-4 lg:mb-0">
             Community
             <ChevronDownIcon
               className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
@@ -24,8 +24,46 @@ export default function Community() {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-black100 divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="px-1 py-1 ">
+          <Menu.Items className="flex absolute right-0 w-56 mt-2 origin-top-right bg-black100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-999">
+            <div className="px-2 py-2 lg:py-6">
+              <Menu.Item>
+                {({ active }) => (
+                  <a
+                    href="/global-leaderboard"
+                    className={`${
+                      active ? "bg-black text-white" : "text-white"
+                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  >
+                    Leaderboard
+                  </a>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <a
+                    href="/#newsletter"
+                    className={`${
+                      active ? "bg-black text-white" : "text-white"
+                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  >
+                    Newsletter
+                  </a>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <a
+                    href="/lab-events"
+                    className={`${
+                      active ? "bg-black text-white" : "text-white"
+                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  >
+                    Events
+                  </a>
+                )}
+              </Menu.Item>
+            </div>
+            <div className="px-2 py-2 lg:py-6 ">
               <Menu.Item>
                 {({ active }) => (
                   <a

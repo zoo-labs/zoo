@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 
 import EndangeredSpecies from "components/EndangeredSpecies";
 
+import { useDispatch } from "react-redux";
+import { useBuyZoo } from "state/zoo/hooks";
+import { useWeb3React } from "@web3-react/core";
+import { useFaucet } from "hooks";
+import { getZooBalance } from "state/zoo/actions";
+import { handleFunds } from "utils/handleFunds";
+
 const OpportunitySection = () => {
+  const { account, library, chainId } = useWeb3React();
+  const buyZoo = useBuyZoo();
+  const [fetching, setFetching] = useState(false);
+  const [confirmation, setConfirmation] = useState(false);
+  const [rejection, setRejection] = useState(false);
+  const faucet = useFaucet();
+  const dispatch = useDispatch();
+
   return (
     <section className="relative">
       <div className="px-6 py-16 lg:py-28">
@@ -26,14 +41,12 @@ const OpportunitySection = () => {
             and public proof of ownership. This establishes credibility for each
             NFT and its unchangeable nature.
           </p>
-          <a
-            href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
-            target="_blank"
-            rel="noreferrer"
-            className="border border-green text-green text-sm md:text-base font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full"
+          <div
+            onClick={() => handleFunds(chainId, buyZoo)}
+            className="border border-green text-green text-sm md:text-base font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full hover:cursor-pointer"
           >
             Buy $ZOO
-          </a>
+          </div>
         </div>
       </div>
     </section>

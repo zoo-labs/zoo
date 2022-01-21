@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const GetStartedSection = () => {
   return (
-    <section className="GetStarted">
+    <section className="GetStarted" id="about">
       <div className="px-6 pb-20 mx-auto max-w-7xl lg:flex lg:items-center lg:justify-between">
         <div className="mb-6 text-center lg:text-left">
           <h2 className="mb-6 text-3xl font-bold md:text-4xl lg:text-5xl">

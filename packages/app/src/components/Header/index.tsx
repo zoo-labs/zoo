@@ -1,6 +1,7 @@
 import { ChainId, Currency, NATIVE, SUSHI_ADDRESS } from "@zoolabs/sdk";
 import { Feature, featureEnabled } from "../../functions/feature";
 import React, { useEffect, useState } from "react";
+import {useRouter} from 'next/router';
 
 import { addresses, ANALYTICS_URL } from "../../constants";
 import ExternalLink from "../ExternalLink";
@@ -9,6 +10,7 @@ import LanguageSwitch from "../LanguageSwitch";
 import Link from "next/link";
 import More from "./More";
 import Community from "./Community";
+import Learn from './Learn';
 import NavLink from "../NavLink";
 import { Popover } from "@headlessui/react";
 import QuestionHelper from "../QuestionHelper";
@@ -28,12 +30,19 @@ function AppBar(): JSX.Element {
   const { i18n } = useLingui();
   const { account, chainId, library } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
-  useEffect(() => {
-    getZooBalance();
-  }, [account]);
+
+  const router = useRouter();
+  let linkStyle = "p-2 text-baseline hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap"
+
+
   const userEthBalance = useETHBalances(account ? [account] : [])?.[
     account ?? ""
   ];
+  useEffect(() => {
+    getZooBalance();
+  }, [account]);
+
+  console.log("userEthBalance", userEthBalance);
   const chainAddresses =
     (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
 
@@ -63,7 +72,7 @@ function AppBar(): JSX.Element {
                       <NavLink href="/market">
                         <a
                           id={`mint-nav-link`}
-                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                          className={router.pathname == "/market" ? `${linkStyle} text-green text-bold` : `${linkStyle} text-white`}
                         >
                           {i18n._(t`Marketplace`)}
                         </a>
@@ -74,7 +83,7 @@ function AppBar(): JSX.Element {
                         target="_blank"
                         rel="noreferrer"
                         id={`market-nav-link`}
-                        className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                        className="p-2 text-baseline text-primary hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap"
                       >
                         {i18n._(t`Chart`)}
                       </a>
@@ -84,19 +93,20 @@ function AppBar(): JSX.Element {
                       <NavLink href="/press">
                         <a
                           id={`mint-nav-link`}
-                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                          className={router.pathname == "/press" ? `${linkStyle} text-grey` : `${linkStyle} text-white`}
                         >
                           {i18n._(t`Press`)}
                         </a>
                       </NavLink>
-                      <NavLink href="/learn">
+                      <Learn />
+                      {/* <NavLink href="/learn">
                         <a
                           id={`mint-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
                           {i18n._(t`Learn`)}
                         </a>
-                      </NavLink>
+                      </NavLink> */}
                       {chainId && featureEnabled(Feature.MIGRATE, chainId) && (
                         <NavLink href={"/migrate"}>
                           <a
@@ -155,7 +165,7 @@ function AppBar(): JSX.Element {
                 <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
                   <div className="flex items-center justify-between w-full space-x-2 sm:justify-end">
                     {chainId &&
-                      [ChainId.MAINNET].includes(chainId) &&
+                      // [ChainId.MAINNET].includes(chainId) &&
                       library &&
                       library.provider.isMetaMask && (
                         <div className="hidden md:inline-flex">
@@ -223,7 +233,7 @@ function AppBar(): JSX.Element {
                       </div>
                     )}
                     {/* My Wallet Button */}
-                    <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
+                    <div className="w-auto flex items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                       {account && chainId && userEthBalance && (
                         <>
                           <div className="px-3 py-2 text-primary text-bold">
@@ -234,7 +244,7 @@ function AppBar(): JSX.Element {
                       )}
                       <Web3Status
                         title="My Wallet"
-                        className="font-bold border border-green text-green"
+                        className="font-bold border border-green text-green bg-black"
                       />
                     </div>
                     <div className="hidden md:block">
@@ -308,6 +318,8 @@ function AppBar(): JSX.Element {
 
                 <Community />
 
+                <Learn />
+
                 {/* <a
                   id={`community`}
                   className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
@@ -316,7 +328,7 @@ function AppBar(): JSX.Element {
                   {i18n._(t`Community`)}
                 </a> */}
 
-                <a
+                {/* <a
                   id={`press`}
                   className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="/press"
@@ -330,7 +342,7 @@ function AppBar(): JSX.Element {
                   href="learn"
                 >
                   {i18n._(t`Learn`)}
-                </a>
+                </a> */}
 
                 <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                   {account && chainId && userEthBalance && (

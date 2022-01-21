@@ -96,6 +96,7 @@ module.exports = {
         blue: "#2517FF",
         black: "#000000",
         black100: "#1F2030",
+        black200: "#292A3E",
         white: "#fff",
       },
       lineHeight: {
@@ -176,6 +177,9 @@ module.exports = {
           "100%": { opacity: 100 },
         },
       },
+      zIndex: {
+        '999': '999'
+      }
     },
   },
   variants: {
