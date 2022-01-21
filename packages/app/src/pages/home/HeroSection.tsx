@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
 // animation
-import { fadeInFromLeft, fadeInFromRight } from "animation";
+import { fadeInFromLeft, fadeInOnScroll } from "animation";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useBuyZoo } from "state/zoo/hooks";
@@ -15,14 +15,13 @@ const HeroSection = () => {
   const { account, library, chainId } = useWeb3React();
   const buyZoo = useBuyZoo();
   const faucet = useFaucet();
-  const dispatch = useDispatch();
 
   const heroContent = useRef();
   const heroImage = useRef();
 
   useEffect(() => {
     fadeInFromLeft(heroContent.current);
-    fadeInFromRight(heroImage.current);
+    fadeInOnScroll(heroImage.current);
   }, []);
 
   return (

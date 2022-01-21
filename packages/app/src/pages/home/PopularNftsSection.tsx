@@ -3,14 +3,19 @@ import Image from "next/image";
 import NftCard from "../../components/NftCard";
 
 // animation
-import { fadeInOnScroll } from "animation";
+import { fadeInOnScroll, fadeInOnScrollAndStagger } from "animation";
 
 const PopularNftsSection = () => {
   const popularRef = React.useRef();
+  const nftsRef = React.useRef()
 
   useEffect(() => {
     fadeInOnScroll(popularRef.current)
   }, []);
+
+  useEffect(() => {
+    fadeInOnScrollAndStagger('.PopularNft_nft', nftsRef.current)
+  }, [])
 
   return (
     <section>
@@ -23,7 +28,7 @@ const PopularNftsSection = () => {
             Browse and bid on the hottest ZOO NFTs on the marketplace.{" "}
           </p>
         </div>
-        <div className="flex flex-col items-center lg:flex-row lg: justify-between lg:gap-4">
+        <div className="flex flex-col items-center lg:flex-row lg: justify-between lg:gap-4" ref={nftsRef}>
           <NftCard
             image={
               <Image src="/img/girrafe.png" width={131} height={292} alt="" />
