@@ -65,6 +65,7 @@ export function useUnsupportedTokens(): { [address: string]: Token } {
 }
 
 export function useSearchInactiveTokenLists(search: string | undefined, minResults = 10): WrappedTokenInfo[] {
+  
   const lists = useAllLists()
   const inactiveUrls = useInactiveListUrls()
   const { chainId } = useActiveWeb3React()
