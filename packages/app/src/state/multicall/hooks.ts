@@ -168,15 +168,16 @@ export function useSingleContractMultipleData(
     () =>
       contract && fragment && callInputs?.length > 0 && callInputs.every((inputs) => isValidMethodArgs(inputs))
         ? callInputs.map<Call>((inputs) => {
-            return {
-              address: contract.address,
-              callData: contract.interface.encodeFunctionData(fragment, inputs),
-              ...(gasRequired ? { gasRequired } : {}),
-            }
-          })
+          return {
+            address: contract.address,
+            callData: contract.interface.encodeFunctionData(fragment, inputs),
+            ...(gasRequired ? { gasRequired } : {}),
+          }
+        })
         : [],
     [contract, fragment, callInputs, gasRequired]
   )
+  console.log('userEthBalance calls', calls)
 
   const results = useCallsData(calls, options)
 
@@ -208,14 +209,14 @@ export function useMultipleContractSingleData(
     () =>
       fragment && addresses && addresses.length > 0 && callData
         ? addresses.map<Call | undefined>((address) => {
-            return address && callData
-              ? {
-                  address,
-                  callData,
-                  ...(gasRequired ? { gasRequired } : {}),
-                }
-              : undefined
-          })
+          return address && callData
+            ? {
+              address,
+              callData,
+              ...(gasRequired ? { gasRequired } : {}),
+            }
+            : undefined
+        })
         : [],
     [addresses, callData, fragment, gasRequired]
   )
@@ -241,12 +242,12 @@ export function useSingleCallResult(
   const calls = useMemo<Call[]>(() => {
     return contract && fragment && isValidMethodArgs(inputs)
       ? [
-          {
-            address: contract.address,
-            callData: contract.interface.encodeFunctionData(fragment, inputs),
-            ...(gasRequired ? { gasRequired } : {}),
-          },
-        ]
+        {
+          address: contract.address,
+          callData: contract.interface.encodeFunctionData(fragment, inputs),
+          ...(gasRequired ? { gasRequired } : {}),
+        },
+      ]
       : []
   }, [contract, fragment, inputs, gasRequired])
 

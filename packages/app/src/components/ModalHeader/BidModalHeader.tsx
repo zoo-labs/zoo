@@ -19,7 +19,7 @@ const BidModalHeader: FC<BidModalHeaderProps> = ({
     <div className={`flex items-center justify-between mb-4 ${className}`}>
       <div
         onClick={onBack}
-        className="flex items-center justify-center rounded-full shadow-2xl cursor-pointer h-14 w-14 bg-dark-900"
+        className="z-10 flex items-center justify-center bg-black rounded-full shadow-2xl cursor-pointer h-14 w-14"
       >
         <ChevronLeft
           width={30}
