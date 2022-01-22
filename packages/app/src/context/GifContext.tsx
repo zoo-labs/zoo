@@ -27,7 +27,7 @@ export const toggleGif = (dispatch) => {
 };
 
 export const toggleImage = (dispatch) => {
-  localStorage.setItem("imageMode", JSON.stringify("image"));
+  localStorage.setItem("gifMode", JSON.stringify("image"));
 
   return dispatch({
     type: "TOGGLE_IMAGEMODE",
