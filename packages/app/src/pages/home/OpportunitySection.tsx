@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+
+// animation
+import { fadeInOnScroll } from "animation";
 
 import EndangeredSpecies from "components/EndangeredSpecies";
 
@@ -18,17 +21,42 @@ const OpportunitySection = () => {
   const [rejection, setRejection] = useState(false);
   const faucet = useFaucet();
   const dispatch = useDispatch();
+  const [runGif, setRunGif] = useState(false);
+
+  const sectionRef = React.useRef();
+
+  useEffect(() => {
+    fadeInOnScroll(sectionRef.current);
+  }, []);
 
   return (
-    <section className="relative">
+    <section className="relative" ref={sectionRef}>
       <div className="px-6 py-16 lg:py-28">
         <h2 className="text-2xl md:text-2xl  lg:text-4xl text-center mb-16 font-semibold">
           Endless Yield Opportunity
         </h2>
         <div className="flex flex-col lg:flex-row justify-between items-center max-w-7xl px-6 mx-auto">
           <EndangeredSpecies />
-          <div>
-            <Image src="/img/life-cycle.png" width={824} height={805} alt="" />
+          <div
+            onMouseEnter={() => setRunGif(true)}
+            onMouseLeave={() => setRunGif(false)}
+          >
+            {runGif ? (
+              <Image
+                src="/img/animal-growth.gif"
+                width={824}
+                height={805}
+                alt=""
+                objectFit="contain"
+              />
+            ) : (
+              <Image
+                src="/img/life-cycle.png"
+                width={824}
+                height={805}
+                alt=""
+              />
+            )}
           </div>
         </div>
 
