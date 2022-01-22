@@ -134,7 +134,7 @@ export default function Menu() {
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
                     style={{}}
                   >
-                    {state.gifMode.toUpperCase()} Mode
+                    {state.gifMode === 'gif' ? 'Gif' : 'Image'} Mode
                     <div className="ml-4 sm:ml-14">
                       <Toggle
                         id="toggle-disable-multihop-button"
