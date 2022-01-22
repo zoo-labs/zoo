@@ -1,12 +1,26 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Image from "next/image";
 import NftCard from "../../components/NftCard";
 
+// animation
+import { fadeInOnScroll, fadeInOnScrollAndStagger } from "animation";
+
 const PopularNftsSection = () => {
+  const popularRef = React.useRef();
+  const nftsRef = React.useRef()
+
+  useEffect(() => {
+    fadeInOnScroll(popularRef.current)
+  }, []);
+
+  useEffect(() => {
+    fadeInOnScrollAndStagger('.PopularNft_nft', nftsRef.current)
+  }, [])
+
   return (
     <section>
       <div className="max-w-7xl mx-auto px-6 lg:pb-20">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center" ref={popularRef}>
           <h2 className="text-2xl md:text-2xl lg:text-5xl text-center mb-4 font-semibold">
             Popular NFTs
           </h2>
@@ -14,7 +28,7 @@ const PopularNftsSection = () => {
             Browse and bid on the hottest ZOO NFTs on the marketplace.{" "}
           </p>
         </div>
-        <div className="flex flex-col items-center lg:flex-row lg: justify-between lg:gap-4">
+        <div className="flex flex-col items-center lg:flex-row lg: justify-between lg:gap-4" ref={nftsRef}>
           <NftCard
             image={
               <Image src="/img/girrafe.png" width={131} height={292} alt="" />
