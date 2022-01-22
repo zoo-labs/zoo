@@ -1,12 +1,27 @@
+import React, { useEffect } from "react";
 import Image from "next/image";
 
 import PopularNftsSection from "pages/home/PopularNftsSection";
 
+// animation
+import { fadeInFromLeft, fadeInFromRight } from "animation";
+
 const Nft = () => {
+  const nftImageRef = React.useRef();
+  const nftContentRef = React.useRef();
+
+  useEffect(() => {
+    fadeInFromLeft(nftImageRef.current);
+    fadeInFromRight(nftContentRef.current);
+  }, []);
+
   return (
     <div className="pt-16 pb-16 px-6 md:flex md:flex-col lg:max-w-7xl lg:mx-auto">
       <div className="flex flex-col lg:flex-row lg:justify-between">
-        <div className="flex flex-col border border-blue px-4 py-6 rounded mb-4 lg:mb-0 lg:px-8">
+        <div
+          className="flex flex-col border border-blue px-4 py-6 rounded mb-4 lg:mb-0 lg:px-8"
+          ref={nftImageRef}
+        >
           <div style={{ minHeight: "299px" }}>
             <Image src="/img/egg.png" width={300} height={300} alt="" />
           </div>
@@ -14,7 +29,7 @@ const Nft = () => {
             Place bid
           </button>
         </div>
-        <div>
+        <div ref={nftContentRef}>
           <div className="mb-8">
             <h3 className="text-xl font-bold mb-4">Egg #4</h3>
             <p>

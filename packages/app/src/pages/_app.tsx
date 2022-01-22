@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Fragment, FunctionComponent } from "react";
 import { GetStaticProps, NextComponentType, NextPageContext } from "next";
 import store, { persistor } from "../state";
+import { GifProvider } from "context/GifContext";
 
 import type { AppProps } from "next/app";
 import ApplicationUpdater from "../state/application/updater";
@@ -186,25 +187,27 @@ function MyApp({
             <Web3ReactManager>
               <SubgraphProvider>
                 <ReduxProvider store={store}>
-                  <PersistGate
-                    loading={<Dots>loading</Dots>}
-                    persistor={persistor}
-                  >
-                    <>
-                      <ListsUpdater />
-                      <UserUpdater />
-                      <ApplicationUpdater />
-                      <TransactionUpdater />
-                      <MulticallUpdater />
-                    </>
-                    <Provider>
-                      <Layout>
-                        <Guard>
-                          <Component {...pageProps} />
-                        </Guard>
-                      </Layout>
-                    </Provider>
-                  </PersistGate>
+                  <GifProvider>
+                    <PersistGate
+                      loading={<Dots>loading</Dots>}
+                      persistor={persistor}
+                    >
+                      <>
+                        <ListsUpdater />
+                        <UserUpdater />
+                        <ApplicationUpdater />
+                        <TransactionUpdater />
+                        <MulticallUpdater />
+                      </>
+                      <Provider>
+                        <Layout>
+                          <Guard>
+                            <Component {...pageProps} />
+                          </Guard>
+                        </Layout>
+                      </Provider>
+                    </PersistGate>
+                  </GifProvider>
                 </ReduxProvider>
               </SubgraphProvider>
             </Web3ReactManager>
