@@ -1,9 +1,16 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Image from "next/image";
 
+// animation
+import {fadeInOnScroll} from '../../animation'
+
 const ZooNewsSection = () => {
+  const zooRef = React.useRef()
+  useEffect(() => {
+    fadeInOnScroll(zooRef.current)
+  }, []);
   return (
-    <section className="ZooNews">
+    <section className="ZooNews" ref={zooRef}>
       <div className="flex flex-col items-center px-6 pb-20 mx-auto max-w-7xl">
         <div className="mb-6 text-center lg:mb-8">
           <h2 className="mb-6 text-3xl font-bold text-center lg:text-5xl">
