@@ -1,4 +1,5 @@
 const withPWA = require("next-pwa");
+const { withSentryConfig } = require('@sentry/nextjs')
 
 const linguiConfig = require("./lingui.config.js");
 
@@ -26,4 +27,4 @@ const nextConfig = {
     defaultLocale: sourceLocale,
   },
 };
-module.exports = withPWA(withBundleAnalyzer(nextConfig));
+module.exports = withSentryConfig(withPWA(withBundleAnalyzer(nextConfig)));
