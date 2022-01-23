@@ -1,3 +1,5 @@
+import { i18n } from "@lingui/core";
+import { t } from "@lingui/macro";
 import { useWeb3React } from "@web3-react/core";
 import Web3Status from "components/Web3Status";
 import React, { FC } from "react";
@@ -28,7 +30,7 @@ const BidModalHeader: FC<BidModalHeaderProps> = ({
           fill="#f2f2f2"
         />
       </div>
-      {showAccount && <Web3Status />}
+      {showAccount && <Web3Status title={i18n._(t`Connect Wallet`)} />}
     </div>
   );
 };

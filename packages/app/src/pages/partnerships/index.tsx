@@ -1,10 +1,18 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Image from "next/image";
 
+// animation
+import { fadeInOnScroll } from "animation";
+
 const Partnership = () => {
+  const partnerRef = React.useRef();
+
+  useEffect(() => {
+    fadeInOnScroll(partnerRef.current)
+  }, [])
   return (
     <section>
-      <div className="flex flex-col py-16 items-center max-w-7xl mx-auto px-6">
+      <div className="flex flex-col py-16 items-center max-w-7xl mx-auto px-6" ref={partnerRef}>
         <h1 className="text-3xl lg:text-5xl mb-8 font-bold">ZOO Foundation</h1>
         <p className="text-center text-xl lg:text-3xl max-w-5xl">
           The ZOO foundation donates 10% of all gaming fees in efforts to save
