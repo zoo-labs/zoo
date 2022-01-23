@@ -199,7 +199,7 @@ export default function Web3Status({
   title,
   className,
 }: {
-  title?: string;
+  title: string;
   className?: string;
 }) {
   const { active, account } = useWeb3React();
