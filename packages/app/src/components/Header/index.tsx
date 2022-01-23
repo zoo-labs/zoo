@@ -1,7 +1,7 @@
 import { ChainId, Currency, NATIVE, SUSHI_ADDRESS } from "@zoolabs/sdk";
 import { Feature, featureEnabled } from "../../functions/feature";
 import React, { useEffect, useState } from "react";
-import {useRouter} from 'next/router';
+import { useRouter } from "next/router";
 
 import { addresses, ANALYTICS_URL } from "../../constants";
 import ExternalLink from "../ExternalLink";
@@ -10,7 +10,7 @@ import LanguageSwitch from "../LanguageSwitch";
 import Link from "next/link";
 import More from "./More";
 import Community from "./Community";
-import Learn from './Learn';
+import Learn from "./Learn";
 import NavLink from "../NavLink";
 import { Popover } from "@headlessui/react";
 import QuestionHelper from "../QuestionHelper";
@@ -32,8 +32,8 @@ function AppBar(): JSX.Element {
   const getZooBalance = useZoobalance();
 
   const router = useRouter();
-  let linkStyle = "p-2 text-baseline hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap"
-
+  let linkStyle =
+    "p-2 text-baseline hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap";
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[
     account ?? ""
@@ -72,7 +72,11 @@ function AppBar(): JSX.Element {
                       <NavLink href="/market">
                         <a
                           id={`mint-nav-link`}
-                          className={router.pathname == "/market" ? `${linkStyle} text-green text-bold` : `${linkStyle} text-white`}
+                          className={
+                            router.pathname == "/market"
+                              ? `${linkStyle} text-green text-bold`
+                              : `${linkStyle} text-white`
+                          }
                         >
                           {i18n._(t`Marketplace`)}
                         </a>
@@ -93,7 +97,11 @@ function AppBar(): JSX.Element {
                       <NavLink href="/press">
                         <a
                           id={`mint-nav-link`}
-                          className={router.pathname == "/press" ? `${linkStyle} text-grey` : `${linkStyle} text-white`}
+                          className={
+                            router.pathname == "/press"
+                              ? `${linkStyle} text-grey`
+                              : `${linkStyle} text-white`
+                          }
                         >
                           {i18n._(t`Press`)}
                         </a>
@@ -243,8 +251,8 @@ function AppBar(): JSX.Element {
                         </>
                       )}
                       <Web3Status
-                        title="My Wallet"
-                        className="font-bold border border-green text-green bg-black"
+                        title={i18n._(t`Connect Wallet`)}
+                        className="font-bold bg-black border border-green text-green"
                       />
                     </div>
                     <div className="hidden md:block">
@@ -354,7 +362,7 @@ function AppBar(): JSX.Element {
                     </>
                   )}
                   <Web3Status
-                    title="My Wallet"
+                    title={i18n._(t`My Wallet`)}
                     className="font-bold border border-green text-green"
                   />
                 </div>
