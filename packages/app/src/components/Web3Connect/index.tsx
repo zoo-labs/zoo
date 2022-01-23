@@ -11,9 +11,9 @@ export default function Web3Connect({
   color = "gray",
   size = "sm",
   className = "",
-  title = "Connect to a wallet",
+  title,
   ...rest
-}: ButtonProps) { 
+}: ButtonProps) {
   const { i18n } = useLingui();
   const toggleWalletModal = useWalletModalToggle();
   const { error } = useWeb3React();
@@ -39,7 +39,7 @@ export default function Web3Connect({
       size={size}
       {...rest}
     >
-      {i18n._(t`${title}`)}
+      {title}
     </Button>
   );
 }
