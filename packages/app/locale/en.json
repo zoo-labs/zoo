@@ -119,7 +119,6 @@
   "Investment Details": "",
   "Join the community on Discord.": "",
   "Kashi market to get KMP (Kashi Medium-risk Pair) tokens.": "",
-  "Learn": "Learn",
   "Learn more about wallets": "",
   "Lend": "",
   "Lending": "",
@@ -143,6 +142,8 @@
   "Minimum Received": "",
   "Minimum received": "",
   "My Orders": "",
+  "My Profile": "My Profile",
+  "My Wallet": "My Wallet",
   "Network not supported yet": "",
   "Never": "",
   "New to Ethereum?": "",
@@ -291,6 +292,5 @@
   "xSUSHI in Cream": "",
   "{0, plural, one {Token} many {Tokens}}": "",
   "{0} Deposited": "",
-  "{0} {1} per {2}": "",
-  "{title}": "{title}"
+  "{0} {1} per {2}": ""
 }
