@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import articles from "../../components/blog/articles.json";
 import Article from "components/blog/articles";
 import Image from "next/image";
 
+// animation
+import { fadeInOnScroll } from "animation";
+
 const Blog = () => {
   const [category, setCategory] = useState(0);
+  const blogHeaderRef = React.useRef();
+
+  useEffect(() => {
+    fadeInOnScroll(blogHeaderRef.current);
+  }, [])
 
   return (
     <>
       {/* Hero Section*/}
       <div className="pt-16 pb-16 px-6 lg:max-w-7xl lg:mx-auto">
-        <div className="flex items-center text-center flex-col">
+        <div className="flex items-center text-center flex-col" ref={blogHeaderRef}>
           <p className="text-5xl lg:text-7xl text-white font-bold mb-6">
             ZOO Blog
           </p>
