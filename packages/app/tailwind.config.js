@@ -31,7 +31,7 @@ module.exports = {
           "blue-pink": ["#27B0E6", "#FA52A0"],
           "pink-red-light-brown": ["#FE5A75", "#FEC464"],
           "purple-blue": ["#462CA9", "#2517FF"],
-          "blue-green": ["#2517FF", "#15F195"]
+          "blue-green": ["#2517FF", "#15F195"],
         },
         background: {
           "dark-1000": "#0D0415",
@@ -47,7 +47,7 @@ module.exports = {
         },
       },
       backgroundImage: {
-        'marketplace-section': "url(/img/leaves.png)"
+        "marketplace-section": "url(/img/leaves.png)",
       },
       colors: {
         purple: "#462CA9",
@@ -68,6 +68,7 @@ module.exports = {
         "butter-white": "#FCFCFD",
         dark: "#000",
         "dark-gray": "#6D7278",
+        "grey-400": "#878787",
         "grey-300": "#353945",
         "trading-history": "#1F2126",
         "trading-history-border-b": "#E6E8EC",
@@ -178,8 +179,8 @@ module.exports = {
         },
       },
       zIndex: {
-        '999': '999'
-      }
+        999: "999",
+      },
     },
   },
   variants: {
