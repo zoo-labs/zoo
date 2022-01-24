@@ -70,6 +70,8 @@ module.exports = {
         "dark-gray": "#6D7278",
         "grey-400": "#878787",
         "grey-300": "#353945",
+        "grey-50": "#7A7585",
+        "grey-80": "#3C3844",
         "trading-history": "#1F2126",
         "trading-history-border-b": "#E6E8EC",
         "nft-card-border": "#A67CED",
