@@ -95,7 +95,7 @@ export default function Learn() {
               <Menu.Item>
                 {({ active }) => (
                   <a
-                    href="/#faqs"
+                    href="/faqs"
                     className={`${
                       active ? "bg-black text-white" : "text-white"
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
