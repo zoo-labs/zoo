@@ -22,12 +22,24 @@ const OpportunitySection = () => {
   const faucet = useFaucet();
   const dispatch = useDispatch();
   const [runGif, setRunGif] = useState(false);
+  const [stage, setStage] = useState("");
 
   const sectionRef = React.useRef();
 
   useEffect(() => {
     fadeInOnScroll(sectionRef.current);
   }, []);
+
+  const styling = {
+    width: "50px",
+    height: "50px",
+    background: "yellow",
+    borderRadius: "50%",
+  };
+
+  const displayContent = (desc: string) => {
+    setStage(desc);
+  };
 
   return (
     <section className="relative" ref={sectionRef}>
@@ -37,7 +49,40 @@ const OpportunitySection = () => {
         </h2>
         <div className="flex flex-col lg:flex-row justify-between items-center max-w-7xl px-6 mx-auto">
           <EndangeredSpecies />
-          <div
+          <div className="relative h-screen w-screen flex flex-col justify-center items-center bg-image">
+            <div className="big-circle">
+              <div className="animal-content">{stage && <p>{stage}</p>}</div>
+              <div
+                className="animate-animal incubate"
+                onMouseEnter={() => displayContent("Incubate")}
+                onMouseOut={() => displayContent("")}
+              >
+                <Image src="/img/incubate-cycle.png" width={150} height={170} alt="" objectFit="contain" />
+              </div>
+              <div
+                className="animate-animal feed"
+                onMouseEnter={() => displayContent("Feed")}
+                onMouseOut={() => displayContent("")}
+              >
+                 <Image src="/img/feed-cycle.png" width={150} height={170} alt="" objectFit="contain" />
+              </div>
+              <div
+                className="animate-animal grow"
+                onMouseEnter={() => displayContent("Grow")}
+                onMouseOut={() => displayContent("")}
+              >
+                 <Image src="/img/grow-cycle.png" width={150} height={170} alt="" objectFit="contain" />
+              </div>
+              <div
+                className="animate-animal breed"
+                onMouseEnter={() => displayContent("Breed")}
+                onMouseOut={() => displayContent("")}
+              >
+                 <Image src="/img/breed-cycle.png" width={150} height={170} alt="" objectFit="contain" />
+              </div>
+            </div>
+          </div>
+          {/* <div
             onMouseEnter={() => setRunGif(true)}
             onMouseLeave={() => setRunGif(false)}
           >
@@ -57,7 +102,7 @@ const OpportunitySection = () => {
                 alt=""
               />
             )}
-          </div>
+          </div> */}
         </div>
 
         <div className="flex flex-col items-center max-w-7xl px-6 mx-auto py-20 lg:mt-20">
