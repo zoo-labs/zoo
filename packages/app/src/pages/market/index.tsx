@@ -261,15 +261,16 @@ const Market: React.FC<MarketProps> = ({}) => {
                         }
                       }}
                       className={`text-white text-sm font-bold py-1 px-4 cursor-pointer w-full h-full flex items-center justify-center ${
+                        index !== 3 && 'border-r border-blue'
+                      } ${
                         index === 0
                           ? 'rounded-l-xl'
                           : index === 3 && 'rounded-r-xl'
-                      } `}
+                      }`}
                       style={{
                         background: active
                           ? 'linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)'
                           : 'transparent'
-                        // borderRight: index !== 3 && '2px solid'
                       }}
                       key={index}
                     >
