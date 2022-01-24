@@ -1,39 +1,39 @@
-import { numberWithCommas } from "functions";
-import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { numberWithCommas } from 'functions';
+import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 
 // animation
-import { fadeInOnScroll } from "animation";
+import { fadeInOnScroll } from 'animation';
 
-import { useDispatch, useSelector } from "react-redux";
-import { AppState } from "state";
-import { useBuyZoo } from "state/zoo/hooks";
+import { useDispatch, useSelector } from 'react-redux';
+import { AppState } from 'state';
+import { useBuyZoo } from 'state/zoo/hooks';
 // import AssetSaleModal from "zoo/AssetSaleModal";
-import { useModal } from "react-morphing-modal";
-import { useRouter } from "next/router";
-import { useTokenTypes } from "zoo/state";
-import { useActiveWeb3React, useZooKeeper, useZooToken } from "hooks";
-import { useWeb3React } from "@web3-react/core";
+import { useModal } from 'react-morphing-modal';
+import { useRouter } from 'next/router';
+import { useTokenTypes } from 'zoo/state';
+import { useActiveWeb3React, useZooKeeper, useZooToken } from 'hooks';
+import { useWeb3React } from '@web3-react/core';
 import {
   useBuyEggModalToggle,
-  useBuyZooModalToggle,
-} from "state/application/hooks";
-import useAllowance from "hooks/useBentoBoxAllowance";
-import BuyEggModal from "modals/MarketModals/BuyEggModal";
-import BuyZooModal from "modals/MarketModals/BuyZooModal";
-import { useETHBalances } from "state/wallet/hooks";
-import { NETWORK_LABEL } from "config/networks";
-import { useFaucet } from "hooks";
-import { getZooBalance } from "state/zoo/actions";
-import { useAppDispatch } from "state/hooks";
+  useBuyZooModalToggle
+} from 'state/application/hooks';
+import useAllowance from 'hooks/useBentoBoxAllowance';
+import BuyEggModal from 'modals/MarketModals/BuyEggModal';
+import BuyZooModal from 'modals/MarketModals/BuyZooModal';
+import { useETHBalances } from 'state/wallet/hooks';
+import { NETWORK_LABEL } from 'config/networks';
+import { useFaucet } from 'hooks';
+import { getZooBalance } from 'state/zoo/actions';
+import { useAppDispatch } from 'state/hooks';
 
-import Notification from "../../modals/NotificationModal";
-import {handleFunds} from '../../utils/handleFunds';
+import Notification from '../../modals/NotificationModal';
+import { handleFunds } from '../../utils/handleFunds';
 
 interface WalletProps {}
 
 const Wallet: React.FC<WalletProps> = ({}) => {
-  const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
+  const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>(
     (state) => state.zoo.zooBalance
   );
   const { account, library, chainId } = useWeb3React();
@@ -53,13 +53,13 @@ const Wallet: React.FC<WalletProps> = ({}) => {
   const { tokenTypes } = useTokenTypes();
 
   const { modalProps, open: openModal } = useModal({
-    background: "black",
+    background: 'black'
   });
   const router = useRouter();
 
   const onClickTokenType = (name: string) => {
     router.push(`${router.pathname}?name=${name}`, undefined, {
-      shallow: true,
+      shallow: true
     });
   };
   const buyZoo = useBuyZoo();
@@ -69,18 +69,18 @@ const Wallet: React.FC<WalletProps> = ({}) => {
   const approve = async () => {
     try {
       if (!account) {
-        console.log("Account not connected yet");
+        console.log('Account not connected yet');
         return;
       }
 
       setDisableApprove(true);
-      console.log("Processing approval...");
-      console.log("zooToken", zooToken);
-      console.log("zooKeeper", zooKeeper);
+      console.log('Processing approval...');
+      console.log('zooToken', zooToken);
+      console.log('zooKeeper', zooKeeper);
 
       // Increase allowance
       const supply = await zooToken.totalSupply();
-      console.log("library", library);
+      console.log('library', library);
       // const allowance = useAllowance(zooKeeper.options.address)
       const tx = zooToken
         .approve(zooKeeper.options.address)
@@ -90,13 +90,13 @@ const Wallet: React.FC<WalletProps> = ({}) => {
         setAllowance(true);
         setDisableApprove(false);
         setKeepApprove(false);
-        console.log("Approval success!");
-        console.log("approved", tx);
+        console.log('Approval success!');
+        console.log('approved', tx);
       }
     } catch (error) {
-      console.error("APPROVE ERROR", error);
+      console.error('APPROVE ERROR', error);
       setDisableApprove(false);
-      console.log("Failed to approve account");
+      console.log('Failed to approve account');
     }
   };
 
@@ -107,13 +107,13 @@ const Wallet: React.FC<WalletProps> = ({}) => {
 
   useEffect(() => {
     fadeInOnScroll(walletRef.current);
-  }, [])
+  }, []);
   // const buyEggs = () => {
   //   router.push(`${router.pathname}?tokenId=egg`, undefined, { shallow: true });
   // };
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[
-    account ?? ""
+    account ?? ''
   ];
 
   return (
@@ -130,10 +130,11 @@ const Wallet: React.FC<WalletProps> = ({}) => {
           >
             <span
               className={`flex items-center justify-center ml-2 py-2 text-base text-center text-secondary hover:text-high-emphesis font-bold  rounded-xl text-high-emphesis bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary w-[120px] min-h-[36px] mb-[-2px] ${
-                zooBalance === 0 && "gradient-border"
+                zooBalance === 0 && 'gradient-border'
               }`}
               style={{
-                background: "linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)",
+                // background: "linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)",
+                background: 'linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)'
               }}
             >
               Get ZOO
@@ -174,16 +175,18 @@ const Wallet: React.FC<WalletProps> = ({}) => {
                 </button>
               </div>
             ) : ( */}
-            <div className={"ml-2"}>
+            <div className={'ml-2'}>
               <button
                 // disabled={disable || !allowance}
                 className={`shadow-sm focus:ring-2 focus:ring-offset-2 bg-opacity-80 text-primaryhover:bg-opacity-100 focus:ring-offset-dark-700 disabled:bg-opacity-80 px-0 py-2 text-base rounded disabled:cursor-not-allowed focus:outline-none w-full bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary ${
-                  zooBalance !== 0 && "gradient-border"
+                  zooBalance !== 0 && 'gradient-border'
                 }`}
                 style={{
-                  width: "120px",
-                  minHeight: "36px",
-                  marginBottom: "-2px",
+                  width: '120px',
+                  minHeight: '36px',
+                  marginBottom: '-2px',
+                  background:
+                    'linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)'
                 }}
                 onClick={() => toggleBuyEggModal()}
               >
