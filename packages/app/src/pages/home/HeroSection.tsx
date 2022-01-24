@@ -10,6 +10,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useFaucet } from "hooks";
 import { getZooBalance } from "state/zoo/actions";
 import { handleFunds } from "utils/handleFunds";
+import { useGif } from "context/GifContext";
 
 const HeroSection = () => {
   const { account, library, chainId } = useWeb3React();
@@ -18,6 +19,9 @@ const HeroSection = () => {
 
   const heroContent = useRef();
   const heroImage = useRef();
+
+  const { state } = useGif();
+  const { gifMode } = state;
 
   useEffect(() => {
     fadeInFromLeft(heroContent.current);
@@ -63,12 +67,21 @@ const HeroSection = () => {
           className="Hero__image max-w-md lg:max-w-xl lg:basis-1/2"
           ref={heroImage}
         >
-          <Image
-            src="/img/amur-leopard.png"
-            width={700}
-            height={612}
-            alt="leopard"
-          />
+          {gifMode === "gif" ? (
+            <Image
+              src="/gifs/zoo-tiger-gif.gif"
+              width={700}
+              height={612}
+              alt="leopard"
+            />
+          ) : (
+            <Image
+              src="/img/amur-leopard.png"
+              width={700}
+              height={612}
+              alt="leopard"
+            />
+          )}
         </div>
       </div>
     </section>
