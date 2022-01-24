@@ -21,7 +21,6 @@ const OpportunitySection = () => {
   const [rejection, setRejection] = useState(false);
   const faucet = useFaucet();
   const dispatch = useDispatch();
-  const [runGif, setRunGif] = useState(false);
   const [stage, setStage] = useState("");
 
   const sectionRef = React.useRef();
@@ -29,13 +28,6 @@ const OpportunitySection = () => {
   useEffect(() => {
     fadeInOnScroll(sectionRef.current);
   }, []);
-
-  const styling = {
-    width: "50px",
-    height: "50px",
-    background: "yellow",
-    borderRadius: "50%",
-  };
 
   const displayContent = (desc: string) => {
     setStage(desc);
@@ -82,27 +74,7 @@ const OpportunitySection = () => {
               </div>
             </div>
           </div>
-          {/* <div
-            onMouseEnter={() => setRunGif(true)}
-            onMouseLeave={() => setRunGif(false)}
-          >
-            {runGif ? (
-              <Image
-                src="/img/animal-growth.gif"
-                width={824}
-                height={805}
-                alt=""
-                objectFit="contain"
-              />
-            ) : (
-              <Image
-                src="/img/life-cycle.png"
-                width={824}
-                height={805}
-                alt=""
-              />
-            )}
-          </div> */}
+         
         </div>
 
         <div className="flex flex-col items-center max-w-7xl px-6 mx-auto py-20 lg:mt-20">
