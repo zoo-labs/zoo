@@ -1,21 +1,23 @@
-import { useState, useCallback } from "react";
-import Calendar from "react-calendar";
-import Image from "next/image";
+import { useState, useCallback } from 'react';
+import Calendar from 'react-calendar';
+// import 'react-calendar/dist/Calendar.css';
+import Image from 'next/image';
 
 const LabEvents = () => {
   const [value, setValue] = useState();
-  // const onChange = (date: Date) => {
-  //   console.log(date);
-  // };
-  const onChange = () => {
-    console.log(value);
+  const [activeMonth, setActiveMonth] = useState(new Date().getMonth());
+  const onChange = (val, e) => {
+    const month = val.getMonth();
+    if (month !== activeMonth) {
+      setActiveMonth(month);
+    }
   };
 
   const dummyEvents = [
-    { text: "Marketplace Launch", day: "1st" },
-    { text: "Upgrades Available ", day: "12th" },
-    { text: "First AMA 2022 ", day: "20th" },
-    { text: "New Animal Party ", day: "31st" },
+    { text: 'Marketplace Launch', day: '1st' },
+    { text: 'Upgrades Available ', day: '12th' },
+    { text: 'First AMA 2022 ', day: '20th' },
+    { text: 'New Animal Party ', day: '31st' }
   ];
 
   return (
@@ -23,29 +25,45 @@ const LabEvents = () => {
       <h1 className="text-center text-4xl lg:text-6xl font-bold mb-8">
         ZOO Labs Events
       </h1>
-      <div className="flex flex-col lg:flex-row lg:justify-center lg:basis-2/3">
+      <div className="flex flex-col md:flex-row lg:justify-center lg:basis-2/3">
         <div className="text-center flex bg-black100 px-4 py-8 rounded flex-col lg:flex-row lg:justify-between mr-4 gap-10">
-          <div className="mb-4 lg:basis-1/2">
-            <Calendar value={value} onChange={onChange} />
-          </div>
+          {/* <div className="lg:basis-1/2"> */}
+          <Calendar
+            value={value}
+            onChange={onChange}
+            nextLabel={null}
+            prevLabel={null}
+            next2Label={null}
+            prev2Label={null}
+            className="lg:basis-1/2"
+            tileClassName={({ view, date }) => {
+              console.log('This is the view -> ', view);
+              return `md:p-2 ${
+                date.getMonth() === activeMonth
+                  ? 'text-grey-50'
+                  : 'text-grey-80'
+              }`;
+            }}
+          />
+          {/* </div> */}
           <div className="lg:basis-1/2">
             <p className="text-grey uppercase text-xl font-bold mb-4">Events</p>
             <div className="border-2 border-white rounded">
               {dummyEvents.map((event, index) => (
                 <p
                   style={{
-                    padding: "15px 10px",
+                    padding: '15px 10px',
                     borderBottom:
                       index + 1 !== dummyEvents.length
-                        ? "3px solid #fff"
-                        : "none",
+                        ? '3px solid #fff'
+                        : 'none',
                     fontSize: 14,
-                    fontWeight: "normal",
+                    fontWeight: 'normal'
                   }}
                   key={index}
                 >
-                  {event.text} -{" "}
-                  <span style={{ fontWeight: "bold" }}>{event.day}</span>
+                  {event.text} -{' '}
+                  <span style={{ fontWeight: 'bold' }}>{event.day}</span>
                 </p>
               ))}
             </div>
