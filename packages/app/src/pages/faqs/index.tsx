@@ -122,9 +122,9 @@ const Accordion = ({ question, answer }: AccordionProps) => {
         onClick={() => setOpen(!open)}
       >
         <p className="text-base md:text-2xl font-light">{question}</p>
-        <span>
+        <span className="hover:cursor-pointer">
           {open ? (
-            "-"
+            <Image src="/img/minus-sign.svg" width={16} height={16} alt="" />
           ) : (
             <Image src="/img/plus-sign.svg" width={16} height={16} alt="" />
           )}
