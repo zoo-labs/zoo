@@ -1,58 +1,59 @@
-import { numberWithCommas } from "functions";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { AppState } from "state";
-import { useBuyZoo } from "state/zoo/hooks";
-import MarketItem from "../../components/market/marketItem";
-import markets from "../../components/market/marketitem.json";
-import { wait } from "functions";
-import { withStyles } from "@mui/styles";
-import CloseIcon from "components/CloseIcon";
-import ReactDropdown from "react-dropdown";
-import { Filter } from "react-feather";
-import { Slider } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { useModal } from "react-morphing-modal";
-import { useRouter } from "next/router";
-import Wallet from "./wallet";
-import { useTokenTypes } from "zoo/state";
+import { numberWithCommas } from 'functions';
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useSelector } from 'react-redux';
+import { AppState } from 'state';
+import { useBuyZoo } from 'state/zoo/hooks';
+import MarketItem from '../../components/market/marketItem';
+import markets from '../../components/market/marketitem.json';
+import { wait } from 'functions';
+import { withStyles } from '@mui/styles';
+import CloseIcon from 'components/CloseIcon';
+import ReactDropdown from 'react-dropdown';
+import { Filter } from 'react-feather';
+import { Slider } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { useModal } from 'react-morphing-modal';
+import { useRouter } from 'next/router';
+import Wallet from './wallet';
+import { useTokenTypes } from 'zoo/state';
 const PrettoSlider = styled(Slider)({
-  color: "#8c4ff8",
+  color: '#8c4ff8',
   height: 8,
-  "& .MuiSlider-track": {
-    border: "none",
+  '& .MuiSlider-track': {
+    border: 'none'
   },
-  "& .MuiSlider-thumb": {
+  '& .MuiSlider-thumb': {
     height: 24,
     width: 24,
-    backgroundColor: "#8c4ff8",
-    border: "2px solid #fff",
-    "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {
-      boxShadow: "inherit",
+    backgroundColor: '#8c4ff8',
+    border: '2px solid #fff',
+    '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+      boxShadow: 'inherit'
     },
-    "&:before": {
-      display: "none",
-    },
+    '&:before': {
+      display: 'none'
+    }
   },
-  "& .MuiSlider-valueLabel": {
+  '& .MuiSlider-valueLabel': {
     lineHeight: 1.2,
     fontSize: 12,
-    background: "unset",
+    background: 'unset',
     padding: 0,
     width: 32,
     height: 32,
-    borderRadius: "50% 50% 50% 0",
-    backgroundColor: "#8c4ff8",
-    transformOrigin: "bottom left",
-    transform: "translate(50%, -100%) rotate(-45deg) scale(0)",
-    "&:before": { display: "none" },
-    "&.MuiSlider-valueLabelOpen": {
-      transform: "translate(50%, -100%) rotate(-45deg) scale(1)",
+    borderRadius: '50% 50% 50% 0',
+    backgroundColor: '#8c4ff8',
+    transformOrigin: 'bottom left',
+    transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
+    '&:before': { display: 'none' },
+    '&.MuiSlider-valueLabelOpen': {
+      transform: 'translate(50%, -100%) rotate(-45deg) scale(1)'
     },
-    "& > *": {
-      transform: "rotate(45deg)",
-    },
-  },
+    '& > *': {
+      transform: 'rotate(45deg)'
+    }
+  }
 });
 
 // const PrettoSlider = withStyles({
@@ -92,24 +93,31 @@ const PrettoSlider = styled(Slider)({
 interface MarketProps {}
 
 const Market: React.FC<MarketProps> = ({}) => {
-  const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
+  const zooBalance = useSelector<AppState, AppState['zoo']['zooBalance']>(
     (state) => state.zoo.zooBalance
   );
-  const animalsState = useSelector<AppState, AppState["zoo"]["animals"]>(
+  const animalsState = useSelector<AppState, AppState['zoo']['animals']>(
     (state) => state.zoo.animals
   );
-  const eggsState = useSelector<AppState, AppState["zoo"]["eggs"]>(
+  const eggsState = useSelector<AppState, AppState['zoo']['eggs']>(
     (state) => state.zoo.eggs
   );
   // const toggleBidModal = useBidModalToggle()
   // const toggleAssetModal = useAssetModalToggle()
   const myAuctions = [0, 1];
   const options = [
-    "Common 🌕",
-    "Uncommon 🌓",
-    "Rare 🔥",
-    "Super Rare ☄️",
-    "Epic 🌟",
+    'Common 🌕',
+    'Uncommon 🌓',
+    'Rare 🔥',
+    'Super Rare ☄️',
+    'Epic 🌟'
+  ];
+  const timeFIlterOption = [
+    'Recently added',
+    'Last 24 hours',
+    'Last 7 days',
+    'Last 30 days',
+    'Last 90 days'
   ];
   const [fetching, setFetching] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -130,10 +138,10 @@ const Market: React.FC<MarketProps> = ({}) => {
   const allEggs = Object.values(eggsState);
   const allData = {
     0: allEggs,
-    1: allAnimls,
+    1: allAnimls
   };
   const { tokenTypes } = useTokenTypes();
-  console.log("tokenTypes", tokenTypes);
+  console.log('tokenTypes', tokenTypes);
   useEffect(() => {
     setData(
       [...Object.values(allData)]
@@ -156,7 +164,7 @@ const Market: React.FC<MarketProps> = ({}) => {
           .slice(0, 8 * page)
       );
     } else if (category === 3) {
-      console.log("is hybrid filter");
+      console.log('is hybrid filter');
     } else {
       setData(
         [allData[category - 1]]
@@ -169,18 +177,18 @@ const Market: React.FC<MarketProps> = ({}) => {
   };
 
   const { modalProps, open: openModal } = useModal({
-    background: "black",
+    background: 'black'
   });
 
   const router = useRouter();
 
   const onClickTokenType = (name: string) => {
-    console.log("name", name);
+    console.log('name', name);
     router.push(`${router.pathname}?name=${name}`, undefined, {
-      shallow: true,
+      shallow: true
     });
   };
-  
+
   const buyZoo = useBuyZoo();
   return (
     <div className="pt-16 pb-16 px-6 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
@@ -190,16 +198,93 @@ const Market: React.FC<MarketProps> = ({}) => {
       <div className="w-full max-w-screen-xl mx-auto mt-20">
         <h3 className="mb-16 text-4xl font-semibold">Discover</h3>
         <div className="relative justify-between hidden mb-8 lg:flex">
-          <div className="flex items-center justify-between h-12 pl-4 pr-1 text-sm rounded-lg cursor-pointer w-44"></div>
+          {/* <div className="flex items-center justify-between h-12 pl-4 pr-1 text-sm rounded-lg cursor-pointer w-full"></div> */}
+          <div className="flex items-center justify-between h-12 pl-4 pr-1 text-sm rounded-lg cursor-pointer w-full">
+            <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold text-grey-400 border border-white border-solid rounded-lg cursor-pointer w-44">
+              <ReactDropdown
+                menuClassName="menu absolute top-full"
+                className="dropdown"
+                options={timeFIlterOption}
+                value={''}
+                placeholder="Recently added"
+              />
+              <Image
+                src={'/icons/download.svg'}
+                alt=""
+                className="absolute top-0"
+                width={20}
+                height={20}
+              />
+              {/* <RiArrowDownCircleLine values={"dfghj"} fill='gray' style={{ fontSize: 25, color: 'red' }} /> */}
+            </div>
+          </div>
           {/* <div className='flex items-center justify-between h-12 pl-4 pr-1 text-sm border border-gray-600 border-solid rounded-lg cursor-pointer w-44'>
               Recently added
               <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} />
             </div> */}
           <div
+            className="rounded-xl w-full"
+            style={{
+              background: 'linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)',
+              padding: 2
+            }}
+          >
+            <div className="flex items-center justify-center bg-black rounded-xl w-full h-full">
+              {['All Items', 'Eggs', 'Animals', 'Hybrid'].map(
+                (value, index) => {
+                  const active = category === index;
+                  return (
+                    <a
+                      onClick={() => {
+                        setCategory(index);
+                        setPage(1);
+                        if (index === 0) {
+                          setData(
+                            [...Object.values(allData)]
+                              .flat(1)
+                              .sort((a: any, b: any) => a.tokenID - b.tokenID)
+                              .slice(0, 8)
+                          );
+                        } else if (index === 3) {
+                          console.log('is hybrid filter');
+                        } else {
+                          setData([]);
+                          setFetching(true);
+                          wait(1500).then(() =>
+                            setData(
+                              [allData[index - 1]]
+                                .flat(1)
+                                .sort((a, b) => a.tokenID - b.tokenID)
+                                .slice(0, 8)
+                            )
+                          );
+                        }
+                      }}
+                      className={`text-white text-sm font-bold py-1 px-4 cursor-pointer w-full h-full flex items-center justify-center ${
+                        index === 0
+                          ? 'rounded-l-xl'
+                          : index === 3 && 'rounded-r-xl'
+                      } `}
+                      style={{
+                        background: active
+                          ? 'linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)'
+                          : 'transparent'
+                        // borderRight: index !== 3 && '2px solid'
+                      }}
+                      key={index}
+                    >
+                      {value}
+                    </a>
+                  );
+                }
+              )}
+            </div>
+          </div>
+          {/* <div
             className="absolute flex justify-center transform left-2/4 -translate-x-2/4"
             style={{ top: 10 }}
           >
-            {["All Items", "Eggs", "Animals", "Hybrid"].map((value, index) => {
+            {['All Items', 'Eggs', 'Animals', 'Hybrid'].map((value, index) => {
               const active = category === index;
               return (
                 <a
@@ -214,7 +299,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                           .slice(0, 8)
                       );
                     } else if (index === 3) {
-                      console.log("is hybrid filter");
+                      console.log('is hybrid filter');
                     } else {
                       setData([]);
                       setFetching(true);
@@ -229,7 +314,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                     }
                   }}
                   className={`${
-                    active ? "bg-white text-gray-900" : "text-gray-600"
+                    active ? 'bg-white text-gray-900' : 'text-gray-600'
                   } text-sm rounded-full font-bold py-1 px-4 cursor-pointer`}
                   key={index}
                 >
@@ -237,35 +322,50 @@ const Market: React.FC<MarketProps> = ({}) => {
                 </a>
               );
             })}
-          </div>
+          </div> */}
           <div className="hidden">show on tablet viewport</div>
-          <button
+          <div className="w-full flex items-end justify-end">
+            <button
+              onClick={() => setFiltering(!filtering)}
+              className="relative flex items-center justify-center text-center px-6 py-3 font-bold leading-3 rounded-xl border-2 text-grey-400"
+            >
+              Filter
+              <span className="flex items-center justify-center pl-2">
+                {!filtering ? (
+                  <Filter color="#878787" />
+                ) : (
+                  <CloseIcon color="#878787" />
+                )}
+              </span>
+            </button>
+          </div>
+          {/* <button
             onClick={() => setFiltering(!filtering)}
-            className="relative flex items-center justify-center pl-6 font-bold leading-3 rounded-full bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary"
+            className="relative flex items-center justify-center pl-6 font-bold leading-3 rounded-full bg-gradient-to-b from-btn1 to-btn2 hover:from-primary hover:to-primary "
             style={{
-              background: "linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)",
+              background: 'linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)'
             }}
           >
             Filter
             <div className="flex items-center justify-center pr-2 w-14">
               {!filtering ? <Filter /> : <CloseIcon fill="white" />}
             </div>
-          </button>
+          </button> */}
         </div>
 
         <div
           className={`${
-            !filtering ? "hidden" : "block"
+            !filtering ? 'hidden' : 'block'
           } border-t border-solid  py-8`}
-          style={{ borderColor: "rgb(107, 114, 128)" }}
+          style={{ borderColor: 'rgb(107, 114, 128)' }}
         >
           <div className="flex flex-wrap -mx-4 -mt-8 ">
             <div
               className=""
               style={{
-                flex: " 0 0 calc(25% - 32px)",
-                maxWidth: "calc(25% - 32px)",
-                margin: "32px 16px 0",
+                flex: ' 0 0 calc(25% - 32px)',
+                maxWidth: 'calc(25% - 32px)',
+                margin: '32px 16px 0'
               }}
             >
               <div>
@@ -293,9 +393,9 @@ const Market: React.FC<MarketProps> = ({}) => {
             <div
               className=""
               style={{
-                flex: " 0 0 calc(25% - 32px)",
-                maxWidth: "calc(25% - 32px)",
-                margin: "32px 16px 0",
+                flex: ' 0 0 calc(25% - 32px)',
+                maxWidth: 'calc(25% - 32px)',
+                margin: '32px 16px 0'
               }}
             >
               <div>
@@ -307,7 +407,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                     {/* Highest Yields */}
                     {/* <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} /> */}
                     <input
-                      type={"number"}
+                      type={'number'}
                       onChange={(e) => {
                         setAge(parseInt(e.target.value));
                       }}
@@ -321,9 +421,9 @@ const Market: React.FC<MarketProps> = ({}) => {
             <div
               className=""
               style={{
-                flex: " 0 0 calc(25% - 32px)",
-                maxWidth: "calc(25% - 32px)",
-                margin: "32px 16px 0",
+                flex: ' 0 0 calc(25% - 32px)',
+                maxWidth: 'calc(25% - 32px)',
+                margin: '32px 16px 0'
               }}
             >
               <div>
@@ -336,7 +436,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                       menuClassName="menu absolute top-full"
                       className="dropdown"
                       options={options}
-                      value={""}
+                      value={''}
                       placeholder="Select an option"
                     />
                     {/* <RiArrowDownCircleLine values={"dfghj"} fill='gray' style={{ fontSize: 25, color: 'red' }} /> */}
@@ -348,9 +448,9 @@ const Market: React.FC<MarketProps> = ({}) => {
             <div
               className=""
               style={{
-                flex: " 0 0 calc(25% - 32px)",
-                maxWidth: "calc(25% - 32px)",
-                margin: "32px 16px 0",
+                flex: ' 0 0 calc(25% - 32px)',
+                maxWidth: 'calc(25% - 32px)',
+                margin: '32px 16px 0'
               }}
             >
               <div>
@@ -378,9 +478,9 @@ const Market: React.FC<MarketProps> = ({}) => {
             <div
               className=""
               style={{
-                flex: " 0 0 calc(25% - 32px)",
-                maxWidth: "calc(25% - 32px)",
-                margin: "32px 16px 0",
+                flex: ' 0 0 calc(25% - 32px)',
+                maxWidth: 'calc(25% - 32px)',
+                margin: '32px 16px 0'
               }}
             >
               <div>
@@ -417,7 +517,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                     <MarketItem
                       datum={datum}
                       applyMaxWidth={false}
-                      placeBid={() => (setActiveItem(datum), console.log(""))}
+                      placeBid={() => (setActiveItem(datum), console.log(''))}
                     />
                   </div>
                 );
