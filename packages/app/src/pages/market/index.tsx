@@ -18,7 +18,7 @@ import { useRouter } from 'next/router';
 import Wallet from './wallet';
 import { useTokenTypes } from 'zoo/state';
 const PrettoSlider = styled(Slider)({
-  color: '#8c4ff8',
+  color: '#15F195',
   height: 8,
   '& .MuiSlider-track': {
     border: 'none'
@@ -26,7 +26,7 @@ const PrettoSlider = styled(Slider)({
   '& .MuiSlider-thumb': {
     height: 24,
     width: 24,
-    backgroundColor: '#8c4ff8',
+    backgroundColor: '#15F195',
     border: '2px solid #fff',
     '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
       boxShadow: 'inherit'
@@ -43,7 +43,7 @@ const PrettoSlider = styled(Slider)({
     width: 32,
     height: 32,
     borderRadius: '50% 50% 50% 0',
-    backgroundColor: '#8c4ff8',
+    backgroundColor: '#15F195',
     transformOrigin: 'bottom left',
     transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
     '&:before': { display: 'none' },
@@ -215,7 +215,6 @@ const Market: React.FC<MarketProps> = ({}) => {
                 width={20}
                 height={20}
               />
-              {/* <RiArrowDownCircleLine values={"dfghj"} fill='gray' style={{ fontSize: 25, color: 'red' }} /> */}
             </div>
           </div>
           {/* <div className='flex items-center justify-between h-12 pl-4 pr-1 text-sm border border-gray-600 border-solid rounded-lg cursor-pointer w-44'>
@@ -357,10 +356,74 @@ const Market: React.FC<MarketProps> = ({}) => {
         <div
           className={`${
             !filtering ? 'hidden' : 'block'
-          } border-t border-solid  py-8`}
+          } border-t border-solid py-8`}
           style={{ borderColor: 'rgb(107, 114, 128)' }}
         >
-          <div className="flex flex-wrap -mx-4 -mt-8 ">
+          <div className="flex items-center justify-between  flex-wrap ">
+            <div>
+              <p className="mb-2 text-sm md:text-lg font-normal text-grey-400 uppercase">
+                PRICE
+              </p>
+              <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold text-grey-400 border border-white border-solid rounded-lg cursor-pointer w-44">
+                <ReactDropdown
+                  menuClassName="menu absolute top-full"
+                  className="dropdown"
+                  options={timeFIlterOption}
+                  value={''}
+                  placeholder="Highest Prices"
+                />
+                <Image
+                  src={'/icons/download.svg'}
+                  alt=""
+                  className="absolute top-0"
+                  width={20}
+                  height={20}
+                />
+              </div>
+            </div>
+            <div>
+              <p className="mb-2 text-sm md:text-lg font-normal text-grey-400 uppercase">
+                YIELDS
+              </p>
+              <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold text-grey-400 border border-white border-solid rounded-lg cursor-pointer w-44">
+                <ReactDropdown
+                  menuClassName="menu absolute top-full"
+                  className="dropdown"
+                  options={timeFIlterOption}
+                  value={''}
+                  placeholder="Highest Yields"
+                />
+                <Image
+                  src={'/icons/download.svg'}
+                  alt=""
+                  className="absolute top-0"
+                  width={20}
+                  height={20}
+                />
+              </div>
+            </div>
+            <div>
+              <p className="mb-2 text-sm md:text-lg font-normal text-grey-400 uppercase">
+                RARITY
+              </p>
+              <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold text-grey-400 border border-white border-solid rounded-lg cursor-pointer w-44">
+                <ReactDropdown
+                  menuClassName="menu absolute top-full"
+                  className="dropdown"
+                  options={timeFIlterOption}
+                  value={''}
+                  placeholder="Epic"
+                />
+                <Image
+                  src={'/icons/download.svg'}
+                  alt=""
+                  className="absolute top-0"
+                  width={20}
+                  height={20}
+                />
+              </div>
+            </div>
+
             <div
               className=""
               style={{
@@ -370,8 +433,8 @@ const Market: React.FC<MarketProps> = ({}) => {
               }}
             >
               <div>
-                <div className="mb-2 text-xs font-bold text-gray-400 uppercase">
-                  Breed Count
+                <div className="mb-2 text-sm md:text-lg font-normal text-grey-400 uppercase">
+                  PRICE RANGE
                 </div>
                 <PrettoSlider
                   onChange={(value, number) => {
@@ -391,7 +454,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                 </div>
               </div>
             </div>
-            <div
+            {/* <div
               className=""
               style={{
                 flex: ' 0 0 calc(25% - 32px)',
@@ -405,8 +468,8 @@ const Market: React.FC<MarketProps> = ({}) => {
                 </div>
                 <div className="relative">
                   <div className="flex items-center justify-between w-full h-12 pl-4 pr-1 text-sm font-semibold text-white border border-gray-600 border-solid rounded-lg cursor-pointer w-44">
-                    {/* Highest Yields */}
-                    {/* <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} /> */}
+                    Highest Yields
+                    <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} />
                     <input
                       type={'number'}
                       onChange={(e) => {
@@ -418,8 +481,8 @@ const Market: React.FC<MarketProps> = ({}) => {
                   </div>
                 </div>
               </div>
-            </div>
-            <div
+            </div> */}
+            {/* <div
               className=""
               style={{
                 flex: ' 0 0 calc(25% - 32px)',
@@ -440,13 +503,13 @@ const Market: React.FC<MarketProps> = ({}) => {
                       value={''}
                       placeholder="Select an option"
                     />
-                    {/* <RiArrowDownCircleLine values={"dfghj"} fill='gray' style={{ fontSize: 25, color: 'red' }} /> */}
+                    <RiArrowDownCircleLine values={"dfghj"} fill='gray' style={{ fontSize: 25, color: 'red' }} />
                   </div>
                 </div>
               </div>
-            </div>
-            ``
-            <div
+            </div> */}
+
+            {/* <div
               className=""
               style={{
                 flex: ' 0 0 calc(25% - 32px)',
@@ -475,8 +538,8 @@ const Market: React.FC<MarketProps> = ({}) => {
                   <div className="font-semibold">9</div>
                 </div>
               </div>
-            </div>
-            <div
+            </div> */}
+            {/* <div
               className=""
               style={{
                 flex: ' 0 0 calc(25% - 32px)',
@@ -505,7 +568,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                   <div className="font-semibold">10 ETH</div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
