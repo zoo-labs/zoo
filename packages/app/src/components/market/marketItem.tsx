@@ -1,7 +1,8 @@
-import React from 'react';
-import { FaHeart, FaMoneyBill, FaMoneyBillWave } from 'react-icons/fa';
-import { useHistory } from 'react-router';
-import { accountEllipsis, getEmoji } from 'functions';
+import React from "react";
+import { FaHeart, FaMoneyBill, FaMoneyBillWave } from "react-icons/fa";
+import { useHistory } from "react-router";
+import { accountEllipsis, getEmoji } from "functions";
+import Image from "next/image";
 
 interface IndexProps {
   datum: any;
@@ -14,17 +15,17 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
   return (
     <div className="flex flex-col ">
       <div className="relative overflow-hidden rounded parent">
-        <img
-          style={{ verticalAlign: 'middle' }}
-          src={`${datum.imageUrl || '/static/video/egg.gif'}`}
+        <Image
+          layout="fill"
+          src={`${datum.imageUrl || "/static/video/egg.gif"}`}
           className="w-full transition-transform duration-1000 "
         />
         <div className="absolute top-0 left-0 invisible w-full h-full transition-all duration-300 rounded opacity-0 hover:visible hover:opacity-100">
           <div className="absolute px-2 py-1 text-xs font-bold uppercase rounded top-6 left-3 bg-primary ">
-            {datum.bloodline || (datum.basic ? 'BASIC' : 'HYBRID')}
+            {datum.bloodline || (datum.basic ? "BASIC" : "HYBRID")}
           </div>
 
-          {/* <div className='absolute flex items-center justify-center w-8 h-8 rounded-full cursor-pointer  top-6 right-3 bg-dark-800'>
+          {/* <div className='absolute flex items-center justify-center w-8 h-8 rounded-full cursor-pointer top-6 right-3 bg-dark-800'>
             <FaHeart fill='white' style={{ fontSize: 10 }} />
           </div> */}
           <a
@@ -39,7 +40,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
       <a
         onClick={() =>
           history.push(`/feed/${datum.owner}/${datum.tokenID}`, {
-            item: datum
+            item: datum,
           })
         }
         className="flex flex-col flex-grow py-4 no-underline cursor-pointer"
@@ -47,14 +48,14 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
         <div className="flex flex-col flex-grow">
           <div className="flex mb-4 ">
             <div className="mt-1 mr-auto font-semibold">
-              {datum.name || 'Egg'}{' '}
+              {datum.name || "Egg"}{" "}
               <span className="text-xs text-gray-500">
-                ({datum.tokenID || ''})
+                ({datum.tokenID || ""})
               </span>
             </div>
             <div
               className="flex items-center justify-center flex-shrink-0 px-2 ml-2 text-xs font-bold uppercase rounded-sm primary"
-              style={{ boxShadow: 'inset 0 0 0 1px rgb(140, 79, 248)' }}
+              style={{ boxShadow: "inset 0 0 0 1px rgb(140, 79, 248)" }}
             >
               500K Z00
             </div>
@@ -62,7 +63,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
           <div className="flex ">
             <div className="flex mt-1 mr-auto text-xs font-semibold text-gray-500">
               <div className="w-4 h-4 mr-1 rounded-full bg-gradient-to-b from-btn1 to-btn2"></div>
-              {accountEllipsis(datum.owner || '')}
+              {accountEllipsis(datum.owner || "")}
             </div>
             <div className="flex items-center justify-center flex-shrink-0 ml-2 text-xs font-bold uppercase rounded-sm">
               3 days Left
@@ -79,7 +80,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
           <div className="text-xs font-semibold text-gray-500">
             {datum.yield
               ? `${datum.yield} Yields/Day ${getEmoji(datum.rarity)}`
-              : ''}{' '}
+              : ""}{" "}
           </div>
         </div>
       </a>

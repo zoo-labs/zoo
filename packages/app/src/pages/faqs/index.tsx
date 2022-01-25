@@ -55,7 +55,7 @@ export const faqData = [
   },
   {
     question: "I need help",
-    answer: `If you're having difficulty, please join our Discord server and post in the <span class="font-bold">#new-player-help</span> channel and our community will be happy to help!
+    answer: `If you"re having difficulty, please join our Discord server and post in the <span class="font-bold">#new-player-help</span> channel and our community will be happy to help!
 		In addition, a complete list of guides can be found <a href="https://bit.ly/JihozAxieResources" class="text-green" target="_blank" rel="noreferrer">here</a>.`,
   },
   {
@@ -73,22 +73,22 @@ export const faqData = [
   },
   {
     question: "What is a Wallet?",
-    answer: `A wallet is a secure place to store your digital items, whether they be cards, boards, trinkets, Ether or anything else you may come across. Every wallet has a unique wallet ID, and this is the thing that links your digital assets to you. What’s more, they are completely free to set up and own.<br />
+    answer: `A wallet is a secure place to store your digital items, whether they be cards, boards, trinkets, Ether or anything else you may come across. Every wallet has a unique wallet ID, and this is the thing that links your digital assets to you. What"s more, they are completely free to set up and own.<br />
 		When you purchase anything on the ZOO marketplace the NFTs are stored in your wallet, but only if you have one linked to the game.<br /> 
 		We recommend using MetaMask to set up a new wallet or link an existing wallet as it has the best functionality with ZOO. MetaMask is a browser extension that easily allows you to interact with the BSC network. With this extension, you can set up a wallet and link it to ZOO to make purchases, sign in, and store your in-game items`,
   },
   {
     question: "How do I set up a Wallet?",
-    answer: `Great question! Here’s a simple guide to help you through the process:<br /><br />
+    answer: `Great question! Here"s a simple guide to help you through the process:<br /><br />
 		<ol>
 			<li>1. Head to MetaMask.io</li>
 			<li>2. Install the plug-in: Install the MetaMask extension for your chosen browser.</li>
 			<li>3. Create a wallet: Follow the prompts to “Create a Wallet”. </li>
 			<li>4. Connect plug-in: Sign in to the Gods Unchained website  with your Gods Unchained account. The MetaMask plug-in will then appear with a prompt to connect – click “Connect”. </li>
-			<li>5. Link wallet: Head to the Manage Wallet section of the Gods Unchained website by clicking on your profile image in the top right. Click the ‘Add Wallet’ button.</li>
+			<li>5. Link wallet: Head to the Manage Wallet section of the Gods Unchained website by clicking on your profile image in the top right. Click the Add Wallet button.</li>
 		</ol>
 		<br />
-		It’s important to note that connecting and linking your wallet doesn’t give us any power over your wallet or its contents, it simply shows NFT belong to you so you can play with and sell them. That’s the beauty of true ownership! 
+		It"s important to note that connecting and linking your wallet doesn"t give us any power over your wallet or its contents, it simply shows NFT belong to you so you can play with and sell them. That"s the beauty of true ownership! 
 		`,
   },
   {
@@ -118,10 +118,10 @@ const Accordion = ({ question, answer }: AccordionProps) => {
   return (
     <div className="mb-4 border-b border-purple">
       <div
-        className="py-4 rounded flex items-center justify-between"
+        className="flex items-center justify-between py-4 rounded"
         onClick={() => setOpen(!open)}
       >
-        <p className="text-base md:text-2xl font-light">{question}</p>
+        <p className="text-base font-light md:text-2xl">{question}</p>
         <span className="hover:cursor-pointer">
           {open ? (
             <Image src="/img/minus-sign.svg" width={16} height={16} alt="" />
@@ -143,8 +143,8 @@ const Accordion = ({ question, answer }: AccordionProps) => {
 const Faqs = () => {
   return (
     <div className="">
-      <div className="pt-16 pb-16 px-4 lg:max-w-7xl mx-auto">
-        <h1 className="text-center text-4xl lg:text-5xl font-bold mb-8">
+      <div className="px-4 pt-16 pb-16 mx-auto lg:max-w-7xl">
+        <h1 className="mb-8 text-4xl font-bold text-center lg:text-5xl">
           Frequently asked questions
         </h1>
 
@@ -157,41 +157,41 @@ const Faqs = () => {
         })}
       </div>
 
-      <div className="pt-16 pb-16 lg:pb-24 px-4 lg:max-w-5xl mx-auto">
-        <h2 className="text-3xl lg:text-4xl font-bold text-center mb-8">
+      <div className="px-4 pt-16 pb-16 mx-auto lg:pb-24 lg:max-w-5xl">
+        <h2 className="mb-8 text-3xl font-bold text-center lg:text-4xl">
           Contact Us
         </h2>
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center lg:gap-12">
-          <form className="flex flex-col basis-1/2 mb-8 lg:mb-0">
+          <form className="flex flex-col mb-8 basis-1/2 lg:mb-0">
             <div className="mb-6">
               <input
                 type="text"
                 placeholder="Name"
-                className="w-full bg-transparent border border-grey p-2 py-3 rounded-md"
+                className="w-full p-2 py-3 bg-transparent border rounded-md border-grey"
               />
             </div>
             <div className="mb-6">
               <input
                 type="email"
                 placeholder="Email Address"
-                className="w-full bg-transparent border border-grey p-2 py-3 rounded-md"
+                className="w-full p-2 py-3 bg-transparent border rounded-md border-grey"
               />
             </div>
             <div className="mb-6">
               <textarea
                 placeholder="Your Message"
-                className="w-full bg-transparent border border-grey p-2 py-3 rounded-md"
+                className="w-full p-2 py-3 bg-transparent border rounded-md border-grey"
               ></textarea>
             </div>
             <div>
-              <button className="bg-blue text-white text-center py-3 px-2 w-full rounded-md">
+              <button className="w-full px-2 py-3 text-center text-white rounded-md bg-blue">
                 Send
               </button>
             </div>
           </form>
           <div className="basis-1/2">
-            <p className="text-md lg:text-2xl mb-6">
-              If you're having difficulty, please join our Discord server and
+            <p className="mb-6 text-md lg:text-2xl">
+              If you are having difficulty, please join our Discord server and
               post in the #new-player-help channel and our community will be
               happy to help!
             </p>
