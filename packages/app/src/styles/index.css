@@ -217,6 +217,7 @@ video {
   animation-play-state: paused;
 }
 
+
 @keyframes anim {
   from {
     transform: rotate(0deg) translateX(100px);

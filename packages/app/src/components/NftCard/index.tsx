@@ -22,8 +22,8 @@ const NftCard = ({
   currency = "ZOO",
 }: NftCardProps) => {
   return (
-    <div className="p-px bg-gradient-to-b from-btn1 to-btn2 rounded-lg w-full overflow-hidden mb-6 lg:mb-0 PopularNft_nft">
-      <div className="bg-black overflow-hidden">
+    <div className="p-1 bg-gradient-to-b from-btn1 to-btn2 rounded-xl w-full overflow-hidden mb-6 lg:mb-0 PopularNft_nft">
+      <div className="bg-black overflow-hidden p-1">
         <div className="PopularNfts__nft-img text-center object-contain overflow-hidden">
           {image && image}
         </div>

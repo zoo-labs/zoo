@@ -22,6 +22,7 @@ const OpportunitySection = () => {
   const faucet = useFaucet();
   const dispatch = useDispatch();
   const [stage, setStage] = useState("");
+  const [hovered, setHovered] = useState(false)
 
   const sectionRef = React.useRef();
 
@@ -31,7 +32,15 @@ const OpportunitySection = () => {
 
   const displayContent = (desc: string) => {
     setStage(desc);
+    hanldeHover();
   };
+
+  const hanldeHover = () => {
+    setHovered(!hovered);
+  }
+  const style = {
+    animationPlayState: 'paused'
+  }
 
   return (
     <section className="relative" ref={sectionRef}>
@@ -45,30 +54,34 @@ const OpportunitySection = () => {
             <div className="big-circle">
               <div className="animal-content">{stage && <p>{stage}</p>}</div>
               <div
-                className="animate-animal incubate"
+                className="animate-animal animal incubate"
+                style={hovered ? style : undefined}
                 onMouseEnter={() => displayContent("Incubate")}
                 onMouseOut={() => displayContent("")}
               >
                 <Image src="/img/incubate-cycle.png" width={150} height={170} alt="" objectFit="contain" />
               </div>
               <div
-                className="animate-animal feed"
+                className="animate-animal animal feed"
                 onMouseEnter={() => displayContent("Feed")}
                 onMouseOut={() => displayContent("")}
+                style={hovered ? style : undefined}
               >
                  <Image src="/img/feed-cycle.png" width={150} height={170} alt="" objectFit="contain" />
               </div>
               <div
-                className="animate-animal grow"
+                className="animate-animal animal grow"
                 onMouseEnter={() => displayContent("Grow")}
                 onMouseOut={() => displayContent("")}
+                style={hovered ? style : undefined}
               >
                  <Image src="/img/grow-cycle.png" width={150} height={170} alt="" objectFit="contain" />
               </div>
               <div
-                className="animate-animal breed"
+                className="animate-animal animal breed"
                 onMouseEnter={() => displayContent("Breed")}
                 onMouseOut={() => displayContent("")}
+                style={hovered ? style : undefined}
               >
                  <Image src="/img/breed-cycle.png" width={150} height={170} alt="" objectFit="contain" />
               </div>
