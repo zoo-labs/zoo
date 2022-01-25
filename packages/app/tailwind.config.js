@@ -48,6 +48,8 @@ module.exports = {
       },
       backgroundImage: {
         "marketplace-section": "url(/img/leaves.png)",
+        "nft-gradient":
+          "linear-gradient(180deg, #2517FF -61.88%, #15F195 131.19%)",
       },
       colors: {
         purple: "#462CA9",
@@ -67,6 +69,8 @@ module.exports = {
         "dark-blue": "#020F2C",
         "butter-white": "#FCFCFD",
         dark: "#000",
+        steel: "#797979",
+
         "dark-gray": "#6D7278",
         "grey-400": "#878787",
         "grey-300": "#353945",
@@ -145,12 +149,11 @@ module.exports = {
         "3px": "3px",
       },
       minHeight: {
+        5: "1.25rem",
         empty: "128px",
         cardContent: "230px",
         fitContent: "fit-content",
-      },
-      minHeight: {
-        5: "1.25rem",
+        nftContainer: "503px",
       },
       minWidth: {
         5: "1.25rem",

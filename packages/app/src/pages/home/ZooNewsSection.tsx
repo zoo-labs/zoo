@@ -1,13 +1,13 @@
-import React, {useEffect} from "react";
-import Image from "next/image";
+import React, { useEffect } from 'react';
+import Image from 'next/image';
 
 // animation
-import {fadeInOnScroll} from '../../animation'
+import { fadeInOnScroll } from '../../animation';
 
 const ZooNewsSection = () => {
-  const zooRef = React.useRef()
+  const zooRef = React.useRef();
   useEffect(() => {
-    fadeInOnScroll(zooRef.current)
+    fadeInOnScroll(zooRef.current);
   }, []);
   return (
     <section className="ZooNews" ref={zooRef}>
@@ -27,13 +27,15 @@ const ZooNewsSection = () => {
           </div>
           <div className="flex flex-col justify-center lg:basis-1/2 bg-black100 rounded-2xl lg:-ml-2 -mt-3 lg:-mt-0">
             <div className="max-w-sm mx-auto py-8 lg:py-0 px-4 lg:px-0">
-              <p className="bg-green text-white px-2 py-1 rounderd mb-6 inline-block text-xs font-bold uppercase rounded-sm">New</p>
+              <p className="bg-blue text-white px-2 py-1 rounderd mb-6 inline-block text-xs font-bold uppercase rounded-sm">
+                New
+              </p>
               <h2 className="mb-3 text-2xl lg:text-3xl font-bold">
                 Stories From Our Community: Kohaku &amp; Moyo Shiro
               </h2>
               <p className="mb-6">
                 How the ZOO foundation helped save over 100,000 acres of
-                elephant habitat to date.{" "}
+                elephant habitat to date.{' '}
               </p>
               <a
                 className="bg-gradient-to-b from-purple to-blue text-white  text-sm md:text-base font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full"
@@ -49,6 +51,6 @@ const ZooNewsSection = () => {
   );
 };
 
-// px-4 py-4 -mt-4 lg:py-0 bg-black100 rounded-b-2xl lg:rounded-2xl lg:-ml-1 
+// px-4 py-4 -mt-4 lg:py-0 bg-black100 rounded-b-2xl lg:rounded-2xl lg:-ml-1
 
 export default ZooNewsSection;
