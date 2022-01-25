@@ -338,7 +338,8 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
         <div className="w-full mb-4">
           <div className="flex h-20 ">
             <div className="flex items-center justify-center mr-2 rounded w-14">
-              <img
+               <Image
+                  layout="fill"
                 style={{ verticalAlign: "middle" }}
                 src={`/static/images/basic.jpg`}
                 className="w-full h-full transition-transform duration-1000 rounded"
