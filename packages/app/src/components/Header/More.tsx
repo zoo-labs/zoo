@@ -2,6 +2,7 @@ import { Popover, Transition } from "@headlessui/react";
 import React, { Fragment } from "react";
 import { useGif } from "context/GifContext";
 import { toggleImage, toggleGif } from "context/GifContext";
+import Link from "next/link";
 
 import ExternalLink from "../ExternalLink";
 import { I18n } from "@lingui/core";
@@ -130,11 +131,30 @@ export default function Menu() {
             >
               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                 <div className="relative grid gap-6 px-5 py-6 bg-dark-900 sm:gap-8 sm:p-8">
+                  <Link href="/wallet">
+                    <a className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer">
+                      Wallet
+                      <div className="ml-4 sm:ml-14">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </a>
+                  </Link>
                   <div
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
                     style={{}}
                   >
-                    {state.gifMode === 'gif' ? 'Gif' : 'Image'} Mode
+                    {state.gifMode === "gif" ? "Gif" : "Image"} Mode
                     <div className="ml-4 sm:ml-14">
                       <Toggle
                         id="toggle-disable-multihop-button"
