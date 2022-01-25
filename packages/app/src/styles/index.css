@@ -198,32 +198,32 @@ video {
 }
 
 .incubate {
-  animation-delay: 9s;
-}
-
-.feed {
   animation-delay: 7s;
 }
 
+.feed {
+  animation-delay: 4.5s;
+}
+
 .grow {
-  animation-delay: 4s;
+  animation-delay: 2.5s;
 }
 
 .breed {
-  animation-delay: 2s;
+  animation-delay: 0s;
 }
 
-.animate-animal:hover {
+/* .animate-animal:hover {
   animation-play-state: paused;
-}
+} */
 
 
 @keyframes anim {
   from {
-    transform: rotate(0deg) translateX(100px);
+    transform: rotate(0deg) translateX(100px) rotate(0deg);
   }
   to {
-    transform: rotate(360deg) translateX(100px);
+    transform: rotate(360deg) translateX(100px) rotate(-360deg);
   }
 }
 
@@ -249,10 +249,10 @@ video {
 
   @keyframes anim {
     from {
-      transform: rotate(0deg) translateX(200px);
+      transform: rotate(0deg) translateX(200px) rotate(0deg);
     }
     to {
-      transform: rotate(360deg) translateX(200px);
+      transform: rotate(360deg) translateX(200px) rotate(-360deg);
     }
   }
 }
