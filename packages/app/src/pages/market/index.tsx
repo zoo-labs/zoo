@@ -56,40 +56,6 @@ const PrettoSlider = styled(Slider)({
   }
 });
 
-// const PrettoSlider = withStyles({
-//   root: {
-//     color: '#52af77',
-//     height: 8
-//   },
-//   thumb: {
-//     height: 24,
-//     width: 24,
-//     backgroundColor: 'rgb(140, 79, 248)',
-//     border: '2px solid currentColor',
-//     marginTop: -8,
-//     marginLeft: -12,
-//     '&:focus, &:hover, &$active': {
-//       boxShadow: 'inherit'
-//     }
-//   },
-//   active: {},
-//   valueLabel: {
-//     left: 'calc(-50% + 4px)',
-//     '& *': {
-//       background: 'white',
-//       color: 'rgb(140, 79, 248)'
-//     }
-//   },
-//   track: {
-//     height: 8,
-//     borderRadius: 4,
-//     backgroundColor: 'rgb(140, 79, 248)'
-//   },
-//   rail: {
-//     height: 8,
-//     borderRadius: 4
-//   }
-// })(Slider);
 interface MarketProps {}
 
 const Market: React.FC<MarketProps> = ({}) => {
@@ -202,16 +168,17 @@ const Market: React.FC<MarketProps> = ({}) => {
           <div className="flex items-center justify-between h-12 pl-4 pr-1 text-sm rounded-lg cursor-pointer w-full">
             <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold text-grey-400 border border-white border-solid rounded-lg cursor-pointer w-44">
               <ReactDropdown
-                menuClassName="menu absolute top-full"
+                menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
                 className="dropdown"
                 options={timeFIlterOption}
                 value={''}
-                placeholder="Recently added"
+                placeholder={'Recently added'}
+                placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
               />
               <Image
                 src={'/icons/download.svg'}
                 alt=""
-                className="absolute top-0"
+                className="absolute"
                 width={20}
                 height={20}
               />
@@ -366,11 +333,12 @@ const Market: React.FC<MarketProps> = ({}) => {
               </p>
               <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold text-grey-400 border border-white border-solid rounded-lg cursor-pointer w-44">
                 <ReactDropdown
-                  menuClassName="menu absolute top-full"
+                  menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
                   className="dropdown"
                   options={timeFIlterOption}
                   value={''}
                   placeholder="Highest Prices"
+                  placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
                 />
                 <Image
                   src={'/icons/download.svg'}
@@ -387,11 +355,12 @@ const Market: React.FC<MarketProps> = ({}) => {
               </p>
               <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold text-grey-400 border border-white border-solid rounded-lg cursor-pointer w-44">
                 <ReactDropdown
-                  menuClassName="menu absolute top-full"
+                  menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
                   className="dropdown"
                   options={timeFIlterOption}
                   value={''}
                   placeholder="Highest Yields"
+                  placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
                 />
                 <Image
                   src={'/icons/download.svg'}
@@ -408,11 +377,12 @@ const Market: React.FC<MarketProps> = ({}) => {
               </p>
               <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold text-grey-400 border border-white border-solid rounded-lg cursor-pointer w-44">
                 <ReactDropdown
-                  menuClassName="menu absolute top-full"
+                  menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
                   className="dropdown"
                   options={timeFIlterOption}
                   value={''}
                   placeholder="Epic"
+                  placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
                 />
                 <Image
                   src={'/icons/download.svg'}
