@@ -134,12 +134,12 @@ video {
 }
 
 .from-blue {
-  --tw-gradient-from: #2517FF;
-  --tw-gradient-stops: #27B0E6;
+  --tw-gradient-from: #2517ff;
+  --tw-gradient-stops: #27b0e6;
 }
 
 .to-green {
-  --tw-gradient-to: #15F195;
+  --tw-gradient-to: #15f195;
 }
 
 .MarketPlace {
@@ -155,4 +155,103 @@ video {
   }
 }
 
+/* Animation */
+.bg-image {
+  background: url('/img/bg-leaves.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
 
+.big-circle {
+  width: 200px;
+  max-width: 200px;
+  height: 200px;
+  border: 10px solid #2517ff;
+  border-radius: 50%;
+  position: fixed;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.animal-content {
+  max-width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  position: absolute;
+  top: 60px;
+  left: 70px;
+}
+
+.animate-animal {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  position: absolute;
+  top: 60px;
+  left: 60px;
+  animation-name: anim;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.incubate {
+  animation-delay: 9s;
+}
+
+.feed {
+  animation-delay: 7s;
+}
+
+.grow {
+  animation-delay: 4s;
+}
+
+.breed {
+  animation-delay: 2s;
+}
+
+.animate-animal:hover {
+  animation-play-state: paused;
+}
+
+@keyframes anim {
+  from {
+    transform: rotate(0deg) translateX(100px);
+  }
+  to {
+    transform: rotate(360deg) translateX(100px);
+  }
+}
+
+
+@media only screen and (min-width: 1024px) {
+  .big-circle {
+    width: 400px;
+    max-width: 400px;
+    height: 400px;
+  }
+
+  .animal-content {
+    top: 150px;
+    left: 170px;
+  }
+
+  .animate-animal {
+    width: 150px;
+    height: 150px;
+    top: 120px;
+    left: 120px;
+  }
+
+  @keyframes anim {
+    from {
+      transform: rotate(0deg) translateX(200px);
+    }
+    to {
+      transform: rotate(360deg) translateX(200px);
+    }
+  }
+}
