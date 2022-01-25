@@ -22,6 +22,7 @@ const OpportunitySection = () => {
   const faucet = useFaucet();
   const dispatch = useDispatch();
   const [stage, setStage] = useState("");
+  const [hovered, setHovered] = useState(false)
 
   const sectionRef = React.useRef();
 
@@ -31,7 +32,15 @@ const OpportunitySection = () => {
 
   const displayContent = (desc: string) => {
     setStage(desc);
+    handleHover();
   };
+
+  const handleHover = () => {
+    setHovered(!hovered);
+  }
+  const style = {
+    animationPlayState: 'paused'
+  }
 
   return (
     <section className="relative" ref={sectionRef}>
@@ -46,6 +55,7 @@ const OpportunitySection = () => {
               <div className="animal-content">{stage && <p>{stage}</p>}</div>
               <div
                 className="animate-animal incubate"
+                style={hovered ? style : undefined}
                 onMouseEnter={() => displayContent("Incubate")}
                 onMouseOut={() => displayContent("")}
               >
@@ -55,6 +65,7 @@ const OpportunitySection = () => {
                 className="animate-animal feed"
                 onMouseEnter={() => displayContent("Feed")}
                 onMouseOut={() => displayContent("")}
+                style={hovered ? style : undefined}
               >
                  <Image src="/img/feed-cycle.png" width={150} height={170} alt="" objectFit="contain" />
               </div>
@@ -62,6 +73,7 @@ const OpportunitySection = () => {
                 className="animate-animal grow"
                 onMouseEnter={() => displayContent("Grow")}
                 onMouseOut={() => displayContent("")}
+                style={hovered ? style : undefined}
               >
                  <Image src="/img/grow-cycle.png" width={150} height={170} alt="" objectFit="contain" />
               </div>
@@ -69,6 +81,7 @@ const OpportunitySection = () => {
                 className="animate-animal breed"
                 onMouseEnter={() => displayContent("Breed")}
                 onMouseOut={() => displayContent("")}
+                style={hovered ? style : undefined}
               >
                  <Image src="/img/breed-cycle.png" width={150} height={170} alt="" objectFit="contain" />
               </div>

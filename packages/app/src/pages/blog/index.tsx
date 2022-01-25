@@ -12,13 +12,16 @@ const Blog = () => {
 
   useEffect(() => {
     fadeInOnScroll(blogHeaderRef.current);
-  }, [])
+  }, []);
 
   return (
     <>
       {/* Hero Section*/}
       <div className="pt-16 pb-16 px-6 lg:max-w-7xl lg:mx-auto">
-        <div className="flex items-center text-center flex-col" ref={blogHeaderRef}>
+        <div
+          className="flex items-center text-center flex-col"
+          ref={blogHeaderRef}
+        >
           <p className="text-5xl lg:text-7xl text-white font-bold mb-6">
             ZOO Blog
           </p>
@@ -85,7 +88,7 @@ const Blog = () => {
       <section className="pb-16 px-6 lg:max-w-7xl lg:mx-auto ">
         <div className="flex flex-col mb-16 lg:flex-row flex-wrap lg:justify-between">
           {articles.map((article) => (
-            <Article key={article.name} article={article} />
+            <Article article={article} key={article.name} />
           ))}
         </div>
         <div className="flex justify-center">
