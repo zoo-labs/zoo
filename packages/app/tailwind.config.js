@@ -50,6 +50,7 @@ module.exports = {
         "marketplace-section": "url(/img/leaves.png)",
         "nft-gradient":
           "linear-gradient(180deg, #2517FF -61.88%, #15F195 131.19%)",
+        "leader-board": "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)",
       },
       colors: {
         purple: "#462CA9",
