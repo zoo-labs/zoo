@@ -11,7 +11,6 @@ const Slug: React.FC<Props> = ({}) => {
   const { slug } = router.query;
   const [category, setCategory] = useState(0);
 
-  const gradient = 'linear-gradient(180deg, #2517FF -61.88%, #15F195 131.19%)';
   const items = [
     {
       id: 1,
@@ -95,10 +94,7 @@ const Slug: React.FC<Props> = ({}) => {
           key={id}
           className="flex flex-col md:flex-row md:justify-between md:gap-16 lg:gap-32 mb-40"
         >
-          <div
-            className="mb-4 lg:mb-0 p-0.5 rounded"
-            style={{ background: gradient }}
-          >
+          <div className="mb-4 lg:mb-0 p-0.5 rounded bg-nft-gradient">
             <div className="flex flex-col justify-center items-center px-4 py-6 rounded lg:px-8 bg-black h-full">
               <div style={{ minHeight: '299px' }}>
                 <Image
@@ -123,10 +119,7 @@ const Slug: React.FC<Props> = ({}) => {
                 Generation one Base Animals. To hatch or to hold…
               </p>
             </div>
-            <div
-              className="p-0.5 mb-8 rounded"
-              style={{ background: gradient }}
-            >
+            <div className="p-0.5 mb-8 rounded bg-nft-gradient">
               <div className="bg-black px-4 py-6 rounded h-full">
                 <p className="font-bold mb-2">Details</p>
                 <div className="flex justify-between mb-2">
@@ -148,10 +141,7 @@ const Slug: React.FC<Props> = ({}) => {
               </div>
             </div>
 
-            <div
-              className="p-0.5 mb-8 rounded"
-              style={{ background: gradient }}
-            >
+            <div className="p-0.5 mb-8 rounded bg-nft-gradient">
               <div className="details rounded bg-black">
                 <div className="px-4 pt-6 pb-2 ">
                   <p className="font-bold mb-2">Proof of Authenticity</p>
