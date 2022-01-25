@@ -32,10 +32,10 @@ const OpportunitySection = () => {
 
   const displayContent = (desc: string) => {
     setStage(desc);
-    hanldeHover();
+    handleHover();
   };
 
-  const hanldeHover = () => {
+  const handleHover = () => {
     setHovered(!hovered);
   }
   const style = {
@@ -54,7 +54,7 @@ const OpportunitySection = () => {
             <div className="big-circle">
               <div className="animal-content">{stage && <p>{stage}</p>}</div>
               <div
-                className="animate-animal animal incubate"
+                className="animate-animal incubate"
                 style={hovered ? style : undefined}
                 onMouseEnter={() => displayContent("Incubate")}
                 onMouseOut={() => displayContent("")}
@@ -62,7 +62,7 @@ const OpportunitySection = () => {
                 <Image src="/img/incubate-cycle.png" width={150} height={170} alt="" objectFit="contain" />
               </div>
               <div
-                className="animate-animal animal feed"
+                className="animate-animal feed"
                 onMouseEnter={() => displayContent("Feed")}
                 onMouseOut={() => displayContent("")}
                 style={hovered ? style : undefined}
@@ -70,7 +70,7 @@ const OpportunitySection = () => {
                  <Image src="/img/feed-cycle.png" width={150} height={170} alt="" objectFit="contain" />
               </div>
               <div
-                className="animate-animal animal grow"
+                className="animate-animal grow"
                 onMouseEnter={() => displayContent("Grow")}
                 onMouseOut={() => displayContent("")}
                 style={hovered ? style : undefined}
@@ -78,7 +78,7 @@ const OpportunitySection = () => {
                  <Image src="/img/grow-cycle.png" width={150} height={170} alt="" objectFit="contain" />
               </div>
               <div
-                className="animate-animal animal breed"
+                className="animate-animal breed"
                 onMouseEnter={() => displayContent("Breed")}
                 onMouseOut={() => displayContent("")}
                 style={hovered ? style : undefined}
