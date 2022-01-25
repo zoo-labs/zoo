@@ -78,7 +78,7 @@ const MyBidsSection = () => {
         <Modal onDismiss={() => setOpenModal(false)} isOpen={openMoal}>
           <div>
             <div className="my-4">
-              <p className="text-white font-bold">Edit Auction</p>
+              <p className="text-white font-bold">Increase Bid</p>
             </div>
             <div>
               <form>
