@@ -1,71 +1,71 @@
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const animalFamilyData = [
   {
-    id: "1",
-    image: "/img/sumatran-elephant.png",
-    name: "Sumatran Elephant",
-    scientificName: " Elephas Maximus Sumatranus",
+    id: '1',
+    image: '/img/sumatran-elephant.png',
+    name: 'Sumatran Elephant',
+    scientificName: ' Elephas Maximus Sumatranus',
     description: `Sumatran elephants feed on a variety of plants and deposit seeds
     wherever they go, contributing to a healthy forest ecosystem.
     They also share their lush forest habitat with other endangered
     species.`,
-    status: "endangered",
-    population: "2,400 - 2,800",
-    size: "6.6 - 10.5 Feet",
-    habitat: "Tropical Forests",
+    status: 'endangered',
+    population: '2,400 - 2,800',
+    size: '6.6 - 10.5 Feet',
+    habitat: 'Tropical Forests',
     images: [
-      "/img/sumatran-elephant.png",
-      "/img/sumatran-elephant.png",
-      "/img/sumatran-elephant.png",
-      "/img/sumatran-elephant.png",
-    ],
+      '/img/sumatran-elephant.png',
+      '/img/sumatran-elephant.png',
+      '/img/sumatran-elephant.png',
+      '/img/sumatran-elephant.png'
+    ]
   },
   {
-    id: "2",
-    image: "/img/javan-rhino.png",
-    name: "Javan Rhino",
-    scientificName: "Rhinoceros Sondaicus",
+    id: '2',
+    image: '/img/javan-rhino.png',
+    name: 'Javan Rhino',
+    scientificName: 'Rhinoceros Sondaicus',
     description: `Once the most widespread of Asian rhinoceroses, the Javan
     rhinoceros ranged from the islands of Java and Sumatra,
     throughout Southeast Asia, and into India and China. The species
     is critically endangered, with only one known population in the
     wild, and no individuals in captivity. It is possibly the rarest
     large mammal on Earth.`,
-    status: "endangered",
-    population: "2,400 - 2,800",
-    size: "6.6 - 10.5 Feet",
-    habitat: "Tropical Forests",
+    status: 'endangered',
+    population: '2,400 - 2,800',
+    size: '6.6 - 10.5 Feet',
+    habitat: 'Tropical Forests',
     images: [
-      "/img/javan-rhino.png",
-      "/img/javan-rhino.png",
-      "/img/javan-rhino.png",
-      "/img/javan-rhino.png",
-    ],
+      '/img/javan-rhino.png',
+      '/img/javan-rhino.png',
+      '/img/javan-rhino.png',
+      '/img/javan-rhino.png'
+    ]
   },
   {
-    id: "3",
-    image: "/img/siberian-tiger.png",
-    name: "Siberian Tiger",
-    scientificName: "Siberian Tiger",
+    id: '3',
+    image: '/img/siberian-tiger.png',
+    name: 'Siberian Tiger',
+    scientificName: 'Siberian Tiger',
     description: `The Siberian tiger is a tiger from a specific population of the
     Panthera tigris tigris subspecies native to the Russian Far
     East, Northeast China. It once ranged throughout the Korean
     Peninsula, north China, and eastern Mongolia. The population
     currently inhabits mainly the Sikhote-Alin mountain region in
     southwest Primorye Province in East Russia.`,
-    status: "endangered",
-    population: "2,400 - 2,800",
-    size: "6.6 - 10.5 Feet",
-    habitat: "Tropical Forests",
+    status: 'endangered',
+    population: '2,400 - 2,800',
+    size: '6.6 - 10.5 Feet',
+    habitat: 'Tropical Forests',
     images: [
-      "/img/siberian-tiger.png",
-      "/img/siberian-tiger.png",
-      "/img/siberian-tiger.png",
-    ],
-  },
+      '/img/siberian-tiger.png',
+      '/img/siberian-tiger.png',
+      '/img/siberian-tiger.png'
+    ]
+  }
 ];
 
 const AnimalFamilySection = () => {
@@ -117,7 +117,7 @@ const AnimalFamilySection = () => {
         <div className="flex items-center justify-center">
           <a
             href="/animal-list"
-            className="px-5 py-3 text-sm border rounded-full font-bold border-green md:text-base text-green md:px-6 md:py-4 lg:px-16"
+            className="px-5 py-3 text-sm border rounded-full font-bold border-green md:text-base text-green md:px-6 md:py-4 lg:px-20"
           >
             See All
           </a>
