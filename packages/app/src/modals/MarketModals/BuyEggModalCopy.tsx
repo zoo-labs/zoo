@@ -18,6 +18,7 @@ import { CircularProgress } from "@mui/material";
 import CloseIcon from "components/CloseIcon";
 import { useZoobalance } from "state/zoo/hooks";
 import CurrencySwitch from "components/CurrencySwitch";
+import Image from "next/image";
 
 interface BuyEggModalProps {}
 
@@ -229,8 +230,8 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
             <div className="w-full my-8 ">
               <div className="flex h-20 ">
                 <div className="flex items-center justify-center mr-2 rounded w-14">
-                  <img
-                    style={{ verticalAlign: "middle" }}
+                  <Image
+                    layout="fill"
                     src={`/static/images/basic.jpg`}
                     className="w-full h-full transition-transform duration-1000 rounded"
                   />
@@ -308,8 +309,8 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
         <div className="w-full mb-4">
           <div className="flex h-20 ">
             <div className="flex items-center justify-center mr-2 rounded w-14">
-              <img
-                style={{ verticalAlign: "middle" }}
+              <Image
+                layout="fill"
                 src={`/static/images/basic.jpg`}
                 className="w-full h-full transition-transform duration-1000 rounded"
               />
