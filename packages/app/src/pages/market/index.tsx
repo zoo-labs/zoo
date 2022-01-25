@@ -557,7 +557,15 @@ const Market: React.FC<MarketProps> = ({}) => {
                 );
               })
             ) : (
-              <div>None</div>
+              <div className="flex flex-1 justify-center my-24">
+                <Image
+                  src="/img/noNft.png"
+                  alt=""
+                  height={'309px'}
+                  width={'341px'}
+                  className="my-48"
+                />
+              </div>
             )}
           </div>
         </div>
