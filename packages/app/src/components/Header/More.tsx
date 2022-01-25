@@ -135,7 +135,6 @@ export default function Menu() {
                     <a className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer">
                       Wallet
                       <div className="ml-4 sm:ml-14">
-                        {/* <Image src="/img/wallet-icon.svg" width={24} height={24} alt="" /> */}
                         <svg
                           width="31"
                           height="30"
