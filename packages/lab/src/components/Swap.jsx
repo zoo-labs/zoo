@@ -426,7 +426,8 @@ function Swap({ selectedProvider, tokenListURI }) {
     <Modal title="Confirm swap" visible={swapModalVisible} onOk={handleSwapModalOk} onCancel={handleSwapModalCancel}>
       <Row>
         <Space>
-          <img src={logoIn} alt={tokenIn} width="30" />
+           <Image
+                  layout="fill" src={logoIn} alt={tokenIn} width="30" />
           {amountIn}
           {tokenIn}
         </Space>
@@ -436,7 +437,8 @@ function Swap({ selectedProvider, tokenListURI }) {
       </Row>
       <Row>
         <Space>
-          <img src={logoOut} alt={tokenOut} width="30" />
+           <Image
+                  layout="fill" src={logoOut} alt={tokenOut} width="30" />
           {amountOut}
           {tokenOut}
         </Space>
@@ -461,7 +463,8 @@ function Swap({ selectedProvider, tokenListURI }) {
     <Card
       title={
         <Space>
-          <img src="https://ipfs.io/ipfs/QmXttGpZrECX5qCyXbBQiqgQNytVGeZW5Anewvh2jc4psg" width="40" alt="uniswapLogo" />
+           <Image
+                  layout="fill" src="https://ipfs.io/ipfs/QmXttGpZrECX5qCyXbBQiqgQNytVGeZW5Anewvh2jc4psg" width="40" alt="uniswapLogo" />
           <Typography>Uniswapper</Typography>
         </Space>
       }
@@ -484,7 +487,8 @@ function Swap({ selectedProvider, tokenListURI }) {
             title={`From${exact === "out" && tokenIn && tokenOut ? " (estimate)" : ""}`}
             extra={
               <>
-                <img src={logoIn} alt={tokenIn} width="30" />
+                 <Image
+                  layout="fill" src={logoIn} alt={tokenIn} width="30" />
                 <Button
                   type="link"
                   onClick={() => {
@@ -557,7 +561,8 @@ function Swap({ selectedProvider, tokenListURI }) {
             title={`To${exact === "in" && tokenIn && tokenOut ? " (estimate)" : ""}`}
             extra={
               <>
-                <img src={logoOut} width="30" alt={tokenOut} />
+                 <Image
+                  layout="fill" src={logoOut} width="30" alt={tokenOut} />
                 <Button type="text">{formattedBalanceOut}</Button>
               </>
             }
