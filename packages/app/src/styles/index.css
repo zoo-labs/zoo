@@ -175,13 +175,14 @@ video {
 }
 
 .animal-content {
-  max-width: 150px;
+  max-width: 130px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
   position: absolute;
   top: 60px;
-  left: 70px;
+  left: 30px;
+  font-size: 12px;
 }
 
 .animate-animal {
@@ -236,8 +237,10 @@ video {
   }
 
   .animal-content {
+    max-width: 150px;
     top: 150px;
-    left: 170px;
+    left: 130px;
+    font-size: 16px;
   }
 
   .animate-animal {
