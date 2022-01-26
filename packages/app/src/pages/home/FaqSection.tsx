@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-
+import Link from "next/link";
 // animation
 import { fadeInOnScroll } from "animation";
 
@@ -102,6 +102,13 @@ const FaqSection = () => {
               .
             </p>
           </div>
+        </div>
+        <div className="flex items-center justify-center">
+          <Link href="/faqs">
+            <a className="px-5 py-3 text-sm border rounded-full font-bold border-green md:text-base text-green md:px-6 md:py-4 lg:px-20">
+              See more
+            </a>
+          </Link>
         </div>
       </div>
     </section>

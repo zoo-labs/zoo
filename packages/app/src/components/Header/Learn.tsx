@@ -78,7 +78,7 @@ export default function Learn() {
                   </a>
                 )}
               </Menu.Item>
-              <Menu.Item>
+              {/* <Menu.Item>
                 {({ active }) => (
                   <a
                     href="/guides"
@@ -91,7 +91,7 @@ export default function Learn() {
                     Guides
                   </a>
                 )}
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item>
                 {({ active }) => (
                   <a
@@ -116,7 +116,7 @@ export default function Learn() {
                   </a>
                 )}
               </Menu.Item>
-              <Menu.Item>
+              {/* <Menu.Item>
                 {({ active }) => (
                   <a
                     href="/press"
@@ -127,7 +127,7 @@ export default function Learn() {
                     Press
                   </a>
                 )}
-              </Menu.Item>
+              </Menu.Item> */}
             </div>
           </Menu.Items>
         </Transition>
