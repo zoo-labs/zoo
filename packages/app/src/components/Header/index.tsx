@@ -28,23 +28,23 @@ import { useZoobalance } from "state/zoo/hooks";
 
 function AppBar(): JSX.Element {
   const { i18n } = useLingui();
-  const { account, chainId, library } = useActiveWeb3React();
-  const getZooBalance = useZoobalance();
+  // const { account, chainId, library } = useActiveWeb3React();
+  // const getZooBalance = useZoobalance();
 
   const router = useRouter();
   let linkStyle =
     "p-2 text-baseline hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap";
 
-  const userEthBalance = useETHBalances(account ? [account] : [])?.[
-    account ?? ""
-  ];
-  useEffect(() => {
-    getZooBalance();
-  }, [account]);
+  // const userEthBalance = useETHBalances(account ? [account] : [])?.[
+  //   account ?? ""
+  // ];
+  // useEffect(() => {
+  //   getZooBalance();
+  // }, [account]);
 
-  console.log("userEthBalance", userEthBalance);
-  const chainAddresses =
-    (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
+  // console.log("userEthBalance", userEthBalance);
+  // const chainAddresses =
+  //   (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
 
   return (
     //     // <header className="flex flex-row justify-between w-screen flex-nowrap">
@@ -94,7 +94,7 @@ function AppBar(): JSX.Element {
 
                       <Community />
 
-                      <NavLink href="/press">
+                      {/* <NavLink href="/press">
                         <a
                           id={`mint-nav-link`}
                           className={
@@ -105,7 +105,7 @@ function AppBar(): JSX.Element {
                         >
                           {i18n._(t`Press`)}
                         </a>
-                      </NavLink>
+                      </NavLink> */}
                       <Learn />
                       {/* <NavLink href="/learn">
                         <a
@@ -115,7 +115,7 @@ function AppBar(): JSX.Element {
                           {i18n._(t`Learn`)}
                         </a>
                       </NavLink> */}
-                      {chainId && featureEnabled(Feature.MIGRATE, chainId) && (
+                      {/* {chainId && featureEnabled(Feature.MIGRATE, chainId) && (
                         <NavLink href={"/migrate"}>
                           <a
                             id={`migrate-nav-link`}
@@ -165,14 +165,14 @@ function AppBar(): JSX.Element {
                             {i18n._(t`Stake`)}
                           </a>
                         </NavLink>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>
 
                 <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
                   <div className="flex items-center justify-between w-full space-x-2 sm:justify-end">
-                    {chainId &&
+                    {/* {chainId &&
                       // [ChainId.MAINNET].includes(chainId) &&
                       library &&
                       library.provider.isMetaMask && (
@@ -233,15 +233,15 @@ function AppBar(): JSX.Element {
                             </div>
                           </QuestionHelper>
                         </div>
-                      )}
+                      )} */}
 
-                    {library && library.provider.isMetaMask && (
+                    {/* {library && library.provider.isMetaMask && (
                       <div className="hidden sm:inline-block">
                         <Web3Network />
                       </div>
-                    )}
+                    )} */}
                     {/* My Wallet Button */}
-                    <div className="w-auto flex items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
+                    {/* <div className="w-auto flex items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                       {account && chainId && userEthBalance && (
                         <>
                           <div className="px-3 py-2 text-primary text-bold">
@@ -254,11 +254,11 @@ function AppBar(): JSX.Element {
                         title={i18n._(t`Connect Wallet`)}
                         className="font-bold bg-black border border-green text-green"
                       />
-                    </div>
+                    </div> */}
                     <div className="hidden md:block">
                       <LanguageSwitch />
                     </div>
-                    <More />
+                    {/* <More /> */}
                   </div>
                 </div>
                 <div className="flex -mr-2 sm:hidden">
@@ -328,31 +328,7 @@ function AppBar(): JSX.Element {
 
                 <Learn />
 
-                {/* <a
-                  id={`community`}
-                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  href="/community"
-                >
-                  {i18n._(t`Community`)}
-                </a> */}
-
-                {/* <a
-                  id={`press`}
-                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  href="/press"
-                >
-                  {i18n._(t`Press`)}
-                </a>
-
-                <a
-                  id={`learn`}
-                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  href="learn"
-                >
-                  {i18n._(t`Learn`)}
-                </a> */}
-
-                <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
+                {/* <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                   {account && chainId && userEthBalance && (
                     <>
                       <div className="px-3 py-2 text-primary text-bold">
@@ -399,7 +375,7 @@ function AppBar(): JSX.Element {
                       </a>
                     </Link>
                   </>
-                )}
+                )} 
 
                 {chainId && featureEnabled(Feature.STAKING, chainId) && (
                   <Link href={"/stake"}>
@@ -423,6 +399,7 @@ function AppBar(): JSX.Element {
                     {i18n._(t`Analytics`)}
                   </ExternalLink>
                 )}
+                */}
               </div>
             </Popover.Panel>
           </>
