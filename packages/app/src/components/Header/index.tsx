@@ -94,7 +94,7 @@ function AppBar(): JSX.Element {
 
                       <Community />
 
-                      <NavLink href="/press">
+                      {/* <NavLink href="/press">
                         <a
                           id={`mint-nav-link`}
                           className={
@@ -105,7 +105,7 @@ function AppBar(): JSX.Element {
                         >
                           {i18n._(t`Press`)}
                         </a>
-                      </NavLink>
+                      </NavLink> */}
                       <Learn />
                       {/* <NavLink href="/learn">
                         <a
@@ -258,7 +258,7 @@ function AppBar(): JSX.Element {
                     <div className="hidden md:block">
                       <LanguageSwitch />
                     </div>
-                    <More />
+                    {/* <More /> */}
                   </div>
                 </div>
                 <div className="flex -mr-2 sm:hidden">

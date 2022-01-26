@@ -31,9 +31,9 @@ const Footer = () => {
               </Link>
             </div>
             <div className="flex flex-col text-grey">
-              <div className="mb-2">
+              {/* <div className="mb-2">
                 <Link href="/market">Marketplace</Link>
-              </div>
+              </div> */}
               <div className="mb-2">
                 <a
                   href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
@@ -46,15 +46,15 @@ const Footer = () => {
               <div className="mb-2">
                 <Link href="/community">Community</Link>
               </div>
-              <div className="mb-2">
+              {/* <div className="mb-2">
                 <Link href="/press">Press</Link>
-              </div>
+              </div> */}
               <div className="mb-0">
                 <Link href="/learn">Learn</Link>
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-end px-6 py-16 border-r basis-1/3 text-grey border-grey">
+          <div className="flex flex-col items-end px-6 p-16 border-r basis-1/3 text-grey border-grey h-full">
             <div className="mb-0">
               {!account ? (
                 <a href="#">
@@ -84,11 +84,11 @@ const Footer = () => {
               </a>
             </div>
             <div className="mb-2">
-              <a href="/#faqs">FAQ</a>
+              <a href="/faqs">FAQ</a>
             </div>
-            <div className="mb-0">
+            {/* <div className="mb-0">
               <Link href="/">Connect us</Link>
-            </div>
+            </div> */}
           </div>
           <div className="flex flex-col items-start px-6 py-16 basis-2/3">
             <p className="mb-4 font-bold text-white uppercase">Newsletter</p>

@@ -3,7 +3,7 @@ import _ from 'lodash';
 import HeroSection from './HeroSection';
 import PartnersSection from './PartnersSection';
 import OpportunitySection from './OpportunitySection';
-import PopularNftsSection from './PopularNftsSection';
+// import PopularNftsSection from './PopularNftsSection';
 import MarketPlaceSection from './MarketPlaceSection';
 import GetStartedSection from './GetStartedSection';
 import ZooNewsSection from 'pages/home/ZooNewsSection';
@@ -32,7 +32,7 @@ export default function Home() {
       <HeroSection />
       <PartnersSection />
       <OpportunitySection />
-      <PopularNftsSection />
+      {/* <PopularNftsSection /> */}
       <MarketPlaceSection />
       <GetStartedSection />
       <ZooNewsSection />

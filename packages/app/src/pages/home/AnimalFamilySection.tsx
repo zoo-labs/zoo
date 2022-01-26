@@ -90,10 +90,10 @@ const AnimalFamilySection = () => {
                     {data.name}
                   </h2>
                   <a
-                    href="/nft"
+                    href="/coming-soon"
                     className="bg-gradient-to-b from-purple to-blue text-white  text-sm md:text-base  font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full"
                   >
-                    Buy NFT
+                    Coming Soon
                   </a>
                 </div>
                 <div className="px-2 py-6  lg:px-6 lg:basis-1/3 lg:bg-black100 lg:rounded-3xl">
