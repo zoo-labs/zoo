@@ -48,12 +48,10 @@ const HeroSection = () => {
           </p>
           <div className="flex gap-3 items-center">
             <a
-              href="https://metamask.io/"
-              target="_blank"
-              rel="noreferrer"
+              href="/#endless-opportunity"
               className="bg-gradient-to-b from-purple to-blue text-white font-semibold text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full"
             >
-              Download App
+              Learn More
             </a>
             <div
               className="border border-gray-100 text-sm md:text-base font-semibold text-white px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full hover:cursor-pointer"

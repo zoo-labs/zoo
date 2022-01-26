@@ -26,7 +26,7 @@ export default function Community() {
         >
           <Menu.Items className="flex absolute right-0 w-56 mt-2 origin-top-right bg-black100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-999">
             <div className="px-2 py-2 lg:py-6">
-              <Menu.Item>
+              {/* <Menu.Item>
                 {({ active }) => (
                   <a
                     href="/global-leaderboard"
@@ -37,7 +37,7 @@ export default function Community() {
                     Leaderboard
                   </a>
                 )}
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item>
                 {({ active }) => (
                   <a

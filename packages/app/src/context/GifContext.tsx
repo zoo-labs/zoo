@@ -8,11 +8,12 @@ let initialState: any = {};
 
 if (typeof window === "undefined") {
   initialState = {};
+  
 } else {
   initialState = {
     gifMode: localStorage?.getItem("gifMode")
       ? JSON.parse(localStorage.getItem("gifMode"))
-      : "image",
+      : "gif",
   };
 }
 
