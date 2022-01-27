@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import Image from 'next/image';
+import React, { useEffect } from "react";
+import Image from "next/image";
 
 // animation
-import { fadeInOnScroll } from '../../animation';
+import { fadeInOnScroll } from "../../animation";
 
 const ZooNewsSection = () => {
   const zooRef = React.useRef();
@@ -17,8 +17,9 @@ const ZooNewsSection = () => {
             ZOO News
           </h2>
           <p className="max-w-2xl text-white text-opacity-70">
-            Track your workouts, get better results, and be the best version of
-            you. Less thinking, more lifting.
+            Wildlife Conservation powered by DeFi — Zoo Labs’ 3D/AR NFTS are
+            cutting edge &amp; our liquidity protocol/multi-chain bridge will
+            change the game as we know it.
           </p>
         </div>
         <div className="flex flex-col items-center max-w-xl mx-auto lg:flex-row lg:items-stretch lg:max-w-5xl">
@@ -35,7 +36,7 @@ const ZooNewsSection = () => {
               </h2>
               <p className="mb-6">
                 How the ZOO foundation helped save over 100,000 acres of
-                elephant habitat to date.{' '}
+                elephant habitat to date.{" "}
               </p>
               <a
                 className="bg-gradient-to-b from-purple to-blue text-white  text-sm md:text-base font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full"
