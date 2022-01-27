@@ -1,6 +1,7 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+import Link from "next/link";
 
 export default function Community() {
   return (
@@ -40,26 +41,28 @@ export default function Community() {
               </Menu.Item> */}
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="/#newsletter"
-                    className={`${
-                      active ? "bg-black text-white" : "text-white"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    Newsletter
-                  </a>
+                  <Link href="/#newsletter">
+                    <a
+                      className={`${
+                        active ? "bg-black text-white" : "text-white"
+                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      Newsletter
+                    </a>
+                  </Link>
                 )}
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="/lab-events"
-                    className={`${
-                      active ? "bg-black text-white" : "text-white"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    Events
-                  </a>
+                  <Link href="/lab-events">
+                    <a
+                      className={`${
+                        active ? "bg-black text-white" : "text-white"
+                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      Events
+                    </a>
+                  </Link>
                 )}
               </Menu.Item>
             </div>
