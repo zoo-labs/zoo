@@ -19,6 +19,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
           layout="fill"
           src={`${datum.imageUrl || "/static/video/egg.gif"}`}
           className="w-full transition-transform duration-1000 "
+          alt=""
         />
         <div className="absolute top-0 left-0 invisible w-full h-full transition-all duration-300 rounded opacity-0 hover:visible hover:opacity-100">
           <div className="absolute px-2 py-1 text-xs font-bold uppercase rounded top-6 left-3 bg-primary ">
