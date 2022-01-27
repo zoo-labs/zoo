@@ -1,6 +1,7 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+import Link from "next/link";
 
 export default function Learn() {
   return (
@@ -28,14 +29,15 @@ export default function Learn() {
             <div className="px-2 py-2 lg:py-6">
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="/animal-list"
-                    className={`${
-                      active ? "bg-black text-white" : "text-white"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    Our Animals
-                  </a>
+                  <Link href="/animal-list">
+                    <a
+                      className={`${
+                        active ? "bg-black text-white" : "text-white"
+                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      Our Animals
+                    </a>
+                  </Link>
                 )}
               </Menu.Item>
               <Menu.Item>
@@ -68,14 +70,15 @@ export default function Learn() {
             <div className="px-2 py-2 lg:py-6">
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="/blog"
-                    className={`${
-                      active ? "bg-black text-white" : "text-white"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    Blog
-                  </a>
+                  <Link href="/blog" passHref>
+                    <a
+                      className={`${
+                        active ? "bg-black text-white" : "text-white"
+                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      Blog
+                    </a>
+                  </Link>
                 )}
               </Menu.Item>
               {/* <Menu.Item>
@@ -94,26 +97,28 @@ export default function Learn() {
               </Menu.Item> */}
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="/faqs"
-                    className={`${
-                      active ? "bg-black text-white" : "text-white"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    FAQs
-                  </a>
+                  <Link href="/faqs">
+                    <a
+                      className={`${
+                        active ? "bg-black text-white" : "text-white"
+                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      FAQs
+                    </a>
+                  </Link>
                 )}
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="/partnerships"
-                    className={`${
-                      active ? "bg-black text-white" : "text-white"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    Partnerships
-                  </a>
+                  <Link href="/partnerships">
+                    <a
+                      className={`${
+                        active ? "bg-black text-white" : "text-white"
+                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      Partnerships{" "}
+                    </a>
+                  </Link>
                 )}
               </Menu.Item>
               {/* <Menu.Item>
