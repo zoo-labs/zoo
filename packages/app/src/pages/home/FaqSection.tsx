@@ -78,7 +78,7 @@ const FaqSection = () => {
               <li>Buy BNB with another crypto or a credit card.</li>
               <li>Go to Pancake swap or another trusted exchange.</li>
               <li>
-                Swap BNB for $XOO use this token address as their are many
+                Swap BNB for $ZOO use this token address as their are many
                 scammers
               </li>
               <li>0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13</li>
