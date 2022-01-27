@@ -37,7 +37,7 @@ export const faqData = [
   {
     question: "Which blockchain will the game be launched on?",
     answer:
-      "Currently the game and coin is on the BSC network. Not only do we plan to make the game ethereum compatible, but we also are launching a bridge for all stable coins to easily exchange for $ZOO.",
+      "Currently, the game and coin is on the BSC network. Not only do we plan to make the game ethereum compatible, but we also are launching a bridge for all stable coins to easily exchange for $ZOO.",
   },
   {
     question: "Where to buy $ZOO tokens?",

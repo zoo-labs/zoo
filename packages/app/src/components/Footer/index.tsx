@@ -18,7 +18,7 @@ const Footer = () => {
     <footer className="flex-shrink-0 w-full bg-black">
       <div className="hidden border-t border-b border-grey lg:block">
         <div className="flex items-start justify-between flex-auto px-4 mx-auto max-w-7xl">
-          <div className="flex items-start justify-between px-6 py-16 border-r basis-2/3 border-grey">
+          <div className="flex items-start justify-between px-6 py-16 basis-2/3 ">
             <div>
               <Link href="/" passHref>
                 <Image
@@ -54,15 +54,15 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-end px-6 p-16 border-r basis-1/3 text-grey border-grey h-full">
-            <div className="mb-0">
+          <div className="flex flex-col items-end px-6 p-16 basis-1/3 text-grey h-full">
+            {/* <div className="mb-0">
               {!account ? (
                 <a href="#">
                   <Web3Status title={i18n._(t`My Profile`)} className="px-0" />
                 </a>
               ) : null}
-            </div>
-            <div className="mb-2">
+            </div> */}
+            {/* <div className="mb-2">
               {!account ? (
                 <a href="#">
                   <Web3Status
@@ -73,7 +73,7 @@ const Footer = () => {
               ) : (
                 <Link href="/market">Market place</Link>
               )}
-            </div>
+            </div> */}
             <div className="mb-2">
               <a
                 href="https://zoolabs.gitbook.io/whitepaper/introduction/introduction"

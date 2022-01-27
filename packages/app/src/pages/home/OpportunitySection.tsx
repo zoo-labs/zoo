@@ -48,7 +48,7 @@ const OpportunitySection = () => {
         <h2 className="text-2xl md:text-2xl  lg:text-4xl text-center mb-16 font-semibold">
           Endless Yield Opportunity
         </h2>
-        <div className="flex flex-col lg:flex-row justify-between items-center max-w-7xl px-6 mx-auto">
+        <div className="flex flex-col lg:flex-row justify-between items-center max-w-7xl mx-auto">
           <EndangeredSpecies />
           <div className="relative h-screen w-screen flex flex-col justify-center items-center bg-image">
             <div className="big-circle">
