@@ -43,7 +43,7 @@ const noContractDisplay = (
 
 const isQueryable = fn => (fn.stateMutability === "view" || fn.stateMutability === "pure") && fn.inputs.length === 0;
 
-export default function Contract({
+export default function cdContract({
   customContract,
   account,
   gasPrice,
