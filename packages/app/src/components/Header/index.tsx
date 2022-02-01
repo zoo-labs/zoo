@@ -50,8 +50,8 @@ function AppBar(props: { banner: boolean }): JSX.Element {
   return (
     //     // <header className="flex flex-row justify-between w-screen flex-nowrap">
     <header className="fixed z-20 flex-shrink-0 w-full bg-black ">
-      {props.banner && <Banner />}
-
+      {/* {props.banner && <Banner />} */}
+      <Banner />
       <Popover as="nav" className="z-10 w-full bg-transparent header-border-b">
         {({ open }) => (
           <>
@@ -175,7 +175,7 @@ function AppBar(props: { banner: boolean }): JSX.Element {
 
                 <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
                   <div className="flex items-center justify-between w-full space-x-2 sm:justify-end">
-                    {chainId &&
+                    {/* {chainId &&
                       // [ChainId.MAINNET].includes(chainId) &&
                       library &&
                       library.provider.isMetaMask && (
@@ -241,7 +241,7 @@ function AppBar(props: { banner: boolean }): JSX.Element {
                             </div>
                           </QuestionHelper>
                         </div>
-                      )}
+                      )} */}
 
                     {/* {library && library.provider.isMetaMask && (
                       <div className="hidden sm:inline-block">
