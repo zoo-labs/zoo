@@ -3,6 +3,7 @@ import Image from "next/image";
 
 // animation
 import { fadeInFromLeft, fadeInOnScroll } from "animation";
+import Tiger from "../../../public/gifs/siberian-tiger.gif";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useBuyZoo } from "state/zoo/hooks";
@@ -11,6 +12,7 @@ import { useFaucet } from "hooks";
 import { getZooBalance } from "state/zoo/actions";
 import { handleFunds } from "utils/handleFunds";
 import { useGif } from "context/GifContext";
+import { createRequire } from "module";
 
 const HeroSection = () => {
   const { account, library, chainId } = useWeb3React();
@@ -66,13 +68,12 @@ const HeroSection = () => {
           ref={heroImage}
         >
           {gifMode === "gif" ? (
-            <Image
-              src="/images/gifs/giphy.gif"
-              width={700}
-              height={612}
-              alt="leopard"
-              objectFit="contain"
-            />
+            <video autoPlay loop={true} playsInline={true} muted>
+              <source
+                src="/videos/siberian-tiger.mov"
+                type="video/mp4"
+              ></source>
+            </video>
           ) : (
             <Image
               src="/img/amur-leopard.png"
