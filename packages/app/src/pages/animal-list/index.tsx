@@ -32,7 +32,7 @@ const animalFamilyData =[
   {
     id: "2",
     image: "/img/javan-rhino.png",
-    gif: "/gifs/javan-rhino.gif",
+    gif: "/img/javan-rhino.png",
     name: "Javan Rhino",
     scientificName: "Rhinoceros Sondaicus",
     description: `Once the most widespread of Asian rhinoceroses, the Javan
@@ -55,7 +55,7 @@ const animalFamilyData =[
   {
     id: "3",
     image: "/img/siberian-tiger.png",
-    gif: "/gifs/siberian-tiger.gif",
+    gif: "/img/siberian-tiger.png",
     name: "Siberian Tiger",
     scientificName: "Siberian Tiger",
     description: `The Siberian tiger is a tiger from a specific population of the
@@ -77,7 +77,7 @@ const animalFamilyData =[
   {
     id: "4",
     image: "/img/clouded-leopard.png",
-    gif: "/gifs/clouded-leopard.gif",
+    gif: "/img/clouded-leopard.png",
     name: "Clouded Leopard",
     scientificName: "Neofelis Diardi",
     description: `The Siberian tiger is a tiger from a specific population of the
@@ -99,7 +99,7 @@ const animalFamilyData =[
   {
     id: "5",
     image: "/img/ethiopian-wolf.png",
-    gif: "/gifs/ethiopian-wolf.gif",
+    gif: "/img/ethiopian-wolf.png",
     name: "Ethiopian Wolf",
     scientificName: "Canis simensis",
     description: `The Siberian tiger is a tiger from a specific population of the
@@ -208,7 +208,7 @@ const AnimalList = () => {
   };
   return (
     <section>
-      <div className="lg:max-w-7xl lg:mx-auto mb-8">
+      <div className="lg:max-w-7xl lg:mx-auto mb-8 py-16">
         <h1 className="pt-16 text-4xl lg:text-6xl font-bold text-center">
           Our Animal Family
         </h1>

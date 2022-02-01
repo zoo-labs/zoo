@@ -56,14 +56,15 @@ export default function Learn() {
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="/#about"
-                    className={`${
-                      active ? "bg-black text-white" : "text-white"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    About
-                  </a>
+                  <Link href="/about">
+                    <a
+                      className={`${
+                        active ? "bg-black text-white" : "text-white"
+                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      About
+                    </a>
+                  </Link>
                 )}
               </Menu.Item>
             </div>
