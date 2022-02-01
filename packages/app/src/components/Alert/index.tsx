@@ -68,6 +68,8 @@ export interface AlertProps {
   type?: "warning" | "error" | "information";
   showIcon?: boolean;
   dismissable?: boolean;
+  show?: boolean;
+  setShow?: (arg: boolean) => void;
 }
 
 export default function Alert({
@@ -77,15 +79,17 @@ export default function Alert({
   className = "",
   showIcon = false,
   dismissable = true,
+  show,
+  setShow,
 }: AlertProps & React.HTMLAttributes<HTMLDivElement>): JSX.Element | null {
   // TODO: Persist this...
-  const [show, setShow] = useState(true);
+  const [defaultShow, setDefaultShow] = useState(true);
   const { color, icon } = TYPE[type];
-  return message && show ? (
+  return message && (show || defaultShow) ? (
     <div
       className={classNames(
         "block relative w-full rounded text-sm p-4",
-        show && "pr-10",
+        (show || defaultShow) && "pr-10",
         color,
         className
       )}
@@ -101,7 +105,9 @@ export default function Alert({
         <div className="absolute top-2 right-2">
           <button
             type="button"
-            onClick={() => setShow(!show)}
+            onClick={() =>
+              setShow ? setShow(!show) : setDefaultShow(!defaultShow)
+            }
             className="inline-flex opacity-80 hover:opacity-100 focused:opacity-100 rounded p-1.5 text-primary hover:text-high-emphesis focus:text-high-emphesis focus:outline-none focus:ring focus:ring-offset focus:ring-offset-purple focus:ring-purple"
           >
             <span className="sr-only">Dismiss</span>
