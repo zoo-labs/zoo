@@ -21,14 +21,12 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 };
 export default function Dashboard(props) {
   return (
-    <DefaultLayout banner={true}>
-      <div>
-        <Head>
-          <title>ZOO</title>
-          <meta name="description" content="Zoo" />
-        </Head>
-        <Home />
-      </div>
-    </DefaultLayout>
+    <div>
+      <Head>
+        <title>ZOO</title>
+        <meta name="description" content="Zoo" />
+      </Head>
+      <Home />
+    </div>
   );
 }
