@@ -146,7 +146,7 @@ video {
   background: url("/img/leaves.png");
   background-repeat: no-repeat;
   background-position: bottom right;
-  background-size: 50%;
+  background-size: contain;
 }
 
 @media screen and (min-width: 1200px) {
