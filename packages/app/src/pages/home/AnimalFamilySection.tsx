@@ -94,10 +94,10 @@ const AnimalFamilySection = () => {
                   <div className="p-px bg-nft-gradient mb-8 lg:mb-0 rounded-lg overflow-hidden">
                     {gifMode === "gif" ? (
                       <div className="bg-black rounded-lg overflow-hidden">
-                        <Image src={data.gif} width={373} height={373} alt="" />
+                        <Image src={data.gif} width={373} height={373} alt="" objectFit="contain" />
                       </div>
                     ) : (
-                      <Image src={data.image} width={373} height={373} alt="" />
+                      <Image src={data.image} width={373} height={373} alt="" objectFit="contain" />
                     )}
                   </div>
                 </div>
