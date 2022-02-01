@@ -1,7 +1,11 @@
+import React from "react";
 import Image from "next/image";
-import TransactionHistory from '../wallet/TransactionHistorySection';
+
+import Modal from "../../components/Modal/";
+import TransactionHistory from "../wallet/TransactionHistorySection";
 
 const NftInfo = () => {
+  const [openMoal, setOpenModal] = React.useState(false);
   return (
     <div className="">
       <div className="max-w-7xl mx-auto py-16 px-4">
@@ -10,9 +14,15 @@ const NftInfo = () => {
             <div style={{ minHeight: "299px" }}>
               <Image src="/img/egg.png" width={300} height={300} alt="" />
             </div>
-            <button className="bg-gradient-to-b from-purple to-blue text-white font-semibold text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full">
+            <button
+              className="bg-gradient-to-b from-purple to-blue text-white font-semibold text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full"
+              onClick={() => setOpenModal(true)}
+            >
               Place bid
             </button>
+            <Modal onDismiss={() => setOpenModal(false)} isOpen={openMoal}>
+              <p className="text-white">Modal</p>
+            </Modal>
           </div>
           <div>
             <div className="mb-8">
@@ -71,7 +81,7 @@ const NftInfo = () => {
             </div>
           </div>
         </div>
-				<TransactionHistory />
+        <TransactionHistory />
       </div>
     </div>
   );

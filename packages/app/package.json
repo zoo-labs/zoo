@@ -23,7 +23,7 @@
     ]
   },
   "dependencies": {
-    "@netlify/plugin-nextjs": "^4.2.0",
+    "@netlify/plugin-nextjs": "^4.2.2",
     "@binance-chain/bsc-connector": "^1.0.0",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",

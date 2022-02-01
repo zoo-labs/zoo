@@ -21,34 +21,37 @@ import { useActiveWeb3React } from "../../hooks/useActiveWeb3React";
 import { useETHBalances } from "../../state/wallet/hooks";
 import { useLingui } from "@lingui/react";
 import { useZoobalance } from "state/zoo/hooks";
+import Banner from "components/Banner";
 // import { ChainId } from '../../config/networks'
 
 // import { ExternalLink, NavLink } from "./Link";
 // import { ReactComponent as Burger } from "../assets/images/burger.svg";
 
-function AppBar(): JSX.Element {
+function AppBar(props: { banner?: boolean }): JSX.Element {
   const { i18n } = useLingui();
   const { account, chainId, library } = useActiveWeb3React();
-  const getZooBalance = useZoobalance();
+  // const getZooBalance = useZoobalance();
 
   const router = useRouter();
   let linkStyle =
     "p-2 text-baseline hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap";
 
-  const userEthBalance = useETHBalances(account ? [account] : [])?.[
-    account ?? ""
-  ];
-  useEffect(() => {
-    getZooBalance();
-  }, [account]);
+  // const userEthBalance = useETHBalances(account ? [account] : [])?.[
+  //   account ?? ""
+  // ];
+  // useEffect(() => {
+  //   getZooBalance();
+  // }, [account]);
 
-  console.log("userEthBalance", userEthBalance);
+  // console.log("userEthBalance", userEthBalance);
   const chainAddresses =
     (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
 
   return (
     //     // <header className="flex flex-row justify-between w-screen flex-nowrap">
-    <header className="flex-shrink-0 w-full bg-black">
+    <header className="fixed z-20 flex-shrink-0 w-full bg-black ">
+      {props.banner && <Banner />}
+
       <Popover as="nav" className="z-10 w-full bg-transparent header-border-b">
         {({ open }) => (
           <>
@@ -94,7 +97,7 @@ function AppBar(): JSX.Element {
 
                       <Community />
 
-                      <NavLink href="/press">
+                      {/* <NavLink href="/press">
                         <a
                           id={`mint-nav-link`}
                           className={
@@ -105,7 +108,7 @@ function AppBar(): JSX.Element {
                         >
                           {i18n._(t`Press`)}
                         </a>
-                      </NavLink>
+                      </NavLink> */}
                       <Learn />
                       {/* <NavLink href="/learn">
                         <a
@@ -115,7 +118,7 @@ function AppBar(): JSX.Element {
                           {i18n._(t`Learn`)}
                         </a>
                       </NavLink> */}
-                      {chainId && featureEnabled(Feature.MIGRATE, chainId) && (
+                      {/* {chainId && featureEnabled(Feature.MIGRATE, chainId) && (
                         <NavLink href={"/migrate"}>
                           <a
                             id={`migrate-nav-link`}
@@ -165,7 +168,7 @@ function AppBar(): JSX.Element {
                             {i18n._(t`Stake`)}
                           </a>
                         </NavLink>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>
@@ -178,16 +181,21 @@ function AppBar(): JSX.Element {
                       library.provider.isMetaMask && (
                         <div className="hidden md:inline-flex">
                           <QuestionHelper
-                            text={i18n._(t`Add ZOO to your MetaMask wallet`)}
+                            text={i18n._(
+                              t`Add ZOO to your MetaMask wallet
+                              ${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`
+                            )}
                           >
                             <div
                               className="hidden p-0.5 rounded-md cursor-pointer sm:inline-flex bg-dark-900 hover:bg-dark-800"
                               onClick={() => {
-                                const tokenAddress = chainAddresses.ZOO;
+                                const tokenAddress =
+                                  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ||
+                                  chainAddresses.ZOO;
                                 const tokenSymbol = "ZOO";
                                 const tokenDecimals = 18;
                                 const tokenImage =
-                                  window.location.origin + "/icons/egg.svg";
+                                  window.location.origin + "/img/egg.png";
                                 if (
                                   library &&
                                   library.provider.isMetaMask &&
@@ -235,13 +243,13 @@ function AppBar(): JSX.Element {
                         </div>
                       )}
 
-                    {library && library.provider.isMetaMask && (
+                    {/* {library && library.provider.isMetaMask && (
                       <div className="hidden sm:inline-block">
                         <Web3Network />
                       </div>
-                    )}
+                    )} */}
                     {/* My Wallet Button */}
-                    <div className="w-auto flex items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
+                    {/* <div className="w-auto flex items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                       {account && chainId && userEthBalance && (
                         <>
                           <div className="px-3 py-2 text-primary text-bold">
@@ -254,11 +262,15 @@ function AppBar(): JSX.Element {
                         title={i18n._(t`Connect Wallet`)}
                         className="font-bold bg-black border border-green text-green"
                       />
-                    </div>
+                    </div> */}
                     <div className="hidden md:block">
                       <LanguageSwitch />
                     </div>
-                    <More />
+                    {/* <div>
+                      <p>{process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}</p>
+                    </div> */}
+
+                    {/* <More /> */}
                   </div>
                 </div>
                 <div className="flex -mr-2 sm:hidden">
@@ -328,31 +340,7 @@ function AppBar(): JSX.Element {
 
                 <Learn />
 
-                {/* <a
-                  id={`community`}
-                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  href="/community"
-                >
-                  {i18n._(t`Community`)}
-                </a> */}
-
-                {/* <a
-                  id={`press`}
-                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  href="/press"
-                >
-                  {i18n._(t`Press`)}
-                </a>
-
-                <a
-                  id={`learn`}
-                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  href="learn"
-                >
-                  {i18n._(t`Learn`)}
-                </a> */}
-
-                <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
+                {/* <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                   {account && chainId && userEthBalance && (
                     <>
                       <div className="px-3 py-2 text-primary text-bold">
@@ -423,6 +411,7 @@ function AppBar(): JSX.Element {
                     {i18n._(t`Analytics`)}
                   </ExternalLink>
                 )}
+                */}
               </div>
             </Popover.Panel>
           </>

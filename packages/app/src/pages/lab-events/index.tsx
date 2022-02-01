@@ -78,7 +78,7 @@ const LabEvents = () => {
             <div className="border-2 border-white text-center rounded-sm px-4 py-8">
               <p>Where? zoolabs.io</p>
               <p>
-                After much anticipation we are proud to announce the launch of
+                After much anticipation, we are proud to announce the launch of
                 the ZOO Market. Now all users can buy, sell, trade and bid on
                 all ZOO creatures, including our NFT Animals and our unhatched
                 NFT Eggs.

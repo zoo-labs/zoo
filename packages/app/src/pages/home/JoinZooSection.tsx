@@ -11,7 +11,7 @@ const JoinZooSection = () => {
         <h2 className="mb-6 text-3xl font-semibold text-center lg:text-5xl">
           Join the ZOO family!
         </h2>
-        <p className="mb-4 text-xl">Follow our social media</p>
+        <p className="mb-4 text-xl">Follow us on social media</p>
         <div className="flex items-center mb-6">
           <a
             href="https://mobile.twitter.com/zoo_labs"
