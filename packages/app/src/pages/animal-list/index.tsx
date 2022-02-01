@@ -7,7 +7,7 @@ import { ANIMAL_TYPE } from "../../types";
 
 import { useGif } from "context/GifContext";
 
-const animalFamilyData =[
+const animalFamilyData = [
   {
     id: "1",
     image: "/img/sumatran-elephant.png",
@@ -98,25 +98,47 @@ const animalFamilyData =[
   },
   {
     id: "5",
-    image: "/img/ethiopian-wolf.png",
-    gif: "/img/ethiopian-wolf.png",
-    name: "Ethiopian Wolf",
+    image: "/img/hippo.png",
+    gif: "/img/hippo.png",
+    name: "Pygmy Hippo",
+    scientificName: "Cheropsis liberiensis",
+    description: `<p class="mb-6">The Pygmy Hippopotamus looks like a miniature version of its larger relative, the Hippopotamus (also known as the river or common hippopotamus), but it differs greatly in both behavior and physical characteristics. The Pygmy Hippo has adaptations for spending time in the water but is far less aquatic than the hippo. Its nose and ears close underwater just like its larger cousin’s do, but its head is rounder and narrower, its neck is proportionally longer, and its eyes are not on the top of its head.</p>The Pygmy Hippopotamus is much more rare in the wild, too, found only in the interior forests in parts of West Africa, mainly confined to Liberia, with small numbers in the neighboring countries of Sierra Leone, Guinea, and the Ivory Coast.<p>
+
+    </p>`,
+    status: "Critically Endangered",
+    population: "2,000 to 3,000",
+    size: "1 meters (3 ft)",
+    habitat: "Forests and Swamps",
+    images: ["/img/hippo.png", "/img/hippo.png", "/img/hippo.png"],
+  },
+  {
+    id: "6",
+    image: "/img/giraffe.png",
+    gif: "/img/giraffe.png",
+    name: "Nubian Giraffe",
+    scientificName: "Giraffa camelopardalis",
+    description: `<p class="mb-6">The tallest of all giraffes is the Nubian species. This means they are considered to be the tallest land animal on the Earth, measuring up to a remarkable 6 meters, or 20 feet tall! They can also weigh approximately 2,800 pounds, with the males outweighing the females by several hundred pounds. The Nubian Giraffe is endangered with less than 2,645 individuals remaining, are now just one stage from becoming extinct in the wild.</p>
+    <p>A distinguishing feature of the Nubian Giraffe is the number of horns on top of it’s head. Other Giraffe species typically have two horns, but the Nubian Giraffe can have up to five! They have two in the same place as other giraffes, one in the center, and two behind those.</p>`,
+    status: "Critically Endangered",
+    population: "2,645",
+    size: "1.5 meters (9 ft)",
+    habitat: "Savannahs and Woodlands",
+    images: ["/img/giraffe.png", "/img/giraffe.png", "/img/giraffe.png"],
+  },
+  {
+    id: "7",
+    image: "/img/red-wolf.png",
+    gif: "/img/red-wolf.png",
+    name: "Red Wolf",
     scientificName: "Canis simensis",
-    description: `The Siberian tiger is a tiger from a specific population of the
-    Panthera tigris tigris subspecies native to the Russian Far
-    East, Northeast China. It once ranged throughout the Korean
-    Peninsula, north China, and eastern Mongolia. The population
-    currently inhabits mainly the Sikhote-Alin mountain region in
-    southwest Primorye Province in East Russia.`,
-    status: "Endangered",
-    population: "197",
-    size: "6.6 - 10.5 Feet",
-    habitat: "Shrubland, Grassland",
-    images: [
-      "/gifs/ethiopian-wolf.gif",
-      "/gifs/ethiopian-wolf.gif",
-      "/gifs/ethiopian-wolf.gif",
-    ],
+    description: `<p class="mb-6">The Red Wolf is the world’s most endangered member of the Canine family.</p>
+    <p class="mb-6">Native to the United States, Red Wolves (Canis rufus) have a tawny, reddish coat, and they are intermediate in size between grey wolves and coyotes. That makes sense, as these two species interbred in the past to produce the red wolves’ ancestors. Nevertheless, recent research shows that red wolves are a unique species.</p><p>The only place where red wolves remain in the wild is the Alligator River National Wildlife Refuge in eastern North Carolina, and surrounding counties. There are only an estimated 35 or fewer wild red wolves.
+  </p>`,
+    status: "Critically Endangered",
+    population: "Less than 10",
+    size: "1.2 meters (4 ft)",
+    habitat: "Forest, wetlands & bushlands",
+    images: ["/img/red-wolf.png", "/img/red-wolf.png", "/img/red-wolf.png"],
   },
 ];
 
