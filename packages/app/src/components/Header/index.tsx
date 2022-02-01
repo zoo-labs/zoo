@@ -49,7 +49,7 @@ function AppBar(props: { banner: boolean }): JSX.Element {
 
   return (
     //     // <header className="flex flex-row justify-between w-screen flex-nowrap">
-    <header className="fixed z-20 flex-shrink-0 w-full bg-black ">
+    <header className="fixed z-20 flex-shrink-0 w-full bg-black">
       {/* {props.banner && <Banner />} */}
       <Banner />
       <Popover as="nav" className="z-10 w-full bg-transparent header-border-b">

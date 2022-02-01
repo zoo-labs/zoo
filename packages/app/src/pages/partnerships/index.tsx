@@ -13,7 +13,7 @@ const Partnership = () => {
   return (
     <section>
       <div className="flex flex-col py-16 items-center max-w-7xl mx-auto px-6" ref={partnerRef}>
-        <h1 className="text-3xl lg:text-5xl mb-8 font-bold">ZOO Foundation</h1>
+        <h1 className="text-3xl lg:text-5xl mb-8 font-bold mt-20">ZOO Foundation</h1>
         <p className="text-center text-xl lg:text-3xl max-w-5xl">
           The ZOO foundation donates 10% of all gaming fees in efforts to save
           endangered species. Every animal in our game is a representation of an
@@ -21,7 +21,7 @@ const Partnership = () => {
           following organizations. Click any of them to visit their website.
         </p>
       </div>
-      <div className="bg-green" id="partnerships">
+      <div className="bg-green" id="partnerships" style={{marginBottom: '96px'}}>
         <div className="flex py-6 items-center justify-between max-w-7xl mx-auto px-6">
           <div className="flex flex-col gap-2 justify-between">
             <Image src="/img/wcs.svg" width={147} height={104} alt="" />
