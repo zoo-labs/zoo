@@ -10,6 +10,7 @@ const animalFamilyData = [
     image: "/img/sumatran-elephant.png",
     gif: "/videos/sumatran-elephant.mov",
     name: "Sumatran Elephant",
+    slug: 'sumatran-elephant',
     scientificName: " Elephas Maximus Sumatranus",
     description: `Sumatran elephants feed on a variety of plants and deposit seeds
     wherever they go, contributing to a healthy forest ecosystem.
@@ -31,6 +32,7 @@ const animalFamilyData = [
     image: "/img/javan-rhino.png",
     gif: "/videos/javan-rhino.mov",
     name: "Javan Rhino",
+    slug: 'javan-rhino',
     scientificName: "Rhinoceros Sondaicus",
     description: `Once the most widespread of Asian rhinoceroses, the Javan
     rhinoceros ranged from the islands of Java and Sumatra,
@@ -54,6 +56,7 @@ const animalFamilyData = [
     image: "/img/siberian-tiger.png",
     gif: "/videos/siberian-tiger.mov",
     name: "Siberian Tiger",
+    slug: 'siberian-tiger',
     scientificName: "Siberian Tiger",
     description: `The Siberian tiger is a tiger from a specific population of the
     Panthera tigris tigris subspecies native to the Russian Far
@@ -133,7 +136,7 @@ const AnimalFamilySection = () => {
                   <p className="mb-3 text-grey text-opacity-70">
                     {data.description}
                   </p>
-                  <Link href={`nft-product/${data.id}`} passHref>
+                  <Link href={`nft-product/${data.slug}`} passHref>
                     <span className="text-green font-bold underline hover:cursor-pointer">
                       Learn more
                     </span>
