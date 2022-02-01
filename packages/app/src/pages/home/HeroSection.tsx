@@ -67,7 +67,7 @@ const HeroSection = () => {
         >
           {gifMode === "gif" ? (
             <Image
-              src="/gifs/giphy.gif"
+              src="/images/gifs/giphy.gif"
               width={700}
               height={612}
               alt="leopard"
