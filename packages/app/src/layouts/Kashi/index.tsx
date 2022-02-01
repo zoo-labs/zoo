@@ -24,7 +24,7 @@ export default function Layout({
   const router = useRouter()
   return (
     <div className="z-0 flex flex-col items-start w-full h-screen">
-      <Header />
+      <Header banner={false} />
       <Main>
         <Container className="px-4 py-4 md:py-8 lg:py-12" maxWidth="7xl">
           <div className={`mb-2 grid grid-cols-12 gap-4`}>

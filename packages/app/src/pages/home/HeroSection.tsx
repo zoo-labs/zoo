@@ -67,10 +67,11 @@ const HeroSection = () => {
         >
           {gifMode === "gif" ? (
             <Image
-              src="/gifs/zoo-tiger-gif.gif"
+              src="/gifs/siberian-tiger.gif"
               width={700}
               height={612}
               alt="leopard"
+              objectFit="contain"
             />
           ) : (
             <Image
