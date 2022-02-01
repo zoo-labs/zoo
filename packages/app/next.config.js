@@ -38,9 +38,7 @@ const SentryWebpackPluginOptions = {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 };
-module.exports = withPWA(withBundleAnalyzer(nextConfig));
-
-// withSentryConfig(
-//   withPWA(withBundleAnalyzer(nextConfig)),
-//   SentryWebpackPluginOptions
-// );
+module.exports = withSentryConfig(
+  withPWA(withBundleAnalyzer(nextConfig)),
+  SentryWebpackPluginOptions
+);
