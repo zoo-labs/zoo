@@ -182,7 +182,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                         <div className="hidden md:inline-flex">
                           <QuestionHelper
                             text={i18n._(
-                              t`Add ZOO to your MetaMask wallet 
+                              t`Add ZOO to your MetaMask wallet
                               ${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`
                             )}
                           >
@@ -387,7 +387,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                       </a>
                     </Link>
                   </>
-                )} 
+                )}
 
                 {chainId && featureEnabled(Feature.STAKING, chainId) && (
                   <Link href={"/stake"}>
