@@ -79,16 +79,16 @@ const AnimalList = () => {
   };
   return (
     <section>
-      <div className="lg:max-w-7xl lg:mx-auto mb-8 py-16">
-        <h1 className="pt-16 text-4xl lg:text-6xl font-bold text-center">
+      <div className="py-16 mb-8 lg:max-w-7xl lg:mx-auto">
+        <h1 className="pt-16 text-4xl font-bold text-center lg:text-6xl">
           Our Animal Family
         </h1>
       </div>
-      <div className="px-4 py-16 lg:max-w-7xl lg:mx-auto flex flex-col items-center lg:flex-row flex-wrap lg:justify-between lg:gap-2">
+      <div className="flex flex-col flex-wrap items-center px-4 py-16 lg:max-w-7xl lg:mx-auto lg:flex-row lg:justify-between lg:gap-2">
         {animalFamilyData.map((animal) => (
           <div
             key={animal.id}
-            className="p-px mb-8 cursor-pointer rounded bg-nft-gradient lg:max-w-md overflow-hidden"
+            className="p-px mb-8 overflow-hidden rounded cursor-pointer bg-nft-gradient lg:max-w-md"
           >
             {gifMode === "gif" ? (
               <div className="bg-black rounded overflow-hidden">
@@ -100,7 +100,7 @@ const AnimalList = () => {
                         loop={true}
                         playsInline={true}
                         muted
-                        className="rounded overflow-hidden"
+                        className="overflow-hidden rounded"
                       >
                         <source src={animal.gif}></source>
                       </video>

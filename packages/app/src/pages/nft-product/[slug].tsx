@@ -64,9 +64,9 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "3 meters (12 ft)",
     habitat: "Lowland to mountain forests",
     images: [
-      "/gifs/siberian-tiger.gif",
-      "/gifs/siberian-tiger.gif",
-      "/gifs/siberian-tiger.gif",
+      "/images/gifs/siberian-tiger.gif",
+      "/images/gifs/siberian-tiger.gif",
+      "/images/gifs/siberian-tiger.gif",
     ],
   },
   {
@@ -84,9 +84,9 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "Up to 3.1 meters (7 feet)",
     habitat: "Temperate, Broadleaf Forest/Mountains",
     images: [
-      "/gifs/clouded-leopard.gif",
-      "/gifs/clouded-leopard.gif",
-      "/gifs/clouded-leopard.gif",
+      "/images/gifs/clouded-leopard.gif",
+      "/images/gifs/clouded-leopard.gif",
+      "/images/gifs/clouded-leopard.gif",
     ],
   },
   {
@@ -151,16 +151,16 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
 const NFTProduct = ({ animal }) => {
   return (
     <div className="NFTProduct">
-      <div className=" pt-16 pb-16 px-6 md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-center gap-4">
-        <div className="lg:basis-1/2 flex items-center justify-center">
-          <div className="p-px bg-nft-gradient mb-8 lg:mb-0 rounded">
+      <div className="gap-4 px-6 pt-16 pb-16  md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-center">
+        <div className="flex items-center justify-center lg:basis-1/2">
+          <div className="p-px mb-8 rounded bg-nft-gradient lg:mb-0">
             <div className="bg-black rounded-lg">
               <video
                 autoPlay
                 loop={true}
                 playsInline={true}
                 muted
-                className="rounded overflow-hidden"
+                className="overflow-hidden rounded"
               >
                 <source src={animal.gif}></source>
               </video>
@@ -169,12 +169,12 @@ const NFTProduct = ({ animal }) => {
         </div>
 
         <div
-          className="bg-black100 rounded px-4 py-12 flex flex-col lg:flex-row items-start justify-between lg:basis-1/2 gap-2"
+          className="flex flex-col items-start justify-between gap-2 px-4 py-12 rounded bg-black100 lg:flex-row lg:basis-1/2"
           key={animal.id}
         >
           <div>
             <div className="mb-8">
-              <h2 className="text-2xl font-bold mb-4">{animal.name}</h2>
+              <h2 className="mb-4 text-2xl font-bold">{animal.name}</h2>
               <a href="/partnerships" className="text-sm underline">
                 philanthropic partnership
               </a>
@@ -239,8 +239,8 @@ const NFTProduct = ({ animal }) => {
           </div>
         </div>
       </div>
-      <div className="pt-16 pb-16 px-6 md:flex md:flex-col lg:max-w-7xl lg:mx-auto">
-        <h2 className="text-3xl lg:text-4xl font-bold text-center mb-8">
+      <div className="px-6 pt-16 pb-16 md:flex md:flex-col lg:max-w-7xl lg:mx-auto">
+        <h2 className="mb-8 text-3xl font-bold text-center lg:text-4xl">
           View Available {animal.name}
         </h2>
 
@@ -248,16 +248,16 @@ const NFTProduct = ({ animal }) => {
           {animal.images.map((img, index) => {
             return (
               <div
-                className="p-px mb-4 rounded bg-nft-gradient overflow-hidden"
+                className="p-px mb-4 overflow-hidden rounded bg-nft-gradient"
                 key={index}
               >
-                <div className="bg-black rounded overflow-hidden">
+                <div className="overflow-hidden bg-black rounded">
                   <video
                     autoPlay
                     loop={true}
                     playsInline={true}
                     muted
-                    className="rounded overflow-hidden"
+                    className="overflow-hidden rounded"
                   >
                     <source src={animal.gif}></source>
                   </video>

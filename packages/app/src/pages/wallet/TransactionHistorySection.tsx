@@ -57,6 +57,8 @@ const TransactionHistory = () => {
         <Alert
           message={`copied!`}
           className="mb-4 bg-black100 text-white w-48 border border-grey mx-auto"
+          show={copied}
+          setShow={setCopied}
         />
       )}
 
@@ -129,6 +131,7 @@ const TransactionHistory = () => {
                       height={24}
                       alt=""
                       onClick={() => copyToClipboard(item.hash)}
+                      className="cursor-pointer"
                     />
                   </td>
                 </tr>

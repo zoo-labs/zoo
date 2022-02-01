@@ -89,20 +89,20 @@ const AnimalFamilySection = () => {
         {animalFamilyData.map((data) => {
           return (
             <div
-              className="flex flex-col items-center AnimalFamily__nfts mb-4"
+              className="flex flex-col items-center mb-4 AnimalFamily__nfts"
               key={data.id}
             >
               <div className="flex flex-col items-center justify-center AnimalFamily__nft lg:flex-row">
                 <div className="flex flex-col items-center w-full h-auto mb-8 AnimalFamily__image lg:basis-1/3">
-                  <div className="p-px bg-nft-gradient mb-8 lg:mb-0 rounded-lg overflow-hidden">
+                  <div className="p-px mb-8 overflow-hidden rounded-lg bg-nft-gradient lg:mb-0">
                     {gifMode === "gif" ? (
-                      <div className="bg-black rounded-lg overflow-hidden">
+                      <div className="overflow-hidden bg-black rounded-lg">
                         <video
                           autoPlay
                           loop={true}
                           playsInline={true}
                           muted
-                          className="rounded overflow-hidden"
+                          className="overflow-hidden rounded"
                         >
                           <source src={data.gif}></source>
                         </video>
@@ -124,12 +124,12 @@ const AnimalFamilySection = () => {
                   </h2>
                   <a
                     href="/coming-soon"
-                    className="bg-gradient-to-b from-purple to-blue text-white  text-sm md:text-base  font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full"
+                    className="px-8 py-3 text-sm font-bold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 lg:px-16"
                   >
                     Coming Soon
                   </a>
                 </div>
-                <div className="px-2 py-6  lg:px-6 lg:basis-1/3 lg:bg-black100 lg:rounded-3xl">
+                <div className="px-2 py-6 lg:px-6 lg:basis-1/3 lg:bg-black100 lg:rounded-3xl">
                   <h3 className="mb-4 text-xl font-bold ">
                     {data.scientificName}
                   </h3>
@@ -150,7 +150,7 @@ const AnimalFamilySection = () => {
         <div className="flex items-center justify-center">
           <a
             href="/animal-list"
-            className="px-5 py-3 text-sm border rounded-full font-bold border-green md:text-base text-green md:px-6 md:py-4 lg:px-20"
+            className="px-5 py-3 text-sm font-bold border rounded-full border-green md:text-base text-green md:px-6 md:py-4 lg:px-20"
           >
             See All
           </a>
@@ -166,7 +166,7 @@ export default AnimalFamilySection;
   /* Another section */
 }
 {
-  /* <div className="flex flex-col items-center AnimalFamily__nfts mb-4">
+  /* <div className="flex flex-col items-center mb-4 AnimalFamily__nfts">
           <div className="flex flex-col items-center justify-center AnimalFamily__nft lg:flex-row">
             <div className="flex flex-col items-center w-full h-auto mb-8 AnimalFamily__image lg:basis-1/3">
               <Image
@@ -180,12 +180,12 @@ export default AnimalFamilySection;
               <h2 className="mb-6 text-3xl font-bold lg:4xl">Javan Rhino</h2>
               <a
                 href="/nft"
-                className="bg-gradient-to-b from-purple to-blue text-white  text-sm md:text-base  font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full"
+                className="px-8 py-3 text-sm font-bold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 lg:px-16"
               >
                 Buy NFT
               </a>
             </div>
-            <div className="px-2 py-6  lg:px-6 lg:basis-1/3 lg:bg-black100 lg:rounded-3xl">
+            <div className="px-2 py-6 lg:px-6 lg:basis-1/3 lg:bg-black100 lg:rounded-3xl">
               <h3 className="mb-4 text-xl font-bold ">Rhinoceros Sondaicus</h3>
               <p className="mb-3 text-grey text-opacity-70">
                 Once the most widespread of Asian rhinoceroses, the Javan
@@ -198,7 +198,7 @@ export default AnimalFamilySection;
               <a
                 href=""
                 rel="noreferrer"
-                className="text-green font-bold underline"
+                className="font-bold underline text-green"
               >
                 Learn more
               </a>
@@ -224,12 +224,12 @@ export default AnimalFamilySection;
               <h2 className="mb-6 text-3xl font-bold lg:4xl">Siberian Tiger</h2>
               <a
                 href="/nft"
-                className="bg-gradient-to-b from-purple to-blue text-white  text-sm md:text-base  font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full"
+                className="px-8 py-3 text-sm font-bold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 lg:px-16"
               >
                 Buy NFT
               </a>
             </div>
-            <div className="px-2 py-6  lg:px-6 lg:basis-1/3 lg:bg-black100 lg:rounded-3xl">
+            <div className="px-2 py-6 lg:px-6 lg:basis-1/3 lg:bg-black100 lg:rounded-3xl">
               <h3 className="mb-4 text-xl font-bold ">Siberian Tiger</h3>
               <p className="mb-3 text-grey text-opacity-70">
                 The Siberian tiger is a tiger from a specific population of the
@@ -242,7 +242,7 @@ export default AnimalFamilySection;
               <a
                 href=""
                 rel="noreferrer"
-                className="text-green font-bold underline"
+                className="font-bold underline text-green"
               >
                 Learn more
               </a>

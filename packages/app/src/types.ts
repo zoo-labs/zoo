@@ -78,7 +78,6 @@ export type ANIMAL_TYPE = {
   };
 };
 
-
 export interface CardEgg extends Egg {
   id: number
   name: string
