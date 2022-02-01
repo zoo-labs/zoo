@@ -9,7 +9,7 @@ export default function Wallet({ children }) {
 
   return (
     <section className="Hero">
-      <div className="Hero__inner pt-16 pb-16 px-6 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto ">
+      <div className="Hero__inner pt-16 pb-16 px-6 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
         <div className="inline-block bg-leader-board rounded p-px  mb-28 ml-16 w-auto overflow-hidden">
           <div className="w-auto bg-black rounded " style={{ top: 10 }}>
             {['My Wallet', 'My Bids', 'My Auctions'].map((value, index) => {
