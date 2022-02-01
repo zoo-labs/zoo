@@ -3,7 +3,7 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import { loadTranslation } from "../entities";
 import Home from "./home";
-
+import DefaultLayout from "../layouts/Default";
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const sessionId = nanoid();
 
@@ -21,12 +21,14 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 };
 export default function Dashboard(props) {
   return (
-    <div>
-      <Head>
-        <title>ZOO</title>
-        <meta name="description" content="Zoo" />
-      </Head>
-      <Home />
-    </div>
+    <DefaultLayout banner={true}>
+      <div>
+        <Head>
+          <title>ZOO</title>
+          <meta name="description" content="Zoo" />
+        </Head>
+        <Home />
+      </div>
+    </DefaultLayout>
   );
 }

@@ -29,32 +29,32 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="Hero">
+    <section className="mt-24 Hero">
       <div
-        className="Hero__inner pt-16 pb-16 px-6 md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-between"
+        className="px-6 pt-16 pb-16 Hero__inner md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-between"
         ref={heroContent}
       >
-        <div className="Hero__content mb-6 md:mb-12 md:flex md:flex-col md:items-center md:text-center md:max-w-7xl lg:items-start lg:text-left lg:basis-1/2">
-          <p className="uppercase text-green mb-2">Nfts made Fun.</p>
-          <h1 className="font-bold text-4xl mb-3 lg:text-7xl lg:mb-6">
+        <div className="mb-6 Hero__content md:mb-12 md:flex md:flex-col md:items-center md:text-center md:max-w-7xl lg:items-start lg:text-left lg:basis-1/2">
+          <p className="mb-2 uppercase text-green">Nfts made Fun.</p>
+          <h1 className="mb-3 text-4xl font-bold lg:text-7xl lg:mb-6">
             Exotic animals for everyone.
           </h1>
-          <p className="text-base lg:text-lg mb-6 text-white text-opacity-70 md:max-w-xl lg:text-left">
+          <p className="mb-6 text-base text-white lg:text-lg text-opacity-70 md:max-w-xl lg:text-left">
             Pet, play, feed, grow, and breed your very own animal NFT’s in our
             Sims-like metaverse to increase their value and earn greater
             rewards, all while contibuting to saving endangered animals. Your
             virtual ZOO does not imprison endangered animals, instead it
             supports real world organizations.
           </p>
-          <div className="flex gap-3 items-center">
+          <div className="flex items-center gap-3">
             <a
               href="/#endless-opportunity"
-              className="bg-gradient-to-b from-purple to-blue text-white font-semibold text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full"
+              className="px-5 py-3 text-sm font-semibold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10"
             >
               Learn More
             </a>
             <div
-              className="border border-gray-100 text-sm md:text-base font-semibold text-white px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full hover:cursor-pointer"
+              className="px-5 py-3 text-sm font-semibold text-white border border-gray-100 rounded-full md:text-base md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
               onClick={() => handleFunds(chainId, buyZoo)}
             >
               Buy $ZOO
@@ -62,7 +62,7 @@ const HeroSection = () => {
           </div>
         </div>
         <div
-          className="Hero__image max-w-md lg:max-w-xl lg:basis-1/2"
+          className="max-w-md Hero__image lg:max-w-xl lg:basis-1/2"
           ref={heroImage}
         >
           {gifMode === "gif" ? (
