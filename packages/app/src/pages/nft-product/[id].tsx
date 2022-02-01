@@ -4,7 +4,7 @@ const productsData = [
   {
     id: "1",
     image: "/img/sumatran-elephant.png",
-    gif: "/gifs/sumatran-elephant.gif",
+    gif: "/images/gifs/sumatran-elephant.gif",
     name: "Sumatran Elephant",
     scientificName: "Elephas Maximus Sumatranus",
     description: `<p class="mb-6">Sumatran elephants feed on a variety of plants and deposit seeds wherever they go, contributing to a healthy forest ecosystem. As herbivores, these noble animals spend their days munching on 150kg of plants and seeds as they move through the forests. They also share their lush forest habitat with several other endangered species, such as the Sumatran Rhinoceros, Sumatran Tiger, Sumatran Orangutan, and countless other species; all of which benefit from an elephant population that thrives in a healthy habitat.</p>
@@ -16,16 +16,16 @@ const productsData = [
     size: "Up to 6 meters (20 feet)",
     habitat: "Broadleaf, moist tropical forest",
     images: [
-      "/gifs/sumatran-elephant.gif",
-      "/gifs/sumatran-elephant.gif",
-      "/gifs/sumatran-elephant.gif",
-      "/gifs/sumatran-elephant.gif",
+      "/images/gifs/sumatran-elephant.gif",
+      "/images/gifs/sumatran-elephant.gif",
+      "/images/gifs/sumatran-elephant.gif",
+      "/images/gifs/sumatran-elephant.gif",
     ],
   },
   {
     id: "2",
     image: "/img/javan-rhino.png",
-    gif: "/gifs/javan-rhino.gif",
+    gif: "/images/gifs/javan-rhino.gif",
     name: "Javan Rhino",
     scientificName: "Rhinoceros Sondaicus",
     description: `<p class="mb-6">Once the most widespread of Asian rhinoceroses, the Javan
@@ -41,16 +41,16 @@ const productsData = [
     size: "3 meters (10 ft)",
     habitat: "Tropical forests",
     images: [
-      "/gifs/javan-rhino.gif",
-      "/gifs/javan-rhino.gif",
-      "/gifs/javan-rhino.gif",
-      "/gifs/javan-rhino.gif",
+      "/images/gifs/javan-rhino.gif",
+      "/images/gifs/javan-rhino.gif",
+      "/images/gifs/javan-rhino.gif",
+      "/images/gifs/javan-rhino.gif",
     ],
   },
   {
     id: "3",
     image: "/img/siberian-tiger.png",
-    gif: "/gifs/siberian-tiger.gif",
+    gif: "/images/gifs/siberian-tiger.gif",
     name: "Siberian Tiger",
     scientificName: "Panthera tigris sumatrae",
     description: `<p class="mb-6">The Siberian tiger, a subspecies of tiger, is the largest cat in the world from the Russian Far East, Northeast China, and possibly North Korea. It once ranged throughout the Korean Peninsula, north China, and eastern Mongolia. It averages about 11 feet in total length, with a tail that accounts for approximately 3 feet of it. Adult male Siberian tigers can weigh up to 700 pounds, while females are significantly smaller, weighing up to 400 pounds.
@@ -62,15 +62,15 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "3 meters (12 ft)",
     habitat: "Lowland to mountain forests",
     images: [
-      "/gifs/siberian-tiger.gif",
-      "/gifs/siberian-tiger.gif",
-      "/gifs/siberian-tiger.gif",
+      "/images/gifs/siberian-tiger.gif",
+      "/images/gifs/siberian-tiger.gif",
+      "/images/gifs/siberian-tiger.gif",
     ],
   },
   {
     id: "4",
     image: "/img/clouded-leopard.png",
-    gif: "/gifs/clouded-leopard.gif",
+    gif: "/images/gifs/clouded-leopard.gif",
     name: "Amur leopard",
     scientificName: "Panthera pardus orientalis",
     description: `<p class="mb-6">The Amur leopard is one of 10 subspecies of leopard, and one of the world’s rarest cats, with an estimated population of under 70 individuals left in the wild. They all live in a small area that hugs Russia’s far eastern border with China.</p>
@@ -81,9 +81,9 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "Up to 3.1 meters (7 feet)",
     habitat: "Temperate, Broadleaf Forest/Mountains",
     images: [
-      "/gifs/clouded-leopard.gif",
-      "/gifs/clouded-leopard.gif",
-      "/gifs/clouded-leopard.gif",
+      "/images/gifs/clouded-leopard.gif",
+      "/images/gifs/clouded-leopard.gif",
+      "/images/gifs/clouded-leopard.gif",
     ],
   },
   {
@@ -104,7 +104,7 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
   {
     id: "6",
     image: "/img/giraffe.png",
-    gif: "/gifs/giraffe.gif",
+    gif: "/images/gifs/giraffe.gif",
     name: "Nubian Giraffe",
     scientificName: "Canis simensis",
     description: `<p class="mb-6">The tallest of all giraffes is the Nubian species. This means they are considered to be the tallest land animal on the Earth, measuring up to a remarkable 6 meters, or 20 feet tall! They can also weigh approximately 2,800 pounds, with the males outweighing the females by several hundred pounds. The Nubian Giraffe is endangered with less than 2,645 individuals remaining, are now just one stage from becoming extinct in the wild.</p>
@@ -113,12 +113,16 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     population: "2,645",
     size: "1.5 meters (9 ft)",
     habitat: "Savannahs and Woodlands",
-    images: ["/gifs/giraffe.gif", "/gifs/giraffe.gif", "/gifs/giraffe.gif"],
+    images: [
+      "/images/gifs/giraffe.gif",
+      "/images/gifs/giraffe.gif",
+      "/images/gifs/giraffe.gif",
+    ],
   },
   {
     id: "7",
     image: "/img/red-wolf.png",
-    gif: "/gifs/red-wolf.gif",
+    gif: "/images/gifs/red-wolf.gif",
     name: "Red Wolf",
     scientificName: "Canis simensis",
     description: `<p class="mb-6">The Red Wolf is the world’s most endangered member of the Canine family.</p>
@@ -129,9 +133,9 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "1.2 meters (4 ft)",
     habitat: "Forest, wetlands & bushlands",
     images: [
-      "/gifs/red-wolf.gif",
-      "/gifs/red-wolf.gif",
-      "/gifs/red-wolf.gif",
+      "/images/gifs/red-wolf.gif",
+      "/images/gifs/red-wolf.gif",
+      "/images/gifs/red-wolf.gif",
     ],
   },
 ];
