@@ -21,14 +21,15 @@ import { useActiveWeb3React } from "../../hooks/useActiveWeb3React";
 import { useETHBalances } from "../../state/wallet/hooks";
 import { useLingui } from "@lingui/react";
 import { useZoobalance } from "state/zoo/hooks";
+import Banner from "components/Banner";
 // import { ChainId } from '../../config/networks'
 
 // import { ExternalLink, NavLink } from "./Link";
 // import { ReactComponent as Burger } from "../assets/images/burger.svg";
 
-function AppBar(): JSX.Element {
+function AppBar(props: { banner: boolean }): JSX.Element {
   const { i18n } = useLingui();
-  // const { account, chainId, library } = useActiveWeb3React();
+  const { account, chainId, library } = useActiveWeb3React();
   // const getZooBalance = useZoobalance();
 
   const router = useRouter();
@@ -43,12 +44,14 @@ function AppBar(): JSX.Element {
   // }, [account]);
 
   // console.log("userEthBalance", userEthBalance);
-  // const chainAddresses =
-  //   (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
+  const chainAddresses =
+    (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
 
   return (
     //     // <header className="flex flex-row justify-between w-screen flex-nowrap">
-    <header className="flex-shrink-0 w-full bg-black">
+    <header className="fixed z-20 flex-shrink-0 w-full bg-black ">
+      {props.banner && <Banner />}
+
       <Popover as="nav" className="z-10 w-full bg-transparent header-border-b">
         {({ open }) => (
           <>
@@ -172,22 +175,27 @@ function AppBar(): JSX.Element {
 
                 <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
                   <div className="flex items-center justify-between w-full space-x-2 sm:justify-end">
-                    {/* {chainId &&
+                    {chainId &&
                       // [ChainId.MAINNET].includes(chainId) &&
                       library &&
                       library.provider.isMetaMask && (
                         <div className="hidden md:inline-flex">
                           <QuestionHelper
-                            text={i18n._(t`Add ZOO to your MetaMask wallet`)}
+                            text={i18n._(
+                              t`Add ZOO to your MetaMask wallet 
+                              ${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`
+                            )}
                           >
                             <div
                               className="hidden p-0.5 rounded-md cursor-pointer sm:inline-flex bg-dark-900 hover:bg-dark-800"
                               onClick={() => {
-                                const tokenAddress = chainAddresses.ZOO;
+                                const tokenAddress =
+                                  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ||
+                                  chainAddresses.ZOO;
                                 const tokenSymbol = "ZOO";
                                 const tokenDecimals = 18;
                                 const tokenImage =
-                                  window.location.origin + "/icons/egg.svg";
+                                  window.location.origin + "/img/egg.png";
                                 if (
                                   library &&
                                   library.provider.isMetaMask &&
@@ -233,7 +241,7 @@ function AppBar(): JSX.Element {
                             </div>
                           </QuestionHelper>
                         </div>
-                      )} */}
+                      )}
 
                     {/* {library && library.provider.isMetaMask && (
                       <div className="hidden sm:inline-block">
@@ -258,6 +266,10 @@ function AppBar(): JSX.Element {
                     <div className="hidden md:block">
                       <LanguageSwitch />
                     </div>
+                    {/* <div>
+                      <p>{process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}</p>
+                    </div> */}
+
                     {/* <More /> */}
                   </div>
                 </div>
