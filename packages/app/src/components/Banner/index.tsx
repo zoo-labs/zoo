@@ -31,6 +31,9 @@ const Banner: FC = () => (
               {process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ||
                 "0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13"}
             </Typography>
+            <Typography variant="sm" className="font-bold text-white underline">
+              Token Address
+            </Typography>
           </Copy>
         </span>
       </div>
