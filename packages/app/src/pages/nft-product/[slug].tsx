@@ -6,6 +6,7 @@ const productsData = [
     image: "/img/sumatran-elephant.png",
     gif: "/videos/sumatran-elephant.mov",
     name: "Sumatran Elephant",
+    slug: 'sumatran-elephant',
     scientificName: "Elephas Maximus Sumatranus",
     description: `<p class="mb-6">Sumatran elephants feed on a variety of plants and deposit seeds wherever they go, contributing to a healthy forest ecosystem. As herbivores, these noble animals spend their days munching on 150kg of plants and seeds as they move through the forests. They also share their lush forest habitat with several other endangered species, such as the Sumatran Rhinoceros, Sumatran Tiger, Sumatran Orangutan, and countless other species; all of which benefit from an elephant population that thrives in a healthy habitat.</p>
     <p>
@@ -19,7 +20,7 @@ const productsData = [
       "/videos/sumatran-elephant.mov",
       "/videos/sumatran-elephant.mov",
       "/videos/sumatran-elephant.mov",
-      "/videos/sumatran-elephant.mov",
+   
     ],
   },
   {
@@ -27,6 +28,7 @@ const productsData = [
     image: "/img/javan-rhino.png",
     gif: "/videos/javan-rhino.mov",
     name: "Javan Rhino",
+    slug: 'javan-rhino',
     scientificName: "Rhinoceros Sondaicus",
     description: `<p class="mb-6">Once the most widespread of Asian rhinoceroses, the Javan
     rhinoceros ranged from the islands of Java and Sumatra,
@@ -41,10 +43,9 @@ const productsData = [
     size: "3 meters (10 ft)",
     habitat: "Tropical forests",
     images: [
-      "/images/gifs/javan-rhino.gif",
-      "/images/gifs/javan-rhino.gif",
-      "/images/gifs/javan-rhino.gif",
-      "/images/gifs/javan-rhino.gif",
+      "/gifs/javan-rhino.gif",
+      "/gifs/javan-rhino.gif",
+      "/gifs/javan-rhino.gif",
     ],
   },
   {
@@ -52,6 +53,7 @@ const productsData = [
     image: "/img/siberian-tiger.png",
     gif: "/videos/siberian-tiger.mov",
     name: "Siberian Tiger",
+    slug: 'siberian-tiger',
     scientificName: "Panthera tigris sumatrae",
     description: `<p class="mb-6">The Siberian tiger, a subspecies of tiger, is the largest cat in the world from the Russian Far East, Northeast China, and possibly North Korea. It once ranged throughout the Korean Peninsula, north China, and eastern Mongolia. It averages about 11 feet in total length, with a tail that accounts for approximately 3 feet of it. Adult male Siberian tigers can weigh up to 700 pounds, while females are significantly smaller, weighing up to 400 pounds.
 </p><p>
@@ -71,7 +73,8 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     id: "4",
     image: "/img/clouded-leopard.png",
     gif: "/videos/clouded-leopard.mov",
-    name: "Amur leopard",
+    name: "Clouded leopard",
+    slug: 'clouded-leopard',
     scientificName: "Panthera pardus orientalis",
     description: `<p class="mb-6">The Amur leopard is one of 10 subspecies of leopard, and one of the world’s rarest cats, with an estimated population of under 70 individuals left in the wild. They all live in a small area that hugs Russia’s far eastern border with China.</p>
     <p>
@@ -91,6 +94,7 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     image: "/img/hippo.png",
     gif: "/videos/hippo.mov",
     name: "Pygmy Hippo",
+    slug: 'pygmy-hippo',
     scientificName: "Cheropsis liberiensis",
     description: `<p class="mb-6">The Pygmy Hippopotamus looks like a miniature version of its larger relative, the Hippopotamus (also known as the river or common hippopotamus), but it differs greatly in both behavior and physical characteristics. The Pygmy Hippo has adaptations for spending time in the water but is far less aquatic than the hippo. Its nose and ears close underwater just like its larger cousin’s do, but its head is rounder and narrower, its neck is proportionally longer, and its eyes are not on the top of its head.</p>The Pygmy Hippopotamus is much more rare in the wild, too, found only in the interior forests in parts of West Africa, mainly confined to Liberia, with small numbers in the neighboring countries of Sierra Leone, Guinea, and the Ivory Coast.<p>
 
@@ -106,6 +110,7 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     image: "/img/giraffe.png",
     gif: "/videos/giraffe.mov",
     name: "Nubian Giraffe",
+    slug: 'nubian-giraffe',
     scientificName: "Canis simensis",
     description: `<p class="mb-6">The tallest of all giraffes is the Nubian species. This means they are considered to be the tallest land animal on the Earth, measuring up to a remarkable 6 meters, or 20 feet tall! They can also weigh approximately 2,800 pounds, with the males outweighing the females by several hundred pounds. The Nubian Giraffe is endangered with less than 2,645 individuals remaining, are now just one stage from becoming extinct in the wild.</p>
     <p>A distinguishing feature of the Nubian Giraffe is the number of horns on top of it’s head. Other Giraffe species typically have two horns, but the Nubian Giraffe can have up to five! They have two in the same place as other giraffes, one in the center, and two behind those.</p>`,
@@ -124,6 +129,7 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     image: "/img/red-wolf.png",
     gif: "/videos/red-wolf.mov",
     name: "Red Wolf",
+    slug: 'red-wolf',
     scientificName: "Canis simensis",
     description: `<p class="mb-6">The Red Wolf is the world’s most endangered member of the Canine family.</p>
     <p class="mb-6">Native to the United States, Red Wolves (Canis rufus) have a tawny, reddish coat, and they are intermediate in size between grey wolves and coyotes. That makes sense, as these two species interbred in the past to produce the red wolves’ ancestors. Nevertheless, recent research shows that red wolves are a unique species.</p><p>The only place where red wolves remain in the wild is the Alligator River National Wildlife Refuge in eastern North Carolina, and surrounding counties. There are only an estimated 35 or fewer wild red wolves.
@@ -271,7 +277,7 @@ export async function getStaticPaths() {
   const data = productsData;
 
   const paths = data.map((animal) => ({
-    params: { id: animal.id.toString() },
+    params: { slug: animal.slug },
   }));
 
   return { paths, fallback: false };
@@ -280,7 +286,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const results = productsData;
   const productsLength = results.length;
-  const data = results.filter((animal) => animal.id.toString() === params.id);
+  const data = results.filter((animal) => animal.slug === params.slug);
 
   return {
     props: {
