@@ -8,7 +8,7 @@ const animalFamilyData = [
   {
     id: "1",
     image: "/img/sumatran-elephant.png",
-    gif: "/gifs/sumatran-elephant.gif",
+    gif: "/videos/sumatran-elephant.mov",
     name: "Sumatran Elephant",
     scientificName: " Elephas Maximus Sumatranus",
     description: `Sumatran elephants feed on a variety of plants and deposit seeds
@@ -29,7 +29,7 @@ const animalFamilyData = [
   {
     id: "2",
     image: "/img/javan-rhino.png",
-    gif: "/gifs/javan-rhino.gif",
+    gif: "/videos/javan-rhino.mov",
     name: "Javan Rhino",
     scientificName: "Rhinoceros Sondaicus",
     description: `Once the most widespread of Asian rhinoceroses, the Javan
@@ -52,7 +52,7 @@ const animalFamilyData = [
   {
     id: "3",
     image: "/img/siberian-tiger.png",
-    gif: "/gifs/siberian-tiger.gif",
+    gif: "/videos/siberian-tiger.mov",
     name: "Siberian Tiger",
     scientificName: "Siberian Tiger",
     description: `The Siberian tiger is a tiger from a specific population of the
@@ -94,10 +94,24 @@ const AnimalFamilySection = () => {
                   <div className="p-px bg-nft-gradient mb-8 lg:mb-0 rounded-lg overflow-hidden">
                     {gifMode === "gif" ? (
                       <div className="bg-black rounded-lg overflow-hidden">
-                        <Image src={data.gif} width={373} height={373} alt="" objectFit="contain" />
+                        <video
+                          autoPlay
+                          loop={true}
+                          playsInline={true}
+                          muted
+                          className="rounded overflow-hidden"
+                        >
+                          <source src={data.gif}></source>
+                        </video>
                       </div>
                     ) : (
-                      <Image src={data.image} width={373} height={373} alt="" objectFit="contain" />
+                      <Image
+                        src={data.image}
+                        width={373}
+                        height={373}
+                        alt=""
+                        objectFit="contain"
+                      />
                     )}
                   </div>
                 </div>
