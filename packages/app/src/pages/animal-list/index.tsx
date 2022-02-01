@@ -11,7 +11,7 @@ const animalFamilyData = [
   {
     id: "1",
     image: "/img/sumatran-elephant.png",
-    gif: "/gifs/sumatran-elephant.gif",
+    gif: "/images/gifs/sumatran-elephant.gif",
     name: "Sumatran Elephant",
     scientificName: " Elephas Maximus Sumatranus",
     description: `Sumatran elephants feed on a variety of plants and deposit seeds
@@ -91,9 +91,9 @@ const animalFamilyData = [
     size: "6.6 - 10.5 Feet",
     habitat: "Forest",
     images: [
-      "/gifs/clouded-leopard.gif",
-      "/gifs/clouded-leopard.gif",
-      "/gifs/clouded-leopard.gif",
+      "/images/gifs/clouded-leopard.gif",
+      "/images/gifs/clouded-leopard.gif",
+      "/images/gifs/clouded-leopard.gif",
     ],
   },
   {
@@ -146,7 +146,7 @@ const animalFamilyData = [
 //   {
 //     id: "1",
 //     image: "/img/sumatran-elephant.png",
-//     gif: "/gifs/sumatran-elephant.gif",
+//     gif: "/images/gifs/sumatran-elephant.gif",
 //     name: "Sumatran Elephant",
 //     scientificName: " Elephas Maximus Sumatranus",
 //     description: `Sumatran elephants feed on a variety of plants and deposit seeds
@@ -167,7 +167,7 @@ const animalFamilyData = [
 //   {
 //     id: "2",
 //     image: "/img/javan-rhino.png",
-//     gif: "/gifs/javan-rhino.gif",
+//     gif: "/images/gifs/javan-rhino.gif",
 //     name: "Javan Rhino",
 //     scientificName: "Rhinoceros Sondaicus",
 //     description: `Once the most widespread of Asian rhinoceroses, the Javan
@@ -190,7 +190,7 @@ const animalFamilyData = [
 //   {
 //     id: "3",
 //     image: "/img/siberian-tiger.png",
-//     gif: "/gifs/siberian-tiger.gif",
+//     gif: "/images/gifs/siberian-tiger.gif",
 //     name: "Siberian Tiger",
 //     scientificName: "Siberian Tiger",
 //     description: `The Siberian tiger is a tiger from a specific population of the
@@ -230,19 +230,19 @@ const AnimalList = () => {
   };
   return (
     <section>
-      <div className="lg:max-w-7xl lg:mx-auto mb-8 py-16">
-        <h1 className="pt-16 text-4xl lg:text-6xl font-bold text-center">
+      <div className="py-16 mb-8 lg:max-w-7xl lg:mx-auto">
+        <h1 className="pt-16 text-4xl font-bold text-center lg:text-6xl">
           Our Animal Family
         </h1>
       </div>
-      <div className="px-4 py-16 lg:max-w-7xl lg:mx-auto flex flex-col items-center lg:flex-row flex-wrap lg:justify-between lg:gap-2">
+      <div className="flex flex-col flex-wrap items-center px-4 py-16 lg:max-w-7xl lg:mx-auto lg:flex-row lg:justify-between lg:gap-2">
         {animalFamilyData.map((animal) => (
           <div
             key={animal.id}
-            className="p-px mb-8 cursor-pointer rounded bg-nft-gradient lg:max-w-md overflow-hidden"
+            className="p-px mb-8 overflow-hidden rounded cursor-pointer bg-nft-gradient lg:max-w-md"
           >
             {gifMode === "gif" ? (
-              <div className="bg-black rounded overflow-hidden">
+              <div className="overflow-hidden bg-black rounded">
                 <Link href={`nft-product/${animal.id}`}>
                   <a className="AnimalFamily__image w-full bg-[#000] border border-[#000] rounded-3xl	 h-auto flex flex-col items-center lg:basis-1/3">
                     <Image
