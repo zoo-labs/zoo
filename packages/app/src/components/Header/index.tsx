@@ -27,7 +27,7 @@ import Banner from "components/Banner";
 // import { ExternalLink, NavLink } from "./Link";
 // import { ReactComponent as Burger } from "../assets/images/burger.svg";
 
-function AppBar(props: { banner: boolean }): JSX.Element {
+function AppBar(props: { banner?: boolean }): JSX.Element {
   const { i18n } = useLingui();
   const { account, chainId, library } = useActiveWeb3React();
   // const getZooBalance = useZoobalance();
