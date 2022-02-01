@@ -6,6 +6,7 @@ import Image from 'next/image';
 const LabEvents = () => {
   const [value, setValue] = useState();
   const [activeMonth, setActiveMonth] = useState(new Date().getMonth());
+  
   const onChange = (val, e) => {
     const month = val.getMonth();
     if (month !== activeMonth) {
@@ -35,6 +36,7 @@ const LabEvents = () => {
             prevLabel={null}
             next2Label={null}
             prev2Label={null}
+            defaultValue={new Date(2022, 1, 1)}
             className="lg:basis-1/2"
             tileClassName={({ view, date }) => {
               console.log('This is the view -> ', view);
