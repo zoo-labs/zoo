@@ -66,13 +66,9 @@ const HeroSection = () => {
           ref={heroImage}
         >
           {gifMode === "gif" ? (
-            <Image
-              src="/gifs/siberian-tiger.gif"
-              width={700}
-              height={612}
-              alt="leopard"
-              objectFit="contain"
-            />
+            <div className="max-w-2xl lg:max-w-3xl">
+              <img src="/gifs/siberian-tiger.gif" alt="leopard" />
+            </div>
           ) : (
             <Image
               src="/img/amur-leopard.png"
