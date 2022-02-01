@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import Calendar from "react-calendar";
-import { data } from "./data";
+import data from "../../data/events.json";
 
 const LabEvents = () => {
   const formatDate = (date) => {
