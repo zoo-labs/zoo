@@ -4,7 +4,7 @@ const productsData = [
   {
     id: "1",
     image: "/img/sumatran-elephant.png",
-    gif: "/images/gifs/sumatran-elephant.gif",
+    gif: "/videos/sumatran-elephant.mov",
     name: "Sumatran Elephant",
     scientificName: "Elephas Maximus Sumatranus",
     description: `<p class="mb-6">Sumatran elephants feed on a variety of plants and deposit seeds wherever they go, contributing to a healthy forest ecosystem. As herbivores, these noble animals spend their days munching on 150kg of plants and seeds as they move through the forests. They also share their lush forest habitat with several other endangered species, such as the Sumatran Rhinoceros, Sumatran Tiger, Sumatran Orangutan, and countless other species; all of which benefit from an elephant population that thrives in a healthy habitat.</p>
@@ -16,16 +16,16 @@ const productsData = [
     size: "Up to 6 meters (20 feet)",
     habitat: "Broadleaf, moist tropical forest",
     images: [
-      "/images/gifs/sumatran-elephant.gif",
-      "/images/gifs/sumatran-elephant.gif",
-      "/images/gifs/sumatran-elephant.gif",
-      "/images/gifs/sumatran-elephant.gif",
+      "/videos/sumatran-elephant.mov",
+      "/videos/sumatran-elephant.mov",
+      "/videos/sumatran-elephant.mov",
+      "/videos/sumatran-elephant.mov",
     ],
   },
   {
     id: "2",
     image: "/img/javan-rhino.png",
-    gif: "/images/gifs/javan-rhino.gif",
+    gif: "/videos/javan-rhino.mov",
     name: "Javan Rhino",
     scientificName: "Rhinoceros Sondaicus",
     description: `<p class="mb-6">Once the most widespread of Asian rhinoceroses, the Javan
@@ -50,7 +50,7 @@ const productsData = [
   {
     id: "3",
     image: "/img/siberian-tiger.png",
-    gif: "/images/gifs/siberian-tiger.gif",
+    gif: "/videos/siberian-tiger.mov",
     name: "Siberian Tiger",
     scientificName: "Panthera tigris sumatrae",
     description: `<p class="mb-6">The Siberian tiger, a subspecies of tiger, is the largest cat in the world from the Russian Far East, Northeast China, and possibly North Korea. It once ranged throughout the Korean Peninsula, north China, and eastern Mongolia. It averages about 11 feet in total length, with a tail that accounts for approximately 3 feet of it. Adult male Siberian tigers can weigh up to 700 pounds, while females are significantly smaller, weighing up to 400 pounds.
@@ -70,7 +70,7 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
   {
     id: "4",
     image: "/img/clouded-leopard.png",
-    gif: "/images/gifs/clouded-leopard.gif",
+    gif: "/videos/clouded-leopard.mov",
     name: "Amur leopard",
     scientificName: "Panthera pardus orientalis",
     description: `<p class="mb-6">The Amur leopard is one of 10 subspecies of leopard, and one of the world’s rarest cats, with an estimated population of under 70 individuals left in the wild. They all live in a small area that hugs Russia’s far eastern border with China.</p>
@@ -89,7 +89,7 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
   {
     id: "5",
     image: "/img/hippo.png",
-    gif: "/img/hippo.png",
+    gif: "/videos/hippo.mov",
     name: "Pygmy Hippo",
     scientificName: "Cheropsis liberiensis",
     description: `<p class="mb-6">The Pygmy Hippopotamus looks like a miniature version of its larger relative, the Hippopotamus (also known as the river or common hippopotamus), but it differs greatly in both behavior and physical characteristics. The Pygmy Hippo has adaptations for spending time in the water but is far less aquatic than the hippo. Its nose and ears close underwater just like its larger cousin’s do, but its head is rounder and narrower, its neck is proportionally longer, and its eyes are not on the top of its head.</p>The Pygmy Hippopotamus is much more rare in the wild, too, found only in the interior forests in parts of West Africa, mainly confined to Liberia, with small numbers in the neighboring countries of Sierra Leone, Guinea, and the Ivory Coast.<p>
@@ -99,12 +99,12 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     population: "2,000 to 3,000",
     size: "1 meters (3 ft)",
     habitat: "Forests and Swamps",
-    images: ["/img/hippo.png", "/img/hippo.png", "/img/hippo.png"],
+    images: ["/videos/hippo.mov", "/videos/hippo.mov", "/videos/hippo.mov"],
   },
   {
     id: "6",
     image: "/img/giraffe.png",
-    gif: "/images/gifs/giraffe.gif",
+    gif: "/videos/giraffe.mov",
     name: "Nubian Giraffe",
     scientificName: "Canis simensis",
     description: `<p class="mb-6">The tallest of all giraffes is the Nubian species. This means they are considered to be the tallest land animal on the Earth, measuring up to a remarkable 6 meters, or 20 feet tall! They can also weigh approximately 2,800 pounds, with the males outweighing the females by several hundred pounds. The Nubian Giraffe is endangered with less than 2,645 individuals remaining, are now just one stage from becoming extinct in the wild.</p>
@@ -114,15 +114,15 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "1.5 meters (9 ft)",
     habitat: "Savannahs and Woodlands",
     images: [
-      "/images/gifs/giraffe.gif",
-      "/images/gifs/giraffe.gif",
-      "/images/gifs/giraffe.gif",
+      "/videos/giraffe.mov",
+      "/videos/giraffe.mov",
+      "/videos/giraffe.mov",
     ],
   },
   {
     id: "7",
     image: "/img/red-wolf.png",
-    gif: "/images/gifs/red-wolf.gif",
+    gif: "/videos/red-wolf.mov",
     name: "Red Wolf",
     scientificName: "Canis simensis",
     description: `<p class="mb-6">The Red Wolf is the world’s most endangered member of the Canine family.</p>
@@ -133,9 +133,9 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "1.2 meters (4 ft)",
     habitat: "Forest, wetlands & bushlands",
     images: [
-      "/images/gifs/red-wolf.gif",
-      "/images/gifs/red-wolf.gif",
-      "/images/gifs/red-wolf.gif",
+      "/videos/red-wolf.mov",
+      "/videos/red-wolf.mov",
+      "/videos/red-wolf.mov",
     ],
   },
 ];
@@ -145,29 +145,30 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
 const NFTProduct = ({ animal }) => {
   return (
     <div className="NFTProduct">
-      <div className=" pt-16 pb-16 px-6 md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-center gap-4">
-        <div className="lg:basis-1/2 flex items-center justify-center">
-          <div className="p-px bg-nft-gradient mb-8 lg:mb-0 rounded">
-            <div className="bg-black rounded">
-              <Image
-                src={`${animal.gif}`}
-                width={373}
-                height={373}
-                alt=""
-                className="rounded-3xl"
-                objectFit="contain"
-              />
+      <div className="gap-4 px-6 pt-16 pb-16  md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-center">
+        <div className="flex items-center justify-center lg:basis-1/2">
+          <div className="p-px mb-8 rounded bg-nft-gradient lg:mb-0">
+            <div className="bg-black rounded-lg">
+              <video
+                autoPlay
+                loop={true}
+                playsInline={true}
+                muted
+                className="overflow-hidden rounded"
+              >
+                <source src={animal.gif}></source>
+              </video>
             </div>
           </div>
         </div>
 
         <div
-          className="bg-black100 rounded px-4 py-12 flex flex-col lg:flex-row items-start justify-between lg:basis-1/2 gap-2"
+          className="flex flex-col items-start justify-between gap-2 px-4 py-12 rounded bg-black100 lg:flex-row lg:basis-1/2"
           key={animal.id}
         >
           <div>
             <div className="mb-8">
-              <h2 className="text-2xl font-bold mb-4">{animal.name}</h2>
+              <h2 className="mb-4 text-2xl font-bold">{animal.name}</h2>
               <a href="/partnerships" className="text-sm underline">
                 philanthropic partnership
               </a>
@@ -232,8 +233,8 @@ const NFTProduct = ({ animal }) => {
           </div>
         </div>
       </div>
-      <div className="pt-16 pb-16 px-6 md:flex md:flex-col lg:max-w-7xl lg:mx-auto">
-        <h2 className="text-3xl lg:text-4xl font-bold text-center mb-8">
+      <div className="px-6 pt-16 pb-16 md:flex md:flex-col lg:max-w-7xl lg:mx-auto">
+        <h2 className="mb-8 text-3xl font-bold text-center lg:text-4xl">
           View Available {animal.name}
         </h2>
 
@@ -241,17 +242,19 @@ const NFTProduct = ({ animal }) => {
           {animal.images.map((img, index) => {
             return (
               <div
-                className="p-px mb-4 rounded bg-nft-gradient overflow-hidden"
+                className="p-px mb-4 overflow-hidden rounded bg-nft-gradient"
                 key={index}
               >
-                <div className="bg-black rounded overflow-hidden">
-                  <Image
-                    src={img}
-                    width={263}
-                    height={334}
-                    alt=""
-                    objectFit="contain"
-                  />
+                <div className="overflow-hidden bg-black rounded">
+                  <video
+                    autoPlay
+                    loop={true}
+                    playsInline={true}
+                    muted
+                    className="overflow-hidden rounded"
+                  >
+                    <source src={animal.gif}></source>
+                  </video>
                 </div>
               </div>
             );
