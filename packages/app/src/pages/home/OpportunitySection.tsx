@@ -22,7 +22,7 @@ const OpportunitySection = () => {
   const faucet = useFaucet();
   const dispatch = useDispatch();
   const [stage, setStage] = useState("");
-  const [hovered, setHovered] = useState(false)
+  const [hovered, setHovered] = useState(false);
 
   const sectionRef = React.useRef();
 
@@ -37,57 +37,96 @@ const OpportunitySection = () => {
 
   const handleHover = () => {
     setHovered(!hovered);
-  }
+  };
   const style = {
-    animationPlayState: 'paused'
-  }
+    animationPlayState: "paused",
+  };
 
   return (
-    <section className="relative" ref={sectionRef}>
+    <section className="relative" ref={sectionRef} id="endless-opportunity">
       <div className="px-6 py-16 lg:py-28">
         <h2 className="text-2xl md:text-2xl  lg:text-4xl text-center mb-16 font-semibold">
           Endless Yield Opportunity
         </h2>
-        <div className="flex flex-col lg:flex-row justify-between items-center max-w-7xl px-6 mx-auto">
+        <div className="flex flex-col lg:flex-row justify-between items-center max-w-7xl mx-auto">
           <EndangeredSpecies />
           <div className="relative h-screen w-screen flex flex-col justify-center items-center bg-image">
             <div className="big-circle">
-              <div className="animal-content">{stage && <p>{stage}</p>}</div>
+              <div className="animal-content mx-auto">{stage && <p>{stage}</p>}</div>
               <div
                 className="animate-animal incubate"
                 style={hovered ? style : undefined}
-                onMouseEnter={() => displayContent("Incubate")}
+                onMouseEnter={() =>
+                  displayContent(
+                    "Your NFT Egg to reveal the animal within and learn about it"
+                  )
+                }
                 onMouseOut={() => displayContent("")}
               >
-                <Image src="/img/incubate-cycle.png" width={150} height={170} alt="" objectFit="contain" />
+                <Image
+                  src="/img/incubate-cycle.png"
+                  width={150}
+                  height={170}
+                  alt=""
+                  objectFit="contain"
+                />
               </div>
               <div
                 className="animate-animal feed"
-                onMouseEnter={() => displayContent("Feed")}
+                onMouseEnter={() =>
+                  displayContent(
+                    "Your animal $ZOO to increase the value of your animal NFT."
+                  )
+                }
                 onMouseOut={() => displayContent("")}
                 style={hovered ? style : undefined}
               >
-                 <Image src="/img/feed-cycle.png" width={150} height={170} alt="" objectFit="contain" />
+                <Image
+                  src="/img/feed-cycle.png"
+                  width={150}
+                  height={170}
+                  alt=""
+                  objectFit="contain"
+                />
               </div>
               <div
                 className="animate-animal grow"
-                onMouseEnter={() => displayContent("Grow")}
+                onMouseEnter={() =>
+                  displayContent(
+                    "Your animal and watch it transition through its different stages of maturity."
+                  )
+                }
                 onMouseOut={() => displayContent("")}
                 style={hovered ? style : undefined}
               >
-                 <Image src="/img/grow-cycle.png" width={150} height={170} alt="" objectFit="contain" />
+                <Image
+                  src="/img/grow-cycle.png"
+                  width={150}
+                  height={170}
+                  alt=""
+                  objectFit="contain"
+                />
               </div>
               <div
                 className="animate-animal breed"
-                onMouseEnter={() => displayContent("Breed")}
+                onMouseEnter={() =>
+                  displayContent(
+                    "Your fully mature animal to mint new Egg NFT’s. Breed the animals up to 6x."
+                  )
+                }
                 onMouseOut={() => displayContent("")}
                 style={hovered ? style : undefined}
               >
-                 <Image src="/img/breed-cycle.png" width={150} height={170} alt="" objectFit="contain" />
+                <Image
+                  src="/img/breed-cycle.png"
+                  width={150}
+                  height={170}
+                  alt=""
+                  objectFit="contain"
+                />
               </div>
             </div>
           </div>
-         
         </div>
 
         <div className="flex flex-col items-center max-w-7xl px-6 mx-auto py-20 lg:mt-20">

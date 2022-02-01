@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-
+import Link from "next/link";
 // animation
 import { fadeInOnScroll } from "animation";
 
@@ -35,13 +35,13 @@ const FaqSection = () => {
               What are the Key features in ZOO?
             </h3>
             <p className="text-white lg:max-w-sm ">
-              Our key features include: growing, breeding, youth elixir (back in
+              {`Our key features include: growing, breeding, youth elixir (back in
               time), age freezing. In the near future we will also launch an app
               with our ZOO augmented reality game. This apple will load the NFTs
               in your wallet. With the app you will be able to see your NFT in
               real time with much more animal engagement including: petting,
               make the animal roll over, shake animals paw, give animal kiss,
-              receive kiss, feed your animal, and walking with your animal.
+              receive kiss, feed your animal, and walking with your animal.`}
             </p>
           </div>
 
@@ -78,7 +78,7 @@ const FaqSection = () => {
               <li>Buy BNB with another crypto or a credit card.</li>
               <li>Go to Pancake swap or another trusted exchange.</li>
               <li>
-                Swap BNB for $XOO use this token address as their are many
+                Swap BNB for $ZOO use this token address as their are many
                 scammers
               </li>
               <li>0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13</li>
@@ -102,6 +102,13 @@ const FaqSection = () => {
               .
             </p>
           </div>
+        </div>
+        <div className="flex items-center justify-center">
+          <Link href="/faqs">
+            <a className="px-5 py-3 text-sm border rounded-full font-bold border-green md:text-base text-green md:px-6 md:py-4 lg:px-20">
+              See more
+            </a>
+          </Link>
         </div>
       </div>
     </section>
