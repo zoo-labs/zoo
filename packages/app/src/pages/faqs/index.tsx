@@ -12,7 +12,7 @@ export const faqData = [
     answer: "ZOO will be released January 2022.",
   },
   {
-    question: "How do I get onboarded?",
+    question: "How do I get on-boarded?",
     answer:
       "Players will be able to get access to the game through our Metamask App as well as ZOO Labs official website.",
   },
