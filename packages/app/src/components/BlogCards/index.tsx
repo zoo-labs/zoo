@@ -15,7 +15,7 @@ const BlogCards = ({data}:any) => {
             rel="noreferrer"
             className="border border-green text-green text-sm md:text-base font-semibold px-8 py-3 md:px-6 lg:px-16 rounded-full hover:cursor-pointer"
           >
-            Our Medium Page
+            Zoo Medium Page
           </a>
         </div>
       </section>
