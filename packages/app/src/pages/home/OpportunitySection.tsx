@@ -140,7 +140,7 @@ const OpportunitySection = () => {
           </p>
           <div
             onClick={() => handleFunds(chainId, buyZoo)}
-            className="border border-green text-green text-sm md:text-base font-bold px-8 py-3 md:px-6 lg:px-16 rounded-full hover:cursor-pointer"
+            className="border border-green text-green font-semibold text-sm md:text-base px-8 py-3 md:px-6 lg:px-16 rounded-full hover:cursor-pointer"
           >
             Buy $ZOO
           </div>
