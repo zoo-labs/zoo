@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import Image from "next/image";
-import Link from 'next/link';
+import Link from "next/link";
 import { useActiveWeb3React } from "hooks";
 import Web3Status from "../../components/Web3Status";
 
@@ -22,12 +22,9 @@ const MarketPlaceSection = () => {
     <section className="MarketPlace" ref={marketRef}>
       <div className="flex flex-col items-center px-6 mx-auto py-28 lg:flex-row max-w-7xl">
         <div className="relative z-30 flex mb-8 basis-1/2">
-          <div>
-            <Image src="/img/iphone-1.png" width={363} height={675} alt="" />
-          </div>
-          <div>
-            <Image src="/img/iphone-2.png" width={363} height={675} alt="" />
-          </div>
+          <video autoPlay loop={true} playsInline={true} muted>
+            <source src="/videos/phones.mov"></source>
+          </video>
         </div>
         <div className="flex flex-col items-center lg:items-start basis-1/2 lg:max-w-lg lg:mx-auto">
           <h2 className="mb-8 text-3xl font-bold text-center lg:text-5xl lg:text-left">
@@ -35,7 +32,9 @@ const MarketPlaceSection = () => {
           </h2>
           <div className="flex items-center gap-3 lg:items-start">
             <Link href="/coming-soon">
-              <a  className="px-5 py-3 text-sm font-semibold text-white rounded-full bg-gradient-to-b from-purple to-blue bg-gradient-tr-purple-blue md:text-base md:px-6 md:py-4 lg:px-10">Coming Soon</a>
+              <a className="px-5 py-3 text-sm font-semibold text-white rounded-full bg-gradient-to-b from-purple to-blue bg-gradient-tr-purple-blue md:text-base md:px-6 md:py-4 lg:px-10">
+                Coming Soon
+              </a>
             </Link>
             {/* {!account ? (
               <a>
