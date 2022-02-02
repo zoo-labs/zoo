@@ -150,8 +150,8 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
 
 const NFTProduct = ({ animal }) => {
   return (
-    <div className="NFTProduct">
-      <div className="gap-4 px-6 pt-16 pb-16  md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-center">
+    <div className="NFTProduct mt-16">
+      <div className="gap-4 px-6 pt-20 pb-16  md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-center">
         <div className="flex items-center justify-center lg:basis-1/2">
           <div className="p-px mb-8 rounded bg-nft-gradient lg:mb-0">
             <div className="bg-black rounded-lg">

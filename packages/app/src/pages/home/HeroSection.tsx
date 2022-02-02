@@ -68,7 +68,7 @@ const HeroSection = () => {
           {gifMode === "gif" ? (
             <video autoPlay loop={true} playsInline={true} muted>
               <source
-                src="/videos/siberian-tiger.mov"
+                src="/videos/hero-video.mov"
                 type="video/mp4"
               ></source>
             </video>
