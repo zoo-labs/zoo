@@ -37,8 +37,8 @@ export default function Home() {
       <GetStartedSection />
       <ZooNewsSection />
       <AnimalFamilySection />
-      <JoinZooSection />
       <FaqSection />
+      <JoinZooSection />
     </div>
   );
 }

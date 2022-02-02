@@ -177,7 +177,8 @@ const Footer = () => {
       </div>
       <div className="flex flex-col items-center justify-between px-4 py-6 mx-auto iterms-center lg:flex-row max-w-7xl">
         <p className="mb-4 text-center lg:mb-0 lg:text-left text-grey">
-          Copyright &copy; 2021 ZOO Labs INC. Allrights reserved
+          Copyright &copy; {new Date().getFullYear()} ZOO Labs INC. Allrights
+          reserved
         </p>
         <div>
           <a

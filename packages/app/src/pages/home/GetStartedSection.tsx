@@ -30,7 +30,7 @@ const GetStartedSection = () => {
 
           <a
             href="/blog"
-            className="px-5 py-3 text-sm text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10"
+            className="px-5 py-3 text-sm text-white rounded-full  font-semibold bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10"
           >
             Get Started
           </a>
