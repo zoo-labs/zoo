@@ -44,27 +44,25 @@ const HeroSection = () => {
           <p className="mb-6 text-base text-white lg:text-lg text-opacity-70 md:max-w-xl lg:text-left">
             Pet, play, feed, grow, and breed your very own animal NFT’s in our
             Sims-like metaverse to increase their value and earn greater
-            rewards, all while contibuting to saving endangered animals. Your
-            virtual ZOO does not imprison endangered animals, instead it
-            supports real world organizations.
+            rewards, all while contibuting to saving endangered animals.
           </p>
           <div className="flex items-center gap-3">
-            <a
-              href="/#endless-opportunity"
-              className="px-5 py-3 text-sm font-semibold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10"
-            >
-              Learn More
-            </a>
             <div
-              className="px-5 py-3 text-sm font-semibold text-white border border-gray-100 rounded-full md:text-base md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
               onClick={() => handleFunds(chainId, buyZoo)}
+              className="px-5 py-3 text-sm font-semibold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
             >
               Buy $ZOO
             </div>
+            <a
+              className="px-5 py-3 text-sm font-semibold text-white border border-gray-100 rounded-full md:text-base md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
+              href="/#endless-opportunity"
+            >
+              Learn More
+            </a>
           </div>
         </div>
         <div
-          className="max-w-md Hero__image lg:max-w-xl lg:basis-1/2"
+          className="max-w-md Hero__image lg:max-w-xl lg:basis-1/2 flex justify-center"
           ref={heroImage}
         >
           {gifMode === "gif" ? (
