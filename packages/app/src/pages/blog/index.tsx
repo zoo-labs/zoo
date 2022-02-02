@@ -54,9 +54,7 @@ const Blog = () => {
             ZOO Blog
           </p>
           <p className="w-96 mb-20">
-            Wildlife Conservation powered by DeFi — Zoo Labs’ 3D/AR NFTS are
-            cutting edge &amp; our liquidity protocol/multi-chain bridge will
-            change the game as we know it.
+            Learn all about Zoo, Our Nfts, and browse through our helpful guides
           </p>
         </div>
         <div className="flex flex-col items-stretch max-w-xl max-h-[494px] mx-auto lg:flex-row lg:items-stretch lg:max-w-5xl">
