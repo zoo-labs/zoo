@@ -79,11 +79,11 @@ const AnimalList = () => {
   return (
     <section>
       <div className="py-16 mb-8 lg:max-w-7xl lg:mx-auto">
-        <h1 className="pt-16 text-4xl font-bold text-center lg:text-6xl">
+        <h1 className="mt-20 text-4xl font-bold text-center lg:text-6xl">
           Our Animal Family
         </h1>
       </div>
-      <div className="flex flex-col flex-wrap items-center px-4 py-16 lg:max-w-7xl lg:mx-auto lg:flex-row lg:justify-between lg:gap-2">
+      <div className="flex flex-col flex-wrap items-center px-4 pb-16 lg:max-w-7xl lg:mx-auto lg:flex-row lg:justify-between lg:gap-2">
         {animalFamilyData.map((animal) => (
           <div
             key={animal.id}
