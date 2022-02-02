@@ -83,12 +83,12 @@ const EndangeredSpecies = () => {
       </div>
       <p className="text-center mb-4 text-sm text-grey">
         <span className="text-green">Earn yield</span> while you play{" "}
-        <span className="text-white">ZOO</span> on our Metamask App.
+        <span className="text-white">ZOO</span> on our Metamask Browser.
       </p>
       <div className="flex justify-center">
         <div
           onClick={() => handleFunds(chainId, buyZoo)}
-          className="bg-gradient-to-b from-purple to-blue text-white text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full flex items-center hover:cursor-pointer"
+          className="bg-gradient-to-b from-purple to-blue font-semibold text-white text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full flex items-center hover:cursor-pointer"
         >
           Buy $ZOO{" "}
           <span className="ml-2">

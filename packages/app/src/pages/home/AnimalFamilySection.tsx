@@ -124,7 +124,7 @@ const AnimalFamilySection = () => {
                   </h2>
                   <a
                     href="/coming-soon"
-                    className="px-8 py-3 text-sm font-bold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 lg:px-16"
+                    className="px-8 py-3 text-sm font-semibold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 lg:px-16"
                   >
                     Coming Soon
                   </a>
@@ -150,7 +150,7 @@ const AnimalFamilySection = () => {
         <div className="flex items-center justify-center">
           <a
             href="/animal-list"
-            className="px-5 py-3 text-sm font-bold border rounded-full border-green md:text-base text-green md:px-6 md:py-4 lg:px-20"
+            className="px-5 py-3 text-sm font-semibold border rounded-full border-green md:text-base text-green md:px-6 md:py-4 lg:px-20"
           >
             See All
           </a>
