@@ -23,27 +23,27 @@ const Article: FC<Props> = ({ article: { name, image, link, date } }) => {
           />
         </div>
         <div className="px-4 py-8">
-          <div className="flex flex-col items-start mb-4">
+          <div className="flex  justify-between items-center mb-4">
             <p className="bg-blue text-white rounded-sm text-xs font-bold px-2 py-1 uppercase">
               New
             </p>
+            <div className="flex justify-between items-center">
+              <div className="flex ">
+                <Image
+                  src="/img/logo.png"
+                  width={24}
+                  height={24}
+                  alt=""
+                  objectFit="contain"
+                />
+                <p className="ml-3">Zoo Labs</p>
+              </div>
+              <p>{date}</p>
+            </div>
           </div>
-          <h3 className="text-xl lg:text-2xl font-bold text-white mb-4">
+          <h3 className="text-xl lg:text-2xl font-bold text-white">
             {name}
           </h3>
-          <div className="flex justify-between items-center">
-            <div className="flex ">
-              <Image
-                src="/img/logo.png"
-                width={24}
-                height={24}
-                alt=""
-                objectFit="contain"
-              />
-              <p className="ml-3">Zoo Labs</p>
-            </div>
-            <p>{date}</p>
-          </div>
         </div>
       </a>
     </div>

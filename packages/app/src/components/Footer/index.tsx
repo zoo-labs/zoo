@@ -35,23 +35,31 @@ const Footer = () => {
                 <Link href="/market">Marketplace</Link>
               </div> */}
               <div className="mb-2">
+                <a href="Marketplace">Marketplace</a>
+              </div>
+              <div className="mb-2">
+                <Link href="/market">
+                  <a>Chart</a>
+                </Link>
+              </div>
+              <div className="mb-2">
                 <a
-                  href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
+                  href="https://prezi.com/i/view/fWOPqU2eZzcqYyVzb5pz"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Chart
+                  Buy Guide
                 </a>
               </div>
-              <div className="mb-2">
+              {/* <div className="mb-2">
                 <Link href="/community">Community</Link>
-              </div>
+              </div> */}
               {/* <div className="mb-2">
                 <Link href="/press">Press</Link>
               </div> */}
-              <div className="mb-0">
+              {/* <div className="mb-0">
                 <Link href="/learn">Learn</Link>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="flex flex-col items-end px-6 p-16 basis-1/3 text-grey h-full">
@@ -211,6 +219,14 @@ const Footer = () => {
             rel="noreferrer"
           >
             <Image src="/img/discord.svg" height={16} width={16} alt="" />{" "}
+          </a>
+          <a
+            href="https://zoolabsofficial.medium.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="ml-2"
+          >
+            <Image src="/img/medium-icon.svg" height={16} width={16} alt="" />{" "}
           </a>
         </div>
       </div>

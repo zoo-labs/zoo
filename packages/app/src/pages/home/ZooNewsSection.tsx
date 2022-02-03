@@ -11,28 +11,38 @@ const ZooNewsSection = () => {
   }, []);
   return (
     <section className="ZooNews" ref={zooRef}>
-      <div className="flex flex-col items-center px-6 pb-20 mx-auto max-w-7xl">
-        <div className="mb-6 text-center lg:mb-8">
-          <h2 className="mb-6 text-3xl font-bold text-center lg:text-5xl">
+      <div className="pt-16 pb-16 px-6 lg:max-w-7xl lg:mx-auto">
+        <div
+          className="flex items-center text-center flex-col"
+          ref={zooRef}
+        >
+          <h1 className="text-4xl lg:text-5xl text-white font-bold mb-6 mt-20 lg:mt-12">
             ZOO News
-          </h2>
-          <p className="max-w-2xl text-white text-opacity-70">
-          Learn all about Zoo, Our Nfts, and browse through our helpful guides
+          </h1>
+          <p className="w-96 mb-20">
+            Learn all about Zoo, our Nfts, and browse through our helpful
+            guides.
           </p>
         </div>
-        <div className="flex flex-col items-center max-w-xl mx-auto lg:flex-row lg:items-stretch lg:max-w-5xl bg-black100 rounded-2xl">
+        <div className="flex flex-col items-center max-w-xl max-h-[494px] mx-auto lg:flex-row lg:items-stretch lg:max-w-5xl">
           <div className="overflow-hidden rounded-l-2xl lg:basis-1/2">
-            <Image src="/img/blog-post-1.png" width={565} height={516} alt="" />
+            <Image
+              src="/img/blog-post-1.png"
+              width={565}
+              height={600}
+              alt=""
+              objectFit="cover"
+            />
           </div>
-          <div className="flex flex-col justify-center lg:basis-1/2 bg-black100 rounded-r-2xl lg:-ml-2 -mt-3 lg:-mt-0">
+          <div className="flex flex-col justify-center w-full lg:basis-1/2 bg-deep-gray rounded-r-2xl lg:-ml-2 -mt-3 lg:-mt-0">
             <div className="max-w-sm mx-auto py-8 lg:py-0 px-4 lg:px-0">
-              <p className="bg-blue text-white px-2 py-1 rounderd mb-6 inline-block text-xs font-bold uppercase rounded-sm">
+              <p className="bg-blue text-white px-2 py-1 mb-6 inline-block text-xs font-bold uppercase rounded-sm">
                 New
               </p>
               <h2 className="mb-3 text-2xl lg:text-3xl font-bold">
                 Introducing - Zoo Labs: Wildlife Conservation Powered by DeFi
               </h2>
-              <p className="mb-6">
+              <p className="mb-12">
                 Zoo Labs, a new NFT-based P2E (Play-to-Earn) game that utilizes
                 the $ZOO token in its ecosystem, is launching in Q1 of 2022 with
                 the mission to aid...
