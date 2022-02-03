@@ -17,7 +17,7 @@ const ZooNewsSection = () => {
             ZOO News
           </h2>
           <p className="max-w-2xl text-white text-opacity-70">
-          Learn all about Zoo, Our Nfts, and browse through our helpful guides
+          Learn all about Zoo, our Nfts, and browse through our helpful guides
           </p>
         </div>
         <div className="flex flex-col items-center max-w-xl mx-auto lg:flex-row lg:items-stretch lg:max-w-5xl bg-black100 rounded-2xl">

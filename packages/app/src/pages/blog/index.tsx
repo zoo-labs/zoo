@@ -54,7 +54,7 @@ const Blog = () => {
             ZOO Blog
           </h1>
           <p className="w-96 mb-20">
-            Learn all about Zoo, Our Nfts, and browse through our helpful guides
+            Learn all about Zoo, our Nfts, and browse through our helpful guides
           </p>
         </div>
         <div className="flex flex-col items-stretch max-w-xl max-h-[494px] mx-auto lg:flex-row lg:items-stretch lg:max-w-5xl">
