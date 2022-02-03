@@ -50,9 +50,9 @@ const Blog = () => {
           className="flex items-center text-center flex-col"
           ref={blogHeaderRef}
         >
-          <p className="text-5xl lg:text-7xl text-white font-bold mb-6">
+          <h1 className="text-5xl lg:text-7xl text-white font-bold mb-6 mt-20 lg:mt-12">
             ZOO Blog
-          </p>
+          </h1>
           <p className="w-96 mb-20">
             Learn all about Zoo, Our Nfts, and browse through our helpful guides
           </p>
