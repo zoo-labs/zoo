@@ -184,16 +184,13 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
 
                 <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
                   <div className="flex items-center justify-between w-full space-x-2 sm:justify-end">
-                    {/* {chainId &&
+                    {chainId &&
                       // [ChainId.MAINNET].includes(chainId) &&
                       library &&
                       library.provider.isMetaMask && (
                         <div className="hidden md:inline-flex">
                           <QuestionHelper
-                            text={i18n._(
-                              t`Add ZOO to your MetaMask wallet
-                              ${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`
-                            )}
+                            text={i18n._(t`Add ZOO to your MetaMask wallet`)}
                           >
                             <div
                               className="hidden p-0.5 rounded-md cursor-pointer sm:inline-flex bg-dark-900 hover:bg-dark-800"
@@ -240,7 +237,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                               }}
                             >
                               <Image
-                                src="/icons/egg.svg"
+                                src="/img/egg.png"
                                 alt="zoo"
                                 width="30px"
                                 height="30px"
@@ -250,7 +247,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                             </div>
                           </QuestionHelper>
                         </div>
-                      )} */}
+                      )}
 
                     {/* {library && library.provider.isMetaMask && (
                       <div className="hidden sm:inline-block">
@@ -275,11 +272,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                     <div className="hidden md:block">
                       <LanguageSwitch />
                     </div>
-                    {/* <div>
-                      <p>{process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}</p>
-                    </div> */}
-
-                    {/* <More /> */}
+                    <More />
                   </div>
                 </div>
                 <div className="flex -mr-2 sm:hidden">
