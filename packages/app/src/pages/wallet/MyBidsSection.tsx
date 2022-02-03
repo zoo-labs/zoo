@@ -4,146 +4,148 @@ import Link from "next/link";
 import PopularNftsSection from "pages/home/PopularNftsSection";
 
 import Modal from "../../components/Modal/";
+import ComingSoon from "components/ComingSoon";
 
 const MyBidsSection = () => {
   const [openMoal, setOpenModal] = React.useState(false);
 
   return (
-    <>
-      <section className="flex flex-col lg:flex-row lg:justify-between gap-24 lg:px-48">
-        <div className="bg-nft-gradient p-0.5 flex flex-col basis-1/2 justify-center rounded-xl">
-          <div className="h-full flex flex-col justify-center bg-black rounded-xl">
-            <Image
-              src="/img/egg.png"
-              width={200}
-              height={400}
-              alt=""
-              objectFit="contain"
-            />
-          </div>
-        </div>
-        <div className="flex flex-col basis-1/2">
-          <h2 className="text-4xl lg:text-6xl mb-4">Egg</h2>
-          {/* Address and Price */}
-          <div className="flex justify-between mb-4">
-            <div className="address flex items-center">
-              <div className="h-12 w-12 bg-nft-gradient rounded-full mr-3" />
-              <div className="owner">
-                <p className="text-grey">Owner</p>
-                <p>0xd0ae…e3e0</p>
-              </div>
-            </div>
-            <div className="money flex">
-              <Image
-                src="/img/reserved-price.png"
-                width={51}
-                height={51}
-                alt=""
-              />
-              <div className="ml-3">
-                <p className="text-grey">Reserve Price</p>
-                <p className="font-bold">
-                  3.5 ETH <span className="text-green">$6800</span>
-                </p>
-              </div>
-            </div>
-          </div>
-          {/* Card */}
-          <div className="card bg-black100 px-4 py-8 rounded flex flex-col items-center mb-6">
-            <p className="text-xs mb-6">Current Bid</p>
-            <h1 className="font-bold text-4xl lg:text-6xl mb-4">1.00 ETH</h1>
-            <p className="text-green font-bold lg:text-xl mb-9">$3,618.36</p>
+    <ComingSoon />
+    // <>
+    //   <section className="flex flex-col gap-24 lg:flex-row lg:justify-between lg:px-48">
+    //     <div className="bg-nft-gradient p-0.5 flex flex-col basis-1/2 justify-center rounded-xl">
+    //       <div className="flex flex-col justify-center h-full bg-black rounded-xl">
+    //         <Image
+    //           src="/img/egg.png"
+    //           width={200}
+    //           height={400}
+    //           alt=""
+    //           objectFit="contain"
+    //         />
+    //       </div>
+    //     </div>
+    //     <div className="flex flex-col basis-1/2">
+    //       <h2 className="mb-4 text-4xl lg:text-6xl">Egg</h2>
+    //       {/* Address and Price */}
+    //       <div className="flex justify-between mb-4">
+    //         <div className="flex items-center address">
+    //           <div className="w-12 h-12 mr-3 rounded-full bg-nft-gradient" />
+    //           <div className="owner">
+    //             <p className="text-grey">Owner</p>
+    //             <p>0xd0ae…e3e0</p>
+    //           </div>
+    //         </div>
+    //         <div className="flex money">
+    //           <Image
+    //             src="/img/reserved-price.png"
+    //             width={51}
+    //             height={51}
+    //             alt=""
+    //           />
+    //           <div className="ml-3">
+    //             <p className="text-grey">Reserve Price</p>
+    //             <p className="font-bold">
+    //               3.5 ETH <span className="text-green">$6800</span>
+    //             </p>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       {/* Card */}
+    //       <div className="flex flex-col items-center px-4 py-8 mb-6 rounded card bg-black100">
+    //         <p className="mb-6 text-xs">Current Bid</p>
+    //         <h1 className="mb-4 text-4xl font-bold lg:text-6xl">1.00 ETH</h1>
+    //         <p className="font-bold text-green lg:text-xl mb-9">$3,618.36</p>
 
-            <p className="text-white font-medium mb-2">Auction ending in</p>
-            <div className="flex max-w-md justify-between items-center">
-              <div className="text-center mr-3">
-                <p className="text-2xl lg:text-4xl font-medium ">01</p>
-                <p className="text-grey font-medium">Hrs</p>
-              </div>
-              <div className="text-center mr-3">
-                <p className="text-2xl lg:text-4xl font-medium ">23</p>
-                <p className="text-grey font-medium">Min</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl lg:text-4xl font-medium"> 17</p>
-                <p className="text-grey font-medium">Sec</p>
-              </div>
-            </div>
-          </div>
-          <button
-            className="bg-blue text-white rounded py-2 font-semibold mb-4"
-            onClick={() => setOpenModal(true)}
-          >
-            Increase Bid
-          </button>
-          <Link href="/nft-info" passHref>
-            <button className="border border-white rounded py-2 font-semibold">
-              View Item
-            </button>
-          </Link>
-        </div>
-        <Modal onDismiss={() => setOpenModal(false)} isOpen={openMoal}>
-          <div>
-            <div className="my-4">
-              <p className="text-white font-bold">Increase Bid</p>
-            </div>
-            <div>
-              <form>
-                <div className="mb-4">
-                  <p className="text-xs font-bold mb-2">Current Bid</p>
-                  <div className="flex flex-row justify-between items center border border-black100 rounded bg-black100 px-4 py-2">
-                    <input
-                      type=""
-                      value="1.00 ETH"
-                      className="bg-transparent outline-0 border-0"
-                    />
-                    <Image
-                      src="/img/eth-icon.svg"
-                      width={16}
-                      height={16}
-                      alt=""
-                    />
-                  </div>
-                </div>
+    //         <p className="mb-2 font-medium text-white">Auction ending in</p>
+    //         <div className="flex items-center justify-between max-w-md">
+    //           <div className="mr-3 text-center">
+    //             <p className="text-2xl font-medium lg:text-4xl ">01</p>
+    //             <p className="font-medium text-grey">Hrs</p>
+    //           </div>
+    //           <div className="mr-3 text-center">
+    //             <p className="text-2xl font-medium lg:text-4xl ">23</p>
+    //             <p className="font-medium text-grey">Min</p>
+    //           </div>
+    //           <div className="text-center">
+    //             <p className="text-2xl font-medium lg:text-4xl"> 17</p>
+    //             <p className="font-medium text-grey">Sec</p>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <button
+    //         className="py-2 mb-4 font-semibold text-white rounded bg-blue"
+    //         onClick={() => setOpenModal(true)}
+    //       >
+    //         Increase Bid
+    //       </button>
+    //       <Link href="/nft-info" passHref>
+    //         <button className="py-2 font-semibold border border-white rounded">
+    //           View Item
+    //         </button>
+    //       </Link>
+    //     </div>
+    //     <Modal onDismiss={() => setOpenModal(false)} isOpen={openMoal}>
+    //       <div>
+    //         <div className="my-4">
+    //           <p className="font-bold text-white">Increase Bid</p>
+    //         </div>
+    //         <div>
+    //           <form>
+    //             <div className="mb-4">
+    //               <p className="mb-2 text-xs font-bold">Current Bid</p>
+    //               <div className="flex flex-row justify-between px-4 py-2 border rounded items center border-black100 bg-black100">
+    //                 <input
+    //                   type=""
+    //                   value="1.00 ETH"
+    //                   className="bg-transparent border-0 outline-0"
+    //                 />
+    //                 <Image
+    //                   src="/img/eth-icon.svg"
+    //                   width={16}
+    //                   height={16}
+    //                   alt=""
+    //                 />
+    //               </div>
+    //             </div>
 
-                <div>
-                  <p className="text-xs font-bold mb-2">Start time</p>
-                  <div className="flex justify-center gap-4 overflow-hidden">
-                    <div className="border border-black100 rounded bg-black100 py-2 basis-1/2">
-                      <input
-                        type="text"
-                        value="25 Jan 2022"
-                        className="bg-transparent outline-0 border-0"
-                      />
-                    </div>
+    //             <div>
+    //               <p className="mb-2 text-xs font-bold">Start time</p>
+    //               <div className="flex justify-center gap-4 overflow-hidden">
+    //                 <div className="py-2 border rounded border-black100 bg-black100 basis-1/2">
+    //                   <input
+    //                     type="text"
+    //                     value="25 Jan 2022"
+    //                     className="bg-transparent border-0 outline-0"
+    //                   />
+    //                 </div>
 
-                    <div className="border border-black100 rounded bg-black100 py-2 basis-1/2">
-                      <input
-                        type="text"
-                        value="12:27 PM GMT"
-                        className="bg-transparent outline-0 border-0"
-                      />
-                    </div>
-                  </div>
-                </div>
+    //                 <div className="py-2 border rounded border-black100 bg-black100 basis-1/2">
+    //                   <input
+    //                     type="text"
+    //                     value="12:27 PM GMT"
+    //                     className="bg-transparent border-0 outline-0"
+    //                   />
+    //                 </div>
+    //               </div>
+    //             </div>
 
-                <button className="bg-blue text-white text-center font-bold w-full px-4 py-2 rounded mt-8">
-                  Save Changes
-                </button>
-              </form>
-            </div>
-          </div>
-        </Modal>
-      </section>
-      <div className="py-20">
-        <PopularNftsSection />
-        <div className="text-center mt-12 text-xl">
-          <a href="/animal-list" className="underline text-green ">
-            View All
-          </a>
-        </div>
-      </div>
-    </>
+    //             <button className="w-full px-4 py-2 mt-8 font-bold text-center text-white rounded bg-blue">
+    //               Save Changes
+    //             </button>
+    //           </form>
+    //         </div>
+    //       </div>
+    //     </Modal>
+    //   </section>
+    //   <div className="py-20">
+    //     <PopularNftsSection />
+    //     <div className="mt-12 text-xl text-center">
+    //       <a href="/animal-list" className="underline text-green ">
+    //         View All
+    //       </a>
+    //     </div>
+    //   </div>
+    // </>
   );
 };
 
@@ -151,24 +153,24 @@ const MyBidsSection = () => {
 //   return (
 //     <div>
 //       <div className="flex flex-col lg:flex-row lg:justify-between">
-//         <div className="flex flex-col border border-blue px-4 py-6 rounded mb-4 lg:mb-0 lg:px-8">
+//         <div className="flex flex-col px-4 py-6 mb-4 border rounded border-blue lg:mb-0 lg:px-8">
 //           <div style={{ minHeight: '299px' }}>
 //             <Image src="/img/egg.png" width={300} height={300} alt="" />
 //           </div>
-//           <button className="bg-gradient-to-b from-purple to-blue text-white font-semibold text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full">
+//           <button className="px-5 py-3 text-sm font-semibold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10">
 //             Increase bid
 //           </button>
 //         </div>
 //         <div>
 //           <div className="mb-8">
-//             <h3 className="text-xl font-bold mb-4">Egg #4</h3>
+//             <h3 className="mb-4 text-xl font-bold">Egg #4</h3>
 //             <p>
 //               Contains <span className="font-bold">1 of 16</span> Generation one
 //               Base Animals. To hatch or to hold…
 //             </p>
 //           </div>
-//           <div className="mb-8 border border-blue px-4 py-6 rounded">
-//             <p className="font-bold mb-2">Details</p>
+//           <div className="px-4 py-6 mb-8 border rounded border-blue">
+//             <p className="mb-2 font-bold">Details</p>
 //             <div className="flex justify-between mb-2">
 //               <p>Transaction</p>
 //               <p className="text-purple">0x00000000…000000</p>
@@ -187,9 +189,9 @@ const MyBidsSection = () => {
 //             </div>
 //           </div>
 
-//           <div className="details border border-blue rounded">
+//           <div className="border rounded details border-blue">
 //             <div className="px-4 pt-6 pb-2 ">
-//               <p className="font-bold mb-2">Proof of Authenticity</p>
+//               <p className="mb-2 font-bold">Proof of Authenticity</p>
 //               <div className="mb-2">
 //                 <p className="text-lg font-bold">300,000 $ZOO</p>
 //               </div>
@@ -218,7 +220,7 @@ const MyBidsSection = () => {
 //       </div>
 //       <div className="py-20">
 //         <PopularNftsSection />
-//         <div className="text-center mt-12 text-xl">
+//         <div className="mt-12 text-xl text-center">
 //           <a href="/animal-list" className="underline text-green ">
 //             View All
 //           </a>
