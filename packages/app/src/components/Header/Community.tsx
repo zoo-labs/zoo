@@ -123,6 +123,20 @@ export default function Community() {
                   </a>
                 )}
               </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <a
+                    href="https://zoolabsofficial.medium.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`${
+                      active ? "bg-black text-white" : "text-white"
+                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  >
+                    Medium
+                  </a>
+                )}
+              </Menu.Item>
             </div>
           </Menu.Items>
         </Transition>

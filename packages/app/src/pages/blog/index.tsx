@@ -54,15 +54,15 @@ const Blog = () => {
             ZOO Blog
           </h1>
           <p className="w-96 mb-20">
-            Learn all about Zoo, our Nfts, and browse through our helpful guides
+            Learn all about Zoo, our Nfts, and browse through our helpful guides.
           </p>
         </div>
-        <div className="flex flex-col items-stretch max-w-xl max-h-[494px] mx-auto lg:flex-row lg:items-stretch lg:max-w-5xl">
-          <div className="overflow-hidden rounded-l-2xl lg:basis-1/2 bg-deep-gray">
+        <div className="flex flex-col items-center max-w-xl max-h-[494px] mx-auto lg:flex-row lg:items-stretch lg:max-w-5xl">
+          <div className="overflow-hidden rounded-l-2xl lg:basis-1/2">
             <Image
               src="/img/blog-post-1.png"
               width={565}
-              height={516}
+              height={600}
               alt=""
               objectFit="cover"
             />
@@ -75,7 +75,7 @@ const Blog = () => {
               <h2 className="mb-3 text-2xl lg:text-3xl font-bold">
                 Introducing - Zoo Labs: Wildlife Conservation Powered by DeFi
               </h2>
-              <p className="mb-6">
+              <p className="mb-12">
                 Zoo Labs, a new NFT-based P2E (Play-to-Earn) game that utilizes
                 the $ZOO token in its ecosystem, is launching in Q1 of 2022 with
                 the mission to aid...
