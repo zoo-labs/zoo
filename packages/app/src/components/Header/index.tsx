@@ -30,20 +30,20 @@ import Banner from "components/Banner";
 function AppBar(props: { banner?: boolean }): JSX.Element {
   const { i18n } = useLingui();
   const { account, chainId, library } = useActiveWeb3React();
-  // const getZooBalance = useZoobalance();
+  const getZooBalance = useZoobalance();
 
   const router = useRouter();
   let linkStyle =
     "p-2 text-baseline hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap";
 
-  // const userEthBalance = useETHBalances(account ? [account] : [])?.[
-  //   account ?? ""
-  // ];
-  // useEffect(() => {
-  //   getZooBalance();
-  // }, [account]);
+  const userEthBalance = useETHBalances(account ? [account] : [])?.[
+    account ?? ""
+  ];
+  useEffect(() => {
+    getZooBalance();
+  }, [account]);
 
-  // console.log("userEthBalance", userEthBalance);
+  console.log("userEthBalance", userEthBalance);
   const chainAddresses =
     (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
 
@@ -258,7 +258,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                       </div>
                     )} */}
                     {/* My Wallet Button */}
-                    {/* <div className="w-auto flex items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
+                    <div className="w-auto flex items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                       {account && chainId && userEthBalance && (
                         <>
                           <div className="px-3 py-2 text-primary text-bold">
@@ -271,7 +271,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                         title={i18n._(t`Connect Wallet`)}
                         className="font-bold bg-black border border-green text-green"
                       />
-                    </div> */}
+                    </div>
                     <div className="hidden md:block">
                       <LanguageSwitch />
                     </div>
