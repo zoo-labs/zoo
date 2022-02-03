@@ -11,7 +11,7 @@ const ComingSoon = () => {
     fadeInOnScroll(comingSoonRef.current);
   }, []);
   return (
-    <div className="">
+    <div className="py-20">
       <div className="max-w-7xl mx-auto py-20 px-4">
         <div
           className="flex flex-col items-center justify-center text-center "
@@ -21,7 +21,7 @@ const ComingSoon = () => {
           <p>
             Go pack to the{" "}
             <Link href="/">
-              <a className="text-green underline">homepage</a>
+              <a className="text-green underline">home page</a>
             </Link>
           </p>
         </div>
