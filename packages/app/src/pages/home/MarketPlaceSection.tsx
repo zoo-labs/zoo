@@ -20,7 +20,7 @@ const MarketPlaceSection = () => {
 
   return (
     <section className="MarketPlace" ref={marketRef}>
-      <div className="flex flex-col items-center px-6 mx-auto py-28 lg:flex-row max-w-7xl">
+      <div className="flex flex-col items-center px-6 mx-auto pb-16 lg:py-28 lg:flex-row max-w-7xl">
         <div className="relative z-30 flex mb-8 basis-1/2">
           <video autoPlay loop={true} playsInline={true} muted>
             <source src="/videos/phones.mov"></source>
