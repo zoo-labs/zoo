@@ -72,11 +72,11 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                   <div className="hidden sm:block sm:ml-4">
                     <div className="flex space-x-2">
                       {/* <Buy /> */}
-                      <NavLink href="/market">
+                      <NavLink href="/wallet">
                         <a
                           id={`mint-nav-link`}
                           className={
-                            router.pathname == "/market"
+                            router.pathname == "/wallet"
                               ? `${linkStyle} text-green text-bold`
                               : `${linkStyle} text-white`
                           }
@@ -323,7 +323,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                 <a
                   id={`marketplace`}
                   className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  href="/market"
+                  href="/wallet"
                 >
                   {i18n._(t`Marketplace`)}
                 </a>
