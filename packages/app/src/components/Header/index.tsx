@@ -110,15 +110,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                         </a>
                       </NavLink> */}
                       <Learn />
-                      <a
-                        id={`buyguide`}
-                        className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                        href="https://prezi.com/i/view/fWOPqU2eZzcqYyVzb5pz"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {i18n._(t`Buy Guide`)}
-                      </a>
+
                       {/* <NavLink href="/learn">
                         <a
                           id={`mint-nav-link`}
@@ -341,16 +333,6 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                 <Community />
 
                 <Learn />
-
-                <a
-                  id={`buyguide`}
-                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  href="https://prezi.com/i/view/fWOPqU2eZzcqYyVzb5pz"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {i18n._(t`Buy Guide`)}
-                </a>
 
                 {/* <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                   {account && chainId && userEthBalance && (
