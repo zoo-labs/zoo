@@ -16,7 +16,7 @@ const FaqSection = () => {
         <h2 className="mb-10 text-3xl font-bold text-center lg:text-4xl lg:mb-20">
           Game FAQ
         </h2>
-        <div className="flex flex-col items-center lg:flex-row lg:flex-wrap lg:items-start lg:justify-between">
+        <div className="flex flex-col  lg:flex-row lg:flex-wrap lg:items-start lg:justify-between">
           <div className="flex flex-col mb-8 lg:basis-1/2 lg:max-w-sm">
             <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
               What is ZOO?
@@ -65,24 +65,23 @@ const FaqSection = () => {
               Metamask App as well as ZOO Labs official website.
             </p>
           </div>
-
-          <div className="flex flex-col mb-12 text-left lg:basis-1/2">
-            <h3 className="pl-4 mb-4 text-xl font-bold text-left text-green lg:text-2xl lg:pl-0">
+          {/* flex flex-col mb-12 text-left lg:basis-1/2,  pl-4 mb-4 text-xl font-bold text-left text-green lg:text-2xl lg:pl-0, max-w-sm px-4 mx-auto text-white list-disc lg:mx-0*/}
+          <div className="flex flex-col mb-12 lg:basis-1/2">
+            <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
               How do i buy $ZOO?
             </h3>
-            <ul className="max-w-sm px-4 pl-8 mx-auto text-white list-disc lg:mx-0">
-              <li>Buy BNB</li>
-              <li>Get a Binance coin wallet(Ledger, Coinomi).</li>
-              <li>Locate your BNB address.</li>
-              <li>Sign up to Binance</li>
-              <li>Buy BNB with another crypto or a credit card.</li>
-              <li>Go to Pancake swap or another trusted exchange.</li>
-              <li>
-                Swap BNB for $ZOO use this token address as their are many
-                scammers
-              </li>
-              <li>0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13</li>
-            </ul>
+
+            <li>Buy BNB</li>
+            <li>Get a Binance coin wallet(Ledger, Coinomi).</li>
+            <li>Locate your BNB address.</li>
+            <li>Sign up to Binance</li>
+            <li>Buy BNB with another crypto or a credit card.</li>
+            <li>Go to Pancake swap or another trusted exchange.</li>
+            <li>
+              Swap BNB for $ZOO use this token address as their are many
+              scammers
+            </li>
+            <li>0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13</li>
           </div>
 
           <div className="flex flex-col mb-12 lg:basis-1/2">
