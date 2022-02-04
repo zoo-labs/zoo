@@ -28,7 +28,7 @@ const news = [
 const guides = [
   {
     name: "How to Buy $ZOO",
-    image: "/img/blog-guide-1.png",
+    image: "/img/buy-zoo.svg",
     link: "https://prezi.com/i/view/fWOPqU2eZzcqYyVzb5pz",
     date: "Feb 1, 2022",
     writtenBy: 'Lou Di Monaco',
