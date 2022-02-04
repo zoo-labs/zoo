@@ -11,14 +11,14 @@ import BlogCards from "components/BlogCards";
 const news = [
   {
     name: "Introducing - Zoo Labs: Wildlife Conservation Powered by DeFi",
-    image: "/img/blog-post-1.png",
+    image: "/img/zoo.svg",
     link: "https://zoolabsofficial.medium.com/introducing-zoo-labs-wildlife-conservation-powered-by-defi-67eacef5a07",
     date: "Jan 6, 2022",
     writtenBy: 'Lou Di Monaco',
   },
   {
     name: "NFT: The Most Misunderstood 3 Letters in Decentralized Finance",
-    image: "/img/blog-post-2.png",
+    image: "/img/introducing.svg",
     link: "https://zoolabsofficial.medium.com/nft-the-most-misunderstood-3-letters-in-decentralized-finance-c901ba7f94eb",
     date: "Jan 27, 2022",
     writtenBy: 'Lou Di Monaco',

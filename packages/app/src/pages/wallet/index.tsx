@@ -71,7 +71,7 @@ export default function Wallet({ children }) {
                     }}
                     className={`${
                       active ? "bg-green text-black" : "text-gray-400"
-                    } text-sm font-bold py-4 px-6 cursor-pointer inline-block border text-center border-green`}
+                    } text-sm font-bold py-4 px-6 cursor-pointer inline-block  text-center`}
                     key={index}
                   >
                     {value}

@@ -56,6 +56,21 @@ export default function Learn() {
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
+                  <a
+                    href="https://prezi.com/i/view/fWOPqU2eZzcqYyVzb5pz"
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`${
+                      active ? "bg-black text-white" : "text-white"
+                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  >
+                    Buy Guide
+                  </a>
+                )}
+              </Menu.Item>
+
+              <Menu.Item>
+                {({ active }) => (
                   <Link href="/about">
                     <a
                       className={`${

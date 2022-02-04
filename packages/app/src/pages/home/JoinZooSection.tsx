@@ -55,9 +55,17 @@ const JoinZooSection = () => {
           >
             <Image src="/img/discord-large.svg" width={32} height={32} alt="" />
           </a>
+          <a
+            href="https://zoolabsofficial.medium.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-8"
+          >
+            <Image src="/img/medium-icon.svg" height={32} width={32} alt="" />{" "}
+          </a>
         </div>
 
-        <form className="">
+        {/* <form className="">
           <div className="flex flex-row px-4">
             <input
               type="email"
@@ -71,7 +79,7 @@ const JoinZooSection = () => {
               Join
             </button>
           </div>
-        </form>
+        </form> */}
       </div>
     </section>
   );
