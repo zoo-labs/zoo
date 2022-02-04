@@ -35,7 +35,7 @@ const Footer = () => {
                 <Link href="/market">Marketplace</Link>
               </div> */}
               <div className="mb-2">
-                <a href="Marketplace">Marketplace</a>
+                <a href="/wallet">Marketplace</a>
               </div>
               <div className="mb-2">
                 <Link href="/market">
