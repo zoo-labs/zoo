@@ -35,7 +35,9 @@ const Footer = () => {
                 <Link href="/market">Marketplace</Link>
               </div> */}
               <div className="mb-2">
-                <a href="/wallet">Marketplace</a>
+                <Link href="/wallet">
+                  <a>Marketplace</a>
+                </Link>
               </div>
               <div className="mb-2">
                 <Link href="/market">
@@ -50,6 +52,11 @@ const Footer = () => {
                 >
                   Buy Guide
                 </a>
+              </div>
+              <div className="mb-2">
+                <Link href="/about">
+                  <a>About</a>
+                </Link>
               </div>
               {/* <div className="mb-2">
                 <Link href="/community">Community</Link>
@@ -92,7 +99,24 @@ const Footer = () => {
               </a>
             </div>
             <div className="mb-2">
-              <a href="/faqs">FAQ</a>
+              <Link href="/blog">
+                <a>Blogs</a>
+              </Link>
+            </div>
+            <div className="mb-2">
+              <Link href="/faqs">
+                <a>FAQs</a>
+              </Link>
+            </div>
+            <div className="mb-2">
+              <Link href="/animal-list">
+                <a>Our Animals</a>
+              </Link>
+            </div>
+            <div className="mb-2">
+              <Link href="/partnerships">
+                <a>Partnerships</a>
+              </Link>
             </div>
             {/* <div className="mb-0">
               <Link href="/">Connect us</Link>

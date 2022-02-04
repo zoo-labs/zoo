@@ -18,13 +18,13 @@ const MyWalletSection = () => {
 
   return (
     <div>
-      <p className="mb-8 text-xl">
+      {/* <p className="mb-8 text-xl md:text-2xl">
         Wallet Balance{" "}
-        <span className="text-base font-bold text-green">
+        <span className="text-base font-bold text-green md:text-2xl">
           {" "}
-          {numberWithCommas(zooBalance.toFixed(2))} ZOO
+          {numberWithCommas(zooBalance.toFixed(2))} $ZOO
         </span>
-      </p>
+      </p> */}
 
       {/* <>
       <div className="flex flex-col items-center justify-center mb-8 lg:flex-row lg:justify-between">
