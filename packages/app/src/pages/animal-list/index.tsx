@@ -104,8 +104,8 @@ const AnimalList = () => {
                 </Link>
               </div>
             ) : (
-              <Link href={`nft-product/${animal.name?.toLowerCase()}`}>
-                <a className="AnimalFamily__image w-full bg-[#000] border border-[#000] rounded-3xl	 h-auto flex flex-col items-center lg:basis-1/3">
+              <Link href={`nft-product/${animal.slug}`}>
+                <a className="AnimalFamily__image w-full bg-[#000] border border-[#000] rounded-xl	 h-auto flex flex-col items-center lg:basis-1/3">
                   <Image
                     src={`${animal.image}`}
                     width={373}
