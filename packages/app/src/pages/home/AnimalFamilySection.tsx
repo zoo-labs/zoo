@@ -119,7 +119,7 @@ const AnimalFamilySection = () => {
                   </div>
                 </div>
                 <div className="text-center AnimalFamily__name lg:basis-1/3">
-                  <h2 className="mb-6 text-3xl font-bold lg:4xl">
+                  <h2 className="mb-6 text-3xl text-center font-bold lg:4xl">
                     {data.name}
                   </h2>
                   <a
@@ -129,11 +129,11 @@ const AnimalFamilySection = () => {
                     Coming Soon
                   </a>
                 </div>
-                <div className="px-2 py-6 lg:px-6 lg:basis-1/3 lg:bg-black100 lg:rounded-3xl">
+                <div className="px-2 py-6 lg:px-6 lg:basis-1/3 text-center lg:bg-black100 lg:rounded-3xl">
                   <h3 className="mb-4 text-xl font-bold ">
                     {data.scientificName}
                   </h3>
-                  <p className="mb-3 text-grey text-opacity-70">
+                  <p className="mb-3 text-grey text-opacity-70 md:px-8 lg:px-0">
                     {data.description}
                   </p>
                   <Link href={`nft-product/${data.slug}`} passHref>
