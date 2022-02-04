@@ -56,14 +56,15 @@ const MyWalletSection = () => {
       <TransactionHistory />
       </> */}
 
-      <div className="flex items-center justify-center">
+      {/* <div className="flex items-center justify-center">
         <button
           onClick={() => handleFunds(chainId, buyZoo)}
           className="px-5 py-3 text-sm font-semibold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10"
         >
           Buy $ZOO
         </button>
-      </div>
+      </div> */}
+      <ComingSoon />
     </div>
   );
 };

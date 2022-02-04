@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500px" height="500px" viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Artboard</title>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#000000" x="0" y="0" width="500" height="500"></rect>
+        <g id="Group" transform="translate(92.000000, 101.000000)" fill="#FFFFFF" font-family="GoodSans-Medium, Good Sans" font-weight="400">
+            <text id="ZOO!" transform="translate(205.742086, 135.000000) rotate(14.000000) translate(-205.742086, -135.000000) " font-size="48" letter-spacing="-1.11618933">
+                <tspan x="135.308559" y="160"> ZOO!</tspan>
+            </text>
+            <text id="ZOO!" transform="translate(115.742086, 212.000000) rotate(-25.000000) translate(-115.742086, -212.000000) " font-size="40" letter-spacing="-0.930157778">
+                <tspan x="57.0474803" y="227"> ZOO!</tspan>
+            </text>
+            <text id="ZOO!" transform="translate(127.742086, 82.000000) rotate(16.000000) translate(-127.742086, -82.000000) " font-size="18" letter-spacing="-0.418571">
+                <tspan x="101.329513" y="69"> ZOO!</tspan>
+            </text>
+            <text id="ZOO!" transform="translate(194.742086, 106.000000) rotate(-8.000000) translate(-194.742086, -106.000000) " font-size="18" letter-spacing="-0.418571">
+                <tspan x="168.329513" y="93"> ZOO!</tspan>
+            </text>
+            <text id="ZOO!" transform="translate(217.742086, 223.000000) rotate(16.000000) translate(-217.742086, -223.000000) " font-size="24" letter-spacing="-0.558094667">
+                <tspan x="182.525323" y="218"> ZOO!</tspan>
+            </text>
+            <text id="ZOO!" transform="translate(167.742086, 54.000000) rotate(16.000000) translate(-167.742086, -54.000000) " font-size="24" letter-spacing="-0.558094667">
+                <tspan x="132.525323" y="49"> ZOO!</tspan>
+            </text>
+            <text id="ZOO!" transform="translate(100.742086, 119.000000) rotate(-14.000000) translate(-100.742086, -119.000000) " font-size="24" letter-spacing="-0.558094667">
+                <tspan x="65.5253225" y="114"> ZOO!</tspan>
+            </text>
+            <text id="ZOO!" transform="translate(237.742086, 118.000000) rotate(-14.000000) translate(-237.742086, -118.000000) " font-size="24" letter-spacing="-0.558094667">
+                <tspan x="202.525323" y="113"> ZOO!</tspan>
+            </text>
+            <text id="ZOO!" transform="translate(80.500000, 150.353338) rotate(-6.000000) translate(-80.500000, -150.353338) " font-size="36" letter-spacing="-0.837142">
+                <tspan x="27.674855" y="169.353338"> ZOO!</tspan>
+            </text>
+            <text id="ZOO!" transform="translate(127.742086, 82.000000) rotate(16.000000) translate(-127.742086, -82.000000) " font-size="18" letter-spacing="-0.418571">
+                <tspan x="101.329513" y="69"> ZOO!</tspan>
+            </text>
+            <text id="ZOO!" transform="translate(170.742086, 261.000000) rotate(-1.000000) translate(-170.742086, -261.000000) " font-size="24" letter-spacing="-0.558094667">
+                <tspan x="135.525323" y="256"> ZOO!</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
