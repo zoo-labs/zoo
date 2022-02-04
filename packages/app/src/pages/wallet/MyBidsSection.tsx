@@ -1,16 +1,39 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import PopularNftsSection from "pages/home/PopularNftsSection";
 
 import Modal from "../../components/Modal/";
-import ComingSoon from "components/ComingSoon";
+
+import { fadeInOnScroll } from "animation";
 
 const MyBidsSection = () => {
   const [openMoal, setOpenModal] = React.useState(false);
+  const comingSoonRef = React.useRef();
+
+  useEffect(() => {
+    fadeInOnScroll(comingSoonRef.current);
+  }, []);
 
   return (
-    <ComingSoon />
+    <div className="py-20">
+      <div className="max-w-7xl mx-auto py-20 px-4">
+        <div
+          className="flex flex-col items-center justify-center text-center "
+          ref={comingSoonRef}
+        >
+          <h1 className="text-4xl lg:text-5xl font-bold mb-8">
+            You have no Bids
+          </h1>
+          <p>
+            Go pack to the{" "}
+            <Link href="/">
+              <a className="text-green underline">home page</a>
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
     // <>
     //   <section className="flex flex-col gap-24 lg:flex-row lg:justify-between lg:px-48">
     //     <div className="bg-nft-gradient p-0.5 flex flex-col basis-1/2 justify-center rounded-xl">

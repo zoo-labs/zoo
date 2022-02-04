@@ -6,9 +6,10 @@ interface Props {
     image: string;
     link: string;
     date: string;
+    writtenBy: string;
   };
 }
-const Article: FC<Props> = ({ article: { name, image, link, date } }) => {
+const Article: FC<Props> = ({ article: { name, image, link, date, writtenBy } }) => {
   return (
     <div className="mb-8 lg:mb-8 bg-dark-blue flex flex-col max-w-sm md:max-w-lg border border-opacity-30 rounded">
       <a href={`${link}`} target="_blank" rel="noreferrer">
@@ -36,14 +37,16 @@ const Article: FC<Props> = ({ article: { name, image, link, date } }) => {
                   alt=""
                   objectFit="contain"
                 />
-                <p className="ml-3">Zoo Labs</p>
+                <p className="mr-3 ml-3">Zoo Labs</p>
               </div>
               <p>{date}</p>
             </div>
           </div>
-          <h3 className="text-xl lg:text-2xl font-bold text-white">
+          <h3 className="text-xl lg:text-2xl font-bold text-white h-[110px]">
             {name}
           </h3>
+
+          <p className="font-thin text-sm">Written by: {writtenBy}</p>
         </div>
       </a>
     </div>
