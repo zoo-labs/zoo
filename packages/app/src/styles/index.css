@@ -284,13 +284,13 @@ video {
 }
 
 .react-calendar__tile--now {
-  background: #ffff76;
-  color: black;
+  background: transparent;
 }
 
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
   background-color: #15f195;
+  
 }
 
 .react-calendar__navigation button:enabled:hover,

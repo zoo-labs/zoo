@@ -36,7 +36,7 @@ const GetStartedSection = () => {
           </a>
         </div>
         <div
-          className="flex flex-col items-center"
+          className="flex flex-col items-center lg:absolute lg:right-0"
           ref={getStartedImageRef}
         >
           <Image src="/img/zoo-hippo.png" width={603} height={450} alt="" />
