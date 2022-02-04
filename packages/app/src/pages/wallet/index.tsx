@@ -22,7 +22,7 @@ export default function Wallet({ children }) {
 
   return (
     <section className="Hero">
-      <div className="Hero__inner pt-16 pb-16 px-6 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
+      <div className="Hero__inner pb-16 px-6 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto mt-16">
         {/* <div className="inline-block bg-leader-board rounded p-px  mb-28 ml-16 w-auto overflow-hidden mt-20">
           <div className="w-auto bg-black rounded" style={{ top: 10 }}>
             {['My Wallet', 'My Bids', 'My Auctions'].map((value, index) => {
@@ -43,17 +43,17 @@ export default function Wallet({ children }) {
             })}
           </div>
         </div> */}
-        <div className="pt-16 pb-8 px-6 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto flex justify-between items-center">
+        <div className="pt-16 px-6 flex-col lg:flex-row lg:max-w-7xl lg:mx-auto flex justify-between items-center">
           <p className="text-xl md:text-4xl font-bold">
             Wallet Balance{" "}
-            <span className="text-base font-bold text-green md:text-4xl font-bold">
+            <span className="text-base text-green md:text-4xl font-bold">
               {" "}
               {numberWithCommas(zooBalance.toFixed(2))} $ZOO
             </span>
           </p>
           <button
             onClick={() => handleFunds(chainId, buyZoo)}
-            className="px-5 py-3 text-sm font-semibold text-black rounded-full bg-green md:text-base md:px-6 md:py-4 lg:px-10"
+            className="px-5 py-3 text-sm font-semibold text-black rounded-full bg-green md:text-base md:px-6 md:py-4 lg:px-10 my-6"
           >
             Buy $ZOO
           </button>

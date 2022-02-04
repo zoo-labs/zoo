@@ -14,7 +14,7 @@ const MyAuctionSection = () => {
   }, []);
 
   return (
-    <div className="py-20">
+    <div className="">
       <div className="max-w-7xl mx-auto py-20 px-4">
         <div
           className="flex flex-col items-center justify-center text-center "
