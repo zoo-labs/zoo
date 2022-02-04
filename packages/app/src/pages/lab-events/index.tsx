@@ -12,11 +12,11 @@ const LabEvents = () => {
 
   const [value, setValue] = useState(formatDate(new Date()));
   const [activeMonth, setActiveMonth] = useState(new Date().getMonth());
-  const [date, setDate] = useState(new Date());
+  // const [date, setDate] = useState(new Date());
   const [selected, setSelected] = useState<typeof data[0] | undefined>(data[0]);
 
   const onChange = (date) => {
-    setDate(date);
+    // setDate(date)
     setActiveMonth(date.getMonth());
   };
 
@@ -88,7 +88,7 @@ const LabEvents = () => {
         <div className="text-center flex bg-black100 px-4 py-8 rounded flex-col lg:flex-row lg:justify-between mr-4 gap-10">
           <Calendar
             onChange={onChange}
-            value={date}
+            // value={date}
             isMultiSelection={true}
             // value={value}
             // onChange={onChange}
@@ -122,7 +122,7 @@ border-image-source: linear-gradient(180deg, #2517FF -61.88%, #15F195 131.19%);
             className="lg:basis-1/2"
             tileClassName={({ view, date }) => {
               return `md:p-2 ${data.map(
-                (d) => d.date === formatDate(date) && " border-b border-gre"
+                (d) => d.date === formatDate(date) && " bg-green "
               )} ${
                 date.getMonth() === activeMonth
                   ? "text-grey-50"
@@ -153,10 +153,10 @@ border-image-source: linear-gradient(180deg, #2517FF -61.88%, #15F195 131.19%);
             </div>
           </div>
         </div>
-        <div className="bg-violet-600 text-white px-4 py-8 rounded flex flex-col items-center lg:basis-1/2 mt-8 lg:mt-0">
+        <div className="bg-blue text-white px-4 py-8 rounded flex flex-col items-center lg:basis-1/2 mt-8 lg:mt-0">
           <h2 className="text-3xl font-bold mb-4">Event Information</h2>
           <div className="flex flex-col items-center">
-            <p className="bg-orange text-white px-4 py-2 text-center mb-4 inline-block">
+            <p className="bg-green text-black px-4 py-2 text-center mb-4 inline-block">
               {`${formatMonth(value)}.${value.split("-")[2]}.${value
                 .split("-")[0]
                 ?.slice(2)}`}

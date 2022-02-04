@@ -52,7 +52,9 @@ const OpportunitySection = () => {
           <EndangeredSpecies />
           <div className="relative w-screen h-screen flex flex-col justify-center items-center bg-image">
             <div className="big-circle">
-              <div className="animal-content mx-auto">{stage && <p>{stage}</p>}</div>
+              <div className="animal-content mx-auto">
+                {stage && <p>{stage}</p>}
+              </div>
               <div
                 className="animate-animal incubate"
                 style={hovered ? style : undefined}
@@ -93,14 +95,14 @@ const OpportunitySection = () => {
                 className="animate-animal grow"
                 onMouseEnter={() =>
                   displayContent(
-                    "Your animal and watch it transition through its different stages of maturity."
+                    "Your fully mature animal to mint new Egg NFT’s. Breed the animals up to 6x."
                   )
                 }
                 onMouseOut={() => displayContent("")}
                 style={hovered ? style : undefined}
               >
                 <Image
-                  src="/img/grow-cycle.png"
+                  src="/img/breed-cycle.png"
                   width={150}
                   height={170}
                   alt=""
@@ -111,14 +113,14 @@ const OpportunitySection = () => {
                 className="animate-animal breed"
                 onMouseEnter={() =>
                   displayContent(
-                    "Your fully mature animal to mint new Egg NFT’s. Breed the animals up to 6x."
+                    "Your animal and watch it transition through its different stages of maturity."
                   )
                 }
                 onMouseOut={() => displayContent("")}
                 style={hovered ? style : undefined}
               >
                 <Image
-                  src="/img/breed-cycle.png"
+                  src="/img/grow-cycle.png"
                   width={150}
                   height={170}
                   alt=""
