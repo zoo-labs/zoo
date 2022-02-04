@@ -12,7 +12,7 @@ const FaqSection = () => {
 
   return (
     <section id="faqs" ref={faqsRef}>
-      <div className="px-6 py-20 mx-auto max-w-7xl text-center">
+      <div className="px-6 py-20 mx-auto max-w-7xl">
         <h2 className="mb-10 text-3xl font-bold text-center lg:text-4xl lg:mb-20">
           Game FAQ
         </h2>

@@ -146,13 +146,14 @@ video {
   background: url("/img/leaves.png");
   background-repeat: no-repeat;
   background-position: bottom right;
-  background-size: contain;
+  background-size: 50%;
 }
+
 
 @media screen and (min-width: 1200px) {
   .MarketPlace {
     background-position: center right;
-    background-size: contain;
+    background-size: 30%;
   }
 }
 
@@ -215,8 +216,16 @@ video {
   top: 30px;
   left: -50px;
 }
+/* 
+@media only screen and (min-width: 601px) {
+  .big-circle {
+    width: 400px;
+    max-width: 400px;
+    height: 400px;
+  }
+} */
 
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 601px) {
   .big-circle {
     width: 400px;
     max-width: 400px;
