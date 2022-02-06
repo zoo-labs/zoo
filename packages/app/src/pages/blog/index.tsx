@@ -63,7 +63,7 @@ const Blog = () => {
         <div className="flex flex-col items-center max-w-xl max-h-[494px] mx-auto lg:flex-row lg:items-stretch lg:max-w-5xl">
           <div className="overflow-hidden rounded-l-2xl lg:basis-1/2">
             <Image
-              src="/img/blog-post-1.png"
+              src="/img/zoo.svg"
               width={565}
               height={600}
               alt=""
