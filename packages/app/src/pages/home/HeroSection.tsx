@@ -44,7 +44,7 @@ const HeroSection = () => {
           <p className="mb-6 text-base text-white lg:text-lg text-opacity-70 md:max-w-xl lg:text-left">
             Pet, play, feed, grow, and breed your very own animal NFT’s in our
             Sims-like metaverse to increase their value and earn greater
-            rewards, all while contibuting to saving endangered animals.
+            rewards, all while contributing to saving endangered animals.
           </p>
           <div className="flex items-center gap-3">
             <div
