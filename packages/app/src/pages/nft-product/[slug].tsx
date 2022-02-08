@@ -3,10 +3,11 @@ import Image from "next/image";
 const productsData = [
   {
     id: "1",
-    image: "/img/sumatran-elephant.png",
-    gif: "/videos/sumatran-elephant.mov",
+    image:
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
+    gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
     name: "Sumatran Elephant",
-    slug: 'sumatran-elephant',
+    slug: "sumatran-elephant",
     scientificName: "Elephas Maximus Sumatranus",
     description: `<p class="mb-6">Sumatran elephants feed on a variety of plants and deposit seeds wherever they go, contributing to a healthy forest ecosystem. As herbivores, these noble animals spend their days munching on 150kg of plants and seeds as they move through the forests. They also share their lush forest habitat with several other endangered species, such as the Sumatran Rhinoceros, Sumatran Tiger, Sumatran Orangutan, and countless other species; all of which benefit from an elephant population that thrives in a healthy habitat.</p>
     <p>
@@ -17,18 +18,18 @@ const productsData = [
     size: "Up to 6 meters (20 feet)",
     habitat: "Broadleaf, moist tropical forest",
     images: [
-      "/videos/sumatran-elephant.mov",
-      "/videos/sumatran-elephant.mov",
-      "/videos/sumatran-elephant.mov",
-   
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
     ],
   },
   {
     id: "2",
-    image: "/img/javan-rhino.png",
-    gif: "/videos/javan-rhino.mov",
+    image:
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
+    gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
     name: "Javan Rhino",
-    slug: 'javan-rhino',
+    slug: "javan-rhino",
     scientificName: "Rhinoceros Sondaicus",
     description: `<p class="mb-6">Once the most widespread of Asian rhinoceroses, the Javan
     rhinoceros ranged from the islands of Java and Sumatra,
@@ -43,17 +44,18 @@ const productsData = [
     size: "3 meters (10 ft)",
     habitat: "Tropical forests",
     images: [
-      "/gifs/javan-rhino.gif",
-      "/gifs/javan-rhino.gif",
-      "/gifs/javan-rhino.gif",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
     ],
   },
   {
     id: "3",
-    image: "/img/siberian-tiger.png",
-    gif: "/videos/siberian-tiger.mov",
+    image:
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
+    gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
     name: "Siberian Tiger",
-    slug: 'siberian-tiger',
+    slug: "siberian-tiger",
     scientificName: "Panthera tigris sumatrae",
     description: `<p class="mb-6">The Siberian tiger, a subspecies of tiger, is the largest cat in the world from the Russian Far East, Northeast China, and possibly North Korea. It once ranged throughout the Korean Peninsula, north China, and eastern Mongolia. It averages about 11 feet in total length, with a tail that accounts for approximately 3 feet of it. Adult male Siberian tigers can weigh up to 700 pounds, while females are significantly smaller, weighing up to 400 pounds.
 </p><p>
@@ -64,17 +66,18 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "3 meters (12 ft)",
     habitat: "Lowland to mountain forests",
     images: [
-      "/images/gifs/siberian-tiger.gif",
-      "/images/gifs/siberian-tiger.gif",
-      "/images/gifs/siberian-tiger.gif",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
     ],
   },
   {
     id: "4",
-    image: "/img/clouded-leopard.png",
-    gif: "/videos/clouded-leopard.mov",
+    image:
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332847/zoo/images/clouded-leopard_piqix9.png",
+    gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/clouded-leopard_tmjty9.mov",
     name: "Clouded leopard",
-    slug: 'clouded-leopard',
+    slug: "clouded-leopard",
     scientificName: "Panthera pardus orientalis",
     description: `<p class="mb-6">The Amur leopard is one of 10 subspecies of leopard, and one of the world’s rarest cats, with an estimated population of under 70 individuals left in the wild. They all live in a small area that hugs Russia’s far eastern border with China.</p>
     <p>
@@ -84,17 +87,18 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "Up to 3.1 meters (7 feet)",
     habitat: "Temperate, Broadleaf Forest/Mountains",
     images: [
-      "/images/gifs/clouded-leopard.gif",
-      "/images/gifs/clouded-leopard.gif",
-      "/images/gifs/clouded-leopard.gif",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/clouded-leopard_tmjty9.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/clouded-leopard_tmjty9.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/clouded-leopard_tmjty9.mov",
     ],
   },
   {
     id: "5",
-    image: "/img/hippo.png",
-    gif: "/videos/hippo.mov",
+    image:
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332795/zoo/images/hippo_i4grms.png",
+    gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/hippo_xpzo3k.mov",
     name: "Pygmy Hippo",
-    slug: 'pygmy-hippo',
+    slug: "pygmy-hippo",
     scientificName: "Cheropsis liberiensis",
     description: `<p class="mb-6">The Pygmy Hippopotamus looks like a miniature version of its larger relative, the Hippopotamus (also known as the river or common hippopotamus), but it differs greatly in both behavior and physical characteristics. The Pygmy Hippo has adaptations for spending time in the water but is far less aquatic than the hippo. Its nose and ears close underwater just like its larger cousin’s do, but its head is rounder and narrower, its neck is proportionally longer, and its eyes are not on the top of its head.</p>The Pygmy Hippopotamus is much more rare in the wild, too, found only in the interior forests in parts of West Africa, mainly confined to Liberia, with small numbers in the neighboring countries of Sierra Leone, Guinea, and the Ivory Coast.<p>
 
@@ -103,14 +107,19 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     population: "2,000 to 3,000",
     size: "1 meters (3 ft)",
     habitat: "Forests and Swamps",
-    images: ["/videos/hippo.mov", "/videos/hippo.mov", "/videos/hippo.mov"],
+    images: [
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/hippo_xpzo3k.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/hippo_xpzo3k.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/hippo_xpzo3k.mov",
+    ],
   },
   {
     id: "6",
-    image: "/img/giraffe.png",
-    gif: "/videos/giraffe.mov",
+    image:
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332705/zoo/images/giraffe_caohec.png",
+    gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/giraffe_dz5ed1.mov",
     name: "Nubian Giraffe",
-    slug: 'nubian-giraffe',
+    slug: "nubian-giraffe",
     scientificName: "Canis simensis",
     description: `<p class="mb-6">The tallest of all giraffes is the Nubian species. This means they are considered to be the tallest land animal on the Earth, measuring up to a remarkable 6 meters, or 20 feet tall! They can also weigh approximately 2,800 pounds, with the males outweighing the females by several hundred pounds. The Nubian Giraffe is endangered with less than 2,645 individuals remaining, are now just one stage from becoming extinct in the wild.</p>
     <p>A distinguishing feature of the Nubian Giraffe is the number of horns on top of it’s head. Other Giraffe species typically have two horns, but the Nubian Giraffe can have up to five! They have two in the same place as other giraffes, one in the center, and two behind those.</p>`,
@@ -119,17 +128,18 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "1.5 meters (9 ft)",
     habitat: "Savannahs and Woodlands",
     images: [
-      "/videos/giraffe.mov",
-      "/videos/giraffe.mov",
-      "/videos/giraffe.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/giraffe_dz5ed1.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/giraffe_dz5ed1.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/giraffe_dz5ed1.mov",
     ],
   },
   {
     id: "7",
-    image: "/img/red-wolf.png",
-    gif: "/videos/red-wolf.mov",
+    image:
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332820/zoo/images/red-wolf_tjiwez.png",
+    gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644336263/zoo/red-wolf_hq2iuv.mov",
     name: "Red Wolf",
-    slug: 'red-wolf',
+    slug: "red-wolf",
     scientificName: "Canis simensis",
     description: `<p class="mb-6">The Red Wolf is the world’s most endangered member of the Canine family.</p>
     <p class="mb-6">Native to the United States, Red Wolves (Canis rufus) have a tawny, reddish coat, and they are intermediate in size between grey wolves and coyotes. That makes sense, as these two species interbred in the past to produce the red wolves’ ancestors. Nevertheless, recent research shows that red wolves are a unique species.</p><p>The only place where red wolves remain in the wild is the Alligator River National Wildlife Refuge in eastern North Carolina, and surrounding counties. There are only an estimated 35 or fewer wild red wolves.
@@ -139,9 +149,9 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "1.2 meters (4 ft)",
     habitat: "Forest, wetlands & bushlands",
     images: [
-      "/videos/red-wolf.mov",
-      "/videos/red-wolf.mov",
-      "/videos/red-wolf.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644336263/zoo/red-wolf_hq2iuv.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644336263/zoo/red-wolf_hq2iuv.mov",
+      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644336263/zoo/red-wolf_hq2iuv.mov",
     ],
   },
 ];

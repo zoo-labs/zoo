@@ -23,7 +23,7 @@ const MarketPlaceSection = () => {
       <div className="flex flex-col items-center px-6 mx-auto pb-16 lg:py-28 lg:flex-row max-w-7xl">
         <div className="relative z-30 flex mb-8 basis-1/2">
           <video autoPlay loop={true} playsInline={true} muted>
-            <source src="/videos/phones.mov"></source>
+            <source src="https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/phones_nhqvji.mov"></source>
           </video>
         </div>
         <div className="flex flex-col items-center lg:items-start basis-1/2 lg:max-w-lg lg:mx-auto">

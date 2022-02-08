@@ -11,14 +11,14 @@ import BlogCards from "components/BlogCards";
 const news = [
   {
     name: "Introducing - Zoo Labs: Wildlife Conservation Powered by DeFi",
-    image: "/img/zoo.svg",
+    image: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644331375/zoo/images/zoo_jqxsaz.svg",
     link: "https://zoolabsofficial.medium.com/introducing-zoo-labs-wildlife-conservation-powered-by-defi-67eacef5a07",
     date: "Jan 6, 2022",
     writtenBy: 'Lou Di Monaco',
   },
   {
     name: "NFT: The Most Misunderstood 3 Letters in Decentralized Finance",
-    image: "/img/introducing.svg",
+    image: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644331379/zoo/images/introducing_iyc6cj.svg",
     link: "https://zoolabsofficial.medium.com/nft-the-most-misunderstood-3-letters-in-decentralized-finance-c901ba7f94eb",
     date: "Jan 27, 2022",
     writtenBy: 'Lou Di Monaco',
@@ -28,7 +28,7 @@ const news = [
 const guides = [
   {
     name: "How to Buy $ZOO",
-    image: "/img/buy-zoo.svg",
+    image: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644331377/zoo/images/buy-zoo_sszkrs.svg",
     link: "https://prezi.com/i/view/fWOPqU2eZzcqYyVzb5pz",
     date: "Feb 1, 2022",
     writtenBy: 'Lou Di Monaco',
@@ -63,7 +63,7 @@ const Blog = () => {
         <div className="flex flex-col items-center max-w-xl max-h-[494px] mx-auto lg:flex-row lg:items-stretch lg:max-w-5xl">
           <div className="overflow-hidden rounded-l-2xl lg:basis-1/2">
             <Image
-              src="/img/zoo.svg"
+              src="https://res.cloudinary.com/diu8hjwwe/image/upload/v1644331375/zoo/images/zoo_jqxsaz.svg"
               width={565}
               height={600}
               alt=""

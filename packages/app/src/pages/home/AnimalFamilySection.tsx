@@ -7,10 +7,11 @@ import { useGif } from "context/GifContext";
 const animalFamilyData = [
   {
     id: "1",
-    image: "/img/sumatran-elephant.png",
-    gif: "/videos/sumatran-elephant.mov",
+    image:
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
+    gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
     name: "Sumatran Elephant",
-    slug: 'sumatran-elephant',
+    slug: "sumatran-elephant",
     scientificName: " Elephas Maximus Sumatranus",
     description: `Sumatran elephants feed on a variety of plants and deposit seeds
     wherever they go, contributing to a healthy forest ecosystem.
@@ -21,18 +22,18 @@ const animalFamilyData = [
     size: "6.6 - 10.5 Feet",
     habitat: "Tropical Forests",
     images: [
-      "/img/sumatran-elephant.png",
-      "/img/sumatran-elephant.png",
-      "/img/sumatran-elephant.png",
-      "/img/sumatran-elephant.png",
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
     ],
   },
   {
     id: "2",
-    image: "/img/javan-rhino.png",
-    gif: "/videos/javan-rhino.mov",
+    image:
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
+    gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
     name: "Javan Rhino",
-    slug: 'javan-rhino',
+    slug: "javan-rhino",
     scientificName: "Rhinoceros Sondaicus",
     description: `Once the most widespread of Asian rhinoceroses, the Javan
     rhinoceros ranged from the islands of Java and Sumatra,
@@ -45,18 +46,18 @@ const animalFamilyData = [
     size: "6.6 - 10.5 Feet",
     habitat: "Forests",
     images: [
-      "/img/javan-rhino.png",
-      "/img/javan-rhino.png",
-      "/img/javan-rhino.png",
-      "/img/javan-rhino.png",
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
     ],
   },
   {
     id: "3",
-    image: "/img/siberian-tiger.png",
-    gif: "/videos/siberian-tiger.mov",
+    image:
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
+    gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
     name: "Siberian Tiger",
-    slug: 'siberian-tiger',
+    slug: "siberian-tiger",
     scientificName: "Siberian Tiger",
     description: `The Siberian tiger is a tiger from a specific population of the
     Panthera tigris tigris subspecies native to the Russian Far
@@ -69,9 +70,9 @@ const animalFamilyData = [
     size: "6.6 - 10.5 Feet",
     habitat: "Tropical Forests",
     images: [
-      "/img/siberian-tiger.png",
-      "/img/siberian-tiger.png",
-      "/img/siberian-tiger.png",
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
     ],
   },
 ];
