@@ -143,7 +143,7 @@ video {
 }
 
 .MarketPlace {
-  background: url("/img/leaves.png");
+  background: url("https://res.cloudinary.com/diu8hjwwe/image/upload/v1644331325/zoo/images/leaves_fthdmy.png");
   background-repeat: no-repeat;
   background-position: bottom right;
   background-size: 50%;
@@ -159,7 +159,7 @@ video {
 
 /* Animation */
 .bg-image {
-  background: url("/img/bg-leaves.png");
+  background: url("https://res.cloudinary.com/diu8hjwwe/image/upload/v1644331347/zoo/images/bg-leaves_icwizm.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;

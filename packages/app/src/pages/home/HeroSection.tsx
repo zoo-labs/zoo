@@ -68,7 +68,7 @@ const HeroSection = () => {
           {gifMode === "gif" ? (
             <video autoPlay loop={true} playsInline={true} muted>
               <source
-                src="/videos/hero-video.mov"
+                src="https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/hero-video_gum6sk.mov"
                 type="video/mp4"
               ></source>
             </video>

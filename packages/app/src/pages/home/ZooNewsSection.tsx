@@ -27,7 +27,7 @@ const ZooNewsSection = () => {
         <div className="flex flex-col items-center max-w-xl lg:max-h-[494px] mx-auto lg:flex-row lg:items-stretch lg:max-w-5xl">
           <div className="overflow-hidden rounded-l-2xl lg:basis-1/2">
             <Image
-              src="/img/zoo.svg"
+              src="https://res.cloudinary.com/diu8hjwwe/image/upload/v1644331375/zoo/images/zoo_jqxsaz.svg"
               width={565}
               height={600}
               alt=""
