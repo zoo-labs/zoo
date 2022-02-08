@@ -31,7 +31,7 @@ export const faqData = [
     question: "What are the key game features in ZOO?",
     answer: `Our key features include: growing, breeding, youth elixir (back in time), age freezing.
 			<br />
-			In the near future we will also launch an app with our ZOO augmented reality game. This apple will load the NFTs in your wallet. With the app you will be able to see your NFT in real time with much more animal engagement including: petting, make the animal roll over, shake animals paw, give animal kiss, receive kiss, feed your animal, and walking with your animal. 
+			In the near future we will also launch an app with our ZOO augmented reality game. This apple will load the NFTs in your wallet. With the app you will be able to see your NFT in real time with much more animal engagement including: petting, make the animal roll over, shake animals paw, give animal kiss, receive kiss, feed your animal, and walking with your animal.
 			`,
   },
   {
@@ -43,9 +43,9 @@ export const faqData = [
     question: "Where to buy $ZOO tokens?",
     answer: `Please find the official smart contract address of $ZOO here:
 		<span class="font-bold">0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13</span> <br/>
-		
+
 		<a href="https://pancakeswap.finance/swap?outputCurrency=$0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13" target="_blank" rel="noreferrer" class="text-green text-underline">https://pancakeswap.finance/swap?outputCurrency=$0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13</a> <br />
-		
+
 		 Pancakeswap trading link: <a href="https://pancakeswap.finance/swap" target="_blank" rel="noreferrer" class="text-green text-underline">https://pancakeswap.finance/swap</a>
 		`,
   },
@@ -55,8 +55,7 @@ export const faqData = [
   },
   {
     question: "I need help",
-    answer: `If you"re having difficulty, please join our Discord server and post in the <span class="font-bold">#new-player-help</span> channel and our community will be happy to help!
-		In addition, a complete list of guides can be found <a href="https://bit.ly/JihozAxieResources" class="text-green" target="_blank" rel="noreferrer">here</a>.`,
+    answer: `If you"re having difficulty, please join our Discord server and post in the <span class="font-bold">#new-player-help</span> channel and our community will be happy to help!`,
   },
   {
     question: "Where can I interact and meet more members of the community?",
@@ -74,7 +73,7 @@ export const faqData = [
   {
     question: "What is a Wallet?",
     answer: `A wallet is a secure place to store your digital items, whether they be cards, boards, trinkets, Ether or anything else you may come across. Every wallet has a unique wallet ID, and this is the thing that links your digital assets to you. What"s more, they are completely free to set up and own.<br />
-		When you purchase anything on the ZOO marketplace the NFTs are stored in your wallet, but only if you have one linked to the game.<br /> 
+		When you purchase anything on the ZOO marketplace the NFTs are stored in your wallet, but only if you have one linked to the game.<br />
 		We recommend using MetaMask to set up a new wallet or link an existing wallet as it has the best functionality with ZOO. MetaMask is a browser extension that easily allows you to interact with the BSC network. With this extension, you can set up a wallet and link it to ZOO to make purchases, sign in, and store your in-game items`,
   },
   {
@@ -88,7 +87,7 @@ export const faqData = [
 			<li>5. Link wallet: Head to the Manage Wallet section of the Gods Unchained website by clicking on your profile image in the top right. Click the Add Wallet button.</li>
 		</ol>
 		<br />
-		It"s important to note that connecting and linking your wallet doesn"t give us any power over your wallet or its contents, it simply shows NFT belong to you so you can play with and sell them. That"s the beauty of true ownership! 
+		It"s important to note that connecting and linking your wallet doesn"t give us any power over your wallet or its contents, it simply shows NFT belong to you so you can play with and sell them. That"s the beauty of true ownership!
 		`,
   },
   {
@@ -144,7 +143,7 @@ const Faqs = () => {
   return (
     <div className="">
       <div className="px-4 pt-16 pb-16 mx-auto lg:max-w-7xl">
-        <h1 className="mb-8 text-4xl font-bold text-center lg:text-5xl mt-20 lg:mt-16">
+        <h1 className="mt-20 mb-8 text-4xl font-bold text-center lg:text-5xl lg:mt-16">
           Frequently asked questions
         </h1>
 
