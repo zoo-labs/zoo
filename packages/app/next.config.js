@@ -10,7 +10,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const nextConfig = {
   env: {},
   images: {
-    domains: ["raw.githubusercontent.com"],
+    domains: ["raw.githubusercontent.com", "res.cloudinary.com"],
   },
   // async redirects() {
   //   return [
