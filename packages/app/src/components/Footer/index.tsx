@@ -90,13 +90,9 @@ const Footer = () => {
               )}
             </div> */}
             <div className="mb-2">
-              <a
-                href="https://zoolabs.gitbook.io/whitepaper/introduction/introduction"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Whitepaper
-              </a>
+              <Link href="/whitepaper">
+                <a>Whitepaper</a>
+              </Link>
             </div>
             <div className="mb-2">
               <Link href="/blog">
