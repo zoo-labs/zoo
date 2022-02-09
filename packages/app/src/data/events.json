@@ -1,20 +1,5 @@
 [
-  {
-    "id": "1",
-    "title": "Marketplace Launch",
-    "description": "After much anticipation, we are proud to announce the launch of the ZOO Market. Now all users can buy, sell, trade and bid on all ZOO creatures, including our NFT Animals and our unhatched NFT Eggs.",
-    "date": "2022-02-01",
-    "time": "10:00",
-    "location": "Zoolabs.io"
-  },
-  {
-    "id": "2",
-    "title": "Upgrades Available",
-    "description": "This is the second lab event, it is a good one. It is a good one. Now all users can buy, sell, trade and bid on all ZOOcreatures, including our NFT Animals and our unhatched NFT Eggs.",
-    "date": "2022-02-12",
-    "time": "10:00",
-    "location": "Room 2"
-  },
+ 
   {
     "id": "3",
     "title": "First AMA 2022",
