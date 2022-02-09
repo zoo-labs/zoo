@@ -27,8 +27,6 @@ const LabEvents = () => {
   };
 
   const dummyEvents = [
-    { text: "Marketplace Launch", day: "1st" },
-    { text: "Upgrades Available ", day: "12th" },
     { text: "First AMA 2022 ", day: "20th" },
     { text: "New Animal Party ", day: "31st" },
   ];
