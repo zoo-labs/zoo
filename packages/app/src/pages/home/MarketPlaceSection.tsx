@@ -12,14 +12,14 @@ import { t } from "@lingui/macro";
 const MarketPlaceSection = () => {
   const { account, chainId, library } = useActiveWeb3React();
 
-  const marketRef = useRef();
+  // const marketRef = useRef();
 
-  useEffect(() => {
-    fadeInOnScroll(marketRef.current);
-  }, []);
+  // useEffect(() => {
+  //   fadeInOnScroll(marketRef.current);
+  // }, []);
 
   return (
-    <section className="MarketPlace" ref={marketRef}>
+    <section className="MarketPlace" >
       <div className="flex flex-col items-center px-6 mx-auto pb-16 lg:py-28 lg:flex-row max-w-7xl">
         <div className="relative z-30 flex mb-8 basis-1/2">
           <video autoPlay loop={true} playsInline={true} muted>

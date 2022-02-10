@@ -5,19 +5,19 @@ import Image from "next/image";
 import { fadeInFromLeft, fadeInFromRight } from "../../animation";
 
 const GetStartedSection = () => {
-  const getStartedContentRef = React.useRef();
-  const getStartedImageRef = React.useRef();
+  // const getStartedContentRef = React.useRef();
+  // const getStartedImageRef = React.useRef();
 
-  useEffect(() => {
-    fadeInFromLeft(getStartedContentRef.current);
-    fadeInFromRight(getStartedImageRef.current);
-  }, []);
+  // useEffect(() => {
+  //   fadeInFromLeft(getStartedContentRef.current);
+  //   fadeInFromRight(getStartedImageRef.current);
+  // }, []);
   return (
     <section className="GetStarted" id="about">
       <div className="px-6 pb-20 mx-auto max-w-7xl lg:flex lg:items-center lg:justify-between">
         <div
           className="mb-6 text-center lg:text-left"
-          ref={getStartedContentRef}
+          // ref={getStartedContentRef}
         >
           <h2 className="mb-6 text-3xl font-bold md:text-4xl lg:text-5xl">
             Make yield and do good.
@@ -37,7 +37,7 @@ const GetStartedSection = () => {
         </div>
         <div
           className="flex flex-col items-center lg:absolute lg:right-0"
-          ref={getStartedImageRef}
+          // ref={getStartedImageRef}
         >
           <Image src="https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332367/zoo/images/zoo-hippo_dn5vrq.png" width={603} height={450} alt="" />
         </div>
