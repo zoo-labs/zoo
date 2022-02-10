@@ -19,22 +19,22 @@ const HeroSection = () => {
   const buyZoo = useBuyZoo();
   const faucet = useFaucet();
 
-  const heroContent = useRef();
-  const heroImage = useRef();
+  // const heroContent = useRef();
+  // const heroImage = useRef();
 
   const { state } = useGif();
   const { gifMode } = state;
 
-  useEffect(() => {
-    fadeInFromLeft(heroContent.current);
-    fadeInOnScroll(heroImage.current);
-  }, []);
+  // useEffect(() => {
+  //   fadeInFromLeft(heroContent.current);
+  //   fadeInOnScroll(heroImage.current);
+  // }, []);
 
   return (
     <section className="mt-24 Hero">
       <div
         className="px-6 pt-16 pb-16 Hero__inner md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-between"
-        ref={heroContent}
+        // ref={heroContent}
       >
         <div className="mb-6 Hero__content md:mb-12 md:flex md:flex-col md:items-center md:text-center md:max-w-7xl lg:items-start lg:text-left lg:basis-1/2">
           <p className="mb-2 uppercase text-green">Nfts made Fun.</p>
@@ -63,7 +63,7 @@ const HeroSection = () => {
         </div>
         <div
           className="max-w-md Hero__image lg:max-w-xl lg:basis-1/2 flex justify-center"
-          ref={heroImage}
+          // ref={heroImage}
         >
           {gifMode === "gif" ? (
             <video autoPlay loop={true} playsInline={true} muted>
