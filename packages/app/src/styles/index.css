@@ -171,7 +171,7 @@ video {
   height: 200px;
   border: 10px solid #2517ff;
   border-radius: 50%;
-  position: fixed;
+  position: absolute;
   margin-left: auto;
   margin-right: auto;
 }
