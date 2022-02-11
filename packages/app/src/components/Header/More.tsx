@@ -57,9 +57,8 @@ export default function Menu() {
   const { i18n } = useLingui();
   const solutions = items(i18n);
   const [animationMode, toggleSetAnimationMode] = useAnimationModeManager();
-  console.log("animationMode", animationMode);
+
   const { state, dispatch } = useGif();
-  console.log("VICTOR", state.gifMode);
 
   const toggleGifMode = () => {
     if (state.gifMode === "gif") {
