@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from 'next/link';
 
 // animation
 import { fadeInOnScroll } from "animation";
@@ -100,14 +101,12 @@ const Blog = () => {
                 There are still many users that never added the new $ZOO token
                 address into their BSC Mainnet Wallet...
               </p>
-              <a
-                className="bg-gradient-to-b from-purple to-blue text-white  text-sm md:text-base font-semibold px-8 py-3 md:px-6 lg:px-16 rounded-full"
-                href="https://zoolabsofficial.medium.com/introducing-zoo-labs-wildlife-conservation-powered-by-defi-67eacef5a07"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Read full story
-              </a>
+            
+              <Link href="/blog/guide">
+                <a className="bg-gradient-to-b from-purple to-blue text-white  text-sm md:text-base font-semibold px-8 py-3 md:px-6 lg:px-16 rounded-full">
+                  Read full story
+                </a>
+              </Link>
             </div>
           </div>
         </div>
