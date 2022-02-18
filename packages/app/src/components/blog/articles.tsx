@@ -12,9 +12,9 @@ interface Props {
 }
 const Article: FC<Props> = ({ article: { name, image, link, date, writtenBy, isNew } }) => {
   return (
-    <div className="mb-8 lg:mb-8 bg-dark-blue flex flex-col max-w-sm md:max-w-lg border border-opacity-30 rounded">
+    <div className="mb-8 lg:mb-8 bg-dark-blue flex flex-col w-full max-w-sm md:max-w-lg border border-opacity-30 rounded">
       <a href={`${link}`} target="_blank" rel="noreferrer">
-        <div className="mb-4 rounded overflow-hidden border-b border-opacity-30">
+        <div className="mb-4 rounded overflow-hidden border-b border-opacity-30 bg-dark">
           <Image
             src={image}
             width="100%"
