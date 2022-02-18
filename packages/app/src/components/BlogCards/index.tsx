@@ -3,7 +3,7 @@ import Article from "components/blog/articles";
 const BlogCards = ({data}:any) => {
 	return (
 		<section className="pb-16 px-6 lg:max-w-7xl lg:mx-auto ">
-        <div className="flex flex-col mb-16 lg:grid lg:grid-cols-3 md:grid-cols-1 md:place-items-center lg:place-items-stretch lg:gap-12 ">
+        <div className="flex flex-col items-center mb-16 lg:grid lg:grid-cols-3 lg:place-items-stretch lg:gap-12 ">
           {data.map((article) => (
             <Article article={article} key={article.name} />
           ))}
