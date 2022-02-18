@@ -227,9 +227,10 @@ video {
 
 @media only screen and (min-width: 601px) {
   .big-circle {
-    width: 400px;
-    max-width: 400px;
-    height: 400px;
+    width: 300px;
+    max-width: 300px;
+    height: 300px;
+    margin-left: 30px;
   }
 
   .animal-content {
@@ -247,19 +248,19 @@ video {
   .incubate {
     position: absolute;
     top: -80px;
-    left: 120px;
+    left: 70px;
   }
 
   .feed {
     position: absolute;
     top: 80px;
-    left: 300px;
+    left: 200px;
   }
 
   .breed {
     position: absolute;
-    top: 320px;
-    left: 120px;
+    top: 200px;
+    left: 80px;
   }
 
   .grow {
