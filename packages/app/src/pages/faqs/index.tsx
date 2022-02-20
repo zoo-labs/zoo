@@ -60,7 +60,7 @@ export const faqData = [
   },
   {
     question: "Where can I interact and meet more members of the community?",
-    answer: `Please join our <a href="https://discord.com/invite/FZzWUbMUK5" target="_blank" rel="noreferrer" class="text-green text-underline">Discord</a> server where you can meet the rest of the community!
+    answer: `Please join our <a href="https://discord.com/invite/43m9Sstd" target="_blank" rel="noreferrer" class="text-green text-underline">Discord</a> server where you can meet the rest of the community!
 		You can find the rest of our channels <a href="https://linktr.ee/AxieInfinity" target="_blank" rel="noreferrer" class="text-green text-underline">here</a>.`,
   },
   {
