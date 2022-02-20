@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import Calendar from "react-calendar";
 import data from "../../data/events.json";
+import Image from 'next/image';
 
 const LabEvents = () => {
   const formatDate = (date) => {
@@ -82,6 +83,9 @@ const LabEvents = () => {
       <h1 className="text-center text-4xl lg:text-6xl font-bold mb-8 mt-16">
         ZOO Labs Events
       </h1>
+      <div  className="flex flex-col mb-12 md:flex-row md:justify-center lg:justify-center lg:basis-2/3 lg:mb-16">
+        <Image src="/img/zoo-event.jpg" width={480} height={600} objectFit="contain" alt="" />
+      </div>
       <div className="flex flex-col md:flex-row lg:justify-center lg:basis-2/3 lg:mb-16">
         <div className="text-center flex bg-black100 px-4 py-8 rounded flex-col lg:flex-row lg:justify-between mr-4 gap-10">
           <Calendar
