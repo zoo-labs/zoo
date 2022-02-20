@@ -52,7 +52,7 @@ export default function Community() {
                   </Link>
                 )}
               </Menu.Item> */}
-              <Menu.Item>
+              {/* <Menu.Item>
                 {({ active }) => (
                   <Link href="/lab-events">
                     <a
@@ -64,7 +64,7 @@ export default function Community() {
                     </a>
                   </Link>
                 )}
-              </Menu.Item>
+              </Menu.Item> */}
             </div>
             <div className="px-2 py-2 lg:py-6 ">
               <Menu.Item>
