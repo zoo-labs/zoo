@@ -70,7 +70,7 @@ export default function Community() {
               <Menu.Item>
                 {({ active }) => (
                   <a
-                    href="https://discord.com/invite/FZzWUbMUK5"
+                    href="https://discord.com/invite/43m9Sstd"
                     target="_blank"
                     rel="noreferrer"
                     className={`${
