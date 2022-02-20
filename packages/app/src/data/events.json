@@ -15,13 +15,5 @@
     "date": "2022-02-28",
     "time": "10:00",
     "location": "Room 4"
-  },
-  {
-    "id": "5",
-    "title": "New Animal Party",
-    "description": "This is the first lab event, it is a good one. It is a good one. Now all users can buy, sell, trade and bid on all ZOOcreatures, including our NFT Animals and our unhatched NFT Eggs.",
-    "date": "2022-03-31",
-    "time": "10:00",
-    "location": "Room 5"
   }
 ]
