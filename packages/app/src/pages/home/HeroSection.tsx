@@ -31,13 +31,14 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="mt-24 Hero">
+    <section className="mt-24 Hero p-10">
       <div
         className="px-6 pt-16 pb-16 Hero__inner md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-between"
         ref={heroContent}
       >
         <div className="mb-6 Hero__content md:mb-12 md:flex md:flex-col md:items-center md:text-center md:max-w-7xl lg:items-start lg:text-left lg:basis-1/2">
           <p className="mb-2 uppercase text-green">Nfts made Fun.</p>
+
           <h1 className="mb-3 text-4xl font-bold lg:text-7xl lg:mb-6">
             Exotic animals for everyone.
           </h1>
@@ -67,10 +68,7 @@ const HeroSection = () => {
         >
           {gifMode === "gif" ? (
             <video autoPlay loop={true} playsInline={true} muted>
-              <source
-                src="/videos/hero-video.mov"
-                type="video/mp4"
-              ></source>
+              <source src="/videos/hero-video.mov" type="video/mp4"></source>
             </video>
           ) : (
             <Image
