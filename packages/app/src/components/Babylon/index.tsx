@@ -7,7 +7,7 @@ import {
   SceneLoader,
 } from "@babylonjs/core";
 import SceneComponent from "./SceneComponent";
-import anim from "../../assets/animations/TIGER_ADULT.glb";
+// import anim from "../../assets/animations/TIGER_ADULT.glb";
 
 const BabylonAnim = () => {
   let box;
