@@ -39,7 +39,7 @@ export default function Community() {
                   </a>
                 )}
               </Menu.Item> */}
-              <Menu.Item>
+              {/* <Menu.Item>
                 {({ active }) => (
                   <Link href="/#newsletter">
                     <a
@@ -51,8 +51,8 @@ export default function Community() {
                     </a>
                   </Link>
                 )}
-              </Menu.Item>
-              <Menu.Item>
+              </Menu.Item> */}
+              {/* <Menu.Item>
                 {({ active }) => (
                   <Link href="/lab-events">
                     <a
@@ -64,13 +64,13 @@ export default function Community() {
                     </a>
                   </Link>
                 )}
-              </Menu.Item>
+              </Menu.Item> */}
             </div>
             <div className="px-2 py-2 lg:py-6 ">
               <Menu.Item>
                 {({ active }) => (
                   <a
-                    href="https://discord.com/invite/FZzWUbMUK5"
+                    href="https://discord.com/invite/43m9Sstd"
                     target="_blank"
                     rel="noreferrer"
                     className={`${

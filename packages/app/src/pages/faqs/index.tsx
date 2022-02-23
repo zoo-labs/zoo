@@ -59,7 +59,8 @@ export const faqData = [
   },
   {
     question: "Where can I interact and meet more members of the community?",
-    answer: `Please join our <a href="https://welcome.skymavis.com/regional-servers/" target="_blank" rel="noreferrer" class="text-green text-underline">Discord</a> server where you can meet the rest of the community!`,
+    answer: `Please join our <a href="https://discord.com/invite/43m9Sstd" target="_blank" rel="noreferrer" class="text-green text-underline">Discord</a> server where you can meet the rest of the community!
+		You can find the rest of our channels <a href="https://linktr.ee/AxieInfinity" target="_blank" rel="noreferrer" class="text-green text-underline">here</a>.`,
   },
   {
     question: "Who created the artwork for ZOO?",
@@ -142,7 +143,7 @@ const Faqs = () => {
   return (
     <div className="">
       <div className="px-4 pt-16 pb-16 mx-auto lg:max-w-7xl">
-        <h1 className="mb-8 text-4xl font-bold text-center lg:text-5xl mt-20 lg:mt-16">
+        <h1 className="mt-20 mb-8 text-4xl font-bold text-center lg:text-5xl lg:mt-16">
           Frequently asked questions
         </h1>
 

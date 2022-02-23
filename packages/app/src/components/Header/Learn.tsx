@@ -42,16 +42,15 @@ export default function Learn() {
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="https://zoolabs.gitbook.io/whitepaper/introduction/introduction"
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`${
-                      active ? "bg-black text-white" : "text-white"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    Whitepaper
-                  </a>
+                  <Link href="/whitepaper">
+                    <a
+                      className={`${
+                        active ? "bg-black text-white" : "text-white"
+                      } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      Whitepaper
+                    </a>
+                  </Link>
                 )}
               </Menu.Item>
               <Menu.Item>

@@ -90,13 +90,9 @@ const Footer = () => {
               )}
             </div> */}
             <div className="mb-2">
-              <a
-                href="https://zoolabs.gitbook.io/whitepaper/introduction/introduction"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Whitepaper
-              </a>
+              <Link href="/whitepaper">
+                <a>Whitepaper</a>
+              </Link>
             </div>
             <div className="mb-2">
               <Link href="/blog">
@@ -238,7 +234,7 @@ const Footer = () => {
             <Image src="/img/instagram.svg" height={16} width={16} alt="" />{" "}
           </a>
           <a
-            href="https://discord.com/invite/FZzWUbMUK5"
+            href="https://discord.com/invite/43m9Sstd"
             target="_blank"
             rel="noreferrer"
           >

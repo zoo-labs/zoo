@@ -143,7 +143,7 @@ video {
 }
 
 .MarketPlace {
-  background: url("/img/leaves.png");
+  background: url("https://res.cloudinary.com/diu8hjwwe/image/upload/v1644331325/zoo/images/leaves_fthdmy.png");
   background-repeat: no-repeat;
   background-position: bottom right;
   background-size: 50%;
@@ -159,7 +159,7 @@ video {
 
 /* Animation */
 .bg-image {
-  background: url("/img/bg-leaves.png");
+  background: url("https://res.cloudinary.com/diu8hjwwe/image/upload/v1644331347/zoo/images/bg-leaves_icwizm.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;
@@ -171,7 +171,7 @@ video {
   height: 200px;
   border: 10px solid #2517ff;
   border-radius: 50%;
-  position: fixed;
+  position: absolute;
   margin-left: auto;
   margin-right: auto;
 }
@@ -227,16 +227,17 @@ video {
 
 @media only screen and (min-width: 601px) {
   .big-circle {
-    width: 400px;
-    max-width: 400px;
-    height: 400px;
+    width: 300px;
+    max-width: 300px;
+    height: 300px;
+    margin-left: 30px;
   }
 
   .animal-content {
     max-width: 150px;
-    top: 150px;
-    left: 130px;
-    font-size: 16px;
+    top: 110px;
+    left: 70px;
+    font-size: 14px;
   }
 
   .animate-animal {
@@ -247,19 +248,19 @@ video {
   .incubate {
     position: absolute;
     top: -80px;
-    left: 120px;
+    left: 70px;
   }
 
   .feed {
     position: absolute;
     top: 80px;
-    left: 300px;
+    left: 200px;
   }
 
   .breed {
     position: absolute;
-    top: 320px;
-    left: 120px;
+    top: 200px;
+    left: 80px;
   }
 
   .grow {
