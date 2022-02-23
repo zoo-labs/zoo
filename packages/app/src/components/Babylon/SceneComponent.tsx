@@ -1,4 +1,4 @@
-import { Engine, Scene } from "@babylonjs/core";
+import { Engine, Scene } from "babylonjs";
 import React, { useEffect, useRef } from "react";
 
 export default (props) => {

@@ -23,8 +23,6 @@
     ]
   },
   "dependencies": {
-    "@babylonjs/core": "^4.2.1",
-    "@babylonjs/gui": "^4.2.1",
     "@binance-chain/bsc-connector": "^1.0.0",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
@@ -70,6 +68,7 @@
     "@web3-react/walletlink-connector": "^6.2.8",
     "@welldone-software/why-did-you-render": "^6.2.3",
     "autoprefixer": "^10.4.0",
+    "babylonjs": "^4.2.1",
     "babylonjs-hook": "^0.1.0",
     "cookie-cutter": "^0.2.0",
     "fuse.js": "^6.5.3",

@@ -5,7 +5,7 @@ import {
   HemisphericLight,
   MeshBuilder,
   SceneLoader,
-} from "@babylonjs/core";
+} from "babylonjs";
 import SceneComponent from "./SceneComponent";
 // import anim from "../../assets/animations/TIGER_ADULT.glb";
 
