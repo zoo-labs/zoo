@@ -7800,6 +7800,11 @@ babylonjs-hook@^0.1.0:
   resolved "https://registry.yarnpkg.com/babylonjs-hook/-/babylonjs-hook-0.1.0.tgz#f091b8449131fce086040dfbe8faf0c0261565f8"
   integrity sha512-Xfyi4iHAa6jX8OLC5Sc8tezPIOXtFL6cO+nZVSofzS0ekDpS33y+X4mR63pS5+OZt+8NjoTkGFxkhEvMU4itOg==
 
+babylonjs@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/babylonjs/-/babylonjs-4.2.1.tgz#202808ac89f7c6bd5f1efa848f2781360034967e"
+  integrity sha512-FQdJ2VTENUpUJQ30ddihwTjV6K94kglET0P7jV8OQzjA4eez3sotmG22Fn9+8yb069SA26KnrAGOI2sKMQ7BCw==
+
 bach@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/bach/-/bach-1.2.0.tgz#4b3ce96bf27134f79a1b414a51c14e34c3bd9880"
