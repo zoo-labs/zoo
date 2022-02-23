@@ -1,17 +1,19 @@
 import _ from "lodash";
-// sections
-import HeroSection from "./HeroSection";
-import PartnersSection from "./PartnersSection";
-import OpportunitySection from "./OpportunitySection";
-// import PopularNftsSection from './PopularNftsSection';
-import MarketPlaceSection from "./MarketPlaceSection";
-import GetStartedSection from "./GetStartedSection";
-import ZooNewsSection from "pages/home/ZooNewsSection";
-import AnimalFamilySection from "./AnimalFamilySection";
-import JoinZooSection from "./JoinZooSection";
-import FaqSection from "./FaqSection";
-import { useTokenTypes } from "zoo/state";
 import ZooBabyAnim from "../../components/Babylon";
+import dynamic from "next/dynamic";
+
+// sections
+const HeroSection = dynamic(() => import("./HeroSection"));
+const PartnersSection = dynamic(() => import("./PartnersSection"));
+const OpportunitySection = dynamic(() => import("./OpportunitySection"));
+// import PopularNftsSection from './PopularNftsSection';
+const MarketPlaceSection = dynamic(() => import("./MarketPlaceSection"));
+const GetStartedSection = dynamic(() => import("./GetStartedSection"));
+const ZooNewsSection = dynamic(() => import("pages/home/ZooNewsSection"));
+const AnimalFamilySection = dynamic(() => import("./AnimalFamilySection"));
+const JoinZooSection = dynamic(() => import("./JoinZooSection"));
+const FaqSection = dynamic(() => import("./FaqSection"));
+import { useTokenTypes } from "zoo/state";
 
 const BASE_NFT_URL = "https://db.zoolabs.io";
 
@@ -32,6 +34,7 @@ export default function Home() {
     <div>
       <ZooBabyAnim></ZooBabyAnim>
       <HeroSection />
+
       <PartnersSection />
       <OpportunitySection />
       {/* <PopularNftsSection /> */}

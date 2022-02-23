@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
 // animation
-import { fadeInOnScroll } from "animation";
+// import { fadeInOnScroll } from "animation";
 
 import EndangeredSpecies from "components/EndangeredSpecies";
 
@@ -24,11 +24,11 @@ const OpportunitySection = () => {
   const [stage, setStage] = useState("");
   const [hovered, setHovered] = useState(false);
 
-  const sectionRef = React.useRef();
+  // const sectionRef = React.useRef();
 
-  useEffect(() => {
-    fadeInOnScroll(sectionRef.current);
-  }, []);
+  // useEffect(() => {
+  //   fadeInOnScroll(sectionRef.current);
+  // }, []);
 
   const displayContent = (desc: string) => {
     setStage(desc);
@@ -43,13 +43,14 @@ const OpportunitySection = () => {
   };
 
   return (
-    <section className="relative" ref={sectionRef} id="endless-opportunity">
+    <section className="relative" id="endless-opportunity">
       <div className="px-6 py-16 lg:mt-28">
         <h2 className="text-2xl md:text-2xl  lg:text-4xl text-center mb-16 font-semibold">
           Endless Yield Opportunity
         </h2>
         <div className="flex flex-col lg:flex-row justify-between items-center max-w-7xl mx-auto">
           <EndangeredSpecies />
+       
           <div className="relative w-screen h-screen flex flex-col justify-center items-center bg-image">
             <div className="big-circle">
               <div className="animal-content mx-auto">
@@ -57,7 +58,7 @@ const OpportunitySection = () => {
               </div>
               <div
                 className="animate-animal incubate"
-                style={hovered ? style : undefined}
+                // style={hovered ? style : undefined}
                 onMouseEnter={() =>
                   displayContent(
                     "Your NFT Egg to reveal the animal within and learn about it"
@@ -81,7 +82,7 @@ const OpportunitySection = () => {
                   )
                 }
                 onMouseOut={() => displayContent("")}
-                style={hovered ? style : undefined}
+                // style={hovered ? style : undefined}
               >
                 <Image
                   src="/img/feed-cycle.png"
@@ -99,7 +100,7 @@ const OpportunitySection = () => {
                   )
                 }
                 onMouseOut={() => displayContent("")}
-                style={hovered ? style : undefined}
+                // style={hovered ? style : undefined}
               >
                 <Image
                   src="/img/breed-cycle.png"
@@ -117,7 +118,7 @@ const OpportunitySection = () => {
                   )
                 }
                 onMouseOut={() => displayContent("")}
-                style={hovered ? style : undefined}
+                // style={hovered ? style : undefined}
               >
                 <Image
                   src="/img/grow-cycle.png"
