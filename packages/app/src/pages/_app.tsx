@@ -127,24 +127,24 @@ function MyApp({
           name="description"
           content="The future is decentralized."
         />
-        <meta name="application-name" content="Lux Defi" />
+        <meta name="application-name" content="Zoo Labs" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
-        <meta name="apple-mobile-web-app-title" content="Lux Defi" />
+        <meta name="apple-mobile-web-app-title" content="Zoo Labs" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="theme-color" content="#F338C3" />
         <meta key="twitter:card" name="twitter:card" content="app" />
-        <meta key="twitter:title" name="twitter:title" content="Lux Defi" />
+        <meta key="twitter:title" name="twitter:title" content="Zoo Labs" />
         <meta
           key="twitter:url"
           name="twitter:url"
-          content="https://zoo.financial/"
+          content="https://zoolabs.io"
         />
         <meta
           key="twitter:description"
@@ -154,7 +154,7 @@ function MyApp({
         <meta
           key="twitter:image"
           name="twitter:image"
-          content="https://zoo.financial/zoo.png"
+          content="https://zoolabs.io/zoo.png"
         />
         <meta
           key="twitter:creator"
@@ -162,12 +162,12 @@ function MyApp({
           content="@SushiSwap"
         />
         <meta key="og:type" property="og:type" content="website" />
-        <meta key="og:site_name" property="og:site_name" content="Lux Defi" />
-        <meta key="og:url" property="og:url" content="https://zoo.financial" />
+        <meta key="og:site_name" property="og:site_name" content="Zoo Labs" />
+        <meta key="og:url" property="og:url" content="https://zoolabs.io" />
         <meta
           key="og:image"
           property="og:image"
-          content="https://zoo.financial/zoo.png"
+          content="https://zoolabs.io/zoo.png"
         />
         <meta
           key="og:description"
