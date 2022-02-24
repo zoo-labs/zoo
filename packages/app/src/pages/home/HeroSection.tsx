@@ -14,7 +14,7 @@ import { handleFunds } from "utils/handleFunds";
 import { useGif } from "context/GifContext";
 import { createRequire } from "module";
 
-const HeroSection = () => {
+const HeroSection = ({ animal3d }) => {
   const { account, library, chainId } = useWeb3React();
   const buyZoo = useBuyZoo();
   const faucet = useFaucet();
@@ -31,7 +31,7 @@ const HeroSection = () => {
   // }, []);
 
   return (
-    <section className="mt-24 Hero p-10">
+    <section className="mt-24 Hero  ">
       <div
         className="px-6 pt-16 pb-16 Hero__inner md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-between"
         // ref={heroContent}
@@ -66,7 +66,8 @@ const HeroSection = () => {
           className="max-w-md Hero__image lg:max-w-xl lg:basis-1/2 flex justify-center"
           // ref={heroImage}
         >
-          {gifMode === "gif" ? (
+          {animal3d}
+          {/* {gifMode === "gif" ? (
             <video autoPlay loop={true} playsInline={true} muted>
               <source
                 src="https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/hero-video_gum6sk.mov"
@@ -80,7 +81,7 @@ const HeroSection = () => {
               height={612}
               alt="leopard"
             />
-          )}
+          )} */}
         </div>
       </div>
     </section>
