@@ -125,22 +125,22 @@ function MyApp({
         <meta
           key="description"
           name="description"
-          content="The future is decentralized."
+          content="ZOO is an decentralized protocol to collect, breed, and trade Metaverse-ready 3D animals on the blockchain."
         />
-        <meta name="application-name" content="Zoo Labs" />
+        <meta name="application-name" content="ZOO" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
-        <meta name="apple-mobile-web-app-title" content="Zoo Labs" />
+        <meta name="apple-mobile-web-app-title" content="ZOO" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="theme-color" content="#F338C3" />
         <meta key="twitter:card" name="twitter:card" content="app" />
-        <meta key="twitter:title" name="twitter:title" content="Zoo Labs" />
+        <meta key="twitter:title" name="twitter:title" content="ZOO" />
         <meta
           key="twitter:url"
           name="twitter:url"
@@ -149,7 +149,7 @@ function MyApp({
         <meta
           key="twitter:description"
           name="twitter:description"
-          content="The future is decentralized."
+          content="ZOO is an decentralized protocol to collect, breed, and trade Metaverse-ready 3D animals on the blockchain."
         />
         <meta
           key="twitter:image"
@@ -162,7 +162,7 @@ function MyApp({
           content="@SushiSwap"
         />
         <meta key="og:type" property="og:type" content="website" />
-        <meta key="og:site_name" property="og:site_name" content="Zoo Labs" />
+        <meta key="og:site_name" property="og:site_name" content="ZOO" />
         <meta key="og:url" property="og:url" content="https://zoolabs.io" />
         <meta
           key="og:image"
@@ -172,7 +172,7 @@ function MyApp({
         <meta
           key="og:description"
           property="og:description"
-          content="The future is decentralized."
+          content="ZOO is an decentralized protocol to collect, breed, and trade Metaverse-ready 3D animals on the blockchain."
         />
         <script src="https://cdn.babylonjs.com/babylon.js"></script>
         <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
