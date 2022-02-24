@@ -64,5 +64,5 @@ export default (props) => {
     }
   }, [reactCanvas]);
 
-  return <canvas className="h-full w-full" ref={reactCanvas} {...rest} />;
+  return <canvas className="h-full w-full " ref={reactCanvas} {...rest} />;
 };

@@ -6,6 +6,8 @@ import {
   MeshBuilder,
   SceneLoader,
   Color3,
+  ActionManager,
+  ArcRotateCamera,
 } from "babylonjs";
 import "babylonjs-loaders";
 import SceneComponent from "./SceneComponent";
@@ -16,12 +18,30 @@ const BabylonAnim = () => {
 
   const onSceneReady = (scene) => {
     // This creates and positions a free camera (non-mesh)
-    var camera = new FreeCamera("camera1", new Vector3(10, 0, 20), scene);
-    // This targets the camera to scene origin
-    camera.setTarget(Vector3.Zero());
+    // var camera = new FreeCamera("camera1", new Vector3(10, 0, 13), scene);
+    // // This targets the camera to scene origin
+    // camera.setTarget(Vector3.Zero());
+
+    // Parameters: name, alpha, beta, radius, target position, scene
+    var camera2 = new BABYLON.ArcRotateCamera(
+      "Camera",
+      0,
+      0,
+      10,
+      new BABYLON.Vector3(0, 0, 0),
+      scene
+    );
+
+    // Positions the camera2 overwriting alpha, beta, radius
+    camera2.setPosition(new BABYLON.Vector3(0, 0, 20));
+
     const canvas = scene.getEngine().getRenderingCanvas();
+
+    // This attaches the camera2 to the canvas
+    camera2.attachControl(canvas, true);
+
     // This attaches the camera to the canvas
-    camera.attachControl(canvas, true);
+    //camera.attachControl(canvas, true);
     // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
     var light = new HemisphericLight("light", new Vector3(0, 5, 0), scene);
     // Default intensity is 1. Let's dim the light a small amount
@@ -34,7 +54,7 @@ const BabylonAnim = () => {
 
     //box.position.y = 2;
 
-    SceneLoader.ImportMeshAsync("", "./models/", "TigerTeen.glb").then(
+    tiger = SceneLoader.ImportMeshAsync("", "./models/", "TigerTeen.glb").then(
       (result) => {
         console.log("ImportMeshAsync", result);
         // result.meshes[0].position.x = -2;
@@ -43,8 +63,6 @@ const BabylonAnim = () => {
         //result.meshes[0].rotation.x = 15;
         // result.meshes[0].rotation.y = 4;
         //  result.meshes[0].rotation.z = 2;
-
-        const myMesh1 = scene.getMeshByName("myMesh_1");
       }
     );
 
@@ -66,7 +84,7 @@ const BabylonAnim = () => {
   };
   return (
     <div className="h-full w-full flex flex-col justify-center items-center ">
-      <div className="w-full  h-[600px]">
+      <div className="w-full  h-[500px]">
         <SceneComponent
           antialias
           onSceneReady={onSceneReady}
