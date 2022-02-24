@@ -66,7 +66,7 @@ const BabylonAnim = () => {
   };
   return (
     <div className="h-full w-full flex flex-col justify-center items-center ">
-      <div className="  h-[600px]">
+      <div className="w-full  h-[600px]">
         <SceneComponent
           antialias
           onSceneReady={onSceneReady}
