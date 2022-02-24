@@ -23,6 +23,7 @@
     ]
   },
   "dependencies": {
+    "@babylonjs/loaders": "^4.2.1",
     "@binance-chain/bsc-connector": "^1.0.0",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
@@ -70,6 +71,7 @@
     "autoprefixer": "^10.4.0",
     "babylonjs": "^4.2.1",
     "babylonjs-hook": "^0.1.0",
+    "babylonjs-loaders": "^4.2.1",
     "cookie-cutter": "^0.2.0",
     "fuse.js": "^6.5.3",
     "graphql-request": "^3.7.0",
