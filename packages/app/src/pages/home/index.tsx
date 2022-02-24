@@ -32,8 +32,7 @@ export default function Home() {
 
   return (
     <div>
-      <ZooBabyAnim></ZooBabyAnim>
-      <HeroSection />
+      <HeroSection animal3d={<ZooBabyAnim />} />
 
       <PartnersSection />
       <OpportunitySection />

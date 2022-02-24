@@ -1,4 +1,12 @@
-import { Engine, Scene } from "babylonjs";
+import {
+  Engine,
+  Scene,
+  SceneLoader,
+  FreeCamera,
+  Vector3,
+  Color4,
+} from "babylonjs";
+//import { Color3 } from "babylonjs/Maths/math.color";
 import React, { useEffect, useRef } from "react";
 
 export default (props) => {
@@ -22,6 +30,8 @@ export default (props) => {
         adaptToDeviceRatio
       );
       const scene = new Scene(engine, sceneOptions);
+
+      scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
 
       if (scene.isReady()) {
         props.onSceneReady(scene);
