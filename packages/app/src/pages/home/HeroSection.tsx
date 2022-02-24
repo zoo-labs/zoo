@@ -31,7 +31,7 @@ const HeroSection = ({ animal3d }) => {
   // }, []);
 
   return (
-    <section className="mt-24 Hero  ">
+    <section className=" Hero  ">
       <div
         className="px-6 pt-16 pb-16 Hero__inner md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-between"
         // ref={heroContent}
@@ -63,7 +63,7 @@ const HeroSection = ({ animal3d }) => {
           </div>
         </div>
         <div
-          className="max-w-md Hero__image lg:max-w-xl lg:basis-1/2 flex justify-center"
+          className="lg:mt-6  max-w-md Hero__image lg:max-w-xl lg:basis-1/2 flex justify-center"
           // ref={heroImage}
         >
           {animal3d}
