@@ -1,6 +1,6 @@
 // @ts-ignore
 import { ethers, deployments } from 'hardhat'
-import { Auction, Market, Media, Market__factory, Media__factory, ZOO__factory, ZooKeeper__factory, BadBidder, BadERC721, TestERC721, ZOO  } from '../types'
+import { Auction, Market, Media, Market__factory, Media__factory, ZOO__factory, ZooKeeper__factory, BadBidder, BadERC721, TestERC721, ZOO } from '../types'
 import { sha256 } from 'ethers/lib/utils'
 import Decimal from '../utils/Decimal'
 import { BigNumber, BigNumberish, Contract } from 'ethers'
@@ -38,8 +38,8 @@ const deployContractsAsync = async (contractArr: string[]) => {
   return await contractArr.reduce(async (prev: Promise<{}>, name: string) => {
     const sum = await prev
     const contract: Contract = await ethers.getContract(name)
-    sum[name] = contract;
-    return sum;
+    sum[name] = contract
+    return sum
   }, Promise.resolve({}))
 }
 
@@ -48,7 +48,7 @@ export const setupTestFactory = (contractArr: string[]) =>
     requireDependencies()
     await deployments.fixture(contractArr)
 
-    let tokens: { [key: string]: Contract } = await deployContractsAsync(contractArr);
+    let tokens: { [key: string]: Contract } = await deployContractsAsync(contractArr)
     // contractArr.reduce(async (sum: {}, name: string) => {
     //   const contract: Contract = await ethers.getContract(name)
     //   return {
@@ -243,8 +243,8 @@ export const deployProtocol = async (tokenAddress) => {
   const market = await (await new Market__factory(deployer).deploy()).deployed()
   const media = await (await new Media__factory(deployer).deploy('ANML', 'ZooAnimals')).deployed()
   const zookeeper = await (await new ZooKeeper__factory(deployer).deploy()).deployed()
-  await market.configure(media.address)
-  await media.configure(market.address)
+  await market.configure(market.address)
+  await media.configure(zookeeper.address, market.address)
   // await drop.configure(zookepeer, media);
   return { market, media }
 }
