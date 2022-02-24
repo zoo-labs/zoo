@@ -1,4 +1,5 @@
 import _ from "lodash";
+import ZooBabyAnim from "../../components/Babylon";
 import dynamic from "next/dynamic";
 
 // sections
@@ -31,7 +32,7 @@ export default function Home() {
 
   return (
     <div>
-      <HeroSection />
+      <HeroSection animal3d={<ZooBabyAnim />} />
 
       <PartnersSection />
       <OpportunitySection />
