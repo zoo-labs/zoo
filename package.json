@@ -30,6 +30,7 @@
     "deploy:game": "yarn workspace @zoolabs/contracts deploy:game",
     "deploy:mainnet": "yarn workspace @zoolabs/contracts deploy:mainnet",
     "deploy:testnet": "yarn workspace @zoolabs/contracts deploy:testnet",
+    "dev": "yarn workspace @zoolabs/app dev",
     "configure": "yarn workspace @zoolabs/contracts configure",
     "configure:testnet": "yarn workspace @zoolabs/contracts configure:testnet",
     "configure:mainnet": "yarn workspace @zoolabs/contracts configure:mainnet",

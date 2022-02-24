@@ -117,19 +117,16 @@ function MyApp({
       <Head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-
         <meta
           name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
         <title key="title">ZOO</title>
-
         <meta
           key="description"
           name="description"
           content="The future is decentralized."
         />
-
         <meta name="application-name" content="Lux Defi" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
@@ -137,13 +134,11 @@ function MyApp({
           content="black-translucent"
         />
         <meta name="apple-mobile-web-app-title" content="Lux Defi" />
-
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="theme-color" content="#F338C3" />
-
         <meta key="twitter:card" name="twitter:card" content="app" />
         <meta key="twitter:title" name="twitter:title" content="Lux Defi" />
         <meta
@@ -179,6 +174,8 @@ function MyApp({
           property="og:description"
           content="The future is decentralized."
         />
+        <script src="https://cdn.babylonjs.com/babylon.js"></script>
+        <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
       </Head>
 
       <I18nProvider i18n={i18n} forceRenderOnLocaleChange={false}>
