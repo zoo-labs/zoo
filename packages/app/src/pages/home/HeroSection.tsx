@@ -63,7 +63,7 @@ const HeroSection = ({ animal3d }) => {
           </div>
         </div>
         <div
-          className="lg:mt-6  max-w-md Hero__image lg:max-w-xl lg:basis-1/2 flex justify-center"
+          className="lg:mt-6  max-w-md Hero__image lg:max-w-xl lg:basis-1/2 flex justify-center bg-red-300"
           // ref={heroImage}
         >
           {animal3d}
