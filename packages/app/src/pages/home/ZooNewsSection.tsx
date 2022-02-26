@@ -10,18 +10,17 @@ const ZooNewsSection = () => {
   //   fadeInOnScroll(zooRef.current);
   // }, []);
   return (
-    <section className="ZooNews" >
+    <section className="ZooNews">
       <div className="pt-16 pb-16 px-6 lg:max-w-7xl lg:mx-auto">
-        <div
-          className="flex items-center text-center flex-col"
-          
-        >
+        <div className="flex items-center text-center flex-col">
           <h1 className="text-4xl lg:text-5xl text-white font-bold mb-6 mt-20 lg:mt-12">
             ZOO News
           </h1>
-          <p className="w-96 mb-20">
-            Learn all about Zoo, our Nfts, and browse through our helpful
-            guides.
+          <p className="mb-20 max-w-xl">
+            Learn all about Zoo, our cutting-edge 3D/AR-enabled NFTs & the
+            critically-endangered animals they're inspired by, how we are
+            contributing to conservation efforts, and browse through our helpful
+            educational guides & resources
           </p>
         </div>
         <div className="flex flex-col items-center max-w-xl lg:max-h-[494px] mx-auto lg:flex-row lg:items-stretch lg:max-w-5xl">
