@@ -84,8 +84,8 @@ const EndangeredSpecies = () => {
         </div>
       </div>
       <p className="text-center mb-4 text-sm text-grey">
-        <span className="text-green">Earn yield</span> while you play{" "}
-        <span className="text-white">ZOO</span> on our Metamask Browser.
+        <span className="text-green">Earn more</span> when you feed your animals
+        any crypto <span className="text-white">$ZOO</span> currency.
       </p>
       <div className="flex justify-center">
         <div
