@@ -18,6 +18,7 @@ export default (props) => {
     sceneOptions,
     onRender,
     onSceneReady,
+    clearColor = new BABYLON.Color4(0, 0, 0, 0),
     ...rest
   } = props;
 
