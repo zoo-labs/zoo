@@ -44,13 +44,14 @@ const OpportunitySection = () => {
 
   return (
     <section className="relative" id="endless-opportunity">
-      <div className="px-6 py-16 lg:mt-28">
+      <div className="px-6 py-16 lg:mt-10">
         <h2 className="text-2xl md:text-2xl  lg:text-4xl text-center mb-16 font-semibold">
-          Endless Yield Opportunity
+          Endless <span className=" tracking-widest ">Yield Opportunity</span>
         </h2>
+
         <div className="flex flex-col lg:flex-row justify-between items-center max-w-7xl mx-auto">
           <EndangeredSpecies />
-       
+
           <div className="relative w-screen h-screen flex flex-col justify-center items-center bg-image">
             <div className="big-circle">
               <div className="animal-content mx-auto">

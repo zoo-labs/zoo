@@ -18,7 +18,7 @@ const ZooNewsSection = () => {
           </h1>
           <p className="mb-20 max-w-xl">
             Learn all about Zoo, our cutting-edge 3D/AR-enabled NFTs & the
-            critically-endangered animals they're inspired by, how we are
+            critically-endangered animals they are inspired by, how we are
             contributing to conservation efforts, and browse through our helpful
             educational guides & resources
           </p>
