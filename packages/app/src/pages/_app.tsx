@@ -175,8 +175,6 @@ function MyApp({
           property="og:description"
           content="ZOO is an decentralized protocol to collect, breed, and trade Metaverse-ready 3D animals on the blockchain."
         />
-        <script src="https://cdn.babylonjs.com/babylon.js"></script>
-        <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
       </Head>
 
       <I18nProvider i18n={i18n} forceRenderOnLocaleChange={false}>
