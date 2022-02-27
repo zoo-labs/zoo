@@ -130,6 +130,19 @@ export default function Menu() {
             >
               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                 <div className="relative grid gap-6 px-5 py-6 bg-dark-900 sm:gap-8 sm:p-8">
+                  <div
+                    className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
+                    style={{}}
+                  >
+                    {state.gifMode === "gif" ? "3D" : "Gif"} Mode
+                    <div className="ml-4 sm:ml-14">
+                      <Toggle
+                        id="toggle-disable-multihop-button"
+                        isActive={state.gifMode === "gif"}
+                        toggle={() => toggleGifMode()}
+                      />
+                    </div>
+                  </div>
                   <Link href="/wallet">
                     <a className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer">
                       Wallet
@@ -150,19 +163,6 @@ export default function Menu() {
                       </div>
                     </a>
                   </Link>
-                  <div
-                    className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
-                    style={{}}
-                  >
-                    {state.gifMode === "gif" ? "Gif" : "Image"} Mode
-                    <div className="ml-4 sm:ml-14">
-                      <Toggle
-                        id="toggle-disable-multihop-button"
-                        isActive={state.gifMode === "gif"}
-                        toggle={() => toggleGifMode()}
-                      />
-                    </div>
-                  </div>
 
                   <div
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
@@ -186,7 +186,7 @@ export default function Menu() {
                       </svg>
                     </div>
                   </div>
-                  <div
+                  {/* <div
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
                     style={{}}
                   >
@@ -198,7 +198,7 @@ export default function Menu() {
                         toggle={() => toggleSetAnimationMode()}
                       />
                     </div>
-                  </div>
+                  </div> */}
                   <div
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
                     style={{}}
