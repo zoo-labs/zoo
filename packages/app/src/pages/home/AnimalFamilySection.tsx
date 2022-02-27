@@ -110,6 +110,13 @@ const AnimalFamilySection = () => {
                 <div className="flex flex-col items-center w-full h-auto mb-8 AnimalFamily__image lg:basis-1/3">
                   <div className="p-px mb-8 overflow-hidden rounded-lg bg-nft-gradient lg:mb-0">
                     {gifMode === "gif" ? (
+                      <BabylonAnim
+                        lowerRadius={data.lowLimit}
+                        upperRadius={data.upLimit}
+                        animal={data.glb}
+                        cameraZ={data.cameraZ}
+                      ></BabylonAnim>
+                    ) : (
                       <div className="overflow-hidden bg-black rounded-lg">
                         <video
                           autoPlay
@@ -121,13 +128,6 @@ const AnimalFamilySection = () => {
                           <source src={data.gif}></source>
                         </video>
                       </div>
-                    ) : (
-                      <BabylonAnim
-                        lowerRadius={data.lowLimit}
-                        upperRadius={data.upLimit}
-                        animal={data.glb}
-                        cameraZ={data.cameraZ}
-                      ></BabylonAnim>
                     )}
                   </div>
                 </div>
