@@ -126,24 +126,6 @@ const AnimalList = () => {
             className="p-px  overflow-hidden rounded cursor-pointer bg-nft-gradient lg:max-w-md m-4  "
           >
             {gifMode === "gif" ? (
-              <div className="bg-black rounded overflow-hidden">
-                <div className="h-[300px] w-[300px]">
-                  <BabylonAnim
-                    lowerRadius={animal.lowLimit}
-                    upperRadius={animal.upLimit}
-                    animal={animal.glb}
-                    cameraZ={animal.cameraZ}
-                    cameraX={180}
-                  />
-                </div>
-
-                <Link href={`nft-product/${animal.slug}`}>
-                  <a className="AnimalFamily__image w-full bg-[#000] border border-[#000] rounded-3xl	 h-auto flex flex-col items-center lg:basis-1/3 p-4">
-                    {animal.name}
-                  </a>
-                </Link>
-              </div>
-            ) : (
               <div className=" ">
                 <div className="h-[300px] w-[300px]">
                   <BabylonAnim
@@ -159,7 +141,25 @@ const AnimalList = () => {
                 </div>
 
                 <Link href={`nft-product/${animal.slug}`}>
-                  <a className="AnimalFamily__image w-full bg-transparent	 h-auto flex flex-col items-center lg:basis-1/3   p-4">
+                  <a className="AnimalFamily__image w-full bg-[#000]	 h-auto flex flex-col items-center lg:basis-1/3   p-4">
+                    {animal.name}
+                  </a>
+                </Link>
+              </div>
+            ) : (
+              <div className="bg-black rounded overflow-hidden">
+                <div className="h-[300px] w-[300px]">
+                  <Image
+                    src={`${animal.gif}`}
+                    width={373}
+                    height={373}
+                    alt=""
+                    className="rounded-3xl"
+                  />
+                </div>
+
+                <Link href={`nft-product/${animal.slug}`}>
+                  <a className="AnimalFamily__image w-full bg-[#000] border border-[#000] rounded-3xl	 h-auto flex flex-col items-center lg:basis-1/3 p-4">
                     {animal.name}
                   </a>
                 </Link>
