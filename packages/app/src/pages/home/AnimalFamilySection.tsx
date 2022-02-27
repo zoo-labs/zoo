@@ -3,10 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useGif } from "context/GifContext";
+import BabylonAnim from "components/Babylon";
 
 const animalFamilyData = [
   {
     id: "1",
+    cameraZ: 100,
+    upLimit: 120,
+    lowLimit: 40,
+    glb: "ELEPHANT_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
@@ -29,6 +34,10 @@ const animalFamilyData = [
   },
   {
     id: "2",
+    cameraZ: 80,
+    upLimit: 120,
+    lowLimit: 40,
+    glb: "RHINO_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
@@ -53,6 +62,10 @@ const animalFamilyData = [
   },
   {
     id: "3",
+    cameraZ: 50,
+    upLimit: 80,
+    lowLimit: 35,
+    glb: "TIGER_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
@@ -109,13 +122,12 @@ const AnimalFamilySection = () => {
                         </video>
                       </div>
                     ) : (
-                      <Image
-                        src={data.image}
-                        width={373}
-                        height={373}
-                        alt=""
-                        objectFit="contain"
-                      />
+                      <BabylonAnim
+                        lowerRadius={data.lowLimit}
+                        upperRadius={data.upLimit}
+                        animal={data.glb}
+                        cameraZ={data.cameraZ}
+                      ></BabylonAnim>
                     )}
                   </div>
                 </div>
