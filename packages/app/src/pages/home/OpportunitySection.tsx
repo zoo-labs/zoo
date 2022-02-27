@@ -52,7 +52,7 @@ const OpportunitySection = () => {
         <div className="flex flex-col lg:flex-row justify-between items-center max-w-7xl mx-auto">
           <EndangeredSpecies />
 
-          <div className="relative w-screen h-screen flex flex-col justify-center items-center bg-image">
+          <div className="relative w-screen h-screen flex flex-col justify-center items-center ">
             <div className="big-circle">
               <div className="animal-content mx-auto">
                 {stage && <p>{stage}</p>}
