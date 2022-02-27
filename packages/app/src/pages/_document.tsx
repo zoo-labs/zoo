@@ -41,6 +41,10 @@ export default class MyDocument extends Document {
           <Main />
           <NextScript />
         </body>
+
+        <script src="https://cdn.babylonjs.com/babylon.js"></script>
+        <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+        <script src="a.js"></script>
       </Html>
     );
   }
