@@ -68,6 +68,13 @@ input:focus {
   );
 }
 
+/* canvas highlight stop */
+
+canvas {
+  outline: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */
+}
+
 /* *::-webkit-scrollbar {
   width: var(--scrollbar-width);
 }
@@ -148,7 +155,6 @@ video {
   background-position: bottom right;
   background-size: 50%;
 }
-
 
 @media screen and (min-width: 1200px) {
   .MarketPlace {
@@ -291,7 +297,6 @@ video {
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
   background-color: #15f195;
-  
 }
 
 .react-calendar__navigation button:enabled:hover,
