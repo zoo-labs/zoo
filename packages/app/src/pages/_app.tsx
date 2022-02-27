@@ -139,6 +139,7 @@ function MyApp({
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="theme-color" content="#F338C3" />
+        <meta name="facebook-domain-verification" content="qyo9v1m8qrsqejah3idkc5na67mzq9" />
         <meta key="twitter:card" name="twitter:card" content="app" />
         <meta key="twitter:title" name="twitter:title" content="ZOO" />
         <meta
