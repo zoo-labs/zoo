@@ -123,37 +123,44 @@ const AnimalList = () => {
         {animalFamilyData.map((animal, index) => (
           <div
             key={animal.id}
-            className="p-px  overflow-hidden rounded cursor-pointer bg-nft-gradient lg:max-w-md lg:m-4"
+            className="p-px  overflow-hidden rounded cursor-pointer bg-nft-gradient lg:max-w-md m-4  "
           >
             {gifMode === "gif" ? (
-              <div className="bg-black rounded overflow-hidden h-auto">
+              <div className="bg-black rounded overflow-hidden">
+                <div className="h-[300px] w-[300px]">
+                  <BabylonAnim
+                    lowerRadius={animal.lowLimit}
+                    upperRadius={animal.upLimit}
+                    animal={animal.glb}
+                    cameraZ={animal.cameraZ}
+                    cameraX={180}
+                  />
+                </div>
+
                 <Link href={`nft-product/${animal.slug}`}>
-                  <a className="AnimalFamily__image w-full bg-[#000] border border-[#000] rounded-3xl	 h-auto flex flex-col items-center lg:basis-1/3">
-                    <BabylonAnim
-                      lowerRadius={animal.lowLimit}
-                      upperRadius={animal.upLimit}
-                      animal={animal.glb}
-                      cameraZ={animal.cameraZ}
-                    />
+                  <a className="AnimalFamily__image w-full bg-[#000] border border-[#000] rounded-3xl	 h-auto flex flex-col items-center lg:basis-1/3 p-4">
+                    {animal.name}
                   </a>
                 </Link>
               </div>
             ) : (
-              <div className="">
+              <div className=" ">
+                <div className="h-[300px] w-[300px]">
+                  <BabylonAnim
+                    lowerRadius={animal.lowLimit}
+                    upperRadius={animal.upLimit}
+                    animal={animal.glb}
+                    cameraZ={animal.cameraZ}
+                    cameraX={180}
+                    rotationX={0}
+                    rotationZ={0}
+                    rotationY={0}
+                  />
+                </div>
+
                 <Link href={`nft-product/${animal.slug}`}>
-                  <a className="AnimalFamily__image w-full bg-[#000] border border-[#000] rounded-xl	 h-auto flex flex-col items-center lg:basis-1/3">
-                    <div className="h-[300px] w-[300px]">
-                      <BabylonAnim
-                        lowerRadius={animal.lowLimit}
-                        upperRadius={animal.upLimit}
-                        animal={animal.glb}
-                        cameraZ={animal.cameraZ}
-                        cameraX={180}
-                        rotationX={0}
-                        rotationZ={0}
-                        rotationY={0}
-                      />
-                    </div>
+                  <a className="AnimalFamily__image w-full bg-transparent	 h-auto flex flex-col items-center lg:basis-1/3   p-4">
+                    {animal.name}
                   </a>
                 </Link>
               </div>
