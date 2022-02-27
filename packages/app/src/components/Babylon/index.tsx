@@ -7,6 +7,11 @@ const BabylonAnim = ({
   animal = "TigerTeen.glb",
   upperRadius = 40,
   lowerRadius = 14,
+  cameraZ = 16,
+  cameraX = 5,
+  rotationX = 0,
+  rotationY = 0,
+  rotationZ = 0,
 }) => {
   const animalModel = useRef(null);
   let tiger;
@@ -48,9 +53,17 @@ const BabylonAnim = ({
         scene.activeCamera.lowerRadiusLimit = lowerRadius;
         scene.activeCamera.upperRadiusLimit = upperRadius;
 
-        scene.activeCamera.setPosition(new BABYLON.Vector3(5, 5, 16));
+        scene.activeCamera.setPosition(
+          new BABYLON.Vector3(cameraX, 5, cameraZ)
+        );
 
-        scene.lights[0].dispose();
+        result.meshes[0].rotation.x = rotationX;
+        result.meshes[0].rotation.y = rotationY;
+        result.meshes[0].rotation.z = rotationZ;
+
+        //result.mesh[0].rotation.x = rotationX;
+
+        //scene.lights[0].dispose();
         // var light = new BABYLON.DirectionalLight(
         //   "light1",
         //   new BABYLON.Vector3(0, 0, 0),
@@ -74,8 +87,6 @@ const BabylonAnim = ({
         // for (var i = 0; i < scene.meshes.length; i++) {
         //   generator.addShadowCaster(scene.meshes[i]);
         // }
-
-        let myPet = result.meshes[0];
 
         var helper = scene.createDefaultEnvironment({
           enableGroundMirror: true,
