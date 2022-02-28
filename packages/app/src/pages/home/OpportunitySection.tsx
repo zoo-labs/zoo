@@ -68,6 +68,7 @@ const OpportunitySection = () => {
                 onMouseOut={() => displayContent("")}
               >
                 <Image
+                  className="hover:scale-90"
                   src="/img/incubate-cycle.png"
                   width={150}
                   height={170}
@@ -86,6 +87,7 @@ const OpportunitySection = () => {
                 // style={hovered ? style : undefined}
               >
                 <Image
+                  className="hover:scale-90"
                   src="/img/feed-cycle.png"
                   width={150}
                   height={170}
@@ -104,6 +106,7 @@ const OpportunitySection = () => {
                 // style={hovered ? style : undefined}
               >
                 <Image
+                  className="hover:scale-90"
                   src="/img/breed-cycle.png"
                   width={150}
                   height={170}
@@ -122,6 +125,7 @@ const OpportunitySection = () => {
                 // style={hovered ? style : undefined}
               >
                 <Image
+                  className="hover:scale-90"
                   src="/img/grow-cycle.png"
                   width={150}
                   height={170}
