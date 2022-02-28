@@ -18,12 +18,12 @@ const EndangeredSpecies = () => {
 
   return (
     <div className="border rounded-lg py-12 px-4 bg-black100 max-w-lg flex flex-col items-center">
-      <div className="text-center mb-8">
-        <h2 className="font-bold text-xl lg:text-3xl mb-4">
+      <div className="mb-8">
+        <h2 className="font-bold text-xl lg:text-3xl mb-4 text-center">
           Save Endangered Species
         </h2>
 
-        <p className="text-grey text-base ">
+        <p className="text-grey text-base text-justify">
           10% of all gaming fees will be donated to non-profit organizations.
           Grow your animals, view yield earned per animal, and breed mature
           animals to mint more NFTs!
