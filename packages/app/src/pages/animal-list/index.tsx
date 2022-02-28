@@ -116,17 +116,32 @@ const AnimalList = () => {
     <section>
       <div className="py-16 mb-8 lg:max-w-7xl lg:mx-auto">
         <h1 className="mt-20 text-4xl font-bold text-center lg:text-6xl">
-          Our Animal Family
+          Our Animal NFT Family
         </h1>
+        <p className="max-w-4xl mx-auto mt-6 text-center">
+          The gallery below contains each of the stunningly 3D rendered, AR-
+          Enabled animal NFTs representing a critically-endangered species in
+          the real world.{" "}
+          <a
+            href="https://zoolabsofficial.medium.com/introducing-zoo-labs-wildlife-conservation-powered-by-defi-67eacef5a07"
+            target="_blank"
+            rel="noreferrer"
+            className="text-green underline"
+          >
+            Click here
+          </a>{" "}
+          to learn more about how purchasing a Zoo Labs Animal NFT will allow
+          you to join us in the fight for conservation.
+        </p>
       </div>
       <div className="flex flex-col flex-wrap items-center px-4 pb-16 lg:max-w-7xl lg:mx-auto lg:flex-row lg:justify-center lg:gap-2">
         {animalFamilyData.map((animal, index) => (
           <div
             key={animal.id}
-            className="p-px  overflow-hidden rounded cursor-pointer bg-nft-gradient lg:max-w-md m-4  "
+            className="p-px  overflow-hidden rounded bg-nft-gradient lg:max-w-md m-4  "
           >
             {gifMode === "gif" ? (
-              <div className=" ">
+              <div className="overflow-hidden rounded ">
                 <div className="h-[300px] w-[300px]">
                   <BabylonAnim
                     lowerRadius={animal.lowLimit}
