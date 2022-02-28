@@ -32,7 +32,7 @@ export default function Home() {
 
   return (
     <div>
-      <HeroSection animal3d={<ZooBabyAnim animal="TigerTeen.glb" />} />
+      <HeroSection animal3d={<ZooBabyAnim />} />
 
       <PartnersSection />
       <OpportunitySection />
