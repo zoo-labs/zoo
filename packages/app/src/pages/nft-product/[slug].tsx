@@ -1,8 +1,13 @@
+import BabylonAnim from "components/Babylon";
 import Image from "next/image";
 
 const productsData = [
   {
     id: "1",
+    cameraZ: 90,
+    upLimit: 120,
+    lowLimit: 40,
+    glb: "ELEPHANT_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
@@ -18,13 +23,19 @@ const productsData = [
     size: "Up to 6 meters (20 feet)",
     habitat: "Broadleaf, moist tropical forest",
     images: [
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
+      //"https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
+      //"https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
+      //"https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
+      { cameraZ: 90, upLimit: 120, lowLimit: 40, glb: "ELEPHANTTEEN.glb" },
+      { cameraZ: 90, upLimit: 120, lowLimit: 40, glb: "ELEPHANT_ADULT.glb" },
     ],
   },
   {
     id: "2",
+    cameraZ: 50,
+    upLimit: 100,
+    lowLimit: 40,
+    glb: "RHINO_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
@@ -44,13 +55,20 @@ const productsData = [
     size: "3 meters (10 ft)",
     habitat: "Tropical forests",
     images: [
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
+      //   "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
+      //  "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
+      // "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
+
+      { cameraZ: 50, upLimit: 100, lowLimit: 40, glb: "RHINO_YOUNG_TEEN.glb" },
+      { cameraZ: 50, upLimit: 100, lowLimit: 40, glb: "RHINO_ADULT.glb" },
     ],
   },
   {
     id: "3",
+    cameraZ: 40,
+    upLimit: 80,
+    lowLimit: 35,
+    glb: "TIGER_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
@@ -66,13 +84,19 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "3 meters (12 ft)",
     habitat: "Lowland to mountain forests",
     images: [
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
+      // "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
+      //"https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
+      //"https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
+      { cameraZ: 40, upLimit: 80, lowLimit: 35, glb: "TIGERTeen.glb" },
+      { cameraZ: 40, upLimit: 80, lowLimit: 35, glb: "TIGER_ADULT.glb" },
     ],
   },
   {
     id: "4",
+    cameraZ: 30,
+    upLimit: 40,
+    lowLimit: 20,
+    glb: "LEO_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332847/zoo/images/clouded-leopard_piqix9.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/clouded-leopard_tmjty9.mov",
@@ -87,13 +111,19 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "Up to 3.1 meters (7 feet)",
     habitat: "Temperate, Broadleaf Forest/Mountains",
     images: [
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/clouded-leopard_tmjty9.mov",
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/clouded-leopard_tmjty9.mov",
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/clouded-leopard_tmjty9.mov",
+      //    "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/clouded-leopard_tmjty9.mov",
+      //  "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/clouded-leopard_tmjty9.mov",
+      //"https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/clouded-leopard_tmjty9.mov",
+      { cameraZ: 20, upLimit: 30, lowLimit: 10, glb: "LEOPARD_YOUNG_TEEN.glb" },
+      { cameraZ: 20, upLimit: 30, lowLimit: 10, glb: "LEO_ADULT.glb" },
     ],
   },
   {
     id: "5",
+    cameraZ: 45,
+    upLimit: 100,
+    lowLimit: 40,
+    glb: "HIPPO_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332795/zoo/images/hippo_i4grms.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/hippo_xpzo3k.mov",
@@ -108,13 +138,20 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "1 meters (3 ft)",
     habitat: "Forests and Swamps",
     images: [
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/hippo_xpzo3k.mov",
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/hippo_xpzo3k.mov",
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/hippo_xpzo3k.mov",
+      //   "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/hippo_xpzo3k.mov",
+      // "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/hippo_xpzo3k.mov",
+      //"https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/hippo_xpzo3k.mov",
+
+      { cameraZ: 45, upLimit: 100, lowLimit: 40, glb: "HIPPO_YOUNG_TEEN.glb" },
+      { cameraZ: 45, upLimit: 100, lowLimit: 40, glb: "HIPPO_ADULT.glb" },
     ],
   },
   {
     id: "6",
+    cameraZ: 90,
+    upLimit: 120,
+    lowLimit: 40,
+    glb: "Gir.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332705/zoo/images/giraffe_caohec.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/giraffe_dz5ed1.mov",
@@ -128,13 +165,26 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "1.5 meters (9 ft)",
     habitat: "Savannahs and Woodlands",
     images: [
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/giraffe_dz5ed1.mov",
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/giraffe_dz5ed1.mov",
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/giraffe_dz5ed1.mov",
+      //   "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/giraffe_dz5ed1.mov",
+      //   "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/giraffe_dz5ed1.mov",
+      //   "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/giraffe_dz5ed1.mov",
+      //
+
+      {
+        cameraZ: 90,
+        upLimit: 120,
+        lowLimit: 40,
+        glb: "GIRAFFE_YOUNG_TEEN.glb",
+      },
+      { cameraZ: 90, upLimit: 120, lowLimit: 40, glb: "Gir.glb" },
     ],
   },
   {
     id: "7",
+    cameraZ: 30,
+    upLimit: 40,
+    lowLimit: 20,
+    glb: "WOLF.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332820/zoo/images/red-wolf_tjiwez.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644336263/zoo/red-wolf_hq2iuv.mov",
@@ -149,9 +199,16 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
     size: "1.2 meters (4 ft)",
     habitat: "Forest, wetlands & bushlands",
     images: [
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644336263/zoo/red-wolf_hq2iuv.mov",
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644336263/zoo/red-wolf_hq2iuv.mov",
-      "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644336263/zoo/red-wolf_hq2iuv.mov",
+      //"https://res.cloudinary.com/diu8hjwwe/video/upload/v1644336263/zoo/red-wolf_hq2iuv.mov",
+      // "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644336263/zoo/red-wolf_hq2iuv.mov",
+      //   "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644336263/zoo/red-wolf_hq2iuv.mov",
+      { cameraZ: 30, upLimit: 40, lowLimit: 20, glb: "WOLF.glb" },
+      {
+        cameraZ: 30,
+        upLimit: 40,
+        lowLimit: 20,
+        glb: "WOLF_BIG.glb",
+      },
     ],
   },
 ];
@@ -161,10 +218,23 @@ Siberian tigers are distinguishable by their striped fur. Similar to people’s 
 const NFTProduct = ({ animal }) => {
   return (
     <div className="NFTProduct mt-16">
-      <div className="gap-4 px-6 pt-20 pb-16  md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-center">
+      <div className="gap-4 px-6 pt-20   md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-center">
         <div className="flex items-center justify-center lg:basis-1/2">
           <div className="p-px mb-8 rounded bg-nft-gradient lg:mb-0">
-            <div className="bg-black rounded-lg">
+            <div className="h-[300px] w-[300px]">
+              <BabylonAnim
+                lowerRadius={animal.lowLimit}
+                upperRadius={animal.upLimit}
+                animal={animal.glb}
+                cameraZ={animal.cameraZ}
+                cameraX={180}
+                rotationX={0}
+                rotationZ={0}
+                rotationY={0}
+              />
+            </div>
+
+            {/* <div className="bg-black rounded-lg">
               <video
                 autoPlay
                 loop={true}
@@ -174,7 +244,7 @@ const NFTProduct = ({ animal }) => {
               >
                 <source src={animal.gif}></source>
               </video>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -254,15 +324,25 @@ const NFTProduct = ({ animal }) => {
           View Available {animal.name}
         </h2>
 
-        <div className="flex flex-col items-center lg:flex-row lg:justify-between">
+        <div className="flex flex-col items-center lg:flex-row lg:justify-evenly">
           {animal.images.map((img, index) => {
             return (
               <div
                 className="p-px mb-4 overflow-hidden rounded bg-nft-gradient"
                 key={index}
               >
-                <div className="overflow-hidden bg-black rounded">
-                  <video
+                <div className="overflow-hidden bg-black rounded w-[300px] h-[300px]">
+                  <BabylonAnim
+                    lowerRadius={img.lowLimit}
+                    upperRadius={img.upLimit}
+                    animal={img.glb}
+                    cameraZ={img.cameraZ}
+                    cameraX={180}
+                    rotationX={0}
+                    rotationZ={0}
+                    rotationY={0}
+                  />
+                  {/* <video
                     autoPlay
                     loop={true}
                     playsInline={true}
@@ -270,7 +350,7 @@ const NFTProduct = ({ animal }) => {
                     className="overflow-hidden rounded"
                   >
                     <source src={animal.gif}></source>
-                  </video>
+                  </video> */}
                 </div>
               </div>
             );
