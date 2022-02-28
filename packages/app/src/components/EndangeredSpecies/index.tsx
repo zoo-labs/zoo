@@ -23,7 +23,7 @@ const EndangeredSpecies = () => {
           Save Endangered Species
         </h2>
 
-        <p className="text-grey text-base ">
+        <p className="text-grey text-base text-justify break-all">
           10% of all gaming fees will be donated to non-profit organizations.
           Grow your animals, view yield earned per animal, and breed mature
           animals to mint more NFTs!
