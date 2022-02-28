@@ -90,7 +90,7 @@ const Footer = () => {
               )}
             </div> */}
             <div className="mb-2">
-              <Link href="/whitepaper">
+              <Link href="https://zoolabs.gitbook.io/whitepaper">
                 <a>Whitepaper</a>
               </Link>
             </div>
