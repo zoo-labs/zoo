@@ -43,7 +43,7 @@ const BabylonAnim = ({
 
     //Set gravity for the scene (G force like, on Y-axis)
     //  scene.gravity = new BABYLON.Vector3(0, -0.9, 0);
-    tiger = SceneLoader.ImportMeshAsync("", "./models/", animal, scene).then(
+    tiger = SceneLoader.ImportMeshAsync("", "/models/", animal, scene).then(
       (result) => {
         console.log("ImportMeshAsync", result);
 
