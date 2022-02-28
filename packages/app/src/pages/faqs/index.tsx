@@ -9,10 +9,10 @@ export const faqData = [
   },
   {
     question: "When will the game be released?",
-    answer: "ZOO will be released January 2022.",
+    answer: "Q1 2022.",
   },
   {
-    question: "How do I get on-boarded?",
+    question: "How do I get started?",
     answer:
       "Players will be able to get access to the game through our Metamask App as well as ZOO Labs official website.",
   },
@@ -29,7 +29,7 @@ export const faqData = [
 
   {
     question: "What are the key game features in ZOO?",
-    answer: `Our key features include: growing, breeding, youth elixir (back in time), age freezing.
+    answer: `Our key features include: growing, breeding.
 			<br />
 			In the near future we will also launch an app with our ZOO augmented reality game. This app will load the NFTs in your wallet. With the app you will be able to see your NFT in real time with much more animal engagement including: petting, make the animal roll over, shake animals paw, give animal kiss, receive kiss, feed your animal, and walking with your animal. 
 			`,
@@ -50,22 +50,21 @@ export const faqData = [
 		`,
   },
   {
-    question: "How do I get a ZOO Nft?",
+    question: "How do I get a ZOO NFT?",
     answer: "You can buy $ZOO directly on our marketplace. ",
   },
   {
-    question: "I need help",
+    question: "Still need help?",
     answer: `If you"re having difficulty, please join our Discord server and post in the <span class="font-bold">#new-player-help</span> channel and our community will be happy to help!`,
   },
   {
     question: "Where can I interact and meet more members of the community?",
-    answer: `Please join our <a href="https://discord.com/invite/43m9Sstd" target="_blank" rel="noreferrer" class="text-green text-underline">Discord</a> server where you can meet the rest of the community!
-		You can find the rest of our channels <a href="https://linktr.ee/AxieInfinity" target="_blank" rel="noreferrer" class="text-green text-underline">here</a>.`,
+    answer: `Please join our <a href="https://discord.com/invite/43m9Sstd" target="_blank" rel="noreferrer" class="text-green text-underline">Discord</a> server where you can meet the rest of the community?`,
   },
-  {
-    question: "Who created the artwork for ZOO?",
-    answer: "",
-  },
+  // {
+  //   question: "Who created the artwork for ZOO?",
+  //   answer: "",
+  // },
   {
     question: "What is play to earn?",
     answer: `Play to Earn (P2E) means you can earn cash just by playing the game. In ZOO, this is seen by collecting Egg and Animal NFTs that you can sell for real-world cash.`,
