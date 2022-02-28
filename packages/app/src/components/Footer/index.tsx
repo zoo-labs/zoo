@@ -129,13 +129,13 @@ const Footer = () => {
                 <input
                   type="email"
                   placeholder="enter your email"
-                  className="bg-transparent"
+                  className="bg-transparent text-center"
                 />
                 <button type="submit" className="flex">
                   <Image
                     src="/img/small-circle-button.svg"
-                    width={24}
-                    height={24}
+                    width={20}
+                    height={20}
                     alt=""
                   />
                 </button>
