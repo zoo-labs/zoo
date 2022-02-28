@@ -71,7 +71,7 @@ const animalFamilyData = [
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
     name: "Siberian Tiger",
     slug: "siberian-tiger",
-    scientificName: "Siberian Tiger",
+    scientificName: "Panthera Tigris Altaica",
     description: `The Siberian tiger is a tiger from a specific population of the
     Panthera tigris tigris subspecies native to the Russian Far
     East, Northeast China. It once ranged throughout the Korean
@@ -110,12 +110,14 @@ const AnimalFamilySection = () => {
                 <div className="flex flex-col items-center w-full h-auto mb-8 AnimalFamily__image lg:basis-1/3">
                   <div className="p-px mb-8 overflow-hidden rounded-lg bg-nft-gradient lg:mb-0">
                     {gifMode === "gif" ? (
-                      <BabylonAnim
-                        lowerRadius={data.lowLimit}
-                        upperRadius={data.upLimit}
-                        animal={data.glb}
-                        cameraZ={data.cameraZ}
-                      ></BabylonAnim>
+                      <div className="overflow-hidden rounded">
+                        <BabylonAnim
+                          lowerRadius={data.lowLimit}
+                          upperRadius={data.upLimit}
+                          animal={data.glb}
+                          cameraZ={data.cameraZ}
+                        ></BabylonAnim>
+                      </div>
                     ) : (
                       <div className="overflow-hidden bg-black rounded-lg">
                         <video
@@ -163,9 +165,9 @@ const AnimalFamilySection = () => {
         <div className="flex items-center justify-center">
           <a
             href="/animal-list"
-            className="px-5 py-3 font-semibold underline md:text-base text-green md:px-6 md:py-4 lg:px-20"
+            className="px-5 py-3 text-sm border text-center rounded-full font-semibold border-green md:text-base text-green md:px-6 md:py-4 lg:px-20"
           >
-            See All
+            See the entire First Generation Animal NFT series
           </a>
         </div>
       </div>

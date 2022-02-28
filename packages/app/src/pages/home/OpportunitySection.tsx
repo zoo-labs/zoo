@@ -70,7 +70,7 @@ const OpportunitySection = () => {
                 <Image
                   src="/img/incubate-cycle.png"
                   width={150}
-                  height={170}
+                  height={130}
                   alt=""
                   objectFit="contain"
                 />
