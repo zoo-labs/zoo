@@ -11,7 +11,7 @@ const FaqSection = () => {
   // }, []);
 
   return (
-    <section id="faqs" >
+    <section id="faqs">
       <div className="px-6 py-20 mx-auto max-w-7xl">
         <h2 className="mb-10 text-3xl font-bold text-center lg:text-4xl lg:mb-20">
           Game FAQ
@@ -24,7 +24,7 @@ const FaqSection = () => {
             <p className="leading-6 text-white lg:max-w-xl">
               ZOO is a Liquidity Protocol that exists to bridge tokens and NFTs
               at the intersection of Defi and gaming. Each of our NFTs (animal
-              or egg) yield our native currency, $ZOO. Each Nft is
+              or egg) yield our native currency, $ZOO. Each NFT is
               collateralized by $ZOO, which appreciates over time based on
               rarity, age and by playing our game.{" "}
             </p>
@@ -32,11 +32,10 @@ const FaqSection = () => {
 
           <div className="flex flex-col mb-12 lg:basis-1/2 ">
             <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
-              What are the Key features in ZOO?
+              What are the Key Features in ZOO?
             </h3>
             <p className="text-white lg:max-w-sm ">
-              {`Our key features include: growing, breeding, youth elixir (back in
-              time), age freezing. In the near future we will also launch an app
+              {`Our key features include: growing, breeding. In the near future we will also launch an app
               with our ZOO augmented reality game. This apple will load the NFTs
               in your wallet. With the app you will be able to see your NFT in
               real time with much more animal engagement including: petting,
@@ -58,38 +57,36 @@ const FaqSection = () => {
 
           <div className="flex flex-col mb-12 lg:basis-1/2">
             <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
-              How do i get Onboarded?
+              How Do I Get Started?
             </h3>
             <p className="text-white lg:max-w-sm">
-              Players will be able to get access to the game through our
-              Metamask App as well as ZOO Labs official website.
+              Players will be able to get access to the game through our DApp as
+              well as ZOO {`Labs'`} official website.
             </p>
           </div>
           {/* flex flex-col mb-12 text-left lg:basis-1/2,  pl-4 mb-4 text-xl font-bold text-left text-green lg:text-2xl lg:pl-0, max-w-sm px-4 mx-auto text-white list-disc lg:mx-0*/}
           <div className="flex flex-col mb-12 lg:basis-1/2">
             <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
-              How do i buy $ZOO?
+              How do I buy $ZOO?
             </h3>
-
-            <li>Buy BNB</li>
-            <li>Get a Binance coin wallet(Ledger, Coinomi).</li>
-            <li>Locate your BNB address.</li>
-            <li>Sign up to Binance</li>
-            <li>Buy BNB with another crypto or a credit card.</li>
-            <li>Go to Pancake swap or another trusted exchange.</li>
             <li>
-              Swap BNB for $ZOO use this token address as their are many
-              scammers
+              <a
+                className="text-green underline"
+                href="https://prezi.com/i/view/fWOPqU2eZzcqYyVzb5pz"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Click here
+              </a>
             </li>
-            <li>0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13</li>
           </div>
 
           <div className="flex flex-col mb-12 lg:basis-1/2">
             <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
-              You need help?
+              Still have questions?
             </h3>
             <p className="mb-4 text-white lg:max-w-sm">
-              If you are having difficulty, please join our Discord server and
+              If you are having difficulty, please <a href="https://discord.com/invite/43m9Sstd" className="text-green underline">join our Discord server</a> and
               post in the #new-player-help channel and our community will be
               happy to help!
             </p>
