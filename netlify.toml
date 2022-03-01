@@ -1,4 +1,5 @@
 [build]
+  command = "yarn build:all"
   publish = "packages/app/.next"
 
 [build.environment]
