@@ -264,7 +264,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                     <div className="hidden md:block">
                       {/* <LanguageSwitch /> */}
                     </div>
-                    {/* <More /> */}
+                    <More />
                   </div>
                 </div>
                 <div className="flex -mr-2 sm:hidden">
