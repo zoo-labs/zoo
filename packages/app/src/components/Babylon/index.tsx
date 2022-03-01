@@ -13,6 +13,7 @@ const BabylonAnim = ({
   rotationX = 0,
   rotationY = 0,
   rotationZ = 0,
+  isArAble = false,
 }) => {
   const animalModel = useRef(null);
   let tiger;
@@ -119,9 +120,30 @@ const BabylonAnim = ({
           onRender={onRender}
           id="my-canvas"
         />
-        <a rel="ar" href="/models/tigerteen.usdz" style={{float: 'right', marginTop: -64}}>
-          <Image src="/img/ar.svg" alt="AR Quick Look" width={51} height={51}/>
-        </a>
+
+        {isArAble ? (
+          <a
+            rel="ar"
+            href="/models/tigerteen.usdz"
+            style={{ float: "right", marginTop: -64 }}
+          >
+            <Image
+              src="/img/ar.svg"
+              alt="AR Quick Look"
+              width={51}
+              height={51}
+            />
+          </a>
+        ) : (
+          " "
+        )}
+        {/* <a
+          rel="ar"
+          href="/models/tigerteen.usdz"
+          style={{ float: "right", marginTop: -64 }}
+        >
+          <Image src="/img/ar.svg" alt="AR Quick Look" width={51} height={51} />
+        </a> */}
       </div>
     </div>
   );
