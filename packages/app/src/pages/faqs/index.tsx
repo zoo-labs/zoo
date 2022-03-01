@@ -55,7 +55,7 @@ export const faqData = [
   },
   {
     question: "Still have questions?",
-    answer: `If you"re having difficulty, please join our <a href="https://discord.com/invite/43m9Sstd" >Discord server<a/>  and post in the <span class="font-bold">#new-player-help</span> channel and our community will be happy to help!`,
+    answer: `If you"re having difficulty, please join our <a href="https://discord.com/invite/43m9Sstd" >Discord server<a/> and post in the <span class="font-bold">#new-player-help</span> channel and our community will be happy to help!`,
   },
   {
     question: "Where can I interact and meet more members of the community?",
