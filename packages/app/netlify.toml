@@ -8,6 +8,18 @@
   package = "@netlify/plugin-nextjs"
 
 [[headers]]
-  for = "/models/tigerteen.usdz"
+  for = "/*.usdz"
   [headers.values]
     Content-Type = model/vnd.usdz+zip
+    Content-Type = model/vnd.pixar.usd
+    Cache-Control = max-age=86400
+
+  for = "/*.glb"
+  [headers.values]
+    Content-Type = model/gltf-binary
+    Cache-Control = max-age=86400
+
+  for = "/*.gltf"
+  [headers.values]
+    Content-Type = model/gltf+json
+    Cache-Control = max-age=86400
