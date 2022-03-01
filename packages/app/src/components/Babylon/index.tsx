@@ -119,7 +119,7 @@ const BabylonAnim = ({
           onRender={onRender}
           id="my-canvas"
         />
-        <a href="/models/tigerteen.usdz" style={{float: 'right', marginTop: -64}}>
+        <a rel="ar" href="/models/tigerteen.usdz" style={{float: 'right', marginTop: -64}}>
           <Image src="/img/ar.svg" alt="AR Quick Look" width={51} height={51}/>
         </a>
       </div>
