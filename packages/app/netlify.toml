@@ -6,3 +6,8 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+[[headers]]
+  for = "/models/tigerteen.usdz"
+  [headers.values]
+    Content-Type = model/vnd.usdz+zip
