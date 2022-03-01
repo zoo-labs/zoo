@@ -1,0 +1,27 @@
+[build]
+  command = "yarn build:all"
+  publish = "packages/app/.next"
+
+[build.environment]
+  NODE_OPTIONS = "--max-old-space-size=8192"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[[headers]]
+  for = "/*.usdz"
+  [headers.values]
+    Content-Type = "model/vnd.usdz+zip"
+    Cache-Control = "max-age=86400"
+
+[[headers]]
+  for = "/*.glb"
+  [headers.values]
+    Content-Type = "model/gltf-binary"
+    Cache-Control = "max-age=86400"
+
+[[headers]]
+  for = "/*.gltf"
+  [headers.values]
+    Content-Type = "model/gltf+json"
+    Cache-Control = "max-age=86400"
