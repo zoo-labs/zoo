@@ -12,7 +12,6 @@
   for = "/*.usdz"
   [headers.values]
     Content-Type = "model/vnd.usdz+zip"
-    Content-Type = "model/vnd.pixar.usd"
     Cache-Control = "max-age=86400"
 
   for = "/*.glb"
