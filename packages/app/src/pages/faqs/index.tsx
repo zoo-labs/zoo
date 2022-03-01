@@ -5,7 +5,7 @@ export const faqData = [
   {
     question: "What is ZOO?",
     answer:
-      "ZOO is a Liquidity Protocol that exists to bridge tokens and NFTs at the intersection of Defi and gaming. Each of our NFTs (animal or egg) yield our native currency, $ZOO. Each Nft is collateralized by $ZOO, which appreciates over time based on rarity, age and by playing our game.",
+      "ZOO is a Liquidity Protocol that exists to bridge tokens and NFTs at the intersection of Defi and gaming. Each of our NFTs (animal or egg) yield our native currency, $ZOO. Each NFT is collateralized by $ZOO, which appreciates over time based on rarity, age and by playing our game.",
   },
   {
     question: "When will the game be released?",
@@ -14,7 +14,7 @@ export const faqData = [
   {
     question: "How do I get started?",
     answer:
-      "Players will be able to get access to the game through our Metamask App as well as ZOO Labs official website.",
+      "Players will be able to get access to the game through our DApp as well as ZOO Labs' official website.",
   },
   {
     question: "What is the $ZOO token?",
@@ -54,8 +54,8 @@ export const faqData = [
     answer: "You can buy $ZOO directly on our marketplace. ",
   },
   {
-    question: "Still need help?",
-    answer: `If you"re having difficulty, please join our Discord server and post in the <span class="font-bold">#new-player-help</span> channel and our community will be happy to help!`,
+    question: "Still have questions?",
+    answer: `If you"re having difficulty, please join our <a href="https://discord.com/invite/43m9Sstd" >Discord server<a/> and post in the <span class="font-bold">#new-player-help</span> channel and our community will be happy to help!`,
   },
   {
     question: "Where can I interact and meet more members of the community?",
@@ -91,18 +91,20 @@ export const faqData = [
   },
   {
     question: "How do I buy $ZOO?",
-    answer: `
-		Buy BNB -> go to pancake swap —-> swap BNB for $ZOO <br /><br />
-		How to Buy Binance Coin Summary
-		<ol>
-		<li>1. Get a Binance coin wallet (Ledger, Coinomi).</li>
-		<li>2. Locate your BNB address.</li>
-		<li>3. Sign up to Binance.</li>
-		<li>4. Buy BNB with another crypto or a credit card.</li>
-		<li>5. Go to Pancake swap or another trusted exchange.</li>
-		<li>6. Swap BNB for $ZOO use this token address as their are many scammers <span class="font-bold">0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13</span></li>
-		</ol>
-		`,
+    answer: `<a href="https://prezi.com/i/view/fWOPqU2eZzcqYyVzb5pz" className="text-blue"  >Click me</a> For Guide`,
+
+    // answer: `
+    // Buy BNB -> go to pancake swap —-> swap BNB for $ZOO <br /><br />
+    // How to Buy Binance Coin Summary
+    // <ol>
+    // <li>1. Get a Binance coin wallet (Ledger, Coinomi).</li>
+    // <li>2. Locate your BNB address.</li>
+    // <li>3. Sign up to Binance.</li>
+    // <li>4. Buy BNB with another crypto or a credit card.</li>
+    // <li>5. Go to Pancake swap or another trusted exchange.</li>
+    // <li>6. Swap BNB for $ZOO use this token address as their are many scammers <span class="font-bold">0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13</span></li>
+    // </ol>
+    // `,
   },
 ];
 
