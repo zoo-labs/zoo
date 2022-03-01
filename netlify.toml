@@ -14,11 +14,13 @@
     Content-Type = "model/vnd.usdz+zip"
     Cache-Control = "max-age=86400"
 
+[[headers]]
   for = "/*.glb"
   [headers.values]
     Content-Type = "model/gltf-binary"
     Cache-Control = "max-age=86400"
 
+[[headers]]
   for = "/*.gltf"
   [headers.values]
     Content-Type = "model/gltf+json"
