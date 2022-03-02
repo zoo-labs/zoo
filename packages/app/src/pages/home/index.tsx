@@ -1,7 +1,11 @@
 import _ from "lodash";
 import ZooBabyAnim from "../../components/Babylon";
 import dynamic from "next/dynamic";
+const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
+  ssr: false,
+});
 
+//import MyModel from "../../components/ModelViewer/index";
 // sections
 const HeroSection = dynamic(() => import("./HeroSection"));
 const PartnersSection = dynamic(() => import("./PartnersSection"));
@@ -32,7 +36,7 @@ export default function Home() {
 
   return (
     <div>
-      <HeroSection animal3d={<ZooBabyAnim isArAble={true} />} />
+      <HeroSection animal3d={<ModelViewer></ModelViewer>} />
 
       <PartnersSection />
       <OpportunitySection />
