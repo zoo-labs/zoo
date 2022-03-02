@@ -116,7 +116,7 @@ const AnimalFamilySection = () => {
                   <div className="p-px mb-8 overflow-hidden rounded-lg bg-nft-gradient ">
                     {gifMode === "gif" ? (
                       <div className="overflow-hidden rounded">
-                        <div className=" w-[350px] h-[350px]">
+                        <div className=" w-[400px] h-[400px]">
                           <ModelViewer glb={data.glb}></ModelViewer>
                         </div>
                       </div>
