@@ -6,7 +6,7 @@ import animals from "../../animals.json";
 import { ANIMAL_TYPE } from "../../types";
 
 import { useGif } from "context/GifContext";
-import BabylonAnim from "components/Babylon";
+//import BabylonAnim from "components/Babylon";
 import dynamic from "next/dynamic";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
