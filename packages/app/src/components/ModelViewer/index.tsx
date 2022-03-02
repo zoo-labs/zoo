@@ -6,13 +6,12 @@ const ModelViewer = ({
   glb = "/models/tigerteen.glb",
   usdz = "/models/tigerteen.usdz",
 }) => {
-  return (
-    <div className="w-full h-[400px]">
+  const ModelVie = `
       <model-viewer
-        src={glb}
-        ios-src={glb}
-        // loading="eager"
-        poster="/img/plasma.png"
+        src=${glb}
+        ios-src=${glb}
+        loading="eager"
+        poster="/img/loadingtiger.png"
         alt="A 3D model of an astronaut"
         shadow-intensity="1"
         camera-controls
@@ -20,15 +19,15 @@ const ModelViewer = ({
         autoplay
         ar
         ar-modes="webxr scene-viewer quick-look"
-      >
-        <button
-          slot="ar-button"
-          className="p-2  bg-white border-4 absolute top-16 right-10"
-        >
-          👋 Activate AR
-        </button>
-      </model-viewer>
-    </div>
+      ></model-viewer>`;
+
+  return (
+    <>
+      <div
+        className="w-full h-[400px]"
+        dangerouslySetInnerHTML={{ __html: ModelVie }}
+      ></div>
+    </>
   );
 };
 
