@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import "@google/model-viewer/dist/model-viewer";
 
@@ -6,12 +6,34 @@ const ModelViewer = ({
   glb = "/models/tigerteen.glb",
   usdz = "/models/tigerteen.usdz",
 }) => {
+  // const animals = [
+  //   "/models/tigerteen.glb",
+  //   "/models/Gir.glb",
+  //   "/models/Leo.glb",
+  //   "/models/WOLF.glb",
+  // ];
+  // let index;
+  // const [currentAnimal, setCurrentAnimal] = useState(animals[index]);
+
+  // function makeAlert() {
+  //   if (index > animals.length) {
+  //     index = 0;
+  //     setCurrentAnimal(animals[index]);
+  //   } else {
+  //     index++;
+  //     setCurrentAnimal(animals[index]);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   setInterval(makeAlert, 500);
+  //   return () => {};
+  // }, [currentAnimal]);
+
   const ModelVie = `
       <model-viewer
         src=${glb}
-        ios-src=${glb}
         loading="eager"
-        poster="/img/loadingtiger.png"
         alt="A 3D model of an astronaut"
         shadow-intensity="1"
         camera-controls
@@ -19,6 +41,7 @@ const ModelViewer = ({
         autoplay
         ar
         ar-modes="webxr scene-viewer quick-look"
+        reveal="auto"
       ></model-viewer>`;
 
   return (
