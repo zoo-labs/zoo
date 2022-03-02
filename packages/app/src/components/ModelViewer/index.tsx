@@ -5,6 +5,7 @@ import "@google/model-viewer/dist/model-viewer";
 const ModelViewer = ({
   glb = "/models/tigerteen.glb",
   usdz = "/models/tigerteen.usdz",
+  zoom = "auto",
 }) => {
   // const animals = [
   //   "/models/tigerteen.glb",
@@ -42,20 +43,10 @@ const ModelViewer = ({
         ar
         ar-modes="webxr scene-viewer quick-look"
         reveal="auto"
+        max-field-of-view=${zoom}
+        
       >
-      
-      <button slot="ar-button" >
-     <Image
-              src="/img/ar.svg"
-              alt="AR Quick Look"
-              width={51}
-              height={51}
-            />
-  </button>
-      
-      
-      
-      </model-viewer>`;
+          </model-viewer>`;
 
   return (
     <>
