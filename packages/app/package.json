@@ -36,6 +36,7 @@
     "@lingui/macro": "^3.13.0",
     "@lingui/react": "^3.13.0",
     "@lingui/remote-loader": "^3.11.0",
+    "@mailchimp/mailchimp_marketing": "^3.0.74",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.7",
     "@mui/styles": "^5.2.3",

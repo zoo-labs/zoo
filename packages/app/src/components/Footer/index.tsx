@@ -9,10 +9,53 @@ import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 import { useActiveWeb3React } from "hooks";
 import Web3Status from "../Web3Status";
-
+import { useState } from "react";
+import axios from "axios";
 const Footer = () => {
   const { account, chainId, library } = useActiveWeb3React();
   const { i18n } = useLingui();
+  const [Form, setForm] = useState({
+    email: "",
+  });
+  const [succes, setSucces] = useState(false);
+  const [error, seterror] = useState(false);
+
+  const handleSubmit = () => {
+    console.log("sending information");
+
+    const { email } = Form;
+
+    //call api to send obj
+
+    axios
+      .post("/api/subscribe", {
+        email: email,
+      })
+      .then(function (response) {
+        setForm({
+          email: "Succes!",
+        });
+        seterror(false);
+        setSucces(true);
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+        seterror(true);
+        setForm({
+          email: "Error!",
+        });
+      });
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setForm({
+      ...Form,
+      [name]: value,
+    });
+  };
+
   return (
     // <footer className="absolute bottom-0 flex items-center justify-between w-screen h-20 p-4 mx-auto text-center text-low-emphesis">
     <footer className="flex-shrink-0 w-full bg-black">
@@ -127,11 +170,21 @@ const Footer = () => {
             <form>
               <div className="flex items-center px-2 py-2 border rounded-full">
                 <input
-                  type="email"
                   placeholder="enter your email"
-                  className="bg-transparent text-center"
+                  name="email"
+                  type="email"
+                  value={Form.email}
+                  onChange={handleInputChange}
+                  className="bg-transparent placeholder:text-center"
                 />
-                <button type="submit" className="flex">
+
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSubmit();
+                  }}
+                  className="flex"
+                >
                   <Image
                     src="/img/small-circle-button.svg"
                     width={20}
