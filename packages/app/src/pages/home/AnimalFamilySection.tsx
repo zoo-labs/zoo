@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useGif } from "context/GifContext";
-import BabylonAnim from "components/Babylon";
+//import BabylonAnim from "components/Babylon";
 
 import dynamic from "next/dynamic";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
