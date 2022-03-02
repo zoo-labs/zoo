@@ -145,7 +145,7 @@ const AnimalList = () => {
           >
             {gifMode === "gif" ? (
               <div className="overflow-hidden rounded ">
-                <div className="h-[300px] w-[300px]">
+                <div className="h-[350px] w-[300px]">
                   {/* <BabylonAnim
                     lowerRadius={animal.lowLimit}
                     upperRadius={animal.upLimit}
