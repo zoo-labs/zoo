@@ -7,14 +7,17 @@ import { ANIMAL_TYPE } from "../../types";
 
 import { useGif } from "context/GifContext";
 import BabylonAnim from "components/Babylon";
-
+import dynamic from "next/dynamic";
+const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
+  ssr: false,
+});
 const animalFamilyData = [
   {
     id: "1",
     cameraZ: 90,
     upLimit: 120,
     lowLimit: 40,
-    glb: "ELEPHANT_ADULT.glb",
+    glb: "/models/ELEPHANT_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
@@ -26,7 +29,7 @@ const animalFamilyData = [
     cameraZ: 50,
     upLimit: 100,
     lowLimit: 40,
-    glb: "RHINO_ADULT.glb",
+    glb: "/models/RHINO_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
@@ -38,7 +41,7 @@ const animalFamilyData = [
     cameraZ: 40,
     upLimit: 80,
     lowLimit: 35,
-    glb: "TIGER_ADULT.glb",
+    glb: "/models/TIGER_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
@@ -50,7 +53,7 @@ const animalFamilyData = [
     cameraZ: 30,
     upLimit: 40,
     lowLimit: 20,
-    glb: "LEO_ADULT.glb",
+    glb: "/models/LEO_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332847/zoo/images/clouded-leopard_piqix9.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332847/zoo/images/clouded-leopard_piqix9.png",
@@ -62,7 +65,7 @@ const animalFamilyData = [
     cameraZ: 45,
     upLimit: 100,
     lowLimit: 40,
-    glb: "HIPPO_ADULT.glb",
+    glb: "/models/HIPPO_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332795/zoo/images/hippo_i4grms.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332795/zoo/images/hippo_i4grms.png",
@@ -74,7 +77,7 @@ const animalFamilyData = [
     cameraZ: 90,
     upLimit: 120,
     lowLimit: 40,
-    glb: "Gir.glb",
+    glb: "/models/Gir.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332705/zoo/images/giraffe_caohec.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332705/zoo/images/giraffe_caohec.png",
@@ -86,7 +89,7 @@ const animalFamilyData = [
     cameraZ: 30,
     upLimit: 40,
     lowLimit: 20,
-    glb: "WOLF.glb",
+    glb: "/models/WOLF.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332820/zoo/images/red-wolf_tjiwez.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332820/zoo/images/red-wolf_tjiwez.png",
@@ -143,7 +146,7 @@ const AnimalList = () => {
             {gifMode === "gif" ? (
               <div className="overflow-hidden rounded ">
                 <div className="h-[300px] w-[300px]">
-                  <BabylonAnim
+                  {/* <BabylonAnim
                     lowerRadius={animal.lowLimit}
                     upperRadius={animal.upLimit}
                     animal={animal.glb}
@@ -152,14 +155,18 @@ const AnimalList = () => {
                     rotationX={0}
                     rotationZ={0}
                     rotationY={0}
-                  />
+                  /> */}
+
+                  <ModelViewer glb={animal.glb}></ModelViewer>
                 </div>
 
-                <Link href={`nft-product/${animal.slug}`}>
-                  <a className="AnimalFamily__image w-full bg-[#000]	 h-auto flex flex-col items-center lg:basis-1/3   p-4">
-                    {animal.name}
-                  </a>
-                </Link>
+                <div className="mt-4">
+                  <Link href={`nft-product/${animal.slug}`}>
+                    <a className="AnimalFamily__image w-full bg-[#000]	 h-auto flex flex-col items-center lg:basis-1/3   p-4">
+                      {animal.name}
+                    </a>
+                  </Link>
+                </div>
               </div>
             ) : (
               <div className="bg-black rounded overflow-hidden">
