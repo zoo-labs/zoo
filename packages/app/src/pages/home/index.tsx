@@ -1,5 +1,5 @@
 import _ from "lodash";
-import ZooBabyAnim from "../../components/Babylon";
+//import ZooBabyAnim from "../../components/Babylon";
 import dynamic from "next/dynamic";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
