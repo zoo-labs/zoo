@@ -68,11 +68,20 @@ input:focus {
   );
 }
 
+/* model viewer */
+model-viewer {
+  width: inherit;
+  height: inherit;
+  background-color: transparent;
+  --poster-color: transparent;
+}
+
 /* canvas highlight stop */
 
 canvas {
   outline: none;
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  /* mobile webkit */
 }
 
 /* *::-webkit-scrollbar {
