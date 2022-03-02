@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import Image from "next/link";
 import "@google/model-viewer/dist/model-viewer";
 
 const ModelViewer = ({
@@ -42,7 +42,20 @@ const ModelViewer = ({
         ar
         ar-modes="webxr scene-viewer quick-look"
         reveal="auto"
-      ></model-viewer>`;
+      >
+      
+      <button slot="ar-button" >
+     <Image
+              src="/img/ar.svg"
+              alt="AR Quick Look"
+              width={51}
+              height={51}
+            />
+  </button>
+      
+      
+      
+      </model-viewer>`;
 
   return (
     <>
