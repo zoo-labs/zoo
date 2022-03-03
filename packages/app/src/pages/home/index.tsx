@@ -36,7 +36,7 @@ export default function Home() {
 
   return (
     <div>
-      <HeroSection animal3d={<ModelViewer zoom="30deg"></ModelViewer>} />
+      <HeroSection animal3d={<ModelViewer zoom="35deg"></ModelViewer>} />
 
       <PartnersSection />
       <OpportunitySection />

@@ -1,35 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Image from "next/link";
 import "@google/model-viewer/dist/model-viewer";
-
+import Head from "next";
 const ModelViewer = ({
   glb = "/models/tigerteen.glb",
   usdz = "/models/tigerteen.usdz",
   zoom = "auto",
+  multiple = false,
 }) => {
-  // const animals = [
-  //   "/models/tigerteen.glb",
-  //   "/models/Gir.glb",
-  //   "/models/Leo.glb",
-  //   "/models/WOLF.glb",
-  // ];
-  // let index;
-  // const [currentAnimal, setCurrentAnimal] = useState(animals[index]);
-
-  // function makeAlert() {
-  //   if (index > animals.length) {
-  //     index = 0;
-  //     setCurrentAnimal(animals[index]);
-  //   } else {
-  //     index++;
-  //     setCurrentAnimal(animals[index]);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   setInterval(makeAlert, 500);
-  //   return () => {};
-  // }, [currentAnimal]);
+  const animals = [
+    "/models/WOLF.glb",
+    "/models/tigerteen.glb",
+    "/models/LEOPARD_YOUNG_TEEN.glb",
+    "/models/ELEPHTEEN.glb",
+    "/models/GIRAFFE_YOUNG_TEEN.glb",
+    "/models/HIPPO_YOUNG_TEEN.glb",
+    "/models/RHINO_YOUNG_TEEN.glb",
+  ];
+  const elementRef = useRef();
+  const [index, setindex] = useState(0);
+  const [currentAnimal, setCurrentAnimal] = useState(animals[index]);
 
   const ModelVie = `
       <model-viewer
@@ -44,14 +34,28 @@ const ModelViewer = ({
         ar-modes="webxr scene-viewer quick-look"
         reveal="auto"
         max-field-of-view=${zoom}
-        
-      >
-          </model-viewer>`;
+        ></model-viewer>`;
+
+  useEffect(() => {
+    // setInterval(() => {
+    //   if (index < 6) {
+    //     setindex((index) => index + 1);
+    //     console.log(animals[index]);
+    //     setCurrentAnimal(animals[index]);
+    //   } else {
+    //     setindex(0);
+    //     console.log(animals[index]);
+    //     setCurrentAnimal(animals[index]);
+    //   }
+    // }, 15000);
+
+    return () => {};
+  }, []);
 
   return (
     <>
       <div
-        className="w-full h-[400px]"
+        className="w-full h-full"
         dangerouslySetInnerHTML={{ __html: ModelVie }}
       ></div>
     </>
