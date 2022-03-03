@@ -66,7 +66,7 @@ const HeroSection = ({ animal3d }) => {
           className="lg:mt-6  max-w-md Hero__image lg:max-w-xl lg:basis-1/2 flex justify-center bg-red-300"
           // ref={heroImage}
         >
-          {animal3d}
+          <div className="w-[400px] h-[400px]">{animal3d}</div>
           {/* {gifMode === "gif" ? (
             <video autoPlay loop={true} playsInline={true} muted>
               <source
