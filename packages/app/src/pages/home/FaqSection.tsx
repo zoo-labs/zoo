@@ -35,12 +35,11 @@ const FaqSection = () => {
               What are the Key Features in ZOO?
             </h3>
             <p className="text-white lg:max-w-sm ">
-              {`Our key features include: growing, breeding. In the near future we will also launch an app
-              with our ZOO augmented reality game. The ZOO App will load the NFTs
-              in your wallet. With the app you will be able to see your NFT in
-              real time with much more animal engagement including: petting,
-              make the animal roll over, shake animals paw, give animal kiss,
-              receive kiss, feed your animal, and walking with your animal.`}
+              {`Our key features include: growing,
+              breeding. In the near future we will
+              also launch the ZOO AR App which will enable you to
+              play with your animals in AR. With the app you will be able
+              to see your NFT and pet, play, shake hands and more.`}
             </p>
           </div>
 
