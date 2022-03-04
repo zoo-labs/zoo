@@ -36,7 +36,7 @@ const FaqSection = () => {
             </h3>
             <p className="text-white lg:max-w-sm ">
               {`Our key features include: growing, breeding. In the near future we will also launch an app
-              with our ZOO augmented reality game. This apple will load the NFTs
+              with our ZOO augmented reality game. The ZOO App will load the NFTs
               in your wallet. With the app you will be able to see your NFT in
               real time with much more animal engagement including: petting,
               make the animal roll over, shake animals paw, give animal kiss,
