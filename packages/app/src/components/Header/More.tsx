@@ -13,6 +13,7 @@ import { useLingui } from "@lingui/react";
 import NavLink from "../NavLink";
 import Toggle from "../Toggle";
 import { useAnimationModeManager } from "../../state/user/hooks";
+import MoonPayBtn from "components/Moonpaybtn/MoonpayBtn";
 
 const items = (i18n: I18n) => [
   {
@@ -241,6 +242,13 @@ export default function Menu() {
                       </svg>
                     </div>
                   </div>
+
+                  {/* <div
+                    className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
+                    style={{}}
+                  >
+
+                  </div> */}
                   {/* <div
                     onClick={() => toggleTheme()}
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
