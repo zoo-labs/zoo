@@ -171,8 +171,8 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                           </a>
                         </NavLink>
                       )} */}
-
-                      <MoonPayBtn></MoonPayBtn>
+                      {/* moon pay widget */}
+                      {/* <MoonPayBtn></MoonPayBtn> */}
                     </div>
                   </div>
                 </div>
