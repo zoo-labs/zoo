@@ -31,7 +31,7 @@ const MoonPayBtn = () => {
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="inline-flex w-full px-2 text-base font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 mb-4 md:mb-0">
-            BuyBNB
+            Buy Crypto
           </Menu.Button>
         </div>
         <Transition
@@ -50,7 +50,7 @@ const MoonPayBtn = () => {
                   <iframe
                     allow="accelerometer; autoplay; camera; gyroscope; payment"
                     height="100%"
-                    src="https://buy-staging.moonpay.io?apiKey=pk_test_123"
+                    src="https://buy-sandbox.moonpay.com?apiKey=pk_test_gmMP8EXajK6LPecrHyUOyvvksZNrPbG&currencyCode=bnb"
                     width="100%"
                   >
                     <p>Your browser does not support iframes.</p>
