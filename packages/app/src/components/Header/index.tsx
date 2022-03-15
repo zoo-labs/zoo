@@ -22,6 +22,7 @@ import { useETHBalances } from "../../state/wallet/hooks";
 import { useLingui } from "@lingui/react";
 import { useZoobalance } from "state/zoo/hooks";
 import Banner from "components/Banner";
+import MoonPayBtn from "components/Moonpaybtn/MoonpayBtn";
 // import { ChainId } from '../../config/networks'
 
 // import { ExternalLink, NavLink } from "./Link";
@@ -170,6 +171,8 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                           </a>
                         </NavLink>
                       )} */}
+                      {/* moon pay widget */}
+                      {/* <MoonPayBtn></MoonPayBtn> */}
                     </div>
                   </div>
                 </div>
