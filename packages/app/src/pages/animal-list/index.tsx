@@ -17,6 +17,9 @@ const animalFamilyData = [
     cameraZ: 90,
     upLimit: 120,
     lowLimit: 40,
+    usdzFile: false,
+    usdz: "/models/ELEPHANT_ADULT.usdz",
+
     glb: "/models/ELEPHANT_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
@@ -29,6 +32,8 @@ const animalFamilyData = [
     cameraZ: 50,
     upLimit: 100,
     lowLimit: 40,
+    usdzFile: true,
+    usdz: "/models/RHINO_ADULT.usdz",
     glb: "/models/RHINO_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
@@ -41,6 +46,8 @@ const animalFamilyData = [
     cameraZ: 40,
     upLimit: 80,
     lowLimit: 35,
+    usdzFile: true,
+    usdz: "/models/TIGER_ADULT.usdz",
     glb: "/models/TIGER_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
@@ -53,6 +60,8 @@ const animalFamilyData = [
     cameraZ: 30,
     upLimit: 40,
     lowLimit: 20,
+    usdzFile: false,
+    usdz: "/models/LEO_ADULT.usdz",
     glb: "/models/LEO_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332847/zoo/images/clouded-leopard_piqix9.png",
@@ -65,6 +74,8 @@ const animalFamilyData = [
     cameraZ: 45,
     upLimit: 100,
     lowLimit: 40,
+    usdzFile: true,
+    usdz: "/models/HIPPO_ADULT.usdz",
     glb: "/models/HIPPO_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332795/zoo/images/hippo_i4grms.png",
@@ -77,6 +88,8 @@ const animalFamilyData = [
     cameraZ: 90,
     upLimit: 120,
     lowLimit: 40,
+    usdzFile: true,
+    usdz: "/models/GIRAFFE_ADULT.usdz",
     glb: "/models/Gir.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332705/zoo/images/giraffe_caohec.png",
@@ -89,7 +102,9 @@ const animalFamilyData = [
     cameraZ: 30,
     upLimit: 40,
     lowLimit: 20,
-    glb: "/models/WOLF.glb",
+    usdzFile: false,
+    usdz: "/models/",
+    glb: "/models/WOLF_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332820/zoo/images/red-wolf_tjiwez.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332820/zoo/images/red-wolf_tjiwez.png",
@@ -157,7 +172,11 @@ const AnimalList = () => {
                     rotationY={0}
                   /> */}
 
-                  <ModelViewer glb={animal.glb}></ModelViewer>
+                  <ModelViewer
+                    usdz={animal.usdz}
+                    glb={animal.glb}
+                    usdzFile={animal.usdzFile}
+                  ></ModelViewer>
                 </div>
 
                 <div className="mt-4">

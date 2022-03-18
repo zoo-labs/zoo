@@ -18,7 +18,6 @@ export default async function moonpay(req, res) {
 
   //   console.log("MAKING REQUEST NOW");
   //   console.log("___________-----------_______");
-
   //if (req.method === "POST") {
   // Process a POST request
 
