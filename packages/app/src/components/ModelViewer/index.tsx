@@ -4,8 +4,9 @@ import "@google/model-viewer/dist/model-viewer";
 import Head from "next";
 const ModelViewer = ({
   glb = "/models/tigerteen.glb",
-  usdz = "/models/tigerteen.usdz",
+  usdz = "/models/TIGER_BABY.usdz",
   zoom = "auto",
+  usdzFile = false,
   multiple = false,
 }) => {
   const animals = [
@@ -23,6 +24,7 @@ const ModelViewer = ({
 
   const ModelVie = `
       <model-viewer
+        ${usdzFile ? `usdz=${usdz}` : ``}
         src=${glb}
         loading="eager"
         alt="A 3D model of an astronaut"

@@ -10,6 +10,8 @@ const productsData = [
     cameraZ: 90,
     upLimit: 120,
     lowLimit: 40,
+    usdzFile: false,
+    usdz: "/models/ELEPHANT_ADULT.usdz",
     glb: "/models/ELEPHANT_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
@@ -32,11 +34,20 @@ const productsData = [
       //"https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
       //"https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
       //"https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
-      { cameraZ: 90, upLimit: 120, lowLimit: 40, glb: "/models/ELEPHTEEN.glb" },
       {
         cameraZ: 90,
         upLimit: 120,
         lowLimit: 40,
+        glb: "/models/ELEPHTEEN.glb",
+        usdzFile: false,
+        usdz: "/models/ELEPHANT_TEEN.usdz",
+      },
+      {
+        cameraZ: 90,
+        upLimit: 120,
+        lowLimit: 40,
+        usdzFile: false,
+        usdz: "/models/ELEPHANT_ADULT.usdz",
         glb: "/models/ELEPHANT_ADULT.glb",
       },
     ],
@@ -47,6 +58,8 @@ const productsData = [
     upLimit: 100,
     lowLimit: 40,
     glb: "/models/RHINO_ADULT.glb",
+    usdzFile: true,
+    usdz: "/models/RHINO_ADULT.usdz",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
@@ -72,12 +85,16 @@ const productsData = [
         upLimit: 100,
         lowLimit: 40,
         glb: "/models/RHINO_YOUNG_TEEN.glb",
+        usdzFile: true,
+        usdz: "/models/RHINO_BABY.usdz",
       },
       {
         cameraZ: 50,
         upLimit: 100,
         lowLimit: 40,
         glb: "/models/RHINO_ADULT.glb",
+        usdzFile: true,
+        usdz: "/models/RHINO_ADULT.usdz",
       },
     ],
   },
@@ -87,6 +104,8 @@ const productsData = [
     upLimit: 80,
     lowLimit: 35,
     glb: "/models/TIGER_ADULT.glb",
+    usdzFile: true,
+    usdz: "/models/TIGER_ADULT.usdz",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
@@ -106,12 +125,21 @@ const productsData = [
       // "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
       //"https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
       //"https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
-      { cameraZ: 40, upLimit: 80, lowLimit: 35, glb: "/models/TIGERTeen.glb" },
+      {
+        cameraZ: 40,
+        upLimit: 80,
+        lowLimit: 35,
+        glb: "/models/TIGERTeen.glb",
+        usdzFile: true,
+        usdz: "/models/TIGER_BABY.usdz",
+      },
       {
         cameraZ: 40,
         upLimit: 80,
         lowLimit: 35,
         glb: "/models/TIGER_ADULT.glb",
+        usdzFile: true,
+        usdz: "/models/TIGER_ADULT.usdz",
       },
     ],
   },
@@ -120,6 +148,8 @@ const productsData = [
     cameraZ: 30,
     upLimit: 40,
     lowLimit: 20,
+    usdzFile: false,
+    usdz: "/models/LEO_ADULT.usdz",
     glb: "/models/LEO_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332847/zoo/images/clouded-leopard_piqix9.png",
@@ -143,9 +173,18 @@ const productsData = [
         cameraZ: 20,
         upLimit: 30,
         lowLimit: 10,
+        usdzFile: false,
+        usdz: "/models/LEOPARD_YOUNG_TEEN.usdz",
         glb: "/models/LEOPARD_YOUNG_TEEN.glb",
       },
-      { cameraZ: 20, upLimit: 30, lowLimit: 10, glb: "/models/LEO_ADULT.glb" },
+      {
+        cameraZ: 20,
+        upLimit: 30,
+        lowLimit: 10,
+        glb: "/models/LEO_ADULT.glb",
+        usdzFile: false,
+        usdz: "/models/LEO_ADULT.usdz",
+      },
     ],
   },
   {
@@ -153,6 +192,8 @@ const productsData = [
     cameraZ: 45,
     upLimit: 100,
     lowLimit: 40,
+    usdzFile: true,
+    usdz: "/models/HIPPO_ADULT.usdz",
     glb: "/models/HIPPO_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332795/zoo/images/hippo_i4grms.png",
@@ -177,12 +218,16 @@ const productsData = [
         cameraZ: 45,
         upLimit: 100,
         lowLimit: 40,
+        usdzFile: true,
+        usdz: "/models/HIPPO_BABY.usdz",
         glb: "/models/HIPPO_YOUNG_TEEN.glb",
       },
       {
         cameraZ: 45,
         upLimit: 100,
         lowLimit: 40,
+        usdzFile: true,
+        usdz: "/models/HIPPO_ADULT.usdz",
         glb: "/models/HIPPO_ADULT.glb",
       },
     ],
@@ -193,6 +238,8 @@ const productsData = [
     upLimit: 120,
     lowLimit: 40,
     glb: "/models/Gir.glb",
+    usdzFile: true,
+    usdz: "/models/GIRAFFE_ADULT.usdz",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332705/zoo/images/giraffe_caohec.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/giraffe_dz5ed1.mov",
@@ -218,8 +265,17 @@ const productsData = [
         upLimit: 120,
         lowLimit: 40,
         glb: "/models/GIRAFFE_YOUNG_TEEN.glb",
+        usdzFile: true,
+        usdz: "/models/GIRAFFE_BABY.usdz",
       },
-      { cameraZ: 90, upLimit: 120, lowLimit: 40, glb: "/models/Gir.glb" },
+      {
+        cameraZ: 90,
+        upLimit: 120,
+        lowLimit: 40,
+        glb: "/models/Gir.glb",
+        usdzFile: true,
+        usdz: "/models/GIRAFFE_ADULT.usdz",
+      },
     ],
   },
   {
@@ -228,6 +284,8 @@ const productsData = [
     upLimit: 40,
     lowLimit: 20,
     glb: "/models/WOLF_ADULT.glb",
+    usdzFile: false,
+    usdz: "/models/WOLF_ADULT.usdz",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332820/zoo/images/red-wolf_tjiwez.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644336263/zoo/red-wolf_hq2iuv.mov",
@@ -247,12 +305,21 @@ const productsData = [
       //"https://res.cloudinary.com/diu8hjwwe/video/upload/v1644336263/zoo/red-wolf_hq2iuv.mov",
       // "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644336263/zoo/red-wolf_hq2iuv.mov",
       //   "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644336263/zoo/red-wolf_hq2iuv.mov",
-      { cameraZ: 30, upLimit: 40, lowLimit: 20, glb: "/models/WOLF.glb" },
+      {
+        cameraZ: 30,
+        upLimit: 40,
+        lowLimit: 20,
+        glb: "/models/WOLF.glb",
+        usdzFile: false,
+        usdz: "/models/WOLF_ADULT.usdz",
+      },
       {
         cameraZ: 40,
         upLimit: 60,
         lowLimit: 20,
         glb: "/models/WOLF_ADULT.glb",
+        usdzFile: false,
+        usdz: "/models/WOLF_ADULT.usdz",
       },
     ],
   },
@@ -268,7 +335,12 @@ const NFTProduct = ({ animal }) => {
         <div className="w-full flex items-center justify-center lg:basis-1/2">
           <div className="p-px  rounded bg-nft-gradient lg:mb-0">
             <div className="h-[300px] w-[300px] lg:h-[800px] lg:w-[600px]  overflow-hidden rounded">
-              <ModelViewer zoom="50deg" glb={animal.glb}></ModelViewer>
+              <ModelViewer
+                usdz={animal.usdz}
+                usdzFile={animal.usdzFile}
+                zoom="50deg"
+                glb={animal.glb}
+              ></ModelViewer>
             </div>
           </div>
         </div>
@@ -365,7 +437,11 @@ const NFTProduct = ({ animal }) => {
                 key={index}
               >
                 <div className="overflow-hidden bg-black rounded w-[300px] h-[300px]">
-                  <ModelViewer glb={img.glb}></ModelViewer>
+                  <ModelViewer
+                    usdzFile={img.usdzFile}
+                    usdz={img.usdz}
+                    glb={img.glb}
+                  ></ModelViewer>
                   {/* <video
                     autoPlay
                     loop={true}
