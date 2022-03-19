@@ -3,20 +3,20 @@ import Image from "next/link";
 import "@google/model-viewer/dist/model-viewer";
 import Head from "next";
 const ModelViewer = ({
-  glb = "/models/tigerteen.glb",
-  usdz = "/models/TIGER_BABY.usdz",
+  glb = "/models/Tiger/tigerteen.glb",
+  usdz = "/models/Tiger/TIGER_BABY.usdz",
   zoom = "auto",
   usdzFile = false,
   multiple = false,
 }) => {
   const animals = [
-    "/models/WOLF.glb",
-    "/models/tigerteen.glb",
-    "/models/LEOPARD_YOUNG_TEEN.glb",
-    "/models/ELEPHTEEN.glb",
-    "/models/GIRAFFE_YOUNG_TEEN.glb",
-    "/models/HIPPO_YOUNG_TEEN.glb",
-    "/models/RHINO_YOUNG_TEEN.glb",
+    "/models/Wolf/WOLF.glb",
+    "/models/Tiger/tigerteen.glb",
+    "/models/Leopard/LEOPARD_YOUNG_TEEN.glb",
+    "/models/Elephant/ELEPHTEEN.glb",
+    "/models/Giraffe/GIRAFFE_YOUNG_TEEN.glb",
+    "/models/Hippo/HIPPO_YOUNG_TEEN.glb",
+    "/models/Rhino/RHINO_YOUNG_TEEN.glb",
   ];
   const elementRef = useRef();
   const [index, setindex] = useState(0);
