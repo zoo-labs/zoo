@@ -17,9 +17,7 @@ const animalFamilyData = [
     cameraZ: 90,
     upLimit: 120,
     lowLimit: 40,
-    usdzFile: false,
     usdz: "/models/Elephant/ELEPHANT_ADULT.usdz",
-
     glb: "/models/Elephant/ELEPHANT_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
@@ -29,12 +27,11 @@ const animalFamilyData = [
   },
   {
     id: "2",
-    cameraZ: 50,
+    cameraZ: 90,
     upLimit: 100,
     lowLimit: 40,
-    usdzFile: true,
     usdz: "/models/Rhino/RHINO_ADULT.usdz",
-    glb: "/models/Rhino/RHINO_ADULT.glb",
+    glb: "/models/Rhino/RHINO.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
@@ -46,7 +43,6 @@ const animalFamilyData = [
     cameraZ: 40,
     upLimit: 80,
     lowLimit: 35,
-    usdzFile: true,
     usdz: "/models/Tiger/TIGER_ADULT.usdz",
     glb: "/models/Tiger/TIGER_ADULT.glb",
     image:
@@ -60,9 +56,8 @@ const animalFamilyData = [
     cameraZ: 30,
     upLimit: 40,
     lowLimit: 20,
-    usdzFile: false,
-    usdz: "/models/Leopard/LEO_ADULT.usdz",
-    glb: "/models/Leopard/LEO_ADULT.glb",
+    usdz: "/models/Leopard/LEOPARD_ADULT.usdz",
+    glb: "/models/Leopard/LEOPARD_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332847/zoo/images/clouded-leopard_piqix9.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332847/zoo/images/clouded-leopard_piqix9.png",
@@ -74,7 +69,6 @@ const animalFamilyData = [
     cameraZ: 45,
     upLimit: 100,
     lowLimit: 40,
-    usdzFile: true,
     usdz: "/models/Hippo/HIPPO_ADULT.usdz",
     glb: "/models/Hippo/HIPPO_ADULT.glb",
     image:
@@ -88,9 +82,8 @@ const animalFamilyData = [
     cameraZ: 90,
     upLimit: 120,
     lowLimit: 40,
-    usdzFile: true,
     usdz: "/models/Giraffe/GIRAFFE_ADULT.usdz",
-    glb: "/models/Giraffe/Gir.glb",
+    glb: "/models/Giraffe/GIRAFFE_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332705/zoo/images/giraffe_caohec.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332705/zoo/images/giraffe_caohec.png",
@@ -102,7 +95,6 @@ const animalFamilyData = [
     cameraZ: 30,
     upLimit: 40,
     lowLimit: 20,
-    usdzFile: false,
     usdz: "/models/Wolf/WOLF_ADULT.usdz",
     glb: "/models/Wolf/WOLF_ADULT.glb",
     image:
@@ -161,21 +153,9 @@ const AnimalList = () => {
             {gifMode === "gif" ? (
               <div className="overflow-hidden rounded ">
                 <div className="h-[350px] w-[300px]">
-                  {/* <BabylonAnim
-                    lowerRadius={animal.lowLimit}
-                    upperRadius={animal.upLimit}
-                    animal={animal.glb}
-                    cameraZ={animal.cameraZ}
-                    cameraX={180}
-                    rotationX={0}
-                    rotationZ={0}
-                    rotationY={0}
-                  /> */}
-
                   <ModelViewer
                     usdz={animal.usdz}
                     glb={animal.glb}
-                    usdzFile={animal.usdzFile}
                   ></ModelViewer>
                 </div>
 
