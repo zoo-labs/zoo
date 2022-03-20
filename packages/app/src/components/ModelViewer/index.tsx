@@ -3,7 +3,7 @@ import Image from "next/link";
 import "@google/model-viewer/dist/model-viewer";
 import Head from "next";
 const ModelViewer = ({
-  glb = "/models/Tiger/tigerteen.glb",
+  glb = "/models/Tiger/TIGER_BABY.glb",
   usdz = "/models/Tiger/TIGER_BABY.usdz",
   zoom = "auto",
   usdzFile = false,
@@ -24,7 +24,7 @@ const ModelViewer = ({
 
   const ModelVie = `
       <model-viewer
-        ${usdzFile ? `usdz=${usdz}` : ``}
+        usdz=${usdz}
         src=${glb}
         loading="eager"
         alt="A 3D model of an astronaut"
@@ -39,18 +39,6 @@ const ModelViewer = ({
         ></model-viewer>`;
 
   useEffect(() => {
-    // setInterval(() => {
-    //   if (index < 6) {
-    //     setindex((index) => index + 1);
-    //     console.log(animals[index]);
-    //     setCurrentAnimal(animals[index]);
-    //   } else {
-    //     setindex(0);
-    //     console.log(animals[index]);
-    //     setCurrentAnimal(animals[index]);
-    //   }
-    // }, 15000);
-
     return () => {};
   }, []);
 
