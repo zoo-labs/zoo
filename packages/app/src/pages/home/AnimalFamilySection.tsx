@@ -16,6 +16,7 @@ const animalFamilyData = [
     cameraZ: 100,
     upLimit: 120,
     lowLimit: 40,
+    usdz: "/models/Elephant/ELEPHANT_ADULT.usdz",
     glb: "/models/Elephant/ELEPHANT_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
@@ -42,7 +43,8 @@ const animalFamilyData = [
     cameraZ: 80,
     upLimit: 120,
     lowLimit: 40,
-    glb: "/models/Rhino/RHINO_ADULT.glb",
+    usdz: "/models/Rhino/RHINO_ADULT.usdz",
+    glb: "/models/Rhino/RHINO.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
@@ -70,6 +72,7 @@ const animalFamilyData = [
     cameraZ: 50,
     upLimit: 80,
     lowLimit: 35,
+    usdz: "/models/Tiger/TIGER_ADULT.usdz",
     glb: "/models/Tiger/TIGER_ADULT.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
@@ -117,7 +120,10 @@ const AnimalFamilySection = () => {
                     {gifMode === "gif" ? (
                       <div className="overflow-hidden rounded">
                         <div className=" w-[400px] h-[400px]">
-                          <ModelViewer glb={data.glb}></ModelViewer>
+                          <ModelViewer
+                            usdz={data.usdz}
+                            glb={data.glb}
+                          ></ModelViewer>
                         </div>
                       </div>
                     ) : (
