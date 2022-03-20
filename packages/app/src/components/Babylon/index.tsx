@@ -5,7 +5,7 @@ import SceneComponent from "./SceneComponent";
 import Image from "next/image";
 
 const BabylonAnim = ({
-  animal = "TigerTeen.glb",
+  animal = "Tiger/TigerTeen.glb",
   upperRadius = 40,
   lowerRadius = 14,
   cameraZ = 16,
@@ -124,7 +124,7 @@ const BabylonAnim = ({
         {isArAble ? (
           <a
             rel="ar"
-            href="/models/tigerteen.usdz"
+            href="/models/Tiger/TIGER_BABY.usdz"
             style={{ float: "right", marginTop: -64 }}
           >
             <Image
