@@ -33,10 +33,12 @@ const ModelViewer = ({
         auto-rotate
         autoplay
         ar
+        ar-scale="fixed"
         placement="floor"
         ar-modes="webxr scene-viewer quick-look"
         reveal="auto"
         max-field-of-view=${zoom}
+        xr-environment
         ></model-viewer>`;
 
   useEffect(() => {
