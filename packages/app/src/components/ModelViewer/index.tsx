@@ -33,6 +33,7 @@ const ModelViewer = ({
         auto-rotate
         autoplay
         ar
+        placement="floor"
         ar-modes="webxr scene-viewer quick-look"
         reveal="auto"
         max-field-of-view=${zoom}
