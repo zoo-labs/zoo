@@ -24,7 +24,7 @@ const ModelViewer = ({
 
   const ModelVie = `
       <model-viewer
-        usdz=${usdz}
+        ios-src=${usdz}
         src=${glb}
         loading="eager"
         alt="A 3D model of an astronaut"
