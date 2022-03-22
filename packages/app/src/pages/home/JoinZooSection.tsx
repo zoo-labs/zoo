@@ -63,6 +63,14 @@ const JoinZooSection = () => {
           >
             <Image src="/img/medium-icon.svg" height={32} width={32} alt="" />{" "}
           </a>
+          <a
+            href="https://www.youtube.com/channel/UCjTd-6h0nbVwz34IihdCUww"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-8"
+          >
+            <Image src="/img/youtube.svg" width={32} height={32} alt="" />
+            </a>
         </div>
 
         {/* <form className="">
