@@ -300,21 +300,15 @@ const Footer = () => {
             className="ml-2"
           >
             <Image src="/img/medium-icon.svg" height={16} width={16} alt="" />{" "}
-            </a>
-          <a
-            href=""
-            target="_blank"
-            rel="noreferrer"
-            className="ml-2"
-          >
-            <Image src="/img/youtube.svg" height={16} width={16} alt="" />{" "}
-            </a>
+          </a>
+
           <a
             href="https://www.youtube.com/channel/UCjTd-6h0nbVwz34IihdCUww"
             target="_blank"
             rel="noreferrer"
             className="ml-2"
           >
+            <Image src="/img/youtube.svg" height={16} width={16} alt="" />{" "}
           </a>
         </div>
       </div>
