@@ -26,15 +26,16 @@ const ModelViewer = ({
       <model-viewer
         ios-src=${usdz}
         src=${glb}
-        loading="eager"
-        alt="A 3D model of an astronaut"
+        loading="auto"
+        reveal="auto"
+        alt=""
         shadow-intensity="1"
         camera-controls
         auto-rotate
         autoplay
         ar
-        ar-modes="webxr scene-viewer quick-look"
-        reveal="auto"
+        ar-placement="floor"
+        ar-modes="scene-viewer webxr"
         max-field-of-view=${zoom}
         ></model-viewer>`;
 
