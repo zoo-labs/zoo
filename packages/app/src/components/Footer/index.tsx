@@ -74,6 +74,44 @@ const Footer = () => {
               </Link>
             </div>
             <div className="flex flex-col text-grey">
+            <div className="mb-2">
+            <a
+                  href="https://bscscan.com/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13#tokenInfo"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  BSCscan
+                </a>
+              </div>
+              <div className="mb-2">
+              <a
+                  href="https://coinmarketcap.com/currencies/zoo-labs/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  CoinMarketCap
+                </a>
+              </div>
+              <div className="mb-2">
+              <a
+                  href="https://www.dextools.io/app/bsc/pair-explorer/0x9f011e700fe3bd7004a8701a64517f2dc23f87dd"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  DEXtools
+                </a>  
+              </div>
+              <div className="mb-2">
+              <a
+                  href="https://www.coingecko.com/en/coins/zoo-labs"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  CoinGecko
+                </a>   
+              </div>
+              </div>    
+            <div className="flex flex-col text-grey">
               {/* <div className="mb-2">
                 <Link href="/market">Marketplace</Link>
               </div> */}
@@ -112,7 +150,7 @@ const Footer = () => {
               </div> */}
             </div>
           </div>
-          <div className="flex flex-col items-end px-6 p-16 basis-1/3 text-grey h-full">
+          <div className="flex flex-col px-6 p-16 basis-1/3 text-grey h-full">
             {/* <div className="mb-0">
               {!account ? (
                 <a href="#">
