@@ -55,11 +55,11 @@ export const faqData = [
   },
   {
     question: "Still have questions?",
-    answer: `If you"re having difficulty, please join our <a href="https://discord.com/invite/43m9Sstd" >Discord server<a/> and post in the <span class="font-bold">#new-player-help</span> channel and our community will be happy to help!`,
+    answer: `If you"re having difficulty, please join our <a href="https://discord.gg/wW6Wth6r" >Discord server<a/> and post in the <span class="font-bold">#new-player-help</span> channel and our community will be happy to help!`,
   },
   {
     question: "Where can I interact and meet more members of the community?",
-    answer: `Please join our <a href="https://discord.com/invite/43m9Sstd" target="_blank" rel="noreferrer" class="text-green text-underline">Discord</a> server where you can meet the rest of the community?`,
+    answer: `Please join our <a href="https://discord.gg/wW6Wth6r" target="_blank" rel="noreferrer" class="text-green text-underline">Discord</a> server where you can meet the rest of the community?`,
   },
   // {
   //   question: "Who created the artwork for ZOO?",
