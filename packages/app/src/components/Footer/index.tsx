@@ -74,8 +74,8 @@ const Footer = () => {
               </Link>
             </div>
             <div className="flex flex-col text-grey">
-            <div className="mb-2">
-            <a
+              <div className="mb-2">
+                <a
                   href="https://bscscan.com/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13#tokenInfo"
                   target="_blank"
                   rel="noreferrer"
@@ -84,7 +84,7 @@ const Footer = () => {
                 </a>
               </div>
               <div className="mb-2">
-              <a
+                <a
                   href="https://coinmarketcap.com/currencies/zoo-labs/"
                   target="_blank"
                   rel="noreferrer"
@@ -93,24 +93,24 @@ const Footer = () => {
                 </a>
               </div>
               <div className="mb-2">
-              <a
+                <a
                   href="https://www.dextools.io/app/bsc/pair-explorer/0x9f011e700fe3bd7004a8701a64517f2dc23f87dd"
                   target="_blank"
                   rel="noreferrer"
                 >
                   DEXtools
-                </a>  
+                </a>
               </div>
               <div className="mb-2">
-              <a
+                <a
                   href="https://www.coingecko.com/en/coins/zoo-labs"
                   target="_blank"
                   rel="noreferrer"
                 >
                   CoinGecko
-                </a>   
+                </a>
               </div>
-              </div>    
+            </div>
             <div className="flex flex-col text-grey">
               {/* <div className="mb-2">
                 <Link href="/market">Marketplace</Link>
@@ -171,7 +171,7 @@ const Footer = () => {
               )}
             </div> */}
             <div className="mb-2">
-              <Link href="https://zoolabs.gitbook.io/whitepaper">
+              <Link href="https://zoolabs.gitbook.io/whitepaper/introduction/what-is-zoo">
                 <a>Whitepaper</a>
               </Link>
             </div>
