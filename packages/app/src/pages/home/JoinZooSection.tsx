@@ -48,7 +48,7 @@ const JoinZooSection = () => {
             />
           </a>
           <a
-            href="https://discord.com/invite/43m9Sstd"
+            href="https://discord.gg/wW6Wth6r"
             target="_blank"
             rel="noreferrer"
             className="mr-8"
@@ -70,7 +70,7 @@ const JoinZooSection = () => {
             className="mr-8"
           >
             <Image src="/img/youtube.svg" width={32} height={32} alt="" />
-            </a>
+          </a>
         </div>
 
         {/* <form className="">
