@@ -85,8 +85,14 @@ const FaqSection = () => {
               Still have questions?
             </h3>
             <p className="mb-4 text-white lg:max-w-sm">
-              If you are having difficulty, please <a href="https://discord.com/invite/43m9Sstd" className="text-green underline">join our Discord server</a> and
-              post in the #new-player-help channel and our community will be
+              If you are having difficulty, please{" "}
+              <a
+                href="https://discord.gg/wW6Wth6r"
+                className="text-green underline"
+              >
+                join our Discord server
+              </a>{" "}
+              and post in the #new-player-help channel and our community will be
               happy to help!
             </p>
             <p className="text-white lg:max-w-sm">
