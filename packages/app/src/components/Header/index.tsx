@@ -177,6 +177,21 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                   </div>
                 </div>
 
+                <div className=" w-3/4 text-xs flex flex-row-reverse items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap  font-bold cursor-pointer select-none pointer-events-auto">
+                  {account && chainId && userEthBalance && (
+                    <>
+                      <div className="px-3 py-2 text-primary text-bold">
+                        {userEthBalance?.toFixed(3)}{" "}
+                        {NATIVE[chainId]?.symbol || "ETH"}
+                      </div>
+                    </>
+                  )}
+                  <Web3Status
+                    title={i18n._(t`Connect Wallet`)}
+                    className="font-bold bg-black border border-green text-green"
+                  />
+                </div>
+
                 <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
                   <div className="flex items-center justify-between w-full space-x-2 sm:justify-end">
                     {chainId &&
@@ -250,20 +265,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                       </div>
                     )} */}
                     {/* My Wallet Button */}
-                    <div className="w-auto flex items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
-                      {account && chainId && userEthBalance && (
-                        <>
-                          <div className="px-3 py-2 text-primary text-bold">
-                            {userEthBalance?.toFixed(3)}{" "}
-                            {NATIVE[chainId]?.symbol || "ETH"}
-                          </div>
-                        </>
-                      )}
-                      <Web3Status
-                        title={i18n._(t`Connect Wallet`)}
-                        className="font-bold bg-black border border-green text-green"
-                      />
-                    </div>
+                    <div className=""></div>
                     <div className="hidden md:block">
                       {/* <LanguageSwitch /> */}
                     </div>
