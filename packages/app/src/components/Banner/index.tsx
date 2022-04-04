@@ -11,7 +11,7 @@ const Banner: FC = () => {
       {showBanner ? (
         <div className="relative w-full bg-purple bg-opacity-20">
           <div className="px-3 py-3 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div className="pr-4 sm:text-center">
+            <div className="pr-4 ">
               {/* <p className="font-medium text-white">
         <span className="md:hidden">We announced a new product!</span>
         <span className="hidden md:inline">
@@ -24,30 +24,26 @@ const Banner: FC = () => {
           </a>
         </span>
       </p> */}
-              <span className="block sm:ml-2 sm:inline-block">
+              <span className="block text-left  ">
                 <Copy
-                  className="flex flex-col text-center lg:flex-row"
+                  className="flex flex-col  text-left   sm:text-xs sm:w-full"
                   toCopy={
                     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ||
                     "0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13"
                   }
                 >
-                  <Typography
-                    variant="sm"
-                    className="font-bold text-white underline"
-                  >
+                  <Typography className="ml-1 font-bold text-green text-xs text-left underline p-1 sm:w-full">
+                    Token Address
+                  </Typography>
+
+                  <Typography className="font-bold  text-green text-xs text-left underline p-1  sm:w-full ">
                     {process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ||
                       "0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13"}
-                  </Typography>
-                  <Typography
-                    variant="sm"
-                    className="font-bold text-white underline"
-                  >
-                    Token Address
                   </Typography>
                 </Copy>
               </span>
             </div>
+            {/* X Icon Div  */}
             <div className="absolute inset-y-0 right-0 flex items-start pt-1 pr-1 sm:pt-1 sm:pr-2 sm:items-start">
               <button
                 type="button"
@@ -55,7 +51,10 @@ const Banner: FC = () => {
                 onClick={() => setShowBanner(false)}
               >
                 <span className="sr-only">Dismiss</span>
-                <XIcon className="w-6 h-6 text-white" aria-hidden="true" />
+                <XIcon
+                  className="w-6 h-6 text-white text-left"
+                  aria-hidden="true"
+                />
               </button>
             </div>
           </div>
