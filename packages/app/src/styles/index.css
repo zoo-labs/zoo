@@ -139,13 +139,13 @@ video {
 .z-10001 {
   z-index: 10;
 }
-.from-btn1 {
-  --tw-gradient-from: rgba(255, 64, 205, 0.9);
-  --tw-gradient-stops: var(--tw-gradient-from),
+.from-btn1.to-btn2 {
+  --tw-gradient-from: #2517ff -61.88%;
+  --tw-gradient-stops: #2517ff -61.88%,
     var(--tw-gradient-to, rgba(59, 130, 246, 0));
 }
-.to-btn2 {
-  --tw-gradient-to: rgba(26, 175, 221, 0.9);
+.from-btn1 {
+  --tw-gradient-to: #15f195 131.19%;
 }
 .bg-dark-900 {
   background-color: rgba(22, 21, 34, 1);
