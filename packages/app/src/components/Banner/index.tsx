@@ -24,19 +24,19 @@ const Banner: FC = () => {
           </a>
         </span>
       </p> */}
-              <span className="block text-left  ">
+              <span className="block text-left ">
                 <Copy
-                  className="flex flex-col  text-left   sm:text-xs sm:w-full"
+                  className="flex flex-wrap text-left xs:text-xs xs:w-full"
                   toCopy={
                     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ||
                     "0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13"
                   }
                 >
-                  <Typography className="ml-1 font-bold text-green text-xs text-left underline p-1 sm:w-full">
+                  <Typography className="p-1 ml-1 text-xs font-bold text-left underline text-green xs:w-full">
                     Token Address
                   </Typography>
 
-                  <Typography className="font-bold  text-green text-xs text-left underline p-1  sm:w-full ">
+                  <Typography className="p-1 text-xs font-bold text-left underline text-green xs:w-full ">
                     {process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ||
                       "0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13"}
                   </Typography>
@@ -44,7 +44,7 @@ const Banner: FC = () => {
               </span>
             </div>
             {/* X Icon Div  */}
-            <div className="absolute inset-y-0 right-0 flex items-start pt-1 pr-1 sm:pt-1 sm:pr-2 sm:items-start">
+            <div className="absolute inset-y-0 right-0 flex items-center justify-center pt-1 pr-1 sm:pt-1 sm:pr-2 sm:items-start">
               <button
                 type="button"
                 className="flex p-2 focus:outline-none"
@@ -52,7 +52,7 @@ const Banner: FC = () => {
               >
                 <span className="sr-only">Dismiss</span>
                 <XIcon
-                  className="w-6 h-6 text-white text-left"
+                  className="w-6 h-6 text-left text-white"
                   aria-hidden="true"
                 />
               </button>
