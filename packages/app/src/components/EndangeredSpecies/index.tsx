@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { useBuyZoo } from "state/zoo/hooks";
-import { useWeb3React } from "@web3-react/core";
-import { useFaucet } from "hooks";
+import { useActiveWeb3React, useFaucet } from "hooks";
 import { getZooBalance } from "state/zoo/actions";
 import { handleFunds } from "utils/handleFunds";
 
 const EndangeredSpecies = () => {
-  const { account, library, chainId } = useWeb3React();
+  const { account, library, chainId } = useActiveWeb3React();
   const buyZoo = useBuyZoo();
   const [fetching, setFetching] = useState(false);
   const [confirmation, setConfirmation] = useState(false);

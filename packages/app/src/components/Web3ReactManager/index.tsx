@@ -8,7 +8,7 @@ import { t } from "@lingui/macro";
 import useEagerConnect from "../../hooks/useEagerConnect";
 import useInactiveListener from "../../hooks/useInactiveListener";
 import { useLingui } from "@lingui/react";
-import { useWeb3React } from "@web3-react/core";
+import { useActiveWeb3React } from "hooks";
 
 const GnosisManagerNoSSR = dynamic(() => import("./GnosisManager"), {
   ssr: false,
@@ -20,13 +20,12 @@ export default function Web3ReactManager({
   children: JSX.Element;
 }) {
   const { i18n } = useLingui();
-  const { active } = useWeb3React();
   const {
     active: networkActive,
     error: networkError,
-    activate: activateNetwork,
     chainId,
-  } = useWeb3React(NetworkContextName);
+    active,
+  } = useActiveWeb3React();
 
   // try to eagerly connect to an injected provider, if it exists and has granted access already
   const triedEager = useEagerConnect();
@@ -35,9 +34,8 @@ export default function Web3ReactManager({
   useEffect(() => {
     if (triedEager && !networkActive && !networkError && !active) {
       console.log("chain id changed here");
-      activateNetwork(network);
     }
-  }, [triedEager, networkActive, networkError, activateNetwork, active]);
+  }, [triedEager, networkActive, networkError, active]);
 
   // when there's no account connected, react to logins (broadly speaking) on the injected provider, if it exists
   useInactiveListener(!triedEager);
