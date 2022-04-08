@@ -20,8 +20,8 @@ import ReactGA from "react-ga";
 import { Provider as ReduxProvider, useDispatch } from "react-redux";
 import TransactionUpdater from "../state/transactions/updater";
 import UserUpdater from "../state/user/updater";
-import Web3ReactManager from "../components/Web3ReactManager";
-import { Web3ReactProvider } from "@web3-react/core";
+// import Web3ReactManager from "../components/Web3ReactManager";
+// import { Web3ReactProvider } from "@web3-react/core";
 import dynamic from "next/dynamic";
 import getLibrary from "../functions/getLibrary";
 import { i18n } from "@lingui/core";
@@ -36,7 +36,6 @@ import {
   useQuery,
   gql,
 } from "@apollo/client";
-import { useActiveWeb3React } from "../hooks";
 import { SubgraphProvider } from "../providers/SubgraphProvider";
 import { initTranslation, loadTranslation } from "../entities";
 
@@ -44,7 +43,10 @@ const Web3ProviderNetwork = dynamic(
   () => import("../components/Web3ProviderNetwork"),
   { ssr: false }
 );
-
+const HooksProvider = dynamic(
+  () => import("../state/application/HooksProvider"),
+  { ssr: false }
+);
 // const Web3ReactManager = dynamic(() => import('../components/Web3ReactManager'), { ssr: false })
 
 if (typeof window !== "undefined" && !!window.ethereum) {
@@ -139,7 +141,10 @@ function MyApp({
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="theme-color" content="#000" />
-        <meta name="facebook-domain-verification" content="qyo9v1m8qrsqejah3idkc5na67mzq9" />
+        <meta
+          name="facebook-domain-verification"
+          content="qyo9v1m8qrsqejah3idkc5na67mzq9"
+        />
         <meta key="twitter:card" name="twitter:card" content="app" />
         <meta key="twitter:title" name="twitter:title" content="ZOO" />
         <meta
@@ -178,37 +183,33 @@ function MyApp({
       </Head>
 
       <I18nProvider i18n={i18n} forceRenderOnLocaleChange={false}>
-        <Web3ReactProvider getLibrary={getLibrary}>
-          <Web3ProviderNetwork getLibrary={getLibrary}>
-            <Web3ReactManager>
-              <SubgraphProvider>
-                <ReduxProvider store={store}>
-                  <GifProvider>
-                    <PersistGate
-                      loading={<Dots>loading</Dots>}
-                      persistor={persistor}
-                    >
-                      <>
-                        <ListsUpdater />
-                        <UserUpdater />
-                        <ApplicationUpdater />
-                        <TransactionUpdater />
-                        <MulticallUpdater />
-                      </>
-                      <Provider>
-                        <Layout>
-                          <Guard>
-                            <Component {...pageProps} />
-                          </Guard>
-                        </Layout>
-                      </Provider>
-                    </PersistGate>
-                  </GifProvider>
-                </ReduxProvider>
-              </SubgraphProvider>
-            </Web3ReactManager>
-          </Web3ProviderNetwork>
-        </Web3ReactProvider>
+        <ReduxProvider store={store}>
+          <HooksProvider>
+            <SubgraphProvider>
+              <GifProvider>
+                <PersistGate
+                  loading={<Dots>loading</Dots>}
+                  persistor={persistor}
+                >
+                  <>
+                    <ListsUpdater />
+                    <UserUpdater />
+                    <ApplicationUpdater />
+                    <TransactionUpdater />
+                    <MulticallUpdater />
+                  </>
+                  <Provider>
+                    <Layout>
+                      <Guard>
+                        <Component {...pageProps} />
+                      </Guard>
+                    </Layout>
+                  </Provider>
+                </PersistGate>
+              </GifProvider>
+            </SubgraphProvider>
+          </HooksProvider>
+        </ReduxProvider>
       </I18nProvider>
     </Fragment>
   );

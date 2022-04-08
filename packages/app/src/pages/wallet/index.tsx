@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { useSelector } from "react-redux";
 import { AppState } from "state";
-import { useWeb3React } from "@web3-react/core";
 import { useBuyZoo } from "state/zoo/hooks";
 import { numberWithCommas } from "functions";
 
@@ -10,11 +9,12 @@ import MyWalletSection from "./MyWalletSection";
 import MyBidsSection from "./MyBidsSection";
 import MyAuctionSection from "./MyAuctionsSections";
 import { handleFunds } from "utils/handleFunds";
+import { useActiveWeb3React } from "hooks";
 
 export default function Wallet({ children }) {
   const [category, setCategory] = useState(0);
 
-  const { account, library, chainId } = useWeb3React();
+  const { account, library, chainId } = useActiveWeb3React();
   const buyZoo = useBuyZoo();
   const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
     (state) => state.zoo.zooBalance
@@ -22,8 +22,8 @@ export default function Wallet({ children }) {
 
   return (
     <section className="Hero">
-      <div className="Hero__inner pb-16 px-6 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto mt-16">
-        {/* <div className="inline-block bg-leader-board rounded p-px  mb-28 ml-16 w-auto overflow-hidden mt-20">
+      <div className="px-6 pb-16 mt-16 Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
+        {/* <div className="inline-block w-auto p-px mt-20 ml-16 overflow-hidden rounded bg-leader-board mb-28">
           <div className="w-auto bg-black rounded" style={{ top: 10 }}>
             {['My Wallet', 'My Bids', 'My Auctions'].map((value, index) => {
               const active = category === index;
@@ -43,23 +43,23 @@ export default function Wallet({ children }) {
             })}
           </div>
         </div> */}
-        <div className="pt-16 px-6 flex-col lg:flex-row lg:max-w-7xl lg:mx-auto flex justify-between items-center">
-          <p className="text-xl md:text-4xl font-bold">
+        <div className="flex flex-col items-center justify-between px-6 pt-16 lg:flex-row lg:max-w-7xl lg:mx-auto">
+          <p className="text-xl font-bold md:text-4xl">
             Wallet Balance{" "}
-            <span className="text-base text-green md:text-4xl font-bold">
+            <span className="text-base font-bold text-green md:text-4xl">
               {" "}
               {numberWithCommas(zooBalance.toFixed(2))} $ZOO
             </span>
           </p>
           <button
             onClick={() => handleFunds(chainId, buyZoo)}
-            className="px-5 py-3 text-sm font-semibold text-black rounded-full bg-green md:text-base md:px-6 md:py-4 lg:px-10 my-6"
+            className="px-5 py-3 my-6 text-sm font-semibold text-black rounded-full bg-green md:text-base md:px-6 md:py-4 lg:px-10"
           >
             Buy $ZOO
           </button>
           <div className="flex justify-center">
             <div
-              className="flex lg:grid lg:grid-cols-3 border-green w-auto border rounded-full overflow-hidden "
+              className="flex w-auto overflow-hidden border rounded-full lg:grid lg:grid-cols-3 border-green "
               style={{ top: 10 }}
             >
               {["My Wallet", "My Bids", "My Auctions"].map((value, index) => {
@@ -91,4 +91,6 @@ export default function Wallet({ children }) {
   );
 }
 
-{/* from-purple to-blue bg-gradient-to-b */}
+{
+  /* from-purple to-blue bg-gradient-to-b */
+}

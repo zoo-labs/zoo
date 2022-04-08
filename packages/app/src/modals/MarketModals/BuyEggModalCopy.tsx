@@ -1,4 +1,3 @@
-import { useWeb3React } from "@web3-react/core";
 import BigNumber from "bignumber.js";
 import { formatError, numberWithCommas, wait } from "functions";
 import { useZooKeeper, useZooToken } from "hooks/useContract";
@@ -19,6 +18,8 @@ import CloseIcon from "components/CloseIcon";
 import { useZoobalance } from "state/zoo/hooks";
 import CurrencySwitch from "components/CurrencySwitch";
 import Image from "next/image";
+import { useActiveWeb3React } from "hooks";
+import Web3 from "web3";
 
 interface BuyEggModalProps {}
 
@@ -40,7 +41,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     (state) => state.zoo.myEggs
   );
   const [zooBnbPrice, setZooBnbPrice] = useState(0);
-  const { account, library } = useWeb3React();
+  const { account, library } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
   useEffect(() => {
     if (amount > zooBalance) {
@@ -107,11 +108,11 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const getBnbBalance = async () => {
     if (!account) return;
     try {
-      await library.eth.getBalance(account).then((val) => {
-        const divisor = parseFloat(Math.pow(10, 18).toString());
-        const balance = parseFloat(val) / divisor;
-        setBnbBalance(parseFloat(balance.toFixed(4)));
-      });
+      // await Web3?.eth.getBalance(account).then((val) => {
+      //   const divisor = parseFloat(Math.pow(10, 18).toString());
+      //   const balance = parseFloat(val) / divisor;
+      //   setBnbBalance(parseFloat(balance.toFixed(4)));
+      // });
     } catch (e) {
       console.error("ISSUE LOADING BNB BALANCE \n", e);
     }
@@ -141,7 +142,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
           .send({
             from: account,
             gasPrice: gasPrice,
-            value: library.utils.toWei(eggPriceBNB),
+            value: Web3.utils.toWei(eggPriceBNB),
           })
           .then((res) => {
             toastClear();
