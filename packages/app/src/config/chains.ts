@@ -12,6 +12,12 @@ const MATIC: AddEthereumChainParameter["nativeCurrency"] = {
   decimals: 18,
 };
 
+const BSC: AddEthereumChainParameter["nativeCurrency"] = {
+  name: "Binance",
+  symbol: "BNB",
+  decimals: 18,
+};
+
 interface BasicChainInformation {
   urls: string[];
   name: string;
@@ -159,6 +165,20 @@ export const CHAINS: {
     name: "Polygon Mumbai",
     nativeCurrency: MATIC,
     blockExplorerUrls: ["https://mumbai.polygonscan.com"],
+  },
+  // Binance
+  56: {
+    urls: ['https://bsc-dataseed.binance.org/'].filter((url) => url !== undefined),
+    name: "Binance",
+    nativeCurrency: MATIC,
+    blockExplorerUrls: ["https://bscscan.com"],
+  },
+  97: {
+    urls: [
+      'https://data-seed-prebsc-2-s3.binance.org:8545'].filter((url) => url !== undefined),
+    name: "Binance Testnet",
+    nativeCurrency: BSC,
+    blockExplorerUrls: ["https://testnet.bscscan.com/"],
   },
 };
 
