@@ -66,14 +66,19 @@ function StatusIcon({ connector }: { connector: Connector }) {
     // return <Image src="/chef.svg" alt="Injected (MetaMask etc...)" width={20} height={20} />
     return (
       <IconWrapper size={16}>
-        <UserIcon />
+        <Image
+          src="/images/wallets/metamask.png"
+          alt={"Metamask"}
+          width="16px"
+          height="16px"
+        />
       </IconWrapper>
     );
   } else if (connector.constructor.name === "WalletConnect") {
     return (
       <IconWrapper size={16}>
         <Image
-          src="/images/wallets/wallet-connect.png"
+          src="/images/wallets/wallet-connect.svg"
           alt={"Wallet Connect"}
           width="16px"
           height="16px"
