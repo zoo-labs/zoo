@@ -3,7 +3,7 @@
 ![App CI](https://github.com/zoo-labs/zoo/actions/workflows/app.yml/badge.svg)
 ![Contracts CI](https://github.com/zoo-labs/zoo/actions/workflows/contracts.yml/badge.svg)
 
-> An autonomous ecosystem where ZOO owners breed, collect, and trade exotic hybrid animals via NFTs.
+> Wildlife Conservation Powered by DeFi.
 
 # 🏄‍♂️ Quick Start
 
@@ -82,10 +82,10 @@ yarn graphnode:start
 ```
 
 > Successful Docker output
-> ![](success-docker.png)
+> ![](resources/success-docker.png)
 
 > Successful Graph Node output
-> ![](success-graphnode.png)
+> ![](resources/success-graphnode.png)
 
 > Start the Zoo Subgraph
 
@@ -97,7 +97,7 @@ yarn subgraph:start
 ```
 
 > Successful Subgraph output
-> ![](success-subgraph.png)
+> ![](resources/success-subgraph.png)
 
 > Build the SDK and Configure
 

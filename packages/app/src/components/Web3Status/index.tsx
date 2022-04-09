@@ -4,6 +4,7 @@ import {
   isTransactionRecent,
   useAllTransactions,
 } from "../../state/transactions/hooks";
+import type { Connector } from "@web3-react/types";
 
 import { AbstractConnector } from "@web3-react/abstract-connector";
 import Image from "next/image";
@@ -18,9 +19,12 @@ import { t } from "@lingui/macro";
 import useENSName from "../../hooks/useENSName";
 import { useLingui } from "@lingui/react";
 import { useWalletModalToggle } from "../../state/application/hooks";
-import { useWeb3React } from "@web3-react/core";
 import { UserIcon } from "@heroicons/react/solid";
-
+import { useActiveWeb3React } from "hooks";
+import { WalletConnect } from "@web3-react/walletconnect";
+import { WalletLink } from "@web3-react/walletlink";
+import { MetaMask } from "@web3-react/metamask";
+import { Network } from "@web3-react/network";
 const IconWrapper = styled.div<{ size?: number }>`
   display: flex;
   flex-flow: column nowrap;
@@ -46,21 +50,35 @@ const SOCK = (
     🧦
   </span>
 );
+function getName(connector: Connector) {
+  if (connector instanceof MetaMask) return "MetaMask";
+  if (connector instanceof WalletConnect) return "WalletConnect";
+  if (connector instanceof WalletLink) return "WalletLink";
+  if (connector instanceof Network) return "Network";
+  return "Unknown";
+}
 
 // eslint-disable-next-line react/prop-types
-function StatusIcon({ connector }: { connector: AbstractConnector }) {
-  if (connector === injected) {
+function StatusIcon({ connector }: { connector: Connector }) {
+  const name = getName(connector);
+
+  if (name === "MetaMask") {
     // return <Image src="/chef.svg" alt="Injected (MetaMask etc...)" width={20} height={20} />
     return (
       <IconWrapper size={16}>
-        <UserIcon />
+        <Image
+          src="/images/wallets/metamask.png"
+          alt={"Metamask"}
+          width="16px"
+          height="16px"
+        />
       </IconWrapper>
     );
-  } else if (connector.constructor.name === "WalletConnectConnector") {
+  } else if (connector.constructor.name === "WalletConnect") {
     return (
       <IconWrapper size={16}>
         <Image
-          src="/images/wallets/wallet-connect.png"
+          src="/images/wallets/wallet-connect.svg"
           alt={"Wallet Connect"}
           width="16px"
           height="16px"
@@ -78,7 +96,7 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
         />
       </IconWrapper>
     );
-  } else if (connector.constructor.name === "WalletLinkConnector") {
+  } else if (name === "WalletLink") {
     return (
       <IconWrapper size={16}>
         <Image
@@ -128,7 +146,7 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
 
 function Web3StatusInner({ title, className }) {
   const { i18n } = useLingui();
-  const { account, connector } = useWeb3React();
+  const { account, connector } = useActiveWeb3React();
 
   const { ENSName } = useENSName(account ?? undefined);
 
@@ -199,11 +217,11 @@ export default function Web3Status({
   title,
   className,
 }: {
-  title?: string;
+  title: string;
   className?: string;
 }) {
-  const { active, account } = useWeb3React();
-  const contextNetwork = useWeb3React(NetworkContextName);
+  const { active, account } = useActiveWeb3React();
+  // const contextNetwork = useWeb3React(NetworkContextName);
 
   const { ENSName } = useENSName(account ?? undefined);
 
@@ -221,9 +239,9 @@ export default function Web3Status({
     .filter((tx) => tx.receipt)
     .map((tx) => tx.hash);
 
-  if (!contextNetwork.active && !active) {
-    return null;
-  }
+  // if (!contextNetwork.active && !active) {
+  //   return null;
+  // }
 
   return (
     <>

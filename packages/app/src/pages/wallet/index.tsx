@@ -1,37 +1,86 @@
 import React, { useState } from "react";
 
+import { useSelector } from "react-redux";
+import { AppState } from "state";
+import { useBuyZoo } from "state/zoo/hooks";
+import { numberWithCommas } from "functions";
+
 import MyWalletSection from "./MyWalletSection";
 import MyBidsSection from "./MyBidsSection";
 import MyAuctionSection from "./MyAuctionsSections";
+import { handleFunds } from "utils/handleFunds";
+import { useActiveWeb3React } from "hooks";
 
 export default function Wallet({ children }) {
   const [category, setCategory] = useState(0);
 
+  const { account, library, chainId } = useActiveWeb3React();
+  const buyZoo = useBuyZoo();
+  const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
+    (state) => state.zoo.zooBalance
+  );
+
   return (
     <section className="Hero">
-      <div className="Hero__inner pt-16 pb-16 px-6 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto ">
-        <div
-          className="inline-block border-blue w-auto mb-8 border rounded overflow-hidden"
-          style={{ top: 10 }}
-        >
-          {["My Wallet", "My Bids", "My Auctions"].map((value, index) => {
-            const active = category === index;
-            return (
-              <a
-                onClick={() => {
-                  setCategory(index);
-                }}
-                className={`${
-                  active ? "bg-blue text-white" : "text-gray-600"
-                } text-sm font-bold py-2 px-4 cursor-pointer inline-block`}
-                key={index}
-              >
-                {value}
-              </a>
-            );
-          })}
+      <div className="px-6 pb-16 mt-16 Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
+        {/* <div className="inline-block w-auto p-px mt-20 ml-16 overflow-hidden rounded bg-leader-board mb-28">
+          <div className="w-auto bg-black rounded" style={{ top: 10 }}>
+            {['My Wallet', 'My Bids', 'My Auctions'].map((value, index) => {
+              const active = category === index;
+              return (
+                <a
+                  onClick={() => {
+                    setCategory(index);
+                  }}
+                  className={`${
+                    active ? 'bg-leader-board text-white' : 'text-gray-600'
+                  } text-sm font-bold py-2 px-4 cursor-pointer inline-block`}
+                  key={index}
+                >
+                  {value}
+                </a>
+              );
+            })}
+          </div>
+        </div> */}
+        <div className="flex flex-col items-center justify-between px-6 pt-16 lg:flex-row lg:max-w-7xl lg:mx-auto">
+          <p className="text-xl font-bold md:text-4xl">
+            Wallet Balance{" "}
+            <span className="text-base font-bold text-green md:text-4xl">
+              {" "}
+              {numberWithCommas(zooBalance.toFixed(2))} $ZOO
+            </span>
+          </p>
+          <button
+            onClick={() => handleFunds(chainId, buyZoo)}
+            className="px-5 py-3 my-6 text-sm font-semibold text-black rounded-full bg-green md:text-base md:px-6 md:py-4 lg:px-10"
+          >
+            Buy $ZOO
+          </button>
+          <div className="flex justify-center">
+            <div
+              className="flex w-auto overflow-hidden border rounded-full lg:grid lg:grid-cols-3 border-green "
+              style={{ top: 10 }}
+            >
+              {["My Wallet", "My Bids", "My Auctions"].map((value, index) => {
+                const active = category === index;
+                return (
+                  <a
+                    onClick={() => {
+                      setCategory(index);
+                    }}
+                    className={`${
+                      active ? "bg-green text-black" : "text-gray-400"
+                    } text-sm font-bold py-4 px-6 cursor-pointer inline-block  text-center`}
+                    key={index}
+                  >
+                    {value}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
         </div>
-
         <div>
           {category === 0 && <MyWalletSection />}
           {category === 1 && <MyBidsSection />}
@@ -40,4 +89,8 @@ export default function Wallet({ children }) {
       </div>
     </section>
   );
+}
+
+{
+  /* from-purple to-blue bg-gradient-to-b */
 }

@@ -9,16 +9,59 @@ import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 import { useActiveWeb3React } from "hooks";
 import Web3Status from "../Web3Status";
-
+import { useState } from "react";
+import axios from "axios";
 const Footer = () => {
   const { account, chainId, library } = useActiveWeb3React();
   const { i18n } = useLingui();
+  const [Form, setForm] = useState({
+    email: "",
+  });
+  const [succes, setSucces] = useState(false);
+  const [error, seterror] = useState(false);
+
+  const handleSubmit = () => {
+    console.log("sending information");
+
+    const { email } = Form;
+
+    //call api to send obj
+
+    axios
+      .post("/api/subscribe", {
+        email: email,
+      })
+      .then(function (response) {
+        setForm({
+          email: "Succes!",
+        });
+        seterror(false);
+        setSucces(true);
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+        seterror(true);
+        setForm({
+          email: "Error!",
+        });
+      });
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setForm({
+      ...Form,
+      [name]: value,
+    });
+  };
+
   return (
     // <footer className="absolute bottom-0 flex items-center justify-between w-screen h-20 p-4 mx-auto text-center text-low-emphesis">
     <footer className="flex-shrink-0 w-full bg-black">
-      <div className="border-t border-b border-grey  hidden lg:block">
-        <div className="flex items-start justify-between px-4 max-w-7xl mx-auto flex-auto">
-          <div className="flex justify-between items-start basis-2/3 px-6 py-16 border-r border-grey">
+      <div className="hidden border-t border-b border-grey lg:block">
+        <div className="flex items-start justify-between flex-auto px-4 mx-auto max-w-7xl">
+          <div className="flex items-start justify-between px-6 py-16 basis-2/3 ">
             <div>
               <Link href="/" passHref>
                 <Image
@@ -32,79 +75,158 @@ const Footer = () => {
             </div>
             <div className="flex flex-col text-grey">
               <div className="mb-2">
-                <Link href="/market">Marketplace</Link>
-              </div>
-              <div className="mb-2">
                 <a
-                  href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
+                  href="https://bscscan.com/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13#tokenInfo"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Chart
+                  BSCscan
                 </a>
               </div>
               <div className="mb-2">
-                <Link href="/community">Community</Link>
+                <a
+                  href="https://coinmarketcap.com/currencies/zoo-labs/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  CoinMarketCap
+                </a>
               </div>
               <div className="mb-2">
+                <a
+                  href="https://www.dextools.io/app/bsc/pair-explorer/0x9f011e700fe3bd7004a8701a64517f2dc23f87dd"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  DEXtools
+                </a>
+              </div>
+              <div className="mb-2">
+                <a
+                  href="https://www.coingecko.com/en/coins/zoo-labs"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  CoinGecko
+                </a>
+              </div>
+            </div>
+            <div className="flex flex-col text-grey">
+              {/* <div className="mb-2">
+                <Link href="/market">Marketplace</Link>
+              </div> */}
+              <div className="mb-2">
+                <Link href="/wallet">
+                  <a>Marketplace</a>
+                </Link>
+              </div>
+              <div className="mb-2">
+                <Link href="/market">
+                  <a>Chart</a>
+                </Link>
+              </div>
+              <div className="mb-2">
+                <a
+                  href="https://prezi.com/i/view/fWOPqU2eZzcqYyVzb5pz"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Buy Guide
+                </a>
+              </div>
+              <div className="mb-2">
+                <Link href="/about">
+                  <a>About</a>
+                </Link>
+              </div>
+              {/* <div className="mb-2">
+                <Link href="/community">Community</Link>
+              </div> */}
+              {/* <div className="mb-2">
                 <Link href="/press">Press</Link>
-              </div>
-              <div className="mb-0">
+              </div> */}
+              {/* <div className="mb-0">
                 <Link href="/learn">Learn</Link>
-              </div>
+              </div> */}
             </div>
           </div>
-          <div className="flex flex-col items-end basis-1/3 px-6 text-grey border-r py-16 border-grey">
-            <div className="mb-0">
+          <div className="flex flex-col px-6 p-16 basis-1/3 text-grey h-full">
+            {/* <div className="mb-0">
               {!account ? (
                 <a href="#">
-                  <Web3Status title="My Profile" className="px-0" />
+                  <Web3Status title={i18n._(t`My Profile`)} className="px-0" />
                 </a>
               ) : null}
-            </div>
-            <div className="mb-2">
+            </div> */}
+            {/* <div className="mb-2">
               {!account ? (
                 <a href="#">
-                  <Web3Status title="Connect Wallet" className="px-0" />
+                  <Web3Status
+                    title={i18n._(t`Connect Wallet`)}
+                    className="px-0"
+                  />
                 </a>
               ) : (
                 <Link href="/market">Market place</Link>
               )}
+            </div> */}
+            <div className="mb-2">
+              <Link href="https://zoolabs.gitbook.io/whitepaper/introduction/what-is-zoo">
+                <a>Whitepaper</a>
+              </Link>
             </div>
             <div className="mb-2">
-              <a
-                href="https://zoolabs.gitbook.io/whitepaper/introduction/introduction"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Whitepaper
-              </a>
+              <Link href="/blog">
+                <a>Blogs</a>
+              </Link>
             </div>
             <div className="mb-2">
-              <a href="/#faqs">FAQ</a>
+              <Link href="/faqs">
+                <a>FAQs</a>
+              </Link>
             </div>
-            <div className="mb-0">
+            <div className="mb-2">
+              <Link href="/animal-list">
+                <a>Our Animals</a>
+              </Link>
+            </div>
+            <div className="mb-2">
+              <Link href="/partnerships">
+                <a>Partnerships</a>
+              </Link>
+            </div>
+            {/* <div className="mb-0">
               <Link href="/">Connect us</Link>
-            </div>
+            </div> */}
           </div>
-          <div className="flex flex-col items-start basis-2/3 px-6 py-16">
-            <p className="text-white uppercase font-bold mb-4">Newsletter</p>
+          <div className="flex flex-col items-start px-6 py-16 basis-2/3">
+            <p className="mb-4 font-bold text-white uppercase">Newsletter</p>
             <p className="mb-4 text-white text-opacity-70">
               Subscribe to our newsletter to get the first notice on upgrades,
               new features and events!
             </p>
             <form>
-              <div className="flex items-center border rounded-full py-2 px-2">
+              <div className="flex items-center px-2 py-2 border rounded-full">
                 <input
-                  type="email"
                   placeholder="enter your email"
-                  className="bg-transparent"
+                  name="email"
+                  type="email"
+                  value={Form.email}
+                  onChange={handleInputChange}
+                  className="bg-transparent placeholder:text-center"
                 />
-                <button type="submit" className="flex">
+
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSubmit();
+                  }}
+                  className="flex"
+                >
                   <Image
                     src="/img/small-circle-button.svg"
-                    width={24}
-                    height={24}
+                    width={20}
+                    height={20}
                     alt=""
                   />
                 </button>
@@ -172,9 +294,10 @@ const Footer = () => {
           {/* <Polling /> */}
         </div>
       </div>
-      <div className="flex flex-col iterms-center lg:flex-row justify-between items-center max-w-7xl mx-auto px-4 py-6">
-        <p className="text-center mb-4 lg:mb-0 lg:text-left text-grey">
-          Copyright &copy; 2021 ZOO Labs INC. Allrights reserved
+      <div className="flex flex-col items-center justify-between px-4 py-6 mx-auto iterms-center lg:flex-row max-w-7xl">
+        <p className="mb-4 text-center lg:mb-0 lg:text-left text-grey">
+          Copyright &copy; {new Date().getFullYear()} ZOO Labs INC. Allrights
+          reserved
         </p>
         <div>
           <a
@@ -202,11 +325,28 @@ const Footer = () => {
             <Image src="/img/instagram.svg" height={16} width={16} alt="" />{" "}
           </a>
           <a
-            href="https://discord.com/invite/FZzWUbMUK5"
+            href="https://discord.gg/wW6Wth6r"
             target="_blank"
             rel="noreferrer"
           >
             <Image src="/img/discord.svg" height={16} width={16} alt="" />{" "}
+          </a>
+          <a
+            href="https://zoolabsofficial.medium.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="ml-2"
+          >
+            <Image src="/img/medium-icon.svg" height={16} width={16} alt="" />{" "}
+          </a>
+
+          <a
+            href="https://www.youtube.com/channel/UCjTd-6h0nbVwz34IihdCUww"
+            target="_blank"
+            rel="noreferrer"
+            className="ml-2"
+          >
+            <Image src="/img/youtube.svg" height={16} width={16} alt="" />{" "}
           </a>
         </div>
       </div>

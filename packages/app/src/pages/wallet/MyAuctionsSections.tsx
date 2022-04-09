@@ -1,70 +1,242 @@
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import Modal from "components/Modal";
+
+import { fadeInOnScroll } from "animation";
 
 const MyAuctionSection = () => {
-  return (
-    <section className="flex flex-col lg:flex-row lg:justify-between">
-      <div className="flex flex-col basis-1/2 justify-center">
-        <Image src="/img/egg.png" width={200} height={400} alt="" objectFit="contain" />
-      </div>
-      <div className="flex flex-col basis-1/2">
-        <h2 className="text-4xl lg:text-7xl mb-4">Egg</h2>
-				{/* Address and Price */}
-        <div className="flex justify-between mb-4">
-          <div className="address flex items-center">
-            <div className="mr-3">
-              <Image src="/img/round-bg.svg" width={48} height={48} alt="" />
-            </div>
-            <div className="owner">
-              <p className="text-grey">Owner</p>
-              <p>0xd0ae…e3e0</p>
-            </div>
-          </div>
-          <div className="money flex">
-            <Image
-              src="/img/reserved-price.png"
-              width={51}
-              height={51}
-              alt=""
-            />
-            <div className="ml-3">
-              <p className="text-grey">Reserve Price</p>
-              <p className="font-bold">
-                3.5 ETH <span className="text-green">$6800</span>
-              </p>
-            </div>
-          </div>
-        </div>
-				{/* Card */}
-        <div className="card bg-black100 px-4 py-8 rounded flex flex-col items-center mb-6">
-          <p className="text-xs mb-6">Current Bid</p>
-          <h1 className="font-bold text-4xl lg:text-7xl mb-4">1.00 ETH</h1>
-          <p className="text-green font-bold lg:text-xl mb-12">$3,618.36</p>
+  const [openMoal, setOpenModal] = React.useState(false);
+  const comingSoonRef = React.useRef();
 
-          <p className="text-grey mb-4">Auction ending in</p>
-          <div className="flex max-w-md justify-between items-center">
-            <div className="text-center">
-              <p className="text-2xl lg:text-4xl font-bold mr-3">01</p>
-              <p className="text-grey font-bold">Hrs</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl lg:text-4xl font-bold mr-3">23</p>
-              <p className="text-grey font-bold">Min</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl lg:text-4xl font-bold mr-3"> 17</p>
-              <p className="text-grey font-bold">Sec</p>
-            </div>
-          </div>
+  useEffect(() => {
+    fadeInOnScroll(comingSoonRef.current);
+  }, []);
+
+  return (
+    <div className="">
+      <div className="max-w-7xl mx-auto py-20 px-4">
+        <div
+          className="flex flex-col items-center justify-center text-center "
+          ref={comingSoonRef}
+        >
+          <h1 className="text-4xl lg:text-5xl font-bold mb-8">
+            You have no Auctions
+          </h1>
+          <p>
+            Go pack to the{" "}
+            <Link href="/">
+              <a className="text-green underline">home page</a>
+            </Link>
+          </p>
         </div>
-        <button className="bg-blue text-white rounded py-2 font-semibold mb-4">
-          Edit Auction
-        </button>
-        <button className="border border-white rounded py-2 font-semibold">
-          View Item
-        </button>
       </div>
-    </section>
+    </div>
+    // <>
+    //   <section className="flex flex-col gap-24 lg:flex-row lg:justify-between lg:px-48">
+    //     <div className="bg-nft-gradient p-0.5 flex flex-col basis-1/2 justify-center rounded-xl">
+    //       <div className="flex flex-col justify-center h-full bg-black rounded-xl">
+    //         <Image
+    //           src="/img/egg.png"
+    //           width={200}
+    //           height={400}
+    //           alt=""
+    //           objectFit="contain"
+    //         />
+    //       </div>
+    //     </div>
+    //     <div className="flex flex-col basis-1/2">
+    //       <h2 className="mb-4 text-4xl lg:text-6xl">Egg</h2>
+    //       {/* Address and Price */}
+    //       <div className="flex justify-between mb-4">
+    //         <div className="flex items-center address">
+    //           <div className="w-12 h-12 mr-3 rounded-full bg-nft-gradient" />
+    //           <div className="owner">
+    //             <p className="text-grey">Owner</p>
+    //             <p>0xd0ae…e3e0</p>
+    //           </div>
+    //         </div>
+    //         <div className="flex money">
+    //           <Image
+    //             src="/img/reserved-price.png"
+    //             width={51}
+    //             height={51}
+    //             alt=""
+    //           />
+    //           <div className="ml-3">
+    //             <p className="text-grey">Reserve Price</p>
+    //             <p className="font-bold">
+    //               3.5 ETH <span className="text-green">$6800</span>
+    //             </p>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       {/* Card */}
+    //       <div className="flex flex-col items-center px-4 py-8 mb-6 rounded card bg-black100">
+    //         <p className="mb-6 text-xs">Current Bid</p>
+    //         <h1 className="mb-4 text-4xl font-bold lg:text-6xl">1.00 ETH</h1>
+    //         <p className="font-bold text-green lg:text-xl mb-9">$3,618.36</p>
+
+    //         <p className="mb-2 font-medium text-white">Auction ending in</p>
+    //         <div className="flex items-center justify-between max-w-md">
+    //           <div className="mr-3 text-center">
+    //             <p className="text-2xl font-medium lg:text-4xl ">01</p>
+    //             <p className="font-medium text-grey">Hrs</p>
+    //           </div>
+    //           <div className="mr-3 text-center">
+    //             <p className="text-2xl font-medium lg:text-4xl ">23</p>
+    //             <p className="font-medium text-grey">Min</p>
+    //           </div>
+    //           <div className="text-center">
+    //             <p className="text-2xl font-medium lg:text-4xl"> 17</p>
+    //             <p className="font-medium text-grey">Sec</p>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <button
+    //         className="py-2 mb-4 font-semibold text-white rounded bg-blue"
+    //         onClick={() => setOpenModal(true)}
+    //       >
+    //         Edit Auction
+    //       </button>
+    //       <Link href="/nft-info" passHref>
+    //         <button className="py-2 font-semibold border border-white rounded">
+    //           View Item
+    //         </button>
+    //       </Link>
+    //     </div>
+    //   </section>
+
+    //   <Modal onDismiss={() => setOpenModal(false)} isOpen={openMoal}>
+    //     <div>
+    //       <div className="my-4">
+    //         <p className="font-bold text-white">Edit Auction</p>
+    //       </div>
+    //       <div>
+    //         <form>
+    //           <div className="mb-4">
+    //             <p className="mb-2 text-xs font-bold">Current Bid</p>
+    //             <div className="flex flex-row justify-between px-4 py-2 border rounded items center border-black100 bg-black100">
+    //               <input
+    //                 type=""
+    //                 value="1.00 ETH"
+    //                 className="bg-transparent border-0 outline-0"
+    //               />
+    //               <Image
+    //                 src="/img/eth-icon.svg"
+    //                 width={16}
+    //                 height={16}
+    //                 alt=""
+    //               />
+    //             </div>
+    //           </div>
+
+    //           <div>
+    //             <p className="mb-2 text-xs font-bold">Start time</p>
+    //             <div className="flex justify-center gap-4 overflow-hidden">
+    //               <div className="py-2 border rounded border-black100 bg-black100 basis-1/2">
+    //                 <input
+    //                   type="text"
+    //                   value="25 Jan 2022"
+    //                   className="bg-transparent border-0 outline-0"
+    //                 />
+    //               </div>
+
+    //               <div className="py-2 border rounded border-black100 bg-black100 basis-1/2">
+    //                 <input
+    //                   type="text"
+    //                   value="12:27 PM GMT"
+    //                   className="bg-transparent border-0 outline-0"
+    //                 />
+    //               </div>
+    //             </div>
+    //           </div>
+
+    //           <button className="w-full px-4 py-2 mt-8 font-bold text-center text-white rounded bg-blue">
+    //             Save Changes
+    //           </button>
+    //         </form>
+    //       </div>
+    //     </div>
+    //   </Modal>
+
+    //   {/* <div className="py-20">
+    //     <PopularNftsSection />
+    //     <div className="mt-12 text-xl text-center">
+    //       <a href="/animal-list" className="underline text-green ">
+    //         View All
+    //       </a>
+    //     </div>
+    //   </div> */}
+    // </>
   );
 };
+
+// const MyAuctionSection = () => {
+//   return (
+//     <section className="flex flex-col lg:flex-row lg:justify-between">
+//       <div className="flex flex-col justify-center basis-1/2">
+//         <Image src="/img/egg.png" width={200} height={400} alt="" objectFit="contain" />
+//       </div>
+//       <div className="flex flex-col basis-1/2">
+//         <h2 className="mb-4 text-4xl lg:text-7xl">Egg</h2>
+// 				{/* Address and Price */}
+//         <div className="flex justify-between mb-4">
+//           <div className="flex items-center address">
+//             <div className="mr-3">
+//               <Image src="/img/round-bg.svg" width={48} height={48} alt="" />
+//             </div>
+//             <div className="owner">
+//               <p className="text-grey">Owner</p>
+//               <p>0xd0ae…e3e0</p>
+//             </div>
+//           </div>
+//           <div className="flex money">
+//             <Image
+//               src="/img/reserved-price.png"
+//               width={51}
+//               height={51}
+//               alt=""
+//             />
+//             <div className="ml-3">
+//               <p className="text-grey">Reserve Price</p>
+//               <p className="font-bold">
+//                 3.5 ETH <span className="text-green">$6800</span>
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+// 				{/* Card */}
+//         <div className="flex flex-col items-center px-4 py-8 mb-6 rounded card bg-black100">
+//           <p className="mb-6 text-xs">Current Bid</p>
+//           <h1 className="mb-4 text-4xl font-bold lg:text-7xl">1.00 ETH</h1>
+//           <p className="mb-12 font-bold text-green lg:text-xl">$3,618.36</p>
+
+//           <p className="mb-4 text-grey">Auction ending in</p>
+//           <div className="flex items-center justify-between max-w-md">
+//             <div className="text-center">
+//               <p className="mr-3 text-2xl font-bold lg:text-4xl">01</p>
+//               <p className="font-bold text-grey">Hrs</p>
+//             </div>
+//             <div className="text-center">
+//               <p className="mr-3 text-2xl font-bold lg:text-4xl">23</p>
+//               <p className="font-bold text-grey">Min</p>
+//             </div>
+//             <div className="text-center">
+//               <p className="mr-3 text-2xl font-bold lg:text-4xl"> 17</p>
+//               <p className="font-bold text-grey">Sec</p>
+//             </div>
+//           </div>
+//         </div>
+//         <button className="py-2 mb-4 font-semibold text-white rounded bg-blue">
+//           Edit Auction
+//         </button>
+//         <button className="py-2 font-semibold border border-white rounded">
+//           View Item
+//         </button>
+//       </div>
+//     </section>
+//   );
+// };
 
 export default MyAuctionSection;
