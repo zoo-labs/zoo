@@ -60,13 +60,13 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <NavLink href="/">
-                    <div className="pl-2 cursor-pointer logo">
+                    <div className=" h-full pl-2 cursor-pointer logo w-[50px] flex">
                       <Image
-                        src="/img/logo.svg"
-                        className="w-10"
+                        src="/img/logo.png"
+                        // className="w-10"
                         alt="Logo"
-                        height={24}
-                        width={60}
+                        height="24px"
+                        width="60px"
                       />
                     </div>
                   </NavLink>
