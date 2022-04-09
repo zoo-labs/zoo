@@ -1,68 +1,86 @@
-import { Popover, Transition } from '@headlessui/react'
-import React, { Fragment } from 'react'
+import { Popover, Transition } from "@headlessui/react";
+import React, { Fragment } from "react";
+import { useGif } from "context/GifContext";
+import { toggleImage, toggleGif } from "context/GifContext";
+import Link from "next/link";
 
-import ExternalLink from '../ExternalLink'
-import { I18n } from '@lingui/core'
-import Image from 'next/image'
-import { classNames } from '../../functions/styling'
-import { t } from '@lingui/macro'
-import { useLingui } from '@lingui/react'
-import NavLink from '../NavLink'
-import Toggle from '../Toggle'
-import { useAnimationModeManager } from '../../state/user/hooks'
+import ExternalLink from "../ExternalLink";
+import { I18n } from "@lingui/core";
+import Image from "next/image";
+import { classNames } from "../../functions/styling";
+import { t } from "@lingui/macro";
+import { useLingui } from "@lingui/react";
+import NavLink from "../NavLink";
+import Toggle from "../Toggle";
+import { useAnimationModeManager } from "../../state/user/hooks";
+import MoonPayBtn from "components/Moonpaybtn/MoonpayBtn";
 
 const items = (i18n: I18n) => [
   {
     name: i18n._(t`About`),
     description: i18n._(t`Documentation for users of Sushi.`),
-    href: 'https://docs.sushi.com',
+    href: "https://docs.sushi.com",
     external: true,
   },
   {
     name: i18n._(t`Dev`),
     description: i18n._(t`Documentation for developers of Sushi.`),
-    href: 'https://dev.sushi.com',
+    href: "https://dev.sushi.com",
     external: true,
   },
   {
     name: i18n._(t`Open Source`),
     description: i18n._(t`Sushi is a supporter of Open Source.`),
-    href: 'https://github.com/sushiswap',
+    href: "https://github.com/sushiswap",
     external: true,
   },
   {
     name: i18n._(t`Tools`),
     description: i18n._(t`Tools to optimize your workflow.`),
-    href: '/tools',
+    href: "/tools",
     external: false,
   },
   {
     name: i18n._(t`Discord`),
     description: i18n._(t`Join the community on Discord.`),
-    href: 'https://discord.gg/NVPXN4e',
+    href: "https://discord.gg/NVPXN4e",
     external: true,
   },
   {
     name: i18n._(t`Vesting`),
     description: i18n._(t`Weekly unlocks from the vesting period.`),
-    href: '/vesting',
+    href: "/vesting",
     external: false,
   },
-]
+];
 
 export default function Menu() {
-  const { i18n } = useLingui()
-  const solutions = items(i18n)
-  const [animationMode, toggleSetAnimationMode] = useAnimationModeManager()
-  console.log('animationMode', animationMode)
+  const { i18n } = useLingui();
+  const solutions = items(i18n);
+  const [animationMode, toggleSetAnimationMode] = useAnimationModeManager();
+
+  const { state, dispatch } = useGif();
+
+  const toggleGifMode = () => {
+    if (state.gifMode === "gif") {
+      toggleImage(dispatch);
+    } else {
+      toggleGif(dispatch);
+    }
+  };
+
+  const handleToggleImage = () => {
+    toggleImage(dispatch);
+  };
+
   return (
     <Popover className="relative ml-auto md:m-0">
       {({ open }) => (
         <>
           <Popover.Button
             className={classNames(
-              open ? 'text-primary' : 'text-secondary',
-              'focus:outline-none hover:text-high-emphesis'
+              open ? "text-primary" : "text-secondary",
+              "focus:outline-none hover:text-high-emphesis"
             )}
           >
             <svg
@@ -116,29 +134,44 @@ export default function Menu() {
                   <div
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
                     style={{}}
-                    onClick={() => window.open('https://t.me/Zoolabs')}
                   >
-                    About
+                    {state.gifMode === "gif" ? "3D" : "Gif"} Mode
                     <div className="ml-4 sm:ml-14">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+                      <Toggle
+                        id="toggle-disable-multihop-button"
+                        isActive={state.gifMode === "gif"}
+                        toggle={() => toggleGifMode()}
+                      />
                     </div>
                   </div>
+                  <Link href="/wallet">
+                    <a className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer">
+                      Wallet
+                      <div className="ml-4 sm:ml-14">
+                        <svg
+                          width="31"
+                          height="30"
+                          viewBox="0 0 31 30"
+                          className="h-5 w-5"
+                          fill="currentColor"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M24.2326 8.84315H6.07012V8.11665L22.0531 6.83801V8.11665H24.2326V5.93715C24.2326 4.33885 22.938 3.21713 21.3571 3.44235L6.76756 5.52595C5.18525 5.75262 3.89062 7.24485 3.89062 8.84315V23.3731C3.89063 24.1439 4.19679 24.883 4.74177 25.428C5.28675 25.973 6.02591 26.2791 6.79662 26.2791H24.2326C25.0033 26.2791 25.7425 25.973 26.2875 25.428C26.8325 24.883 27.1386 24.1439 27.1386 23.3731V11.7491C27.1386 10.9784 26.8325 10.2393 26.2875 9.6943C25.7425 9.14932 25.0033 8.84315 24.2326 8.84315V8.84315ZM22.0531 19.0229C21.7668 19.0228 21.4833 18.9663 21.2188 18.8566C20.9544 18.747 20.7141 18.5863 20.5117 18.3838C20.3093 18.1813 20.1488 17.9409 20.0393 17.6763C19.9298 17.4118 19.8735 17.1282 19.8736 16.8419C19.8737 16.5556 19.9302 16.2721 20.0399 16.0076C20.1495 15.7432 20.3102 15.5029 20.5127 15.3005C20.7152 15.0981 20.9556 14.9376 21.2202 14.8281C21.4847 14.7186 21.7683 14.6623 22.0546 14.6624C22.6328 14.6626 23.1873 14.8925 23.596 15.3015C24.0048 15.7105 24.2343 16.2651 24.2341 16.8434C24.2339 17.4216 24.004 17.9761 23.595 18.3848C23.186 18.7935 22.6314 19.0231 22.0531 19.0229Z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </div>
+                    </a>
+                  </Link>
+
                   <div
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
                     style={{}}
                     onClick={() =>
-                      window.open('https://charts.bogged.finance/0x09E2b83Fe5485a7c8BeAa5DffD1D324A2B2D5c13')
+                      window.open(
+                        "https://charts.bogged.finance/0x09E2b83Fe5485a7c8BeAa5DffD1D324A2B2D5c13"
+                      )
                     }
                   >
                     Analytics
@@ -154,7 +187,7 @@ export default function Menu() {
                       </svg>
                     </div>
                   </div>
-                  <div
+                  {/* <div
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
                     style={{}}
                   >
@@ -166,11 +199,11 @@ export default function Menu() {
                         toggle={() => toggleSetAnimationMode()}
                       />
                     </div>
-                  </div>
+                  </div> */}
                   <div
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
                     style={{}}
-                    onClick={() => window.open('https://github.com/zoo-labs')}
+                    onClick={() => window.open("https://github.com/zoo-labs")}
                   >
                     Code
                     <div className="ml-4 sm:ml-14">
@@ -192,7 +225,9 @@ export default function Menu() {
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
                     style={{}}
                     onClick={() =>
-                      window.open('https://discord.com/channels/@me/878753766248177685/880493331010945095')
+                      window.open(
+                        "https://discord.com/channels/@me/878753766248177685/880493331010945095"
+                      )
                     }
                   >
                     Discord
@@ -207,6 +242,13 @@ export default function Menu() {
                       </svg>
                     </div>
                   </div>
+
+                  {/* <div
+                    className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
+                    style={{}}
+                  >
+
+                  </div> */}
                   {/* <div
                     onClick={() => toggleTheme()}
                     className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
@@ -232,5 +274,5 @@ export default function Menu() {
         </>
       )}
     </Popover>
-  )
+  );
 }

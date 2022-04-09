@@ -16,12 +16,12 @@ import { t } from "@lingui/macro";
 import { useCombinedActiveList } from "../../../state/lists/hooks";
 import { useIsUserAddedToken } from "../../../hooks/Tokens";
 import { useLingui } from "@lingui/react";
-import { useWeb3React } from "@web3-react/core";
 import QuestionHelper from "components/QuestionHelper";
 import CurrencyLogo from "components/CurrencyLogo";
 import { useCurrencyBalance } from "state/wallet/hooks";
 import { MenuItem } from "@mui/material";
 import ImportRow from "modals/SearchModal/ImportRow";
+import { useActiveWeb3React } from "hooks";
 
 function currencyKey(currency: Currency): string {
   return currency.isToken ? currency.address : "ETHER";
@@ -109,7 +109,7 @@ function CurrencyRow({
   otherSelected: boolean;
   style: CSSProperties;
 }) {
-  const { account, chainId } = useWeb3React();
+  const { account, chainId } = useActiveWeb3React();
   const key = currencyKey(currency);
   const selectedTokenList = useCombinedActiveList();
   const isOnSelectedList = isTokenOnList(

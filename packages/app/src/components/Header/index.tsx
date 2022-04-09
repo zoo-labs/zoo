@@ -1,7 +1,7 @@
 import { ChainId, Currency, NATIVE, SUSHI_ADDRESS } from "@zoolabs/sdk";
 import { Feature, featureEnabled } from "../../functions/feature";
 import React, { useEffect, useState } from "react";
-import {useRouter} from 'next/router';
+import { useRouter } from "next/router";
 
 import { addresses, ANALYTICS_URL } from "../../constants";
 import ExternalLink from "../ExternalLink";
@@ -10,7 +10,7 @@ import LanguageSwitch from "../LanguageSwitch";
 import Link from "next/link";
 import More from "./More";
 import Community from "./Community";
-import Learn from './Learn';
+import Learn from "./Learn";
 import NavLink from "../NavLink";
 import { Popover } from "@headlessui/react";
 import QuestionHelper from "../QuestionHelper";
@@ -21,19 +21,21 @@ import { useActiveWeb3React } from "../../hooks/useActiveWeb3React";
 import { useETHBalances } from "../../state/wallet/hooks";
 import { useLingui } from "@lingui/react";
 import { useZoobalance } from "state/zoo/hooks";
+import Banner from "components/Banner";
+import MoonPayBtn from "components/Moonpaybtn/MoonpayBtn";
 // import { ChainId } from '../../config/networks'
 
 // import { ExternalLink, NavLink } from "./Link";
 // import { ReactComponent as Burger } from "../assets/images/burger.svg";
 
-function AppBar(): JSX.Element {
+function AppBar(props: { banner?: boolean }): JSX.Element {
   const { i18n } = useLingui();
   const { account, chainId, library } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
 
   const router = useRouter();
-  let linkStyle = "p-2 text-baseline hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap"
-
+  let linkStyle =
+    "p-2 text-baseline hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap";
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[
     account ?? ""
@@ -48,7 +50,9 @@ function AppBar(): JSX.Element {
 
   return (
     //     // <header className="flex flex-row justify-between w-screen flex-nowrap">
-    <header className="flex-shrink-0 w-full bg-black">
+    <header className="fixed z-20 flex-shrink-0 w-full bg-black">
+      {/* {props.banner && <Banner />} */}
+      <Banner />
       <Popover as="nav" className="z-10 w-full bg-transparent header-border-b">
         {({ open }) => (
           <>
@@ -69,10 +73,14 @@ function AppBar(): JSX.Element {
                   <div className="hidden sm:block sm:ml-4">
                     <div className="flex space-x-2">
                       {/* <Buy /> */}
-                      <NavLink href="/market">
+                      <NavLink href="/wallet">
                         <a
                           id={`mint-nav-link`}
-                          className={router.pathname == "/market" ? `${linkStyle} text-green text-bold` : `${linkStyle} text-white`}
+                          className={
+                            router.pathname == "/wallet"
+                              ? `${linkStyle} text-green text-bold`
+                              : `${linkStyle} text-white`
+                          }
                         >
                           {i18n._(t`Marketplace`)}
                         </a>
@@ -90,15 +98,20 @@ function AppBar(): JSX.Element {
 
                       <Community />
 
-                      <NavLink href="/press">
+                      {/* <NavLink href="/press">
                         <a
                           id={`mint-nav-link`}
-                          className={router.pathname == "/press" ? `${linkStyle} text-grey` : `${linkStyle} text-white`}
+                          className={
+                            router.pathname == "/press"
+                              ? `${linkStyle} text-grey`
+                              : `${linkStyle} text-white`
+                          }
                         >
                           {i18n._(t`Press`)}
                         </a>
-                      </NavLink>
+                      </NavLink> */}
                       <Learn />
+
                       {/* <NavLink href="/learn">
                         <a
                           id={`mint-nav-link`}
@@ -107,7 +120,7 @@ function AppBar(): JSX.Element {
                           {i18n._(t`Learn`)}
                         </a>
                       </NavLink> */}
-                      {chainId && featureEnabled(Feature.MIGRATE, chainId) && (
+                      {/* {chainId && featureEnabled(Feature.MIGRATE, chainId) && (
                         <NavLink href={"/migrate"}>
                           <a
                             id={`migrate-nav-link`}
@@ -157,9 +170,26 @@ function AppBar(): JSX.Element {
                             {i18n._(t`Stake`)}
                           </a>
                         </NavLink>
-                      )}
+                      )} */}
+                      {/* moon pay widget */}
+                      {/* <MoonPayBtn></MoonPayBtn> */}
                     </div>
                   </div>
+                </div>
+
+                <div className=" w-3/4 text-xs flex flex-row-reverse items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap  font-bold cursor-pointer select-none pointer-events-auto">
+                  {account && chainId && userEthBalance && (
+                    <>
+                      <div className="px-3 py-2 text-primary text-bold">
+                        {userEthBalance?.toFixed(3)}{" "}
+                        {NATIVE[chainId]?.symbol || "ETH"}
+                      </div>
+                    </>
+                  )}
+                  <Web3Status
+                    title={i18n._(t`Connect Wallet`)}
+                    className="font-bold bg-black border border-green text-green"
+                  />
                 </div>
 
                 <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
@@ -175,11 +205,13 @@ function AppBar(): JSX.Element {
                             <div
                               className="hidden p-0.5 rounded-md cursor-pointer sm:inline-flex bg-dark-900 hover:bg-dark-800"
                               onClick={() => {
-                                const tokenAddress = chainAddresses.ZOO;
+                                const tokenAddress =
+                                  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ||
+                                  chainAddresses.ZOO;
                                 const tokenSymbol = "ZOO";
                                 const tokenDecimals = 18;
                                 const tokenImage =
-                                  window.location.origin + "/icons/egg.svg";
+                                  window.location.origin + "/img/egg.png";
                                 if (
                                   library &&
                                   library.provider.isMetaMask &&
@@ -215,7 +247,7 @@ function AppBar(): JSX.Element {
                               }}
                             >
                               <Image
-                                src="/icons/egg.svg"
+                                src="/img/egg.png"
                                 alt="zoo"
                                 width="30px"
                                 height="30px"
@@ -227,28 +259,15 @@ function AppBar(): JSX.Element {
                         </div>
                       )}
 
-                    {library && library.provider.isMetaMask && (
+                    {/* {library && library.provider.isMetaMask && (
                       <div className="hidden sm:inline-block">
                         <Web3Network />
                       </div>
-                    )}
+                    )} */}
                     {/* My Wallet Button */}
-                    <div className="w-auto flex items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
-                      {account && chainId && userEthBalance && (
-                        <>
-                          <div className="px-3 py-2 text-primary text-bold">
-                            {userEthBalance?.toFixed(3)}{" "}
-                            {NATIVE[chainId]?.symbol || "ETH"}
-                          </div>
-                        </>
-                      )}
-                      <Web3Status
-                        title="My Wallet"
-                        className="font-bold border border-green text-green bg-black"
-                      />
-                    </div>
+                    <div className=""></div>
                     <div className="hidden md:block">
-                      <LanguageSwitch />
+                      {/* <LanguageSwitch /> */}
                     </div>
                     <More />
                   </div>
@@ -301,7 +320,7 @@ function AppBar(): JSX.Element {
                 <a
                   id={`marketplace`}
                   className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  href="/market"
+                  href="/wallet"
                 >
                   {i18n._(t`Marketplace`)}
                 </a>
@@ -320,31 +339,7 @@ function AppBar(): JSX.Element {
 
                 <Learn />
 
-                {/* <a
-                  id={`community`}
-                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  href="/community"
-                >
-                  {i18n._(t`Community`)}
-                </a> */}
-
-                {/* <a
-                  id={`press`}
-                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  href="/press"
-                >
-                  {i18n._(t`Press`)}
-                </a>
-
-                <a
-                  id={`learn`}
-                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  href="learn"
-                >
-                  {i18n._(t`Learn`)}
-                </a> */}
-
-                <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
+                {/* <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                   {account && chainId && userEthBalance && (
                     <>
                       <div className="px-3 py-2 text-primary text-bold">
@@ -354,7 +349,7 @@ function AppBar(): JSX.Element {
                     </>
                   )}
                   <Web3Status
-                    title="My Wallet"
+                    title={i18n._(t`My Wallet`)}
                     className="font-bold border border-green text-green"
                   />
                 </div>
@@ -415,6 +410,7 @@ function AppBar(): JSX.Element {
                     {i18n._(t`Analytics`)}
                   </ExternalLink>
                 )}
+                */}
               </div>
             </Popover.Panel>
           </>

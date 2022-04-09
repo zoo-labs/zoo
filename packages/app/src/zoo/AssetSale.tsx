@@ -7,6 +7,7 @@ import { useActiveWeb3React, useContract } from "../hooks";
 import { EyeIcon } from "@heroicons/react/solid";
 import { shortenAddress } from "../functions";
 import TimeAgo from "react-timeago";
+import Image from "next/image";
 
 export type AssetSaleProps = {
   dropId: number | string;
@@ -95,7 +96,9 @@ const AssetSale = (props: AssetSaleProps) => {
           style={{ height: "auto" }}
         />
       ) : (
-        image && <img src={image} alt={`${type} ${dropId}-${name}`} />
+        image && (
+          <Image layout="fill" src={image} alt={`${type} ${dropId}-${name}`} />
+        )
       )}
       <div
         className={`w-full pb-5 text-center backdrop-filter backdrop-opacity video-overlay`}

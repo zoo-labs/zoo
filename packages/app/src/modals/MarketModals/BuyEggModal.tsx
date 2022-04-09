@@ -1,11 +1,11 @@
 import { CircularProgress } from "@mui/material";
-import { useWeb3React } from "@web3-react/core";
 import BigNumber from "bignumber.js";
 import CloseIcon from "components/CloseIcon";
 import CurrencySwitch from "components/CurrencySwitch";
 import Modal from "components/Modal";
 import BidModalHeader from "components/ModalHeader/BidModalHeader";
 import { formatError, numberWithCommas, wait } from "functions";
+import { useActiveWeb3React } from "hooks";
 import { useZooKeeper, useZooToken, useDrop } from "hooks/useContract";
 import useToast from "hooks/useToast";
 import { isEmpty } from "lodash";
@@ -41,7 +41,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   );
   const [zooBnbPrice, setZooBnbPrice] = useState(0);
   const [eggPrice, setEggPrice] = useState(0);
-  const { account, library } = useWeb3React();
+  const { account, library } = useActiveWeb3React();
   const userEthBalance = useETHBalances(account ? [account] : [])?.[
     account ?? ""
   ];
@@ -153,7 +153,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
           .send({
             from: account,
             gasPrice: gasPrice,
-            value: library.utils.toWei(eggPriceBNB),
+            value: web3.utils.toWei(eggPriceBNB),
           })
           .then((res) => {
             toastClear();
@@ -220,14 +220,14 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     <Modal isOpen={buyEggModal} onDismiss={() => null} isMax>
       <BidModalHeader
         onBack={() => toggleBuyEggModal()}
-        className="absolute w-full p-6 "
+        className="absolute w-full p-6 mb-6"
         showAccount
       />
-      <div className="flex flex-wrap h-full">
-        <div className="relative flex flex-col items-center justify-center w-full shadow-lg md:w-1/2">
-          <div className="w-4/5 max-w-2xl p-4 lg:w-1/2">
-            <div className="flex flex-col w-full MB-6">
-              <div className="text-sm font-semibold text-gray-500">
+      <div className="flex flex-col h-full px-4 mx-auto overflow-y-auto lg:flex-row lg:items-center max-w-7xl">
+        <div className="realtive lg:basis-1/2">
+          <div className="mt-20 lg:mt-0">
+            {/* <div className="flex flex-col w-full mb-6">
+              <div className="mb-2 text-sm font-semibold text-gray-500">
                 BUY EGGS
               </div>
               <div className="text-2xl font-bold lg:text-4xl">
@@ -240,18 +240,31 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                 )}{" "}
                 {checked ? "BNB" : "ZOO"}
               </div>
-            </div>
+            </div> */}
             <div className="w-full my-8 ">
-              <div className="flex ">
-                <div className="flex items-center justify-center w-full rounded">
-                  <Image
-                    src={`/img/egg.png`}
-                    width={300}
-                    height={300}
-                    className="w-full h-full transition-transform duration-1000 rounded"
-                  />
-                </div>
-                {/* <div className="flex justify-between w-full h-full px-4">
+              <div className="mb-2 text-sm font-semibold text-gray-500">
+                BUY EGGS
+              </div>
+              <div className="text-2xl font-bold lg:text-4xl">
+                {numberWithCommas(
+                  checked
+                    ? userEthBalance
+                      ? userEthBalance.toFixed(2)
+                      : 0
+                    : zooBalance.toFixed(2)
+                )}{" "}
+                {checked ? "BNB" : "ZOO"}
+              </div>
+              <div className="flex items-center justify-center w-full rounded">
+                <Image
+                  src={`/img/egg.png`}
+                  width={300}
+                  height={300}
+                  className="w-full h-full transition-transform duration-1000 rounded"
+                  alt=""
+                />
+              </div>
+              {/* <div className="flex justify-between w-full h-full px-4">
                   <div className="flex flex-col justify-center">
                     <div className="mb-2">Egg</div>
                     <div className="flex items-center mt-2 text-gray-400">
@@ -274,14 +287,13 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                     {checked ? "BNB" : "ZOO"}
                   </div>
                 </div> */}
-              </div>
             </div>
             {error && (
-              <div className="mb-1 text-xs font-semibold text-red-500">
+              <div className="mb-4 text-base font-semibold text-center text-red">
                 {error}
               </div>
             )}
-            <h6 className="my-1 text-xs font-semibold text-center text-gray-400">
+            <h6 className="my-1 text-sm font-semibold text-center text-gray-400">
               One egg costs{" "}
               <span className="font-bold text-white">
                 {" "}
@@ -289,18 +301,18 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                 {checked ? "BNB" : "ZOO"} each
               </span>
             </h6>
-            <h6 className="mb-2 text-xs font-semibold text-center text-gray-400">
+            <h6 className="mb-2 text-sm font-semibold text-center text-gray-400">
               A maximum of 3 eggs are allowed per account
             </h6>
           </div>
-          <div className="absolute lg:bottom-52 bottom-10 left-50">
+          <div className="flex flex-col items-center mt-4">
             <CurrencySwitch
               checked={checked}
               checkFunc={() => setChecked(!checked)}
             />
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center w-full md:w-1/2 bg-modal-dark">
+        <div className="lg:basis-1/2">
           <div className="w-1/2">
             <div className="flex">
               <button
@@ -326,7 +338,8 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
         <div className="w-full mb-4">
           <div className="flex h-20 ">
             <div className="flex items-center justify-center mr-2 rounded w-14">
-              <img
+               <Image
+                  layout="fill"
                 style={{ verticalAlign: "middle" }}
                 src={`/static/images/basic.jpg`}
                 className="w-full h-full transition-transform duration-1000 rounded"

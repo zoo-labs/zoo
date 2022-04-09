@@ -11,7 +11,7 @@ const JoinZooSection = () => {
         <h2 className="mb-6 text-3xl font-semibold text-center lg:text-5xl">
           Join the ZOO family!
         </h2>
-        <p className="mb-4 text-xl">Follow our social media</p>
+        <p className="mb-4 text-xl">Follow us on social media</p>
         <div className="flex items-center mb-6">
           <a
             href="https://mobile.twitter.com/zoo_labs"
@@ -48,16 +48,32 @@ const JoinZooSection = () => {
             />
           </a>
           <a
-            href="https://discord.com/invite/FZzWUbMUK5"
+            href="https://discord.gg/wW6Wth6r"
             target="_blank"
             rel="noreferrer"
             className="mr-8"
           >
             <Image src="/img/discord-large.svg" width={32} height={32} alt="" />
           </a>
+          <a
+            href="https://zoolabsofficial.medium.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-8"
+          >
+            <Image src="/img/medium-icon.svg" height={32} width={32} alt="" />{" "}
+          </a>
+          <a
+            href="https://www.youtube.com/channel/UCjTd-6h0nbVwz34IihdCUww"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-8"
+          >
+            <Image src="/img/youtube.svg" width={32} height={32} alt="" />
+          </a>
         </div>
 
-        <form className="">
+        {/* <form className="">
           <div className="flex flex-row px-4">
             <input
               type="email"
@@ -71,7 +87,7 @@ const JoinZooSection = () => {
               Join
             </button>
           </div>
-        </form>
+        </form> */}
       </div>
     </section>
   );

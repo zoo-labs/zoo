@@ -1,5 +1,7 @@
-import { useWeb3React } from "@web3-react/core";
+import { i18n } from "@lingui/core";
+import { t } from "@lingui/macro";
 import Web3Status from "components/Web3Status";
+import { useActiveWeb3React } from "hooks";
 import React, { FC } from "react";
 import { ChevronLeft } from "react-feather";
 interface BidModalHeaderProps {
@@ -13,7 +15,7 @@ const BidModalHeader: FC<BidModalHeaderProps> = ({
   onBack = undefined,
   showAccount,
 }) => {
-  const { account } = useWeb3React();
+  const { account } = useActiveWeb3React();
 
   return (
     <div className={`flex items-center justify-between mb-4 ${className}`}>
@@ -28,7 +30,7 @@ const BidModalHeader: FC<BidModalHeaderProps> = ({
           fill="#f2f2f2"
         />
       </div>
-      {showAccount && <Web3Status />}
+      {showAccount && <Web3Status title={i18n._(t`Connect Wallet`)} />}
     </div>
   );
 };
