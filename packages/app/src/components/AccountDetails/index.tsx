@@ -21,6 +21,7 @@ import { getZooBalance } from "state/zoo/actions";
 import { numberWithCommas } from "functions";
 import { AppState } from "state";
 import { metaMask } from "connectors/metaMask";
+import { walletConnect } from "connectors/walletConnect";
 
 const WalletIcon: FC<{ size?: number; src: string; alt: string }> = ({
   size,
@@ -87,11 +88,20 @@ const AccountDetails: FC<AccountDetailsProps> = ({
 
   function getStatusIcon() {
     if (connector === metaMask) {
-      return null;
-      // return <IconWrapper size={16}>{/* <Identicon /> */}</IconWrapper>
+      return (
+        <WalletIcon
+          src="/images/wallets/metamask.png"
+          alt="Metamask"
+          size={16}
+        />
+      );
     } else if (connector.constructor.name === "WalletConnect") {
       return (
-        <WalletIcon src="/wallet-connect.png" alt="Wallet Connect" size={16} />
+        <WalletIcon
+          src="/images/wallets/wallet-connect.svg"
+          alt="Wallet Connect"
+          size={16}
+        />
       );
     } else if (connector.constructor.name === "WalletLink") {
       return <WalletIcon src="/coinbase.svg" alt="Coinbase" size={16} />;
@@ -128,22 +138,18 @@ const AccountDetails: FC<AccountDetailsProps> = ({
           <div className="flex items-center justify-between">
             {formatConnectorName()}
             <div className="flex space-x-3">
-              {connector === metaMask &&
-                connector.constructor.name !== "WalletLink" &&
-                connector.constructor.name !== "BscConnector" &&
-                connector.constructor.name !== "KeystoneConnector" && (
-                  <Button
-                    variant="outlined"
-                    color="gray"
-                    size="xs"
-                    onClick={() => {
-                      console.log(connector);
-                      (connector as any).handleClose();
-                    }}
-                  >
-                    {i18n._(t`Disconnect`)}
-                  </Button>
-                )}
+              <Button
+                variant="outlined"
+                color="gray"
+                size="xs"
+                onClick={() => {
+                  console.log(connector);
+                  connector.deactivate();
+                }}
+              >
+                {i18n._(t`Disconnect`)}
+              </Button>
+
               <Button
                 variant="outlined"
                 color="gray"
@@ -166,9 +172,12 @@ const AccountDetails: FC<AccountDetailsProps> = ({
                 <Typography>{ENSName}</Typography>
               </div>
             ) : (
-              <div className="px-3 py-2 rounded bg-dark-800">
+              <div className="flex py-2 rounded bg-dark-800">
+                <Typography className="pr-2">
+                  {account && shortenAddress(account)}
+                </Typography>
+                {"   "}
                 {getStatusIcon()}
-                <Typography>{account && shortenAddress(account)}</Typography>
               </div>
             )}
             <div>
