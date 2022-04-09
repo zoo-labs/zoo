@@ -39,10 +39,10 @@ import {
 import { SubgraphProvider } from "../providers/SubgraphProvider";
 import { initTranslation, loadTranslation } from "../entities";
 
-const Web3ProviderNetwork = dynamic(
-  () => import("../components/Web3ProviderNetwork"),
-  { ssr: false }
-);
+// const Web3ProviderNetwork = dynamic(
+//   () => import("../components/Web3ProviderNetwork"),
+//   { ssr: false }
+// );
 const HooksProvider = dynamic(
   () => import("../state/application/HooksProvider"),
   { ssr: false }

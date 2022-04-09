@@ -1,16 +1,16 @@
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { ChainId } from '@zoolabs/sdk'
 import { InjectedConnector } from '@web3-react/injected-connector'
-import { NetworkConnector } from '../entities/NetworkConnector'
+// import { NetworkConnector } from '../entities/NetworkConnector'
 import RPC from './rpc'
 import { AVAILABLE_NETWORKS, SUPPORTED_NETWORKS } from './networks'
 import { hooks as metaMaskHooks, metaMask } from 'connectors/metaMask'
 import { hooks as walletConnectHooks, walletConnect } from 'connectors/walletConnect'
 import { hooks as walletLinkHooks, walletLink } from 'connectors/walletLink'
-export const network = new NetworkConnector({
-  defaultChainId: 1,
-  urls: RPC,
-})
+// export const network = new NetworkConnector({
+//   defaultChainId: 1,
+//   urls: RPC,
+// })
 
 const supportedChainIds = Object.values(AVAILABLE_NETWORKS) as number[]
 

@@ -20,6 +20,7 @@ import { useLingui } from "@lingui/react";
 import { getZooBalance } from "state/zoo/actions";
 import { numberWithCommas } from "functions";
 import { AppState } from "state";
+import { metaMask } from "connectors/metaMask";
 
 const WalletIcon: FC<{ size?: number; src: string; alt: string }> = ({
   size,
@@ -74,7 +75,7 @@ const AccountDetails: FC<AccountDetailsProps> = ({
       .filter(
         (k) =>
           SUPPORTED_WALLETS[k].connector === connector &&
-          (connector !== injected || isMetaMask === (k === "METAMASK"))
+          (connector !== metaMask || isMetaMask === (k === "METAMASK"))
       )
       .map((k) => SUPPORTED_WALLETS[k].name)[0];
     return (
@@ -85,14 +86,14 @@ const AccountDetails: FC<AccountDetailsProps> = ({
   }
 
   function getStatusIcon() {
-    if (connector === injected) {
+    if (connector === metaMask) {
       return null;
       // return <IconWrapper size={16}>{/* <Identicon /> */}</IconWrapper>
-    } else if (connector.constructor.name === "WalletConnectConnector") {
+    } else if (connector.constructor.name === "WalletConnect") {
       return (
         <WalletIcon src="/wallet-connect.png" alt="Wallet Connect" size={16} />
       );
-    } else if (connector.constructor.name === "WalletLinkConnector") {
+    } else if (connector.constructor.name === "WalletLink") {
       return <WalletIcon src="/coinbase.svg" alt="Coinbase" size={16} />;
     } else if (connector.constructor.name === "FortmaticConnector") {
       return <WalletIcon src="/formatic.png" alt="Fortmatic" size={16} />;
@@ -127,8 +128,8 @@ const AccountDetails: FC<AccountDetailsProps> = ({
           <div className="flex items-center justify-between">
             {formatConnectorName()}
             <div className="flex space-x-3">
-              {connector === injected &&
-                connector.constructor.name !== "WalletLinkConnector" &&
+              {connector === metaMask &&
+                connector.constructor.name !== "WalletLink" &&
                 connector.constructor.name !== "BscConnector" &&
                 connector.constructor.name !== "KeystoneConnector" && (
                   <Button
@@ -171,7 +172,9 @@ const AccountDetails: FC<AccountDetailsProps> = ({
               </div>
             )}
             <div>
-              <p className="font-bold">Balance: {numberWithCommas(zooBalance.toFixed(2))} ZOO</p>
+              <p className="font-bold">
+                Balance: {numberWithCommas(zooBalance.toFixed(2))} ZOO
+              </p>
             </div>
             <div className="flex items-center gap-2 space-x-3">
               {chainId && account && (
