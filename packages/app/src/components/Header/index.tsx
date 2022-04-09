@@ -95,7 +95,18 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                       >
                         {i18n._(t`Chart`)}
                       </a>
-
+                      <NavLink href="/store">
+                        <a
+                          id={`store`}
+                          className={
+                            router.pathname == "/store"
+                              ? `${linkStyle} text-green text-bold`
+                              : `${linkStyle} text-white`
+                          }
+                        >
+                          {i18n._(t`Store`)}
+                        </a>
+                      </NavLink>
                       <Community />
 
                       {/* <NavLink href="/press">
