@@ -14,8 +14,7 @@ const Layout = ({ children, banner = undefined }) => {
   }, [library]);
   return (
     <div className="z-0 flex flex-col items-center w-full h-screen pb-16 lg:pb-0">
-      {banner && <Banner />}
-      <Header />
+      <Header banner={banner} />
       <Main>{children}</Main>
       <Popups />
       <Footer />

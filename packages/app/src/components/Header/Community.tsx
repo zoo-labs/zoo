@@ -1,13 +1,14 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+import Link from "next/link";
 
 export default function Community() {
   return (
     <div className="text-right relative flex flex-col justify-center">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex w-full px-2 text-base font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 mb-4 lg:mb-0">
+          <Menu.Button className="inline-flex w-full px-2 text-base font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 mb-4 md:mb-0">
             Community
             <ChevronDownIcon
               className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
@@ -26,7 +27,7 @@ export default function Community() {
         >
           <Menu.Items className="flex absolute right-0 w-56 mt-2 origin-top-right bg-black100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-999">
             <div className="px-2 py-2 lg:py-6">
-              <Menu.Item>
+              {/* <Menu.Item>
                 {({ active }) => (
                   <a
                     href="/global-leaderboard"
@@ -37,37 +38,39 @@ export default function Community() {
                     Leaderboard
                   </a>
                 )}
-              </Menu.Item>
-              <Menu.Item>
+              </Menu.Item> */}
+              {/* <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="/#newsletter"
-                    className={`${
-                      active ? "bg-black text-white" : "text-white"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    Newsletter
-                  </a>
+                  <Link href="/#newsletter">
+                    <a
+                      className={`${
+                        active ? "bg-black text-white" : "text-white"
+                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      Newsletter
+                    </a>
+                  </Link>
                 )}
-              </Menu.Item>
-              <Menu.Item>
+              </Menu.Item> */}
+              {/* <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="/lab-events"
-                    className={`${
-                      active ? "bg-black text-white" : "text-white"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    Events
-                  </a>
+                  <Link href="/lab-events">
+                    <a
+                      className={`${
+                        active ? "bg-black text-white" : "text-white"
+                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      Events
+                    </a>
+                  </Link>
                 )}
-              </Menu.Item>
+              </Menu.Item> */}
             </div>
             <div className="px-2 py-2 lg:py-6 ">
               <Menu.Item>
                 {({ active }) => (
                   <a
-                    href="https://discord.com/invite/FZzWUbMUK5"
+                    href="https://discord.gg/wW6Wth6r"
                     target="_blank"
                     rel="noreferrer"
                     className={`${
@@ -117,6 +120,20 @@ export default function Community() {
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                   >
                     Twitter
+                  </a>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <a
+                    href="https://zoolabsofficial.medium.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`${
+                      active ? "bg-black text-white" : "text-white"
+                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  >
+                    Medium
                   </a>
                 )}
               </Menu.Item>

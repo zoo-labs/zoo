@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Fragment, FunctionComponent } from "react";
 import { GetStaticProps, NextComponentType, NextPageContext } from "next";
 import store, { persistor } from "../state";
+import { GifProvider } from "context/GifContext";
 
 import type { AppProps } from "next/app";
 import ApplicationUpdater from "../state/application/updater";
@@ -19,8 +20,8 @@ import ReactGA from "react-ga";
 import { Provider as ReduxProvider, useDispatch } from "react-redux";
 import TransactionUpdater from "../state/transactions/updater";
 import UserUpdater from "../state/user/updater";
-import Web3ReactManager from "../components/Web3ReactManager";
-import { Web3ReactProvider } from "@web3-react/core";
+// import Web3ReactManager from "../components/Web3ReactManager";
+// import { Web3ReactProvider } from "@web3-react/core";
 import dynamic from "next/dynamic";
 import getLibrary from "../functions/getLibrary";
 import { i18n } from "@lingui/core";
@@ -35,15 +36,17 @@ import {
   useQuery,
   gql,
 } from "@apollo/client";
-import { useActiveWeb3React } from "../hooks";
 import { SubgraphProvider } from "../providers/SubgraphProvider";
 import { initTranslation, loadTranslation } from "../entities";
 
-const Web3ProviderNetwork = dynamic(
-  () => import("../components/Web3ProviderNetwork"),
+// const Web3ProviderNetwork = dynamic(
+//   () => import("../components/Web3ProviderNetwork"),
+//   { ssr: false }
+// );
+const HooksProvider = dynamic(
+  () => import("../state/application/HooksProvider"),
   { ssr: false }
 );
-
 // const Web3ReactManager = dynamic(() => import('../components/Web3ReactManager'), { ssr: false })
 
 if (typeof window !== "undefined" && !!window.ethereum) {
@@ -116,49 +119,48 @@ function MyApp({
       <Head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-
         <meta
           name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
         <title key="title">ZOO</title>
-
         <meta
           key="description"
           name="description"
-          content="The future is decentralized."
+          content="ZOO is an decentralized protocol to collect, breed, and trade Metaverse-ready 3D animals on the blockchain."
         />
-
-        <meta name="application-name" content="Lux Defi" />
+        <meta name="application-name" content="ZOO" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
-        <meta name="apple-mobile-web-app-title" content="Lux Defi" />
-
+        <meta name="apple-mobile-web-app-title" content="ZOO" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="msapplication-tap-highlight" content="no" />
-        <meta name="theme-color" content="#F338C3" />
-
+        <meta name="theme-color" content="#000" />
+        <meta
+          name="facebook-domain-verification"
+          content="qyo9v1m8qrsqejah3idkc5na67mzq9"
+        />
         <meta key="twitter:card" name="twitter:card" content="app" />
-        <meta key="twitter:title" name="twitter:title" content="Lux Defi" />
+        <meta key="twitter:title" name="twitter:title" content="ZOO" />
         <meta
           key="twitter:url"
           name="twitter:url"
-          content="https://zoo.financial/"
+          content="https://zoolabs.io"
         />
         <meta
           key="twitter:description"
           name="twitter:description"
-          content="The future is decentralized."
+          content="ZOO is an decentralized protocol to collect, breed, and trade Metaverse-ready 3D animals on the blockchain."
         />
         <meta
           key="twitter:image"
           name="twitter:image"
-          content="https://zoo.financial/zoo.png"
+          content="https://zoolabs.io/zoo.png"
         />
         <meta
           key="twitter:creator"
@@ -166,50 +168,48 @@ function MyApp({
           content="@SushiSwap"
         />
         <meta key="og:type" property="og:type" content="website" />
-        <meta key="og:site_name" property="og:site_name" content="Lux Defi" />
-        <meta key="og:url" property="og:url" content="https://zoo.financial" />
+        <meta key="og:site_name" property="og:site_name" content="ZOO" />
+        <meta key="og:url" property="og:url" content="https://zoolabs.io" />
         <meta
           key="og:image"
           property="og:image"
-          content="https://zoo.financial/zoo.png"
+          content="https://zoolabs.io/zoo.png"
         />
         <meta
           key="og:description"
           property="og:description"
-          content="The future is decentralized."
+          content="ZOO is an decentralized protocol to collect, breed, and trade Metaverse-ready 3D animals on the blockchain."
         />
       </Head>
 
       <I18nProvider i18n={i18n} forceRenderOnLocaleChange={false}>
-        <Web3ReactProvider getLibrary={getLibrary}>
-          <Web3ProviderNetwork getLibrary={getLibrary}>
-            <Web3ReactManager>
-              <SubgraphProvider>
-                <ReduxProvider store={store}>
-                  <PersistGate
-                    loading={<Dots>loading</Dots>}
-                    persistor={persistor}
-                  >
-                    <>
-                      <ListsUpdater />
-                      <UserUpdater />
-                      <ApplicationUpdater />
-                      <TransactionUpdater />
-                      <MulticallUpdater />
-                    </>
-                    <Provider>
-                      <Layout>
-                        <Guard>
-                          <Component {...pageProps} />
-                        </Guard>
-                      </Layout>
-                    </Provider>
-                  </PersistGate>
-                </ReduxProvider>
-              </SubgraphProvider>
-            </Web3ReactManager>
-          </Web3ProviderNetwork>
-        </Web3ReactProvider>
+        <ReduxProvider store={store}>
+          <HooksProvider>
+            <SubgraphProvider>
+              <GifProvider>
+                <PersistGate
+                  loading={<Dots>loading</Dots>}
+                  persistor={persistor}
+                >
+                  <>
+                    <ListsUpdater />
+                    <UserUpdater />
+                    <ApplicationUpdater />
+                    <TransactionUpdater />
+                    <MulticallUpdater />
+                  </>
+                  <Provider>
+                    <Layout>
+                      <Guard>
+                        <Component {...pageProps} />
+                      </Guard>
+                    </Layout>
+                  </Provider>
+                </PersistGate>
+              </GifProvider>
+            </SubgraphProvider>
+          </HooksProvider>
+        </ReduxProvider>
       </I18nProvider>
     </Fragment>
   );

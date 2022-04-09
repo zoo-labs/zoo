@@ -1,42 +1,55 @@
 import { FC } from "react";
 import Image from "next/image";
-
 interface Props {
   article: {
     name: string;
     image: string;
+    link: string;
+    date: string;
+    writtenBy: string;
+    isNew: boolean;
   };
 }
-const Article: FC<Props> = ({ article: { name, image } }) => {
+const Article: FC<Props> = ({ article: { name, image, link, date, writtenBy, isNew } }) => {
   return (
-    <div className="mb-8 lg:mb-8 bg-dark-blue flex flex-col max-w-sm">
-      <div className="mb-4 overflow-hidden">
-        <Image
-          src={image}
-          width="100%"
-          height="100%"
-          layout="responsive"
-          objectFit="cover"
-          alt=""
-        />
-      </div>
-      <div className="px-4 py-8">
-        <div className="flex flex-col items-start mb-4">
-          <p className="bg-blue text-white rounded-sm text-xs font-bold px-2 py-1 uppercase">
-            New
-          </p>
+    <div className="mb-8 lg:mb-8 bg-dark-blue flex flex-col w-full max-w-sm md:max-w-lg border border-opacity-30 rounded">
+      <a href={`${link}`} target="_blank" rel="noreferrer">
+        <div className="mb-4 rounded overflow-hidden border-b border-opacity-30 bg-dark">
+          <Image
+            src={image}
+            width="100%"
+            height="100%"
+            layout="responsive"
+            objectFit="contain"
+            alt=""
+          />
         </div>
-        <h3 className="text-xl lg:text-2xl font-bold text-white mb-4">
-          {name}
-        </h3>
-        <div className="flex justify-between items-center">
-          <div className="flex ">
-            <Image src="/img/trainer.png" width={24} height={24} alt="" />
-            <p className="ml-3">Portner Daniel</p>
+        <div className="px-4 py-8">
+          <div className="flex  justify-between items-center mb-4">
+            {isNew ? (<p className="bg-blue text-white rounded-sm text-xs font-bold px-2 py-1 uppercase">
+              New
+            </p>) : (<p></p>)}
+            <div className="flex justify-between items-center">
+              <div className="flex ">
+                <Image
+                  src="/img/logo.png"
+                  width={24}
+                  height={24}
+                  alt=""
+                  objectFit="contain"
+                />
+                <p className="mr-3 ml-3">Zoo Labs</p>
+              </div>
+              <p>{date}</p>
+            </div>
           </div>
-          <p>Feb 03, 2021</p>
+          <h3 className="text-xl lg:text-2xl font-bold text-white h-[110px]">
+            {name}
+          </h3>
+
+          <p className="font-thin text-sm">Written by: {writtenBy}</p>
         </div>
-      </div>
+      </a>
     </div>
   );
 };

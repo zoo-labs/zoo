@@ -2,6 +2,9 @@ import { numberWithCommas } from "functions";
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
+// animation
+import { fadeInOnScroll } from "animation";
+
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "state";
 import { useBuyZoo } from "state/zoo/hooks";
@@ -10,7 +13,6 @@ import { useModal } from "react-morphing-modal";
 import { useRouter } from "next/router";
 import { useTokenTypes } from "zoo/state";
 import { useActiveWeb3React, useZooKeeper, useZooToken } from "hooks";
-import { useWeb3React } from "@web3-react/core";
 import {
   useBuyEggModalToggle,
   useBuyZooModalToggle,
@@ -25,7 +27,7 @@ import { getZooBalance } from "state/zoo/actions";
 import { useAppDispatch } from "state/hooks";
 
 import Notification from "../../modals/NotificationModal";
-import {handleFunds} from '../../utils/handleFunds';
+import { handleFunds } from "../../utils/handleFunds";
 
 interface WalletProps {}
 
@@ -33,7 +35,7 @@ const Wallet: React.FC<WalletProps> = ({}) => {
   const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
     (state) => state.zoo.zooBalance
   );
-  const { account, library, chainId } = useWeb3React();
+  const { account, library, chainId } = useActiveWeb3React();
   const faucet = useFaucet();
   const dispatch = useDispatch();
 
@@ -96,8 +98,15 @@ const Wallet: React.FC<WalletProps> = ({}) => {
       console.log("Failed to approve account");
     }
   };
+
   const toggleBuyEggModal = useBuyEggModalToggle();
   const toggleBuyZooModal = useBuyZooModalToggle();
+
+  const walletRef = React.useRef();
+
+  useEffect(() => {
+    fadeInOnScroll(walletRef.current);
+  }, []);
   // const buyEggs = () => {
   //   router.push(`${router.pathname}?tokenId=egg`, undefined, { shallow: true });
   // };
@@ -107,7 +116,7 @@ const Wallet: React.FC<WalletProps> = ({}) => {
   ];
 
   return (
-    <div>
+    <div ref={walletRef}>
       <p className="mb-2 text-xl font-bold ">Wallet Balance</p>
       <div className="flex items-center">
         <p className="text-xl font-bold ">
@@ -123,7 +132,8 @@ const Wallet: React.FC<WalletProps> = ({}) => {
                 zooBalance === 0 && "gradient-border"
               }`}
               style={{
-                background: "linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)",
+                // background: "linear-gradient(180deg, #DF3EBB 0%, #199BC3 100%)",
+                background: "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)",
               }}
             >
               Get ZOO
@@ -174,6 +184,8 @@ const Wallet: React.FC<WalletProps> = ({}) => {
                   width: "120px",
                   minHeight: "36px",
                   marginBottom: "-2px",
+                  background:
+                    "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)",
                 }}
                 onClick={() => toggleBuyEggModal()}
               >

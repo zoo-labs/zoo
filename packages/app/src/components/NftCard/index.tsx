@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface NftCardProps {
   image: React.ReactNode;
@@ -19,41 +19,38 @@ const NftCard = ({
   days,
   highestBid,
   yields,
-  currency = "ZOO",
+  currency = 'ZOO'
 }: NftCardProps) => {
   return (
-    <div className="p-px bg-gradient-to-b from-btn1 to-btn2 rounded-lg w-full overflow-hidden mb-6 lg:mb-0">
-      <div className="bg-black overflow-hidden">
-        <div className="PopularNfts__nft-img text-center object-contain overflow-hidden">
-          {image && image}
+    <div className="flex flex-col flex-1 grow">
+      <div className="p-0.5 rounded-lg h-full w-full overflow-hidden mb-6 lg:mb-0 PopularNft_nft bg-nft-gradient">
+        <div className="bg-black rounded-lg overflow-hidden">
+          <div className="PopularNfts__nft-img flex flex-col justify-end my-8 text-center object-contain overflow-hidden min-h-nftContainer">
+            {image && image}
+          </div>
         </div>
-        <div className="PopularNfts__nft-info px-8 py-8">
-          <div className="flex justify-between items-center mb-4">
-            <p>{name}</p>
-            <div className="p-px bg-gradient-to-b from-btn1 to-btn2 ">
-              <p className="text-uppercase bg-black px-2 py-2">
-                {price} {currency}
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center justify-between mb-6">
-            <p className="flex items-center ">
-              <div className="w-3 h-3 bg-red-400 rounded-full mr-2"></div>
-              {address}
-            </p>
-            <p>{days} Days Left</p>
-          </div>
-          <hr className="mb-6" />
-          <div className="flex justify-between items-center mb-4">
-            <p>Highest bid</p>
-            <p className="text-uppercase">{highestBid} Zoo</p>
-          </div>
-          <div className="text-center flex justify-center items-center">
-            <p className="flex items-center">
-              <div className="w-3 h-3 bg-red-400 rounded-full mr-2" />
-              {yields} Yields/Day
-            </p>
-          </div>
+      </div>
+      <div className="PopularNfts__nft-info py-8">
+        <div className="flex justify-between items-center mb-4">
+          <p>{name}</p>
+          <p className="text-uppercase border border-blue p-1.5">
+            {price} {currency}
+          </p>
+        </div>
+        <div className="flex items-center justify-between mb-6">
+          <p className="flex items-center text-steel text-base">
+            <span className="w-5 h-5 bg-nft-gradient rounded-full mr-2" />
+            {address}
+          </p>
+          <p>{days} Days Left</p>
+        </div>
+        <hr className="mb-6" />
+        <div className="flex justify-between items-center mb-4">
+          <p className="text-steel text-sm mr-9">Highest bid</p>
+          <p className="text-uppercase">{highestBid} Zoo</p>
+          <p className="flex items-center text-steel text-sm ml-9">
+            {yields} Yields/Day
+          </p>
         </div>
       </div>
     </div>

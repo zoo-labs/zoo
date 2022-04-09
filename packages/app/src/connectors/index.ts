@@ -2,7 +2,7 @@ import { BscConnector } from '@binance-chain/bsc-connector'
 import { ChainId } from '@zoolabs/sdk'
 import { FortmaticConnector } from '../entities/FortmaticConnector'
 import { InjectedConnector } from '@web3-react/injected-connector'
-import { NetworkConnector } from '../entities/NetworkConnector'
+// import { NetworkConnector } from '../entities/NetworkConnector'
 import { PortisConnector } from '@web3-react/portis-connector'
 import { TorusConnector } from '@web3-react/torus-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
@@ -37,23 +37,23 @@ const RPC = {
   [ChainId.PALM]: 'https://palm-mainnet.infura.io/v3/da5fbfafcca14b109e2665290681e267',
 }
 
-export function getNetwork(defaultChainId, urls = RPC) {
-  return new NetworkConnector({
-    defaultChainId,
-    urls,
-  })
-}
+// export function getNetwork(defaultChainId, urls = RPC) {
+//   return new NetworkConnector({
+//     defaultChainId,
+//     urls,
+//   })
+// }
 
-export const network = new NetworkConnector({
-  defaultChainId: 1,
-  urls: RPC,
-})
+// export const network = new NetworkConnector({
+//   defaultChainId: 1,
+//   urls: RPC,
+// })
 
 let networkLibrary: Web3Provider | undefined
 
-export function getNetworkLibrary(): Web3Provider {
-  return (networkLibrary = networkLibrary ?? new Web3Provider(network.provider as any))
-}
+// export function getNetworkLibrary(): Web3Provider {
+//   return (networkLibrary = networkLibrary ?? new Web3Provider(network.provider as any))
+// }
 
 const supportedChainIds = [
   1, // mainnet

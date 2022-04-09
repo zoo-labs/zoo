@@ -1,7 +1,5 @@
-import { NetworkConnector } from '../entities/NetworkConnector'
 import { Web3Provider } from '@ethersproject/providers'
-import { network } from '../config/wallets'
-
+import { network } from '../connectors/network'
 let networkLibrary: Web3Provider | undefined
 
 export function getNetworkLibrary(): Web3Provider {
