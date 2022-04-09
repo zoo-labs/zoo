@@ -9,7 +9,7 @@ const Banner: FC = () => {
   return (
     <>
       {showBanner ? (
-        <div className="relative w-full bg-purple bg-opacity-20">
+        <div className="sm:mb-12 relative w-full bg-purple bg-opacity-20">
           <div className="px-3 py-3 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="pr-4 ">
               {/* <p className="font-medium text-white">
@@ -32,7 +32,7 @@ const Banner: FC = () => {
                     "0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13"
                   }
                 >
-                  <Typography className="p-1 ml-1 text-xs font-bold text-left underline text-green xs:w-full">
+                  <Typography className="hidden md:block p-1 ml-1 text-xs font-bold text-left underline text-green xs:w-full">
                     Token Address
                   </Typography>
 
