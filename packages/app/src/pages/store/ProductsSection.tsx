@@ -27,12 +27,16 @@ const ProductsSection = () => {
             {products.map((item, index) => {
               return (
                 <div key={index} className="md:basis-1/3 mb-8">
-                  <img src="/img/store-1.png" alt="" className="mb-4" />
-                  <div className="mb-4">
-                    <p>Zoo Merch Top Rainy Days</p>
-                    <p>Collection 21</p>
-                  </div>
-                  <p>$260.99</p>
+                  <a href={`/store/${item.id}`}>
+                    <>
+                      <img src="/img/store-1.png" alt="" className="mb-4" />
+                      <div className="mb-4">
+                        <p>Zoo Merch Top Rainy Days</p>
+                        <p>Collection 21</p>
+                      </div>
+                      <p>$260.99</p>
+                    </>
+                  </a>
                 </div>
               );
             })}
