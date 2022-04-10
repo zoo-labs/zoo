@@ -22,7 +22,7 @@ import { numberWithCommas } from "functions";
 import { AppState } from "state";
 import { metaMask } from "connectors/metaMask";
 import { walletConnect } from "connectors/walletConnect";
-
+import { walletLink } from "connectors/walletLink";
 const WalletIcon: FC<{ size?: number; src: string; alt: string }> = ({
   size,
   src,
@@ -95,7 +95,7 @@ const AccountDetails: FC<AccountDetailsProps> = ({
           size={16}
         />
       );
-    } else if (connector.constructor.name === "WalletConnect") {
+    } else if (connector === walletConnect) {
       return (
         <WalletIcon
           src="/images/wallets/wallet-connect.svg"
@@ -103,7 +103,7 @@ const AccountDetails: FC<AccountDetailsProps> = ({
           size={16}
         />
       );
-    } else if (connector.constructor.name === "WalletLink") {
+    } else if (connector === walletLink) {
       return <WalletIcon src="/coinbase.svg" alt="Coinbase" size={16} />;
     } else if (connector.constructor.name === "FortmaticConnector") {
       return <WalletIcon src="/formatic.png" alt="Fortmatic" size={16} />;
