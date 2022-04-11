@@ -94,3 +94,20 @@ export type EggCardType = {
 export interface ToastsState {
   data: Toast[]
 }
+
+export interface Product {
+  name: String;
+  price: string;
+  discount_price: string;
+  description: string;
+  properties: {
+    colors: Array<string>;
+    sizes: Array<string>;
+    adendums: Array<string>;
+  }
+  image: string;
+  gallery_image: Array<string>;
+  quantity: number;
+  _id: string;
+  status: string;
+}
