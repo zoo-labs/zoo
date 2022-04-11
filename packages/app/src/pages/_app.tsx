@@ -181,7 +181,8 @@ function MyApp({
           content="ZOO is an decentralized protocol to collect, breed, and trade Metaverse-ready 3D animals on the blockchain."
         />
       </Head>
-
+      {/* 
+  // @ts-ignore */}
       <I18nProvider i18n={i18n} forceRenderOnLocaleChange={false}>
         <ReduxProvider store={store}>
           <HooksProvider>
