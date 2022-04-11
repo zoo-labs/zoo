@@ -247,7 +247,7 @@ const SetSaleBid = ({ dropId, name, children }) => {
           </p>
         )}
 
-        {children}
+        <>{children}</>
       </div>
     </div>
   );

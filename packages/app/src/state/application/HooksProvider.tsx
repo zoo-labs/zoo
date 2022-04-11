@@ -11,7 +11,7 @@ import { hooks as walletLinkHooks, walletLink } from "connectors/walletLink";
 import { setPriorityConnector } from "./actions";
 import { useAppDispatch } from "state/hooks";
 
-const HooksProvider: FC = ({ children }) => {
+const HooksProvider = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
   const [isReady, setReady] = useState<boolean>(false);
 
