@@ -22,7 +22,7 @@ import { numberWithCommas } from "functions";
 import { AppState } from "state";
 import { metaMask } from "connectors/metaMask";
 import { walletConnect } from "connectors/walletConnect";
-import { walletLink } from "connectors/walletLink";
+import { coinbaseWallet } from "connectors/coinbaseWallet";
 const WalletIcon: FC<{
   size?: number;
   src: string;
@@ -105,7 +105,7 @@ const AccountDetails: FC<AccountDetailsProps> = ({
           size={16}
         />
       );
-    } else if (connector === walletLink) {
+    } else if (connector === coinbaseWallet) {
       return <WalletIcon src="/coinbase.svg" alt="Coinbase" size={16} />;
     } else if (connector.constructor.name === "FortmaticConnector") {
       return <WalletIcon src="/formatic.png" alt="Fortmatic" size={16} />;
