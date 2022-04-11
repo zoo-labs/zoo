@@ -36,7 +36,7 @@ export function useActiveWeb3React(): {
   const { provider, connector,
     chainId,
     account,
-    error, isActivating, accounts, isActive } = useWeb3React()
+    error, isActivating, accounts, isActive, } = useWeb3React()
 
 
 

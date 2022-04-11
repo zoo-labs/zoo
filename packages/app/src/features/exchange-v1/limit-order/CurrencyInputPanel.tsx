@@ -1,22 +1,22 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode } from "react";
 
-import { ExclamationIcon } from '@heroicons/react/solid'
-import { classNames } from '../../../functions'
+import { ExclamationIcon } from "@heroicons/react/solid";
+import { classNames } from "../../../functions";
 
 interface CurrencyInputPanelProps {
-  id: string
-  error?: string
-  className?: string
-  topAdornment?: ReactNode
-  bottomAdornment?: ReactNode
-  selectComponent?: ReactNode
-  inputComponent?: ReactNode
+  id: string;
+  error?: string;
+  className?: string;
+  topAdornment?: ReactNode;
+  bottomAdornment?: ReactNode;
+  selectComponent?: ReactNode;
+  inputComponent?: ReactNode;
 }
 
 export default function CurrencyInputPanel({
   id,
-  error = '',
-  className = '',
+  error = "",
+  className = "",
   topAdornment = null,
   bottomAdornment = null,
   selectComponent = null,
@@ -24,26 +24,27 @@ export default function CurrencyInputPanel({
 }: CurrencyInputPanelProps) {
   return (
     <div id={id}>
-      {topAdornment && topAdornment}
+      <>{topAdornment && topAdornment}</>
       <div
         className={classNames(
-          'p-5 bg-dark-800 flex flex-col justify-between space-y-3 sm:space-y-0 sm:flex-row',
+          "p-5 bg-dark-800 flex flex-col justify-between space-y-3 sm:space-y-0 sm:flex-row",
           className
         )}
       >
-        <div className={classNames('w-full', inputComponent ? 'sm:w-2/5' : '')}>{selectComponent}</div>
-        {inputComponent && inputComponent}
+        <div className={classNames("w-full", inputComponent ? "sm:w-2/5" : "")}>
+          <>{selectComponent}</>
+        </div>
+        <>{inputComponent && inputComponent}</>
       </div>
-      {bottomAdornment && bottomAdornment}
-
+      <> {bottomAdornment && bottomAdornment}</>
       {error && (
-        <div className="p-3 flex justify-center items-center gap-2">
-          <span className="text-red flex items-center">
+        <div className="flex items-center justify-center gap-2 p-3">
+          <span className="flex items-center text-red">
             <ExclamationIcon width={20} height={20} />
           </span>
-          <span className="text-high-emphesis font-bold text-sm">{error}</span>
+          <span className="text-sm font-bold text-high-emphesis">{error}</span>
         </div>
       )}
     </div>
-  )
+  );
 }
