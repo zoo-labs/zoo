@@ -21,10 +21,6 @@ import { useLingui } from "@lingui/react";
 import { useWalletModalToggle } from "../../state/application/hooks";
 import { UserIcon } from "@heroicons/react/solid";
 import { useActiveWeb3React } from "hooks";
-import { WalletConnect } from "@web3-react/walletconnect";
-import { WalletLink } from "@web3-react/walletlink";
-import { MetaMask } from "@web3-react/metamask";
-import { Network } from "@web3-react/network";
 import { getName } from "state/application/HooksProvider";
 const IconWrapper = styled.div<{ size?: number }>`
   display: flex;
