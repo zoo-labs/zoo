@@ -87,7 +87,7 @@ export default function Updater(): null {
       .map((hash) => {
         const { promise, cancel } = getReceipt(hash);
         promise
-          .then((receipt) => {
+          .then((receipt: any) => {
             if (receipt) {
               dispatch(
                 finalizeTransaction({

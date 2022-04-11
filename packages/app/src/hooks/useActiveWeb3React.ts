@@ -25,7 +25,7 @@ import { useWeb3React } from '@web3-react/core';
 
 export function useActiveWeb3React(): {
   connector: Connector;
-  library: BaseProvider | Web3Provider | undefined;
+  library: BaseProvider | Web3Provider | any;
   chainId: number | undefined;
   account: string | undefined;
   active: boolean;
