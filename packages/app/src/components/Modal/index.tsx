@@ -68,7 +68,7 @@ export default function Modal({
                         maxHeight: `${maxHeight}vh`,
                       }}
                     >
-                      {children}
+                      <>{children}</>
                     </div>
                   </div>
                 </div>
@@ -131,7 +131,7 @@ export default function Modal({
                         maxHeight: scrollable ? "auto" : `${maxHeight}vh`,
                       }}
                     >
-                      {children}
+                      <>{children}</>
                     </div>
                   </div>
                 </div>

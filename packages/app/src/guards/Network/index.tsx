@@ -18,6 +18,7 @@ import { useActiveWeb3React } from "../../hooks";
 
 interface NetworkGuardProps {
   networks: ChainId[];
+  children?;
 }
 
 const Component: FC<NetworkGuardProps> = ({ children, networks = [] }) => {
@@ -99,7 +100,7 @@ const Component: FC<NetworkGuardProps> = ({ children, networks = [] }) => {
           </div>
         </div>
       </HeadlessUIModal>
-      {children}
+      <>{children}</>
     </>
   );
 };

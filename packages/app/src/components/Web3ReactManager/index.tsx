@@ -81,7 +81,7 @@ export default function Web3ReactManager({
   return (
     <>
       <GnosisManagerNoSSR />
-      {children}
+      <>{children}</>
     </>
   );
 }

@@ -135,7 +135,7 @@ const InariButton: FC<InariButtonProps> = ({ children, ...rest }) => {
       color={pending ? "gray" : "gradient"}
       onClick={onExecute}
     >
-      {children}
+      <>{children}</>
     </Button>
   );
 };

@@ -1,34 +1,34 @@
-import { AxisBottom, AxisLeft, AxisScale } from '@visx/axis'
-import { GradientTealBlue, LinearGradient } from '@visx/gradient'
+import { AxisBottom, AxisLeft, AxisScale } from "@visx/axis";
+import { GradientTealBlue, LinearGradient } from "@visx/gradient";
 
-import { Group } from '@visx/group'
-import { LinePath } from '@visx/shape'
-import React from 'react'
-import { curveNatural } from '@visx/curve'
-import millify from 'millify'
+import { Group } from "@visx/group";
+import { LinePath } from "@visx/shape";
+import React from "react";
+import { curveNatural } from "@visx/curve";
+import millify from "millify";
 
 // Initialize some variables
-const axisColor = 'currentColor'
+const axisColor = "currentColor";
 
 const axisBottomTickLabelProps = {
-  textAnchor: 'middle' as 'middle',
-  fontFamily: 'Arial',
+  textAnchor: "middle" as "middle",
+  fontFamily: "Arial",
   fontSize: 10,
   fill: axisColor,
-}
+};
 
 const axisLeftTickLabelProps = {
-  dx: '-0.25em',
-  dy: '0.25em',
-  fontFamily: 'Arial',
+  dx: "-0.25em",
+  dy: "0.25em",
+  fontFamily: "Arial",
   fontSize: 10,
-  textAnchor: 'end' as 'end',
+  textAnchor: "end" as "end",
   fill: axisColor,
-}
+};
 
 // accessors
-const getX = (d) => new Date(d.date)
-const getY = (d) => Number(d.value)
+const getX = (d) => new Date(d.date);
+const getY = (d) => Number(d.value);
 
 export default function CurveChart({
   data,
@@ -53,7 +53,7 @@ export default function CurveChart({
   markerStart = undefined,
   markerEnd = undefined,
 }) {
-  if (width < 10) return null
+  if (width < 10) return null;
   return (
     <Group left={left || margin.left} top={top || margin.top}>
       <LinePath
@@ -89,7 +89,7 @@ export default function CurveChart({
           tickLabelProps={() => axisLeftTickLabelProps}
         />
       )}
-      {children}
+      <>{children}</>
     </Group>
-  )
+  );
 }
