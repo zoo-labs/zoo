@@ -25,6 +25,7 @@ import { WalletConnect } from "@web3-react/walletconnect";
 import { WalletLink } from "@web3-react/walletlink";
 import { MetaMask } from "@web3-react/metamask";
 import { Network } from "@web3-react/network";
+import { getName } from "state/application/HooksProvider";
 const IconWrapper = styled.div<{ size?: number }>`
   display: flex;
   flex-flow: column nowrap;
@@ -50,13 +51,6 @@ const SOCK = (
     🧦
   </span>
 );
-function getName(connector: Connector) {
-  if (connector instanceof MetaMask) return "MetaMask";
-  if (connector instanceof WalletConnect) return "WalletConnect";
-  if (connector instanceof WalletLink) return "WalletLink";
-  if (connector instanceof Network) return "Network";
-  return "Unknown";
-}
 
 // eslint-disable-next-line react/prop-types
 function StatusIcon({ connector }: { connector: Connector }) {
@@ -96,7 +90,7 @@ function StatusIcon({ connector }: { connector: Connector }) {
         />
       </IconWrapper>
     );
-  } else if (name === "WalletLink") {
+  } else if (name === "Coinbase Wallet") {
     return (
       <IconWrapper size={16}>
         <Image
