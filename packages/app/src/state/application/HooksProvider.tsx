@@ -1,33 +1,46 @@
 // HooksProvider.tsx
-import { getPriorityConnector } from "@web3-react/core";
-import { FC, ReactElement, useEffect, useState } from "react";
 import { hooks as metaMaskHooks, metaMask } from "connectors/metaMask";
 import { hooks as networkHooks, network } from "connectors/network";
 import {
   hooks as walletConnectHooks,
   walletConnect,
 } from "connectors/walletConnect";
-import { hooks as walletLinkHooks, walletLink } from "connectors/walletLink";
-import { setPriorityConnector } from "./actions";
-import { useAppDispatch } from "state/hooks";
+import { CoinbaseWallet } from "@web3-react/coinbase-wallet";
+import {
+  useWeb3React,
+  Web3ReactHooks,
+  Web3ReactProvider,
+} from "@web3-react/core";
+import { MetaMask } from "@web3-react/metamask";
+import { Network } from "@web3-react/network";
+import type { Connector } from "@web3-react/types";
+import { WalletConnect } from "@web3-react/walletconnect";
+import {
+  coinbaseWallet,
+  hooks as coinbaseWalletHooks,
+} from "connectors/coinbaseWallet";
+
+export function getName(connector: Connector) {
+  if (connector instanceof MetaMask) return "MetaMask";
+  if (connector instanceof WalletConnect) return "WalletConnect";
+  if (connector instanceof CoinbaseWallet) return "Coinbase Wallet";
+  if (connector instanceof Network) return "Network";
+  return "Unknown";
+}
+const connectors: [
+  MetaMask | WalletConnect | CoinbaseWallet | Network,
+  Web3ReactHooks
+][] = [
+  [metaMask, metaMaskHooks],
+  [walletConnect, walletConnectHooks],
+  [coinbaseWallet, coinbaseWalletHooks],
+  [network, networkHooks],
+];
 
 const HooksProvider = ({ children }: { children: React.ReactNode }) => {
-  const dispatch = useAppDispatch();
-  const [isReady, setReady] = useState<boolean>(false);
-
-  const priorityConnector = getPriorityConnector(
-    [metaMask, metaMaskHooks],
-    [walletConnect, walletConnectHooks],
-    [walletLink, walletLinkHooks],
-    [network, networkHooks]
+  return (
+    <Web3ReactProvider connectors={connectors}>{children}</Web3ReactProvider>
   );
-
-  useEffect(() => {
-    dispatch(setPriorityConnector(priorityConnector));
-    setReady(true);
-  }, [dispatch, priorityConnector]);
-
-  return isReady ? (children as ReactElement) : null;
 };
 
 export default HooksProvider;
