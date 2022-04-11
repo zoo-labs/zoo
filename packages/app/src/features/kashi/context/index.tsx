@@ -611,7 +611,7 @@ export function KashiProvider({ children }) {
         dispatch,
       }}
     >
-      {children}
+      <>{children}</>
     </KashiContext.Provider>
   );
 }
