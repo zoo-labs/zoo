@@ -13,8 +13,8 @@
   "private": true,
   "scripts": {
     "build": "yarn build:all",
-    "build:app": "yarn workspace @zoolabs/app build",
     "build:all": "yarn build:sdk && yarn build:app",
+    "build:app": "yarn workspace @zoolabs/app build",
     "build:lab": "yarn workspace @zoolabs/lab build",
     "build:sdk": "yarn workspace @zoolabs/sdk build",
     "clean": "rm -rf packages/app/build && rm -rf packages/contracts/artifacts && rm -rf packages/contracts/cache && rm -rf packages/contracts/types",

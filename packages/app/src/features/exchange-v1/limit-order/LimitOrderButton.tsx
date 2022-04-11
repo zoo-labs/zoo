@@ -37,7 +37,7 @@ const LimitOrderButton: FC<LimitOrderButtonProps> = ({
   ...rest
 }) => {
   const { i18n } = useLingui();
-  const { account, chainId, library } = useActiveWeb3React();
+  const { account, chainId, library, connector } = useActiveWeb3React();
   const dispatch = useDispatch<AppDispatch>();
   const addPopup = useAddPopup();
   const toggleWalletModal = useWalletModalToggle();

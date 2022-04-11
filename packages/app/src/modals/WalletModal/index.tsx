@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { SUPPORTED_WALLETS, injected } from "../../config/wallets";
-import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
-import {
-  useModalOpen,
-  useWalletModalToggle,
-} from "../../state/application/hooks";
 
-import { AbstractConnector } from "@web3-react/abstract-connector";
+import { SUPPORTED_WALLETS, injected } from "../../config/wallets";
+import { useModalOpen, useWalletModalToggle } from "state/application/hooks";
+import { Network } from "@web3-react/network";
+import { WalletConnect } from "@web3-react/walletconnect";
 import AccountDetails from "../../components/AccountDetails";
 import { ApplicationModal } from "../../state/application/actions";
 import { ButtonError } from "../../components/Button";
@@ -22,6 +19,10 @@ import { isMobile } from "react-device-detect";
 import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 import usePrevious from "../../hooks/usePrevious";
+import { useActiveWeb3React } from "hooks";
+import { AbstractConnector } from "@web3-react/abstract-connector";
+import { getAddChainParameters } from "config/chains";
+import { metaMask } from "connectors/metaMask";
 
 const WALLET_VIEWS = {
   OPTIONS: "options",
@@ -41,8 +42,8 @@ export default function WalletModal({
 }) {
   // console.log({ ENSName })
   // important that these are destructed from the account-specific web3-react context
-  const { active, account, connector, activate, error, deactivate } =
-    useWeb3React();
+  const { chainId, account, accounts, active, isActivating, connector, error } =
+    useActiveWeb3React();
 
   const { i18n } = useLingui();
 
@@ -96,79 +97,138 @@ export default function WalletModal({
     connectorPrevious,
   ]);
 
-  const tryActivation = async (
-    connector:
-      | (() => Promise<AbstractConnector>)
-      | AbstractConnector
-      | undefined
-  ) => {
-    let name = "";
-    let conn = typeof connector === "function" ? await connector() : connector;
+  // const tryActivation = async (
+  //   connector:
+  //     | (() => Promise<AbstractConnector>)
+  //     | AbstractConnector
+  //     | undefined
+  // ) => {
+  //   let name = "";
+  //   let conn = typeof connector === "function" ? await connector() : connector;
 
-    Object.keys(SUPPORTED_WALLETS).map((key) => {
-      if (connector === SUPPORTED_WALLETS[key].connector) {
-        return (name = SUPPORTED_WALLETS[key].name);
-      }
-      return true;
-    });
-    // log selected wallet
-    ReactGA.event({
-      category: "Wallet",
-      action: "Change Wallet",
-      label: name,
-    });
-    setPendingWallet(conn); // set wallet for pending view
-    setWalletView(WALLET_VIEWS.PENDING);
+  //   Object.keys(SUPPORTED_WALLETS).map((key) => {
+  //     if (connector === SUPPORTED_WALLETS[key].connector) {
+  //       return (name = SUPPORTED_WALLETS[key].name);
+  //     }
+  //     return true;
+  //   });
+  //   // log selected wallet
+  //   ReactGA.event({
+  //     category: "Wallet",
+  //     action: "Change Wallet",
+  //     label: name,
+  //   });
+  //   setPendingWallet(conn); // set wallet for pending view
+  //   setWalletView(WALLET_VIEWS.PENDING);
 
-    // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
-    if (
-      conn instanceof WalletConnectConnector &&
-      conn.walletConnectProvider?.wc?.uri
-    ) {
-      conn.walletConnectProvider = undefined;
-    }
+  //   // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
+  //   if (
+  //     conn instanceof WalletConnectConnector &&
+  //     conn.walletConnectProvider?.wc?.uri
+  //   ) {
+  //     conn.walletConnectProvider = undefined;
+  //   }
 
-    conn &&
-      activate(conn, undefined, true).catch((error) => {
-        if (error instanceof UnsupportedChainIdError) {
-          activate(conn); // a little janky...can't use setError because the connector isn't set
-        } else {
-          setPendingError(true);
-        }
-      });
-  };
+  //   conn &&
+  //     activate(conn, undefined, true).catch((error) => {
+  //       if (error instanceof UnsupportedChainIdError) {
+  //         activate(conn); // a little janky...can't use setError because the connector isn't set
+  //       } else {
+  //         setPendingError(true);
+  //       }
+  //     });
+  // };
 
   // close wallet modal if fortmatic modal is active
-  useEffect(() => {
-    if (connector?.constructor?.name === "FormaticConnector") {
-      connector.on(OVERLAY_READY, () => {
-        toggleWalletModal();
-      });
-    }
-  }, [toggleWalletModal, connector]);
+  // useEffect(() => {
+  //   if (connector?.constructor?.name === "FormaticConnector") {
+  //     connector.on(OVERLAY_READY, () => {
+  //       toggleWalletModal();
+  //     });
+  //   }
+  // }, [toggleWalletModal, connector]);
 
   // get wallets user can switch too, depending on device/browser
   function getOptions() {
     const isMetamask = window.ethereum && window.ethereum.isMetaMask;
     return Object.keys(SUPPORTED_WALLETS).map((key) => {
       const option = SUPPORTED_WALLETS[key];
+      const isNetwork = option.connector instanceof Network;
 
       // check for mobile options
-      if (isMobile) {
+      if (isMobile && option.mobile) {
         // disable portis on mobile for now
         if (option.name === "Portis") {
           return null;
         }
-
-        if (!window.web3 && !window.ethereum && option.mobile) {
+        console.log("here", window.web3, window.ethereum, option);
+        if (!window.web3 && !window.ethereum) {
+          if (option.name === "MetaMask") {
+            return (
+              <Option
+                id={`connect-${key}`}
+                key={key}
+                color={"#E8831D"}
+                header={"Install Metamask"}
+                subheader={null}
+                link={"https://metamask.io/"}
+                icon="/images/wallets/metamask.png"
+              />
+            );
+          } else {
+            return (
+              <Option
+                onClick={
+                  isActivating
+                    ? () => console.log("is activating")
+                    : () => {
+                        console.log("clicked me 1", option.connector);
+                        option.connector instanceof WalletConnect ||
+                        option.connector instanceof Network
+                          ? option.connector.activate(
+                              chainId === -1 ? undefined : chainId
+                            )
+                          : option.connector.activate(
+                              chainId === -1
+                                ? undefined
+                                : getAddChainParameters(chainId)
+                            );
+                      }
+                }
+                id={`connect-${key}`}
+                key={key}
+                active={option.connector && option.connector === true}
+                color={option.color}
+                link={option.href}
+                header={option.name}
+                subheader={null}
+                icon={"/images/wallets/" + option.iconName}
+              />
+            );
+          }
+        } else {
           return (
             <Option
-              onClick={() => {
-                tryActivation(option.connector);
-              }}
+              onClick={
+                isActivating
+                  ? () => console.log("is activating")
+                  : () => {
+                      console.log("clicked me 1", option.connector);
+                      option.connector instanceof WalletConnect ||
+                      option.connector instanceof Network
+                        ? option.connector.activate(
+                            chainId === -1 ? undefined : chainId
+                          )
+                        : option.connector.activate(
+                            chainId === -1
+                              ? undefined
+                              : getAddChainParameters(chainId)
+                          );
+                    }
+              }
               id={`connect-${key}`}
               key={key}
-              active={option.connector && option.connector === connector}
+              active={option.connector && option.connector === true}
               color={option.color}
               link={option.href}
               header={option.name}
@@ -181,7 +241,7 @@ export default function WalletModal({
       }
 
       // overwrite injected when needed
-      if (option.connector === injected) {
+      if (option.connector === injected || option.connector === metaMask) {
         // don't show injected if there's no injected provider
         if (!(window.web3 || window.ethereum)) {
           if (option.name === "MetaMask") {
@@ -197,6 +257,7 @@ export default function WalletModal({
               />
             );
           } else {
+            console.log("hereeeee o");
             return null; // dont want to return install twice
           }
         }
@@ -209,20 +270,37 @@ export default function WalletModal({
           return null;
         }
       }
-
       // return rest of options
       return (
         !isMobile &&
         !option.mobileOnly && (
           <Option
             id={`connect-${key}`}
-            onClick={() => {
-              option.connector === connector
-                ? setWalletView(WALLET_VIEWS.ACCOUNT)
-                : !option.href && tryActivation(option.connector);
-            }}
+            onClick={
+              isActivating
+                ? () => console.log("is activatinggggg")
+                : () => {
+                    console.log("clicked me 2", option.connector);
+                    console.log(
+                      "connector_instanceof",
+                      option.connector instanceof WalletConnect
+                    );
+
+                    option.connector instanceof WalletConnect ||
+                    option.connector instanceof Network
+                      ? (console.log("clicked me oksndvvdjn", option.connector),
+                        option.connector.activate(
+                          chainId === -1 ? undefined : chainId
+                        ))
+                      : option.connector.activate(
+                          chainId === -1
+                            ? undefined
+                            : getAddChainParameters(chainId)
+                        );
+                  }
+            }
             key={key}
-            active={option.connector === connector}
+            active={option.connector === true}
             color={option.color}
             link={option.href}
             header={option.name}
@@ -239,23 +317,31 @@ export default function WalletModal({
       return (
         <div>
           <ModalHeader
-            title={
-              error instanceof UnsupportedChainIdError
-                ? i18n._(t`Wrong Network`)
-                : i18n._(t`Error connecting`)
-            }
+            // title={
+            //   error instanceof UnsupportedChainIdError
+            //     ? i18n._(t`Wrong Network`)
+            //     : i18n._(t`Error connecting`)
+            // }
+            title="Select a Wallet"
             onClose={toggleWalletModal}
           />
           <div>
-            {error instanceof UnsupportedChainIdError ? (
+            {/* {error instanceof UnsupportedChainIdError ? (
               <h5>
                 {i18n._(t`Please connect to the appropriate Ethereum network.`)}
               </h5>
             ) : (
               i18n._(t`Error connecting. Try refreshing the page.`)
-            )}
+            )} */}
             <div style={{ marginTop: "1rem" }} />
-            <ButtonError error={true} size="sm" onClick={deactivate}>
+            <ButtonError
+              error={true}
+              size="sm"
+              onClick={() => {
+                toggleWalletModal();
+                connector.deactivate();
+              }}
+            >
               {i18n._(t`Disconnect`)}
             </ButtonError>
           </div>
@@ -281,12 +367,13 @@ export default function WalletModal({
         />
         <div className="flex flex-col space-y-6">
           {walletView === WALLET_VIEWS.PENDING ? (
-            <PendingView
-              connector={pendingWallet}
-              error={pendingError}
-              setPendingError={setPendingError}
-              tryActivation={tryActivation}
-            />
+            // <PendingView
+            //   connector={pendingWallet}
+            //   error={pendingError}
+            //   setPendingError={setPendingError}
+            //   tryActivation={tryActivation}
+            // /
+            <></>
           ) : (
             <div className="flex flex-col space-y-5 overflow-y-auto">
               {getOptions()}

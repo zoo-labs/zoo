@@ -152,7 +152,7 @@ const CurrencyLogo: FunctionComponent<CurrencyLogoProps> = ({
       height={size}
       alt={currency?.symbol}
       className={className}
-      {...rest}
+      // {...rest}
     />
   );
 };
