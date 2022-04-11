@@ -1,18 +1,24 @@
-import { FC } from 'react'
-import React, { Fragment } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
+import { FC } from "react";
+import React, { Fragment } from "react";
+import { Dialog, Transition } from "@headlessui/react";
 
 interface ModalProps {
-  isOpen: boolean
-  onDismiss: () => void
-  children?: React.ReactNode
+  isOpen: boolean;
+  onDismiss: () => void;
+  children?: React.ReactNode;
 }
 
 const HeadlessUIModal: FC<ModalProps> = ({ isOpen, onDismiss, children }) => {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
-      <Dialog as="div" static className="fixed z-10 inset-0 overflow-y-auto" open={isOpen} onClose={onDismiss}>
-        <div className="relative flex items-center justify-center min-h-screen text-center block">
+      <Dialog
+        as="div"
+        static
+        className="fixed inset-0 z-10 overflow-y-auto"
+        open={isOpen}
+        onClose={onDismiss}
+      >
+        <div className="relative flex items-center justify-center block min-h-screen text-center">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-100"
@@ -29,7 +35,10 @@ const HeadlessUIModal: FC<ModalProps> = ({ isOpen, onDismiss, children }) => {
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
-          <span className="inline-block align-middle h-screen" aria-hidden="true">
+          <span
+            className="inline-block h-screen align-middle"
+            aria-hidden="true"
+          >
             &#8203;
           </span>
 
@@ -42,14 +51,14 @@ const HeadlessUIModal: FC<ModalProps> = ({ isOpen, onDismiss, children }) => {
             leaveFrom="opacity-40"
             leaveTo="opacity-0"
           >
-            <div className="inline-block align-bottom rounded-lg text-left overflow-hidden transform  sm:my-8 sm:align-middle max-w-sm md:max-w-3xl sm:w-full p-4 sm:p-6">
-              {children}
+            <div className="inline-block max-w-sm p-4 overflow-hidden text-left align-bottom transform rounded-lg sm:my-8 sm:align-middle md:max-w-3xl sm:w-full sm:p-6">
+              <>{children}</>
             </div>
           </Transition.Child>
         </div>
       </Dialog>
     </Transition.Root>
-  )
-}
+  );
+};
 
-export default HeadlessUIModal
+export default HeadlessUIModal;

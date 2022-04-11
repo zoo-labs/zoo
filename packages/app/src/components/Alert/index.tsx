@@ -64,7 +64,7 @@ export const TYPE = {
 
 export interface AlertProps {
   title?: string;
-  message?: string | React.ReactChild | React.ReactChild[];
+  message?: string | React.ReactChild | React.ReactChild[] | JSX.Element[];
   type?: "warning" | "error" | "information";
   showIcon?: boolean;
   dismissable?: boolean;
@@ -98,7 +98,9 @@ export default function Alert({
       <div className="flex items-center">
         {showIcon && <div className="flex-shrink-0">{icon}</div>}
         <div className={!showIcon ? "ml-0" : "ml-3"}>
-          <p className="text-base">{message}</p>
+          <p className="text-base">
+            <>{message}</>
+          </p>
         </div>
       </div>
       {dismissable && (

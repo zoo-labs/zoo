@@ -38,7 +38,7 @@ const CopyHelper: FC<CopyHelperProps> = ({ className, toCopy, children }) => {
 
       {!isCopied && (
         <>
-          {children}
+          <>{children}</>
           <ClipboardCopyIcon width={16} height={16} />
         </>
       )}
