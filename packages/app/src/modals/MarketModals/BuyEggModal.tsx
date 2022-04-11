@@ -1,11 +1,11 @@
 import { CircularProgress } from "@mui/material";
-import { useWeb3React } from "@web3-react/core";
 import BigNumber from "bignumber.js";
 import CloseIcon from "components/CloseIcon";
 import CurrencySwitch from "components/CurrencySwitch";
 import Modal from "components/Modal";
 import BidModalHeader from "components/ModalHeader/BidModalHeader";
 import { formatError, numberWithCommas, wait } from "functions";
+import { useActiveWeb3React } from "hooks";
 import { useZooKeeper, useZooToken, useDrop } from "hooks/useContract";
 import useToast from "hooks/useToast";
 import { isEmpty } from "lodash";
@@ -41,7 +41,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   );
   const [zooBnbPrice, setZooBnbPrice] = useState(0);
   const [eggPrice, setEggPrice] = useState(0);
-  const { account, library } = useWeb3React();
+  const { account, library } = useActiveWeb3React();
   const userEthBalance = useETHBalances(account ? [account] : [])?.[
     account ?? ""
   ];
@@ -153,7 +153,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
           .send({
             from: account,
             gasPrice: gasPrice,
-            value: library.utils.toWei(eggPriceBNB),
+            value: web3.utils.toWei(eggPriceBNB),
           })
           .then((res) => {
             toastClear();
@@ -223,11 +223,11 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
         className="absolute w-full p-6 mb-6"
         showAccount
       />
-      <div className="flex flex-col px-4 lg:flex-row lg:items-center h-full max-w-7xl mx-auto overflow-y-auto">
+      <div className="flex flex-col h-full px-4 mx-auto overflow-y-auto lg:flex-row lg:items-center max-w-7xl">
         <div className="realtive lg:basis-1/2">
           <div className="mt-20 lg:mt-0">
             {/* <div className="flex flex-col w-full mb-6">
-              <div className="text-sm font-semibold text-gray-500 mb-2">
+              <div className="mb-2 text-sm font-semibold text-gray-500">
                 BUY EGGS
               </div>
               <div className="text-2xl font-bold lg:text-4xl">
@@ -242,7 +242,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
               </div>
             </div> */}
             <div className="w-full my-8 ">
-              <div className="text-sm font-semibold text-gray-500 mb-2">
+              <div className="mb-2 text-sm font-semibold text-gray-500">
                 BUY EGGS
               </div>
               <div className="text-2xl font-bold lg:text-4xl">
@@ -289,7 +289,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                 </div> */}
             </div>
             {error && (
-              <div className="mb-4 text-base text-center font-semibold text-red">
+              <div className="mb-4 text-base font-semibold text-center text-red">
                 {error}
               </div>
             )}
