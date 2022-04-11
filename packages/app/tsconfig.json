@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "downlevelIteration": true,
-    "baseUrl": "src",
     "target": "es5",
     "lib": [
       "dom",
@@ -19,7 +17,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "downlevelIteration": true,
+    "incremental": true,
+    "baseUrl": "src"
   },
   "include": [
     "next-env.d.ts",
