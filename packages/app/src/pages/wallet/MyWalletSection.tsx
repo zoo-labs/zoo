@@ -9,7 +9,6 @@ import { AppState } from "state";
 
 import TransactionHistory from "./TransactionHistorySection";
 import { handleFunds } from "utils/handleFunds";
-import { useWeb3React } from "@web3-react/core";
 import { useBuyZoo } from "state/zoo/hooks";
 
 import { useLingui } from "@lingui/react";
@@ -17,9 +16,10 @@ import Web3Status from "../../components/Web3Status";
 import { useETHBalances } from "../../state/wallet/hooks";
 
 import { fadeInOnScroll } from "animation";
+import { useActiveWeb3React } from "hooks";
 
 const MyWalletSection = () => {
-  const { account, library, chainId } = useWeb3React();
+  const { account, library, chainId } = useActiveWeb3React();
   const buyZoo = useBuyZoo();
   const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
     (state) => state.zoo.zooBalance
@@ -38,16 +38,20 @@ const MyWalletSection = () => {
   return (
     <div>
       <div className="">
-        <div className="max-w-7xl mx-auto py-20 px-4">
+        <div className="px-4 py-20 mx-auto max-w-7xl">
           <div
             className="flex flex-col items-center justify-center text-center "
             ref={comingSoonRef}
           >
             {!account ? (
-              <h1 className="text-4xl lg:text-5xl font-bold mb-8">
+              <h1 className="mb-8 text-4xl font-bold lg:text-5xl">
                 Wallet Not Connected
               </h1>
-            ) : <h1 className="text-4xl lg:text-5xl font-bold mb-8">Wallet Connected</h1>}
+            ) : (
+              <h1 className="mb-8 text-4xl font-bold lg:text-5xl">
+                Wallet Connected
+              </h1>
+            )}
             <div className="w-auto flex items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
               {account && chainId && userEthBalance && (
                 <>
@@ -59,13 +63,13 @@ const MyWalletSection = () => {
               )}
               <Web3Status
                 title={`Connect Wallet`}
-                className="font-bold bg-black  underline text-green"
+                className="font-bold underline bg-black text-green"
               />
             </div>
             {/* <p>
               Connect wallet{" "}
               <Link href="/">
-                <a className="text-green underline">home page</a>
+                <a className="underline text-green">home page</a>
               </Link>
             </p> */}
           </div>

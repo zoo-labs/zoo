@@ -6,7 +6,7 @@ import {
   removePopup,
   setKashiApprovalPending,
   setOpenModal,
-  updateBlockNumber,
+  updateBlockNumber, setPriorityConnector
 } from './actions'
 
 type PopupList = Array<{
@@ -20,7 +20,9 @@ export interface ApplicationState {
   readonly blockNumber: { readonly [chainId: number]: number }
   readonly popupList: PopupList
   readonly openModal: ApplicationModal | null
-  kashiApprovalPending: string
+  kashiApprovalPending: string;
+  priorityConnector: any
+
 }
 
 const initialState: ApplicationState = {
@@ -28,6 +30,8 @@ const initialState: ApplicationState = {
   popupList: [],
   openModal: null,
   kashiApprovalPending: '',
+  priorityConnector: null
+
 }
 
 export default createReducer(initialState, (builder) =>
@@ -62,5 +66,7 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(setKashiApprovalPending, (state, action) => {
       state.kashiApprovalPending = action.payload
+    }).addCase(setPriorityConnector, (state, action) => {
+      state.priorityConnector = action.payload
     })
 )
