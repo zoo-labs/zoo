@@ -1,6 +1,6 @@
 import React from "react";
 import { FaHeart, FaMoneyBill, FaMoneyBillWave } from "react-icons/fa";
-import { useHistory } from "react-router";
+import { useRouter } from "next/router";
 import { accountEllipsis, getEmoji } from "functions";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -16,13 +16,13 @@ interface IndexProps {
 }
 
 const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
-  const history = useHistory();
+  const router = useRouter();
   console.log("DATAUM", datum);
   return (
     <div className="flex flex-col ">
-      <div className="bg-nft-gradient relative overflow-hidden rounded parent">
-      <div className="h-[350px] w-[300px]">
-        <ModelViewer usdz={datum.usdz} glb={datum.glb}></ModelViewer>
+      <div className="relative overflow-hidden rounded bg-nft-gradient parent">
+        <div className="h-[350px] w-[300px]">
+          <ModelViewer usdz={datum.usdz} glb={datum.glb}></ModelViewer>
         </div>
         {/* <img
           src={`${datum?.image}`}
@@ -55,8 +55,11 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
 
       <a
         onClick={() =>
-          history.push(`/feed/${datum.owner}/${datum.tokenID}`, {
-            item: datum,
+          router.push({
+            pathname: `/feed/${datum.owner}/${datum.tokenID}`,
+            query: {
+              item: datum,
+            },
           })
         }
         className="flex flex-col flex-grow py-4 no-underline cursor-pointer"
