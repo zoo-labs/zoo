@@ -1,6 +1,6 @@
-import Footer from '../../components/Footer'
-import Header from '../../components/Header'
-import Popups from '../../components/Popups'
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import Popups from "../../components/Popups";
 
 const Layout = ({ children }) => {
   return (
@@ -9,14 +9,14 @@ const Layout = ({ children }) => {
       <Header banner={false} />
       <main
         className="flex flex-col items-center justify-start flex-grow w-full h-full"
-        style={{ height: 'max-content' }}
+        style={{ height: "max-content" }}
       >
-        {children}
+        <>{children}</>
       </main>
       <Popups />
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
