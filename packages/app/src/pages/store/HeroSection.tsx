@@ -15,11 +15,16 @@ const HeroSection = () => {
               />
             </div>
           </div>
-          <div>
+          <div className="flex">
             <Link href="/cart">
-              <a className="bg-[#1f1f1f] py-4 px-6 inline-block">Cart(0)</a>
+              <a className="bg-[#1f1f1f] py-4 px-6 flex gap-1">
+                <img src="/img/cart.png" alt="" />
+                Cart(0)
+              </a>
             </Link>
-            <button className="bg-[#393939] py-4 px-6 border-none">Checkout</button>
+            <Link href="/info">
+              <a className="bg-[#393939] py-4 px-6 border-none">Checkout</a>
+            </Link>
           </div>
         </div>
       </div>

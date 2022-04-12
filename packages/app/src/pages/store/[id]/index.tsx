@@ -1,5 +1,6 @@
 import { useCart } from "state/store/hooks";
 import { CartItem } from "types/cart";
+import Link from "next/link";
 
 const ShopDetails = () => {
   const [addToCart] = useCart();
