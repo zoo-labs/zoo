@@ -7,15 +7,14 @@ import Tiger from "../../../public/gifs/siberian-tiger.gif";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useBuyZoo } from "state/zoo/hooks";
-import { useWeb3React } from "@web3-react/core";
-import { useFaucet } from "hooks";
+import { useActiveWeb3React, useFaucet } from "hooks";
 import { getZooBalance } from "state/zoo/actions";
 import { handleFunds } from "utils/handleFunds";
 import { useGif } from "context/GifContext";
 import { createRequire } from "module";
 
 const HeroSection = ({ animal3d }) => {
-  const { account, library, chainId } = useWeb3React();
+  const { account, library, chainId } = useActiveWeb3React();
   const buyZoo = useBuyZoo();
   const faucet = useFaucet();
 
@@ -31,7 +30,7 @@ const HeroSection = ({ animal3d }) => {
   // }, []);
 
   return (
-    <section className=" Hero  ">
+    <section className=" Hero">
       <div
         className="px-6 pt-16 pb-16 Hero__inner md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-between"
         // ref={heroContent}
@@ -63,7 +62,7 @@ const HeroSection = ({ animal3d }) => {
           </div>
         </div>
         <div
-          className="lg:mt-6  max-w-md Hero__image lg:max-w-xl lg:basis-1/2 flex justify-center bg-red-300"
+          className="flex justify-center max-w-md bg-red-300 lg:mt-6 Hero__image lg:max-w-xl lg:basis-1/2"
           // ref={heroImage}
         >
           <div className="w-[400px] h-[400px]">{animal3d}</div>

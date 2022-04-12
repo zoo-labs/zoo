@@ -45,3 +45,6 @@ export const addPopup = createAction<{
 }>('application/addPopup')
 export const removePopup = createAction<{ key: string }>('application/removePopup')
 export const setKashiApprovalPending = createAction<string>('application/setKashiApprovalPending')
+export const setPriorityConnector = createAction<any>(
+  "application/setPriorityConnector"
+);

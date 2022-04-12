@@ -23,6 +23,7 @@ import { useLingui } from "@lingui/react";
 import { useZoobalance } from "state/zoo/hooks";
 import Banner from "components/Banner";
 import MoonPayBtn from "components/Moonpaybtn/MoonpayBtn";
+import { metaMask } from "connectors/metaMask";
 // import { ChainId } from '../../config/networks'
 
 // import { ExternalLink, NavLink } from "./Link";
@@ -30,7 +31,7 @@ import MoonPayBtn from "components/Moonpaybtn/MoonpayBtn";
 
 function AppBar(props: { banner?: boolean }): JSX.Element {
   const { i18n } = useLingui();
-  const { account, chainId, library } = useActiveWeb3React();
+  const { account, chainId, library, connector } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
 
   const router = useRouter();
@@ -95,7 +96,18 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                       >
                         {i18n._(t`Chart`)}
                       </a>
-
+                      <NavLink href="/store">
+                        <a
+                          id={`store`}
+                          className={
+                            router.pathname == "/store"
+                              ? `${linkStyle} text-green text-bold`
+                              : `${linkStyle} text-white`
+                          }
+                        >
+                          {i18n._(t`Store`)}
+                        </a>
+                      </NavLink>
                       <Community />
 
                       {/* <NavLink href="/press">
@@ -196,8 +208,8 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                   <div className="flex items-center justify-between w-full space-x-2 sm:justify-end">
                     {chainId &&
                       // [ChainId.MAINNET].includes(chainId) &&
-                      library &&
-                      library.provider.isMetaMask && (
+                      connector &&
+                      connector === metaMask && (
                         <div className="hidden md:inline-flex">
                           <QuestionHelper
                             text={i18n._(t`Add ZOO to your MetaMask wallet`)}
@@ -213,9 +225,9 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                                 const tokenImage =
                                   window.location.origin + "/img/egg.png";
                                 if (
-                                  library &&
-                                  library.provider.isMetaMask &&
-                                  library.provider.request
+                                  connector &&
+                                  connector === metaMask &&
+                                  connector.provider.request
                                 ) {
                                   const params: any = {
                                     type: "ERC20",
@@ -226,7 +238,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                                       image: tokenImage,
                                     },
                                   };
-                                  library.provider
+                                  connector.provider
                                     .request({
                                       method: "wallet_watchAsset",
                                       params,
