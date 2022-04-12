@@ -1,8 +1,13 @@
 import React from "react";
 import { FaHeart, FaMoneyBill, FaMoneyBillWave } from "react-icons/fa";
-import { useHistory } from "react-router";
+import { useRouter } from "next/router";
 import { accountEllipsis, getEmoji } from "functions";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
+  ssr: false,
+});
 
 interface IndexProps {
   datum: any;
@@ -11,19 +16,29 @@ interface IndexProps {
 }
 
 const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
-  const history = useHistory();
+  const router = useRouter();
+  console.log("DATAUM", datum);
   return (
     <div className="flex flex-col ">
-      <div className="relative overflow-hidden rounded parent">
-        <Image
-          layout="fill"
-          src={`${datum.imageUrl || "/static/video/egg.gif"}`}
+      <div className="relative overflow-hidden rounded bg-nft-gradient parent">
+        <div className="h-[350px] w-[300px]">
+          <ModelViewer usdz={datum.usdz} glb={datum.glb}></ModelViewer>
+        </div>
+        {/* <img
+          src={`${datum?.image}`}
           className="w-full transition-transform duration-1000 "
           alt=""
-        />
+          style={{ objectFit: "contain" }}
+        /> */}
+        {/* <Image
+          layout="fill"
+          src={`/img/giraffe.png`}
+          className="w-full transition-transform duration-1000 "
+          alt=""
+        /> */}
         <div className="absolute top-0 left-0 invisible w-full h-full transition-all duration-300 rounded opacity-0 hover:visible hover:opacity-100">
           <div className="absolute px-2 py-1 text-xs font-bold uppercase rounded top-6 left-3 bg-primary ">
-            {datum.bloodline || (datum.basic ? "BASIC" : "HYBRID")}
+            {/* {datum.bloodline || (datum.basic ? "BASIC" : "HYBRID")} */}
           </div>
 
           {/* <div className='absolute flex items-center justify-center w-8 h-8 rounded-full cursor-pointer top-6 right-3 bg-dark-800'>
@@ -40,8 +55,11 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
 
       <a
         onClick={() =>
-          history.push(`/feed/${datum.owner}/${datum.tokenID}`, {
-            item: datum,
+          router.push({
+            pathname: `/feed/${datum.owner}/${datum.tokenID}`,
+            query: {
+              item: datum,
+            },
           })
         }
         className="flex flex-col flex-grow py-4 no-underline cursor-pointer"

@@ -192,7 +192,7 @@ export default function CurrencyInputPanel({
                     className="text-xs font-medium text-right cursor-pointer text-low-emphesis"
                   >
                     {renderBalance ? (
-                      renderBalance(selectedCurrencyBalance)
+                      <>{renderBalance(selectedCurrencyBalance)}</>
                     ) : (
                       <>
                         {i18n._(t`Balance:`)}{" "}
