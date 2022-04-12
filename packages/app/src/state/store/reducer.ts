@@ -1,20 +1,26 @@
 
 
 import { createReducer } from '@reduxjs/toolkit'
-import { addCartItem, getCartItems, removeCartItem } from './actions'
-import { CartItem } from 'types/item'
+import { addCartItem, getCartItems, getProducts, removeCartItem } from './actions'
+import { CartItem } from 'types/cart'
+import { Product } from 'types/product';
 
 
-export interface TransactionState {
-  CartItems: CartItem[]
+export interface StoreState {
+  CartItems: CartItem[];
+  Products: Product[]
 }
 
-export const initialState: TransactionState = {
+export const initialState: StoreState = {
   CartItems: [],
+  Products: []
 }
 
 export default createReducer(initialState, (builder) =>
   builder
+    .addCase(getProducts, (state, { payload: products }) => {
+      state.Products = products
+    })
     .addCase(getCartItems, (state, { payload: cartItems }) => {
       state.CartItems = cartItems
     })
