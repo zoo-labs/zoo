@@ -21,7 +21,7 @@ export interface ProductInterface {
 
 const ProductsSection = () => {
   const { Products } = useAppSelector((state) => state.store);
-
+  console.log("Products in section", Products);
   return (
     <div className="w-full mt-[64px]">
       <div className="px-4 mx-auto max-w-7xl">
@@ -38,23 +38,27 @@ const ProductsSection = () => {
       <div className="">
         <div className="max-w-7xl mx-auto px-4 my-[64px]">
           <div className="flex flex-wrap justify-between">
-            {Products.map((item: Product, index) => {
-              const { name, shortDescription, image, basePrice, _id } = item;
-              return (
-                <div key={index} className="mb-8 md:basis-1/3">
-                  <a href={`/store/${_id}`}>
-                    <>
-                      <img src={image} alt="" className="mb-4" />
-                      <div className="mb-4">
-                        <p>{name}</p>
-                        <p>{shortDescription}</p>
-                      </div>
-                      <p>${basePrice}</p>
-                    </>
-                  </a>
-                </div>
-              );
-            })}
+            {Products && Products.length > 0 ? (
+              Products.map((item: Product, index) => {
+                const { name, shortDescription, image, basePrice, id } = item;
+                return (
+                  <div key={index} className="mb-8 md:basis-1/3">
+                    <a href={`/store/${id}`}>
+                      <>
+                        <img src={image} alt="" className="mb-4" />
+                        <div className="mb-4">
+                          <p>{name}</p>
+                          <p>{shortDescription}</p>
+                        </div>
+                        <p>${basePrice}</p>
+                      </>
+                    </a>
+                  </div>
+                );
+              })
+            ) : (
+              <div>No products</div>
+            )}
           </div>
         </div>
       </div>
