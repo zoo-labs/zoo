@@ -8,10 +8,10 @@ export default function Community() {
     <div className="text-right relative flex flex-col justify-center">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex w-full px-2 text-base font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 mb-4 md:mb-0">
+          <Menu.Button className="inline-flex w-full px-2 text-base font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 mb-4 md:mb-0"  style={{letterSpacing: '2px'}}>
             Community
             <ChevronDownIcon
-              className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
+              className="w-5 h-5 ml-1 -mr-1 mt-[3px] text-white-200 hover:text-white-100"
               aria-hidden="true"
             />
           </Menu.Button>

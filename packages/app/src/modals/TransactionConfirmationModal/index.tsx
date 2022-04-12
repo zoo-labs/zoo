@@ -126,9 +126,11 @@ export const ConfirmationModalContent: FC<ConfirmationModelContentProps> = ({
 }) => {
   return (
     <div className="grid gap-4">
-      <ModalHeader title={title} onClose={onDismiss} />
-      {topContent()}
-      {bottomContent()}
+      <>
+        <ModalHeader title={title} onClose={onDismiss} />
+        {topContent()}
+        {bottomContent()}
+      </>
     </div>
   );
 };

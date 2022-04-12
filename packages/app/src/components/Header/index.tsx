@@ -23,6 +23,7 @@ import { useLingui } from "@lingui/react";
 import { useZoobalance } from "state/zoo/hooks";
 import Banner from "components/Banner";
 import MoonPayBtn from "components/Moonpaybtn/MoonpayBtn";
+import { metaMask } from "connectors/metaMask";
 // import { ChainId } from '../../config/networks'
 
 // import { ExternalLink, NavLink } from "./Link";
@@ -30,7 +31,7 @@ import MoonPayBtn from "components/Moonpaybtn/MoonpayBtn";
 
 function AppBar(props: { banner?: boolean }): JSX.Element {
   const { i18n } = useLingui();
-  const { account, chainId, library } = useActiveWeb3React();
+  const { account, chainId, library, connector } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
 
   const router = useRouter();
@@ -81,6 +82,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                               ? `${linkStyle} text-green text-bold`
                               : `${linkStyle} text-white`
                           }
+                          style={{ letterSpacing: "2px" }}
                         >
                           {i18n._(t`Marketplace`)}
                         </a>
@@ -92,6 +94,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                         rel="noreferrer"
                         id={`market-nav-link`}
                         className="p-2 text-baseline text-primary hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                        style={{ letterSpacing: "2px" }}
                       >
                         {i18n._(t`Chart`)}
                       </a>
@@ -103,6 +106,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                               ? `${linkStyle} text-green text-bold`
                               : `${linkStyle} text-white`
                           }
+                          style={{ letterSpacing: "2px" }}
                         >
                           {i18n._(t`Store`)}
                         </a>
@@ -207,8 +211,8 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                   <div className="flex items-center justify-between w-full space-x-2 sm:justify-end">
                     {chainId &&
                       // [ChainId.MAINNET].includes(chainId) &&
-                      library &&
-                      library.provider.isMetaMask && (
+                      connector &&
+                      connector === metaMask && (
                         <div className="hidden md:inline-flex">
                           <QuestionHelper
                             text={i18n._(t`Add ZOO to your MetaMask wallet`)}
@@ -224,9 +228,9 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                                 const tokenImage =
                                   window.location.origin + "/img/egg.png";
                                 if (
-                                  library &&
-                                  library.provider.isMetaMask &&
-                                  library.provider.request
+                                  connector &&
+                                  connector === metaMask &&
+                                  connector.provider.request
                                 ) {
                                   const params: any = {
                                     type: "ERC20",
@@ -237,7 +241,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                                       image: tokenImage,
                                     },
                                   };
-                                  library.provider
+                                  connector.provider
                                     .request({
                                       method: "wallet_watchAsset",
                                       params,
@@ -330,8 +334,10 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
               <div className="flex flex-col px-4 pt-2 pb-3 space-y-1">
                 <a
                   id={`marketplace`}
-                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap tracking-widest"
+                  // style={{letterSpacing: '2px'}}
                   href="/wallet"
+                  style={{ letterSpacing: "2px" }}
                 >
                   {i18n._(t`Marketplace`)}
                 </a>
@@ -342,8 +348,20 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                   href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
                   target="_blank"
                   rel="noreferrer"
+                  style={{ letterSpacing: "2px" }}
                 >
                   {i18n._(t`Chart`)}
+                </a>
+
+                <a
+                  id={`store`}
+                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  href="/store"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ letterSpacing: "2px" }}
+                >
+                  {i18n._(t`Store`)}
                 </a>
 
                 <Community />

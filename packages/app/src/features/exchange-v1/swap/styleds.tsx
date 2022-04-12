@@ -1,8 +1,8 @@
-import React, { ReactNode } from 'react'
-import styled, { css } from 'styled-components'
+import React, { ReactNode } from "react";
+import styled, { css } from "styled-components";
 
-import { AlertTriangle } from 'react-feather'
-import Slider from 'rc-slider'
+import { AlertTriangle } from "react-feather";
+import Slider from "rc-slider";
 
 export const ArrowWrapper = styled.div<{ clickable: boolean }>`
   padding: 2px;
@@ -16,19 +16,21 @@ export const ArrowWrapper = styled.div<{ clickable: boolean }>`
           }
         `
       : null}
-`
+`;
 
 export const BottomGrouping = styled.div`
   margin-top: 1rem;
-`
+`;
 
 export function SwapCallbackError({ error }: { error: ReactNode }) {
   return (
     <div className="flex items-center justify-center pt-6 text-red">
       <AlertTriangle size={16} />
-      <div className="ml-4 text-sm">{error}</div>
+      <div className="ml-4 text-sm">
+        <>{error}</>
+      </div>
     </div>
-  )
+  );
 }
 
 export const StyledSlider = styled(Slider)`
@@ -66,4 +68,4 @@ export const StyledSlider = styled(Slider)`
   .rc-slider-dot-active {
     border-color: #fa52a0;
   }
-`
+`;

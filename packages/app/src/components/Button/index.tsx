@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { classNames } from "../../functions";
 
 const SIZE = {
@@ -73,6 +73,7 @@ export interface ButtonProps
   size?: ButtonSize;
   variant?: ButtonVariant;
   ref?: React.Ref<HTMLButtonElement>;
+  children?: any;
 }
 
 function Button({
@@ -94,7 +95,7 @@ function Button({
       )}
       {...rest}
     >
-      {children}
+      <>{children}</>
     </button>
   );
 }

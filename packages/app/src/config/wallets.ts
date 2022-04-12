@@ -6,7 +6,7 @@ import RPC from './rpc'
 import { AVAILABLE_NETWORKS, SUPPORTED_NETWORKS } from './networks'
 import { hooks as metaMaskHooks, metaMask } from 'connectors/metaMask'
 import { hooks as walletConnectHooks, walletConnect } from 'connectors/walletConnect'
-import { hooks as walletLinkHooks, walletLink } from 'connectors/walletLink'
+import { coinbaseWallet } from 'connectors/coinbaseWallet'
 // export const network = new NetworkConnector({
 //   defaultChainId: 1,
 //   urls: RPC,
@@ -144,8 +144,8 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     href: null,
     color: '#4196FC',
   },
-  WALLET_LINK: {
-    connector: walletLink,
+  COINBASE: {
+    connector: coinbaseWallet,
     name: 'Coinbase Wallet',
     iconName: 'coinbase.svg',
     description: 'Use Coinbase Wallet app on mobile device',
