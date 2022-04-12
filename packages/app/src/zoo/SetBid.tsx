@@ -118,7 +118,7 @@ const SetBid = ({ tokenId, children }) => {
             You cannot withdraw a reservation once submitted.
           </p>
         )}
-        {children}
+        <>{children}</>
       </div>
     </div>
   );
