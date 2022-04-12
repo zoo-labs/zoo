@@ -47,7 +47,7 @@ const Banner: FC = () => {
             </div>
             {/* X Icon Div  */}
             <div className="absolute inset-y-0 right-0 flex items-center justify-center pt-1 pr-1 sm:pt-1 sm:pr-2 sm:items-start">
-              <button
+              {/* <button
                 type="button"
                 className="flex p-2 focus:outline-none"
                 onClick={() => setShowBanner(false)}
@@ -57,7 +57,7 @@ const Banner: FC = () => {
                   className="w-6 h-6 text-left text-white"
                   aria-hidden="true"
                 />
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
