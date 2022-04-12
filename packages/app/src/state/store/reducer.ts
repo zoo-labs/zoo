@@ -25,19 +25,19 @@ export default createReducer(initialState, (builder) =>
       state.CartItems = cartItems
     })
     .addCase(addCartItem, ({ CartItems }, { payload: cartItem }) => {
-      const { _id } = cartItem
-      if (CartItems[cartItem._id]) {
+      const { id } = cartItem
+      if (CartItems[cartItem.id]) {
         throw Error('Attempted to add existing cart Item.')
       }
-      CartItems[_id] = cartItem
+      CartItems[id] = cartItem
     })
     .addCase(removeCartItem, (state, { payload: cartItem }) => {
-      const { _id } = cartItem
-      if (!_id) {
+      const { id } = cartItem
+      if (!id) {
         return state;
       }
       const newCartItems = [...state.CartItems]
-      delete newCartItems[_id];
+      delete newCartItems[id];
       return {
         ...state,
         CartItems: { ...newCartItems },

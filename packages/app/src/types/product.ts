@@ -12,7 +12,7 @@ export interface Product {
     image: string;
     galleryImages: Array<string>;
     quantity: number;
-    _id: string;
+    id: string;
     status: string;
     createdAt: string;
 }

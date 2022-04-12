@@ -57,6 +57,7 @@ export function useAllProducts(): (
   callback?: (val: Array<Product>) => void
 ) => void {
   const dispatch = useDispatch();
+  console.log("getting products");
 
   return useCallback(async (startDate, endDate, noLimit, callback) => {
     const products: Array<Product> = [];
@@ -64,9 +65,10 @@ export function useAllProducts(): (
     const productsQuery = query(productsRef, orderBy("createdAt"), limit(100));
     const productsQuerySnapshot = await getDocs(productsQuery);
     productsQuerySnapshot.forEach((doc) => {
-      const data = doc.data() as Product;
+      const data = { ...doc.data(), id: doc.id } as Product;
       products.push(data);
     });
+    console.log("products", products);
     if (callback) {
       callback(products);
     } else {
