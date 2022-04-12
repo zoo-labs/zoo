@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const HeroSection = () => {
   return (
     <div className="flex justify-center">
@@ -14,8 +16,10 @@ const HeroSection = () => {
             </div>
           </div>
           <div>
-            <button className="bg-[#1f1f1f] py-4 px-6">Cart(0)</button>
-            <button className="bg-[#393939] py-4 px-6">Checkout</button>
+            <Link href="/cart">
+              <a className="bg-[#1f1f1f] py-4 px-6 inline-block">Cart(0)</a>
+            </Link>
+            <button className="bg-[#393939] py-4 px-6 border-none">Checkout</button>
           </div>
         </div>
       </div>
