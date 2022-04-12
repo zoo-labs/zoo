@@ -18,7 +18,7 @@ export interface OrderData {
   extChannel: string;
 }
 
-export interface OrderLineItem {
+export interface OrderItem {
   price?: number;
   quantity?: number;
   shippedQuantity?: number;
@@ -41,7 +41,7 @@ export interface OrderLineItem {
 
 export interface Order {
   orderNumber?: number;
-  items?: OrderLineItem[];
+  items?: OrderItem[];
   balance?: number;
   createdBy?: string;
   currency?: Currency;
