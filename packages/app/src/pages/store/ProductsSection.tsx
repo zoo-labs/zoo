@@ -1,3 +1,20 @@
+export interface ProductInterface {
+  name: String;
+  price: string;
+  discount_price: string;
+  description: string;
+  properties: {
+    colors: Array<string>;
+    sizes: Array<string>;
+    adendums: Array<string>;
+  };
+  image: string;
+  gallery_image: Array<string>;
+  quantity: number;
+  _id: string;
+  status: string;
+}
+
 const ProductsSection = () => {
   const products = [
     { id: 1 },

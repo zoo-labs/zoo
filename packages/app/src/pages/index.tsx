@@ -1,9 +1,9 @@
+import React from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import { loadTranslation } from "../entities";
 import Home from "./home";
-import DefaultLayout from "../layouts/Default";
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const sessionId = nanoid();
 
