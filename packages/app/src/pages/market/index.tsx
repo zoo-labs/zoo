@@ -158,7 +158,7 @@ const Market: React.FC<MarketProps> = ({}) => {
   const buyZoo = useBuyZoo();
 
   return (
-    <div className="pt-16 pb-16 px-6 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
+    <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
       <div className="flex items-end justify-between text-white w-100">
         <Wallet />
       </div>
@@ -167,16 +167,16 @@ const Market: React.FC<MarketProps> = ({}) => {
 
         {/* Tab Navigation */}
         <div className="relative justify-between hidden mb-8 lg:flex">
-          <div className="flex items-center justify-between h-12 pl-4 pr-1 text-sm rounded-lg cursor-pointer w-full">
-            <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold text-grey-400 border border-white border-solid rounded-lg cursor-pointer w-44">
-              <ReactDropdown
+          <div className="flex items-center justify-between w-full h-12 pl-4 pr-1 text-sm rounded-lg cursor-pointer">
+            <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 w-44">
+              {/* <ReactDropdown
                 menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
                 className="dropdown"
                 options={timeFIlterOption}
                 value={""}
                 placeholder={"Recently added"}
                 placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
-              />
+              /> */}
               <Image
                 src={"/icons/download.svg"}
                 alt=""
@@ -191,13 +191,13 @@ const Market: React.FC<MarketProps> = ({}) => {
               <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} />
             </div> */}
           <div
-            className="rounded-xl w-full"
+            className="w-full rounded-xl"
             style={{
               background: "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)",
               padding: 2,
             }}
           >
-            <div className="flex items-center justify-center bg-black rounded-xl w-full h-full">
+            <div className="flex items-center justify-center w-full h-full bg-black rounded-xl">
               {["All Items", "Eggs", "Animals", "Hybrid"].map(
                 (value, index) => {
                   const active = category === index;
@@ -293,10 +293,10 @@ const Market: React.FC<MarketProps> = ({}) => {
             })}
           </div> */}
           <div className="hidden">show on tablet viewport</div>
-          <div className="w-full flex items-end justify-end">
+          <div className="flex items-end justify-end w-full">
             <button
               onClick={() => setFiltering(!filtering)}
-              className="relative flex items-center justify-center text-center px-6 py-3 font-bold leading-3 rounded-xl border-2 text-grey-400"
+              className="relative flex items-center justify-center px-6 py-3 font-bold leading-3 text-center border-2 rounded-xl text-grey-400"
             >
               Filter
               <span className="flex items-center justify-center pl-2">
@@ -317,20 +317,20 @@ const Market: React.FC<MarketProps> = ({}) => {
           } border-t border-solid py-8`}
           style={{ borderColor: "rgb(107, 114, 128)" }}
         >
-          <div className="flex items-center justify-between  flex-wrap ">
+          <div className="flex flex-wrap items-center justify-between ">
             <div>
-              <p className="mb-2 text-sm md:text-lg font-normal text-grey-400 uppercase">
+              <p className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
                 PRICE
               </p>
-              <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold text-grey-400 border border-white border-solid rounded-lg cursor-pointer w-44">
-                <ReactDropdown
+              <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 w-44">
+                {/* <ReactDropdown
                   menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
                   className="dropdown"
                   options={timeFIlterOption}
                   value={""}
                   placeholder="Highest Prices"
                   placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
-                />
+                /> */}
                 <Image
                   src={"/icons/download.svg"}
                   alt=""
@@ -341,18 +341,18 @@ const Market: React.FC<MarketProps> = ({}) => {
               </div>
             </div>
             <div>
-              <p className="mb-2 text-sm md:text-lg font-normal text-grey-400 uppercase">
+              <p className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
                 YIELDS
               </p>
-              <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold text-grey-400 border border-white border-solid rounded-lg cursor-pointer w-44">
-                <ReactDropdown
+              <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 w-44">
+                {/* <ReactDropdown
                   menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
                   className="dropdown"
                   options={timeFIlterOption}
                   value={""}
                   placeholder="Highest Yields"
                   placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
-                />
+                /> */}
                 <Image
                   src={"/icons/download.svg"}
                   alt=""
@@ -363,18 +363,18 @@ const Market: React.FC<MarketProps> = ({}) => {
               </div>
             </div>
             <div>
-              <p className="mb-2 text-sm md:text-lg font-normal text-grey-400 uppercase">
+              <p className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
                 RARITY
               </p>
-              <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold text-grey-400 border border-white border-solid rounded-lg cursor-pointer w-44">
-                <ReactDropdown
+              <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 w-44">
+                {/* <ReactDropdown
                   menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
                   className="dropdown"
                   options={timeFIlterOption}
                   value={""}
                   placeholder="Epic"
                   placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
-                />
+                /> */}
                 <Image
                   src={"/icons/download.svg"}
                   alt=""
@@ -394,7 +394,7 @@ const Market: React.FC<MarketProps> = ({}) => {
               }}
             >
               <div>
-                <div className="mb-2 text-sm md:text-lg font-normal text-grey-400 uppercase">
+                <div className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
                   PRICE RANGE
                 </div>
                 <PrettoSlider
