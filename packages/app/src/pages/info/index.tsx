@@ -108,18 +108,16 @@ const Info = () => {
             </div>
             {/* Form Buttons */}
             <div className="mt-8 flex flex-col lg:flex-row gap-6">
-              <button
-                type="button"
-                className="bg-green text-black py-4 px-6 rounded-sm font-semibold"
-              >
-                Continue to Shipping
-              </button>
-              <button
-                type="button"
-                className="bg-transparent text-white py-4 px-6 rounded-sm font-semibold"
-              >
-                Return to cart
-              </button>
+              <Link href="/shipping">
+                <a className="bg-green text-black py-4 px-6 rounded-sm font-semibold">
+                  Continue to Shipping
+                </a>
+              </Link>
+              <Link href="/shipping">
+                <a className="bg-transparent text-white py-4 px-6 rounded-sm font-semibold">
+                  Return to cart
+                </a>
+              </Link>
             </div>
           </div>
 

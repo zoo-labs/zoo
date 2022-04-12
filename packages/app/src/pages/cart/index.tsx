@@ -1,5 +1,7 @@
+import Link from "next/link";
+
 const Cart = () => {
-	const products = [
+  const products = [
     { id: 1 },
     { id: 2 },
     { id: 3 },
@@ -7,7 +9,7 @@ const Cart = () => {
     { id: 5 },
     { id: 6 },
   ];
-	
+
   return (
     <div className="w-full">
       <div className="max-w-7xl mx-auto my-[100px] px-4">
@@ -62,9 +64,11 @@ const Cart = () => {
               </p>
             </div>
 
-            <button className="mt-8 w-full bg-green text-black py-4 px-6 rounded-sm font-semibold">
-              Checkout
-            </button>
+            <Link href="/info">
+              <a className="mt-8 w-full bg-green text-black py-4 px-6 rounded-sm font-semibold block text-center">
+                Checkout
+              </a>
+            </Link>
           </div>
         </div>
       </div>
