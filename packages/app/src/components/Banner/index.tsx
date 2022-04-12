@@ -32,7 +32,9 @@ const Banner: FC = () => {
                     "0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13"
                   }
                 >
-                  <Typography className="hidden md:block p-1 ml-1 text-xs font-bold text-left underline text-green xs:w-full">
+
+                  <Typography className="hidden md:block ml-1 font-bold text-green text-xs text-left underline p-1 sm:w-full">
+
                     Token Address
                   </Typography>
 
