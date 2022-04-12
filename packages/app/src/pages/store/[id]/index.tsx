@@ -5,21 +5,29 @@ import { useRouter } from "next/router";
 import { useAppSelector } from "state/hooks";
 import { Product } from "types/product";
 import { useEffect, useState } from "react";
+import { useAllProducts } from "state/store/hooks";
 
 const ShopDetails = () => {
   const [addToCart] = useCart();
   const router = useRouter();
   const { id } = router.query;
-  const store: { Products: Product[] } = useAppSelector((state) => state.store);
+  const { Products }: { Products: Product[] } = useAppSelector(
+    (state) => state.store
+  );
   const [product, setProduct] = useState<Product>();
-  console.log("store", store);
-  // useEffect(() => {
-  //   if (Products) {
-  //     console.log("products here", Products, id);
-  //     const data = Products.find((products) => products.id === id);
-  //     setProduct(data);
-  //   }
-  // }, [Products]);
+  console.log("store", Products);
+  useEffect(() => {
+    if (Products) {
+      console.log("products here", Products, id);
+      const data = Products.find((products) => products.id === id);
+      setProduct(data);
+    }
+  }, [Products]);
+  const getProducts = useAllProducts();
+
+  useEffect(() => {
+    getProducts();
+  }, []);
   return (
     <div className="w-full my-[100px]">
       <div className="mx-auto max-w-7xl">
