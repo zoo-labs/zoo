@@ -8,13 +8,12 @@ import EndangeredSpecies from "components/EndangeredSpecies";
 
 import { useDispatch } from "react-redux";
 import { useBuyZoo } from "state/zoo/hooks";
-import { useWeb3React } from "@web3-react/core";
-import { useFaucet } from "hooks";
+import { useActiveWeb3React, useFaucet } from "hooks";
 import { getZooBalance } from "state/zoo/actions";
 import { handleFunds } from "utils/handleFunds";
 
 const OpportunitySection = () => {
-  const { account, library, chainId } = useWeb3React();
+  const { account, library, chainId } = useActiveWeb3React();
   const buyZoo = useBuyZoo();
   const [fetching, setFetching] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
@@ -45,16 +44,16 @@ const OpportunitySection = () => {
   return (
     <section className="relative" id="endless-opportunity">
       <div className="px-6 py-16 lg:mt-10">
-        <h2 className="text-2xl md:text-2xl  lg:text-4xl text-center mb-16 font-semibold">
-          Endless <span className=" tracking-widest ">Yield Opportunity</span>
+        <h2 className="mb-16 text-2xl font-semibold text-center md:text-2xl lg:text-4xl">
+          Endless <span className="tracking-widest ">Yield Opportunity</span>
         </h2>
 
-        <div className="flex flex-col lg:flex-row justify-between items-center max-w-7xl mx-auto">
+        <div className="flex flex-col items-center justify-between mx-auto lg:flex-row max-w-7xl">
           <EndangeredSpecies />
 
-          <div className="relative w-screen h-screen flex flex-col justify-center items-center ">
+          <div className="relative flex flex-col items-center justify-center w-screen h-screen ">
             <div className="big-circle">
-              <div className="animal-content mx-auto">
+              <div className="mx-auto animal-content">
                 {stage && <p>{stage}</p>}
               </div>
               <div
@@ -137,18 +136,18 @@ const OpportunitySection = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center max-w-7xl px-6 mx-auto lg:mt-20">
-          <h2 className="text-2xl md:text-2xl lg:text-5xl text-center mb-6 md:mb-4 font-semibold">
+        <div className="flex flex-col items-center px-6 mx-auto max-w-7xl lg:mt-20">
+          <h2 className="mb-6 text-2xl font-semibold text-center md:text-2xl lg:text-5xl md:mb-4">
             Fully Transparent Ecosystem
           </h2>
-          <p className="max-w-3xl mx-auto text-center mb-6 md:mb-8 lg:text-xl">
+          <p className="max-w-3xl mx-auto mb-6 text-center md:mb-8 lg:text-xl">
             Each animal NFT uses blockchain technology to establish a verified
             and public proof of ownership. This establishes credibility for each
             NFT and its unchangeable nature.
           </p>
           <div
             onClick={() => handleFunds(chainId, buyZoo)}
-            className="border border-green text-green font-semibold text-sm md:text-base px-8 py-3 md:px-6 lg:px-16 rounded-full hover:cursor-pointer"
+            className="px-8 py-3 text-sm font-semibold border rounded-full border-green text-green md:text-base md:px-6 lg:px-16 hover:cursor-pointer"
           >
             Buy $ZOO
           </div>
