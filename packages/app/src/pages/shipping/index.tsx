@@ -68,7 +68,11 @@ const Shipping = () => {
             </div>
           </div>
         </div>
-        <div></div>
+        <div className="max-w-4xl mx-auto mt-8">
+          <button className="w-full bg-green text-black py-4 px-6 rounded-sm font-semibold">
+            Pay Now
+          </button>
+        </div>
       </div>
     </div>
   );
