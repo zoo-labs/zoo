@@ -18,16 +18,13 @@ const ShopDetails = () => {
   console.log("store", Products);
   useEffect(() => {
     if (Products) {
-      console.log("products here", Products, id);
       const data = Products.find((products) => products.id === id);
+      console.log("products here", Products, id, data);
+
       setProduct(data);
     }
-  }, [Products]);
-  const getProducts = useAllProducts();
+  }, [Products, id]);
 
-  useEffect(() => {
-    getProducts();
-  }, []);
   return (
     <div className="w-full my-[100px]">
       <div className="mx-auto max-w-7xl">
@@ -37,27 +34,18 @@ const ShopDetails = () => {
             <div className="flex flex-col-reverse lg:flex-row flex-[1.5] gap-4 px-4">
               {/** Side images */}
               <div className="flex lg:flex-col flex-[0.5] flex-row gap-4">
-                <div className="w-full h-[200px] object-contain mb-4">
-                  <img
-                    src="/img/store-1.png"
-                    alt=""
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-                <div className="w-full h-[200px] object-contain mb-4">
-                  <img
-                    src="/img/store-1.png"
-                    alt=""
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-                <div className="w-full h-[200px] object-contain mb-4">
-                  <img
-                    src="/img/store-1.png"
-                    alt=""
-                    className="object-cover w-full h-full"
-                  />
-                </div>
+                {product.galleryImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className="w-full h-[200px] object-contain mb-4"
+                  >
+                    <img
+                      src={image}
+                      alt=""
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                ))}
               </div>
               {/* Main Image */}
               <div className="flex-1">

@@ -5,7 +5,7 @@ import reducer from './reducer'
 
 let store
 
-const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists']
+const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', "store"]
 
 const persistConfig = {
   key: 'root',
