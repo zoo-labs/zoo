@@ -1,14 +1,18 @@
 import Link from "next/link";
+import { useAppSelector } from "state/hooks";
+import { useCart } from "state/store/hooks";
+import { CartItem } from "types/cart";
+import { Product } from "types/product";
 
 const Cart = () => {
-  const products = [
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-  ];
+  const [addToCart, removeFromCart, clearCart] = useCart();
+
+  const {
+    Products,
+    CartItems,
+  }: { Products: Product[]; CartItems: CartItem[] } = useAppSelector(
+    (state) => state.store
+  );
 
   return (
     <div className="w-full">
@@ -19,35 +23,63 @@ const Cart = () => {
               <h2 className="pb-2 mb-8 text-base border-b border-gray-600">
                 Your Shopping Cart
               </h2>
-              <div className="flex gap-4">
-                <div>
-                  <img src="/img/store-1.png" className="" alt="" />
-                </div>
+              {CartItems && CartItems.length > 0 ? (
+                CartItems.map((item, index) => {
+                  const {
+                    image,
+                    name,
+                    description,
+                    properties,
+                    basePrice,
+                    productId,
+                  } = item;
+                  return (
+                    <div key={index} className="flex gap-4">
+                      <div>
+                        <img src={image} className="" alt="" />
+                      </div>
 
-                <div className="space-y-2">
-                  <p className="font-semibold">Zoo Merch</p>
-                  <p className="text-gray-400">Top Rainy Days Collection 21</p>
-                  <p className="text-gray-400">Extra Large</p>
-                  <p className="font-bold">$260.99</p>
-                  <div className="text-gray-400 ">
-                    <p className="mt-8 mb-1">Quantity</p>
-                    <div className="flex flex-col gap-4 lg:flex-row">
-                      <input
-                        type="number"
-                        className="bg-transparent bg-[#1f1f1f] py-2 px-2"
-                      />
-                      <button className="underline">Remove Item</button>
+                      <div className="space-y-2">
+                        <p className="font-semibold">{name}</p>
+                        <p className="text-gray-400">{description}</p>
+                        <p className="text-gray-400">{properties.size}</p>
+                        <p className="font-bold">${basePrice}</p>
+                        <div className="text-gray-400 ">
+                          <p className="mt-8 mb-1">Quantity</p>
+                          <div className="flex flex-col gap-4 lg:flex-row">
+                            <input
+                              type="number"
+                              className="bg-transparent bg-[#1f1f1f] py-2 px-2"
+                            />
+                            <button
+                              onClick={() => removeFromCart(productId)}
+                              className="underline"
+                            >
+                              Remove Item
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
+                  );
+                })
+              ) : (
+                <div>Cart is empty</div>
+              )}
             </div>
           </div>
           <div className="flex-1">
             <h2 className="pb-2 mb-8 text-base border-b border-gray-600">
               Subtotal
             </h2>
-            <p className="text-2xl font-bold">$260.99</p>
+            <p className="text-2xl font-bold">
+              $
+              {CartItems.reduce(
+                (memo, item) =>
+                  memo + parseFloat(item.basePrice) * item.quantity,
+                0
+              )}
+            </p>
             <div className="mt-8">
               <p className="bg-[#1F1F1F] p-4">
                 Lorem ipsum dolor sit amet, consectetur adipielit. Purus
@@ -79,17 +111,20 @@ const Cart = () => {
         <div className="">
           <div className="max-w-7xl mx-auto px-4 my-[64px]">
             <div className="flex flex-wrap justify-between">
-              {products.map((item, index) => {
+              {Products.filter(
+                (product) =>
+                  !CartItems.some((item) => product.id === item.productId)
+              ).map((item, index) => {
                 return (
                   <div key={index} className="mb-8 md:basis-1/3">
                     <a href={`/store/${item.id}`}>
                       <>
-                        <img src="/img/store-1.png" alt="" className="mb-4" />
+                        <img src={item.image} alt="" className="mb-4" />
                         <div className="mb-4">
-                          <p>Zoo Merch Top Rainy Days</p>
-                          <p>Collection 21</p>
+                          <p>{item.name}</p>
+                          <p>{item.shortDescription}</p>
                         </div>
-                        <p>$260.99</p>
+                        <p>${item.basePrice}</p>
                       </>
                     </a>
                   </div>
