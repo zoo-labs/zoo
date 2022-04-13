@@ -1,8 +1,9 @@
-export interface CartItem {
+export interface Product {
     name: string;
     basePrice: string;
     discountPrice: string;
     description: string;
+    shortDescription: string;
     properties: {
         colors: Array<string>;
         sizes: Array<string>;
@@ -11,6 +12,7 @@ export interface CartItem {
     image: string;
     galleryImages: Array<string>;
     quantity: number;
-    _id: string;
+    id: string;
     status: string;
+    createdAt: string;
 }
