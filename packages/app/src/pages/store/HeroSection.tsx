@@ -27,7 +27,7 @@ const HeroSection = () => {
                 Cart({CartItems.length})
               </a>
             </Link>
-            <Link href="/store/info">
+            <Link href="/store/checkout">
               <a className="bg-[#393939] py-4 px-6 border-none">Checkout</a>
             </Link>
           </div>
