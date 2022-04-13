@@ -169,6 +169,10 @@ const Info = () => {
                     {/* {item.properties?.adendums.map((adendum) => (
                       <p>{adendum}</p>
                     ))} */}
+                    <div className="flex items-center justify-between">
+                      <p className="font-semibold">Quantity</p>
+                      <p className="font-semibold">{item.quantity}</p>
+                    </div>
                   </div>
                   <p className="font-semibold">${item.basePrice}</p>
                 </div>

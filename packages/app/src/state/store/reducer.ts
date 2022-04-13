@@ -1,7 +1,7 @@
 
 
 import { createReducer } from '@reduxjs/toolkit'
-import { addCartItem, getCartItems, getProducts, removeCartItem, clearCartItems } from './actions'
+import { addCartItem, getCartItems, getProducts, removeCartItem, clearCartItems, updateCartItem } from './actions'
 import { CartItem } from 'types/cart'
 import { Product } from 'types/product';
 
@@ -32,6 +32,16 @@ export default createReducer(initialState, (builder) =>
         throw Error('Attempted to add existing cart Item.')
       }
       CartItems.push(cartItem)
+
+    })
+    .addCase(updateCartItem, ({ CartItems }, { payload: cartItem }) => {
+      const { id } = cartItem
+      const index = CartItems.findIndex((item) => item.id == id)
+
+      if (!CartItems[index]) {
+        throw Error('Attempted to update non-existing cart Item.')
+      }
+      CartItems[index] = { ...cartItem }
 
     })
     .addCase(removeCartItem, (state, { payload: id }) => {
