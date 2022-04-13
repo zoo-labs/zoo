@@ -12,15 +12,15 @@ const nextConfig = {
   images: {
     domains: ["raw.githubusercontent.com", "res.cloudinary.com"],
   },
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: "/mint",
-  //       destination: "/",
-  //       permanent: true,
-  //     },
-  //   ];
-  // },
+  async redirects() {
+    return [
+      {
+        source: "/store/checkout",
+        destination: "/store/checkout/cart",
+        permanent: true,
+      },
+    ];
+  },
   i18n: {
     localeDetection: true,
     locales,
