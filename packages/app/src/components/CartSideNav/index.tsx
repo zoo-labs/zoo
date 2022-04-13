@@ -7,6 +7,8 @@ const CartSideNav = () => {
     (state) => state.store
   );
   const [toggleCart, setToggleCart] = useState(false);
+  const [quantity, setQuantity] = useState(0);
+  const [showInput, setShowInput] = useState(false);
 
   return (
     <>
@@ -42,7 +44,58 @@ const CartSideNav = () => {
                     />
                   </svg>
                 </div>
-                <p className="mt-8">No items in cart</p>
+
+                {CartItems.map((item, index) => (
+                  <div className="mt-4 w-full" key={index}>
+                    <div className="flex gap-4 mb-8">
+                      <div className="w-[150px] h-[120px]">
+                        <img
+                          src={item.image}
+                          className="object-cover object-center w-full h-full"
+                          alt=""
+                        />
+                      </div>
+                      <div className="flex flex-col text-gray-400">
+                        <p>{item.name}</p>
+                        <p>{item.properties.size}</p>
+                        <p>{item.properties?.color}</p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-4 justify-between">
+                        <>
+                          <p className="font-semibold">Quantity</p>
+                          <p className="font-semibold">{item.quantity}</p>
+                        </>
+                        <div className="flex gap-2">
+                          <button
+                            className="flex gap-1 px-4 py-2 font-semibold text-white rounded-sm bg-[#000]"
+                            onClick={() => setShowInput(!showInput)}
+                          >
+                            <img src="/img/edit.svg" alt="" />
+                          </button>
+                          <button className="flex gap-1 px-4 py-2 font-semibold text-white rounded-sm bg-red">
+                            <img src="/img/delete.svg" alt="" />
+                          </button>
+                        </div>
+                      </div>
+                      {showInput && (
+                        <div className="mt-4 flex gap-1">
+                          <input
+                            onChange={(e) => setQuantity(+e.target.value)}
+                            value={quantity}
+                            type="text"
+                            placeholder="First Name"
+                            className="w-full px-4 py-2 bg-transparent bg-[#1f1f1f] border border-gray-400 rounded-sm"
+                          />
+                          <button className="px-4 py-2 font-semibold text-black rounded-sm bg-green">
+                            Update
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </ul>
             </div>
           )}
