@@ -190,12 +190,11 @@ const Info = () => {
                         <p>{item.name}</p>
                         <p>{item.properties.size}</p>
                         <p>{item.properties?.color}</p>
-
-                        {/* {item.properties?.adendums.map((adendum) => (
-                      <p>{adendum}</p>
-                    ))} */}
                       </div>
-                      <p className="font-semibold">${item.basePrice}</p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <p className="font-semibold">Quantity</p>
+                      <p className="font-semibold">{item.quantity}</p>
                     </div>
                   </div>
                 </Slider>
