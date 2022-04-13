@@ -8,14 +8,21 @@ import { useEffect, useState } from "react";
 import { useAllProducts } from "state/store/hooks";
 
 const ShopDetails = () => {
-  const [addToCart] = useCart();
+  const [addToCart, removeFromCart, clearCart] = useCart();
   const router = useRouter();
   const { id } = router.query;
-  const { Products }: { Products: Product[] } = useAppSelector(
+  const {
+    Products,
+    CartItems,
+  }: { Products: Product[]; CartItems: CartItem[] } = useAppSelector(
     (state) => state.store
   );
   const [product, setProduct] = useState<Product>();
-  console.log("store", Products);
+  const [size, setSize] = useState<string>();
+  const [color, setColor] = useState<string>();
+  const [adendums, setAdendums] = useState<string[]>();
+
+  console.log("store", Products, CartItems);
   useEffect(() => {
     if (Products) {
       const data = Products.find((products) => products.id === id);
@@ -70,18 +77,47 @@ const ShopDetails = () => {
               </ul>
               <div className="flex gap-8 mb-8">
                 <select className="px-2 py-2 bg-transparent border-t border-b border-gray-400 outline-none">
-                  {product.properties.sizes.map((size, index) => (
-                    <option key={index}>{size}</option>
+                  {product.properties.sizes.map((sizer, index) => (
+                    <option onClick={() => setSize(sizer)} key={index}>
+                      {sizer}
+                    </option>
                   ))}
                 </select>
-                <button
-                  // map product and other values into the cart schema
-
-                  onClick={() => addToCart({ name: product.name } as CartItem)}
-                  className="px-6 py-2 font-semibold text-black rounded-sm bg-green"
+                {/* <button
+                  onClick={() => clearCart()}
+                  className="px-6 py-2 font-semibold text-black rounded-sm bg-red"
                 >
-                  Add To Cart
-                </button>
+                  Clear Cart
+                </button> */}
+                {CartItems?.some((item) => item.productId === id) ? (
+                  <button
+                    onClick={() => removeFromCart(product.id)}
+                    className="px-6 py-2 font-semibold text-black rounded-sm bg-red"
+                  >
+                    Remove From Cart
+                  </button>
+                ) : (
+                  <button
+                    // improve on this using just the product id
+                    onClick={() =>
+                      addToCart({
+                        name: product.name,
+                        basePrice: product.basePrice,
+                        discountPrice: product.discountPrice,
+                        description: product.description,
+                        properties: { size, color, adendums },
+                        image: product.image,
+                        galleryImages: product.galleryImages,
+                        productId: product.id,
+                        id: Math.floor(Math.random() * Date.now()).toString(),
+                        quantity: 1,
+                      } as CartItem)
+                    }
+                    className="px-6 py-2 font-semibold text-black rounded-sm bg-green"
+                  >
+                    Add To Cart
+                  </button>
+                )}
               </div>
               <p>
                 Secure payments with MoonPay, Paypal, Stripe or your Wallet{" "}

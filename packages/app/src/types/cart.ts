@@ -4,13 +4,14 @@ export interface CartItem {
     discountPrice: string;
     description: string;
     properties: {
-        color: string;
+        color?: string;
         size: string;
-        adendums: Array<string>;
+        adendums?: Array<string>;
     }
     image: string;
     galleryImages: Array<string>;
     quantity: number;
     id: string;
     status: string;
+    productId: string;
 }
