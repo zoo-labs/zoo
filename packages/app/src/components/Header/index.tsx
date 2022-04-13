@@ -30,11 +30,13 @@ import { metaMask } from "connectors/metaMask";
 // import { ReactComponent as Burger } from "../assets/images/burger.svg";
 
 function AppBar(props: { banner?: boolean }): JSX.Element {
+  const [toggleCart, setToggleCart] = useState(true);
   const { i18n } = useLingui();
   const { account, chainId, library, connector } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
 
   const router = useRouter();
+
   let linkStyle =
     "p-2 text-baseline hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap";
 
@@ -50,7 +52,6 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
     (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
 
   return (
-    //     // <header className="flex flex-row justify-between w-screen flex-nowrap">
     <header className="fixed z-999 flex-shrink-0 w-full bg-black">
       <Banner />
       <Popover as="nav" className="z-10 w-full bg-transparent header-border-b">
@@ -203,16 +204,43 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                         <Web3Network />
                       </div>
                     )} */}
-                    {/* My Wallet Button */}
-                    <div className=""></div>
-                    <div className="hidden md:block">
-                      {/* <LanguageSwitch /> */}
-                    </div>
                     <More />
-                    <div className="hidden lg:flex">
+                  </div>
+                  <div className="flex relative hover:cursor-pointer ml-1">
+                    <div
+                      className="flex relative"
+                      onClick={() => setToggleCart(!toggleCart)}
+                    >
                       <img src="/img/cart.png" width={24} height={24} alt="" />{" "}
                       (0)
                     </div>
+
+                    {toggleCart && (
+                      <div className="">
+                        <ul className="z-999 fixed lg:right-3 top-0 lg:top-auto left-0 lg:left-auto bottom-0 lg:bottom-auto  mb-8 lg:mt-8 py-8 w-full lg:w-[20vw] h-[90vh] lg:h-screen list-none flex flex-col justify-start items-start rounded-md bg-[#1f1f1f] text-white px-6">
+                          <div
+                            className="flex w-full justify-end border-b border-gray-700 pb-2"
+                            onClick={() => setToggleCart(!toggleCart)}
+                          >
+                            <svg
+                              className="block w-6 h-6"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M6 18L18 6M6 6l12 12"
+                              />
+                            </svg>
+                          </div>
+                          <p className="mt-8">No items in cart</p>
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="flex -mr-2 sm:hidden">
@@ -295,10 +323,6 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                 <Community />
 
                 <Learn />
-
-                <div className="flex p-2 md:p-3">
-                  <img src="/img/cart.png" width={24} height={24} alt="" /> (0)
-                </div>
 
                 {/* <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                   {account && chainId && userEthBalance && (
