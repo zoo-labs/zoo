@@ -5,6 +5,10 @@ import { CartItem } from "types/cart";
 
 import { countries } from "data/countries";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+
 const Info = () => {
   const [shippingDetails, setShippingDetails] = useState<{
     email: string;
@@ -14,6 +18,14 @@ const Info = () => {
   const [shippingPrice, setShippingPrice] = useState(15);
   const [subTotal, setSubTotal] = useState(0);
   const [country, setCountry] = useState("");
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
 
   const handleChange = (name, value: string) => {
     setShippingDetails({ ...shippingDetails, [name]: value });
@@ -34,7 +46,7 @@ const Info = () => {
       <div className="max-w-7xl mx-auto my-[100px] px-4">
         <div className="flex flex-col gap-8 lg:flex-row ">
           {/* Contact Information Section */}
-          <div className="flex-[1.5]">
+          <div className="lg:w-[60%]">
             <nav className="flex gap-4 pb-4 border-b border-gray-600 cursor-pointer">
               <Link href="/store/checkout/cart">
                 <a>Cart {">"}</a>
@@ -159,30 +171,34 @@ const Info = () => {
               </Link>
             </div>
           </div>
-  
+
           {/* Payment Info Section*/}
-          <div className="flex-1">
+          <div className="lg:w-[40%]">
             {CartItems.map((item, index) => {
               return (
-                <div key={index} className="flex justify-between mb-8">
-                  <div className="w-[150px] h-[120px]">
-                    <img
-                      src={item.image}
-                      className="object-cover object-center w-full h-full"
-                      alt=""
-                    />
-                  </div>
-                  <div className="flex flex-col text-gray-400">
-                    <p>{item.name}</p>
-                    <p>{item.properties.size}</p>
-                    <p>{item.properties?.color}</p>
+                <Slider {...settings} key={index} className="">
+                  <div className="px-4">
+                    <div className="flex justify-between mb-8">
+                      <div className="w-[150px] h-[120px]">
+                        <img
+                          src={item.image}
+                          className="object-cover object-center w-full h-full"
+                          alt=""
+                        />
+                      </div>
+                      <div className="flex flex-col text-gray-400">
+                        <p>{item.name}</p>
+                        <p>{item.properties.size}</p>
+                        <p>{item.properties?.color}</p>
 
-                    {/* {item.properties?.adendums.map((adendum) => (
+                        {/* {item.properties?.adendums.map((adendum) => (
                       <p>{adendum}</p>
                     ))} */}
+                      </div>
+                      <p className="font-semibold">${item.basePrice}</p>
+                    </div>
                   </div>
-                  <p className="font-semibold">${item.basePrice}</p>
-                </div>
+                </Slider>
               );
             })}
 
