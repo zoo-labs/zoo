@@ -1,11 +1,12 @@
 import Link from "next/link";
+import { useState } from "react";
 import { useAppSelector } from "state/hooks";
 import { useCart } from "state/store/hooks";
 import { CartItem } from "types/cart";
 import { Product } from "types/product";
 
 const Cart = () => {
-  const [addToCart, removeFromCart, clearCart] = useCart();
+  const [addToCart, removeFromCart, updateCart, clearCart] = useCart();
 
   const {
     Products,
@@ -32,7 +33,9 @@ const Cart = () => {
                     properties,
                     basePrice,
                     productId,
+                    quantity,
                   } = item;
+
                   return (
                     <div key={index} className="flex gap-4">
                       <div>
@@ -48,6 +51,13 @@ const Cart = () => {
                           <p className="mt-8 mb-1">Quantity</p>
                           <div className="flex flex-col gap-4 lg:flex-row">
                             <input
+                              value={quantity}
+                              onChange={(e) =>
+                                updateCart({
+                                  ...item,
+                                  quantity: parseFloat(e.target.value),
+                                })
+                              }
                               type="number"
                               className="bg-transparent bg-[#1f1f1f] py-2 px-2"
                             />
