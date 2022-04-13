@@ -51,8 +51,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
 
   return (
     //     // <header className="flex flex-row justify-between w-screen flex-nowrap">
-    <header className="fixed z-20 flex-shrink-0 w-full bg-black">
-      {/* {props.banner && <Banner />} */}
+    <header className="fixed z-999 flex-shrink-0 w-full bg-black">
       <Banner />
       <Popover as="nav" className="z-10 w-full bg-transparent header-border-b">
         {({ open }) => (
@@ -112,82 +111,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                         </a>
                       </NavLink>
                       <Community />
-
-                      {/* <NavLink href="/press">
-                        <a
-                          id={`mint-nav-link`}
-                          className={
-                            router.pathname == "/press"
-                              ? `${linkStyle} text-grey`
-                              : `${linkStyle} text-white`
-                          }
-                        >
-                          {i18n._(t`Press`)}
-                        </a>
-                      </NavLink> */}
                       <Learn />
-
-                      {/* <NavLink href="/learn">
-                        <a
-                          id={`mint-nav-link`}
-                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                        >
-                          {i18n._(t`Learn`)}
-                        </a>
-                      </NavLink> */}
-                      {/* {chainId && featureEnabled(Feature.MIGRATE, chainId) && (
-                        <NavLink href={"/migrate"}>
-                          <a
-                            id={`migrate-nav-link`}
-                            className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                          >
-                            {i18n._(t`Migrate`)}
-                          </a>
-                        </NavLink>
-                      )}
-                      {chainId &&
-                        featureEnabled(Feature.LIQUIDITY_MINING, chainId) && (
-                          <NavLink href={"/farm"}>
-                            <a
-                              id={`farm-nav-link`}
-                              className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                            >
-                              {i18n._(t`Farm`)}
-                            </a>
-                          </NavLink>
-                        )}
-                      {chainId && featureEnabled(Feature.KASHI, chainId) && (
-                        <>
-                          <NavLink href={"/lend"}>
-                            <a
-                              id={`lend-nav-link`}
-                              className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                            >
-                              {i18n._(t`Lend`)}
-                            </a>
-                          </NavLink>
-                          <NavLink href={"/borrow"}>
-                            <a
-                              id={`borrow-nav-link`}
-                              className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                            >
-                              {i18n._(t`Borrow`)}
-                            </a>
-                          </NavLink>
-                        </>
-                      )}
-                      {chainId && featureEnabled(Feature.STAKING, chainId) && (
-                        <NavLink href={"/stake"}>
-                          <a
-                            id={`stake-nav-link`}
-                            className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                          >
-                            {i18n._(t`Stake`)}
-                          </a>
-                        </NavLink>
-                      )} */}
-                      {/* moon pay widget */}
-                      {/* <MoonPayBtn></MoonPayBtn> */}
                     </div>
                   </div>
                 </div>
@@ -208,7 +132,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                 </div>
 
                 <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
-                  <div className="flex items-center justify-between w-full space-x-2 sm:justify-end">
+                  <div className="flex items-center justify-between w-full space-x-4 sm:justify-end">
                     {chainId &&
                       // [ChainId.MAINNET].includes(chainId) &&
                       connector &&
@@ -285,6 +209,10 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                       {/* <LanguageSwitch /> */}
                     </div>
                     <More />
+                    <div className="hidden lg:flex">
+                      <img src="/img/cart.png" width={24} height={24} alt="" />{" "}
+                      (0)
+                    </div>
                   </div>
                 </div>
                 <div className="flex -mr-2 sm:hidden">
@@ -367,6 +295,10 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                 <Community />
 
                 <Learn />
+
+                <div className="flex p-2 md:p-3">
+                  <img src="/img/cart.png" width={24} height={24} alt="" /> (0)
+                </div>
 
                 {/* <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                   {account && chainId && userEthBalance && (
