@@ -1,11 +1,16 @@
 import Link from "next/link";
+import { useAppSelector } from "state/hooks";
+import { CartItem } from "types/cart";
 
 const HeroSection = () => {
+  const { CartItems }: { CartItems: CartItem[] } = useAppSelector(
+    (state) => state.store
+  );
   return (
     <div className="flex justify-center">
-      <div className="max-w-7xl w-full px-4">
+      <div className="w-full px-4 max-w-7xl">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-          <div className="flex-1 flex justify-center">
+          <div className="flex justify-center flex-1">
             <div className="w-full md:w-7/12">
               <input
                 type="text"
@@ -16,13 +21,13 @@ const HeroSection = () => {
             </div>
           </div>
           <div className="flex">
-            <Link href="/cart">
+            <Link href="/store/cart">
               <a className="bg-[#1f1f1f] py-4 px-6 flex gap-1">
                 <img src="/img/cart.png" alt="" />
-                Cart(0)
+                Cart({CartItems.length})
               </a>
             </Link>
-            <Link href="/info">
+            <Link href="/store/info">
               <a className="bg-[#393939] py-4 px-6 border-none">Checkout</a>
             </Link>
           </div>

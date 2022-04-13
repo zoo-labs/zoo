@@ -7,6 +7,7 @@ import {
   getCartItems,
   getProducts,
   removeCartItem,
+  clearCartItems,
 } from "./actions";
 import { toast } from "react-toastify";
 import { CartItem } from "types/cart";
@@ -37,16 +38,21 @@ const notify = (message: string, type: string) => {
 
 export function useCart(): [
   (cartItem: CartItem) => void,
-  (cartItem: CartItem) => void
+  (id: string) => void,
+  () => void
 ] {
   const dispatch = useAppDispatch();
   const addToCart = useCallback((cartItem) => {
+    console.log("adding to cart", cartItem);
     dispatch(addCartItem(cartItem));
   }, []);
-  const removeFromCart = useCallback((cartItem) => {
-    dispatch(removeCartItem(cartItem));
+  const removeFromCart = useCallback((id) => {
+    dispatch(removeCartItem(id));
   }, []);
-  return [addToCart, removeFromCart];
+  const clearCart = useCallback(() => {
+    dispatch(clearCartItems());
+  }, []);
+  return [addToCart, removeFromCart, clearCart];
 }
 
 // returns all the products

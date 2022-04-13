@@ -13,10 +13,10 @@ const Cart = () => {
   return (
     <div className="w-full">
       <div className="max-w-7xl mx-auto my-[100px] px-4">
-        <div className="flex flex-col lg:flex-row gap-8 lg:justify-between">
+        <div className="flex flex-col gap-8 lg:flex-row lg:justify-between">
           <div className="flex-[1.5]">
             <div className="shop-item">
-              <h2 className="text-base pb-2 border-b border-gray-600 mb-8">
+              <h2 className="pb-2 mb-8 text-base border-b border-gray-600">
                 Your Shopping Cart
               </h2>
               <div className="flex gap-4">
@@ -30,8 +30,8 @@ const Cart = () => {
                   <p className="text-gray-400">Extra Large</p>
                   <p className="font-bold">$260.99</p>
                   <div className="text-gray-400 ">
-                    <p className="mb-1 mt-8">Quantity</p>
-                    <div className="flex flex-col lg:flex-row gap-4">
+                    <p className="mt-8 mb-1">Quantity</p>
+                    <div className="flex flex-col gap-4 lg:flex-row">
                       <input
                         type="number"
                         className="bg-transparent bg-[#1f1f1f] py-2 px-2"
@@ -44,7 +44,7 @@ const Cart = () => {
             </div>
           </div>
           <div className="flex-1">
-            <h2 className="text-base pb-2 border-b border-gray-600 mb-8">
+            <h2 className="pb-2 mb-8 text-base border-b border-gray-600">
               Subtotal
             </h2>
             <p className="text-2xl font-bold">$260.99</p>
@@ -56,7 +56,7 @@ const Cart = () => {
                 tristique. Tempor in malesuada sed tempor, cursus.
               </p>
             </div>
-            <div className="mt-8 flex items-start gap-6">
+            <div className="flex items-start gap-6 mt-8">
               <input type="checkbox" className="w-[24px] h-[24px] mt-1" />
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipielit. Purus
@@ -64,8 +64,8 @@ const Cart = () => {
               </p>
             </div>
 
-            <Link href="/info">
-              <a className="mt-8 w-full bg-green text-black py-4 px-6 rounded-sm font-semibold block text-center">
+            <Link href="/store/checkout/info">
+              <a className="block w-full px-6 py-4 mt-8 font-semibold text-center text-black rounded-sm bg-green">
                 Checkout
               </a>
             </Link>
@@ -73,15 +73,15 @@ const Cart = () => {
         </div>
       </div>
       <div className="max-w-7xl mx-auto my-[100px]">
-        <h2 className="text-base pb-2 border-b border-gray-600 mb-8">
+        <h2 className="pb-2 mb-8 text-base border-b border-gray-600">
           Checkout these new releases too
         </h2>
         <div className="">
           <div className="max-w-7xl mx-auto px-4 my-[64px]">
-            <div className="flex justify-between flex-wrap">
+            <div className="flex flex-wrap justify-between">
               {products.map((item, index) => {
                 return (
-                  <div key={index} className="md:basis-1/3 mb-8">
+                  <div key={index} className="mb-8 md:basis-1/3">
                     <a href={`/store/${item.id}`}>
                       <>
                         <img src="/img/store-1.png" alt="" className="mb-4" />
