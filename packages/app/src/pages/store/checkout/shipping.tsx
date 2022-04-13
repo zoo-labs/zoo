@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "state/hooks";
 import { CartItem } from "types/cart";
 
+import { countries } from "data/countries";
+
 const Info = () => {
   const [shippingDetails, setShippingDetails] = useState<{
     email: string;
@@ -11,6 +13,8 @@ const Info = () => {
   }>({ email: "", firstName: "", lastName: "" });
   const [shippingPrice, setShippingPrice] = useState(15);
   const [subTotal, setSubTotal] = useState(0);
+  const [country, setCountry] = useState("");
+
   const handleChange = (name, value: string) => {
     setShippingDetails({ ...shippingDetails, [name]: value });
   };
@@ -82,9 +86,16 @@ const Info = () => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <select className="w-full px-4 py-2 bg-transparent bg-[#1f1f1f] border border-gray-400 outline-none">
-                    <option>Nigeria</option>
-                    <option>Ghana</option>
+                  <select
+                    className="w-full px-4 py-2 bg-transparent bg-[#1f1f1f] border border-gray-400 outline-none"
+                    onChange={(e) => setCountry(e.target.value)}
+                    value={country}
+                  >
+                    {countries.map((data, index) => (
+                      <option key={`${index}${data.name}`} value={data.name}>
+                        {data.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="mb-4">
@@ -148,7 +159,7 @@ const Info = () => {
               </Link>
             </div>
           </div>
-
+  
           {/* Payment Info Section*/}
           <div className="flex-1">
             {CartItems.map((item, index) => {
