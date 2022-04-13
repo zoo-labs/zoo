@@ -4,19 +4,15 @@ const Info = () => {
   return (
     <div className="w-full">
       <div className="max-w-7xl mx-auto my-[100px] px-4">
-        <div className="flex flex-col lg:flex-row gap-8 ">
+        <div className="flex flex-col gap-8 lg:flex-row ">
           {/* Contact Information Section */}
           <div className="flex-[1.5]">
-            <nav className="flex gap-4 border-b border-gray-600 pb-4">
-              <Link href="/cart">
+            <nav className="flex gap-4 pb-4 border-b border-gray-600 cursor-pointer">
+              <Link href="/store/checkout/cart">
                 <a>Cart {">"}</a>
               </Link>
-              <Link href="/info">
-                <a>Information {">"}</a>
-              </Link>
-              <Link href="/shipping">
-                <a>Shipping {">"}</a>
-              </Link>
+              <p className="cursor-pointer text-green">Information {">"}</p>
+              <p>Shipping {">"}</p>
             </nav>
             {/* Form */}
             <div className="mt-8 lg:w-10/12">
@@ -107,14 +103,14 @@ const Info = () => {
               </div>
             </div>
             {/* Form Buttons */}
-            <div className="mt-8 flex flex-col lg:flex-row gap-6">
-              <Link href="/shipping">
-                <a className="bg-green text-black py-4 px-6 rounded-sm font-semibold">
+            <div className="flex flex-col gap-6 mt-8 lg:flex-row">
+              <Link href="/store/checkout/shipping">
+                <a className="px-6 py-4 font-semibold text-black rounded-sm bg-green">
                   Continue to Shipping
                 </a>
               </Link>
-              <Link href="/shipping">
-                <a className="bg-transparent text-white py-4 px-6 rounded-sm font-semibold">
+              <Link href="/store/cart">
+                <a className="px-6 py-4 font-semibold text-white bg-transparent rounded-sm">
                   Return to cart
                 </a>
               </Link>
@@ -127,7 +123,7 @@ const Info = () => {
               <div className="w-[150px] h-[120px]">
                 <img
                   src="/img/store-1.png"
-                  className="w-full h-full object-cover object-center"
+                  className="object-cover object-center w-full h-full"
                   alt=""
                 />
               </div>
@@ -138,17 +134,17 @@ const Info = () => {
               <p className="font-semibold">$260.99</p>
             </div>
 
-            <div className="border-t border-b border-gray-600 py-4 mt-8 space-y-2">
-              <div className="flex justify-between items-center">
+            <div className="py-4 mt-8 space-y-2 border-t border-b border-gray-600">
+              <div className="flex items-center justify-between">
                 <p>Subtotal</p>
                 <p className="font-semibold">$260.99</p>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex items-center justify-between">
                 <p>Shipping</p>
                 <p className="font-semibold">$15.00</p>
               </div>
             </div>
-            <div className="py-4 flex justify-between items-center">
+            <div className="flex items-center justify-between py-4">
               <p>Total</p>
               <p className="font-semibold">$275.99</p>
             </div>
