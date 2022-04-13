@@ -96,11 +96,13 @@ const Cart = () => {
               </p>
             </div>
 
-            <Link href="/store/checkout/shipping">
-              <a className="block w-full px-6 py-4 mt-8 font-semibold text-center text-black rounded-sm bg-green">
-                Checkout
-              </a>
-            </Link>
+            {CartItems && CartItems.length > 0 && (
+              <Link href="/store/checkout/shipping">
+                <a className="block w-full px-6 py-4 mt-8 font-semibold text-center text-black rounded-sm bg-green">
+                  Checkout
+                </a>
+              </Link>
+            )}
           </div>
         </div>
       </div>
