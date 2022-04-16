@@ -52,7 +52,7 @@ describe('Savage', function () {
     expect(rfactory).to.equal(factory.address)
   })
 
-  it.only('removes BNB from old LP', async () => {
+  it('removes BNB from old LP', async () => {
     const txn = await factory.createPair(z1.address, bnb.address);
     await txn.wait();
     const pair = await factory.getPair(z1.address, bnb.address)
