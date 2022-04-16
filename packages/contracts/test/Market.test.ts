@@ -26,18 +26,9 @@ type BidShares = {
   creator: DecimalValue
 }
 
-type Ask = {
-  currency: string
-  amount: BigNumberish
-}
+type Ask = { amount: BigNumberish; currency: string; offline: boolean; }
 
-type Bid = {
-  currency: string
-  amount: BigNumberish
-  bidder: string
-  recipient: string
-  sellOnShare: { value: BigNumberish }
-}
+type Bid = { amount: BigNumberish; currency: string; bidder: string; recipient: string; sellOnShare: { value: BigNumberish; }; offline: boolean; }
 
 describe('Market', () => {
   let [deployerWallet, bidderWallet, mockTokenWallet, otherWallet] = generatedWallets(provider)
@@ -53,6 +44,7 @@ describe('Market', () => {
     amount: 100,
     currency: '0x41A322b28D0fF354040e2CbC676F0320d8c8850d',
     sellOnShare: Decimal.new(0),
+    offline: false
   }
 
   let marketAddress: string
@@ -254,6 +246,7 @@ describe('Market', () => {
         setAsk(maket, defaultTokenId, {
           amount: 1,
           currency: AddressZero,
+          offline: false
         }),
       ).rejectedWith('Market: Ask invalid for share splitting')
     })
@@ -274,6 +267,7 @@ describe('Market', () => {
       spender: bidderWallet.address,
       sellOnShare: Decimal.new(10),
       contract: null as ZOO,
+      offline: false,
     }
 
     beforeEach(async () => {
@@ -293,7 +287,7 @@ describe('Market', () => {
       const maket = await maketAs(mockTokenWallet)
       await mintCurrency(defaultBid.currency, defaultBid.bidder, 100000000)
       try {
-        await setBid(maket, defaultBid as Bid, defaultTokenId)
+        await setBid(maket, defaultBid as unknown as Bid, defaultTokenId)
       } catch (error) {
         expect(error.body).to.be.equal(
           '{"jsonrpc":"2.0","id":508,"error":{"code":-32603,"message":"Error: VM Exception while processing transaction: revert ERC20: transfer amount exceeds allowance"}}',
@@ -307,7 +301,7 @@ describe('Market', () => {
       await approveCurrency(defaultBid.currency, maket.address, bidderWallet)
 
       try {
-        await setBid(maket, defaultBid as Bid, defaultTokenId)
+        await setBid(maket, defaultBid as unknown as Bid, defaultTokenId)
       } catch (error) {
         expect(error.body).to.be.equal(
           '{"jsonrpc":"2.0","id":563,"error":{"code":-32603,"message":"Error: VM Exception while processing transaction: revert ERC20: transfer amount exceeds balance"}}',
@@ -321,7 +315,10 @@ describe('Market', () => {
       await mintCurrency(defaultBid.currency, defaultBid.bidder, defaultBid.amount)
       await approveCurrency(defaultBid.currency, maket.address, bidderWallet)
 
-      await expect(setBid(maket, { ...defaultBid, currency: AddressZero }, defaultTokenId)).rejectedWith('Market: bid currency cannot be 0 address')
+      await expect(setBid(maket, {
+  ...defaultBid, currency: AddressZero,
+  offline: false
+}, defaultTokenId)).rejectedWith('Market: bid currency cannot be 0 address')
     })
 
     it('should revert if the bid recipient is 0 address', async () => {
@@ -330,7 +327,10 @@ describe('Market', () => {
       await mintCurrency(defaultBid.currency, defaultBid.bidder, defaultBid.amount)
       await approveCurrency(defaultBid.currency, maket.address, bidderWallet)
 
-      await expect(setBid(maket, { ...defaultBid, recipient: AddressZero }, defaultTokenId)).rejectedWith('Market: bid recipient cannot be 0 address')
+      await expect(setBid(maket, {
+  ...defaultBid, recipient: AddressZero,
+  offline: false
+}, defaultTokenId)).rejectedWith('Market: bid recipient cannot be 0 address')
     })
 
     it('should revert if the bidder bids 0 tokens', async () => {
@@ -339,7 +339,10 @@ describe('Market', () => {
       await mintCurrency(defaultBid.currency, defaultBid.bidder, defaultBid.amount)
       await approveCurrency(defaultBid.currency, maket.address, bidderWallet)
 
-      await expect(setBid(maket, { ...defaultBid, amount: 0 }, defaultTokenId)).rejectedWith('Market: cannot bid amount of 0')
+      await expect(setBid(maket, {
+  ...defaultBid, amount: 0,
+  offline: false
+}, defaultTokenId)).rejectedWith('Market: cannot bid amount of 0')
     })
 
     it('should accept a valid bid', async () => {
@@ -371,6 +374,7 @@ describe('Market', () => {
         recipient: otherWallet.address,
         spender: bidderWallet.address,
         sellOnShare: Decimal.new(10),
+        offline: false
       }
 
       await mintCurrency(defaultBid.currency, largerValidBid.bidder, largerValidBid.amount)
@@ -397,7 +401,10 @@ describe('Market', () => {
       const bidderBalance = toNumWei(await ZOO__factory.connect(defaultBid.currency, bidderWallet).balanceOf(bidderWallet.address))
 
       await setBid(maket, defaultBid, defaultTokenId)
-      await expect(setBid(maket, { ...defaultBid, amount: defaultBid.amount * 2 }, defaultTokenId)).fulfilled
+      await expect(setBid(maket, {
+  ...defaultBid, amount: defaultBid.amount * 2,
+  offline: false
+}, defaultTokenId)).fulfilled
 
       const afterBalance = toNumWei(await ZOO__factory.connect(defaultBid.currency, bidderWallet).balanceOf(bidderWallet.address))
       await expect(afterBalance).eq(bidderBalance - defaultBid.amount * 2)
