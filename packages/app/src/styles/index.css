@@ -10,6 +10,17 @@
 
 @import "./react-morphing-modal.css";
 
+
+
+.slick-dots li.slick-active button:before {
+  color: #14F195 !important;
+}
+
+.slick-dots li button:before {
+  color: white!important;
+}
+
+
 *,
 *:before,
 *:after {
