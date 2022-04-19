@@ -50,18 +50,9 @@ type MediaData = {
   metadataHash: Bytes
 }
 
-type Ask = {
-  currency: string
-  amount: BigNumberish
-}
+type Ask = { amount: BigNumberish; currency: string; offline: boolean; }
 
-type Bid = {
-  currency: string
-  amount: BigNumberish
-  bidder: string
-  recipient: string
-  sellOnShare: { value: BigNumberish }
-}
+type Bid = { amount: BigNumberish; currency: string; bidder: string; recipient: string; sellOnShare: { value: BigNumberish; }; offline: boolean; }
 
 describe('Media', () => {
   let [deployerWallet, bidderWallet, creatorWallet, ownerWallet, prevOwnerWallet, otherWallet, nonBidderWallet] = generatedWallets(provider)
@@ -77,6 +68,7 @@ describe('Media', () => {
     amount: 100,
     currency: '0x41A322b28D0fF354040e2CbC676F0320d8c8850d',
     sellOnShare: Decimal.new(0),
+    offline: false
   }
   const defaultBid = (currency: string, bidder: string, recipient?: string) => ({
     amount: 100,
@@ -84,6 +76,7 @@ describe('Media', () => {
     bidder,
     recipient: recipient || bidder,
     sellOnShare: Decimal.new(10),
+    offline: false
   })
 
   let mediaAddress: string
@@ -645,6 +638,7 @@ describe('Media', () => {
           bidder: bidderWallet.address,
           recipient: otherWallet.address,
           sellOnShare: Decimal.new(10),
+          offline: false
         },
         1,
       )
