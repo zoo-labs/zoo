@@ -24,17 +24,19 @@ import { useZoobalance } from "state/zoo/hooks";
 import Banner from "components/Banner";
 import MoonPayBtn from "components/Moonpaybtn/MoonpayBtn";
 import { metaMask } from "connectors/metaMask";
-// import { ChainId } from '../../config/networks'
-
-// import { ExternalLink, NavLink } from "./Link";
-// import { ReactComponent as Burger } from "../assets/images/burger.svg";
+import { CartItem } from "types/cart";
+import { useAppSelector } from "state/hooks";
+import CartSideNav from "components/CartSideNav";
 
 function AppBar(props: { banner?: boolean }): JSX.Element {
   const { i18n } = useLingui();
   const { account, chainId, library, connector } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
-
+  const { CartItems }: { CartItems: CartItem[] } = useAppSelector(
+    (state) => state.store
+  );
   const router = useRouter();
+
   let linkStyle =
     "p-2 text-baseline hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap";
 
@@ -50,9 +52,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
     (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
 
   return (
-    //     // <header className="flex flex-row justify-between w-screen flex-nowrap">
-    <header className="fixed z-20 flex-shrink-0 w-full bg-black">
-      {/* {props.banner && <Banner />} */}
+    <header className="fixed flex-shrink-0 w-full bg-black z-999">
       <Banner />
       <Popover as="nav" className="z-10 w-full bg-transparent header-border-b">
         {({ open }) => (
@@ -112,82 +112,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                         </a>
                       </NavLink>
                       <Community />
-
-                      {/* <NavLink href="/press">
-                        <a
-                          id={`mint-nav-link`}
-                          className={
-                            router.pathname == "/press"
-                              ? `${linkStyle} text-grey`
-                              : `${linkStyle} text-white`
-                          }
-                        >
-                          {i18n._(t`Press`)}
-                        </a>
-                      </NavLink> */}
                       <Learn />
-
-                      {/* <NavLink href="/learn">
-                        <a
-                          id={`mint-nav-link`}
-                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                        >
-                          {i18n._(t`Learn`)}
-                        </a>
-                      </NavLink> */}
-                      {/* {chainId && featureEnabled(Feature.MIGRATE, chainId) && (
-                        <NavLink href={"/migrate"}>
-                          <a
-                            id={`migrate-nav-link`}
-                            className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                          >
-                            {i18n._(t`Migrate`)}
-                          </a>
-                        </NavLink>
-                      )}
-                      {chainId &&
-                        featureEnabled(Feature.LIQUIDITY_MINING, chainId) && (
-                          <NavLink href={"/farm"}>
-                            <a
-                              id={`farm-nav-link`}
-                              className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                            >
-                              {i18n._(t`Farm`)}
-                            </a>
-                          </NavLink>
-                        )}
-                      {chainId && featureEnabled(Feature.KASHI, chainId) && (
-                        <>
-                          <NavLink href={"/lend"}>
-                            <a
-                              id={`lend-nav-link`}
-                              className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                            >
-                              {i18n._(t`Lend`)}
-                            </a>
-                          </NavLink>
-                          <NavLink href={"/borrow"}>
-                            <a
-                              id={`borrow-nav-link`}
-                              className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                            >
-                              {i18n._(t`Borrow`)}
-                            </a>
-                          </NavLink>
-                        </>
-                      )}
-                      {chainId && featureEnabled(Feature.STAKING, chainId) && (
-                        <NavLink href={"/stake"}>
-                          <a
-                            id={`stake-nav-link`}
-                            className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                          >
-                            {i18n._(t`Stake`)}
-                          </a>
-                        </NavLink>
-                      )} */}
-                      {/* moon pay widget */}
-                      {/* <MoonPayBtn></MoonPayBtn> */}
                     </div>
                   </div>
                 </div>
@@ -208,7 +133,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                 </div>
 
                 <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
-                  <div className="flex items-center justify-between w-full space-x-2 sm:justify-end">
+                  <div className="flex items-center justify-between w-full space-x-4 sm:justify-end">
                     {chainId &&
                       // [ChainId.MAINNET].includes(chainId) &&
                       connector &&
@@ -279,13 +204,9 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                         <Web3Network />
                       </div>
                     )} */}
-                    {/* My Wallet Button */}
-                    <div className=""></div>
-                    <div className="hidden md:block">
-                      {/* <LanguageSwitch /> */}
-                    </div>
                     <More />
                   </div>
+                  <CartSideNav />
                 </div>
                 <div className="flex -mr-2 sm:hidden">
                   {/* Mobile menu button */}
@@ -334,7 +255,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
               <div className="flex flex-col px-4 pt-2 pb-3 space-y-1">
                 <a
                   id={`marketplace`}
-                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap tracking-widest"
+                  className="p-2 tracking-widest text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   // style={{letterSpacing: '2px'}}
                   href="/wallet"
                   style={{ letterSpacing: "2px" }}
