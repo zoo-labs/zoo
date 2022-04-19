@@ -50,8 +50,6 @@ const Cart = () => {
                         <div className="text-gray-400 ">
                           <p className="mt-8 mb-1">Quantity</p>
                           <div className="flex flex-col gap-4 lg:flex-row">
-                            //Check if quantity is more than available quantity
-                            in stock
                             <input
                               value={quantity}
                               onChange={(e) =>
