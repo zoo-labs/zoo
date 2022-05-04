@@ -9,7 +9,7 @@ import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 contract Faucet is Ownable {
     using SafeMath for uint256;
 
-    uint256 public rate = 100000;
+    uint256 public rate = 10000;
 
     IERC20 token;
 
@@ -27,11 +27,11 @@ contract Faucet is Ownable {
     }
 
     function fund(address to) public returns (uint256) {
-        uint256 amount = rate.mul(10**18);
-        require(amount <= token.balanceOf(address(this)));
-        token.transfer(to, amount);
-        emit Fund(msg.sender, amount);
-        return amount;
+        // uint256 amount = rate.mul(10**18);
+        require(rate <= token.balanceOf(address(this)));
+        token.transfer(to, rate);
+        emit Fund(msg.sender, rate);
+        return rate;
     }
 
     function withdraw() public onlyOwner {
