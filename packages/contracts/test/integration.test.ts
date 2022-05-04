@@ -11,7 +11,7 @@ import Decimal from '../utils/Decimal'
 
 chai.use(asPromised)
 
-const ONE_DAY = 24 * 60 * 60
+const ONE_DAY = 24 * 60 * 60;
 
 // helper function so we can parse numbers and do approximate number calculations, to avoid annoying gas calculations
 const smallify = (bn: BigNumber) => bn.div(THOUSANDTH_ZOO).toNumber()
@@ -97,56 +97,61 @@ describe('integration', async () => {
     await market.connect(deployer).configure(media.address)
     await mint(media.connect(creator))
     await mint(media.connect(creator))
-    await otherNft.mint(creator.address, 0)
-    await media.connect(creator).transferFrom(creatorAddress, ownerAddress, 0)
-    await otherNft.connect(creator).transferFrom(creatorAddress, ownerAddress, 0)
+    await otherNft.mint(creator.address, 1)
+    await media.connect(creator).transferFrom(creatorAddress, ownerAddress, 1)
+    await otherNft.connect(creator).transferFrom(creatorAddress, ownerAddress, 1)
   })
 
   describe('Auction with no curator', async () => {
     async function run() {
       console.log('connect media')
-      await media.connect(owner).approve(auction.address, MaxUint256)
-      await token.connect(deployer).mint(bidderAAddress, 1000000000000000000)
-      await token.connect(deployer).mint(bidderBAddress, 1000000000000000000)
-      await media.connect(deployer).mint(data, defaultBidShares)
-      await media.connect(deployer).mint(dataTwo, defaultBidShares)
+      await media.connect(owner).approve(auction.address, 1)
+      await token.connect(deployer).mint(bidderAAddress, ONE_ZOO)
+      await token.connect(deployer).mint(bidderBAddress, TWO_ZOO)
+      await token.connect(bidderA).approve(auction.address, ONE_ZOO)
+      await token.connect(bidderB).approve(auction.address, TWO_ZOO)
       console.log('connect auction')
-      await auction.connect(owner).createAuction(1, media.address, ONE_DAY, TENTH_ZOO, ethers.constants.AddressZero, 0, ethers.constants.AddressZero)
-      console.log('createbid auction')
-      await auction.connect(bidderA).createBid(1, ONE_ZOO, { value: ONE_ZOO })
-      await auction.connect(bidderB).createBid(1, TWO_ZOO, { value: TWO_ZOO })
-      await ethers.providers[0].send('evm_setNextBlockTimestamp', [Date.now() + ONE_DAY])
+      await auction.connect(owner).createAuction(1, media.address, ONE_DAY, TENTH_ZOO, ethers.constants.AddressZero, 0, token.address)
+      console.log('action currency', await auction.tokenAddress())
+      // console.log('onwer of tokenId', await media.auctions(0).tokenOwner)
+      // console.log('createbid auction', await auction._exists(1))
+      await auction.connect(bidderA).createBid(0, ONE_ZOO, { value: ONE_ZOO })
+      await auction.connect(bidderB).createBid(0, TWO_ZOO, { value: TWO_ZOO })
+      await ethers.provider.send('evm_increaseTime', [ONE_DAY]);
+      await ethers.provider.send('evm_mine', []);
       await auction.connect(otherUser).endAuction(0)
     }
 
     it('should transfer the NFT to the winning bidder', async () => {
       await run()
-      expect(await media.ownerOf(0)).to.eq(bidderBAddress)
+      expect(await media.ownerOf(1)).to.eq(bidderBAddress)
     })
 
     it('should withdraw the winning bid amount from the winning bidder', async () => {
-      const beforeBalance = await bidderB.getBalance()
       await run()
-      const afterBalance = await bidderB.getBalance()
+      const afterBalance = await token.balanceOf(bidderBAddress)
 
-      expect(smallify(beforeBalance.sub(afterBalance))).to.be.approximately(smallify(TWO_ZOO), smallify(TENTH_ZOO))
+      expect(afterBalance).to.eq(ONE_ZOO.mul(0))
     })
 
     it('should refund the losing bidder', async () => {
-      const beforeBalance = await bidderA.getBalance()
+      const beforeBalance = await token.balanceOf(bidderAAddress)
       await run()
-      const afterBalance = await bidderA.getBalance()
+      const afterBalance = await token.balanceOf(bidderAAddress)
       
-      expect(smallify(beforeBalance)).to.be.approximately(smallify(afterBalance), smallify(TENTH_ZOO))
+      expect(afterBalance).to.eq(ONE_ZOO)
     })
 
     it('should pay the auction creator', async () => {
-      const beforeBalance = await ownerAddress.getBalance()
+      const beforeBalance = await token.balanceOf(ownerAddress)
       await run()
-      const afterBalance = await ownerAddress.getBalance()
+      const afterBalance = await token.balanceOf(ownerAddress)
 
-      // 15% creator fee -> 2ZOO * 85% = 1.7 ZOO
-      expect(smallify(afterBalance)).to.be.approximately(smallify(beforeBalance.add(TENTH_ZOO.mul(17))), smallify(TENTH_ZOO))
+      expect(smallify(afterBalance)).to.be.approximately(
+        // 20% curator fee  -> 2 ZOO * 80% = 1.6 ZOO
+        smallify(beforeBalance.add(TENTH_ZOO.mul(16))),
+        smallify(TENTH_ZOO),
+      )
     })
 
     it('should pay the token creator in ZooToken', async () => {
@@ -161,44 +166,49 @@ describe('integration', async () => {
 
   describe('ZOO auction with curator', () => {
     async function run() {
-      await media.connect(owner).approve(auction.address, 0)
-      await auction.connect(owner).createAuction(1, media.address, ONE_DAY, TENTH_ZOO, curatorAddress, 20, ethers.constants.AddressZero)
-      await auction.connect(curator).setAuctionApproval(1, true)
-      await auction.connect(bidderA).createBid(1, ONE_ZOO, { value: ONE_ZOO })
-      await auction.connect(bidderB).createBid(1, TWO_ZOO, { value: TWO_ZOO })
-      await ethers.providers[0].send('evm_setNextBlockTimestamp', [Date.now() + ONE_DAY])
+      await media.connect(owner).approve(auction.address, 1)
+      await auction.connect(owner).createAuction(1, media.address, ONE_DAY, TENTH_ZOO, curatorAddress, 20, token.address)
+      await auction.connect(curator).setAuctionApproval(0, true)
+      await token.connect(deployer).mint(bidderAAddress, ONE_ZOO)
+      await token.connect(deployer).mint(bidderBAddress, TWO_ZOO)
+      await token.connect(bidderA).approve(auction.address, ONE_ZOO)
+      // await token.connect(bidderB).deposit({ value: TWO_ZOO });
+      await token.connect(bidderB).approve(auction.address, TWO_ZOO)
+      await auction.connect(bidderA).createBid(0, ONE_ZOO, { value: ONE_ZOO })
+      await auction.connect(bidderB).createBid(0, TWO_ZOO, { value: TWO_ZOO })
+      await ethers.provider.send('evm_increaseTime', [ONE_DAY]);
+      await ethers.provider.send('evm_mine', []);
       await auction.connect(otherUser).endAuction(0)
     }
 
     it('should transfer the NFT to the winning bidder', async () => {
       await run()
-      expect(await media.connect(owner).ownerOf(0)).to.eq(bidderBAddress)
+      expect(await media.connect(owner).ownerOf(1)).to.eq(bidderBAddress)
     })
 
     it('should withdraw the winning bid amount from the winning bidder', async () => {
-      const beforeBalance = await ethers.provider.getBalance(bidderBAddress)
       await run()
-      const afterBalance = await ethers.provider.getBalance(bidderBAddress)
+      const afterBalance = await token.balanceOf(bidderBAddress)
 
-      expect(smallify(beforeBalance.sub(afterBalance))).to.be.approximately(smallify(TWO_ZOO), smallify(TENTH_ZOO))
+      expect(afterBalance).to.eq(ONE_ZOO.mul(0))
     })
 
     it('should refund the losing bidder', async () => {
-      const beforeBalance = await ethers.provider.getBalance(bidderAAddress)
+      const beforeBalance = await token.balanceOf(bidderAAddress)
       await run()
-      const afterBalance = await ethers.provider.getBalance(bidderAAddress)
+      const afterBalance = await token.balanceOf(bidderAAddress)
 
-      expect(smallify(beforeBalance)).to.be.approximately(smallify(afterBalance), smallify(TENTH_ZOO))
+      expect(afterBalance).to.eq(ONE_ZOO)
     })
 
     it('should pay the auction creator', async () => {
-      const beforeBalance = await ethers.provider.getBalance(ownerAddress)
+      const beforeBalance = await token.balanceOf(ownerAddress)
       await run()
-      const afterBalance = await ethers.provider.getBalance(ownerAddress)
+      const afterBalance = await token.balanceOf(ownerAddress)
 
       expect(smallify(afterBalance)).to.be.approximately(
-        // 15% creator share + 20% curator fee  -> 1.7 ZOO * 80% = 1.36 ZOO
-        smallify(beforeBalance.add(TENTH_ZOO.mul(14))),
+        // 20% curator fee  -> 2 ZOO * 80% = 1.6 ZOO
+        smallify(beforeBalance.add(TENTH_ZOO.mul(16))),
         smallify(TENTH_ZOO),
       )
     })
@@ -213,9 +223,9 @@ describe('integration', async () => {
     })
 
     it('should pay the curator', async () => {
-      const beforeBalance = await ethers.provider.getBalance(curatorAddress)
+      const beforeBalance = await token.balanceOf(curatorAddress)
       await run()
-      const afterBalance = await ethers.provider.getBalance(curatorAddress)
+      const afterBalance = await token.balanceOf(curatorAddress)
 
       // 20% of 1.7 ZooToken -> 0.34
       expect(smallify(afterBalance)).to.be.approximately(smallify(beforeBalance.add(THOUSANDTH_ZOO.mul(340))), smallify(TENTH_ZOO))
@@ -224,23 +234,24 @@ describe('integration', async () => {
 
   describe('ZooToken Auction with no curator', () => {
     async function run() {
-      await media.connect(owner).approve(auction.address, 0)
+      await media.connect(owner).approve(auction.address, 1)
       await auction.connect(owner).createAuction(1, media.address, ONE_DAY, TENTH_ZOO, ethers.constants.AddressZero, 20, token.address)
       // await token.connect(bidderA).deposit({ value: ONE_ZOO });
       await token.connect(bidderA).approve(auction.address, ONE_ZOO)
-      await token.connect(deployer).mint(bidderAAddress, 1000000000000000000)
-      await token.connect(deployer).mint(bidderBAddress, 1000000000000000000)
+      await token.connect(deployer).mint(bidderAAddress, ONE_ZOO)
+      await token.connect(deployer).mint(bidderBAddress, TWO_ZOO)
       // await token.connect(bidderB).deposit({ value: TWO_ZOO });
       await token.connect(bidderB).approve(auction.address, TWO_ZOO)
-      await auction.connect(bidderA).createBid(1, ONE_ZOO, { value: ONE_ZOO })
-      await auction.connect(bidderB).createBid(1, TWO_ZOO, { value: TWO_ZOO })
-      await ethers.provider.send('evm_setNextBlockTimestamp', [Date.now() + ONE_DAY])
+      await auction.connect(bidderA).createBid(0, ONE_ZOO, { value: ONE_ZOO })
+      await auction.connect(bidderB).createBid(0, TWO_ZOO, { value: TWO_ZOO })
+      await ethers.provider.send('evm_increaseTime', [ONE_DAY]);
+      await ethers.provider.send('evm_mine', []);
       await auction.connect(otherUser).endAuction(0)
     }
 
     it('should transfer the NFT to the winning bidder', async () => {
       await run()
-      expect(await media.ownerOf(0)).to.eq(bidderBAddress)
+      expect(await media.ownerOf(1)).to.eq(bidderBAddress)
     })
 
     it('should withdraw the winning bid amount from the winning bidder', async () => {
@@ -258,11 +269,15 @@ describe('integration', async () => {
     })
 
     it('should pay the auction creator', async () => {
+      const beforeBalance = await token.balanceOf(ownerAddress)
       await run()
       const afterBalance = await token.balanceOf(ownerAddress)
 
-      // 15% creator fee -> 2 ZOO * 85% = 1.7ZooToken
-      expect(afterBalance).to.eq(TENTH_ZOO.mul(17))
+      expect(smallify(afterBalance)).to.be.approximately(
+        // 20% curator fee  -> 2 ZOO * 80% = 1.6 ZOO
+        smallify(beforeBalance.add(TENTH_ZOO.mul(16))),
+        smallify(TENTH_ZOO),
+      )
     })
 
     it('should pay the token creator', async () => {
@@ -277,22 +292,25 @@ describe('integration', async () => {
 
   describe('ZooToken auction with curator', async () => {
     async function run() {
-      await media.connect(owner).approve(auction.address, 0)
+      await media.connect(owner).approve(auction.address, 1)
       await auction.connect(owner).createAuction(1, media.address, ONE_DAY, TENTH_ZOO, curator.address, 20, token.address)
-      await auction.connect(curator).setAuctionApproval(1, true)
+      await auction.connect(curator).setAuctionApproval(0, true)
       // await token.connect(bidderA).deposit({ value: ONE_ZOO });
+      await token.connect(deployer).mint(bidderAAddress, ONE_ZOO)
+      await token.connect(deployer).mint(bidderBAddress, TWO_ZOO)
       await token.connect(bidderA).approve(auction.address, ONE_ZOO)
       // await token.connect(bidderB).deposit({ value: TWO_ZOO });
       await token.connect(bidderB).approve(auction.address, TWO_ZOO)
-      await auction.connect(bidderA).createBid(1, ONE_ZOO, { value: ONE_ZOO })
-      await auction.connect(bidderB).createBid(1, TWO_ZOO, { value: TWO_ZOO })
-      await ethers.provider.send('evm_setNextBlockTimestamp', [Date.now() + ONE_DAY])
+      await auction.connect(bidderA).createBid(0, ONE_ZOO, { value: ONE_ZOO })
+      await auction.connect(bidderB).createBid(0, TWO_ZOO, { value: TWO_ZOO })
+      await ethers.provider.send('evm_increaseTime', [ONE_DAY]);
+      await ethers.provider.send('evm_mine', []);
       await auction.connect(otherUser).endAuction(0)
     }
 
     it('should transfer the NFT to the winning bidder', async () => {
       await run()
-      expect(await media.ownerOf(0)).to.eq(bidderBAddress)
+      expect(await media.ownerOf(1)).to.eq(bidderBAddress)
     })
 
     it('should withdraw the winning bid amount from the winning bidder', async () => {
@@ -310,11 +328,15 @@ describe('integration', async () => {
     })
 
     it('should pay the auction creator', async () => {
+      const beforeBalance = await token.balanceOf(ownerAddress)
       await run()
       const afterBalance = await token.balanceOf(ownerAddress)
 
-      // 15% creator fee + 20% curator fee -> 2 ZOO * 85% * 80% = 1.36ZooToken
-      expect(afterBalance).to.eq(THOUSANDTH_ZOO.mul(1360))
+      expect(smallify(afterBalance)).to.be.approximately(
+        // 20% curator fee  -> 2 ZOO * 80% = 1.6 ZOO
+        smallify(beforeBalance.add(TENTH_ZOO.mul(16))),
+        smallify(TENTH_ZOO),
+      )
     })
 
     it('should pay the token creator', async () => {
@@ -338,39 +360,44 @@ describe('integration', async () => {
 
   describe('3rd party nft auction', async () => {
     async function run() {
-      await otherNft.connect(owner).approve(auction.address, 0)
-      await auction.connect(owner).createAuction(1, otherNft.address, ONE_DAY, TENTH_ZOO, curatorAddress, 20, ethers.constants.AddressZero)
-      await auction.connect(curator).setAuctionApproval(1, true)
-      await auction.connect(bidderA).createBid(1, ONE_ZOO, { value: ONE_ZOO })
-      await auction.connect(bidderB).createBid(1, TWO_ZOO, { value: TWO_ZOO })
-      await ethers.provider.send('evm_setNextBlockTimestamp', [Date.now() + ONE_DAY])
+      await otherNft.connect(owner).approve(auction.address, 1)
+      await auction.connect(owner).createAuction(1, otherNft.address, ONE_DAY, TENTH_ZOO, curatorAddress, 20, token.address)
+      await auction.connect(curator).setAuctionApproval(0, true)
+      await token.connect(deployer).mint(bidderAAddress, ONE_ZOO)
+      await token.connect(deployer).mint(bidderBAddress, TWO_ZOO)
+      await token.connect(bidderA).approve(auction.address, ONE_ZOO)
+      // await token.connect(bidderB).deposit({ value: TWO_ZOO });
+      await token.connect(bidderB).approve(auction.address, TWO_ZOO)
+      await auction.connect(bidderA).createBid(0, ONE_ZOO, { value: ONE_ZOO })
+      await auction.connect(bidderB).createBid(0, TWO_ZOO, { value: TWO_ZOO })
+      await ethers.provider.send('evm_increaseTime', [ONE_DAY]);
+      await ethers.provider.send('evm_mine', []);
       await auction.connect(otherUser).endAuction(0)
     }
     it('should transfer the NFT to the winning bidder', async () => {
       await run()
-      expect(await otherNft.ownerOf(0)).to.eq(bidderBAddress)
+      expect(await otherNft.ownerOf(1)).to.eq(bidderBAddress)
     })
 
     it('should withdraw the winning bid amount from the winning bidder', async () => {
-      const beforeBalance = await ethers.provider.getBalance(bidderBAddress)
       await run()
-      const afterBalance = await ethers.provider.getBalance(bidderBAddress)
+      const afterBalance = await token.balanceOf(bidderBAddress)
 
-      expect(smallify(beforeBalance.sub(afterBalance))).to.be.approximately(smallify(TWO_ZOO), smallify(TENTH_ZOO))
+      expect(afterBalance).to.eq(ONE_ZOO.mul(0))
     })
 
     it('should refund the losing bidder', async () => {
-      const beforeBalance = await ethers.provider.getBalance(bidderAAddress)
+      const beforeBalance = await token.balanceOf(bidderAAddress)
       await run()
-      const afterBalance = await ethers.provider.getBalance(bidderAAddress)
+      const afterBalance = await token.balanceOf(bidderAAddress)
 
-      expect(smallify(beforeBalance)).to.be.approximately(smallify(afterBalance), smallify(TENTH_ZOO))
+      expect(afterBalance).to.eq(ONE_ZOO)
     })
 
     it('should pay the auction creator', async () => {
-      const beforeBalance = await ethers.provider.getBalance(ownerAddress)
+      const beforeBalance = await token.balanceOf(ownerAddress)
       await run()
-      const afterBalance = await ethers.provider.getBalance(ownerAddress)
+      const afterBalance = await token.balanceOf(ownerAddress)
 
       expect(smallify(afterBalance)).to.be.approximately(
         // 20% curator fee  -> 2 ZOO * 80% = 1.6 ZOO
@@ -380,9 +407,9 @@ describe('integration', async () => {
     })
 
     it('should pay the curator', async () => {
-      const beforeBalance = await ethers.provider.getBalance(curatorAddress)
+      const beforeBalance = await token.balanceOf(curatorAddress)
       await run()
-      const afterBalance = await ethers.provider.getBalance(curatorAddress)
+      const afterBalance = await token.balanceOf(curatorAddress)
 
       // 20% of 2 ZooToken -> 0.4
       expect(smallify(afterBalance)).to.be.approximately(smallify(beforeBalance.add(TENTH_ZOO.mul(4))), smallify(THOUSANDTH_ZOO))

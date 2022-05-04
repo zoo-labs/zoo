@@ -34,13 +34,13 @@ describe('Test Faucet', () => {
   })
 
   it('Should mint 100,000,000 from ZOO to Faucet', async () => {
-    console.log('owner is', await zooToken.owner())
-    console.log(owner)
-    // const faucetPreBal: BigNumber = await zooToken.connect(owner).balanceOf(zooFaucet.address)
-    // await zooToken.connect(owner).mint(zooFaucet.address, mintAmt)
-    // const faucetPostBal: BigNumber = await zooToken.connect(owner).balanceOf(zooFaucet.address)
-    // expect(parseInt(faucetPreBal._hex)).to.equal(0)
-    // expect(parseInt(faucetPostBal._hex)).to.equal(mintAmt)
+    const faucetPreBal = await zooToken.connect(owner).balanceOf(zooFaucet.address)
+    await zooToken.connect(owner).mint(zooFaucet.address, mintAmt)
+    const faucetPostBal = await zooToken.connect(owner).balanceOf(zooFaucet.address)
+    console.log(parseInt(faucetPreBal), parseInt(faucetPostBal));
+    
+    expect(parseInt(faucetPreBal)).to.equal(0)
+    expect(parseInt(faucetPostBal)).to.equal(mintAmt)
   })
 
   it('Should be able transfer 10k ZOO from Faucet', async () => {
