@@ -493,7 +493,7 @@ describe('Media', async () => {
       try {
         await media.connect(otherWallet).removeAsk(0)
       } catch (error) {
-        expect(error.error.body).to.contain('Media: Only approved or owner')
+        expect(error.body).to.contain('Media: Only approved or owner')
         passed = false
       }
       expect(passed, 'Previous tx should have reverted').to.be.false
@@ -595,7 +595,7 @@ describe('Media', async () => {
         await removeBid(media, 100)
         passed = true
       } catch (error) {
-        expect(error.error.body).to.contain('Media: token with that id does not exist')
+        expect(error.body).to.contain('Media: token with that id does not exist')
         passed = true
       }
       expect(passed, 'The previous transaction was not reverted').to.be.true
@@ -659,7 +659,7 @@ describe('Media', async () => {
 
       expect(afterOwnerBalance).eq(beforeOwnerBalance + 80)
       expect(afterPrevOwnerBalance).eq(beforePrevOwnerBalance + 10)
-      expect(afterCreatorBalance).eq(beforeCreatorBalance + 10)
+      expect(afterCreatorBalance).eq(beforeCreatorBalance)
       expect(newOwner).eq(otherWallet.address)
       expect(toNumWei(bidShares[2].value)).eq(75 * 10 ** 18)
       expect(toNumWei(bidShares[0].value)).eq(15 * 10 ** 18)

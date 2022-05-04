@@ -6,7 +6,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   
   const { deployments, ethers, getNamedAccounts, network } = hre
   const { deploy } = deployments
-  const { deployer } = await getNamedAccounts()
 
   const [deployerWallet] = await ethers.getSigners()
 
@@ -29,7 +28,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const keeper = await ethers.getContractAt('ZooKeeper', deployResult.address)
 
-  const pair = await factory.connect(deployer).getPair(zooAddress.address, bnb.address)
+  const pair = await factory.connect(deployerWallet).getPair(zooAddress.address, bnb.address)
 
   console.log(await keeper.owner());
   
@@ -39,7 +38,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   await keeper.connect(deployerWallet).configure(media.address, zooAddress.address, pair, bridge.address, true)
 
   //   // Mint ZOO to keeper for yield
-  await zooAddress.connect(deployer).mint(keeper.address, 1000000000000)
+  await zooAddress.connect(deployerWallet).mint(keeper.address, 1000000000000)
 
   return hre.network.live
 }
