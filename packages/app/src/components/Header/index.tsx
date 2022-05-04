@@ -102,7 +102,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                       >
                         {i18n._(t`Chart`)}
                       </a>
-                      <NavLink href="/store">
+                      {/* <NavLink href="/store">
                         <a
                           id={`store`}
                           className={
@@ -114,7 +114,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                         >
                           {i18n._(t`Store`)}
                         </a>
-                      </NavLink>
+                      </NavLink> */}
                       <Community />
                       <Learn />
                     </div>
@@ -320,7 +320,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                   {i18n._(t`Chart`)}
                 </a>
 
-                <a
+                {/* <a
                   id={`store`}
                   className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="/store"
@@ -329,7 +329,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                   style={{ letterSpacing: "2px" }}
                 >
                   {i18n._(t`Store`)}
-                </a>
+                </a> */}
 
                 <Community />
 
