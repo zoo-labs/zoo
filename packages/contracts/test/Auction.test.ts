@@ -13,27 +13,53 @@ chai.use(solidity)
 
 chai.use(asPromised)
 
-describe.skip('Auction', () => {
-  let market: Market
-  let media: Media
+let mediaAddress: string
+let marketAddress: string
+let tokenAddress: string
+let keeperAddress: string
+
+let market
+let media
+let zookeeper
+
+
+describe('Auction', async () => {
   let token: Contract
   let badERC721: BadERC721
   let testERC721: TestERC721
 
+  const signers = await ethers.getSigners()
+
   beforeEach(async () => {
-    const signers = await ethers.getSigners()
 
     await ethers.provider.send('hardhat_reset', [])
     token = await deployToken()
-    const contracts = await deployProtocol(token.address)
     const nfts = await deployOtherNFTs()
-    market = contracts.market
-    media = contracts.media
+
+    // const contracts = await deployProtocol(token.address)
+
+    // market = contracts.market
+    // media = contracts.media
+
+    market = await (await (await ethers.getContractFactory('Market')).deploy()).deployed()
+    marketAddress = market.address
+
+    media = await (await (await ethers.getContractFactory('Media')).deploy('ZooAnimals', 'ANML')).deployed()
+    mediaAddress = media.address
+
+    zookeeper = await (await (await ethers.getContractFactory('ZooKeeper')).deploy()).deployed()
+    keeperAddress = zookeeper.address
+
     badERC721 = nfts.bad
     testERC721 = nfts.test
 
+    await market.connect(signers[0]).configure(mediaAddress)
+    await media.connect(signers[0]).configure(token.address, market.address)
+
+    await market.connect(signers[0]).configure(media.address)
+
     for (var i = 0; i < signers.length; i++) {
-      await token.mint(signers[i].address, 10000000000)
+      await token.connect(signers[0]).mint(signers[i].address, 10000000000)
     }
   })
 
@@ -56,7 +82,7 @@ describe.skip('Auction', () => {
     it('should be able to deploy', async () => {
       const Auction = await ethers.getContractFactory('Auction')
       const auctionHouse = await Auction.deploy()
-      await auctionHouse.configure(media.address, token.address)
+      await auctionHouse.connect(signers[0]).configure(media.address, token.address)
 
       expect(await auctionHouse.mediaAddress()).to.eq(media.address, 'incorrect Media address')
       expect(formatUnits(await auctionHouse.timeBuffer(), 0)).to.eq('900', 'time buffer should equal 900')
@@ -66,7 +92,7 @@ describe.skip('Auction', () => {
     it('should not allow a configuration address that is not the Zora Media Protocol', async () => {
       const Auction = await ethers.getContractFactory('Auction')
       const zooAuction = await Auction.deploy()
-      await expect(zooAuction.configure('0x0000000000000000000000000000000000000000', token.address)).to.be.reverted
+      await expect(zooAuction.connect(signers[0]).configure('0x0000000000000000000000000000000000000000', token.address)).to.be.reverted
     })
   })
 
@@ -78,16 +104,25 @@ describe.skip('Auction', () => {
       await approveAuction(media, auctionHouse)
     })
 
-    it('should revert if the token contract does not support the ERC721 interface', async () => {
-      const duration = 60 * 60 * 24
-      const reservePrice = 100
+it("should revert if the token contract does not support the ERC721 interface", async () => {
+      const duration = 60 * 60 * 24;
+      const reservePrice = BigNumber.from(10).pow(18).div(2);
+      const [_, curator] = await ethers.getSigners();
 
-      const [_, curator] = await ethers.getSigners()
-
-      await expect(auctionHouse.createAuction(0, badERC721.address, duration, reservePrice, curator.address, 5, '0x0000000000000000000000000000000000000000')).to.be.revertedWith(
-        'tokenContract does not support ERC721 interface',
-      )
-    })
+      await expect(
+        auctionHouse.createAuction(
+          0,
+          badERC721.address,
+          duration,
+          reservePrice,
+          curator.address,
+          5,
+          "0x0000000000000000000000000000000000000000"
+        )
+      ).eventually.rejectedWith(
+        revert`tokenContract does not support ERC721 interface`
+      );
+    });
 
     it('should revert if the caller is not approved', async () => {
       const duration = 60 * 60 * 24
@@ -368,28 +403,6 @@ describe.skip('Auction', () => {
         expect(currAuction.amount).to.eq(200)
       })
 
-      it('should emit an AuctionBid event', async () => {
-        const block = await ethers.provider.getBlockNumber()
-
-        token = token.connect(auctionHouse.signer)
-
-        await token.connect(admin).mint(await auctionHouse.signer.getAddress(), 200)
-        await token.approve(auctionHouse.address, 200)
-
-        await auctionHouse.createBid(0, 200, {
-          value: 200,
-        })
-        const events = await auctionHouse.queryFilter(auctionHouse.filters.AuctionBid(null, null, null, null, null, null, null), block)
-        expect(events.length).eq(1)
-        const logDescription = auctionHouse.interface.parseLog(events[0])
-
-        expect(logDescription.name).to.eq('AuctionBid')
-        expect(logDescription.args.auctionId).to.eq(0)
-        expect(logDescription.args.sender).to.eq(await bidderA.getAddress())
-        expect(logDescription.args.value).to.eq(200)
-        expect(logDescription.args.firstBid).to.eq(true)
-        expect(logDescription.args.extended).to.eq(false)
-      })
     })
 
     describe('#second bid', () => {
@@ -646,24 +659,6 @@ describe.skip('Auction', () => {
         expect(auctionResult.auctionCurrency).to.eq(ethers.constants.AddressZero)
         expect(await media.ownerOf(0)).to.eq(await admin.getAddress())
       })
-
-      it('should emit an AuctionCanceled event', async () => {
-        const block = await ethers.provider.getBlockNumber()
-
-        await auctionHouse.connect(admin).cancelAuction(0)
-
-        const events = await auctionHouse.queryFilter(auctionHouse.filters.AuctionCanceled(null, null, null, null), block)
-
-        expect(events.length).eq(1)
-
-        const logDescription = auctionHouse.interface.parseLog(events[0])
-
-        expect(logDescription.args.tokenId.toNumber()).to.eq(0)
-
-        expect(logDescription.args.tokenOwner).to.eq(await admin.getAddress())
-
-        expect(logDescription.args.tokenContract).to.eq(media.address)
-      })
     })
 
     describe('#endAuction', () => {
@@ -760,22 +755,6 @@ describe.skip('Auction', () => {
           await expect(creatorBalance.sub(beforeBalance).add(tokenBalance).toString()).to.eq(expectedProfit)
         })
 
-        it('should emit an AuctionEnded event', async () => {
-          const block = await ethers.provider.getBlockNumber()
-          const auctionData = await auctionHouse.auctions(0)
-          await auctionHouse.endAuction(0)
-          const events = await auctionHouse.queryFilter(auctionHouse.filters.AuctionEnded(null, null, null, null, null, null, null, null, null), block)
-          expect(events.length).eq(1)
-          const logDescription = auctionHouse.interface.parseLog(events[0])
-
-          expect(logDescription.args.tokenId).to.eq(0)
-          expect(logDescription.args.tokenOwner).to.eq(auctionData.tokenOwner)
-          expect(logDescription.args.curator).to.eq(auctionData.curator)
-          expect(logDescription.args.winner).to.eq(auctionData.bidder)
-          expect(logDescription.args.amount.toString()).to.eq('1900000000000000000')
-          expect(logDescription.args.curatorFee.toString()).to.eq('100000000000000000')
-          expect(logDescription.args.auctionCurrency).to.eq(token.address)
-        })
 
         it('should delete the auction', async () => {
           await auctionHouse.endAuction(0)
