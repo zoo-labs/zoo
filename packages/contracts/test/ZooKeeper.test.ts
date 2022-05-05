@@ -14,6 +14,7 @@ import { solidity } from 'ethereum-waffle'
 import { hex } from 'chalk'
 
 import { requireDependencies, setupTestFactory } from './utils'
+import { MaxUint256 } from '@ethersproject/constants'
 const { expect } = requireDependencies()
 
 const setupTest = setupTestFactory(['Media', 'Market', 'Bridge', 'ZOO'])
@@ -89,8 +90,8 @@ class Helper {
 
   async buyEgg(signerIdx: number = 0) {
     // await this.zooToken.connect(this.zooKeeper.address).approve(addr, this.eggPrice)
-    await this.ZOO.approve(this.zooKeeper.address, this.eggPrice)
-    const tx = await this.zooKeeper.buyEgg(1, appSigners[1])
+    await this.ZOO.approve(this.zooKeeper.address, MaxUint256)
+    const tx = await this.zooKeeper.buyEggs(1, 2)
     const args = await this.getEventData(tx, 'BuyEgg')
     return { from_evt: args['from'], eggID: args['eggID'] }
   }
@@ -116,20 +117,20 @@ class Helper {
 
 describe('ZooKeeper', () => {
 
-  it('can buy an egg and hatch an animal from the egg', async () => {
-    const h = await Helper.setup()
+  // it('can buy an egg and hatch an animal from the egg', async () => {
+  //   const h = await Helper.setup()
 
-    await h.ZOO.approve(h.zooKeeper.address, h.eggPrice)
+  //   await h.ZOO.approve(h.zooKeeper.address, h.eggPrice)
 
-    const { eggID: egg1_id } = await h.buyEgg(1)
-    const { eggID: egg2_id } = await h.buyEgg(1)
+  //   const { eggID: egg1_id } = await h.buyEgg(1)
+  //   const { eggID: egg2_id } = await h.buyEgg(1)
 
-    const { eggID: animal1_id } = await h.hatchAnimal(egg1_id)
-    const { eggID: animal2_id } = await h.hatchAnimal(egg2_id)
+  //   const { eggID: animal1_id } = await h.hatchAnimal(egg1_id)
+  //   const { eggID: animal2_id } = await h.hatchAnimal(egg2_id)
 
-    expect(animal1_id).to.equal(egg1_id)
-    expect(animal2_id).to.equal(egg2_id)
-  })
+  //   expect(animal1_id).to.equal(egg1_id)
+  //   expect(animal2_id).to.equal(egg2_id)
+  // })
 
   it('sets the owner of the egg to the buyer', async () => {
     const h = await Helper.setup()
