@@ -13,6 +13,7 @@ import { recoverTypedMessage, recoverTypedSignature, signTypedData } from 'eth-s
 import { bufferToHex, ecrecover, fromRpcSig, pubToAddress } from 'ethereumjs-util'
 import { toUtf8Bytes } from 'ethers/lib/utils'
 import { keccak256 } from '@ethersproject/keccak256'
+import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 
 let provider = new JsonRpcProvider()
 let [deployerWallet] = generatedWallets(provider)
@@ -49,13 +50,13 @@ export const setupTestFactory = (contractArr: string[]) =>
     await deployments.fixture(contractArr)
 
     let tokens: { [key: string]: Contract } = await deployContractsAsync(contractArr)
-    // contractArr.reduce(async (sum: {}, name: string) => {
-    //   const contract: Contract = await ethers.getContract(name)
-    //   return {
-    //     [name]: contract,
-    //     ...sum,
-    //   }
-    // }, {})
+    contractArr.reduce(async (sum: {}, name: string) => {
+      const contract: Contract = await ethers.getContract(name)
+      return {
+        [name]: contract,
+        ...sum,
+      }
+    }, {})
     const signers = await ethers.getSigners()
     const owner = (await getNamedAccounts()).deployer
     return {
@@ -75,7 +76,7 @@ export async function mintCurrency(currency: string, to: string, value: number) 
   await ZOO__factory.connect(currency, deployerWallet).mint(to, value)
 }
 
-export async function approveCurrency(currency: string, spender: string, owner: Wallet) {
+export async function approveCurrency(currency: string, spender: string, owner: Wallet | SignerWithAddress) {
   await ZOO__factory.connect(currency, owner).approve(spender, MaxUint256)
 }
 export async function getBalance(currency: string, owner: string) {
@@ -93,10 +94,10 @@ export type EIP712Sig = {
   s: any
 }
 
-export async function signPermit(owner: Wallet, toAddress: string, tokenAddress: string, tokenId: number, chainId: number) {
+export async function signPermit(media: any, owner: Wallet | SignerWithAddress | any, toAddress: string, tokenAddress: string, tokenId: number, chainId: number) {
   return new Promise<EIP712Sig>(async (res, reject) => {
     let nonce
-    const mediaContract = Media__factory.connect(tokenAddress, owner)
+    const mediaContract = media.connect(owner)
 
     try {
       nonce = (await mediaContract.permitNonces(owner.address, tokenId)).toNumber()
@@ -156,7 +157,8 @@ export async function signPermit(owner: Wallet, toAddress: string, tokenAddress:
 }
 
 export async function signMintWithSig(
-  owner: Wallet,
+  media: any,
+  owner: Wallet | SignerWithAddress | any,
   tokenAddress: string,
   creator: string,
   contentHash: string,
@@ -166,7 +168,7 @@ export async function signMintWithSig(
 ) {
   return new Promise<EIP712Sig>(async (res, reject) => {
     let nonce
-    const mediaContract = Media__factory.connect(tokenAddress, owner)
+    const mediaContract = media.connect(owner)
 
     try {
       nonce = (await mediaContract.mintWithSigNonces(creator)).toNumber()
@@ -240,7 +242,7 @@ export const deployProtocol = async (tokenAddress) => {
   const [deployer] = await ethers.getSigners()
   const token = await (await new ZOO__factory(deployer).deploy()).deployed()
   // const drop = await (await new ZooDrop__factory(deployer).deploy()).deployed();
-  const market = await (await new Market__factory(deployer).deploy()).deployed()
+  const market = await (await (await ethers.getContractFactory('Market')).deploy()).deployed()
   const media = await (await new Media__factory(deployer).deploy('ANML', 'ZooAnimals')).deployed()
   const zookeeper = await (await new ZooKeeper__factory(deployer).deploy()).deployed()
   await market.configure(market.address)
@@ -283,4 +285,4 @@ export const approveAuction = async (media: Media, auctionHouse: Auction) => {
   await media.approve(auctionHouse.address, 0)
 }
 
-export const revert = (messages: TemplateStringsArray) => `VM Exception while processing transaction: revert ${messages[0]}`
+export const revert = (messages: TemplateStringsArray) => `VM Exception while processing transaction: reverted with reason string '${messages[0]}'`
