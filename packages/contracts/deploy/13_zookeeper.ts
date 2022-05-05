@@ -9,8 +9,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const [deployerWallet] = await ethers.getSigners()
 
+  const { deployer } = await getNamedAccounts();
+
   const deployResult = await deploy('ZooKeeper', {
-    from: deployerWallet.address,
+    from: deployer,
     args: [],
     log: true,
   })
@@ -29,8 +31,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const keeper = await ethers.getContractAt('ZooKeeper', deployResult.address)
 
   const pair = await factory.connect(deployerWallet).getPair(zooAddress.address, bnb.address)
-
-  console.log(await keeper.owner());
   
 
   await market.connect(deployerWallet).configure(media.address)

@@ -251,8 +251,6 @@ describe('Market', async () => {
       await media.connect(deployerWallet).mint(data, defaultBidShares)
       await media.connect(deployerWallet).mint(dataTwo, defaultBidShares)
 
-      const currentTokenId = await media._tokenIdTracker()
-
       await media.connect(deployerWallet).setAsk(defaultTokenId, defaultAsk)
 
       // await expect(media.connect(deployerWallet).setAsk(defaultTokenId, defaultAsk)).eventually.fulfilled

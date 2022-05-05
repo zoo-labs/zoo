@@ -84,7 +84,7 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
    */
   bytes4 private constant _INTERFACE_ID_ERC721_METADATA = 0x4e222e66;
 
-  Counters.Counter public _tokenIdTracker;
+  Counters.Counter private _tokenIdTracker;
 
   /* *********
    * Modifiers
