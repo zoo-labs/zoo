@@ -5,7 +5,7 @@ async function main() {
   const UniswapV2Factory = await ethers.getContractFactory('UniswapV2Factory')
   const UniswapV2Pair = await ethers.getContractFactory('UniswapV2Pair')
   const Token = await ethers.getContractFactory('ZooFarmTokenV2')
-  const Farm = await ethers.getContractFactory('ZooFarm')
+  const Farm = await ethers.getContractFactory('Farm')
 
   // Get current account
   const [signer] = await ethers.getSigners()
