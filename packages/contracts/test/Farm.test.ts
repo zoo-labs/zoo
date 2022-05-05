@@ -1,10 +1,10 @@
 import { setupTestFactory, requireDependencies } from './utils'
 
 const { expect } = requireDependencies()
-const setupTest = setupTestFactory(['Farm'])
+const setupTest = setupTestFactory(['Farm', 'ZOO', 'DAO'])
 
 describe('Farm', async () => {
-  xit('exists', async () => {
+  it('exists', async () => {
     const {
       tokens: { ZooFarm: token },
     } = await setupTest()

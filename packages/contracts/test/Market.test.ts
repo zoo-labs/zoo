@@ -150,7 +150,7 @@ describe('Market', async () => {
   // })
 
   describe('#constructor', () => {
-    xit('should be able to deploy', async () => {
+    it('should be able to deploy', async () => {
       await expect(deploy()).eventually.fulfilled
     })
   })
