@@ -28,18 +28,18 @@ const Banner: FC = () => {
                 <Copy
                   className="flex flex-wrap text-left xs:text-xs xs:w-full"
                   toCopy={
-                    process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ||
-                    "0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13"
+                    "https://bscscan.com/address/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13"
                   }
                 >
                   <Typography className="hidden p-1 ml-1 text-xs font-bold text-left underline md:block text-green xs:w-full">
-                    Token Address
+                    <a href="https://bscscan.com/address/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13" target="_blank" rel="noreferrer">
+                      Link to BSC Scan
+                    </a>
                   </Typography>
 
-                  <Typography className="p-1 text-xs font-bold text-left underline text-green xs:w-full ">
-                    {process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ||
-                      "0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13"}
-                  </Typography>
+                  {/* <Typography className="p-1 text-xs font-bold text-left underline text-green xs:w-full ">
+                    {`https://bscscan.com/address/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13`}
+                  </Typography> */}
                 </Copy>
               </span>
             </div>

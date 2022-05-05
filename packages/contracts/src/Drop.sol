@@ -65,7 +65,7 @@ contract Drop is IDrop, Ownable {
         return getEgg(baseEgg).minted;
     }
 
-    // Set current base and hybrid egg
+    // Set currentSupply base and hybrid egg
     function configureEggs(string memory _baseEgg, string memory _hybridEgg) public onlyOwner {
         baseEgg = _baseEgg;
         hybridEgg = _hybridEgg;
@@ -104,6 +104,20 @@ contract Drop is IDrop, Ownable {
         egg.supply = supply;
         eggs[name] = egg;
         return egg;
+    }
+
+    function setEggPrice(string memory name, uint256 price) public onlyOwner returns (Egg memory) {
+        Egg memory egg;
+        egg.price = price.mul(10**18);
+        eggs[name] = egg;
+        return egg;
+    }
+
+    function setUris(string memory name, string memory tokenURI, string memory metadataURIs) public onlyOwner returns (Animal memory) {
+        Animal memory animal;
+        animal.data = getMediaData(tokenURI, metadataURIs);
+        animals[name] = animal;
+        return animal;
     }
 
     // Add or configure a given animal
