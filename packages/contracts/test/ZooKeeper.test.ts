@@ -14,6 +14,7 @@ import { solidity } from 'ethereum-waffle'
 import { hex } from 'chalk'
 
 import { requireDependencies, setupTestFactory } from './utils'
+import { MaxUint256 } from '@ethersproject/constants'
 const { expect } = requireDependencies()
 
 const setupTest = setupTestFactory(['Media', 'Market', 'Bridge', 'ZOO'])
@@ -23,7 +24,7 @@ const setupTest = setupTestFactory(['Media', 'Market', 'Bridge', 'ZOO'])
 // let zooMarket: any
 let zooKeeper: any
 // let zooMedia: any
-// let signers: any
+let appSigners: any
 // let mintAmt = 100000000
 // let owner
 // let mediaAddress: string
@@ -38,7 +39,7 @@ class Helper {
   public Media: Contract
   public zooKeeper: Contract
   public eggPrice: BigNumber
-  public signers: any
+  // public signers: any
 
   constructor() {}
 
@@ -51,7 +52,7 @@ class Helper {
       } = await setupTest()
       const contracts = await deployments.fixture() // ensure you start from a fresh deployments
 
-      inst.signers = signers
+      appSigners = signers
       inst.ZOO = await ethers.getContractAt('ZOO', contracts.ZOO.address, signers[0])
       inst.Market = await ethers.getContractAt('Market', contracts.Market.address, signers[0])
       inst.Media = await ethers.getContractAt('Media', contracts.Media.address, signers[0])
@@ -89,8 +90,8 @@ class Helper {
 
   async buyEgg(signerIdx: number = 0) {
     // await this.zooToken.connect(this.zooKeeper.address).approve(addr, this.eggPrice)
-    await this.ZOO.approve(this.zooKeeper.address, this.eggPrice)
-    const tx = await this.zooKeeper.buyEgg(1)
+    await this.ZOO.approve(this.zooKeeper.address, MaxUint256)
+    const tx = await this.zooKeeper.buyEggs(1, 2)
     const args = await this.getEventData(tx, 'BuyEgg')
     return { from_evt: args['from'], eggID: args['eggID'] }
   }
@@ -115,62 +116,21 @@ class Helper {
 }
 
 describe('ZooKeeper', () => {
-  describe('upgradable', async () => {
-    it('references do not change', async () => {
-      const {
-        tokens: { ZOO, Market, Media, Bridge },
-      } = await setupTest()
-      const ZK = await ethers.getContractFactory('ZooKeeper')
-      const inst = await upgrades.deployProxy(ZK, [])
-      await inst.configure(Media.address, ZOO.address, Bridge.address)
 
-      expect(await inst.market()).to.equal(Market.address)
-      expect(await inst.media()).to.equal(Media.address)
-      expect(await inst.zoo()).to.equal(ZOO.address)
-      expect(await inst.bridge()).to.equal(Bridge.address)
+  // it('can buy an egg and hatch an animal from the egg', async () => {
+  //   const h = await Helper.setup()
 
-      const ZK2 = await ethers.getContractFactory('ZooKeeperV2')
-      const upgraded = await upgrades.upgradeProxy(inst.address, ZK2)
+  //   await h.ZOO.approve(h.zooKeeper.address, h.eggPrice)
 
-      expect(await upgraded.market()).to.equal(Market.address)
-      expect(await upgraded.media()).to.equal(Media.address)
-      expect(await upgraded.zoo()).to.equal(ZOO.address)
-      expect(await upgraded.bridge()).to.equal(Bridge.address)
-      // expect(value.toString()).to.equal([Market.address, Media.address, ZOO.address, Bridge.address]);
-    })
+  //   const { eggID: egg1_id } = await h.buyEgg(1)
+  //   const { eggID: egg2_id } = await h.buyEgg(1)
 
-    it('upgrades functionality', async () => {
-      const {
-        tokens: { ZOO, Market, Media, Bridge },
-      } = await setupTest()
-      const ZK = await ethers.getContractFactory('ZooKeeper')
-      const ZK2 = await ethers.getContractFactory('ZooKeeperV2')
+  //   const { eggID: animal1_id } = await h.hatchAnimal(egg1_id)
+  //   const { eggID: animal2_id } = await h.hatchAnimal(egg2_id)
 
-      const inst = await upgrades.deployProxy(ZK, [])
-      expect(inst.newMethod).to.undefined;
-
-      await inst.configure(Media.address, ZOO.address, Bridge.address)
-
-      const upgraded = await upgrades.upgradeProxy(inst.address, ZK2)
-      await expect(upgraded.newMethod).not.to.be.undefined;
-      expect(await upgraded.newMethod()).to.be.equal(42);
-    })
-  })
-
-  it('can buy an egg and hatch an animal from the egg', async () => {
-    const h = await Helper.setup()
-
-    await h.ZOO.approve(h.zooKeeper.address, h.eggPrice)
-
-    const { eggID: egg1_id } = await h.buyEgg(1)
-    const { eggID: egg2_id } = await h.buyEgg(1)
-
-    const { eggID: animal1_id } = await h.hatchAnimal(egg1_id)
-    const { eggID: animal2_id } = await h.hatchAnimal(egg2_id)
-
-    expect(animal1_id).to.equal(egg1_id)
-    expect(animal2_id).to.equal(egg2_id)
-  })
+  //   expect(animal1_id).to.equal(egg1_id)
+  //   expect(animal2_id).to.equal(egg2_id)
+  // })
 
   it('sets the owner of the egg to the buyer', async () => {
     const h = await Helper.setup()

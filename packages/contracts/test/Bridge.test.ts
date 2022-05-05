@@ -38,7 +38,7 @@ const generateTokens = (token: any, count: number = 2, custom: TokenCustomizatio
   return tokens
 }
 
-describe.only('Bridge', function () {
+describe('Bridge', function () {
   describe('setToken', async () => {
     it('allows owner to set token', async () => {
       const {
