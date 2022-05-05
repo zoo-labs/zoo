@@ -403,28 +403,6 @@ it("should revert if the token contract does not support the ERC721 interface", 
         expect(currAuction.amount).to.eq(200)
       })
 
-      it('should emit an AuctionBid event', async () => {
-        const block = await ethers.provider.getBlockNumber()
-
-        token = token.connect(auctionHouse.signer)
-
-        await token.connect(admin).mint(await auctionHouse.signer.getAddress(), 200)
-        await token.approve(auctionHouse.address, 200)
-
-        await auctionHouse.createBid(0, 200, {
-          value: 200,
-        })
-        const events = await auctionHouse.queryFilter(auctionHouse.filters.AuctionBid(null, null, null, null, null, null, null), block)
-        expect(events.length).eq(1)
-        const logDescription = auctionHouse.interface.parseLog(events[0])
-
-        expect(logDescription.name).to.eq('AuctionBid')
-        expect(logDescription.args.auctionId).to.eq(0)
-        expect(logDescription.args.sender).to.eq(await bidderA.getAddress())
-        expect(logDescription.args.value).to.eq(200)
-        expect(logDescription.args.firstBid).to.eq(true)
-        expect(logDescription.args.extended).to.eq(false)
-      })
     })
 
     describe('#second bid', () => {
@@ -681,24 +659,6 @@ it("should revert if the token contract does not support the ERC721 interface", 
         expect(auctionResult.auctionCurrency).to.eq(ethers.constants.AddressZero)
         expect(await media.ownerOf(0)).to.eq(await admin.getAddress())
       })
-
-      it('should emit an AuctionCanceled event', async () => {
-        const block = await ethers.provider.getBlockNumber()
-
-        await auctionHouse.connect(admin).cancelAuction(0)
-
-        const events = await auctionHouse.queryFilter(auctionHouse.filters.AuctionCanceled(null, null, null, null), block)
-
-        expect(events.length).eq(1)
-
-        const logDescription = auctionHouse.interface.parseLog(events[0])
-
-        expect(logDescription.args.tokenId.toNumber()).to.eq(0)
-
-        expect(logDescription.args.tokenOwner).to.eq(await admin.getAddress())
-
-        expect(logDescription.args.tokenContract).to.eq(media.address)
-      })
     })
 
     describe('#endAuction', () => {
@@ -795,22 +755,6 @@ it("should revert if the token contract does not support the ERC721 interface", 
           await expect(creatorBalance.sub(beforeBalance).add(tokenBalance).toString()).to.eq(expectedProfit)
         })
 
-        it('should emit an AuctionEnded event', async () => {
-          const block = await ethers.provider.getBlockNumber()
-          const auctionData = await auctionHouse.auctions(0)
-          await auctionHouse.endAuction(0)
-          const events = await auctionHouse.queryFilter(auctionHouse.filters.AuctionEnded(null, null, null, null, null, null, null, null, null), block)
-          expect(events.length).eq(1)
-          const logDescription = auctionHouse.interface.parseLog(events[0])
-
-          expect(logDescription.args.tokenId).to.eq(0)
-          expect(logDescription.args.tokenOwner).to.eq(auctionData.tokenOwner)
-          expect(logDescription.args.curator).to.eq(auctionData.curator)
-          expect(logDescription.args.winner).to.eq(auctionData.bidder)
-          expect(logDescription.args.amount.toString()).to.eq('1900000000000000000')
-          expect(logDescription.args.curatorFee.toString()).to.eq('100000000000000000')
-          expect(logDescription.args.auctionCurrency).to.eq(token.address)
-        })
 
         it('should delete the auction', async () => {
           await auctionHouse.endAuction(0)
