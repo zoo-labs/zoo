@@ -50,13 +50,13 @@ export const setupTestFactory = (contractArr: string[]) =>
     await deployments.fixture(contractArr)
 
     let tokens: { [key: string]: Contract } = await deployContractsAsync(contractArr)
-    // contractArr.reduce(async (sum: {}, name: string) => {
-    //   const contract: Contract = await ethers.getContract(name)
-    //   return {
-    //     [name]: contract,
-    //     ...sum,
-    //   }
-    // }, {})
+    contractArr.reduce(async (sum: {}, name: string) => {
+      const contract: Contract = await ethers.getContract(name)
+      return {
+        [name]: contract,
+        ...sum,
+      }
+    }, {})
     const signers = await ethers.getSigners()
     const owner = (await getNamedAccounts()).deployer
     return {

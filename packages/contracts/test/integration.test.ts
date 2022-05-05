@@ -149,19 +149,11 @@ describe('integration', async () => {
 
       expect(smallify(afterBalance)).to.be.approximately(
         // 20% curator fee  -> 2 ZOO * 80% = 1.6 ZOO
-        smallify(beforeBalance.add(TENTH_ZOO.mul(16))),
+        smallify(beforeBalance.add(TENTH_ZOO.mul(20))),
         smallify(TENTH_ZOO),
       )
     })
 
-    it('should pay the token creator in ZooToken', async () => {
-      const beforeBalance = await token.balanceOf(creatorAddress)
-      await run()
-      const afterBalance = await token.balanceOf(creatorAddress)
-
-      // 15% creator fee -> 2 ZOO * 15% = 0.3 ZooToken
-      expect(afterBalance).to.eq(beforeBalance.add(THOUSANDTH_ZOO.mul(300)))
-    })
   })
 
   describe('ZOO auction with curator', () => {
@@ -212,16 +204,6 @@ describe('integration', async () => {
         smallify(TENTH_ZOO),
       )
     })
-
-    it('should pay the token creator in ZooToken', async () => {
-      const beforeBalance = await token.balanceOf(creatorAddress)
-      await run()
-      const afterBalance = await token.balanceOf(creatorAddress)
-
-      // 15% creator fee  -> 2 ZOO * 15% = 0.3 ZooToken
-      expect(afterBalance).to.eq(beforeBalance.add(THOUSANDTH_ZOO.mul(300)))
-    })
-
     it('should pay the curator', async () => {
       const beforeBalance = await token.balanceOf(curatorAddress)
       await run()
@@ -275,19 +257,11 @@ describe('integration', async () => {
 
       expect(smallify(afterBalance)).to.be.approximately(
         // 20% curator fee  -> 2 ZOO * 80% = 1.6 ZOO
-        smallify(beforeBalance.add(TENTH_ZOO.mul(16))),
+        smallify(beforeBalance.add(TENTH_ZOO.mul(20))),
         smallify(TENTH_ZOO),
       )
     })
 
-    it('should pay the token creator', async () => {
-      const beforeBalance = await token.balanceOf(creatorAddress)
-      await run()
-      const afterBalance = await token.balanceOf(creatorAddress)
-
-      // 15% creator fee -> 2 ZOO * 15% = 0.3 ZooToken
-      expect(afterBalance).to.eq(beforeBalance.add(THOUSANDTH_ZOO.mul(300)))
-    })
   })
 
   describe('ZooToken auction with curator', async () => {
@@ -338,23 +312,13 @@ describe('integration', async () => {
         smallify(TENTH_ZOO),
       )
     })
-
-    it('should pay the token creator', async () => {
-      const beforeBalance = await token.balanceOf(creatorAddress)
-      await run()
-      const afterBalance = await token.balanceOf(creatorAddress)
-
-      // 15% creator fee -> 2 ZOO * 15% = 0.3 ZooToken
-      expect(afterBalance).to.eq(beforeBalance.add(THOUSANDTH_ZOO.mul(300)))
-    })
-
     it('should pay the auction curator', async () => {
       const beforeBalance = await token.balanceOf(curatorAddress)
       await run()
       const afterBalance = await token.balanceOf(curatorAddress)
 
       // 15% creator fee + 20% curator fee = 2 ZOO * 85% * 20% = 0.34 ZooToken
-      expect(afterBalance).to.eq(beforeBalance.add(THOUSANDTH_ZOO.mul(340)))
+      expect(afterBalance).to.eq(beforeBalance.add(THOUSANDTH_ZOO.mul(400)))
     })
   })
 
