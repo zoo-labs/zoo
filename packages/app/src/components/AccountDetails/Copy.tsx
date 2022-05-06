@@ -19,7 +19,7 @@ const CopyHelper: FC<CopyHelperProps> = ({ className, toCopy, children }) => {
   return (
     <div
       className={classNames(
-        "flex flex-shrink-0 space-x-1 no-underline cursor-pointer whitespace-nowrap hover:no-underline focus:no-underline active:no-underline text-blue opacity-80 hover:opacity-100 focus:opacity-100",
+        "flex flex-shrink-0 space-x-1 no-underline cursor-pointer whitespace-nowrap hover:no-underline focus:no-underline active:no-underline text-white opacity-80 hover:opacity-100 focus:opacity-100",
         className
       )}
       onClick={() => setCopied(toCopy)}
@@ -37,10 +37,10 @@ const CopyHelper: FC<CopyHelperProps> = ({ className, toCopy, children }) => {
       )}
 
       {!isCopied && (
-        <>
+        <div className="flex items-center">
           <>{children}</>
           <ClipboardCopyIcon width={16} height={16} />
-        </>
+        </div>
       )}
     </div>
   );
