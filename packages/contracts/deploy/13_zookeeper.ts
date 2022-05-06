@@ -1,34 +1,49 @@
-// 13_zookeeper.ts
+import { HardhatRuntimeEnvironment } from 'hardhat/types'
+import { DeployFunction } from 'hardhat-deploy/types'
 
-import { Deploy } from '@zoolabs/contracts/utils/deploy'
+// Change to support Deploy helper
+const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+  
+  const { deployments, ethers, getNamedAccounts, network } = hre
+  const { deploy } = deployments
 
-export default Deploy('ZooKeeper', {
-    dependencies: ['Bridge', 'Media', 'ZOO', 'BNB', 'Market', 'UniswapV2Factory', 'UniswapV2Pair'],
-    // proxy: { kind: 'uups' },
-  },
-  async ({ ethers, deploy, deployments, deps, hre }) => {
-    const tx = await deploy()
+  const [deployerWallet] = await ethers.getSigners()
 
-    const keeper = await ethers.getContractAt('ZooKeeper', tx.address)
-    const factory = await ethers.getContract('UniswapV2Factory')
-    const bridge = await ethers.getContract('Bridge')
-    const market = await ethers.getContract('Market')
-    const media = await ethers.getContract('Media')
-    const bnb = await ethers.getContract('BNB')
-    const zoo = await ethers.getContract('ZOO')
+  const { deployer } = await getNamedAccounts();
 
-    // Get pair address from Factory
-    const pair = await factory.getPair(zoo.address, bnb.address)
-    console.log(pair)
+  const deployResult = await deploy('ZooKeeper', {
+    from: deployer,
+    args: [],
+    log: true,
+  })
+  
 
-    // Configure contracts to talk to each other
-    await market.configure(media.address)
-    await media.configure(keeper.address, market.address)
-    await keeper.configure(media.address, zoo.address, pair, bridge.address, true)
+  if (hre.network.name == 'mainnet') return
 
-    if (hre.network.name == 'mainnet') return
+  const zooAddress = await ethers.getContract('ZOO')
+  const factory = await ethers.getContract('UniswapV2Factory')
+  const bridge = await ethers.getContract('Bridge')
+  const market = await ethers.getContract('Market')
+  const media = await ethers.getContract('Media')
+  const bnb = await ethers.getContract('BNB')
 
-    // Mint ZOO to keeper for yield
-    await zoo.mint(keeper.address, 1000000000000)
-  },
-)
+
+  const keeper = await ethers.getContractAt('ZooKeeper', deployResult.address)
+
+  const pair = await factory.connect(deployerWallet).getPair(zooAddress.address, bnb.address)
+  
+
+  await market.connect(deployerWallet).configure(media.address)
+  await media.connect(deployerWallet).configure(keeper.address, market.address)
+  await keeper.connect(deployerWallet).configure(media.address, zooAddress.address, pair, bridge.address, true)
+
+  //   // Mint ZOO to keeper for yield
+  await zooAddress.connect(deployerWallet).mint(keeper.address, 1000000000000)
+
+  return hre.network.live
+}
+
+export default func
+func.id = 'zooKeeper'
+func.tags = ['ZooKeeper']
+func.dependencies = ['Bridge', 'Media', 'ZOO', 'BNB', 'Market', 'UniswapV2Factory', 'UniswapV2Pair']
