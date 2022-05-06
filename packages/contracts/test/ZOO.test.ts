@@ -182,6 +182,5 @@ describe('ZOO', function () {
       expect(await token.balanceOf(caller)).to.be.equal(0)
     })
 
-    it('allows the bridge to call mint')
   })
 })
