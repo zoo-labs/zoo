@@ -37,23 +37,23 @@ export default async function configureGame(keeper: any, drop: any) {
     await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
   })
 
-  await drop.configureEggs('Base Egg', 'Hybrid Egg')
+  await drop.configureEggs(1, 2)
 
   // // Add rarities
-  // rarities.sort(function (a, b) {
-  //   return a.probability - b.probability
-  // })
-  // rarities.map(async (v) => {
-  //   await drop.setRarity(v.name, v.probability, v.yield, v.boost)
-  // })
+  rarities.sort(function (a, b) {
+    return a.probability - b.probability
+  })
+  rarities.map(async (v) => {
+    await drop.setRarity(v.name, v.probability, v.yields, v.boost)
+  })
 
-  // // Add animals
-  // animals.map(async (v) => {
-  //   await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
-  // })
+  // Add animals
+  animals.map(async (v) => {
+    await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
+  })
 
-  // // Add hybrids
-  // hybrids.map(async (v) => {
-  //   await drop.setHybrid(v.name, v.rarity, v.yield, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
-  // })
+  // Add hybrids
+  hybrids.map(async (v) => {
+    await drop.setHybrid(v.name, v.rarity, v.yields, v.parentA, v.parentB, v.tokenURI, v.metadataURI)
+  })
 }
