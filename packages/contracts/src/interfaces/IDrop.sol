@@ -8,6 +8,8 @@ import { IMarket } from "./IMarket.sol";
 
 interface IDrop {
     struct Egg {
+        uint256 id;
+        bool exist;
         IZoo.Type kind;
         string  name;
         uint256 supply;
@@ -39,9 +41,10 @@ interface IDrop {
     }
 
     function title() external view returns (string memory);
-    function eggPrice() external view returns (uint256);
-    function eggSupply() external view returns (uint256);
-    function newEgg() external returns (IZoo.Token memory);
+    function eggPrice(uint256 id) external view returns (uint256);
+    function totalSupply() external view returns (uint256);
+    function eggSupply(uint256 id) external view returns (uint256);
+    function newEgg(uint256 id) external returns (IZoo.Token memory);
     function newHybridEgg(IZoo.Parents memory) external returns (IZoo.Token memory);
     function getRandomAnimal(uint256) external view returns (IZoo.Token memory);
     function getRandomHybrid(uint256, IZoo.Parents memory) external view returns (IZoo.Token memory);

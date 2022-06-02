@@ -98,7 +98,7 @@ async function main() {
   }
 
   console.log('configureEggs')
-  await drop.configureEggs('Base Egg', 'Hybrid Egg')
+  await drop.configureEggs(1, 2)
 
   // Add rarities
   await rarities
