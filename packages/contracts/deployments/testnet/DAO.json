@@ -1,5 +1,5 @@
 {
-  "address": "0x577535EA72e4e14f1467dD28316232613E1831e3",
+  "address": "0x61E98675693eB77eBc0eF122B47075fe023DD867",
   "abi": [
     {
       "anonymous": false,
@@ -87,6 +87,19 @@
     },
     {
       "inputs": [],
+      "name": "proxiableUUID",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "renounceOwnership",
       "outputs": [],
       "stateMutability": "nonpayable",
@@ -136,5 +149,6 @@
       "stateMutability": "payable",
       "type": "function"
     }
-  ]
+  ],
+  "numDeployments": 2
 }
