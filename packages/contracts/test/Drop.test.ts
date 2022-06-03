@@ -45,15 +45,15 @@ describe('Drop', () => {
     )
 
     // configure our eggs to be base / hybrid egg
-    drop.configureEggs('baseEgg', 'hybridEgg')
+    drop.configureEggs(1, 2)
 
-    // drop.setEgg('baseEgg')
+    // drop.setEgg(1)
     await drop.deployed()
   })
 
   // it('Should have current supply equal total supply', async () => {
-  //   // await expect(drop.getEgg('baseEgg').minted.toNumber()).to.equal((await drop.totalSupply()).toNumber())
-  //   console.log(await drop.getEgg('baseEgg').minted.toNumber(), (await drop.totalSupply()).toNumber())
+  //   // await expect(drop.getEgg(1).minted.toNumber()).to.equal((await drop.totalSupply()).toNumber())
+  //   console.log(await drop.getEgg(1).minted.toNumber(), (await drop.totalSupply()).toNumber())
   // })
 
   it('Should add Rarity', async () => {
@@ -97,18 +97,19 @@ describe('Drop', () => {
 
   it('Should set & get egg price', async () => {
     drop = drop.connect(signers[0])
-    const eggPrice = (await drop.eggPrice()).toString()
+    const eggPrice = (await drop.eggPrice(1)).toString()
     expect(eggPrice).to.equal('210000000000000000000') // default eggPrice
 
-    await drop.connect(signers[0]).setEggPrice('baseEgg', 333) //set a new price
+    await drop.connect(signers[0]).setEggPrice(1, 333) //set a new price
 
-    const newPrice = (await drop.eggPrice()).toString()
+    const newPrice = (await drop.eggPrice(1)).toString()
+    
     expect(newPrice).to.equal('333000000000000000000') // gets the new eggPrice
   })
 
   it('Should revert when setting egg price as non owner', async () => {
     drop = drop.connect(signers[1])
-    await expect(drop.setEggPrice('baseEgg', 333)).to.be.reverted
+    await expect(drop.setEggPrice(1, 333)).to.be.reverted
   })
 
   it('Should set tokenURI and metadatUri for Animal', async () => {
