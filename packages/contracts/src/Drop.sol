@@ -9,21 +9,25 @@ import { IMarket } from "./interfaces/IMarket.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 import { IZoo } from "./interfaces/IZoo.sol";
 import { IDrop } from "./interfaces/IDrop.sol";
+import { Counters } from '@openzeppelin/contracts/utils/Counters.sol';
 
 import "./console.sol";
-
 
 contract Drop is IDrop, Ownable {
     using SafeMath for uint256;
 
+    using Counters for Counters.Counter;
+
+    Counters.Counter public eggId;
+
     // Title of drop
     string override public title;
 
-    // Name of default base egg
-    string public baseEgg;
+    // id of default base egg
+    uint256 public baseEgg;
 
-    // Name of configured hybrid egg
-    string public hybridEgg;
+    // id of configured hybrid egg
+    uint256 public hybridEgg;
 
     // Address of ZooKeeper contract
     address public keeperAddress;
@@ -38,7 +42,7 @@ contract Drop is IDrop, Ownable {
     string[] public raritySorted;
 
     // mapping of Egg name to Egg
-    mapping (string => Egg) public eggs;
+    mapping (uint256 => Egg) public eggs;
 
     // mapping of Animal name to Animal
     mapping (string => Animal) public animals;
@@ -61,12 +65,28 @@ contract Drop is IDrop, Ownable {
         title = _title;
     }
 
-    function totalSupply() public view returns (uint256) {
-        return getEgg(baseEgg).minted;
+    function totalSupply() public override view returns (uint256) {
+         uint256 total;
+
+        for (uint256 i = 0; i < eggId.current(); i++) {
+            total += eggs[i + 1].id;
+        }
+
+        return total;
+    }
+
+    function getAllEggs() public view returns(Egg[] memory) {
+        Egg[] memory availableEggs = new Egg[](eggId.current());
+        
+        for (uint256 i = 0; i < eggId.current(); i++) {
+                availableEggs[i] = eggs[i + 1];
+        }
+
+        return availableEggs;
     }
 
     // Set currentSupply base and hybrid egg
-    function configureEggs(string memory _baseEgg, string memory _hybridEgg) public onlyOwner {
+    function configureEggs(uint256 _baseEgg,uint256 _hybridEgg) public eggExists(_baseEgg) eggExists(_hybridEgg) onlyOwner {
         baseEgg = _baseEgg;
         hybridEgg = _hybridEgg;
     }
@@ -96,20 +116,23 @@ contract Drop is IDrop, Ownable {
 
     // Add or configure a given kind of egg
     function setEgg(string memory name, uint256 price, uint256 supply, string memory tokenURI, string memory metadataURI) public onlyOwner returns (Egg memory) {
+        eggId.increment();
+        uint256 id = eggId.current();
         Egg memory egg;
         egg.name = name;
+        egg.id = id;
         egg.data = getMediaData(tokenURI, metadataURI);
         egg.bidShares = getBidShares();
         egg.price = price.mul(10**18);
         egg.supply = supply;
-        eggs[name] = egg;
+        egg.exist = true;
+        eggs[id] = egg;
         return egg;
     }
 
-    function setEggPrice(string memory name, uint256 price) public onlyOwner returns (Egg memory) {
+    function setEggPrice(uint256 id, uint256 price) public eggExists(id) onlyOwner returns (Egg memory) {
         Egg memory egg;
-        egg.price = price.mul(10**18);
-        eggs[name] = egg;
+        eggs[id].price = price.mul(10**18);
         return egg;
     }
 
@@ -212,13 +235,18 @@ contract Drop is IDrop, Ownable {
         rarityAnimals[rarity] = _animals;
     }
 
-    // Return price for current EggDrop
-    function eggPrice() public override view returns (uint256) {
-        return getEgg(baseEgg).price;
+    modifier eggExists (uint256 id){
+        require(eggs[id].exist, "Egg does't exist");
+        _;
     }
 
-    function eggSupply() public override view returns (uint256) {
-        return getEgg(baseEgg).supply;
+    // Return price for current EggDrop
+    function eggPrice(uint256 id) public eggExists(id) override view returns (uint256) {
+        return getEgg(id).price;
+    }
+
+    function eggSupply(uint256 id) public eggExists(id) override view returns (uint256) {
+        return getEgg(id).supply;
     }
 
     function hybridSupply() public view returns (uint256) {
@@ -226,12 +254,12 @@ contract Drop is IDrop, Ownable {
     }
 
     // Return a new Egg Token
-    function newEgg() override external onlyZoo returns (IZoo.Token memory) {
-        Egg memory egg = getEgg(baseEgg);
-        require(eggSupply() == 0 || egg.minted < eggSupply(), "Out of eggs");
+    function newEgg(uint256 id) override external eggExists(id) onlyZoo returns (IZoo.Token memory) {
+        Egg memory egg = getEgg(id);
+        require(eggSupply(id) == 0 || egg.minted < eggSupply(id), "Out of eggs");
 
         egg.minted++;
-        eggs[egg.name] = egg;
+        eggs[egg.id] = egg;
 
         // Convert egg into a token
         return IZoo.Token({
@@ -277,9 +305,9 @@ contract Drop is IDrop, Ownable {
         });
     }
 
-    // Get Egg by name
-    function getEgg(string memory name) private view returns (Egg memory) {
-        return eggs[name];
+    // Get Egg by id
+    function getEgg(uint256 id) private eggExists(id) view returns (Egg memory) {
+        return eggs[id];
     }
 
     // Get Rarity by name
