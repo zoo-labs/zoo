@@ -18,8 +18,8 @@ export default Deploy('UniswapV2Pair', {dependencies: ['BNB', 'ZOO', 'UniswapV2F
   const amountBNB = ethers.utils.parseUnits('150', 18)
 
   // Create new LP pair
-  const tx = await factory.createPair(zoo.address, bnb.address)
-  await tx.wait()
+  // const tx = await factory.createPair(zoo.address, bnb.address)
+  // await tx.wait()
 
   // Get pair
   const pair = await factory.getPair(zoo.address, bnb.address)
