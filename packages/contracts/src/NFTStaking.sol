@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.7;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Receiver.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "./interfaces/I721Stake.sol";
-import { Ownable } from '@openzeppelin/contracts/access/Ownable.sol';
+import "./Owned.sol";
 
-contract NFT721Staker is Ownable, I721Stake {
+contract ZooNFTStaker is owned, I721Stake {
     using SafeMath for uint256;
 	using SafeMath for uint40;
     bool stakeLive;
@@ -157,9 +157,9 @@ contract NFT721Staker is Ownable, I721Stake {
 
     function _unstake(address NftContract, uint256 _tokenId) public {
        uint256[] memory rewardValues = this.rewardAmount(msg.sender, NftContract, _tokenId);
-       require(rewardValues[1] > 30, "Not yet allowed to withdraw");
+       require(rewardValues[1] > minumTime, "Not yet allowed to withdraw");
        IERC721(NftContract).safeTransferFrom(address(this), msg.sender, _tokenId);
-       RewardCoin.transferFrom(owner(), msg.sender, rewardValues[0]);
+       RewardCoin.transferFrom(owner, msg.sender, rewardValues[0]);
     }
 
 
