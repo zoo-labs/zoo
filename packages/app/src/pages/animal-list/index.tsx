@@ -61,8 +61,8 @@ const animalFamilyData = [
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332847/zoo/images/clouded-leopard_piqix9.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332847/zoo/images/clouded-leopard_piqix9.png",
-    name: "Clouded Leopard",
-    slug: "clouded-leopard",
+    name: "Amur Leopard",
+    slug: "amur-leopard",
   },
   {
     id: "5",
