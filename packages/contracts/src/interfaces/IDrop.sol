@@ -24,9 +24,11 @@ interface IDrop {
     struct Animal {
         IZoo.Type kind;
         IZoo.Rarity rarity;
+        IZoo.AdultHood stage;
         string name;
         IMedia.MediaData data;
         IMarket.BidShares bidShares;
+
     }
 
     struct Hybrid {
