@@ -79,6 +79,8 @@ export function useContract(
   let address: string | AddressMap | undefined = nameOrAddress
   let chainIdStr = chainId ? chainId.toString() : '1337'
 
+  console.log('abis', abis)
+
   if (!isAddress(nameOrAddress) || nameOrAddress === AddressZero) {
     try {
       address = addresses[chainIdStr][nameOrAddress.toString()]
