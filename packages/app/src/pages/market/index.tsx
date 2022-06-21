@@ -56,9 +56,7 @@ const PrettoSlider = styled(Slider)({
   },
 });
 
-interface MarketProps {}
-
-const Market: React.FC<MarketProps> = ({}) => {
+const Test = () => {
   const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
     (state) => state.zoo.zooBalance
   );
@@ -159,101 +157,23 @@ const Market: React.FC<MarketProps> = ({}) => {
 
   return (
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
-      <div className="flex items-end justify-between text-white w-100">
-        <Wallet />
+      <div className="flex flex-col items-center py-12 h-[50vh] bg-[url(/img/plant.png)] bg-contain bg-right-bottom bg-no-repeat">
+        <h1 className="text-5xl mb-4">
+          The <span className="text-green">ZOO</span> Market
+        </h1>
+        <p>Buy, list, and bid on NFT Eggs and Animals.</p>
       </div>
-      <div className="w-full max-w-screen-xl mx-auto mt-20">
-        <h3 className="mb-16 text-4xl font-semibold">Discover</h3>
-
-        {/* Tab Navigation */}
-        <div className="relative justify-between hidden mb-8 lg:flex">
-          <div className="flex items-center justify-between w-full h-12 pl-4 pr-1 text-sm rounded-lg cursor-pointer">
-            <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 w-44">
-              {/* <ReactDropdown
-                menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
-                className="dropdown"
-                options={timeFIlterOption}
-                value={""}
-                placeholder={"Recently added"}
-                placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
-              /> */}
-              <Image
-                src={"/icons/download.svg"}
-                alt=""
-                className="absolute"
-                width={20}
-                height={20}
-              />
-            </div>
-          </div>
-          {/* <div className='flex items-center justify-between h-12 pl-4 pr-1 text-sm border border-gray-600 border-solid rounded-lg cursor-pointer w-44'>
-              Recently added
-              <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} />
-            </div> */}
-          <div
-            className="w-full rounded-xl"
-            style={{
-              background: "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)",
-              padding: 2,
-            }}
-          >
-            <div className="flex items-center justify-center w-full h-full bg-black rounded-xl">
-              {["All Items", "Eggs", "Animals", "Hybrid"].map(
-                (value, index) => {
-                  const active = category === index;
-                  return (
-                    <a
-                      onClick={() => {
-                        setCategory(index);
-                        setPage(1);
-                        if (index === 0) {
-                          setData(
-                            [...Object.values(allData)]
-                              .flat(1)
-                              .sort((a: any, b: any) => a.tokenID - b.tokenID)
-                              .slice(0, 8)
-                          );
-                        } else if (index === 3) {
-                          console.log("is hybrid filter");
-                        } else {
-                          setData([]);
-                          setFetching(true);
-                          wait(1500).then(() =>
-                            setData(
-                              [allData[index - 1]]
-                                .flat(1)
-                                .sort((a, b) => a.tokenID - b.tokenID)
-                                .slice(0, 8)
-                            )
-                          );
-                        }
-                      }}
-                      className={`text-white text-sm font-bold py-1 px-4 cursor-pointer w-full h-full flex items-center justify-center ${
-                        index !== 3 && "border-r border-blue"
-                      } ${
-                        index === 0
-                          ? "rounded-l-xl"
-                          : index === 3 && "rounded-r-xl"
-                      }`}
-                      style={{
-                        background: active
-                          ? "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)"
-                          : "transparent",
-                      }}
-                      key={index}
-                    >
-                      {value}
-                    </a>
-                  );
-                }
-              )}
-            </div>
-          </div>
-          {/* <div
-            className="absolute flex justify-center transform left-2/4 -translate-x-2/4"
-            style={{ top: 10 }}
-          >
-            {['All Items', 'Eggs', 'Animals', 'Hybrid'].map((value, index) => {
+      {/* Tab Navbar */}
+      <div className="relative justify-center hidden mb-8 lg:flex">
+        <div
+          className="rounded-xl"
+          style={{
+            background: "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)",
+            padding: 2,
+          }}
+        >
+          <div className="flex items-center justify-center w-full h-full bg-black rounded-xl">
+            {["All Items", "Eggs", "Animals", "Hybrid"].map((value, index) => {
               const active = category === index;
               return (
                 <a
@@ -268,7 +188,7 @@ const Market: React.FC<MarketProps> = ({}) => {
                           .slice(0, 8)
                       );
                     } else if (index === 3) {
-                      console.log('is hybrid filter');
+                      console.log("is hybrid filter");
                     } else {
                       setData([]);
                       setFetching(true);
@@ -282,288 +202,48 @@ const Market: React.FC<MarketProps> = ({}) => {
                       );
                     }
                   }}
-                  className={`${
-                    active ? 'bg-white text-gray-900' : 'text-gray-600'
-                  } text-sm rounded-full font-bold py-1 px-4 cursor-pointer`}
+                  className={`text-white text-sm font-bold py-1 px-4 cursor-pointer w-full h-full flex items-center justify-center ${
+                    index !== 3 && "border-r border-blue whitespace-nowrap"
+                  } ${
+                    index === 0 ? "rounded-l-xl" : index === 3 && "rounded-r-xl"
+                  }`}
+                  style={{
+                    background: active
+                      ? "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)"
+                      : "transparent",
+                  }}
                   key={index}
                 >
                   {value}
                 </a>
               );
             })}
-          </div> */}
-          <div className="hidden">show on tablet viewport</div>
-          <div className="flex items-end justify-end w-full">
-            <button
-              onClick={() => setFiltering(!filtering)}
-              className="relative flex items-center justify-center px-6 py-3 font-bold leading-3 text-center border-2 rounded-xl text-grey-400"
-            >
-              Filter
-              <span className="flex items-center justify-center pl-2">
-                {!filtering ? (
-                  <Filter color="#878787" />
-                ) : (
-                  <CloseIcon color="#878787" />
-                )}
-              </span>
-            </button>
           </div>
         </div>
-
-        {/* Search + Filter */}
-        <div
-          className={`${
-            !filtering ? "hidden" : "block"
-          } border-t border-solid py-8`}
-          style={{ borderColor: "rgb(107, 114, 128)" }}
-        >
-          <div className="flex flex-wrap items-center justify-between ">
-            <div>
-              <p className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
-                PRICE
-              </p>
-              <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 w-44">
-                {/* <ReactDropdown
-                  menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
-                  className="dropdown"
-                  options={timeFIlterOption}
-                  value={""}
-                  placeholder="Highest Prices"
-                  placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
-                /> */}
-                <Image
-                  src={"/icons/download.svg"}
-                  alt=""
-                  className="absolute top-0"
-                  width={20}
-                  height={20}
-                />
-              </div>
-            </div>
-            <div>
-              <p className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
-                YIELDS
-              </p>
-              <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 w-44">
-                {/* <ReactDropdown
-                  menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
-                  className="dropdown"
-                  options={timeFIlterOption}
-                  value={""}
-                  placeholder="Highest Yields"
-                  placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
-                /> */}
-                <Image
-                  src={"/icons/download.svg"}
-                  alt=""
-                  className="absolute top-0"
-                  width={20}
-                  height={20}
-                />
-              </div>
-            </div>
-            <div>
-              <p className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
-                RARITY
-              </p>
-              <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 w-44">
-                {/* <ReactDropdown
-                  menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
-                  className="dropdown"
-                  options={timeFIlterOption}
-                  value={""}
-                  placeholder="Epic"
-                  placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
-                /> */}
-                <Image
-                  src={"/icons/download.svg"}
-                  alt=""
-                  className="absolute top-0"
-                  width={20}
-                  height={20}
-                />
-              </div>
-            </div>
-
-            <div
-              className=""
-              style={{
-                flex: " 0 0 calc(25% - 32px)",
-                maxWidth: "calc(25% - 32px)",
-                margin: "32px 16px 0",
-              }}
-            >
-              <div>
-                <div className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
-                  PRICE RANGE
-                </div>
-                <PrettoSlider
-                  onChange={(value, number) => {
-                    setBreadCount(Number(number));
-                  }}
-                  value={breedCount}
-                  valueLabelDisplay="auto"
-                  aria-label="slider"
-                  step={1}
-                  defaultValue={10}
-                  min={1}
-                  max={100}
-                />
-                <div className="flex justify-between text-xs">
-                  <div className="font-semibold">0.01 ETH</div>
-                  <div className="font-semibold">10 ETH</div>
-                </div>
-              </div>
-            </div>
-            {/* <div
-              className=""
-              style={{
-                flex: ' 0 0 calc(25% - 32px)',
-                maxWidth: 'calc(25% - 32px)',
-                margin: '32px 16px 0'
-              }}
-            >
-              <div>
-                <div className="mb-4 text-xs font-bold text-gray-400 uppercase">
-                  Age
-                </div>
-                <div className="relative">
-                  <div className="flex items-center justify-between w-full h-12 pl-4 pr-1 text-sm font-semibold text-white border border-gray-600 border-solid rounded-lg cursor-pointer w-44">
-                    Highest Yields
-                    <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} />
-                    <input
-                      type={'number'}
-                      onChange={(e) => {
-                        setAge(parseInt(e.target.value));
-                      }}
-                      placeholder="Age"
-                      className="w-full h-12 text-white bg-transparent border-solid border-none"
-                    ></input>
-                  </div>
-                </div>
-              </div>
-            </div> */}
-            {/* <div
-              className=""
-              style={{
-                flex: ' 0 0 calc(25% - 32px)',
-                maxWidth: 'calc(25% - 32px)',
-                margin: '32px 16px 0'
-              }}
-            >
-              <div>
-                <div className="mb-4 text-xs font-bold text-gray-400 uppercase">
-                  Rarity
-                </div>
-                <div className="relative">
-                  <div className="flex items-center justify-between w-full h-12 pl-4 pr-1 text-sm font-semibold text-white border border-gray-600 border-solid rounded-lg cursor-pointer w-44">
-                    <ReactDropdown
-                      menuClassName="menu absolute top-full"
-                      className="dropdown"
-                      options={options}
-                      value={''}
-                      placeholder="Select an option"
-                    />
-                    <RiArrowDownCircleLine values={"dfghj"} fill='gray' style={{ fontSize: 25, color: 'red' }} />
-                  </div>
-                </div>
-              </div>
-            </div> */}
-
-            {/* <div
-              className=""
-              style={{
-                flex: ' 0 0 calc(25% - 32px)',
-                maxWidth: 'calc(25% - 32px)',
-                margin: '32px 16px 0'
-              }}
-            >
-              <div>
-                <div className="mb-2 text-xs font-bold text-gray-400 uppercase">
-                  Breed Range
-                </div>
-                <PrettoSlider
-                  onChange={(value, number) => {
-                    setBreedRange(number);
-                  }}
-                  value={breedRange}
-                  valueLabelDisplay="auto"
-                  aria-label="slider"
-                  step={1}
-                  defaultValue={2}
-                  min={0}
-                  max={9}
-                />
-                <div className="flex justify-between text-xs">
-                  <div className="font-semibold">0</div>
-                  <div className="font-semibold">9</div>
-                </div>
-              </div>
-            </div> */}
-            {/* <div
-              className=""
-              style={{
-                flex: ' 0 0 calc(25% - 32px)',
-                maxWidth: 'calc(25% - 32px)',
-                margin: '32px 16px 0'
-              }}
-            >
-              <div>
-                <div className="mb-2 text-xs font-bold text-gray-400 uppercase">
-                  Price Range
-                </div>
-                <PrettoSlider
-                  onChange={(value, number) => {
-                    setPriceRange(Number(number));
-                  }}
-                  value={priceRange}
-                  valueLabelDisplay="auto"
-                  aria-label="slider"
-                  step={0.01}
-                  defaultValue={2}
-                  min={0.01}
-                  max={10}
-                />
-                <div className="flex justify-between text-xs">
-                  <div className="font-semibold">0.01 ETH</div>
-                  <div className="font-semibold">10 ETH</div>
-                </div>
-              </div>
-            </div> */}
-          </div>
-        </div>
-
-        <div>
-          <div className="flex flex-wrap mt-8 -mx-4">
-            {markets.length > 0 ? (
-              markets.map((datum, index) => {
-                return (
-                  <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
-                    <MarketItem
-                      datum={datum}
-                      applyMaxWidth={false}
-                      placeBid={() => (setActiveItem(datum), console.log(""))}
-                    />
-                  </div>
-                );
-              })
-            ) : (
-              <div>None</div>
-            )}
-          </div>
-        </div>
-        {/* <div className="mt-8 text-center">
-          <button
-            onClick={() => loadMore()}
-            className="inline-flex items-center h-12 px-6 font-semibold text-white border border-solid rounded-full shadow-lg cursor-pointer hover:bg-primary hover:border-0"
-            style={{ borderColor: 'gray' }}
-          >
-            Load More
-          </button>
-        </div> */}
       </div>
-      {/* <AssetSaleModal modalProps={modalProps} openModal={openModal} /> */}
+
+      {/* Data */}
+      <div>
+        <div className="flex flex-wrap mt-8 -mx-4">
+          {markets.length > 0 ? (
+            markets.map((datum, index) => {
+              return (
+                <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
+                  <MarketItem
+                    datum={datum}
+                    applyMaxWidth={false}
+                    placeBid={() => (setActiveItem(datum), console.log(""))}
+                  />
+                </div>
+              );
+            })
+          ) : (
+            <div>None</div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
-export default Market;
+
+export default Test;
