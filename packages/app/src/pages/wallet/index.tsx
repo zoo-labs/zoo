@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Image from "next/image";
 import { useSelector } from "react-redux";
 import { AppState } from "state";
 import { useBuyZoo } from "state/zoo/hooks";
@@ -8,6 +8,7 @@ import { numberWithCommas } from "functions";
 import MyWalletSection from "./MyWalletSection";
 import MyBidsSection from "./MyBidsSection";
 import MyAuctionSection from "./MyAuctionsSections";
+import TransactionHistorySection from "./TransactionHistorySection";
 import { handleFunds } from "utils/handleFunds";
 import { useActiveWeb3React } from "hooks";
 
@@ -81,10 +82,43 @@ export default function Wallet({ children }) {
             </div>
           </div>
         </div>
-        <div>
-          {category === 0 && <MyWalletSection />}
-          {category === 1 && <MyBidsSection />}
-          {category === 2 && <MyAuctionSection />}
+        <div className="py-12">
+          <h1 className="text-3xl lg:text-5xl text-center ">Eggs </h1>
+          <div className="flex gap-4 mb-4 flex-wrap justify-center items-center">
+            <div>
+              <Image
+                src="/img/egg.png"
+                width={200}
+                height={200}
+                objectFit="contain"
+                alt=""
+              />
+              <Image
+                src="/img/egg1.png"
+                width={200}
+                height={200}
+                objectFit="contain"
+                alt=""
+              />
+              <Image
+                src="/img/egg-dark.png"
+                width={200}
+                height={200}
+                objectFit="contain"
+                alt=""
+              />
+              <Image
+                src="/img/egg2.png"
+                width={200}
+                height={200}
+                objectFit="contain"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+        <div className="py-12">
+          <TransactionHistorySection />
         </div>
       </div>
     </section>
