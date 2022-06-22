@@ -163,6 +163,40 @@ const Test = () => {
         </h1>
         <p>Buy, list, and bid on NFT Eggs and Animals.</p>
       </div>
+      {/* Eggs */}
+      <div className="py-12">
+        <div>
+          <h2 className="text-3xl lg:text-4xl text-white font-bold text-center">
+            Eggs
+          </h2>
+        </div>
+        <div className="flex justify-center items-center">
+          <div className="relative w-[150px] h-[200px]">
+            <Image
+              src="/img/egg.png"
+              layout="fill"
+              objectFit="contain"
+              alt=""
+            />
+          </div>
+          <div className="relative w-[150px] h-[200px]">
+            <Image
+              src="/img/egg1.png"
+              layout="fill"
+              objectFit="contain"
+              alt=""
+            />
+          </div>
+          <div className="relative w-[150px] h-[200px]">
+            <Image
+              src="/img/egg2.png"
+              layout="fill"
+              objectFit="contain"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
       {/* Tab Navbar */}
       <div className="relative justify-center hidden mb-8 lg:flex">
         <div
