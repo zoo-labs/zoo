@@ -175,4 +175,13 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     color: '#F0B90B',
     mobile: true,
   },
+  TrustWallet: {
+    mobile: true,
+    connector: walletConnect,
+    name: 'TrustWallet',
+    iconName: 'trust-wallet.svg',
+    description: 'Connect to Trust Wallet, Rainbow Wallet and more...',
+    href: null,
+    color: '#4196FC',
+  }
 }
