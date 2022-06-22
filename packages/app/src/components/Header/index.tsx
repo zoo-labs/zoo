@@ -74,7 +74,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                   <div className="hidden sm:block sm:ml-4">
                     <div className="flex space-x-2">
                       {/* <Buy /> */}
-                      <NavLink href="/wallet">
+                      <NavLink href="/market">
                         <a
                           id={`mint-nav-link`}
                           className={
@@ -257,7 +257,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                   id={`marketplace`}
                   className="p-2 tracking-widest text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   // style={{letterSpacing: '2px'}}
-                  href="/wallet"
+                  href="/market"
                   style={{ letterSpacing: "2px" }}
                 >
                   {i18n._(t`Marketplace`)}
