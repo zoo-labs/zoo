@@ -9,7 +9,7 @@ import { IMarket } from "./interfaces/IMarket.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 import { IZoo } from "./interfaces/IZoo.sol";
 import { IDrop } from "./interfaces/IDrop.sol";
-import { Counters } from '@openzeppelin/contracts/utils/Counters.sol';
+import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
 
 import "./console.sol";
 
@@ -66,13 +66,8 @@ contract Drop is IDrop, Ownable {
     }
 
     function totalSupply() public override view returns (uint256) {
-         uint256 total;
 
-        for (uint256 i = 0; i < eggId.current(); i++) {
-            total += eggs[i + 1].id;
-        }
-
-        return total;
+        return eggId.current();
     }
 
     function getAllEggs() public view returns(Egg[] memory) {
@@ -131,9 +126,9 @@ contract Drop is IDrop, Ownable {
     }
 
     function setEggPrice(uint256 id, uint256 price) public eggExists(id) onlyOwner returns (Egg memory) {
-        Egg memory egg;
-        eggs[id].price = price.mul(10**18);
-        return egg;
+       Egg memory egg;
+       eggs[id].price = price.mul(10**18);
+       return egg;
     }
 
     function setUris(string memory name, string memory tokenURI, string memory metadataURIs) public onlyOwner returns (Animal memory) {
@@ -147,6 +142,7 @@ contract Drop is IDrop, Ownable {
     function setAnimal(string memory name, string memory rarity, string memory tokenURI, string memory metadataURI) public onlyOwner returns (bool) {
         Animal memory animal = Animal({
             kind: IZoo.Type.BASE_ANIMAL,
+            stage: IZoo.AdultHood.BABY,
             rarity: getRarity(rarity),
             name: name,
             data: getMediaData(tokenURI, metadataURI),
@@ -265,19 +261,16 @@ contract Drop is IDrop, Ownable {
         return IZoo.Token({
             rarity: getRarity('Common'),
             kind: IZoo.Type.BASE_EGG,
-
+            dropEgg: id,
             name: egg.name,
-            birthday: block.number,
-            timestamp: block.timestamp,
+            birthValues: IZoo.Birth({birthday: uint40(block.number), timestamp: uint40(block.timestamp), parents: IZoo.Parents("", "", 0, 0)}),
             data: egg.data,
             bidShares: egg.bidShares,
-
-            parents: IZoo.Parents("", "", 0, 0), // Common eggs have no parents
-
-            id: 0,
             customName: "",
+            id: 0,
             breed: IZoo.Breed(0, 0),
-            meta: IZoo.Meta(0, 0, false, false)
+            meta: IZoo.Meta(0, 0, false, false),
+            stage: IZoo.AdultHood.BABY
         });
     }
 
@@ -291,17 +284,15 @@ contract Drop is IDrop, Ownable {
             rarity: getRarity('Common'),
             kind: IZoo.Type.HYBRID_EGG,
             name: egg.name,
-            birthday: block.number,
-            timestamp: block.timestamp,
+            birthValues: IZoo.Birth({birthday: uint40(block.number), timestamp: uint40(block.timestamp), parents: parents}),
             data: egg.data,
             bidShares: egg.bidShares,
-
-            parents: parents, // Hybrid parents
-
+            dropEgg: hybridEgg,
             id: 0,
             customName: "",
             breed: IZoo.Breed(0, 0),
-            meta: IZoo.Meta(0, 0, false, false)
+            meta: IZoo.Meta(0, 0, false, false),
+            stage: IZoo.AdultHood.BABY
         });
     }
 
@@ -355,8 +346,8 @@ contract Drop is IDrop, Ownable {
         token.data = animal.data;
         token.rarity = animal.rarity;
         token.bidShares = animal.bidShares;
-        token.timestamp = block.timestamp;
-        token.birthday = block.number;
+        token.birthValues.timestamp = uint40(block.timestamp);
+        token.birthValues.birthday = uint40(block.number);
 
         console.log('randomAnimal', animal.name, animal.rarity.name, animal.rarity.yields);
         console.log('randomAnimal.data.tokenURI', animal.data.tokenURI);
@@ -380,9 +371,9 @@ contract Drop is IDrop, Ownable {
         token.rarity = hybrid.rarity;
         token.rarity.yields = hybrid.yields; // Hybrid rarity overrides default
         token.bidShares = hybrid.bidShares;
-        token.timestamp = block.timestamp;
-        token.birthday = block.number;
-        token.parents = parents;
+        token.birthValues.timestamp = uint40(block.timestamp);
+        token.birthValues.birthday = uint40(block.number);
+        token.birthValues.parents = parents;
         return token;
     }
 
