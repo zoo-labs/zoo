@@ -12322,7 +12322,7 @@
           ]
         },
         "Media":{
-          "address": "0x4aF42188DbC3EA7b79dB040192351e68e4998B5F",
+          "address": "0x5FA7559BCEB3D2e86E1A1E01A8883464bA486DB2",
           "abi": [
             {
               "inputs": [
@@ -15548,7 +15548,7 @@
           ]
         },
         "ZooKeeper": {
-          "address": "0x6815AC378D2F83E6eC61f9c3ECEb036Ab4Ad230A",
+          "address": "0xFCed8765933CEb3de67F10FB9BB8302b449984B2",
           "abi": [
             {
               "inputs": [
