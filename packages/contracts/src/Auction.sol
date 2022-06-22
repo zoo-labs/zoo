@@ -56,6 +56,16 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
         _;
     }
 
+    function getAllAuctions() public view returns(IAuctionHouse.Auction[] memory) {
+        IAuctionHouse.Auction[] memory allAuctions = new IAuctionHouse.Auction[](_auctionIDTracker.current());
+        
+        for (uint256 i = 0; i < _auctionIDTracker.current(); i++) {
+                allAuctions[i] = auctions[i + 1];
+        }
+
+        return allAuctions;
+    }
+
     /*
      * Configure ZooAuction to work with the proper media and token contract
      */
@@ -98,6 +108,8 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
                 msg.sender == tokenOwner,
             "Caller must be approved or owner for token id"
         );
+        _auctionIDTracker.increment();
+
         uint256 auctionID = _auctionIDTracker.current();
 
         auctions[auctionID] = Auction({
@@ -116,8 +128,6 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
         });
 
         IERC721(tokenContract).transferFrom(tokenOwner, address(this), tokenID);
-
-        _auctionIDTracker.increment();
 
         emit AuctionCreated(
             auctionID,
