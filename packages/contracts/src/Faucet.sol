@@ -22,6 +22,10 @@ contract Faucet is Ownable {
         token = IERC20(zooAddress);
     }
 
+    function setTokenAddress(address _new) public onlyOwner {
+        token = IERC20(_new);
+    }
+
     function setRate(uint256 _rate) public onlyOwner {
         rate = _rate;
     }
