@@ -1,5 +1,5 @@
 import { numberWithCommas } from "functions";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { AppState } from "state";
@@ -17,6 +17,10 @@ import { useModal } from "react-morphing-modal";
 import { useRouter } from "next/router";
 import Wallet from "./wallet";
 import { useTokenTypes } from "zoo/state";
+import { useFetchMyNFTs, useGetAvailableEggs } from "state/zoo/hooks";
+import { useActiveWeb3React } from "../../hooks";
+import { useMoralis } from "react-moralis";
+
 const PrettoSlider = styled(Slider)({
   color: "#15F195",
   height: 8,
@@ -91,6 +95,7 @@ const Test = () => {
   const [breedRange, setBreedRange] = useState<any>(0.0);
   const [activeItem, setActiveItem] = useState({});
   const [hotData, setHotData] = useState([]);
+  const getAvailableEggs = useGetAvailableEggs()
 
   const [age, setAge] = useState(0);
   const [breedCount, setBreadCount] = useState(0);
@@ -154,6 +159,37 @@ const Test = () => {
   };
 
   const buyZoo = useBuyZoo();
+  const fetchNFTs = useFetchMyNFTs();
+  const { account } = useActiveWeb3React();
+
+  const { availableEggs, loading } = useSelector((state: any) => state.zoo)
+
+  const {
+    myEggsCount: eggsCount,
+    myAnimalsCount: animalsCount,
+    myBreedsCount: breedsCount,
+    myNfts: myNFTs,
+  } = useSelector((state: any) => state.zoo);
+  const { authenticate, isAuthenticated, logout } = useMoralis();
+
+  const login = useCallback(async () => {
+    if (!isAuthenticated) {
+      await authenticate({ signingMessage: "Log in using Moralis" })
+        .then(function (user) {
+          console.log("logged in user:", user);
+          console.log(user!.get("ethAddress"));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  }, [authenticate, isAuthenticated]);
+
+  useEffect(() => {
+    getAvailableEggs()
+  }, [getAvailableEggs])
+
+  console.log('MY NFTSSSS', availableEggs)
 
   return (
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
