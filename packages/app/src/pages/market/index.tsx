@@ -60,7 +60,7 @@ const PrettoSlider = styled(Slider)({
   },
 });
 
-const Test = () => {
+const MarketPlacePage = () => {
   const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
     (state) => state.zoo.zooBalance
   );
@@ -316,4 +316,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default MarketPlacePage;
