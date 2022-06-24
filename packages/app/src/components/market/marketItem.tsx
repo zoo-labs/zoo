@@ -19,51 +19,34 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
   const router = useRouter();
   console.log("DATAUM", datum);
   return (
-    <div className="flex flex-col ">
+    <div
+      className="flex flex-col "
+      onClick={() =>
+        router.push({
+          pathname: `/market/placebid/${datum.id}`,
+        })
+      }
+    >
       <div className="relative overflow-hidden rounded bg-nft-gradient parent">
         <div className="h-[350px] w-[300px]">
           <ModelViewer usdz={datum.usdz} glb={datum.glb}></ModelViewer>
         </div>
-        {/* <img
-          src={`${datum?.image}`}
-          className="w-full transition-transform duration-1000 "
-          alt=""
-          style={{ objectFit: "contain" }}
-        /> */}
-        {/* <Image
-          layout="fill"
-          src={`/img/giraffe.png`}
-          className="w-full transition-transform duration-1000 "
-          alt=""
-        /> */}
+
         <div className="absolute top-0 left-0 invisible w-full h-full transition-all duration-300 rounded opacity-0 hover:visible hover:opacity-100">
           <div className="absolute px-2 py-1 text-xs font-bold uppercase rounded top-6 left-3 bg-primary ">
             {/* {datum.bloodline || (datum.basic ? "BASIC" : "HYBRID")} */}
           </div>
 
-          {/* <div className='absolute flex items-center justify-center w-8 h-8 rounded-full cursor-pointer top-6 right-3 bg-dark-800'>
-            <FaHeart fill='white' style={{ fontSize: 10 }} />
-          </div> */}
-          <a
+          {/* <a
             onClick={() => placeBid()}
             className="absolute inline-flex items-center justify-center h-10 px-4 text-sm transition-all duration-300 transform rounded-full cursor-pointer left-1/2 bottom-6 min-w-max bg-primary -translate-x-2/4"
           >
             <span>Place a bid</span>
-          </a>
+          </a> */}
         </div>
       </div>
 
-      <a
-        onClick={() =>
-          router.push({
-            pathname: `/feed/${datum.owner}/${datum.tokenID}`,
-            query: {
-              item: datum,
-            },
-          })
-        }
-        className="flex flex-col flex-grow py-4 no-underline cursor-pointer"
-      >
+      <div className="flex flex-col flex-grow py-4 no-underline cursor-pointer">
         <div className="flex flex-col flex-grow">
           <div className="flex mb-4 ">
             <div className="mt-1 mr-auto font-semibold">
@@ -102,7 +85,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
               : ""}{" "}
           </div>
         </div>
-      </a>
+      </div>
     </div>
   );
 };
