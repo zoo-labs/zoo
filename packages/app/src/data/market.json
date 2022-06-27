@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Sumatran Elephant",
+    "image": "/img/tiger-nft.png",
+    "usdz": "/models/Elephant/ELEPHANT_ADULT.usdz",
+    "glb": "/models/Elephant/ELEPHANT_ADULT.glb"
+  },
+  {
+    "name": "Javan Rhino",
+    "image": "/img/rhinoce.png",
+    "usdz": "/models/Rhino/RHINO_ADULT.usdz",
+    "glb": "/models/Rhino/RHINO.glb"
+  },
+  {
+    "name": "Amur Leopard",
+    "image": "/img/amur-leopard.png",
+    "usdz": "/models/Leopard/LEOPARD_ADULT.usdz",
+    "glb": "/models/Leopard/LEOPARD_ADULT.glb"
+  },
+  {
+    "name": "Giraffe",
+    "image": "/img/girrafe.png",
+    "usdz": "/models/Giraffe/GIRAFFE_ADULT.usdz",
+    "glb": "/models/Giraffe/GIRAFFE_ADULT.glb"
+  },
+  {
+    "name": "Siberian Tiger",
+    "image": "/img/tiger-nft.png",
+    "usdz": "/models/Tiger/TIGER_ADULT.usdz",
+    "glb": "/models/Tiger/TIGER_ADULT.glb"
+  }
+]
