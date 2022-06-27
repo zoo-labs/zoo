@@ -105,3 +105,11 @@ export function useActivePopups(): AppState['application']['popupList'] {
 export function useKashiApprovalPending(): string {
   return useSelector((state: AppState) => state.application.kashiApprovalPending)
 }
+
+export function useEditAuctionModalToggle(): () => void {
+  return useToggleModal(ApplicationModal.EDIT_AUCTION)
+}
+
+export function useIncreaseBidModalToggle(): () => void {
+  return useToggleModal(ApplicationModal.INCREASE_BID)
+}

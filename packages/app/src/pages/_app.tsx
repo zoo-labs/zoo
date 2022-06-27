@@ -38,6 +38,7 @@ import {
 } from "@apollo/client";
 import { SubgraphProvider } from "../providers/SubgraphProvider";
 import { initTranslation, loadTranslation } from "../entities";
+import { MoralisProvider } from "react-moralis";
 
 // const Web3ProviderNetwork = dynamic(
 //   () => import("../components/Web3ProviderNetwork"),
@@ -199,13 +200,18 @@ function MyApp({
                     <TransactionUpdater />
                     <MulticallUpdater />
                   </>
-                  <Provider>
-                    <Layout>
-                      <Guard>
-                        <Component {...pageProps} />
-                      </Guard>
-                    </Layout>
-                  </Provider>
+                  <MoralisProvider
+                    serverUrl="https://hyrix9h7cyfi.usemoralis.com:2053/server"
+                    appId="ILIieVqZyWlL0ErAjiG9L1X6fep2KEFkKczcGOmJ"
+                  >
+                    <Provider>
+                      <Layout>
+                        <Guard>
+                          <Component {...pageProps} />
+                        </Guard>
+                      </Layout>
+                    </Provider>
+                  </MoralisProvider>
                 </PersistGate>
               </GifProvider>
             </SubgraphProvider>
