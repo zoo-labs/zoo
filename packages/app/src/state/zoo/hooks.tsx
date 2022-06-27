@@ -162,7 +162,7 @@ export function useFetchMyNFTs(): () => void {
 
 export function useGetAvailableEggs(): () => void {
   const dispatch = useAppDispatch();
-  const dropContract = useDrop();
+  const dropContract = useDrop(true);
 
   return useCallback(async () => {
     const eggs = await dropContract?.getAllEggs();
