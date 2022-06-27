@@ -4,7 +4,12 @@ import { useAppDispatch } from "state/hooks";
 import { Egg } from "types";
 
 import { useMoralisWeb3Api } from "react-moralis";
-import { useMedia, useZooKeeper, useDrop } from "hooks/useContract";
+import {
+  useMedia,
+  useZooKeeper,
+  useDrop,
+  useBnbToken,
+} from "hooks/useContract";
 import { useDispatch } from "react-redux";
 import {
   getZooBalance,
@@ -14,7 +19,11 @@ import {
   breedsCount,
   updateMyNfts,
   getAvailableEggs,
+  loading,
 } from "./actions";
+import { useAddPopup } from "state/application/hooks";
+import { MaxUint256 } from "@ethersproject/constants";
+import { formatError } from "functions";
 
 // helper that can take a ethers library transaction response and add it to the list of transactions
 export function useZoobalance(): () => void {
@@ -152,12 +161,12 @@ export function useFetchMyNFTs(): () => void {
 }
 
 export function useGetAvailableEggs(): () => void {
-  const dispatch = useAppDispatch()
-  const dropContract = useDrop()
+  const dispatch = useAppDispatch();
+  const dropContract = useDrop();
 
   return useCallback(async () => {
-    const eggs = await dropContract?.getAllEggs()
-    if (!eggs) return
+    const eggs = await dropContract?.getAllEggs();
+    if (!eggs) return;
     const structuredEggs = eggs.map((egg) => {
       return {
         bidShares: {
@@ -175,13 +184,170 @@ export function useGetAvailableEggs(): () => void {
         price: Number(egg.price) / 10 ** 18,
         supply: Number(egg.supply),
         timestamp: Number(egg.timestamp),
-      }
-    })
-    console.log('structuredEggs', structuredEggs)
-    dispatch(getAvailableEggs(structuredEggs))
-  }, [dispatch, dropContract])
+      };
+    });
+    console.log("structuredEggs", structuredEggs);
+    dispatch(getAvailableEggs(structuredEggs));
+  }, [dispatch, dropContract]);
 }
 
+export function useBuyEgg(): (
+  eggId: string | number,
+  quantity: number,
+  success?: () => void
+) => void {
+  const addPopup = useAddPopup();
+  const zooKeeper = useZooKeeper();
+  const { account } = useActiveWeb3React();
+  const zoo = useZooToken();
+  const dropId = process.env.NEXT_PUBLIC_DROP_ID;
+  const dispatch = useDispatch();
+  return useCallback(
+    async (eggId, quantity, success) => {
+      console.log("buying_eggggg", { eggId, quantity, dropId, zooKeeper });
+      if (!zooKeeper) return;
+      try {
+        dispatch(loading(true));
+        const approval = await zoo?.allowance(account, zooKeeper.address);
+        console.log("approval_buy_egg", Number(approval));
+        if (Number(approval) <= 0) {
+          console.log("approving_media");
+          await zoo
+            ?.approve(zooKeeper.address, MaxUint256, {
+              gasLimit: 4000000,
+            })
+            .then((tx) => {
+              console.log("approval", tx);
+              tx.wait();
+            });
+        }
+        const tx = await zooKeeper.buyEggs(eggId, dropId, quantity, {
+          gasLimit: 4000000,
+        });
+        await tx.wait();
+        console.log(tx);
+        addPopup({
+          txn: {
+            hash: null,
+            summary: `Successfully bought ${quantity} egg${
+              quantity !== 1 ? "s" : ""
+            }`,
+            success: true,
+          },
+        });
+        dispatch(loading(false));
+        success && success();
+      } catch (e) {
+        console.error("ISSUE BUYING EGG \n", e);
+        dispatch(loading(false));
+        addPopup({
+          txn: {
+            hash: null,
+            summary: formatError(e),
+            success: false,
+          },
+        });
+      }
+    },
+    [account, addPopup, dispatch, dropId, zoo, zooKeeper]
+  );
+}
+
+export function useBuyEggWithBnB(): (
+  eggId: string | number,
+  quantity: number,
+  success?: () => void
+) => void {
+  const addPopup = useAddPopup();
+  const { account } = useActiveWeb3React();
+  const zoo = useZooToken();
+  const bnb = useBnbToken();
+  const zooKeeper = useZooKeeper();
+  const dropId = process.env.NEXT_PUBLIC_DROP_ID;
+  const dispatch = useDispatch();
+  return useCallback(
+    async (eggId, quantity, success) => {
+      console.log("buying_eggggg", { eggId, quantity, dropId, zooKeeper });
+      if (!zooKeeper) return;
+      try {
+        dispatch(loading(true));
+        const approval = await bnb?.allowance(account, zooKeeper.address);
+        console.log("approval_approving_media", Number(approval));
+        if (Number(approval) <= 0) {
+          console.log("approving_media");
+          await bnb
+            ?.approve(zooKeeper.address, MaxUint256, {
+              gasLimit: 4000000,
+            })
+            .then((tx) => {
+              console.log("approval", tx);
+              tx.wait();
+            });
+        }
+        const tx = await zooKeeper.buyEggsWithBNB(eggId, dropId, quantity, {
+          gasLimit: 4000000,
+        });
+        await tx.wait();
+        console.log(tx);
+        addPopup({
+          txn: {
+            hash: null,
+            summary: `Successfully bought ${quantity} eggs`,
+            success: true,
+          },
+        });
+        dispatch(loading(false));
+        success && success();
+      } catch (e) {
+        console.error("ISSUE BUYING EGG \n", e);
+        dispatch(loading(false));
+        addPopup({
+          txn: {
+            hash: null,
+            summary: formatError(e),
+            success: false,
+          },
+        });
+      }
+    },
+    [addPopup, dispatch, dropId, zooKeeper]
+  );
+}
+
+export function useTransferZoo(): (recipient: string, amount: number) => void {
+  const addPopup = useAddPopup();
+  const zoo = useZooToken();
+  return useCallback(
+    async (recipient, amount) => {
+      if (!zoo) return;
+      try {
+        // const toWei = amount * Math.pow(10, 18)
+        const tx = await zoo?.transfer(recipient, amount, {
+          gasLimit: 4000000,
+        });
+        await tx.wait();
+        console.log(tx);
+        addPopup({
+          txn: {
+            hash: null,
+            summary: `Successfully transferred ${amount} $zoo to ${recipient}`,
+            success: true,
+          },
+        });
+      } catch (e) {
+        console.error("ISSUE TRANSFERRING ZOO \n", e);
+        addPopup({
+          txn: {
+            hash: null,
+            summary: formatError(e),
+            success: false,
+          },
+        });
+      }
+    },
+    [addPopup, zoo]
+  );
+}
 
 // export function getZooBalance(account, zooToken) {
 //   return async (dispatch) => {
