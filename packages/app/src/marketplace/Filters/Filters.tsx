@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
-import MarketItem from 'components/MarketItem/marketItem'
+import MarketItem from 'components/market/marketItem'
 import markets from 'data/market.json'
 import { Filter } from 'react-feather'
 import { Slider, useMediaQuery } from '@mui/material'
