@@ -1,17 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
-import dynamic from 'next/dynamic'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
-import React from 'react'
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import React from "react";
 
-import CardNft from 'marketplace/Cards/CardNft'
-import Carousel from 'components/Carousel'
-import { SwiperSlide } from 'swiper/react'
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { abbreviateNumber } from 'functions/abbreviateNumbers'
-import { AvailableEggs } from 'types'
-import { useCallback } from 'react'
+import CardNft from "marketplace/Cards/CardNft";
+import Carousel from "components/Carousel";
+import { SwiperSlide } from "swiper/react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { abbreviateNumber } from "functions/abbreviateNumbers";
+import { AvailableEggs } from "types";
+import { useCallback } from "react";
 import {
   useBuyEgg,
   useBuyEggWithBnB,
@@ -19,70 +19,74 @@ import {
   useGetAvailableEggs,
   useTransferZoo,
   useZoobalance,
-} from 'state/zoo/hooks'
-import { useActiveWeb3React } from 'hooks/useActiveWeb3React'
-import { useWalletModalToggle } from 'state/application/hooks'
+} from "state/zoo/hooks";
+import { useActiveWeb3React } from "hooks/useActiveWeb3React";
+import { useWalletModalToggle } from "state/application/hooks";
 
-const ModelViewer = dynamic(() => import('components/ModelViewer'), {
+const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
-})
+});
 
 const Item = () => {
-  const router = useRouter()
-  const { id } = router.query
-  const { account } = useActiveWeb3React()
-  const [egg, setEgg] = React.useState<AvailableEggs>(null)
-  const [withZoo, setWithZoo] = React.useState(true)
-  const { availableEggs, loading, zooBalance } = useSelector((state: any) => state.zoo)
-  const buyZoo = useBuyZoo()
-  const buyEgg = useBuyEgg()
-  const transferZoo = useTransferZoo()
-  const buyEggWithBnB = useBuyEggWithBnB()
-  const getZooBalance = useZoobalance()
-  const getAvailableEggs = useGetAvailableEggs()
-  const toggleWallet = useWalletModalToggle()
+  const router = useRouter();
+  const { id } = router.query;
+  const { account } = useActiveWeb3React();
+  const [egg, setEgg] = React.useState<AvailableEggs>(null);
+  const [withZoo, setWithZoo] = React.useState(true);
+  const { availableEggs, loading, zooBalance } = useSelector(
+    (state: any) => state.zoo
+  );
+  const buyZoo = useBuyZoo();
+  const buyEgg = useBuyEgg();
+  const transferZoo = useTransferZoo();
+  const buyEggWithBnB = useBuyEggWithBnB();
+  const getZooBalance = useZoobalance();
+  const getAvailableEggs = useGetAvailableEggs();
+  const toggleWallet = useWalletModalToggle();
 
   useEffect(() => {
-    getAvailableEggs()
-    getZooBalance()
-  }, [getAvailableEggs, getZooBalance])
+    getAvailableEggs();
+    getZooBalance();
+  }, [getAvailableEggs, getZooBalance]);
 
   const handleBuyZoo = useCallback(() => {
-    console.log('Clicked')
+    console.log("Clicked");
     if (account) {
-      buyZoo()
+      buyZoo();
     } else {
-      toggleWallet()
+      toggleWallet();
     }
-  }, [account, buyZoo, toggleWallet])
+  }, [account, buyZoo, toggleWallet]);
 
   const handleBuyEgg = useCallback(
     (eggId, quantity) => {
-      console.log('Clicked')
+      console.log("Clicked");
       if (account) {
         if (withZoo) {
-          buyEgg(eggId, quantity, () => router.push('/dashboard'))
+          buyEgg(eggId, quantity, () => router.push("/dashboard"));
         } else {
-          buyEggWithBnB(eggId, quantity, () => router.push('/dashboard'))
+          buyEggWithBnB(eggId, quantity, () => router.push("/dashboard"));
           // buyEgg(eggId, quantity, () => router.push('/dashboard'))
         }
       } else {
-        toggleWallet()
+        toggleWallet();
       }
     },
     [account, buyEgg, buyEggWithBnB, router, toggleWallet, withZoo]
-  )
+  );
 
   useEffect(() => {
-    const _egg = availableEggs.find((e: any) => e.id?.toString() === id?.toString())
-    setEgg(_egg)
-  }, [availableEggs, id])
+    const _egg = availableEggs.find(
+      (e: any) => e.id?.toString() === id?.toString()
+    );
+    setEgg(_egg);
+  }, [availableEggs, id]);
 
-  console.log('Item', { egg, availableEggs, withZoo })
-  console.log('comparison', {
+  console.log("Item", { egg, availableEggs, withZoo });
+  console.log("comparison", {
     price: egg?.price,
     zooBalance,
-  })
+  });
   return (
     <>
       <div className="flex flex-col lg:flex-row gap-11 lg:items-center px-5 lg:px-10 mt-20 max-w-7xl mx-auto">
@@ -107,7 +111,12 @@ const Item = () => {
                 </div>
               </div>
               <div className="flex gap-2 items-center">
-                <Image src="/icons/population.svg" alt="" height={26} width={20} />
+                <Image
+                  src="/icons/population.svg"
+                  alt=""
+                  height={26}
+                  width={20}
+                />
                 <div>
                   <p className="font-medium text-sm">Population</p>
                   <p className="font-medium text-[10px]">2,400-2,800</p>
@@ -117,7 +126,9 @@ const Item = () => {
                 <Image src="/icons/react.svg" alt="" height={26} width={20} />
                 <div>
                   <p className="font-medium text-sm">Scientific Name</p>
-                  <p className="font-medium text-[10px]">Elephas Maximus Sumatrensis</p>
+                  <p className="font-medium text-[10px]">
+                    Elephas Maximus Sumatrensis
+                  </p>
                 </div>
               </div>
               <div className="flex gap-2 items-center">
@@ -140,7 +151,9 @@ const Item = () => {
                 <div className="w-full py-2 5 px-6 flex flex-col md:flex-row md:items-center md:justify-between bg-dark-400 rounded-lg ">
                   <div>
                     <p className="text-xs font-normal">Current price</p>
-                    <p className="text-xl font-medium">{abbreviateNumber(egg?.price)} ZOO</p>
+                    <p className="text-xl font-medium">
+                      {abbreviateNumber(egg?.price)} ZOO
+                    </p>
                   </div>
                   <button
                     className="rounded-full bg-c-grey-200 inline-flex items-center justify-between w-[85px] p-1 pr-2 cursor-pointer"
@@ -149,59 +162,90 @@ const Item = () => {
                     <div className="inline-flex items-center">
                       {withZoo ? (
                         <>
-                          <Image src="/images/wallets/bsc.jpg" alt="" width={20} height={20} className="rounded-full" />
+                          <Image
+                            src="/images/wallets/bsc.jpg"
+                            alt=""
+                            width={20}
+                            height={20}
+                            className="rounded-full"
+                          />
                           <p className="text-xs font-semibold ml-1">BNB</p>
                         </>
                       ) : (
                         <>
-                          <Image src="/luxlogo.png" alt="" width={20} height={20} className="rounded-full" />
+                          <Image
+                            src="/luxlogo.png"
+                            alt=""
+                            width={20}
+                            height={20}
+                            className="rounded-full"
+                          />
                           <p className="text-xs font-semibold ml-1">ZOO</p>
                         </>
                       )}
                     </div>
-                    <img src="/icons/caret-right.png" alt="" className="rounded-full" />
+                    <img
+                      src="/icons/caret-right.png"
+                      alt=""
+                      className="rounded-full"
+                    />
                   </button>
                 </div>
                 <p className="text-right text-c-grey-100 text-xs">
-                  Your Wallet Balance: {withZoo ? `${zooBalance} ZOO` : '4.34 BNB'}
+                  Your Wallet Balance:{" "}
+                  {withZoo ? `${zooBalance} ZOO` : "4.34 BNB"}
                 </p>
               </div>
               {Number(egg?.price) > zooBalance && (
-                <button className=" bg-dark-400 rounded-lg px-2 py-2" onClick={() => handleBuyZoo()}>
+                <button
+                  className=" bg-dark-400 rounded-lg px-2 py-2"
+                  onClick={() => handleBuyZoo()}
+                >
                   Buy more
                 </button>
               )}
             </div>
             <div className="text-sm w-full">
-              <p className="w-full border-b border-[#605E5E] pb-2 mb-5">Description</p>
+              <p className="w-full border-b border-[#605E5E] pb-2 mb-5">
+                Description
+              </p>
               <p className="mb-7">
-                Introducing Only1 Genesis NFTs and Creator Staking Pool - where Defi meets social in only1. Each creator
-                passed KYC will be minted a Genesis-NFT, which they can associate with perks and rewards and trade it in
-                the marketplace. Users on the platform can stake $LIKE tokens on individual creators and earn based on
-                the pool’s APY, which adjusts according to the creator’s engagement.
+                Introducing Only1 Genesis NFTs and Creator Staking Pool - where
+                Defi meets social in only1. Each creator passed KYC will be
+                minted a Genesis-NFT, which they can associate with perks and
+                rewards and trade it in the marketplace. Users on the platform
+                can stake $LIKE tokens on individual creators and earn based on
+                the pool’s APY, which adjusts according to the creator’s
+                engagement.
               </p>
               <p>
-                Only1 believes that the future of NFTs will serve a key function within the tech world and that utility
-                NFTs will inevitably spill into other verticals outside gaming. They also think art and collectible NFTs
-                will slowly be replaced by utility NFTs, and hence have made them an integral part of their concept and
-                earning mechanisms. There are two main methods that Only1 uses to prioritize social engagement between
-                fans and influencers. ‍
+                Only1 believes that the future of NFTs will serve a key function
+                within the tech world and that utility NFTs will inevitably
+                spill into other verticals outside gaming. They also think art
+                and collectible NFTs will slowly be replaced by utility NFTs,
+                and hence have made them an integral part of their concept and
+                earning mechanisms. There are two main methods that Only1 uses
+                to prioritize social engagement between fans and influencers. ‍
               </p>
             </div>
             <button
-              className={`py-3.5 w-full rounded-lg bg-bid-gradient disabled:cursor-not-allowed ${
-                loading && 'opacity-30'
+              className={`py-3.5 w-full bg-[#2703F8] rounded-lg disabled:cursor-not-allowed ${
+                loading && "opacity-30"
               }`}
               disabled={loading || Number(egg?.price) > zooBalance}
               onClick={() => handleBuyEgg(id, 1)}
             >
-              {loading ? 'Loading...' : Number(egg?.price) > zooBalance ? 'Insuficient balance' : 'Buy Now'}
+              {loading
+                ? "Loading..."
+                : Number(egg?.price) > zooBalance
+                ? "Insuficient balance"
+                : "Buy Now"}
             </button>
           </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Item
+export default Item;

@@ -32,12 +32,12 @@ const PlaceBid = () => {
 
   useEffect(() => {
     const NFT = markets.filter((obj) => {
-      return obj.id === router.query.id
-    })
-    setNft(NFT[0])
-  })
+      return obj.id === router.query.id;
+    });
+    setNft(NFT[0]);
+  });
 
-  console.log('MY NFTTTT', nft);
+  console.log("MY NFTTTT", nft);
 
   return (
     <div className="w-full lg:px-12 py-32 ">
@@ -82,7 +82,7 @@ const PlaceBid = () => {
               <p className="font-medium text-xl mb-11 text-center">
                 The next bid must be 5% more than the current bid
               </p>
-              <button className="py-[18px] w-full rounded-2xl bg-bid-gradient mb-11">
+              <button className="py-[12px] w-full rounded-2xl bg-[#2703F8] mb-11">
                 Place Bid
               </button>
             </form>
