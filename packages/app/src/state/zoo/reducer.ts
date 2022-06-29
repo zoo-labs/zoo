@@ -36,6 +36,7 @@ import {
     eggsCount,
     animalsCount,
     breedsCount,
+    getAllAuctions
   } from './actions'
   
   import { createReducer } from '@reduxjs/toolkit'
@@ -59,6 +60,7 @@ import {
     myEggsCount: 0,
     myAnimalsCount: 0,
     myBreedsCount: 0,
+    allAuctions: []
   }
   
   export default createReducer(initialState, (builder) =>
@@ -86,6 +88,9 @@ import {
       })
       .addCase(breedsCount, (state, action) => {
         state.myBreedsCount = action.payload
+      })
+      .addCase(getAllAuctions, (state, action) => {
+        state.allAuctions = action.payload
       })
   )
   

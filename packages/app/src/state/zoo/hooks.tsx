@@ -9,6 +9,7 @@ import {
   useZooKeeper,
   useDrop,
   useBnbToken,
+  useAuction
 } from "hooks/useContract";
 import { useDispatch } from "react-redux";
 import {
@@ -20,6 +21,7 @@ import {
   updateMyNfts,
   getAvailableEggs,
   loading,
+  getAllAuctions
 } from "./actions";
 import { useAddPopup } from "state/application/hooks";
 import { MaxUint256 } from "@ethersproject/constants";
@@ -347,6 +349,14 @@ export function useTransferZoo(): (recipient: string, amount: number) => void {
     },
     [addPopup, zoo]
   );
+}
+
+export function useGetAllAuctions(): () => void {
+  const auction = useAuction();
+  console.log('AUCTIONNNN', auction);
+  return useCallback(async () => {
+
+  }, [])
 }
 
 // export function getZooBalance(account, zooToken) {
