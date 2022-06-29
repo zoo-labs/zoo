@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { AppState } from "state";
-import { useBuyZoo } from "state/zoo/hooks";
+import { useBuyZoo, useGetAllAuctions } from "state/zoo/hooks";
 import MarketItem from "../../components/market/marketItem";
 import markets from "../../components/market/marketitem.json";
 import { wait } from "functions";
@@ -99,6 +99,7 @@ const MarketPlacePage = () => {
   const [activeItem, setActiveItem] = useState({});
   const [hotData, setHotData] = useState([]);
   const getAvailableEggs = useGetAvailableEggs();
+  const getAllAuctions = useGetAllAuctions();
 
   const [age, setAge] = useState(0);
   const [breedCount, setBreadCount] = useState(0);
@@ -169,7 +170,9 @@ const MarketPlacePage = () => {
   const fetchNFTs = useFetchMyNFTs();
   const { account } = useActiveWeb3React();
 
-  const { availableEggs, loading } = useSelector((state: any) => state.zoo);
+  const { availableEggs, loading, allAuctions } = useSelector(
+    (state: any) => state.zoo
+  );
 
   const {
     myEggsCount: eggsCount,
@@ -196,7 +199,12 @@ const MarketPlacePage = () => {
     getAvailableEggs();
   }, [getAvailableEggs]);
 
+  useEffect(() => {
+    getAllAuctions();
+  }, [getAllAuctions]);
+
   console.log("MY NFTSSSS", availableEggs);
+  console.log("MY Auctionss", allAuctions);
 
   return (
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
@@ -388,8 +396,8 @@ const MarketPlacePage = () => {
       <div>
         {category === 0 && (
           <div className="flex flex-wrap mt-8 -mx-4">
-            {markets.length > 0 ? (
-              markets.map((datum, index) => {
+            {allAuctions.length > 0 ? (
+              allAuctions.map((datum, index) => {
                 return (
                   <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
                     <MarketItem
@@ -401,15 +409,15 @@ const MarketPlacePage = () => {
                 );
               })
             ) : (
-              <div>None</div>
+              <div className="py-16 w-full text-center">No auctions</div>
             )}
           </div>
         )}
 
         {category === 1 && (
           <div className="flex flex-wrap mt-8 -mx-4">
-            {MarketEggs.length > 0 ? (
-              MarketEggs.map((datum, index) => {
+            {allAuctions.length > 0 ? (
+              allAuctions.map((datum, index) => {
                 return (
                   <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
                     <MarketItem
@@ -421,29 +429,29 @@ const MarketPlacePage = () => {
                 );
               })
             ) : (
-              <div>none</div>
+              <div className="py-16 w-full text-center">No auctions</div>
             )}
           </div>
         )}
 
         {category === 2 && (
           <div className="flex flex-wrap mt-8 -mx-4">
-          {MarketAnimals.length > 0 ? (
-            MarketAnimals.map((datum, index) => {
-              return (
-                <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
-                  <MarketItem
-                    datum={datum}
-                    applyMaxWidth={false}
-                    placeBid={() => (setActiveItem(datum), console.log(""))}
-                  />
-                </div>
-              );
-            })
-          ) : (
-            <div>none</div>
-          )}
-        </div>
+            {allAuctions.length > 0 ? (
+              allAuctions.map((datum, index) => {
+                return (
+                  <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
+                    <MarketItem
+                      datum={datum}
+                      applyMaxWidth={false}
+                      placeBid={() => (setActiveItem(datum), console.log(""))}
+                    />
+                  </div>
+                );
+              })
+            ) : (
+              <div className="py-16 w-full text-center">No auctions</div>
+            )}
+          </div>
         )}
       </div>
     </div>

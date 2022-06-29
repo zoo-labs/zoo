@@ -273,3 +273,7 @@ export function useFaucet(): Contract | null {
 export function useBnbToken(): Contract | null {
   return useContract('BNB')
 }
+
+export function useAuction(): Contract | null {
+  return useContract('Auction')
+}
