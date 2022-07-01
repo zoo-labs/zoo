@@ -106,7 +106,7 @@ export function useApp(): Contract | null {
   return useContract('App')
 }
 
-export function useDrop(): Contract | null {
+export function useDrop(withSignerIfPossible:boolean): Contract | null {
   return useContract('Drop')
 }
 
@@ -272,4 +272,8 @@ export function useFaucet(): Contract | null {
 
 export function useBnbToken(): Contract | null {
   return useContract('BNB')
+}
+
+export function useAuction(): Contract | null {
+  return useContract('Auction')
 }
