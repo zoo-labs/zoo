@@ -33,6 +33,9 @@ export const updateMyNfts = createAction<Array<Object>>('zoo/updateMyNfts')
 export const eggsCount = createAction<number>('zoo/eggsCount')
 export const animalsCount = createAction<number>('zoo/animalsCount')
 export const breedsCount = createAction<number>('zoo/breedsCount')
+export const getAllAuctions = createAction('zoo/getAllAuctions');
+export const createBid = createAction<any>('zoo/createBid');
+
 
 // export function getZooBalance(account, zooToken) {
 //   return async (dispatch) => {
