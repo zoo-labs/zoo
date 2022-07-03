@@ -30,7 +30,9 @@ export enum ApplicationModal {
   LANGUAGE,
   NETWORK,
   BUYEGG,
-  BUYZOO
+  BUYZOO,
+  EDIT_AUCTION,
+  INCREASE_BID
 }
 
 export const updateBlockNumber = createAction<{
