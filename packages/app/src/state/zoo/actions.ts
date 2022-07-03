@@ -7,7 +7,9 @@
 
 // export { addAnimal, addAnimals, addEgg, addEggs, burnAnimal, burnEgg, clearZoo, updatZooBalnce } from '.'
 import { createAction } from '@reduxjs/toolkit'
-import { Egg } from 'types'
+// import { Egg } from 'types'
+
+import { AvailableEggs, Egg } from 'types'
 
 export interface SerializedToken {
   chainId: number
@@ -24,6 +26,17 @@ export interface SerializedPair {
 
 export const getZooBalance = createAction<{ balance: number }>('zoo/getZooBalance')
 export const getEggs = createAction<{ curr: any }>('zoo/getEggs')
+export const getAllowance = createAction<number>('zoo/getAllowance')
+export const getAvailableEggs = createAction<AvailableEggs[]>('zoo/getAvailableEggs')
+export const loading = createAction<boolean>('zoo/loading')
+export const updateMyNfts = createAction<Array<Object>>('zoo/updateMyNfts')
+export const eggsCount = createAction<number>('zoo/eggsCount')
+export const animalsCount = createAction<number>('zoo/animalsCount')
+export const breedsCount = createAction<number>('zoo/breedsCount')
+export const getAllAuctions = createAction('zoo/getAllAuctions');
+export const createBid = createAction<any>('zoo/createBid');
+
+
 // export function getZooBalance(account, zooToken) {
 //   return async (dispatch) => {
 //     if (!account) return
