@@ -24,7 +24,7 @@ const data = [
   },
 ];
 
-const TransactionHistory = () => {
+const TransactionHistory = ({ nftTransfers }) => {
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = (str: any) => {
@@ -49,47 +49,49 @@ const TransactionHistory = () => {
   };
 
   return (
-    <div className="max-w-7xl px-4 py-12">
-      <h2 className="text-center text-4xl lg:text-5xl mb-12 font-bold">
+    <div className="px-4 py-12 max-w-7xl">
+      <h2 className="mb-12 text-4xl font-bold text-center lg:text-5xl">
         Transaction History
       </h2>
       {copied && (
         <Alert
           message={`copied!`}
-          className="mb-4 bg-black100 text-white w-48 border border-grey mx-auto"
+          className="w-48 mx-auto mb-4 text-white border bg-black100 border-grey"
           show={copied}
           setShow={setCopied}
         />
       )}
 
-      <table className="border-collapse w-full">
+      <table className="w-full border-collapse">
         <thead>
-          <tr className="bg-black200 text-left">
-            <th className="p-3 font-bold uppercase  text-white hidden lg:table-cell">
+          <tr className="text-left bg-black200">
+            <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
               ACTIONS
             </th>
-            <th className="p-3 font-bold uppercase  text-white hidden lg:table-cell">
+            <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
               BLOCK
             </th>
-            <th className="p-3 font-bold uppercase  text-white hidden lg:table-cell">
+            <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
               TOKEN ID
             </th>
-            <th className="p-3 font-bold uppercase  text-white hidden lg:table-cell">
+            <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
               HASH
             </th>
             <th />
           </tr>
         </thead>
         <tbody>
-          {data.length ? (
-            data.map((item, index) => {
+          {nftTransfers.length > 0 ? (
+            nftTransfers.map((item, index) => {
+              console.log("nftTransfers item", item);
+              const { block_number, transaction_hash, token_id, value } = item;
               return (
                 <tr
                   key={index}
-                  className="bg-black100 lg:hover:bg-black200 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0"
+                  className="flex flex-row flex-wrap mb-10 bg-black100 lg:hover:bg-black200 lg:table-row lg:flex-row lg:flex-no-wrap lg:mb-0"
                 >
-                  <td className="w-full  flex lg:w-auto p-3 uppercase text-left text-white items-center lg:table-cell relative lg:static">
-                    <span className="lg:hidden bg-blue  rounded mr-4 px-2 py-1 text-xs font-bold uppercase">
+                  <td className="relative flex items-center w-full p-3 text-left text-white uppercase lg:w-auto lg:table-cell lg:static">
+                    <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
                       ACTIONS:
                     </span>
                     <span className="flex items-center">
@@ -100,29 +102,31 @@ const TransactionHistory = () => {
                         alt=""
                         className=""
                       />
-                      <span className="ml-1 uppercase">{item.type}</span>
+                      <span className="ml-1 uppercase">
+                        {value == "0" ? "Bought Egg" : "Animal"}
+                      </span>
                     </span>
                   </td>
-                  <td className="w-full lg:w-auto p-3 text-white text-left block lg:table-cell relative lg:static">
-                    <span className="lg:hidden   bg-blue  rounded mr-4 px-2 py-1 text-xs font-bold uppercase">
+                  <td className="relative block w-full p-3 text-left text-white lg:w-auto lg:table-cell lg:static">
+                    <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
                       BLOCK:
                     </span>
-                    {item.block}
+                    {block_number}
                   </td>
-                  <td className="w-full lg:w-auto p-3 text-white text-left block lg:table-cell relative lg:static">
-                    <span className="lg:hidden bg-blue  rounded mr-4 px-2 py-1 text-xs font-bold uppercase">
+                  <td className="relative block w-full p-3 text-left text-white lg:w-auto lg:table-cell lg:static">
+                    <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
                       TOKEN ID:
                     </span>
-                    {item.tokenId}
+                    {token_id}
                   </td>
-                  <td className="w-full lg:w-auto p-3 text-white text-left block lg:table-cell relative lg:static">
-                    <span className="lg:hidden bg-blue  rounded mr-4 px-2 py-1 text-xs font-bold uppercase">
+                  <td className="relative block w-full p-3 text-left text-white lg:w-auto lg:table-cell lg:static">
+                    <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
                       HASH:
                     </span>
-                    {item.hash}
+                    {transaction_hash}
                   </td>
-                  <td className="w-full lg:w-auto p-3 text-white text-left block lg:table-cell relative lg:static">
-                    <span className="lg:hidden bg-blue  rounded mr-4 px-2 py-1 text-xs font-bold uppercase">
+                  <td className="relative block w-full p-3 text-left text-white lg:w-auto lg:table-cell lg:static">
+                    <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
                       Copy
                     </span>
                     <Image
@@ -130,7 +134,7 @@ const TransactionHistory = () => {
                       width={24}
                       height={24}
                       alt=""
-                      onClick={() => copyToClipboard(item.hash)}
+                      onClick={() => copyToClipboard(transaction_hash)}
                       className="cursor-pointer"
                     />
                   </td>
@@ -138,7 +142,7 @@ const TransactionHistory = () => {
               );
             })
           ) : (
-            <p className="text-center font-bold  text-xl">
+            <p className="text-xl font-bold text-center">
               No Transaction History
             </p>
           )}
