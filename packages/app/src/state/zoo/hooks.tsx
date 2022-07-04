@@ -105,7 +105,82 @@ export function useGetEggs(): (eggs) => void {
     [dispatch]
   );
 }
+export function useHatch(): (
+  dropEggId: number,
+  eggId: number,
+  success?: () => void
+) => void {
+  const addPopup = useAddPopup();
+  const zooKeeper = useZooKeeper();
+  const { account } = useActiveWeb3React();
+  const zoo = useZooToken();
+  const dropId = process.env.NEXT_PUBLIC_DROP_ID;
+  const dispatch = useAppDispatch();
+  return useCallback(
+    async (dropEggId, eggId, success) => {
+      if (!zooKeeper) return;
+      console.log("zooKeeper_usehatch", {
+        dropEggid: Number(dropEggId),
+        dropId: Number(dropId),
+        eggId: Number(eggId),
+        zooKeeper: zooKeeper.address,
+      });
+      try {
+        dispatch(loading(true));
+        const approval = await zoo?.allowance(account, zooKeeper.address);
+        console.log("approval_", Number(approval));
 
+        if (Number(approval) <= 0) {
+          console.log("approving_media");
+          await zoo
+            ?.approve(zooKeeper.address, MaxUint256, {
+              gasLimit: 4000000,
+            })
+            .then((tx) => {
+              console.log("approval", tx);
+              tx.wait();
+            })
+            .catch((err) => {
+              console.error("ISSUE APPROVING MEDIA \n", err);
+              dispatch(loading(false));
+              addPopup({
+                txn: {
+                  hash: null,
+                  summary: formatError(err),
+                  success: false,
+                },
+              });
+              return;
+            });
+        }
+        const tx = await zooKeeper?.hatchEgg(Number(dropId), Number(eggId), {
+          gasLimit: 4000000,
+        });
+        await tx.wait();
+        dispatch(loading(false));
+        success && success();
+        addPopup({
+          txn: {
+            hash: null,
+            summary: `Successfully hatched egg ${eggId}`,
+            success: true,
+          },
+        });
+      } catch (error) {
+        console.error("error hatching egg", error);
+        dispatch(loading(false));
+        addPopup({
+          txn: {
+            hash: null,
+            summary: formatError(error),
+            success: false,
+          },
+        });
+      }
+    },
+    [account, addPopup, dispatch, dropId, zoo, zooKeeper]
+  );
+}
 export function useFetchMyNFTs(): () => void {
   const Web3Api = useMoralisWeb3Api();
   console.log("structuredNft fetching nfts", Web3Api);

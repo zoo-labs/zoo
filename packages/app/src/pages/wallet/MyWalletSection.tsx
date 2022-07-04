@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { ChainId, Currency, NATIVE, SUSHI_ADDRESS } from "@zoolabs/sdk";
 import { numberWithCommas } from "functions";
 import Image from "next/image";
@@ -19,10 +19,14 @@ import { fadeInOnScroll } from "animation";
 import { useActiveWeb3React } from "hooks";
 import TransactionHistorySection from "./TransactionHistorySection";
 import dynamic from "next/dynamic";
+import { useHatchEggModal } from "state/application/hooks";
+import HatchEggModal from "modals/HatchEggModal";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
 const MyWalletSection = ({ myNfts, nftTransfers }) => {
+  const toggleModal = useHatchEggModal();
+  const [nftItem, setNftItem] = useState({ eggId: 1, dropId: 1, name: "" });
   return (
     <div>
       <div className="py-12">
@@ -30,9 +34,16 @@ const MyWalletSection = ({ myNfts, nftTransfers }) => {
         <div className="flex flex-wrap items-center justify-center gap-4 mb-4">
           <div>
             {myNfts.map((nft) => {
-              const { kind, name } = nft;
+              const { kind, name, eggId, id, dropId } = nft;
+              console.log("nftttt", nft);
               return (
-                <div className="flex flex-col items-center">
+                <div
+                  onClick={() => {
+                    setNftItem({ dropId, eggId: id, name });
+                    toggleModal();
+                  }}
+                  className="flex flex-col items-center"
+                >
                   {kind === 0 ? (
                     <Image
                       src="/img/egg.png"
@@ -42,7 +53,12 @@ const MyWalletSection = ({ myNfts, nftTransfers }) => {
                       alt=""
                     />
                   ) : (
-                    <ModelViewer zoom="35deg"></ModelViewer>
+                    <div className="h-[350px] w-[300px]">
+                      <ModelViewer
+                        glb={"/models/Elephant/ELEPHANT_ADULT.glb"}
+                        usdz={"/models/Elephant/ELEPHANT_ADULT.usdz"}
+                      ></ModelViewer>
+                    </div>
                   )}
                   <p>{name}</p>
                 </div>
@@ -54,6 +70,7 @@ const MyWalletSection = ({ myNfts, nftTransfers }) => {
       <div className="py-12">
         <TransactionHistorySection nftTransfers={nftTransfers} />
       </div>
+      <HatchEggModal nftItem={nftItem} success={() => console.log("okay")} />
     </div>
   );
 };
