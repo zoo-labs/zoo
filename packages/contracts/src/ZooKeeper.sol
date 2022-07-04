@@ -6,18 +6,19 @@ import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { SafeMath } from "@openzeppelin/contracts/utils/math/SafeMath.sol";
-
 import { IDrop } from "./interfaces/IDrop.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 import { IZoo } from "./interfaces/IZoo.sol";
 import { IERC721Burnable } from "./interfaces/IERC721Burnable.sol";
 import { IUniswapV2Pair } from "./interfaces/IUniswapV2Pair.sol";
+import { IKeeper } from "./interfaces/IKeeper.sol";
 
-contract ZooKeeper is Ownable, IZoo {
+contract ZooKeeper is Ownable, IZoo, IKeeper {
   using SafeMath for uint256;
   using Counters for Counters.Counter;
 
   Counters.Counter private dropIDs;
+  Counters.Counter private whitelistedCount;
 
   mapping(uint256 => address) public drops;
 
@@ -70,6 +71,7 @@ contract ZooKeeper is Ownable, IZoo {
   function setNamePrice(uint256 price) public onlyOwner {
     namePrice = price.mul(10**18);
   }
+
 
   function setBNBPrice(uint256 price) public onlyOwner {
     BNBPrice = price;
@@ -166,6 +168,12 @@ contract ZooKeeper is Ownable, IZoo {
     }
   }
 
+  function dropEggs(uint256 eggId, uint256 dropID,address buyer) override public {
+    IDrop drop = IDrop(drops[dropID]);
+    require(msg.sender == drop.EggDropAddress(), "wrong egg dropper");
+    mintEgg(eggId, dropID, buyer);
+  }
+
   function hatchEgg(uint256 dropID, uint256 eggID) public returns (IZoo.Token memory) {
     IDrop drop = IDrop(drops[dropID]);
     uint256 price = drop.eggPrice(buyerEggDrop[msg.sender][eggID]);
@@ -177,6 +185,7 @@ contract ZooKeeper is Ownable, IZoo {
     IZoo.Token memory animal = getAnimal(dropID, eggID);
     animal.meta.eggID = eggID;
     animal.meta.dropID = dropID;
+    animal.dropEgg = buyerEggDrop[msg.sender][eggID];
 
     animal = mint(msg.sender, animal);
 
@@ -199,7 +208,7 @@ contract ZooKeeper is Ownable, IZoo {
     if(tokens[animal].stage == IZoo.AdultHood.BABY){
       token.stage = IZoo.AdultHood.TEEN;
     }
-    if(tokens[animal].stage == IZoo.AdultHood.TEEN){
+    else if(tokens[animal].stage == IZoo.AdultHood.TEEN){
       token.stage = IZoo.AdultHood.ADULT;
     }
     zoo.transferFrom(msg.sender, address(this), price);
@@ -275,8 +284,8 @@ contract ZooKeeper is Ownable, IZoo {
     tokens[tokenID] = token;
   }
 
-  function unsafeRandom() private view returns (uint256) {
-    uint256 randomNumber = uint256(keccak256(abi.encodePacked(block.number, msg.sender, block.timestamp))) % 10000;
+  function unsafeRandom() public view returns (uint256) {
+    uint256 randomNumber = uint256(keccak256(abi.encodePacked(block.number, msg.sender, block.timestamp))) % 4;
     return randomNumber;
   }
 
