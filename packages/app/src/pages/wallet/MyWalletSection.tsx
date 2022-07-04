@@ -19,15 +19,23 @@ import { fadeInOnScroll } from "animation";
 import { useActiveWeb3React } from "hooks";
 import TransactionHistorySection from "./TransactionHistorySection";
 import dynamic from "next/dynamic";
-import { useHatchEggModal, useMyNftModalToggle } from "state/application/hooks";
+import {
+  useAuctionModal,
+  useHatchEggModal,
+  useMyNftModalToggle,
+} from "state/application/hooks";
 import HatchEggModal from "modals/HatchEggModal";
 import NftModal from "modals/NftModal";
 import { MyNFT } from "state/zoo/types";
+import AssetModal from "marketplace/AssetModal";
+import AuctionModal from "modals/Auction";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
 const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
   const toggleHatchEggModal = useHatchEggModal();
+  const toggleAucionModal = useAuctionModal();
+
   const [nftItem, setNftItem] = useState<MyNFT>();
   const toggleNftModal = useMyNftModalToggle();
   const feedAnimal = useFeed();
@@ -98,8 +106,9 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
             }}
             feed={(id) => feedAnimal(id)}
             breed={() => console.log("breeding")}
-            auction={() => console.log("auctioning")}
+            auction={() => toggleAucionModal()}
           />
+          <AuctionModal nft={nftItem} />
         </>
       )}
     </div>
