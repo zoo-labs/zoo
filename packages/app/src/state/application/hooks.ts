@@ -35,6 +35,10 @@ export function useWalletModalToggle(): () => void {
   return useToggleModal(ApplicationModal.WALLET)
 }
 
+export function useHatchEggModal(): () => void {
+  return useToggleModal(ApplicationModal.HATCH_EGG)
+}
+
 export function useNetworkModalToggle(): () => void {
   return useToggleModal(ApplicationModal.NETWORK)
 }

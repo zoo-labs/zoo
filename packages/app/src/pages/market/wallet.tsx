@@ -28,6 +28,7 @@ import { useAppDispatch } from "state/hooks";
 
 import Notification from "../../modals/NotificationModal";
 import { handleFunds } from "../../utils/handleFunds";
+import HatchEggModal from "modals/HatchEggModal";
 
 interface WalletProps {}
 
