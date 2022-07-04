@@ -13,6 +13,7 @@ import { abbreviateNumber } from "functions/abbreviateNumbers";
 import { AvailableEggs } from "types";
 import { useCallback } from "react";
 import {
+  useBnbBalance,
   useBuyEgg,
   useBuyEggWithBnB,
   useBuyZoo,
@@ -33,7 +34,7 @@ const Item = () => {
   const { account } = useActiveWeb3React();
   const [egg, setEgg] = React.useState<AvailableEggs>(null);
   const [withZoo, setWithZoo] = React.useState(true);
-  const { availableEggs, loading, zooBalance } = useSelector(
+  const { availableEggs, loading, zooBalance, bnbBalance } = useSelector(
     (state: any) => state.zoo
   );
   const buyZoo = useBuyZoo();
@@ -41,13 +42,15 @@ const Item = () => {
   const transferZoo = useTransferZoo();
   const buyEggWithBnB = useBuyEggWithBnB();
   const getZooBalance = useZoobalance();
+  const getBNBBalance = useBnbBalance();
   const getAvailableEggs = useGetAvailableEggs();
   const toggleWallet = useWalletModalToggle();
 
   useEffect(() => {
     getAvailableEggs();
     getZooBalance();
-  }, [getAvailableEggs, getZooBalance]);
+    getBNBBalance();
+  }, []);
 
   const handleBuyZoo = useCallback(() => {
     console.log("Clicked");
@@ -89,7 +92,7 @@ const Item = () => {
   });
   return (
     <>
-      <div className="flex flex-col lg:flex-row gap-11 lg:items-center px-5 lg:px-10 mt-20 max-w-7xl mx-auto">
+      <div className="flex flex-col px-5 mx-auto mt-20 lg:flex-row gap-11 lg:items-center lg:px-10 max-w-7xl">
         <div className="rounded-xl p-px h-full bg-view-gradient w-full lg:w-[40%]">
           <div className="bg-black rounded-xl min-h-[466px] h-full w-full px-12 py-12 flex flex-col justify-center items-center">
             {/* <ModelViewer></ModelViewer> */}
@@ -98,19 +101,19 @@ const Item = () => {
           </div>
         </div>
         <div className="rounded-xl p-px h-full bg-transparent px-5 py-3 w-full lg:w-[60%]">
-          <div className="flex flex-col gap-9 items-start text-white mb-7">
-            <div className="flex items-center gap-x-4 space-y-3 flex-wrap w-full">
+          <div className="flex flex-col items-start text-white gap-9 mb-7">
+            <div className="flex flex-wrap items-center w-full space-y-3 gap-x-4">
               <div className="w-full">
                 <p className="font-semibold text-[52px]">{egg?.name}</p>
               </div>
-              <div className="flex gap-2 items-center">
+              <div className="flex items-center gap-2">
                 <Image src="/icons/status.svg" alt="" height={26} width={20} />
                 <div>
-                  <p className="font-medium text-sm">Status</p>
+                  <p className="text-sm font-medium">Status</p>
                   <p className="font-medium text-[10px]">Endangered</p>
                 </div>
               </div>
-              <div className="flex gap-2 items-center">
+              <div className="flex items-center gap-2">
                 <Image
                   src="/icons/population.svg"
                   alt=""
@@ -118,37 +121,37 @@ const Item = () => {
                   width={20}
                 />
                 <div>
-                  <p className="font-medium text-sm">Population</p>
+                  <p className="text-sm font-medium">Population</p>
                   <p className="font-medium text-[10px]">2,400-2,800</p>
                 </div>
               </div>
-              <div className="flex gap-2 items-center">
+              <div className="flex items-center gap-2">
                 <Image src="/icons/react.svg" alt="" height={26} width={20} />
                 <div>
-                  <p className="font-medium text-sm">Scientific Name</p>
+                  <p className="text-sm font-medium">Scientific Name</p>
                   <p className="font-medium text-[10px]">
                     Elephas Maximus Sumatrensis
                   </p>
                 </div>
               </div>
-              <div className="flex gap-2 items-center">
+              <div className="flex items-center gap-2">
                 <Image src="/icons/shape.svg" alt="" height={26} width={20} />
                 <div>
-                  <p className="font-medium text-sm">Size</p>
+                  <p className="text-sm font-medium">Size</p>
                   <p className="font-medium text-[10px]">6.6 - 10.5 Feet</p>
                 </div>
               </div>
-              <div className="flex gap-2 items-center">
+              <div className="flex items-center gap-2">
                 <Image src="/icons/habitat.svg" alt="" height={26} width={20} />
                 <div>
-                  <p className="font-medium text-sm">Habitats</p>
+                  <p className="text-sm font-medium">Habitats</p>
                   <p className="font-medium text-[10px]">Tropical Forests</p>
                 </div>
               </div>
             </div>
             <div className="flex w-full items-center gap-3 mb-2.5">
               <div className="w-full lg:w-3/4">
-                <div className="w-full py-2 5 px-6 flex flex-col md:flex-row md:items-center md:justify-between bg-dark-400 rounded-lg ">
+                <div className="flex flex-col w-full px-6 py-2 rounded-lg 5 md:flex-row md:items-center md:justify-between bg-dark-400 ">
                   <div>
                     <p className="text-xs font-normal">Current price</p>
                     <p className="text-xl font-medium">
@@ -169,18 +172,18 @@ const Item = () => {
                             height={20}
                             className="rounded-full"
                           />
-                          <p className="text-xs font-semibold ml-1">BNB</p>
+                          <p className="ml-1 text-xs font-semibold">BNB</p>
                         </>
                       ) : (
                         <>
                           <Image
-                            src="/luxlogo.png"
+                            src="/logo.png"
                             alt=""
                             width={20}
                             height={20}
-                            className="rounded-full"
+                            className=""
                           />
-                          <p className="text-xs font-semibold ml-1">ZOO</p>
+                          <p className="ml-1 text-xs font-semibold">ZOO</p>
                         </>
                       )}
                     </div>
@@ -191,21 +194,21 @@ const Item = () => {
                     />
                   </button>
                 </div>
-                <p className="text-right text-c-grey-100 text-xs">
+                <p className="text-xs text-right text-c-grey-100">
                   Your Wallet Balance:{" "}
-                  {withZoo ? `${zooBalance} ZOO` : "4.34 BNB"}
+                  {withZoo ? `${zooBalance} ZOO` : `${bnbBalance} BNB`}
                 </p>
               </div>
               {Number(egg?.price) > zooBalance && (
                 <button
-                  className=" bg-dark-400 rounded-lg px-2 py-2"
+                  className="px-2 py-2 rounded-lg bg-dark-400"
                   onClick={() => handleBuyZoo()}
                 >
                   Buy more
                 </button>
               )}
             </div>
-            <div className="text-sm w-full">
+            <div className="w-full text-sm">
               <p className="w-full border-b border-[#605E5E] pb-2 mb-5">
                 Description
               </p>

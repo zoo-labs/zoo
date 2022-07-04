@@ -106,7 +106,7 @@ export function useApp(): Contract | null {
   return useContract('App')
 }
 
-export function useDrop(withSignerIfPossible:boolean): Contract | null {
+export function useDrop(withSignerIfPossible?: boolean): Contract | null {
   return useContract('Drop')
 }
 

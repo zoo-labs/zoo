@@ -1,7 +1,7 @@
 import { useActiveWeb3React, useFaucet, useZooToken } from "hooks";
 import { useCallback } from "react";
 import { useAppDispatch } from "state/hooks";
-import { Egg } from "types";
+import { Auction, Egg } from "types";
 
 import { useMoralisWeb3Api } from "react-moralis";
 import {
@@ -23,15 +23,15 @@ import {
   loading,
   getAllAuctions,
   createBid,
+  getBNBBalance,
 } from "./actions";
 import { useAddPopup } from "state/application/hooks";
 import { MaxUint256 } from "@ethersproject/constants";
 import { formatError } from "functions";
-import { useTransactionAdder } from 'state/transactions/hooks'
-import { addresses } from '../../constants'
-import { ChainId } from 'constants/chainIds'
-import { addDays, differenceInSeconds } from 'date-fns'
-
+import { useTransactionAdder } from "state/transactions/hooks";
+import { addresses } from "../../constants";
+import { ChainId } from "constants/chainIds";
+import { addDays, differenceInSeconds } from "date-fns";
 
 // helper that can take a ethers library transaction response and add it to the list of transactions
 export function useZoobalance(): () => void {
@@ -41,15 +41,37 @@ export function useZoobalance(): () => void {
   const dispatch = useAppDispatch();
 
   return useCallback(async () => {
+    try {
+      if (!account) return;
+      if (!chainId) return;
+
+      const decimals = await zooToken.decimals();
+      const rawBalance = await zooToken.balanceOf(account);
+      const divisor = parseFloat(Math.pow(10, decimals).toString());
+      const balance = rawBalance / divisor;
+      console.log("rawBalance", balance);
+      dispatch(getZooBalance({ balance }));
+    } catch (error) {
+      console.log("error in get zoo balance", error);
+    }
+  }, [dispatch, chainId, account]);
+}
+export function useBnbBalance(): () => void {
+  const { chainId, account } = useActiveWeb3React();
+  const bnb = useBnbToken();
+
+  const dispatch = useAppDispatch();
+
+  return useCallback(async () => {
     if (!account) return;
     if (!chainId) return;
 
-    const decimals = await zooToken.decimals();
-    const rawBalance = await zooToken.balanceOf(account);
+    const decimals = await bnb.decimals();
+    const rawBalance = await bnb.balanceOf(account);
     const divisor = parseFloat(Math.pow(10, decimals).toString());
     const balance = rawBalance / divisor;
-    console.log("rawBalance", balance);
-    dispatch(getZooBalance({ balance }));
+    console.log("rawBNB Balance", balance);
+    dispatch(getBNBBalance({ balance }));
   }, [dispatch, chainId, account]);
 }
 export function useBuyZoo(): () => void {
@@ -170,32 +192,38 @@ export function useFetchMyNFTs(): () => void {
 
 export function useGetAvailableEggs(): () => void {
   const dispatch = useAppDispatch();
-  const dropContract = useDrop(true);
-
+  const dropContract = useDrop();
+  const { account } = useActiveWeb3React();
   return useCallback(async () => {
-    const eggs = await dropContract?.getAllEggs();
-    if (!eggs) return;
-    const structuredEggs = eggs.map((egg) => {
-      return {
-        bidShares: {
-          creator: Number(egg?.bidShares?.creator),
-          owner: Number(egg?.bidShares?.owner),
-          prevOwner: Number(egg?.bidShares?.prevOwner),
-        },
-        birthday: Number(egg.birthday),
-        data: egg.data,
-        exist: true,
-        id: Number(egg.id),
-        kind: egg.kind,
-        minted: Number(egg.minted),
-        name: egg.name,
-        price: Number(egg.price) / 10 ** 18,
-        supply: Number(egg.supply),
-        timestamp: Number(egg.timestamp),
-      };
-    });
-    console.log("structuredEggs", structuredEggs);
-    dispatch(getAvailableEggs(structuredEggs));
+    console.log("useGetAvailableEggs  contract", dropContract);
+    try {
+      const eggs = await dropContract?.getAllEggs();
+      console.log("useGetAvailableEggs", eggs);
+      if (!eggs) return;
+      const structuredEggs = eggs.map((egg) => {
+        return {
+          bidShares: {
+            creator: Number(egg?.bidShares?.creator),
+            owner: Number(egg?.bidShares?.owner),
+            prevOwner: Number(egg?.bidShares?.prevOwner),
+          },
+          birthday: Number(egg.birthday),
+          data: egg.data,
+          exist: true,
+          id: Number(egg.id),
+          kind: egg.kind,
+          minted: Number(egg.minted),
+          name: egg.name,
+          price: Number(egg.price) / 10 ** 18,
+          supply: Number(egg.supply),
+          timestamp: Number(egg.timestamp),
+        };
+      });
+      console.log("structuredEggs", structuredEggs);
+      dispatch(getAvailableEggs(structuredEggs));
+    } catch (error) {
+      console.log("errir in useGetAvailableEggs", error);
+    }
   }, [dispatch, dropContract]);
 }
 
@@ -358,57 +386,90 @@ export function useTransferZoo(): (recipient: string, amount: number) => void {
 }
 
 export function useGetAllAuctions(): () => void {
-  const auction = useAuction();
-
+  const auctionContract = useAuction();
+  const dispatch = useDispatch();
   return useCallback(async () => {
-    return await auction.getAllAuctions();
-  }, []);
+    console.log("auction ytfrtdtrsd", auctionContract);
+
+    const auctions = await auctionContract?.getAllAuctions();
+    console.log("auctions await", auctions);
+    const structuredAuctions = auctions.map((auction: Auction) => {
+      const {
+        tokenID,
+        tokenOwner,
+        reservePrice,
+        firstBidTime,
+        duration,
+        curatorFeePercentage,
+        curator,
+        auctionCurrency,
+        amount,
+      } = auction;
+      return {
+        tokenID: Number(tokenID),
+        tokenOwner,
+        reservePrice: Number(reservePrice),
+        firstBidTime: Number(firstBidTime),
+        duration: Number(duration),
+        curatorFeePercentage,
+        curator,
+        auctionCurrency,
+        amount: Number(amount),
+      };
+    });
+    console.log("structuredAuctionss", structuredAuctions);
+    dispatch(getAllAuctions(structuredAuctions || []));
+  }, [dispatch, auctionContract]);
 }
 
-export function useApproveTokenWithMedia(): (tokenId?: number, spender?: string) => Promise<any> {
-  const { chainId } = useActiveWeb3React()
-  const media = useMedia()
-  const dispatch = useAppDispatch()
-  const addTransaction = useTransactionAdder()
+export function useApproveTokenWithMedia(): (
+  tokenId?: number,
+  spender?: string
+) => Promise<any> {
+  const { chainId } = useActiveWeb3React();
+  const media = useMedia();
+  const dispatch = useAppDispatch();
+  const addTransaction = useTransactionAdder();
   return useCallback(
     async (tokenId?: number, spender?: string) => {
-      const chainAddresses = (addresses[chainId] as any) || (addresses[ChainId.BSC] as any)
-      if (!chainId) return
-      if (!media) return
+      const chainAddresses =
+        (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
+      if (!chainId) return;
+      if (!media) return;
 
       // console.log('form_usdjndks', {
       //   tokenId,
       //   spender,
       //   media,
       // })
-      console.log('form_usdjndks', {
+      console.log("form_usdjndks", {
         media: media.address,
         spender: spender,
         same: media.address === spender,
-      })
+      });
 
       try {
-        console.log('about to approve token', tokenId, spender)
+        console.log("about to approve token", tokenId, spender);
         const trx = await media?.setApprovalForAll(spender, true, {
           gasLimit: 4000000,
-        })
+        });
 
-        console.log("I'm approving")
-        await trx.wait()
-        console.log('approved')
+        console.log("I'm approving");
+        await trx.wait();
+        console.log("approved");
 
         addTransaction(trx, {
-          summary: 'Approve ' + tokenId,
+          summary: "Approve " + tokenId,
           approval: { tokenAddress: chainAddresses.media, spender: spender },
-        })
+        });
 
-        return trx
+        return trx;
       } catch (error) {
-        console.error('error approving token', error)
+        console.error("error approving token", error);
       }
     },
     [chainId, media, addTransaction]
-  )
+  );
 }
 
 // Putting animal on market (Creating Auction)
@@ -419,35 +480,41 @@ export function useCreateAuction(): (
   curatorFeePercentage: number,
   success?: () => void
 ) => void {
-  const addPopup = useAddPopup()
-  const auction = useAuction()
-  const zoo = useZooToken()
-  const { account } = useActiveWeb3React()
-  const tokenContract = useMedia()
-  const approveTokenWithMedia = useApproveTokenWithMedia()
-  const auctionCurrency = zoo?.address
-  const dispatch = useDispatch()
+  const addPopup = useAddPopup();
+  const auction = useAuction();
+  const zoo = useZooToken();
+  const { account } = useActiveWeb3React();
+  const tokenContract = useMedia();
+  const approveTokenWithMedia = useApproveTokenWithMedia();
+  const auctionCurrency = zoo?.address;
+  const dispatch = useDispatch();
   return useCallback(
     async (tokenID, duration, reservePrice, curatorFeePercentage, success) => {
-      if (!auction) return
-      dispatch(loading(true))
-      console.log('auction', auction, auctionCurrency)
+      if (!auction) return;
+      dispatch(loading(true));
+      console.log("auction", auction, auctionCurrency);
       try {
-        const isApproved = await tokenContract?.isApprovedForAll(account, auction?.address)
+        const isApproved = await tokenContract?.isApprovedForAll(
+          account,
+          auction?.address
+        );
         if (!isApproved) {
-          console.log('not approved')
-          const approval = await approveTokenWithMedia(Number(tokenID), auction?.address)
-          console.log('approval', approval)
+          console.log("not approved");
+          const approval = await approveTokenWithMedia(
+            Number(tokenID),
+            auction?.address
+          );
+          console.log("approval", approval);
           if (!approval) {
-            dispatch(loading(false))
-            return
+            dispatch(loading(false));
+            return;
           }
         }
 
-        const now = new Date()
-        const auctionEndDate = addDays(now, duration)
+        const now = new Date();
+        const auctionEndDate = addDays(now, duration);
 
-        const duration_ = differenceInSeconds(new Date(auctionEndDate), now)
+        const duration_ = differenceInSeconds(new Date(auctionEndDate), now);
 
         const tx = await auction?.createAuction(
           tokenID,
@@ -458,31 +525,39 @@ export function useCreateAuction(): (
           curatorFeePercentage,
           auctionCurrency,
           { gasLimit: 4000000 }
-        )
-        await tx.wait()
+        );
+        await tx.wait();
         addPopup({
           txn: {
             hash: null,
             summary: `Successfully listed item ${tokenID}`,
             success: true,
           },
-        })
-        dispatch(loading(false))
-        success && success()
+        });
+        dispatch(loading(false));
+        success && success();
       } catch (error) {
-        console.error('error creating auction', error)
-        dispatch(loading(false))
+        console.error("error creating auction", error);
+        dispatch(loading(false));
         addPopup({
           txn: {
             hash: null,
             summary: formatError(error),
             success: false,
           },
-        })
+        });
       }
     },
-    [auction, dispatch, auctionCurrency, tokenContract, account, addPopup, approveTokenWithMedia]
-  )
+    [
+      auction,
+      dispatch,
+      auctionCurrency,
+      tokenContract,
+      account,
+      addPopup,
+      approveTokenWithMedia,
+    ]
+  );
 }
 
 // export function useCreateAuction(): (
