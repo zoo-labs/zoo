@@ -4,13 +4,14 @@ import { useRouter } from "next/router";
 import { accountEllipsis, getEmoji } from "functions";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-
+import { Auction } from "types";
+import moment from "moment";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
 
 interface IndexProps {
-  datum: any;
+  datum: Auction;
   applyMaxWidth: boolean;
   placeBid: () => void;
 }
@@ -23,13 +24,13 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
       className="flex flex-col "
       onClick={() =>
         router.push({
-          pathname: `/market/placebid/${datum.id}`,
+          pathname: `/market/placebid/${datum.tokenID}`,
         })
       }
     >
       <div className="relative overflow-hidden rounded bg-nft-gradient parent">
         <div className="h-[350px] w-[300px]">
-          <ModelViewer usdz={datum.usdz} glb={datum.glb}></ModelViewer>
+          {/* <ModelViewer usdz={datum.usdz} glb={datum.glb}></ModelViewer> */}
         </div>
 
         <div className="absolute top-0 left-0 invisible w-full h-full transition-all duration-300 rounded opacity-0 hover:visible hover:opacity-100">
@@ -50,7 +51,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
         <div className="flex flex-col flex-grow">
           <div className="flex mb-4 ">
             <div className="mt-1 mr-auto font-semibold">
-              {datum.name || "Egg"}{" "}
+              {/* {datum.name || "Egg"}{" "} */}
               <span className="text-xs text-gray-500">
                 ({datum.tokenID || ""})
               </span>
@@ -59,16 +60,16 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
               className="flex items-center justify-center flex-shrink-0 px-2 ml-2 text-xs font-bold uppercase rounded-sm primary"
               style={{ boxShadow: "inset 0 0 0 1px rgb(140, 79, 248)" }}
             >
-              500K Z00
+              {datum.reservePrice} Z00
             </div>
           </div>
           <div className="flex ">
             <div className="flex mt-1 mr-auto text-xs font-semibold text-gray-500">
               <div className="w-4 h-4 mr-1 rounded-full bg-gradient-to-b from-btn1 to-btn2"></div>
-              {accountEllipsis(datum.owner || "")}
+              {accountEllipsis(datum.tokenOwner || "")}
             </div>
             <div className="flex items-center justify-center flex-shrink-0 ml-2 text-xs font-bold uppercase rounded-sm">
-              3 days Left
+              {moment(new Date(datum.duration * 1000), "YYYYMMDD").fromNow()}
             </div>
           </div>
         </div>
@@ -77,13 +78,13 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
             <div className="mr-1">
               <FaMoneyBillWave />
             </div>
-            Highest bid <span className="ml-1">1M ZOO</span>
+            Highest bid <span className="ml-1">{datum.amount} ZOO</span>
           </div>
-          <div className="text-xs font-semibold text-gray-500">
+          {/* <div className="text-xs font-semibold text-gray-500">
             {datum.yield
               ? `${datum.yield} Yields/Day ${getEmoji(datum.rarity)}`
               : ""}{" "}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
