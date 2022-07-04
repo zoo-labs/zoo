@@ -108,7 +108,11 @@ export default function Wallet({ children }) {
           </div>
         </div>
         {category === 0 ? (
-          <MyWalletSection myNfts={myNfts} nftTransfers={nftTransfers} />
+          <MyWalletSection
+            myNfts={myNfts}
+            nftTransfers={nftTransfers}
+            fetchNfts={() => fetchNFTs()}
+          />
         ) : category === 1 ? (
           <MyBidsSection />
         ) : (
