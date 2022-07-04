@@ -393,7 +393,7 @@ export function useGetAllAuctions(): () => void {
 
     const auctions = await auctionContract?.getAllAuctions();
     console.log("auctions await", auctions);
-    const structuredAuctions = auctions.map((auction: Auction) => {
+    const structuredAuctions = auctions?.map((auction: Auction) => {
       const {
         tokenID,
         tokenOwner,
