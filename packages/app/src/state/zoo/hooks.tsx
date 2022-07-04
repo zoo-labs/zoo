@@ -1,7 +1,7 @@
 import { useActiveWeb3React, useFaucet, useZooToken } from "hooks";
 import { useCallback } from "react";
 import { useAppDispatch } from "state/hooks";
-import { Egg } from "types";
+import { Auction, Egg } from "types";
 
 import { useMoralisWeb3Api } from "react-moralis";
 import {
@@ -23,15 +23,18 @@ import {
   loading,
   getAllAuctions,
   createBid,
+  getBNBBalance,
+  addNftTTransfers,
 } from "./actions";
 import { useAddPopup } from "state/application/hooks";
 import { MaxUint256 } from "@ethersproject/constants";
 import { formatError } from "functions";
-import { useTransactionAdder } from 'state/transactions/hooks'
-import { addresses } from '../../constants'
-import { ChainId } from 'constants/chainIds'
-import { addDays, differenceInSeconds } from 'date-fns'
-
+import { useTransactionAdder } from "state/transactions/hooks";
+import { addresses } from "../../constants";
+import { ChainId } from "constants/chainIds";
+import { addDays, differenceInSeconds } from "date-fns";
+import { SUPPORTED_NETWORKS } from "config/networks";
+import { MyNFT } from "./types";
 
 // helper that can take a ethers library transaction response and add it to the list of transactions
 export function useZoobalance(): () => void {
@@ -41,17 +44,24 @@ export function useZoobalance(): () => void {
   const dispatch = useAppDispatch();
 
   return useCallback(async () => {
-    if (!account) return;
-    if (!chainId) return;
+    try {
+      if (!account) return;
+      if (!chainId) return;
+      console.log("zooToken", zooToken);
+      const decimals = await zooToken.decimals();
+      const rawBalance = await zooToken.balanceOf(account);
+      console.log("rawBalance", rawBalance);
 
-    const decimals = await zooToken.decimals();
-    const rawBalance = await zooToken.balanceOf(account);
-    const divisor = parseFloat(Math.pow(10, decimals).toString());
-    const balance = rawBalance / divisor;
-    console.log("rawBalance", balance);
-    dispatch(getZooBalance({ balance }));
+      const divisor = parseFloat(Math.pow(10, decimals).toString());
+      const balance = rawBalance / divisor;
+      console.log("rawBalance", balance);
+      dispatch(getZooBalance({ balance }));
+    } catch (error) {
+      console.log("error in get zoo balance", error);
+    }
   }, [dispatch, chainId, account]);
 }
+
 export function useBuyZoo(): () => void {
   const { chainId, account } = useActiveWeb3React();
   const faucet = useFaucet();
@@ -97,10 +107,87 @@ export function useGetEggs(): (eggs) => void {
     [dispatch]
   );
 }
+export function useHatch(): (
+  dropEggId: number,
+  eggId: number,
+  success?: () => void
+) => void {
+  const addPopup = useAddPopup();
+  const zooKeeper = useZooKeeper();
+  const { account } = useActiveWeb3React();
+  const zoo = useZooToken();
+  const dropId = process.env.NEXT_PUBLIC_DROP_ID;
+  const dispatch = useAppDispatch();
+  return useCallback(
+    async (dropEggId, eggId, success) => {
+      if (!zooKeeper) return;
+      console.log("zooKeeper_usehatch", {
+        dropEggid: Number(dropEggId),
+        dropId: Number(dropId),
+        eggId: Number(eggId),
+        zooKeeper: zooKeeper.address,
+      });
+      try {
+        dispatch(loading(true));
+        const approval = await zoo?.allowance(account, zooKeeper.address);
+        console.log("approval_", Number(approval));
 
+        if (Number(approval) <= 0) {
+          console.log("approving_media");
+          await zoo
+            ?.approve(zooKeeper.address, MaxUint256, {
+              gasLimit: 4000000,
+            })
+            .then((tx) => {
+              console.log("approval", tx);
+              tx.wait();
+            })
+            .catch((err) => {
+              console.error("ISSUE APPROVING MEDIA \n", err);
+              dispatch(loading(false));
+              addPopup({
+                txn: {
+                  hash: null,
+                  summary: formatError(err),
+                  success: false,
+                },
+              });
+              return;
+            });
+        }
+        const tx = await zooKeeper?.hatchEgg(Number(dropId), Number(eggId), {
+          gasLimit: 4000000,
+        });
+        await tx.wait();
+        dispatch(loading(false));
+        success && success();
+        addPopup({
+          txn: {
+            hash: null,
+            summary: `Successfully hatched egg ${eggId}`,
+            success: true,
+          },
+        });
+      } catch (error) {
+        console.error("error hatching egg", error);
+        dispatch(loading(false));
+        addPopup({
+          txn: {
+            hash: null,
+            summary: formatError(error),
+            success: false,
+          },
+        });
+      }
+    },
+    [account, addPopup, dispatch, dropId, zoo, zooKeeper]
+  );
+}
 export function useFetchMyNFTs(): () => void {
   const Web3Api = useMoralisWeb3Api();
-  const { account } = useActiveWeb3React();
+  console.log("structuredNft fetching nfts", Web3Api);
+
+  const { account, chainId } = useActiveWeb3React();
   const media = useMedia();
   const zooKeeper = useZooKeeper();
   const dispatch = useDispatch();
@@ -108,94 +195,128 @@ export function useFetchMyNFTs(): () => void {
   return useCallback(async () => {
     // get NFTs for current user on Mainnet
     // bsc nfts
-    const bscNFTs = await Web3Api.account.getNFTsForContract({
-      chain: "bsc",
-      address: account,
-      token_address: media?.address,
-    });
+    try {
+      // bsc testnet nfts
 
-    // bsc testnet nfts
-    const bscTestnetNFTs = await Web3Api.account.getNFTsForContract({
-      chain: "bsc testnet",
-      address: account,
-      token_address: media?.address,
-    });
-
-    const structuredNft = [...bscNFTs.result, ...bscTestnetNFTs.result];
-    let newStruct = [];
-    let _eggsCount = 0;
-    let _animalsCount = 0;
-    let _breedCount = 0;
-
-    for (let i = 0; i < structuredNft.length; i++) {
-      const id = structuredNft[i].token_id;
-      const deet = await zooKeeper?.tokens(Number(id));
-
-      if (deet?.kind === 0) _eggsCount++;
-      else if (deet?.kind === 1) _animalsCount++;
-      else if (deet?.kind === 2) _breedCount++;
-      // console.log('d_deets', deet)
-      const newNft = {
-        customName: deet?.customName,
-        name: deet?.name,
-        kind: deet?.kind,
-        id: Number(deet?.id),
-        timestamp: Number(deet?.timestamp),
-        birthday: Number(deet?.birthday),
-        dropId: Number(deet?.meta?.dropID),
-        eggId: Number(deet?.meta?.eggID),
-        swapped: deet?.meta?.swapped,
-        burned: deet?.meta?.burned,
-        parents: {
-          animalA: deet?.parents?.animalB,
-          animalB: deet?.parents?.animalB,
-          tokenA: Number(deet?.parents?.tokenA),
-          tokenB: Number(deet?.parents?.tokenB),
-        },
-        data: deet?.data,
-        breed: {
-          count: Number(deet?.breed?.count),
-          timestamp: Number(deet?.breed?.timestamp),
-        },
+      const options: { chain?: any; address: string; token_address: string } = {
+        chain: SUPPORTED_NETWORKS[chainId].chainId,
+        address: account,
+        token_address: media?.address,
       };
 
-      newStruct.push(newNft);
+      const nfts = await Web3Api.account.getNFTsForContract(options);
+      const structuredNft = nfts.result;
+      let newStruct = [];
+      let _eggsCount = 0;
+      let _animalsCount = 0;
+      let _breedCount = 0;
+      console.log("structuredNft", structuredNft);
+      for (let i = 0; i < structuredNft.length; i++) {
+        const id = structuredNft[i].token_id;
+        const deet = await zooKeeper?.tokens(Number(id));
+
+        if (deet?.kind === 0) _eggsCount++;
+        else if (deet?.kind === 1) _animalsCount++;
+        else if (deet?.kind === 2) _breedCount++;
+        // console.log('d_deets', deet)
+        const newNft: MyNFT = {
+          customName: deet?.customName,
+          name: deet?.name,
+          kind: deet?.kind,
+          id: Number(deet?.id),
+          timestamp: Number(deet?.birthValues?.timestamp),
+          birthday: Number(deet?.birthValues?.birthday),
+          dropId: Number(deet?.meta?.dropID),
+          eggId: Number(deet?.meta?.eggID),
+          swapped: deet?.meta?.swapped,
+          burned: deet?.meta?.burned,
+          parents: {
+            animalA: deet?.birthValues?.parents?.animalB,
+            animalB: deet?.birthValues?.parents?.animalB,
+            tokenA: Number(deet?.birthValues?.parents?.tokenA),
+            tokenB: Number(deet?.birthValues?.parents?.tokenB),
+          },
+          data: deet?.data,
+          breed: {
+            count: Number(deet?.breed?.count),
+            timestamp: Number(deet?.breed?.timestamp),
+          },
+          stage: deet?.stage,
+          meta: {
+            eggID: Number(deet?.meta?.eggID),
+            dropID: Number(deet?.meta?.dropID),
+            swapped: deet?.meta?.swapped,
+            burned: deet?.meta?.burned,
+          },
+          rarity: deet?.rarity?.name,
+          bidShares: deet?.bidShares,
+        };
+
+        newStruct.push(newNft);
+      }
+      dispatch(eggsCount(_eggsCount));
+      dispatch(animalsCount(_animalsCount));
+      dispatch(breedsCount(_breedCount));
+      dispatch(updateMyNfts([...newStruct]));
+    } catch (error) {
+      console.log("error in fetch nfts", error);
     }
-    dispatch(eggsCount(_eggsCount));
-    dispatch(animalsCount(_animalsCount));
-    dispatch(breedsCount(_breedCount));
-    dispatch(updateMyNfts([...newStruct]));
   }, [Web3Api.account, account, media?.address, zooKeeper, dispatch]);
 }
 
+export function useGetNftTransfers(): () => void {
+  const Web3Api = useMoralisWeb3Api();
+  const { account, chainId } = useActiveWeb3React();
+  const media = useMedia();
+  const dispatch = useDispatch();
+  return useCallback(async () => {
+    // get NFTs for current user on Mainnet
+    // bsc nfts
+    const options: { chain?: any; address: string; token_address: string } = {
+      chain: SUPPORTED_NETWORKS[chainId].chainId,
+      address: account,
+      token_address: media?.address,
+    };
+
+    const bscNFTs = await Web3Api.account.getNFTTransfers(options);
+    console.log("bscNFTs", bscNFTs);
+    dispatch(addNftTTransfers(bscNFTs.result));
+  }, [Web3Api.account, account, media?.address, dispatch]);
+}
 export function useGetAvailableEggs(): () => void {
   const dispatch = useAppDispatch();
-  const dropContract = useDrop(true);
-
+  const dropContract = useDrop();
+  const { account } = useActiveWeb3React();
   return useCallback(async () => {
-    const eggs = await dropContract?.getAllEggs();
-    if (!eggs) return;
-    const structuredEggs = eggs.map((egg) => {
-      return {
-        bidShares: {
-          creator: Number(egg?.bidShares?.creator),
-          owner: Number(egg?.bidShares?.owner),
-          prevOwner: Number(egg?.bidShares?.prevOwner),
-        },
-        birthday: Number(egg.birthday),
-        data: egg.data,
-        exist: true,
-        id: Number(egg.id),
-        kind: egg.kind,
-        minted: Number(egg.minted),
-        name: egg.name,
-        price: Number(egg.price) / 10 ** 18,
-        supply: Number(egg.supply),
-        timestamp: Number(egg.timestamp),
-      };
-    });
-    console.log("structuredEggs", structuredEggs);
-    dispatch(getAvailableEggs(structuredEggs));
+    console.log("useGetAvailableEggs  contract", dropContract);
+    try {
+      const eggs = await dropContract?.getAllEggs();
+      console.log("useGetAvailableEggs", eggs);
+      if (!eggs) return;
+      const structuredEggs = eggs.map((egg) => {
+        return {
+          bidShares: {
+            creator: Number(egg?.bidShares?.creator),
+            owner: Number(egg?.bidShares?.owner),
+            prevOwner: Number(egg?.bidShares?.prevOwner),
+          },
+          birthday: Number(egg.birthday),
+          data: egg.data,
+          exist: true,
+          id: Number(egg.id),
+          kind: egg.kind,
+          minted: Number(egg.minted),
+          name: egg.name,
+          price: Number(egg.price) / 10 ** 18,
+          supply: Number(egg.supply),
+          timestamp: Number(egg.timestamp),
+        };
+      });
+      console.log("structuredEggs", structuredEggs);
+      dispatch(getAvailableEggs(structuredEggs));
+    } catch (error) {
+      console.log("errir in useGetAvailableEggs", error);
+    }
   }, [dispatch, dropContract]);
 }
 
@@ -208,7 +329,7 @@ export function useBuyEgg(): (
   const zooKeeper = useZooKeeper();
   const { account } = useActiveWeb3React();
   const zoo = useZooToken();
-  const dropId = process.env.NEXT_PUBLIC_DROP_ID;
+  const dropId = process.env.NEXT_PUBLIC_DROP_ID || 1;
   const dispatch = useDispatch();
   return useCallback(
     async (eggId, quantity, success) => {
@@ -229,11 +350,13 @@ export function useBuyEgg(): (
               tx.wait();
             });
         }
+        console.log("eggId, dropId, quantity", eggId, dropId, quantity);
         const tx = await zooKeeper.buyEggs(eggId, dropId, quantity, {
           gasLimit: 4000000,
         });
         await tx.wait();
-        console.log(tx);
+        await tx.wait();
+        console.log("tx in buy egg", tx);
         addPopup({
           txn: {
             hash: null,
@@ -358,57 +481,90 @@ export function useTransferZoo(): (recipient: string, amount: number) => void {
 }
 
 export function useGetAllAuctions(): () => void {
-  const auction = useAuction();
-
+  const auctionContract = useAuction();
+  const dispatch = useDispatch();
   return useCallback(async () => {
-    return await auction.getAllAuctions();
-  }, []);
+    console.log("auction ytfrtdtrsd", auctionContract);
+
+    const auctions = await auctionContract?.getAllAuctions();
+    console.log("auctions await", auctions);
+    const structuredAuctions = auctions?.map((auction: Auction) => {
+      const {
+        tokenID,
+        tokenOwner,
+        reservePrice,
+        firstBidTime,
+        duration,
+        curatorFeePercentage,
+        curator,
+        auctionCurrency,
+        amount,
+      } = auction;
+      return {
+        tokenID: Number(tokenID),
+        tokenOwner,
+        reservePrice: Number(reservePrice),
+        firstBidTime: Number(firstBidTime),
+        duration: Number(duration),
+        curatorFeePercentage,
+        curator,
+        auctionCurrency,
+        amount: Number(amount),
+      };
+    });
+    console.log("structuredAuctionss", structuredAuctions);
+    dispatch(getAllAuctions(structuredAuctions || []));
+  }, [dispatch, auctionContract]);
 }
 
-export function useApproveTokenWithMedia(): (tokenId?: number, spender?: string) => Promise<any> {
-  const { chainId } = useActiveWeb3React()
-  const media = useMedia()
-  const dispatch = useAppDispatch()
-  const addTransaction = useTransactionAdder()
+export function useApproveTokenWithMedia(): (
+  tokenId?: number,
+  spender?: string
+) => Promise<any> {
+  const { chainId } = useActiveWeb3React();
+  const media = useMedia();
+  const dispatch = useAppDispatch();
+  const addTransaction = useTransactionAdder();
   return useCallback(
     async (tokenId?: number, spender?: string) => {
-      const chainAddresses = (addresses[chainId] as any) || (addresses[ChainId.BSC] as any)
-      if (!chainId) return
-      if (!media) return
+      const chainAddresses =
+        (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
+      if (!chainId) return;
+      if (!media) return;
 
       // console.log('form_usdjndks', {
       //   tokenId,
       //   spender,
       //   media,
       // })
-      console.log('form_usdjndks', {
+      console.log("form_usdjndks", {
         media: media.address,
         spender: spender,
         same: media.address === spender,
-      })
+      });
 
       try {
-        console.log('about to approve token', tokenId, spender)
+        console.log("about to approve token", tokenId, spender);
         const trx = await media?.setApprovalForAll(spender, true, {
           gasLimit: 4000000,
-        })
+        });
 
-        console.log("I'm approving")
-        await trx.wait()
-        console.log('approved')
+        console.log("I'm approving");
+        await trx.wait();
+        console.log("approved");
 
         addTransaction(trx, {
-          summary: 'Approve ' + tokenId,
+          summary: "Approve " + tokenId,
           approval: { tokenAddress: chainAddresses.media, spender: spender },
-        })
+        });
 
-        return trx
+        return trx;
       } catch (error) {
-        console.error('error approving token', error)
+        console.error("error approving token", error);
       }
     },
     [chainId, media, addTransaction]
-  )
+  );
 }
 
 // Putting animal on market (Creating Auction)
@@ -419,35 +575,41 @@ export function useCreateAuction(): (
   curatorFeePercentage: number,
   success?: () => void
 ) => void {
-  const addPopup = useAddPopup()
-  const auction = useAuction()
-  const zoo = useZooToken()
-  const { account } = useActiveWeb3React()
-  const tokenContract = useMedia()
-  const approveTokenWithMedia = useApproveTokenWithMedia()
-  const auctionCurrency = zoo?.address
-  const dispatch = useDispatch()
+  const addPopup = useAddPopup();
+  const auction = useAuction();
+  const zoo = useZooToken();
+  const { account } = useActiveWeb3React();
+  const tokenContract = useMedia();
+  const approveTokenWithMedia = useApproveTokenWithMedia();
+  const auctionCurrency = zoo?.address;
+  const dispatch = useDispatch();
   return useCallback(
     async (tokenID, duration, reservePrice, curatorFeePercentage, success) => {
-      if (!auction) return
-      dispatch(loading(true))
-      console.log('auction', auction, auctionCurrency)
+      if (!auction) return;
+      dispatch(loading(true));
+      console.log("auction", auction, auctionCurrency);
       try {
-        const isApproved = await tokenContract?.isApprovedForAll(account, auction?.address)
+        const isApproved = await tokenContract?.isApprovedForAll(
+          account,
+          auction?.address
+        );
         if (!isApproved) {
-          console.log('not approved')
-          const approval = await approveTokenWithMedia(Number(tokenID), auction?.address)
-          console.log('approval', approval)
+          console.log("not approved");
+          const approval = await approveTokenWithMedia(
+            Number(tokenID),
+            auction?.address
+          );
+          console.log("approval", approval);
           if (!approval) {
-            dispatch(loading(false))
-            return
+            dispatch(loading(false));
+            return;
           }
         }
 
-        const now = new Date()
-        const auctionEndDate = addDays(now, duration)
+        const now = new Date();
+        const auctionEndDate = addDays(now, duration);
 
-        const duration_ = differenceInSeconds(new Date(auctionEndDate), now)
+        const duration_ = differenceInSeconds(new Date(auctionEndDate), now);
 
         const tx = await auction?.createAuction(
           tokenID,
@@ -458,31 +620,39 @@ export function useCreateAuction(): (
           curatorFeePercentage,
           auctionCurrency,
           { gasLimit: 4000000 }
-        )
-        await tx.wait()
+        );
+        await tx.wait();
         addPopup({
           txn: {
             hash: null,
             summary: `Successfully listed item ${tokenID}`,
             success: true,
           },
-        })
-        dispatch(loading(false))
-        success && success()
+        });
+        dispatch(loading(false));
+        success && success();
       } catch (error) {
-        console.error('error creating auction', error)
-        dispatch(loading(false))
+        console.error("error creating auction", error);
+        dispatch(loading(false));
         addPopup({
           txn: {
             hash: null,
             summary: formatError(error),
             success: false,
           },
-        })
+        });
       }
     },
-    [auction, dispatch, auctionCurrency, tokenContract, account, addPopup, approveTokenWithMedia]
-  )
+    [
+      auction,
+      dispatch,
+      auctionCurrency,
+      tokenContract,
+      account,
+      addPopup,
+      approveTokenWithMedia,
+    ]
+  );
 }
 
 // export function useCreateAuction(): (
@@ -553,3 +723,60 @@ export function useCreateBid(): (id: any) => void {
 //     }
 //   }
 // }
+
+export function useFeed(): (animalID: number) => void {
+  const dropId = process.env.NEXT_PUBLIC_DROP_ID || 1;
+  const addPopup = useAddPopup();
+  const zoo = useZooToken();
+  const zooKeeper = useZooKeeper();
+  const { account } = useActiveWeb3React();
+  const dispatch = useDispatch();
+  const fetchMyNfts = useFetchMyNFTs();
+  return useCallback(
+    async (animalId) => {
+      console.log("feeding_animal", { animalId, dropId });
+      if (!zooKeeper) return;
+      dispatch(loading(true));
+      try {
+        const approval = await zoo?.allowance(account, zooKeeper.address);
+        console.log("approval_approving_media", Number(approval));
+        if (Number(approval) <= 0) {
+          console.log("approving_media");
+          await zoo
+            ?.approve(zooKeeper.address, MaxUint256, {
+              gasLimit: 4000000,
+            })
+            .then((tx) => {
+              console.log("approval", tx);
+              tx.wait();
+            });
+        }
+        const tx = await zooKeeper?.feedAnimal(animalId, dropId, {
+          gasLimit: 4000000,
+        });
+        await tx.wait();
+        console.log(tx);
+        dispatch(loading(false));
+        fetchMyNfts();
+        addPopup({
+          txn: {
+            hash: null,
+            summary: `Successfully fed animal`,
+            success: true,
+          },
+        });
+      } catch (e) {
+        console.error("ISSUE FEEDING EGG \n", e);
+        dispatch(loading(false));
+        addPopup({
+          txn: {
+            hash: null,
+            summary: formatError(e),
+            success: false,
+          },
+        });
+      }
+    },
+    [account, addPopup, dispatch, dropId, zoo, zooKeeper]
+  );
+}

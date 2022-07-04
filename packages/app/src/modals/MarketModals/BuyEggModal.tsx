@@ -1,15 +1,7 @@
-import { CircularProgress } from "@mui/material";
 import BigNumber from "bignumber.js";
-import CloseIcon from "components/CloseIcon";
-import CurrencySwitch from "components/CurrencySwitch";
-import Modal from "components/Modal";
-import BidModalHeader from "components/ModalHeader/BidModalHeader";
 import { formatError, numberWithCommas, wait } from "functions";
-import { useActiveWeb3React } from "hooks";
-import { useZooKeeper, useZooToken, useDrop } from "hooks/useContract";
-import useToast from "hooks/useToast";
+import { useZooKeeper, useZooToken } from "hooks/useContract";
 import { isEmpty } from "lodash";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Minus, Plus } from "react-feather";
 import { RiArrowDropDownLine } from "react-icons/ri";
@@ -18,9 +10,17 @@ import { AppState } from "state";
 import { ApplicationModal } from "state/application/actions";
 import { useBuyEggModalToggle, useModalOpen } from "state/application/hooks";
 import { useGasPrice } from "state/network/hooks";
-import { useETHBalances } from "state/wallet/hooks";
+import Modal from "components/Modal";
+import BidModalHeader from "components/ModalHeader/BidModalHeader";
+import useToast from "hooks/useToast";
+import { CircularProgress } from "@mui/material";
+import CloseIcon from "components/CloseIcon";
 import { useZoobalance } from "state/zoo/hooks";
-import web3 from "web3";
+import CurrencySwitch from "components/CurrencySwitch";
+import Image from "next/image";
+import { useActiveWeb3React } from "hooks";
+import Web3 from "web3";
+
 interface BuyEggModalProps {}
 
 const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
@@ -33,6 +33,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const [eggs, setEggs] = useState<Array<any>>([]);
   const [checked, setChecked] = useState(true);
   const [quantitySwitch, setQuantitySwitch] = useState(false);
+  const [bnbBalance, setBnbBalance] = useState(0);
   const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
     (state) => state.zoo.zooBalance
   );
@@ -40,12 +41,8 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     (state) => state.zoo.myEggs
   );
   const [zooBnbPrice, setZooBnbPrice] = useState(0);
-  const [eggPrice, setEggPrice] = useState(0);
   const { account, library } = useActiveWeb3React();
-  const userEthBalance = useETHBalances(account ? [account] : [])?.[
-    account ?? ""
-  ];
-
+  const getZooBalance = useZoobalance();
   useEffect(() => {
     if (amount > zooBalance) {
       setError(`You dont have enough ZOO`);
@@ -56,8 +53,8 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
 
   useEffect(() => {
     mount();
+    getBnbBalance();
     getZooBnbPrice();
-    getEggPrice();
   }, [myEggs]);
 
   const mount = async () => {
@@ -70,11 +67,9 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     for (let index = 0; index < emptyLength; index++) {
       newEggs.push({});
     }
-    console.log("newEggs", newEggs);
     const eggsLength = newEggs.filter(
       (egg) => !isEmpty(egg) && egg.temporary
     ).length;
-    console.log("eggsLength", eggsLength);
     wait(3000).then(
       () => (setEggs(newEggs), eggsLength === 0 && addEgg(newEggs))
     );
@@ -83,12 +78,10 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   const addEgg = (altEggs: any) => {
     const newEggs = [...altEggs];
     const foundIndex = newEggs.findIndex((x) => isEmpty(x));
-    console.log("foundIndex", foundIndex);
     newEggs[foundIndex] = { temporary: true };
     setAmount(
       360000 * newEggs.filter((egg) => !isEmpty(egg) && egg.temporary).length
     );
-    console.log("adding egg", newEggs);
     setEggs(newEggs);
   };
 
@@ -104,9 +97,6 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   };
 
   const zooKeeper = useZooKeeper();
-  const drop = useDrop();
-  const getZooBalance = useZoobalance();
-  console.log("zooKEeper --->", zooKeeper);
   const zooToken = useZooToken();
 
   const { toastError, toastInfo, clear } = useToast();
@@ -115,25 +105,24 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     clear();
   };
 
-  const getZooBnbPrice = async () => {
-    // console.log("zooBnbPrice", zooKeeper);
-
-    const price = await zooKeeper.zooPriceBNB();
-    const value = web3.utils.fromWei(price.toString(), "ether");
-    console.log("zooBnbPrice", value);
-    setZooBnbPrice(parseFloat(value));
-  };
-  const getEggPrice = async () => {
-    console.log("eggPrice drooop", drop);
+  const getBnbBalance = async () => {
+    if (!account) return;
     try {
-      const price = await drop?.eggPrice();
-      const value = web3.utils.fromWei(price.toString(), "ether");
-      console.log("eggPrice here", value);
-      setEggPrice(parseFloat(value));
-    } catch (error) {
-      console.log("errro in eggPrice", error);
+      // await Web3?.eth.getBalance(account).then((val) => {
+      //   const divisor = parseFloat(Math.pow(10, 18).toString());
+      //   const balance = parseFloat(val) / divisor;
+      //   setBnbBalance(parseFloat(balance.toFixed(4)));
+      // });
+    } catch (e) {
+      console.error("ISSUE LOADING BNB BALANCE \n", e);
     }
   };
+
+  const getZooBnbPrice = async () => {
+    const price = await zooKeeper.zooPriceBNB();
+    setZooBnbPrice(price);
+  };
+
   const dispatch = useDispatch();
   const buyEggs = async () => {
     setDisabled(true);
@@ -153,7 +142,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
           .send({
             from: account,
             gasPrice: gasPrice,
-            value: web3.utils.toWei(eggPriceBNB),
+            value: Web3.utils.toWei(eggPriceBNB),
           })
           .then((res) => {
             toastClear();
@@ -213,58 +202,42 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
   };
 
   const quantity = eggs.filter((egg) => !isEmpty(egg) && egg.temporary).length;
-  const eggPriceBNB = zooBnbPrice * 500000;
-  console.log("eggPriceBNB", eggPriceBNB.toFixed(8));
+  const eggPriceBNB = new BigNumber(10 ** 18)
+    .times(420000 * quantity)
+    .div(zooBnbPrice)
+    .div(10 ** 18)
+    .toFixed(4);
 
   return (
     <Modal isOpen={buyEggModal} onDismiss={() => null} isMax>
       <BidModalHeader
         onBack={() => toggleBuyEggModal()}
-        className="absolute w-full p-6 mb-6"
-        showAccount
+        className="absolute w-full p-6 "
       />
-      <div className="flex flex-col h-full px-4 mx-auto overflow-y-auto lg:flex-row lg:items-center max-w-7xl">
-        <div className="realtive lg:basis-1/2">
-          <div className="mt-20 lg:mt-0">
-            {/* <div className="flex flex-col w-full mb-6">
-              <div className="mb-2 text-sm font-semibold text-gray-500">
+      <div className="flex flex-wrap h-full">
+        <div className="relative flex flex-col items-center justify-center w-full shadow-lg md:w-1/2">
+          <div className="w-4/5 max-w-2xl p-4 lg:w-1/2">
+            <div className="flex flex-col w-full MB-6">
+              <div className="text-sm font-semibold text-gray-500">
                 BUY EGGS
               </div>
               <div className="text-2xl font-bold lg:text-4xl">
                 {numberWithCommas(
-                  checked
-                    ? userEthBalance
-                      ? userEthBalance.toFixed(2)
-                      : 0
-                    : zooBalance.toFixed(2)
+                  checked ? bnbBalance.toFixed(2) : zooBalance.toFixed(2)
                 )}{" "}
                 {checked ? "BNB" : "ZOO"}
               </div>
-            </div> */}
+            </div>
             <div className="w-full my-8 ">
-              <div className="mb-2 text-sm font-semibold text-gray-500">
-                BUY EGGS
-              </div>
-              <div className="text-2xl font-bold lg:text-4xl">
-                {numberWithCommas(
-                  checked
-                    ? userEthBalance
-                      ? userEthBalance.toFixed(2)
-                      : 0
-                    : zooBalance.toFixed(2)
-                )}{" "}
-                {checked ? "BNB" : "ZOO"}
-              </div>
-              <div className="flex items-center justify-center w-full rounded">
-                <Image
-                  src={`/img/egg.png`}
-                  width={300}
-                  height={300}
-                  className="w-full h-full transition-transform duration-1000 rounded"
-                  alt=""
-                />
-              </div>
-              {/* <div className="flex justify-between w-full h-full px-4">
+              <div className="flex h-20 ">
+                <div className="flex items-center justify-center mr-2 rounded w-14">
+                  <Image
+                    layout="fill"
+                    src={`/static/images/basic.jpg`}
+                    className="w-full h-full transition-transform duration-1000 rounded"
+                  />
+                </div>
+                <div className="flex justify-between w-full h-full px-4">
                   <div className="flex flex-col justify-center">
                     <div className="mb-2">Egg</div>
                     <div className="flex items-center mt-2 text-gray-400">
@@ -286,61 +259,59 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
                       : numberWithCommas(360000.0 * quantity)}{" "}
                     {checked ? "BNB" : "ZOO"}
                   </div>
-                </div> */}
+                </div>
+              </div>
             </div>
             {error && (
-              <div className="mb-4 text-base font-semibold text-center text-red">
+              <div className="mb-1 text-xs font-semibold text-red-500">
                 {error}
               </div>
             )}
-            <h6 className="my-1 text-sm font-semibold text-center text-gray-400">
+            <h6 className="my-1 text-xs font-semibold text-gray-400">
               One egg costs{" "}
               <span className="font-bold text-white">
                 {" "}
-                {numberWithCommas(checked ? eggPriceBNB : eggPrice)}{" "}
+                {numberWithCommas(
+                  checked ? (zooBnbPrice * 360000).toFixed(2) : 360000.0
+                )}{" "}
                 {checked ? "BNB" : "ZOO"} each
               </span>
             </h6>
-            <h6 className="mb-2 text-sm font-semibold text-center text-gray-400">
+            <h6 className="mb-2 text-xs font-semibold text-gray-400">
               A maximum of 3 eggs are allowed per account
             </h6>
           </div>
-          <div className="flex flex-col items-center mt-4">
+          <div className="absolute lg:bottom-60 bottom-10 left-50">
             <CurrencySwitch
               checked={checked}
               checkFunc={() => setChecked(!checked)}
             />
           </div>
         </div>
-        <div className="lg:basis-1/2">
+        <div className="flex flex-col items-center justify-center w-full md:w-1/2 bg-modal-dark">
           <div className="w-1/2">
             <div className="flex">
               <button
                 onClick={() => buyEggs()}
-                className="inline-flex items-center justify-center w-full h-10 px-6 my-4 text-lg font-bold leading-none text-white rounded-lg bg-dark-800 hover:bg-primary"
+                className="inline-flex items-center justify-center w-full h-10 px-6 my-4 text-lg font-bold leading-none text-white rounded-lg bg-primary-light hover:bg-primary"
                 style={{ transition: "all .2s" }}
               >
                 {disabled ? (
                   <CircularProgress color="secondary" size={20} thickness={4} />
                 ) : (
-                  `Pay ${
-                    checked
-                      ? eggPriceBNB
-                      : numberWithCommas(eggPrice * quantity)
-                  } ${checked ? "BNB" : "ZOO"}`
+                  "Pay"
                 )}
               </button>
             </div>
           </div>
         </div>
       </div>
-      {/* <Modal isOpen={quantitySwitch} onDismiss={() => setQuantitySwitch(false)}>
+      <Modal isOpen={quantitySwitch} onDismiss={() => setQuantitySwitch(false)}>
         <div className="w-full mb-4">
           <div className="flex h-20 ">
             <div className="flex items-center justify-center mr-2 rounded w-14">
-               <Image
-                  layout="fill"
-                style={{ verticalAlign: "middle" }}
+              <Image
+                layout="fill"
                 src={`/static/images/basic.jpg`}
                 className="w-full h-full transition-transform duration-1000 rounded"
               />
@@ -395,7 +366,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
             </button>
           </div>
         </div>
-      </Modal> */}
+      </Modal>
     </Modal>
   );
 };

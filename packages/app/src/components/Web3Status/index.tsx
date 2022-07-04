@@ -22,6 +22,7 @@ import { useWalletModalToggle } from "../../state/application/hooks";
 import { UserIcon } from "@heroicons/react/solid";
 import { useActiveWeb3React } from "hooks";
 import { getName } from "state/application/HooksProvider";
+import HatchEggModal from "modals/HatchEggModal";
 const IconWrapper = styled.div<{ size?: number }>`
   display: flex;
   flex-flow: column nowrap;

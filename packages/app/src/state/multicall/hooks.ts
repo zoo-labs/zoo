@@ -177,7 +177,6 @@ export function useSingleContractMultipleData(
         : [],
     [contract, fragment, callInputs, gasRequired]
   )
-  console.log('userEthBalance calls', calls)
 
   const results = useCallsData(calls, options)
 

@@ -79,12 +79,10 @@ export function useContract(
   let address: string | AddressMap | undefined = nameOrAddress
   let chainIdStr = chainId ? chainId.toString() : '1337'
 
-  console.log('abis', abis)
 
   if (!isAddress(nameOrAddress) || nameOrAddress === AddressZero) {
     try {
       address = addresses[chainIdStr][nameOrAddress.toString()]
-      console.log('address 0000', address, nameOrAddress)
       ABI = ABI || abis[chainIdStr] ? abis[chainIdStr][nameOrAddress.toString()] : null
     } catch (e) {
       console.error(`Unable to fetch contract ${nameOrAddress} on ${chainId}`)
@@ -106,7 +104,7 @@ export function useApp(): Contract | null {
   return useContract('App')
 }
 
-export function useDrop(withSignerIfPossible:boolean): Contract | null {
+export function useDrop(withSignerIfPossible?: boolean): Contract | null {
   return useContract('Drop')
 }
 
@@ -260,12 +258,10 @@ export function useZooToken(): Contract | null {
 }
 export function useZooKeeper(): Contract | null {
   const zooKeeperContract = useContract('ZooKeeper')
-  console.log('zooKeeperContract', zooKeeperContract)
   return zooKeeperContract
 }
 export function useFaucet(): Contract | null {
   const faucetContrac = useContract('Faucet')
-  console.log('faucetContrac', faucetContrac)
 
   return faucetContrac
 }
