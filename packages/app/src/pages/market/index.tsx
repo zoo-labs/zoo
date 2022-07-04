@@ -199,7 +199,7 @@ const MarketPlacePage = () => {
   useEffect(() => {
     getAllAuctions();
     getAvailableEggs();
-  }, []);
+  }, [getAllAuctions, getAvailableEggs]);
 
   console.log("MY NFTSSSS", availableEggs);
   console.log("MY Auctionss", allAuctions);
