@@ -62,6 +62,17 @@ export interface AvailableEggs {
   timestamp: number
 }
 
+export interface Auction {
+  tokenID: string;
+  tokenOwner: string;
+  reservePrice: string;
+  firstBidTime: string;
+  duration: number;
+  curatorFeePercentage: number;
+  curator: string;
+  auctionCurrency: string;
+  amount: number
+}
 export interface Bid {
   // Amount of the currency being bid
   amount: number

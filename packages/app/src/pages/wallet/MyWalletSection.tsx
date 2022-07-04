@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { ChainId, Currency, NATIVE, SUSHI_ADDRESS } from "@zoolabs/sdk";
 import { numberWithCommas } from "functions";
 import Image from "next/image";
@@ -9,7 +9,7 @@ import { AppState } from "state";
 
 import TransactionHistory from "./TransactionHistorySection";
 import { handleFunds } from "utils/handleFunds";
-import { useBuyZoo } from "state/zoo/hooks";
+import { useBuyZoo, useFeed } from "state/zoo/hooks";
 
 import { useLingui } from "@lingui/react";
 import Web3Status from "../../components/Web3Status";
@@ -17,111 +17,91 @@ import { useETHBalances } from "../../state/wallet/hooks";
 
 import { fadeInOnScroll } from "animation";
 import { useActiveWeb3React } from "hooks";
-
-const MyWalletSection = () => {
-  const { account, library, chainId } = useActiveWeb3React();
-  const buyZoo = useBuyZoo();
-  const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
-    (state) => state.zoo.zooBalance
-  );
-
-  const userEthBalance = useETHBalances(account ? [account] : [])?.[
-    account ?? ""
-  ];
-
-  const comingSoonRef = React.useRef();
-
-  useEffect(() => {
-    fadeInOnScroll(comingSoonRef.current);
-  }, []);
+import TransactionHistorySection from "./TransactionHistorySection";
+import dynamic from "next/dynamic";
+import { useHatchEggModal, useMyNftModalToggle } from "state/application/hooks";
+import HatchEggModal from "modals/HatchEggModal";
+import NftModal from "modals/NftModal";
+import { MyNFT } from "state/zoo/types";
+const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
+  ssr: false,
+});
+const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
+  const toggleHatchEggModal = useHatchEggModal();
+  const [nftItem, setNftItem] = useState<MyNFT>();
+  const toggleNftModal = useMyNftModalToggle();
+  const feedAnimal = useFeed();
 
   return (
     <div>
-      <div className="">
-        <div className="px-4 py-20 mx-auto max-w-7xl">
-          <div
-            className="flex flex-col items-center justify-center text-center "
-            ref={comingSoonRef}
-          >
-            {!account ? (
-              <h1 className="mb-8 text-4xl font-bold lg:text-5xl">
-                Wallet Not Connected
-              </h1>
-            ) : (
-              <h1 className="mb-8 text-4xl font-bold lg:text-5xl">
-                Wallet Connected
-              </h1>
-            )}
-            <div className="w-auto flex items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
-              {account && chainId && userEthBalance && (
-                <>
-                  <div className="px-3 py-2 text-primary text-bold">
-                    {userEthBalance?.toFixed(3)}{" "}
-                    {NATIVE[chainId]?.symbol || "ETH"}
-                  </div>
-                </>
-              )}
-              <Web3Status
-                title={`Connect Wallet`}
-                className="font-bold underline bg-black text-green"
-              />
-            </div>
-            {/* <p>
-              Connect wallet{" "}
-              <Link href="/">
-                <a className="underline text-green">home page</a>
-              </Link>
-            </p> */}
+      <div className="py-12">
+        <h1 className="text-3xl text-center lg:text-5xl ">My Nfts</h1>
+        <div className="flex flex-wrap items-center justify-center gap-4 mb-4">
+          <div className="flex items-center justify-center">
+            {myNfts.map((nft: MyNFT, index) => {
+              const { kind, name, id, dropId, stage } = nft;
+              console.log("nftttt", nft);
+              return (
+                <div
+                  key={index}
+                  onClick={() => {
+                    setNftItem(nft);
+                    toggleNftModal();
+                  }}
+                  className="flex flex-col items-center"
+                >
+                  {kind === 0 ? (
+                    <Image
+                      src="/img/egg.png"
+                      width={200}
+                      height={200}
+                      objectFit="contain"
+                      alt=""
+                    />
+                  ) : (
+                    <div className="h-[350px] w-[300px]">
+                      <ModelViewer
+                        glb={`/models/Elephant/${
+                          stage === 0
+                            ? "ELEPHANT_BABY"
+                            : stage === 1
+                            ? "ELEPHANT_TEEN"
+                            : "ELEPHANT_ADULT"
+                        }.glb`}
+                        usdz={`/models/Elephant/${
+                          stage === 0
+                            ? "ELEPHANT_BABY"
+                            : stage === 1
+                            ? "ELEPHANT_TEEN"
+                            : "ELEPHANT_ADULT"
+                        }.usdz`}
+                      ></ModelViewer>
+                    </div>
+                  )}
+                  <p>{name}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
-      {/* <p className="mb-8 text-xl md:text-2xl">
-        Wallet Balance{" "}
-        <span className="text-base font-bold text-green md:text-2xl">
-          {" "}
-          {numberWithCommas(zooBalance.toFixed(2))} $ZOO
-        </span>
-      </p> */}
-
-      {/* <>
-      <div className="flex flex-col items-center justify-center mb-8 lg:flex-row lg:justify-between">
-        <div className="px-4 py-8 mb-4 border rounded border-blue lg:mb-0">
-          <Image src="/img/javan-rhino.png" width={148} height={153} alt="" />
-        </div>
-        <div className="px-4 py-8 mb-4 border rounded border-blue lg:mb-0">
-          <Image src="/img/plasma.png" width={148} height={153} alt="" />
-        </div>
-        <div className="px-4 py-8 mb-4 border rounded border-blue lg:mb-0">
-          <Image src="/img/egg.png" width={148} height={153} alt="" />
-        </div>
-        <div className="px-4 py-8 mb-4 border rounded border-blue lg:mb-0">
-          <Image src="/img/plasma.png" width={148} height={153} alt="" />
-        </div>
-        <div className="px-4 py-8 mb-4 border rounded border-blue lg:mb-0">
-          <Image src="/img/dog.png" width={148} height={153} alt="" />
-        </div>
+      <div className="py-12">
+        <TransactionHistorySection nftTransfers={nftTransfers} />
       </div>
-      <p className="m-8 text-center text-green">4 Eggs - 2 Animals</p>
-      <div className="flex items-center justify-center">
-        <a
-          href="/market"
-          className="px-5 py-3 text-sm font-semibold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10"
-        >
-          Buy $ZOO
-        </a>
-      </div>
-      <TransactionHistory />
-      </> */}
-
-      {/* <div className="flex items-center justify-center">
-        <button
-          onClick={() => handleFunds(chainId, buyZoo)}
-          className="px-5 py-3 text-sm font-semibold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10"
-        >
-          Buy $ZOO
-        </button>
-      </div> */}
-      {/* <ComingSoon /> */}
+      {nftItem && (
+        <>
+          <HatchEggModal nftItem={nftItem} success={() => fetchNfts()} />
+          <NftModal
+            nftItem={nftItem}
+            hatchEgg={() => {
+              toggleHatchEggModal();
+            }}
+            feed={(id) => feedAnimal(id)}
+            breed={() => console.log("breeding")}
+            auction={() => console.log("auctioning")}
+          />
+        </>
+      )}
     </div>
   );
 };
