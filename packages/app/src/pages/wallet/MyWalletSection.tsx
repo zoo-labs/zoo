@@ -33,11 +33,12 @@ const MyWalletSection = ({ myNfts, nftTransfers }) => {
         <h1 className="text-3xl text-center lg:text-5xl ">My Nfts </h1>
         <div className="flex flex-wrap items-center justify-center gap-4 mb-4">
           <div>
-            {myNfts.map((nft) => {
+            {myNfts.map((nft, index) => {
               const { kind, name, eggId, id, dropId } = nft;
               console.log("nftttt", nft);
               return (
                 <div
+                  key={index}
                   onClick={() => {
                     setNftItem({ dropId, eggId: id, name });
                     toggleModal();
