@@ -24,6 +24,7 @@ import {
   getAllAuctions,
   createBid,
   getBNBBalance,
+  addNftTTransfers,
 } from "./actions";
 import { useAddPopup } from "state/application/hooks";
 import { MaxUint256 } from "@ethersproject/constants";
@@ -44,9 +45,11 @@ export function useZoobalance(): () => void {
     try {
       if (!account) return;
       if (!chainId) return;
-
+      console.log("zooToken", zooToken);
       const decimals = await zooToken.decimals();
       const rawBalance = await zooToken.balanceOf(account);
+      console.log("rawBalance", rawBalance);
+
       const divisor = parseFloat(Math.pow(10, decimals).toString());
       const balance = rawBalance / divisor;
       console.log("rawBalance", balance);
@@ -56,24 +59,7 @@ export function useZoobalance(): () => void {
     }
   }, [dispatch, chainId, account]);
 }
-export function useBnbBalance(): () => void {
-  const { chainId, account } = useActiveWeb3React();
-  const bnb = useBnbToken();
 
-  const dispatch = useAppDispatch();
-
-  return useCallback(async () => {
-    if (!account) return;
-    if (!chainId) return;
-
-    const decimals = await bnb.decimals();
-    const rawBalance = await bnb.balanceOf(account);
-    const divisor = parseFloat(Math.pow(10, decimals).toString());
-    const balance = rawBalance / divisor;
-    console.log("rawBNB Balance", balance);
-    dispatch(getBNBBalance({ balance }));
-  }, [dispatch, chainId, account]);
-}
 export function useBuyZoo(): () => void {
   const { chainId, account } = useActiveWeb3React();
   const faucet = useFaucet();
@@ -122,6 +108,8 @@ export function useGetEggs(): (eggs) => void {
 
 export function useFetchMyNFTs(): () => void {
   const Web3Api = useMoralisWeb3Api();
+  console.log("structuredNft fetching nfts", Web3Api);
+
   const { account } = useActiveWeb3React();
   const media = useMedia();
   const zooKeeper = useZooKeeper();
@@ -142,13 +130,13 @@ export function useFetchMyNFTs(): () => void {
       address: account,
       token_address: media?.address,
     });
-
+    console.log("structuredNft bscTestnetNFTs", bscTestnetNFTs);
     const structuredNft = [...bscNFTs.result, ...bscTestnetNFTs.result];
     let newStruct = [];
     let _eggsCount = 0;
     let _animalsCount = 0;
     let _breedCount = 0;
-
+    console.log("structuredNft", structuredNft);
     for (let i = 0; i < structuredNft.length; i++) {
       const id = structuredNft[i].token_id;
       const deet = await zooKeeper?.tokens(Number(id));
@@ -190,6 +178,24 @@ export function useFetchMyNFTs(): () => void {
   }, [Web3Api.account, account, media?.address, zooKeeper, dispatch]);
 }
 
+export function useGetNftTransfers(): () => void {
+  const Web3Api = useMoralisWeb3Api();
+  const { account } = useActiveWeb3React();
+  const media = useMedia();
+  const dispatch = useDispatch();
+  return useCallback(async () => {
+    // get NFTs for current user on Mainnet
+    // bsc nfts
+    const option: { chain: "0x61"; address: string; token_address: string } = {
+      chain: "0x61",
+      address: account,
+      token_address: media?.address,
+    };
+    const bscNFTs = await Web3Api.account.getNFTTransfers(option);
+    console.log("bscNFTs", bscNFTs);
+    dispatch(addNftTTransfers(bscNFTs.result));
+  }, [Web3Api.account, account, media?.address, dispatch]);
+}
 export function useGetAvailableEggs(): () => void {
   const dispatch = useAppDispatch();
   const dropContract = useDrop();
@@ -236,7 +242,7 @@ export function useBuyEgg(): (
   const zooKeeper = useZooKeeper();
   const { account } = useActiveWeb3React();
   const zoo = useZooToken();
-  const dropId = process.env.NEXT_PUBLIC_DROP_ID;
+  const dropId = process.env.NEXT_PUBLIC_DROP_ID || 1;
   const dispatch = useDispatch();
   return useCallback(
     async (eggId, quantity, success) => {
@@ -257,11 +263,13 @@ export function useBuyEgg(): (
               tx.wait();
             });
         }
+        console.log("eggId, dropId, quantity", eggId, dropId, quantity);
         const tx = await zooKeeper.buyEggs(eggId, dropId, quantity, {
           gasLimit: 4000000,
         });
         await tx.wait();
-        console.log(tx);
+        await tx.wait();
+        console.log("tx in buy egg", tx);
         addPopup({
           txn: {
             hash: null,

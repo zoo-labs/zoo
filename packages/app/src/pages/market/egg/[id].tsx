@@ -2,7 +2,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 
 import CardNft from "marketplace/Cards/CardNft";
 import Carousel from "components/Carousel";
@@ -13,7 +13,6 @@ import { abbreviateNumber } from "functions/abbreviateNumbers";
 import { AvailableEggs } from "types";
 import { useCallback } from "react";
 import {
-  useBnbBalance,
   useBuyEgg,
   useBuyEggWithBnB,
   useBuyZoo,
@@ -23,6 +22,10 @@ import {
 } from "state/zoo/hooks";
 import { useActiveWeb3React } from "hooks/useActiveWeb3React";
 import { useWalletModalToggle } from "state/application/hooks";
+import { Replay } from "@mui/icons-material";
+import { useETHBalances } from "state/wallet/hooks";
+import { useZooKeeper } from "hooks";
+import Web3 from "web3";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -32,26 +35,31 @@ const Item = () => {
   const router = useRouter();
   const { id } = router.query;
   const { account } = useActiveWeb3React();
-  const [egg, setEgg] = React.useState<AvailableEggs>(null);
-  const [withZoo, setWithZoo] = React.useState(true);
+  const [egg, setEgg] = useState<AvailableEggs>(null);
+  const [withZoo, setWithZoo] = useState(true);
   const { availableEggs, loading, zooBalance, bnbBalance } = useSelector(
     (state: any) => state.zoo
   );
   const buyZoo = useBuyZoo();
   const buyEgg = useBuyEgg();
   const transferZoo = useTransferZoo();
+  const zooKeeper = useZooKeeper();
   const buyEggWithBnB = useBuyEggWithBnB();
   const getZooBalance = useZoobalance();
-  const getBNBBalance = useBnbBalance();
   const getAvailableEggs = useGetAvailableEggs();
   const toggleWallet = useWalletModalToggle();
+  const [zooBnbPrice, setZooBnbPrice] = useState(0);
 
   useEffect(() => {
     getAvailableEggs();
     getZooBalance();
-    getBNBBalance();
+    getZooBnbPrice();
   }, []);
-
+  const getZooBnbPrice = async () => {
+    const price = await zooKeeper.zooPriceBNB();
+    const value = Web3.utils.fromWei(price.toString(), "ether");
+    setZooBnbPrice(parseFloat(value));
+  };
   const handleBuyZoo = useCallback(() => {
     console.log("Clicked");
     if (account) {
@@ -66,9 +74,12 @@ const Item = () => {
       console.log("Clicked");
       if (account) {
         if (withZoo) {
-          buyEgg(eggId, quantity, () => router.push("/dashboard"));
+          console.log("withzoo");
+          buyEgg(eggId, quantity, () => router.push("/wallet"));
         } else {
-          buyEggWithBnB(eggId, quantity, () => router.push("/dashboard"));
+          console.log("withbnb");
+
+          buyEggWithBnB(eggId, quantity, () => router.push("/wallet"));
           // buyEgg(eggId, quantity, () => router.push('/dashboard'))
         }
       } else {
@@ -85,11 +96,18 @@ const Item = () => {
     setEgg(_egg);
   }, [availableEggs, id]);
 
-  console.log("Item", { egg, availableEggs, withZoo });
-  console.log("comparison", {
-    price: egg?.price,
-    zooBalance,
-  });
+  const userEthBalance = useETHBalances(account ? [account] : [])?.[
+    account ?? ""
+  ];
+  const eggPriceBNB = zooBnbPrice * Number(egg?.price);
+
+  const balanceCheck = () => {
+    if (withZoo) {
+      return Number(egg?.price) > zooBalance;
+    } else {
+      return Number(eggPriceBNB) > parseFloat(userEthBalance.toFixed(3));
+    }
+  };
   return (
     <>
       <div className="flex flex-col px-5 mx-auto mt-20 lg:flex-row gap-11 lg:items-center lg:px-10 max-w-7xl">
@@ -155,7 +173,9 @@ const Item = () => {
                   <div>
                     <p className="text-xs font-normal">Current price</p>
                     <p className="text-xl font-medium">
-                      {abbreviateNumber(egg?.price)} ZOO
+                      {withZoo
+                        ? `${abbreviateNumber(egg?.price)} ZOO`
+                        : `${eggPriceBNB} BNB`}
                     </p>
                   </div>
                   <button
@@ -166,24 +186,24 @@ const Item = () => {
                       {withZoo ? (
                         <>
                           <Image
-                            src="/images/wallets/bsc.jpg"
+                            src="/logo.png"
                             alt=""
                             width={20}
                             height={20}
                             className="rounded-full"
                           />
-                          <p className="ml-1 text-xs font-semibold">BNB</p>
+                          <p className="ml-1 text-xs font-semibold">ZOO</p>
                         </>
                       ) : (
                         <>
                           <Image
-                            src="/logo.png"
+                            src="/images/wallets/bsc.jpg"
                             alt=""
                             width={20}
                             height={20}
                             className=""
                           />
-                          <p className="ml-1 text-xs font-semibold">ZOO</p>
+                          <p className="ml-1 text-xs font-semibold">BNB</p>
                         </>
                       )}
                     </div>
@@ -196,7 +216,17 @@ const Item = () => {
                 </div>
                 <p className="text-xs text-right text-c-grey-100">
                   Your Wallet Balance:{" "}
-                  {withZoo ? `${zooBalance} ZOO` : `${bnbBalance} BNB`}
+                  {withZoo
+                    ? `${zooBalance} ZOO`
+                    : `${userEthBalance?.toFixed(3)} BNB`}
+                  {/* <div
+                    onClick={() => {
+                      console.log("getting xoo balance");
+                      getZooBalance();
+                    }}
+                  >
+                    <Replay />
+                  </div> */}
                 </p>
               </div>
               {Number(egg?.price) > zooBalance && (
@@ -235,12 +265,12 @@ const Item = () => {
               className={`py-3.5 w-full bg-[#2703F8] rounded-lg disabled:cursor-not-allowed ${
                 loading && "opacity-30"
               }`}
-              disabled={loading || Number(egg?.price) > zooBalance}
+              disabled={loading || balanceCheck()}
               onClick={() => handleBuyEgg(id, 1)}
             >
               {loading
                 ? "Loading..."
-                : Number(egg?.price) > zooBalance
+                : balanceCheck()
                 ? "Insuficient balance"
                 : "Buy Now"}
             </button>

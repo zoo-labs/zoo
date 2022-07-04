@@ -37,7 +37,8 @@ import {
   animalsCount,
   breedsCount,
   getAllAuctions,
-  getBNBBalance
+  getBNBBalance,
+  addNftTTransfers
 } from './actions'
 
 import { createReducer } from '@reduxjs/toolkit'
@@ -62,7 +63,8 @@ export const initialState: any = {
   myEggsCount: 0,
   myAnimalsCount: 0,
   myBreedsCount: 0,
-  allAuctions: []
+  allAuctions: [],
+  nftTransfers: []
 }
 
 export default createReducer(initialState, (builder) =>
@@ -96,5 +98,7 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(getAllAuctions, (state, action) => {
       state.allAuctions = action.payload
+    }).addCase(addNftTTransfers, (state, action) => {
+      state.nftTransfers = action.payload
     })
 )
