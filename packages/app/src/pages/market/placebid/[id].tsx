@@ -6,7 +6,6 @@ import { useZoobalance } from "state/zoo/hooks";
 import TwoColumComp from "marketplace/Grid/TwoColumComp";
 import CardNft from "marketplace/Cards/CardNft";
 import Image from "next/image";
-import markets from "components/market/marketitem.json";
 
 import Trading from "marketplace/TradingHistory/Trading";
 import TableRow from "marketplace/TradingHistory/TableRow";
@@ -29,18 +28,20 @@ const PlaceBid = () => {
   useEffect(() => {
     getZooBalance();
   }, [getZooBalance]);
-
+  const { availableEggs, loading, allAuctions } = useSelector(
+    (state: any) => state.zoo
+  );
   useEffect(() => {
-    const NFT = markets.filter((obj) => {
-      return obj.id === router.query.id;
+    const NFT = allAuctions.filter((obj) => {
+      return obj.tokenID === router.query.id;
     });
     setNft(NFT[0]);
   });
 
-  console.log("MY NFTTTT", nft);
+  console.log("MY NFTTTT", nft, allAuctions);
 
   return (
-    <div className="w-full lg:px-12 py-32 ">
+    <div className="w-full lg:px-12 ">
       <Head>
         <title>ZOO Marketplace</title>
         <meta name="description" content="ZOO Marketplace" />
@@ -60,7 +61,7 @@ const PlaceBid = () => {
         RightCol={
           <div className="w-full bg-[#1F2030] h-full flex flex-col justify-center items-center lg:rounded-r-xl text-white py-6 px-8 lg:px-24">
             <p className="text-2xl font-medium mb-7">Your Bid</p>
-            <div className="flex w-full items-center justify-between font-medium text-xl mb-12">
+            <div className="flex items-center justify-between w-full mb-12 text-xl font-medium">
               <p>Your Balance:</p>
               <p>
                 {zooBalance?.toLocaleString(undefined, {
@@ -76,28 +77,28 @@ const PlaceBid = () => {
                 value={bidPrice}
                 onChange={(e) => setBidPrice(e.target.value)}
               />
-              <p className="font-medium text-xl mb-3 text-center">
-                You must be paid at least 300,00 ZOO
+              <p className="mb-3 text-xl font-medium text-center">
+                You must be paid at least 300,000 ZOO
               </p>
-              <p className="font-medium text-xl mb-11 text-center">
+              <p className="text-xl font-medium text-center mb-11">
                 The next bid must be 5% more than the current bid
               </p>
               <button className="py-[12px] w-full rounded-2xl bg-[#2703F8] mb-11">
                 Place Bid
               </button>
             </form>
-            <p className="font-medium text-xl mb-11 text-center">
+            <p className="text-xl font-medium text-center mb-11">
               You cannot withdraw a bid once submitted
             </p>
-            <a className="font-medium text-xl underline text-primary-green">
+            <a className="text-xl font-medium underline text-primary-green">
               How do auctions work?
             </a>
           </div>
         }
       />
 
-      <div className="w-full flex justify-center ">
-        <div className="md:w-3/4 overflow-auto whitespace-nowrap">
+      <div className="flex justify-center w-full ">
+        <div className="overflow-auto md:w-3/4 whitespace-nowrap">
           <Trading
             TitleMain="Transaction History"
             TitleA="ACTION"

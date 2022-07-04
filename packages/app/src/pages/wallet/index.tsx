@@ -1,26 +1,51 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { AppState } from "state";
-import { useBuyZoo } from "state/zoo/hooks";
+import { useBuyZoo, useFetchMyNFTs, useGetNftTransfers } from "state/zoo/hooks";
 import { numberWithCommas } from "functions";
 
 import MyWalletSection from "./MyWalletSection";
 import MyBidsSection from "./MyBidsSection";
 import MyAuctionSection from "./MyAuctionsSections";
-import TransactionHistorySection from "./TransactionHistorySection";
 import { handleFunds } from "utils/handleFunds";
 import { useActiveWeb3React } from "hooks";
+import { useMoralis } from "react-moralis";
+import dynamic from "next/dynamic";
 
 export default function Wallet({ children }) {
   const [category, setCategory] = useState(0);
+  const { Moralis, initialize } = useMoralis();
 
   const { account, library, chainId } = useActiveWeb3React();
   const buyZoo = useBuyZoo();
   const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
     (state) => state.zoo.zooBalance
   );
+  const fetchNFTs = useFetchMyNFTs();
+  const getNftTransfers = useGetNftTransfers();
+  const { myEggsCount, myAnimalsCount, myBreedsCount, myNfts, nftTransfers } =
+    useSelector((state: any) => state.zoo);
 
+  const initMoralis = async () => {
+    console.log("initMoralis", chainId, Moralis.User.current());
+    if (chainId) {
+      try {
+        // await Moralis.initPlugins();
+        // await Moralis.enableWeb3();
+
+        if (!Moralis.User.current()) await Moralis.authenticate();
+        fetchNFTs();
+        getNftTransfers();
+      } catch (error) {
+        console.log("error in init", error);
+      }
+    }
+  };
+  useEffect(() => {
+    initMoralis();
+  }, [chainId, account]);
+  console.log("myNfts", myNfts, Moralis.User.current());
   return (
     <section className="Hero">
       <div className="px-6 pb-16 mt-16 Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
@@ -82,44 +107,17 @@ export default function Wallet({ children }) {
             </div>
           </div>
         </div>
-        <div className="py-12">
-          <h1 className="text-3xl lg:text-5xl text-center ">Eggs </h1>
-          <div className="flex gap-4 mb-4 flex-wrap justify-center items-center">
-            <div>
-              <Image
-                src="/img/egg.png"
-                width={200}
-                height={200}
-                objectFit="contain"
-                alt=""
-              />
-              <Image
-                src="/img/egg1.png"
-                width={200}
-                height={200}
-                objectFit="contain"
-                alt=""
-              />
-              <Image
-                src="/img/egg-dark.png"
-                width={200}
-                height={200}
-                objectFit="contain"
-                alt=""
-              />
-              <Image
-                src="/img/egg2.png"
-                width={200}
-                height={200}
-                objectFit="contain"
-                alt=""
-              />
-            </div>
-          </div>
-        </div>
-        <div className="py-12">
-          <TransactionHistorySection />
-        </div>
+        {category === 0 ? (
+          <MyWalletSection
+            myNfts={myNfts}
+            nftTransfers={nftTransfers}
+            fetchNfts={() => fetchNFTs()}
+          />
+        ) : category === 1 ? (
+          <MyBidsSection />
+        ) : (
+          <MyAuctionSection />
+        )}
       </div>
     </section>
   );

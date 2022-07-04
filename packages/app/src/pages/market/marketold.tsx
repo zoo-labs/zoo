@@ -534,7 +534,7 @@ const Market: React.FC<MarketProps> = ({}) => {
         </div>
 
         <div>
-          <div className="flex flex-wrap mt-8 -mx-4">
+          {/* <div className="flex flex-wrap mt-8 -mx-4">
             {markets.length > 0 ? (
               markets.map((datum, index) => {
                 return (
@@ -550,7 +550,7 @@ const Market: React.FC<MarketProps> = ({}) => {
             ) : (
               <div>None</div>
             )}
-          </div>
+          </div> */}
         </div>
         {/* <div className="mt-8 text-center">
           <button

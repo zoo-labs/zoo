@@ -394,7 +394,7 @@ export const useTokenTypes = () => {
     }
   }
 
-  drop?.eggPrice().then(price => console.log('getTokenTypes drop', web3.utils.fromWei(price.toString(), "ether")))
+  // drop?.eggPrice().then(price => console.log('getTokenTypes drop', web3.utils.fromWei(price.toString(), "ether")))
   // drop?.getRandomAnimal(24).then((eggs) => console.log('drop getTokenTypes', eggs)).catch(err => console.log('err in drop getTokenTypes', err))
   // useEffect(() => {
   //   drop

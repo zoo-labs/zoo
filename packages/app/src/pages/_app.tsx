@@ -201,8 +201,8 @@ function MyApp({
                     <MulticallUpdater />
                   </>
                   <MoralisProvider
-                    serverUrl="https://hyrix9h7cyfi.usemoralis.com:2053/server"
-                    appId="ILIieVqZyWlL0ErAjiG9L1X6fep2KEFkKczcGOmJ"
+                    serverUrl="https://pu49uxbl83tm.usemoralis.com:2053/server"
+                    appId="mIEUGVNhlrjw8AvOSGJxJ09tu5KKH1bJNi60FWX3"
                   >
                     <Provider>
                       <Layout>
