@@ -30,7 +30,9 @@ export function useCloseModals(): () => void {
   const dispatch = useDispatch<AppDispatch>()
   return useCallback(() => dispatch(setOpenModal(null)), [dispatch])
 }
-
+export function useAuctionModal(): () => void {
+  return useToggleModal(ApplicationModal.AUCTION)
+}
 export function useWalletModalToggle(): () => void {
   return useToggleModal(ApplicationModal.WALLET)
 }
