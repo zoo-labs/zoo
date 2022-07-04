@@ -10,6 +10,7 @@ import { IMedia } from "./interfaces/IMedia.sol";
 import { IZoo } from "./interfaces/IZoo.sol";
 import { IDrop } from "./interfaces/IDrop.sol";
 import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
+import { IKeeper } from "./interfaces/IKeeper.sol";
 
 import "./console.sol";
 
@@ -26,11 +27,15 @@ contract Drop is IDrop, Ownable {
     // id of default base egg
     uint256 public baseEgg;
 
+    uint256 randomLimit;
+
     // id of configured hybrid egg
     uint256 public hybridEgg;
 
     // Address of ZooKeeper contract
     address public keeperAddress;
+
+    address public override EggDropAddress;
 
     // mapping of Rarity name to Rarity
     mapping (string => IZoo.Rarity) public rarities;
@@ -53,6 +58,7 @@ contract Drop is IDrop, Ownable {
     // mapping of (parent + parent) to Hybrid
     mapping (string => Hybrid) public hybridParents;
 
+
     // Ensure only ZK can call method
     modifier onlyZoo() {
         require(
@@ -63,6 +69,7 @@ contract Drop is IDrop, Ownable {
 
     constructor(string memory _title) {
         title = _title;
+        randomLimit = 3;
     }
 
     function totalSupply() public override view returns (uint256) {
@@ -91,6 +98,16 @@ contract Drop is IDrop, Ownable {
         keeperAddress = zooKeeper;
     }
 
+    function configureEggDropper(address eggdropper) public onlyOwner {
+        EggDropAddress = eggdropper;
+    }
+
+    function changeRandomLimit(uint256 limit) override public {
+        require(msg.sender == owner() || msg.sender == EggDropAddress, "not allowed to change");
+        randomLimit = limit;
+    }
+
+
     // Add or configure a given rarity
     function setRarity(string memory name, uint256 probability, uint256 yields, uint256 boost) public onlyOwner returns (bool) {
         require(probability > 0, "Rarity must be over zero");
@@ -118,7 +135,7 @@ contract Drop is IDrop, Ownable {
         egg.id = id;
         egg.data = getMediaData(tokenURI, metadataURI);
         egg.bidShares = getBidShares();
-        egg.price = price.mul(10**18);
+        egg.price = price;
         egg.supply = supply;
         egg.exist = true;
         eggs[id] = egg;
@@ -127,7 +144,7 @@ contract Drop is IDrop, Ownable {
 
     function setEggPrice(uint256 id, uint256 price) public eggExists(id) onlyOwner returns (Egg memory) {
        Egg memory egg;
-       eggs[id].price = price.mul(10**18);
+       eggs[id].price = price;
        return egg;
     }
 
@@ -250,7 +267,8 @@ contract Drop is IDrop, Ownable {
     }
 
     // Return a new Egg Token
-    function newEgg(uint256 id) override external eggExists(id) onlyZoo returns (IZoo.Token memory) {
+    function newEgg(uint256 id) override public eggExists(id) returns (IZoo.Token memory) {
+        require(keeperAddress == msg.sender || EggDropAddress == msg.sender, "only authorized callers");
         Egg memory egg = getEgg(id);
         require(eggSupply(id) == 0 || egg.minted < eggSupply(id), "Out of eggs");
 
@@ -297,7 +315,7 @@ contract Drop is IDrop, Ownable {
     }
 
     // Get Egg by id
-    function getEgg(uint256 id) private eggExists(id) view returns (Egg memory) {
+    function getEgg(uint256 id) public eggExists(id) view override returns (Egg memory) {
         return eggs[id];
     }
 
@@ -413,4 +431,11 @@ contract Drop is IDrop, Ownable {
         }
         return rarityB;
     }
+
+    function unsafeRandom() public view override returns (uint256) {
+        uint256 randomNumber = uint256(keccak256(abi.encodePacked(block.number, msg.sender, block.timestamp))) % randomLimit;
+        return randomNumber;
+    }
+
+
 }

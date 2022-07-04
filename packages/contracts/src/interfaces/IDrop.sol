@@ -50,4 +50,8 @@ interface IDrop {
     function newHybridEgg(IZoo.Parents memory) external returns (IZoo.Token memory);
     function getRandomAnimal(uint256) external view returns (IZoo.Token memory);
     function getRandomHybrid(uint256, IZoo.Parents memory) external view returns (IZoo.Token memory);
+    function unsafeRandom() external view returns(uint256);
+    function changeRandomLimit(uint256 limit) external;
+    function getEgg(uint256 id) external view returns(Egg memory);
+    function EggDropAddress() external returns(address);
 }
