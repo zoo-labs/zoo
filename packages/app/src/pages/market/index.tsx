@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 import Wallet from "./wallet";
 import { useTokenTypes } from "zoo/state";
 import { useFetchMyNFTs, useGetAvailableEggs } from "state/zoo/hooks";
-import { useActiveWeb3React } from "../../hooks";
+import { useActiveWeb3React, useDrop } from "../../hooks";
 import { useMoralis } from "react-moralis";
 import { abbreviateNumber } from "functions/abbreviateNumbers";
 import { accountEllipsis } from "functions/lux";
@@ -100,6 +100,7 @@ const MarketPlacePage = () => {
   const [hotData, setHotData] = useState([]);
   const getAvailableEggs = useGetAvailableEggs();
   const getAllAuctions = useGetAllAuctions();
+  const dropContract = useDrop();
 
   const [age, setAge] = useState(0);
   const [breedCount, setBreadCount] = useState(0);
@@ -196,37 +197,43 @@ const MarketPlacePage = () => {
   }, [authenticate, isAuthenticated]);
 
   useEffect(() => {
-    getAvailableEggs();
-  }, [getAvailableEggs]);
-
-  useEffect(() => {
     getAllAuctions();
-  }, [getAllAuctions]);
+    getAvailableEggs();
+  }, []);
 
   console.log("MY NFTSSSS", availableEggs);
   console.log("MY Auctionss", allAuctions);
 
+  const getEggs = async () => {
+    console.log("getting eggs", dropContract);
+    const eggs = await dropContract?.eggId();
+    console.log("eggss", eggs);
+  };
   return (
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
-      <div className="flex flex-col items-center py-12 h-[50vh] bg-[url(/img/plant.png)] bg-contain bg-right-bottom bg-no-repeat">
-        <h1 className="text-5xl mb-4">
-          The <span className="text-green">ZOO</span> Market
+      <div className="flex flex-col items-center h-[20vh] bg-[url(/img/plant.png)] bg-contain bg-right-bottom bg-no-repeat">
+        <h1 className="mb-4 text-5xl">
+          The{" "}
+          <span className="text-green" onClick={() => getEggs()}>
+            ZOO
+          </span>{" "}
+          Market
         </h1>
         <p>Buy, list, and bid on NFT Eggs and Animals.</p>
       </div>
       {/* Eggs */}
-      <div className="py-12">
+      <div className="">
         <div>
-          <h2 className="text-3xl lg:text-4xl text-white font-bold text-center">
-            Eggs
+          <h2 className="text-3xl font-bold text-center text-white lg:text-4xl">
+            Buy Eggs
           </h2>
         </div>
-        <div className="flex justify-center flex-wrap mt-16 -mx-4">
+        <div className="flex flex-wrap justify-center mt-16 -mx-4">
           {availableEggs.length ? (
             availableEggs?.map((item) => {
               return (
                 <div
-                  className="w-ull p-2 m:w-1/2 l:w-1/4"
+                  className="p-2 w-ull m:w-1/2 l:w-1/4"
                   key={item.id}
                   onClick={() => router.push(`/market/egg/${item.id}`)}
                 >
@@ -289,7 +296,7 @@ const MarketPlacePage = () => {
                           </div>
                           Supply
                         </div>
-                        <span className="text-white font-semibold">
+                        <span className="font-semibold text-white">
                           {item.supply}
                         </span>
                       </div>
@@ -299,14 +306,14 @@ const MarketPlacePage = () => {
               );
             })
           ) : (
-            <div className="py-12 px-4 ">
-              <p className="text-lg lg:text-3xl text-center">
+            <div className="px-4 py-12 ">
+              <p className="text-lg text-center lg:text-3xl">
                 No eggs available
               </p>
             </div>
           )}
         </div>
-        {/* <div className="flex justify-center items-center">
+        {/* <div className="flex items-center justify-center">
           <div className="relative w-[150px] h-[200px]">
             <Image
               src="/img/egg.png"
@@ -409,7 +416,7 @@ const MarketPlacePage = () => {
                 );
               })
             ) : (
-              <div className="py-16 w-full text-center">No auctions</div>
+              <div className="w-full py-16 text-center">No auctions</div>
             )}
           </div>
         )}
@@ -429,7 +436,7 @@ const MarketPlacePage = () => {
                 );
               })
             ) : (
-              <div className="py-16 w-full text-center">No auctions</div>
+              <div className="w-full py-16 text-center">No auctions</div>
             )}
           </div>
         )}
@@ -449,7 +456,7 @@ const MarketPlacePage = () => {
                 );
               })
             ) : (
-              <div className="py-16 w-full text-center">No auctions</div>
+              <div className="w-full py-16 text-center">No auctions</div>
             )}
           </div>
         )}
