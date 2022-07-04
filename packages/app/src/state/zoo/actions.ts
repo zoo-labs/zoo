@@ -10,6 +10,7 @@ import { createAction } from '@reduxjs/toolkit'
 // import { Egg } from 'types'
 
 import { Auction, AvailableEggs, Egg } from 'types'
+import { MyNFT } from './types'
 
 export interface SerializedToken {
   chainId: number
@@ -30,7 +31,7 @@ export const getEggs = createAction<{ curr: any }>('zoo/getEggs')
 export const getAllowance = createAction<number>('zoo/getAllowance')
 export const getAvailableEggs = createAction<AvailableEggs[]>('zoo/getAvailableEggs')
 export const loading = createAction<boolean>('zoo/loading')
-export const updateMyNfts = createAction<Array<Object>>('zoo/updateMyNfts')
+export const updateMyNfts = createAction<Array<MyNFT>>('zoo/updateMyNfts')
 export const eggsCount = createAction<number>('zoo/eggsCount')
 export const animalsCount = createAction<number>('zoo/animalsCount')
 export const breedsCount = createAction<number>('zoo/breedsCount')
