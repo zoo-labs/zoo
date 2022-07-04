@@ -13,3 +13,36 @@ export interface ZooState {
     myBids: { [key: string]: Egg }
     myAuctions: { [key: string]: Egg }
 }
+export interface MyNFT {
+    customName: string,
+    name: string,
+    kind: number,
+    id: number,
+    timestamp: number,
+    birthday: number,
+    dropId: number,
+    eggId: number,
+    swapped: boolean,
+    burned: boolean,
+    parents: {
+        animalA: string,
+        animalB: string,
+        tokenA: number,
+        tokenB: number,
+    },
+    data: Array<any>,
+    breed: {
+        count: number,
+        timestamp: number,
+    },
+    stage: number,
+    meta: {
+        eggID: number,
+        dropID: number,
+        swapped: boolean,
+        burned: boolean,
+    },
+    rarity: string,
+    bidShares: number,
+
+}

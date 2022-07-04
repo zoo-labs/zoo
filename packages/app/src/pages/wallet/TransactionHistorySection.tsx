@@ -3,27 +3,6 @@ import Image from "next/image";
 
 import Alert from "../../components/Alert";
 
-const data = [
-  {
-    type: "bought egg",
-    block: "12051484",
-    tokenId: 6,
-    hash: "0xd8e1c294da833a8db",
-  },
-  {
-    type: "bought egg",
-    block: "12051484",
-    tokenId: 6,
-    hash: "0xd8e1c294da833a8db",
-  },
-  {
-    type: "bought egg",
-    block: "12051484",
-    tokenId: 6,
-    hash: "0xd8e1c294da833a8db",
-  },
-];
-
 const TransactionHistory = ({ nftTransfers }) => {
   const [copied, setCopied] = useState(false);
 
@@ -83,7 +62,6 @@ const TransactionHistory = ({ nftTransfers }) => {
         <tbody>
           {nftTransfers.length > 0 ? (
             nftTransfers.map((item, index) => {
-              console.log("nftTransfers item", item);
               const { block_number, transaction_hash, token_id, value } = item;
               return (
                 <tr
@@ -91,9 +69,6 @@ const TransactionHistory = ({ nftTransfers }) => {
                   className="flex flex-row flex-wrap mb-10 bg-black100 lg:hover:bg-black200 lg:table-row lg:flex-row lg:flex-no-wrap lg:mb-0"
                 >
                   <td className="relative flex items-center w-full p-3 text-left text-white uppercase lg:w-auto lg:table-cell lg:static">
-                    <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
-                      ACTIONS:
-                    </span>
                     <span className="flex items-center">
                       <Image
                         src="/img/check.svg"
@@ -102,9 +77,9 @@ const TransactionHistory = ({ nftTransfers }) => {
                         alt=""
                         className=""
                       />
-                      <span className="ml-1 uppercase">
+                      {/* <span className="ml-1 uppercase">
                         {value == "0" ? "Bought Egg" : "Animal"}
-                      </span>
+                      </span> */}
                     </span>
                   </td>
                   <td className="relative block w-full p-3 text-left text-white lg:w-auto lg:table-cell lg:static">

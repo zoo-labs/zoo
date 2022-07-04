@@ -33,6 +33,8 @@ import { useTransactionAdder } from "state/transactions/hooks";
 import { addresses } from "../../constants";
 import { ChainId } from "constants/chainIds";
 import { addDays, differenceInSeconds } from "date-fns";
+import { SUPPORTED_NETWORKS } from "config/networks";
+import { MyNFT } from "./types";
 
 // helper that can take a ethers library transaction response and add it to the list of transactions
 export function useZoobalance(): () => void {
@@ -185,7 +187,7 @@ export function useFetchMyNFTs(): () => void {
   const Web3Api = useMoralisWeb3Api();
   console.log("structuredNft fetching nfts", Web3Api);
 
-  const { account } = useActiveWeb3React();
+  const { account, chainId } = useActiveWeb3React();
   const media = useMedia();
   const zooKeeper = useZooKeeper();
   const dispatch = useDispatch();
@@ -193,80 +195,90 @@ export function useFetchMyNFTs(): () => void {
   return useCallback(async () => {
     // get NFTs for current user on Mainnet
     // bsc nfts
-    const bscNFTs = await Web3Api.account.getNFTsForContract({
-      chain: "bsc",
-      address: account,
-      token_address: media?.address,
-    });
+    try {
+      // bsc testnet nfts
 
-    // bsc testnet nfts
-    const bscTestnetNFTs = await Web3Api.account.getNFTsForContract({
-      chain: "bsc testnet",
-      address: account,
-      token_address: media?.address,
-    });
-    console.log("structuredNft bscTestnetNFTs", bscTestnetNFTs);
-    const structuredNft = [...bscNFTs.result, ...bscTestnetNFTs.result];
-    let newStruct = [];
-    let _eggsCount = 0;
-    let _animalsCount = 0;
-    let _breedCount = 0;
-    console.log("structuredNft", structuredNft);
-    for (let i = 0; i < structuredNft.length; i++) {
-      const id = structuredNft[i].token_id;
-      const deet = await zooKeeper?.tokens(Number(id));
-
-      if (deet?.kind === 0) _eggsCount++;
-      else if (deet?.kind === 1) _animalsCount++;
-      else if (deet?.kind === 2) _breedCount++;
-      // console.log('d_deets', deet)
-      const newNft = {
-        customName: deet?.customName,
-        name: deet?.name,
-        kind: deet?.kind,
-        id: Number(deet?.id),
-        timestamp: Number(deet?.timestamp),
-        birthday: Number(deet?.birthday),
-        dropId: Number(deet?.meta?.dropID),
-        eggId: Number(deet?.meta?.eggID),
-        swapped: deet?.meta?.swapped,
-        burned: deet?.meta?.burned,
-        parents: {
-          animalA: deet?.parents?.animalB,
-          animalB: deet?.parents?.animalB,
-          tokenA: Number(deet?.parents?.tokenA),
-          tokenB: Number(deet?.parents?.tokenB),
-        },
-        data: deet?.data,
-        breed: {
-          count: Number(deet?.breed?.count),
-          timestamp: Number(deet?.breed?.timestamp),
-        },
+      const options: { chain?: any; address: string; token_address: string } = {
+        chain: SUPPORTED_NETWORKS[chainId].chainId,
+        address: account,
+        token_address: media?.address,
       };
 
-      newStruct.push(newNft);
+      const nfts = await Web3Api.account.getNFTsForContract(options);
+      const structuredNft = nfts.result;
+      let newStruct = [];
+      let _eggsCount = 0;
+      let _animalsCount = 0;
+      let _breedCount = 0;
+      console.log("structuredNft", structuredNft);
+      for (let i = 0; i < structuredNft.length; i++) {
+        const id = structuredNft[i].token_id;
+        const deet = await zooKeeper?.tokens(Number(id));
+
+        if (deet?.kind === 0) _eggsCount++;
+        else if (deet?.kind === 1) _animalsCount++;
+        else if (deet?.kind === 2) _breedCount++;
+        // console.log('d_deets', deet)
+        const newNft: MyNFT = {
+          customName: deet?.customName,
+          name: deet?.name,
+          kind: deet?.kind,
+          id: Number(deet?.id),
+          timestamp: Number(deet?.birthValues?.timestamp),
+          birthday: Number(deet?.birthValues?.birthday),
+          dropId: Number(deet?.meta?.dropID),
+          eggId: Number(deet?.meta?.eggID),
+          swapped: deet?.meta?.swapped,
+          burned: deet?.meta?.burned,
+          parents: {
+            animalA: deet?.birthValues?.parents?.animalB,
+            animalB: deet?.birthValues?.parents?.animalB,
+            tokenA: Number(deet?.birthValues?.parents?.tokenA),
+            tokenB: Number(deet?.birthValues?.parents?.tokenB),
+          },
+          data: deet?.data,
+          breed: {
+            count: Number(deet?.breed?.count),
+            timestamp: Number(deet?.breed?.timestamp),
+          },
+          stage: deet?.stage,
+          meta: {
+            eggID: Number(deet?.meta?.eggID),
+            dropID: Number(deet?.meta?.dropID),
+            swapped: deet?.meta?.swapped,
+            burned: deet?.meta?.burned,
+          },
+          rarity: deet?.rarity?.name,
+          bidShares: deet?.bidShares,
+        };
+
+        newStruct.push(newNft);
+      }
+      dispatch(eggsCount(_eggsCount));
+      dispatch(animalsCount(_animalsCount));
+      dispatch(breedsCount(_breedCount));
+      dispatch(updateMyNfts([...newStruct]));
+    } catch (error) {
+      console.log("error in fetch nfts", error);
     }
-    dispatch(eggsCount(_eggsCount));
-    dispatch(animalsCount(_animalsCount));
-    dispatch(breedsCount(_breedCount));
-    dispatch(updateMyNfts([...newStruct]));
   }, [Web3Api.account, account, media?.address, zooKeeper, dispatch]);
 }
 
 export function useGetNftTransfers(): () => void {
   const Web3Api = useMoralisWeb3Api();
-  const { account } = useActiveWeb3React();
+  const { account, chainId } = useActiveWeb3React();
   const media = useMedia();
   const dispatch = useDispatch();
   return useCallback(async () => {
     // get NFTs for current user on Mainnet
     // bsc nfts
-    const option: { chain: "0x61"; address: string; token_address: string } = {
-      chain: "0x61",
+    const options: { chain?: any; address: string; token_address: string } = {
+      chain: SUPPORTED_NETWORKS[chainId].chainId,
       address: account,
       token_address: media?.address,
     };
-    const bscNFTs = await Web3Api.account.getNFTTransfers(option);
+
+    const bscNFTs = await Web3Api.account.getNFTTransfers(options);
     console.log("bscNFTs", bscNFTs);
     dispatch(addNftTTransfers(bscNFTs.result));
   }, [Web3Api.account, account, media?.address, dispatch]);
@@ -711,3 +723,60 @@ export function useCreateBid(): (id: any) => void {
 //     }
 //   }
 // }
+
+export function useFeed(): (animalID: number) => void {
+  const dropId = process.env.NEXT_PUBLIC_DROP_ID || 1;
+  const addPopup = useAddPopup();
+  const zoo = useZooToken();
+  const zooKeeper = useZooKeeper();
+  const { account } = useActiveWeb3React();
+  const dispatch = useDispatch();
+  const fetchMyNfts = useFetchMyNFTs();
+  return useCallback(
+    async (animalId) => {
+      console.log("feeding_animal", { animalId, dropId });
+      if (!zooKeeper) return;
+      dispatch(loading(true));
+      try {
+        const approval = await zoo?.allowance(account, zooKeeper.address);
+        console.log("approval_approving_media", Number(approval));
+        if (Number(approval) <= 0) {
+          console.log("approving_media");
+          await zoo
+            ?.approve(zooKeeper.address, MaxUint256, {
+              gasLimit: 4000000,
+            })
+            .then((tx) => {
+              console.log("approval", tx);
+              tx.wait();
+            });
+        }
+        const tx = await zooKeeper?.feedAnimal(animalId, dropId, {
+          gasLimit: 4000000,
+        });
+        await tx.wait();
+        console.log(tx);
+        dispatch(loading(false));
+        fetchMyNfts();
+        addPopup({
+          txn: {
+            hash: null,
+            summary: `Successfully fed animal`,
+            success: true,
+          },
+        });
+      } catch (e) {
+        console.error("ISSUE FEEDING EGG \n", e);
+        dispatch(loading(false));
+        addPopup({
+          txn: {
+            hash: null,
+            summary: formatError(e),
+            success: false,
+          },
+        });
+      }
+    },
+    [account, addPopup, dispatch, dropId, zoo, zooKeeper]
+  );
+}

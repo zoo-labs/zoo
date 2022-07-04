@@ -72,6 +72,10 @@ export function useBuyEggModalToggle(): () => void {
   return useToggleModal(ApplicationModal.BUYEGG)
 }
 
+export function useMyNftModalToggle(): () => void {
+
+  return useToggleModal(ApplicationModal.MY_NFT)
+}
 export function useBuyZooModalToggle(): () => void {
 
   return useToggleModal(ApplicationModal.BUYZOO)

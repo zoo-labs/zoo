@@ -9,7 +9,7 @@ import { AppState } from "state";
 
 import TransactionHistory from "./TransactionHistorySection";
 import { handleFunds } from "utils/handleFunds";
-import { useBuyZoo } from "state/zoo/hooks";
+import { useBuyZoo, useFeed } from "state/zoo/hooks";
 
 import { useLingui } from "@lingui/react";
 import Web3Status from "../../components/Web3Status";
@@ -19,29 +19,34 @@ import { fadeInOnScroll } from "animation";
 import { useActiveWeb3React } from "hooks";
 import TransactionHistorySection from "./TransactionHistorySection";
 import dynamic from "next/dynamic";
-import { useHatchEggModal } from "state/application/hooks";
+import { useHatchEggModal, useMyNftModalToggle } from "state/application/hooks";
 import HatchEggModal from "modals/HatchEggModal";
+import NftModal from "modals/NftModal";
+import { MyNFT } from "state/zoo/types";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
 const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
-  const toggleModal = useHatchEggModal();
-  const [nftItem, setNftItem] = useState({ eggId: 1, dropId: 1, name: "" });
+  const toggleHatchEggModal = useHatchEggModal();
+  const [nftItem, setNftItem] = useState<MyNFT>();
+  const toggleNftModal = useMyNftModalToggle();
+  const feedAnimal = useFeed();
+
   return (
     <div>
       <div className="py-12">
-        <h1 className="text-3xl text-center lg:text-5xl ">My Nfts </h1>
+        <h1 className="text-3xl text-center lg:text-5xl ">My Nfts</h1>
         <div className="flex flex-wrap items-center justify-center gap-4 mb-4">
-          <div>
-            {myNfts.map((nft, index) => {
-              const { kind, name, eggId, id, dropId } = nft;
+          <div className="flex items-center justify-center">
+            {myNfts.map((nft: MyNFT, index) => {
+              const { kind, name, id, dropId, stage } = nft;
               console.log("nftttt", nft);
               return (
                 <div
                   key={index}
                   onClick={() => {
-                    setNftItem({ dropId, eggId: id, name });
-                    toggleModal();
+                    setNftItem(nft);
+                    toggleNftModal();
                   }}
                   className="flex flex-col items-center"
                 >
@@ -56,8 +61,20 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
                   ) : (
                     <div className="h-[350px] w-[300px]">
                       <ModelViewer
-                        glb={"/models/Elephant/ELEPHANT_ADULT.glb"}
-                        usdz={"/models/Elephant/ELEPHANT_ADULT.usdz"}
+                        glb={`/models/Elephant/${
+                          stage === 0
+                            ? "ELEPHANT_BABY"
+                            : stage === 1
+                            ? "ELEPHANT_TEEN"
+                            : "ELEPHANT_ADULT"
+                        }.glb`}
+                        usdz={`/models/Elephant/${
+                          stage === 0
+                            ? "ELEPHANT_BABY"
+                            : stage === 1
+                            ? "ELEPHANT_TEEN"
+                            : "ELEPHANT_ADULT"
+                        }.usdz`}
                       ></ModelViewer>
                     </div>
                   )}
@@ -71,7 +88,20 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
       <div className="py-12">
         <TransactionHistorySection nftTransfers={nftTransfers} />
       </div>
-      <HatchEggModal nftItem={nftItem} success={() => fetchNfts()} />
+      {nftItem && (
+        <>
+          <HatchEggModal nftItem={nftItem} success={() => fetchNfts()} />
+          <NftModal
+            nftItem={nftItem}
+            hatchEgg={() => {
+              toggleHatchEggModal();
+            }}
+            feed={(id) => feedAnimal(id)}
+            breed={() => console.log("breeding")}
+            auction={() => console.log("auctioning")}
+          />
+        </>
+      )}
     </div>
   );
 };
