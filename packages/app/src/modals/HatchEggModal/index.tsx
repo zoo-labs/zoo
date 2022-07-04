@@ -29,19 +29,17 @@ export default function HatchEggModal({ nftItem, success }) {
   const toggleModal = useHatchEggModal();
   const hatchEgg = useHatch();
   const toggleWallet = useWalletModalToggle();
-  const { eggId, dropId, name } = nftItem;
   const handleHatchEgg = useCallback(() => {
     console.log("Clicked");
     if (account) {
       console.log("Hatching", {
-        dropId,
-        eggId,
+        nftItem,
       });
-      hatchEgg(dropId, eggId, () => success());
+      hatchEgg(nftItem.dropId, nftItem.id, () => success());
     } else {
       toggleWallet();
     }
-  }, [account, dropId, eggId, hatchEgg, success, toggleWallet]);
+  }, [account, hatchEgg, success, toggleWallet]);
 
   function getModalContent() {
     return (
