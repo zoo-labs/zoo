@@ -17,111 +17,43 @@ import { useETHBalances } from "../../state/wallet/hooks";
 
 import { fadeInOnScroll } from "animation";
 import { useActiveWeb3React } from "hooks";
-
-const MyWalletSection = () => {
-  const { account, library, chainId } = useActiveWeb3React();
-  const buyZoo = useBuyZoo();
-  const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
-    (state) => state.zoo.zooBalance
-  );
-
-  const userEthBalance = useETHBalances(account ? [account] : [])?.[
-    account ?? ""
-  ];
-
-  const comingSoonRef = React.useRef();
-
-  useEffect(() => {
-    fadeInOnScroll(comingSoonRef.current);
-  }, []);
-
+import TransactionHistorySection from "./TransactionHistorySection";
+import dynamic from "next/dynamic";
+const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
+  ssr: false,
+});
+const MyWalletSection = ({ myNfts, nftTransfers }) => {
   return (
     <div>
-      <div className="">
-        <div className="px-4 py-20 mx-auto max-w-7xl">
-          <div
-            className="flex flex-col items-center justify-center text-center "
-            ref={comingSoonRef}
-          >
-            {!account ? (
-              <h1 className="mb-8 text-4xl font-bold lg:text-5xl">
-                Wallet Not Connected
-              </h1>
-            ) : (
-              <h1 className="mb-8 text-4xl font-bold lg:text-5xl">
-                Wallet Connected
-              </h1>
-            )}
-            <div className="w-auto flex items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
-              {account && chainId && userEthBalance && (
-                <>
-                  <div className="px-3 py-2 text-primary text-bold">
-                    {userEthBalance?.toFixed(3)}{" "}
-                    {NATIVE[chainId]?.symbol || "ETH"}
-                  </div>
-                </>
-              )}
-              <Web3Status
-                title={`Connect Wallet`}
-                className="font-bold underline bg-black text-green"
-              />
-            </div>
-            {/* <p>
-              Connect wallet{" "}
-              <Link href="/">
-                <a className="underline text-green">home page</a>
-              </Link>
-            </p> */}
+      <div className="py-12">
+        <h1 className="text-3xl text-center lg:text-5xl ">My Nfts </h1>
+        <div className="flex flex-wrap items-center justify-center gap-4 mb-4">
+          <div>
+            {myNfts.map((nft) => {
+              const { kind, name } = nft;
+              return (
+                <div className="flex flex-col items-center">
+                  {kind === 0 ? (
+                    <Image
+                      src="/img/egg.png"
+                      width={200}
+                      height={200}
+                      objectFit="contain"
+                      alt=""
+                    />
+                  ) : (
+                    <ModelViewer zoom="35deg"></ModelViewer>
+                  )}
+                  <p>{name}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
-      {/* <p className="mb-8 text-xl md:text-2xl">
-        Wallet Balance{" "}
-        <span className="text-base font-bold text-green md:text-2xl">
-          {" "}
-          {numberWithCommas(zooBalance.toFixed(2))} $ZOO
-        </span>
-      </p> */}
-
-      {/* <>
-      <div className="flex flex-col items-center justify-center mb-8 lg:flex-row lg:justify-between">
-        <div className="px-4 py-8 mb-4 border rounded border-blue lg:mb-0">
-          <Image src="/img/javan-rhino.png" width={148} height={153} alt="" />
-        </div>
-        <div className="px-4 py-8 mb-4 border rounded border-blue lg:mb-0">
-          <Image src="/img/plasma.png" width={148} height={153} alt="" />
-        </div>
-        <div className="px-4 py-8 mb-4 border rounded border-blue lg:mb-0">
-          <Image src="/img/egg.png" width={148} height={153} alt="" />
-        </div>
-        <div className="px-4 py-8 mb-4 border rounded border-blue lg:mb-0">
-          <Image src="/img/plasma.png" width={148} height={153} alt="" />
-        </div>
-        <div className="px-4 py-8 mb-4 border rounded border-blue lg:mb-0">
-          <Image src="/img/dog.png" width={148} height={153} alt="" />
-        </div>
+      <div className="py-12">
+        <TransactionHistorySection nftTransfers={nftTransfers} />
       </div>
-      <p className="m-8 text-center text-green">4 Eggs - 2 Animals</p>
-      <div className="flex items-center justify-center">
-        <a
-          href="/market"
-          className="px-5 py-3 text-sm font-semibold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10"
-        >
-          Buy $ZOO
-        </a>
-      </div>
-      <TransactionHistory />
-      </> */}
-
-      {/* <div className="flex items-center justify-center">
-        <button
-          onClick={() => handleFunds(chainId, buyZoo)}
-          className="px-5 py-3 text-sm font-semibold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10"
-        >
-          Buy $ZOO
-        </button>
-      </div> */}
-      {/* <ComingSoon /> */}
     </div>
   );
 };

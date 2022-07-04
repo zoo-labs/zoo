@@ -168,33 +168,31 @@ const MarketPlacePage = () => {
   };
 
   const buyZoo = useBuyZoo();
-  const fetchNFTs = useFetchMyNFTs();
-  const { account } = useActiveWeb3React();
 
   const { availableEggs, loading, allAuctions } = useSelector(
     (state: any) => state.zoo
   );
 
-  const {
-    myEggsCount: eggsCount,
-    myAnimalsCount: animalsCount,
-    myBreedsCount: breedsCount,
-    myNfts: myNFTs,
-  } = useSelector((state: any) => state.zoo);
-  const { authenticate, isAuthenticated, logout } = useMoralis();
+  // const {
+  //   myEggsCount: eggsCount,
+  //   myAnimalsCount: animalsCount,
+  //   myBreedsCount: breedsCount,
+  //   myNfts: myNFTs,
+  // } = useSelector((state: any) => state.zoo);
+  // const { authenticate, isAuthenticated, logout } = useMoralis();
 
-  const login = useCallback(async () => {
-    if (!isAuthenticated) {
-      await authenticate({ signingMessage: "Log in using Moralis" })
-        .then(function (user) {
-          console.log("logged in user:", user);
-          console.log(user!.get("ethAddress"));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-  }, [authenticate, isAuthenticated]);
+  // const login = useCallback(async () => {
+  //   if (!isAuthenticated) {
+  //     await authenticate({ signingMessage: "Log in using Moralis" })
+  //       .then(function (user) {
+  //         console.log("logged in user:", user);
+  //         console.log(user!.get("ethAddress"));
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //       });
+  //   }
+  // }, [authenticate, isAuthenticated]);
 
   useEffect(() => {
     getAllAuctions();
@@ -204,20 +202,11 @@ const MarketPlacePage = () => {
   console.log("MY NFTSSSS", availableEggs);
   console.log("MY Auctionss", allAuctions);
 
-  const getEggs = async () => {
-    console.log("getting eggs", dropContract);
-    const eggs = await dropContract?.eggId();
-    console.log("eggss", eggs);
-  };
   return (
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
       <div className="flex flex-col items-center h-[20vh] bg-[url(/img/plant.png)] bg-contain bg-right-bottom bg-no-repeat">
         <h1 className="mb-4 text-5xl">
-          The{" "}
-          <span className="text-green" onClick={() => getEggs()}>
-            ZOO
-          </span>{" "}
-          Market
+          The <span className="text-green">ZOO</span> Market
         </h1>
         <p>Buy, list, and bid on NFT Eggs and Animals.</p>
       </div>

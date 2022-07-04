@@ -17,18 +17,18 @@ const MyBidsSection = () => {
 
   return (
     <div className="">
-      <div className="max-w-7xl mx-auto py-20 px-4">
+      <div className="px-4 py-20 mx-auto max-w-7xl">
         <div
           className="flex flex-col items-center justify-center text-center "
           ref={comingSoonRef}
         >
-          <h1 className="text-4xl lg:text-5xl font-bold mb-8">
+          <h1 className="mb-8 text-4xl font-bold lg:text-5xl">
             You have no Bids
           </h1>
           <p>
-            Go pack to the{" "}
-            <Link href="/">
-              <a className="text-green underline">home page</a>
+            Go to the{" "}
+            <Link href="/market">
+              <a className="underline text-green">Marketplace</a>
             </Link>
           </p>
         </div>
