@@ -8,14 +8,14 @@ const NftInfo = () => {
   const [openMoal, setOpenModal] = React.useState(false);
   return (
     <div className="">
-      <div className="max-w-7xl mx-auto py-16 px-4">
-        <div className="flex flex-col lg:flex-row lg:justify-center gap-12 mb-12">
-          <div className="flex flex-col border border-blue px-4 py-6 rounded mb-4 lg:mb-0 lg:px-8">
+      <div className="px-4 py-16 mx-auto max-w-7xl">
+        <div className="flex flex-col gap-12 mb-12 lg:flex-row lg:justify-center">
+          <div className="flex flex-col px-4 py-6 mb-4 border rounded border-blue lg:mb-0 lg:px-8">
             <div style={{ minHeight: "299px" }}>
               <Image src="/img/egg.png" width={300} height={300} alt="" />
             </div>
             <button
-              className="bg-gradient-to-b from-purple to-blue text-white font-semibold text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full"
+              className="px-5 py-3 text-sm font-semibold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10"
               onClick={() => setOpenModal(true)}
             >
               Place bid
@@ -26,14 +26,14 @@ const NftInfo = () => {
           </div>
           <div>
             <div className="mb-8">
-              <h3 className="text-xl font-bold mb-4">Egg #4</h3>
+              <h3 className="mb-4 text-xl font-bold">Egg #4</h3>
               <p>
                 Contains <span className="font-bold">1 of 16</span> Generation
                 one Base Animals. To hatch or to hold…
               </p>
             </div>
-            <div className="mb-8 border border-blue px-4 py-6 rounded">
-              <p className="font-bold mb-2">Details</p>
+            <div className="px-4 py-6 mb-8 border rounded border-blue">
+              <p className="mb-2 font-bold">Details</p>
               <div className="flex justify-between mb-2">
                 <p>Transaction</p>
                 <p className="text-purple">0x00000000…000000</p>
@@ -52,9 +52,9 @@ const NftInfo = () => {
               </div>
             </div>
 
-            <div className="details border border-blue rounded">
+            <div className="border rounded details border-blue">
               <div className="px-4 pt-6 pb-2 ">
-                <p className="font-bold mb-2">Proof of Authenticity</p>
+                <p className="mb-2 font-bold">Proof of Authenticity</p>
                 <div className="mb-2">
                   <p className="text-lg font-bold">300,000 $ZOO</p>
                 </div>
@@ -81,7 +81,7 @@ const NftInfo = () => {
             </div>
           </div>
         </div>
-        <TransactionHistory />
+        {/* <TransactionHistory /> */}
       </div>
     </div>
   );
