@@ -24,7 +24,7 @@ import HatchEggModal from "modals/HatchEggModal";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
-const MyWalletSection = ({ myNfts, nftTransfers }) => {
+const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
   const toggleModal = useHatchEggModal();
   const [nftItem, setNftItem] = useState({ eggId: 1, dropId: 1, name: "" });
   return (
@@ -71,7 +71,7 @@ const MyWalletSection = ({ myNfts, nftTransfers }) => {
       <div className="py-12">
         <TransactionHistorySection nftTransfers={nftTransfers} />
       </div>
-      <HatchEggModal nftItem={nftItem} success={() => console.log("okay")} />
+      <HatchEggModal nftItem={nftItem} success={() => fetchNfts()} />
     </div>
   );
 };
