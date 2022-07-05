@@ -10,16 +10,13 @@
 
 @import "./react-morphing-modal.css";
 
-
-
 .slick-dots li.slick-active button:before {
-  color: #14F195 !important;
+  color: #14f195 !important;
 }
 
 .slick-dots li button:before {
-  color: white!important;
+  color: white !important;
 }
-
 
 *,
 *:before,
@@ -46,6 +43,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--primary);
   color: var(--text-primary);
+}
+
+/* Remove arrow from number input */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove arrow from number input mozilla */
+input[type="number"]::-moz-inner-spin-button,
+input[type="number"]::-moz-outer-spin-button {
+  -moz-appearance: none;
+  margin: 0;
 }
 
 body {

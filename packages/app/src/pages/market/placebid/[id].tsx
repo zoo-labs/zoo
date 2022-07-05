@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import Head from "next/head";
-import { useZoobalance } from "state/zoo/hooks";
+import { useZoobalance, useRemoveAuction } from "state/zoo/hooks";
 import TwoColumComp from "marketplace/Grid/TwoColumComp";
 import CardNft from "marketplace/Cards/CardNft";
 import Image from "next/image";
@@ -11,10 +11,16 @@ import Trading from "marketplace/TradingHistory/Trading";
 import TableRow from "marketplace/TradingHistory/TableRow";
 
 import { useRouter } from "next/router";
+import { useActiveWeb3React } from "hooks";
+import { useAuctionModal } from "state/application/hooks";
+import AuctionModal from "modals/Auction";
 
 const PlaceBid = () => {
+  const { account } = useActiveWeb3React();
   const { zooBalance } = useSelector((state: any) => state.zoo);
   const getZooBalance = useZoobalance();
+  const removeAuction = useRemoveAuction();
+  const toggleAuctionModal = useAuctionModal();
   const [bidPrice, setBidPrice] = useState<number | any>(1);
   const [nft, setNft] = useState<any>({});
   const router = useRouter();
@@ -33,13 +39,25 @@ const PlaceBid = () => {
   );
   useEffect(() => {
     const NFT = allAuctions.filter((obj) => {
-      return obj.tokenID === router.query.id;
+      return String(obj.tokenID) === String(router.query.id);
     });
     setNft(NFT[0]);
-  });
+    console.log("NFTTTT_ANDAUCTION_", NFT[0]?.tokenOwner === account);
+  }, [account, allAuctions, router.query.id]);
 
-  console.log("MY NFTTTT", nft, allAuctions);
+  console.log("NFTTTT_ANDAUCTION", nft, allAuctions);
+  const handleClick = () => {
+    if (nft?.tokenOwner === account) {
+      console.log("You own this token and placed this auction");
+      toggleAuctionModal();
+    } else {
+    }
+  };
 
+  const handleRemoveAuction = () => {
+    console.log("Remove auction");
+    removeAuction(nft.tokenID, () => router.push("/market"));
+  };
   return (
     <div className="w-full lg:px-12 ">
       <Head>
@@ -60,7 +78,9 @@ const PlaceBid = () => {
         }
         RightCol={
           <div className="w-full bg-[#1F2030] h-full flex flex-col justify-center items-center lg:rounded-r-xl text-white py-6 px-8 lg:px-24">
-            <p className="text-2xl font-medium mb-7">Your Bid</p>
+            <p className="text-2xl font-medium mb-7">
+              {nft?.tokenOwner === account ? "Your Auction" : "Your Bid"}
+            </p>
             <div className="flex items-center justify-between w-full mb-12 text-xl font-medium">
               <p>Your Balance:</p>
               <p>
@@ -74,18 +94,35 @@ const PlaceBid = () => {
               <input
                 type="number"
                 className="rounded-xl border-[1.5px] border-white px-4 py-5 bg-[#2A2C41] w-full placeholder:text-[#878787] placeholder:text-lg mb-11"
-                value={bidPrice}
+                value={nft?.tokenOwner === account ? nft?.amount : bidPrice}
                 onChange={(e) => setBidPrice(e.target.value)}
+                disabled={nft?.tokenOwner === account}
               />
               <p className="mb-3 text-xl font-medium text-center">
-                You must be paid at least 300,000 ZOO
+                You must be paid at least{" "}
+                {nft?.reservePrice?.toLocaleString(undefined, {
+                  maximumFractionDigits: 2,
+                })}{" "}
+                ZOO
               </p>
               <p className="text-xl font-medium text-center mb-11">
-                The next bid must be 5% more than the current bid
+                The next bid must be {nft?.curatorFeePercentage}% more than the
+                current bid
               </p>
-              <button className="py-[12px] w-full rounded-2xl bg-[#2703F8] mb-11">
-                Place Bid
+              <button
+                className="py-[12px] w-full rounded-2xl bg-[#2703F8] mb-11"
+                onClick={handleClick}
+              >
+                {nft?.tokenOwner === account ? "Edit Auction" : "Place Bid"}
               </button>
+              {nft?.tokenOwner === account && (
+                <button
+                  className="py-[12px] w-full rounded-2xl border border-[#2703F8] bg-[#2A2C41] mb-11"
+                  onClick={handleRemoveAuction}
+                >
+                  Remove Auction
+                </button>
+              )}
             </form>
             <p className="text-xl font-medium text-center mb-11">
               You cannot withdraw a bid once submitted
@@ -127,6 +164,7 @@ const PlaceBid = () => {
           </Trading>
         </div>
       </div>
+      <AuctionModal nft={nft} edit={true} />
     </div>
   );
 };

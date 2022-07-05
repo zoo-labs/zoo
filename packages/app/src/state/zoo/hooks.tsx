@@ -183,7 +183,7 @@ export function useHatch(): (
     [account, addPopup, dispatch, dropId, zoo, zooKeeper]
   );
 }
-export function useFetchMyNFTs(): () => void {
+export function useFetchMyNFTs(): () => Promise<void> {
   const Web3Api = useMoralisWeb3Api();
   console.log("structuredNft fetching nfts", Web3Api);
 
@@ -197,12 +197,17 @@ export function useFetchMyNFTs(): () => void {
     // bsc nfts
     try {
       // bsc testnet nfts
-
       const options: { chain?: any; address: string; token_address: string } = {
-        chain: SUPPORTED_NETWORKS[chainId].chainId,
+        chain: SUPPORTED_NETWORKS[chainId]?.chainId,
         address: account,
         token_address: media?.address,
       };
+
+      console.log("GETTING_USERS_NFTS->", {
+        chain: SUPPORTED_NETWORKS[chainId]?.chainId,
+        address: account,
+        token_address: media?.address,
+      });
 
       const nfts = await Web3Api.account.getNFTsForContract(options);
       const structuredNft = nfts.result;
@@ -261,7 +266,7 @@ export function useFetchMyNFTs(): () => void {
     } catch (error) {
       console.log("error in fetch nfts", error);
     }
-  }, [Web3Api.account, account, media?.address, zooKeeper, dispatch]);
+  }, [chainId, account, media?.address, Web3Api.account, dispatch, zooKeeper]);
 }
 
 export function useGetNftTransfers(): () => void {
@@ -480,14 +485,14 @@ export function useTransferZoo(): (recipient: string, amount: number) => void {
   );
 }
 
-export function useGetAllAuctions(): () => void {
+export function useGetAllAuctions(): () => Promise<void> {
   const auctionContract = useAuction();
   const dispatch = useDispatch();
   return useCallback(async () => {
     console.log("auction ytfrtdtrsd", auctionContract);
 
     const auctions = await auctionContract?.getAllAuctions();
-    console.log("auctions await", auctions);
+    console.log("auctions__await", auctions);
     const structuredAuctions = auctions?.map((auction: Auction) => {
       const {
         tokenID,
@@ -515,6 +520,46 @@ export function useGetAllAuctions(): () => void {
     console.log("structuredAuctionss", structuredAuctions);
     dispatch(getAllAuctions(structuredAuctions || []));
   }, [dispatch, auctionContract]);
+}
+
+export function useRemoveAuction(): (
+  id: string | number,
+  success?: () => void
+) => void {
+  const auctionContract = useAuction();
+  const getAllAuctions = useGetAllAuctions();
+  const addPopup = useAddPopup();
+  return useCallback(
+    async (id, success) => {
+      try {
+        const tx = await auctionContract?.cancelAuction(id, {
+          gasLimit: 4000000,
+        });
+        await tx.wait();
+        console.log(tx);
+        addPopup({
+          txn: {
+            hash: null,
+            summary: `Successfully cancelled auction ${id}`,
+            success: true,
+          },
+        });
+        getAllAuctions().then(() => {
+          success && success();
+        });
+      } catch (e) {
+        console.error("ISSUE REMOVING AUCTION \n", e);
+        addPopup({
+          txn: {
+            hash: null,
+            summary: formatError(e),
+            success: false,
+          },
+        });
+      }
+    },
+    [addPopup, auctionContract, getAllAuctions]
+  );
 }
 
 export function useApproveTokenWithMedia(): (

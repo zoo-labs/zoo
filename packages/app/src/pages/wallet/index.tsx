@@ -28,7 +28,6 @@ export default function Wallet({ children }) {
     useSelector((state: any) => state.zoo);
 
   const initMoralis = async () => {
-    console.log("initMoralis", chainId, Moralis.User.current());
     if (chainId) {
       try {
         // await Moralis.initPlugins();
@@ -45,7 +44,7 @@ export default function Wallet({ children }) {
   useEffect(() => {
     initMoralis();
   }, [chainId, account]);
-  console.log("myNfts", myNfts, Moralis.User.current());
+  console.log("myNfts", myNfts);
   return (
     <section className="Hero">
       <div className="px-6 pb-16 mt-16 Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
