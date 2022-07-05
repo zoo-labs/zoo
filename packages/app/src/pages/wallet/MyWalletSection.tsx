@@ -23,22 +23,27 @@ import {
   useAuctionModal,
   useHatchEggModal,
   useMyNftModalToggle,
+  useHatchEggAnimationModal,
 } from "state/application/hooks";
 import HatchEggModal from "modals/HatchEggModal";
 import NftModal from "modals/NftModal";
 import { MyNFT } from "state/zoo/types";
 import AssetModal from "marketplace/AssetModal";
 import AuctionModal from "modals/Auction";
+import HatchEggAnimationModal from "modals/HatchEggModal/Animation";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
 const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
   const toggleHatchEggModal = useHatchEggModal();
+  const toggleAnimationModal = useHatchEggAnimationModal();
   const toggleAucionModal = useAuctionModal();
 
   const [nftItem, setNftItem] = useState<MyNFT>();
   const toggleNftModal = useMyNftModalToggle();
   const feedAnimal = useFeed();
+
+  console.log("SOME_KINDOF_ITEM", nftItem);
 
   return (
     <div>
@@ -96,9 +101,19 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
       <div className="py-12">
         <TransactionHistorySection nftTransfers={nftTransfers} />
       </div>
+      <HatchEggAnimationModal />
       {nftItem && (
         <>
-          <HatchEggModal nftItem={nftItem} success={() => fetchNfts()} />
+          <HatchEggModal
+            nftItem={nftItem}
+            success={() => {
+              fetchNfts().then((res) => {
+                toggleAnimationModal();
+                const nft__ = myNfts.find((n) => n.eggId === nftItem.id);
+                setNftItem(nft__);
+              });
+            }}
+          />
           <NftModal
             nftItem={nftItem}
             hatchEgg={() => {
