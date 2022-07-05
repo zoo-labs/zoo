@@ -194,12 +194,14 @@ const NftModal: React.FC<NftModalProps> = ({
                         >
                           FEED
                         </button>
-                        <button
-                          className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-black bg-white rounded-full cursor-pointer opacity-30 bg-c-grey-200"
-                          onClick={() => breed()}
-                        >
-                          BREED
-                        </button>
+                        {nftItem.stage === 2 && (
+                          <button
+                            className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-black bg-white rounded-full cursor-pointer opacity-30 bg-c-grey-200"
+                            onClick={() => breed()}
+                          >
+                            BREED
+                          </button>
+                        )}
                       </>
                     )}
 
