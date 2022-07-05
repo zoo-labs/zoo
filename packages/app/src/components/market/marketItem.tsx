@@ -30,7 +30,34 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
     >
       <div className="relative overflow-hidden rounded bg-nft-gradient parent">
         <div className="h-[350px] w-[300px]">
-          {/* <ModelViewer usdz={datum.usdz} glb={datum.glb}></ModelViewer> */}
+          {/* {kind === 0 ? (
+                    <Image
+                      src="/img/egg.png"
+                      width={200}
+                      height={200}
+                      objectFit="contain"
+                      alt=""
+                    />
+                  ) : (
+                    <div className="h-[350px] w-[300px]">
+                      <ModelViewer
+                        glb={`/models/Elephant/${
+                          stage === 0
+                            ? "ELEPHANT_BABY"
+                            : stage === 1
+                            ? "ELEPHANT_TEEN"
+                            : "ELEPHANT_ADULT"
+                        }.glb`}
+                        usdz={`/models/Elephant/${
+                          stage === 0
+                            ? "ELEPHANT_BABY"
+                            : stage === 1
+                            ? "ELEPHANT_TEEN"
+                            : "ELEPHANT_ADULT"
+                        }.usdz`}
+                      ></ModelViewer>
+                    </div>
+                  )} */}
         </div>
 
         <div className="absolute top-0 left-0 invisible w-full h-full transition-all duration-300 rounded opacity-0 hover:visible hover:opacity-100">
