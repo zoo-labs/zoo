@@ -12,8 +12,6 @@ import { IDrop } from "./interfaces/IDrop.sol";
 import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
 import { IKeeper } from "./interfaces/IKeeper.sol";
 
-import "./console.sol";
-
 contract Drop is IDrop, Ownable {
     using SafeMath for uint256;
 
@@ -24,13 +22,11 @@ contract Drop is IDrop, Ownable {
     // Title of drop
     string override public title;
 
-    // id of default base egg
-    uint256 public baseEgg;
+    string public rareAnimal;
 
     uint256 randomLimit;
 
-    // id of configured hybrid egg
-    uint256 public hybridEgg;
+    uint256 public override silverEgg;
 
     // Address of ZooKeeper contract
     address public keeperAddress;
@@ -40,7 +36,6 @@ contract Drop is IDrop, Ownable {
     // mapping of Rarity name to Rarity
     mapping (string => IZoo.Rarity) public rarities;
 
-    // mapping of Rarity name to []string of Animal names
     mapping (string => string[]) public rarityAnimals;
 
     // Rarity sorted by most rare -> least rare
@@ -58,11 +53,13 @@ contract Drop is IDrop, Ownable {
     // mapping of (parent + parent) to Hybrid
     mapping (string => Hybrid) public hybridParents;
 
+    mapping (string => IZoo.URIs) public adultHoodURIs;
+
 
     // Ensure only ZK can call method
     modifier onlyZoo() {
         require(
-            keeperAddress == msg.sender, "ZooDrop: Only ZooKeeper can call this method"
+            keeperAddress == msg.sender, "Only ZooKeeper can call this method"
         );
         _;
     }
@@ -70,10 +67,23 @@ contract Drop is IDrop, Ownable {
     constructor(string memory _title) {
         title = _title;
         randomLimit = 3;
+        rareAnimal = "Javan Rhino";
+    }
+
+    function getAdultHoodURIs(string memory name, IZoo.AdultHood stage) public view override returns(IMedia.MediaData memory){
+        IZoo.URIs storage data = adultHoodURIs[name];
+        if(stage == IZoo.AdultHood.BABY){
+            return data.dataBaby;
+        }
+        else if(stage == IZoo.AdultHood.TEEN){
+            return data.dataTeen;
+        }
+        else{
+            return data.dataAdult;
+        }
     }
 
     function totalSupply() public override view returns (uint256) {
-
         return eggId.current();
     }
 
@@ -81,16 +91,19 @@ contract Drop is IDrop, Ownable {
         Egg[] memory availableEggs = new Egg[](eggId.current());
         
         for (uint256 i = 0; i < eggId.current(); i++) {
-                availableEggs[i] = eggs[i + 1];
+            availableEggs[i] = eggs[i + 1];
         }
 
         return availableEggs;
     }
 
     // Set currentSupply base and hybrid egg
-    function configureEggs(uint256 _baseEgg,uint256 _hybridEgg) public eggExists(_baseEgg) eggExists(_hybridEgg) onlyOwner {
-        baseEgg = _baseEgg;
-        hybridEgg = _hybridEgg;
+    function configureEggs(uint256 _silverEgg) public eggExists(_silverEgg) onlyOwner {
+        silverEgg = _silverEgg;
+    }
+
+    function changeRareAnimal(string memory name) public onlyOwner {
+        rareAnimal = name;
     }
 
     // Configure current ZooKeeper
@@ -103,13 +116,13 @@ contract Drop is IDrop, Ownable {
     }
 
     function changeRandomLimit(uint256 limit) override public {
-        require(msg.sender == owner() || msg.sender == EggDropAddress, "not allowed to change");
+        require(msg.sender == owner() || msg.sender == EggDropAddress || msg.sender == keeperAddress, "not allowed");
         randomLimit = limit;
     }
 
 
     // Add or configure a given rarity
-    function setRarity(string memory name, uint256 probability, uint256 yields, uint256 boost) public onlyOwner returns (bool) {
+    function setRarity(string memory name, uint256 probability, uint256 yields, uint256 boost) public onlyOwner {
         require(probability > 0, "Rarity must be over zero");
 
         IZoo.Rarity memory rarity = IZoo.Rarity({
@@ -122,12 +135,10 @@ contract Drop is IDrop, Ownable {
         // Save rarity
         rarities[rarity.name] = rarity;
         raritySorted.push(rarity.name);
-
-        return true;
     }
 
     // Add or configure a given kind of egg
-    function setEgg(string memory name, uint256 price, uint256 supply, string memory tokenURI, string memory metadataURI) public onlyOwner returns (Egg memory) {
+    function setEgg(string memory name, uint256 price, uint256 supply, string memory tokenURI, string memory metadataURI) public onlyOwner {
         eggId.increment();
         uint256 id = eggId.current();
         Egg memory egg;
@@ -139,44 +150,38 @@ contract Drop is IDrop, Ownable {
         egg.supply = supply;
         egg.exist = true;
         eggs[id] = egg;
-        return egg;
     }
 
-    function setEggPrice(uint256 id, uint256 price) public eggExists(id) onlyOwner returns (Egg memory) {
-       Egg memory egg;
+    function setEggPrice(uint256 id, uint256 price) public eggExists(id) onlyOwner {
        eggs[id].price = price;
-       return egg;
     }
 
-    function setUris(string memory name, string memory tokenURI, string memory metadataURIs) public onlyOwner returns (Animal memory) {
-        Animal memory animal;
-        animal.data = getMediaData(tokenURI, metadataURIs);
-        animals[name] = animal;
-        return animal;
+    function setEggURIs(uint256 id, string memory tokenURI, string memory metadataURI) public eggExists(id) onlyOwner{
+       eggs[id].data = eggs[id].data = getMediaData(tokenURI, metadataURI);
     }
 
     // Add or configure a given animal
-    function setAnimal(string memory name, string memory rarity, string memory tokenURI, string memory metadataURI) public onlyOwner returns (bool) {
+    function setAnimal(string memory name, string memory rarity, string memory adultTokenURI, string memory adultMetadataURI, string memory babyTokenURI, string memory babyMetadataURI, string memory teenTokenURI, string memory teenMetadataURI) public onlyOwner {
         Animal memory animal = Animal({
             kind: IZoo.Type.BASE_ANIMAL,
             stage: IZoo.AdultHood.BABY,
             rarity: getRarity(rarity),
             name: name,
-            data: getMediaData(tokenURI, metadataURI),
+            data: getMediaData(babyTokenURI, babyMetadataURI),
             bidShares: getBidShares()
         });
 
         // Save animal by name
         animals[name] = animal;
 
+        adultHoodURIs[name] = IZoo.URIs({dataBaby: getMediaData(babyTokenURI, babyMetadataURI), dataTeen: getMediaData(teenTokenURI, teenMetadataURI), dataAdult: getMediaData(adultTokenURI, adultMetadataURI)});
+
         // Try to add animal to rarity
         addAnimalToRarity(animal.rarity.name, animal.name);
-
-        return true;
     }
 
     // Add or configure a given hybrid
-    function setHybrid(string memory name, string memory rarity, uint256 yields, string memory parentA, string memory parentB, string memory tokenURI, string memory metadataURI) public onlyOwner returns (bool) {
+    function setHybrid(string memory name, string memory rarity, uint256 yields, string memory parentA, string memory parentB, string memory tokenURI, string memory metadataURI) public onlyOwner{
         Hybrid memory hybrid = Hybrid({
             kind: IZoo.Type.HYBRID_ANIMAL,
             name: name,
@@ -190,7 +195,6 @@ contract Drop is IDrop, Ownable {
 
         hybrids[name] = hybrid;
         hybridParents[parentsKey(parentA, parentB)] = hybrid;
-        return true;
     }
 
     struct _Animal {
@@ -198,13 +202,17 @@ contract Drop is IDrop, Ownable {
         string name;
         string tokenURI;
         string metadataURI;
+        string babyTokenURI;
+        string babyMetadataURI;
+        string teenTokenURI;
+        string teenMetadataURI;
     }
 
     // Helper to set many Animal at once
-    function setAnimals(_Animal[] calldata _animals) public onlyOwner {
+    function setAnimals(_Animal[] memory _animals) public onlyOwner {
         for (uint256 i = 0; i < _animals.length; i++) {
-            _Animal calldata animal = _animals[i];
-            setAnimal(animal.name, animal.rarity, animal.tokenURI, animal.metadataURI);
+            _Animal memory animal = _animals[i];
+            setAnimal(animal.name, animal.rarity, animal.tokenURI, animal.metadataURI, animal.babyTokenURI, animal.babyMetadataURI, animal.teenTokenURI, animal.teenMetadataURI);
         }
     }
 
@@ -220,9 +228,9 @@ contract Drop is IDrop, Ownable {
 
 
     // Helper to set many Animal at once
-    function setHybrids(_Hybrid[] calldata _hybrids) public onlyOwner {
+    function setHybrids(_Hybrid[] memory _hybrids) public onlyOwner {
         for (uint256 i = 0; i < _hybrids.length; i++) {
-            _Hybrid calldata hybrid = _hybrids[i];
+            _Hybrid memory hybrid = _hybrids[i];
             setHybrid(hybrid.name, hybrid.rarity, hybrid.yields, hybrid.parentA, hybrid.parentB, hybrid.tokenURI, hybrid.metadataURI);
         }
     }
@@ -234,7 +242,7 @@ contract Drop is IDrop, Ownable {
 
         // Check if animal has been added to this rarity before
         for (uint256 i = 0; i < _animals.length; i++) {
-            string memory known = _animals[i];
+            string storage known = _animals[i];
             if (keccak256(bytes(name)) == keccak256(bytes(known))) {
                 // Not a new Animal
                 return;
@@ -260,10 +268,6 @@ contract Drop is IDrop, Ownable {
 
     function eggSupply(uint256 id) public eggExists(id) override view returns (uint256) {
         return getEgg(id).supply;
-    }
-
-    function hybridSupply() public view returns (uint256) {
-        return getEgg(hybridEgg).supply;
     }
 
     // Return a new Egg Token
@@ -294,8 +298,10 @@ contract Drop is IDrop, Ownable {
 
     // Return a new Hybrid Egg Token
     function newHybridEgg(IZoo.Parents memory parents) override external view onlyZoo returns (IZoo.Token memory) {
-        Egg memory egg = getEgg(hybridEgg);
-        require(hybridSupply() == 0 || egg.minted < hybridSupply(), "Out of hybrid eggs");
+        uint256 randomEgg = unsafeRandom();
+
+        Egg memory egg = getEgg(randomEgg);
+        require(eggSupply(randomEgg) == 0 || egg.minted < eggSupply(randomEgg), "Out of eggs");
 
         // Convert egg into a token
         return IZoo.Token({
@@ -305,7 +311,7 @@ contract Drop is IDrop, Ownable {
             birthValues: IZoo.Birth({birthday: uint40(block.number), timestamp: uint40(block.timestamp), parents: parents}),
             data: egg.data,
             bidShares: egg.bidShares,
-            dropEgg: hybridEgg,
+            dropEgg: randomEgg,
             id: 0,
             customName: "",
             breed: IZoo.Breed(0, 0),
@@ -335,41 +341,38 @@ contract Drop is IDrop, Ownable {
     }
 
     // Chooses animal based on random number generated from(0-999)
-    function getRandomAnimal(uint256 random) override external view returns (IZoo.Token memory token) {
+    function getRandomAnimal(uint256 random, uint256 dropEgg) override external view returns (IZoo.Token memory token) {
         Animal memory animal;
 
-        console.log('getRandomAnimal', random);
-        console.log('raritySorted.length', raritySorted.length);
+        if(dropEgg == silverEgg){
+            animal = getAnimal(rareAnimal);
+        }
+        else{
 
-        // Find rarest animal choices first
-        for (uint256 i = 0; i < raritySorted.length; i++) {
-            string memory name = raritySorted[i];
-            IZoo.Rarity memory rarity = rarities[name];
+            // Find rarest animal choices first
+            for (uint256 i = 0; i < raritySorted.length; i++) {
+                string memory name = raritySorted[i];
+                IZoo.Rarity memory rarity = rarities[name];
 
-            console.log('rarity.name', name);
-            console.log('rarity.probability', rarity.probability);
-            console.log('rarityAnimals', rarityAnimals[name][0], rarityAnimals[name][1]);
-
-            // Highest probability first, failing that use lowest rarity (common) animal
-            if (rarity.probability > random || i == raritySorted.length - 1) {
-                string[] memory choices = rarityAnimals[name];
-                animal = getAnimal(choices[random % choices.length]);
-                break;
+                // Highest probability first, failing that use lowest rarity (common) animal
+                if (rarity.probability > random || i == raritySorted.length - 1) {
+                    string[] memory choices = rarityAnimals[name];
+                    animal = getAnimal(choices[random % choices.length]);
+                    break;
+                }
             }
+
         }
 
         // Return Token
         token.kind = IZoo.Type.BASE_ANIMAL;
         token.name = animal.name;
-        token.data = animal.data;
+        token.data = adultHoodURIs[animal.name].dataBaby;
         token.rarity = animal.rarity;
         token.bidShares = animal.bidShares;
         token.birthValues.timestamp = uint40(block.timestamp);
         token.birthValues.birthday = uint40(block.number);
 
-        console.log('randomAnimal', animal.name, animal.rarity.name, animal.rarity.yields);
-        console.log('randomAnimal.data.tokenURI', animal.data.tokenURI);
-        console.log('randomAnimal.data.metadataURI', animal.data.metadataURI);
         return token;
     }
 
@@ -385,7 +388,7 @@ contract Drop is IDrop, Ownable {
         // Return Token
         token.kind = IZoo.Type.HYBRID_ANIMAL;
         token.name = hybrid.name;
-        token.data = hybrid.data;
+        token.data = adultHoodURIs[hybrid.name].dataBaby;
         token.rarity = hybrid.rarity;
         token.rarity.yields = hybrid.yields; // Hybrid rarity overrides default
         token.bidShares = hybrid.bidShares;
@@ -424,7 +427,7 @@ contract Drop is IDrop, Ownable {
         return hybridParents[parentsKey(nameA, nameB)];
     }
 
-    // Return the higher of two rarities
+    // // Return the higher of two rarities
     function higher(IZoo.Rarity memory rarityA, IZoo.Rarity memory rarityB) private pure returns (IZoo.Rarity memory) {
         if (rarityA.probability < rarityB.probability) {
             return rarityA;
