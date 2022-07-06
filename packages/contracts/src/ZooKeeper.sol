@@ -10,7 +10,7 @@ import { IDrop } from "./interfaces/IDrop.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 import { IZoo } from "./interfaces/IZoo.sol";
 import { IERC721Burnable } from "./interfaces/IERC721Burnable.sol";
-import { IUniswapV2Pair } from "./interfaces/IUniswapV2Pair.sol";
+import { IUniswapV2Pair } from "./uniswapv2/interfaces/IUniswapV2Pair.sol";
 import { IKeeper } from "./interfaces/IKeeper.sol";
 
 contract ZooKeeper is Ownable, IZoo, IKeeper {
@@ -205,12 +205,17 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
     require(zoo.balanceOf(msg.sender) >= price, "Not enough ZOO");
     IZoo.Token storage token = tokens[animal];
 
+    IMedia.MediaData memory newData = drop.getAdultHoodURIs(token.name, token.stage);
+
     if(tokens[animal].stage == IZoo.AdultHood.BABY){
       token.stage = IZoo.AdultHood.TEEN;
     }
     else if(tokens[animal].stage == IZoo.AdultHood.TEEN){
       token.stage = IZoo.AdultHood.ADULT;
     }
+    token.data = newData;
+    media.updateTokenURI(token.id, newData.tokenURI);
+    media.updateTokenMetadataURI(token.id, newData.metadataURI);
     zoo.transferFrom(msg.sender, address(this), price);
     tokens[animal] = token;
   }
@@ -232,9 +237,13 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
     uint256 tokenB
   ) public canBreed(tokenA, tokenB) returns (IZoo.Token memory) {
 
-    IZoo.Token memory egg = IDrop(drops[dropID]).newHybridEgg(IZoo.Parents({ animalA: tokens[tokenA].name, animalB: tokens[tokenB].name, tokenA: tokenA, tokenB: tokenB }));
-
     IDrop drop = IDrop(drops[dropID]);
+
+    if(tokens[tokenA].dropEgg == drop.silverEgg() || tokens[tokenB].dropEgg == drop.silverEgg()){
+      drop.changeRandomLimit(4);
+    }
+
+    IZoo.Token memory egg = IDrop(drops[dropID]).newHybridEgg(IZoo.Parents({ animalA: tokens[tokenA].name, animalB: tokens[tokenB].name, tokenA: tokenA, tokenB: tokenB }));
 
     uint256 price;
 
@@ -253,6 +262,7 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
 
     egg = mint(msg.sender, egg);
     emit BreedAnimal(msg.sender, tokenA, tokenB, egg.id);
+    drop.changeRandomLimit(3);
     return egg;
   }
 
@@ -284,11 +294,6 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
     tokens[tokenID] = token;
   }
 
-  function unsafeRandom() public view returns (uint256) {
-    uint256 randomNumber = uint256(keccak256(abi.encodePacked(block.number, msg.sender, block.timestamp))) % 4;
-    return randomNumber;
-  }
-
   function isBaseAnimal(uint256 tokenID) private view returns (bool) {
     return tokens[tokenID].kind == IZoo.Type.BASE_ANIMAL;
   }
@@ -303,9 +308,9 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
     IDrop drop = IDrop(drops[dropID]);
 
     if (egg.kind == IZoo.Type.BASE_EGG) {
-      return drop.getRandomAnimal(unsafeRandom());
+      return drop.getRandomAnimal(drop.unsafeRandom(), egg.dropEgg);
     } else {
-      return drop.getRandomHybrid(unsafeRandom(), egg.birthValues.parents);
+      return drop.getRandomHybrid(drop.unsafeRandom(), egg.birthValues.parents);
     }
   }
 
