@@ -20,7 +20,7 @@ import {
   breedsCount,
   updateMyNfts,
   loading,
-  getAllAuctions,
+  addAuctionNft,
   createBid,
   getBNBBalance,
   addNftTTransfers,
@@ -434,7 +434,7 @@ export function useBuyEggWithBnB(): (
   const zoo = useZooToken();
   const bnb = useBnbToken();
   const zooKeeper = useZooKeeper();
-  const dropId = process.env.NEXT_PUBLIC_DROP_ID;
+  const dropId = process.env.NEXT_PUBLIC_DROP_ID || 1;
   const dispatch = useDispatch();
   return useCallback(
     async (eggId, quantity, success) => {
@@ -526,50 +526,89 @@ export function useTransferZoo(): (recipient: string, amount: number) => void {
 export function useGetAllAuctions(): () => Promise<void> {
   const auctionContract = useAuction();
   const dispatch = useDispatch();
+  const media = useMedia();
+  const zooKeeper = useZooKeeper();
   return useCallback(async () => {
     console.log("auction ytfrtdtrsd", auctionContract);
 
     try {
       const auctions = await auctionContract?.getAllAuctions();
       console.log("auctions__await", auctions);
-      const structuredAuctions = auctions?.map((auction: Auction) => {
+      await auctions?.map(async (auction, index: number) => {
+        const tokenUri = await media?.tokenURI(Number(auction.tokenID));
+        const tokenMetadataURI = await media?.tokenMetadataURI(
+          Number(auction.tokenID)
+        );
+        const deet = await zooKeeper?.tokens(Number(auction.tokenID));
+
+        const {
+          name,
+          attributes,
+          image,
+          animation_url,
+          glb_animation_url,
+          usdz_animation_url,
+        } = (await axios.get(tokenMetadataURI)).data;
         const {
           tokenID,
           auctionId,
+          addresses,
           reservePrice,
           firstBidTime,
           duration,
           curatorFeePercentage,
           amount,
-          addresses: {
-            auctionCurrency,
-            bidder,
-            curator,
-            tokenContract,
-            tokenOwner,
-          },
+          kind,
         } = auction;
-        return {
+        const finalNft = {
+          index,
+          kind: deet?.kind,
           tokenID: Number(tokenID),
-          auctionId: Number(auctionId),
-          tokenOwner,
+          tokenOwner: addresses.tokenOwner,
           reservePrice: Number(reservePrice),
           firstBidTime: Number(firstBidTime),
           duration: Number(duration),
           curatorFeePercentage,
-          curator,
-          auctionCurrency,
+          // curator,
+          // auctionCurrency,
           amount: Number(amount),
-          bidder,
-          tokenContract,
+          tokenUri,
+          name,
+          attributes,
+          auctionId,
+          image: image
+            ? `https://zoolabs.mypinata.cloud/ipfs/${image.slice(7)}`
+            : usdz_animation_url
+            ? `https://zoolabs.mypinata.cloud/ipfs/${usdz_animation_url.slice(
+                7
+              )}`
+            : "",
+          animation_url: animation_url
+            ? `https://zoolabs.mypinata.cloud/ipfs/${animation_url.slice(7)}`
+            : usdz_animation_url
+            ? `https://zoolabs.mypinata.cloud/ipfs/${usdz_animation_url.slice(
+                7
+              )}`
+            : "",
+          glb_animation_url: glb_animation_url
+            ? `https://zoolabs.mypinata.cloud/ipfs/${glb_animation_url.slice(
+                7
+              )}`
+            : "",
+          usdz_animation_url: usdz_animation_url
+            ? `https://zoolabs.mypinata.cloud/ipfs/${usdz_animation_url.slice(
+                7
+              )}`
+            : "",
         };
+
+        console.log("finalNft", finalNft, auction);
+        dispatch(addAuctionNft(finalNft as any));
       });
-      console.log("structuredAuctionss", structuredAuctions);
-      dispatch(getAllAuctions(structuredAuctions || []));
     } catch (error) {
       console.error("error_In_UseGetAllAuctions", error);
     }
-  }, [dispatch, auctionContract]);
+  }, [auctionContract, media, zooKeeper, dispatch]);
 }
 
 export function useRemoveAuction(): (
