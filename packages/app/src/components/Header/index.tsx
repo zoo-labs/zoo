@@ -112,16 +112,6 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                       </NavLink> */}
                       <Community />
                       <Learn />
-
-                      <a
-                        id={`creact-auction`}
-                        className="p-2 tracking-widest text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                        // style={{letterSpacing: '2px'}}
-                        href="/create-auction"
-                        style={{ letterSpacing: "2px" }}
-                      >
-                        {i18n._(t`Create Auction`)}
-                      </a>
                     </div>
                   </div>
                 </div>
@@ -297,16 +287,6 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                 <Community />
 
                 <Learn />
-
-                <a
-                  id={`creact-auction`}
-                  className="p-2 tracking-widest text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                  // style={{letterSpacing: '2px'}}
-                  href="/create-auction"
-                  style={{ letterSpacing: "2px" }}
-                >
-                  {i18n._(t`Create Auction`)}
-                </a>
 
                 {/* <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                   {account && chainId && userEthBalance && (
