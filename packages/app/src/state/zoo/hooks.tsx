@@ -216,7 +216,7 @@ export function useFetchMyNFTs(): () => Promise<void> {
       let _eggsCount = 0;
       let _animalsCount = 0;
       let _breedCount = 0;
-      console.log("structuredNft useFetchMyNFTs", structuredNft);
+      console.log("structuredNft_useFetchMyNFTs", structuredNft);
       structuredNft.forEach(async (nft, index) => {
         const id = nft.token_id;
 
@@ -863,6 +863,7 @@ export function useFeed(): (animalID: number) => void {
   const addPopup = useAddPopup();
   const zoo = useZooToken();
   const zooKeeper = useZooKeeper();
+  const media = useMedia();
   const { account } = useActiveWeb3React();
   const dispatch = useDispatch();
   const fetchMyNfts = useFetchMyNFTs();
@@ -882,6 +883,19 @@ export function useFeed(): (animalID: number) => void {
             })
             .then((tx) => {
               console.log("approval", tx);
+              tx.wait();
+            });
+        }
+        const mediaApproval = await zoo?.allowance(account, media.address);
+        console.log("approval_approving_media", Number(mediaApproval));
+        if (Number(mediaApproval) <= 0) {
+          console.log("approving_media");
+          await media
+            ?.setApprovalForAll(zooKeeper.address, true, {
+              gasLimit: 4000000,
+            })
+            .then((tx) => {
+              console.log("mediaApproval", tx);
               tx.wait();
             });
         }
