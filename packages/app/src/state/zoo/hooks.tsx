@@ -292,7 +292,7 @@ export function useFetchMyNFTs(): () => Promise<void> {
       dispatch(animalsCount(_animalsCount));
       dispatch(breedsCount(_breedCount));
     } catch (error) {
-      console.log("error in fetch nfts", error);
+      console.error("error_in_fetch_nfts_func", error);
     }
   }, [chainId, account, media?.address, Web3Api.account, dispatch, zooKeeper]);
 }
@@ -341,8 +341,8 @@ export function useGetAvailableEggs(): () => void {
           id: Number(egg.id),
           kind: egg.kind,
           minted: Number(egg.minted),
-          name,
-          price: Number(egg.price) / 10 ** 18,
+          name: egg.name,
+          price: Number(egg.price),
           supply: Number(egg.supply),
           timestamp: Number(egg.timestamp),
           image: `https://zoolabs.mypinata.cloud/ipfs/${image.slice(7)}`,
@@ -526,34 +526,38 @@ export function useGetAllAuctions(): () => Promise<void> {
   return useCallback(async () => {
     console.log("auction ytfrtdtrsd", auctionContract);
 
-    const auctions = await auctionContract?.getAllAuctions();
-    console.log("auctions__await", auctions);
-    const structuredAuctions = auctions?.map((auction: Auction) => {
-      const {
-        tokenID,
-        tokenOwner,
-        reservePrice,
-        firstBidTime,
-        duration,
-        curatorFeePercentage,
-        curator,
-        auctionCurrency,
-        amount,
-      } = auction;
-      return {
-        tokenID: Number(tokenID),
-        tokenOwner,
-        reservePrice: Number(reservePrice),
-        firstBidTime: Number(firstBidTime),
-        duration: Number(duration),
-        curatorFeePercentage,
-        curator,
-        auctionCurrency,
-        amount: Number(amount),
-      };
-    });
-    console.log("structuredAuctionss", structuredAuctions);
-    dispatch(getAllAuctions(structuredAuctions || []));
+    try {
+      const auctions = await auctionContract?.getAllAuctions();
+      console.log("auctions__await", auctions);
+      const structuredAuctions = auctions?.map((auction: Auction) => {
+        const {
+          tokenID,
+          tokenOwner,
+          reservePrice,
+          firstBidTime,
+          duration,
+          curatorFeePercentage,
+          curator,
+          auctionCurrency,
+          amount,
+        } = auction;
+        return {
+          tokenID: Number(tokenID),
+          tokenOwner,
+          reservePrice: Number(reservePrice),
+          firstBidTime: Number(firstBidTime),
+          duration: Number(duration),
+          curatorFeePercentage,
+          curator,
+          auctionCurrency,
+          amount: Number(amount),
+        };
+      });
+      console.log("structuredAuctionss", structuredAuctions);
+      dispatch(getAllAuctions(structuredAuctions || []));
+    } catch (error) {
+      console.error("error_In_UseGetAllAuctions", error);
+    }
   }, [dispatch, auctionContract]);
 }
 
