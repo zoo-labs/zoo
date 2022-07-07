@@ -31,6 +31,7 @@ import { MyNFT } from "state/zoo/types";
 import AssetModal from "marketplace/AssetModal";
 import AuctionModal from "modals/Auction";
 import HatchEggAnimationModal from "modals/HatchEggModal/Animation";
+import { AvailableEgg } from "types";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
@@ -52,7 +53,7 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
         <div className="flex flex-wrap items-center justify-center gap-4 mb-4">
           <div className="flex items-center justify-center">
             {myNfts.map((nft: MyNFT, index) => {
-              const { kind, name, id, dropId, stage } = nft;
+              const { kind, name, id, dropId, stage, token_uri } = nft;
               console.log("nftttt", nft);
               return (
                 <div
@@ -64,34 +65,24 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
                   className="flex flex-col items-center"
                 >
                   {kind === 0 ? (
-                    <Image
-                      src="/img/egg.png"
-                      width={200}
-                      height={200}
-                      objectFit="contain"
-                      alt=""
-                    />
+                    <>
+                      <video
+                        autoPlay
+                        loop
+                        src={token_uri}
+                        width={300}
+                        height={350}
+                      />
+                    </>
                   ) : (
                     <div className="h-[350px] w-[300px]">
                       <ModelViewer
-                        glb={`/models/Elephant/${
-                          stage === 0
-                            ? "ELEPHANT_BABY"
-                            : stage === 1
-                            ? "ELEPHANT_TEEN"
-                            : "ELEPHANT_ADULT"
-                        }.glb`}
-                        usdz={`/models/Elephant/${
-                          stage === 0
-                            ? "ELEPHANT_BABY"
-                            : stage === 1
-                            ? "ELEPHANT_TEEN"
-                            : "ELEPHANT_ADULT"
-                        }.usdz`}
+                        glb={nft?.glb_animation_url}
+                        usdz={nft?.usdz_animation_url}
                       ></ModelViewer>
                     </div>
                   )}
-                  <p>{name}</p>
+                  <p className="font-semibold">{name?.toUpperCase()}</p>
                 </div>
               );
             })}

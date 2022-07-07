@@ -47,7 +47,6 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
     getZooBalance();
   }, [account]);
 
-  console.log("userEthBalance", userEthBalance);
   const chainAddresses =
     (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
 
