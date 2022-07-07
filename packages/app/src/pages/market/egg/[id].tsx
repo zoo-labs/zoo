@@ -56,7 +56,7 @@ const Item = () => {
     getZooBnbPrice();
   }, []);
   const getZooBnbPrice = async () => {
-    const price = await zooKeeper.zooPriceBNB();
+    const price = await zooKeeper.BNBPrice();
     const value = Web3.utils.fromWei(price.toString(), "ether");
     setZooBnbPrice(parseFloat(value));
   };

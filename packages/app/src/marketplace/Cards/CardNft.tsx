@@ -1,64 +1,80 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
-import dynamic from 'next/dynamic'
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import dynamic from "next/dynamic";
+import { MyNFT } from "state/zoo/types";
+import { Auction } from "types";
+import moment from "moment";
 
-const ModelViewer = dynamic(() => import('../../components/ModelViewer'), {
+const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
-})
+});
 
-const CardNft = ({
-  TokenId = 1,
-  glb,
-  animalName = 'Siberian Tiger(2312)',
-  ownerAdd = '8xbkdbsk',
-  daysLeft = 3,
-  bids = 1,
-  yields = 100,
-  price = 500,
-  className = '',
-}) => {
+const CardNft = ({ nft, className }: { nft: Auction; className: string }) => {
   return (
-    <div className={`flex flex-col w-[300px] lg:w-[400px] h-[600px] justify-center items-center  ${className}`}>
+    <div
+      className={`flex flex-col w-[300px] lg:w-[400px] h-[600px] justify-center items-center  ${className}`}
+    >
       <div>
         <div className="h-[350px] w-[250px]  borderGrad p-2 m-2">
           <div className="w-full h-full bg-black rounded-[0.225rem]">
-            <ModelViewer glb={glb}></ModelViewer>
+            {nft.kind === 0 ? (
+              <video
+                autoPlay
+                loop
+                src={nft.animation_url}
+                width={300}
+                height={350}
+              />
+            ) : (
+              <div className="h-[450px] w-[300px]">
+                <ModelViewer
+                  glb={nft?.glb_animation_url}
+                  usdz={nft?.usdz_animation_url}
+                ></ModelViewer>
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="flex items-center py-2 pr-2 mt-2 w-full justify-between">
+        <div className="flex items-center justify-between w-full py-2 pr-2 mt-2">
           <div className="text-left">
-            <h1 className="text-sm text-white p-2 font-semibold">{animalName}</h1>
+            <h1 className="p-2 text-sm font-semibold text-white">
+              {nft?.name}
+            </h1>
           </div>
 
           <div className="text-center ">
             <Link
               href={{
-                pathname: '/marketplace/[animalNFT]',
-                query: { animalNFT: animalName, id: TokenId, glb: glb },
+                pathname: "/marketplace/[animalNFT]",
               }}
               passHref
             >
               <button className="text-xs  bg-transparent w-full border-solid border-[#06047a] hover:bg-[#06047a] transition ease-in-out border-2 p-2 hover:bg-gradient-to-r from-gray-700 via-gray-900 to-black">
-                {price}K ZOO
+                {nft?.reservePrice}K ZOO
               </button>
             </Link>
           </div>
         </div>
 
         <div className="flex items-center justify-between h-[50px] py-2 px-2">
-          <div className="text-center flex ">
+          <div className="flex text-center ">
             <span
               className="dot p-2 mt-[10px]"
               style={{
-                background: 'linear-gradient(180deg, #2517FF -61.88%, #15F195 131.19%)',
+                background:
+                  "linear-gradient(180deg, #2517FF -61.88%, #15F195 131.19%)",
               }}
             ></span>
-            <h1 className="text-sm text-gray-600 p-2">{ownerAdd}</h1>
+            <h1 className="p-2 text-sm text-gray-600">{nft?.tokenOwner}</h1>
           </div>
 
           <div className="text-center">
-            <h1 className="text-sm font-black uppercase text-gray-300">{daysLeft} days Left</h1>
+            <h1 className="text-sm font-black text-gray-300 uppercase">
+              {" "}
+              {moment(new Date(nft.duration * 1000), "YYYYMMDD").fromNow()} days
+              Left
+            </h1>
           </div>
         </div>
 
@@ -67,21 +83,29 @@ const CardNft = ({
         </div>
 
         <div className="flex items-center justify-between  h-[50px]">
-          <div className="text-left flex-1">
-            <h1 className=" text-xs text-gray-600 p-2">Highest Bid</h1>
+          <div className="flex-1 text-left">
+            <h1 className="p-2 text-xs text-gray-600 ">Highest Bid</h1>
           </div>
 
           <div className="text-center">
-            <h1 className="text-sm text-white p-2 font-semibold">{bids}M Zoo</h1>
+            <h1 className="p-2 text-sm font-semibold text-white">
+              {nft?.amount}M Zoo
+            </h1>
           </div>
 
-          <div className="text-center flex-1">
-            <h1 className=" text-xs text-gray-600 p-2">{yields} Yields/Day</h1>
+          <div className="flex-1 text-center">
+            <h1 className="p-2 text-xs text-gray-600 ">
+              {nft?.attributes &&
+                nft?.attributes.filter(
+                  (attr) => attr.trait_type === "Yields"
+                )[0].value}{" "}
+              Yields/Day
+            </h1>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CardNft
+export default CardNft;

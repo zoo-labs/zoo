@@ -69,15 +69,25 @@ export interface EggAttribute {
 }
 
 export interface Auction {
-  tokenID: string;
+  index: number
+  tokenID: number;
   tokenOwner: string;
-  reservePrice: string;
-  firstBidTime: string;
+  reservePrice: number;
+  firstBidTime: number;
   duration: number;
   curatorFeePercentage: number;
   curator: string;
   auctionCurrency: string;
-  amount: number
+  amount: number;
+  tokenUri: any;
+  name: any;
+  image: string;
+  animation_url: string;
+  attributes: Array<EggAttribute>;
+  kind: 0 | 1
+  glb_animation_url?: string;
+  usdz_animation_url?: string;
+
 }
 export interface Bid {
   // Amount of the currency being bid

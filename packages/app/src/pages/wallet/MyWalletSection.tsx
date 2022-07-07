@@ -62,7 +62,7 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
                     setNftItem(nft);
                     toggleNftModal();
                   }}
-                  className="flex flex-col items-center"
+                  className="h-[450px] flex flex-col items-center"
                 >
                   {kind === 0 ? (
                     <>
@@ -75,7 +75,7 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
                       />
                     </>
                   ) : (
-                    <div className="h-[350px] w-[300px]">
+                    <div className="h-[450px] w-[300px]">
                       <ModelViewer
                         glb={nft?.glb_animation_url}
                         usdz={nft?.usdz_animation_url}
