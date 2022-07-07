@@ -266,8 +266,11 @@ const MarketPlacePage = () => {
                         </div>
                         <div className="flex flex-col">
                           {item.attributes.length > 0 &&
-                            item.attributes.map((attr) => (
-                              <div className="flex items-center justify-between">
+                            item.attributes.map((attr, index) => (
+                              <div
+                                key={index}
+                                className="flex items-center justify-between"
+                              >
                                 <p className="text-sm font-medium">
                                   {attr.trait_type}
                                 </p>
