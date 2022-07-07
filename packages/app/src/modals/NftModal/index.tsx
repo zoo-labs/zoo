@@ -1,30 +1,10 @@
-import BigNumber from "bignumber.js";
-import { formatError, numberWithCommas, wait } from "functions";
-import { useZooKeeper, useZooToken } from "hooks/useContract";
-import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
-import { Minus, Plus } from "react-feather";
-import { RiArrowDropDownLine } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
-import { AppState } from "state";
 import { ApplicationModal } from "state/application/actions";
 import { useMyNftModalToggle, useModalOpen } from "state/application/hooks";
-import { useGasPrice } from "state/network/hooks";
 import Modal from "components/Modal";
 import BidModalHeader from "components/ModalHeader/BidModalHeader";
-import useToast from "hooks/useToast";
-import { CircularProgress } from "@mui/material";
-import CloseIcon from "components/CloseIcon";
-import { useZoobalance } from "state/zoo/hooks";
-import CurrencySwitch from "components/CurrencySwitch";
 import Image from "next/image";
-import { useActiveWeb3React } from "hooks";
-import Web3 from "web3";
-import {
-  ArrowBackIos,
-  ArrowForwardIosRounded,
-  ArrowRightAltSharp,
-} from "@mui/icons-material";
+import AccessAlarmRoundedIcon from "@mui/icons-material/AccessAlarmRounded";
 import dynamic from "next/dynamic";
 import { MyNFT } from "state/zoo/types";
 import moment from "moment";
@@ -52,6 +32,7 @@ const NftModal: React.FC<NftModalProps> = ({
   const toggleNftModal = useMyNftModalToggle();
   const mount = async () => {};
 
+  console.log("the_chosen_nftItem", nftItem);
   return (
     <>
       <Modal
@@ -59,6 +40,7 @@ const NftModal: React.FC<NftModalProps> = ({
         onDismiss={() => null}
         maxWidth={1240}
         minHeight={70}
+        scrollable
       >
         <BidModalHeader
           onBack={() => toggleNftModal()}
@@ -99,8 +81,12 @@ const NftModal: React.FC<NftModalProps> = ({
                     width={20}
                   />
                   <div>
-                    <p className="text-sm font-medium">Rarity</p>
-                    <p className="font-medium text-[10px]">{nftItem?.rarity}</p>
+                    <p className="text-sm font-medium">
+                      {nftItem?.attributes[0]?.trait_type}
+                    </p>
+                    <p className="font-medium text-[10px]">
+                      {nftItem?.attributes[0]?.value}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -111,12 +97,28 @@ const NftModal: React.FC<NftModalProps> = ({
                     width={20}
                   />
                   <div>
-                    <p className="text-sm font-medium">Population</p>
-                    <p className="font-medium text-[10px]">2,400-2,800</p>
+                    <p className="text-sm font-medium">
+                      {nftItem?.attributes[1]?.trait_type}
+                    </p>
+                    <p className="font-medium text-[10px]">
+                      {nftItem?.attributes[1]?.value}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <Image src="/icons/react.svg" alt="" height={26} width={20} />
+                  <div>
+                    <p className="text-sm font-medium">
+                      {nftItem?.attributes[2]?.trait_type}
+                    </p>
+                    <p className="font-medium text-[10px]">
+                      {nftItem?.attributes[2]?.value}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  {/* <Image src="/icons/react.svg" alt="" height={26} width={20} /> */}
+                  <AccessAlarmRoundedIcon />
                   <div>
                     <p className="text-sm font-medium">Birthday</p>
                     <p className="font-medium text-[10px]">

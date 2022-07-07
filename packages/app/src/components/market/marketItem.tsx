@@ -80,11 +80,14 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
           </div>
           <div className="flex ">
             <div className="flex mt-1 mr-auto text-xs font-semibold text-gray-500">
-              <div className="w-4 h-4 mr-1 rounded-full bg-gradient-to-b from-btn1 to-btn2"></div>
+              <div className="w-4 h-4 mr-1 rounded-full bg-gradient-to-b from-btn1 to-btn2" />
               {accountEllipsis(datum.tokenOwner || "")}
             </div>
             <div className="flex items-center justify-center flex-shrink-0 ml-2 text-xs font-bold uppercase rounded-sm">
-              {moment(new Date(datum.duration * 1000), "YYYYMMDD").fromNow()}
+              {moment(
+                new Date(new Date().getTime() + datum.duration * 1000),
+                "YYYYMMDD"
+              ).fromNow()}
             </div>
           </div>
         </div>
