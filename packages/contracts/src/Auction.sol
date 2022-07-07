@@ -113,18 +113,21 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
         uint256 auctionID = _auctionIDTracker.current();
 
         auctions[auctionID] = Auction({
+            auctionId: auctionID,
             tokenID: tokenID,
-            tokenContract: tokenContract,
             approved: false,
             amount: 0,
             duration: duration,
             firstBidTime: 0,
             reservePrice: reservePrice,
             curatorFeePercentage: curatorFeePercentage,
+            addresses: AuctionAddresses({
             tokenOwner: tokenOwner,
-            bidder: payable(address(0)),
+            auctionCurrency: auctionCurrency,
             curator: curator,
-            auctionCurrency: auctionCurrency
+            tokenContract: tokenContract,
+            bidder: payable(address(0))
+            })
         });
 
         IERC721(tokenContract).transferFrom(tokenOwner, address(this), tokenID);
@@ -142,7 +145,7 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
         );
 
         if (
-            auctions[auctionID].curator == address(0) || curator == tokenOwner
+            auctions[auctionID].addresses.curator == address(0) || curator == tokenOwner
         ) {
             _approveAuction(auctionID, true);
         }
@@ -160,7 +163,7 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
         auctionExists(auctionID)
     {
         require(
-            msg.sender == auctions[auctionID].curator,
+            msg.sender == auctions[auctionID].addresses.curator,
             "Must be auction curator"
         );
         require(
@@ -176,8 +179,8 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
         auctionExists(auctionID)
     {
         require(
-            msg.sender == auctions[auctionID].curator ||
-                msg.sender == auctions[auctionID].tokenOwner,
+            msg.sender == auctions[auctionID].addresses.curator ||
+                msg.sender == auctions[auctionID].addresses.tokenOwner,
             "Must be auction curator or token owner"
         );
         require(
@@ -190,7 +193,7 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
         emit AuctionReservePriceUpdated(
             auctionID,
             auctions[auctionID].tokenID,
-            auctions[auctionID].tokenContract,
+            auctions[auctionID].addresses.tokenContract,
             reservePrice
         );
     }
@@ -208,7 +211,7 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
         auctionExists(auctionID)
         nonReentrant
     {
-        address payable lastBidder = auctions[auctionID].bidder;
+        address payable lastBidder = auctions[auctionID].addresses.bidder;
 
         require(
             auctions[auctionID].approved,
@@ -239,7 +242,7 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
         );
 
         // For Zoo Protocol, ensure that the bid is valid for the current bidShare configuration
-        if (auctions[auctionID].tokenContract == tokenAddress) {
+        if (auctions[auctionID].addresses.tokenContract == tokenAddress) {
             require(
                 IMarket(IMediaExtended(tokenAddress).marketContract())
                     .isValidBid(auctions[auctionID].tokenID, amount),
@@ -255,14 +258,14 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
             _handleOutgoingBid(
                 lastBidder,
                 auctions[auctionID].amount,
-                auctions[auctionID].auctionCurrency
+                auctions[auctionID].addresses.auctionCurrency
             );
         }
 
         _handleIncomingBid(amount, tokenAddress);
 
         auctions[auctionID].amount = amount;
-        auctions[auctionID].bidder = payable(msg.sender);
+        auctions[auctionID].addresses.bidder = payable(msg.sender);
 
         bool extended = false;
         // at this point we know that the timestamp is less than start + duration (since the auction would be over, otherwise)
@@ -293,7 +296,7 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
         emit AuctionBid(
             auctionID,
             auctions[auctionID].tokenID,
-            auctions[auctionID].tokenContract,
+            auctions[auctionID].addresses.tokenContract,
             msg.sender,
             amount,
             lastBidder == address(0), // firstBid boolean
@@ -304,7 +307,7 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
             emit AuctionDurationExtended(
                 auctionID,
                 auctions[auctionID].tokenID,
-                auctions[auctionID].tokenContract,
+                auctions[auctionID].addresses.tokenContract,
                 auctions[auctionID].duration
             );
         }
@@ -339,7 +342,7 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
 
         uint256 tokenOwnerProfit = auctions[auctionID].amount;
 
-        if (auctions[auctionID].tokenContract == tokenAddress) {
+        if (auctions[auctionID].addresses.tokenContract == tokenAddress) {
             // If the auction is running on zoo, settle it on the protocol
             (
                 bool success,
@@ -348,9 +351,9 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
             tokenOwnerProfit = remainingProfit;
             if (success != true) {
                 _handleOutgoingBid(
-                    auctions[auctionID].bidder,
+                    auctions[auctionID].addresses.bidder,
                     auctions[auctionID].amount,
-                    auctions[auctionID].auctionCurrency
+                    auctions[auctionID].addresses.auctionCurrency
                 );
                 _cancelAuction(auctionID);
                 return;
@@ -358,46 +361,46 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
         } else {
             // Otherwise, transfer the token to the winner and pay out the participants below
             try
-                IERC721(auctions[auctionID].tokenContract).safeTransferFrom(
+                IERC721(auctions[auctionID].addresses.tokenContract).safeTransferFrom(
                     address(this),
-                    auctions[auctionID].bidder,
+                    auctions[auctionID].addresses.bidder,
                     auctions[auctionID].tokenID
                 )
             {} catch {
                 _handleOutgoingBid(
-                    auctions[auctionID].bidder,
+                    auctions[auctionID].addresses.bidder,
                     auctions[auctionID].amount,
-                    auctions[auctionID].auctionCurrency
+                    auctions[auctionID].addresses.auctionCurrency
                 );
                 _cancelAuction(auctionID);
                 return;
             }
         }
 
-        if (auctions[auctionID].curator != address(0)) {
+        if (auctions[auctionID].addresses.curator != address(0)) {
             curatorFee = tokenOwnerProfit
             .mul(auctions[auctionID].curatorFeePercentage)
             .div(100);
             tokenOwnerProfit = tokenOwnerProfit.sub(curatorFee);
             _handleOutgoingBid(
-                auctions[auctionID].curator,
+                auctions[auctionID].addresses.curator,
                 curatorFee,
-                auctions[auctionID].auctionCurrency
+                auctions[auctionID].addresses.auctionCurrency
             );
         }
         _handleOutgoingBid(
-            auctions[auctionID].tokenOwner,
+            auctions[auctionID].addresses.tokenOwner,
             tokenOwnerProfit,
-            auctions[auctionID].auctionCurrency
+            auctions[auctionID].addresses.auctionCurrency
         );
 
         emit AuctionEnded(
             auctionID,
             auctions[auctionID].tokenID,
-            auctions[auctionID].tokenContract,
-            auctions[auctionID].tokenOwner,
-            auctions[auctionID].curator,
-            auctions[auctionID].bidder,
+            auctions[auctionID].addresses.tokenContract,
+            auctions[auctionID].addresses.tokenOwner,
+            auctions[auctionID].addresses.curator,
+            auctions[auctionID].addresses.bidder,
             tokenOwnerProfit,
             curatorFee,
             currency
@@ -416,8 +419,8 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
         auctionExists(auctionID)
     {
         require(
-            auctions[auctionID].tokenOwner == msg.sender ||
-                auctions[auctionID].curator == msg.sender,
+            auctions[auctionID].addresses.tokenOwner == msg.sender ||
+                auctions[auctionID].addresses.curator == msg.sender,
             "Can only be called by auction creator or curator"
         );
         require(
@@ -466,8 +469,8 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
     }
 
     function _cancelAuction(uint256 auctionID) internal {
-        address tokenOwner = auctions[auctionID].tokenOwner;
-        IERC721(auctions[auctionID].tokenContract).safeTransferFrom(
+        address tokenOwner = auctions[auctionID].addresses.tokenOwner;
+        IERC721(auctions[auctionID].addresses.tokenContract).safeTransferFrom(
             address(this),
             tokenOwner,
             auctions[auctionID].tokenID
@@ -476,7 +479,7 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
         emit AuctionCanceled(
             auctionID,
             auctions[auctionID].tokenID,
-            auctions[auctionID].tokenContract,
+            auctions[auctionID].addresses.tokenContract,
             tokenOwner
         );
         delete auctions[auctionID];
@@ -487,13 +490,13 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
         emit AuctionApprovalUpdated(
             auctionID,
             auctions[auctionID].tokenID,
-            auctions[auctionID].tokenContract,
+            auctions[auctionID].addresses.tokenContract,
             approved
         );
     }
 
     function _exists(uint256 auctionID) internal view returns (bool) {
-        return auctions[auctionID].tokenOwner != address(0);
+        return auctions[auctionID].addresses.tokenOwner != address(0);
     }
 
     function _handleZooAuctionSettlement(uint256 auctionID)
@@ -508,7 +511,7 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
             amount: auctions[auctionID].amount,
             currency: currency,
             bidder: address(this),
-            recipient: auctions[auctionID].bidder,
+            recipient: auctions[auctionID].addresses.bidder,
             sellOnShare: Decimal.D256(0),
             offline: false
         });
