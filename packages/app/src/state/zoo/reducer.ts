@@ -35,7 +35,7 @@ import {
   eggsCount,
   animalsCount,
   breedsCount,
-  getAllAuctions,
+  addAuctionNft,
   getBNBBalance,
   addNftTTransfers,
 } from "./actions";
@@ -44,7 +44,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import { updateVersion } from "../global/actions";
 import { MyNFT, ZooState } from "./types";
 import { isEmptyObj } from "functions";
-import { AvailableEgg } from "types";
+import { Auction, AvailableEgg } from "types";
 
 const currentTimestamp = () => new Date().getTime();
 
@@ -95,6 +95,12 @@ export default createReducer(initialState, (builder) =>
         state.myNfts[nft.index] = nft;
       }
     })
+    .addCase(addAuctionNft, (state, { payload: auction }: { payload: Auction }) => {
+      console.log("update auction", auction);
+      if (auction && !isEmptyObj(auction)) {
+        state.allAuctions[auction.index] = auction;
+      }
+    })
     .addCase(eggsCount, (state, action) => {
       state.myEggsCount = action.payload;
     })
@@ -103,9 +109,6 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(breedsCount, (state, action) => {
       state.myBreedsCount = action.payload;
-    })
-    .addCase(getAllAuctions, (state, action) => {
-      state.allAuctions = action.payload;
     })
     .addCase(addNftTTransfers, (state, action) => {
       state.nftTransfers = action.payload;

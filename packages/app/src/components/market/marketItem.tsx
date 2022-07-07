@@ -29,35 +29,23 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
       }
     >
       <div className="relative overflow-hidden rounded bg-nft-gradient parent">
-        <div className="h-[350px] w-[300px]">
-          {/* {kind === 0 ? (
-                    <Image
-                      src="/img/egg.png"
-                      width={200}
-                      height={200}
-                      objectFit="contain"
-                      alt=""
-                    />
-                  ) : (
-                    <div className="h-[350px] w-[300px]">
-                      <ModelViewer
-                        glb={`/models/Elephant/${
-                          stage === 0
-                            ? "ELEPHANT_BABY"
-                            : stage === 1
-                            ? "ELEPHANT_TEEN"
-                            : "ELEPHANT_ADULT"
-                        }.glb`}
-                        usdz={`/models/Elephant/${
-                          stage === 0
-                            ? "ELEPHANT_BABY"
-                            : stage === 1
-                            ? "ELEPHANT_TEEN"
-                            : "ELEPHANT_ADULT"
-                        }.usdz`}
-                      ></ModelViewer>
-                    </div>
-                  )} */}
+        <div className="h-[450px] w-[300px]">
+          {datum.kind === 0 ? (
+            <video
+              autoPlay
+              loop
+              src={datum.animation_url}
+              width={300}
+              height={350}
+            />
+          ) : (
+            <div className="h-[450px] w-[300px]">
+              <ModelViewer
+                glb={datum?.glb_animation_url}
+                usdz={datum?.usdz_animation_url}
+              ></ModelViewer>
+            </div>
+          )}
         </div>
 
         <div className="absolute top-0 left-0 invisible w-full h-full transition-all duration-300 rounded opacity-0 hover:visible hover:opacity-100">
@@ -78,7 +66,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
         <div className="flex flex-col flex-grow">
           <div className="flex mb-4 ">
             <div className="mt-1 mr-auto font-semibold">
-              {/* {datum.name || "Egg"}{" "} */}
+              {datum.name || "Egg"}{" "}
               <span className="text-xs text-gray-500">
                 ({datum.tokenID || ""})
               </span>
@@ -110,11 +98,13 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
             </div>
             Highest bid <span className="ml-1">{datum.amount} ZOO</span>
           </div>
-          {/* <div className="text-xs font-semibold text-gray-500">
-            {datum.yield
-              ? `${datum.yield} Yields/Day ${getEmoji(datum.rarity)}`
-              : ""}{" "}
-          </div> */}
+          <div className="text-xs font-semibold text-gray-500">
+            {datum?.attributes &&
+              datum?.attributes.filter(
+                (attr) => attr.trait_type === "Yields"
+              )[0].value}{" "}
+            Yields/Day
+          </div>
         </div>
       </div>
     </div>
