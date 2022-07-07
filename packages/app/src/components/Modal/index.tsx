@@ -83,7 +83,7 @@ export default function Modal({
           initialFocus={refDiv}
           as="div"
           onClose={onDismiss}
-          className={`fixed inset-0 z-10 ${
+          className={`fixed inset-0 z-999 ${
             !scrollable ? "overflow-y-hidden" : "overflow-y-auto"
           } backdrop-blur-md`}
         >

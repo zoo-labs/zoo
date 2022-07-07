@@ -28,6 +28,7 @@ import {
 import dynamic from "next/dynamic";
 import { MyNFT } from "state/zoo/types";
 import moment from "moment";
+import { AvailableEgg } from "types";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
@@ -67,30 +68,18 @@ const NftModal: React.FC<NftModalProps> = ({
           <div className="rounded-xl p-px h-full bg-view-gradient w-full lg:w-[40%]">
             <div className="bg-black rounded-xl min-h-[466px] h-full w-full px-12 py-12 flex flex-col justify-center items-center">
               {nftItem.kind === 0 ? (
-                <Image
-                  src="/img/egg.png"
-                  width={200}
-                  height={200}
-                  objectFit="contain"
-                  alt=""
+                <video
+                  autoPlay
+                  loop
+                  src={nftItem.token_uri}
+                  width={300}
+                  height={350}
                 />
               ) : (
                 <div className="h-[350px] w-[300px]">
                   <ModelViewer
-                    glb={`/models/Elephant/${
-                      nftItem.stage === 0
-                        ? "ELEPHANT_BABY"
-                        : nftItem.stage === 1
-                        ? "ELEPHANT_TEEN"
-                        : "ELEPHANT_ADULT"
-                    }.glb`}
-                    usdz={`/models/Elephant/${
-                      nftItem.stage === 0
-                        ? "ELEPHANT_BABY"
-                        : nftItem.stage === 1
-                        ? "ELEPHANT_TEEN"
-                        : "ELEPHANT_ADULT"
-                    }.usdz`}
+                    glb={nftItem?.glb_animation_url}
+                    usdz={nftItem?.usdz_animation_url}
                   ></ModelViewer>
                 </div>
               )}
@@ -194,12 +183,14 @@ const NftModal: React.FC<NftModalProps> = ({
                         >
                           FEED
                         </button>
-                        <button
-                          className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-black bg-white rounded-full cursor-pointer opacity-30 bg-c-grey-200"
-                          onClick={() => breed()}
-                        >
-                          BREED
-                        </button>
+                        {nftItem.stage === 2 && (
+                          <button
+                            className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-black bg-white rounded-full cursor-pointer opacity-30 bg-c-grey-200"
+                            onClick={() => breed()}
+                          >
+                            BREED
+                          </button>
+                        )}
                       </>
                     )}
 

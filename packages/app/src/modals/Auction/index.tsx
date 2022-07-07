@@ -13,7 +13,13 @@ import { useCreateAuction } from "state/zoo/hooks";
 import { useActiveWeb3React } from "hooks/useActiveWeb3React";
 import { useRouter } from "next/router";
 
-export default function AuctionModal({ nft }) {
+export default function AuctionModal({
+  nft,
+  edit = false,
+}: {
+  nft: any;
+  edit?: boolean;
+}) {
   const auctionModalOpen = useModalOpen(ApplicationModal.AUCTION);
   const toggleModal = useAuctionModal();
   // important that these are destructed from the account-specific web3-react context
@@ -26,16 +32,24 @@ export default function AuctionModal({ nft }) {
   const [reservePrice, setReservePrice] = useState(null);
   const [curatorFee, setCuratorFee] = useState(null);
 
+  useEffect(() => {
+    if (edit && nft) {
+      setDuration(nft.duration);
+      setReservePrice(nft.reservePrice);
+      setCuratorFee(nft.curatorFeePercentage);
+    }
+  }, [edit, nft]);
+
   const successCallback = useCallback(() => {
     console.log("success");
     auctionModalOpen && toggleModal();
-  }, [auctionModalOpen, push, toggleModal]);
+  }, [auctionModalOpen, toggleModal]);
 
   const handleAuction = useCallback(
     (duration_, reservePrice_, curatorFee_) => {
       if (account) {
         auction(
-          Number(nft.id),
+          Number(nft?.id),
           duration_,
           reservePrice_,
           curatorFee_,
@@ -45,7 +59,7 @@ export default function AuctionModal({ nft }) {
         toggleWallet();
       }
     },
-    [account, auction, toggleWallet, successCallback]
+    [account, auction, nft?.id, successCallback, toggleWallet]
   );
 
   function getModalContent() {
@@ -90,7 +104,7 @@ export default function AuctionModal({ nft }) {
               loading && "opacity-30 disabled:cursor-not-allowed"
             }`}
           >
-            {loading ? "Loading..." : "Auction"}
+            {loading ? "Loading..." : edit ? "Edit Auction" : "Auction"}
           </button>
         </div>
       </div>

@@ -30,7 +30,7 @@
 import {
   getZooBalance,
   getAllowance,
-  getAvailableEggs,
+  addEgg,
   updateMyNfts,
   loading,
   eggsCount,
@@ -43,7 +43,9 @@ import {
 
 import { createReducer } from '@reduxjs/toolkit'
 import { updateVersion } from '../global/actions'
-import { ZooState } from './types'
+import { MyNFT, ZooState } from './types'
+import { isEmptyObj } from 'functions'
+import { AvailableEgg } from 'types'
 
 const currentTimestamp = () => new Date().getTime()
 
@@ -81,11 +83,16 @@ export default createReducer(initialState, (builder) =>
     .addCase(getAllowance, (state, action) => {
       state.allowance = action.payload
     })
-    .addCase(getAvailableEggs, (state, action) => {
-      state.availableEggs = action.payload
+    .addCase(addEgg, (state, { payload: egg }: { payload: AvailableEgg }) => {
+      if (egg && !isEmptyObj(egg)) {
+        state.availableEggs[egg.id - 1] = egg;
+      }
     })
-    .addCase(updateMyNfts, (state, action) => {
-      state.myNfts = action.payload
+    .addCase(updateMyNfts, (state, { payload: nft }: { payload: MyNFT }) => {
+      console.log('updateMyNfts', nft)
+      if (nft && !isEmptyObj(nft)) {
+        state.myNfts[nft.index] = nft;
+      }
     })
     .addCase(eggsCount, (state, action) => {
       state.myEggsCount = action.payload
