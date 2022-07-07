@@ -23,6 +23,7 @@ import { useMoralis } from "react-moralis";
 import { abbreviateNumber } from "functions/abbreviateNumbers";
 import { accountEllipsis } from "functions/lux";
 import { FaMoneyBillWave } from "react-icons/fa";
+import { AvailableEgg } from "types";
 
 const PrettoSlider = styled(Slider)({
   color: "#15F195",
@@ -199,7 +200,7 @@ const MarketPlacePage = () => {
     getAvailableEggs();
   }, [getAllAuctions, getAvailableEggs]);
 
-  console.log("MY NFTSSSS", availableEggs);
+  console.log("MY availableEggs", availableEggs);
   console.log("MY Auctionss", allAuctions);
 
   return (
@@ -219,18 +220,20 @@ const MarketPlacePage = () => {
         </div>
         <div className="flex flex-wrap justify-center mt-16 -mx-4">
           {availableEggs.length ? (
-            availableEggs?.map((item) => {
+            availableEggs?.map((item: AvailableEgg) => {
+              console.log("nft item", item);
               return (
                 <div
-                  className="p-2 w-ull m:w-1/2 l:w-1/4"
+                  className="p-2 m:w-1/2 l:w-1/4"
                   key={item.id}
                   onClick={() => router.push(`/market/egg/${item.id}`)}
                 >
                   <div className="flex flex-col ">
-                    <div className="relative overflow-hidden rounded bg-nft-gradient parent">
-                      <div className="h-[350px] w-[300px]">
+                    <div className="relative overflow-hidden rounded parent">
+                      <div className="h-full w-[300px]">
                         {/* <ModelViewer usdz={item.usdz} glb={item.glb}></ModelViewer> */}
-                        <img src="/img/egg.png" alt="" />
+                        {/* <img src={item.image} alt="" /> */}
+                        <video src={item.animation_url} autoPlay loop />
                       </div>
                       <div className="absolute top-0 left-0 invisible w-full h-full transition-all duration-300 rounded opacity-0 hover:visible hover:opacity-100">
                         <div className="absolute px-2 py-1 text-xs font-bold uppercase rounded top-6 left-3 bg-primary ">
@@ -271,7 +274,7 @@ const MarketPlacePage = () => {
                                   "linear-gradient(180deg, #2517FF -61.88%, #15F195 131.19%)",
                               }}
                             ></span>
-                            {accountEllipsis(item.owner || "")}
+                            {/* {accountEllipsis(item.owner || "")} */}
                           </div>
                           {/* <div className="flex items-center justify-center flex-shrink-0 ml-2 text-xs font-bold uppercase rounded-sm">
                               3 days Left
