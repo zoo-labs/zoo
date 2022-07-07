@@ -438,22 +438,25 @@ export function useBuyEggWithBnB(): (
   const dispatch = useDispatch();
   return useCallback(
     async (eggId, quantity, success) => {
-      console.log("buying_eggggg", { eggId, quantity, dropId, zooKeeper });
+      console.log("buying_eggggg_w_bnb", {
+        eggId,
+        quantity,
+        dropId,
+        zooKeeper,
+        bnb,
+      });
       if (!zooKeeper) return;
       try {
         dispatch(loading(true));
         const approval = await bnb?.allowance(account, zooKeeper.address);
         console.log("approval_approving_media", Number(approval));
-        if (Number(approval) <= 0) {
+        if (Number(approval) <= 0 || isNaN(Number(approval))) {
           console.log("approving_media");
-          await bnb
-            ?.approve(zooKeeper.address, MaxUint256, {
-              gasLimit: 4000000,
-            })
-            .then((tx) => {
-              console.log("approval", tx);
-              tx.wait();
-            });
+          const approving = await bnb?.approve(zooKeeper.address, MaxUint256, {
+            gasLimit: 4000000,
+          });
+          approving?.wait();
+          console.log("approval_approved", approving);
         }
         const tx = await zooKeeper.buyEggsWithBNB(eggId, dropId, quantity, {
           gasLimit: 4000000,
@@ -481,7 +484,7 @@ export function useBuyEggWithBnB(): (
         });
       }
     },
-    [addPopup, dispatch, dropId, zooKeeper]
+    [account, addPopup, bnb, dispatch, dropId, zooKeeper]
   );
 }
 
