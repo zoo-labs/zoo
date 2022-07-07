@@ -324,7 +324,7 @@ export function useGetAvailableEggs(): () => void {
     console.log("useGetAvailableEggs  contract", dropContract);
     try {
       const eggs = await dropContract?.getAllEggs();
-      console.log("useGetAvailableEggs", eggs);
+      console.log("useGetAvailableEggs eggs", eggs);
       if (!eggs) return;
       await eggs.map(async (egg) => {
         const { name, attributes, image, animation_url } = (
