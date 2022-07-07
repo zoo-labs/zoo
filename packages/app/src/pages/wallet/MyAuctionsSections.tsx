@@ -19,6 +19,8 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
     fadeInOnScroll(comingSoonRef.current);
   }, []);
 
+  console.log("THE_AUCTION>>", auction);
+
   return (
     <>
       <section className="flex flex-col gap-24 my-16 lg:flex-row lg:justify-between lg:px-48">
@@ -65,7 +67,9 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
           {/* Card */}
           <div className="flex flex-col items-center px-4 py-8 mb-6 rounded card bg-black100">
             <p className="mb-6 text-xs">Current Bid</p>
-            <h1 className="mb-4 text-4xl font-bold lg:text-6xl">1.00 ETH</h1>
+            <h1 className="mb-4 text-4xl font-bold lg:text-6xl">
+              {auction?.amount} ZOO
+            </h1>
             <p className="font-bold text-green lg:text-xl mb-9">$3,618.36</p>
 
             <p className="mb-2 font-medium text-white">Auction ending in</p>
@@ -110,7 +114,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
                 <div className="flex flex-row justify-between px-4 py-2 border rounded items center border-black100 bg-black100">
                   <input
                     type=""
-                    value="1.00 ETH"
+                    value={auction?.reservePrice}
                     className="bg-transparent border-0 outline-0"
                   />
                   <Image
