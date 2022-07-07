@@ -39,6 +39,8 @@ import {
 import { SubgraphProvider } from "../providers/SubgraphProvider";
 import { initTranslation, loadTranslation } from "../entities";
 import { MoralisProvider } from "react-moralis";
+import { useActiveWeb3React } from "hooks/useActiveWeb3React";
+import { ChainId } from "constants/chainIds";
 
 // const Web3ProviderNetwork = dynamic(
 //   () => import("../components/Web3ProviderNetwork"),
@@ -103,6 +105,30 @@ function MyApp({
   // Allows for conditionally setting a guard to be hoisted per page
   const Guard = Component.Guard || Fragment;
 
+  const useEagerWalletConnect = () => {
+    const { chainId, connector } = useActiveWeb3React();
+    console.log("useEagerWalletConnect", chainId);
+    useEffect(() => {
+      if (chainId) {
+        const isTestnet = chainId === ChainId.BSC_TESTNET;
+        const isMainnet = chainId === ChainId.BSC;
+
+        if (isTestnet || isMainnet) {
+          connector.activate(chainId);
+        } else {
+          connector.activate(ChainId.BSC_TESTNET);
+        }
+      } else {
+        connector.activate();
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [connector]);
+  };
+
+  const GlobalHooks = () => {
+    useEagerWalletConnect();
+    return null;
+  };
   // const getAnimals = async () => {
   //   try {
   //     const animals = [];
@@ -200,6 +226,7 @@ function MyApp({
                     <TransactionUpdater />
                     <MulticallUpdater />
                   </>
+                  <GlobalHooks />
                   <MoralisProvider
                     serverUrl="https://pu49uxbl83tm.usemoralis.com:2053/server"
                     appId="mIEUGVNhlrjw8AvOSGJxJ09tu5KKH1bJNi60FWX3"

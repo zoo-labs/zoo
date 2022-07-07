@@ -48,10 +48,9 @@ export interface Egg {
   hatching?: boolean
 }
 
-export interface AvailableEggs {
+export interface AvailableEgg {
   bidShares: any
   birthday: number
-  data: any
   exist: boolean
   id: number
   kind: number
@@ -59,7 +58,14 @@ export interface AvailableEggs {
   name: string
   price: number
   supply: number
-  timestamp: number
+  timestamp: number;
+  image: string;
+  animation_url: string;
+  attributes: Array<EggAttribute>
+}
+export interface EggAttribute {
+  trait_type: string,
+  value: string
 }
 
 export interface Auction {
