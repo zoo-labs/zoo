@@ -6,38 +6,43 @@
 // import { updateMyEggs, updateMyTransactions, updatZooBalnce } from '.'
 
 // export { addAnimal, addAnimals, addEgg, addEggs, burnAnimal, burnEgg, clearZoo, updatZooBalnce } from '.'
-import { createAction } from '@reduxjs/toolkit'
+import { createAction } from "@reduxjs/toolkit";
 // import { Egg } from 'types'
 
-import { Auction, AvailableEgg, Egg } from 'types'
-import { MyNFT } from './types'
+import { Auction, AvailableEgg, Egg } from "types";
+import { MyNFT } from "./types";
 
 export interface SerializedToken {
-  chainId: number
-  address: string
-  decimals: number
-  symbol?: string
-  name?: string
+  chainId: number;
+  address: string;
+  decimals: number;
+  symbol?: string;
+  name?: string;
 }
 
 export interface SerializedPair {
-  token0: SerializedToken
-  token1: SerializedToken
+  token0: SerializedToken;
+  token1: SerializedToken;
 }
 
-export const getZooBalance = createAction<{ balance: number }>('zoo/getZooBalance')
-export const getBNBBalance = createAction<{ balance: number }>('zoo/getBNBBalance')
-export const getEggs = createAction<{ curr: any }>('zoo/getEggs')
-export const getAllowance = createAction<number>('zoo/getAllowance')
-export const addEgg = createAction<AvailableEgg>('zoo/addEgg')
-export const loading = createAction<boolean>('zoo/loading')
-export const updateMyNfts = createAction<MyNFT>('zoo/updateMyNfts')
-export const eggsCount = createAction<number>('zoo/eggsCount')
-export const animalsCount = createAction<number>('zoo/animalsCount')
-export const breedsCount = createAction<number>('zoo/breedsCount')
-export const getAllAuctions = createAction<Array<Auction>>('zoo/getAllAuctions');
-export const createBid = createAction<any>('zoo/createBid');
-export const addNftTTransfers = createAction<Array<any>>('zoo/addNftTTransfers');
+export const getZooBalance =
+  createAction<{ balance: number }>("zoo/getZooBalance");
+export const getBNBBalance =
+  createAction<{ balance: number }>("zoo/getBNBBalance");
+export const getEggs = createAction<{ curr: any }>("zoo/getEggs");
+export const getAllowance = createAction<number>("zoo/getAllowance");
+export const addEgg = createAction<AvailableEgg>("zoo/addEgg");
+export const loading = createAction<boolean>("zoo/loading");
+export const updateMyNfts = createAction<MyNFT>("zoo/updateMyNfts");
+export const eggsCount = createAction<number>("zoo/eggsCount");
+export const animalsCount = createAction<number>("zoo/animalsCount");
+export const breedsCount = createAction<number>("zoo/breedsCount");
+export const addAuctionNft =
+  createAction<Auction>("zoo/addAuctionNft");
+export const createBid = createAction<any>("zoo/createBid");
+export const addNftTTransfers = createAction<Array<any>>(
+  "zoo/addNftTTransfers"
+);
 
 // export function getZooBalance(account, zooToken) {
 //   return async (dispatch) => {
@@ -94,4 +99,4 @@ export const addNftTTransfers = createAction<Array<any>>('zoo/addNftTTransfers')
 //   const transactions = await getTransactions({ account })
 //   dispatch(updateMyTransactions(transactions))
 // }
-export { clear, push, remove } from '../toasts'
+export { clear, push, remove } from "../toasts";
