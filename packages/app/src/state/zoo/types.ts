@@ -14,6 +14,7 @@ export interface ZooState {
     myAuctions: { [key: string]: Egg }
 }
 export interface MyNFT {
+    index: number
     customName: string,
     name: string,
     kind: number,
@@ -30,7 +31,7 @@ export interface MyNFT {
         tokenA: number,
         tokenB: number,
     },
-    data: Array<any>,
+    // data: Array<any>,
     breed: {
         count: number,
         timestamp: number,
@@ -44,5 +45,10 @@ export interface MyNFT {
     },
     rarity: string,
     bidShares: number,
-
+    token_uri: string,
+    attributes,
+    image,
+    animation_url,
+    glb_animation_url,
+    usdz_animation_url,
 }

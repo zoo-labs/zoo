@@ -13,7 +13,10 @@ import { getAddress } from '@ethersproject/address'
 export function isZero(hexNumberString: string): boolean {
   return /^0x0*$/.test(hexNumberString)
 }
-
+export const isEmptyObj = (obj: any) =>
+  (obj !== null || obj !== undefined) &&
+  Object.entries(obj).length === 0 &&
+  obj.constructor === Object;
 export const isEmptyValue = (text: string) =>
   BigNumber.isBigNumber(text)
     ? BigNumber.from(text).isZero()

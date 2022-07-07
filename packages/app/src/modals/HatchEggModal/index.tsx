@@ -47,13 +47,12 @@ export default function HatchEggModal({ nftItem, success }) {
         <ModalHeader title={`Ready to Hatch ${name}`} onClose={toggleModal} />
         <div className="flex flex-col items-center space-y-6">
           <div className="relative mb-" style={{ width: 258 }}>
-            <img
-              src="/img/egg.png"
-              alt=""
-              style={{
-                width: "100%",
-                height: 307,
-              }}
+            <video
+              autoPlay
+              loop
+              src={nftItem.token_uri}
+              width={300}
+              height={350}
             />
             <img
               src="/videoes/StealthEggHatch.mp4"
