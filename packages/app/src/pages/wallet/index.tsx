@@ -12,6 +12,7 @@ import { handleFunds } from "utils/handleFunds";
 import { useActiveWeb3React } from "hooks";
 import { useMoralis } from "react-moralis";
 import dynamic from "next/dynamic";
+import { Auction } from "types";
 
 export default function Wallet({ children }) {
   const [category, setCategory] = useState(0);
@@ -24,8 +25,14 @@ export default function Wallet({ children }) {
   );
   const fetchNFTs = useFetchMyNFTs();
   const getNftTransfers = useGetNftTransfers();
-  const { myEggsCount, myAnimalsCount, myBreedsCount, myNfts, nftTransfers } =
-    useSelector((state: any) => state.zoo);
+  const {
+    myEggsCount,
+    myAnimalsCount,
+    myBreedsCount,
+    myNfts,
+    nftTransfers,
+    allAuctions,
+  } = useSelector((state: any) => state.zoo);
 
   const initMoralis = useCallback(async () => {
     if (chainId) {
@@ -119,7 +126,11 @@ export default function Wallet({ children }) {
         ) : category === 1 ? (
           <MyBidsSection />
         ) : (
-          <MyAuctionSection />
+          allAuctions
+            .filter((auction: Auction) => auction.tokenOwner === account)
+            .map((auction: Auction, index: number) => (
+              <MyAuctionSection key={index} auction={auction} />
+            ))
         )}
       </div>
     </section>
