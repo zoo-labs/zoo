@@ -63,6 +63,13 @@ interface IZoo {
         uint40 birthday;     // birth block
     }
 
+
+    struct URIs {
+        IMedia.MediaData dataBaby;
+        IMedia.MediaData dataTeen;
+        IMedia.MediaData dataAdult;
+    }
+
     struct Token {
         Rarity  rarity;
         Type  kind;
