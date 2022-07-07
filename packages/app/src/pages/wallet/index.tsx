@@ -128,7 +128,9 @@ export default function Wallet({ children }) {
         ) : (
           allAuctions
             .filter((auction: Auction) => auction.tokenOwner === account)
-            .map((auction) => <MyAuctionSection auction={auction} />)
+            .map((auction: Auction, index: number) => (
+              <MyAuctionSection key={index} auction={auction} />
+            ))
         )}
       </div>
     </section>
