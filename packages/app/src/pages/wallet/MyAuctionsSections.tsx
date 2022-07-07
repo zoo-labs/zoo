@@ -4,8 +4,14 @@ import Link from "next/link";
 import Modal from "components/Modal";
 
 import { fadeInOnScroll } from "animation";
+import { Auction } from "types";
+import { accountEllipsis } from "functions";
+import dynamic from "next/dynamic";
+const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
+  ssr: false,
+});
 
-const MyAuctionSection = () => {
+const MyAuctionSection = ({ auction }: { auction: Auction }) => {
   const [openMoal, setOpenModal] = React.useState(false);
   const comingSoonRef = React.useRef();
 
@@ -15,29 +21,31 @@ const MyAuctionSection = () => {
 
   return (
     <>
-      <section className="flex flex-col gap-24 lg:flex-row lg:justify-between lg:px-48">
+      <section className="flex flex-col gap-24 my-16 lg:flex-row lg:justify-between lg:px-48">
         <div className="bg-nft-gradient p-0.5 flex flex-col basis-1/2 justify-center rounded-xl">
           <div className="flex flex-col justify-center h-full bg-black rounded-xl">
-            <Image
-              src="/img/egg.png"
-              width={200}
-              height={400}
-              alt=""
-              objectFit="contain"
-            />
+            {auction.kind === 0 ? (
+              <video
+                autoPlay
+                loop
+                src={auction.animation_url}
+                width={300}
+                height={350}
+              />
+            ) : (
+              <div className="h-[450px] w-[300px]">
+                <ModelViewer
+                  glb={auction?.glb_animation_url}
+                  usdz={auction?.usdz_animation_url}
+                ></ModelViewer>
+              </div>
+            )}
           </div>
         </div>
         <div className="flex flex-col basis-1/2">
-          <h2 className="mb-4 text-4xl lg:text-6xl">Egg</h2>
+          <h2 className="mb-4 text-4xl lg:text-4xl">{auction?.name}</h2>
           {/* Address and Price */}
           <div className="flex justify-between mb-4">
-            <div className="flex items-center address">
-              <div className="w-12 h-12 mr-3 rounded-full bg-nft-gradient" />
-              <div className="owner">
-                <p className="text-grey">Owner</p>
-                <p>0xd0ae…e3e0</p>
-              </div>
-            </div>
             <div className="flex money">
               <Image
                 src="/img/reserved-price.png"
@@ -48,7 +56,8 @@ const MyAuctionSection = () => {
               <div className="ml-3">
                 <p className="text-grey">Reserve Price</p>
                 <p className="font-bold">
-                  3.5 ETH <span className="text-green">$6800</span>
+                  {auction?.reservePrice} ZOO{" "}
+                  <span className="text-green">$6800</span>
                 </p>
               </div>
             </div>
