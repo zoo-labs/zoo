@@ -23,7 +23,7 @@ import { useMoralis } from "react-moralis";
 import { abbreviateNumber } from "functions/abbreviateNumbers";
 import { accountEllipsis } from "functions/lux";
 import { FaMoneyBillWave } from "react-icons/fa";
-import { AvailableEgg } from "types";
+import { Auction, AvailableEgg } from "types";
 
 const PrettoSlider = styled(Slider)({
   color: "#15F195",
@@ -212,13 +212,13 @@ const MarketPlacePage = () => {
         <p>Buy, list, and bid on NFT Eggs and Animals.</p>
       </div>
       {/* Eggs */}
-      <div className="">
+      <div className="mb-16">
         <div>
           <h2 className="text-3xl font-bold text-center text-white lg:text-4xl">
             Buy Eggs
           </h2>
         </div>
-        <div className="flex flex-wrap justify-center mt-16 -mx-4">
+        <div className="flex flex-wrap justify-center -mx-4">
           {availableEggs.length ? (
             availableEggs?.map((item: AvailableEgg) => {
               console.log("nft item", item);
@@ -249,11 +249,11 @@ const MarketPlacePage = () => {
                     <a className="flex flex-col flex-grow py-4 no-underline cursor-pointer">
                       <div className="flex flex-col flex-grow">
                         <div className="flex mb-4 ">
-                          <div className="mt-1 mr-auto font-semibold">
+                          <div className="mt-1 mr-auto text-sm font-semibold uppercase">
                             {item.name || "Egg"}{" "}
-                            <span className="text-xs text-gray-500">
+                            {/* <span className="text-xs text-gray-500">
                               (#{item.id || ""})
-                            </span>
+                            </span> */}
                           </div>
                           <div
                             className="flex items-center justify-center flex-shrink-0 px-2 ml-2 text-xs font-bold uppercase rounded-sm primary hover:bg-[#8c4ff8]"
@@ -264,21 +264,21 @@ const MarketPlacePage = () => {
                             {abbreviateNumber(item.price)} Z00
                           </div>
                         </div>
-                        <div className="flex ">
-                          <div className="flex mt-1 mr-auto text-xs font-semibold text-gray-500">
-                            {/* <div className="w-4 h-4 mr-1 rounded-full bg-gradient-to-b from-btn1 to-btn2"></div> */}
-                            <span
-                              className="w-4 h-4 mr-1 rounded-full"
-                              style={{
-                                background:
-                                  "linear-gradient(180deg, #2517FF -61.88%, #15F195 131.19%)",
-                              }}
-                            ></span>
-                            {/* {accountEllipsis(item.owner || "")} */}
-                          </div>
-                          {/* <div className="flex items-center justify-center flex-shrink-0 ml-2 text-xs font-bold uppercase rounded-sm">
-                              3 days Left
-                            </div> */}
+                        <div className="flex flex-col">
+                          {item.attributes.length > 0 &&
+                            item.attributes.map((attr, index) => (
+                              <div
+                                key={index}
+                                className="flex items-center justify-between"
+                              >
+                                <p className="text-sm font-medium">
+                                  {attr.trait_type}
+                                </p>
+                                <p className="font-semibold text-[10px]">
+                                  {attr.value}
+                                </p>
+                              </div>
+                            ))}
                         </div>
                       </div>
                       <div className="flex items-center justify-between pt-4 mt-4 text-sm text-gray-800 border-t border-gray-700 border-solid ">
@@ -289,7 +289,7 @@ const MarketPlacePage = () => {
                           Supply
                         </div>
                         <span className="font-semibold text-white">
-                          {item.supply}
+                          {item.minted} / {item.supply}
                         </span>
                       </div>
                     </a>
@@ -305,32 +305,6 @@ const MarketPlacePage = () => {
             </div>
           )}
         </div>
-        {/* <div className="flex items-center justify-center">
-          <div className="relative w-[150px] h-[200px]">
-            <Image
-              src="/img/egg.png"
-              layout="fill"
-              objectFit="contain"
-              alt=""
-            />
-          </div>
-          <div className="relative w-[150px] h-[200px]">
-            <Image
-              src="/img/egg1.png"
-              layout="fill"
-              objectFit="contain"
-              alt=""
-            />
-          </div>
-          <div className="relative w-[150px] h-[200px]">
-            <Image
-              src="/img/egg2.png"
-              layout="fill"
-              objectFit="contain"
-              alt=""
-            />
-          </div>
-        </div> */}
       </div>
       {/* Tab Navbar */}
       <div className="relative justify-center hidden mb-8 lg:flex">
@@ -396,7 +370,7 @@ const MarketPlacePage = () => {
         {category === 0 && (
           <div className="flex flex-wrap mt-8 -mx-4">
             {allAuctions.length > 0 ? (
-              allAuctions.map((datum, index) => {
+              allAuctions.map((datum: Auction, index) => {
                 return (
                   <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
                     <MarketItem
@@ -416,17 +390,19 @@ const MarketPlacePage = () => {
         {category === 1 && (
           <div className="flex flex-wrap mt-8 -mx-4">
             {allAuctions.length > 0 ? (
-              allAuctions.map((datum, index) => {
-                return (
-                  <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
-                    <MarketItem
-                      datum={datum}
-                      applyMaxWidth={false}
-                      placeBid={() => (setActiveItem(datum), console.log(""))}
-                    />
-                  </div>
-                );
-              })
+              allAuctions
+                .filter((auction) => auction.kind === 0)
+                .map((datum, index) => {
+                  return (
+                    <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
+                      <MarketItem
+                        datum={datum}
+                        applyMaxWidth={false}
+                        placeBid={() => (setActiveItem(datum), console.log(""))}
+                      />
+                    </div>
+                  );
+                })
             ) : (
               <div className="w-full py-16 text-center">No auctions</div>
             )}
@@ -436,17 +412,19 @@ const MarketPlacePage = () => {
         {category === 2 && (
           <div className="flex flex-wrap mt-8 -mx-4">
             {allAuctions.length > 0 ? (
-              allAuctions.map((datum, index) => {
-                return (
-                  <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
-                    <MarketItem
-                      datum={datum}
-                      applyMaxWidth={false}
-                      placeBid={() => (setActiveItem(datum), console.log(""))}
-                    />
-                  </div>
-                );
-              })
+              allAuctions
+                .filter((auction) => auction.kind === 1)
+                .map((datum, index) => {
+                  return (
+                    <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
+                      <MarketItem
+                        datum={datum}
+                        applyMaxWidth={false}
+                        placeBid={() => (setActiveItem(datum), console.log(""))}
+                      />
+                    </div>
+                  );
+                })
             ) : (
               <div className="w-full py-16 text-center">No auctions</div>
             )}

@@ -37,8 +37,8 @@ export const updateMyNfts = createAction<MyNFT>("zoo/updateMyNfts");
 export const eggsCount = createAction<number>("zoo/eggsCount");
 export const animalsCount = createAction<number>("zoo/animalsCount");
 export const breedsCount = createAction<number>("zoo/breedsCount");
-export const getAllAuctions =
-  createAction<Array<Auction>>("zoo/getAllAuctions");
+export const addAuctionNft =
+  createAction<Auction>("zoo/addAuctionNft");
 export const createBid = createAction<any>("zoo/createBid");
 export const addNftTTransfers = createAction<Array<any>>(
   "zoo/addNftTTransfers"

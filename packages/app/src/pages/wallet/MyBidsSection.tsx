@@ -6,6 +6,7 @@ import PopularNftsSection from "pages/home/PopularNftsSection";
 import Modal from "../../components/Modal/";
 
 import { fadeInOnScroll } from "animation";
+import { Auction } from "types";
 
 const MyBidsSection = () => {
   const [openMoal, setOpenModal] = React.useState(false);
