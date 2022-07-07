@@ -216,7 +216,7 @@ export function useFetchMyNFTs(): () => Promise<void> {
       let _eggsCount = 0;
       let _animalsCount = 0;
       let _breedCount = 0;
-      console.log("structuredNft useFetchMyNFTs", structuredNft);
+      console.log("structuredNft_useFetchMyNFTs", structuredNft);
       structuredNft.forEach(async (nft, index) => {
         const id = nft.token_id;
 
