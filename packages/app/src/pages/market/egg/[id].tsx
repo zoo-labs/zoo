@@ -10,7 +10,7 @@ import { SwiperSlide } from "swiper/react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { abbreviateNumber } from "functions/abbreviateNumbers";
-import { AvailableEggs } from "types";
+import { AvailableEgg } from "types";
 import { useCallback } from "react";
 import {
   useBuyEgg,
@@ -35,7 +35,7 @@ const Item = () => {
   const router = useRouter();
   const { id } = router.query;
   const { account } = useActiveWeb3React();
-  const [egg, setEgg] = useState<AvailableEggs>(null);
+  const [egg, setEgg] = useState<AvailableEgg>(null);
   const [withZoo, setWithZoo] = useState(true);
   const { availableEggs, loading, zooBalance, bnbBalance } = useSelector(
     (state: any) => state.zoo
@@ -114,8 +114,13 @@ const Item = () => {
         <div className="rounded-xl p-px h-full bg-view-gradient w-full lg:w-[40%]">
           <div className="bg-black rounded-xl min-h-[466px] h-full w-full px-12 py-12 flex flex-col justify-center items-center">
             {/* <ModelViewer></ModelViewer> */}
-            <img src="/img/egg.png" alt="" />
-            {/* <img src={egg?.data?.tokenURI} alt="Egg" /> */}
+            <video
+              autoPlay
+              loop
+              src={egg?.animation_url}
+              width={350}
+              height={300}
+            />
           </div>
         </div>
         <div className="rounded-xl p-px h-full bg-transparent px-5 py-3 w-full lg:w-[60%]">
@@ -127,7 +132,7 @@ const Item = () => {
               <div className="flex items-center gap-2">
                 <Image src="/icons/status.svg" alt="" height={26} width={20} />
                 <div>
-                  <p className="text-sm font-medium">Status</p>
+                  <p className="text-sm font-medium">Rarity</p>
                   <p className="font-medium text-[10px]">Endangered</p>
                 </div>
               </div>

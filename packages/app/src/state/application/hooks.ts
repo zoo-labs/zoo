@@ -1,125 +1,140 @@
-import { useCallback, useMemo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
-import { AppDispatch, AppState } from '../index'
-import { addPopup, ApplicationModal, PopupContent, removePopup, setOpenModal } from './actions'
+import { useCallback, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useActiveWeb3React } from "../../hooks/useActiveWeb3React";
+import { AppDispatch, AppState } from "../index";
+import {
+  addPopup,
+  ApplicationModal,
+  PopupContent,
+  removePopup,
+  setOpenModal,
+} from "./actions";
 
 export function useBlockNumber(): number | undefined {
-  const { chainId } = useActiveWeb3React()
+  const { chainId } = useActiveWeb3React();
 
-  return useSelector((state: AppState) => state.application.blockNumber[chainId ?? -1])
+  return useSelector(
+    (state: AppState) => state.application.blockNumber ? state.application.blockNumber[chainId ?? -1] : 0
+  );
 }
 
 export function useModalOpen(modal: ApplicationModal): boolean {
-  const openModal = useSelector((state: AppState) => state.application.openModal)
-  return openModal === modal
+  const openModal = useSelector(
+    (state: AppState) => state.application.openModal
+  );
+  return openModal === modal;
 }
 
 export function useToggleModal(modal: ApplicationModal): () => void {
-  const open = useModalOpen(modal)
-  const dispatch = useDispatch<AppDispatch>()
-  return useCallback(() => dispatch(setOpenModal(open ? null : modal)), [dispatch, modal, open])
+  const open = useModalOpen(modal);
+  const dispatch = useDispatch<AppDispatch>();
+  return useCallback(
+    () => dispatch(setOpenModal(open ? null : modal)),
+    [dispatch, modal, open]
+  );
 }
 
 export function useOpenModal(modal: ApplicationModal): () => void {
-  const dispatch = useDispatch<AppDispatch>()
-  return useCallback(() => dispatch(setOpenModal(modal)), [dispatch, modal])
+  const dispatch = useDispatch<AppDispatch>();
+  return useCallback(() => dispatch(setOpenModal(modal)), [dispatch, modal]);
 }
 
 export function useCloseModals(): () => void {
-  const dispatch = useDispatch<AppDispatch>()
-  return useCallback(() => dispatch(setOpenModal(null)), [dispatch])
+  const dispatch = useDispatch<AppDispatch>();
+  return useCallback(() => dispatch(setOpenModal(null)), [dispatch]);
 }
 export function useAuctionModal(): () => void {
-  return useToggleModal(ApplicationModal.AUCTION)
+  return useToggleModal(ApplicationModal.AUCTION);
 }
 export function useWalletModalToggle(): () => void {
-  return useToggleModal(ApplicationModal.WALLET)
+  return useToggleModal(ApplicationModal.WALLET);
 }
 
 export function useHatchEggModal(): () => void {
-  return useToggleModal(ApplicationModal.HATCH_EGG)
+  return useToggleModal(ApplicationModal.HATCH_EGG);
+}
+export function useHatchEggAnimationModal(): () => void {
+  return useToggleModal(ApplicationModal.HATCH_EGG_ANIMATION);
 }
 
 export function useNetworkModalToggle(): () => void {
-  return useToggleModal(ApplicationModal.NETWORK)
+  return useToggleModal(ApplicationModal.NETWORK);
 }
 
 export function useToggleSettingsMenu(): () => void {
-  return useToggleModal(ApplicationModal.SETTINGS)
+  return useToggleModal(ApplicationModal.SETTINGS);
 }
 
 export function useShowClaimPopup(): boolean {
-  return useModalOpen(ApplicationModal.CLAIM_POPUP)
+  return useModalOpen(ApplicationModal.CLAIM_POPUP);
 }
 
 export function useToggleShowClaimPopup(): () => void {
-  return useToggleModal(ApplicationModal.CLAIM_POPUP)
+  return useToggleModal(ApplicationModal.CLAIM_POPUP);
 }
 
 export function useToggleSelfClaimModal(): () => void {
-  return useToggleModal(ApplicationModal.SELF_CLAIM)
+  return useToggleModal(ApplicationModal.SELF_CLAIM);
 }
 
 export function useToggleDelegateModal(): () => void {
-  return useToggleModal(ApplicationModal.DELEGATE)
+  return useToggleModal(ApplicationModal.DELEGATE);
 }
 
 export function useToggleVoteModal(): () => void {
-  return useToggleModal(ApplicationModal.VOTE)
+  return useToggleModal(ApplicationModal.VOTE);
 }
 
 export function useBuyEggModalToggle(): () => void {
-
-  return useToggleModal(ApplicationModal.BUYEGG)
+  return useToggleModal(ApplicationModal.BUYEGG);
 }
 
 export function useMyNftModalToggle(): () => void {
-
-  return useToggleModal(ApplicationModal.MY_NFT)
+  return useToggleModal(ApplicationModal.MY_NFT);
 }
 export function useBuyZooModalToggle(): () => void {
-
-  return useToggleModal(ApplicationModal.BUYZOO)
+  return useToggleModal(ApplicationModal.BUYZOO);
 }
 
 // returns a function that allows adding a popup
 export function useAddPopup(): (content: PopupContent, key?: string) => void {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   return useCallback(
     (content: PopupContent, key?: string) => {
-      dispatch(addPopup({ content, key }))
+      dispatch(addPopup({ content, key }));
     },
     [dispatch]
-  )
+  );
 }
 
 // returns a function that allows removing a popup via its key
 export function useRemovePopup(): (key: string) => void {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   return useCallback(
     (key: string) => {
-      dispatch(removePopup({ key }))
+      dispatch(removePopup({ key }));
     },
     [dispatch]
-  )
+  );
 }
 
 // get the list of active popups
-export function useActivePopups(): AppState['application']['popupList'] {
-  const list = useSelector((state: AppState) => state.application.popupList)
-  return useMemo(() => list.filter((item) => item.show), [list])
+export function useActivePopups(): AppState["application"]["popupList"] {
+  const list = useSelector((state: AppState) => state.application.popupList);
+  return useMemo(() => list.filter((item) => item.show), [list]);
 }
 
 export function useKashiApprovalPending(): string {
-  return useSelector((state: AppState) => state.application.kashiApprovalPending)
+  return useSelector(
+    (state: AppState) => state.application.kashiApprovalPending
+  );
 }
 
 export function useEditAuctionModalToggle(): () => void {
-  return useToggleModal(ApplicationModal.EDIT_AUCTION)
+  return useToggleModal(ApplicationModal.EDIT_AUCTION);
 }
 
 export function useIncreaseBidModalToggle(): () => void {
-  return useToggleModal(ApplicationModal.INCREASE_BID)
+  return useToggleModal(ApplicationModal.INCREASE_BID);
 }

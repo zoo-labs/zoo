@@ -12,7 +12,7 @@ import Dots from "../Dots";
 import DoubleCurrencyLogo from "../DoubleLogo";
 import { t } from "@lingui/macro";
 import { useActiveWeb3React } from "../../hooks/useActiveWeb3React";
-import { useColor } from "../../hooks";
+// import { useColor } from "../../hooks";
 import { useLingui } from "@lingui/react";
 import { useRouter } from "next/router";
 import { useTokenBalance } from "../../state/wallet/hooks";
@@ -194,7 +194,7 @@ export default function FullPositionCard({
         ]
       : [undefined, undefined];
 
-  const backgroundColor = useColor(pair?.token0);
+  // const backgroundColor = useColor(pair?.token0);
 
   return (
     <div
