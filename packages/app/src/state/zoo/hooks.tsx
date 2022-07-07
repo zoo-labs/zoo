@@ -535,17 +535,23 @@ export function useGetAllAuctions(): () => Promise<void> {
       const structuredAuctions = auctions?.map((auction: Auction) => {
         const {
           tokenID,
-          tokenOwner,
+          auctionId,
           reservePrice,
           firstBidTime,
           duration,
           curatorFeePercentage,
-          curator,
-          auctionCurrency,
           amount,
+          addresses: {
+            auctionCurrency,
+            bidder,
+            curator,
+            tokenContract,
+            tokenOwner,
+          },
         } = auction;
         return {
           tokenID: Number(tokenID),
+          auctionId: Number(auctionId),
           tokenOwner,
           reservePrice: Number(reservePrice),
           firstBidTime: Number(firstBidTime),
@@ -554,6 +560,8 @@ export function useGetAllAuctions(): () => Promise<void> {
           curator,
           auctionCurrency,
           amount: Number(amount),
+          bidder,
+          tokenContract,
         };
       });
       console.log("structuredAuctionss", structuredAuctions);
@@ -783,17 +791,53 @@ export function useCreateAuction(): (
 //   );
 // }
 
-export function useCreateBid(): (id: any) => void {
+export function useCreateBid(): (id: string | number, amount: number) => void {
   const auction = useAuction();
   const dispatch = useDispatch();
+  const addPopup = useAddPopup();
+  const zoo = useZooToken();
+  const { account } = useActiveWeb3React();
+  return useCallback(
+    async (id, amount) => {
+      try {
+        dispatch(loading(true));
+        const approved = await zoo?.allowance(account, auction?.address);
+        console.log("AUCTION_APPROVED", Number(approved));
+        if (!approved || Number(approved) <= 0) {
+          const approval = await zoo?.approve(auction?.address, MaxUint256, {
+            gasLimit: 4000000,
+          });
+          await approval.wait();
+          console.log("APPROVAL", approval);
+        }
 
-  return useCallback(async (id) => {
-    try {
-      dispatch(createBid(id));
-    } catch (error) {
-      console.log("CREATE BID", error);
-    }
-  }, []);
+        const tx = await auction?.createBid(id, amount, {
+          gasLimit: 4000000,
+        });
+        await tx.wait();
+        dispatch(createBid(id));
+        dispatch(loading(false));
+        addPopup({
+          txn: {
+            hash: null,
+            summary: `Successfully bid ${amount} on ${id}`,
+            success: true,
+          },
+        });
+      } catch (error) {
+        console.log("CREATE_BID_ERROR", error);
+        dispatch(loading(false));
+        addPopup({
+          txn: {
+            hash: null,
+            summary: formatError(error),
+            success: false,
+          },
+        });
+      }
+    },
+    [auction, dispatch]
+  );
 }
 
 // export function getZooBalance(account, zooToken) {
@@ -880,4 +924,7 @@ export function useFeed(): (animalID: number) => void {
     },
     [account, addPopup, dispatch, dropId, zoo, zooKeeper]
   );
+}
+function MAX_UINT(address: string, MAX_UINT: any, arg2: { gasLimit: number }) {
+  throw new Error("Function not implemented.");
 }
