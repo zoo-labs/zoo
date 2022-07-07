@@ -534,7 +534,7 @@ export function useGetAllAuctions(): () => Promise<void> {
     try {
       const auctions = await auctionContract?.getAllAuctions();
       console.log("auctions__await", auctions);
-      await auctions?.map(async (auction: Auction, index: number) => {
+      await auctions?.map(async (auction, index: number) => {
         const tokenUri = await media?.tokenURI(Number(auction.tokenID));
         const tokenMetadataURI = await media?.tokenMetadataURI(
           Number(auction.tokenID)
@@ -551,7 +551,7 @@ export function useGetAllAuctions(): () => Promise<void> {
         } = (await axios.get(tokenMetadataURI)).data;
         const {
           tokenID,
-          tokenOwner,
+          addresses,
           reservePrice,
           firstBidTime,
           duration,
@@ -565,7 +565,7 @@ export function useGetAllAuctions(): () => Promise<void> {
           index,
           kind: deet?.kind,
           tokenID: Number(tokenID),
-          tokenOwner,
+          tokenOwner: addresses.tokenOwner,
           reservePrice: Number(reservePrice),
           firstBidTime: Number(firstBidTime),
           duration: Number(duration),
