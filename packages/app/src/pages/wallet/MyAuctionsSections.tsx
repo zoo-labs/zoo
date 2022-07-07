@@ -14,161 +14,143 @@ const MyAuctionSection = () => {
   }, []);
 
   return (
-    <div className="">
-      <div className="max-w-7xl mx-auto py-20 px-4">
-        <div
-          className="flex flex-col items-center justify-center text-center "
-          ref={comingSoonRef}
-        >
-          <h1 className="text-4xl lg:text-5xl font-bold mb-8">
-            You have no Auctions
-          </h1>
-          <p>
-            Go pack to the{" "}
-            <Link href="/">
-              <a className="text-green underline">home page</a>
-            </Link>
-          </p>
+    <>
+      <section className="flex flex-col gap-24 lg:flex-row lg:justify-between lg:px-48">
+        <div className="bg-nft-gradient p-0.5 flex flex-col basis-1/2 justify-center rounded-xl">
+          <div className="flex flex-col justify-center h-full bg-black rounded-xl">
+            <Image
+              src="/img/egg.png"
+              width={200}
+              height={400}
+              alt=""
+              objectFit="contain"
+            />
+          </div>
         </div>
-      </div>
-    </div>
-    // <>
-    //   <section className="flex flex-col gap-24 lg:flex-row lg:justify-between lg:px-48">
-    //     <div className="bg-nft-gradient p-0.5 flex flex-col basis-1/2 justify-center rounded-xl">
-    //       <div className="flex flex-col justify-center h-full bg-black rounded-xl">
-    //         <Image
-    //           src="/img/egg.png"
-    //           width={200}
-    //           height={400}
-    //           alt=""
-    //           objectFit="contain"
-    //         />
-    //       </div>
-    //     </div>
-    //     <div className="flex flex-col basis-1/2">
-    //       <h2 className="mb-4 text-4xl lg:text-6xl">Egg</h2>
-    //       {/* Address and Price */}
-    //       <div className="flex justify-between mb-4">
-    //         <div className="flex items-center address">
-    //           <div className="w-12 h-12 mr-3 rounded-full bg-nft-gradient" />
-    //           <div className="owner">
-    //             <p className="text-grey">Owner</p>
-    //             <p>0xd0ae…e3e0</p>
-    //           </div>
-    //         </div>
-    //         <div className="flex money">
-    //           <Image
-    //             src="/img/reserved-price.png"
-    //             width={51}
-    //             height={51}
-    //             alt=""
-    //           />
-    //           <div className="ml-3">
-    //             <p className="text-grey">Reserve Price</p>
-    //             <p className="font-bold">
-    //               3.5 ETH <span className="text-green">$6800</span>
-    //             </p>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       {/* Card */}
-    //       <div className="flex flex-col items-center px-4 py-8 mb-6 rounded card bg-black100">
-    //         <p className="mb-6 text-xs">Current Bid</p>
-    //         <h1 className="mb-4 text-4xl font-bold lg:text-6xl">1.00 ETH</h1>
-    //         <p className="font-bold text-green lg:text-xl mb-9">$3,618.36</p>
+        <div className="flex flex-col basis-1/2">
+          <h2 className="mb-4 text-4xl lg:text-6xl">Egg</h2>
+          {/* Address and Price */}
+          <div className="flex justify-between mb-4">
+            <div className="flex items-center address">
+              <div className="w-12 h-12 mr-3 rounded-full bg-nft-gradient" />
+              <div className="owner">
+                <p className="text-grey">Owner</p>
+                <p>0xd0ae…e3e0</p>
+              </div>
+            </div>
+            <div className="flex money">
+              <Image
+                src="/img/reserved-price.png"
+                width={51}
+                height={51}
+                alt=""
+              />
+              <div className="ml-3">
+                <p className="text-grey">Reserve Price</p>
+                <p className="font-bold">
+                  3.5 ETH <span className="text-green">$6800</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          {/* Card */}
+          <div className="flex flex-col items-center px-4 py-8 mb-6 rounded card bg-black100">
+            <p className="mb-6 text-xs">Current Bid</p>
+            <h1 className="mb-4 text-4xl font-bold lg:text-6xl">1.00 ETH</h1>
+            <p className="font-bold text-green lg:text-xl mb-9">$3,618.36</p>
 
-    //         <p className="mb-2 font-medium text-white">Auction ending in</p>
-    //         <div className="flex items-center justify-between max-w-md">
-    //           <div className="mr-3 text-center">
-    //             <p className="text-2xl font-medium lg:text-4xl ">01</p>
-    //             <p className="font-medium text-grey">Hrs</p>
-    //           </div>
-    //           <div className="mr-3 text-center">
-    //             <p className="text-2xl font-medium lg:text-4xl ">23</p>
-    //             <p className="font-medium text-grey">Min</p>
-    //           </div>
-    //           <div className="text-center">
-    //             <p className="text-2xl font-medium lg:text-4xl"> 17</p>
-    //             <p className="font-medium text-grey">Sec</p>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <button
-    //         className="py-2 mb-4 font-semibold text-white rounded bg-blue"
-    //         onClick={() => setOpenModal(true)}
-    //       >
-    //         Edit Auction
-    //       </button>
-    //       <Link href="/nft-info" passHref>
-    //         <button className="py-2 font-semibold border border-white rounded">
-    //           View Item
-    //         </button>
-    //       </Link>
-    //     </div>
-    //   </section>
+            <p className="mb-2 font-medium text-white">Auction ending in</p>
+            <div className="flex items-center justify-between max-w-md">
+              <div className="mr-3 text-center">
+                <p className="text-2xl font-medium lg:text-4xl ">01</p>
+                <p className="font-medium text-grey">Hrs</p>
+              </div>
+              <div className="mr-3 text-center">
+                <p className="text-2xl font-medium lg:text-4xl ">23</p>
+                <p className="font-medium text-grey">Min</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-medium lg:text-4xl"> 17</p>
+                <p className="font-medium text-grey">Sec</p>
+              </div>
+            </div>
+          </div>
+          <button
+            className="py-2 mb-4 font-semibold text-white rounded bg-blue"
+            onClick={() => setOpenModal(true)}
+          >
+            Edit Auction
+          </button>
+          <Link href="/nft-info" passHref>
+            <button className="py-2 font-semibold border border-white rounded">
+              View Item
+            </button>
+          </Link>
+        </div>
+      </section>
 
-    //   <Modal onDismiss={() => setOpenModal(false)} isOpen={openMoal}>
-    //     <div>
-    //       <div className="my-4">
-    //         <p className="font-bold text-white">Edit Auction</p>
-    //       </div>
-    //       <div>
-    //         <form>
-    //           <div className="mb-4">
-    //             <p className="mb-2 text-xs font-bold">Current Bid</p>
-    //             <div className="flex flex-row justify-between px-4 py-2 border rounded items center border-black100 bg-black100">
-    //               <input
-    //                 type=""
-    //                 value="1.00 ETH"
-    //                 className="bg-transparent border-0 outline-0"
-    //               />
-    //               <Image
-    //                 src="/img/eth-icon.svg"
-    //                 width={16}
-    //                 height={16}
-    //                 alt=""
-    //               />
-    //             </div>
-    //           </div>
+      <Modal onDismiss={() => setOpenModal(false)} isOpen={openMoal}>
+        <div>
+          <div className="my-4">
+            <p className="font-bold text-white">Edit Auction</p>
+          </div>
+          <div>
+            <form>
+              <div className="mb-4">
+                <p className="mb-2 text-xs font-bold">Current Bid</p>
+                <div className="flex flex-row justify-between px-4 py-2 border rounded items center border-black100 bg-black100">
+                  <input
+                    type=""
+                    value="1.00 ETH"
+                    className="bg-transparent border-0 outline-0"
+                  />
+                  <Image
+                    src="/img/eth-icon.svg"
+                    width={16}
+                    height={16}
+                    alt=""
+                  />
+                </div>
+              </div>
 
-    //           <div>
-    //             <p className="mb-2 text-xs font-bold">Start time</p>
-    //             <div className="flex justify-center gap-4 overflow-hidden">
-    //               <div className="py-2 border rounded border-black100 bg-black100 basis-1/2">
-    //                 <input
-    //                   type="text"
-    //                   value="25 Jan 2022"
-    //                   className="bg-transparent border-0 outline-0"
-    //                 />
-    //               </div>
+              <div>
+                <p className="mb-2 text-xs font-bold">Start time</p>
+                <div className="flex justify-center gap-4 overflow-hidden">
+                  <div className="py-2 border rounded border-black100 bg-black100 basis-1/2">
+                    <input
+                      type="text"
+                      value="25 Jan 2022"
+                      className="bg-transparent border-0 outline-0"
+                    />
+                  </div>
 
-    //               <div className="py-2 border rounded border-black100 bg-black100 basis-1/2">
-    //                 <input
-    //                   type="text"
-    //                   value="12:27 PM GMT"
-    //                   className="bg-transparent border-0 outline-0"
-    //                 />
-    //               </div>
-    //             </div>
-    //           </div>
+                  <div className="py-2 border rounded border-black100 bg-black100 basis-1/2">
+                    <input
+                      type="text"
+                      value="12:27 PM GMT"
+                      className="bg-transparent border-0 outline-0"
+                    />
+                  </div>
+                </div>
+              </div>
 
-    //           <button className="w-full px-4 py-2 mt-8 font-bold text-center text-white rounded bg-blue">
-    //             Save Changes
-    //           </button>
-    //         </form>
-    //       </div>
-    //     </div>
-    //   </Modal>
+              <button className="w-full px-4 py-2 mt-8 font-bold text-center text-white rounded bg-blue">
+                Save Changes
+              </button>
+            </form>
+          </div>
+        </div>
+      </Modal>
 
-    //   {/* <div className="py-20">
-    //     <PopularNftsSection />
-    //     <div className="mt-12 text-xl text-center">
-    //       <a href="/animal-list" className="underline text-green ">
-    //         View All
-    //       </a>
-    //     </div>
-    //   </div> */}
-    // </>
+      {/* <div className="py-20">
+        <PopularNftsSection />
+        <div className="mt-12 text-xl text-center">
+          <a href="/animal-list" className="underline text-green ">
+            View All
+          </a>
+        </div>
+      </div> */}
+    </>
   );
 };
 
