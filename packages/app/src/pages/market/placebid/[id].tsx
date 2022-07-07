@@ -17,13 +17,15 @@ import AuctionModal from "modals/Auction";
 
 const PlaceBid = () => {
   const { account } = useActiveWeb3React();
-  const { zooBalance } = useSelector((state: any) => state.zoo);
   const getZooBalance = useZoobalance();
   const removeAuction = useRemoveAuction();
   const toggleAuctionModal = useAuctionModal();
   const [bidPrice, setBidPrice] = useState<number | any>(1);
   const [nft, setNft] = useState<any>({});
   const router = useRouter();
+
+  const { availableEggs, loading, zooBalance, bnbBalance, allAuctions } =
+    useSelector((state: any) => state.zoo);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,9 +36,7 @@ const PlaceBid = () => {
   useEffect(() => {
     getZooBalance();
   }, [getZooBalance]);
-  const { availableEggs, loading, allAuctions } = useSelector(
-    (state: any) => state.zoo
-  );
+
   useEffect(() => {
     const NFT = allAuctions.filter((obj) => {
       return String(obj.tokenID) === String(router.query.id);
@@ -68,12 +68,7 @@ const PlaceBid = () => {
       <TwoColumComp
         LeftCol={
           <div className="w-full bg-[#0D0C16] h-full flex justify-center items-center lg:rounded-l-xl px-24">
-            <CardNft
-              TokenId={nft?.id}
-              animalName={nft?.name}
-              glb={nft?.glb}
-              className="lg:w-full"
-            />
+            <CardNft nft={nft} className="lg:w-full" />
           </div>
         }
         RightCol={
