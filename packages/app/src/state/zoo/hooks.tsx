@@ -816,6 +816,7 @@ export function useFeed(): (animalID: number) => void {
   const addPopup = useAddPopup();
   const zoo = useZooToken();
   const zooKeeper = useZooKeeper();
+  const media = useMedia();
   const { account } = useActiveWeb3React();
   const dispatch = useDispatch();
   const fetchMyNfts = useFetchMyNFTs();
@@ -835,6 +836,19 @@ export function useFeed(): (animalID: number) => void {
             })
             .then((tx) => {
               console.log("approval", tx);
+              tx.wait();
+            });
+        }
+        const mediaApproval = await zoo?.allowance(account, media.address);
+        console.log("approval_approving_media", Number(mediaApproval));
+        if (Number(mediaApproval) <= 0) {
+          console.log("approving_media");
+          await media
+            ?.setApprovalForAll(zooKeeper.address, true, {
+              gasLimit: 4000000,
+            })
+            .then((tx) => {
+              console.log("mediaApproval", tx);
               tx.wait();
             });
         }
