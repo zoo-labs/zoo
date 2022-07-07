@@ -56,7 +56,7 @@ const Item = () => {
     getZooBnbPrice();
   }, []);
   const getZooBnbPrice = async () => {
-    const price = await zooKeeper.zooPriceBNB();
+    const price = await zooKeeper.BNBPrice();
     const value = Web3.utils.fromWei(price.toString(), "ether");
     setZooBnbPrice(parseFloat(value));
   };
@@ -108,6 +108,8 @@ const Item = () => {
       return Number(eggPriceBNB) > parseFloat(userEthBalance.toFixed(3));
     }
   };
+
+  console.log("the_chosen_egg__", egg);
   return (
     <>
       <div className="flex flex-col px-5 mx-auto mt-20 lg:flex-row gap-11 lg:items-center lg:px-10 max-w-7xl">
@@ -132,8 +134,12 @@ const Item = () => {
               <div className="flex items-center gap-2">
                 <Image src="/icons/status.svg" alt="" height={26} width={20} />
                 <div>
-                  <p className="text-sm font-medium">Rarity</p>
-                  <p className="font-medium text-[10px]">Endangered</p>
+                  <p className="text-sm font-medium">
+                    {egg?.attributes[0]?.trait_type}
+                  </p>
+                  <p className="font-medium text-[10px]">
+                    {egg?.attributes[0]?.value}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -144,20 +150,26 @@ const Item = () => {
                   width={20}
                 />
                 <div>
-                  <p className="text-sm font-medium">Population</p>
-                  <p className="font-medium text-[10px]">2,400-2,800</p>
+                  <p className="text-sm font-medium">
+                    {egg?.attributes[1]?.trait_type}
+                  </p>
+                  <p className="font-medium text-[10px]">
+                    {egg?.attributes[1]?.value}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <Image src="/icons/react.svg" alt="" height={26} width={20} />
                 <div>
-                  <p className="text-sm font-medium">Scientific Name</p>
+                  <p className="text-sm font-medium">
+                    {egg?.attributes[2]?.trait_type}
+                  </p>
                   <p className="font-medium text-[10px]">
-                    Elephas Maximus Sumatrensis
+                    {egg?.attributes[2]?.value}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <Image src="/icons/shape.svg" alt="" height={26} width={20} />
                 <div>
                   <p className="text-sm font-medium">Size</p>
@@ -170,7 +182,7 @@ const Item = () => {
                   <p className="text-sm font-medium">Habitats</p>
                   <p className="font-medium text-[10px]">Tropical Forests</p>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="flex w-full items-center gap-3 mb-2.5">
               <div className="w-full lg:w-3/4">

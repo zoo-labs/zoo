@@ -20,7 +20,7 @@ import {
   breedsCount,
   updateMyNfts,
   loading,
-  getAllAuctions,
+  addAuctionNft,
   createBid,
   getBNBBalance,
   addNftTTransfers,
@@ -216,7 +216,7 @@ export function useFetchMyNFTs(): () => Promise<void> {
       let _eggsCount = 0;
       let _animalsCount = 0;
       let _breedCount = 0;
-      console.log("structuredNft useFetchMyNFTs", structuredNft);
+      console.log("structuredNft_useFetchMyNFTs", structuredNft);
       structuredNft.forEach(async (nft, index) => {
         const id = nft.token_id;
 
@@ -292,7 +292,7 @@ export function useFetchMyNFTs(): () => Promise<void> {
       dispatch(animalsCount(_animalsCount));
       dispatch(breedsCount(_breedCount));
     } catch (error) {
-      console.log("error in fetch nfts", error);
+      console.error("error_in_fetch_nfts_func", error);
     }
   }, [chainId, account, media?.address, Web3Api.account, dispatch, zooKeeper]);
 }
@@ -341,8 +341,8 @@ export function useGetAvailableEggs(): () => void {
           id: Number(egg.id),
           kind: egg.kind,
           minted: Number(egg.minted),
-          name,
-          price: Number(egg.price) / 10 ** 18,
+          name: egg.name,
+          price: Number(egg.price),
           supply: Number(egg.supply),
           timestamp: Number(egg.timestamp),
           image: `https://zoolabs.mypinata.cloud/ipfs/${image.slice(7)}`,
@@ -434,26 +434,29 @@ export function useBuyEggWithBnB(): (
   const zoo = useZooToken();
   const bnb = useBnbToken();
   const zooKeeper = useZooKeeper();
-  const dropId = process.env.NEXT_PUBLIC_DROP_ID;
+  const dropId = process.env.NEXT_PUBLIC_DROP_ID || 1;
   const dispatch = useDispatch();
   return useCallback(
     async (eggId, quantity, success) => {
-      console.log("buying_eggggg", { eggId, quantity, dropId, zooKeeper });
+      console.log("buying_eggggg_w_bnb", {
+        eggId,
+        quantity,
+        dropId,
+        zooKeeper,
+        bnb,
+      });
       if (!zooKeeper) return;
       try {
         dispatch(loading(true));
         const approval = await bnb?.allowance(account, zooKeeper.address);
         console.log("approval_approving_media", Number(approval));
-        if (Number(approval) <= 0) {
+        if (Number(approval) <= 0 || isNaN(Number(approval))) {
           console.log("approving_media");
-          await bnb
-            ?.approve(zooKeeper.address, MaxUint256, {
-              gasLimit: 4000000,
-            })
-            .then((tx) => {
-              console.log("approval", tx);
-              tx.wait();
-            });
+          const approving = await bnb?.approve(zooKeeper.address, MaxUint256, {
+            gasLimit: 4000000,
+          });
+          approving?.wait();
+          console.log("approval_approved", approving);
         }
         const tx = await zooKeeper.buyEggsWithBNB(eggId, dropId, quantity, {
           gasLimit: 4000000,
@@ -481,7 +484,7 @@ export function useBuyEggWithBnB(): (
         });
       }
     },
-    [addPopup, dispatch, dropId, zooKeeper]
+    [account, addPopup, bnb, dispatch, dropId, zooKeeper]
   );
 }
 
@@ -523,37 +526,88 @@ export function useTransferZoo(): (recipient: string, amount: number) => void {
 export function useGetAllAuctions(): () => Promise<void> {
   const auctionContract = useAuction();
   const dispatch = useDispatch();
+  const media = useMedia();
+  const zooKeeper = useZooKeeper();
   return useCallback(async () => {
     console.log("auction ytfrtdtrsd", auctionContract);
 
-    const auctions = await auctionContract?.getAllAuctions();
-    console.log("auctions__await", auctions);
-    const structuredAuctions = auctions?.map((auction: Auction) => {
-      const {
-        tokenID,
-        tokenOwner,
-        reservePrice,
-        firstBidTime,
-        duration,
-        curatorFeePercentage,
-        curator,
-        auctionCurrency,
-        amount,
-      } = auction;
-      return {
-        tokenID: Number(tokenID),
-        tokenOwner,
-        reservePrice: Number(reservePrice),
-        firstBidTime: Number(firstBidTime),
-        duration: Number(duration),
-        curatorFeePercentage,
-        curator,
-        auctionCurrency,
-        amount: Number(amount),
-      };
-    });
-    console.log("structuredAuctionss", structuredAuctions);
-    dispatch(getAllAuctions(structuredAuctions || []));
+    try {
+      const auctions = await auctionContract?.getAllAuctions();
+      console.log("auctions__await", auctions);
+      await auctions?.map(async (auction: Auction, index: number) => {
+        const tokenUri = await media?.tokenURI(Number(auction.tokenID));
+        const tokenMetadataURI = await media?.tokenMetadataURI(
+          Number(auction.tokenID)
+        );
+        const deet = await zooKeeper?.tokens(Number(auction.tokenID));
+
+        const {
+          name,
+          attributes,
+          image,
+          animation_url,
+          glb_animation_url,
+          usdz_animation_url,
+        } = (await axios.get(tokenMetadataURI)).data;
+        const {
+          tokenID,
+          tokenOwner,
+          reservePrice,
+          firstBidTime,
+          duration,
+          curatorFeePercentage,
+          curator,
+          auctionCurrency,
+          amount,
+          kind,
+        } = auction;
+        const finalNft = {
+          index,
+          kind: deet?.kind,
+          tokenID: Number(tokenID),
+          tokenOwner,
+          reservePrice: Number(reservePrice),
+          firstBidTime: Number(firstBidTime),
+          duration: Number(duration),
+          curatorFeePercentage,
+          curator,
+          auctionCurrency,
+          amount: Number(amount),
+          tokenUri,
+          name,
+          attributes,
+          image: image
+            ? `https://zoolabs.mypinata.cloud/ipfs/${image.slice(7)}`
+            : usdz_animation_url
+            ? `https://zoolabs.mypinata.cloud/ipfs/${usdz_animation_url.slice(
+                7
+              )}`
+            : "",
+          animation_url: animation_url
+            ? `https://zoolabs.mypinata.cloud/ipfs/${animation_url.slice(7)}`
+            : usdz_animation_url
+            ? `https://zoolabs.mypinata.cloud/ipfs/${usdz_animation_url.slice(
+                7
+              )}`
+            : "",
+          glb_animation_url: glb_animation_url
+            ? `https://zoolabs.mypinata.cloud/ipfs/${glb_animation_url.slice(
+                7
+              )}`
+            : "",
+          usdz_animation_url: usdz_animation_url
+            ? `https://zoolabs.mypinata.cloud/ipfs/${usdz_animation_url.slice(
+                7
+              )}`
+            : "",
+        };
+
+        console.log("finalNft", finalNft, auction);
+        dispatch(addAuctionNft(finalNft));
+      });
+    } catch (error) {
+      console.error("error_In_UseGetAllAuctions", error);
+    }
   }, [dispatch, auctionContract]);
 }
 
@@ -809,6 +863,7 @@ export function useFeed(): (animalID: number) => void {
   const addPopup = useAddPopup();
   const zoo = useZooToken();
   const zooKeeper = useZooKeeper();
+  const media = useMedia();
   const { account } = useActiveWeb3React();
   const dispatch = useDispatch();
   const fetchMyNfts = useFetchMyNFTs();
@@ -828,6 +883,19 @@ export function useFeed(): (animalID: number) => void {
             })
             .then((tx) => {
               console.log("approval", tx);
+              tx.wait();
+            });
+        }
+        const mediaApproval = await zoo?.allowance(account, media.address);
+        console.log("approval_approving_media", Number(mediaApproval));
+        if (Number(mediaApproval) <= 0) {
+          console.log("approving_media");
+          await media
+            ?.setApprovalForAll(zooKeeper.address, true, {
+              gasLimit: 4000000,
+            })
+            .then((tx) => {
+              console.log("mediaApproval", tx);
               tx.wait();
             });
         }

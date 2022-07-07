@@ -23,7 +23,7 @@ import { useMoralis } from "react-moralis";
 import { abbreviateNumber } from "functions/abbreviateNumbers";
 import { accountEllipsis } from "functions/lux";
 import { FaMoneyBillWave } from "react-icons/fa";
-import { AvailableEgg } from "types";
+import { Auction, AvailableEgg } from "types";
 
 const PrettoSlider = styled(Slider)({
   color: "#15F195",
@@ -396,7 +396,7 @@ const MarketPlacePage = () => {
         {category === 0 && (
           <div className="flex flex-wrap mt-8 -mx-4">
             {allAuctions.length > 0 ? (
-              allAuctions.map((datum, index) => {
+              allAuctions.map((datum: Auction, index) => {
                 return (
                   <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
                     <MarketItem
@@ -416,17 +416,19 @@ const MarketPlacePage = () => {
         {category === 1 && (
           <div className="flex flex-wrap mt-8 -mx-4">
             {allAuctions.length > 0 ? (
-              allAuctions.map((datum, index) => {
-                return (
-                  <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
-                    <MarketItem
-                      datum={datum}
-                      applyMaxWidth={false}
-                      placeBid={() => (setActiveItem(datum), console.log(""))}
-                    />
-                  </div>
-                );
-              })
+              allAuctions
+                .filter((auction) => auction.kind === 0)
+                .map((datum, index) => {
+                  return (
+                    <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
+                      <MarketItem
+                        datum={datum}
+                        applyMaxWidth={false}
+                        placeBid={() => (setActiveItem(datum), console.log(""))}
+                      />
+                    </div>
+                  );
+                })
             ) : (
               <div className="w-full py-16 text-center">No auctions</div>
             )}
@@ -436,17 +438,19 @@ const MarketPlacePage = () => {
         {category === 2 && (
           <div className="flex flex-wrap mt-8 -mx-4">
             {allAuctions.length > 0 ? (
-              allAuctions.map((datum, index) => {
-                return (
-                  <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
-                    <MarketItem
-                      datum={datum}
-                      applyMaxWidth={false}
-                      placeBid={() => (setActiveItem(datum), console.log(""))}
-                    />
-                  </div>
-                );
-              })
+              allAuctions
+                .filter((auction) => auction.kind === 1)
+                .map((datum, index) => {
+                  return (
+                    <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
+                      <MarketItem
+                        datum={datum}
+                        applyMaxWidth={false}
+                        placeBid={() => (setActiveItem(datum), console.log(""))}
+                      />
+                    </div>
+                  );
+                })
             ) : (
               <div className="w-full py-16 text-center">No auctions</div>
             )}
