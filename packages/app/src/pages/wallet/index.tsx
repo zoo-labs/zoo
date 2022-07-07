@@ -27,7 +27,7 @@ export default function Wallet({ children }) {
   const { myEggsCount, myAnimalsCount, myBreedsCount, myNfts, nftTransfers } =
     useSelector((state: any) => state.zoo);
 
-  const initMoralis = async () => {
+  const initMoralis = useCallback(async () => {
     if (chainId) {
       try {
         // await Moralis.initPlugins();
@@ -40,11 +40,15 @@ export default function Wallet({ children }) {
         console.log("error in init", error);
       }
     }
-  };
+  }, [Moralis, chainId, fetchNFTs, getNftTransfers]);
+
   useEffect(() => {
-    initMoralis();
-  }, [chainId, account]);
-  console.log("myNfts", myNfts);
+    console.log("initializingMoralis", { chainId, account });
+    initMoralis().then((res) => {
+      console.log("initializedMoralis");
+    });
+  }, [chainId, account, initMoralis]);
+  console.log("myNfts__", myNfts);
   return (
     <section className="Hero">
       <div className="px-6 pb-16 mt-16 Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
