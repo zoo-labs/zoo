@@ -1,12 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Modal from "components/Modal";
-
 import { fadeInOnScroll } from "animation";
 import { Auction } from "types";
-import { accountEllipsis } from "functions";
 import dynamic from "next/dynamic";
+import { useZoobalance } from "state/zoo/hooks";
+import { useZooKeeper } from "hooks";
+import Web3 from "web3";
+
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
@@ -15,11 +17,27 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
   const [openMoal, setOpenModal] = React.useState(false);
   const comingSoonRef = React.useRef();
 
+  const getZooBalance = useZoobalance();
+  const zooKeeper = useZooKeeper();
+  const [zooBnbPrice, setZooBnbPrice] = useState(0);
+
+  const getZooBnbPrice = useCallback(async () => {
+    const price = await zooKeeper.BNBPrice();
+    const value = Web3.utils.fromWei(price.toString(), "ether");
+    setZooBnbPrice(parseFloat(value));
+  }, [zooKeeper]);
+
+  useEffect(() => {
+    getZooBalance();
+    getZooBnbPrice();
+  }, [getZooBalance, getZooBnbPrice]);
+
+  const amountPriceBNB = zooBnbPrice * Number(auction?.amount);
+  const reservePriceBNB = zooBnbPrice * Number(auction?.reservePrice);
+
   useEffect(() => {
     fadeInOnScroll(comingSoonRef.current);
   }, []);
-
-  console.log("THE_AUCTION>>", auction);
 
   return (
     <>
@@ -59,7 +77,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
                 <p className="text-grey">Reserve Price</p>
                 <p className="font-bold">
                   {auction?.reservePrice} ZOO{" "}
-                  <span className="text-green">$6800</span>
+                  <span className="text-green">{reservePriceBNB} BNB</span>
                 </p>
               </div>
             </div>
@@ -70,7 +88,9 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
             <h1 className="mb-4 text-4xl font-bold lg:text-6xl">
               {auction?.amount} ZOO
             </h1>
-            <p className="font-bold text-green lg:text-xl mb-9">$3,618.36</p>
+            <p className="font-bold text-green lg:text-xl mb-9">
+              {amountPriceBNB} BNB
+            </p>
 
             <p className="mb-2 font-medium text-white">Auction ending in</p>
             <div className="flex items-center justify-between max-w-md">
@@ -110,7 +130,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
           <div>
             <form>
               <div className="mb-4">
-                <p className="mb-2 text-xs font-bold">Current Bid</p>
+                <p className="mb-2 text-xs font-bold">Reserved Price</p>
                 <div className="flex flex-row justify-between px-4 py-2 border rounded items center border-black100 bg-black100">
                   <input
                     type=""
