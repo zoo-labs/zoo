@@ -22,8 +22,8 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
   const [zooBnbPrice, setZooBnbPrice] = useState(0);
 
   const getZooBnbPrice = useCallback(async () => {
-    const price = await zooKeeper.BNBPrice();
-    const value = Web3.utils.fromWei(price.toString(), "ether");
+    const price = await zooKeeper?.BNBPrice();
+    const value = Web3.utils.fromWei(price?.toString(), "ether");
     setZooBnbPrice(parseFloat(value));
   }, [zooKeeper]);
 

@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 import { MyNFT } from "state/zoo/types";
 import { Auction } from "types";
 import moment from "moment";
+import { abbreviateNumber } from "functions/abbreviateNumbers";
+import { shortenAddress } from "functions";
 
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
@@ -51,7 +53,7 @@ const CardNft = ({ nft, className }: { nft: Auction; className: string }) => {
               passHref
             >
               <button className="text-xs  bg-transparent w-full border-solid border-[#06047a] hover:bg-[#06047a] transition ease-in-out border-2 p-2 hover:bg-gradient-to-r from-gray-700 via-gray-900 to-black">
-                {nft?.reservePrice}K ZOO
+                {abbreviateNumber(nft?.reservePrice)} ZOO
               </button>
             </Link>
           </div>
@@ -60,20 +62,25 @@ const CardNft = ({ nft, className }: { nft: Auction; className: string }) => {
         <div className="flex items-center justify-between h-[50px] py-2 px-2">
           <div className="flex text-center ">
             <span
-              className="dot p-2 mt-[10px]"
+              className="dot p-2 mt-[10px] rounded-full"
               style={{
                 background:
                   "linear-gradient(180deg, #2517FF -61.88%, #15F195 131.19%)",
               }}
             ></span>
-            <h1 className="p-2 text-sm text-gray-600">{nft?.tokenOwner}</h1>
+            <h1 className="p-2 text-sm text-gray-600">
+              {nft?.tokenOwner ? shortenAddress(nft?.tokenOwner) : "-"}
+            </h1>
           </div>
 
           <div className="text-center">
             <h1 className="text-sm font-black text-gray-300 uppercase">
               {" "}
-              {moment(new Date(nft.duration * 1000), "YYYYMMDD").fromNow()} days
-              Left
+              {moment(
+                new Date(new Date().getTime() + nft.duration * 1000),
+                "YYYYMMDD"
+              ).fromNow()}{" "}
+              {/* days Left */}
             </h1>
           </div>
         </div>

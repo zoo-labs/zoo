@@ -110,13 +110,24 @@ const PlaceBid = () => {
                 The next bid must be {nft?.curatorFeePercentage}% more than the
                 current bid
               </p>
-              <button
-                className="py-[12px] w-full rounded-2xl bg-[#2703F8] mb-11 disabled:cursor-not-allowed"
-                onClick={handleClick}
-                disabled={bidPrice < nft?.reservePrice || loading}
-              >
-                {nft?.tokenOwner === account ? "Edit Auction" : "Place Bid"}
-              </button>
+              {nft?.tokenOwner === account && nft?.amount <= 0 && (
+                <button
+                  className="py-[12px] w-full rounded-2xl bg-[#2703F8] mb-11 disabled:cursor-not-allowed"
+                  onClick={handleClick}
+                  disabled={bidPrice < nft?.reservePrice || loading}
+                >
+                  Edit Auction
+                </button>
+              )}
+              {nft?.tokenOwner !== account && (
+                <button
+                  className="py-[12px] w-full rounded-2xl bg-[#2703F8] mb-11 disabled:cursor-not-allowed"
+                  onClick={handleClick}
+                  disabled={bidPrice < nft?.reservePrice || loading}
+                >
+                  Place Bid
+                </button>
+              )}
               {nft?.tokenOwner === account && (
                 <button
                   className="py-[12px] w-full rounded-2xl border border-[#2703F8] bg-[#2A2C41] mb-11"
