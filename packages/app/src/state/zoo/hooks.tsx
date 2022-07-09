@@ -964,6 +964,43 @@ export function useFeed(): (animalID: number) => void {
     [account, addPopup, dispatch, dropId, zoo, zooKeeper]
   );
 }
-function MAX_UINT(address: string, MAX_UINT: any, arg2: { gasLimit: number }) {
-  throw new Error("Function not implemented.");
+export function useEditAuction(): (
+  auctionId: number | string,
+  reservePrice: number,
+  success?: () => void
+) => void {
+  const auction = useAuction();
+  const getAllAuctions = useGetAllAuctions();
+  const addPopup = useAddPopup();
+  return useCallback(
+    async (auctionId, reservePrice, success) => {
+      try {
+        const tx = await auction?.setAuctionReservePrice(
+          auctionId,
+          reservePrice
+        );
+        await tx?.wait();
+        await getAllAuctions();
+        success?.();
+        addPopup({
+          txn: {
+            hash: null,
+            summary: `Successfully edited auction`,
+            success: true,
+          },
+        });
+        console.log("EDITED AUCTION", tx);
+      } catch (error) {
+        console.log("EDIT_AUCTION_ERROR", error);
+        addPopup({
+          txn: {
+            hash: null,
+            summary: formatError(error),
+            success: false,
+          },
+        });
+      }
+    },
+    [addPopup, auction, getAllAuctions]
+  );
 }
