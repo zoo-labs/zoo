@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Image from "next/image";
 import { useSelector } from "react-redux";
 import { AppState } from "state";
 import { fadeInOnScroll } from "animation";
@@ -13,9 +12,7 @@ import EmptyAuctionSection from "./EmptyAuctionSection";
 import { handleFunds } from "utils/handleFunds";
 import { useActiveWeb3React } from "hooks";
 import { useMoralis } from "react-moralis";
-import dynamic from "next/dynamic";
 import { Auction } from "types";
-import Link from "next/link";
 
 export default function Wallet({ children }) {
   const [category, setCategory] = useState(0);
