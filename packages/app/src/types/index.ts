@@ -71,6 +71,7 @@ export interface EggAttribute {
 export interface Auction {
   index: number;
   tokenID: number;
+  auctionId: number;
   tokenOwner: string;
   reservePrice: number;
   firstBidTime: number;
