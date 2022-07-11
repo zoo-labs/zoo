@@ -53,7 +53,9 @@ const PlaceBid = () => {
       console.log("You own this token and placed this auction");
       toggleAuctionModal();
     } else {
-      placeBid(Number(nft?.auctionId), Number(bidPrice));
+      placeBid(Number(nft?.auctionId), Number(bidPrice), () => {
+        router.push("/market");
+      });
     }
   };
 
