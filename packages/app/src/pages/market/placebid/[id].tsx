@@ -43,7 +43,7 @@ const PlaceBid = () => {
       return String(obj.tokenID) === String(router.query.id);
     });
     setNft(NFT[0]);
-    setBidPrice(NFT[0]?.reservePrice);
+    setBidPrice(NFT[0]?.amount > 0 ? NFT[0]?.amount : NFT[0]?.reservePrice);
     console.log("NFTTTT_ANDAUCTION_", NFT[0]?.tokenOwner === account);
   }, [account, allAuctions, router.query.id]);
 
