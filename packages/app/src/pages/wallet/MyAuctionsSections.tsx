@@ -179,32 +179,36 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
             {/* {timer2} */}
             {/* {timerComponents.length ? timerComponents : <span>6 Weeks</span>} */}
 
-            <div className="flex items-center justify-between max-w-md">
-              <div className="mr-3 text-center">
-                <p className="text-2xl font-medium lg:text-4xl ">
-                  {ttimeLeft.d > 9 ? ttimeLeft.d : "0" + ttimeLeft.d}
-                </p>
-                <p className="font-medium text-grey">Days</p>
+            {auction.firstBidTime ? (
+              <div className="flex items-center justify-between max-w-md">
+                <div className="mr-3 text-center">
+                  <p className="text-2xl font-medium lg:text-4xl ">
+                    {ttimeLeft.d > 9 ? ttimeLeft.d : "0" + ttimeLeft.d}
+                  </p>
+                  <p className="font-medium text-grey">Days</p>
+                </div>
+                <div className="mr-3 text-center">
+                  <p className="text-2xl font-medium lg:text-4xl ">
+                    {ttimeLeft.h > 9 ? ttimeLeft.h : "0" + ttimeLeft.h}
+                  </p>
+                  <p className="font-medium text-grey">Hrs</p>
+                </div>
+                <div className="mr-3 text-center">
+                  <p className="text-2xl font-medium lg:text-4xl ">
+                    {ttimeLeft.m > 9 ? ttimeLeft.m : "0" + ttimeLeft.m}
+                  </p>
+                  <p className="font-medium text-grey">Min</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-medium lg:text-4xl">
+                    {ttimeLeft.s > 9 ? ttimeLeft.s : "0" + ttimeLeft.s}
+                  </p>
+                  <p className="font-medium text-grey">Sec</p>
+                </div>
               </div>
-              <div className="mr-3 text-center">
-                <p className="text-2xl font-medium lg:text-4xl ">
-                  {ttimeLeft.h > 9 ? ttimeLeft.h : "0" + ttimeLeft.h}
-                </p>
-                <p className="font-medium text-grey">Hrs</p>
-              </div>
-              <div className="mr-3 text-center">
-                <p className="text-2xl font-medium lg:text-4xl ">
-                  {ttimeLeft.m > 9 ? ttimeLeft.m : "0" + ttimeLeft.m}
-                </p>
-                <p className="font-medium text-grey">Min</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-medium lg:text-4xl">
-                  {ttimeLeft.s > 9 ? ttimeLeft.s : "0" + ttimeLeft.s}
-                </p>
-                <p className="font-medium text-grey">Sec</p>
-              </div>
-            </div>
+            ) : (
+              "Auction has not started yet"
+            )}
           </div>
           {!auction.firstBidTime && (
             <button
