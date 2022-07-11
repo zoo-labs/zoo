@@ -9,7 +9,7 @@ import { ApplicationModal } from "../../state/application/actions";
 import Modal from "../../components/Modal";
 import ModalHeader from "../../components/ModalHeader";
 import { useSelector } from "react-redux";
-import { useCreateAuction } from "state/zoo/hooks";
+import { useCreateAuction, useEditAuction } from "state/zoo/hooks";
 import { useActiveWeb3React } from "hooks/useActiveWeb3React";
 import { useRouter } from "next/router";
 
@@ -27,6 +27,7 @@ export default function AuctionModal({
   const { push } = useRouter();
   const { loading } = useSelector((state: any) => state.zoo);
   const auction = useCreateAuction();
+  const editAuction = useEditAuction();
   const toggleWallet = useWalletModalToggle();
   const [duration, setDuration] = useState(null);
   const [reservePrice, setReservePrice] = useState(null);
@@ -48,18 +49,24 @@ export default function AuctionModal({
   const handleAuction = useCallback(
     (duration_, reservePrice_, curatorFee_) => {
       if (account) {
-        auction(
-          Number(nft?.id),
-          duration_,
-          reservePrice_,
-          curatorFee_,
-          successCallback
-        );
+        if (edit) {
+          editAuction(nft?.auctionId, reservePrice, () => {
+            successCallback();
+          });
+        } else {
+          auction(
+            Number(nft?.id),
+            duration_,
+            reservePrice_,
+            curatorFee_,
+            successCallback
+          );
+        }
       } else {
         toggleWallet();
       }
     },
-    [account, auction, nft?.id, successCallback, toggleWallet]
+    [account, auction, edit, nft?.id, successCallback, toggleWallet]
   );
 
   function getModalContent() {
@@ -75,6 +82,7 @@ export default function AuctionModal({
               onChange={(e) => setDuration(e.target.value)}
               className="w-full px-5 py-4 text-black rounded-lg bg-dark-400"
               placeholder="Duration (days)"
+              disabled={edit}
             />
           </div>
           <div className="w-full">
@@ -95,6 +103,7 @@ export default function AuctionModal({
               onChange={(e) => setCuratorFee(e.target.value)}
               className="w-full px-5 py-4 text-black rounded-lg bg-dark-400"
               placeholder="max 10%"
+              disabled={edit}
             />
           </div>
           <button

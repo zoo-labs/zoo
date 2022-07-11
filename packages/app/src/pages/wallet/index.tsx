@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Image from "next/image";
 import { useSelector } from "react-redux";
 import { AppState } from "state";
+import { fadeInOnScroll } from "animation";
 import { useBuyZoo, useFetchMyNFTs, useGetNftTransfers } from "state/zoo/hooks";
 import { numberWithCommas } from "functions";
 
 import MyWalletSection from "./MyWalletSection";
 import MyBidsSection from "./MyBidsSection";
 import MyAuctionSection from "./MyAuctionsSections";
+import EmptyAuctionSection from "./EmptyAuctionSection";
 import { handleFunds } from "utils/handleFunds";
 import { useActiveWeb3React } from "hooks";
 import { useMoralis } from "react-moralis";
-import dynamic from "next/dynamic";
 import { Auction } from "types";
 
 export default function Wallet({ children }) {
@@ -33,6 +33,11 @@ export default function Wallet({ children }) {
     nftTransfers,
     allAuctions,
   } = useSelector((state: any) => state.zoo);
+  const comingSoonRef = React.useRef();
+
+  useEffect(() => {
+    fadeInOnScroll(comingSoonRef.current);
+  }, []);
 
   const initMoralis = useCallback(async () => {
     if (chainId) {
@@ -125,12 +130,16 @@ export default function Wallet({ children }) {
           />
         ) : category === 1 ? (
           <MyBidsSection />
-        ) : (
+        ) : allAuctions.filter(
+            (auction: Auction) => auction.tokenOwner === account
+          )?.length > 0 ? (
           allAuctions
-            .filter((auction: Auction) => auction.tokenOwner === account)
+            .filter((auction: Auction) => auction.tokenOwner === account) // filter auctions that are mine
             .map((auction: Auction, index: number) => (
               <MyAuctionSection key={index} auction={auction} />
             ))
+        ) : (
+          <EmptyAuctionSection />
         )}
       </div>
     </section>

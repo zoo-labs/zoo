@@ -551,13 +551,12 @@ export function useGetAllAuctions(): () => Promise<void> {
         } = (await axios.get(tokenMetadataURI)).data;
         const {
           tokenID,
+          auctionId,
           addresses,
           reservePrice,
           firstBidTime,
           duration,
           curatorFeePercentage,
-          curator,
-          auctionCurrency,
           amount,
           kind,
         } = auction;
@@ -570,12 +569,13 @@ export function useGetAllAuctions(): () => Promise<void> {
           firstBidTime: Number(firstBidTime),
           duration: Number(duration),
           curatorFeePercentage,
-          curator,
-          auctionCurrency,
+          // curator,
+          // auctionCurrency,
           amount: Number(amount),
           tokenUri,
           name,
           attributes,
+          auctionId,
           image: image
             ? `https://zoolabs.mypinata.cloud/ipfs/${image.slice(7)}`
             : usdz_animation_url
@@ -603,12 +603,12 @@ export function useGetAllAuctions(): () => Promise<void> {
         };
 
         console.log("finalNft", finalNft, auction);
-        dispatch(addAuctionNft(finalNft));
+        dispatch(addAuctionNft(finalNft as any));
       });
     } catch (error) {
       console.error("error_In_UseGetAllAuctions", error);
     }
-  }, [dispatch, auctionContract]);
+  }, [auctionContract, media, zooKeeper, dispatch]);
 }
 
 export function useRemoveAuction(): (
@@ -830,17 +830,53 @@ export function useCreateAuction(): (
 //   );
 // }
 
-export function useCreateBid(): (id: any) => void {
+export function useCreateBid(): (id: string | number, amount: number) => void {
   const auction = useAuction();
   const dispatch = useDispatch();
+  const addPopup = useAddPopup();
+  const zoo = useZooToken();
+  const { account } = useActiveWeb3React();
+  return useCallback(
+    async (id, amount) => {
+      try {
+        dispatch(loading(true));
+        const approved = await zoo?.allowance(account, auction?.address);
+        console.log("AUCTION_APPROVED", Number(approved));
+        if (!approved || Number(approved) <= 0) {
+          const approval = await zoo?.approve(auction?.address, MaxUint256, {
+            gasLimit: 4000000,
+          });
+          await approval.wait();
+          console.log("APPROVAL", approval);
+        }
 
-  return useCallback(async (id) => {
-    try {
-      dispatch(createBid(id));
-    } catch (error) {
-      console.log("CREATE BID", error);
-    }
-  }, []);
+        const tx = await auction?.createBid(id, amount, {
+          gasLimit: 4000000,
+        });
+        await tx.wait();
+        dispatch(createBid(id));
+        dispatch(loading(false));
+        addPopup({
+          txn: {
+            hash: null,
+            summary: `Successfully bid ${amount} on ${id}`,
+            success: true,
+          },
+        });
+      } catch (error) {
+        console.log("CREATE_BID_ERROR", error);
+        dispatch(loading(false));
+        addPopup({
+          txn: {
+            hash: null,
+            summary: formatError(error),
+            success: false,
+          },
+        });
+      }
+    },
+    [auction, dispatch]
+  );
 }
 
 // export function getZooBalance(account, zooToken) {
@@ -926,5 +962,45 @@ export function useFeed(): (animalID: number) => void {
       }
     },
     [account, addPopup, dispatch, dropId, zoo, zooKeeper]
+  );
+}
+export function useEditAuction(): (
+  auctionId: number | string,
+  reservePrice: number,
+  success?: () => void
+) => void {
+  const auction = useAuction();
+  const getAllAuctions = useGetAllAuctions();
+  const addPopup = useAddPopup();
+  return useCallback(
+    async (auctionId, reservePrice, success) => {
+      try {
+        const tx = await auction?.setAuctionReservePrice(
+          auctionId,
+          reservePrice
+        );
+        await tx?.wait();
+        await getAllAuctions();
+        success?.();
+        addPopup({
+          txn: {
+            hash: null,
+            summary: `Successfully edited auction`,
+            success: true,
+          },
+        });
+        console.log("EDITED AUCTION", tx);
+      } catch (error) {
+        console.log("EDIT_AUCTION_ERROR", error);
+        addPopup({
+          txn: {
+            hash: null,
+            summary: formatError(error),
+            success: false,
+          },
+        });
+      }
+    },
+    [addPopup, auction, getAllAuctions]
   );
 }
