@@ -1,11 +1,21 @@
-import React, { useCallback, useEffect, useState, useMemo } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+  useMemo,
+  useRef,
+} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Modal from "components/Modal";
 import { fadeInOnScroll } from "animation";
 import { Auction } from "types";
 import dynamic from "next/dynamic";
-import { useEditAuction, useZoobalance } from "state/zoo/hooks";
+import {
+  useEditAuction,
+  useGetAllAuctions,
+  useZoobalance,
+} from "state/zoo/hooks";
 import { useZooKeeper } from "hooks";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import Web3 from "web3";
@@ -22,6 +32,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
   const comingSoonRef = React.useRef();
   const { account } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
+  const getAllAuctions = useGetAllAuctions();
   const zooKeeper = useZooKeeper();
   const editAuction = useEditAuction();
   const toggleWallet = useWalletModalToggle();
@@ -36,7 +47,8 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
   useEffect(() => {
     getZooBalance();
     getZooBnbPrice();
-  }, [getZooBalance, getZooBnbPrice]);
+    getAllAuctions();
+  }, [getZooBalance, getZooBnbPrice, getAllAuctions]);
 
   const amountPriceBNB = zooBnbPrice * Number(auction?.amount);
   const reservePriceBNB = zooBnbPrice * Number(auction?.reservePrice);
@@ -46,63 +58,9 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
   }, []);
 
   console.log("THE_SINGLE_AUCC", auction);
-
-  const interval = 1000;
-  const [initialTime, setInitialTime] = useState(0);
-  const [timeLeft, { start, pause, resume, reset }] = useCountDown(
-    initialTime,
-    interval
-  );
-
-  useEffect(() => {
-    const endDate = new Date(auction.firstBidTime + auction.duration);
-    setInitialTime(endDate.getTime());
-  }, [auction]);
-
-  useEffect(() => {
-    start();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   useEffect(() => {
     setReservePrice(auction?.reservePrice);
-    // start();
   }, [auction?.reservePrice]);
-
-  const timer = useMemo(() => {
-    if (auction?.firstBidTime) {
-      console.log("THE_TIME_LEFT", new Date(timeLeft * 1000));
-      const now = new Date();
-      const timeLeft_ = new Date(timeLeft * 1000).getTime() - now.getTime();
-      const days = Math.floor(timeLeft_ / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-      return (
-        <div className="flex items-center justify-between max-w-md">
-          <div className="mr-3 text-center">
-            <p className="text-2xl font-medium lg:text-4xl ">{days}</p>
-            <p className="font-medium text-grey">Days</p>
-          </div>
-          <div className="mr-3 text-center">
-            <p className="text-2xl font-medium lg:text-4xl ">{hours}</p>
-            <p className="font-medium text-grey">Hrs</p>
-          </div>
-          <div className="mr-3 text-center">
-            <p className="text-2xl font-medium lg:text-4xl ">{minutes}</p>
-            <p className="font-medium text-grey">Min</p>
-          </div>
-          <div className="text-center">
-            <p className="text-2xl font-medium lg:text-4xl">{seconds}</p>
-            <p className="font-medium text-grey">Sec</p>
-          </div>
-        </div>
-      );
-    } else return "Auction has not started yet";
-  }, [auction?.firstBidTime, timeLeft]);
 
   const successCallback = useCallback(() => {
     console.log("success");
@@ -124,6 +82,40 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
     },
     [account, auction, editAuction, reservePrice, successCallback, toggleWallet]
   );
+
+  // TIMER 3 LFGGGGGGGG!
+  const calculateTimeLeft = () => {
+    const endDate = new Date(
+      auction.firstBidTime * 1000 + auction.duration * 1000
+    );
+    const difference = +new Date(endDate) - +new Date();
+
+    let timeLeft: any = {};
+
+    if (difference > 0) {
+      timeLeft = {
+        d: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        h: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        m: Math.floor((difference / 1000 / 60) % 60),
+        s: Math.floor((difference / 1000) % 60),
+      };
+    }
+
+    return timeLeft;
+  };
+
+  const [ttimeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [count, setCount] = useState(1);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearTimeout(interval);
+  }, []);
+
+  console.log("TIMER_COMPONENTS__", ttimeLeft);
 
   return (
     <>
@@ -148,7 +140,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
             )}
           </div>
         </div>
-        <div className="flex flex-col basis-1/2">
+        <div className="flex flex-col basis-1/2 w-full">
           <h2 className="mb-4 text-4xl lg:text-4xl">{auction?.name}</h2>
           {/* Address and Price */}
           <div className="flex justify-between mb-4">
@@ -183,25 +175,36 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
               ""
             )}
             {/* Countdown */}
-            {timer}
-            {/* <div className="flex items-center justify-between max-w-md">
+            {/* {timer} */}
+            {/* {timer2} */}
+            {/* {timerComponents.length ? timerComponents : <span>6 Weeks</span>} */}
+
+            <div className="flex items-center justify-between max-w-md">
               <div className="mr-3 text-center">
-                <p className="text-2xl font-medium lg:text-4xl ">{days}</p>
+                <p className="text-2xl font-medium lg:text-4xl ">
+                  {ttimeLeft.d > 9 ? ttimeLeft.d : "0" + ttimeLeft.d}
+                </p>
                 <p className="font-medium text-grey">Days</p>
               </div>
               <div className="mr-3 text-center">
-                <p className="text-2xl font-medium lg:text-4xl ">{hours}</p>
+                <p className="text-2xl font-medium lg:text-4xl ">
+                  {ttimeLeft.h > 9 ? ttimeLeft.h : "0" + ttimeLeft.h}
+                </p>
                 <p className="font-medium text-grey">Hrs</p>
               </div>
               <div className="mr-3 text-center">
-                <p className="text-2xl font-medium lg:text-4xl ">{minutes}</p>
+                <p className="text-2xl font-medium lg:text-4xl ">
+                  {ttimeLeft.m > 9 ? ttimeLeft.m : "0" + ttimeLeft.m}
+                </p>
                 <p className="font-medium text-grey">Min</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-medium lg:text-4xl">{seconds}</p>
+                <p className="text-2xl font-medium lg:text-4xl">
+                  {ttimeLeft.s > 9 ? ttimeLeft.s : "0" + ttimeLeft.s}
+                </p>
                 <p className="font-medium text-grey">Sec</p>
               </div>
-            </div> */}
+            </div>
           </div>
           {!auction.firstBidTime && (
             <button
@@ -211,7 +214,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
               Edit Auction
             </button>
           )}
-          <Link href="/nft-info" passHref>
+          <Link href={`/market/auctions/${auction.auctionId}`} passHref>
             <button className="py-2 font-semibold border border-white rounded">
               View Item
             </button>

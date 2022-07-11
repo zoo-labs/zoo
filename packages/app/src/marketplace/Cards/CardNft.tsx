@@ -14,11 +14,11 @@ const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
 const CardNft = ({ nft, className }: { nft: Auction; className: string }) => {
   return (
     <div
-      className={`flex flex-col w-[300px] lg:w-[400px] h-[600px] justify-center items-center  ${className}`}
+      className={`flex flex-col min-w-[300px] lg:min-w-[400px] min-h-[600px] justify-center items-center  ${className}`}
     >
-      <div>
-        <div className="h-[350px] w-[250px]  borderGrad p-2 m-2">
-          <div className="w-full h-full bg-black rounded-[0.225rem]">
+      <div className="w-full">
+        <div className="min-h-[350px] w-full borderGrad p-2">
+          <div className="w-full h-full bg-black rounded-[0.225rem] flex flex-col justify-center items-center">
             {nft.kind === 0 ? (
               <video
                 autoPlay
@@ -28,7 +28,7 @@ const CardNft = ({ nft, className }: { nft: Auction; className: string }) => {
                 height={350}
               />
             ) : (
-              <div className="h-[450px] w-[300px]">
+              <div className="h-[450px] w-full">
                 <ModelViewer
                   glb={nft?.glb_animation_url}
                   usdz={nft?.usdz_animation_url}
@@ -59,7 +59,7 @@ const CardNft = ({ nft, className }: { nft: Auction; className: string }) => {
           </div>
         </div>
 
-        <div className="flex items-center justify-between h-[50px] py-2 px-2">
+        <div className="flex items-center justify-between h-[50px] py-2 px-2 w-full">
           <div className="flex text-center ">
             <span
               className="dot p-2 mt-[10px] rounded-full"
@@ -85,11 +85,11 @@ const CardNft = ({ nft, className }: { nft: Auction; className: string }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 h-[5spx] w-[250px] p-2">
-          <hr className="  w-[250px]"></hr>
+        <div className="h-[5spx] min-w-[250px] w-full p-2">
+          <hr className="w-full" />
         </div>
 
-        <div className="flex items-center justify-between  h-[50px]">
+        <div className="flex items-center justify-between  h-[50px] w-full">
           <div className="flex-1 text-left">
             <h1 className="p-2 text-xs text-gray-600 ">Highest Bid</h1>
           </div>
@@ -100,7 +100,7 @@ const CardNft = ({ nft, className }: { nft: Auction; className: string }) => {
             </h1>
           </div>
 
-          <div className="flex-1 text-center">
+          <div className="flex-1 text-right">
             <h1 className="p-2 text-xs text-gray-600 ">
               {nft?.attributes &&
                 nft?.attributes.filter(
