@@ -530,7 +530,7 @@ export function useGetAllAuctions(): () => Promise<void> {
   const zooKeeper = useZooKeeper();
   return useCallback(async () => {
     console.log("auction ytfrtdtrsd", auctionContract);
-
+    const na = +new Date();
     try {
       const auctions = await auctionContract?.getAllAuctions();
       console.log("auctions__await", auctions);

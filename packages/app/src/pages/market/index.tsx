@@ -93,10 +93,7 @@ const MarketPlacePage = () => {
   ];
   const [fetching, setFetching] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [bidView, setBidView] = useState(0);
-  const [activeBid, setActiveBid] = useState({});
-  const [priceRange, setPriceRange] = useState<any>(0.0);
-  const [breedRange, setBreedRange] = useState<any>(0.0);
+
   const [activeItem, setActiveItem] = useState({});
   const [hotData, setHotData] = useState([]);
   const getAvailableEggs = useGetAvailableEggs();

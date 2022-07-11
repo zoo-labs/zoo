@@ -60,34 +60,34 @@ const Item = () => {
     const value = Web3.utils.fromWei(price.toString(), "ether");
     setZooBnbPrice(parseFloat(value));
   };
-  // const handleBuyZoo = useCallback(() => {
-  //   console.log("Clicked");
-  //   if (account) {
-  //     buyZoo();
-  //   } else {
-  //     toggleWallet();
-  //   }
-  // }, [account, buyZoo, toggleWallet]);
+  const handleBuyZoo = useCallback(() => {
+    console.log("Clicked");
+    if (account) {
+      buyZoo();
+    } else {
+      toggleWallet();
+    }
+  }, [account, buyZoo, toggleWallet]);
 
-  // const handleBuyEgg = useCallback(
-  //   (eggId, quantity) => {
-  //     console.log("Clicked");
-  //     if (account) {
-  //       if (withZoo) {
-  //         console.log("withzoo");
-  //         buyEgg(eggId, quantity, () => router.push("/wallet"));
-  //       } else {
-  //         console.log("withbnb");
+  const handleBuyEgg = useCallback(
+    (eggId, quantity) => {
+      console.log("Clicked");
+      if (account) {
+        if (withZoo) {
+          console.log("withzoo");
+          buyEgg(eggId, quantity, () => router.push("/wallet"));
+        } else {
+          console.log("withbnb");
 
-  //         buyEggWithBnB(eggId, quantity, () => router.push("/wallet"));
-  //         // buyEgg(eggId, quantity, () => router.push('/dashboard'))
-  //       }
-  //     } else {
-  //       toggleWallet();
-  //     }
-  //   },
-  //   [account, buyEgg, buyEggWithBnB, router, toggleWallet, withZoo]
-  // );
+          buyEggWithBnB(eggId, quantity, () => router.push("/wallet"));
+          // buyEgg(eggId, quantity, () => router.push('/dashboard'))
+        }
+      } else {
+        toggleWallet();
+      }
+    },
+    [account, buyEgg, buyEggWithBnB, router, toggleWallet, withZoo]
+  );
 
   useEffect(() => {
     const _egg = availableEggs.find(
@@ -246,6 +246,14 @@ const Item = () => {
                   </div> */}
                 </p>
               </div>
+              {Number(egg?.price) > zooBalance && (
+                <button
+                  className="px-2 py-2 rounded-lg bg-dark-400"
+                  onClick={() => handleBuyZoo()}
+                >
+                  Buy more
+                </button>
+              )}
             </div>
             <div className="w-full text-sm">
               <p className="w-full border-b border-[#605E5E] pb-2 mb-5">
@@ -270,7 +278,7 @@ const Item = () => {
                 to prioritize social engagement between fans and influencers. ‍
               </p>
             </div>
-            {/* <button
+            <button
               className={`py-3.5 w-full bg-[#2703F8] rounded-lg disabled:cursor-not-allowed ${
                 loading && "opacity-30"
               }`}
@@ -282,7 +290,7 @@ const Item = () => {
                 : balanceCheck()
                 ? "Insuficient balance"
                 : "Buy Now"}
-            </button> */}
+            </button>
           </div>
         </div>
       </div>
