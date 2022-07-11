@@ -201,7 +201,7 @@ const MarketPlacePage = () => {
   }, [getAllAuctions, getAvailableEggs]);
 
   console.log("MY availableEggs", availableEggs);
-  console.log("MY Auctionss", allAuctions);
+  console.log("MY_Auctionss", allAuctions);
 
   return (
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">

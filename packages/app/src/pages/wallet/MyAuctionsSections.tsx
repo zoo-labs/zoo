@@ -1,23 +1,129 @@
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Modal from "components/Modal";
-
 import { fadeInOnScroll } from "animation";
 import { Auction } from "types";
-import { accountEllipsis } from "functions";
 import dynamic from "next/dynamic";
+import { useEditAuction, useZoobalance } from "state/zoo/hooks";
+import { useZooKeeper } from "hooks";
+import useActiveWeb3React from "hooks/useActiveWeb3React";
+import Web3 from "web3";
+import useCountDown from "react-countdown-hook";
+import { useWalletModalToggle } from "state/application/hooks";
+
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
 
 const MyAuctionSection = ({ auction }: { auction: Auction }) => {
   const [openMoal, setOpenModal] = React.useState(false);
+  const [reservePrice, setReservePrice] = useState<number | undefined>();
   const comingSoonRef = React.useRef();
+  const { account } = useActiveWeb3React();
+  const getZooBalance = useZoobalance();
+  const zooKeeper = useZooKeeper();
+  const editAuction = useEditAuction();
+  const toggleWallet = useWalletModalToggle();
+  const [zooBnbPrice, setZooBnbPrice] = useState(0);
+
+  const getZooBnbPrice = useCallback(async () => {
+    const price = await zooKeeper?.BNBPrice();
+    const value = Web3.utils.fromWei(price?.toString(), "ether");
+    setZooBnbPrice(parseFloat(value));
+  }, [zooKeeper]);
+
+  useEffect(() => {
+    getZooBalance();
+    getZooBnbPrice();
+  }, [getZooBalance, getZooBnbPrice]);
+
+  const amountPriceBNB = zooBnbPrice * Number(auction?.amount);
+  const reservePriceBNB = zooBnbPrice * Number(auction?.reservePrice);
 
   useEffect(() => {
     fadeInOnScroll(comingSoonRef.current);
   }, []);
+
+  console.log("THE_SINGLE_AUCC", auction);
+
+  const interval = 1000;
+  const [initialTime, setInitialTime] = useState(0);
+  const [timeLeft, { start, pause, resume, reset }] = useCountDown(
+    initialTime,
+    interval
+  );
+
+  useEffect(() => {
+    const endDate = new Date(auction.firstBidTime + auction.duration);
+    setInitialTime(endDate.getTime());
+  }, [auction]);
+
+  useEffect(() => {
+    start();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setReservePrice(auction?.reservePrice);
+    // start();
+  }, [auction?.reservePrice]);
+
+  const timer = useMemo(() => {
+    if (auction?.firstBidTime) {
+      console.log("THE_TIME_LEFT", new Date(timeLeft * 1000));
+      const now = new Date();
+      const timeLeft_ = new Date(timeLeft * 1000).getTime() - now.getTime();
+      const days = Math.floor(timeLeft_ / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+      return (
+        <div className="flex items-center justify-between max-w-md">
+          <div className="mr-3 text-center">
+            <p className="text-2xl font-medium lg:text-4xl ">{days}</p>
+            <p className="font-medium text-grey">Days</p>
+          </div>
+          <div className="mr-3 text-center">
+            <p className="text-2xl font-medium lg:text-4xl ">{hours}</p>
+            <p className="font-medium text-grey">Hrs</p>
+          </div>
+          <div className="mr-3 text-center">
+            <p className="text-2xl font-medium lg:text-4xl ">{minutes}</p>
+            <p className="font-medium text-grey">Min</p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-medium lg:text-4xl">{seconds}</p>
+            <p className="font-medium text-grey">Sec</p>
+          </div>
+        </div>
+      );
+    } else return "Auction has not started yet";
+  }, [auction?.firstBidTime, timeLeft]);
+
+  const successCallback = useCallback(() => {
+    console.log("success");
+    setOpenModal(false);
+  }, []);
+
+  const handleEditAuction = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (auction.reservePrice !== reservePrice) {
+        if (account) {
+          editAuction(auction.auctionId, reservePrice, () => {
+            successCallback();
+          });
+        } else {
+          toggleWallet();
+        }
+      }
+    },
+    [account, auction, editAuction, reservePrice, successCallback, toggleWallet]
+  );
 
   return (
     <>
@@ -57,7 +163,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
                 <p className="text-grey">Reserve Price</p>
                 <p className="font-bold">
                   {auction?.reservePrice} ZOO{" "}
-                  <span className="text-green">$6800</span>
+                  <span className="text-green">{reservePriceBNB} BNB</span>
                 </p>
               </div>
             </div>
@@ -65,31 +171,46 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
           {/* Card */}
           <div className="flex flex-col items-center px-4 py-8 mb-6 rounded card bg-black100">
             <p className="mb-6 text-xs">Current Bid</p>
-            <h1 className="mb-4 text-4xl font-bold lg:text-6xl">1.00 ETH</h1>
-            <p className="font-bold text-green lg:text-xl mb-9">$3,618.36</p>
-
-            <p className="mb-2 font-medium text-white">Auction ending in</p>
-            <div className="flex items-center justify-between max-w-md">
+            <h1 className="mb-4 text-4xl font-bold lg:text-6xl">
+              {auction?.amount} ZOO
+            </h1>
+            <p className="font-bold text-green lg:text-xl mb-9">
+              {amountPriceBNB} BNB
+            </p>
+            {auction.firstBidTime ? (
+              <p className="mb-2 font-medium text-white">Auction ending in</p>
+            ) : (
+              ""
+            )}
+            {/* Countdown */}
+            {timer}
+            {/* <div className="flex items-center justify-between max-w-md">
               <div className="mr-3 text-center">
-                <p className="text-2xl font-medium lg:text-4xl ">01</p>
+                <p className="text-2xl font-medium lg:text-4xl ">{days}</p>
+                <p className="font-medium text-grey">Days</p>
+              </div>
+              <div className="mr-3 text-center">
+                <p className="text-2xl font-medium lg:text-4xl ">{hours}</p>
                 <p className="font-medium text-grey">Hrs</p>
               </div>
               <div className="mr-3 text-center">
-                <p className="text-2xl font-medium lg:text-4xl ">23</p>
+                <p className="text-2xl font-medium lg:text-4xl ">{minutes}</p>
                 <p className="font-medium text-grey">Min</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-medium lg:text-4xl"> 17</p>
+                <p className="text-2xl font-medium lg:text-4xl">{seconds}</p>
                 <p className="font-medium text-grey">Sec</p>
               </div>
-            </div>
+            </div> */}
           </div>
-          <button
-            className="py-2 mb-4 font-semibold text-white rounded bg-blue"
-            onClick={() => setOpenModal(true)}
-          >
-            Edit Auction
-          </button>
+          {!auction.firstBidTime && (
+            <button
+              className="py-2 mb-4 font-semibold text-white rounded bg-blue"
+              onClick={() => setOpenModal(true)}
+            >
+              Edit Auction
+            </button>
+          )}
           <Link href="/nft-info" passHref>
             <button className="py-2 font-semibold border border-white rounded">
               View Item
@@ -104,13 +225,14 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
             <p className="font-bold text-white">Edit Auction</p>
           </div>
           <div>
-            <form>
+            <form onSubmit={(e: any) => handleEditAuction(e)}>
               <div className="mb-4">
-                <p className="mb-2 text-xs font-bold">Current Bid</p>
+                <p className="mb-2 text-xs font-bold">Reserved Price</p>
                 <div className="flex flex-row justify-between px-4 py-2 border rounded items center border-black100 bg-black100">
                   <input
-                    type=""
-                    value="1.00 ETH"
+                    type="number"
+                    value={reservePrice}
+                    onChange={(e: any) => setReservePrice(e.target.value)}
                     className="bg-transparent border-0 outline-0"
                   />
                   <Image
@@ -122,7 +244,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
                 </div>
               </div>
 
-              <div>
+              {/* <div>
                 <p className="mb-2 text-xs font-bold">Start time</p>
                 <div className="flex justify-center gap-4 overflow-hidden">
                   <div className="py-2 border rounded border-black100 bg-black100 basis-1/2">
@@ -141,9 +263,12 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
 
-              <button className="w-full px-4 py-2 mt-8 font-bold text-center text-white rounded bg-blue">
+              <button
+                className="w-full px-4 py-2 mt-8 font-bold text-center text-white rounded bg-blue disabled:cursor-not-allowed cursor-pointer"
+                disabled={auction.reservePrice === reservePrice}
+              >
                 Save Changes
               </button>
             </form>
