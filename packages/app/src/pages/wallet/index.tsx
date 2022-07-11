@@ -2,7 +2,12 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AppState } from "state";
 import { fadeInOnScroll } from "animation";
-import { useBuyZoo, useFetchMyNFTs, useGetNftTransfers } from "state/zoo/hooks";
+import {
+  useBuyZoo,
+  useFetchMyNFTs,
+  useGetAllAuctions,
+  useGetNftTransfers,
+} from "state/zoo/hooks";
 import { numberWithCommas } from "functions";
 
 import MyWalletSection from "./MyWalletSection";
@@ -20,21 +25,20 @@ export default function Wallet({ children }) {
 
   const { account, library, chainId } = useActiveWeb3React();
   const buyZoo = useBuyZoo();
+  const getAllAuctions = useGetAllAuctions();
   const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
     (state) => state.zoo.zooBalance
   );
   const fetchNFTs = useFetchMyNFTs();
   const getNftTransfers = useGetNftTransfers();
-  const {
-    myEggsCount,
-    myAnimalsCount,
-    myBreedsCount,
-    myNfts,
-    nftTransfers,
-    allAuctions,
-  } = useSelector((state: any) => state.zoo);
+  const { myNfts, nftTransfers, allAuctions } = useSelector(
+    (state: any) => state.zoo
+  );
   const comingSoonRef = React.useRef();
 
+  useEffect(() => {
+    getAllAuctions();
+  }, [getAllAuctions]);
   useEffect(() => {
     fadeInOnScroll(comingSoonRef.current);
   }, []);
