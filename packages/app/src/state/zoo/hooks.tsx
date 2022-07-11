@@ -535,6 +535,7 @@ export function useGetAllAuctions(): () => Promise<void> {
       const auctions = await auctionContract?.getAllAuctions();
       console.log("auctions__await", auctions);
       await auctions?.map(async (auction, index: number) => {
+        if (Number(auction.reservePrice) === 0) return false;
         const tokenUri = await media?.tokenURI(Number(auction.tokenID));
         const tokenMetadataURI = await media?.tokenMetadataURI(
           Number(auction.tokenID)
