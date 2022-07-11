@@ -3,26 +3,12 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-
-import CardNft from "marketplace/Cards/CardNft";
-import Carousel from "components/Carousel";
-import { SwiperSlide } from "swiper/react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { abbreviateNumber } from "functions/abbreviateNumbers";
-import { AvailableEgg } from "types";
 import { useCallback } from "react";
-import {
-  useBuyEgg,
-  useBuyEggWithBnB,
-  useBuyZoo,
-  useGetAvailableEggs,
-  useTransferZoo,
-  useZoobalance,
-} from "state/zoo/hooks";
+import { useGetAllAuctions, useZoobalance } from "state/zoo/hooks";
 import { useActiveWeb3React } from "hooks/useActiveWeb3React";
-import { useWalletModalToggle } from "state/application/hooks";
-import { Replay } from "@mui/icons-material";
 import { useETHBalances } from "state/wallet/hooks";
 import { useZooKeeper } from "hooks";
 import Web3 from "web3";
@@ -35,110 +21,85 @@ const Item = () => {
   const router = useRouter();
   const { id } = router.query;
   const { account } = useActiveWeb3React();
-  const [egg, setEgg] = useState<AvailableEgg>(null);
+  const [auction, setAuction] = useState<any>(null);
   const [withZoo, setWithZoo] = useState(true);
-  const { availableEggs, loading, zooBalance, bnbBalance } = useSelector(
-    (state: any) => state.zoo
-  );
-  const buyZoo = useBuyZoo();
-  const buyEgg = useBuyEgg();
-  const transferZoo = useTransferZoo();
+  const { zooBalance, allAuctions } = useSelector((state: any) => state.zoo);
   const zooKeeper = useZooKeeper();
-  const buyEggWithBnB = useBuyEggWithBnB();
   const getZooBalance = useZoobalance();
-  const getAvailableEggs = useGetAvailableEggs();
-  const toggleWallet = useWalletModalToggle();
+  const getAllAuctions = useGetAllAuctions();
   const [zooBnbPrice, setZooBnbPrice] = useState(0);
 
-  useEffect(() => {
-    getAvailableEggs();
-    getZooBalance();
-    getZooBnbPrice();
-  }, []);
-  const getZooBnbPrice = async () => {
+  const getZooBnbPrice = useCallback(async () => {
     const price = await zooKeeper.BNBPrice();
     const value = Web3.utils.fromWei(price.toString(), "ether");
     setZooBnbPrice(parseFloat(value));
-  };
-  // const handleBuyZoo = useCallback(() => {
-  //   console.log("Clicked");
-  //   if (account) {
-  //     buyZoo();
-  //   } else {
-  //     toggleWallet();
-  //   }
-  // }, [account, buyZoo, toggleWallet]);
-
-  // const handleBuyEgg = useCallback(
-  //   (eggId, quantity) => {
-  //     console.log("Clicked");
-  //     if (account) {
-  //       if (withZoo) {
-  //         console.log("withzoo");
-  //         buyEgg(eggId, quantity, () => router.push("/wallet"));
-  //       } else {
-  //         console.log("withbnb");
-
-  //         buyEggWithBnB(eggId, quantity, () => router.push("/wallet"));
-  //         // buyEgg(eggId, quantity, () => router.push('/dashboard'))
-  //       }
-  //     } else {
-  //       toggleWallet();
-  //     }
-  //   },
-  //   [account, buyEgg, buyEggWithBnB, router, toggleWallet, withZoo]
-  // );
+  }, [zooKeeper]);
 
   useEffect(() => {
-    const _egg = availableEggs.find(
-      (e: any) => e.id?.toString() === id?.toString()
+    getAllAuctions();
+    getZooBalance();
+    getZooBnbPrice();
+  }, [getAllAuctions, getZooBalance, getZooBnbPrice]);
+
+  useEffect(() => {
+    const _auction = allAuctions.find(
+      (e: any) => e?.auctionId?.toString() === id?.toString()
     );
-    setEgg(_egg);
-  }, [availableEggs, id]);
+    setAuction(_auction);
+    console.log("AUCTION_AUXTIO", _auction);
+  }, [allAuctions, id]);
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[
     account ?? ""
   ];
-  const eggPriceBNB = zooBnbPrice * Number(egg?.price);
+  const auctionPriceBNB = zooBnbPrice * Number(auction?.amount);
 
-  const balanceCheck = () => {
-    if (withZoo) {
-      return Number(egg?.price) > zooBalance;
-    } else {
-      return Number(eggPriceBNB) > parseFloat(userEthBalance.toFixed(3));
-    }
-  };
-
-  console.log("the_chosen_egg__", egg);
+  console.log("the_chosen_auction__", auction);
   return (
     <>
       <div className="flex flex-col px-5 mx-auto mt-20 lg:flex-row gap-11 lg:items-center lg:px-10 max-w-7xl">
         <div className="rounded-xl p-px h-full bg-view-gradient w-full lg:w-[40%]">
           <div className="bg-black rounded-xl min-h-[466px] h-full w-full px-12 py-12 flex flex-col justify-center items-center">
             {/* <ModelViewer></ModelViewer> */}
-            <video
+            {/* <video
               autoPlay
               loop
-              src={egg?.animation_url}
+              src={auction?.animation_url}
               width={350}
               height={300}
-            />
+            /> */}
+            {auction?.kind === 0 ? (
+              <video
+                autoPlay
+                loop
+                src={auction.animation_url}
+                width={300}
+                height={350}
+              />
+            ) : (
+              <div className="h-[450px] w-[300px]">
+                <ModelViewer
+                  glb={auction?.glb_animation_url}
+                  usdz={auction?.usdz_animation_url}
+                ></ModelViewer>
+              </div>
+            )}
           </div>
         </div>
         <div className="rounded-xl p-px h-full bg-transparent px-5 py-3 w-full lg:w-[60%]">
           <div className="flex flex-col items-start text-white gap-9 mb-7">
             <div className="flex flex-wrap items-center w-full space-y-3 gap-x-4">
               <div className="w-full">
-                <p className="font-semibold text-[52px]">{egg?.name}</p>
+                <p className="font-semibold text-[52px]">{auction?.name}</p>
               </div>
               <div className="flex items-center gap-2">
                 <Image src="/icons/status.svg" alt="" height={26} width={20} />
                 <div>
                   <p className="text-sm font-medium">
-                    {egg?.attributes[0]?.trait_type}
+                    {auction?.attributes[0]?.trait_type}
                   </p>
                   <p className="font-medium text-[10px]">
-                    {egg?.attributes[0]?.value}
+                    {auction?.attributes[0]?.value}
                   </p>
                 </div>
               </div>
@@ -151,10 +112,10 @@ const Item = () => {
                 />
                 <div>
                   <p className="text-sm font-medium">
-                    {egg?.attributes[1]?.trait_type}
+                    {auction?.attributes[1]?.trait_type}
                   </p>
                   <p className="font-medium text-[10px]">
-                    {egg?.attributes[1]?.value}
+                    {auction?.attributes[1]?.value}
                   </p>
                 </div>
               </div>
@@ -162,37 +123,23 @@ const Item = () => {
                 <Image src="/icons/react.svg" alt="" height={26} width={20} />
                 <div>
                   <p className="text-sm font-medium">
-                    {egg?.attributes[2]?.trait_type}
+                    {auction?.attributes[2]?.trait_type}
                   </p>
                   <p className="font-medium text-[10px]">
-                    {egg?.attributes[2]?.value}
+                    {auction?.attributes[2]?.value}
                   </p>
                 </div>
               </div>
-              {/* <div className="flex items-center gap-2">
-                <Image src="/icons/shape.svg" alt="" height={26} width={20} />
-                <div>
-                  <p className="text-sm font-medium">Size</p>
-                  <p className="font-medium text-[10px]">6.6 - 10.5 Feet</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Image src="/icons/habitat.svg" alt="" height={26} width={20} />
-                <div>
-                  <p className="text-sm font-medium">Habitats</p>
-                  <p className="font-medium text-[10px]">Tropical Forests</p>
-                </div>
-              </div> */}
             </div>
             <div className="flex w-full items-center gap-3 mb-2.5">
               <div className="w-full lg:w-3/4">
                 <div className="flex flex-col w-full px-6 py-2 rounded-lg 5 md:flex-row md:items-center md:justify-between bg-dark-400 ">
                   <div>
-                    <p className="text-xs font-normal">Current price</p>
+                    <p className="text-xs font-normal">Current bid</p>
                     <p className="text-xl font-medium">
                       {withZoo
-                        ? `${abbreviateNumber(egg?.price)} ZOO`
-                        : `${eggPriceBNB} BNB`}
+                        ? `${abbreviateNumber(auction?.amount)} ZOO`
+                        : `${auctionPriceBNB} BNB`}
                     </p>
                   </div>
                   <button
@@ -231,7 +178,7 @@ const Item = () => {
                     />
                   </button>
                 </div>
-                <p className="text-xs text-right text-c-grey-100">
+                <p className="hidden text-xs text-right text-c-grey-100">
                   Your Wallet Balance:{" "}
                   {withZoo
                     ? `${zooBalance} ZOO`
@@ -270,19 +217,6 @@ const Item = () => {
                 to prioritize social engagement between fans and influencers. ‍
               </p>
             </div>
-            {/* <button
-              className={`py-3.5 w-full bg-[#2703F8] rounded-lg disabled:cursor-not-allowed ${
-                loading && "opacity-30"
-              }`}
-              disabled={loading || balanceCheck()}
-              onClick={() => handleBuyEgg(id, 1)}
-            >
-              {loading
-                ? "Loading..."
-                : balanceCheck()
-                ? "Insuficient balance"
-                : "Buy Now"}
-            </button> */}
           </div>
         </div>
       </div>
