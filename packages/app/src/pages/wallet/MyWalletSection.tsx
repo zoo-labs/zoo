@@ -45,6 +45,7 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
   const feedAnimal = useFeed();
 
   console.log("SOME_KINDOF_ITEM", nftItem);
+  // console.log("SOME_KINDOF_ITEM_TOO", myNfts);
 
   return (
     <div>

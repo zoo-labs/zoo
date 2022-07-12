@@ -72,8 +72,13 @@ const PlaceBid = () => {
       </Head>
       <TwoColumComp
         LeftCol={
-          <div className="w-full bg-green-g h-full flex justify-center items-center px-24">
-            <CardNft nft={nft} className="lg:w-full" />
+          <div className="w-full bg-green-g h-full flex justify-center items-center px">
+            <CardNft
+              nft={nft}
+              className="lg:w-full h-full"
+              showDetails={false}
+              onNFTClick={() => {}}
+            />
           </div>
         }
         RightCol={
@@ -157,36 +162,6 @@ const PlaceBid = () => {
         }
       />
 
-      <div className="flex justify-center w-full ">
-        <div className="overflow-auto md:w-3/4 whitespace-nowrap">
-          <Trading
-            TitleMain="Transaction History"
-            TitleA="ACTION"
-            TitleB="BLOCK"
-            TitleC="TOKEN ID"
-            TitleD="HASH"
-          >
-            <TableRow
-              ColA="BOUGHT EGG"
-              ColB="12054184"
-              ColC="6"
-              ColD="0xd8e1c294da833a8db"
-            ></TableRow>
-            <TableRow
-              ColA="SOLD EGG"
-              ColB="12054184"
-              ColC="5"
-              ColD="0xd8e1c294da833a4xb"
-            ></TableRow>
-            <TableRow
-              ColA="BOUGHT EGG"
-              ColB="12054184"
-              ColC="2"
-              ColD="0xd8e1c294da833a4sb"
-            ></TableRow>
-          </Trading>
-        </div>
-      </div>
       <AuctionModal nft={nft} edit={true} />
     </div>
   );

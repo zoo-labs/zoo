@@ -115,6 +115,7 @@ export function useHatch(): (
 ) => void {
   const addPopup = useAddPopup();
   const zooKeeper = useZooKeeper();
+  const media = useMedia();
   const { account } = useActiveWeb3React();
   const zoo = useZooToken();
   const dropId = process.env.NEXT_PUBLIC_DROP_ID;
@@ -156,6 +157,9 @@ export function useHatch(): (
               return;
             });
         }
+        // const
+        const mA = await media.approve(zooKeeper.address, Number(eggId));
+        mA.wait();
         const tx = await zooKeeper?.hatchEgg(Number(dropId), Number(eggId), {
           gasLimit: 4000000,
         });
