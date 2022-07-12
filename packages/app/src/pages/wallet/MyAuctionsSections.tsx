@@ -127,7 +127,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
     <>
       <section className="flex flex-col gap-24 my-16 lg:flex-row lg:justify-between lg:px-48">
         <div className="bg-nft-gradient p-0.5 flex flex-col basis-1/2 justify-center rounded-xl">
-          <div className="flex flex-col justify-center h-full bg-black rounded-xl">
+          <div className="flex flex-col justify-center items-center h-full bg-black rounded-xl">
             {auction.kind === 0 ? (
               <video
                 autoPlay
@@ -137,10 +137,11 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
                 height={350}
               />
             ) : (
-              <div className="h-[450px] w-[300px]">
+              <div className="h-full w-full">
                 <ModelViewer
                   glb={auction?.glb_animation_url}
                   usdz={auction?.usdz_animation_url}
+                  className="rounded-xl"
                 ></ModelViewer>
               </div>
             )}
