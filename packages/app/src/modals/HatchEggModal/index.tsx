@@ -70,7 +70,7 @@ export default function HatchEggModal({ nftItem, success }) {
     }, 1000);
 
     return () => clearTimeout(interval);
-  }, [calculateTimeLeft]);
+  }, [calculateTimeLeft, timeLeft]);
 
   function getModalContent() {
     return (
