@@ -83,7 +83,6 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
     [account, auction, editAuction, reservePrice, successCallback, toggleWallet]
   );
 
-  // TIMER 3 LFGGGGGGGG!
   const calculateTimeLeft = () => {
     const endDate = new Date(
       auction.firstBidTime * 1000 + auction.duration * 1000
@@ -105,7 +104,6 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
   };
 
   const [ttimeLeft, setTimeLeft] = useState(calculateTimeLeft());
-  const [count, setCount] = useState(1);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -115,7 +113,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
     return () => clearTimeout(interval);
   }, []);
 
-  console.log("TIMER_COMPONENTS__", ttimeLeft);
+  // console.log("TIMER_COMPONENTS__", ttimeLeft);
 
   return (
     <>
@@ -174,11 +172,6 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
             ) : (
               ""
             )}
-            {/* Countdown */}
-            {/* {timer} */}
-            {/* {timer2} */}
-            {/* {timerComponents.length ? timerComponents : <span>6 Weeks</span>} */}
-
             {auction.firstBidTime ? (
               <div className="flex items-center justify-between max-w-md">
                 <div className="mr-3 text-center">
