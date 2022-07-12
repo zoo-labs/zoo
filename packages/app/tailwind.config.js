@@ -51,6 +51,8 @@ module.exports = {
         "nft-gradient":
           "linear-gradient(180deg, #2517FF -61.88%, #15F195 131.19%)",
         "leader-board": "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)",
+        "green-g":
+          "linear-gradient(180deg, rgba(37, 23, 255, 0.1) -61.88%, rgba(21, 241, 149, 0.1) 93.88%)",
       },
       colors: {
         purple: "#462CA9",
@@ -71,7 +73,7 @@ module.exports = {
         "butter-white": "#FCFCFD",
         dark: "#000",
         steel: "#797979",
-
+        "zoo-green": "#15F195",
         "dark-gray": "#6D7278",
         "grey-400": "#878787",
         "grey-300": "#353945",
@@ -80,7 +82,9 @@ module.exports = {
         "trading-history": "#1F2126",
         "trading-history-border-b": "#E6E8EC",
         "nft-card-border": "#A67CED",
-
+        a1: "#A1A1A1",
+        "cut-grey": "#292A31",
+        "white-30": "rgba(255, 255, 255, 0.3)",
         // "opaque-blue": "#0993ec80",
         // "opaque-pink": "#f338c380",
         // "pink-red": "#FE5A75",

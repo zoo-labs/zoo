@@ -24,7 +24,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
       className="flex flex-col "
       onClick={() =>
         router.push({
-          pathname: `/market/placebid/${datum.tokenID}`,
+          pathname: `/market/${datum.tokenID}/info`,
         })
       }
     >
