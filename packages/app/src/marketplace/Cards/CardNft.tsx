@@ -18,7 +18,7 @@ const CardNft = ({ nft, className }: { nft: Auction; className: string }) => {
     >
       <div className="w-full">
         <div className="min-h-[350px] w-full borderGrad p-2">
-          <div className="w-full h-full bg-black rounded-[0.225rem] flex flex-col justify-center items-center">
+          <div className="w-full h-full rounded-[0.225rem] flex flex-col justify-center items-center">
             {nft.kind === 0 ? (
               <video
                 autoPlay

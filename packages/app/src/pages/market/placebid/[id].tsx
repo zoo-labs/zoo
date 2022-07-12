@@ -64,7 +64,7 @@ const PlaceBid = () => {
     removeAuction(nft.auctionId, () => router.push("/market"));
   };
   return (
-    <div className="w-full lg:px-12 ">
+    <div className="w-full">
       <Head>
         <title>ZOO Marketplace</title>
         <meta name="description" content="ZOO Marketplace" />
@@ -72,49 +72,56 @@ const PlaceBid = () => {
       </Head>
       <TwoColumComp
         LeftCol={
-          <div className="w-full bg-[#0D0C16] h-full flex justify-center items-center lg:rounded-l-xl px-24">
+          <div className="w-full bg-green-g h-full flex justify-center items-center px-24">
             <CardNft nft={nft} className="lg:w-full" />
           </div>
         }
         RightCol={
-          <div className="w-full bg-[#1F2030] h-full flex flex-col justify-center items-center lg:rounded-r-xl text-white py-6 px-8 lg:px-24">
-            <p className="text-2xl font-medium mb-7">
-              {nft?.tokenOwner === account ? "Your Auction" : "Your Bid"}
-            </p>
-            <div className="flex items-center justify-between w-full mb-12 text-xl font-medium">
-              <p>Your Balance:</p>
-              <p>
-                {zooBalance?.toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 4,
-                })}
+          <div className="w-full bg-[#000] h-full flex flex-col justify-center items-center text-white py-6 px-8 lg:px-24">
+            <div className="flex items-center justify-between w-full mb-5 text-base font-medium">
+              <p className="text-base font-semibold">
+                {nft?.tokenOwner === account ? "Your Auction" : "Place a Bid"}
               </p>
+              <div className="flex items-center font-medium">
+                <p className="text-a1">Your Balance: </p>
+                <p>
+                  {zooBalance?.toLocaleString(undefined, {
+                    maximumFractionDigits: 4,
+                  })}{" "}
+                  ZOO
+                </p>
+              </div>
             </div>
-            <form onSubmit={handleSubmit}>
-              <input
-                type="number"
-                className="rounded-xl border-[1.5px] border-white px-4 py-5 bg-[#2A2C41] w-full placeholder:text-[#878787] placeholder:text-lg"
-                value={nft?.tokenOwner === account ? nft?.amount : bidPrice}
-                onChange={(e) => setBidPrice(e.target.value)}
-                disabled={nft?.tokenOwner === account}
-              />
+            <form onSubmit={handleSubmit} className="w-full">
+              <div className="w-full relative">
+                <input
+                  type="number"
+                  className="rounded-xl pl-4 pr-14 py-5 bg-cut-grey w-full placeholder:text-[#878787] placeholder:text-lg"
+                  value={nft?.tokenOwner === account ? nft?.amount : bidPrice}
+                  onChange={(e) => setBidPrice(e.target.value)}
+                  disabled={nft?.tokenOwner === account}
+                />
+                <span className="text-base font-semibold text-white absolute inset-y-5 right-0 mr-4 mb-4">
+                  ZOO
+                </span>
+              </div>
               {bidPrice < nft?.reservePrice && (
                 <p className="mt-2 text-red">Bid too low</p>
               )}
-              <p className="mt-11 mb-3 text-xl font-medium text-center">
+              <p className="mt-4 mb-1.5 text-base font-normal">
                 You must be paid at least{" "}
                 {nft?.reservePrice?.toLocaleString(undefined, {
                   maximumFractionDigits: 2,
                 })}{" "}
                 ZOO
               </p>
-              <p className="text-xl font-medium text-center mb-11">
+              <p className="text-base font-normal mb-11">
                 The next bid must be {nft?.curatorFeePercentage}% more than the
                 current bid
               </p>
               {nft?.tokenOwner === account && nft?.amount <= 0 && (
                 <button
-                  className="py-[12px] w-full rounded-2xl bg-[#2703F8] mb-11 disabled:cursor-not-allowed"
+                  className="py-[12px] w-full rounded-[4px] bg-leader-board mb-4 disabled:cursor-not-allowed"
                   onClick={handleClick}
                   disabled={bidPrice < nft?.reservePrice || loading}
                 >
@@ -123,7 +130,7 @@ const PlaceBid = () => {
               )}
               {nft?.tokenOwner !== account && (
                 <button
-                  className="py-[12px] w-full rounded-2xl bg-[#2703F8] mb-11 disabled:cursor-not-allowed"
+                  className="py-[12px] w-full rounded-[4px] bg-leader-board mb-4 disabled:cursor-not-allowed"
                   onClick={handleClick}
                   disabled={bidPrice < nft?.reservePrice || loading}
                 >
@@ -132,7 +139,7 @@ const PlaceBid = () => {
               )}
               {nft?.tokenOwner === account && (
                 <button
-                  className="py-[12px] w-full rounded-2xl border border-[#2703F8] bg-[#2A2C41] mb-11"
+                  className="py-[12px] w-full rounded-[4px] border border-leader-board bg-[#2A2C41] mb-4"
                   onClick={handleRemoveAuction}
                   disabled={loading}
                 >
@@ -140,10 +147,10 @@ const PlaceBid = () => {
                 </button>
               )}
             </form>
-            <p className="text-xl font-medium text-center mb-11">
+            <p className="text-base font-normal mb-4 text-left w-full">
               You cannot withdraw a bid once submitted
             </p>
-            <a className="text-xl font-medium underline text-primary-green">
+            <a className="text-lg font-bold text-zoo-green flex items-end">
               How do auctions work?
             </a>
           </div>

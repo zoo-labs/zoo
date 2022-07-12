@@ -83,7 +83,6 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
     [account, auction, editAuction, reservePrice, successCallback, toggleWallet]
   );
 
-  // TIMER 3 LFGGGGGGGG!
   const calculateTimeLeft = () => {
     const endDate = new Date(
       auction.firstBidTime * 1000 + auction.duration * 1000
@@ -92,7 +91,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
 
     let timeLeft: any = {};
 
-    if (difference > 0) {
+    if (difference >= 0) {
       timeLeft = {
         d: Math.floor(difference / (1000 * 60 * 60 * 24)),
         h: Math.floor((difference / (1000 * 60 * 60)) % 24),
@@ -105,17 +104,24 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
   };
 
   const [ttimeLeft, setTimeLeft] = useState(calculateTimeLeft());
-  const [count, setCount] = useState(1);
 
   useEffect(() => {
     const interval = setInterval(() => {
+      if (
+        ttimeLeft.d === 0 &&
+        ttimeLeft.h === 0 &&
+        ttimeLeft.m === 0 &&
+        ttimeLeft.s === 0
+      ) {
+        clearInterval(interval);
+      }
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
     return () => clearTimeout(interval);
   }, []);
 
-  console.log("TIMER_COMPONENTS__", ttimeLeft);
+  // console.log("TIMER_COMPONENTS__", ttimeLeft);
 
   return (
     <>
@@ -169,43 +175,50 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
             <p className="font-bold text-green lg:text-xl mb-9">
               {amountPriceBNB} BNB
             </p>
-            {auction.firstBidTime ? (
+            {auction.firstBidTime &&
+            ttimeLeft.d === 0 &&
+            ttimeLeft.h === 0 &&
+            ttimeLeft.m === 0 &&
+            ttimeLeft.s === 0 ? (
               <p className="mb-2 font-medium text-white">Auction ending in</p>
             ) : (
               ""
             )}
-            {/* Countdown */}
-            {/* {timer} */}
-            {/* {timer2} */}
-            {/* {timerComponents.length ? timerComponents : <span>6 Weeks</span>} */}
-
             {auction.firstBidTime ? (
-              <div className="flex items-center justify-between max-w-md">
-                <div className="mr-3 text-center">
-                  <p className="text-2xl font-medium lg:text-4xl ">
-                    {ttimeLeft.d > 9 ? ttimeLeft.d : "0" + ttimeLeft.d}
-                  </p>
-                  <p className="font-medium text-grey">Days</p>
+              (ttimeLeft.d === 0 &&
+                ttimeLeft.h === 0 &&
+                ttimeLeft.m === 0 &&
+                ttimeLeft.s === 0) ||
+              Object.keys(ttimeLeft).length === 0 ? (
+                "Auction has ended"
+              ) : (
+                <div className="flex items-center justify-between max-w-md">
+                  <div className="mr-3 text-center">
+                    <p className="text-2xl font-medium lg:text-4xl ">
+                      {ttimeLeft.d > 9 ? ttimeLeft.d : "0" + ttimeLeft.d}
+                    </p>
+                    <p className="font-medium text-grey">Days</p>
+                  </div>
+                  <div className="mr-3 text-center">
+                    <p className="text-2xl font-medium lg:text-4xl ">
+                      {ttimeLeft.h > 9 ? ttimeLeft.h : "0" + ttimeLeft.h}
+                    </p>
+                    <p className="font-medium text-grey">Hrs</p>
+                  </div>
+                  <div className="mr-3 text-center">
+                    <p className="text-2xl font-medium lg:text-4xl ">
+                      {ttimeLeft.m > 9 ? ttimeLeft.m : "0" + ttimeLeft.m}
+                    </p>
+                    <p className="font-medium text-grey">Min</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-medium lg:text-4xl">
+                      {ttimeLeft.s > 9 ? ttimeLeft.s : "0" + ttimeLeft.s}
+                    </p>
+                    <p className="font-medium text-grey">Sec</p>
+                  </div>
                 </div>
-                <div className="mr-3 text-center">
-                  <p className="text-2xl font-medium lg:text-4xl ">
-                    {ttimeLeft.h > 9 ? ttimeLeft.h : "0" + ttimeLeft.h}
-                  </p>
-                  <p className="font-medium text-grey">Hrs</p>
-                </div>
-                <div className="mr-3 text-center">
-                  <p className="text-2xl font-medium lg:text-4xl ">
-                    {ttimeLeft.m > 9 ? ttimeLeft.m : "0" + ttimeLeft.m}
-                  </p>
-                  <p className="font-medium text-grey">Min</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-2xl font-medium lg:text-4xl">
-                    {ttimeLeft.s > 9 ? ttimeLeft.s : "0" + ttimeLeft.s}
-                  </p>
-                  <p className="font-medium text-grey">Sec</p>
-                </div>
-              </div>
+              )
             ) : (
               "Auction has not started yet"
             )}
