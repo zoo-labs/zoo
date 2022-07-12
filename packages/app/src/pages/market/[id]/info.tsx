@@ -133,12 +133,29 @@ const InfoPage = () => {
         <div className="w-full lg:w-3/5">
           <p className="font-semibold text-[56px] mb-2">{nft?.name}</p>
           <p className="font-bold text-[22px] mb-9">Minted on Jul 11, 2022 </p>
-          <div className="flex items-center mb-14">
+          <div className="flex items-center mb-4">
             <div className="bg-nft-gradient rounded-full h-8 w-8" />
             <p className="ml-4 text-2xl font-bold text-steel">
               {nft?.tokenOwner ? shortenAddress(nft?.tokenOwner) : ""}
             </p>
           </div>
+          {/* <div className="flex items-center mb-4"> */}
+          <p className="text-2xl text-white mb-4">
+            Highest Bid:{" "}
+            <span className="text-2xl font-semibold text-steel">
+              {nft?.amount} Zoo
+            </span>
+          </p>
+          {/* </div> */}
+          <p className="text-2xl text-white mb-14">
+            Yields/Day:{" "}
+            <span className="text-steel">
+              {nft?.attributes &&
+                nft?.attributes.filter(
+                  (attr) => attr.trait_type === "Yields"
+                )[0].value}
+            </span>
+          </p>
           <p className="text-xl font-semibold mb-3">Description</p>
           <hr className="h-px opacity-40 w-full mb-10" />
           <p className="text-butter-white text-lg font-light">
