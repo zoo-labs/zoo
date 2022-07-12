@@ -11,6 +11,7 @@ import Modal from "../../components/Modal";
 import ModalHeader from "../../components/ModalHeader";
 import { useSelector } from "react-redux";
 import { useHatch } from "state/zoo/hooks";
+import { useMedia, useZooToken } from "hooks";
 
 const WALLET_VIEWS = {
   OPTIONS: "options",
@@ -23,7 +24,8 @@ export default function HatchEggModal({ nftItem, success }) {
   // important that these are destructed from the account-specific web3-react context
   const { account } = useWeb3React();
   const { loading } = useSelector((state: any) => state.zoo);
-
+  const media = useMedia();
+  const zookeeper = useZooToken();
   const hatchEggModalOpen = useModalOpen(ApplicationModal.HATCH_EGG);
 
   const toggleModal = useHatchEggModal();
@@ -39,9 +41,9 @@ export default function HatchEggModal({ nftItem, success }) {
     } else {
       toggleWallet();
     }
-  }, [account, hatchEgg, success, toggleWallet]);
+  }, [account, hatchEgg, nftItem, success, toggleWallet]);
 
-  const calculateTimeLeft = () => {
+  const calculateTimeLeft = useCallback(() => {
     const startDate = new Date(nftItem.timestamp * 1000);
     const endDate = startDate.setHours(startDate.getHours() + 4);
     const difference = +new Date(endDate) - +new Date();
@@ -59,7 +61,7 @@ export default function HatchEggModal({ nftItem, success }) {
     } else {
       return false;
     }
-  };
+  }, [nftItem.timestamp]);
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
@@ -70,7 +72,7 @@ export default function HatchEggModal({ nftItem, success }) {
     }, 1000);
 
     return () => clearTimeout(interval);
-  }, []);
+  }, [calculateTimeLeft, timeLeft]);
 
   function getModalContent() {
     return (
@@ -115,6 +117,10 @@ export default function HatchEggModal({ nftItem, success }) {
       </div>
     );
   }
+
+  // useEffect(() => {
+  //   media?.approve(zookeeper?.address, nftItem.tokenID);
+  // }, [media, nftItem.tokenID, zookeeper?.address]);
 
   return (
     <Modal
