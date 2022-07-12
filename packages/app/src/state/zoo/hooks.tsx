@@ -831,14 +831,18 @@ export function useCreateAuction(): (
 //   );
 // }
 
-export function useCreateBid(): (id: string | number, amount: number) => void {
+export function useCreateBid(): (
+  id: string | number,
+  amount: number,
+  success?: () => void
+) => void {
   const auction = useAuction();
   const dispatch = useDispatch();
   const addPopup = useAddPopup();
   const zoo = useZooToken();
   const { account } = useActiveWeb3React();
   return useCallback(
-    async (id, amount) => {
+    async (id, amount, success) => {
       try {
         dispatch(loading(true));
         const approved = await zoo?.allowance(account, auction?.address);
@@ -857,6 +861,7 @@ export function useCreateBid(): (id: string | number, amount: number) => void {
         await tx.wait();
         dispatch(createBid(id));
         dispatch(loading(false));
+        success && success();
         addPopup({
           txn: {
             hash: null,
