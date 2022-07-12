@@ -8,6 +8,7 @@ const ModelViewer = ({
   zoom = "auto",
   usdzFile = false,
   multiple = false,
+  onClick = () => {},
 }) => {
   const animals = [
     "/models/Wolf/WOLF.glb",
@@ -48,6 +49,7 @@ const ModelViewer = ({
       <div
         className="w-full h-full"
         dangerouslySetInnerHTML={{ __html: ModelVie }}
+        onClick={onClick}
       ></div>
     </>
   );

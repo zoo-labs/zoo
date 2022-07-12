@@ -73,7 +73,12 @@ const PlaceBid = () => {
       <TwoColumComp
         LeftCol={
           <div className="w-full bg-green-g h-full flex justify-center items-center px-24">
-            <CardNft nft={nft} className="lg:w-full" />
+            <CardNft
+              nft={nft}
+              className="lg:w-full"
+              showDetails={false}
+              onNFTClick={() => {}}
+            />
           </div>
         }
         RightCol={
