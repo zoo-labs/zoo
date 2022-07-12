@@ -26,8 +26,8 @@ const CardNft = ({
     <div
       className={`flex flex-col min-w-[300px] lg:min-w-[400px] min-h-[600px] justify-center items-center  ${className}`}
     >
-      <div className="w-full">
-        <div className="min-h-[350px] w-full borderGrad p-2">
+      <div className="w-full h-full">
+        <div className="min-h-[350px] h-full w-full borderGrad p-2">
           <div className="w-full h-full rounded-[0.225rem] flex flex-col justify-center items-center">
             {nft.kind === 0 ? (
               <video
@@ -39,7 +39,7 @@ const CardNft = ({
                 onClick={onNFTClick}
               />
             ) : (
-              <div className="h-[450px] w-full">
+              <div className="h-full w-full">
                 <ModelViewer
                   glb={nft?.glb_animation_url}
                   usdz={nft?.usdz_animation_url}
