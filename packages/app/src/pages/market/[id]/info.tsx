@@ -8,11 +8,13 @@ import { Auction } from "types";
 import { shortenAddress } from "functions";
 import { abbreviateNumber } from "functions/abbreviateNumbers";
 import { useGetAllAuctions } from "state/zoo/hooks";
-import { useZooKeeper } from "hooks";
+import { useZooKeeper, useMedia } from "hooks";
 import Web3 from "web3";
 import styled from "styled-components";
+import { useMoralisWeb3Api } from "react-moralis";
+import useActiveWeb3React from "hooks/useActiveWeb3React";
+import { SUPPORTED_NETWORKS } from "config/networks";
 import moment from "moment";
-import { AccessAlarmRounded } from "@mui/icons-material";
 
 const Table = styled.table`
   font-family: Arial, Helvetica, sans-serif;
@@ -41,12 +43,34 @@ const ModelViewer = dynamic(() => import("components/ModelViewer"), {
 const InfoPage = () => {
   const router = useRouter();
   const { id } = router.query;
+  const { chainId } = useActiveWeb3React();
   const { allAuctions } = useSelector((state: any) => state.zoo);
   const [nft, setNft] = useState<Auction>();
+  const [transactions, setTransactions] = useState<any[]>([]);
   const [showTable, setShowTable] = useState(true);
   const getAllAuctions = useGetAllAuctions();
   const zooKeeper = useZooKeeper();
+  const media = useMedia();
   const [zooBnbPrice, setZooBnbPrice] = useState(0);
+  const Web3Api = useMoralisWeb3Api();
+
+  const fetchContractNFTTransfers = useCallback(async () => {
+    const options: { chain?: any; address: string } = {
+      address: media?.address,
+      chain: SUPPORTED_NETWORKS[chainId]?.chainId,
+    };
+
+    const nftTransfers = await (
+      await Web3Api.token.getContractNFTTransfers(options)
+    ).result;
+
+    const _ = nftTransfers.filter((n) => n.token_id === String(id));
+    setTransactions(_);
+    console.log(
+      "SOMESTUFFABOUTTRANSACTION",
+      nftTransfers.filter((n) => n.token_id === String(id))
+    );
+  }, [Web3Api.token, chainId, id, media?.address]);
 
   const calculateTimeLeft = useCallback(() => {
     const endDate = new Date(nft?.firstBidTime * 1000 + nft?.duration * 1000);
@@ -85,9 +109,8 @@ const InfoPage = () => {
       setTimeLeft(calculateTimeLeft());
     }
     return () => clearTimeout(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [calculateTimeLeft]);
-
-  console.log("AUCTION_TIME_LEFT", ttimeLeft);
 
   const getZooBnbPrice = useCallback(async () => {
     const price = await zooKeeper?.BNBPrice();
@@ -98,7 +121,8 @@ const InfoPage = () => {
   useEffect(() => {
     getZooBnbPrice();
     getAllAuctions();
-  }, [getZooBnbPrice, getAllAuctions]);
+    fetchContractNFTTransfers();
+  }, [getZooBnbPrice, getAllAuctions, fetchContractNFTTransfers]);
 
   const amountPriceBNB = zooBnbPrice * Number(nft?.amount);
   const reservePriceBNB = zooBnbPrice * Number(nft?.reservePrice);
@@ -283,49 +307,39 @@ const InfoPage = () => {
             <tr className="">
               <th>From</th>
               <th>Price</th>
-              <th>Floor Offer</th>
+              {/* <th>Floor Offer</th> */}
               <th>Offer Time</th>
-              <th>Expiration</th>
+              <th>Hash</th>
             </tr>
-            <tr>
-              <td>Niccage22031</td>
-              <td>0.015 ETH</td>
-              <td>100% Below</td>
-              <td>31/03/2022 / 11:46 AM</td>
-              <td>In 3 days</td>
-            </tr>
-
-            <tr>
-              <td>Niccage22031</td>
-              <td>0.015 ETH</td>
-              <td>100% Below</td>
-              <td>31/03/2022 / 11:46 AM</td>
-              <td>In 3 days</td>
-            </tr>
-
-            <tr>
-              <td>Niccage22031</td>
-              <td>0.015 ETH</td>
-              <td>100% Below</td>
-              <td>31/03/2022 / 11:46 AM</td>
-              <td>In 3 days</td>
-            </tr>
-
-            <tr>
-              <td>Niccage22031</td>
-              <td>0.015 ETH</td>
-              <td>100% Below</td>
-              <td>31/03/2022 / 11:46 AM</td>
-              <td>In 3 days</td>
-            </tr>
-
-            <tr>
-              <td>Niccage22031</td>
-              <td>0.015 ETH</td>
-              <td>100% Below</td>
-              <td>31/03/2022 / 11:46 AM</td>
-              <td>In 3 days</td>
-            </tr>
+            {transactions.map((transaction, index) => (
+              <tr key={index}>
+                <td>
+                  <a
+                    target={`_blank`}
+                    rel="noopener noreferrer"
+                    href={`https://testnet.bscscan.com/address/${transaction.from_address}`}
+                  >
+                    {shortenAddress(transaction.from_address)}
+                  </a>
+                </td>
+                <td>{abbreviateNumber(transaction.value)} ZOO</td>
+                {/* <td>{transaction.floorOffer} ZOO</td> */}
+                <td>
+                  {moment(transaction.block_timestamp).format(
+                    "DD/MM/YYYY / hh:mm A"
+                  )}
+                </td>
+                <td>
+                  <a
+                    target={`_blank`}
+                    rel="noopener noreferrer"
+                    href={`https://testnet.bscscan.com/tx/${transaction.transaction_hash}`}
+                  >
+                    {transaction.transaction_hash.slice(0, 10)}...
+                  </a>
+                </td>
+              </tr>
+            ))}
           </Table>
         </div>
       </div>
