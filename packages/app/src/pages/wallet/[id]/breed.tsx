@@ -41,10 +41,10 @@ const Breed = () => {
   const breed = useCallback(() => {
     if (account) {
       if (nft?.id && pair?.id) {
-        handleBreed(nft?.id, pair?.id);
+        handleBreed(nft?.id, pair?.id, () => router.push("/wallet"));
       }
     }
-  }, [account, handleBreed, nft?.id, pair?.id]);
+  }, [account, handleBreed, nft?.id, pair?.id, router]);
 
   console.log("NFT_TO_BREED_1", nft, pairables);
   return (
