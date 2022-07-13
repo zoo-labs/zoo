@@ -1044,7 +1044,6 @@ export function useBreed(): (
         await tx.wait();
         console.log(tx);
         dispatch(loading(false));
-        successCallback && successCallback();
         addPopup({
           txn: {
             hash: null,
@@ -1052,6 +1051,7 @@ export function useBreed(): (
             success: true,
           },
         });
+        successCallback && successCallback();
       } catch (e) {
         console.error("ISSUE BREEDING EGG \n", e);
         dispatch(loading(false));

@@ -308,8 +308,8 @@ const InfoPage = () => {
           <Table className={`w-full ${!showTable && "hidden"}`}>
             <tr className="">
               <th>From</th>
+              <th>To</th>
               <th>Price</th>
-              {/* <th>Floor Offer</th> */}
               <th>Offer Time</th>
               <th>Hash</th>
             </tr>
@@ -324,8 +324,16 @@ const InfoPage = () => {
                     {shortenAddress(transaction.from_address)}
                   </a>
                 </td>
+                <td>
+                  <a
+                    target={`_blank`}
+                    rel="noopener noreferrer"
+                    href={`https://testnet.bscscan.com/address/${transaction.to_address}`}
+                  >
+                    {shortenAddress(transaction.to_address)}
+                  </a>
+                </td>
                 <td>{abbreviateNumber(transaction.value)} ZOO</td>
-                {/* <td>{transaction.floorOffer} ZOO</td> */}
                 <td>
                   {moment(transaction.block_timestamp).format(
                     "DD/MM/YYYY / hh:mm A"
