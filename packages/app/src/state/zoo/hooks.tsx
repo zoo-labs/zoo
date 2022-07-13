@@ -157,11 +157,11 @@ export function useHatch(): (
               return;
             });
         }
-        // const
-        const mA = await media.approve(zooKeeper.address, Number(eggId));
-        mA.wait();
-        const aA = await media.isApprovedForAll(account, zooKeeper.address);
-        console.log("isApprovedForAllInHatch", aA);
+        // // const
+        // const mA = await media.approve(zooKeeper.address, Number(eggId));
+        // mA.wait();
+        // const aA = await media.isApprovedForAll(account, zooKeeper.address);
+        // console.log("isApprovedForAllInHatch", aA);
         const tx = await zooKeeper?.hatchEgg(Number(dropId), Number(eggId), {
           gasLimit: 4000000,
         });
@@ -1014,5 +1014,56 @@ export function useEditAuction(): (
       }
     },
     [addPopup, auction, getAllAuctions]
+  );
+}
+
+// Bread animals   // // Breed two animals and create a hybrid egg
+export function useBreed(): (
+  tokenA: number,
+  tokenB: number,
+  successCallback?: () => void
+) => void {
+  const addPopup = useAddPopup();
+  const zooKeeper = useZooKeeper();
+  const dropId = process.env.NEXT_PUBLIC_DROP_ID;
+  const dispatch = useDispatch();
+  return useCallback(
+    async (tokenA, tokenB, successCallback) => {
+      console.log("breeding_eggggg", { dropId, tokenA, tokenB, zooKeeper });
+      if (!zooKeeper) return;
+      try {
+        dispatch(loading(true));
+        const tx = await zooKeeper?.breedAnimals(
+          Number(dropId),
+          Number(tokenA),
+          Number(tokenB),
+          {
+            gasLimit: 4000000,
+          }
+        );
+        await tx.wait();
+        console.log(tx);
+        dispatch(loading(false));
+        successCallback && successCallback();
+        addPopup({
+          txn: {
+            hash: null,
+            summary: `Successfully bred ${tokenA} and ${tokenB}`,
+            success: true,
+          },
+        });
+      } catch (e) {
+        console.error("ISSUE BREEDING EGG \n", e);
+        dispatch(loading(false));
+        addPopup({
+          txn: {
+            hash: null,
+            summary: formatError(e),
+            success: false,
+          },
+        });
+      }
+    },
+    [addPopup, dispatch, dropId, zooKeeper]
   );
 }
