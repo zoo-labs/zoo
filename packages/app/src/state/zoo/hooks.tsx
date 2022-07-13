@@ -160,6 +160,8 @@ export function useHatch(): (
         // const
         const mA = await media.approve(zooKeeper.address, Number(eggId));
         mA.wait();
+        const aA = await media.isApprovedForAll(account, zooKeeper.address);
+        console.log("isApprovedForAllInHatch", aA);
         const tx = await zooKeeper?.hatchEgg(Number(dropId), Number(eggId), {
           gasLimit: 4000000,
         });
