@@ -8,9 +8,13 @@ import { Auction } from "types";
 import { shortenAddress } from "functions";
 import { abbreviateNumber } from "functions/abbreviateNumbers";
 import { useGetAllAuctions } from "state/zoo/hooks";
-import { useZooKeeper } from "hooks";
+import { useZooKeeper, useMedia } from "hooks";
 import Web3 from "web3";
 import styled from "styled-components";
+import { useMoralisWeb3Api } from "react-moralis";
+import useActiveWeb3React from "hooks/useActiveWeb3React";
+import { SUPPORTED_NETWORKS } from "config/networks";
+import moment from "moment";
 
 const Table = styled.table`
   font-family: Arial, Helvetica, sans-serif;
@@ -39,12 +43,34 @@ const ModelViewer = dynamic(() => import("components/ModelViewer"), {
 const InfoPage = () => {
   const router = useRouter();
   const { id } = router.query;
+  const { chainId } = useActiveWeb3React();
   const { allAuctions } = useSelector((state: any) => state.zoo);
   const [nft, setNft] = useState<Auction>();
+  const [transactions, setTransactions] = useState<any[]>([]);
   const [showTable, setShowTable] = useState(true);
   const getAllAuctions = useGetAllAuctions();
   const zooKeeper = useZooKeeper();
+  const media = useMedia();
   const [zooBnbPrice, setZooBnbPrice] = useState(0);
+  const Web3Api = useMoralisWeb3Api();
+
+  const fetchContractNFTTransfers = useCallback(async () => {
+    const options: { chain?: any; address: string } = {
+      address: media?.address,
+      chain: SUPPORTED_NETWORKS[chainId]?.chainId,
+    };
+
+    const nftTransfers = await (
+      await Web3Api.token.getContractNFTTransfers(options)
+    ).result;
+
+    const _ = nftTransfers.filter((n) => n.token_id === String(id));
+    setTransactions(_);
+    console.log(
+      "SOMESTUFFABOUTTRANSACTION",
+      nftTransfers.filter((n) => n.token_id === String(id))
+    );
+  }, [Web3Api.token, chainId, id, media?.address]);
 
   const calculateTimeLeft = useCallback(() => {
     const endDate = new Date(nft?.firstBidTime * 1000 + nft?.duration * 1000);
@@ -83,9 +109,8 @@ const InfoPage = () => {
       setTimeLeft(calculateTimeLeft());
     }
     return () => clearTimeout(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [calculateTimeLeft]);
-
-  console.log("AUCTION_TIME_LEFT", ttimeLeft);
 
   const getZooBnbPrice = useCallback(async () => {
     const price = await zooKeeper?.BNBPrice();
@@ -96,7 +121,8 @@ const InfoPage = () => {
   useEffect(() => {
     getZooBnbPrice();
     getAllAuctions();
-  }, [getZooBnbPrice, getAllAuctions]);
+    fetchContractNFTTransfers();
+  }, [getZooBnbPrice, getAllAuctions, fetchContractNFTTransfers]);
 
   const amountPriceBNB = zooBnbPrice * Number(nft?.amount);
   const reservePriceBNB = zooBnbPrice * Number(nft?.reservePrice);
@@ -111,7 +137,7 @@ const InfoPage = () => {
   console.log("NFTTTT_ANDAUCTION", nft);
   return (
     <div>
-      <div className="showcase min-h-[500px] bg-[#101010] flex items-center justify-center">
+      <div className="showcase min-h-[500px] flex items-center justify-center">
         {nft?.kind === 0 ? (
           <video
             autoPlay
@@ -123,6 +149,7 @@ const InfoPage = () => {
         ) : (
           <div className="h-[450px] w-full">
             <ModelViewer
+              // zoom="35deg"
               glb={nft?.glb_animation_url}
               usdz={nft?.usdz_animation_url}
             ></ModelViewer>
@@ -132,94 +159,142 @@ const InfoPage = () => {
       <div className="flex flex-col lg:flex-row lg:items-start py-9 px-[70px] space-y-12 space-x-12 mb-5">
         <div className="w-full lg:w-3/5">
           <p className="font-semibold text-[56px] mb-2">{nft?.name}</p>
-          <p className="font-bold text-[22px] mb-9">Minted on Jul 11, 2022 </p>
+          <div className="flex gap-x-4">
+            <div className="flex items-center gap-2">
+              <Image src="/icons/status.svg" alt="" height={26} width={20} />
+              <div>
+                <p className="text-sm font-medium">
+                  {nft?.attributes && nft?.attributes[0]?.trait_type}
+                </p>
+                <p className="font-medium text-[10px]">
+                  {nft?.attributes && nft?.attributes[0]?.value}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Image
+                src="/icons/population.svg"
+                alt=""
+                height={26}
+                width={20}
+              />
+              <div>
+                <p className="text-sm font-medium">
+                  {nft?.attributes && nft?.attributes[1]?.trait_type}
+                </p>
+                <p className="font-medium text-[10px]">
+                  {nft?.attributes && nft?.attributes[1]?.value}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Image src="/icons/react.svg" alt="" height={26} width={20} />
+              <div>
+                <p className="text-sm font-medium">
+                  {nft?.attributes && nft?.attributes[2]?.trait_type}
+                </p>
+                <p className="font-medium text-[10px]">
+                  {nft?.attributes && nft?.attributes[2]?.value}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="my-5">
+            <p className="mb-3 text-xl font-semibold">Description</p>
+            <hr className="w-full h-px mb-10 opacity-40" />
+            <p className="text-lg font-light text-butter-white">
+              Introducing Only1 Genesis NFTs and Creator Staking Pool - where
+              Defi meets social in only1. Each creator passed KYC will be minted
+              a Genesis-NFT, which they can associate with perks and rewards and
+              trade it in the marketplace. Users on the platform can stake $LIKE
+              tokens on individual creators and earn based on the pool’s APY,
+              which adjusts according to the creator’s engagement. ‍
+            </p>
+          </div>
           <div className="flex items-center mb-4">
-            <div className="bg-nft-gradient rounded-full h-8 w-8" />
-            <p className="ml-4 text-2xl font-bold text-steel">
+            <div className="w-6 h-6 rounded-full bg-nft-gradient" />
+            <p className="ml-4 text-xl font-bold text-steel">
               {nft?.tokenOwner ? shortenAddress(nft?.tokenOwner) : ""}
             </p>
           </div>
-          {/* <div className="flex items-center mb-4"> */}
-          <p className="text-2xl text-white mb-4">
-            Highest Bid:{" "}
-            <span className="text-2xl font-semibold text-steel">
-              {nft?.amount} Zoo
-            </span>
-          </p>
-          {/* </div> */}
-          <p className="text-2xl text-white mb-14">
-            Yields/Day:{" "}
-            <span className="text-steel">
-              {nft?.attributes &&
-                nft?.attributes.filter(
-                  (attr) => attr.trait_type === "Yields"
-                )[0].value}
-            </span>
-          </p>
-          <p className="text-xl font-semibold mb-3">Description</p>
-          <hr className="h-px opacity-40 w-full mb-10" />
-          <p className="text-butter-white text-lg font-light">
-            Introducing Only1 Genesis NFTs and Creator Staking Pool - where Defi
-            meets social in only1. Each creator passed KYC will be minted a
-            Genesis-NFT, which they can associate with perks and rewards and
-            trade it in the marketplace. Users on the platform can stake $LIKE
-            tokens on individual creators and earn based on the pool’s APY,
-            which adjusts according to the creator’s engagement. ‍
-          </p>
         </div>
         <div className="w-full lg:w-2/5 border border-white-30 rounded-lg h-auto max-h-fit py-[22px] px-[26px]">
-          <div className="flex items-center justify-between">
-            <p className="text-white opacity-60 text-sm font-normal">
-              Reserve Price
-            </p>
-            <div className="rounded-full bg-zoo-green py-2 px-7 font-medium text-xs">
-              Active
+          <div className="flex items-center justify-end">
+            {nft?.firstBidTime ? (
+              Object.keys(ttimeLeft).length > 0 ? (
+                <div className="py-2 text-xs font-medium rounded-full bg-zoo-green px-7">
+                  Active
+                </div>
+              ) : (
+                <div className="py-2 text-xs font-medium rounded-full bg-red px-7">
+                  Ended
+                </div>
+              )
+            ) : (
+              <div className="py-2 text-xs font-medium rounded-full bg-yellow px-7">
+                No Bid
+              </div>
+            )}
+          </div>
+          <div>
+            <div className="flex  space-x-3.5 mb-2 flex-col">
+              <p className="text-sm font-normal text-white opacity-60">
+                Reserve Price
+              </p>
+
+              <div className="flex items-center space-x-3.5">
+                <p className="text-2xl font-semibold">
+                  {abbreviateNumber(nft?.reservePrice)} ZOO
+                </p>
+                <p className="font-medium text-base text-[#909090]">
+                  ({abbreviateNumber(reservePriceBNB)} BNB)
+                </p>
+              </div>
+            </div>
+            <div className="flex space-x-3.5 mb-2 flex-col">
+              <p className="text-sm font-normal text-white opacity-60">
+                Last Bid Price
+              </p>
+              <div className="flex items-center space-x-3.5">
+                <p className="text-2xl font-semibold">
+                  {abbreviateNumber(nft?.amount)} ZOO
+                </p>
+              </div>
+            </div>
+            <div>
+              <p className="text-white opacity-60 text-sm font-normal mb-2.5">
+                Auction Duration
+              </p>
+              <p className="font-semibold text-[40px] mb-[41px]">
+                {nft?.firstBidTime
+                  ? Object.keys(ttimeLeft).length > 0
+                    ? ttimeLeft.d
+                      ? `${ttimeLeft.d} Day${ttimeLeft.d > 1 ? "s" : ""}  Left`
+                      : ttimeLeft.h
+                      ? `${ttimeLeft.h} Hour${ttimeLeft.h > 1 ? "s" : ""} & ${
+                          ttimeLeft.m
+                        } Minutes Left`
+                      : `${ttimeLeft.m} Minutes Left`
+                    : "Auction has ended"
+                  : "Auction has not started yet"}
+              </p>
             </div>
           </div>
-          <div className="flex items-center space-x-3.5 mb-11">
-            <Image
-              src="/favicon.ico"
-              alt=""
-              width={40}
-              height={40}
-              className="rounded-full bg-[#343434]"
-            />
-            <div className="flex items-center space-x-3.5">
-              <p className="font-semibold text-[40px]">
-                {abbreviateNumber(nft?.reservePrice)} ZOO
-              </p>
-              <p className="font-medium text-base text-[#909090]">
-                ({abbreviateNumber(reservePriceBNB)} BNB)
-              </p>
-            </div>
-          </div>
-          <p className="text-white opacity-60 text-sm font-normal mb-2.5">
-            Auction Duration
-          </p>
-          <p className="font-semibold text-[40px] mb-[41px]">
-            {nft?.firstBidTime
-              ? Object.keys(ttimeLeft).length > 0
-                ? ttimeLeft.d
-                  ? `${ttimeLeft.d} Day${ttimeLeft.d > 1 ? "s" : ""}  Left`
-                  : ttimeLeft.h
-                  ? `${ttimeLeft.h} Hour${ttimeLeft.h > 1 ? "s" : ""} & ${
-                      ttimeLeft.m
-                    } Minutes Left`
-                  : `${ttimeLeft.m} Minutes Left`
-                : "Auction has ended"
-              : "Auction has not started yet"}
-            {/* 3 Days Left */}
-          </p>
-          <Link href={`/market/placebid/${id}`} passHref>
-            <button className="py-[18px] w-full bg-leader-board rounded-[4px]">
-              Place Bid
-            </button>
-          </Link>
+          {nft?.firstBidTime && Object.keys(ttimeLeft).length > 0 ? (
+            <Link href={`/market/placebid/${id}`} passHref>
+              <button className="py-[18px] w-full bg-leader-board rounded-[4px]">
+                Place Bid
+              </button>
+            </Link>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <div className="w-full px-[70px] mb-10">
-        <div className="w-full border border-white-30 rounded-lg ">
-          <div className="flex justify-between items-center py-4 px-12">
+        <div className="w-full border rounded-lg border-white-30 ">
+          <div className="flex items-center justify-between px-12 py-4">
             <p>Current Bids</p>
             <Image
               src="/icons/caaret-down.svg"
@@ -234,49 +309,39 @@ const InfoPage = () => {
             <tr className="">
               <th>From</th>
               <th>Price</th>
-              <th>Floor Offer</th>
+              {/* <th>Floor Offer</th> */}
               <th>Offer Time</th>
-              <th>Expiration</th>
+              <th>Hash</th>
             </tr>
-            <tr>
-              <td>Niccage22031</td>
-              <td>0.015 ETH</td>
-              <td>100% Below</td>
-              <td>31/03/2022 / 11:46 AM</td>
-              <td>In 3 days</td>
-            </tr>
-
-            <tr>
-              <td>Niccage22031</td>
-              <td>0.015 ETH</td>
-              <td>100% Below</td>
-              <td>31/03/2022 / 11:46 AM</td>
-              <td>In 3 days</td>
-            </tr>
-
-            <tr>
-              <td>Niccage22031</td>
-              <td>0.015 ETH</td>
-              <td>100% Below</td>
-              <td>31/03/2022 / 11:46 AM</td>
-              <td>In 3 days</td>
-            </tr>
-
-            <tr>
-              <td>Niccage22031</td>
-              <td>0.015 ETH</td>
-              <td>100% Below</td>
-              <td>31/03/2022 / 11:46 AM</td>
-              <td>In 3 days</td>
-            </tr>
-
-            <tr>
-              <td>Niccage22031</td>
-              <td>0.015 ETH</td>
-              <td>100% Below</td>
-              <td>31/03/2022 / 11:46 AM</td>
-              <td>In 3 days</td>
-            </tr>
+            {transactions.map((transaction, index) => (
+              <tr key={index}>
+                <td>
+                  <a
+                    target={`_blank`}
+                    rel="noopener noreferrer"
+                    href={`https://testnet.bscscan.com/address/${transaction.from_address}`}
+                  >
+                    {shortenAddress(transaction.from_address)}
+                  </a>
+                </td>
+                <td>{abbreviateNumber(transaction.value)} ZOO</td>
+                {/* <td>{transaction.floorOffer} ZOO</td> */}
+                <td>
+                  {moment(transaction.block_timestamp).format(
+                    "DD/MM/YYYY / hh:mm A"
+                  )}
+                </td>
+                <td>
+                  <a
+                    target={`_blank`}
+                    rel="noopener noreferrer"
+                    href={`https://testnet.bscscan.com/tx/${transaction.transaction_hash}`}
+                  >
+                    {transaction.transaction_hash.slice(0, 10)}...
+                  </a>
+                </td>
+              </tr>
+            ))}
           </Table>
         </div>
       </div>
