@@ -281,12 +281,14 @@ const InfoPage = () => {
               </p>
             </div>
           </div>
-          {nft?.firstBidTime && Object.keys(ttimeLeft).length > 0 && (
+          {nft?.firstBidTime && Object.keys(ttimeLeft).length > 0 ? (
             <Link href={`/market/placebid/${id}`} passHref>
               <button className="py-[18px] w-full bg-leader-board rounded-[4px]">
                 Place Bid
               </button>
             </Link>
+          ) : (
+            ""
           )}
         </div>
       </div>

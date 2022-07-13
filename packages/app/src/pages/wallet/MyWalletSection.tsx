@@ -77,7 +77,7 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
                       />
                     </>
                   ) : (
-                    <div className="h-[450px] w-[300px]">
+                    <div className="min-h-[450px] w-[300px]">
                       <ModelViewer
                         glb={nft?.glb_animation_url}
                         usdz={nft?.usdz_animation_url}
