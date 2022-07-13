@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { MyNFT } from "state/zoo/types";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { useFetchMyNFTs } from "state/zoo/hooks";
+import { useBreed, useFetchMyNFTs } from "state/zoo/hooks";
+import useActiveWeb3React from "hooks/useActiveWeb3React";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -16,9 +17,13 @@ const Breed = () => {
   const [pair, setPair] = useState<MyNFT>();
   const [pairables, setPairables] = useState<MyNFT[]>([]);
   const router = useRouter();
+  const { account } = useActiveWeb3React();
   const fetchNFTs = useFetchMyNFTs();
   const { id } = router.query;
-  const { myNfts, nftTransfers } = useSelector((state: any) => state.zoo);
+  const { myNfts, nftTransfers, loading } = useSelector(
+    (state: any) => state.zoo
+  );
+  const handleBreed = useBreed();
 
   useEffect(() => {
     const nft_ = myNfts.find((nft) => String(nft.id) === String(id));
@@ -32,6 +37,14 @@ const Breed = () => {
   useEffect(() => {
     fetchNFTs;
   }, [fetchNFTs]);
+
+  const breed = useCallback(() => {
+    if (account) {
+      if (nft?.id && pair?.id) {
+        handleBreed(nft?.id, pair?.id);
+      }
+    }
+  }, [account, handleBreed, nft?.id, pair?.id]);
 
   console.log("NFT_TO_BREED_1", nft, pairables);
   return (
@@ -55,12 +68,16 @@ const Breed = () => {
           </div>
           <img src="/icons/arrange-circle.svg" alt="" width={62} height={62} />
           {pair ? (
-            <div className="bg-nft-gradient p-px rounded-xl flex-1">
-              <div className="bg-black rounded-xl w-full h-full min-h-[350px]">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi dolor quidem neque dolorem accusantium doloribus veniam
-                aspernatur minima. Temporibus reiciendis similique eos id in
-                assumenda quia atque placeat sit architecto!
+            <div
+              className="bg-nft-gradient p-px rounded-xl flex-1"
+              onClick={() => setPair(null)}
+            >
+              <div className="bg-black rounded-xl w-full h-[350px]">
+                <ModelViewer
+                  glb={pair?.glb_animation_url}
+                  usdz={pair?.usdz_animation_url}
+                  className="rounded-xl"
+                />
               </div>
             </div>
           ) : (
@@ -71,7 +88,8 @@ const Breed = () => {
         </div>
         <button
           className="bg-leader-board rounded-xl md:w-[343px] py-5 mb-20 disabled:opacity-50 disabled:cursor-not-allowed"
-          disabled={!pair}
+          disabled={!pair && loading}
+          onClick={breed}
         >
           Breed
         </button>
@@ -83,22 +101,25 @@ const Breed = () => {
         </p>
         <div className="flex space-10 justify-center items-center flex-wrap mb-20">
           {pairables.length > 0 ? (
-            pairables.map((nft) => (
-              <div key={nft.id}>
-                <div className="bg-nft-gradient p-px rounded-xl flex-1">
-                  <div className="bg-black rounded-xl w-full h-[270px]">
-                    <ModelViewer
-                      glb={nft.glb_animation_url}
-                      usdz={nft.usdz_animation_url}
-                      className="rounded-xl"
-                    />
+            pairables.map((nft) => {
+              if (nft.id === pair?.id) return false;
+              return (
+                <div key={nft.id} onClick={() => setPair(nft)}>
+                  <div className="bg-nft-gradient p-px rounded-xl flex-1">
+                    <div className="bg-black rounded-xl w-[234px]  h-[270px]">
+                      <ModelViewer
+                        glb={nft.glb_animation_url}
+                        usdz={nft.usdz_animation_url}
+                        className="rounded-xl"
+                      />
+                    </div>
                   </div>
+                  <p className="text-lg mt-2.5">
+                    {nft.name} ({nft.id})
+                  </p>
                 </div>
-                <p className="text-lg mt-2.5">
-                  {nft.name} ({nft.id})
-                </p>
-              </div>
-            ))
+              );
+            })
           ) : (
             <p className="font-semibold text-lg">
               You don&apos;t have any other animal to breed with :(
