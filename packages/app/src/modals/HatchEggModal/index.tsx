@@ -22,6 +22,9 @@ const WALLET_VIEWS = {
 
 export default function HatchEggModal({ nftItem, success }) {
   // important that these are destructed from the account-specific web3-react context
+  const hatchEggWaitPeriod: number = Number(
+    process.env.NEXT_PUBLIC_HATCH_EGG_WAIT_PERIOD
+  );
   const { account } = useWeb3React();
   const { loading } = useSelector((state: any) => state.zoo);
   const media = useMedia();
@@ -45,7 +48,9 @@ export default function HatchEggModal({ nftItem, success }) {
 
   const calculateTimeLeft = useCallback(() => {
     const startDate = new Date(nftItem.timestamp * 1000);
-    const endDate = startDate.setHours(startDate.getHours() + 4);
+    const endDate = startDate.setHours(
+      startDate.getHours() + (hatchEggWaitPeriod || 4)
+    );
     const difference = +new Date(endDate) - +new Date();
 
     let timeLeft: any = {};
@@ -61,7 +66,7 @@ export default function HatchEggModal({ nftItem, success }) {
     } else {
       return false;
     }
-  }, [nftItem.timestamp]);
+  }, [hatchEggWaitPeriod, nftItem.timestamp]);
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
