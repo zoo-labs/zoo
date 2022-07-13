@@ -211,7 +211,10 @@ const InfoPage = () => {
             {/* 3 Days Left */}
           </p>
           <Link href={`/market/placebid/${id}`} passHref>
-            <button className="py-[18px] w-full bg-leader-board rounded-[4px]">
+            <button
+              className="py-[18px] w-full bg-leader-board rounded-[4px] disabled:cursor-not-allowed disabled:opacity-60"
+              disabled={Object.keys(ttimeLeft).length <= 0}
+            >
               Place Bid
             </button>
           </Link>
