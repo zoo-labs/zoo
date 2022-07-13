@@ -40,7 +40,6 @@ const NftModal: React.FC<NftModalProps> = ({
         onDismiss={() => null}
         maxWidth={1240}
         minHeight={70}
-        scrollable
       >
         <BidModalHeader
           onBack={() => toggleNftModal()}
