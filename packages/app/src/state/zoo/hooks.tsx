@@ -269,9 +269,9 @@ export function useFetchMyNFTs(): () => Promise<void> {
             dropID: Number(deet?.meta?.dropID),
             swapped: deet?.meta?.swapped,
             burned: deet?.meta?.burned,
+            metaUri: deet?.data.metadataURI,
           },
           rarity: deet?.rarity?.name,
-          bidShares: deet?.bidShares,
           token_uri: nft.token_uri,
           attributes: attributes || "",
           image: image || "",
@@ -915,7 +915,7 @@ export function useFeed(): (animalID: number) => void {
   const fetchMyNfts = useFetchMyNFTs();
   return useCallback(
     async (animalId) => {
-      console.log("feeding_animal", { animalId, dropId });
+      console.log("feeding_animal", zooKeeper, { animalId, dropId });
       if (!zooKeeper) return;
       dispatch(loading(true));
       try {
