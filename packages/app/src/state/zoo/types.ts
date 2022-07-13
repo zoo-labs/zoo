@@ -42,9 +42,9 @@ export interface MyNFT {
         dropID: number,
         swapped: boolean,
         burned: boolean,
+        metaUri: string
     },
     rarity: string,
-    bidShares: number,
     token_uri: string,
     attributes,
     image,
