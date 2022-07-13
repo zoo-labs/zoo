@@ -17,6 +17,7 @@ import { useETHBalances } from "../../state/wallet/hooks";
 
 import { fadeInOnScroll } from "animation";
 import { useActiveWeb3React } from "hooks";
+import { useRouter } from "next/router";
 import TransactionHistorySection from "./TransactionHistorySection";
 import dynamic from "next/dynamic";
 import {
@@ -43,7 +44,7 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
   const [nftItem, setNftItem] = useState<MyNFT>();
   const toggleNftModal = useMyNftModalToggle();
   const feedAnimal = useFeed();
-
+  const route = useRouter();
   console.log("SOME_KINDOF_ITEM", nftItem);
   // console.log("SOME_KINDOF_ITEM_TOO", myNfts);
 
@@ -112,7 +113,7 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
               toggleHatchEggModal();
             }}
             feed={(id) => feedAnimal(id)}
-            breed={() => console.log("breeding")}
+            breed={() => route.push(`/wallet/${nftItem.id}/breed`)}
             auction={() => toggleAucionModal()}
           />
           <AuctionModal nft={nftItem} />

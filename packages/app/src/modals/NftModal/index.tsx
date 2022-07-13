@@ -58,7 +58,7 @@ const NftModal: React.FC<NftModalProps> = ({
                   height={350}
                 />
               ) : (
-                <div className="h-full w-full">
+                <div className="h-full w-[300px]">
                   <ModelViewer
                     glb={nftItem?.glb_animation_url}
                     usdz={nftItem?.usdz_animation_url}
