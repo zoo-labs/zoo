@@ -36,6 +36,7 @@ import { addDays, differenceInSeconds } from "date-fns";
 import { SUPPORTED_NETWORKS } from "config/networks";
 import { MyNFT } from "./types";
 import axios from "axios";
+import { ethers } from "ethers";
 
 // helper that can take a ethers library transaction response and add it to the list of transactions
 export function useZoobalance(): () => void {
@@ -81,7 +82,7 @@ export function useBuyZoo(): () => void {
         .fund(account)
         .send({ from: account })
         .then(async () => {
-          dispatch(getZooBalance());
+          getZooBalance();
           return 2;
         })
         .catch((e) => {
@@ -90,7 +91,7 @@ export function useBuyZoo(): () => void {
     } catch (e) {
       console.error("ISSUE USING FAUCET \n", e);
     }
-  }, [account, chainId, faucet, dispatch, getZooBalance]);
+  }, [account, chainId, faucet, getZooBalance]);
 }
 export function useGetEggs(): (eggs) => void {
   const dispatch = useAppDispatch();
@@ -351,7 +352,7 @@ export function useGetAvailableEggs(): () => void {
           kind: egg.kind,
           minted: Number(egg.minted),
           name: egg.name,
-          price: Number(egg.price),
+          price: Number(egg.price) / Math.pow(10, 18),
           supply: Number(egg.supply),
           timestamp: Number(egg.timestamp),
           image: `https://zoolabs.mypinata.cloud/ipfs/${image.slice(7)}`,
@@ -586,7 +587,7 @@ export function useGetAllAuctions(): () => Promise<void> {
           curatorFeePercentage,
           // curator,
           // auctionCurrency,
-          amount: Number(amount),
+          amount: Number(amount) / Math.pow(10, 18),
           tokenUri,
           name,
           attributes,
@@ -865,6 +866,9 @@ export function useCreateBid(): (
   const getZooBalance = useZoobalance();
   return useCallback(
     async (id, amount, success) => {
+      console.log("AMOUNT_TO_BID", Number(amount));
+      // const weiAmount = ethers.utils.formatUnits(amount, "wei");
+      // console.log("WEI_AMOUNT", weiAmount);
       try {
         dispatch(loading(true));
         const approved = await zoo?.allowance(account, auction?.address);
@@ -876,8 +880,7 @@ export function useCreateBid(): (
           await approval.wait();
           console.log("APPROVAL", approval);
         }
-
-        const tx = await auction?.createBid(id, amount, {
+        const tx = await auction?.createBid(id, `${amount * 10 ** 18}`, {
           gasLimit: 4000000,
         });
         await tx.wait();

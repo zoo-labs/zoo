@@ -26,6 +26,7 @@ import { Replay } from "@mui/icons-material";
 import { useETHBalances } from "state/wallet/hooks";
 import { useZooKeeper } from "hooks";
 import Web3 from "web3";
+import { capitalize } from "functions";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -129,7 +130,9 @@ const Item = () => {
           <div className="flex flex-col items-start text-white gap-9 mb-7">
             <div className="flex flex-wrap items-center w-full space-y-3 gap-x-4">
               <div className="w-full">
-                <p className="font-semibold text-[52px]">{egg?.name}</p>
+                <p className="font-semibold text-[52px]">
+                  {capitalize(egg?.name)} Egg
+                </p>
               </div>
               <div className="flex items-center gap-2">
                 <Image src="/icons/status.svg" alt="" height={26} width={20} />

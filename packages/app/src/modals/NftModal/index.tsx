@@ -49,7 +49,7 @@ const NftModal: React.FC<NftModalProps> = ({
         <div className="flex flex-col px-5 mx-auto mt-20 lg:flex-row gap-11 lg:items-center lg:px-10 max-w-7xl">
           <div className="rounded-xl p-px h-full bg-view-gradient w-full lg:w-[40%]">
             <div className="bg-black rounded-xl min-h-[466px] h-full w-full px-12 py-12 flex flex-col justify-center items-center">
-              {nftItem.kind === 0 ? (
+              {nftItem.kind === 0 || nftItem.kind === 2 ? (
                 <video
                   autoPlay
                   loop
