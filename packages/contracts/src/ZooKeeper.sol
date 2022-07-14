@@ -10,7 +10,7 @@ import { IDrop } from "./interfaces/IDrop.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 import { IZoo } from "./interfaces/IZoo.sol";
 import { IERC721Burnable } from "./interfaces/IERC721Burnable.sol";
-import { IUniswapV2Pair } from "./uniswapv2/interfaces/IUniswapV2Pair.sol";
+import { IUniswapV2Pair } from "./interfaces/IUniswapV2Pair.sol";
 import { IKeeper } from "./interfaces/IKeeper.sol";
 
 contract ZooKeeper is Ownable, IZoo, IKeeper {
@@ -27,6 +27,8 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
   mapping(uint256 => IZoo.Token) public tokens;
 
   mapping(address => mapping(uint256 => uint256)) public buyerEggDrop;
+
+  mapping(uint256 => uint256) public feededTimes;
 
   uint256 public namePrice;
   uint256 public BNBPrice;
@@ -205,14 +207,14 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
     require(zoo.balanceOf(msg.sender) >= price, "Not enough ZOO");
     IZoo.Token storage token = tokens[animal];
 
-    IMedia.MediaData memory newData = drop.getAdultHoodURIs(token.name, token.stage);
-
     if(tokens[animal].stage == IZoo.AdultHood.BABY){
       token.stage = IZoo.AdultHood.TEEN;
     }
     else if(tokens[animal].stage == IZoo.AdultHood.TEEN){
       token.stage = IZoo.AdultHood.ADULT;
     }
+    feededTimes[tokens[animal].id] += 1;
+    IMedia.MediaData memory newData = drop.getAdultHoodURIs(token.name, token.stage);
     token.data = newData;
     media.updateTokenURI(token.id, newData.tokenURI);
     media.updateTokenMetadataURI(token.id, newData.metadataURI);
