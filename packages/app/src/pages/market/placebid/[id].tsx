@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import Head from "next/head";
@@ -24,6 +24,18 @@ const PlaceBid = () => {
   const [bidPrice, setBidPrice] = useState<number | any>(1);
   const [nft, setNft] = useState<any>({});
   const router = useRouter();
+  const minBidFunc = useCallback(() => {
+    const curatorFeePercentage = nft?.curatorFeePercentage / 100;
+    if (nft?.amount > 0) {
+      return nft?.amount + nft?.amount * curatorFeePercentage;
+    } else return nft?.reservePrice;
+  }, [nft]);
+
+  const [minBid, setMinBid] = useState<number | any>(minBidFunc());
+
+  useEffect(() => {
+    setMinBid(minBidFunc());
+  }, [minBidFunc]);
 
   const { loading, zooBalance, allAuctions } = useSelector(
     (state: any) => state.zoo
@@ -43,11 +55,11 @@ const PlaceBid = () => {
       return String(obj.tokenID) === String(router.query.id);
     });
     setNft(NFT[0]);
-    setBidPrice(NFT[0]?.amount > 0 ? NFT[0]?.amount : NFT[0]?.reservePrice);
+    setBidPrice(minBid);
     console.log("NFTTTT_ANDAUCTION_", NFT[0]?.tokenOwner === account);
-  }, [account, allAuctions, router.query.id]);
+  }, [account, allAuctions, minBid, router.query.id]);
 
-  console.log("NFTTTT_ANDAUCTION", nft, allAuctions);
+  console.log("NFTTTT_ANDAUCTION", nft, allAuctions, minBid);
   const handleClick = () => {
     if (nft?.tokenOwner === account) {
       console.log("You own this token and placed this auction");
@@ -88,12 +100,15 @@ const PlaceBid = () => {
                 {nft?.tokenOwner === account ? "Your Auction" : "Place a Bid"}
               </p>
               <div className="flex items-center font-medium">
-                <p className="text-a1">Your Balance: </p>
-                <p>
-                  {zooBalance?.toLocaleString(undefined, {
-                    maximumFractionDigits: 4,
-                  })}{" "}
-                  ZOO
+                <p className="text-a1">
+                  Your Balance:{" "}
+                  <span className="text-white">
+                    {" "}
+                    {zooBalance?.toLocaleString(undefined, {
+                      maximumFractionDigits: 4,
+                    })}{" "}
+                    ZOO
+                  </span>
                 </p>
               </div>
             </div>
@@ -110,12 +125,16 @@ const PlaceBid = () => {
                   ZOO
                 </span>
               </div>
-              {bidPrice < nft?.reservePrice && (
-                <p className="mt-2 text-red">Bid too low</p>
+              {bidPrice < minBid && (
+                <p className="mt-2 text-red">
+                  The minimum bid for this auction is {minBid} ZOO
+                </p>
               )}
               <p className="mt-4 mb-1.5 text-base font-normal">
-                You must be paid at least{" "}
-                {nft?.reservePrice?.toLocaleString(undefined, {
+                {nft?.tokenOwner === account
+                  ? "You must be paid at least"
+                  : "You must pay at least"}{" "}
+                {minBid?.toLocaleString(undefined, {
                   maximumFractionDigits: 2,
                 })}{" "}
                 ZOO
@@ -124,31 +143,40 @@ const PlaceBid = () => {
                 The next bid must be {nft?.curatorFeePercentage}% more than the
                 current bid
               </p>
-              {nft?.tokenOwner === account && nft?.amount <= 0 && (
+              {nft?.tokenOwner === account ? (
+                nft?.amount <= 0 ? (
+                  <>
+                    <button
+                      className="py-[12px] w-full rounded-[4px] bg-leader-board mb-4 disabled:cursor-not-allowed"
+                      onClick={handleClick}
+                      disabled={loading}
+                    >
+                      Edit Auction
+                    </button>
+                    <button
+                      className="py-[12px] w-full rounded-[4px] border border-leader-board bg-[#2A2C41] mb-4"
+                      onClick={handleRemoveAuction}
+                      disabled={loading}
+                    >
+                      Remove Auction
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    className="py-[12px] w-full rounded-[4px] border border-leader-board bg-[#2A2C41] mb-4"
+                    // onClick={handleRemoveAuction}
+                    disabled={true}
+                  >
+                    You can not edit this auction
+                  </button>
+                )
+              ) : (
                 <button
                   className="py-[12px] w-full rounded-[4px] bg-leader-board mb-4 disabled:cursor-not-allowed"
                   onClick={handleClick}
-                  disabled={bidPrice < nft?.reservePrice || loading}
-                >
-                  Edit Auction
-                </button>
-              )}
-              {nft?.tokenOwner !== account && (
-                <button
-                  className="py-[12px] w-full rounded-[4px] bg-leader-board mb-4 disabled:cursor-not-allowed"
-                  onClick={handleClick}
-                  disabled={bidPrice < nft?.reservePrice || loading}
+                  disabled={bidPrice < minBid || loading}
                 >
                   Place Bid
-                </button>
-              )}
-              {nft?.tokenOwner === account && (
-                <button
-                  className="py-[12px] w-full rounded-[4px] border border-leader-board bg-[#2A2C41] mb-4"
-                  onClick={handleRemoveAuction}
-                  disabled={loading}
-                >
-                  Remove Auction
                 </button>
               )}
             </form>
