@@ -187,7 +187,7 @@ function MyApp({
         <meta
           key="twitter:image"
           name="twitter:image"
-          content="https://zoolabs.io/zoo.png"
+          content="/img/logo.png"
         />
         <meta
           key="twitter:creator"
@@ -200,7 +200,8 @@ function MyApp({
         <meta
           key="og:image"
           property="og:image"
-          content="https://zoolabs.io/zoo.png"
+          content="/img/logo.png"
+          // content="https://zoolabs.io/zoo.png"
         />
         <meta
           key="og:description"

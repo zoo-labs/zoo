@@ -206,7 +206,7 @@ const Item = () => {
                       {withZoo ? (
                         <>
                           <Image
-                            src="/logo.png"
+                            src="/img/egg.png"
                             alt=""
                             width={20}
                             height={20}
