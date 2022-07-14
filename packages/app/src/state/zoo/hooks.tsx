@@ -81,7 +81,7 @@ export function useBuyZoo(): () => void {
         .fund(account)
         .send({ from: account })
         .then(async () => {
-          dispatch(getZooBalance());
+          getZooBalance();
           return 2;
         })
         .catch((e) => {
@@ -90,7 +90,7 @@ export function useBuyZoo(): () => void {
     } catch (e) {
       console.error("ISSUE USING FAUCET \n", e);
     }
-  }, [account, chainId, faucet, dispatch, getZooBalance]);
+  }, [account, chainId, faucet, getZooBalance]);
 }
 export function useGetEggs(): (eggs) => void {
   const dispatch = useAppDispatch();
@@ -877,7 +877,7 @@ export function useCreateBid(): (
           console.log("APPROVAL", approval);
         }
 
-        const tx = await auction?.createBid(id, amount, {
+        const tx = await auction?.createBid(id, Number(amount) * 10 ** 18, {
           gasLimit: 4000000,
         });
         await tx.wait();
