@@ -41,7 +41,9 @@ export default function HatchEggAnimationModal({}) {
               autoPlay
               muted
               className="absolute max-h-screen w-full h-full md:-top-2.5 lg:-top-2.5 -ilnset-y-2.5"
-              onEnded={toggleNftModal}
+              onEnded={() => {
+                if (hatchEggModalOpen) toggleModal();
+              }}
               style={{
                 zoom: 50,
               }}
