@@ -52,8 +52,8 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
     <div>
       <div className="py-12">
         <h1 className="text-3xl text-center lg:text-5xl ">My Nfts</h1>
-        <div className="flex flex-wrap items-center justify-center gap-4 mb-4">
-          <div className="flex items-center justify-center">
+        <div className="flex flex-wrap items-center justify-center gap-4 mb-4 w-full">
+          <div className="flex items-center justify-center w-full gap-2 flex-wrap">
             {myNfts.map((nft: MyNFT, index) => {
               const { kind, name, id, dropId, stage, token_uri } = nft;
               console.log("nftttt", nft);
@@ -64,7 +64,7 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
                     setNftItem(nft);
                     toggleNftModal();
                   }}
-                  className="h-[450px] flex flex-col items-center"
+                  className="h-[450px] flex flex-col items-center cursor-pointer w-1/4"
                 >
                   {kind === 0 ? (
                     <>
