@@ -461,7 +461,7 @@ export function useBuyEggWithBnB(): (
       try {
         dispatch(loading(true));
         const approval = await bnb?.allowance(account, zooKeeper.address);
-        console.log("approval_approving_media", Number(approval));
+        console.log("approval_approving_media", isNaN(Number(approval)));
         if (Number(approval) <= 0 || isNaN(Number(approval))) {
           console.log("approving_media");
           const approving = await bnb?.approve(zooKeeper.address, MaxUint256, {
