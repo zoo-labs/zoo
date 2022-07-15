@@ -86,17 +86,33 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                           {i18n._(t`Marketplace`)}
                         </a>
                       </NavLink>
+                      <NavLink href="/bridge">
+                        <a
+                          id={`bridge-nav-link`}
+                          className={
+                            router.pathname == "/wallet"
+                              ? `${linkStyle} text-green text-bold`
+                              : `${linkStyle} text-white`
+                          }
+                          style={{ letterSpacing: "2px" }}
+                        >
+                          {i18n._(t`Bridge`)}
+                        </a>
+                      </NavLink>
+                      <NavLink href="/dao">
+                        <a
+                          id={`dao-nav-link`}
+                          className={
+                            router.pathname == "/wallet"
+                              ? `${linkStyle} text-green text-bold`
+                              : `${linkStyle} text-white`
+                          }
+                          style={{ letterSpacing: "2px" }}
+                        >
+                          {i18n._(t`Dao`)}
+                        </a>
+                      </NavLink>
 
-                      <a
-                        href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
-                        target="_blank"
-                        rel="noreferrer"
-                        id={`market-nav-link`}
-                        className="p-2 text-baseline text-primary hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                        style={{ letterSpacing: "2px" }}
-                      >
-                        {i18n._(t`Chart`)}
-                      </a>
                       {/* <NavLink href="/store">
                         <a
                           id={`store`}
@@ -261,7 +277,24 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                 >
                   {i18n._(t`Marketplace`)}
                 </a>
-
+                <a
+                  id={`dao`}
+                  className="p-2 tracking-widest text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  // style={{letterSpacing: '2px'}}
+                  href="/dao"
+                  style={{ letterSpacing: "2px" }}
+                >
+                  {i18n._(t`Dao`)}
+                </a>
+                <a
+                  id={`bridge`}
+                  className="p-2 tracking-widest text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  // style={{letterSpacing: '2px'}}
+                  href="/bridge"
+                  style={{ letterSpacing: "2px" }}
+                >
+                  {i18n._(t`Bridge`)}
+                </a>
                 <a
                   id={`chart`}
                   className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
