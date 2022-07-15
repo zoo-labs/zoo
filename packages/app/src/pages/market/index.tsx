@@ -211,7 +211,7 @@ const MarketPlacePage = () => {
       {/* Eggs */}
       <div className="mb-16">
         <div>
-          <h2 className="text-3xl font-bold text-center text-white lg:text-4xl">
+          <h2 className="text-3xl font-bold text-center text-white lg:text-4xl mb-4">
             Buy Eggs
           </h2>
         </div>
@@ -227,10 +227,17 @@ const MarketPlacePage = () => {
                 >
                   <div className="flex flex-col ">
                     <div className="relative overflow-hidden rounded parent">
-                      <div className="h-full w-[300px]">
-                        {/* <ModelViewer usdz={item.usdz} glb={item.glb}></ModelViewer> */}
-                        {/* <img src={item.image} alt="" /> */}
-                        <video src={item.animation_url} autoPlay loop />
+                      <div className="relative overflow-hidden rounded bg-nft-gradient p-[2px] parent w-full">
+                        <div className="h-full w-[300px]">
+                          {/* <ModelViewer usdz={item.usdz} glb={item.glb}></ModelViewer> */}
+                          {/* <img src={item.image} alt="" /> */}
+                          <video
+                            src={item.animation_url}
+                            autoPlay
+                            loop
+                            className="rounded overflow-hidden max-h-full object-cover"
+                          />
+                        </div>
                       </div>
                       <div className="absolute top-0 left-0 invisible w-full h-full transition-all duration-300 rounded opacity-0 hover:visible hover:opacity-100">
                         <div className="absolute px-2 py-1 text-xs font-bold uppercase rounded top-6 left-3 bg-primary ">
