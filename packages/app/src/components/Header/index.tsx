@@ -133,22 +133,27 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                 </div>
 
                 <div className=" w-3/4 text-xs flex flex-row-reverse items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap  font-bold cursor-pointer select-none pointer-events-auto">
-                  {account && chainId && userEthBalance && (
-                    <>
-                      <div className="px-3 py-2 text-primary text-bold">
-                        {userEthBalance?.toFixed(3)}{" "}
-                        {NATIVE[chainId]?.symbol || "ETH"}
-                      </div>
-                    </>
-                  )}
-                  <Web3Status
-                    title={i18n._(t`Connect Wallet`)}
-                    className="font-bold bg-black border border-green text-green"
-                  />
-                </div>
-
-                <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
-                  <div className="flex items-center justify-between w-full space-x-4 sm:justify-end">
+                  <More />
+                  <div
+                    className={`${
+                      account &&
+                      "flex flex-row-reverse items-center bg-[#212429] rounded-[10px] p-1"
+                    }`}
+                  >
+                    <Web3Status
+                      title={i18n._(t`Connect Wallet`)}
+                      className="font-bold bg-black border border-green text-green"
+                    />
+                    {account && chainId && userEthBalance && (
+                      <>
+                        <div className="mr-2 pl-1 py-2 text-primary font-semibold">
+                          {userEthBalance?.toFixed(3)}{" "}
+                          {NATIVE[chainId]?.symbol || "ETH"}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <div className="flex items-center justify-between w-full space-x-4 sm:justify-end mr-2">
                     {chainId &&
                       // [ChainId.MAINNET].includes(chainId) &&
                       connector &&
@@ -204,8 +209,8 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                               <Image
                                 src="/img/egg.png"
                                 alt="zoo"
-                                width="30px"
-                                height="30px"
+                                width="31px"
+                                height="36px"
                                 // objectFit="contain"
                                 className="rounded-md"
                               />
@@ -219,8 +224,10 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                         <Web3Network />
                       </div>
                     )} */}
-                    <More />
                   </div>
+                </div>
+
+                <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
                   <CartSideNav />
                 </div>
                 <div className="flex -mr-2 sm:hidden">
