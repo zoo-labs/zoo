@@ -3,20 +3,20 @@ import { TokenList } from "@uniswap/token-lists";
 
 export type PopupContent =
   | {
-      txn: {
-        hash: string;
-        success: boolean;
-        summary?: string;
-      };
-    }
-  | {
-      listUpdate: {
-        listUrl: string;
-        oldList: TokenList;
-        newList: TokenList;
-        auto: boolean;
-      };
+    txn: {
+      hash: string;
+      success: boolean;
+      summary?: string;
     };
+  }
+  | {
+    listUpdate: {
+      listUrl: string;
+      oldList: TokenList;
+      newList: TokenList;
+      auto: boolean;
+    };
+  };
 
 export enum ApplicationModal {
   WALLET,
@@ -37,6 +37,7 @@ export enum ApplicationModal {
   MY_NFT,
   AUCTION,
   HATCH_EGG_ANIMATION,
+  CAST_VOTE
 }
 
 export const updateBlockNumber = createAction<{
