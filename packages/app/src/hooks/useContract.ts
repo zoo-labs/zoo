@@ -22,7 +22,8 @@ import {
   TIMELOCK_ADDRESS,
   WNATIVE_ADDRESS,
 } from "@zoolabs/sdk";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
+import { useDispatch } from "react-redux";
 import { abis, addresses } from "../constants";
 import ARCHER_ROUTER_ABI from "../constants/abis/archer-router.json";
 import {
@@ -392,4 +393,57 @@ export function useBnbToken(): Contract | null {
 
 export function useAuction(): Contract | null {
   return useContract("Auction");
+}
+
+export function useTeleportContract(): (chain) => Contract | null {
+  const { account, library } = useActiveWeb3React()
+  const dispatch = useDispatch()
+  return useCallback(
+    (chain) => {
+      const contract = altContract("TELEPORT", chain, account, library);
+      console.log('hitting burnContract', chain, contract)
+
+      return contract
+    },
+    [dispatch],
+  )
+
+}
+
+export function useLbtcContract(chain?): Contract | null {
+
+  return useContract('LBTC', chain) // DYNAMICALLY FETCHES THE RIGHT CONTRACT BASED ON THE CURRENT CHAIN..USERS CAN ONLY BRIDGE FROM AN ACTIVE CHAIN
+
+}
+export const altContract = (nameOrAddress,
+  chain,
+  account, library) => {
+  let chainIdStr = chain ? chain : "4";
+  console.log('useGetCurrentBalances', nameOrAddress, chain)
+  let address: string | undefined = nameOrAddress;
+  let ABI;
+  if (!isAddress(nameOrAddress) || nameOrAddress === AddressZero) {
+    address = addresses[chainIdStr][nameOrAddress.toString()] || "";
+    ABI =
+      ABI || abis[chainIdStr]
+        ? abis[chainIdStr][nameOrAddress.toString()]
+        : null;
+  }
+
+
+  if (!address || !ABI || !library) return null;
+  try {
+    const contract = getContract(
+      address.toString(),
+      ABI,
+      library,
+      account ? account : undefined
+    );
+    console.log('fetching contracrt', contract)
+    return contract;
+  } catch (error) {
+    console.error("Failed to get contract", error);
+    return null;
+  }
+
 }
