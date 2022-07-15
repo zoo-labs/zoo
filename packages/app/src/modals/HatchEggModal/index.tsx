@@ -47,7 +47,7 @@ export default function HatchEggModal({ nftItem, success }) {
   }, [account, hatchEgg, nftItem, success, toggleWallet]);
 
   const calculateTimeLeft = useCallback(() => {
-    const startDate = new Date(nftItem.timestamp * 1000);
+    const startDate = new Date(nftItem?.timestamp * 1000);
     const endDate = startDate.setHours(
       startDate.getHours() + (hatchEggWaitPeriod || 4)
     );
@@ -66,7 +66,7 @@ export default function HatchEggModal({ nftItem, success }) {
     } else {
       return false;
     }
-  }, [hatchEggWaitPeriod, nftItem.timestamp]);
+  }, [hatchEggWaitPeriod, nftItem?.timestamp]);
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
@@ -88,7 +88,7 @@ export default function HatchEggModal({ nftItem, success }) {
             <video
               autoPlay
               loop
-              src={nftItem.token_uri}
+              src={nftItem?.token_uri}
               width={300}
               height={350}
             />

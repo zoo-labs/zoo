@@ -77,7 +77,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                         <a
                           id={`mint-nav-link`}
                           className={
-                            router.pathname == "/wallet"
+                            router.pathname == "/market"
                               ? `${linkStyle} text-green text-bold`
                               : `${linkStyle} text-white`
                           }
@@ -86,17 +86,33 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                           {i18n._(t`Marketplace`)}
                         </a>
                       </NavLink>
+                      <NavLink href="/bridge">
+                        <a
+                          id={`bridge-nav-link`}
+                          className={
+                            router.pathname == "/bridge"
+                              ? `${linkStyle} text-green text-bold`
+                              : `${linkStyle} text-white`
+                          }
+                          style={{ letterSpacing: "2px" }}
+                        >
+                          {i18n._(t`Bridge`)}
+                        </a>
+                      </NavLink>
+                      <NavLink href="/dao">
+                        <a
+                          id={`dao-nav-link`}
+                          className={
+                            router.pathname == "/dao"
+                              ? `${linkStyle} text-green text-bold`
+                              : `${linkStyle} text-white`
+                          }
+                          style={{ letterSpacing: "2px" }}
+                        >
+                          {i18n._(t`Dao`)}
+                        </a>
+                      </NavLink>
 
-                      <a
-                        href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
-                        target="_blank"
-                        rel="noreferrer"
-                        id={`market-nav-link`}
-                        className="p-2 text-baseline text-primary hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                        style={{ letterSpacing: "2px" }}
-                      >
-                        {i18n._(t`Chart`)}
-                      </a>
                       {/* <NavLink href="/store">
                         <a
                           id={`store`}
@@ -117,22 +133,27 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                 </div>
 
                 <div className=" w-3/4 text-xs flex flex-row-reverse items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap  font-bold cursor-pointer select-none pointer-events-auto">
-                  {account && chainId && userEthBalance && (
-                    <>
-                      <div className="px-3 py-2 text-primary text-bold">
-                        {userEthBalance?.toFixed(3)}{" "}
-                        {NATIVE[chainId]?.symbol || "ETH"}
-                      </div>
-                    </>
-                  )}
-                  <Web3Status
-                    title={i18n._(t`Connect Wallet`)}
-                    className="font-bold bg-black border border-green text-green"
-                  />
-                </div>
-
-                <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
-                  <div className="flex items-center justify-between w-full space-x-4 sm:justify-end">
+                  <More />
+                  <div
+                    className={`${
+                      account &&
+                      "flex flex-row-reverse items-center bg-[#212429] rounded-[10px] p-1"
+                    }`}
+                  >
+                    <Web3Status
+                      title={i18n._(t`Connect Wallet`)}
+                      className="font-bold bg-black border border-green text-green"
+                    />
+                    {account && chainId && userEthBalance && (
+                      <>
+                        <div className="mr-2 pl-1 py-2 text-primary font-semibold">
+                          {userEthBalance?.toFixed(3)}{" "}
+                          {NATIVE[chainId]?.symbol || "ETH"}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <div className="flex items-center justify-between w-full space-x-4 sm:justify-end mr-2">
                     {chainId &&
                       // [ChainId.MAINNET].includes(chainId) &&
                       connector &&
@@ -188,8 +209,8 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                               <Image
                                 src="/img/egg.png"
                                 alt="zoo"
-                                width="30px"
-                                height="30px"
+                                width="31px"
+                                height="36px"
                                 // objectFit="contain"
                                 className="rounded-md"
                               />
@@ -203,8 +224,10 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                         <Web3Network />
                       </div>
                     )} */}
-                    <More />
                   </div>
+                </div>
+
+                <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
                   <CartSideNav />
                 </div>
                 <div className="flex -mr-2 sm:hidden">
@@ -261,7 +284,24 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                 >
                   {i18n._(t`Marketplace`)}
                 </a>
-
+                <a
+                  id={`dao`}
+                  className="p-2 tracking-widest text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  // style={{letterSpacing: '2px'}}
+                  href="/dao"
+                  style={{ letterSpacing: "2px" }}
+                >
+                  {i18n._(t`Dao`)}
+                </a>
+                <a
+                  id={`bridge`}
+                  className="p-2 tracking-widest text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  // style={{letterSpacing: '2px'}}
+                  href="/bridge"
+                  style={{ letterSpacing: "2px" }}
+                >
+                  {i18n._(t`Bridge`)}
+                </a>
                 <a
                   id={`chart`}
                   className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
