@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import ProposalsTable from "components/Voting/ProposalsTable";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -30,10 +31,15 @@ const Voting = () => {
       <Head>
         <title>ZOO | DAO</title>
       </Head>
-      <div className="Home flex flex-col justify-center items-center min-h-[70vh]">
+      <div className="Home flex flex-col justify-center items-center min-h-[70vh] relative">
+        <img
+          src="/images/giant-rhino.png"
+          alt=""
+          className="absolute right-0 top-0"
+        />
         <div className="w-full px-4 py-16 mx-auto lg:max-w-7xl mt-14">
           <div
-            className="py-10 px-7 md:px-20 md:py-16 rounded-2xl mb-9"
+            className="py-10 px-7 md:px-20 md:py-16 rounded-2xl mb-20 relative"
             style={{
               backgroundImage: "url(/images/voting-banner.png)",
               backgroundSize: "cover",
