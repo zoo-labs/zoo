@@ -43,24 +43,49 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
       </div>
 
       <div className="flex flex-col flex-grow py-4 no-underline cursor-pointer">
-        <div className="flex flex-col flex-grow">
+        <div className="flex flex-col flex-grow border-b border-[#797979] pb-2">
           <div className="flex mb-4 ">
             <div className="mt-1 mr-auto font-semibold">
               {datum.name?.toUpperCase()} {datum.kind >= 2 && "(Hybrid)"}{" "}
               <span className="text-xs text-gray-500">({datum.id || ""})</span>
             </div>
           </div>
-          <div className="flex ">
+          <div className="flex items-center">
             <div className="flex mt-1 mr-auto text-xs font-semibold text-gray-500">
               <div className="w-4 h-4 mr-1 rounded-full bg-gradient-to-b from-btn1 to-btn2" />
-              {"Date"}
             </div>
             <div className="flex items-center justify-center flex-shrink-0 ml-2 text-xs font-bold uppercase rounded-sm">
               {moment(new Date(datum.timestamp * 1000), "YYYYMMDD").fromNow()}
             </div>
           </div>
         </div>
-        {datum.attributes &&
+        <div className="flex w-full items-center justify-between pt-3">
+          {datum.attributes &&
+            typeof datum.attributes === "object" &&
+            datum.attributes.map((attr, index) => {
+              return (
+                <div
+                  className={`flex flex-col text-xs relative ${
+                    index !== 0 &&
+                    index + 1 !== datum.attributes.length &&
+                    "items-center"
+                  }
+                  ${index + 1 === datum.attributes.length && "items-end"}
+                  ${
+                    datum.attributes.length !== index + 1 &&
+                    "after:h-[24px] after:absolute after:w-px after:inset-y-[25%] after:right-0 after:bg-[#3D3D3D] after:content-[''] after:ml-0.5 "
+                  } w-full`}
+                  key={index}
+                >
+                  <div>
+                    <p className="text-[#797979]">{attr.trait_type}</p>
+                    <p className="font-medium">{attr.value}</p>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+        {/* {datum.attributes &&
           typeof datum.attributes === "object" &&
           datum.attributes.map((attr, index) => {
             return (
@@ -79,7 +104,7 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
                 </div>
               </div>
             );
-          })}
+          })} */}
       </div>
     </div>
   );
