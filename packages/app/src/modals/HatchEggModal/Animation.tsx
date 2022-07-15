@@ -1,16 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useCallback } from "react";
-import { useWeb3React } from "@web3-react/core";
+import React from "react";
+import { useRouter } from "next/router";
 import {
   useHatchEggAnimationModal,
   useModalOpen,
-  useMyNftModalToggle,
 } from "../../state/application/hooks";
 import { ApplicationModal } from "../../state/application/actions";
 import Modal from "../../components/Modal";
-import ModalHeader from "../../components/ModalHeader";
-import { useSelector } from "react-redux";
-import { useHatch } from "state/zoo/hooks";
 
 const WALLET_VIEWS = {
   OPTIONS: "options",
@@ -20,14 +16,9 @@ const WALLET_VIEWS = {
 };
 
 export default function HatchEggAnimationModal({}) {
-  // important that these are destructed from the account-specific web3-react context
-  const { account } = useWeb3React();
-  const { loading } = useSelector((state: any) => state.zoo);
-
   const hatchEggModalOpen = useModalOpen(ApplicationModal.HATCH_EGG_ANIMATION);
-
   const toggleModal = useHatchEggAnimationModal();
-  const toggleNftModal = useMyNftModalToggle();
+  const { push } = useRouter();
 
   function getModalContent() {
     return (
@@ -43,6 +34,7 @@ export default function HatchEggAnimationModal({}) {
               className="absolute max-h-screen w-full h-full md:-top-2.5 lg:-top-2.5 -ilnset-y-2.5"
               onEnded={() => {
                 if (hatchEggModalOpen) toggleModal();
+                push("/wallet");
               }}
               style={{
                 zoom: 50,

@@ -37,6 +37,8 @@ export enum ApplicationModal {
   MY_NFT,
   AUCTION,
   HATCH_EGG_ANIMATION,
+  FREE_NFT,
+  CAST_VOTE,
 }
 
 export const updateBlockNumber = createAction<{
