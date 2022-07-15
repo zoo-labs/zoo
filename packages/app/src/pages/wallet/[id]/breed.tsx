@@ -93,10 +93,10 @@ const Breed = () => {
         </div>
         <button
           className="bg-leader-board rounded-xl md:w-[343px] py-5 mb-20 disabled:opacity-50 disabled:cursor-not-allowed"
-          disabled={!pair && loading}
+          disabled={!pair || loading}
           onClick={breed}
         >
-          Breed
+          {!loading ? "Breed" : "Breeding..."}
         </button>
         <p className="font-bold text-4xl mt-10">Select Animal to Pair</p>
         <p className="font-light text-base mt-2 text-butter-white mb-9">
@@ -104,7 +104,7 @@ const Breed = () => {
           enim tincidunt sit eleifend. Sed ut nibh interdum porttitor molestie
           velit, Sed ut nibh interdum porttitor molestie velit.
         </p>
-        <div className="flex space-10 justify-center items-center flex-wrap mb-20">
+        <div className="flex gap-2.5 justify-center items-center flex-wrap mb-20">
           {pairables.length > 0 ? (
             pairables.map((nft) => {
               if (nft.id === pair?.id) return false;

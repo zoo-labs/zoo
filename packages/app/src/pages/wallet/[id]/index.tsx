@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useFeed, useFetchMyNFTs } from "state/zoo/hooks";
 import {
-  useMyNftModalToggle,
   useHatchEggModal,
   useAuctionModal,
   useFreeNftModal,
+  useHatchEggAnimationModal,
 } from "state/application/hooks";
 import BidModalHeader from "components/ModalHeader/BidModalHeader";
 import Image from "next/image";
@@ -17,6 +17,8 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import AuctionModal from "modals/Auction";
 import FreeNFTModal from "modals/FreeNFTModal";
+import HatchEggModal from "modals/HatchEggModal";
+import HatchEggAnimationModal from "modals/HatchEggModal/Animation";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -25,12 +27,11 @@ const ModelViewer = dynamic(() => import("components/ModelViewer"), {
 interface NftModalProps {}
 
 const NftModal: React.FC<NftModalProps> = ({}) => {
-  const { myNfts, nftTransfers, allAuctions } = useSelector(
-    (state: any) => state.zoo
-  );
+  const { myNfts, loading } = useSelector((state: any) => state.zoo);
+  const toggleAnimationModal = useHatchEggAnimationModal();
   const toggleHatchEggModal = useHatchEggModal();
   const toggleAucionModal = useAuctionModal();
-  const [nftItem, setNftItem] = useState<MyNFT>();
+  const [nftItem, setNftItem] = useState<MyNFT | any>({});
   const toggleFreeNFTModal = useFreeNftModal();
   const router = useRouter();
   const fetchNFTs = useFetchMyNFTs();
@@ -99,10 +100,10 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
                 <Image src="/icons/status.svg" alt="" height={26} width={20} />
                 <div>
                   <p className="text-sm font-medium">
-                    {nftItem?.attributes[0]?.trait_type}
+                    {nftItem?.attributes && nftItem?.attributes[0]?.trait_type}
                   </p>
                   <p className="font-medium text-[10px]">
-                    {nftItem?.attributes[0]?.value}
+                    {nftItem?.attributes && nftItem?.attributes[0]?.value}
                   </p>
                 </div>
               </div>
@@ -115,10 +116,10 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
                 />
                 <div>
                   <p className="text-sm font-medium">
-                    {nftItem?.attributes[1]?.trait_type}
+                    {nftItem?.attributes && nftItem?.attributes[1]?.trait_type}
                   </p>
                   <p className="font-medium text-[10px]">
-                    {nftItem?.attributes[1]?.value}
+                    {nftItem?.attributes && nftItem?.attributes[1]?.value}
                   </p>
                 </div>
               </div>
@@ -126,10 +127,10 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
                 <Image src="/icons/react.svg" alt="" height={26} width={20} />
                 <div>
                   <p className="text-sm font-medium">
-                    {nftItem?.attributes[2]?.trait_type}
+                    {nftItem?.attributes && nftItem?.attributes[2]?.trait_type}
                   </p>
                   <p className="font-medium text-[10px]">
-                    {nftItem?.attributes[2]?.value}
+                    {nftItem?.attributes && nftItem?.attributes[2]?.value}
                   </p>
                 </div>
               </div>
@@ -188,22 +189,27 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
                 <div className="flex flex-col w-full py-2 rounded-lg 5 md:flex-row md:items-center bg-dark-400 ">
                   {nftItem?.kind === 0 || nftItem?.kind === 2 ? (
                     <button
-                      className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white bg-leader-board rounded-lg cursor-pointer"
+                      className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white bg-leader-board rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
                       onClick={() => hatchEgg()}
+                      disabled={loading}
                     >
                       HATCH
                     </button>
                   ) : (
                     <>
                       <button
-                        className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white bg-leader-board rounded-lg cursor-pointer"
+                        className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white bg-leader-board rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
                         onClick={() => feed()}
+                        disabled={loading}
                       >
                         FEED
                       </button>
                       {nftItem?.stage === 2 && (
                         <Link href={`/wallet/${nftItem?.id}/breed`} passHref>
-                          <button className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white bg-nft-gradient rounded-lg cursor-pointer">
+                          <button
+                            className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white bg-nft-gradient rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+                            disabled={loading}
+                          >
                             BREED
                           </button>
                         </Link>
@@ -212,14 +218,16 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
                   )}
 
                   <button
-                    className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white bg-auction-gradient rounded-lg cursor-pointer"
+                    className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white bg-auction-gradient rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
                     onClick={() => auction()}
+                    disabled={loading}
                   >
                     AUCTION
                   </button>
                   <button
-                    className="w-1/4 p-2 mr-2 text-sm font-bold text-center border border-white-30 bg-white-10 text-white rounded-lg cursor-pointer"
+                    className="w-1/4 p-2 mr-2 text-sm font-bold text-center border border-white-30 bg-white-10 text-white rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
                     onClick={() => freeNft()}
+                    disabled={loading}
                   >
                     FREE
                   </button>
@@ -266,8 +274,19 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
           </div>
         </div>
       </div>
+      <HatchEggModal
+        nftItem={nftItem}
+        success={() => {
+          fetchNFTs().then((res) => {
+            toggleAnimationModal();
+            // const nft__ = myNfts.find((n) => n.eggId === nftItem.id);
+            // setNftItem(nft__);
+          });
+        }}
+      />
       <FreeNFTModal nft={nftItem} />
       <AuctionModal nft={nftItem} />
+      <HatchEggAnimationModal />
     </>
   );
 };
