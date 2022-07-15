@@ -132,7 +132,7 @@ export default function Menu() {
               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                 <div className="relative grid gap-6 px-5 py-6 bg-dark-900 sm:gap-8 sm:p-8">
                   <div
-                    className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
+                    className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
                     style={{}}
                   >
                     {state.gifMode === "gif" ? "3D" : "Gif"} Mode
@@ -145,14 +145,14 @@ export default function Menu() {
                     </div>
                   </div>
                   <Link href="/wallet">
-                    <a className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer">
+                    <a className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white">
                       Wallet
                       <div className="ml-4 sm:ml-14">
                         <svg
                           width="31"
                           height="30"
                           viewBox="0 0 31 30"
-                          className="h-5 w-5"
+                          className="w-5 h-5"
                           fill="currentColor"
                           xmlns="http://www.w3.org/2000/svg"
                         >
@@ -166,7 +166,7 @@ export default function Menu() {
                   </Link>
 
                   <div
-                    className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
+                    className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
                     style={{}}
                     onClick={() =>
                       window.open(
@@ -178,7 +178,7 @@ export default function Menu() {
                     <div className="ml-4 sm:ml-14">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
+                        className="w-5 h-5"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -188,7 +188,7 @@ export default function Menu() {
                     </div>
                   </div>
                   {/* <div
-                    className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
+                    className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
                     style={{}}
                   >
                     Animation
@@ -201,7 +201,7 @@ export default function Menu() {
                     </div>
                   </div> */}
                   <div
-                    className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
+                    className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
                     style={{}}
                     onClick={() => window.open("https://github.com/zoo-labs")}
                   >
@@ -209,7 +209,7 @@ export default function Menu() {
                     <div className="ml-4 sm:ml-14">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
+                        className="w-5 h-5"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -222,7 +222,7 @@ export default function Menu() {
                     </div>
                   </div>
                   <div
-                    className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
+                    className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
                     style={{}}
                     onClick={() =>
                       window.open(
@@ -234,7 +234,7 @@ export default function Menu() {
                     <div className="ml-4 sm:ml-14">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
+                        className="w-5 h-5"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -242,16 +242,36 @@ export default function Menu() {
                       </svg>
                     </div>
                   </div>
-
+                  <div
+                    className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
+                    style={{}}
+                    onClick={() =>
+                      window.open(
+                        "https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
+                      )
+                    }
+                  >
+                    Chart
+                    <div className="ml-4 sm:ml-14">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                      </svg>
+                    </div>
+                  </div>
                   {/* <div
-                    className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
+                    className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
                     style={{}}
                   >
 
                   </div> */}
                   {/* <div
                     onClick={() => toggleTheme()}
-                    className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
+                    className='flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white'
                     style={{}}>
                     Theme
                     <div className='ml-4 sm:ml-14'>
@@ -260,7 +280,7 @@ export default function Menu() {
                   </div> */}
                   {/* <div
                     onClick={() => logout}
-                    className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
+                    className='flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white'
                     style={{}}>
                     Log Out
                     <div className='ml-4 sm:ml-14'>

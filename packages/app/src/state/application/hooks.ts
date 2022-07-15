@@ -100,6 +100,9 @@ export function useMyNftModalToggle(): () => void {
 export function useBuyZooModalToggle(): () => void {
   return useToggleModal(ApplicationModal.BUYZOO);
 }
+export function useCastVoteModalToggle(): () => void {
+  return useToggleModal(ApplicationModal.CAST_VOTE)
+}
 
 // returns a function that allows adding a popup
 export function useAddPopup(): (content: PopupContent, key?: string) => void {
