@@ -36,6 +36,7 @@ import { addDays, differenceInSeconds } from "date-fns";
 import { SUPPORTED_NETWORKS } from "config/networks";
 import { MyNFT } from "./types";
 import axios from "axios";
+import { ethers } from "ethers";
 
 // helper that can take a ethers library transaction response and add it to the list of transactions
 export function useZoobalance(): () => void {
@@ -60,7 +61,7 @@ export function useZoobalance(): () => void {
     } catch (error) {
       console.log("error in get zoo balance", error);
     }
-  }, [dispatch, chainId, account]);
+  }, [account, chainId, zooToken, dispatch]);
 }
 
 export function useBuyZoo(): () => void {
@@ -81,7 +82,7 @@ export function useBuyZoo(): () => void {
         .fund(account)
         .send({ from: account })
         .then(async () => {
-          dispatch(getZooBalance());
+          getZooBalance();
           return 2;
         })
         .catch((e) => {
@@ -90,7 +91,7 @@ export function useBuyZoo(): () => void {
     } catch (e) {
       console.error("ISSUE USING FAUCET \n", e);
     }
-  }, [dispatch, chainId, account]);
+  }, [account, chainId, faucet, getZooBalance]);
 }
 export function useGetEggs(): (eggs) => void {
   const dispatch = useAppDispatch();
@@ -120,6 +121,7 @@ export function useHatch(): (
   const zoo = useZooToken();
   const dropId = process.env.NEXT_PUBLIC_DROP_ID;
   const dispatch = useAppDispatch();
+  const getZooBalance = useZoobalance();
   return useCallback(
     async (dropEggId, eggId, success) => {
       if (!zooKeeper) return;
@@ -166,6 +168,7 @@ export function useHatch(): (
           gasLimit: 4000000,
         });
         await tx.wait();
+        getZooBalance();
         dispatch(loading(false));
         success && success();
         addPopup({
@@ -178,6 +181,7 @@ export function useHatch(): (
       } catch (error) {
         console.error("error hatching egg", error);
         dispatch(loading(false));
+        getZooBalance();
         addPopup({
           txn: {
             hash: null,
@@ -187,7 +191,7 @@ export function useHatch(): (
         });
       }
     },
-    [account, addPopup, dispatch, dropId, zoo, zooKeeper]
+    [account, addPopup, dispatch, dropId, getZooBalance, zoo, zooKeeper]
   );
 }
 export function useFetchMyNFTs(): () => Promise<void> {
@@ -348,7 +352,7 @@ export function useGetAvailableEggs(): () => void {
           kind: egg.kind,
           minted: Number(egg.minted),
           name: egg.name,
-          price: Number(egg.price),
+          price: Number(egg.price) / Math.pow(10, 18),
           supply: Number(egg.supply),
           timestamp: Number(egg.timestamp),
           image: `https://zoolabs.mypinata.cloud/ipfs/${image.slice(7)}`,
@@ -377,6 +381,7 @@ export function useBuyEgg(): (
   const zoo = useZooToken();
   const dropId = process.env.NEXT_PUBLIC_DROP_ID || 1;
   const dispatch = useDispatch();
+  const getZooBalance = useZoobalance();
   return useCallback(
     async (eggId, quantity, success) => {
       console.log("buying_eggggg", { eggId, quantity, dropId, zooKeeper });
@@ -401,7 +406,7 @@ export function useBuyEgg(): (
           gasLimit: 4000000,
         });
         await tx.wait();
-        await tx.wait();
+        getZooBalance();
         console.log("tx in buy egg", tx);
         addPopup({
           txn: {
@@ -417,6 +422,7 @@ export function useBuyEgg(): (
       } catch (e) {
         console.error("ISSUE BUYING EGG \n", e);
         dispatch(loading(false));
+        getZooBalance();
         addPopup({
           txn: {
             hash: null,
@@ -426,7 +432,7 @@ export function useBuyEgg(): (
         });
       }
     },
-    [account, addPopup, dispatch, dropId, zoo, zooKeeper]
+    [account, addPopup, dispatch, dropId, getZooBalance, zoo, zooKeeper]
   );
 }
 
@@ -442,6 +448,7 @@ export function useBuyEggWithBnB(): (
   const zooKeeper = useZooKeeper();
   const dropId = process.env.NEXT_PUBLIC_DROP_ID || 1;
   const dispatch = useDispatch();
+  const getZooBalance = useZoobalance();
   return useCallback(
     async (eggId, quantity, success) => {
       console.log("buying_eggggg_w_bnb", {
@@ -455,7 +462,7 @@ export function useBuyEggWithBnB(): (
       try {
         dispatch(loading(true));
         const approval = await bnb?.allowance(account, zooKeeper.address);
-        console.log("approval_approving_media", Number(approval));
+        console.log("approval_approving_media", isNaN(Number(approval)));
         if (Number(approval) <= 0 || isNaN(Number(approval))) {
           console.log("approving_media");
           const approving = await bnb?.approve(zooKeeper.address, MaxUint256, {
@@ -469,6 +476,7 @@ export function useBuyEggWithBnB(): (
         });
         await tx.wait();
         console.log(tx);
+        getZooBalance();
         addPopup({
           txn: {
             hash: null,
@@ -481,6 +489,7 @@ export function useBuyEggWithBnB(): (
       } catch (e) {
         console.error("ISSUE BUYING EGG \n", e);
         dispatch(loading(false));
+        getZooBalance();
         addPopup({
           txn: {
             hash: null,
@@ -490,7 +499,7 @@ export function useBuyEggWithBnB(): (
         });
       }
     },
-    [account, addPopup, bnb, dispatch, dropId, zooKeeper]
+    [account, addPopup, bnb, dispatch, dropId, getZooBalance, zooKeeper]
   );
 }
 
@@ -578,7 +587,7 @@ export function useGetAllAuctions(): () => Promise<void> {
           curatorFeePercentage,
           // curator,
           // auctionCurrency,
-          amount: Number(amount),
+          amount: Number(amount) / Math.pow(10, 18),
           tokenUri,
           name,
           attributes,
@@ -625,6 +634,7 @@ export function useRemoveAuction(): (
   const auctionContract = useAuction();
   const getAllAuctions = useGetAllAuctions();
   const addPopup = useAddPopup();
+  const getZooBalance = useZoobalance();
   return useCallback(
     async (id, success) => {
       try {
@@ -633,6 +643,7 @@ export function useRemoveAuction(): (
         });
         await tx.wait();
         console.log(tx);
+        getZooBalance();
         addPopup({
           txn: {
             hash: null,
@@ -645,6 +656,7 @@ export function useRemoveAuction(): (
         });
       } catch (e) {
         console.error("ISSUE REMOVING AUCTION \n", e);
+        getZooBalance();
         addPopup({
           txn: {
             hash: null,
@@ -654,7 +666,7 @@ export function useRemoveAuction(): (
         });
       }
     },
-    [addPopup, auctionContract, getAllAuctions]
+    [addPopup, auctionContract, getAllAuctions, getZooBalance]
   );
 }
 
@@ -724,6 +736,7 @@ export function useCreateAuction(): (
   const approveTokenWithMedia = useApproveTokenWithMedia();
   const auctionCurrency = zoo?.address;
   const dispatch = useDispatch();
+  const getZooBalance = useZoobalance();
   return useCallback(
     async (tokenID, duration, reservePrice, curatorFeePercentage, success) => {
       if (!auction) return;
@@ -763,6 +776,7 @@ export function useCreateAuction(): (
           { gasLimit: 4000000 }
         );
         await tx.wait();
+        getZooBalance();
         addPopup({
           txn: {
             hash: null,
@@ -775,6 +789,7 @@ export function useCreateAuction(): (
       } catch (error) {
         console.error("error creating auction", error);
         dispatch(loading(false));
+        getZooBalance();
         addPopup({
           txn: {
             hash: null,
@@ -790,6 +805,7 @@ export function useCreateAuction(): (
       auctionCurrency,
       tokenContract,
       account,
+      getZooBalance,
       addPopup,
       approveTokenWithMedia,
     ]
@@ -847,8 +863,12 @@ export function useCreateBid(): (
   const addPopup = useAddPopup();
   const zoo = useZooToken();
   const { account } = useActiveWeb3React();
+  const getZooBalance = useZoobalance();
   return useCallback(
     async (id, amount, success) => {
+      console.log("AMOUNT_TO_BID", Number(amount));
+      // const weiAmount = ethers.utils.formatUnits(amount, "wei");
+      // console.log("WEI_AMOUNT", weiAmount);
       try {
         dispatch(loading(true));
         const approved = await zoo?.allowance(account, auction?.address);
@@ -860,11 +880,11 @@ export function useCreateBid(): (
           await approval.wait();
           console.log("APPROVAL", approval);
         }
-
-        const tx = await auction?.createBid(id, amount, {
+        const tx = await auction?.createBid(id, `${amount * 10 ** 18}`, {
           gasLimit: 4000000,
         });
         await tx.wait();
+        getZooBalance();
         dispatch(createBid(id));
         dispatch(loading(false));
         success && success();
@@ -878,6 +898,7 @@ export function useCreateBid(): (
       } catch (error) {
         console.log("CREATE_BID_ERROR", error);
         dispatch(loading(false));
+        getZooBalance();
         addPopup({
           txn: {
             hash: null,
@@ -887,7 +908,7 @@ export function useCreateBid(): (
         });
       }
     },
-    [auction, dispatch]
+    [account, addPopup, auction, dispatch, getZooBalance, zoo]
   );
 }
 
@@ -915,6 +936,7 @@ export function useFeed(): (animalID: number) => void {
   const { account } = useActiveWeb3React();
   const dispatch = useDispatch();
   const fetchMyNfts = useFetchMyNFTs();
+  const getZooBalance = useZoobalance();
   return useCallback(
     async (animalId) => {
       console.log("feeding_animal", zooKeeper, { animalId, dropId });
@@ -951,6 +973,7 @@ export function useFeed(): (animalID: number) => void {
           gasLimit: 4000000,
         });
         await tx.wait();
+        getZooBalance();
         console.log(tx);
         dispatch(loading(false));
         fetchMyNfts();
@@ -964,6 +987,7 @@ export function useFeed(): (animalID: number) => void {
       } catch (e) {
         console.error("ISSUE FEEDING EGG \n", e);
         dispatch(loading(false));
+        getZooBalance();
         addPopup({
           txn: {
             hash: null,
@@ -973,7 +997,17 @@ export function useFeed(): (animalID: number) => void {
         });
       }
     },
-    [account, addPopup, dispatch, dropId, zoo, zooKeeper]
+    [
+      account,
+      addPopup,
+      dispatch,
+      dropId,
+      fetchMyNfts,
+      getZooBalance,
+      media,
+      zoo,
+      zooKeeper,
+    ]
   );
 }
 export function useEditAuction(): (
@@ -984,6 +1018,7 @@ export function useEditAuction(): (
   const auction = useAuction();
   const getAllAuctions = useGetAllAuctions();
   const addPopup = useAddPopup();
+  const getZooBalance = useZoobalance();
   return useCallback(
     async (auctionId, reservePrice, success) => {
       try {
@@ -992,6 +1027,7 @@ export function useEditAuction(): (
           reservePrice
         );
         await tx?.wait();
+        getZooBalance();
         await getAllAuctions();
         success?.();
         addPopup({
@@ -1004,6 +1040,7 @@ export function useEditAuction(): (
         console.log("EDITED AUCTION", tx);
       } catch (error) {
         console.log("EDIT_AUCTION_ERROR", error);
+        getZooBalance();
         addPopup({
           txn: {
             hash: null,
@@ -1013,7 +1050,7 @@ export function useEditAuction(): (
         });
       }
     },
-    [addPopup, auction, getAllAuctions]
+    [addPopup, auction, getAllAuctions, getZooBalance]
   );
 }
 
@@ -1027,6 +1064,7 @@ export function useBreed(): (
   const zooKeeper = useZooKeeper();
   const dropId = process.env.NEXT_PUBLIC_DROP_ID;
   const dispatch = useDispatch();
+  const getZooBalance = useZoobalance();
   return useCallback(
     async (tokenA, tokenB, successCallback) => {
       console.log("breeding_eggggg", { dropId, tokenA, tokenB, zooKeeper });
@@ -1044,6 +1082,7 @@ export function useBreed(): (
         await tx.wait();
         console.log(tx);
         dispatch(loading(false));
+        getZooBalance();
         addPopup({
           txn: {
             hash: null,
@@ -1055,6 +1094,7 @@ export function useBreed(): (
       } catch (e) {
         console.error("ISSUE BREEDING EGG \n", e);
         dispatch(loading(false));
+        getZooBalance();
         addPopup({
           txn: {
             hash: null,
@@ -1064,6 +1104,6 @@ export function useBreed(): (
         });
       }
     },
-    [addPopup, dispatch, dropId, zooKeeper]
+    [addPopup, dispatch, dropId, getZooBalance, zooKeeper]
   );
 }
