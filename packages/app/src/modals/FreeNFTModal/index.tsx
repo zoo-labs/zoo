@@ -9,7 +9,7 @@ import { ApplicationModal } from "../../state/application/actions";
 import Modal from "../../components/Modal";
 import ModalHeader from "../../components/ModalHeader";
 import { useSelector } from "react-redux";
-import {} from "state/zoo/hooks";
+import { useFreeNFT } from "state/zoo/hooks";
 import { useActiveWeb3React } from "hooks/useActiveWeb3React";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
@@ -26,14 +26,21 @@ export default function FreeNFTModal({ nft }: { nft: any }) {
   const { push } = useRouter();
   const { loading } = useSelector((state: any) => state.zoo);
   const toggleWallet = useWalletModalToggle();
-  const [duration, setDuration] = useState(null);
-  const [reservePrice, setReservePrice] = useState(null);
-  const [curatorFee, setCuratorFee] = useState(null);
+  const freeNftF = useFreeNFT();
 
   const successCallback = useCallback(() => {
     console.log("success");
+    push("/wallet");
     freeNftModalOpen && toggleModal();
-  }, [freeNftModalOpen, toggleModal]);
+  }, [freeNftModalOpen, push, toggleModal]);
+
+  const freeNft = useCallback(() => {
+    if (account) {
+      freeNftF(nft?.id, successCallback);
+    } else {
+      toggleWallet();
+    }
+  }, [account, freeNftF, nft?.id, successCallback, toggleWallet]);
 
   function getModalContent() {
     return (
@@ -73,12 +80,13 @@ export default function FreeNFTModal({ nft }: { nft: any }) {
             porta morbi vulputate commodo, orci.
           </p>
           <button
+            onClick={freeNft}
             disabled={loading}
             className={`py-4 w-52 bg-bid-leader-board rounded-xl mb-7 outline-none focus:outline-none ${
               loading && "opacity-30 disabled:cursor-not-allowed"
             }`}
           >
-            {loading ? "Loading..." : "Set Free"}
+            {loading ? "Setting free..." : "Set Free"}
           </button>
         </div>
       </div>
