@@ -33,6 +33,8 @@ import AssetModal from "marketplace/AssetModal";
 import AuctionModal from "modals/Auction";
 import HatchEggAnimationModal from "modals/HatchEggModal/Animation";
 import { AvailableEgg } from "types";
+import WalletItem from "components/wallet/WalletItem";
+
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
@@ -51,47 +53,53 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
   return (
     <div>
       <div className="py-12">
-        <h1 className="text-3xl text-center lg:text-5xl ">My Nfts</h1>
+        <h1 className="text-3xl text-center lg:text-5xl mb-8">My Nfts</h1>
         <div className="flex flex-wrap items-center justify-center gap-4 mb-4 w-full">
-          <div className="flex flex-col md:flex-row items-start justify-center w-full space-x-2 space-y-8 flex-wrap">
+          <div className="flex flex-col md:flex-row items-start justify-center w-full gap-x-2 gap-y-8 flex-wrap">
             {myNfts.map((nft: MyNFT, index) => {
               const { kind, name, id, dropId, stage, token_uri } = nft;
               console.log("nftttt", nft);
               return (
-                <div
-                  key={index}
-                  onClick={() => {
-                    setNftItem(nft);
-                    toggleNftModal();
-                  }}
-                  className="h-[450px] flex flex-col justify-between items-center cursor-pointer w-full md:w-[32%] lg:w-[24%] mb-10"
-                >
-                  {kind === 0 || kind === 2 ? (
-                    <>
-                      <video
-                        autoPlay
-                        loop
-                        src={token_uri}
-                        width={300}
-                        height={"100%"}
-                        style={{
-                          maxHeight: "350px",
-                        }}
-                      />
-                    </>
-                  ) : (
-                    <div className="h-full w-[300px]">
-                      <ModelViewer
-                        glb={nft?.glb_animation_url}
-                        usdz={nft?.usdz_animation_url}
-                        className="rounded-xl"
-                      ></ModelViewer>
-                    </div>
-                  )}
-                  <p className="font-semibold">
-                    {name?.toUpperCase()} {kind >= 2 && "(Hybrid)"}
-                  </p>
-                </div>
+                // <div
+                //   key={index}
+                //   onClick={() => {
+                //     setNftItem(nft);
+                //     // toggleNftModal();
+                //     route.push(`/wallet/${id}`);
+                //   }}
+                //   className="h-[450px] flex flex-col justify-between items-center cursor-pointer w-full md:w-[32%] lg:w-[24%] mb-10"
+                // >
+                //   {kind === 0 || kind === 2 ? (
+                //     <>
+                //       <video
+                //         autoPlay
+                //         loop
+                //         src={token_uri}
+                //         width={300}
+                //         height={"100%"}
+                //         style={{
+                //           maxHeight: "350px",
+                //         }}
+                //       />
+                //     </>
+                //   ) : (
+                //     <div className="h-full w-[300px]">
+                //       <ModelViewer
+                //         glb={nft?.glb_animation_url}
+                //         usdz={nft?.usdz_animation_url}
+                //         className="rounded-xl"
+                //       ></ModelViewer>
+                //     </div>
+                //   )}
+                //   <p className="font-semibold">
+                //     {name?.toUpperCase()} {kind >= 2 && "(Hybrid)"}
+                //   </p>
+                // </div>
+                <WalletItem
+                  key={id}
+                  datum={nft}
+                  onClick={() => route.push(`/wallet/${id}`)}
+                />
               );
             })}
           </div>
@@ -122,7 +130,6 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
             breed={() => route.push(`/wallet/${nftItem.id}/breed`)}
             auction={() => toggleAucionModal()}
           />
-          <AuctionModal nft={nftItem} />
         </>
       )}
     </div>
