@@ -43,7 +43,7 @@ const ModelViewer = dynamic(() => import("components/ModelViewer"), {
 const InfoPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { chainId } = useActiveWeb3React();
+  const { chainId, account } = useActiveWeb3React();
   const { allAuctions } = useSelector((state: any) => state.zoo);
   const [nft, setNft] = useState<Auction>();
   const [transactions, setTransactions] = useState<any[]>([]);
@@ -272,23 +272,25 @@ const InfoPage = () => {
                     ? ttimeLeft.d
                       ? `${ttimeLeft.d} Day${ttimeLeft.d > 1 ? "s" : ""}  Left`
                       : ttimeLeft.h
-                      ? `${ttimeLeft.h} Hour${ttimeLeft.h > 1 ? "s" : ""} & ${
+                      ? `${ttimeLeft.h} Hr${ttimeLeft.h > 1 ? "s" : ""} : ${
                           ttimeLeft.m
-                        } Minutes Left`
+                        } Min${ttimeLeft.m > 1 ? "s" : ""}`
                       : `${ttimeLeft.m} Minutes Left`
                     : "Auction has ended"
                   : "Auction has not started yet"}
               </p>
             </div>
           </div>
-          {nft?.firstBidTime && Object.keys(ttimeLeft).length > 0 ? (
+          {nft?.firstBidTime && Object.keys(ttimeLeft).length === 0 ? (
+            ""
+          ) : (
             <Link href={`/market/placebid/${id}`} passHref>
               <button className="py-[18px] w-full bg-leader-board rounded-[4px]">
-                Place Bid
+                {nft?.tokenOwner === account
+                  ? "Edit Your Auction"
+                  : "Place Bid"}
               </button>
             </Link>
-          ) : (
-            ""
           )}
         </div>
       </div>

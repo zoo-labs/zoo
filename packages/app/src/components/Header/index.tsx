@@ -190,7 +190,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                                 alt="zoo"
                                 width="30px"
                                 height="30px"
-                                objectFit="contain"
+                                // objectFit="contain"
                                 className="rounded-md"
                               />
                             </div>

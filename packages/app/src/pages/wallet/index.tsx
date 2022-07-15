@@ -56,7 +56,8 @@ export default function Wallet({ children }) {
         console.log("error in init", error);
       }
     }
-  }, [Moralis, chainId, fetchNFTs, getNftTransfers]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [Moralis, chainId, fetchNFTs, getNftTransfers, account]);
 
   useEffect(() => {
     console.log("initializingMoralis", { chainId, account });
