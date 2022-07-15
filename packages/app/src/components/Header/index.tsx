@@ -77,7 +77,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                         <a
                           id={`mint-nav-link`}
                           className={
-                            router.pathname == "/wallet"
+                            router.pathname == "/market"
                               ? `${linkStyle} text-green text-bold`
                               : `${linkStyle} text-white`
                           }
@@ -90,7 +90,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                         <a
                           id={`bridge-nav-link`}
                           className={
-                            router.pathname == "/wallet"
+                            router.pathname == "/bridge"
                               ? `${linkStyle} text-green text-bold`
                               : `${linkStyle} text-white`
                           }
@@ -103,7 +103,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                         <a
                           id={`dao-nav-link`}
                           className={
-                            router.pathname == "/wallet"
+                            router.pathname == "/dao"
                               ? `${linkStyle} text-green text-bold`
                               : `${linkStyle} text-white`
                           }
