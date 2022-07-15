@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useBreed, useFetchMyNFTs } from "state/zoo/hooks";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
+import BidModalHeader from "components/ModalHeader/BidModalHeader";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -49,6 +50,10 @@ const Breed = () => {
   console.log("NFT_TO_BREED_1", nft, pairables);
   return (
     <div>
+      <BidModalHeader
+        onBack={() => router.push(`/wallet/${nft?.id}`)}
+        className="absolute w-full p-6 "
+      />
       <div className="max-w-[777px] w-full mx-auto text-center flex flex-col items-center">
         <p className="font-bold text-4xl mt-10">Breed Animals</p>
         <p className="font-light text-base mt-2 text-butter-white mb-9">

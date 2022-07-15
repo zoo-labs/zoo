@@ -13,8 +13,10 @@ import {
 export function useBlockNumber(): number | undefined {
   const { chainId } = useActiveWeb3React();
 
-  return useSelector(
-    (state: AppState) => state.application.blockNumber ? state.application.blockNumber[chainId ?? -1] : 0
+  return useSelector((state: AppState) =>
+    state.application.blockNumber
+      ? state.application.blockNumber[chainId ?? -1]
+      : 0
   );
 }
 
@@ -45,6 +47,9 @@ export function useCloseModals(): () => void {
 }
 export function useAuctionModal(): () => void {
   return useToggleModal(ApplicationModal.AUCTION);
+}
+export function useFreeNftModal(): () => void {
+  return useToggleModal(ApplicationModal.FREE_NFT);
 }
 export function useWalletModalToggle(): () => void {
   return useToggleModal(ApplicationModal.WALLET);
