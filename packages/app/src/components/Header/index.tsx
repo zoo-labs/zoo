@@ -27,11 +27,14 @@ import { metaMask } from "connectors/metaMask";
 import { CartItem } from "types/cart";
 import { useAppSelector } from "state/hooks";
 import CartSideNav from "components/CartSideNav";
+import NetworkModal from "modals/NetworkModal";
+import { useNetworkModalToggle } from "state/application/hooks";
 
 function AppBar(props: { banner?: boolean }): JSX.Element {
   const { i18n } = useLingui();
   const { account, chainId, library, connector } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
+  const toggleNetworkModal = useNetworkModalToggle();
   const { CartItems }: { CartItems: CartItem[] } = useAppSelector(
     (state) => state.store
   );
@@ -146,7 +149,10 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                     />
                     {account && chainId && userEthBalance && (
                       <>
-                        <div className="mr-2 pl-1 py-2 text-primary font-semibold">
+                        <div
+                          className="mr-2 pl-1 py-2 text-primary font-semibold"
+                          onClick={toggleNetworkModal}
+                        >
                           {userEthBalance?.toFixed(3)}{" "}
                           {NATIVE[chainId]?.symbol || "ETH"}
                         </div>
@@ -405,6 +411,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
           </>
         )}
       </Popover>
+      <NetworkModal />
     </header>
   );
 }

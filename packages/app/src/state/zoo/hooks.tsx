@@ -242,12 +242,14 @@ export function useFetchMyNFTs(): () => Promise<void> {
           animation_url,
           glb_animation_url,
           usdz_animation_url,
+          description,
         } = data;
         if (deet?.kind === 0) _eggsCount++;
         else if (deet?.kind === 1) _animalsCount++;
         else if (deet?.kind === 2) _breedCount++;
         const newNft: MyNFT = {
           index,
+          description,
           customName: deet?.customName,
           name: deet?.name,
           kind: deet?.kind,
