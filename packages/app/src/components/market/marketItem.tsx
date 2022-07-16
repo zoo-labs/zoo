@@ -63,7 +63,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
       </div>
 
       <div className="flex flex-col flex-grow py-4 no-underline cursor-pointer">
-        <div className="flex flex-col flex-grow">
+        <div className="flex flex-col flex-grow border-b border-gray-700 pb-4">
           <div className="flex mb-4 ">
             <div className="mt-1 mr-auto font-semibold">
               {datum.name || "Egg"}{" "}
@@ -91,19 +91,42 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
             </div>
           </div>
         </div>
+        <div className="flex w-full items-center justify-between pt-3">
+          {datum.attributes &&
+            typeof datum.attributes === "object" &&
+            datum.attributes.map((attr, index) => {
+              // if (attr.trait_type === "Yields") return null;
+              return (
+                <div
+                  className={`flex flex-col text-xs relative ${
+                    index !== 0 &&
+                    index + 1 !== datum.attributes.length &&
+                    "items-center"
+                  }
+                  ${index + 1 === datum.attributes.length && "items-end"}
+                  ${
+                    datum.attributes.length !== index + 1 &&
+                    "after:h-[24px] after:absolute after:w-px after:inset-y-[25%] after:right-0 after:bg-[#3D3D3D] after:content-[''] after:ml-0.5 "
+                  } w-full`}
+                  key={index}
+                >
+                  <div>
+                    <p className="text-[#797979]">{attr.trait_type}</p>
+                    <p className="font-medium">{attr.value}</p>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
         <div className="flex items-center justify-between pt-4 mt-4 text-sm text-gray-800 border-t border-gray-700 border-solid ">
           <div className="flex items-center text-xs font-semibold text-gray-500">
             <div className="mr-1">
               <FaMoneyBillWave />
             </div>
-            Highest bid <span className="ml-1">{datum.amount} ZOO</span>
+            Highest bid
           </div>
           <div className="text-xs font-semibold text-gray-500">
-            {datum?.attributes &&
-              datum?.attributes.filter(
-                (attr) => attr.trait_type === "Yields"
-              )[0].value}{" "}
-            Yields/Day
+            {datum.amount} ZOO
           </div>
         </div>
       </div>
