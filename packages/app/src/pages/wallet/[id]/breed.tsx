@@ -57,9 +57,11 @@ const Breed = () => {
       <div className="max-w-[777px] w-full mx-auto text-center flex flex-col items-center">
         <p className="font-bold text-4xl mt-10">Breed Animals</p>
         <p className="font-light text-base mt-2 text-butter-white mb-9">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida nisl
-          enim tincidunt sit eleifend. Sed ut nibh interdum porttitor molestie
-          velit, Sed ut nibh interdum porttitor molestie velit.
+          Zoo Labs’ ADULT NFT Animals can each be bred up to 6 times. Any two
+          NFT Animals can be bred together and will produce a random egg
+          according to rarity tier percentages. The fee for breeding is
+          determined by the rarity tier of the rarest animal in the breeding
+          pair.
         </p>
         <div className="flex space-x-14 w-full justify-between items-center mb-11">
           <div className="bg-nft-gradient p-px rounded-xl flex-1">
@@ -100,9 +102,11 @@ const Breed = () => {
         </button>
         <p className="font-bold text-4xl mt-10">Select Animal to Pair</p>
         <p className="font-light text-base mt-2 text-butter-white mb-9">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida nisl
-          enim tincidunt sit eleifend. Sed ut nibh interdum porttitor molestie
-          velit, Sed ut nibh interdum porttitor molestie velit.
+          Zoo Labs’ ADULT NFT Animals can each be bred up to 6 times. Any two
+          NFT Animals can be bred together and will produce a random egg
+          according to rarity tier percentages. The fee for breeding is
+          determined by the rarity tier of the rarest animal in the breeding
+          pair.
         </p>
         <div className="flex gap-2.5 justify-center items-center flex-wrap mb-20">
           {pairables.length > 0 ? (
