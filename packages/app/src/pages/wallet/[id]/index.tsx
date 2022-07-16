@@ -224,38 +224,49 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
                   >
                     AUCTION
                   </button>
-                  <button
-                    className="w-1/4 p-2 mr-2 text-sm font-bold text-center border border-white-30 bg-white-10 text-white rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
-                    onClick={() => freeNft()}
-                    disabled={loading}
-                  >
-                    FREE
-                  </button>
+                  {nftItem &&
+                    (nftItem.kind === 0 || nftItem.kind === 2 ? (
+                      ""
+                    ) : (
+                      <button
+                        className="w-1/4 p-2 mr-2 text-sm font-bold text-center border border-white-30 bg-white-10 text-white rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+                        onClick={() => freeNft()}
+                        disabled={loading}
+                      >
+                        FREE
+                      </button>
+                    ))}
                 </div>
               </div>
               <div className="w-full text-sm">
                 <p className="w-full border-b border-[#605E5E] pb-2 mb-5">
                   Description
                 </p>
-                <p className="mb-7">
-                  Introducing Only1 Genesis NFTs and Creator Staking Pool -
-                  where Defi meets social in only1. Each creator passed KYC will
-                  be minted a Genesis-NFT, which they can associate with perks
-                  and rewards and trade it in the marketplace. Users on the
-                  platform can stake $LIKE tokens on individual creators and
-                  earn based on the pool’s APY, which adjusts according to the
-                  creator’s engagement.
-                </p>
-                <p>
-                  Only1 believes that the future of NFTs will serve a key
-                  function within the tech world and that utility NFTs will
-                  inevitably spill into other verticals outside gaming. They
-                  also think art and collectible NFTs will slowly be replaced by
-                  utility NFTs, and hence have made them an integral part of
-                  their concept and earning mechanisms. There are two main
-                  methods that Only1 uses to prioritize social engagement
-                  between fans and influencers. ‍
-                </p>
+                {nftItem?.description ? (
+                  <p>{nftItem?.description}</p>
+                ) : (
+                  <>
+                    <p className="mb-7">
+                      Introducing Only1 Genesis NFTs and Creator Staking Pool -
+                      where Defi meets social in only1. Each creator passed KYC
+                      will be minted a Genesis-NFT, which they can associate
+                      with perks and rewards and trade it in the marketplace.
+                      Users on the platform can stake $LIKE tokens on individual
+                      creators and earn based on the pool’s APY, which adjusts
+                      according to the creator’s engagement.
+                    </p>
+                    <p>
+                      Only1 believes that the future of NFTs will serve a key
+                      function within the tech world and that utility NFTs will
+                      inevitably spill into other verticals outside gaming. They
+                      also think art and collectible NFTs will slowly be
+                      replaced by utility NFTs, and hence have made them an
+                      integral part of their concept and earning mechanisms.
+                      There are two main methods that Only1 uses to prioritize
+                      social engagement between fans and influencers. ‍
+                    </p>
+                  </>
+                )}
               </div>
               {/* <button
           className={`py-3.5 w-full bg-[#2703F8] rounded-lg disabled:cursor-not-allowed ${
