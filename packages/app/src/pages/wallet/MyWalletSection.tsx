@@ -83,10 +83,10 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
   return (
     <div>
       <div className="py-12">
-        <h1 className="text-3xl text-center lg:text-5xl mb-8">My Nfts</h1>
+        <h1 className="mb-8 text-3xl text-center lg:text-5xl">My Nfts</h1>
 
         {/* Tab Navbar */}
-        <div className="relative justify-center  mb-8 flex">
+        <div className="relative flex justify-center mb-8">
           <div
             className="rounded-xl"
             style={{
@@ -126,47 +126,12 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-4 mb-4 w-full">
+        <div className="flex flex-wrap items-center justify-center w-full gap-4 mb-4">
           <div className="flex flex-col md:flex-row items-start justify-center w-full gap-x-2.5 gap-y-8 flex-wrap">
             {filteredNfts.map((nft: MyNFT, index) => {
               const { kind, name, id, dropId, stage, token_uri } = nft;
               console.log("nftttt", nft);
               return (
-                // <div
-                //   key={index}
-                //   onClick={() => {
-                //     setNftItem(nft);
-                //     // toggleNftModal();
-                //     route.push(`/wallet/${id}`);
-                //   }}
-                //   className="h-[450px] flex flex-col justify-between items-center cursor-pointer w-full md:w-[32%] lg:w-[24%] mb-10"
-                // >
-                //   {kind === 0 || kind === 2 ? (
-                //     <>
-                //       <video
-                //         autoPlay
-                //         loop
-                //         src={token_uri}
-                //         width={300}
-                //         height={"100%"}
-                //         style={{
-                //           maxHeight: "350px",
-                //         }}
-                //       />
-                //     </>
-                //   ) : (
-                //     <div className="h-full w-[300px]">
-                //       <ModelViewer
-                //         glb={nft?.glb_animation_url}
-                //         usdz={nft?.usdz_animation_url}
-                //         className="rounded-xl"
-                //       ></ModelViewer>
-                //     </div>
-                //   )}
-                //   <p className="font-semibold">
-                //     {name?.toUpperCase()} {kind >= 2 && "(Hybrid)"}
-                //   </p>
-                // </div>
                 <WalletItem
                   key={id}
                   datum={nft}
