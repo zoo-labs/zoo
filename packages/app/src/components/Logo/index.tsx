@@ -1,50 +1,51 @@
 import React, { FC, useState } from "react";
 
+import { IconProps } from "react-feather";
+import Image from "../Image";
+import { classNames } from "../../functions";
+import { cloudinaryLoader } from "../../functions/cloudinary";
+
 const BAD_SRCS: { [tokenAddress: string]: true } = {};
 
 export type LogoProps = {
-  src: string;
-  width?: string | number;
-  height?: string | number;
+  srcs: string[];
+  width: string | number;
+  height: string | number;
   alt?: string;
-  className?: string;
-  style?: any;
-};
+} & IconProps;
 
 /**
  * Renders an image by sequentially trying a list of URIs, and then eventually a fallback triangle alert
  */
 const Logo: FC<LogoProps> = ({
-  src,
+  srcs,
   width,
   height,
+  style,
   alt = "",
   className,
-  style,
   ...rest
 }) => {
+  const [, refresh] = useState<number>(0);
+  const src = srcs.find((src) => !BAD_SRCS[src]);
   return (
-    <div
-      className="rounded"
-      style={{
-        width,
-        height,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <img
-        src={src || "/images/unknown.webp"}
-        // onError={() => {
-        //   if (src) BAD_SRCS[src] = true
-        //   refresh((i) => i + 1)
-        // }}
+    <div className="rounded" style={{ width, height, ...style }}>
+      <Image
+        src={
+          src ||
+          "https://raw.githubusercontent.com/sushiswap/icons/master/token/unknown.png"
+        }
+        loader={cloudinaryLoader}
+        onError={() => {
+          if (src) BAD_SRCS[src] = true;
+          refresh((i) => i + 1);
+        }}
         width={width}
         height={height}
         alt={alt}
-        className={`rounded ${className}`}
-        style={style}
+        layout="fixed"
+        className={classNames("rounded", className)}
+        {...rest}
       />
     </div>
   );
