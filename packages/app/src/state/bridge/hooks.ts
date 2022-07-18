@@ -41,6 +41,7 @@ export function useGetAvailableTokens(): (chain?: number) => void {
         LETH: string;
         LUSD: string
         TELEPORT: string;
+        ZOO: string
       } =
         (addresses[chain] as any) || (addresses[ChainId.MAINNET] as any);
       const result: { tokens: { [address in string]?: Token[] } } =
@@ -50,12 +51,12 @@ export function useGetAvailableTokens(): (chain?: number) => void {
         });
       const customTokens: any = {
 
-        [chainAddresses.LBTC]: {
+        [chainAddresses.ZOO]: {
           decimals: 18,
-          symbol: "LBTC",
-          address: chainAddresses.LBTC,
-          logoURI: "/icons/lux-triangle.png",
-          name: "LuxBTC",
+          symbol: "ZOO",
+          address: chainAddresses.ZOO,
+          logoURI: "/img/egg.png",
+          name: "ZOO",
           isNative: false,
         }, [chainAddresses.LETH]: {
           decimals: 18,
