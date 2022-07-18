@@ -74,19 +74,6 @@ export function useGetAvailableTokens(): (chain?: number) => void {
       console.log('{ [chain]: resultTokens }', { [chain]: resultTokens })
       dispatch(fetchTokens({ [chain]: resultTokens }));
 
-      // const from = Object.values(resultTokens).find(
-      //   (val: any) => val.symbol === "LBTC"
-      // );
-      // const to = Object.values(resultTokens).find(
-      //   (val: any) => val.symbol === "LETH"
-      // );
-      // console.log('currentTrade totototot', to, resultTokens)
-      // dispatch(
-      //   updateCurrentTrade({
-      //     to: { ...to, isNative: to.symbol === "ETH" },
-      //     from: { ...from, isNative: from.symbol === "ETH" },
-      //   })
-      // );
     } catch (error) {
       console.log("error in useGetAvailableTokens", error);
     }
