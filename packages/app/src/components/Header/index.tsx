@@ -61,7 +61,7 @@ function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
         !props.isModal ? "bg-black" : "bg-transparent"
       } z-999`}
     >
-      <Banner />
+      {!props.isModal && <Banner />}
       <Popover
         as="nav"
         className={`z-10 w-full bg-transparent ${
@@ -74,7 +74,6 @@ function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
               <div className="flex items-center justify-between">
                 {props.isModal ? (
                   <div>
-                    {/* <BackpackRounded />{" "} */}
                     <ChevronLeftIcon
                       onClick={() => history.back()}
                       width={24}
