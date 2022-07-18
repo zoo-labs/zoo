@@ -19,14 +19,19 @@ import AuctionModal from "modals/Auction";
 import FreeNFTModal from "modals/FreeNFTModal";
 import HatchEggModal from "modals/HatchEggModal";
 import HatchEggAnimationModal from "modals/HatchEggModal/Animation";
+import ModalLayout from "layouts/Modal";
+import { NextComponentType, NextPageContext } from "next";
+import { AppProps } from "next/app";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
 });
 
-interface NftModalProps {}
-
-const NftModal: React.FC<NftModalProps> = ({}) => {
+const NftModal = ({}: AppProps & {
+  Component: NextComponentType<NextPageContext> & {
+    Layout: (title: string) => void;
+  };
+}) => {
   const { myNfts, loading } = useSelector((state: any) => state.zoo);
   const toggleAnimationModal = useHatchEggAnimationModal();
   const toggleHatchEggModal = useHatchEggModal();
@@ -65,11 +70,7 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
   console.log("the_chosen_nftItem", nftItem);
   return (
     <>
-      <BidModalHeader
-        onBack={() => router.push("/wallet")}
-        className="absolute w-full p-6 "
-      />
-      <div className="flex flex-col px-5 mx-auto mt-20 lg:flex-row gap-11 lg:items-center lg:px-10 max-w-7xl">
+      <div className="flex flex-col px-5 mx-auto mt-40 lg:flex-row gap-11 lg:items-center lg:px-10 max-w-7xl">
         <div className="rounded-xl p-px h-full bg-view-gradient w-full lg:w-[40%]">
           <div className="bg-black rounded-xl h-[466px] w-full flex flex-col justify-center items-center">
             {nftItem?.kind === 0 || nftItem?.kind === 2 ? (
@@ -146,25 +147,7 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
                   </p>
                 </div>
               </div>
-              {/* <div className="flex items-center gap-2">
-                  <Image src="/icons/shape.svg" alt="" height={26} width={20} />
-                  <div>
-                    <p className="text-sm font-medium">Size</p>
-                    <p className="font-medium text-[10px]">6.6 - 10.5 Feet</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Image
-                    src="/icons/habitat.svg"
-                    alt=""
-                    height={26}
-                    width={20}
-                  />
-                  <div>
-                    <p className="text-sm font-medium">Habitats</p>
-                    <p className="font-medium text-[10px]">Tropical Forests</p>
-                  </div>
-                </div> */}
+
               {(nftItem?.kind === 1 || nftItem?.kind === 3) && (
                 <div className="flex items-center gap-2">
                   <Image
@@ -267,19 +250,6 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
                   </>
                 )}
               </div>
-              {/* <button
-          className={`py-3.5 w-full bg-[#2703F8] rounded-lg disabled:cursor-not-allowed ${
-            loading && "opacity-30"
-          }`}
-          disabled={loading || balanceCheck()}
-          onClick={() => handleBuyEgg(id, 1)}
-        >
-          {loading
-            ? "Loading..."
-            : balanceCheck()
-            ? "Insuficient balance"
-            : "Buy Now"}
-        </button> */}
             </div>
           </div>
         </div>
@@ -301,4 +271,5 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
   );
 };
 
+NftModal.Layout = ModalLayout;
 export default NftModal;
