@@ -124,7 +124,7 @@ export default function ExchangePanel({
               {token && (
                 <div className="flex items-center">
                   <Logo
-                    srcs={[token?.logoURI]}
+                    src={token?.logoURI}
                     width={"24px"}
                     height={"24px"}
                     alt={token?.symbol}
