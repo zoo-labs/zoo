@@ -7,7 +7,7 @@ import { FiatValue } from "./FiatValue";
 import Lottie from "lottie-react";
 import { DebounceInput } from "react-debounce-input";
 
-import Logo from "components/Logo";
+import BridgeLogo from "components/Logo/bridgeLogo";
 import { ChevronDownIcon } from "@heroicons/react/outline";
 import Web3 from "web3";
 import { Balance, Token } from "state/bridge/types";
@@ -123,7 +123,7 @@ export default function ExchangePanel({
             <div className="flex items-center gap-1.5 rounded-full bg-space-grey p-2 pl-3.5">
               {token && (
                 <div className="flex items-center">
-                  <Logo
+                  <BridgeLogo
                     src={token?.logoURI}
                     width={"24px"}
                     height={"24px"}
