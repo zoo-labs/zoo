@@ -158,7 +158,7 @@ function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
                   </div>
                 )}
 
-                <div className=" w-3/4 text-xs flex flex-row-reverse items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap  font-bold cursor-pointer select-none pointer-events-auto">
+                <div className=" w-3/4 text-xs flex flex-row-reverse items-center rounded p-0.5 whitespace-nowrap  font-bold select-none pointer-events-auto">
                   <More />
                   <div
                     className={`${
@@ -173,7 +173,7 @@ function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
                     {account && chainId && userEthBalance && (
                       <>
                         <div
-                          className="py-2 pl-1 mr-2 font-semibold text-primary"
+                          className="py-2 pl-1 mr-2 font-semibold text-white cursor-pointer"
                           onClick={toggleNetworkModal}
                         >
                           {userEthBalance?.toFixed(3)}{" "}
