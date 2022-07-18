@@ -242,14 +242,16 @@ export function useFetchMyNFTs(): () => Promise<void> {
           animation_url,
           glb_animation_url,
           usdz_animation_url,
+          description,
         } = data;
         if (deet?.kind === 0) _eggsCount++;
         else if (deet?.kind === 1) _animalsCount++;
         else if (deet?.kind === 2) _breedCount++;
         const newNft: MyNFT = {
           index,
+          description,
           customName: deet?.customName,
-          name: deet?.name,
+          name,
           kind: deet?.kind,
           id: Number(deet?.id),
           timestamp: Number(deet?.birthValues?.timestamp),
@@ -333,13 +335,14 @@ export function useGetAvailableEggs(): () => void {
   return useCallback(async () => {
     console.log("useGetAvailableEggs  contract", dropContract);
     try {
-      const eggs = await dropContract?.getAllEggs();
+      const eggs: Array<any> = await dropContract?.getAllEggs();
       console.log("useGetAvailableEggs eggs", eggs);
       if (!eggs) return;
-      await eggs.map(async (egg) => {
-        const { name, attributes, image, animation_url } = (
-          await axios.get(egg.data[1])
-        ).data;
+      await [...eggs].map(async (egg) => {
+        const data = (await axios.get(egg.data.metadataURI)).data;
+        const { name, attributes, image, animation_url } = data;
+        console.log("eggsuseGetAvailableEggs ", data);
+
         const finalEgg: AvailableEgg = {
           bidShares: {
             creator: Number(egg?.bidShares?.creator),
@@ -557,14 +560,18 @@ export function useGetAllAuctions(): () => Promise<void> {
         );
         const deet = await zooKeeper?.tokens(Number(auction.tokenID));
 
+        const data = (await axios.get(tokenMetadataURI)).data;
         const {
           name,
           attributes,
+          description,
           image,
           animation_url,
           glb_animation_url,
           usdz_animation_url,
-        } = (await axios.get(tokenMetadataURI)).data;
+        } = data;
+
+        console.log("auction nft data", data, tokenMetadataURI);
         const {
           tokenID,
           auctionId,
@@ -578,6 +585,7 @@ export function useGetAllAuctions(): () => Promise<void> {
         } = auction;
         const finalNft = {
           index,
+          description,
           kind: deet?.kind,
           tokenID: Number(tokenID),
           tokenOwner: addresses.tokenOwner,
