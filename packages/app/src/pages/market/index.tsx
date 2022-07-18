@@ -372,7 +372,7 @@ const MarketPlacePage = () => {
       {/* Data */}
       <div>
         {category === 0 && (
-          <div className="flex flex-wrap mt-8 -mx-4">
+          <div className="flex flex-wrap mt-8 -mx-4 justify-center">
             {allAuctions.length > 0 ? (
               allAuctions.map((datum: Auction, index) => {
                 return (
@@ -392,7 +392,7 @@ const MarketPlacePage = () => {
         )}
 
         {category === 1 && (
-          <div className="flex flex-wrap mt-8 -mx-4">
+          <div className="flex flex-wrap mt-8 -mx-4 justify-center">
             {allAuctions.length > 0 ? (
               allAuctions
                 .filter((auction) => auction.kind === 0)
@@ -414,7 +414,7 @@ const MarketPlacePage = () => {
         )}
 
         {category === 2 && (
-          <div className="flex flex-wrap mt-8 -mx-4">
+          <div className="flex flex-wrap mt-8 -mx-4 justify-center">
             {allAuctions.length > 0 ? (
               allAuctions
                 .filter((auction) => auction.kind === 1)
