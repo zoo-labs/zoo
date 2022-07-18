@@ -25,7 +25,7 @@ export default function Modal({
   maxHeight = 90,
   initialFocusRef,
   children,
-  padding = 5,
+  padding = 6,
   maxWidth = 420,
   isMax,
   isFullWidth,
@@ -121,7 +121,7 @@ export default function Modal({
                 >
                   <div
                     className={`${
-                      !isMax && "rounded p-6"
+                      !isMax && `rounded p-${padding}`
                     } flex flex-col w-full h-full  overflow-y-hidden  bg-dark-900`}
                     style={{ backgroundColor }}
                   >

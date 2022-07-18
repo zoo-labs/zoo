@@ -234,7 +234,7 @@ export function useFetchMyNFTs(): () => Promise<void> {
         console.log("d_deets", deet);
 
         const data = (await axios.get(deet.data.metadataURI)).data;
-        console.log("dataa useFetchMyNFTs", data);
+        console.log("dataa_IN__useFetchMyNFTs", data);
         const {
           name,
           attributes,
@@ -941,8 +941,8 @@ export function useFeed(): (animalID: number) => void {
     async (animalId) => {
       console.log("feeding_animal", zooKeeper, { animalId, dropId });
       if (!zooKeeper) return;
-      dispatch(loading(true));
       try {
+        dispatch(loading(true));
         const approval = await zoo?.allowance(account, zooKeeper.address);
         console.log("approval_approving_media", Number(approval));
         if (Number(approval) <= 0) {
@@ -975,15 +975,27 @@ export function useFeed(): (animalID: number) => void {
         await tx.wait();
         getZooBalance();
         console.log(tx);
-        dispatch(loading(false));
-        fetchMyNfts();
-        addPopup({
-          txn: {
-            hash: null,
-            summary: `Successfully fed animal`,
-            success: true,
-          },
-        });
+        fetchMyNfts()
+          .then(() => {
+            dispatch(loading(false));
+            addPopup({
+              txn: {
+                hash: null,
+                summary: `Successfully fed animal`,
+                success: true,
+              },
+            });
+          })
+          .catch((e) => {
+            dispatch(loading(false));
+            addPopup({
+              txn: {
+                hash: null,
+                summary: formatError(e),
+                success: false,
+              },
+            });
+          });
       } catch (e) {
         console.error("ISSUE FEEDING EGG \n", e);
         dispatch(loading(false));
@@ -1065,6 +1077,7 @@ export function useBreed(): (
   const dropId = process.env.NEXT_PUBLIC_DROP_ID;
   const dispatch = useDispatch();
   const getZooBalance = useZoobalance();
+  const fetchNFTs = useFetchMyNFTs();
   return useCallback(
     async (tokenA, tokenB, successCallback) => {
       console.log("breeding_eggggg", { dropId, tokenA, tokenB, zooKeeper });
@@ -1081,16 +1094,30 @@ export function useBreed(): (
         );
         await tx.wait();
         console.log(tx);
-        dispatch(loading(false));
-        getZooBalance();
-        addPopup({
-          txn: {
-            hash: null,
-            summary: `Successfully bred ${tokenA} and ${tokenB}`,
-            success: true,
-          },
-        });
-        successCallback && successCallback();
+        fetchNFTs()
+          .then(() => {
+            dispatch(loading(false));
+            getZooBalance();
+            addPopup({
+              txn: {
+                hash: null,
+                summary: `Successfully bred ${tokenA} and ${tokenB}`,
+                success: true,
+              },
+            });
+            successCallback && successCallback();
+          })
+          .catch((e) => {
+            dispatch(loading(false));
+            getZooBalance();
+            addPopup({
+              txn: {
+                hash: null,
+                summary: formatError(e),
+                success: false,
+              },
+            });
+          });
       } catch (e) {
         console.error("ISSUE BREEDING EGG \n", e);
         dispatch(loading(false));
@@ -1104,6 +1131,52 @@ export function useBreed(): (
         });
       }
     },
-    [addPopup, dispatch, dropId, getZooBalance, zooKeeper]
+    [addPopup, dispatch, dropId, fetchNFTs, getZooBalance, zooKeeper]
+  );
+}
+
+export function useFreeNFT(): (tokenId: number, success?: () => void) => void {
+  const addPopup = useAddPopup();
+  const zooKeeper = useZooKeeper();
+  const fetchMyNfts = useFetchMyNFTs();
+  const dispatch = useDispatch();
+  const getZooBalance = useZoobalance();
+  return useCallback(
+    async (id, success) => {
+      try {
+        dispatch(loading(true));
+        const tx = await zooKeeper?.freeAnimal(id);
+        await tx.wait();
+        getZooBalance();
+        console.log("SUCCESSFULLY FREED THE ITEM e", id);
+        await fetchMyNfts()
+          .then(() => {
+            dispatch(loading(false));
+            success && success();
+            addPopup({
+              txn: {
+                hash: null,
+                summary: `SUCCESSFULLY FREED THE ITEM ${id}`,
+                success: true,
+              },
+            });
+          })
+          .catch((e) => {
+            dispatch(loading(false));
+          });
+      } catch (error) {
+        console.log("ERROR FREEING THE ITEM e", id);
+        dispatch(loading(false));
+        getZooBalance();
+        addPopup({
+          txn: {
+            hash: null,
+            summary: formatError(error),
+            success: false,
+          },
+        });
+      }
+    },
+    [addPopup, dispatch, fetchMyNfts, getZooBalance, zooKeeper]
   );
 }

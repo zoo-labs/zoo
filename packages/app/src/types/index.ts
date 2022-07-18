@@ -1,4 +1,5 @@
 import { Toast } from "components/Toast";
+import BigNumber from 'bignumber.js'
 
 export interface Animal {
   owner?: string;
@@ -134,4 +135,26 @@ export type EggCardType = {
 };
 export interface ToastsState {
   data: Toast[];
+}
+
+export interface Proposal {
+  signature: string
+  timestamp: string
+  token: string;
+  type: 'proposal';
+  tokenDecimal: number;
+  tokenAddress: string;
+  id: string;
+  proposalType: number
+  proposalStatus: number
+  proposalIpfs: string
+  votes: BigNumber[], voteCount: BigNumber, title: string;
+  description: string
+  choices: string[],
+  startDate: any;
+  startTime: any
+  endDate: any;
+  endTime: any;
+  creator: string;
+  blockNumber: number
 }
