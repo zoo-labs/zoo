@@ -55,9 +55,18 @@ function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
     (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
 
   return (
-    <header className="fixed flex-shrink-0 w-full bg-black z-999">
+    <header
+      className={`absolute flex-shrink-0 w-full ${
+        !props.isModal ? "bg-black" : "bg-transparent"
+      } z-999`}
+    >
       <Banner />
-      <Popover as="nav" className="z-10 w-full bg-transparent header-border-b">
+      <Popover
+        as="nav"
+        className={`z-10 w-full bg-transparent ${
+          !props.isModal && "header-border-b"
+        }`}
+      >
         {({ open }) => (
           <>
             <div className="px-4 py-4 mx-auto max-w-7xl">

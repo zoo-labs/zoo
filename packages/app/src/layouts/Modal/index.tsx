@@ -15,7 +15,7 @@ const ModalLayout = ({ children, banner = undefined }) => {
   return (
     <div className="z-0 flex flex-col items-center w-full h-screen pb-16 lg:pb-0">
       <Header isModal={true} banner={banner} />
-      <Main>{children}</Main>
+      <Main isModal={true}>{children}</Main>
     </div>
   );
 };
