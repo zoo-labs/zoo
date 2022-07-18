@@ -30,6 +30,7 @@ import CartSideNav from "components/CartSideNav";
 import NetworkModal from "modals/NetworkModal";
 import { useNetworkModalToggle } from "state/application/hooks";
 import { BackpackRounded } from "@mui/icons-material";
+import { ChevronLeftIcon } from "@heroicons/react/outline";
 
 function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
   const { i18n } = useLingui();
@@ -60,7 +61,7 @@ function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
         !props.isModal ? "bg-black" : "bg-transparent"
       } z-999`}
     >
-      <Banner />
+      {!props.isModal && <Banner />}
       <Popover
         as="nav"
         className={`z-10 w-full bg-transparent ${
@@ -73,7 +74,12 @@ function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
               <div className="flex items-center justify-between">
                 {props.isModal ? (
                   <div>
-                    <BackpackRounded />{" "}
+                    <ChevronLeftIcon
+                      onClick={() => history.back()}
+                      width={24}
+                      height={24}
+                      className="cursor-pointer"
+                    />{" "}
                   </div>
                 ) : (
                   <div className="flex items-center">
@@ -151,7 +157,7 @@ function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
                   </div>
                 )}
 
-                <div className=" w-3/4 text-xs flex flex-row-reverse items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap  font-bold cursor-pointer select-none pointer-events-auto">
+                <div className=" w-3/4 text-xs flex flex-row-reverse items-center rounded p-0.5 whitespace-nowrap  font-bold select-none pointer-events-auto">
                   <More />
                   <div
                     className={`${
@@ -166,7 +172,7 @@ function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
                     {account && chainId && userEthBalance && (
                       <>
                         <div
-                          className="py-2 pl-1 mr-2 font-semibold text-primary"
+                          className="py-2 pl-1 mr-2 font-semibold text-white cursor-pointer"
                           onClick={toggleNetworkModal}
                         >
                           {userEthBalance?.toFixed(3)}{" "}

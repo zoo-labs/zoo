@@ -557,7 +557,7 @@ const Swap: React.FC<SwapProps> = ({}) => {
     }
   }
   return (
-    <main className="flex flex-col items-center justify-center flex-grow w-full h-full px-2 mt-24 sm:px-0">
+    <main className="flex flex-col items-center justify-center flex-grow w-full h-full px-2 mt-12 sm:px-0">
       <div id="swap-page" className="w-full max-w-xl py-4 md:py-8 lg:py-12">
         <Head>
           <title>LUX | BRIDGE</title>
@@ -772,7 +772,7 @@ const Swap: React.FC<SwapProps> = ({}) => {
                   onChange={(e) => setEvmToAddress(e.target.value)}
                   className="w-full bg-transparent border bg-[#1B1D2B] border-[#323546] focus:outline-none rounded-full placeholder-white-50  font-light text-sm pl-3 px-6 py-4 "
                 />
-                <p className="ml-3 text-xs text-grey-100">
+                <p className="mt-1 mb-2 ml-3 text-xs text-grey-100">
                   Destination Address
                 </p>
               </div>

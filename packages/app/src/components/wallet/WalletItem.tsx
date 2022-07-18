@@ -46,7 +46,7 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
         <div className="flex flex-col flex-grow border-b border-[#797979] pb-2">
           <div className="flex mb-4 ">
             <div className="mt-1 mr-auto font-semibold">
-              {datum.name?.toUpperCase()} {datum.kind === 0 && "(Origin)"}{" "}
+              {datum.name?.toUpperCase()} {datum.kind >= 2 && "(Hybrid)"}{" "}
               <span className="text-xs text-gray-500">({datum.id || ""})</span>
             </div>
           </div>
@@ -59,7 +59,7 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-between w-full pt-3">
+        <div className="flex w-full items-center justify-between pt-3">
           {datum.attributes &&
             typeof datum.attributes === "object" &&
             datum.attributes.map((attr, index) => {
@@ -85,26 +85,6 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
               );
             })}
         </div>
-        {/* {datum.attributes &&
-          typeof datum.attributes === "object" &&
-          datum.attributes.map((attr, index) => {
-            return (
-              <div
-                key={index}
-                className="flex items-center justify-between pt-4 mt-4 text-sm text-gray-800 border-t border-gray-700 border-solid "
-              >
-                <div className="flex items-center text-xs font-semibold text-gray-500">
-                  <div className="mr-1">
-                    <FaHeart />
-                  </div>
-                  {attr.trait_type}
-                </div>
-                <div className="text-xs font-semibold text-gray-500">
-                  {attr.value}
-                </div>
-              </div>
-            );
-          })} */}
       </div>
     </div>
   );
