@@ -38,7 +38,7 @@ function PlaceBid({}: AppProps & {
   const [nft, setNft] = useState<any>({});
   const router = useRouter();
   const minBidFunc = useCallback(() => {
-    const curatorFeePercentage = 3 / 100;
+    const curatorFeePercentage = 5 / 100;
     if (nft?.amount > 0) {
       return nft?.amount + nft?.amount * curatorFeePercentage;
     } else return nft?.reservePrice;
