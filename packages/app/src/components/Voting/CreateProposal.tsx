@@ -93,10 +93,9 @@ const MakeProposals = () => {
                 onChange={(e: any) => setDescription(e.target.value)}
                 style={{
                   height: 300,
-                  background: "#131224",
-                  borderRadius: "1rem",
+                  background: "#797979",
                 }}
-                className="w-full p-4 text-white border-none bg-space-grey rounded-2xl focus:outline-none"
+                className="w-full p-4 text-white border-none bg-[#797979] focus:outline-none"
               />
             </div>
 
@@ -105,10 +104,10 @@ const MakeProposals = () => {
                 Choices
               </div>
               <div className="px-6 py-5 md:px-12">
-                <div className="w-full px-5 py-4 mb-6 font-medium rounded-xl bg-space-grey">
+                <div className="w-full px-5 py-4 mb-6 font-medium rounded-xl bg-[#797979]">
                   Approve
                 </div>
-                <div className="w-full px-5 py-4 mb-6 font-medium rounded-xl bg-space-grey">
+                <div className="w-full px-5 py-4 mb-6 font-medium rounded-xl bg-[#797979]">
                   Disapprove
                 </div>
               </div>
@@ -133,7 +132,7 @@ const MakeProposals = () => {
                       renderInput={(params) => (
                         <TextField
                           {...params}
-                          className="w-full px-5 py-4 text-base text-white uppercase rounded-xl bg-space-grey placeholder:text-space-gray-500 placeholder:text-base focus:outline-none hover:outline-none placeholder:uppercase"
+                          className="w-full px-5 py-4 text-base text-white uppercase rounded-xl bg-[#797979] placeholder:text-butter placeholder:text-base focus:outline-none hover:outline-none placeholder:uppercase"
                           placeholder="DD/MM/YYYY"
                           sx={{
                             zIndex: 1,
@@ -191,7 +190,7 @@ const MakeProposals = () => {
                         <TextField
                           {...params}
                           placeholder="00:00"
-                          className="w-full px-5 py-4 text-white uppercase rounded-xl bg-space-grey placeholder:text-space-gray-500 focus:outline-none placeholder:uppercase"
+                          className="w-full px-5 py-4 text-white uppercase rounded-xl bg-[#797979] placeholder:text-butter focus:outline-none placeholder:uppercase"
                           inputProps={{
                             ...params.inputProps,
                             style: {
@@ -218,7 +217,7 @@ const MakeProposals = () => {
                       renderInput={(params) => (
                         <TextField
                           {...params}
-                          className="w-full px-5 py-4 text-white uppercase rounded-xl bg-space-grey placeholder:text-space-gray-500 focus:outline-none placeholder:uppercase"
+                          className="w-full px-5 py-4 text-white uppercase rounded-xl bg-[#797979] placeholder:text-butter focus:outline-none placeholder:uppercase"
                           placeholder="DD/MM/YYYY"
                           inputProps={{
                             ...params.inputProps,
@@ -245,7 +244,7 @@ const MakeProposals = () => {
                         <TextField
                           {...params}
                           placeholder="00:00"
-                          className="w-full px-5 py-4 text-white uppercase rounded-xl bg-space-grey placeholder:text-space-gray-500 focus:outline-none placeholder:uppercase"
+                          className="w-full px-5 py-4 text-white uppercase rounded-xl bg-[#797979] placeholder:text-butter focus:outline-none placeholder:uppercase"
                           inputProps={{
                             ...params.inputProps,
                             style: {
@@ -265,7 +264,7 @@ const MakeProposals = () => {
                     href={`https://rinkeby.etherscan.io/block/${blockNumber}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mb-6 text-space-gray-500"
+                    className="mb-6 text-butter"
                   >
                     Snapshot{" "}
                     <span className="inline-flex items-center gap-3 font-medium text-space-blue-dark">

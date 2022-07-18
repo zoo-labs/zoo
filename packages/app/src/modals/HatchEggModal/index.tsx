@@ -81,16 +81,25 @@ export default function HatchEggModal({ nftItem, success }) {
 
   function getModalContent() {
     return (
-      <div className="flex flex-col space-y-4">
-        <ModalHeader title={`Ready to Hatch ${name}`} onClose={toggleModal} />
-        <div className="flex flex-col items-center space-y-6">
-          <div className="relative mb-" style={{ width: 258 }}>
+      <div
+        style={{ height: "80vh" }}
+        className="flex flex-col items-center justify-center space-y-4 bg-black rounded-xl"
+      >
+        <div className="absolute right-8 top-7">
+          <ModalHeader onClose={toggleModal} />
+        </div>
+        <div className="w-full flex flex-col items-center justify-center space-y-6 max-w-[486px]">
+          <div className="bg-black rounded-xl h-[310px] w-full flex flex-col justify-center items-center">
             <video
               autoPlay
               loop
               src={nftItem?.token_uri}
-              width={300}
-              height={350}
+              width={"340px"}
+              height={"340px"}
+              className="rounded overflow-hidden object-cover max-h-[310px]"
+              style={{
+                zoom: "0.7",
+              }}
             />
             <img
               src="/videoes/StealthEggHatch.mp4"
@@ -99,6 +108,9 @@ export default function HatchEggModal({ nftItem, success }) {
               style={{ height: 219 }}
             />
           </div>
+          <p className="text-sm font-normal text-[#BDBDBD] text-center">
+            Hatch Egg text
+          </p>
           <button
             className={`py-4 w-52 bg-bid-gradient rounded-xl mb-7 disabled:cursor-not-allowed ${
               loading && "opacity-60"
@@ -120,6 +132,46 @@ export default function HatchEggModal({ nftItem, success }) {
           </button>
         </div>
       </div>
+
+      // <div className="flex flex-col space-y-4">
+      //   <ModalHeader title={`Ready to Hatch ${name}`} onClose={toggleModal} />
+      //   <div className="flex flex-col items-center space-y-6">
+      //     <div className="relative mb-" style={{ width: 258 }}>
+      //       <video
+      //         autoPlay
+      //         loop
+      //         src={nftItem?.token_uri}
+      //         width={300}
+      //         height={350}
+      //       />
+      //       <img
+      //         src="/videoes/StealthEggHatch.mp4"
+      //         alt=""
+      //         className="absolute top-10 inset-x-[35%]"
+      //         style={{ height: 219 }}
+      //       />
+      //     </div>
+      //     <button
+      //       className={`py-4 w-52 bg-bid-gradient rounded-xl mb-7 disabled:cursor-not-allowed ${
+      //         loading && "opacity-60"
+      //       }`}
+      //       disabled={loading || timeLeft}
+      //       onClick={handleHatchEgg}
+      //     >
+      //       {loading
+      //         ? "Hatching..."
+      //         : !timeLeft
+      //         ? "Hatch Egg"
+      //         : "Hatch Egg in " +
+      //           timeLeft.h +
+      //           "h " +
+      //           timeLeft.m +
+      //           "m " +
+      //           timeLeft.s +
+      //           "s"}
+      //     </button>
+      //   </div>
+      // </div>
     );
   }
 
@@ -131,8 +183,10 @@ export default function HatchEggModal({ nftItem, success }) {
     <Modal
       isOpen={hatchEggModalOpen}
       onDismiss={toggleModal}
-      minHeight={0}
-      maxHeight={90}
+      minHeight={80}
+      maxHeight={100}
+      padding={0}
+      maxWidth={659}
     >
       {getModalContent()}
     </Modal>

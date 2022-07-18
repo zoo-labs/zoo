@@ -44,7 +44,7 @@ export default function FreeNFTModal({ nft }: { nft: any }) {
 
   function getModalContent() {
     return (
-      <div className="flex flex-col space-y-4 bg-black rounded-xl justify-center items-center">
+      <div className="flex flex-col items-center justify-center space-y-4 bg-black rounded-xl">
         <div className="absolute right-8 top-7">
           <ModalHeader onClose={toggleModal} />
         </div>
@@ -63,7 +63,7 @@ export default function FreeNFTModal({ nft }: { nft: any }) {
                 }}
               />
             ) : (
-              <div className="h-full w-full">
+              <div className="w-full h-full">
                 <ModelViewer
                   glb={nft?.glb_animation_url}
                   usdz={nft?.usdz_animation_url}
@@ -71,13 +71,13 @@ export default function FreeNFTModal({ nft }: { nft: any }) {
               </div>
             )}
           </div>
-          <p className="text-xl font-semibold mb-4">
-            Are you sure you want to set egg free?
+          <p className="mb-4 text-xl font-semibold">
+            Are you sure you want to set your Animal free?
           </p>
           <p className="text-sm font-normal text-[#BDBDBD] text-center">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vel eu, ut
-            tellus arcu bibendum odio nam auctor. Enim, ridiculus laoreet enim
-            porta morbi vulputate commodo, orci.
+            By freeing your animal, your collateral is returned, but your NFT is
+            lost forever. Are you sure you want to continue? A 20% fee goes back
+            to the Zoo DAO.
           </p>
           <button
             onClick={freeNft}

@@ -88,7 +88,6 @@ export const DEFAULT_METAMASK_CHAIN_ID = [ChainId.MAINNET, ChainId.RINKEBY, Chai
 
 export const AVAILABLE_NETWORKS: number[] = [
   ChainId.MAINNET,
-  ChainId.ROPSTEN,
   // ChainId.MATIC,
   // ChainId.FANTOM,
   // ChainId.ARBITRUM,
@@ -104,8 +103,9 @@ export const AVAILABLE_NETWORKS: number[] = [
 ]
 
 if (!isEnvironment('prod')) {
-  AVAILABLE_NETWORKS.push(ChainId.HARDHAT)
+  // AVAILABLE_NETWORKS.push(ChainId.HARDHAT)
   AVAILABLE_NETWORKS.push(ChainId.BSC_TESTNET)
+  AVAILABLE_NETWORKS.push(ChainId.RINKEBY)
 
 }
 
