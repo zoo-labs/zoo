@@ -81,7 +81,7 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
                 height={350}
               />
             ) : (
-              <div className="h-full w-full">
+              <div className="w-full h-full">
                 <ModelViewer
                   glb={nftItem?.glb_animation_url}
                   usdz={nftItem?.usdz_animation_url}
@@ -165,31 +165,33 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
                     <p className="font-medium text-[10px]">Tropical Forests</p>
                   </div>
                 </div> */}
-              <div className="flex items-center gap-2">
-                <Image
-                  src="/icons/growing-up.png"
-                  alt=""
-                  height={26}
-                  width={20}
-                />
-                <div>
-                  <p className="text-sm font-medium">Age</p>
-                  <p className="font-medium text-[10px]">
-                    {nftItem?.stage === 0
-                      ? "BABY"
-                      : nftItem?.stage === 1
-                      ? "TEENAGE"
-                      : "ADULT"}
-                  </p>
+              {(nftItem?.kind === 1 || nftItem?.kind === 3) && (
+                <div className="flex items-center gap-2">
+                  <Image
+                    src="/icons/growing-up.png"
+                    alt=""
+                    height={26}
+                    width={20}
+                  />
+                  <div>
+                    <p className="text-sm font-medium">Age</p>
+                    <p className="font-medium text-[10px]">
+                      {nftItem?.stage === 0
+                        ? "BABY"
+                        : nftItem?.stage === 1
+                        ? "TEENAGE"
+                        : "ADULT"}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             <div className="flex w-full flex-col items-center gap-3 mb-2.5">
               <div className="w-full">
                 <div className="flex flex-col w-full py-2 rounded-lg 5 md:flex-row md:items-center bg-dark-400 ">
                   {nftItem?.kind === 0 || nftItem?.kind === 2 ? (
                     <button
-                      className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white bg-leader-board rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+                      className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-leader-board disabled:cursor-not-allowed disabled:opacity-60"
                       onClick={() => hatchEgg()}
                       disabled={loading}
                     >
@@ -198,7 +200,7 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
                   ) : (
                     <>
                       <button
-                        className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white bg-leader-board rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+                        className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-leader-board disabled:cursor-not-allowed disabled:opacity-60"
                         onClick={() => feed()}
                         disabled={loading}
                       >
@@ -207,7 +209,7 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
                       {nftItem?.stage === 2 && (
                         <Link href={`/wallet/${nftItem?.id}/breed`} passHref>
                           <button
-                            className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white bg-nft-gradient rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+                            className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-nft-gradient disabled:cursor-not-allowed disabled:opacity-60"
                             disabled={loading}
                           >
                             BREED
@@ -218,44 +220,52 @@ const NftModal: React.FC<NftModalProps> = ({}) => {
                   )}
 
                   <button
-                    className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white bg-auction-gradient rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+                    className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-auction-gradient disabled:cursor-not-allowed disabled:opacity-60"
                     onClick={() => auction()}
                     disabled={loading}
                   >
                     AUCTION
                   </button>
-                  <button
-                    className="w-1/4 p-2 mr-2 text-sm font-bold text-center border border-white-30 bg-white-10 text-white rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
-                    onClick={() => freeNft()}
-                    disabled={loading}
-                  >
-                    FREE
-                  </button>
+                  {nftItem && (nftItem.kind === 1 || nftItem.kind === 3) && (
+                    <button
+                      className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white border rounded-lg cursor-pointer border-white-30 bg-white-10 disabled:cursor-not-allowed disabled:opacity-60"
+                      onClick={() => freeNft()}
+                      disabled={loading}
+                    >
+                      FREE
+                    </button>
+                  )}
                 </div>
               </div>
               <div className="w-full text-sm">
                 <p className="w-full border-b border-[#605E5E] pb-2 mb-5">
                   Description
                 </p>
-                <p className="mb-7">
-                  Introducing Only1 Genesis NFTs and Creator Staking Pool -
-                  where Defi meets social in only1. Each creator passed KYC will
-                  be minted a Genesis-NFT, which they can associate with perks
-                  and rewards and trade it in the marketplace. Users on the
-                  platform can stake $LIKE tokens on individual creators and
-                  earn based on the pool’s APY, which adjusts according to the
-                  creator’s engagement.
-                </p>
-                <p>
-                  Only1 believes that the future of NFTs will serve a key
-                  function within the tech world and that utility NFTs will
-                  inevitably spill into other verticals outside gaming. They
-                  also think art and collectible NFTs will slowly be replaced by
-                  utility NFTs, and hence have made them an integral part of
-                  their concept and earning mechanisms. There are two main
-                  methods that Only1 uses to prioritize social engagement
-                  between fans and influencers. ‍
-                </p>
+                {nftItem?.description ? (
+                  <p>{nftItem?.description}</p>
+                ) : (
+                  <>
+                    <p className="mb-7">
+                      Introducing Only1 Genesis NFTs and Creator Staking Pool -
+                      where Defi meets social in only1. Each creator passed KYC
+                      will be minted a Genesis-NFT, which they can associate
+                      with perks and rewards and trade it in the marketplace.
+                      Users on the platform can stake $LIKE tokens on individual
+                      creators and earn based on the pool’s APY, which adjusts
+                      according to the creator’s engagement.
+                    </p>
+                    <p>
+                      Only1 believes that the future of NFTs will serve a key
+                      function within the tech world and that utility NFTs will
+                      inevitably spill into other verticals outside gaming. They
+                      also think art and collectible NFTs will slowly be
+                      replaced by utility NFTs, and hence have made them an
+                      integral part of their concept and earning mechanisms.
+                      There are two main methods that Only1 uses to prioritize
+                      social engagement between fans and influencers. ‍
+                    </p>
+                  </>
+                )}
               </div>
               {/* <button
           className={`py-3.5 w-full bg-[#2703F8] rounded-lg disabled:cursor-not-allowed ${

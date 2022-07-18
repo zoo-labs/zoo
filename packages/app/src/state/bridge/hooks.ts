@@ -23,11 +23,11 @@ import Web3 from "web3";
 import { AppState } from "state";
 
 export function useAllTokens(): { [chainId in ChainId]?: Token[] } {
-  return useSelector((state: AppState) => state.swap.tokens);
+  return useSelector((state: AppState) => state.bridge.tokens);
 }
 export function useGetAvailableTokens(): (chain?: number) => void {
   const activeChain: number = useSelector(
-    (state: AppState) => state.swap.activeChain
+    (state: AppState) => state.bridge.activeChain
   );
 
   const dispatch = useDispatch();
@@ -41,6 +41,7 @@ export function useGetAvailableTokens(): (chain?: number) => void {
         LETH: string;
         LUSD: string
         TELEPORT: string;
+        ZOO: string
       } =
         (addresses[chain] as any) || (addresses[ChainId.MAINNET] as any);
       const result: { tokens: { [address in string]?: Token[] } } =
@@ -50,12 +51,12 @@ export function useGetAvailableTokens(): (chain?: number) => void {
         });
       const customTokens: any = {
 
-        [chainAddresses.LBTC]: {
+        [chainAddresses.ZOO]: {
           decimals: 18,
-          symbol: "LBTC",
-          address: chainAddresses.LBTC,
-          logoURI: "/icons/lux-triangle.png",
-          name: "LuxBTC",
+          symbol: "ZOO",
+          address: chainAddresses.ZOO,
+          logoURI: "/img/egg.png",
+          name: "ZOO",
           isNative: false,
         }, [chainAddresses.LETH]: {
           decimals: 18,
@@ -73,19 +74,6 @@ export function useGetAvailableTokens(): (chain?: number) => void {
       console.log('{ [chain]: resultTokens }', { [chain]: resultTokens })
       dispatch(fetchTokens({ [chain]: resultTokens }));
 
-      // const from = Object.values(resultTokens).find(
-      //   (val: any) => val.symbol === "LBTC"
-      // );
-      // const to = Object.values(resultTokens).find(
-      //   (val: any) => val.symbol === "LETH"
-      // );
-      // console.log('currentTrade totototot', to, resultTokens)
-      // dispatch(
-      //   updateCurrentTrade({
-      //     to: { ...to, isNative: to.symbol === "ETH" },
-      //     from: { ...from, isNative: from.symbol === "ETH" },
-      //   })
-      // );
     } catch (error) {
       console.log("error in useGetAvailableTokens", error);
     }
@@ -132,7 +120,7 @@ export function useGetAvailableTokens(): (chain?: number) => void {
 export function useUpdateActiveChains(): (chain: ChainId, side: 'from' | 'to') => void {
   const router = useRouter();
   const dispatch = useDispatch();
-  const aChains = useSelector((state: AppState) => state.swap.activeChains);
+  const aChains = useSelector((state: AppState) => state.bridge.activeChains);
   return useCallback(
     (chain: number, side: string) => {
       // console.log('useUpdateActiveChains sidee', side)
@@ -161,7 +149,7 @@ export function useFetchUserBalances(): () => void {
   const dispatch = useDispatch();
   const Web3Api = useMoralisWeb3Api();
   // const getCurrentBalances = useGetCurrentBalances();
-  const { activeChains } = useAppSelector((state) => state.swap);
+  const { activeChains } = useAppSelector((state) => state.bridge);
 
   return useCallback(async () => {
     try {
@@ -226,7 +214,7 @@ export function useFetchUserBalances(): () => void {
 // export function useGetCurrentBalances(): () => void {
 //   const dispatch = useDispatch();
 
-//   const { currentTrade, balances, activeChains } = useAppSelector((state) => state.swap);
+//   const { currentTrade, balances, activeChains } = useAppSelector((state) => state.bridge);
 //   const { Moralis } = useMoralis();
 //   const { account, library } = useActiveWeb3React()
 //   // const getQuote = useGetQuote();
@@ -299,7 +287,7 @@ export function useGetQuote(): (
   const dispatch = useDispatch();
   const { Moralis } = useMoralis();
   const { currentTrade, currentSelectSide } = useAppSelector(
-    (state: AppState) => state.swap
+    (state: AppState) => state.bridge
   );
   console.log("currentSelectSide in quite", currentSelectSide);
   return useCallback(
@@ -356,7 +344,7 @@ export function useSwap(): () => void {
   const { Moralis } = useMoralis();
   const { account } = useActiveWeb3React();
   const { currentTrade, currentAmount } = useAppSelector(
-    (state: AppState) => state.swap
+    (state: AppState) => state.bridge
   );
   const dispatch = useAppDispatch();
   return useCallback(async () => {
@@ -451,7 +439,7 @@ export function useGetTokenFiatValue(): (address) => Promise<number> {
 
 export const useTokenBalance = (token) => {
   const { Moralis } = useMoralis();
-  const { balances } = useAppSelector((state: AppState) => state.swap);
+  const { balances } = useAppSelector((state: AppState) => state.bridge);
   const tokenBalance = balances.find(
     (balance) => balance.symbol === token.symbol
   );
@@ -461,13 +449,13 @@ export const useTokenBalance = (token) => {
 };
 
 export const useAllTokenBalances = () => {
-  const { balances } = useAppSelector((state: AppState) => state.swap);
+  const { balances } = useAppSelector((state: AppState) => state.bridge);
 
   return balances.length > 0 ? balances : [];
 };
 
 export const useToken = (address) => {
-  const { tokens } = useAppSelector((state: AppState) => state.swap);
+  const { tokens } = useAppSelector((state: AppState) => state.bridge);
 
   return tokens.length > 0
     ? tokens.find((token) => token.address === address)

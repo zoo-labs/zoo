@@ -136,7 +136,7 @@ const InfoPage = () => {
 
   console.log("NFTTTT_ANDAUCTION", nft);
   return (
-    <div>
+    <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
       <div className="showcase min-h-[500px] flex items-center justify-center">
         {nft?.kind === 0 ? (
           <video
@@ -156,7 +156,7 @@ const InfoPage = () => {
           </div>
         )}
       </div>
-      <div className="flex flex-col lg:flex-row lg:items-start py-9 px-[70px] space-y-12 space-x-12 mb-5">
+      <div className="flex flex-col mb-5 space-x-12 space-y-12 lg:flex-row lg:items-start py-9 ">
         <div className="w-full lg:w-3/5">
           <p className="font-semibold text-[56px] mb-2">{nft?.name}</p>
           <div className="flex gap-x-4">
@@ -294,7 +294,7 @@ const InfoPage = () => {
           )}
         </div>
       </div>
-      <div className="w-full px-[70px] mb-10">
+      <div className="w-full mb-10">
         <div className="w-full border rounded-lg border-white-30 ">
           <div className="flex items-center justify-between px-12 py-4">
             <p>Current Bids</p>

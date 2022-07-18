@@ -27,11 +27,15 @@ import { metaMask } from "connectors/metaMask";
 import { CartItem } from "types/cart";
 import { useAppSelector } from "state/hooks";
 import CartSideNav from "components/CartSideNav";
+import NetworkModal from "modals/NetworkModal";
+import { useNetworkModalToggle } from "state/application/hooks";
+import { BackpackRounded } from "@mui/icons-material";
 
-function AppBar(props: { banner?: boolean }): JSX.Element {
+function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
   const { i18n } = useLingui();
   const { account, chainId, library, connector } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
+  const toggleNetworkModal = useNetworkModalToggle();
   const { CartItems }: { CartItems: CartItem[] } = useAppSelector(
     (state) => state.store
   );
@@ -51,69 +55,83 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
     (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
 
   return (
-    <header className="fixed flex-shrink-0 w-full bg-black z-999">
+    <header
+      className={`absolute flex-shrink-0 w-full ${
+        !props.isModal ? "bg-black" : "bg-transparent"
+      } z-999`}
+    >
       <Banner />
-      <Popover as="nav" className="z-10 w-full bg-transparent header-border-b">
+      <Popover
+        as="nav"
+        className={`z-10 w-full bg-transparent ${
+          !props.isModal && "header-border-b"
+        }`}
+      >
         {({ open }) => (
           <>
             <div className="px-4 py-4 mx-auto max-w-7xl">
               <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <NavLink href="/">
-                    <div className=" h-full pl-2 cursor-pointer logo w-[50px] flex">
-                      <Image
-                        src="/img/logo.png"
-                        // className="w-10"
-                        alt="Logo"
-                        height="24px"
-                        width="60px"
-                      />
-                    </div>
-                  </NavLink>
-                  <div className="hidden sm:block sm:ml-4">
-                    <div className="flex space-x-2">
-                      {/* <Buy /> */}
-                      <NavLink href="/market">
-                        <a
-                          id={`mint-nav-link`}
-                          className={
-                            router.pathname == "/market"
-                              ? `${linkStyle} text-green text-bold`
-                              : `${linkStyle} text-white`
-                          }
-                          style={{ letterSpacing: "2px" }}
-                        >
-                          {i18n._(t`Marketplace`)}
-                        </a>
-                      </NavLink>
-                      <NavLink href="/bridge">
-                        <a
-                          id={`bridge-nav-link`}
-                          className={
-                            router.pathname == "/bridge"
-                              ? `${linkStyle} text-green text-bold`
-                              : `${linkStyle} text-white`
-                          }
-                          style={{ letterSpacing: "2px" }}
-                        >
-                          {i18n._(t`Bridge`)}
-                        </a>
-                      </NavLink>
-                      <NavLink href="/dao">
-                        <a
-                          id={`dao-nav-link`}
-                          className={
-                            router.pathname == "/dao"
-                              ? `${linkStyle} text-green text-bold`
-                              : `${linkStyle} text-white`
-                          }
-                          style={{ letterSpacing: "2px" }}
-                        >
-                          {i18n._(t`Dao`)}
-                        </a>
-                      </NavLink>
+                {props.isModal ? (
+                  <div>
+                    <BackpackRounded />{" "}
+                  </div>
+                ) : (
+                  <div className="flex items-center">
+                    <NavLink href="/">
+                      <div className=" h-full pl-2 cursor-pointer logo w-[50px] flex">
+                        <Image
+                          src="/img/logo.png"
+                          // className="w-10"
+                          alt="Logo"
+                          height="24px"
+                          width="60px"
+                        />
+                      </div>
+                    </NavLink>
+                    <div className="hidden sm:block sm:ml-4">
+                      <div className="flex space-x-2">
+                        {/* <Buy /> */}
+                        <NavLink href="/market">
+                          <a
+                            id={`mint-nav-link`}
+                            className={
+                              router.pathname == "/market"
+                                ? `${linkStyle} text-green text-bold`
+                                : `${linkStyle} text-white`
+                            }
+                            style={{ letterSpacing: "2px" }}
+                          >
+                            {i18n._(t`Marketplace`)}
+                          </a>
+                        </NavLink>
+                        <NavLink href="/bridge">
+                          <a
+                            id={`bridge-nav-link`}
+                            className={
+                              router.pathname == "/bridge"
+                                ? `${linkStyle} text-green text-bold`
+                                : `${linkStyle} text-white`
+                            }
+                            style={{ letterSpacing: "2px" }}
+                          >
+                            {i18n._(t`Bridge`)}
+                          </a>
+                        </NavLink>
+                        <NavLink href="/dao">
+                          <a
+                            id={`dao-nav-link`}
+                            className={
+                              router.pathname == "/dao"
+                                ? `${linkStyle} text-green text-bold`
+                                : `${linkStyle} text-white`
+                            }
+                            style={{ letterSpacing: "2px" }}
+                          >
+                            {i18n._(t`Dao`)}
+                          </a>
+                        </NavLink>
 
-                      {/* <NavLink href="/store">
+                        {/* <NavLink href="/store">
                         <a
                           id={`store`}
                           className={
@@ -126,11 +144,12 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                           {i18n._(t`Store`)}
                         </a>
                       </NavLink> */}
-                      <Community />
-                      <Learn />
+                        <Community />
+                        <Learn />
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
 
                 <div className=" w-3/4 text-xs flex flex-row-reverse items-center rounded hover:bg-dark-800 p-0.5 whitespace-nowrap  font-bold cursor-pointer select-none pointer-events-auto">
                   <More />
@@ -146,14 +165,17 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
                     />
                     {account && chainId && userEthBalance && (
                       <>
-                        <div className="mr-2 pl-1 py-2 text-primary font-semibold">
+                        <div
+                          className="py-2 pl-1 mr-2 font-semibold text-primary"
+                          onClick={toggleNetworkModal}
+                        >
                           {userEthBalance?.toFixed(3)}{" "}
                           {NATIVE[chainId]?.symbol || "ETH"}
                         </div>
                       </>
                     )}
                   </div>
-                  <div className="flex items-center justify-between w-full space-x-4 sm:justify-end mr-2">
+                  <div className="flex items-center justify-between w-full mr-2 space-x-4 sm:justify-end">
                     {chainId &&
                       // [ChainId.MAINNET].includes(chainId) &&
                       connector &&
@@ -405,6 +427,7 @@ function AppBar(props: { banner?: boolean }): JSX.Element {
           </>
         )}
       </Popover>
+      <NetworkModal />
     </header>
   );
 }

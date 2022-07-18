@@ -14,7 +14,7 @@ import {
   useSortedTokensByQuery,
 } from "functions/bridgeFiltering";
 import AutoSizer from "react-virtualized-auto-sizer";
-
+//
 import CurrencyList from "./CurrencyList";
 import { FixedSizeList } from "react-window";
 import ImportRow from "./ImportRow";

@@ -122,7 +122,7 @@ function CurrencyRow({
     >
       <div className="flex items-center flex-1 my-8">
         <div className="flex items-center">
-          <Logo srcs={[currency.logoURI]} height={32} width={32} />
+          <Logo src={currency.logoURI} height={32} width={32} />
         </div>
         <div className="ml-2">
           <div title={currency.name} className="text-sm font-medium">

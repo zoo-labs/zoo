@@ -14,8 +14,15 @@ import { useRouter } from "next/router";
 import { useActiveWeb3React } from "hooks";
 import { useAuctionModal } from "state/application/hooks";
 import AuctionModal from "modals/Auction";
+import ModalLayout from "layouts/Modal";
+import { NextComponentType, NextPageContext } from "next";
+import { AppProps } from "next/app";
 
-const PlaceBid = () => {
+function PlaceBid({}: AppProps & {
+  Component: NextComponentType<NextPageContext> & {
+    Layout: (title: string) => void;
+  };
+}) {
   const { account } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
   const removeAuction = useRemoveAuction();
@@ -84,10 +91,10 @@ const PlaceBid = () => {
       </Head>
       <TwoColumComp
         LeftCol={
-          <div className="w-full bg-green-g h-full flex justify-center items-center px">
+          <div className="flex items-center justify-center w-full h-full bg-green-g px">
             <CardNft
               nft={nft}
-              className="lg:w-full h-full"
+              className="h-full lg:w-full"
               showDetails={false}
               onNFTClick={() => {}}
             />
@@ -113,7 +120,7 @@ const PlaceBid = () => {
               </div>
             </div>
             <form onSubmit={handleSubmit} className="w-full">
-              <div className="w-full relative">
+              <div className="relative w-full">
                 <input
                   type="number"
                   className="rounded-xl pl-4 pr-14 py-5 bg-cut-grey w-full placeholder:text-[#878787] placeholder:text-lg"
@@ -121,7 +128,7 @@ const PlaceBid = () => {
                   onChange={(e) => setBidPrice(e.target.value)}
                   disabled={nft?.tokenOwner === account}
                 />
-                <span className="text-base font-semibold text-white absolute inset-y-5 right-0 mr-4 mb-4">
+                <span className="absolute right-0 mb-4 mr-4 text-base font-semibold text-white inset-y-5">
                   ZOO
                 </span>
               </div>
@@ -180,10 +187,10 @@ const PlaceBid = () => {
                 </button>
               )}
             </form>
-            <p className="text-base font-normal mb-4 text-left w-full">
+            <p className="w-full mb-4 text-base font-normal text-left">
               You cannot withdraw a bid once submitted
             </p>
-            <a className="text-lg font-bold text-zoo-green flex items-end">
+            <a className="flex items-end text-lg font-bold text-zoo-green">
               How do auctions work?
             </a>
           </div>
@@ -193,6 +200,6 @@ const PlaceBid = () => {
       <AuctionModal nft={nft} edit={true} />
     </div>
   );
-};
-
+}
+PlaceBid.Layout = ModalLayout;
 export default PlaceBid;

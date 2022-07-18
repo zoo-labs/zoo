@@ -46,7 +46,7 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
         <div className="flex flex-col flex-grow border-b border-[#797979] pb-2">
           <div className="flex mb-4 ">
             <div className="mt-1 mr-auto font-semibold">
-              {datum.name?.toUpperCase()} {datum.kind >= 2 && "(Hybrid)"}{" "}
+              {datum.name?.toUpperCase()} {datum.kind === 0 && "(Origin)"}{" "}
               <span className="text-xs text-gray-500">({datum.id || ""})</span>
             </div>
           </div>
@@ -59,7 +59,7 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
             </div>
           </div>
         </div>
-        <div className="flex w-full items-center justify-between pt-3">
+        <div className="flex items-center justify-between w-full pt-3">
           {datum.attributes &&
             typeof datum.attributes === "object" &&
             datum.attributes.map((attr, index) => {

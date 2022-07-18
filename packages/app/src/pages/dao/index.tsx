@@ -32,12 +32,12 @@ const Voting = () => {
         <title>ZOO | DAO</title>
       </Head>
       <div className="Home flex flex-col justify-center items-center min-h-[70vh] relative">
-        <img
-          src="/images/giant-rhino.png"
-          alt=""
-          className="absolute right-0 top-0"
-        />
-        <div className="w-full px-4 py-16 mx-auto lg:max-w-7xl mt-14">
+        <div className="w-full px-4 py-16 mx-auto lg:max-w-7xl mt-14 relative">
+          <img
+            src="/images/giant-rhino.png"
+            alt=""
+            className="absolute right-0 -top-14"
+          />
           <div
             className="py-10 px-7 md:px-20 md:py-16 rounded-2xl mb-20 relative"
             style={{
