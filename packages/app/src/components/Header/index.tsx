@@ -30,6 +30,7 @@ import CartSideNav from "components/CartSideNav";
 import NetworkModal from "modals/NetworkModal";
 import { useNetworkModalToggle } from "state/application/hooks";
 import { BackpackRounded } from "@mui/icons-material";
+import { ChevronLeftIcon } from "@heroicons/react/outline";
 
 function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
   const { i18n } = useLingui();
@@ -73,7 +74,13 @@ function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
               <div className="flex items-center justify-between">
                 {props.isModal ? (
                   <div>
-                    <BackpackRounded />{" "}
+                    {/* <BackpackRounded />{" "} */}
+                    <ChevronLeftIcon
+                      onClick={() => history.back()}
+                      width={24}
+                      height={24}
+                      className="cursor-pointer"
+                    />{" "}
                   </div>
                 ) : (
                   <div className="flex items-center">
