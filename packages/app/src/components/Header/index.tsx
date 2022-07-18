@@ -73,7 +73,7 @@ function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
             <div className="px-4 py-4 mx-auto max-w-7xl">
               <div className="flex items-center justify-between">
                 {props.isModal ? (
-                  <div>
+                  <div className="rounded-full bg-secondary p-1">
                     <ChevronLeftIcon
                       onClick={() => history.back()}
                       width={24}
