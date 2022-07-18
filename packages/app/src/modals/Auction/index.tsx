@@ -44,7 +44,8 @@ export default function AuctionModal({
   const successCallback = useCallback(() => {
     console.log("success");
     auctionModalOpen && toggleModal();
-  }, [auctionModalOpen, toggleModal]);
+    push("/market");
+  }, [auctionModalOpen, push, toggleModal]);
 
   const handleAuction = useCallback(
     (duration_, reservePrice_, curatorFee_) => {

@@ -231,7 +231,7 @@ export function useFetchMyNFTs(): () => Promise<void> {
         const id = nft.token_id;
 
         const deet = await zooKeeper?.tokens(Number(id));
-        console.log("d_deets", deet);
+        console.log("d_deets", { deetId: Number(deet?.id), id });
 
         const data = (await axios.get(deet.data.metadataURI)).data;
         console.log("dataa_IN__useFetchMyNFTs", data);
