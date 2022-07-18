@@ -1,5 +1,5 @@
 import { Toast } from "components/Toast";
-import BigNumber from 'bignumber.js'
+import BigNumber from "bignumber.js";
 
 export interface Animal {
   owner?: string;
@@ -86,7 +86,7 @@ export interface Auction {
   image: string;
   animation_url: string;
   attributes: Array<EggAttribute>;
-  kind: 0 | 1;
+  kind: 0 | 1 | 2 | 3;
   glb_animation_url?: string;
   usdz_animation_url?: string;
 }
@@ -138,23 +138,25 @@ export interface ToastsState {
 }
 
 export interface Proposal {
-  signature: string
-  timestamp: string
+  signature: string;
+  timestamp: string;
   token: string;
-  type: 'proposal';
+  type: "proposal";
   tokenDecimal: number;
   tokenAddress: string;
   id: string;
-  proposalType: number
-  proposalStatus: number
-  proposalIpfs: string
-  votes: BigNumber[], voteCount: BigNumber, title: string;
-  description: string
-  choices: string[],
+  proposalType: number;
+  proposalStatus: number;
+  proposalIpfs: string;
+  votes: BigNumber[];
+  voteCount: BigNumber;
+  title: string;
+  description: string;
+  choices: string[];
   startDate: any;
-  startTime: any
+  startTime: any;
   endDate: any;
   endTime: any;
   creator: string;
-  blockNumber: number
+  blockNumber: number;
 }

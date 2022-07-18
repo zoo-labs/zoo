@@ -8,12 +8,19 @@ import { useSelector } from "react-redux";
 import { useBreed, useFetchMyNFTs } from "state/zoo/hooks";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import BidModalHeader from "components/ModalHeader/BidModalHeader";
+import ModalLayout from "layouts/Modal";
+import { NextComponentType, NextPageContext } from "next";
+import { AppProps } from "next/app";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
 });
 
-const Breed = () => {
+const Breed = ({}: AppProps & {
+  Component: NextComponentType<NextPageContext> & {
+    Layout: (title: string) => void;
+  };
+}) => {
   const [nft, setNftItem] = useState<MyNFT>();
   const [pair, setPair] = useState<MyNFT>();
   const [pairables, setPairables] = useState<MyNFT[]>([]);
@@ -27,7 +34,7 @@ const Breed = () => {
   const handleBreed = useBreed();
 
   useEffect(() => {
-    const nft_ = myNfts.find((nft) => String(nft.id) === String(id));
+    const nft_ = myNfts.find((nft) => String(nft?.id) === String(id));
     setNftItem(nft_);
     const pairables_ = myNfts.filter(
       (nft) =>
@@ -39,7 +46,7 @@ const Breed = () => {
   }, [id, myNfts]);
 
   useEffect(() => {
-    fetchNFTs;
+    fetchNFTs();
   }, [fetchNFTs]);
 
   const breed = useCallback(() => {
@@ -52,11 +59,7 @@ const Breed = () => {
 
   console.log("NFT_TO_BREED_1", nft, pairables);
   return (
-    <div>
-      <BidModalHeader
-        onBack={() => router.push(`/wallet/${nft?.id}`)}
-        className="absolute w-full p-6 "
-      />
+    <div className="mt-28">
       <div className="max-w-[777px] w-full mx-auto text-center flex flex-col items-center">
         <p className="font-bold text-4xl mt-10">Breed Animals</p>
         <p className="font-light text-base mt-2 text-butter-white mb-9">
@@ -143,4 +146,5 @@ const Breed = () => {
   );
 };
 
+Breed.Layout = ModalLayout;
 export default Breed;

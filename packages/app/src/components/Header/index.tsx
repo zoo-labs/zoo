@@ -156,147 +156,150 @@ function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
                     </div>
                   </div>
                 )}
-
-                <div className=" w-3/4 text-xs flex flex-row-reverse items-center rounded p-0.5 whitespace-nowrap  font-bold select-none pointer-events-auto">
-                  <More />
-                  <div
-                    className={`${
-                      account &&
-                      "flex flex-row-reverse items-center bg-[#212429] rounded-[10px] p-1"
-                    }`}
-                  >
-                    <Web3Status
-                      title={i18n._(t`Connect Wallet`)}
-                      className="font-bold bg-black border border-green text-green"
-                    />
-                    {account && chainId && userEthBalance && (
-                      <>
-                        <div
-                          className="py-2 pl-1 mr-2 font-semibold text-white cursor-pointer"
-                          onClick={toggleNetworkModal}
-                        >
-                          {userEthBalance?.toFixed(3)}{" "}
-                          {NATIVE[chainId]?.symbol || "ETH"}
-                        </div>
-                      </>
-                    )}
-                  </div>
-                  <div className="flex items-center justify-between w-full mr-2 space-x-4 sm:justify-end">
-                    {chainId &&
-                      // [ChainId.MAINNET].includes(chainId) &&
-                      connector &&
-                      connector === metaMask && (
-                        <div className="hidden md:inline-flex">
-                          <QuestionHelper
-                            text={i18n._(t`Add ZOO to your MetaMask wallet`)}
+                <div className="w-full flex justify-end items-center">
+                  <div className=" w-3/4 text-xs flex flex-row-reverse items-center rounded p-0.5 whitespace-nowrap  font-bold select-none pointer-events-auto">
+                    <More />
+                    <div
+                      className={`${
+                        account &&
+                        "flex flex-row-reverse items-center bg-[#212429] rounded-[10px] p-1"
+                      }`}
+                    >
+                      <Web3Status
+                        title={i18n._(t`Connect Wallet`)}
+                        className="font-bold bg-black border border-green text-green"
+                      />
+                      {account && chainId && userEthBalance && (
+                        <>
+                          <div
+                            className="py-2 pl-1 mr-2 font-semibold text-white cursor-pointer"
+                            onClick={toggleNetworkModal}
                           >
-                            <div
-                              className="hidden p-0.5 rounded-md cursor-pointer sm:inline-flex bg-dark-900 hover:bg-dark-800"
-                              onClick={() => {
-                                const tokenAddress =
-                                  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ||
-                                  chainAddresses.ZOO;
-                                const tokenSymbol = "ZOO";
-                                const tokenDecimals = 18;
-                                const tokenImage =
-                                  window.location.origin + "/img/egg.png";
-                                if (
-                                  connector &&
-                                  connector === metaMask &&
-                                  connector.provider.request
-                                ) {
-                                  const params: any = {
-                                    type: "ERC20",
-                                    options: {
-                                      address: tokenAddress,
-                                      symbol: tokenSymbol,
-                                      decimals: tokenDecimals,
-                                      image: tokenImage,
-                                    },
-                                  };
-                                  connector.provider
-                                    .request({
-                                      method: "wallet_watchAsset",
-                                      params,
-                                    })
-                                    .then((success) => {
-                                      if (success) {
-                                        console.log(
-                                          "Successfully added ZOO to MetaMask"
-                                        );
-                                      } else {
-                                        throw new Error(
-                                          "Something went wrong."
-                                        );
-                                      }
-                                    })
-                                    .catch(console.error);
-                                }
-                              }}
-                            >
-                              <Image
-                                src="/img/egg.png"
-                                alt="zoo"
-                                width="31px"
-                                height="36px"
-                                // objectFit="contain"
-                                className="rounded-md"
-                              />
-                            </div>
-                          </QuestionHelper>
-                        </div>
+                            {userEthBalance?.toFixed(3)}{" "}
+                            {NATIVE[chainId]?.symbol || "ETH"}
+                          </div>
+                        </>
                       )}
+                    </div>
+                    <div className="flex items-center justify-between w-full mr-2 space-x-4 sm:justify-end">
+                      {chainId &&
+                        // [ChainId.MAINNET].includes(chainId) &&
+                        connector &&
+                        connector === metaMask && (
+                          <div className="hidden md:inline-flex">
+                            <QuestionHelper
+                              text={i18n._(t`Add ZOO to your MetaMask wallet`)}
+                            >
+                              <div
+                                className="hidden p-0.5 rounded-md cursor-pointer sm:inline-flex bg-dark-900 hover:bg-dark-800"
+                                onClick={() => {
+                                  const tokenAddress =
+                                    process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ||
+                                    chainAddresses.ZOO;
+                                  const tokenSymbol = "ZOO";
+                                  const tokenDecimals = 18;
+                                  const tokenImage =
+                                    window.location.origin + "/img/egg.png";
+                                  if (
+                                    connector &&
+                                    connector === metaMask &&
+                                    connector.provider.request
+                                  ) {
+                                    const params: any = {
+                                      type: "ERC20",
+                                      options: {
+                                        address: tokenAddress,
+                                        symbol: tokenSymbol,
+                                        decimals: tokenDecimals,
+                                        image: tokenImage,
+                                      },
+                                    };
+                                    connector.provider
+                                      .request({
+                                        method: "wallet_watchAsset",
+                                        params,
+                                      })
+                                      .then((success) => {
+                                        if (success) {
+                                          console.log(
+                                            "Successfully added ZOO to MetaMask"
+                                          );
+                                        } else {
+                                          throw new Error(
+                                            "Something went wrong."
+                                          );
+                                        }
+                                      })
+                                      .catch(console.error);
+                                  }
+                                }}
+                              >
+                                <Image
+                                  src="/img/egg.png"
+                                  alt="zoo"
+                                  width="31px"
+                                  height="36px"
+                                  // objectFit="contain"
+                                  className="rounded-md"
+                                />
+                              </div>
+                            </QuestionHelper>
+                          </div>
+                        )}
 
-                    {/* {library && library.provider.isMetaMask && (
+                      {/* {library && library.provider.isMetaMask && (
                       <div className="hidden sm:inline-block">
                         <Web3Network />
                       </div>
                     )} */}
+                    </div>
                   </div>
-                </div>
 
-                <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
-                  <CartSideNav />
-                </div>
-                <div className="flex -mr-2 sm:hidden">
-                  {/* Mobile menu button */}
-                  <Popover.Button className="inline-flex items-center justify-center p-2 rounded-md text-primary hover:text-high-emphesis focus:outline-none">
-                    <span className="sr-only">{i18n._(t`Open main menu`)}</span>
-                    {open ? (
-                      <svg
-                        className="block w-6 h-6"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    ) : (
-                      // <X title="Close" className="block w-6 h-6" aria-hidden="true" />
-                      <svg
-                        className="block w-6 h-6"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 6h16M4 12h16M4 18h16"
-                        />
-                      </svg>
-                      // <Burger title="Burger" className="block w-6 h-6" aria-hidden="true" />
-                    )}
-                  </Popover.Button>
+                  <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
+                    <CartSideNav />
+                  </div>
+                  <div className="flex -mr-2 sm:hidden">
+                    {/* Mobile menu button */}
+                    <Popover.Button className="inline-flex items-center justify-center p-2 rounded-md text-primary hover:text-high-emphesis focus:outline-none">
+                      <span className="sr-only">
+                        {i18n._(t`Open main menu`)}
+                      </span>
+                      {open ? (
+                        <svg
+                          className="block w-6 h-6"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      ) : (
+                        // <X title="Close" className="block w-6 h-6" aria-hidden="true" />
+                        <svg
+                          className="block w-6 h-6"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4 6h16M4 12h16M4 18h16"
+                          />
+                        </svg>
+                        // <Burger title="Burger" className="block w-6 h-6" aria-hidden="true" />
+                      )}
+                    </Popover.Button>
+                  </div>
                 </div>
               </div>
             </div>

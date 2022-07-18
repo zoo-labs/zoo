@@ -46,7 +46,7 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
         <div className="flex flex-col flex-grow border-b border-[#797979] pb-2">
           <div className="flex mb-4 ">
             <div className="mt-1 mr-auto font-semibold">
-              {datum.name?.toUpperCase()} {datum.kind >= 2 && "(Hybrid)"}{" "}
+              {datum.name?.toUpperCase()} {datum.kind === 0 && "(Origin)"}{" "}
               <span className="text-xs text-gray-500">({datum.id || ""})</span>
             </div>
           </div>

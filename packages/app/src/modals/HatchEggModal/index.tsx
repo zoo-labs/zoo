@@ -40,7 +40,7 @@ export default function HatchEggModal({ nftItem, success }) {
       console.log("Hatching", {
         nftItem,
       });
-      hatchEgg(nftItem.dropId, 35, () => success());
+      hatchEgg(nftItem.dropId, nftItem.id, () => success());
     } else {
       toggleWallet();
     }

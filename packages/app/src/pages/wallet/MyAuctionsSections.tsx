@@ -128,7 +128,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
       <section className="flex flex-col gap-24 my-16 lg:flex-row lg:justify-between lg:px-48">
         <div className="bg-nft-gradient p-0.5 flex flex-col basis-1/2 justify-center rounded-xl">
           <div className="flex flex-col justify-center items-center h-full bg-black rounded-xl">
-            {auction.kind === 0 ? (
+            {auction.kind === 0 || auction.kind === 2 ? (
               <video
                 autoPlay
                 loop
