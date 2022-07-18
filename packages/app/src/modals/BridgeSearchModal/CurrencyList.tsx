@@ -11,7 +11,7 @@ import { MenuItem } from "./styleds";
 import styled from "styled-components";
 import { Token } from "state/bridge/types";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
-import Logo from "components/Logo";
+import BridgeLogo from "components/Logo/bridgeLogo";
 import Loader from "components/Loader";
 import Image from "next/image";
 
@@ -122,7 +122,7 @@ function CurrencyRow({
     >
       <div className="flex items-center flex-1 my-8">
         <div className="flex items-center">
-          <Logo src={currency.logoURI} height={32} width={32} />
+          <BridgeLogo src={currency.logoURI} height={32} width={32} />
         </div>
         <div className="ml-2">
           <div title={currency.name} className="text-sm font-medium">
