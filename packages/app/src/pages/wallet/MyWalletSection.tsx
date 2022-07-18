@@ -59,7 +59,9 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
           setFilteredNFTs(myNfts);
           break;
         case 1:
-          setFilteredNFTs(myNfts.filter((nft) => nft?.kind === 0));
+          setFilteredNFTs(
+            myNfts.filter((nft) => nft?.kind === 0 || nft?.kind === 2)
+          );
           break;
         case 2:
           setFilteredNFTs(myNfts.filter((nft) => nft?.kind === 1));
@@ -95,33 +97,31 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
             }}
           >
             <div className="flex items-center justify-center w-full h-full bg-black rounded-xl">
-              {["All Items", "Eggs", "Animals", "Hybrid"].map(
-                (value, index) => {
-                  const active = category === index;
-                  return (
-                    <a
-                      onClick={() => {
-                        filterData(index);
-                      }}
-                      className={`text-white text-sm font-bold py-1 px-4 cursor-pointer w-full h-full flex items-center justify-center ${
-                        index !== 3 && "border-r border-blue whitespace-nowrap"
-                      } ${
-                        index === 0
-                          ? "rounded-l-xl"
-                          : index === 3 && "rounded-r-xl"
-                      }`}
-                      style={{
-                        background: active
-                          ? "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)"
-                          : "transparent",
-                      }}
-                      key={index}
-                    >
-                      {value}
-                    </a>
-                  );
-                }
-              )}
+              {["All Items", "Eggs", "Animals"].map((value, index) => {
+                const active = category === index;
+                return (
+                  <a
+                    onClick={() => {
+                      filterData(index);
+                    }}
+                    className={`text-white text-sm font-bold py-1 px-4 cursor-pointer w-full h-full flex items-center justify-center ${
+                      index !== 2 && "border-r border-blue whitespace-nowrap"
+                    } ${
+                      index === 0
+                        ? "rounded-l-xl"
+                        : index === 2 && "rounded-r-xl"
+                    }`}
+                    style={{
+                      background: active
+                        ? "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)"
+                        : "transparent",
+                    }}
+                    key={index}
+                  >
+                    {value}
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>

@@ -30,7 +30,10 @@ const Breed = () => {
     const nft_ = myNfts.find((nft) => String(nft.id) === String(id));
     setNftItem(nft_);
     const pairables_ = myNfts.filter(
-      (nft) => nft.stage === 2 && String(nft.id) !== String(id)
+      (nft) =>
+        nft.stage === 2 &&
+        String(nft.id) !== String(id) &&
+        nft?.name?.toLowerCase() === nft_?.name?.toLowerCase()
     );
     setPairables(pairables_);
   }, [id, myNfts]);
