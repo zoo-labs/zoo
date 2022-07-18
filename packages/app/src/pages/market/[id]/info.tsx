@@ -138,7 +138,7 @@ const InfoPage = () => {
   return (
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
       <div className="showcase min-h-[500px] flex items-center justify-center">
-        {nft?.kind === 0 ? (
+        {nft?.kind === 0 || nft?.kind === 2 ? (
           <video
             autoPlay
             loop
