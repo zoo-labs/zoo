@@ -52,7 +52,6 @@ interface SwapProps {}
 
 const Swap: React.FC<SwapProps> = ({}) => {
   const { library, connector, chainId, account } = useActiveWeb3React();
-  const { loading } = useSelector((state: any) => state.swap);
   const { Moralis, initialize } = useMoralis();
   const teleportContract = useTeleportContract();
   const dispatch = useDispatch();
@@ -100,7 +99,7 @@ const Swap: React.FC<SwapProps> = ({}) => {
     currentSelectSide,
     balances,
     activeChains,
-  } = useAppSelector((state: AppState) => state.swap);
+  } = useAppSelector((state: AppState) => state.bridge);
 
   const isCrossChain = activeChains?.from !== activeChains?.toChain;
 
