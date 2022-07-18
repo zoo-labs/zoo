@@ -14,6 +14,7 @@ import user from './user/reducer'
 import zoo from './zoo/reducer'
 import store from "./store/reducer"
 import voting from "./voting/reducer";
+import bridge from './bridge/reducer'
 
 const reducer = combineReducers({
   application,
@@ -29,7 +30,7 @@ const reducer = combineReducers({
   create,
   inari,
   zoo,
-  store, voting,
+  store, voting, bridge
 
 })
 

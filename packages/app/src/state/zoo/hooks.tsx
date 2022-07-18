@@ -335,13 +335,14 @@ export function useGetAvailableEggs(): () => void {
   return useCallback(async () => {
     console.log("useGetAvailableEggs  contract", dropContract);
     try {
-      const eggs = await dropContract?.getAllEggs();
+      const eggs: Array<any> = await dropContract?.getAllEggs();
       console.log("useGetAvailableEggs eggs", eggs);
       if (!eggs) return;
-      await eggs.map(async (egg) => {
-        const { name, attributes, image, animation_url } = (
-          await axios.get(egg.data[1])
-        ).data;
+      await [...eggs].map(async (egg) => {
+        const data = (await axios.get(egg.data.metadataURI)).data;
+        const { name, attributes, image, animation_url } = data;
+        console.log("eggsuseGetAvailableEggs ", data);
+
         const finalEgg: AvailableEgg = {
           bidShares: {
             creator: Number(egg?.bidShares?.creator),
