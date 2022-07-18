@@ -251,7 +251,7 @@ export function useFetchMyNFTs(): () => Promise<void> {
           index,
           description,
           customName: deet?.customName,
-          name: deet?.name,
+          name,
           kind: deet?.kind,
           id: Number(deet?.id),
           timestamp: Number(deet?.birthValues?.timestamp),
@@ -560,14 +560,18 @@ export function useGetAllAuctions(): () => Promise<void> {
         );
         const deet = await zooKeeper?.tokens(Number(auction.tokenID));
 
+        const data = (await axios.get(tokenMetadataURI)).data;
         const {
           name,
           attributes,
+          description,
           image,
           animation_url,
           glb_animation_url,
           usdz_animation_url,
-        } = (await axios.get(tokenMetadataURI)).data;
+        } = data;
+
+        console.log("auction nft data", data, tokenMetadataURI);
         const {
           tokenID,
           auctionId,
@@ -581,6 +585,7 @@ export function useGetAllAuctions(): () => Promise<void> {
         } = auction;
         const finalNft = {
           index,
+          description,
           kind: deet?.kind,
           tokenID: Number(tokenID),
           tokenOwner: addresses.tokenOwner,
