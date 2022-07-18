@@ -92,7 +92,7 @@ const Item = () => {
 
   useEffect(() => {
     const _egg = availableEggs.find(
-      (e: any) => e.id?.toString() === id?.toString()
+      (e: any) => e?.id?.toString() === id?.toString()
     );
     setEgg(_egg);
   }, [availableEggs, id]);

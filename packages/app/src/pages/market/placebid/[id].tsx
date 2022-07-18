@@ -2,7 +2,12 @@ import React, { useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import Head from "next/head";
-import { useZoobalance, useRemoveAuction, useCreateBid } from "state/zoo/hooks";
+import {
+  useZoobalance,
+  useRemoveAuction,
+  useCreateBid,
+  useGetAllAuctions,
+} from "state/zoo/hooks";
 import TwoColumComp from "marketplace/Grid/TwoColumComp";
 import CardNft from "marketplace/Cards/CardNft";
 import Image from "next/image";
@@ -25,6 +30,7 @@ function PlaceBid({}: AppProps & {
 }) {
   const { account } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
+  const getAllAuctions = useGetAllAuctions();
   const removeAuction = useRemoveAuction();
   const placeBid = useCreateBid();
   const toggleAuctionModal = useAuctionModal();
@@ -32,7 +38,7 @@ function PlaceBid({}: AppProps & {
   const [nft, setNft] = useState<any>({});
   const router = useRouter();
   const minBidFunc = useCallback(() => {
-    const curatorFeePercentage = nft?.curatorFeePercentage / 100;
+    const curatorFeePercentage = 3 / 100;
     if (nft?.amount > 0) {
       return nft?.amount + nft?.amount * curatorFeePercentage;
     } else return nft?.reservePrice;
@@ -56,6 +62,7 @@ function PlaceBid({}: AppProps & {
   // console.log('zooBalance', zooBalance)
   useEffect(() => {
     getZooBalance();
+    getAllAuctions();
   }, [getZooBalance]);
   useEffect(() => {
     const NFT = allAuctions.filter((obj) => {
@@ -147,8 +154,7 @@ function PlaceBid({}: AppProps & {
                 ZOO
               </p>
               <p className="text-base font-normal mb-11">
-                The next bid must be {nft?.curatorFeePercentage}% more than the
-                current bid
+                The next bid must be 3% more than the current bid
               </p>
               {nft?.tokenOwner === account ? (
                 nft?.amount <= 0 ? (
