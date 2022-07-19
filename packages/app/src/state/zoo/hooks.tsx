@@ -324,9 +324,9 @@ export function useGetNftTransfers(): () => void {
     };
 
     const bscNFTs = await Web3Api.account.getNFTTransfers(options);
-    console.log("bscNFTs", bscNFTs);
-    dispatch(addNftTTransfers(bscNFTs.result));
-  }, [Web3Api.account, account, media?.address, dispatch]);
+    console.log("bscNFTs", bscNFTs.result);
+    dispatch(addNftTTransfers(bscNFTs.result.slice(0, 10)));
+  }, [chainId, account, media?.address, Web3Api.account, dispatch]);
 }
 export function useGetAvailableEggs(): () => void {
   const dispatch = useAppDispatch();
