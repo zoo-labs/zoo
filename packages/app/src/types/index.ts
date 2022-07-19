@@ -63,6 +63,7 @@ export interface AvailableEgg {
   image: string;
   animation_url: string;
   attributes: Array<EggAttribute>;
+  description: string;
 }
 export interface EggAttribute {
   trait_type: string;
@@ -70,6 +71,7 @@ export interface EggAttribute {
 }
 
 export interface Auction {
+  description: string;
   index: number;
   tokenID: number;
   auctionId: number;
@@ -78,8 +80,8 @@ export interface Auction {
   firstBidTime: number;
   duration: number;
   curatorFeePercentage: number;
-  curator: string;
-  auctionCurrency: string;
+  // curator: string;
+  // auctionCurrency: string;
   amount: number;
   tokenUri: any;
   name: any;

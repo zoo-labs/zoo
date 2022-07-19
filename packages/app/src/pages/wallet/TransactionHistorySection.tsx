@@ -61,7 +61,7 @@ const TransactionHistory = ({ nftTransfers }) => {
         </thead>
         <tbody>
           {nftTransfers?.length > 0 ? (
-            nftTransfers?.map((item, index) => {
+            nftTransfers?.slice(0, 10).map((item, index) => {
               const { block_number, transaction_hash, token_id, value } = item;
               return (
                 <tr
