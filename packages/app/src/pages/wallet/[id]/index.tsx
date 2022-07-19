@@ -68,6 +68,12 @@ const NftModal = ({}: AppProps & {
   }, [id, myNfts]);
 
   console.log("the_chosen_nftItem", nftItem);
+  const t = new Date(nftItem?.breed?.timestamp * 1000);
+  const nt = t.setHours(t.getHours() + 24);
+  const now = new Date();
+  const breedCooldown = +nt - +now;
+  console.log("BREED DIFFERENCE", breedCooldown, nftItem?.breed?.timestamp);
+
   return (
     <>
       <div className="flex flex-col px-5 mx-auto mt-40 lg:flex-row gap-11 lg:items-center lg:px-10 max-w-7xl">
@@ -193,7 +199,7 @@ const NftModal = ({}: AppProps & {
                         <Link href={`/wallet/${nftItem?.id}/breed`} passHref>
                           <button
                             className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-nft-gradient disabled:cursor-not-allowed disabled:opacity-60"
-                            disabled={loading}
+                            disabled={loading || breedCooldown > 0}
                           >
                             BREED
                           </button>
