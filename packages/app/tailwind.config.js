@@ -108,6 +108,7 @@ module.exports = {
         "dark-500": "#223D5E",
         "dark-300": "#1D1F2E",
         "gray-50": "rgba(50, 53, 70, 0.5)",
+        "gray-100": "#424141",
         "low-emphesis": "#575757",
         green: "#14F195",
         blue: "#2517FF",
