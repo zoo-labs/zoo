@@ -280,7 +280,9 @@ export function useFetchMyNFTs(): () => Promise<void> {
             metaUri: deet?.data.metadataURI,
           },
           rarity: deet?.rarity?.name,
-          token_uri: nft.token_uri,
+          token_uri: animation_url
+            ? `https://zoolabs.mypinata.cloud/ipfs/${animation_url.slice(7)}`
+            : "",
           attributes: attributes || "",
           image: image || "",
           animation_url: animation_url || "",
@@ -340,7 +342,7 @@ export function useGetAvailableEggs(): () => void {
       if (!eggs) return;
       await [...eggs].map(async (egg) => {
         const data = (await axios.get(egg.data.metadataURI)).data;
-        const { name, attributes, image, animation_url } = data;
+        const { name, description, attributes, image, animation_url } = data;
         console.log("eggsuseGetAvailableEggs ", data);
 
         const finalEgg: AvailableEgg = {
@@ -355,6 +357,7 @@ export function useGetAvailableEggs(): () => void {
           kind: egg.kind,
           minted: Number(egg.minted),
           name: egg.name,
+          description,
           price: Number(egg.price) / Math.pow(10, 18),
           supply: Number(egg.supply),
           timestamp: Number(egg.timestamp),
@@ -583,7 +586,7 @@ export function useGetAllAuctions(): () => Promise<void> {
           amount,
           kind,
         } = auction;
-        const finalNft = {
+        const finalAuction: Auction = {
           index,
           description,
           kind: deet?.kind,
@@ -626,8 +629,8 @@ export function useGetAllAuctions(): () => Promise<void> {
             : "",
         };
 
-        console.log("finalNft", finalNft, auction);
-        dispatch(addAuctionNft(finalNft as any));
+        console.log("finaAuction", finalAuction, auction);
+        dispatch(addAuctionNft(finalAuction as any));
       });
     } catch (error) {
       console.error("error_In_UseGetAllAuctions", error);
