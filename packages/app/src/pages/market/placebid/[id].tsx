@@ -109,96 +109,111 @@ function PlaceBid({}: AppProps & {
         }
         RightCol={
           <div className="w-full bg-[#000] h-full flex flex-col justify-center items-center text-white py-6 px-8 lg:px-24">
-            <div className="flex items-center justify-between w-full mb-5 text-base font-medium">
-              <p className="text-base font-semibold">
-                {nft?.tokenOwner === account ? "Your Auction" : "Place a Bid"}
-              </p>
-              <div className="flex items-center font-medium">
-                <p className="text-a1">
-                  Your Balance:{" "}
-                  <span className="text-white">
-                    {" "}
-                    {zooBalance?.toLocaleString(undefined, {
-                      maximumFractionDigits: 4,
+            {!account ? (
+              <div className="flex flex-col items-center justify-center w-full text-base font-medium">
+                <p className="text-2xl lg:text-4xl font-semibold text-center">
+                  Connect your wallet to place a bid
+                </p>
+                <div className="flex items-center justify-between w-full mb-5 text-base font-medium"></div>
+              </div>
+            ) : (
+              <>
+                <div className="flex items-center justify-between w-full mb-5 text-base font-medium">
+                  <p className="text-base font-semibold">
+                    {nft?.tokenOwner === account
+                      ? "Your Auction"
+                      : "Place a Bid"}
+                  </p>
+                  <div className="flex items-center font-medium">
+                    <p className="text-a1">
+                      Your Balance:{" "}
+                      <span className="text-white">
+                        {" "}
+                        {zooBalance?.toLocaleString(undefined, {
+                          maximumFractionDigits: 4,
+                        })}{" "}
+                        ZOO
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                <form onSubmit={handleSubmit} className="w-full">
+                  <div className="relative w-full">
+                    <input
+                      type="number"
+                      className="rounded-xl pl-4 pr-14 py-5 bg-cut-grey w-full placeholder:text-[#878787] placeholder:text-lg"
+                      value={
+                        nft?.tokenOwner === account ? nft?.amount : bidPrice
+                      }
+                      onChange={(e) => setBidPrice(e.target.value)}
+                      disabled={nft?.tokenOwner === account}
+                    />
+                    <span className="absolute right-0 mb-4 mr-4 text-base font-semibold text-white inset-y-5">
+                      ZOO
+                    </span>
+                  </div>
+                  {bidPrice < minBid && (
+                    <p className="mt-2 text-red">
+                      The minimum bid for this auction is {minBid} ZOO
+                    </p>
+                  )}
+                  <p className="mt-4 mb-1.5 text-base font-normal">
+                    {nft?.tokenOwner === account
+                      ? "You must be paid at least"
+                      : "You must pay at least"}{" "}
+                    {minBid?.toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
                     })}{" "}
                     ZOO
-                  </span>
-                </p>
-              </div>
-            </div>
-            <form onSubmit={handleSubmit} className="w-full">
-              <div className="relative w-full">
-                <input
-                  type="number"
-                  className="rounded-xl pl-4 pr-14 py-5 bg-cut-grey w-full placeholder:text-[#878787] placeholder:text-lg"
-                  value={nft?.tokenOwner === account ? nft?.amount : bidPrice}
-                  onChange={(e) => setBidPrice(e.target.value)}
-                  disabled={nft?.tokenOwner === account}
-                />
-                <span className="absolute right-0 mb-4 mr-4 text-base font-semibold text-white inset-y-5">
-                  ZOO
-                </span>
-              </div>
-              {bidPrice < minBid && (
-                <p className="mt-2 text-red">
-                  The minimum bid for this auction is {minBid} ZOO
-                </p>
-              )}
-              <p className="mt-4 mb-1.5 text-base font-normal">
-                {nft?.tokenOwner === account
-                  ? "You must be paid at least"
-                  : "You must pay at least"}{" "}
-                {minBid?.toLocaleString(undefined, {
-                  maximumFractionDigits: 2,
-                })}{" "}
-                ZOO
-              </p>
-              <p className="text-base font-normal mb-11">
-                The next bid must be 3% more than the current bid
-              </p>
-              {nft?.tokenOwner === account ? (
-                nft?.amount <= 0 ? (
-                  <>
+                  </p>
+                  <p className="text-base font-normal mb-11">
+                    The next bid must be 3% more than the current bid
+                  </p>
+                  {nft?.tokenOwner === account ? (
+                    nft?.amount <= 0 ? (
+                      <>
+                        <button
+                          className="py-[12px] w-full rounded-[4px] bg-leader-board mb-4 disabled:cursor-not-allowed"
+                          onClick={handleClick}
+                          disabled={loading}
+                        >
+                          Edit Auction
+                        </button>
+                        <button
+                          className="py-[12px] w-full rounded-[4px] border border-leader-board bg-[#2A2C41] mb-4"
+                          onClick={handleRemoveAuction}
+                          disabled={loading}
+                        >
+                          Remove Auction
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        className="py-[12px] w-full rounded-[4px] border border-leader-board bg-[#2A2C41] mb-4"
+                        // onClick={handleRemoveAuction}
+                        disabled={true}
+                      >
+                        You can not edit this auction
+                      </button>
+                    )
+                  ) : (
                     <button
                       className="py-[12px] w-full rounded-[4px] bg-leader-board mb-4 disabled:cursor-not-allowed"
                       onClick={handleClick}
-                      disabled={loading}
+                      disabled={bidPrice < minBid || loading}
                     >
-                      Edit Auction
+                      Place Bid
                     </button>
-                    <button
-                      className="py-[12px] w-full rounded-[4px] border border-leader-board bg-[#2A2C41] mb-4"
-                      onClick={handleRemoveAuction}
-                      disabled={loading}
-                    >
-                      Remove Auction
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    className="py-[12px] w-full rounded-[4px] border border-leader-board bg-[#2A2C41] mb-4"
-                    // onClick={handleRemoveAuction}
-                    disabled={true}
-                  >
-                    You can not edit this auction
-                  </button>
-                )
-              ) : (
-                <button
-                  className="py-[12px] w-full rounded-[4px] bg-leader-board mb-4 disabled:cursor-not-allowed"
-                  onClick={handleClick}
-                  disabled={bidPrice < minBid || loading}
-                >
-                  Place Bid
-                </button>
-              )}
-            </form>
-            <p className="w-full mb-4 text-base font-normal text-left">
-              You cannot withdraw a bid once submitted
-            </p>
-            <a className="flex items-end text-lg font-bold text-zoo-green">
-              How do auctions work?
-            </a>
+                  )}
+                </form>
+                <p className="w-full mb-4 text-base font-normal text-left">
+                  You cannot withdraw a bid once submitted
+                </p>
+                <a className="flex items-end text-lg font-bold text-zoo-green">
+                  How do auctions work?
+                </a>
+              </>
+            )}
           </div>
         }
       />
