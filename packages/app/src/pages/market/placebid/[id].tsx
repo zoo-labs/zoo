@@ -17,7 +17,7 @@ import TableRow from "marketplace/TradingHistory/TableRow";
 
 import { useRouter } from "next/router";
 import { useActiveWeb3React } from "hooks";
-import { useAuctionModal } from "state/application/hooks";
+import { useAuctionModal, useWalletModalToggle } from "state/application/hooks";
 import AuctionModal from "modals/Auction";
 import ModalLayout from "layouts/Modal";
 import { NextComponentType, NextPageContext } from "next";
@@ -34,6 +34,7 @@ function PlaceBid({}: AppProps & {
   const removeAuction = useRemoveAuction();
   const placeBid = useCreateBid();
   const toggleAuctionModal = useAuctionModal();
+  const toggleWallet = useWalletModalToggle();
   const [bidPrice, setBidPrice] = useState<number | any>(1);
   const [nft, setNft] = useState<any>({});
   const router = useRouter();
@@ -114,7 +115,22 @@ function PlaceBid({}: AppProps & {
                 <p className="text-2xl lg:text-4xl font-semibold text-center">
                   Connect your wallet to place a bid
                 </p>
-                <div className="flex items-center justify-between w-full mb-5 text-base font-medium"></div>
+                <div className="flex items-center justify-between w-full text-base font-medium my-6">
+                  <div className="h-px bg-white-30 opacity-50 w-full" />
+                  <p className="text-lg text-white opacity-70 font-medium w-full text-center">
+                    SELECT WALLET
+                  </p>
+                  <div className="h-px bg-white-30 opacity-50 w-full" />
+                </div>
+                <button
+                  onClick={toggleWallet}
+                  className="w-full py-4 rounded-xl bg-leader-board mb-4"
+                >
+                  Continue with MetaMask
+                </button>
+                <a href="#" className="text-white-30">
+                  How do I get a wallet?
+                </a>
               </div>
             ) : (
               <>

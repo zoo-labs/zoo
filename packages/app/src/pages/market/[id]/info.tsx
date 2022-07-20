@@ -136,8 +136,8 @@ const InfoPage = () => {
 
   console.log("NFTTTT_ANDAUCTION", nft);
   return (
-    <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
-      <div className="showcase min-h-[500px] flex items-center justify-center">
+    <div className="px-6 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
+      <div className="showcase min-h-[564px] flex items-center justify-center relative">
         {nft?.kind === 0 || nft?.kind === 2 ? (
           <video
             autoPlay
@@ -147,7 +147,7 @@ const InfoPage = () => {
             height={350}
           />
         ) : (
-          <div className="h-[450px] w-full">
+          <div className="h-[564px] w-full">
             <ModelViewer
               // zoom="35deg"
               glb={nft?.glb_animation_url}
@@ -155,6 +155,15 @@ const InfoPage = () => {
             ></ModelViewer>
           </div>
         )}
+        <div className="absolute flex items-center justify-end gap-3 w-full right bottom-0">
+          <button className="flex items-center justify-center gap-3 py-3 px-5 bg-gray-100 rounded-full">
+            <Image src="/icons/upload.svg" alt="" width={18} height={18} />
+            <span className="font-medium">Share</span>
+          </button>
+          <button className="flex items-center justify-center gap-3 py-4 px-4 bg-gray-100 rounded-full">
+            <Image src="/icons/upload.svg" alt="" width={18} height={18} />
+          </button>
+        </div>
       </div>
       <div className="flex flex-col mb-5 space-x-12 space-y-12 lg:flex-row lg:items-start py-9 ">
         <div className="w-full lg:w-3/5">
