@@ -79,8 +79,8 @@ export default function Menu() {
         <>
           <Popover.Button
             className={classNames(
-              open ? "text-primary" : "text-secondary",
-              "focus:outline-none hover:text-high-emphesis"
+              open ? "text-high-emphesis" : "text-white",
+              "focus:outline-none hover:opacity-70"
             )}
           >
             <svg
