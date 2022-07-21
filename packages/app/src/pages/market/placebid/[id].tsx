@@ -146,7 +146,7 @@ function PlaceBid({}: AppProps & {
                       <span className="text-white">
                         {" "}
                         {zooBalance?.toLocaleString(undefined, {
-                          maximumFractionDigits: 4,
+                          maximumFractionDigits: 2,
                         })}{" "}
                         ZOO
                       </span>

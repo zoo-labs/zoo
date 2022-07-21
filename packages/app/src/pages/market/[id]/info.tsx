@@ -15,6 +15,7 @@ import { useMoralisWeb3Api } from "react-moralis";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import { SUPPORTED_NETWORKS } from "config/networks";
 import moment from "moment";
+import CropFreeRoundedIcon from "@mui/icons-material/CropFreeRounded";
 
 const Table = styled.table`
   font-family: Arial, Helvetica, sans-serif;
@@ -160,8 +161,8 @@ const InfoPage = () => {
             <Image src="/icons/upload.svg" alt="" width={18} height={18} />
             <span className="font-medium">Share</span>
           </button>
-          <button className="flex items-center justify-center gap-3 py-4 px-4 bg-gray-100 rounded-full">
-            <Image src="/icons/upload.svg" alt="" width={18} height={18} />
+          <button className="flex items-center justify-center gap-3 py-3.5 px-3.5 bg-gray-100 rounded-full">
+            <CropFreeRoundedIcon width={18} height={18} />
           </button>
         </div>
       </div>
