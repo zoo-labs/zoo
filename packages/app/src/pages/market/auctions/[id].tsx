@@ -181,7 +181,7 @@ const Item = () => {
                 <p className="hidden text-xs text-right text-c-grey-100">
                   Your Wallet Balance:{" "}
                   {withZoo
-                    ? `${zooBalance} ZOO`
+                    ? `${zooBalance?.toFixed(2)} ZOO`
                     : `${userEthBalance?.toFixed(3)} BNB`}
                   {/* <div
                     onClick={() => {
