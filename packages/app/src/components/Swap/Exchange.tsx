@@ -111,7 +111,7 @@ export default function ExchangePanel({
             className={`${
               !!token ? "text-primary" : "text-high-emphesis"
             } open-currency-select-button h-full outline-none select-none cursor-pointer border border-white-10 text-xl font-medium items-center rounded-full ${
-              token ? "bg-white-2" : "bg-primary-300"
+              token ? "bg-white-2" : "bg-leader-board"
             } `}
             onClick={() => {
               if (onCurrencySelect) {
@@ -136,7 +136,7 @@ export default function ExchangePanel({
                 {token && token.symbol ? (
                   token.symbol
                 ) : (
-                  <div className="px-2 py-1 mt-1 text-xs font-medium text-white bg-primary-300 border-low-emphesis whitespace-nowrap ">
+                  <div className="px-2 py-1 mt-1 text-xs font-medium text-white border-low-emphesis whitespace-nowrap ">
                     Select a token
                   </div>
                 )}
@@ -145,7 +145,7 @@ export default function ExchangePanel({
                 <ChevronDownIcon
                   width={16}
                   height={16}
-                  className="stroke-primary-300"
+                  className="stroke-white-30"
                 />
               )}
             </div>

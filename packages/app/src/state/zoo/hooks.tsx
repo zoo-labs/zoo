@@ -169,8 +169,8 @@ export function useHatch(): (
         });
         await tx.wait();
         getZooBalance();
-        dispatch(loading(false));
         success && success();
+        dispatch(loading(false));
         addPopup({
           txn: {
             hash: null,

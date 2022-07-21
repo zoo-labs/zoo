@@ -51,6 +51,7 @@ module.exports = {
         "nft-gradient":
           "linear-gradient(180deg, #2517FF -61.88%, #15F195 131.19%)",
         "leader-board": "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)",
+        "bid-gradient": "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)",
         "green-g":
           "linear-gradient(180deg, rgba(37, 23, 255, 0.1) -61.88%, rgba(21, 241, 149, 0.1) 93.88%)",
         "auction-gradient":

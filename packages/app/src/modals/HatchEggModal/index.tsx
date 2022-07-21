@@ -49,7 +49,7 @@ export default function HatchEggModal({ nftItem, success }) {
   const calculateTimeLeft = useCallback(() => {
     const startDate = new Date(nftItem?.timestamp * 1000);
     const endDate = startDate.setHours(
-      startDate.getHours() + (hatchEggWaitPeriod || 4)
+      startDate.getHours() + hatchEggWaitPeriod
     );
     const difference = +new Date(endDate) - +new Date();
 
@@ -81,13 +81,15 @@ export default function HatchEggModal({ nftItem, success }) {
 
   function getModalContent() {
     return (
-      <div
-        style={{ height: "80vh" }}
-        className="flex flex-col items-center justify-center space-y-4 bg-black rounded-xl"
-      >
-        <div className="absolute right-8 top-7">
-          <ModalHeader onClose={toggleModal} />
+      <div className="flex flex-col items-center justify-center space-y-4 bg-black rounded-xl relative h-[80vh]">
+        <div className="w-3/5 absolute right-8 top-7 font-semibold">
+          <ModalHeader
+            title="Ready to Hatch?"
+            className="w-full"
+            onClose={toggleModal}
+          />
         </div>
+        <div className="h-px w-full bg-white opacity-10" />
         <div className="w-full flex flex-col items-center justify-center space-y-6 max-w-[486px]">
           <div className="bg-black rounded-xl h-[310px] w-full flex flex-col justify-center items-center">
             <video
@@ -108,9 +110,9 @@ export default function HatchEggModal({ nftItem, success }) {
               style={{ height: 219 }}
             />
           </div>
-          <p className="text-sm font-normal text-[#BDBDBD] text-center">
+          {/* <p className="text-sm font-normal text-[#BDBDBD] text-center">
             Hatch Egg text
-          </p>
+          </p> */}
           <button
             className={`py-4 w-52 bg-bid-gradient rounded-xl mb-7 disabled:cursor-not-allowed ${
               loading && "opacity-60"
@@ -175,10 +177,6 @@ export default function HatchEggModal({ nftItem, success }) {
     );
   }
 
-  // useEffect(() => {
-  //   media?.approve(zookeeper?.address, nftItem.tokenID);
-  // }, [media, nftItem.tokenID, zookeeper?.address]);
-
   return (
     <Modal
       isOpen={hatchEggModalOpen}
@@ -186,7 +184,7 @@ export default function HatchEggModal({ nftItem, success }) {
       minHeight={80}
       maxHeight={100}
       padding={0}
-      maxWidth={659}
+      maxWidth={569}
     >
       {getModalContent()}
     </Modal>
