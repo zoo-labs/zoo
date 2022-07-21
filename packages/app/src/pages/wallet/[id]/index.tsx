@@ -264,6 +264,11 @@ const NftModal = ({}: AppProps & {
         nftItem={nftItem}
         success={() => {
           fetchNFTs().then((res) => {
+            console.log(
+              "SGDBDVCHFCBDFC CBF HEF EFD",
+              myNfts[0].name,
+              myNfts.length
+            );
             toggleAnimationModal();
             // const nft__ = myNfts.find((n) => n.eggId === nftItem.id);
             // setNftItem(nft__);
