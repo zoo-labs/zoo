@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import { Auction } from "types";
 import { shortenAddress } from "functions";
 import { abbreviateNumber } from "functions/abbreviateNumbers";
-import { useGetAllAuctions } from "state/zoo/hooks";
+import { useGetAllAuctions, useGetTokenOwner } from "state/zoo/hooks";
 import { useZooKeeper, useMedia } from "hooks";
 import Web3 from "web3";
 import styled from "styled-components";
@@ -47,6 +47,7 @@ const InfoPage = () => {
   const { chainId, account } = useActiveWeb3React();
   const { allAuctions } = useSelector((state: any) => state.zoo);
   const [nft, setNft] = useState<Auction>();
+  const [creator, setCreator] = useState("");
   const [transactions, setTransactions] = useState<any[]>([]);
   const [showTable, setShowTable] = useState(true);
   const getAllAuctions = useGetAllAuctions();
@@ -54,6 +55,7 @@ const InfoPage = () => {
   const media = useMedia();
   const [zooBnbPrice, setZooBnbPrice] = useState(0);
   const Web3Api = useMoralisWeb3Api();
+  const getCreator = useGetTokenOwner();
 
   const fetchContractNFTTransfers = useCallback(async () => {
     const options: { chain?: any; address: string } = {
@@ -123,7 +125,14 @@ const InfoPage = () => {
     getZooBnbPrice();
     getAllAuctions();
     fetchContractNFTTransfers();
-  }, [getZooBnbPrice, getAllAuctions, fetchContractNFTTransfers]);
+    getCreator(nft?.tokenID).then((res) => setCreator(res));
+  }, [
+    getZooBnbPrice,
+    getAllAuctions,
+    fetchContractNFTTransfers,
+    getCreator,
+    nft?.tokenID,
+  ]);
 
   const amountPriceBNB = zooBnbPrice * Number(nft?.amount);
   const reservePriceBNB = zooBnbPrice * Number(nft?.reservePrice);
@@ -241,9 +250,27 @@ const InfoPage = () => {
           </div>
           <div className="flex items-center mb-4">
             <div className="w-6 h-6 rounded-full bg-nft-gradient" />
-            <p className="ml-4 text-xl font-bold text-steel">
+            <p className="text-xl font-bold ml-2">Creator: </p>
+            <a
+              href={`https://testnet.bscscan.com/address/${creator}`}
+              target="_blank"
+              rel={"noreferrer noopener"}
+              className="ml-4 text-xl font-bold text-steel"
+            >
+              {creator ? shortenAddress(creator) : ""}
+            </a>
+          </div>
+          <div className="flex items-center mb-4">
+            <div className="w-6 h-6 rounded-full bg-nft-gradient" />
+            <p className="text-xl font-bold ml-2">Current owner: </p>
+            <a
+              href={`https://testnet.bscscan.com/address/${nft?.tokenOwner}`}
+              target="_blank"
+              rel={"noreferrer noopener"}
+              className="ml-4 text-xl font-bold text-steel"
+            >
               {nft?.tokenOwner ? shortenAddress(nft?.tokenOwner) : ""}
-            </p>
+            </a>
           </div>
         </div>
         <div className="w-full lg:w-2/5 border border-white-30 rounded-lg h-auto max-h-fit py-[22px] px-[26px]">
