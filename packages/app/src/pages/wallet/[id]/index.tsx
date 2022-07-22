@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { useFeed, useFetchMyNFTs } from "state/zoo/hooks";
+import { useFeed, useFeedCount, useFetchMyNFTs } from "state/zoo/hooks";
 import {
   useHatchEggModal,
   useAuctionModal,
@@ -41,9 +41,16 @@ const NftModal = ({}: AppProps & {
   const router = useRouter();
   const fetchNFTs = useFetchMyNFTs();
   const feedAnimal = useFeed();
+  const feedCount = useFeedCount();
   const { id } = router.query;
 
-  const feed = () => feedAnimal(+String(id));
+  const feed = () => {
+    const count = feedCount(+String(id));
+    // if (lasttime i fed < Date.now()) {
+    //    toggleFeeTimerModal(amount of times I fed * 24)
+    // }
+    feedAnimal(+String(id));
+  };
   const hatchEgg = () => {
     toggleHatchEggModal();
   };
@@ -199,7 +206,7 @@ const NftModal = ({}: AppProps & {
                         <Link href={`/wallet/${nftItem?.id}/breed`} passHref>
                           <button
                             className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-nft-gradient disabled:cursor-not-allowed disabled:opacity-60"
-                            disabled={loading || breedCooldown > 0}
+                            disabled={loading}
                           >
                             BREED
                           </button>
@@ -264,11 +271,7 @@ const NftModal = ({}: AppProps & {
         nftItem={nftItem}
         success={() => {
           fetchNFTs().then((res) => {
-            console.log(
-              "SGDBDVCHFCBDFC CBF HEF EFD",
-              myNfts[0].name,
-              myNfts.length
-            );
+            console.log("SGDBDVCHFCBDFC CBF HEF EFD", myNfts, myNfts.length);
             toggleAnimationModal();
             // const nft__ = myNfts.find((n) => n.eggId === nftItem.id);
             // setNftItem(nft__);
