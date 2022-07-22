@@ -1100,6 +1100,21 @@ export function useEditAuction(): (
   );
 }
 
+export function useGetTokenOwner(): (
+  tokenId: number | string
+) => Promise<string> {
+  const media = useMedia();
+
+  return useCallback(
+    async (id) => {
+      const owner: string = await media.tokenCreators(id);
+      console.log("OWNER OF THE TOKEN", owner);
+      return owner;
+    },
+    [media]
+  );
+}
+
 // Bread animals   // // Breed two animals and create a hybrid egg
 export function useBreed(): (
   tokenA: number,
