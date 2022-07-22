@@ -11,6 +11,8 @@ import BidModalHeader from "components/ModalHeader/BidModalHeader";
 import ModalLayout from "layouts/Modal";
 import { NextComponentType, NextPageContext } from "next";
 import { AppProps } from "next/app";
+import CooldownModal from "modals/CountdownModal.";
+import { useCountdownToggle } from "state/application/hooks";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -24,6 +26,7 @@ const Breed = ({}: AppProps & {
   const [nft, setNftItem] = useState<MyNFT>();
   const [pair, setPair] = useState<MyNFT>();
   const [pairables, setPairables] = useState<MyNFT[]>([]);
+  const toggleCooldown = useCountdownToggle();
   const router = useRouter();
   const { account } = useActiveWeb3React();
   const fetchNFTs = useFetchMyNFTs();
@@ -33,6 +36,12 @@ const Breed = ({}: AppProps & {
   );
   const handleBreed = useBreed();
 
+  const t = new Date(nft?.breed?.timestamp * 1000);
+  const nt = t.setHours(t.getHours() + 24);
+  const now = new Date();
+  const breedCooldown = +nt - +now;
+
+  // console.log("COOLDOWN_TIMER", breedCooldown);
   useEffect(() => {
     const nft_ = myNfts.find((nft) => String(nft?.id) === String(id));
     setNftItem(nft_);
@@ -51,11 +60,37 @@ const Breed = ({}: AppProps & {
 
   const breed = useCallback(() => {
     if (account) {
+      const t = new Date(pair?.breed?.timestamp * 1000);
+      const nt = t.setHours(t.getHours() + 24);
+      const now = new Date();
+      const pairBreedCooldown = +nt - +now;
+      console.log("COOLDOWN_TIMER", pair, nt, pairBreedCooldown);
+
+      if (breedCooldown > 0) {
+        toggleCooldown();
+        return;
+      }
+      if (pairBreedCooldown > 0) {
+        toggleCooldown();
+        return;
+      }
       if (nft?.id && pair?.id) {
         handleBreed(nft?.id, pair?.id, () => router.push("/wallet"));
       }
     }
-  }, [account, handleBreed, nft?.id, pair?.id, router]);
+  }, [
+    account,
+    breedCooldown,
+    handleBreed,
+    nft?.id,
+    pair,
+    router,
+    toggleCooldown,
+  ]);
+
+  // useEffect(() => {
+  //   if (breedCooldown > 0) toggleCooldown();
+  // }, [breedCooldown, toggleCooldown]);
 
   console.log("NFT_TO_BREED_1", nft, pairables);
   return (
@@ -142,6 +177,7 @@ const Breed = ({}: AppProps & {
           )}
         </div>
       </div>
+      <CooldownModal />
     </div>
   );
 };

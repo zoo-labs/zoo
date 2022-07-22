@@ -21,13 +21,12 @@ import { useActiveWeb3React } from "../../hooks/useActiveWeb3React";
 import { useETHBalances } from "../../state/wallet/hooks";
 import { useLingui } from "@lingui/react";
 import { useZoobalance } from "state/zoo/hooks";
-import Banner from "components/Banner";
-import MoonPayBtn from "components/Moonpaybtn/MoonpayBtn";
 import { metaMask } from "connectors/metaMask";
 import { CartItem } from "types/cart";
 import { useAppSelector } from "state/hooks";
 import CartSideNav from "components/CartSideNav";
 import NetworkModal from "modals/NetworkModal";
+import NetworkPopup from "modals/NetworkPopup";
 import { useNetworkModalToggle } from "state/application/hooks";
 import { BackpackRounded } from "@mui/icons-material";
 import { ChevronLeftIcon } from "@heroicons/react/outline";
@@ -171,13 +170,14 @@ function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
                       />
                       {account && chainId && userEthBalance && (
                         <>
-                          <div
+                          {/* <div
                             className="py-2 pl-1 mr-2 font-semibold text-white cursor-pointer"
                             onClick={toggleNetworkModal}
                           >
                             {userEthBalance?.toFixed(3)}{" "}
                             {NATIVE[chainId]?.symbol || "ETH"}
-                          </div>
+                          </div> */}
+                          <NetworkPopup {...{ userEthBalance, NATIVE }} />
                         </>
                       )}
                     </div>

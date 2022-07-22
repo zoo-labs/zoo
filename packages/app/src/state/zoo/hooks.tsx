@@ -231,7 +231,7 @@ export function useFetchMyNFTs(): () => Promise<void> {
         const id = nft.token_id;
 
         const deet = await zooKeeper?.tokens(Number(id));
-        console.log("d_deets", { deetId: Number(deet?.id), id });
+        console.log("d_deets", { deet });
 
         const data = (await axios.get(deet.data.metadataURI)).data;
         console.log("dataa_IN__useFetchMyNFTs", data);
@@ -1033,6 +1033,29 @@ export function useFeed(): (animalID: number) => void {
     ]
   );
 }
+
+export function useFeedCount(): (animalID: number) => void {
+  const zooKeeper = useZooKeeper();
+  const getZooBalance = useZoobalance();
+
+  return useCallback(
+    async (animalId) => {
+      console.log("feeding_animal", zooKeeper, { animalId });
+      if (!zooKeeper) return;
+      try {
+        const tx = await zooKeeper?.feededTimes(animalId);
+        getZooBalance();
+        console.log(tx);
+        return Number(tx);
+      } catch (e) {
+        console.error("ISSUE GET FEED COUNT \n", e);
+        getZooBalance();
+      }
+    },
+    [getZooBalance, zooKeeper]
+  );
+}
+
 export function useEditAuction(): (
   auctionId: number | string,
   reservePrice: number,
