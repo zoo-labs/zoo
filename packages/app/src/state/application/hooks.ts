@@ -97,11 +97,16 @@ export function useBuyEggModalToggle(): () => void {
 export function useMyNftModalToggle(): () => void {
   return useToggleModal(ApplicationModal.MY_NFT);
 }
+
+export function useCountdownToggle(): () => void {
+  return useToggleModal(ApplicationModal.COUNTDOWN);
+}
+
 export function useBuyZooModalToggle(): () => void {
   return useToggleModal(ApplicationModal.BUYZOO);
 }
 export function useCastVoteModalToggle(): () => void {
-  return useToggleModal(ApplicationModal.CAST_VOTE)
+  return useToggleModal(ApplicationModal.CAST_VOTE);
 }
 
 // returns a function that allows adding a popup
