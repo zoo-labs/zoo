@@ -61,7 +61,7 @@ const NftModal: React.FC<NftModalProps> = ({
                   }}
                 />
               ) : (
-                <div className="h-full w-full">
+                <div className="w-full h-full">
                   <ModelViewer
                     glb={nftItem?.glb_animation_url}
                     usdz={nftItem?.usdz_animation_url}
@@ -208,7 +208,7 @@ const NftModal: React.FC<NftModalProps> = ({
                   </div>
                 </div>
                 <div className="w-full text-sm">
-                  <p className="w-full border-b border-[#605E5E] pb-2 mb-5">
+                  <p className="text-justify w-full border-b border-[#605E5E] pb-2 mb-5">
                     Description
                   </p>
                   <p className="mb-7">
