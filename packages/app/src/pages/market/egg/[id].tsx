@@ -263,7 +263,7 @@ const Item = () => {
                 Description
               </p>
               {egg?.description ? (
-                <p>{egg?.description}</p>
+                <p className="text-justify">{egg?.description}</p>
               ) : (
                 <>
                   <p className="mb-7">
