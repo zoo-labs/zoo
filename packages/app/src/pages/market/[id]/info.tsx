@@ -16,8 +16,9 @@ import useActiveWeb3React from "hooks/useActiveWeb3React";
 import { SUPPORTED_NETWORKS } from "config/networks";
 import moment from "moment";
 import CropFreeRoundedIcon from "@mui/icons-material/CropFreeRounded";
-import { useExpandNFTModal } from "state/application/hooks";
+import { useExpandNFTModal, useShareModal } from "state/application/hooks";
 import NFTExpandedModal from "modals/ExpandNftModal";
+import ShareNFTModal from "modals/ShareNFTModal";
 
 const Table = styled.table`
   font-family: Arial, Helvetica, sans-serif;
@@ -59,6 +60,7 @@ const InfoPage = () => {
   const Web3Api = useMoralisWeb3Api();
   const getCreator = useGetTokenOwner();
   const toggleExpand = useExpandNFTModal();
+  const toggleShare = useShareModal();
 
   const fetchContractNFTTransfers = useCallback(async () => {
     const options: { chain?: any; address: string } = {
@@ -169,7 +171,10 @@ const InfoPage = () => {
           </div>
         )}
         <div className="absolute bottom-0 flex items-center justify-end w-full gap-3 right">
-          <button className="flex items-center justify-center gap-3 px-5 py-3 bg-gray-100 rounded-full">
+          <button
+            onClick={toggleShare}
+            className="flex items-center justify-center gap-3 px-5 py-3 bg-gray-100 rounded-full"
+          >
             <Image src="/icons/upload.svg" alt="" width={18} height={18} />
             <span className="font-medium">Share</span>
           </button>
@@ -415,6 +420,7 @@ const InfoPage = () => {
           </Table>
         </div>
       </div>
+      <ShareNFTModal nft={nft} />
       <NFTExpandedModal nft={nft} />
     </div>
   );
