@@ -37,6 +37,7 @@ const NftModal = ({}: AppProps & {
   const toggleHatchEggModal = useHatchEggModal();
   const toggleAucionModal = useAuctionModal();
   const [nftItem, setNftItem] = useState<MyNFT | any>({});
+  const [nftAnimate, setNftAnimate] = useState<MyNFT | any>({});
   const toggleFreeNFTModal = useFreeNftModal();
   const router = useRouter();
   const fetchNFTs = useFetchMyNFTs();
@@ -238,7 +239,7 @@ const NftModal = ({}: AppProps & {
                   Description
                 </p>
                 {nftItem?.description ? (
-                  <p>{nftItem?.description}</p>
+                  <p className="text-justify">{nftItem?.description}</p>
                 ) : (
                   <>
                     <p className="mb-7">
@@ -271,7 +272,12 @@ const NftModal = ({}: AppProps & {
         nftItem={nftItem}
         success={() => {
           fetchNFTs().then((res) => {
-            console.log("SGDBDVCHFCBDFC CBF HEF EFD", myNfts, myNfts.length);
+            console.log(
+              "SGDBDVCHFCBDFC CBF HEF EFD",
+              res?.length,
+              myNfts.length
+            );
+            setNftAnimate(myNfts[0]);
             toggleAnimationModal();
             // const nft__ = myNfts.find((n) => n.eggId === nftItem.id);
             // setNftItem(nft__);
@@ -280,7 +286,9 @@ const NftModal = ({}: AppProps & {
       />
       <FreeNFTModal nft={nftItem} />
       <AuctionModal nft={nftItem} />
-      <HatchEggAnimationModal />
+      {Object.keys(nftAnimate).length > 0 && (
+        <HatchEggAnimationModal nft={nftAnimate} />
+      )}
     </>
   );
 };

@@ -560,15 +560,15 @@ const Swap: React.FC<SwapProps> = ({}) => {
     <main className="flex flex-col items-center justify-center flex-grow w-full h-full px-2 mt-12 sm:px-0">
       <div id="swap-page" className="w-full max-w-xl py-4 md:py-8 lg:py-12">
         <Head>
-          <title>LUX | BRIDGE</title>
+          <title>ZOO | BRIDGE</title>
           <meta
             key="description"
             name="description"
             content="Lux Zero Knowledge Privacy Bridge"
           />
         </Head>
-        <div className="bg-nft-gradient p-px rounded-3xl mb-7">
-          <div className="py-6 space-y-4 rounded-3xl bg-black z-1">
+        <div className="p-px bg-nft-gradient rounded-3xl mb-7">
+          <div className="py-6 space-y-4 bg-black rounded-3xl z-1">
             {/* Add slippage */}
             <div className="px-5">
               <SwapHeader
