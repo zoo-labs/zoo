@@ -18,10 +18,10 @@
 
 // export default useActiveWeb3React
 
-import type { Connector } from '@web3-react/types'
-import type { BaseProvider, Web3Provider } from '@ethersproject/providers';
-import { useAppSelector } from 'state/hooks'
-import { useWeb3React } from '@web3-react/core';
+import type { Connector } from "@web3-react/types";
+import type { BaseProvider, Web3Provider } from "@ethersproject/providers";
+import { useAppSelector } from "state/hooks";
+import { useWeb3React } from "@web3-react/core";
 
 export function useActiveWeb3React(): {
   connector: Connector;
@@ -31,14 +31,18 @@ export function useActiveWeb3React(): {
   active: boolean;
   error: Error | undefined;
   accounts: string[] | undefined;
-  isActivating: boolean
+  isActivating: boolean;
 } {
-  const { provider, connector,
+  const {
+    provider,
+    connector,
     chainId,
     account,
-    error, isActivating, accounts, isActive, } = useWeb3React()
-
-
+    error,
+    isActivating,
+    accounts,
+    isActive,
+  } = useWeb3React();
 
   // replace with address to impersonate
   return {
@@ -48,8 +52,9 @@ export function useActiveWeb3React(): {
     account,
     accounts,
     active: isActive,
-    error, isActivating
-  }
+    error,
+    isActivating,
+  };
 }
 
-export default useActiveWeb3React
+export default useActiveWeb3React;
