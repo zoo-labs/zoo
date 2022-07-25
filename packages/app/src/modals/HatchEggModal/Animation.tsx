@@ -53,7 +53,8 @@ export default function HatchEggAnimationModal({ nft }) {
                 zoom: 50,
               }}
             >
-              <source src={animation} type="video/mp4" />
+              {/* <source src={animation} type="video/mp4" /> */}
+              <source src={"/videoes/StealthEggHatch.mp4"} type="video/mp4" />
             </video>
           </div>
         </div>
