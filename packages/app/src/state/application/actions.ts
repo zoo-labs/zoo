@@ -41,6 +41,7 @@ export enum ApplicationModal {
   FREE_NFT,
   CAST_VOTE,
   COUNTDOWN,
+  SHARE,
 }
 
 export const updateBlockNumber = createAction<{
