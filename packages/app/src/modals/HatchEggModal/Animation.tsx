@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
   useHatchEggAnimationModal,
@@ -8,17 +8,30 @@ import {
 import { ApplicationModal } from "../../state/application/actions";
 import Modal from "../../components/Modal";
 
-const WALLET_VIEWS = {
-  OPTIONS: "options",
-  OPTIONS_SECONDARY: "options_secondary",
-  ACCOUNT: "account",
-  PENDING: "pending",
-};
-
-export default function HatchEggAnimationModal({}) {
+export default function HatchEggAnimationModal({ nft }) {
   const hatchEggModalOpen = useModalOpen(ApplicationModal.HATCH_EGG_ANIMATION);
   const toggleModal = useHatchEggAnimationModal();
   const { push } = useRouter();
+  const [animation, setAnimation] = useState("");
+
+  useEffect(() => {
+    switch (nft?.name?.toUppercase()) {
+      case "NUBIAN GIRAFFE".toUpperCase():
+        setAnimation(
+          "https://drive.google.com/file/d/1OPLyvsFnuaGmrxGfbJ-dK_n6mXvFsNaX/view"
+        );
+      case "Pygmy Hippopotamus".toUpperCase():
+        setAnimation(
+          "https://drive.google.com/file/d/1wlt8QxpEJueD4blTN_0DaZYsoj0NeiIU/view"
+        );
+      case "Javan Rhinoceros".toUpperCase():
+        setAnimation(
+          "https://drive.google.com/file/d/1L9AKtGJ3msc1LRxi8Yv21U4miicvy1ca/view"
+        );
+      default:
+        setAnimation("/videoes/StealthEggHatch.mp4");
+    }
+  }, [nft]);
 
   function getModalContent() {
     return (
@@ -40,7 +53,7 @@ export default function HatchEggAnimationModal({}) {
                 zoom: 50,
               }}
             >
-              <source src="/videoes/StealthEggHatch.mp4" type="video/mp4" />
+              <source src={animation} type="video/mp4" />
             </video>
           </div>
         </div>

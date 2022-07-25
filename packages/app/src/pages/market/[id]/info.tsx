@@ -16,6 +16,8 @@ import useActiveWeb3React from "hooks/useActiveWeb3React";
 import { SUPPORTED_NETWORKS } from "config/networks";
 import moment from "moment";
 import CropFreeRoundedIcon from "@mui/icons-material/CropFreeRounded";
+import { useExpandNFTModal } from "state/application/hooks";
+import NFTExpandedModal from "modals/ExpandNftModal";
 
 const Table = styled.table`
   font-family: Arial, Helvetica, sans-serif;
@@ -56,6 +58,7 @@ const InfoPage = () => {
   const [zooBnbPrice, setZooBnbPrice] = useState(0);
   const Web3Api = useMoralisWeb3Api();
   const getCreator = useGetTokenOwner();
+  const toggleExpand = useExpandNFTModal();
 
   const fetchContractNFTTransfers = useCallback(async () => {
     const options: { chain?: any; address: string } = {
@@ -170,7 +173,10 @@ const InfoPage = () => {
             <Image src="/icons/upload.svg" alt="" width={18} height={18} />
             <span className="font-medium">Share</span>
           </button>
-          <button className="flex items-center justify-center gap-3 py-3.5 px-3.5 bg-gray-100 rounded-full">
+          <button
+            className="flex items-center justify-center gap-3 py-3.5 px-3.5 bg-gray-100 rounded-full"
+            onClick={toggleExpand}
+          >
             <CropFreeRoundedIcon width={18} height={18} />
           </button>
         </div>
@@ -409,6 +415,7 @@ const InfoPage = () => {
           </Table>
         </div>
       </div>
+      <NFTExpandedModal nft={nft} />
     </div>
   );
 };

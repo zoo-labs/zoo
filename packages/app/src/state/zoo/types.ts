@@ -24,6 +24,7 @@ export interface MyNFT {
   birthday: number;
   dropId: number;
   eggId: number;
+  dropEgg: number;
   swapped: boolean;
   burned: boolean;
   parents: {

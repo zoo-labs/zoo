@@ -132,7 +132,7 @@ function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
                             }
                             style={{ letterSpacing: "2px" }}
                           >
-                            {i18n._(t`Dao`)}
+                            {i18n._(t`DAO`)}
                           </a>
                         </NavLink>
 
