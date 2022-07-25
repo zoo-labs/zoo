@@ -61,6 +61,9 @@ export function useHatchEggModal(): () => void {
 export function useHatchEggAnimationModal(): () => void {
   return useToggleModal(ApplicationModal.HATCH_EGG_ANIMATION);
 }
+export function useExpandNFTModal(): () => void {
+  return useToggleModal(ApplicationModal.EXPAND_NFT);
+}
 
 export function useNetworkModalToggle(): () => void {
   return useToggleModal(ApplicationModal.NETWORK);

@@ -37,6 +37,7 @@ export enum ApplicationModal {
   MY_NFT,
   AUCTION,
   HATCH_EGG_ANIMATION,
+  EXPAND_NFT,
   FREE_NFT,
   CAST_VOTE,
   COUNTDOWN,

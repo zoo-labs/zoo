@@ -55,16 +55,19 @@ const Voting = () => {
           </div>
           <div className="flex items-center justify-between w-full mb-9">
             <p className="text-lg font-semibold md:text-4xl">Proposals</p>
-            <button className="rounded-full bg-proposal-button px-2.5 md:px-5 py-2.5 md:py-4">
-              <Link href="/dao/proposal/create" passHref>
+            <Link href="/dao/proposal/create" passHref>
+              <button
+                className="rounded-full bg-proposal-button px-2.5 md:px-5 py-2.5 md:py-4 disabled:cursor-not-allowed"
+                disabled
+              >
                 <div className="flex items-center gap-3">
                   <Image src="/icons/paper.svg" alt="" height={24} width={24} />
                   <p className="text-xs font-medium md:text-base">
                     Make a proposal
                   </p>
                 </div>
-              </Link>
-            </button>
+              </button>
+            </Link>
           </div>
           <div className="w-full border rounded-3xl border-space-grey bg-space-dark">
             <div className="flex items-center justify-between w-full px-4 py-6 bg-space-grey md:px-12 rounded-t-3xl">
@@ -113,11 +116,14 @@ const Voting = () => {
               </select>
             </div>
 
-            <ProposalsTable
+            {/* <ProposalsTable
               proposals={proposals}
               state={proposalState}
               type={proposalType}
-            />
+            /> */}
+            <p className="text-center pb-10 text-2xl font-semibold">
+              Coming soon...
+            </p>
           </div>
         </div>
       </div>
