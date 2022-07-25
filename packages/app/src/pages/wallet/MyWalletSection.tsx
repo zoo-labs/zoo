@@ -145,7 +145,7 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
       <div className="py-12">
         <TransactionHistorySection nftTransfers={nftTransfers} />
       </div>
-      <HatchEggAnimationModal />
+      {/* <HatchEggAnimationModal /> */}
       {nftItem && (
         <>
           <HatchEggModal
