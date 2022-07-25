@@ -332,7 +332,7 @@ export function useGetNftTransfers(): () => void {
 }
 export function useGetAvailableEggs(): () => void {
   const dispatch = useAppDispatch();
-  const dropContract = useDrop();
+  const dropContract = useDrop(true);
   const { account } = useActiveWeb3React();
   return useCallback(async () => {
     console.log("useGetAvailableEggs  contract", dropContract);
@@ -545,10 +545,10 @@ export function useTransferZoo(): (recipient: string, amount: number) => void {
 }
 
 export function useGetAllAuctions(): () => Promise<void> {
-  const auctionContract = useAuction();
+  const auctionContract = useAuction(true);
   const dispatch = useDispatch();
-  const media = useMedia();
-  const zooKeeper = useZooKeeper();
+  const media = useMedia(true);
+  const zooKeeper = useZooKeeper(true);
   return useCallback(async () => {
     console.log("auction ytfrtdtrsd", auctionContract);
     const na = +new Date();
