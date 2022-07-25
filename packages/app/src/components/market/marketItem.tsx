@@ -30,7 +30,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
     >
       <div className="relative overflow-hidden rounded bg-nft-gradient parent">
         <div className="h-[450px] w-[300px]">
-          {datum.kind === 0 ? (
+          {datum.kind === 0 || datum.kind === 2 ? (
             <video
               autoPlay
               loop
@@ -66,7 +66,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
         <div className="flex flex-col flex-grow border-b border-gray-700 pb-4">
           <div className="flex mb-4 ">
             <div className="mt-1 mr-auto font-semibold">
-              {datum.name || "Egg"}{" "}
+              {datum.name || "Egg"} {datum.kind === 0 ? "(Origin)" : ""}{" "}
               <span className="text-xs text-gray-500">
                 ({datum.tokenID || ""})
               </span>

@@ -194,7 +194,7 @@ export function useHatch(): (
     [account, addPopup, dispatch, dropId, getZooBalance, zoo, zooKeeper]
   );
 }
-export function useFetchMyNFTs(): () => Promise<void> {
+export function useFetchMyNFTs(): () => Promise<any> {
   const Web3Api = useMoralisWeb3Api();
   console.log("structuredNft fetching nfts", Web3Api);
 
@@ -213,6 +213,8 @@ export function useFetchMyNFTs(): () => Promise<void> {
         address: account,
         token_address: media?.address,
       };
+
+      let returnNFTs = [];
 
       console.log("GETTING_USERS_NFTS->", {
         chain: SUPPORTED_NETWORKS[chainId]?.chainId,
@@ -258,6 +260,7 @@ export function useFetchMyNFTs(): () => Promise<void> {
           birthday: Number(deet?.birthValues?.birthday),
           dropId: Number(deet?.meta?.dropID),
           eggId: Number(deet?.meta?.eggID),
+          dropEgg: Number(deet?.dropEgg),
           swapped: deet?.meta?.swapped,
           burned: deet?.meta?.burned,
           parents: {
@@ -300,11 +303,13 @@ export function useFetchMyNFTs(): () => Promise<void> {
 
         console.log("updateMyNfts updating my nfts here with", newNft);
         dispatch(updateMyNfts(newNft));
+        returnNFTs = [newNft, ...returnNFTs];
       });
 
       dispatch(eggsCount(_eggsCount));
       dispatch(animalsCount(_animalsCount));
       dispatch(breedsCount(_breedCount));
+      return returnNFTs;
     } catch (error) {
       console.error("error_in_fetch_nfts_func", error);
     }
@@ -332,7 +337,7 @@ export function useGetNftTransfers(): () => void {
 }
 export function useGetAvailableEggs(): () => void {
   const dispatch = useAppDispatch();
-  const dropContract = useDrop();
+  const dropContract = useDrop(true);
   const { account } = useActiveWeb3React();
   return useCallback(async () => {
     console.log("useGetAvailableEggs  contract", dropContract);
@@ -545,10 +550,10 @@ export function useTransferZoo(): (recipient: string, amount: number) => void {
 }
 
 export function useGetAllAuctions(): () => Promise<void> {
-  const auctionContract = useAuction();
+  const auctionContract = useAuction(true);
   const dispatch = useDispatch();
-  const media = useMedia();
-  const zooKeeper = useZooKeeper();
+  const media = useMedia(true);
+  const zooKeeper = useZooKeeper(true);
   return useCallback(async () => {
     console.log("auction ytfrtdtrsd", auctionContract);
     const na = +new Date();
