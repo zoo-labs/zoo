@@ -199,7 +199,7 @@ const Item = () => {
                 Description
               </p>
               {auction?.description ? (
-                <p>{auction?.description}</p>
+                <p className="text-justify">{auction?.description}</p>
               ) : (
                 <>
                   <p className="mb-7">
