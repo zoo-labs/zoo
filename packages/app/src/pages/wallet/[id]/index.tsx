@@ -239,7 +239,7 @@ const NftModal = ({}: AppProps & {
                   Description
                 </p>
                 {nftItem?.description ? (
-                  <p>{nftItem?.description}</p>
+                  <p className="text-justify">{nftItem?.description}</p>
                 ) : (
                   <>
                     <p className="mb-7">
