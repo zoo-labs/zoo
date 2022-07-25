@@ -168,8 +168,8 @@ const InfoPage = () => {
             ></ModelViewer>
           </div>
         )}
-        <div className="absolute flex items-center justify-end gap-3 w-full right bottom-0">
-          <button className="flex items-center justify-center gap-3 py-3 px-5 bg-gray-100 rounded-full">
+        <div className="absolute bottom-0 flex items-center justify-end w-full gap-3 right">
+          <button className="flex items-center justify-center gap-3 px-5 py-3 bg-gray-100 rounded-full">
             <Image src="/icons/upload.svg" alt="" width={18} height={18} />
             <span className="font-medium">Share</span>
           </button>
@@ -229,7 +229,7 @@ const InfoPage = () => {
             <p className="mb-3 text-xl font-semibold">Description</p>
             <hr className="w-full h-px mb-10 opacity-40" />
             {nft?.description ? (
-              <p>{nft?.description}</p>
+              <p className="text-justify">{nft?.description}</p>
             ) : (
               <>
                 <p className="mb-7">
@@ -256,7 +256,7 @@ const InfoPage = () => {
           </div>
           <div className="flex items-center mb-4">
             <div className="w-6 h-6 rounded-full bg-nft-gradient" />
-            <p className="text-xl font-bold ml-2">Creator: </p>
+            <p className="ml-2 text-xl font-bold">Creator: </p>
             <a
               href={`https://testnet.bscscan.com/address/${creator}`}
               target="_blank"
@@ -268,7 +268,7 @@ const InfoPage = () => {
           </div>
           <div className="flex items-center mb-4">
             <div className="w-6 h-6 rounded-full bg-nft-gradient" />
-            <p className="text-xl font-bold ml-2">Current owner: </p>
+            <p className="ml-2 text-xl font-bold">Current owner: </p>
             <a
               href={`https://testnet.bscscan.com/address/${nft?.tokenOwner}`}
               target="_blank"
