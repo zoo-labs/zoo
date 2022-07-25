@@ -22,6 +22,7 @@ import {
   TIMELOCK_ADDRESS,
   WNATIVE_ADDRESS,
 } from "@zoolabs/sdk";
+import { ethers } from "ethers";
 import { useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { abis, addresses } from "../constants";
@@ -73,12 +74,17 @@ export function useEIP2612Contract(tokenAddress?: string): Contract | null {
 export function useContract(
   nameOrAddress: string | AddressMap | undefined,
   ABI: any = undefined,
-  withSignerIfPossible = true
+  withSignerIfPossible = true,
+  canUseDefaultProvider = false
 ): Contract | null {
   const { library, account, chainId } = useActiveWeb3React();
+  const { ethereum } = window;
+
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  console.log("TRYINGTO GET NEW LIBRARY", provider);
 
   let address: string | AddressMap | undefined = nameOrAddress;
-  let chainIdStr = chainId ? chainId.toString() : "1337";
+  let chainIdStr = chainId ? chainId.toString() : "97";
 
   if (!isAddress(nameOrAddress) || nameOrAddress === AddressZero) {
     try {
@@ -87,37 +93,57 @@ export function useContract(
         ABI || abis[chainIdStr]
           ? abis[chainIdStr][nameOrAddress.toString()]
           : null;
+      console.log("THIS_IS_THE_return_ADDRESS", {
+        nameOrAddress,
+        address,
+        ABI,
+        library,
+      });
     } catch (e) {
-      console.error(`Unable to fetch contract ${nameOrAddress} on ${chainId}`);
+      console.error(
+        `Unable to fetch contract ${nameOrAddress} on ${chainIdStr}: address = ${addresses[chainIdStr]["Drop"]}`
+      );
     }
   }
 
+  const newLibrary = library ?? (canUseDefaultProvider && provider);
+
   return useMemo(() => {
-    if (!address || !ABI || !library) return null;
+    if (!address || !ABI || !newLibrary) return null;
     try {
       return getContract(
         address.toString(),
         ABI,
-        library,
+        newLibrary,
         withSignerIfPossible && account ? account : undefined
       );
     } catch (error) {
       console.error("Failed to get contract", error);
       return null;
     }
-  }, [nameOrAddress, address, ABI, library, withSignerIfPossible, account]);
+  }, [address, ABI, newLibrary, withSignerIfPossible, account]);
 }
 
 export function useApp(): Contract | null {
   return useContract("App");
 }
 
-export function useDrop(withSignerIfPossible?: boolean): Contract | null {
-  return useContract("Drop");
+export function useDrop(useDefaultProvider?: boolean): Contract | null {
+  return useContract(
+    "Drop",
+    undefined,
+    true,
+    useDefaultProvider ? true : false
+  );
 }
 
-export function useMedia(): Contract | null {
-  return useContract("Media");
+export function useMedia(useDefaultProvider?: boolean): Contract | null {
+  return useContract(
+    "Media",
+    undefined,
+    true,
+    useDefaultProvider ? true : false
+  );
 }
 
 export function useTokenContract(
@@ -377,8 +403,13 @@ export function useZenkoContract(
 export function useZooToken(): Contract | null {
   return useContract("ZOO");
 }
-export function useZooKeeper(): Contract | null {
-  const zooKeeperContract = useContract("ZooKeeper");
+export function useZooKeeper(useDefaultProvider?: boolean): Contract | null {
+  const zooKeeperContract = useContract(
+    "ZooKeeper",
+    undefined,
+    true,
+    useDefaultProvider ? true : false
+  );
   return zooKeeperContract;
 }
 export function useFaucet(): Contract | null {
@@ -391,35 +422,35 @@ export function useBnbToken(): Contract | null {
   return useContract("BNB");
 }
 
-export function useAuction(): Contract | null {
-  return useContract("Auction");
+export function useAuction(useDefaultProvider?: boolean): Contract | null {
+  return useContract(
+    "Auction",
+    undefined,
+    true,
+    useDefaultProvider ? true : false
+  );
 }
 
 export function useTeleportContract(): (chain) => Contract | null {
-  const { account, library } = useActiveWeb3React()
-  const dispatch = useDispatch()
+  const { account, library } = useActiveWeb3React();
+  const dispatch = useDispatch();
   return useCallback(
     (chain) => {
       const contract = altContract("TELEPORT", chain, account, library);
-      console.log('hitting burnContract', chain, contract)
+      console.log("hitting burnContract", chain, contract);
 
-      return contract
+      return contract;
     },
-    [dispatch],
-  )
-
+    [dispatch]
+  );
 }
 
 export function useLbtcContract(chain?): Contract | null {
-
-  return useContract('LBTC', chain) // DYNAMICALLY FETCHES THE RIGHT CONTRACT BASED ON THE CURRENT CHAIN..USERS CAN ONLY BRIDGE FROM AN ACTIVE CHAIN
-
+  return useContract("LBTC", chain); // DYNAMICALLY FETCHES THE RIGHT CONTRACT BASED ON THE CURRENT CHAIN..USERS CAN ONLY BRIDGE FROM AN ACTIVE CHAIN
 }
-export const altContract = (nameOrAddress,
-  chain,
-  account, library) => {
+export const altContract = (nameOrAddress, chain, account, library) => {
   let chainIdStr = chain ? chain : "4";
-  console.log('useGetCurrentBalances', nameOrAddress, chain)
+  console.log("useGetCurrentBalances", nameOrAddress, chain);
   let address: string | undefined = nameOrAddress;
   let ABI;
   if (!isAddress(nameOrAddress) || nameOrAddress === AddressZero) {
@@ -430,7 +461,6 @@ export const altContract = (nameOrAddress,
         : null;
   }
 
-
   if (!address || !ABI || !library) return null;
   try {
     const contract = getContract(
@@ -439,11 +469,10 @@ export const altContract = (nameOrAddress,
       library,
       account ? account : undefined
     );
-    console.log('fetching contracrt', contract)
+    console.log("fetching contracrt", contract);
     return contract;
   } catch (error) {
     console.error("Failed to get contract", error);
     return null;
   }
-
-}
+};

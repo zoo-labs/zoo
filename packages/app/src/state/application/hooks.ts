@@ -48,6 +48,9 @@ export function useCloseModals(): () => void {
 export function useAuctionModal(): () => void {
   return useToggleModal(ApplicationModal.AUCTION);
 }
+export function useShareModal(): () => void {
+  return useToggleModal(ApplicationModal.SHARE);
+}
 export function useFreeNftModal(): () => void {
   return useToggleModal(ApplicationModal.FREE_NFT);
 }
@@ -60,6 +63,9 @@ export function useHatchEggModal(): () => void {
 }
 export function useHatchEggAnimationModal(): () => void {
   return useToggleModal(ApplicationModal.HATCH_EGG_ANIMATION);
+}
+export function useExpandNFTModal(): () => void {
+  return useToggleModal(ApplicationModal.EXPAND_NFT);
 }
 
 export function useNetworkModalToggle(): () => void {

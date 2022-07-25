@@ -96,7 +96,7 @@ export default function AuctionModal({
               placeholder="Reserve Price ($ZOO)"
             />
           </div>
-          <div className="w-full">
+          {/* <div className="w-full">
             <label className="mb-3.5">Curator fee</label>
             <input
               type="number"
@@ -106,9 +106,9 @@ export default function AuctionModal({
               placeholder="max 10%"
               disabled={edit}
             />
-          </div>
+          </div> */}
           <button
-            onClick={() => handleAuction(duration, reservePrice, curatorFee)}
+            onClick={() => handleAuction(duration, reservePrice, 0)}
             disabled={loading}
             className={`py-4 w-52 bg-bid-gradient rounded-xl mb-7 outline-none focus:outline-none ${
               loading && "opacity-30 disabled:cursor-not-allowed"
