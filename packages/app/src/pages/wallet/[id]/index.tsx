@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { useFeed, useFeedCount, useFetchMyNFTs } from "state/zoo/hooks";
+import {
+  useFeed,
+  useFeedCount,
+  useFetchMyNFTs,
+  useRefreshMetadata,
+} from "state/zoo/hooks";
 import {
   useHatchEggModal,
   useAuctionModal,
@@ -43,6 +48,7 @@ const NftModal = ({}: AppProps & {
   const fetchNFTs = useFetchMyNFTs();
   const feedAnimal = useFeed();
   const feedCount = useFeedCount();
+  const refetch = useRefreshMetadata();
   const { id } = router.query;
 
   const feed = () => {
@@ -52,6 +58,11 @@ const NftModal = ({}: AppProps & {
     // }
     feedAnimal(+String(id));
   };
+
+  const refetchMetadata = () => {
+    refetch(nftItem.id, nftItem.token_uri, nftItem.meta?.metaUri);
+  };
+
   const hatchEgg = () => {
     toggleHatchEggModal();
   };
@@ -232,6 +243,13 @@ const NftModal = ({}: AppProps & {
                       FREE
                     </button>
                   )}
+                  <button
+                    className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-nft-gradient disabled:cursor-not-allowed disabled:opacity-60"
+                    disabled={loading}
+                    onClick={() => refetchMetadata()}
+                  >
+                    REFRESH
+                  </button>
                 </div>
               </div>
               <div className="w-full text-sm">
