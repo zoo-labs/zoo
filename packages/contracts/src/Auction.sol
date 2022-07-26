@@ -60,7 +60,7 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
         IAuctionHouse.Auction[] memory allAuctions = new IAuctionHouse.Auction[](_auctionIDTracker.current());
         
         for (uint256 i = 0; i < _auctionIDTracker.current(); i++) {
-            if(auctions[i + 1].auctionId != 0){
+            if(auctions[i + 1].addresses.tokenOwner != address(0)){
                 allAuctions[i] = auctions[i + 1];
             }
         }
