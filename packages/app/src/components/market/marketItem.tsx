@@ -28,15 +28,16 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
         })
       }
     >
-      <div className="relative overflow-hidden rounded bg-nft-gradient parent">
-        <div className="h-[450px] w-[300px]">
+      <div className="relative overflow-hidden rounded p-[2px] bg-nft-gradient parent">
+        <div className="h-[450px] w-full">
           {datum.kind === 0 || datum.kind === 2 ? (
             <video
               autoPlay
               loop
               src={datum.animation_url}
-              width={300}
+              width={"100%"}
               height={350}
+              className="rounded overflow-hidden max-h-[450px] object-cover"
             />
           ) : (
             <div className="h-[450px] w-[300px]">
@@ -46,19 +47,6 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
               ></ModelViewer>
             </div>
           )}
-        </div>
-
-        <div className="absolute top-0 left-0 invisible w-full h-full transition-all duration-300 rounded opacity-0 hover:visible hover:opacity-100">
-          <div className="absolute px-2 py-1 text-xs font-bold uppercase rounded top-6 left-3 bg-primary ">
-            {/* {datum.bloodline || (datum.basic ? "BASIC" : "HYBRID")} */}
-          </div>
-
-          {/* <a
-            onClick={() => placeBid()}
-            className="absolute inline-flex items-center justify-center h-10 px-4 text-sm transition-all duration-300 transform rounded-full cursor-pointer left-1/2 bottom-6 min-w-max bg-primary -translate-x-2/4"
-          >
-            <span>Place a bid</span>
-          </a> */}
         </div>
       </div>
 
