@@ -1234,3 +1234,51 @@ export function useFreeNFT(): (tokenId: number, success?: () => void) => void {
     [addPopup, dispatch, fetchMyNfts, getZooBalance, zooKeeper]
   );
 }
+
+export function useRefreshMetadata(): (
+  tokenId: number,
+  tokenUri: string,
+  metadataURI: string
+) => void {
+  const media = useMedia();
+  const addPopup = useAddPopup();
+  const fetchMyNfts = useFetchMyNFTs();
+  const dispatch = useDispatch();
+  return useCallback(
+    async (tokenId, tokenUri, metadataURI) => {
+      try {
+        dispatch(loading(true));
+        const updateMetadata = await media.updateTokenMetadataURI(
+          tokenId,
+          metadataURI,
+          { gasLimit: 400000 }
+        );
+        await updateMetadata.wait();
+        const updateTokenUri = await media.updateTokenURI(tokenId, tokenUri, {
+          gasLimit: 400000,
+        });
+        await updateTokenUri.wait();
+        fetchMyNfts();
+        addPopup({
+          txn: {
+            hash: null,
+            summary: `Successfully refreshed metadata`,
+            success: true,
+          },
+        });
+        dispatch(loading(false));
+      } catch (error) {
+        console.error("ERROR_GETTING_REFRESH_METADATA", error);
+        addPopup({
+          txn: {
+            hash: null,
+            summary: formatError(error),
+            success: true,
+          },
+        });
+        dispatch(loading(false));
+      }
+    },
+    [addPopup, dispatch, fetchMyNfts, media]
+  );
+}
