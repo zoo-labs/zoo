@@ -5,6 +5,10 @@ import { ApplicationModal } from "../../state/application/actions";
 import Modal from "../../components/Modal";
 import ModalHeader from "../../components/ModalHeader";
 
+// Social media icons
+import { FaDiscord, FaSlack, FaTwitter } from "react-icons/fa";
+import { SiGmail } from "react-icons/si";
+
 export default function ShareNFTModal({
   nft,
   edit = false,
@@ -21,34 +25,21 @@ export default function ShareNFTModal({
       <div className="flex flex-col space-y-4">
         <ModalHeader title="Share" onClose={toggleModal} />
         <div className="flex flex-col items-center space-y-6">
-          <div className="w-full">
-            <input
-              type="number"
-              className="w-full px-5 py-4 text-black rounded-lg bg-dark-800"
-              placeholder="Twitter"
-              disabled
-            />
+          <div className="w-full flex items-center justify-between px-5 py-4 text-[#626471] rounded-lg bg-dark-800">
+            <p>Twitter</p>
+            <FaTwitter />
           </div>
-          <div className="w-full">
-            <input
-              type="number"
-              className="w-full px-5 py-4 text-black rounded-lg bg-dark-800"
-              placeholder="Discord"
-            />
+          <div className="w-full flex items-center justify-between px-5 py-4 text-[#626471] rounded-lg bg-dark-800">
+            <p>Discord</p>
+            <FaDiscord />
           </div>
-          <div className="w-full">
-            <input
-              type="number"
-              className="w-full px-5 py-4 text-black rounded-lg bg-dark-800"
-              placeholder="Slack"
-            />
+          <div className="w-full flex items-center justify-between px-5 py-4 text-[#626471] rounded-lg bg-dark-800">
+            <p>Slack</p>
+            <FaSlack />
           </div>
-          <div className="w-full">
-            <input
-              type="number"
-              className="w-full px-5 py-4 text-black rounded-lg bg-dark-800"
-              placeholder="Gmail"
-            />
+          <div className="w-full flex items-center justify-between px-5 py-4 text-[#626471] rounded-lg bg-dark-800">
+            <p>Gmail</p>
+            <SiGmail />
           </div>
         </div>
       </div>
