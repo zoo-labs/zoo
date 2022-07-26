@@ -194,7 +194,7 @@ contract Drop is IDrop, Ownable {
         // Save animal by name
         animals[name] = animal;
 
-        setAnimalURIs(name, adultTokenURI, adultMetadataURI, babyTokenURI, babyMetadataURI, teenTokenURI, teenMetadataURI);
+        setAnimalURIs(name, adultTokenURI, adultMetadataURI, teenTokenURI, teenMetadataURI, babyTokenURI, babyMetadataURI);
         // Try to add animal to rarity
         addAnimalToRarity(animal.rarity.name, animal.name);
     }
