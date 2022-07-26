@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { useFeed, useFeedCount, useFetchMyNFTs } from "state/zoo/hooks";
+import {
+  useFeed,
+  useFeedCount,
+  useFetchMyNFTs,
+  useRefreshMetadata,
+} from "state/zoo/hooks";
 import {
   useHatchEggModal,
   useAuctionModal,
@@ -43,6 +48,7 @@ const NftModal = ({}: AppProps & {
   const fetchNFTs = useFetchMyNFTs();
   const feedAnimal = useFeed();
   const feedCount = useFeedCount();
+  const refetch = useRefreshMetadata();
   const { id } = router.query;
 
   const feed = () => {
@@ -52,6 +58,11 @@ const NftModal = ({}: AppProps & {
     // }
     feedAnimal(+String(id));
   };
+
+  const refetchMetadata = () => {
+    refetch(nftItem.id, nftItem.token_uri, nftItem.meta?.metaUri);
+  };
+
   const hatchEgg = () => {
     toggleHatchEggModal();
   };
@@ -185,7 +196,7 @@ const NftModal = ({}: AppProps & {
             </div>
             <div className="flex w-full flex-col items-center gap-3 mb-2.5">
               <div className="w-full">
-                <div className="flex flex-col w-full py-2 rounded-lg 5 md:flex-row md:items-center bg-dark-400 ">
+                <div className="flex flex-col flex-wrap w-full py-2 rounded-lg 5 md:flex-row md:items-center bg-dark-400 ">
                   {nftItem?.kind === 0 || nftItem?.kind === 2 ? (
                     <button
                       className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-leader-board disabled:cursor-not-allowed disabled:opacity-60"
@@ -232,6 +243,13 @@ const NftModal = ({}: AppProps & {
                       FREE
                     </button>
                   )}
+                  <button
+                    className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-nft-gradient disabled:cursor-not-allowed disabled:opacity-60"
+                    disabled={loading}
+                    onClick={() => refetchMetadata()}
+                  >
+                    REFRESH
+                  </button>
                 </div>
               </div>
               <div className="w-full text-sm">
