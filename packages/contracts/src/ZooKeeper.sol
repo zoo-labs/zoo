@@ -24,6 +24,11 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
   Counters.Counter private dropIDs;
   Counters.Counter private whitelistedCount;
 
+  struct Feeding{
+    uint256 count;
+    uint40 lastTimeFed;
+  }
+
   mapping(uint256 => address) public drops;
 
   mapping(address => uint256) public dropAddresses;
@@ -32,7 +37,7 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
 
   mapping(uint256 => uint256) public EggDrop;
 
-  mapping(uint256 => uint256) public feededTimes;
+  mapping(uint256 => Feeding) public feededTimes;
 
   uint256 public namePrice;
   uint256 public BNBPrice;
@@ -90,6 +95,7 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
   function mint(address owner, IZoo.Token memory token) private returns (IZoo.Token memory) {
     token = media.mintToken(owner, token);
     tokens[token.id] = token;
+    EggDrop[token.id] = token.dropEgg;
     emit Mint(owner, token.id);
     return token;
   }
@@ -217,7 +223,8 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
     else if(tokens[animal].stage == IZoo.AdultHood.TEEN){
       token.stage = IZoo.AdultHood.ADULT;
     }
-    feededTimes[tokens[animal].id] += 1;
+    feededTimes[tokens[animal].id].count += 1;
+    feededTimes[tokens[animal].id].lastTimeFed = uint40(block.timestamp);
     IMedia.MediaData memory newData = drop.getAdultHoodURIs(token.name, token.stage);
     token.data = newData;
     media.updateTokenURI(token.id, newData.tokenURI);
@@ -232,7 +239,7 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
     require((media.ownerOf(parentA) == msg.sender && media.ownerOf(parentB) == msg.sender), "Not owner of Animals");
     require(keccak256(abi.encode(parentA)) != keccak256(abi.encode(parentB)), "Not able to breed with self");
     require(breedReady(parentA) && breedReady(parentB), "Wait for cooldown to finish.");
-    require(isBaseAnimal(parentA) && isBaseAnimal(parentB), "Only BASE_ANIMAL can breed.");
+    require(tokens[parentA].breed.count <= 6 || tokens[parentA].breed.count <= 6, "reached max breed");
     require(isAnimalAdult(parentA) && isAnimalAdult(parentB), "Only Adult animals can breed.");
     require(keccak256(abi.encodePacked(tokens[parentA].name)) == keccak256(abi.encodePacked(tokens[parentB].name)), "Only same breed can be bred");
     _;
@@ -306,10 +313,6 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
     IZoo.Token storage token = tokens[tokenID];
     token.customName = customName;
     tokens[tokenID] = token;
-  }
-
-  function isBaseAnimal(uint256 tokenID) private view returns (bool) {
-    return tokens[tokenID].kind == IZoo.Type.BASE_ANIMAL;
   }
 
    function isAnimalAdult(uint256 tokenID) private view returns (bool) {
