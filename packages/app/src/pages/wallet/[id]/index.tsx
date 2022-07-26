@@ -196,7 +196,7 @@ const NftModal = ({}: AppProps & {
             </div>
             <div className="flex w-full flex-col items-center gap-3 mb-2.5">
               <div className="w-full">
-                <div className="flex flex-col w-full py-2 rounded-lg 5 md:flex-row md:items-center bg-dark-400 ">
+                <div className="flex flex-col flex-wrap w-full py-2 rounded-lg 5 md:flex-row md:items-center bg-dark-400 ">
                   {nftItem?.kind === 0 || nftItem?.kind === 2 ? (
                     <button
                       className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-leader-board disabled:cursor-not-allowed disabled:opacity-60"
