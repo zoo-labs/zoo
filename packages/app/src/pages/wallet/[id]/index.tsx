@@ -12,6 +12,7 @@ import {
   useAuctionModal,
   useFreeNftModal,
   useHatchEggAnimationModal,
+  useAddPopup,
 } from "state/application/hooks";
 import BidModalHeader from "components/ModalHeader/BidModalHeader";
 import Image from "next/image";
@@ -43,20 +44,39 @@ const NftModal = ({}: AppProps & {
   const toggleAucionModal = useAuctionModal();
   const [nftItem, setNftItem] = useState<MyNFT | any>({});
   const [nftAnimate, setNftAnimate] = useState<MyNFT | any>({});
+  const [feeding, setFeeding] = useState(false);
   const toggleFreeNFTModal = useFreeNftModal();
   const router = useRouter();
   const fetchNFTs = useFetchMyNFTs();
   const feedAnimal = useFeed();
   const feedCount = useFeedCount();
   const refetch = useRefreshMetadata();
+  const addPopup = useAddPopup();
   const { id } = router.query;
 
-  const feed = () => {
-    const count = feedCount(+String(id));
-    // if (lasttime i fed < Date.now()) {
-    //    toggleFeeTimerModal(amount of times I fed * 24)
-    // }
-    feedAnimal(+String(id));
+  const feed = async () => {
+    setFeeding(true);
+    const { count, lastTimeFed } = await feedCount(+String(id));
+    const lastFed = new Date(lastTimeFed * 1000);
+    const newFeedMin = lastFed.setHours(lastFed.getHours() + count * 24);
+    const canFeed = +new Date() > +new Date(newFeedMin);
+    console.log("_lasttime_fed", { count, lastTimeFed, canFeed });
+    if (canFeed) {
+      setFeeding(false);
+      feedAnimal(+String(id));
+    } else {
+      setFeeding(false);
+      addPopup({
+        txn: {
+          hash: null,
+          summary: `You can feed your animal again at ${moment(
+            newFeedMin
+          ).format("MMM Do YYYY, h:mm a")}`,
+          success: false,
+        },
+      });
+      //  toggleFeeTimerModal(amount of times I fed * 24)
+    }
   };
 
   const refetchMetadata = () => {
@@ -87,11 +107,6 @@ const NftModal = ({}: AppProps & {
   }, [id, myNfts]);
 
   console.log("the_chosen_nftItem", nftItem);
-  const t = new Date(nftItem?.breed?.timestamp * 1000);
-  const nt = t.setHours(t.getHours() + 24);
-  const now = new Date();
-  const breedCooldown = +nt - +now;
-  console.log("BREED DIFFERENCE", breedCooldown, nftItem?.breed?.timestamp);
 
   return (
     <>
@@ -199,26 +214,26 @@ const NftModal = ({}: AppProps & {
                 <div className="flex flex-col flex-wrap w-full py-2 rounded-lg 5 md:flex-row md:items-center bg-dark-400 ">
                   {nftItem?.kind === 0 || nftItem?.kind === 2 ? (
                     <button
-                      className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-leader-board disabled:cursor-not-allowed disabled:opacity-60"
+                      className="w-[23%] p-2 mb-1 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-leader-board disabled:cursor-not-allowed disabled:opacity-60"
                       onClick={() => hatchEgg()}
-                      disabled={loading}
+                      disabled={loading || feeding}
                     >
                       HATCH
                     </button>
                   ) : (
                     <>
                       <button
-                        className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-leader-board disabled:cursor-not-allowed disabled:opacity-60"
+                        className="w-[23%] p-2 mb-1 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-leader-board disabled:cursor-not-allowed disabled:opacity-60"
                         onClick={() => feed()}
-                        disabled={loading}
+                        disabled={loading || feeding}
                       >
                         FEED
                       </button>
                       {nftItem?.stage === 2 && (
                         <Link href={`/wallet/${nftItem?.id}/breed`} passHref>
                           <button
-                            className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-nft-gradient disabled:cursor-not-allowed disabled:opacity-60"
-                            disabled={loading}
+                            className="w-[23%] p-2 mb-1 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-nft-gradient disabled:cursor-not-allowed disabled:opacity-60"
+                            disabled={loading || feeding}
                           >
                             BREED
                           </button>
@@ -228,24 +243,24 @@ const NftModal = ({}: AppProps & {
                   )}
 
                   <button
-                    className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-auction-gradient disabled:cursor-not-allowed disabled:opacity-60"
+                    className="w-[23%] p-2 mb-1 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-auction-gradient disabled:cursor-not-allowed disabled:opacity-60"
                     onClick={() => auction()}
-                    disabled={loading}
+                    disabled={loading || feeding}
                   >
                     AUCTION
                   </button>
                   {nftItem && (nftItem.kind === 1 || nftItem.kind === 3) && (
                     <button
-                      className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white border rounded-lg cursor-pointer border-white-30 bg-white-10 disabled:cursor-not-allowed disabled:opacity-60"
+                      className="w-[23%] p-2 mb-1 mr-2 text-sm font-bold text-center text-white border rounded-lg cursor-pointer border-white-30 bg-white-10 disabled:cursor-not-allowed disabled:opacity-60"
                       onClick={() => freeNft()}
-                      disabled={loading}
+                      disabled={loading || feeding}
                     >
                       FREE
                     </button>
                   )}
                   <button
-                    className="w-1/4 p-2 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-nft-gradient disabled:cursor-not-allowed disabled:opacity-60"
-                    disabled={loading}
+                    className="w-[23%] p-2 mb-1 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-nft-gradient disabled:cursor-not-allowed disabled:opacity-60"
+                    disabled={loading || feeding}
                     onClick={() => refetchMetadata()}
                   >
                     REFRESH
