@@ -82,6 +82,7 @@ module.exports = {
         "grey-300": "#353945",
         "grey-50": "#7A7585",
         "grey-80": "#3C3844",
+        "glass-50": "rgba(137, 136, 136, 0.5)",
         "trading-history": "#1F2126",
         "trading-history-border-b": "#E6E8EC",
         "nft-card-border": "#A67CED",
