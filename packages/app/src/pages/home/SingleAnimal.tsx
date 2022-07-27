@@ -27,7 +27,7 @@ const SingleAnimal = ({ data }) => {
   return (
     <div className="overflow-hidden rounded relative">
       <div className=" w-[400px] h-[400px]">{renderAnimal}</div>
-      <div className="absolute  left-0 right-0 bottom-6 max-w-[245px] mx-auto w-full flex items-center rounded-full bg-glass-50">
+      <div className="absolute  left-0 right-0 bottom-2 max-w-[245px] mx-auto w-full flex items-center rounded-full bg-glass-50">
         <div
           onClick={() => setCategory("baby")}
           className={`flex-1 rounded-full py-2.5 cursor-pointer ${

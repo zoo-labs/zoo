@@ -137,17 +137,25 @@ const NftModal = ({}: AppProps & {
               <div className="w-full">
                 <p className="font-semibold text-[52px]">{nftItem?.name}</p>
               </div>
-              <div className="flex items-center gap-2">
-                <Image src="/icons/status.svg" alt="" height={26} width={20} />
-                <div>
-                  <p className="text-sm font-medium">
-                    {nftItem?.attributes && nftItem?.attributes[0]?.trait_type}
-                  </p>
-                  <p className="font-medium text-[10px]">
-                    {nftItem?.attributes && nftItem?.attributes[0]?.value}
-                  </p>
+              {nftItem.kind !== 0 && nftItem.kind !== 2 ? (
+                <div className="flex items-center gap-2">
+                  <Image
+                    src="/icons/status.svg"
+                    alt=""
+                    height={26}
+                    width={20}
+                  />
+                  <div>
+                    <p className="text-sm font-medium">
+                      {nftItem?.attributes &&
+                        nftItem?.attributes[0]?.trait_type}
+                    </p>
+                    <p className="font-medium text-[10px]">
+                      {nftItem?.attributes && nftItem?.attributes[0]?.value}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              ) : null}
               <div className="flex items-center gap-2">
                 <Image
                   src="/icons/population.svg"
