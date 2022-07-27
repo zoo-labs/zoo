@@ -270,19 +270,22 @@ const MarketPlacePage = () => {
                         </div>
                         <div className="flex flex-col">
                           {item.attributes.length > 0 &&
-                            item.attributes.map((attr, index) => (
-                              <div
-                                key={index}
-                                className="flex items-center justify-between"
-                              >
-                                <p className="text-sm font-medium">
-                                  {attr.trait_type}
-                                </p>
-                                <p className="font-semibold text-[10px]">
-                                  {attr.value}
-                                </p>
-                              </div>
-                            ))}
+                            item.attributes.map((attr, index) => {
+                              if (attr.trait_type === "Rarity") return null;
+                              return (
+                                <div
+                                  key={index}
+                                  className="flex items-center justify-between"
+                                >
+                                  <p className="text-sm font-medium">
+                                    {attr.trait_type}
+                                  </p>
+                                  <p className="font-semibold text-[10px]">
+                                    {attr.value}
+                                  </p>
+                                </div>
+                              );
+                            })}
                         </div>
                       </div>
                       <div className="flex items-center justify-between pt-4 mt-4 text-sm text-gray-800 border-t border-gray-700 border-solid ">
