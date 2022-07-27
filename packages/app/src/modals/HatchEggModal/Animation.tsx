@@ -15,7 +15,7 @@ export default function HatchEggAnimationModal({ nft }) {
   const [animation, setAnimation] = useState("");
 
   useEffect(() => {
-    switch (nft?.name?.toUppercase()) {
+    switch (nft?.name) {
       case "NUBIAN GIRAFFE".toUpperCase():
         setAnimation(
           "https://drive.google.com/file/d/1OPLyvsFnuaGmrxGfbJ-dK_n6mXvFsNaX/view"
