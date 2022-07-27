@@ -8,6 +8,7 @@ import { ANIMAL_TYPE } from "../../types";
 import { useGif } from "context/GifContext";
 //import BabylonAnim from "components/Babylon";
 import dynamic from "next/dynamic";
+import SingleAnimal from "pages/home/SingleAnimal";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
@@ -19,6 +20,10 @@ const animalFamilyData = [
     lowLimit: 40,
     usdz: "/models/Elephant/ELEPHANT_ADULT.usdz",
     glb: "/models/Elephant/ELEPHANT_ADULT.glb",
+    usdz_baby: "/models/Elephant/ELEPHANT_BABY.usdz",
+    glb_baby: "/models/Elephant/ELEPHANT_BABY.glb",
+    usdz_teen: "/models/Elephant/ELEPHANT_TEEN.usdz",
+    glb_teen: "/models/Elephant/ELEPHANT_TEEN.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
@@ -32,6 +37,10 @@ const animalFamilyData = [
     lowLimit: 40,
     usdz: "/models/Rhino/RHINO_ADULT.usdz",
     glb: "/models/Rhino/RHINO.glb",
+    usdz_baby: "/models/Rhino/RHINO_BABY.usdz",
+    glb_baby: "/models/Rhino/RHINO_BABY.glb",
+    usdz_teen: "/models/Rhino/RHINO_TEEN.usdz",
+    glb_teen: "/models/Rhino/RHINO_TEEN.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
@@ -45,6 +54,10 @@ const animalFamilyData = [
     lowLimit: 35,
     usdz: "/models/Tiger/TIGER_ADULT.usdz",
     glb: "/models/Tiger/TIGER_ADULT.glb",
+    usdz_baby: "/models/Tiger/TIGER_BABY.usdz",
+    glb_baby: "/models/Tiger/TIGER_BABY.glb",
+    usdz_teen: "/models/Tiger/TIGER_TEEN.usdz",
+    glb_teen: "/models/Tiger/TIGER_TEEN.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
@@ -58,6 +71,10 @@ const animalFamilyData = [
     lowLimit: 20,
     usdz: "/models/Leopard/LEOPARD_ADULT.usdz",
     glb: "/models/Leopard/LEOPARD_ADULT.glb",
+    usdz_baby: "/models/Leopard/LEOPARD_BABY.usdz",
+    glb_baby: "/models/Leopard/LEOPARD_BABY.glb",
+    usdz_teen: "/models/Leopard/LEOPARD_TEEN.usdz",
+    glb_teen: "/models/Leopard/LEOPARD_TEEN.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332847/zoo/images/clouded-leopard_piqix9.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332847/zoo/images/clouded-leopard_piqix9.png",
@@ -71,6 +88,10 @@ const animalFamilyData = [
     lowLimit: 40,
     usdz: "/models/Hippo/HIPPO_ADULT.usdz",
     glb: "/models/Hippo/HIPPO_ADULT.glb",
+    usdz_baby: "/models/Hippo/HIPPO_BABY.usdz",
+    glb_baby: "/models/Hippo/HIPPO_BABY.glb",
+    usdz_teen: "/models/Hippo/HIPPO_TEEN.usdz",
+    glb_teen: "/models/Hippo/HIPPO_TEEN.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332795/zoo/images/hippo_i4grms.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332795/zoo/images/hippo_i4grms.png",
@@ -84,6 +105,10 @@ const animalFamilyData = [
     lowLimit: 40,
     usdz: "/models/Giraffe/GIRAFFE_ADULT.usdz",
     glb: "/models/Giraffe/GIRAFFE_ADULT.glb",
+    usdz_baby: "/models/Giraffe/GIRAFFE_BABY.usdz",
+    glb_baby: "/models/Giraffe/GIRAFFE_BABY.glb",
+    usdz_teen: "/models/Giraffe/GIRAFFE_TEEN.usdz",
+    glb_teen: "/models/Giraffe/GIRAFFE_TEEN.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332705/zoo/images/giraffe_caohec.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332705/zoo/images/giraffe_caohec.png",
@@ -97,6 +122,10 @@ const animalFamilyData = [
     lowLimit: 20,
     usdz: "/models/Wolf/WOLF_ADULT.usdz",
     glb: "/models/Wolf/WOLF_ADULT.glb",
+    usdz_baby: "/models/Wolf/WOLF_BABY.usdz",
+    glb_baby: "/models/Wolf/WOLF_BABY.glb",
+    usdz_teen: "/models/Wolf/WOLF_TEEN.usdz",
+    glb_teen: "/models/Wolf/WOLF_TEEN.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332820/zoo/images/red-wolf_tjiwez.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332820/zoo/images/red-wolf_tjiwez.png",
@@ -152,12 +181,13 @@ const AnimalList = () => {
           >
             {gifMode === "gif" ? (
               <div className="overflow-hidden rounded ">
-                <div className="h-[350px] w-[300px]">
+                {/* <div className="h-[350px] w-[300px]">
                   <ModelViewer
-                    usdz={animal.usdz}
-                    glb={animal.glb}
-                  ></ModelViewer>
-                </div>
+                     usdz={animal.usdz}
+                     glb={animal.glb}
+                   ></ModelViewer>
+                 </div> */}
+                <SingleAnimal data={animal} />
 
                 <div className="mt-4">
                   <Link href={`nft-product/${animal.slug}`}>
