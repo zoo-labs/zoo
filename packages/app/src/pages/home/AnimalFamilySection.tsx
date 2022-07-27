@@ -6,9 +6,7 @@ import { useGif } from "context/GifContext";
 //import BabylonAnim from "components/Babylon";
 
 import dynamic from "next/dynamic";
-const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
-  ssr: false,
-});
+import SingleAnimal from "./SingleAnimal";
 
 const animalFamilyData = [
   {
@@ -18,6 +16,10 @@ const animalFamilyData = [
     lowLimit: 40,
     usdz: "/models/Elephant/ELEPHANT_ADULT.usdz",
     glb: "/models/Elephant/ELEPHANT_ADULT.glb",
+    usdz_baby: "/models/Elephant/ELEPHANT_BABY.usdz",
+    glb_baby: "/models/Elephant/ELEPHANT_BABY.glb",
+    usdz_teen: "/models/Elephant/ELEPHANT_TEEN.usdz",
+    glb_teen: "/models/Elephant/ELEPHANT_TEEN.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
@@ -45,6 +47,10 @@ const animalFamilyData = [
     lowLimit: 40,
     usdz: "/models/Rhino/RHINO_ADULT.usdz",
     glb: "/models/Rhino/RHINO.glb",
+    usdz_baby: "/models/Rhino/RHINO_BABY.usdz",
+    glb_baby: "/models/Rhino/RHINO_BABY.glb",
+    usdz_teen: "/models/Rhino/RHINO_TEEN.usdz",
+    glb_teen: "/models/Rhino/RHINO_TEEN.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330489/zoo/javan-rhino_nkm1sw.mov",
@@ -74,6 +80,10 @@ const animalFamilyData = [
     lowLimit: 35,
     usdz: "/models/Tiger/TIGER_ADULT.usdz",
     glb: "/models/Tiger/TIGER_ADULT.glb",
+    usdz_baby: "/models/Tiger/TIGER_BABY.usdz",
+    glb_baby: "/models/Tiger/TIGER_BABY.glb",
+    usdz_teen: "/models/Tiger/TIGER_TEEN.usdz",
+    glb_teen: "/models/Tiger/TIGER_TEEN.glb",
     image:
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
     gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
@@ -118,14 +128,7 @@ const AnimalFamilySection = () => {
                 <div className="flex flex-col items-center w-full h-auto mb-8 AnimalFamily__image lg:basis-1/3">
                   <div className="p-px mb-8 overflow-hidden  bg-nft-gradient ">
                     {gifMode === "gif" ? (
-                      <div className="overflow-hidden rounded">
-                        <div className=" w-[400px] h-[400px]">
-                          <ModelViewer
-                            usdz={data.usdz}
-                            glb={data.glb}
-                          ></ModelViewer>
-                        </div>
-                      </div>
+                      <SingleAnimal data={data} />
                     ) : (
                       <div className="overflow-hidden bg-black rounded-lg">
                         <video
