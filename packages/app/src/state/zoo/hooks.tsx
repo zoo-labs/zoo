@@ -1039,7 +1039,9 @@ export function useFeed(): (animalID: number) => void {
   );
 }
 
-export function useFeedCount(): (animalID: number) => void {
+export function useFeedCount(): (
+  animalID: number
+) => Promise<{ count: number; lastTimeFed: number }> {
   const zooKeeper = useZooKeeper();
   const getZooBalance = useZoobalance();
 
@@ -1050,8 +1052,10 @@ export function useFeedCount(): (animalID: number) => void {
       try {
         const tx = await zooKeeper?.feededTimes(animalId);
         getZooBalance();
-        console.log(tx);
-        return Number(tx);
+        return {
+          count: Number(tx.count),
+          lastTimeFed: tx.lastTimeFed,
+        };
       } catch (e) {
         console.error("ISSUE GET FEED COUNT \n", e);
         getZooBalance();
