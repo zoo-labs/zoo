@@ -8,6 +8,10 @@ import { useGif } from "context/GifContext";
 import dynamic from "next/dynamic";
 import SingleAnimal from "./SingleAnimal";
 
+const ModelViewer = dynamic(() => import("components/ModelViewer"), {
+  ssr: false,
+});
+
 const animalFamilyData = [
   {
     id: "1",
@@ -128,7 +132,14 @@ const AnimalFamilySection = () => {
                 <div className="flex flex-col items-center w-full h-auto mb-8 AnimalFamily__image lg:basis-1/3">
                   <div className="p-px mb-8 overflow-hidden  bg-nft-gradient ">
                     {gifMode === "gif" ? (
-                      <SingleAnimal data={data} />
+                      <div className="overflow-hidden rounded">
+                        <div className=" w-[400px] h-[400px]">
+                          <ModelViewer
+                            usdz={data.usdz}
+                            glb={data.glb}
+                          ></ModelViewer>
+                        </div>
+                      </div>
                     ) : (
                       <div className="overflow-hidden bg-black rounded-lg">
                         <video
