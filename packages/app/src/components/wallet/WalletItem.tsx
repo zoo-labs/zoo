@@ -63,9 +63,14 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
           {datum.attributes &&
             typeof datum.attributes === "object" &&
             datum.attributes.map((attr, index) => {
+              if (datum.kind === 0 || datum.kind === 2) {
+                if (attr.trait_type === "Rarity") return null;
+              }
               return (
                 <div
                   className={`flex flex-col text-xs relative ${
+                    datum.kind !== 0 &&
+                    datum.kind !== 2 &&
                     index !== 0 &&
                     index + 1 !== datum.attributes.length &&
                     "items-center"
