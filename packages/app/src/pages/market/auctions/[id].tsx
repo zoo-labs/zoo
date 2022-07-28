@@ -92,17 +92,24 @@ const Item = () => {
               <div className="w-full">
                 <p className="font-semibold text-[52px]">{auction?.name}</p>
               </div>
-              <div className="flex items-center gap-2">
-                <Image src="/icons/status.svg" alt="" height={26} width={20} />
-                <div>
-                  <p className="text-sm font-medium">
-                    {auction?.attributes[0]?.trait_type}
-                  </p>
-                  <p className="font-medium text-[10px]">
-                    {auction?.attributes[0]?.value}
-                  </p>
+              {auction?.kind !== 0 && auction?.kind !== 2 ? (
+                <div className="flex items-center gap-2">
+                  <Image
+                    src="/icons/status.svg"
+                    alt=""
+                    height={26}
+                    width={20}
+                  />
+                  <div>
+                    <p className="text-sm font-medium">
+                      {auction?.attributes[0]?.trait_type}
+                    </p>
+                    <p className="font-medium text-[10px]">
+                      {auction?.attributes[0]?.value}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              ) : null}
               <div className="flex items-center gap-2">
                 <Image
                   src="/icons/population.svg"
