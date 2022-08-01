@@ -335,6 +335,7 @@ export function useGetNftTransfers(): () => void {
     dispatch(addNftTTransfers(bscNFTs.result.slice(0, 10)));
   }, [chainId, account, media?.address, Web3Api.account, dispatch]);
 }
+
 export function useGetAvailableEggs(): () => void {
   const dispatch = useAppDispatch();
   const dropContract = useDrop(true);
@@ -343,12 +344,12 @@ export function useGetAvailableEggs(): () => void {
     console.log("useGetAvailableEggs  contract", dropContract);
     try {
       const eggs: Array<any> = await dropContract?.getAllEggs();
-      console.log("useGetAvailableEggs eggs", eggs);
+      console.log("useGetAvailableEggs eggs", eggs?.length);
       if (!eggs) return;
       await [...eggs].map(async (egg) => {
         const data = (await axios.get(egg.data.metadataURI)).data;
         const { name, description, attributes, image, animation_url } = data;
-        console.log("eggsuseGetAvailableEggs ", data);
+        console.log("eggsuseGetAvailableEggs ", data, eggs.length);
 
         const finalEgg: AvailableEgg = {
           bidShares: {
@@ -366,8 +367,8 @@ export function useGetAvailableEggs(): () => void {
           price: Number(egg.price) / Math.pow(10, 18),
           supply: Number(egg.supply),
           timestamp: Number(egg.timestamp),
-          image: `https://zoolabs.mypinata.cloud/ipfs/${image.slice(7)}`,
-          animation_url: `https://zoolabs.mypinata.cloud/ipfs/${animation_url.slice(
+          image: `https://zoolabs.mypinata.cloud/ipfs/${image?.slice(7)}`,
+          animation_url: `https://zoolabs.mypinata.cloud/ipfs/${animation_url?.slice(
             7
           )}`,
           attributes,
@@ -1076,6 +1077,7 @@ export function useEditAuction(): (
   const getZooBalance = useZoobalance();
   return useCallback(
     async (auctionId, reservePrice, success) => {
+      console.log("THE_NEW_STUFF", { auctionId, reservePrice });
       try {
         const tx = await auction?.setAuctionReservePrice(
           auctionId,
@@ -1245,6 +1247,7 @@ export function useRefreshMetadata(): (
   metadataURI: string
 ) => void {
   const media = useMedia();
+  const zooKeeper = useZooKeeper();
   const addPopup = useAddPopup();
   const fetchMyNfts = useFetchMyNFTs();
   const dispatch = useDispatch();
@@ -1252,6 +1255,7 @@ export function useRefreshMetadata(): (
     async (tokenId, tokenUri, metadataURI) => {
       try {
         dispatch(loading(true));
+        await media?.setApprovalForAll(zooKeeper, true, { gasLimit: 4000000 });
         const updateMetadata = await media.updateTokenMetadataURI(
           tokenId,
           metadataURI,
@@ -1283,6 +1287,6 @@ export function useRefreshMetadata(): (
         dispatch(loading(false));
       }
     },
-    [addPopup, dispatch, fetchMyNfts, media]
+    [addPopup, dispatch, fetchMyNfts, media, zooKeeper]
   );
 }
