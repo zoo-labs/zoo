@@ -269,7 +269,7 @@ const MarketPlacePage = () => {
                           </div>
                         </div>
                         <div className="flex flex-col">
-                          {item.attributes.length > 0 &&
+                          {item.attributes?.length > 0 &&
                             item.attributes.map((attr, index) => {
                               if (attr.trait_type === "Rarity") return null;
                               return (

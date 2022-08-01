@@ -29,7 +29,7 @@ const CardNft = ({
       <div className="w-full h-full">
         <div className="min-h-[350px] h-full w-full borderGrad p-2">
           <div className="w-full h-full rounded-[0.225rem] flex flex-col justify-center items-center">
-            {nft.kind === 0 || nft.kind === 2 ? (
+            {nft?.kind === 0 || nft?.kind === 2 ? (
               <video
                 autoPlay
                 loop
