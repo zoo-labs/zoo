@@ -1077,7 +1077,6 @@ export function useEditAuction(): (
   const getZooBalance = useZoobalance();
   return useCallback(
     async (auctionId, reservePrice, success) => {
-      console.log("THE_NEW_STUFF", { auctionId, reservePrice });
       try {
         const tx = await auction?.setAuctionReservePrice(
           auctionId,
@@ -1253,9 +1252,18 @@ export function useRefreshMetadata(): (
   const dispatch = useDispatch();
   return useCallback(
     async (tokenId, tokenUri, metadataURI) => {
+      console.log("the_nft_to_fetch", {
+        tokenId,
+        tokenUri,
+        metadataURI,
+        media,
+        zooKeeper,
+      });
       try {
         dispatch(loading(true));
-        await media?.setApprovalForAll(zooKeeper, true, { gasLimit: 4000000 });
+        await media?.setApprovalForAll(zooKeeper.address, true, {
+          gasLimit: 4000000,
+        });
         const updateMetadata = await media.updateTokenMetadataURI(
           tokenId,
           metadataURI,
