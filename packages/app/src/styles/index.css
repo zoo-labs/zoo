@@ -189,6 +189,13 @@ video {
   background-size: 50%;
 }
 
+.dao-bg {
+  background: url("/images/bg/dao.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 @media screen and (min-width: 1200px) {
   .MarketPlace {
     background-position: center right;
