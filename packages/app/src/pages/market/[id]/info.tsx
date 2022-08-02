@@ -7,7 +7,11 @@ import dynamic from "next/dynamic";
 import { Auction } from "types";
 import { shortenAddress } from "functions";
 import { abbreviateNumber } from "functions/abbreviateNumbers";
-import { useGetAllAuctions, useGetTokenOwner } from "state/zoo/hooks";
+import {
+  useGetAllAuctions,
+  useGetTokenOwner,
+  useRefreshMetadata,
+} from "state/zoo/hooks";
 import { useZooKeeper, useMedia } from "hooks";
 import Web3 from "web3";
 import styled from "styled-components";
@@ -16,6 +20,7 @@ import useActiveWeb3React from "hooks/useActiveWeb3React";
 import { SUPPORTED_NETWORKS } from "config/networks";
 import moment from "moment";
 import CropFreeRoundedIcon from "@mui/icons-material/CropFreeRounded";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import { useExpandNFTModal, useShareModal } from "state/application/hooks";
 import NFTExpandedModal from "modals/ExpandNftModal";
 import ShareNFTModal from "modals/ShareNFTModal";
@@ -61,6 +66,7 @@ const InfoPage = () => {
   const getCreator = useGetTokenOwner();
   const toggleExpand = useExpandNFTModal();
   const toggleShare = useShareModal();
+  const refetchStuff = useRefreshMetadata();
 
   const fetchContractNFTTransfers = useCallback(async () => {
     const options: { chain?: any; address: string } = {
@@ -126,6 +132,10 @@ const InfoPage = () => {
     setZooBnbPrice(parseFloat(value));
   }, [zooKeeper]);
 
+  const refresh = useCallback(async () => {
+    refetchStuff(nft.tokenID, nft.tokenUri, nft.animation_url);
+  }, [refetchStuff, nft]);
+
   useEffect(() => {
     getZooBnbPrice();
     getAllAuctions();
@@ -183,6 +193,12 @@ const InfoPage = () => {
             onClick={toggleExpand}
           >
             <CropFreeRoundedIcon width={18} height={18} />
+          </button>
+          <button
+            className="flex items-center justify-center gap-3 py-3.5 px-3.5 bg-gray-100 rounded-full"
+            onClick={refresh}
+          >
+            <RefreshIcon width={18} height={18} />
           </button>
         </div>
       </div>

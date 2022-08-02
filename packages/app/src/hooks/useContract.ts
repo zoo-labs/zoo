@@ -81,7 +81,6 @@ export function useContract(
   const { ethereum } = window;
 
   const provider = new ethers.providers.Web3Provider(ethereum);
-  console.log("TRYINGTO GET NEW LIBRARY", provider);
 
   let address: string | AddressMap | undefined = nameOrAddress;
   let chainIdStr = chainId ? chainId.toString() : "97";

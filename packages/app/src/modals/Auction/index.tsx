@@ -51,7 +51,7 @@ export default function AuctionModal({
     (duration_, reservePrice_, curatorFee_) => {
       if (account) {
         if (edit) {
-          editAuction(nft?.auctionId, reservePrice, () => {
+          editAuction(nft?.auctionId, reservePrice_, () => {
             successCallback();
           });
         } else {
@@ -67,7 +67,16 @@ export default function AuctionModal({
         toggleWallet();
       }
     },
-    [account, auction, edit, nft?.id, successCallback, toggleWallet]
+    [
+      account,
+      auction,
+      edit,
+      editAuction,
+      nft?.auctionId,
+      nft?.id,
+      successCallback,
+      toggleWallet,
+    ]
   );
 
   function getModalContent() {
