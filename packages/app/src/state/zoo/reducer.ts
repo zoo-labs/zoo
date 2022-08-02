@@ -84,7 +84,9 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(addEgg, (state, { payload: egg }: { payload: AvailableEgg }) => {
       if (egg && !isEmptyObj(egg)) {
-        state.availableEggs[egg.id - 1] = egg;
+        if (state.availableEggs.length < 3) {
+          state.availableEggs[egg.id - 1] = egg;
+        }
       } else {
         console.log("NOT_ADDED_EGG", egg);
       }
@@ -95,12 +97,15 @@ export default createReducer(initialState, (builder) =>
         state.myNfts[nft.index] = nft;
       }
     })
-    .addCase(addAuctionNft, (state, { payload: auction }: { payload: Auction }) => {
-      console.log("update auction", auction);
-      if (auction && !isEmptyObj(auction)) {
-        state.allAuctions[auction.index] = auction;
+    .addCase(
+      addAuctionNft,
+      (state, { payload: auction }: { payload: Auction }) => {
+        console.log("update auction", auction);
+        if (auction && !isEmptyObj(auction)) {
+          state.allAuctions[auction.index] = auction;
+        }
       }
-    })
+    )
     .addCase(eggsCount, (state, action) => {
       state.myEggsCount = action.payload;
     })

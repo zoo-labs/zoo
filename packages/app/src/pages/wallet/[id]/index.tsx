@@ -13,8 +13,10 @@ import {
   useFreeNftModal,
   useHatchEggAnimationModal,
   useAddPopup,
+  useShareModal,
 } from "state/application/hooks";
-import BidModalHeader from "components/ModalHeader/BidModalHeader";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import ShareIcon from "@mui/icons-material/Share";
 import Image from "next/image";
 import AccessAlarmRoundedIcon from "@mui/icons-material/AccessAlarmRounded";
 import { MyNFT } from "state/zoo/types";
@@ -28,6 +30,7 @@ import HatchEggAnimationModal from "modals/HatchEggModal/Animation";
 import ModalLayout from "layouts/Modal";
 import { NextComponentType, NextPageContext } from "next";
 import { AppProps } from "next/app";
+import ShareNFTModal from "modals/ShareNFTModal";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -52,6 +55,7 @@ const NftModal = ({}: AppProps & {
   const feedCount = useFeedCount();
   const refetch = useRefreshMetadata();
   const addPopup = useAddPopup();
+  const toggleShare = useShareModal();
   const { id } = router.query;
 
   const feed = async () => {
@@ -134,8 +138,24 @@ const NftModal = ({}: AppProps & {
         <div className="rounded-xl p-px h-full bg-transparent px-5 py-3 w-full lg:w-[60%]">
           <div className="flex flex-col items-start text-white gap-9 mb-7">
             <div className="flex flex-wrap items-center w-full space-y-3 gap-x-4">
-              <div className="w-full">
+              <div className="w-full flex items-center justify-between">
                 <p className="font-semibold text-[52px]">{nftItem?.name}</p>
+                <div className=" flex items-center rounded-xl border-2 border-[#323341]">
+                  <button
+                    className="px-4 py-2 cursor-pointer border-r border-[#323341] outline-none focus:outline-none disabled:cursor-not-allowed"
+                    disabled={loading || feeding}
+                    onClick={refetchMetadata}
+                  >
+                    <RefreshIcon />
+                  </button>
+                  <button
+                    disabled={loading || feeding}
+                    className="px-4 py-2 cursor-pointer border-l border-[#323341] outline-none focus:outline-none disabled:cursor-not-allowed"
+                    onClick={toggleShare}
+                  >
+                    <ShareIcon />
+                  </button>
+                </div>
               </div>
               {nftItem.kind !== 0 && nftItem.kind !== 2 ? (
                 <div className="flex items-center gap-2">
@@ -266,13 +286,6 @@ const NftModal = ({}: AppProps & {
                       FREE
                     </button>
                   )}
-                  <button
-                    className="w-[23%] p-2 mb-1 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-nft-gradient disabled:cursor-not-allowed disabled:opacity-60"
-                    disabled={loading || feeding}
-                    onClick={() => refetchMetadata()}
-                  >
-                    REFRESH
-                  </button>
                 </div>
               </div>
               <div className="w-full text-sm">
@@ -327,6 +340,7 @@ const NftModal = ({}: AppProps & {
       />
       <FreeNFTModal nft={nftItem} />
       <AuctionModal nft={nftItem} />
+      <ShareNFTModal nft={nftItem} />
       {Object.keys(nftAnimate).length > 0 && (
         <HatchEggAnimationModal nft={nftAnimate} />
       )}
