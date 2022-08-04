@@ -91,7 +91,7 @@ class Helper {
   async buyEgg(signerIdx: number = 0) {
     // await this.zooToken.connect(this.zooKeeper.address).approve(addr, this.eggPrice)
     await this.ZOO.approve(this.zooKeeper.address, MaxUint256)
-    const tx = await this.zooKeeper.buyEggs(1, 1, 2)
+    const tx = await this.zooKeeper.buyEggs(1, 1)
     const args = await this.getEventData(tx, 'BuyEgg')
     return { from_evt: args['from'], eggID: args['eggID'] }
   }
