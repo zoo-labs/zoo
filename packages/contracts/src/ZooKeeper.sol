@@ -10,7 +10,7 @@ import { IDrop } from "./interfaces/IDrop.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 import { IZoo } from "./interfaces/IZoo.sol";
 import { IERC721Burnable } from "./interfaces/IERC721Burnable.sol";
-import { IUniswapV2Pair } from "./interfaces/IUniswapV2Pair.sol";
+import { IUniswapV2Pair } from "./uniswapv2/interfaces/IUniswapV2Pair.sol";
 import { IKeeper } from "./interfaces/IKeeper.sol";
 
 interface ICustomDrop{
