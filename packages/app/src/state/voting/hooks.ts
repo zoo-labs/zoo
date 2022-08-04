@@ -1,13 +1,11 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-
-
 import axios from "axios";
 
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import { signMessage } from "hooks/webReact";
 import {
+  useAddPopup,
   useBlockNumber,
   useCastVoteModalToggle,
   useWalletModalToggle,
@@ -16,9 +14,14 @@ import { toast } from "react-toastify";
 
 import { Proposal } from "types";
 // import { useAddProposal, useHasVoted, useVoteProposal } from "hooks/useVote";
-import { useApproveCallback } from "hooks/useApproveCallback";
+import {
+  useApproveCallback,
+  useVotingApproveCallback,
+} from "hooks/useApproveCallback";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "state/hooks";
+import { useAddProposal, useVoteProposal } from "hooks/useVote";
+import { useZooVoting } from "hooks";
 
 const pinataApiKey = process.env.NEXT_PUBLIC_PINATA_API_KEY as string;
 const pinataSecretApiKey = process.env
@@ -53,8 +56,8 @@ export function useCreateProposals(): (
   const toggleWallet = useWalletModalToggle();
   const { votingPower } = useSelector((state: any) => state.voting);
   const blockNumber = useBlockNumber();
-
-  const dispatch = useAppDispatch();
+  const addProposal = useAddProposal();
+  const addPopup = useAddPopup();
   console.log("creting proposals");
 
   return useCallback(
@@ -89,6 +92,13 @@ export function useCreateProposals(): (
       ) {
         console.log("kindly complete the form");
         toast.error("kindly complete the form");
+        addPopup({
+          txn: {
+            hash: null,
+            summary: "kindly complete the form",
+            success: false,
+          },
+        });
         callback();
         return;
       }
@@ -137,12 +147,12 @@ export function useCreateProposals(): (
         const proposal = await pinJSONToIPFS(payload);
         console.log("proposal proposal", proposal);
 
-        // await addProposal(
-        //   proposal,
-        //   startTimestamp,
-        //   endTimestamp,
-        //   successCallback
-        // );
+        await addProposal(
+          proposal,
+          startTimestamp,
+          endTimestamp,
+          successCallback
+        );
         successCallback();
         callback();
       } catch (error: any) {
@@ -150,7 +160,16 @@ export function useCreateProposals(): (
         callback();
       }
     },
-    [dispatch, chainId, account]
+    [
+      account,
+      chainId,
+      votingPower,
+      toggleWallet,
+      addPopup,
+      blockNumber,
+      library,
+      addProposal,
+    ]
   );
 }
 
@@ -161,75 +180,86 @@ export function useHandleVoteProposal(): (
 ) => void {
   const { library, account, chainId } = useActiveWeb3React();
   const toggleWallet = useWalletModalToggle();
-  // const [approvalState, approve] = useApproveCallback(50, contract?.address);
+  const voteProposal = useVoteProposal();
+  const contract = useZooVoting();
+  const [approvalState, approve] = useVotingApproveCallback(
+    50,
+    contract?.address
+  );
   const toggleCastVoteModal = useCastVoteModalToggle();
 
   const router = useRouter();
-  return useCallback(async (data, vote, successCallback) => {
-    console.log("about_vote", account);
-    if (!account) {
-      toggleWallet();
-      return;
-    }
-    if (!vote) {
-      alert("Please select a vote");
-      return;
-    }
+  return useCallback(
+    async (data, vote, successCallback) => {
+      console.log("about_vote", account);
+      if (!account) {
+        toggleWallet();
+        return;
+      }
+      if (!vote) {
+        alert("Please select a vote");
+        return;
+      }
 
-    // const voted = await hasVoted(
-    //   account,
-    //   data.proposalIpfs,
-    //   () => {},
-    //   () => {}
-    // );
-    // if (voted) {
-    //   notify("You have already voted", "info", {
-    //     position: "top-center",
-    //   });
-    //   return;
-    // } else
+      // const voted = await hasVoted(
+      //   account,
+      //   data.proposalIpfs,
+      //   () => {},
+      //   () => {}
+      // );
+      // if (voted) {
+      //   notify("You have already voted", "info", {
+      //     position: "top-center",
+      //   });
+      //   return;
+      // } else
 
-    // if (!approvalState) {
-    //   const allowed = await approve();
-    //   console.log("allowedsss", allowed);
-    // }
-    const payload = {
-      timestamp: new Date().getTime(),
-      token: "ZOO",
-      type: "Vote",
-      proposalCid: data.proposalIpfs,
-      choice: vote,
-    };
-    // await voteProposal(
-    //   data.proposalIpfs,
-    //   vote === "approve" ? true : false,
-    //   () => {
-    //     console.log("_proposal", data);
-    //     successCallback && successCallback();
-    //     toggleCastVoteModal();
-    //     // router.push("/vote");
-    //   },
-    //   () => {}
-    // );
-  }, []);
+      if (!approvalState) {
+        const allowed = await approve();
+        console.log("allowedsss", allowed);
+      }
+      const payload = {
+        timestamp: new Date().getTime(),
+        token: "ZOO",
+        type: "Vote",
+        proposalCid: data.proposalIpfs,
+        choice: vote,
+      };
+      await voteProposal(
+        data.proposalIpfs,
+        vote === "approve" ? true : false,
+        () => {
+          console.log("_proposal", data);
+          successCallback && successCallback();
+          toggleCastVoteModal();
+        },
+        () => {}
+      );
+    },
+    [
+      account,
+      approvalState,
+      approve,
+      toggleCastVoteModal,
+      toggleWallet,
+      voteProposal,
+    ]
+  );
 }
 
 export function useGetVotingAmount(): (
   address: string,
   proposal: string
 ) => Promise<{ approvedTimes: number; disapprovedTimes: number }> {
-  return useCallback(
-    async (address, proposal) => {
-      // const votingAmount = await contract?.votingAmount(address, proposal);
-      // const tx = await votingAmount.wait();
-      let votingAmount;
-      const struct = {
-        approvedTimes: Number(votingAmount?.approvedTimes),
-        disapprovedTimes: Number(votingAmount?.dissaprovedTimes),
-      };
-      // console.log("_votingDeet", struct, votingAmount);
-      return struct;
-    },
-    []
-  );
+  const contract = useZooVoting();
+  return useCallback(async (address, proposal) => {
+    const votingAmount = await contract?.votingAmount(address, proposal);
+    // const tx = await votingAmount.wait();
+    const struct = {
+      approvedTimes: Number(votingAmount?.approvedTimes),
+      disapprovedTimes: Number(votingAmount?.dissaprovedTimes),
+    };
+    console.log("_votingDeet", struct, votingAmount);
+    return struct;
+  }, []);
 }
