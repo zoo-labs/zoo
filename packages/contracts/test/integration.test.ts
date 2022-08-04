@@ -115,11 +115,11 @@ describe('integration', async () => {
       console.log('action currency', await auction.tokenAddress())
       // console.log('onwer of tokenId', await media.auctions(0).tokenOwner)
       // console.log('createbid auction', await auction._exists(1))
-      await auction.connect(bidderA).createBid(0, ONE_ZOO, { value: ONE_ZOO })
-      await auction.connect(bidderB).createBid(0, TWO_ZOO, { value: TWO_ZOO })
+      await auction.connect(bidderA).createBid(1, ONE_ZOO, { value: ONE_ZOO })
+      await auction.connect(bidderB).createBid(1, TWO_ZOO, { value: TWO_ZOO })
       await ethers.provider.send('evm_increaseTime', [ONE_DAY]);
       await ethers.provider.send('evm_mine', []);
-      await auction.connect(otherUser).endAuction(0)
+      await auction.connect(otherUser).endAuction(1)
     }
 
     it('should transfer the NFT to the winning bidder', async () => {
@@ -160,17 +160,17 @@ describe('integration', async () => {
     async function run() {
       await media.connect(owner).approve(auction.address, 1)
       await auction.connect(owner).createAuction(1, media.address, ONE_DAY, TENTH_ZOO, curatorAddress, 20, token.address)
-      await auction.connect(curator).setAuctionApproval(0, true)
+      await auction.connect(curator).setAuctionApproval(1, true)
       await token.connect(deployer).mint(bidderAAddress, ONE_ZOO)
       await token.connect(deployer).mint(bidderBAddress, TWO_ZOO)
       await token.connect(bidderA).approve(auction.address, ONE_ZOO)
       // await token.connect(bidderB).deposit({ value: TWO_ZOO });
       await token.connect(bidderB).approve(auction.address, TWO_ZOO)
-      await auction.connect(bidderA).createBid(0, ONE_ZOO, { value: ONE_ZOO })
-      await auction.connect(bidderB).createBid(0, TWO_ZOO, { value: TWO_ZOO })
+      await auction.connect(bidderA).createBid(1, ONE_ZOO, { value: ONE_ZOO })
+      await auction.connect(bidderB).createBid(1, TWO_ZOO, { value: TWO_ZOO })
       await ethers.provider.send('evm_increaseTime', [ONE_DAY]);
       await ethers.provider.send('evm_mine', []);
-      await auction.connect(otherUser).endAuction(0)
+      await auction.connect(otherUser).endAuction(1)
     }
 
     it('should transfer the NFT to the winning bidder', async () => {
@@ -224,11 +224,11 @@ describe('integration', async () => {
       await token.connect(deployer).mint(bidderBAddress, TWO_ZOO)
       // await token.connect(bidderB).deposit({ value: TWO_ZOO });
       await token.connect(bidderB).approve(auction.address, TWO_ZOO)
-      await auction.connect(bidderA).createBid(0, ONE_ZOO, { value: ONE_ZOO })
-      await auction.connect(bidderB).createBid(0, TWO_ZOO, { value: TWO_ZOO })
+      await auction.connect(bidderA).createBid(1, ONE_ZOO, { value: ONE_ZOO })
+      await auction.connect(bidderB).createBid(1, TWO_ZOO, { value: TWO_ZOO })
       await ethers.provider.send('evm_increaseTime', [ONE_DAY]);
       await ethers.provider.send('evm_mine', []);
-      await auction.connect(otherUser).endAuction(0)
+      await auction.connect(otherUser).endAuction(1)
     }
 
     it('should transfer the NFT to the winning bidder', async () => {
@@ -268,18 +268,18 @@ describe('integration', async () => {
     async function run() {
       await media.connect(owner).approve(auction.address, 1)
       await auction.connect(owner).createAuction(1, media.address, ONE_DAY, TENTH_ZOO, curator.address, 20, token.address)
-      await auction.connect(curator).setAuctionApproval(0, true)
+      await auction.connect(curator).setAuctionApproval(1, true)
       // await token.connect(bidderA).deposit({ value: ONE_ZOO });
       await token.connect(deployer).mint(bidderAAddress, ONE_ZOO)
       await token.connect(deployer).mint(bidderBAddress, TWO_ZOO)
       await token.connect(bidderA).approve(auction.address, ONE_ZOO)
       // await token.connect(bidderB).deposit({ value: TWO_ZOO });
       await token.connect(bidderB).approve(auction.address, TWO_ZOO)
-      await auction.connect(bidderA).createBid(0, ONE_ZOO, { value: ONE_ZOO })
-      await auction.connect(bidderB).createBid(0, TWO_ZOO, { value: TWO_ZOO })
+      await auction.connect(bidderA).createBid(1, ONE_ZOO, { value: ONE_ZOO })
+      await auction.connect(bidderB).createBid(1, TWO_ZOO, { value: TWO_ZOO })
       await ethers.provider.send('evm_increaseTime', [ONE_DAY]);
       await ethers.provider.send('evm_mine', []);
-      await auction.connect(otherUser).endAuction(0)
+      await auction.connect(otherUser).endAuction(1)
     }
 
     it('should transfer the NFT to the winning bidder', async () => {
@@ -326,17 +326,17 @@ describe('integration', async () => {
     async function run() {
       await otherNft.connect(owner).approve(auction.address, 1)
       await auction.connect(owner).createAuction(1, otherNft.address, ONE_DAY, TENTH_ZOO, curatorAddress, 20, token.address)
-      await auction.connect(curator).setAuctionApproval(0, true)
+      await auction.connect(curator).setAuctionApproval(1, true)
       await token.connect(deployer).mint(bidderAAddress, ONE_ZOO)
       await token.connect(deployer).mint(bidderBAddress, TWO_ZOO)
       await token.connect(bidderA).approve(auction.address, ONE_ZOO)
       // await token.connect(bidderB).deposit({ value: TWO_ZOO });
       await token.connect(bidderB).approve(auction.address, TWO_ZOO)
-      await auction.connect(bidderA).createBid(0, ONE_ZOO, { value: ONE_ZOO })
-      await auction.connect(bidderB).createBid(0, TWO_ZOO, { value: TWO_ZOO })
+      await auction.connect(bidderA).createBid(1, ONE_ZOO, { value: ONE_ZOO })
+      await auction.connect(bidderB).createBid(1, TWO_ZOO, { value: TWO_ZOO })
       await ethers.provider.send('evm_increaseTime', [ONE_DAY]);
       await ethers.provider.send('evm_mine', []);
-      await auction.connect(otherUser).endAuction(0)
+      await auction.connect(otherUser).endAuction(1)
     }
     it('should transfer the NFT to the winning bidder', async () => {
       await run()
