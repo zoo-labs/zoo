@@ -28,11 +28,11 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
   borderRadius: 5,
   [`&.${linearProgressClasses.colorPrimary}`]: {
-    backgroundColor: "#282646",
+    backgroundColor: "#213036",
   },
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 5,
-    backgroundColor: "#3A6EE7",
+    backgroundColor: "#15F195",
   },
 }));
 
@@ -130,67 +130,63 @@ const SingleVote = () => {
   };
 
   return (
-    <div className="Home flex flex-col justify-center items-center min-h-[70vh]">
-      <div className="w-full px-4 py-16 mx-auto mt-24 lg:max-w-7xl">
+    <div className="dao-bg w-full Home flex flex-col justify-center items-center min-h-[70vh]">
+      <div className="w-full px-4 pb-16 mx-auto mt-12 lg:max-w-6xl">
         <a
           onClick={goBack}
-          className="flex items-center justify-start gap-4 mb-10 text-left"
+          className="flex items-center justify-star mb-10 text-left cursor-pointer"
         >
-          <Image src="/icons/arrow-left.svg" alt="" height={30} width={30} />
-          <span className="text-lg font-semibold">Back to vote overview</span>
+          <Image src="/icons/arrow-left.svg" alt="" height={12} width={16} />
+          <span className="text-sm font-light ml-3">Back</span>
         </a>
-        <div className="flex flex-col md:flex-row md:items-start gap-7">
+        <div className="flex flex-col md:flex-row md:items-start gap-14">
           <div className="w-full md:w-3/5">
-            <div className="flex items-center gap-3 mb-4">
+            <p className="mb-4 text-2xl font-normal md:text-2xl md:mb-8 max-w-[487px]">
+              {/* {_proposal?.title} */}
+              ARC: Extend the Safety Module Protection to Aave V2 Avalanche
+            </p>
+            <div className="flex items-center gap-3 mb-8">
               <button
-                className={`rounded-full py-2 md:py-3.5 px-4 md:px-5 ${
-                  status === ProposalState.ENDED
-                    ? "bg-space-gray-500"
-                    : status === ProposalState.PENDING
-                    ? "bg-space-yellow"
-                    : "bg-space-green"
-                } text-sm font-medium`}
+                className={`rounded-full py-1.5 md:py-2.5 px-4 md:px-5 bg-activeGreen text-sm font-medium`}
               >
                 {status}
               </button>
 
               {_proposal?.proposalType === 0 ? (
-                <button className="rounded-full py-2.5 md:py-3.5 px-4 md:px-5 border border-space-purple text-space-purple text-sm font-medium">
+                <button className="rounded-full py-1.5 md:py-2.5 px-4 md:px-5  border border-zoo-green text-zoo-green text-sm font-medium">
                   Core
                 </button>
               ) : (
-                <button className="rounded-full py-2.5 md:py-3.5 px-4 md:px-5 border border-space-pink text-space-pink text-sm font-medium">
+                <button className="rounded-full py-1.5 md:py-2.5 px-4 md:px-5  border border-zoo-green text-zoo-green text-sm font-medium">
                   Community
                 </button>
               )}
             </div>
-            <p className="mb-4 text-2xl font-semibold md:text-4xl md:mb-8">
-              {_proposal?.title}
+            <p className="mb-1.5 text-sm font-light opacity-[0.45]">
+              Proposal Description
             </p>
             <p
-              className="mb-6 text-sm text-white md:text-xl md:mb-10"
+              className="mb-6 text-sm text-white md:text-sm md:mb-10"
               dangerouslySetInnerHTML={{
-                __html: sanitizeHtml(_proposal?.description),
+                // __html: sanitizeHtml(_proposal?.description),
+                __html: sanitizeHtml(
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius tincidunt egestas porta tincidunt in. Eros, venenatis et ullamcorper quis diam velit eu. Senectus luctus enim turpis urna. Iaculis a sagittis tincidunt id ac.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius tincidunt egestas porta tincidunt in. Eros, venenatis et ullamcorper quis diam velit eu. Senectus luctus enim turpis urna. Iaculis a sagittis tincidunt id ac."
+                ),
               }}
             />
-            {/* {_proposal?.description} */}
-            {_proposal && new Date(_proposal.endTime) > new Date() ? (
-              <div className="w-full mb-6 border rounded-3xl border-space-grey bg-space-dark">
-                <div className="flex items-center justify-between w-full px-6 py-6 text-2xl font-semibold bg-space-grey md:px-12 rounded-t-3xl">
-                  Cast your vote
-                </div>
-                <div className="px-6 py-6 md:px-12">
+            <p className="flex items-center justify-between w-full text-sm font-light rounded-t-3xl mb-2.5">
+              Cast your vote
+            </p>
+            <div className="w-full mb-6 border rounded-2xl border-white-10">
+              <div className="p-5">
+                <div className="flex items-center justify-between mb-6">
                   <div
                     onClick={() => setVote("approve")}
-                    className={`w-full py-4 px-5 mb-6 rounded-xl border ${
-                      vote === "approve"
-                        ? "border-space-blue"
-                        : "border-space-gray-300"
-                    } flex items-center gap-4 cursor-pointer`}
+                    className={`flex-1 py-4 px-5 mr-3 rounded-xl border border-white-10 flex items-center gap-4 cursor-pointer`}
                   >
                     <div
-                      className={`h-6 w-6 bg-space-grey rounded-full ${
-                        vote === "approve" && "border-4 border-space-blue"
+                      className={`h-4 w-4 rounded-full border border-white-60 ${
+                        vote === "approve" ? "bg-activeGreen" : "bg-white-20"
                       }`}
                     />
                     <p className="font-medium">Approve</p>
@@ -198,48 +194,32 @@ const SingleVote = () => {
 
                   <div
                     onClick={() => setVote("disapprove")}
-                    className={`w-full py-4 px-5 mb-6 rounded-xl border ${
-                      vote === "disapprove"
-                        ? "border-space-blue"
-                        : "border-space-gray-300"
-                    } flex items-center gap-4 cursor-pointer`}
+                    className={`flex-1 py-4 px-5 rounded-xl border border-white-10 flex items-center gap-4 cursor-pointer`}
                   >
                     <div
-                      className={`h-6 w-6 bg-space-grey rounded-full ${
-                        vote === "disapprove" && "border-4 border-space-blue"
+                      className={`h-4 w-4 rounded-full border border-white-60 ${
+                        vote === "disapprove" ? "bg-activeGreen" : "bg-white-20"
                       }`}
                     />
                     <p className="font-medium">Disapprove</p>
                   </div>
-                  {/* {[ApprovalState.NOT_APPROVED, ApprovalState.UNKNOWN].includes(
-                    approvalState
-                  ) ? (
-                    <button
-                      type="button"
-                      className="px-12 py-3 text-lg text-center text-white transition duration-200 ease-in rounded-full shadow-md bg-space-gray-100 hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
-                      onClick={approve}
-                    >
-                      Approve
-                    </button>
-                  ) : ( */}
-                  <button
-                    disabled={account && !vote}
-                    className="py-2.5 md:py-4 px-4 md:px-6 bg-proposal-button rounded-full disabled:cursor-not-allowed"
-                    onClick={handleVote}
-                  >
-                    {account ? "Cast Vote" : "Connect to wallet"}
-                  </button>
-                  {/* )} */}
                 </div>
+                <button
+                  disabled={account && !vote}
+                  className="py-2.5 md:py-4 px-4 md:px-6 bg-bid-gradient rounded-full disabled:cursor-not-allowed"
+                  onClick={handleVote}
+                >
+                  {account ? "Cast Vote" : "Connect to wallet"}
+                </button>
               </div>
-            ) : (
-              <div className="p-4 my-4 italic font-semibold rounded-3xl bg-space-grey">
-                Proposal End Date reached
-              </div>
-            )}
-            <div className="w-full border rounded-3xl border-space-grey bg-space-dark">
-              <div className="flex items-center justify-between w-full px-6 py-6 text-2xl font-semibold bg-space-grey md:px-12 rounded-t-3xl">
-                Votes ({votes?.length})
+            </div>
+
+            <div className="w-full border rounded-2xl border-white-10">
+              <div className="flex items-center w-full p-5 text-sm font-light bg-white-5 rounded-t-2xl">
+                Current Votes
+                <span className="ml-3 text-12 text-center bg-activeGreen p-1 rounded-full min-w-[40px]">
+                  {votes?.length}
+                </span>
               </div>
               <div className="">
                 {votes?.length === 0 ? (
@@ -252,14 +232,14 @@ const SingleVote = () => {
                       key={index}
                       className={`flex justify-between items-center py-5 px-6 md:px-12 ${
                         index !== votes.length - 1 &&
-                        "border-b border-space-gray-100"
+                        "border-b border-primary-500"
                       }`}
                     >
                       <a
                         href={`https://rinkeby.etherscan.io/address/${vote.voterAddress}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-3 font-medium text-space-blue-dark"
+                        className="flex items-center gap-3 font-semibold text-activeGreen"
                       >
                         {vote.voterAddress && shortenAddress(vote.voterAddress)}
                         <Image
@@ -269,31 +249,22 @@ const SingleVote = () => {
                           height={16}
                         />
                       </a>
-                      <p className="font-medium">
+                      <p className="font-semibold">
                         {vote?.vote ? "Approve" : "Disapprove"}
                       </p>
-                      {/* <a className="flex items-center gap-3 font-medium">
-                      19,180.831
-                      <Image
-                        src="/icons/link.svg"
-                        alt=""
-                        width={16}
-                        height={16}
-                      />
-                    </a> */}
                     </div>
                   ))
                 )}
               </div>
             </div>
           </div>
-          <div className="w-full md:w-2/5">
-            <div className="w-full mb-6 border rounded-3xl border-space-grey bg-space-dark">
-              <div className="flex items-center justify-between w-full py-6 text-2xl font-semibold bg-space-grey px-7 rounded-t-3xl">
-                Details
-              </div>
-              <div className="py-6 px-7">
-                <p className="mb-6 text-space-light-gray">
+          <div className="w-full md:w-2/5 pt-6">
+            <div className="w-full mb-14 border rounded-2xl border-white-10">
+              <p className="flex items-center justify-between w-full p-5 text-sm font-light bg-white-5 rounded-t-2xl">
+                Information
+              </p>
+              <div className="p-5">
+                <p className="mb-2.5 text-space-light-gray">
                   Identifier:{" "}
                   <a
                     href={`https://gateway.ipfs.io/ipfs/${_proposal?.proposalIpfs}`}
@@ -310,7 +281,7 @@ const SingleVote = () => {
                     />
                   </a>
                 </p>
-                <p className="mb-6 text-space-light-gray">
+                <p className="mb-2.5 text-space-light-gray">
                   Creator:{" "}
                   <a
                     href={`https://rinkeby.etherscan.io/address/${_proposal?.creator}`}
@@ -329,7 +300,7 @@ const SingleVote = () => {
                     />
                   </a>
                 </p>
-                <p className="mb-6 text-space-light-gray">
+                <p className="mb-2.5 text-space-light-gray">
                   Snapshot:{" "}
                   <a
                     href={`https://etherscan.io/block/${_proposal?.blockNumber}`}
@@ -346,43 +317,25 @@ const SingleVote = () => {
                     />
                   </a>
                 </p>
-                <div className="px-5 py-5 bg-space-grey rounded-xl">
-                  <button
-                    className={`rounded-full py-2.5 px-5 ${
-                      status === ProposalState.PENDING
-                        ? "bg-space-yellow"
-                        : status === ProposalState.ONGOING
-                        ? "bg-space-green"
-                        : "bg-space-gray-500"
-                    }  text-sm font-medium mb-3.5`}
-                  >
-                    {status === ProposalState.PENDING
-                      ? "Starting Soon"
-                      : status === ProposalState.ONGOING
-                      ? "Vote Now"
-                      : "Vote Closed"}
-                  </button>
-
-                  <p className="mb-3 text-space-light-gray">
-                    Start Date:{" "}
-                    <a className="inline-flex items-center gap-3 font-semibold text-white">
-                      {startTime}
-                    </a>
-                  </p>
-                  <p className="text-space-light-gray">
-                    End Date:{" "}
-                    <a className="inline-flex items-center gap-3 font-semibold text-white">
-                      {endTime}
-                    </a>
-                  </p>
-                </div>
+                <p className="mb-2.5 text-space-light-gray">
+                  Start Date:{" "}
+                  <a className="inline-flex items-center gap-3 font-semibold text-white">
+                    {startTime}
+                  </a>
+                </p>
+                <p className="text-space-light-gray">
+                  End Date:{" "}
+                  <a className="inline-flex items-center gap-3 font-semibold text-white">
+                    {endTime}
+                  </a>
+                </p>
               </div>
             </div>
-            <div className="w-full mb-6 border rounded-3xl border-space-grey bg-space-dark">
-              <div className="flex items-center justify-between w-full py-6 text-2xl font-semibold bg-space-grey px-7 rounded-t-3xl">
-                Current results
+            <div className="w-full mb-6 border rounded-2xl border-white-10 bg-space-dark">
+              <div className="flex items-center justify-between w-full p-5 text-sm font-light bg-white-5 rounded-t-2xl">
+                Current Results
               </div>
-              <div className="py-6 px-7">
+              <div className="p-5">
                 <div className="mb-4">
                   <p className="mb-2 text-lg font-medium">Approve</p>
                   <BorderLinearProgress
