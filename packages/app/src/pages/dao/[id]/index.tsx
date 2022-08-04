@@ -20,9 +20,10 @@ import { format, isDate, differenceInSeconds } from "date-fns";
 import CastVoteModal from "modals/CastVoteModal";
 import { ApprovalState, useApproveCallback } from "hooks/useApproveCallback";
 import { Proposal } from "types";
-import { ProposalState } from "hooks/useVote";
+import { ProposalState, useGetAllVoters } from "hooks/useVote";
 
 import { getProposalState } from "functions/proposal";
+import { useGetVotingAmount, useHandleVoteProposal } from "state/voting/hooks";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -57,7 +58,9 @@ const SingleVote = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [status, setStatus] = useState(ProposalState.UNKNOWN);
-
+  const handleVoteProposal = useHandleVoteProposal();
+  const getAllVoters = useGetAllVoters();
+  const getVotingAmount = useGetVotingAmount();
   const toggleCastVoteModal = useCastVoteModalToggle();
 
   const [approvedCount, setApprovedCount] = useState(0);
@@ -68,29 +71,29 @@ const SingleVote = () => {
     setProposal(proposal);
   }, [id, proposals]);
 
-  // useEffect(() => {
-  //   getVotingAmount(account, `${id}`).then((voteCounts) => {
-  //     const { approvedTimes, disapprovedTimes } = voteCounts;
-  //     setApprovedCount(approvedTimes);
-  //     setDisapprovedCount(disapprovedTimes);
-  //   });
-  // }, [account, getVotingAmount, id]);
+  useEffect(() => {
+    getVotingAmount(account, `${id}`).then((voteCounts) => {
+      const { approvedTimes, disapprovedTimes } = voteCounts;
+      setApprovedCount(approvedTimes);
+      setDisapprovedCount(disapprovedTimes);
+    });
+  }, [account, getVotingAmount, id]);
 
-  // const fetchVoteCounts = useCallback(() => {
-  //   getVotingAmount(account, `${id}`).then((voteCounts) => {
-  //     const { approvedTimes, disapprovedTimes } = voteCounts;
-  //     setApprovedCount(approvedTimes);
-  //     setDisapprovedCount(disapprovedTimes);
-  //   });
-  // }, [account, getVotingAmount, id]);
+  const fetchVoteCounts = useCallback(() => {
+    getVotingAmount(account, `${id}`).then((voteCounts) => {
+      const { approvedTimes, disapprovedTimes } = voteCounts;
+      setApprovedCount(approvedTimes);
+      setDisapprovedCount(disapprovedTimes);
+    });
+  }, [account, getVotingAmount, id]);
 
-  // useEffect(() => {
-  //   // getVotingPower();
-  //   getAllVoters().then((voters) => {
-  //     const votes = voters?.filter((v) => v.proposal === id);
-  //     setVotes(votes);
-  //   });
-  // }, [account, getAllVoters, id]);
+  useEffect(() => {
+    // getVotingPower();
+    getAllVoters().then((voters) => {
+      const votes = voters?.filter((v) => v.proposal === id);
+      setVotes(votes);
+    });
+  }, [account, getAllVoters, id]);
 
   useEffect(() => {
     const _approvedVotes = votes?.filter((v) => v.vote === true).length;
@@ -102,6 +105,7 @@ const SingleVote = () => {
     setApprovedVotes(_approvedVotes);
     setDisapprovedVotes(_disapprovedVotes);
   }, [votes]);
+
   useEffect(() => {
     if (_proposal && Object.keys(_proposal).length > 0) {
       setStartTime(formatDate(new Date(_proposal?.startTime)));
@@ -142,14 +146,18 @@ const SingleVote = () => {
         <div className="flex flex-col md:flex-row md:items-start gap-14">
           <div className="w-full md:w-3/5">
             <p className="mb-4 text-2xl font-normal md:text-2xl md:mb-8 max-w-[487px]">
-              {/* {_proposal?.title} */}
-              ARC: Extend the Safety Module Protection to Aave V2 Avalanche
+              {_proposal?.title}
+              {/* ARC: Extend the Safety Module Protection to Aave V2 Avalanche */}
             </p>
             <div className="flex items-center gap-3 mb-8">
               <button
                 className={`rounded-full py-1.5 md:py-2.5 px-4 md:px-5 bg-activeGreen text-sm font-medium`}
               >
-                {status}
+                {status === ProposalState.ONGOING
+                  ? "Vote Now"
+                  : status === ProposalState.ENDED
+                  ? "Closed"
+                  : "Soon"}
               </button>
 
               {_proposal?.proposalType === 0 ? (
@@ -168,10 +176,10 @@ const SingleVote = () => {
             <p
               className="mb-6 text-sm text-white md:text-sm md:mb-10"
               dangerouslySetInnerHTML={{
-                // __html: sanitizeHtml(_proposal?.description),
-                __html: sanitizeHtml(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius tincidunt egestas porta tincidunt in. Eros, venenatis et ullamcorper quis diam velit eu. Senectus luctus enim turpis urna. Iaculis a sagittis tincidunt id ac.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius tincidunt egestas porta tincidunt in. Eros, venenatis et ullamcorper quis diam velit eu. Senectus luctus enim turpis urna. Iaculis a sagittis tincidunt id ac."
-                ),
+                __html: _proposal?.description,
+                // __html: sanitizeHtml(
+                //   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius tincidunt egestas porta tincidunt in. Eros, venenatis et ullamcorper quis diam velit eu. Senectus luctus enim turpis urna. Iaculis a sagittis tincidunt id ac.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius tincidunt egestas porta tincidunt in. Eros, venenatis et ullamcorper quis diam velit eu. Senectus luctus enim turpis urna. Iaculis a sagittis tincidunt id ac."
+                // ),
               }}
             />
             <p className="flex items-center justify-between w-full text-sm font-light rounded-t-3xl mb-2.5">
@@ -230,13 +238,13 @@ const SingleVote = () => {
                   votes?.map((vote, index) => (
                     <div
                       key={index}
-                      className={`flex justify-between items-center py-5 px-6 md:px-12 ${
+                      className={`flex justify-between items-center py-5 px-5 ${
                         index !== votes.length - 1 &&
                         "border-b border-primary-500"
                       }`}
                     >
                       <a
-                        href={`https://rinkeby.etherscan.io/address/${vote.voterAddress}`}
+                        href={`https://testnet.bscscan.com/address/${vote.voterAddress}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-3 font-semibold text-activeGreen"
@@ -264,13 +272,13 @@ const SingleVote = () => {
                 Information
               </p>
               <div className="p-5">
-                <p className="mb-2.5 text-space-light-gray">
-                  Identifier:{" "}
+                <p className="mb-2.5 text-dark-400 flex items-center justify-between">
+                  <span>Identifier: </span>
                   <a
                     href={`https://gateway.ipfs.io/ipfs/${_proposal?.proposalIpfs}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 font-semibold text-space-blue-dark"
+                    className="inline-flex items-center gap-3 font-semibold text-activeGreen"
                   >
                     {_proposal?.proposalIpfs?.substring(0, 8)}
                     <Image
@@ -281,13 +289,13 @@ const SingleVote = () => {
                     />
                   </a>
                 </p>
-                <p className="mb-2.5 text-space-light-gray">
-                  Creator:{" "}
+                <p className="mb-2.5 text-dark-400 flex items-center justify-between">
+                  <span>Creator: </span>
                   <a
                     href={`https://rinkeby.etherscan.io/address/${_proposal?.creator}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 font-semibold text-space-blue-dark"
+                    className="inline-flex items-center gap-3 font-semibold text-activeGreen"
                   >
                     {account &&
                       _proposal?.creator &&
@@ -300,13 +308,13 @@ const SingleVote = () => {
                     />
                   </a>
                 </p>
-                <p className="mb-2.5 text-space-light-gray">
-                  Snapshot:{" "}
+                <p className="mb-2.5 text-dark-400 flex items-center justify-between">
+                  <span>Snapshot: </span>
                   <a
                     href={`https://etherscan.io/block/${_proposal?.blockNumber}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 font-semibold text-space-blue-dark"
+                    className="inline-flex items-center gap-3 font-semibold text-activeGreen"
                   >
                     {_proposal?.blockNumber}
                     <Image
@@ -317,15 +325,15 @@ const SingleVote = () => {
                     />
                   </a>
                 </p>
-                <p className="mb-2.5 text-space-light-gray">
-                  Start Date:{" "}
-                  <a className="inline-flex items-center gap-3 font-semibold text-white">
+                <p className="mb-2.5 text-dark-400 flex items-center justify-between">
+                  <span>Start Date: </span>
+                  <a className="inline-flex items-center gap-3 font-semibold text-activeGreen">
                     {startTime}
                   </a>
                 </p>
-                <p className="text-space-light-gray">
-                  End Date:{" "}
-                  <a className="inline-flex items-center gap-3 font-semibold text-white">
+                <p className="text-dark-400 flex items-center justify-between">
+                  <span>End Date: </span>
+                  <a className="inline-flex items-center gap-3 font-semibold text-activeGreen">
                     {endTime}
                   </a>
                 </p>
@@ -406,21 +414,20 @@ const SingleVote = () => {
       </div>
       <CastVoteModal
         vote={vote}
-        voteProposal={
-          () => console.log("done")
-          // handleVoteProposal(_proposal, vote, () => {
-          //   setVote(null);
-          //   getAllVoters().then((voters) => {
-          //     toggleCastVoteModal();
-          //     const votes = voters?.filter((v) => v.proposal === id);
-          //     setVotes(votes);
-          //   });
-          //   getVotingAmount(account, `${id}`).then((voteCounts) => {
-          //     const { approvedTimes, disapprovedTimes } = voteCounts;
-          //     setApprovedCount(approvedTimes);
-          //     setDisapprovedCount(disapprovedTimes);
-          //   });
-          // })
+        voteProposal={() =>
+          handleVoteProposal(_proposal, vote, () => {
+            setVote(null);
+            getAllVoters().then((voters) => {
+              toggleCastVoteModal();
+              const votes = voters?.filter((v) => v.proposal === id);
+              setVotes(votes);
+            });
+            getVotingAmount(account, `${id}`).then((voteCounts) => {
+              const { approvedTimes, disapprovedTimes } = voteCounts;
+              setApprovedCount(approvedTimes);
+              setDisapprovedCount(disapprovedTimes);
+            });
+          })
         }
         votingPower={votingPower}
         approvedCount={approvedCount}
