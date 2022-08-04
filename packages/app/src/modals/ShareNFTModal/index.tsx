@@ -19,28 +19,58 @@ export default function ShareNFTModal({
   const modalOpen = useModalOpen(ApplicationModal.SHARE);
   const toggleModal = useShareModal();
   // important that these are destructed from the account-specific web3-react context
+  // Get absolute url of page
+  const url = window.location.href;
+
+  // Share via discord
+  const shareDiscord = () => {
+    window.open(
+      `https://discordapp.com/oauth2/authorize?client_id=${process.env.DISCORD_CLIENT_ID}&scope=bot&permissions=8&redirect_uri=${url}&response_type=code&state=${nft.id}`,
+      "_blank"
+    );
+  };
 
   function getModalContent() {
     return (
       <div className="flex flex-col space-y-4">
         <ModalHeader title="Share" onClose={toggleModal} />
         <div className="flex flex-col items-center space-y-6">
-          <div className="w-full flex items-center justify-between px-5 py-4 text-[#626471] rounded-lg bg-dark-800">
+          <a
+            href={`http://twitter.com/share?text=Hi guys, check this out!&url=${url}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full flex items-center justify-between px-5 py-4 text-[#626471] rounded-lg bg-dark-800"
+          >
             <p>Twitter</p>
             <FaTwitter />
-          </div>
-          <div className="w-full flex items-center justify-between px-5 py-4 text-[#626471] rounded-lg bg-dark-800">
+          </a>
+          <a
+            href=""
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full flex items-center justify-between px-5 py-4 text-[#626471] rounded-lg bg-dark-800"
+          >
             <p>Discord</p>
             <FaDiscord />
-          </div>
-          <div className="w-full flex items-center justify-between px-5 py-4 text-[#626471] rounded-lg bg-dark-800">
+          </a>
+          <a
+            href=""
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full flex items-center justify-between px-5 py-4 text-[#626471] rounded-lg bg-dark-800"
+          >
             <p>Slack</p>
             <FaSlack />
-          </div>
-          <div className="w-full flex items-center justify-between px-5 py-4 text-[#626471] rounded-lg bg-dark-800">
+          </a>
+          <a
+            href={`mailto:?subject=Check this out!&body=Hey, check this out!%0A%0A${url}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full flex items-center justify-between px-5 py-4 text-[#626471] rounded-lg bg-dark-800"
+          >
             <p>Gmail</p>
             <SiGmail />
-          </div>
+          </a>
         </div>
       </div>
     );
