@@ -31,7 +31,11 @@ import { useNetworkModalToggle } from "state/application/hooks";
 import { BackpackRounded } from "@mui/icons-material";
 import { ChevronLeftIcon } from "@heroicons/react/outline";
 
-function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
+function AppBar(props: {
+  banner?: boolean;
+  isModal?: boolean;
+  transparent?: boolean;
+}): JSX.Element {
   const { i18n } = useLingui();
   const { account, chainId, library, connector } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
@@ -57,7 +61,7 @@ function AppBar(props: { banner?: boolean; isModal?: boolean }): JSX.Element {
   return (
     <header
       className={`absolute flex-shrink-0 w-full ${
-        !props.isModal ? "bg-black" : "bg-transparent"
+        !props.isModal && !props.transparent ? "bg-black" : "bg-transparent"
       } z-999`}
     >
       {/* {!props.isModal && <Banner />} */}
