@@ -10948,6 +10948,520 @@
             }
           ]
         },
+        "ZOOVOTING": {
+          "address": "0x5619c02a057D50fFD5EFA1DFeaF465150a97CcEA",
+          "abi": [
+            {
+              "inputs": [
+                {
+                  "internalType": "contract IERC20",
+                  "name": "coinAddress",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "constructor"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferred",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "string",
+                  "name": "newProposals",
+                  "type": "string"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint40",
+                  "name": "timestamp",
+                  "type": "uint40"
+                }
+              ],
+              "name": "addedProposal",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "string",
+                  "name": "proposal",
+                  "type": "string"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "bool",
+                  "name": "choice",
+                  "type": "bool"
+                }
+              ],
+              "name": "votedProposal",
+              "type": "event"
+            },
+            {
+              "inputs": [],
+              "name": "ZOO",
+              "outputs": [
+                {
+                  "internalType": "contract IERC20",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "newProposal",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint40",
+                  "name": "startTime",
+                  "type": "uint40"
+                },
+                {
+                  "internalType": "uint40",
+                  "name": "endTime",
+                  "type": "uint40"
+                }
+              ],
+              "name": "addProposals",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "target",
+                  "type": "address"
+                },
+                { "internalType": "bool", "name": "freeze", "type": "bool" }
+              ],
+              "name": "blockAddress",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                { "internalType": "address", "name": "", "type": "address" }
+              ],
+              "name": "blocked",
+              "outputs": [
+                { "internalType": "bool", "name": "", "type": "bool" }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_newCoinAddress",
+                  "type": "address"
+                }
+              ],
+              "name": "changeCoinAddress",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_newWithdrawAddress",
+                  "type": "address"
+                }
+              ],
+              "name": "changeWithdrawAddress",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                { "internalType": "address", "name": "", "type": "address" }
+              ],
+              "name": "coreMember",
+              "outputs": [
+                { "internalType": "bool", "name": "", "type": "bool" }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "decimals",
+              "outputs": [
+                { "internalType": "uint8", "name": "", "type": "uint8" }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "getAllProposals",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "string",
+                      "name": "proposal",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "bool",
+                      "name": "exists",
+                      "type": "bool"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "voteCount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "enum IVoting.Type",
+                      "name": "proposalType",
+                      "type": "uint8"
+                    },
+                    {
+                      "internalType": "enum IVoting.Status",
+                      "name": "proposalStatus",
+                      "type": "uint8"
+                    },
+                    {
+                      "internalType": "uint40",
+                      "name": "startTime",
+                      "type": "uint40"
+                    },
+                    {
+                      "internalType": "uint40",
+                      "name": "endTime",
+                      "type": "uint40"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "approvals",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "disapprovals",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct IVoting.Votes",
+                      "name": "votes",
+                      "type": "tuple"
+                    }
+                  ],
+                  "internalType": "struct IVoting.Proposal[]",
+                  "name": "",
+                  "type": "tuple[]"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "getAllVoters",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "string",
+                      "name": "proposal",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "voterAddress",
+                      "type": "address"
+                    },
+                    { "internalType": "bool", "name": "vote", "type": "bool" },
+                    {
+                      "internalType": "uint40",
+                      "name": "timestamp",
+                      "type": "uint40"
+                    }
+                  ],
+                  "internalType": "struct IVoting.Voter[]",
+                  "name": "",
+                  "type": "tuple[]"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_addr",
+                  "type": "address"
+                }
+              ],
+              "name": "isBlocked",
+              "outputs": [
+                { "internalType": "bool", "name": "", "type": "bool" }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "owner",
+              "outputs": [
+                { "internalType": "address", "name": "", "type": "address" }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "proposalFee",
+              "outputs": [
+                { "internalType": "uint256", "name": "", "type": "uint256" }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "_newAmount",
+                  "type": "uint256"
+                }
+              ],
+              "name": "proposalFeeAmount",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                { "internalType": "string", "name": "", "type": "string" }
+              ],
+              "name": "proposals",
+              "outputs": [
+                {
+                  "internalType": "string",
+                  "name": "proposal",
+                  "type": "string"
+                },
+                { "internalType": "bool", "name": "exists", "type": "bool" },
+                {
+                  "internalType": "uint256",
+                  "name": "voteCount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "enum IVoting.Type",
+                  "name": "proposalType",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "enum IVoting.Status",
+                  "name": "proposalStatus",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "uint40",
+                  "name": "startTime",
+                  "type": "uint40"
+                },
+                {
+                  "internalType": "uint40",
+                  "name": "endTime",
+                  "type": "uint40"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "approvals",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "disapprovals",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct IVoting.Votes",
+                  "name": "votes",
+                  "type": "tuple"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "toggleproposingStatus",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "transferOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "proposal",
+                  "type": "string"
+                },
+                { "internalType": "uint8", "name": "_status", "type": "uint8" }
+              ],
+              "name": "updateProposalStatus",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "proposal",
+                  "type": "string"
+                },
+                { "internalType": "bool", "name": "choice", "type": "bool" }
+              ],
+              "name": "voteProposal",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                { "internalType": "string", "name": "", "type": "string" }
+              ],
+              "name": "voters",
+              "outputs": [
+                {
+                  "internalType": "string",
+                  "name": "proposal",
+                  "type": "string"
+                },
+                {
+                  "internalType": "address",
+                  "name": "voterAddress",
+                  "type": "address"
+                },
+                { "internalType": "bool", "name": "vote", "type": "bool" },
+                {
+                  "internalType": "uint40",
+                  "name": "timestamp",
+                  "type": "uint40"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                { "internalType": "address", "name": "", "type": "address" },
+                { "internalType": "string", "name": "", "type": "string" }
+              ],
+              "name": "votingAmount",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "approvedTimes",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "dissaprovedTimes",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "target",
+                  "type": "address"
+                },
+                { "internalType": "bool", "name": "state", "type": "bool" }
+              ],
+              "name": "whitelist_as_core",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "withdraw",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "withdrawAddress",
+              "outputs": [
+                { "internalType": "address", "name": "", "type": "address" }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            }
+          ]
+        },
         "WETH": {
           "address": "0xFF3F0058fD6B4B56C11f7FE9d10B0586560e7EF6",
           "abi": [
