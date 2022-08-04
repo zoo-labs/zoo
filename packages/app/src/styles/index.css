@@ -196,7 +196,7 @@ video {
   background-size: cover;
   /* background-attachment: fixed; */
   /* height: 100vh; */
-  overflow-y: auto;
+  /* overflow-y: auto; */
 }
 
 @media screen and (min-width: 1200px) {
