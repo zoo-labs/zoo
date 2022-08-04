@@ -15,10 +15,14 @@ import { DatePicker, MobileDatePicker } from "@mui/x-date-pickers";
 // import { useGetVotingPower } from "hooks/useVote";
 import { useCreateProposals } from "state/voting/hooks";
 import { Proposal } from "types";
-import { ApprovalState, useApproveCallback } from "hooks/useApproveCallback";
+import {
+  ApprovalState,
+  useVotingApproveCallback,
+} from "hooks/useApproveCallback";
 import { ChainId } from "constants/chainIds";
 import BlockIcon from "@mui/icons-material/Block";
 import * as sanitizeHtml from "sanitize-html";
+import { useZooVoting } from "hooks";
 
 const MakeProposals = () => {
   const router = useRouter();
@@ -38,7 +42,11 @@ const MakeProposals = () => {
   const [creator, setCreator] = useState("");
   const blockNumber = useBlockNumber();
   const createProposals = useCreateProposals();
-  // const [approvalState, approve] = useApproveCallback(50, contract?.address);
+  const zooVotingContract = useZooVoting();
+  const [approvalState, approve] = useVotingApproveCallback(
+    50,
+    zooVotingContract?.address
+  );
 
   // const proposalLoaderStart = useLoaderStart(ApplicationLoader.PROPOSAL);
   const [loading, setLoading] = useState(false);
@@ -296,7 +304,7 @@ const MakeProposals = () => {
             <div className="w-full border rounded-3xl border-white-10 bg-transparent p-5 mb-7">
               <button
                 disabled={loading}
-                className="w-full rounded-full bg-bid-gradient p-px mb-4"
+                className="w-full rounded-full bg-bid-gradient p-px mb-4 hidden"
               >
                 <p className="py-4 w-full rounded-full bg-grey">
                   <p
@@ -307,43 +315,55 @@ const MakeProposals = () => {
                   </p>
                 </p>
               </button>
-              <button
-                disabled={loading}
-                className="w-full text-sm font-light py-4 rounded-full bg-bid-gradient"
-                onClick={() => {
-                  if (account) {
-                    setLoading(true);
+              {[ApprovalState.NOT_APPROVED, ApprovalState.UNKNOWN].includes(
+                approvalState
+              ) ? (
+                <button
+                  type="button"
+                  className="w-full px-12 py-3 text-lg text-center text-white transition duration-200 ease-in rounded-full shadow-md bg-space-gray-100 hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
+                  onClick={approve}
+                >
+                  Approve
+                </button>
+              ) : (
+                <button
+                  disabled={loading}
+                  className="w-full text-sm font-light py-4 rounded-full bg-bid-gradient"
+                  onClick={() => {
+                    if (account) {
+                      setLoading(true);
 
-                    createProposals(
-                      {
-                        title,
-                        description,
-                        endDate,
-                        endTime,
-                        startDate,
-                        startTime,
-                        choices,
-                        creator,
-                      } as Proposal,
-                      () => (console.log("dhdhvshgvd"), setLoading(false)),
-                      () => {
-                        resetValues();
-                        setTimeout(() => router.push("/dao"), 1000);
-                      }
-                    );
-                  } else {
-                    toggleWallet();
-                  }
-                }}
-              >
-                {loading ? (
-                  <i className="text-white fas fa-circle-notch animate-spin" />
-                ) : account ? (
-                  "Submit"
-                ) : (
-                  "Connect wallet"
-                )}
-              </button>
+                      createProposals(
+                        {
+                          title,
+                          description,
+                          endDate,
+                          endTime,
+                          startDate,
+                          startTime,
+                          choices,
+                          creator,
+                        } as Proposal,
+                        () => (console.log("dhdhvshgvd"), setLoading(false)),
+                        () => {
+                          resetValues();
+                          setTimeout(() => router.push("/dao"), 1000);
+                        }
+                      );
+                    } else {
+                      toggleWallet();
+                    }
+                  }}
+                >
+                  {loading ? (
+                    <i className="text-white fas fa-circle-notch animate-spin" />
+                  ) : account ? (
+                    "Submit"
+                  ) : (
+                    "Connect wallet"
+                  )}
+                </button>
+              )}
             </div>
             <div className="w-full border rounded-3xl border-white-10 bg-transparent">
               <p className="flex items-center justify-between w-full pt-6 text-lg font-semibold bg-space-grey px-4 md:px-5 rounded-t-3xl md:text-sm">

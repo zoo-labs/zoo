@@ -421,6 +421,10 @@ export function useBnbToken(): Contract | null {
   return useContract("BNB");
 }
 
+export function useZooVoting(): Contract | null {
+  return useContract("ZOOVOTING");
+}
+
 export function useAuction(useDefaultProvider?: boolean): Contract | null {
   return useContract(
     "Auction",
