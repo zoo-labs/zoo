@@ -45,22 +45,13 @@ export default function ShareNFTModal({
             <FaTwitter />
           </a>
           <a
-            href=""
+            href="https://discord.gg/8K3cfV6b"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full flex items-center justify-between px-5 py-4 text-[#626471] rounded-lg bg-dark-800"
           >
             <p>Discord</p>
             <FaDiscord />
-          </a>
-          <a
-            href=""
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full flex items-center justify-between px-5 py-4 text-[#626471] rounded-lg bg-dark-800"
-          >
-            <p>Slack</p>
-            <FaSlack />
           </a>
           <a
             href={`mailto:?subject=Check this out!&body=Hey, check this out!%0A%0A${url}`}
