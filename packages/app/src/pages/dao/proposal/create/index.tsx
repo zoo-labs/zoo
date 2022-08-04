@@ -5,11 +5,6 @@ const MakeProposal = dynamic(() => import("components/Voting/CreateProposal"), {
   ssr: false,
 });
 const MakeProposals = () => {
-  // const startLoader = useProposalLoaderToggle();
-
-  // useEffect(() => {
-  //   startLoader();
-  // }, []);
   return (
     <>
       <MakeProposal />
