@@ -15,7 +15,9 @@ const DaoLayout = ({ children, banner = undefined }) => {
   return (
     <div className="z-0 flex flex-col items-center w-full h-screen pb-16 lg:pb-0">
       <Header transparent={true} banner={banner} />
-      <Main isModal={false}>{children}</Main>
+      <Main isModal={false} bgColor="dao-bg">
+        {children}
+      </Main>
       <Popups />
       <Footer />
     </div>
