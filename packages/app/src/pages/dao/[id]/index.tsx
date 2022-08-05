@@ -24,6 +24,9 @@ import { ProposalState, useGetAllVoters } from "hooks/useVote";
 
 import { getProposalState } from "functions/proposal";
 import { useGetVotingAmount, useHandleVoteProposal } from "state/voting/hooks";
+import { AppProps } from "next/app";
+import { NextComponentType, NextPageContext } from "next";
+import DaoLayout from "layouts/Dao";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -37,7 +40,10 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-const SingleVote = () => {
+const SingleVote = ({}: AppProps & {
+  Component: NextComponentType<NextPageContext>;
+  Layout: (title: string) => void;
+}) => {
   const {
     proposals,
     votingPower,
@@ -438,3 +444,4 @@ const SingleVote = () => {
 };
 
 export default SingleVote;
+SingleVote.Layout = DaoLayout;

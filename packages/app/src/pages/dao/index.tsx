@@ -13,7 +13,8 @@ import { AppProps } from "next/app";
 import { NextComponentType, NextPageContext } from "next";
 import { useRouter } from "next/router";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { padding } from "@mui/system";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import { useAddPopup } from "state/application/hooks";
 
 const Voting = ({}: AppProps & {
   Component: NextComponentType<NextPageContext>;
@@ -23,7 +24,7 @@ const Voting = ({}: AppProps & {
   const [proposalType, setProposalType] = useState(3);
   const [_proposals, setProposals] = useState([]);
   const { proposals }: any = useSelector((state: any) => state.voting);
-  const { chainId, account } = useActiveWeb3React();
+  const addPopup = useAddPopup();
   const getAllProposals = useGetAllProposals();
 
   const { push } = useRouter();
@@ -174,6 +175,22 @@ const Voting = ({}: AppProps & {
                   <MenuItem value={ProposalState.ENDED}>Closed</MenuItem>
                 </Select>
               </FormControl>
+              <div
+                onClick={() =>
+                  getAllProposals().then(() => {
+                    addPopup({
+                      txn: {
+                        hash: null,
+                        summary: "Successfully fetched proposals",
+                        success: true,
+                      },
+                    });
+                  })
+                }
+                className="cursor-pointer"
+              >
+                <RefreshIcon />
+              </div>
               {/* <select
                 onChange={(e) =>
                   setProposalState(e.target.value as ProposalState)

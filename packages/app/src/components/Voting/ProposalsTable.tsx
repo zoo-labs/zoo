@@ -162,7 +162,7 @@ const ProposalsTable = ({
                   {proposalState}
                 </div>
               </div>
-              <p className="text-lg mb-3">{_.title}</p>
+              <p className="text-lg mb-3 max-w-[90%]">{_.title}</p>
               <p
                 className="text-sm max-w-[85%]"
                 dangerouslySetInnerHTML={{ __html: _.description }}
