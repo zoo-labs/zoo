@@ -12,7 +12,7 @@ contract DropEggs is Ownable {
     using SafeMath for uint256;
 
     using Counters for Counters.Counter;
-
+    uint256 randomLimit;
     Counters.Counter public whitelistedCount;
 
     uint256 zooKeeperDropId;
@@ -30,10 +30,15 @@ contract DropEggs is Ownable {
     constructor() {
         zooKeeperDropId = 1;
         maxEggForSublime = 20;
+        randomLimit = 3;
     }
 
     function configureDropAddress(address drop) public onlyOwner {
         dropAddress = drop;
+    }
+
+    function changeRandomLimit(uint256 limit) private {
+        randomLimit = limit;
     }
 
     function configureKeeperAddress(address keeper) public onlyOwner {
@@ -70,7 +75,15 @@ contract DropEggs is Ownable {
         _;
     }
 
+
+    function unsafeRandom() public view returns (uint256) {
+        uint256 randomNumber = uint256(keccak256(abi.encodePacked(block.number, msg.sender, block.timestamp))) % randomLimit;
+        return randomNumber;
+    }
+
    function AirdropEggs(address[] memory addresses, uint256[] memory numAllowedToMint) airdropModifier(addresses, numAllowedToMint) public onlyOwner {
+        uint256 _zooKeeperDropId = zooKeeperDropId;
+        uint256 _maxEggForSublime = maxEggForSublime;
 
         for (uint256 i = 0; i < addresses.length; i++) {
             _whitelistedAllowToMint[addresses[i]] = numAllowedToMint[i];
@@ -84,12 +97,12 @@ contract DropEggs is Ownable {
         for (uint256 i = 0; i < addresses.length; i++){
             address buyerAddress = addresses[i];
                 require(_whitelistedAllowToMint[buyerAddress] != 0, "Can not mint 0 token");
-                if(_whitelistedAllowToMint[buyerAddress] >= maxEggForSublime){
-                    drop.changeRandomLimit(4);
+                if(_whitelistedAllowToMint[buyerAddress] >= _maxEggForSublime){
+                    changeRandomLimit(4);
                 }
                 for (uint256 j = 0; j < _whitelistedAllowToMint[buyerAddress]; j++){
                     require(buyerAddress != address(0), "An address is equal to 0x0");
-                    uint256 randomEgg = drop.unsafeRandom();
+                    uint256 randomEgg = unsafeRandom();
                     uint256 Id;
                     IDrop.Egg memory egg;
 
@@ -101,9 +114,9 @@ contract DropEggs is Ownable {
                         Id = 1;
                     }
                     require(egg.minted <= egg.supply, "STOCK_EXCEEDED");
-                    keeper.dropEggs(Id, zooKeeperDropId, buyerAddress);
+                    keeper.dropEggs(Id, _zooKeeperDropId, buyerAddress);
                 }
-                drop.changeRandomLimit(3);
+                changeRandomLimit(3);
 
         }
 
