@@ -34,12 +34,12 @@ export default Deploy('UniswapV2Pair', {dependencies: ['BNB', 'ZOO', 'UniswapV2F
   await zoo.approve(router.address, amountZOO)
 
   // Add liquidity
-  // await router.addLiquidity(
-  //   zoo.address,
-  //   bnb.address,
-  //   amountZOO, amountBNB,
-  //   100, 100,
-  //   signer.address,
-  //   2e9
-  // )
+  await router.addLiquidity(
+    zoo.address,
+    bnb.address,
+    amountZOO, amountBNB,
+    100, 100,
+    signer.address,
+    2e9
+  )
 })

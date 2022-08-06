@@ -10,6 +10,10 @@ let owner
 
 const TOKEN_URI = 'idx.zoolabs.io/token/'
 const META_URI = 'idx.zoolabs.io/meta/'
+const TOKEN_URI_BABY = 'idx.zoolabs.io/token/baby'
+const META_URI_BABY = 'idx.zoolabs.io/meta/baby'
+const TOKEN_URI_TEEN = 'idx.zoolabs.io/token/teen'
+const META_URI_TEEN = 'idx.zoolabs.io/meta/teen'
 
 describe('Drop', () => {
   beforeEach(async () => {
@@ -66,18 +70,18 @@ describe('Drop', () => {
 
   it('Should add Animal', async () => {
     await drop.setRarity('RarityOne', 4, 10, 10)
-    await drop.setAnimal('Pug', 'RarityOne', TOKEN_URI, META_URI)
+    await drop.setAnimal('Pug', 'RarityOne', TOKEN_URI, META_URI, TOKEN_URI_BABY, META_URI_BABY, TOKEN_URI_TEEN, META_URI_TEEN)
 
     const Animal = await drop.animals('Pug')
 
     expect(Animal.name).to.equal('Pug')
-    expect(Animal.data.tokenURI).to.equal(TOKEN_URI)
+    expect(Animal.data.tokenURI).to.equal(TOKEN_URI_BABY)
   })
 
   it('Should add an Hybrid', async () => {
     await drop.setRarity('RarityOne', 4, 10, 10)
-    await drop.setAnimal('PugMale', 'RarityOne', TOKEN_URI, META_URI)
-    await drop.setAnimal('PugFemale', 'RarityOne', TOKEN_URI, META_URI)
+    await drop.setAnimal('PugMale', 'RarityOne', TOKEN_URI, META_URI, TOKEN_URI_BABY, META_URI_BABY, TOKEN_URI_TEEN, META_URI_TEEN)
+    await drop.setAnimal('PugFemale', 'RarityOne', TOKEN_URI, META_URI, TOKEN_URI_BABY, META_URI_BABY, TOKEN_URI_TEEN, META_URI_TEEN)
     await drop.setHybrid('Puggy', 'RarityOne', 10, 'PugMale', 'PugFemale', TOKEN_URI, META_URI)
 
     const Hybrid = await drop.hybrids('Puggy')
@@ -98,13 +102,13 @@ describe('Drop', () => {
   it('Should set & get egg price', async () => {
     drop = drop.connect(signers[0])
     const eggPrice = (await drop.eggPrice(1)).toString()
-    expect(eggPrice).to.equal('210000000000000000000') // default eggPrice
+    expect(eggPrice).to.equal('210') // default eggPrice
 
     await drop.connect(signers[0]).setEggPrice(1, 333) //set a new price
 
     const newPrice = (await drop.eggPrice(1)).toString()
     
-    expect(newPrice).to.equal('333000000000000000000') // gets the new eggPrice
+    expect(newPrice).to.equal('333') // gets the new eggPrice
   })
 
   it('Should revert when setting egg price as non owner', async () => {
@@ -115,15 +119,15 @@ describe('Drop', () => {
   it('Should set tokenURI and metadatUri for Animal', async () => {
     drop = drop.connect(signers[0])
     await drop.setRarity('RarityOne', 4, 10, 10)
-    await drop.setAnimal('Pug', 'RarityOne', TOKEN_URI, META_URI)
-    await drop.setUris('Pug', 'newtokenuri.com', 'newmetadatauri.com')
+    await drop.setAnimal('Pug', 'RarityOne', TOKEN_URI, META_URI, TOKEN_URI_BABY, META_URI_BABY, TOKEN_URI_TEEN, META_URI_TEEN)
+    await drop.setAnimalURIs('pug', 'newtokenuri.com', 'newmetadatauri.com', 'newtokenuriBaby.com', 'newmetadatauriBaby.com', 'newtokenuriTeen.com', 'newmetadatauriTeen.com')
     let URIs = await drop.animals('Pug')
-    expect(URIs.data.tokenURI).to.equal('newtokenuri.com')
-    expect(URIs.data.metadataURI).to.equal('newmetadatauri.com')
+    expect(URIs.data.tokenURI).to.equal('idx.zoolabs.io/token/baby')
+    expect(URIs.data.metadataURI).to.equal('idx.zoolabs.io/meta/baby')
   })
 
   it('Should revert when setting tokenURI as non owner', async () => {
     drop = drop.connect(signers[1])
-    await expect(drop.setUris('pug', 'newtokenuri.com', 'newmetadatauri.com')).to.be.reverted
+    await expect(drop.setAnimalURIs('pug', 'newtokenuri.com', 'newmetadatauri.com', 'newtokenuriBaby.com', 'newmetadatauriBaby.com', 'newtokenuriTeen.com', 'newmetadatauriTeen.com')).to.be.reverted
   })
 })
