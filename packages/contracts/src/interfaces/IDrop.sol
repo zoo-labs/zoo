@@ -49,11 +49,11 @@ interface IDrop {
     function newEgg(uint256 id) external returns (IZoo.Token memory);
     function newHybridEgg(IZoo.Parents memory) external returns (IZoo.Token memory);
     function getRandomAnimal(uint256, uint256) external view returns (IZoo.Token memory);
-    function getRandomHybrid(uint256, IZoo.Parents memory) external view returns (IZoo.Token memory);
     function unsafeRandom() external view returns(uint256);
     function changeRandomLimit(uint256 limit) external;
-    function getEgg(uint256 id) external view returns(Egg memory);
     function EggDropAddress() external returns(address);
     function getAdultHoodURIs(string memory name, IZoo.AdultHood stage) external returns (IMedia.MediaData memory);
     function silverEgg() external view returns(uint256);
+    function getBredAnimal(string memory animal, IZoo.Parents memory) external view returns(IZoo.Token memory token);
+    function getEgg(uint256 id) external view returns (Egg memory);
 }
