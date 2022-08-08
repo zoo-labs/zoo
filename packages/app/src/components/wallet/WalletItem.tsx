@@ -20,7 +20,7 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
       className="flex flex-col w-full md:w-[32%] lg:w-[24%]"
       onClick={onClick}
     >
-      <div className="relative overflow-hidden rounded bg-nft-gradient p-[2px] parent w-full">
+      <div className="relative overflow-hidden rounded bg-bid-gradient p-[2px] parent w-full">
         <div className="h-[450px] w-full">
           {datum.kind === 0 || datum.kind === 2 ? (
             <video
@@ -42,7 +42,7 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
         </div>
       </div>
 
-      <div className="flex flex-col flex-grow py-4 no-underline cursor-pointer">
+      <div className="hidden flex-col flex-grow py-4 no-underline cursor-pointer">
         <div className="flex flex-col flex-grow border-b border-[#797979] pb-2">
           <div className="flex mb-4 ">
             <div className="mt-1 mr-auto font-semibold">
