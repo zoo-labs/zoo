@@ -70,6 +70,17 @@ interface IZoo {
         IMedia.MediaData dataAdult;
     }
 
+    struct YieldsBoost{
+        uint256 yields;
+        uint256 boost;
+    }
+
+    struct StageYields{
+        YieldsBoost baby;
+        YieldsBoost teen;
+        YieldsBoost adult;
+    }
+
     struct Token {
         Rarity  rarity;
         Type  kind;
