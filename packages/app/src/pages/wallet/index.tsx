@@ -31,9 +31,8 @@ export default function Wallet({ children }) {
   );
   const fetchNFTs = useFetchMyNFTs();
   const getNftTransfers = useGetNftTransfers();
-  const { myNfts, nftTransfers, allAuctions } = useSelector(
-    (state: any) => state.zoo
-  );
+  const { myNfts, nftTransfers, allAuctions, myEggsCount, myAnimalsCount } =
+    useSelector((state: any) => state.zoo);
   const comingSoonRef = React.useRef();
 
   useEffect(() => {
@@ -68,10 +67,10 @@ export default function Wallet({ children }) {
   console.log("myNfts__", myNfts);
   return (
     <section className="Hero">
-      <div className="px-6 pb-16 mt-16 Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
-        {/* <div className="inline-block w-auto p-px mt-20 ml-16 overflow-hidden rounded bg-leader-board mb-28">
-          <div className="w-auto bg-black rounded" style={{ top: 10 }}>
-            {['My Wallet', 'My Bids', 'My Auctions'].map((value, index) => {
+      <div className="px-6 pb-16 mt- Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
+        <div className="flex flex-col items-center justify-between px-6 pt-4 lg:flex-row lg:max-w-7xl lg:mx-auto">
+          <div className="flex w-full items-center">
+            {["My Wallet", "My Bids", "My Auctions"].map((value, index) => {
               const active = category === index;
               return (
                 <a
@@ -79,8 +78,8 @@ export default function Wallet({ children }) {
                     setCategory(index);
                   }}
                   className={`${
-                    active ? 'bg-leader-board text-white' : 'text-gray-600'
-                  } text-sm font-bold py-2 px-4 cursor-pointer inline-block`}
+                    active ? "underline" : ""
+                  } text-2xl font-semibold py-4 pr-6 cursor-pointer inline-block`}
                   key={index}
                 >
                   {value}
@@ -88,43 +87,26 @@ export default function Wallet({ children }) {
               );
             })}
           </div>
-        </div> */}
-        <div className="flex flex-col items-center justify-between px-6 pt-16 lg:flex-row lg:max-w-7xl lg:mx-auto">
-          <p className="text-xl font-bold md:text-4xl">
-            Wallet Balance{" "}
-            <span className="text-base font-bold text-green md:text-4xl">
-              {" "}
-              {numberWithCommas(zooBalance.toFixed(2))} $ZOO
-            </span>
-          </p>
-          <button
-            onClick={() => handleFunds(chainId, buyZoo)}
-            className="px-5 py-3 my-6 text-sm font-semibold text-black rounded-full bg-green md:text-base md:px-6 md:py-4 lg:px-10"
-          >
-            Buy $ZOO
-          </button>
-          <div className="flex justify-center">
-            <div
-              className="flex w-auto overflow-hidden border rounded-full lg:grid lg:grid-cols-3 border-green "
-              style={{ top: 10 }}
-            >
-              {["My Wallet", "My Bids", "My Auctions"].map((value, index) => {
-                const active = category === index;
-                return (
-                  <a
-                    onClick={() => {
-                      setCategory(index);
-                    }}
-                    className={`${
-                      active ? "bg-green text-black" : "text-gray-400"
-                    } text-sm font-bold py-4 px-6 cursor-pointer inline-block  text-center`}
-                    key={index}
-                  >
-                    {value}
-                  </a>
-                );
-              })}
+        </div>
+        <div className="flex flex-col items-center justify-betweenn px-6 pt-4 lg:flex-row lg:max-w-7xl lg:mx-auto">
+          <div className="">
+            <p className="text-lg font-bold md:text-xl">Wallet Balance </p>
+            <div className="flex items-center mb-7">
+              <p className="text-base font-bold text-white md:text-2xl">
+                {numberWithCommas(zooBalance.toFixed(2))} $ZOO
+              </p>
+              <button
+                onClick={() => handleFunds(chainId, buyZoo)}
+                className="ml-4 px-5 py-3 text-sm font-semibold text-white rounded-xl bg-orange md:text-base md:px-6 md:py-3 lg:px-6"
+              >
+                Buy $ZOO
+              </button>
             </div>
+            {account && category === 0 && (
+              <p className="font-semibold">
+                {myEggsCount} Eggs - {myAnimalsCount} Animals
+              </p>
+            )}
           </div>
         </div>
         {category === 0 ? (
