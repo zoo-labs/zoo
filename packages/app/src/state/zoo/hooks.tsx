@@ -209,7 +209,7 @@ export function useFetchMyNFTs(): () => Promise<any> {
     try {
       // bsc testnet nfts
       const options: { chain?: any; address: string; token_address: string } = {
-        chain: SUPPORTED_NETWORKS[chainId]?.chainId,
+        chain: "bsc testnet",
         address: account,
         token_address: media?.address,
       };
@@ -220,6 +220,7 @@ export function useFetchMyNFTs(): () => Promise<any> {
         chain: SUPPORTED_NETWORKS[chainId]?.chainId,
         address: account,
         token_address: media?.address,
+        chainId,
       });
 
       const nfts = await Web3Api.account.getNFTsForContract(options);
@@ -248,7 +249,12 @@ export function useFetchMyNFTs(): () => Promise<any> {
         } = data;
         if (deet?.kind === 0) _eggsCount++;
         else if (deet?.kind === 1) _animalsCount++;
-        else if (deet?.kind === 2) _breedCount++;
+        else if (deet?.kind === 2) _eggsCount++;
+        else if (deet?.kind === 3) _animalsCount++;
+        console.log("countINDJJW", deet?.kind, _eggsCount);
+        dispatch(eggsCount(_eggsCount));
+        dispatch(animalsCount(_animalsCount));
+        dispatch(breedsCount(_breedCount));
         const newNft: MyNFT = {
           index,
           description,
@@ -306,9 +312,12 @@ export function useFetchMyNFTs(): () => Promise<any> {
         returnNFTs = [newNft, ...returnNFTs];
       });
 
-      dispatch(eggsCount(_eggsCount));
-      dispatch(animalsCount(_animalsCount));
-      dispatch(breedsCount(_breedCount));
+      console.log("count_of_thigns", {
+        _eggsCount,
+        _animalsCount,
+        _breedCount,
+      });
+
       return returnNFTs;
     } catch (error) {
       console.error("error_in_fetch_nfts_func", error);
