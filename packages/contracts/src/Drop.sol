@@ -55,6 +55,8 @@ contract Drop is IDrop, Ownable {
 
     mapping (string => IZoo.URIs) public adultHoodURIs;
 
+    mapping (string => IZoo.StageYields) public animalStageYields;
+
 
     // Ensure only ZK can call method
     modifier onlyZoo() {
@@ -82,6 +84,7 @@ contract Drop is IDrop, Ownable {
             return data.dataAdult;
         }
     }
+
 
     function totalSupply() public override view returns (uint256) {
         return eggId.current();
@@ -160,6 +163,23 @@ contract Drop is IDrop, Ownable {
        eggs[id].data = eggs[id].data = getMediaData(tokenURI, metadataURI);
     }
 
+    function setAnimalURIs(string memory name, string memory adultTokenURI, string memory adultMetadataURI, string memory teenTokenURI, string memory teenMetadataURI, string memory babyTokenURI, string memory babyMetadataURI) public onlyOwner {
+        adultHoodURIs[name] = IZoo.URIs({dataBaby: getMediaData(babyTokenURI, babyMetadataURI), dataTeen: getMediaData(teenTokenURI, teenMetadataURI), dataAdult: getMediaData(adultTokenURI, adultMetadataURI)});
+    }
+
+    function setStageYields(string memory name, uint256 yieldBaby, uint256 boostBaby, uint256 yieldTeen, uint256 boostTeen, uint256 yieldAdult, uint256 boostAdult) public onlyOwner {
+        animalStageYields[name] = IZoo.StageYields({baby: IZoo.YieldsBoost({
+            yields: yieldBaby,
+            boost: boostBaby
+        }), teen: IZoo.YieldsBoost({
+            yields: yieldTeen,
+            boost: boostTeen
+        }), adult: IZoo.YieldsBoost({
+            yields: yieldAdult,
+            boost: boostAdult
+        })});
+    }
+
     // Add or configure a given animal
     function setAnimal(string memory name, string memory rarity, string memory adultTokenURI, string memory adultMetadataURI, string memory babyTokenURI, string memory babyMetadataURI, string memory teenTokenURI, string memory teenMetadataURI) public onlyOwner {
         Animal memory animal = Animal({
@@ -174,8 +194,7 @@ contract Drop is IDrop, Ownable {
         // Save animal by name
         animals[name] = animal;
 
-        adultHoodURIs[name] = IZoo.URIs({dataBaby: getMediaData(babyTokenURI, babyMetadataURI), dataTeen: getMediaData(teenTokenURI, teenMetadataURI), dataAdult: getMediaData(adultTokenURI, adultMetadataURI)});
-
+        setAnimalURIs(name, adultTokenURI, adultMetadataURI, teenTokenURI, teenMetadataURI, babyTokenURI, babyMetadataURI);
         // Try to add animal to rarity
         addAnimalToRarity(animal.rarity.name, animal.name);
     }
@@ -197,43 +216,6 @@ contract Drop is IDrop, Ownable {
         hybridParents[parentsKey(parentA, parentB)] = hybrid;
     }
 
-    struct _Animal {
-        string rarity;
-        string name;
-        string tokenURI;
-        string metadataURI;
-        string babyTokenURI;
-        string babyMetadataURI;
-        string teenTokenURI;
-        string teenMetadataURI;
-    }
-
-    // Helper to set many Animal at once
-    function setAnimals(_Animal[] memory _animals) public onlyOwner {
-        for (uint256 i = 0; i < _animals.length; i++) {
-            _Animal memory animal = _animals[i];
-            setAnimal(animal.name, animal.rarity, animal.tokenURI, animal.metadataURI, animal.babyTokenURI, animal.babyMetadataURI, animal.teenTokenURI, animal.teenMetadataURI);
-        }
-    }
-
-    struct _Hybrid {
-        string rarity;
-        string name;
-        uint256 yields;
-        string parentA;
-        string parentB;
-        string tokenURI;
-        string metadataURI;
-    }
-
-
-    // Helper to set many Animal at once
-    function setHybrids(_Hybrid[] memory _hybrids) public onlyOwner {
-        for (uint256 i = 0; i < _hybrids.length; i++) {
-            _Hybrid memory hybrid = _hybrids[i];
-            setHybrid(hybrid.name, hybrid.rarity, hybrid.yields, hybrid.parentA, hybrid.parentB, hybrid.tokenURI, hybrid.metadataURI);
-        }
-    }
 
 
     // Add Animal to rarity set if it has not been seen before
@@ -281,7 +263,7 @@ contract Drop is IDrop, Ownable {
 
         // Convert egg into a token
         return IZoo.Token({
-            rarity: getRarity('Common'),
+            rarity: getRarity('Endangered'),
             kind: IZoo.Type.BASE_EGG,
             dropEgg: id,
             name: egg.name,
@@ -305,13 +287,13 @@ contract Drop is IDrop, Ownable {
 
         // Convert egg into a token
         return IZoo.Token({
-            rarity: getRarity('Common'),
+            rarity: getRarity(animals[parents.animalA].rarity.name),
             kind: IZoo.Type.HYBRID_EGG,
             name: egg.name,
             birthValues: IZoo.Birth({birthday: uint40(block.number), timestamp: uint40(block.timestamp), parents: parents}),
             data: egg.data,
             bidShares: egg.bidShares,
-            dropEgg: randomEgg,
+            dropEgg: egg.id,
             id: 0,
             customName: "",
             breed: IZoo.Breed(0, 0),
@@ -338,6 +320,19 @@ contract Drop is IDrop, Ownable {
     // Get Hybrid by name
     function getHybrid(string memory name) private view returns (Hybrid memory) {
         return hybrids[name];
+    }
+
+    function getBredAnimal(string memory animal, IZoo.Parents memory parents) override public view returns(IZoo.Token memory token) {
+        token.kind = IZoo.Type.HYBRID_ANIMAL;
+        token.name = animals[animal].name;
+        token.data = adultHoodURIs[animals[animal].name].dataBaby;
+        token.rarity = animals[animal].rarity;
+        token.bidShares = animals[animal].bidShares;
+        token.birthValues.timestamp = uint40(block.timestamp);
+        token.birthValues.birthday = uint40(block.number);
+        token.birthValues.parents = parents;
+
+        return token;
     }
 
     // Chooses animal based on random number generated from(0-999)
@@ -373,28 +368,6 @@ contract Drop is IDrop, Ownable {
         token.birthValues.timestamp = uint40(block.timestamp);
         token.birthValues.birthday = uint40(block.number);
 
-        return token;
-    }
-
-    function getRandomHybrid(uint256 random, IZoo.Parents memory parents) override external view returns (IZoo.Token memory token) {
-        Hybrid[2] memory possible = [
-            parentsToHybrid(parents.animalA, parents.animalB),
-            parentsToHybrid(parents.animalB, parents.animalA)
-        ];
-
-        // pick array index 0 or 1 depending on the rarity
-        Hybrid memory hybrid = possible[random % 2];
-
-        // Return Token
-        token.kind = IZoo.Type.HYBRID_ANIMAL;
-        token.name = hybrid.name;
-        token.data = adultHoodURIs[hybrid.name].dataBaby;
-        token.rarity = hybrid.rarity;
-        token.rarity.yields = hybrid.yields; // Hybrid rarity overrides default
-        token.bidShares = hybrid.bidShares;
-        token.birthValues.timestamp = uint40(block.timestamp);
-        token.birthValues.birthday = uint40(block.number);
-        token.birthValues.parents = parents;
         return token;
     }
 
