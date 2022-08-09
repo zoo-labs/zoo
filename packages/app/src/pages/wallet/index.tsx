@@ -69,7 +69,7 @@ export default function Wallet({ children }) {
     <section className="Hero">
       <div className="px-6 pb-16 mt- Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
         <div className="flex flex-col items-center justify-between px-6 pt-4 lg:flex-row lg:max-w-7xl lg:mx-auto">
-          <div className="flex w-full items-center">
+          <div className="flex items-center w-full">
             {["My Wallet", "My Bids", "My Auctions"].map((value, index) => {
               const active = category === index;
               return (
@@ -88,7 +88,7 @@ export default function Wallet({ children }) {
             })}
           </div>
         </div>
-        <div className="flex flex-col items-center justify-betweenn px-6 pt-4 lg:flex-row lg:max-w-7xl lg:mx-auto">
+        <div className="flex flex-col items-center px-6 pt-4 justify-betweenn lg:flex-row lg:max-w-7xl lg:mx-auto">
           <div className="">
             <p className="text-lg font-bold md:text-xl">Wallet Balance </p>
             <div className="flex items-center mb-7">
@@ -97,7 +97,7 @@ export default function Wallet({ children }) {
               </p>
               <button
                 onClick={() => handleFunds(chainId, buyZoo)}
-                className="ml-4 px-5 py-3 text-sm font-semibold text-white rounded-xl bg-orange md:text-base md:px-6 md:py-3 lg:px-6"
+                className="px-5 py-3 ml-4 text-sm font-semibold text-white rounded-full bg-green md:text-base md:px-6 md:py-3 lg:px-6"
               >
                 Buy $ZOO
               </button>

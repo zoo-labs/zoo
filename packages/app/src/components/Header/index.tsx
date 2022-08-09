@@ -87,13 +87,13 @@ function AppBar(props: {
                 ) : (
                   <div className="flex items-center">
                     <NavLink href="/">
-                      <div className=" h-full pl-2 cursor-pointer logo w-[50px] flex">
+                      <div className=" h-full pl-2 cursor-pointer logo w-[70px] flex">
                         <Image
-                          src="/img/logo.png"
+                          src="/img/newzoologo.png"
                           // className="w-10"
                           alt="Logo"
-                          height="24px"
-                          width="60px"
+                          height="200px"
+                          width="200px"
                         />
                       </div>
                     </NavLink>
@@ -113,7 +113,7 @@ function AppBar(props: {
                             {i18n._(t`Marketplace`)}
                           </a>
                         </NavLink>
-                        <NavLink href="/bridge">
+                        {/* <NavLink href="/bridge">
                           <a
                             id={`bridge-nav-link`}
                             className={
@@ -138,7 +138,7 @@ function AppBar(props: {
                           >
                             {i18n._(t`DAO`)}
                           </a>
-                        </NavLink>
+                        </NavLink> */}
 
                         {/* <NavLink href="/store">
                         <a
@@ -336,7 +336,7 @@ function AppBar(props: {
                 >
                   {i18n._(t`Marketplace`)}
                 </a>
-                <a
+                {/* <a
                   id={`dao`}
                   className="p-2 tracking-widest text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   // style={{letterSpacing: '2px'}}
@@ -353,7 +353,7 @@ function AppBar(props: {
                   style={{ letterSpacing: "2px" }}
                 >
                   {i18n._(t`Bridge`)}
-                </a>
+                </a> */}
                 <a
                   id={`chart`}
                   className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
