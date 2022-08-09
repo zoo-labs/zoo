@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 
 import Alert from "../../components/Alert";
+import { Table } from "components/Table/styles";
 
 const TransactionHistory = ({ nftTransfers }) => {
   const [copied, setCopied] = useState(false);
@@ -41,88 +42,81 @@ const TransactionHistory = ({ nftTransfers }) => {
         />
       )}
 
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="text-left bg-black200">
-            <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
-              ACTIONS
-            </th>
-            <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
-              BLOCK
-            </th>
-            <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
-              TOKEN ID
-            </th>
-            <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
-              HASH
-            </th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {nftTransfers?.length > 0 ? (
-            nftTransfers?.slice(0, 10).map((item, index) => {
-              const { block_number, transaction_hash, token_id, value } = item;
-              return (
-                <tr
-                  key={index}
-                  className="flex flex-row flex-wrap mb-10 bg-black100 lg:hover:bg-black200 lg:table-row lg:flex-row lg:flex-no-wrap lg:mb-0"
-                >
-                  <td className="relative flex items-center w-full p-3 text-left text-white uppercase lg:w-auto lg:table-cell lg:static">
-                    <span className="flex items-center">
-                      <Image
-                        src="/img/check.svg"
-                        width={24}
-                        height={24}
-                        alt=""
-                        className=""
-                      />
-                      {/* <span className="ml-1 uppercase">
-                        {value == "0" ? "Bought Egg" : "Animal"}
-                      </span> */}
-                    </span>
-                  </td>
-                  <td className="relative block w-full p-3 text-left text-white lg:w-auto lg:table-cell lg:static">
-                    <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
-                      BLOCK:
-                    </span>
-                    {block_number}
-                  </td>
-                  <td className="relative block w-full p-3 text-left text-white lg:w-auto lg:table-cell lg:static">
-                    <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
-                      TOKEN ID:
-                    </span>
-                    {token_id}
-                  </td>
-                  <td className="relative block w-full p-3 text-left text-white lg:w-auto lg:table-cell lg:static">
-                    <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
-                      HASH:
-                    </span>
-                    {transaction_hash}
-                  </td>
-                  <td className="relative block w-full p-3 text-left text-white lg:w-auto lg:table-cell lg:static">
-                    <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
-                      Copy
-                    </span>
+      <Table className="w-full">
+        <tr className="text-left bg-black200 ">
+          <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
+            ACTIONS
+          </th>
+          <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
+            BLOCK
+          </th>
+          <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
+            TOKEN ID
+          </th>
+          <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
+            HASH
+          </th>
+          <th />
+        </tr>
+        {nftTransfers?.length > 0 ? (
+          nftTransfers?.slice(0, 10).map((item, index) => {
+            const { block_number, transaction_hash, token_id, value } = item;
+            return (
+              <tr
+                key={index}
+                // className="flex flex-row flex-wrap mb-10 bg-black100 lg:hover:bg-black200 lg:table-row lg:flex-row lg:flex-no-wrap lg:mb-0"
+              >
+                <td className="">
+                  <span className="flex items-center">
                     <Image
-                      src="/img/copy-icon.svg"
+                      src="/img/check.svg"
                       width={24}
                       height={24}
                       alt=""
-                      onClick={() => copyToClipboard(transaction_hash)}
-                      className="cursor-pointer"
+                      className=""
                     />
-                  </td>
-                </tr>
-              );
-            })
-          ) : (
-            <p className="text-xl font-bold text-center">
-              No Transaction History
-            </p>
-          )}
-        </tbody>
-      </table>
+                  </span>
+                </td>
+                <td className="">
+                  <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
+                    BLOCK:
+                  </span>
+                  {block_number}
+                </td>
+                <td className="">
+                  <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
+                    TOKEN ID:
+                  </span>
+                  {token_id}
+                </td>
+                <td className="">
+                  <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
+                    HASH:
+                  </span>
+                  {transaction_hash}
+                </td>
+                <td className="">
+                  <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
+                    Copy
+                  </span>
+                  <Image
+                    src="/img/copy-icon.svg"
+                    width={24}
+                    height={24}
+                    alt=""
+                    onClick={() => copyToClipboard(transaction_hash)}
+                    className="cursor-pointer"
+                  />
+                </td>
+              </tr>
+            );
+          })
+        ) : (
+          <p className="text-xl font-bold text-center">
+            No Transaction History
+          </p>
+        )}
+      </Table>
     </div>
   );
 };
