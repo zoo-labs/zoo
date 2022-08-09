@@ -44,7 +44,7 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en" dir="ltr">
         <Head>
-          <link rel="shortcut icon" href="/img/logo.png" />
+          <link rel="shortcut icon" href="/img/egg.png" />
 
           <link rel="manifest" href="/manifest.json" />
         </Head>
