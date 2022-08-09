@@ -37,7 +37,7 @@ const Item = () => {
   const { id } = router.query;
   const { account } = useActiveWeb3React();
   const [egg, setEgg] = useState<AvailableEgg>(null);
-  const [withZoo, setWithZoo] = useState(true);
+  const [withZoo, setWithZoo] = useState(false);
   const { availableEggs, loading, zooBalance, bnbBalance } = useSelector(
     (state: any) => state.zoo
   );
@@ -134,7 +134,7 @@ const Item = () => {
                   {capitalize(egg?.name)}
                 </p>
               </div>
-              <div className="hidden fflex items-center gap-2">
+              <div className="items-center hidden gap-2 fflex">
                 <Image src="/icons/status.svg" alt="" height={26} width={20} />
                 <div>
                   <p className="text-sm font-medium">
@@ -189,7 +189,7 @@ const Item = () => {
             </div>
             <div className="flex w-full items-center gap-3 mb-2.5">
               <div className="w-full lg:w-3/4">
-                <div className="flex flex-col w-full px-6 py-2 rounded-lg 5 md:flex-row md:items-center md:justify-between bg-dark-400 ">
+                <div className="flex flex-col w-full px-6 py-2 rounded-lg 5 md:flex-row md:items-center md:justify-between">
                   <div>
                     <p className="text-xs font-normal">Current price</p>
                     <p className="text-xl font-medium">
@@ -200,7 +200,7 @@ const Item = () => {
                   </div>
                   <button
                     className="rounded-full bg-c-grey-200 inline-flex items-center justify-between w-[85px] p-1 pr-2 cursor-pointer"
-                    onClick={() => setWithZoo(!withZoo)}
+                    // onClick={() => setWithZoo(!withZoo)}
                   >
                     <div className="inline-flex items-center">
                       {withZoo ? (
@@ -227,11 +227,11 @@ const Item = () => {
                         </>
                       )}
                     </div>
-                    <img
+                    {/* <img
                       src="/icons/caret-right.png"
                       alt=""
                       className="rounded-full"
-                    />
+                    /> */}
                   </button>
                 </div>
                 <p className="text-xs text-right text-c-grey-100">

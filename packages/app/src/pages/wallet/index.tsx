@@ -97,7 +97,7 @@ export default function Wallet({ children }) {
               </p>
               <button
                 onClick={() => handleFunds(chainId, buyZoo)}
-                className="ml-4 px-5 py-3 text-sm font-semibold text-white rounded-xl bg-orange md:text-base md:px-6 md:py-3 lg:px-6"
+                className="px-5 py-3 ml-4 text-sm font-semibold text-white rounded-full bg-green md:text-base md:px-6 md:py-3 lg:px-6"
               >
                 Buy $ZOO
               </button>
