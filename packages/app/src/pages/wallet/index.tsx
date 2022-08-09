@@ -68,8 +68,8 @@ export default function Wallet({ children }) {
   return (
     <section className="Hero">
       <div className="px-6 pb-16 mt- Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
-        <div className="flex flex-col items-center justify-between px-6 pt-4 lg:flex-row lg:max-w-7xl lg:mx-auto">
-          <div className="flex items-center w-full">
+        <div className="flex flex-col items-center justify-between px-2 md:px-6 pt-4 lg:flex-row lg:max-w-7xl lg:mx-auto">
+          <div className="flex w-full items-center">
             {["My Wallet", "My Bids", "My Auctions"].map((value, index) => {
               const active = category === index;
               return (
@@ -79,7 +79,7 @@ export default function Wallet({ children }) {
                   }}
                   className={`${
                     active ? "underline" : ""
-                  } text-2xl font-semibold py-4 pr-6 cursor-pointer inline-block`}
+                  } text-lg md:text-2xl font-semibold py-4 pr-4 md:pr-6 cursor-pointer inline-block`}
                   key={index}
                 >
                   {value}
@@ -88,7 +88,7 @@ export default function Wallet({ children }) {
             })}
           </div>
         </div>
-        <div className="flex flex-col items-center px-6 pt-4 justify-betweenn lg:flex-row lg:max-w-7xl lg:mx-auto">
+        <div className="flex flex-col md:items-center justify-between px-2 md:px-6 pt-4 lg:flex-row lg:max-w-7xl lg:mx-auto">
           <div className="">
             <p className="text-lg font-bold md:text-xl">Wallet Balance </p>
             <div className="flex items-center mb-7">
