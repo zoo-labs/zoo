@@ -17,11 +17,11 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
   console.log("DATAUM", datum);
   return (
     <div
-      className="flex flex-col w-full md:w-[32%] lg:w-[24%]"
+      className="flex flex-col w-full md:w-[24%] lg:w-[16%]"
       onClick={onClick}
     >
       <div className="relative overflow-hidden rounded bg-bid-gradient p-[2px] parent w-full">
-        <div className="h-[450px] w-full">
+        <div className="w-full h-full">
           {datum.kind === 0 || datum.kind === 2 ? (
             <video
               autoPlay
@@ -32,7 +32,7 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
               className="rounded overflow-hidden max-h-[450px] object-cover"
             />
           ) : (
-            <div className="h-[450px] w-[300px]">
+            <div className="h-[345px] w-full bg-black rounded">
               <ModelViewer
                 glb={datum?.glb_animation_url}
                 usdz={datum?.usdz_animation_url}
@@ -42,7 +42,7 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
         </div>
       </div>
 
-      <div className="hidden flex-col flex-grow py-4 no-underline cursor-pointer">
+      <div className="flex-col flex-grow hidden py-4 no-underline cursor-pointer">
         <div className="flex flex-col flex-grow border-b border-[#797979] pb-2">
           <div className="flex mb-4 ">
             <div className="mt-1 mr-auto font-semibold">
@@ -59,7 +59,7 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
             </div>
           </div>
         </div>
-        <div className="flex w-full items-center justify-between pt-3">
+        <div className="flex items-center justify-between w-full pt-3">
           {datum.attributes &&
             typeof datum.attributes === "object" &&
             datum.attributes.map((attr, index) => {
