@@ -80,7 +80,9 @@ export function useContract(
   const { library, account, chainId } = useActiveWeb3React();
   const { ethereum } = window;
 
-  const provider = new ethers.providers.Web3Provider(ethereum);
+  const provider = ethereum
+    ? new ethers.providers.Web3Provider(ethereum)
+    : null;
 
   let address: string | AddressMap | undefined = nameOrAddress;
   let chainIdStr = chainId ? chainId.toString() : "97";
