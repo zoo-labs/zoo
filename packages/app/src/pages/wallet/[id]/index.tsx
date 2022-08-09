@@ -138,7 +138,7 @@ const NftModal = ({}: AppProps & {
         <div className="rounded-xl p-px h-full bg-transparent px-5 py-3 w-full lg:w-[60%]">
           <div className="flex flex-col items-start text-white gap-9 mb-7">
             <div className="flex flex-wrap items-center w-full space-y-3 gap-x-4">
-              <div className="w-full flex items-center justify-between">
+              <div className="flex items-center justify-between w-full">
                 <p className="font-semibold text-[52px]">{nftItem?.name}</p>
                 <div className=" flex items-center rounded-xl border-2 border-[#323341]">
                   <button
@@ -241,13 +241,14 @@ const NftModal = ({}: AppProps & {
               <div className="w-full">
                 <div className="flex flex-col flex-wrap w-full py-2 rounded-lg 5 md:flex-row md:items-center">
                   {nftItem?.kind === 0 || nftItem?.kind === 2 ? (
-                    <button
-                      className="w-[23%] p-2 mb-1 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-leader-board disabled:cursor-not-allowed disabled:opacity-60"
-                      onClick={() => hatchEgg()}
-                      disabled={loading || feeding}
-                    >
-                      HATCH
-                    </button>
+                    // <button
+                    //   className="w-[23%] p-2 mb-1 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-leader-board disabled:cursor-not-allowed disabled:opacity-60"
+                    //   onClick={() => hatchEgg()}
+                    //   disabled={loading || feeding}
+                    // >
+                    //   HATCH
+                    // </button>
+                    <></>
                   ) : (
                     <>
                       <button
