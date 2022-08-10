@@ -68,24 +68,30 @@ export default function Wallet({ children }) {
   return (
     <section className="Hero">
       <div className="px-6 pb-16 mt- Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
-        <div className="flex flex-col items-center justify-between px-2 md:px-6 pt-4 lg:flex-row lg:max-w-7xl lg:mx-auto">
-          <div className="flex w-full items-center">
-            {["My Wallet", "My Bids", "My Auctions"].map((value, index) => {
-              const active = category === index;
-              return (
-                <a
-                  onClick={() => {
-                    setCategory(index);
-                  }}
-                  className={`${
-                    active ? "underline" : ""
-                  } text-lg md:text-2xl font-semibold py-4 pr-4 md:pr-6 cursor-pointer inline-block`}
-                  key={index}
-                >
-                  {value}
-                </a>
-              );
-            })}
+        <div className="flex flex-col items-center justify-between px-2 md:px-6 pt-12 lg:flex-row lg:max-w-7xl lg:mx-auto">
+          <div className="p-px bg-bid-gradient rounded-xl">
+            <div className=" bg-black rounded-xl">
+              <div className="flex w-max bg-bid-gradient items-center rounded-xl">
+                {["My Wallet", "My Bids", "My Auctions"].map((value, index) => {
+                  const active = category === index;
+                  return (
+                    <a
+                      onClick={() => {
+                        setCategory(index);
+                      }}
+                      className={`${active ? "bg-bid-gradient" : "bg-black"} ${
+                        index === 0 && "rounded-l-xl"
+                      } ${index === 2 && "rounded-r-xl"}
+                    ${index !== 2 && "mr-px"}
+                    text-base font-semibold py-4 px-3 cursor-pointer inline-block `}
+                      key={index}
+                    >
+                      {value}
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex flex-col md:items-center justify-between px-2 md:px-6 pt-4 lg:flex-row lg:max-w-7xl lg:mx-auto">
