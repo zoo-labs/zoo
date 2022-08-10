@@ -11,7 +11,7 @@ const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
 });
 
-export default function NFTExpandedModal({ nft }) {
+export default function NFTExpandedModal({ nft, isAuction = true }) {
   const modalOpen = useModalOpen(ApplicationModal.EXPAND_NFT);
   const toggleModal = useExpandNFTModal();
   console.log("nft_to_expand", nft);
@@ -49,7 +49,7 @@ export default function NFTExpandedModal({ nft }) {
               <video
                 autoPlay
                 loop
-                src={nft.animation_url}
+                src={isAuction ? nft.animation_url : nft.token_uri}
                 width={300}
                 height={350}
               />
