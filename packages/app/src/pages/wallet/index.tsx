@@ -69,9 +69,9 @@ export default function Wallet({ children }) {
     <section className="Hero">
       <div className="px-6 pb-16 mt- Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
         <div className="flex flex-col items-center justify-between px-2 md:px-6 pt-12 lg:flex-row lg:max-w-7xl lg:mx-auto">
-          <div className="p-px bg-green rounded-full">
-            <div className=" bg-black rounded-full">
-              <div className="flex w-max bg-green items-center rounded-full">
+          <div className="p-px bg-bid-gradient rounded-xl">
+            <div className=" bg-black rounded-xl">
+              <div className="flex w-max bg-bid-gradient items-center rounded-xl">
                 {["My Wallet", "My Bids", "My Auctions"].map((value, index) => {
                   const active = category === index;
                   return (
@@ -79,11 +79,9 @@ export default function Wallet({ children }) {
                       onClick={() => {
                         setCategory(index);
                       }}
-                      className={`${
-                        active ? "bg-green text-black" : "bg-black"
-                      } ${index === 0 && "rounded-l-full"} ${
-                        index === 2 && "rounded-r-full"
-                      }
+                      className={`${active ? "bg-bid-gradient" : "bg-black"} ${
+                        index === 0 && "rounded-l-xl"
+                      } ${index === 2 && "rounded-r-xl"}
                     ${index !== 2 && "mr-px"}
                     text-base font-semibold py-4 px-3 cursor-pointer inline-block `}
                       key={index}
@@ -105,7 +103,7 @@ export default function Wallet({ children }) {
               </p>
               <button
                 onClick={() => handleFunds(chainId, buyZoo)}
-                className="px-5 py-3 ml-4 text-sm font-semibold text-black rounded-full bg-green md:text-base md:px-6 md:py-3 lg:px-6"
+                className="px-5 py-3 ml-4 text-sm font-semibold text-white rounded-full bg-green md:text-base md:px-6 md:py-3 lg:px-6"
               >
                 Buy $ZOO
               </button>
