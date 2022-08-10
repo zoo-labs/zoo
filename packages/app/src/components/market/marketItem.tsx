@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FaHeart, FaMoneyBill, FaMoneyBillWave } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { accountEllipsis, getEmoji } from "functions";
@@ -6,6 +6,8 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Auction } from "types";
 import moment from "moment";
+import Web3 from "web3";
+import { useZooKeeper } from "hooks";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
@@ -18,7 +20,22 @@ interface IndexProps {
 
 const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
   const router = useRouter();
-  console.log("DATAUM", datum);
+  const [zooBnbPrice, setZooBnbPrice] = useState(0);
+  const zooKeeper = useZooKeeper();
+
+  const getZooBnbPrice = useCallback(async () => {
+    const price = await zooKeeper.BNBPrice();
+    const value = Web3.utils.fromWei(price.toString(), "ether");
+    setZooBnbPrice(parseFloat(value));
+  }, [zooKeeper]);
+
+  useEffect(() => {
+    getZooBnbPrice();
+  }, [getZooBnbPrice]);
+
+  const amountBNB = zooBnbPrice * Number(datum?.amount);
+  const reservePriceBNB = zooBnbPrice * Number(datum?.reservePrice);
+
   return (
     <div
       className="flex flex-col "
@@ -63,7 +80,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
               className="flex items-center justify-center flex-shrink-0 px-2 ml-2 text-xs font-bold uppercase rounded-sm primary"
               style={{ boxShadow: "inset 0 0 0 1px rgb(140, 79, 248)" }}
             >
-              {datum.reservePrice} Z00
+              {reservePriceBNB} BNB
             </div>
           </div>
           <div className="flex ">
@@ -114,7 +131,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
             Highest bid
           </div>
           <div className="text-xs font-semibold text-gray-500">
-            {datum.amount} ZOO
+            {amountBNB} BNB
           </div>
         </div>
       </div>

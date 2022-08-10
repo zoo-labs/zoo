@@ -14,7 +14,6 @@ import {
 } from "state/zoo/hooks";
 import { useZooKeeper, useMedia } from "hooks";
 import Web3 from "web3";
-import styled from "styled-components";
 import { useMoralisWeb3Api } from "react-moralis";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import { SUPPORTED_NETWORKS } from "config/networks";
@@ -24,27 +23,7 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import { useExpandNFTModal, useShareModal } from "state/application/hooks";
 import NFTExpandedModal from "modals/ExpandNftModal";
 import ShareNFTModal from "modals/ShareNFTModal";
-
-const Table = styled.table`
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-
-  td,
-  th {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 16px;
-    padding-left: 48px;
-  }
-
-  th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #0f0f0f;
-    color: white;
-  }
-`;
+import { Table } from "components/Table/styles";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
