@@ -107,9 +107,9 @@ const NftModal = ({}: AppProps & {
     toggleFreeNFTModal();
   };
 
-  const refresh = useCallback(async () => {
-    refetchStuff(nftItem.tokenID, nftItem.tokenUri, nftItem.animation_url);
-  }, [refetchStuff, nftItem]);
+  // const refresh = useCallback(async () => {
+  //   refetchStuff(nftItem.tokenID, nftItem.tokenUri, nftItem.animation_url);
+  // }, [refetchStuff, nftItem]);
 
   useEffect(() => {
     fetchNFTs();
@@ -165,7 +165,7 @@ const NftModal = ({}: AppProps & {
           </button>
           <button
             className="flex items-center justify-center gap-3 py-3.5 px-3.5 bg-gray-100 rounded-full"
-            onClick={refresh}
+            onClick={refetchMetadata}
           >
             <RefreshIcon width={18} height={18} />
           </button>
