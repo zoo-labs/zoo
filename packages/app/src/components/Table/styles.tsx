@@ -4,7 +4,6 @@ export const Table = styled.table`
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
-
   td,
   th {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
