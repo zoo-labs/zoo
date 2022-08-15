@@ -84,9 +84,7 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(addEgg, (state, { payload: egg }: { payload: AvailableEgg }) => {
       if (egg && !isEmptyObj(egg)) {
-        if (state.availableEggs.length < 3) {
-          state.availableEggs[egg.id - 1] = egg;
-        }
+        state.availableEggs[egg.id - 1] = egg;
       } else {
         console.log("NOT_ADDED_EGG", egg);
       }
