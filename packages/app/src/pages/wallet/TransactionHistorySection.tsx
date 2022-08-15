@@ -42,81 +42,83 @@ const TransactionHistory = ({ nftTransfers }) => {
         />
       )}
 
-      <Table className="w-full border rounded-lg border-white-30">
-        <tr className="text-left bg-black200 ">
-          <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
-            ACTIONS
-          </th>
-          <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
-            BLOCK
-          </th>
-          <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
-            TOKEN ID
-          </th>
-          <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
-            HASH
-          </th>
-          <th />
-        </tr>
-        {nftTransfers?.length > 0 ? (
-          nftTransfers?.slice(0, 10).map((item, index) => {
-            const { block_number, transaction_hash, token_id, value } = item;
-            return (
-              <tr
-                key={index}
-                // className="flex flex-row flex-wrap mb-10 bg-black100 lg:hover:bg-black200 lg:table-row lg:flex-row lg:flex-no-wrap lg:mb-0"
-              >
-                <td className="">
-                  <span className="flex items-center">
+      <div className="border rounded-lg border-white-30">
+        <Table className="w-full rounded-lg">
+          <tr className="text-left bg-black200 ">
+            <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
+              ACTIONS
+            </th>
+            <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
+              BLOCK
+            </th>
+            <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
+              TOKEN ID
+            </th>
+            <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
+              HASH
+            </th>
+            <th />
+          </tr>
+          {nftTransfers?.length > 0 ? (
+            nftTransfers?.slice(0, 10).map((item, index) => {
+              const { block_number, transaction_hash, token_id, value } = item;
+              return (
+                <tr
+                  key={index}
+                  // className="flex flex-row flex-wrap mb-10 bg-black100 lg:hover:bg-black200 lg:table-row lg:flex-row lg:flex-no-wrap lg:mb-0"
+                >
+                  <td className="">
+                    <span className="flex items-center">
+                      <Image
+                        src="/img/check.svg"
+                        width={24}
+                        height={24}
+                        alt=""
+                        className=""
+                      />
+                    </span>
+                  </td>
+                  <td className="">
+                    <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
+                      BLOCK:
+                    </span>
+                    {block_number}
+                  </td>
+                  <td className="">
+                    <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
+                      TOKEN ID:
+                    </span>
+                    {token_id}
+                  </td>
+                  <td className="">
+                    <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
+                      HASH:
+                    </span>
+                    {transaction_hash}
+                  </td>
+                  <td className="">
+                    <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
+                      Copy
+                    </span>
                     <Image
-                      src="/img/check.svg"
+                      src="/img/copy-icon.svg"
                       width={24}
                       height={24}
                       alt=""
-                      className=""
+                      onClick={() => copyToClipboard(transaction_hash)}
+                      className="cursor-pointer"
                     />
-                  </span>
-                </td>
-                <td className="">
-                  <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
-                    BLOCK:
-                  </span>
-                  {block_number}
-                </td>
-                <td className="">
-                  <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
-                    TOKEN ID:
-                  </span>
-                  {token_id}
-                </td>
-                <td className="">
-                  <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
-                    HASH:
-                  </span>
-                  {transaction_hash}
-                </td>
-                <td className="">
-                  <span className="px-2 py-1 mr-4 text-xs font-bold uppercase rounded lg:hidden bg-blue">
-                    Copy
-                  </span>
-                  <Image
-                    src="/img/copy-icon.svg"
-                    width={24}
-                    height={24}
-                    alt=""
-                    onClick={() => copyToClipboard(transaction_hash)}
-                    className="cursor-pointer"
-                  />
-                </td>
-              </tr>
-            );
-          })
-        ) : (
-          <p className="text-xl font-bold text-center">
-            No Transaction History
-          </p>
-        )}
-      </Table>
+                  </td>
+                </tr>
+              );
+            })
+          ) : (
+            <p className="text-xl font-bold text-center">
+              No Transaction History
+            </p>
+          )}
+        </Table>
+      </div>
     </div>
   );
 };

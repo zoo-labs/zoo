@@ -367,7 +367,7 @@ const InfoPage = () => {
               className="cursor-pointer"
             />
           </div>
-          <Table className={`w-full ${!showTable && "hidden"}`}>
+          <Table className={`w-full rounded-b-lg ${!showTable && "hidden"}`}>
             <tr className="">
               <th>From</th>
               <th>To</th>
