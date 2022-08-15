@@ -68,10 +68,10 @@ export default function Wallet({ children }) {
   return (
     <section className="Hero">
       <div className="px-6 pb-16 mt- Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
-        <div className="flex flex-col items-center justify-between px-2 md:px-6 pt-12 lg:flex-row lg:max-w-7xl lg:mx-auto">
-          <div className="p-px bg-green rounded-full">
-            <div className=" bg-black rounded-full">
-              <div className="flex w-max bg-green items-center rounded-full">
+        <div className="flex flex-col items-center justify-between px-2 pt-12 md:px-6 lg:flex-row lg:max-w-7xl lg:mx-auto">
+          <div className="p-px rounded-full bg-green">
+            <div className="bg-black rounded-full ">
+              <div className="flex items-center rounded-full w-max bg-green">
                 {["My Wallet", "My Bids", "My Auctions"].map((value, index) => {
                   const active = category === index;
                   return (
@@ -96,7 +96,7 @@ export default function Wallet({ children }) {
             </div>
           </div>
         </div>
-        <div className="flex flex-col md:items-center justify-between px-2 md:px-6 pt-4 lg:flex-row lg:max-w-7xl lg:mx-auto">
+        <div className="flex flex-col justify-between px-2 pt-4 md:items-center md:px-6 lg:flex-row lg:max-w-7xl lg:mx-auto">
           <div className="">
             <p className="text-lg font-bold md:text-xl">Wallet Balance </p>
             <div className="flex items-center mb-7">
