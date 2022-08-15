@@ -350,15 +350,25 @@ export function useGetAvailableEggs(): () => void {
   const dropContract = useDrop(true);
   const { account } = useActiveWeb3React();
   return useCallback(async () => {
-    console.log("useGetAvailableEggs  contract", dropContract);
     try {
       const eggs: Array<any> = await dropContract?.getAllEggs();
-      console.log("useGetAvailableEggs eggs", eggs?.length);
       if (!eggs) return;
       await [...eggs].map(async (egg) => {
+        fetch(egg.data.metadataURI)
+          .then((res) => {
+            res.json().then((data) => {
+              console.log(data, "EggDataSuccess");
+            });
+          })
+          .catch((err) => {
+            console.log(err, "EggDataErr");
+          })
+          .finally(() => {
+            console.log("EggDataFinally");
+          });
         const data = (await axios.get(egg.data.metadataURI)).data;
         const { name, description, attributes, image, animation_url } = data;
-        console.log("eggsuseGetAvailableEggs ", data, eggs.length);
+        console.log("eggsuseGetAvailableEggs", data, eggs.length);
 
         const finalEgg: AvailableEgg = {
           bidShares: {
@@ -412,7 +422,7 @@ export function useBuyEgg(): (
         const approval = await zoo?.allowance(account, zooKeeper.address);
         console.log("approval_buy_egg", Number(approval));
         if (Number(approval) <= 0) {
-          console.log("approving_media");
+          console.log("approving_zoo_keeper");
           await zoo
             ?.approve(zooKeeper.address, MaxUint256, {
               gasLimit: 4000000,
@@ -422,13 +432,18 @@ export function useBuyEgg(): (
               tx.wait();
             });
         }
-        console.log("eggId, dropId, quantity", eggId, dropId, quantity);
+        console.log("eggId_dropId_quantity", {
+          eggId,
+          dropId,
+          quantity,
+          approval,
+        });
         const tx = await zooKeeper.buyEggs(eggId, dropId, quantity, {
           gasLimit: 4000000,
         });
         await tx.wait();
         getZooBalance();
-        console.log("tx in buy egg", tx);
+        console.log("tx_in_buy_egg", tx);
         addPopup({
           txn: {
             hash: null,
@@ -483,7 +498,11 @@ export function useBuyEggWithBnB(): (
       try {
         dispatch(loading(true));
         const approval = await bnb?.allowance(account, zooKeeper.address);
-        console.log("approval_approving_media", isNaN(Number(approval)));
+        console.log(
+          "approval_approving_media",
+          Number(approval),
+          isNaN(Number(approval))
+        );
         if (Number(approval) <= 0 || isNaN(Number(approval))) {
           console.log("approving_media");
           const approving = await bnb?.approve(zooKeeper.address, MaxUint256, {
@@ -573,9 +592,7 @@ export function useGetAllAuctions(): () => Promise<void> {
       await auctions?.map(async (auction, index: number) => {
         if (Number(auction.reservePrice) === 0) return false;
         const tokenUri = await media?.tokenURI(Number(auction.tokenID));
-        const tokenMetadataURI = await media?.tokenMetadataURI(
-          Number(auction.tokenID)
-        );
+        const tokenMetadataURI = await media?.tokenURI(Number(auction.tokenID));
         const deet = await zooKeeper?.tokens(Number(auction.tokenID));
 
         const data = (await axios.get(tokenMetadataURI)).data;
