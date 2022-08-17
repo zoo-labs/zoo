@@ -68,7 +68,7 @@ const Item = () => {
               width={350}
               height={300}
             /> */}
-            {auction?.kind === 0 || auction?.kind === 2 ? (
+            {auction?.kind === 0 ? (
               <video
                 autoPlay
                 loop
