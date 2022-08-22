@@ -10,6 +10,50 @@
 
 @import "./react-morphing-modal.css";
 
+@font-face {
+  font-family: "Made Outer Sans";
+  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Alt\ Bold\ PERSONAL\ USE.otf");
+}
+
+@font-face {
+  font-family: "Made Outer Sans";
+  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Alt\ Medium\ PERSONAL\ USE.otf");
+}
+
+@font-face {
+  font-family: "Made Outer Sans";
+  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Alt\ Light\ PERSONAL\ USE.otf");
+}
+
+@font-face {
+  font-family: "Made Outer Sans";
+  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Alt\ Regular\ PERSONAL\ USE.otf");
+}
+
+@font-face {
+  font-family: "Made Outer Sans";
+  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Medium\ PERSONAL\ USE.otf");
+}
+
+@font-face {
+  font-family: "Made Outer Sans";
+  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Black\ PERSONAL\ USE.otf");
+}
+
+@font-face {
+  font-family: "Made Outer Sans";
+  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Bold\ PERSONAL\ USE.otf");
+}
+
+@font-face {
+  font-family: "Made Outer Sans";
+  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Light\ PERSONAL\ USE.otf");
+}
+
+.font-made-outer-sans {
+  font-family: "Made Outer Sans";
+}
+
 .slick-dots li.slick-active button:before {
   color: #14f195 !important;
 }
@@ -197,6 +241,46 @@ video {
   /* background-attachment: fixed; */
   /* height: 100vh; */
   /* overflow-y: auto; */
+}
+.bg-drop {
+  background: url("/images/bg/drop-bg.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.bg-drop-tree {
+  background: url("/images/bg/drop.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.bg-drop-nft {
+  /* background-image: linear-gradient(
+      268.95deg,
+      #2517ff 0.43%,
+      #1d84ca 49.76%,
+      #1fdd8e 99.1%
+    ),
+    url("/images/nft.png"); */
+  background-image: url("/images/nft.png");
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.text-new-clip {
+  background: linear-gradient(
+    268.95deg,
+    #2517ff 0.43%,
+    #1d84ca 49.76%,
+    #1fdd8e 99.1%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
 
 @media screen and (min-width: 1200px) {
