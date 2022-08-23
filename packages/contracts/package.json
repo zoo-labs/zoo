@@ -56,6 +56,7 @@
   "scripts": {
     "airdrop": "hardhat run --network hardhat scripts/airdrop.ts",
     "account": "hardhat account",
+    "airdropEggs": "hardhat run --network hardhat scripts/airdropEggs.ts",
     "accounts": "hardhat accounts",
     "balance": "hardhat balance",
     "chain": "hardhat node --network hardhat --show-stack-traces",
