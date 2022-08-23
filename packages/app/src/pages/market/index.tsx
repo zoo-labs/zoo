@@ -222,7 +222,7 @@ const MarketPlacePage = () => {
         <p>Buy, list, and bid on NFT Eggs and Animals.</p>
       </div>
       {/* Eggs */}
-      <div className="mb-16">
+      {/* <div className="mb-16">
         <div>
           <h2 className="text-3xl font-bold text-center text-white lg:text-4xl mb-4">
             Buy Eggs
@@ -242,8 +242,6 @@ const MarketPlacePage = () => {
                     <div className="relative overflow-hidden rounded parent">
                       <div className="relative overflow-hidden rounded bg-nft-gradient p-[2px] parent w-full">
                         <div className="h-full w-[300px]">
-                          {/* <ModelViewer usdz={item.usdz} glb={item.glb}></ModelViewer> */}
-                          {/* <img src={item.image} alt="" /> */}
                           <video
                             src={item.animation_url}
                             autoPlay
@@ -253,10 +251,6 @@ const MarketPlacePage = () => {
                         </div>
                       </div>
                       <div className="absolute top-0 left-0 invisible w-full h-full transition-all duration-300 rounded opacity-0 hover:visible hover:opacity-100">
-                        <div className="absolute px-2 py-1 text-xs font-bold uppercase rounded top-6 left-3 bg-primary ">
-                          {/* {item.bloodline || (item.basic ? "BASIC" : "HYBRID")} */}
-                        </div>
-
                         <a className="absolute inline-flex items-center justify-center h-10 px-4 text-sm transition-all duration-300 transform rounded-full cursor-pointer left-1/2 bottom-6 min-w-max bg-primary -translate-x-2/4">
                           <span>Place a bid</span>
                         </a>
@@ -268,9 +262,6 @@ const MarketPlacePage = () => {
                         <div className="flex mb-4 ">
                           <div className="mt-1 mr-auto text-sm font-semibold uppercase">
                             {item.name || "Egg"}{" "}
-                            {/* <span className="text-xs text-gray-500">
-                              (#{item.id || ""})
-                            </span> */}
                           </div>
                           <div
                             className="flex items-center justify-center flex-shrink-0 px-2 ml-2 text-xs font-bold uppercase rounded-sm primary hover:bg-[#8c4ff8]"
@@ -278,8 +269,6 @@ const MarketPlacePage = () => {
                               boxShadow: "inset 0 0 0 1px rgb(140, 79, 248)",
                             }}
                           >
-                            {/* {abbreviateNumber(item.price)} Z00 */}
-                            {/* {String(item.price * zooBnbPrice).substr(0, 4)} BNB */}
                             {String(item.price * zooBnbPrice)} BNB
                           </div>
                         </div>
@@ -327,7 +316,7 @@ const MarketPlacePage = () => {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
       {/* Tab Navbar */}
       <div className="relative justify-center hidden mb-8 lg:flex">
         <div
