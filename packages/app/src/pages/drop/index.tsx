@@ -166,9 +166,9 @@ const Drop = ({}: AppProps & {
             </button>
           </div>
 
-          <div className="flex flex-col-reverse md:items-center mb-32">
+          <div className="flex flex-col-reverse md:flex-row md:items-center mb-32">
             <img src="/images/drop/roadmap.png" alt="" />
-            <div className="md:text-right flex-1 mb-5 md:mb-auto md:pl-12">
+            <div className="md:text-right flex-1 mb-5 md:mb-0 md:pl-12">
               <div className="flex flex-col md:items-end">
                 <p className="text-right flex justify-end font-bold mb-3 text-[42px] leading-10 w-max relative before:absolute before:h-1 before:w-[70%] before:left-0 md:before:left-auto before:md:right-0 before:-top-2 before:bg-new cursor-pointer">
                   Our Roadmap
