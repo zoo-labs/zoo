@@ -94,12 +94,6 @@ export function useContract(
         ABI || abis[chainIdStr]
           ? abis[chainIdStr][nameOrAddress.toString()]
           : null;
-      console.log("THIS_IS_THE_return_ADDRESS", {
-        nameOrAddress,
-        address,
-        ABI,
-        library,
-      });
     } catch (e) {
       console.error(
         `Unable to fetch contract ${nameOrAddress} on ${chainIdStr}: address = ${addresses[chainIdStr]["Drop"]}`
