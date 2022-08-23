@@ -349,16 +349,23 @@ export function useGetAvailableEggs(): () => void {
   const dispatch = useAppDispatch();
   const dropContract = useDrop(true);
   const { account } = useActiveWeb3React();
+  const getData = async (uri) => {
+    const res = await axios.get(uri);
+    return res.data;
+  };
   return useCallback(async () => {
-    console.log("useGetAvailableEggs  contract", dropContract);
     try {
       const eggs: Array<any> = await dropContract?.getAllEggs();
-      console.log("useGetAvailableEggs eggs", eggs?.length);
       if (!eggs) return;
-      await [...eggs].map(async (egg) => {
-        const data = (await axios.get(egg.data.metadataURI)).data;
+      console.log("eggsuseGetAvailableEggs", eggs);
+      [...eggs].map(async (egg) => {
+        console.log("eggsuseGetAvailableEggs__mi_egg", egg, eggs.length);
+        // const data = await (await axios.get(egg.data.metadataURI)).data;
+        // const res = await axios.get(egg.data.metadataURI);
+        // const data = await res.data;
+        const data = await getData(egg.data.metadataURI);
         const { name, description, attributes, image, animation_url } = data;
-        console.log("eggsuseGetAvailableEggs ", data, eggs.length);
+        console.log("eggsuseGetAvailableEggs__", data, egg, eggs.length);
 
         const finalEgg: AvailableEgg = {
           bidShares: {
@@ -412,7 +419,7 @@ export function useBuyEgg(): (
         const approval = await zoo?.allowance(account, zooKeeper.address);
         console.log("approval_buy_egg", Number(approval));
         if (Number(approval) <= 0) {
-          console.log("approving_media");
+          console.log("approving_zoo_keeper");
           await zoo
             ?.approve(zooKeeper.address, MaxUint256, {
               gasLimit: 4000000,
@@ -422,13 +429,18 @@ export function useBuyEgg(): (
               tx.wait();
             });
         }
-        console.log("eggId, dropId, quantity", eggId, dropId, quantity);
+        console.log("eggId_dropId_quantity", {
+          eggId,
+          dropId,
+          quantity,
+          approval,
+        });
         const tx = await zooKeeper.buyEggs(eggId, dropId, quantity, {
           gasLimit: 4000000,
         });
         await tx.wait();
         getZooBalance();
-        console.log("tx in buy egg", tx);
+        console.log("tx_in_buy_egg", tx);
         addPopup({
           txn: {
             hash: null,
@@ -483,7 +495,11 @@ export function useBuyEggWithBnB(): (
       try {
         dispatch(loading(true));
         const approval = await bnb?.allowance(account, zooKeeper.address);
-        console.log("approval_approving_media", isNaN(Number(approval)));
+        console.log(
+          "approval_approving_media",
+          Number(approval),
+          isNaN(Number(approval))
+        );
         if (Number(approval) <= 0 || isNaN(Number(approval))) {
           console.log("approving_media");
           const approving = await bnb?.approve(zooKeeper.address, MaxUint256, {
@@ -573,9 +589,7 @@ export function useGetAllAuctions(): () => Promise<void> {
       await auctions?.map(async (auction, index: number) => {
         if (Number(auction.reservePrice) === 0) return false;
         const tokenUri = await media?.tokenURI(Number(auction.tokenID));
-        const tokenMetadataURI = await media?.tokenMetadataURI(
-          Number(auction.tokenID)
-        );
+        const tokenMetadataURI = await media?.tokenURI(Number(auction.tokenID));
         const deet = await zooKeeper?.tokens(Number(auction.tokenID));
 
         const data = (await axios.get(tokenMetadataURI)).data;
@@ -1254,6 +1268,7 @@ export function useRefreshMetadata(): (
   tokenUri: string,
   metadataURI: string
 ) => void {
+  const dropId = process.env.NEXT_PUBLIC_DROP_ID;
   const media = useMedia();
   const zooKeeper = useZooKeeper();
   const addPopup = useAddPopup();
@@ -1270,6 +1285,11 @@ export function useRefreshMetadata(): (
       });
       try {
         dispatch(loading(true));
+        // await media?.setApprovalForAll(zooKeeper.address, true, {
+        //   gasLimit: 4000000,
+        // });
+        // const tx = await zooKeeper?.updateTokenUris(tokenId, dropId);
+        // await tx.wait();
         await media?.setApprovalForAll(zooKeeper.address, true, {
           gasLimit: 4000000,
         });
@@ -1304,6 +1324,6 @@ export function useRefreshMetadata(): (
         dispatch(loading(false));
       }
     },
-    [addPopup, dispatch, fetchMyNfts, media, zooKeeper]
+    [addPopup, dispatch, dropId, fetchMyNfts, media, zooKeeper]
   );
 }
