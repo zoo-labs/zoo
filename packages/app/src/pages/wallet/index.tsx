@@ -79,11 +79,9 @@ export default function Wallet({ children }) {
                       onClick={() => {
                         setCategory(index);
                       }}
-                      className={`${
-                        active ? "bg-green text-black" : "bg-black"
-                      } ${index === 0 && "rounded-l-full"} ${
-                        index === 2 && "rounded-r-full"
-                      }
+                      className={`${active ? "bg-bid-gradient" : "bg-black"} ${
+                        index === 0 && "rounded-l-xl"
+                      } ${index === 2 && "rounded-r-xl"}
                     ${index !== 2 && "mr-px"}
                     text-base font-semibold py-4 px-3 cursor-pointer inline-block `}
                       key={index}
@@ -105,7 +103,7 @@ export default function Wallet({ children }) {
               </p>
               <button
                 onClick={() => handleFunds(chainId, buyZoo)}
-                className="px-5 py-3 ml-4 text-sm font-semibold text-black rounded-full bg-green md:text-base md:px-6 md:py-3 lg:px-6"
+                className="px-5 py-3 ml-4 text-sm font-semibold text-white rounded-full bg-green md:text-base md:px-6 md:py-3 lg:px-6"
               >
                 Buy $ZOO
               </button>

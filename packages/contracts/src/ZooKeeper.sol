@@ -10,7 +10,7 @@ import { IDrop } from "./interfaces/IDrop.sol";
 import { IMedia } from "./interfaces/IMedia.sol";
 import { IZoo } from "./interfaces/IZoo.sol";
 import { IERC721Burnable } from "./interfaces/IERC721Burnable.sol";
-import { IUniswapV2Pair } from "./uniswapv2/interfaces/IUniswapV2Pair.sol";
+import { IUniswapV2Pair } from "./interfaces/IUniswapV2Pair.sol";
 import { IKeeper } from "./interfaces/IKeeper.sol";
 
 interface ICustomDrop{
@@ -28,6 +28,9 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
     uint256 count;
     uint40 lastTimeFed;
   }
+    bool public allowHatching;
+    bool public allowFeeding;
+    bool public allowBreeding;
 
   mapping(uint256 => address) public drops;
 
@@ -88,6 +91,12 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
     BNBPrice = price;
   }
 
+  function changeAllowance(bool _allowHatching, bool _allowFeeding, bool _allowBreeding) public onlyOwner {
+      allowHatching = _allowHatching;
+      allowFeeding = _allowFeeding;
+      allowBreeding = _allowBreeding;
+  }
+
   function setBNB(address _bnb) public onlyOwner {
     BNB = _bnb;
   }
@@ -123,6 +132,12 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
     IZoo.Token calldata token
   ) external onlyBridge {
     mint(owner, token);
+  }
+
+  function updateTokenUris(uint256 tokenId, uint256 dropId) public {
+    IDrop drop = IDrop(drops[dropId]);
+    media.updateTokenURI(tokens[tokenId].dropEgg, drop.getEgg(tokens[tokenId].dropEgg).data.tokenURI);
+    media.updateTokenMetadataURI(tokens[tokenId].dropEgg, drop.getEgg(tokens[tokenId].dropEgg).data.metadataURI);
   }
 
   function mintEgg(uint256 eggId, uint256 dropID, address owner) internal returns (IZoo.Token memory) {
@@ -187,6 +202,7 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
   }
 
   function hatchEgg(uint256 dropID, uint256 eggID) public returns (IZoo.Token memory) {
+    require(allowHatching, "Not allowed to Hatch");
     IDrop drop = IDrop(drops[dropID]);
     uint256 price = drop.eggPrice(EggDrop[eggID]);
     require(zoo.balanceOf(msg.sender) >= price, "Not enough ZOO");
@@ -211,6 +227,7 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
 
 
   function feedAnimal (uint256 animal, uint256 dropID) public {
+    require(allowFeeding, "Not allowed to Feed");
     require(tokens[animal].kind != IZoo.Type.BASE_EGG || tokens[animal].kind != IZoo.Type.HYBRID_EGG, "token not animal");
     IDrop drop = IDrop(drops[dropID]);
     uint256 price = drop.eggPrice(tokens[animal].dropEgg);
@@ -250,7 +267,7 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
     uint256 tokenA,
     uint256 tokenB
   ) public canBreed(tokenA, tokenB) returns (IZoo.Token memory) {
-
+    require(allowBreeding, "Not allowed to Breed");
     IDrop drop = IDrop(drops[dropID]);
 
     if(tokens[tokenA].dropEgg == drop.silverEgg() || tokens[tokenB].dropEgg == drop.silverEgg()){
@@ -286,8 +303,8 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
 
     burn(msg.sender, tokenID);
 
-    uint256 blockAge = block.number - token.birthValues.birthday;
-    uint256 daysOld = blockAge.div(28800);
+    uint256 blockAge = block.timestamp - token.birthValues.timestamp;
+    uint256 daysOld = blockAge.div(86000);
 
     if(token.stage == IZoo.AdultHood.BABY){
       yields = daysOld.mul(ICustomDrop(drops[dropID]).animalStageYields(token.name).baby.yields.mul(10**18));
