@@ -89,7 +89,7 @@ function AppBar(props: {
                     <NavLink href="/">
                       <div className=" h-full pl-2 cursor-pointer logo w-[70px] flex">
                         <Image
-                          src="/img/newzoologo.png"
+                          src="/img/logo.png"
                           // className="w-10"
                           alt="Logo"
                           height="200px"

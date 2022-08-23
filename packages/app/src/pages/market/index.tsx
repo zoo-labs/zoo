@@ -18,12 +18,13 @@ import { useRouter } from "next/router";
 import Wallet from "./wallet";
 import { useTokenTypes } from "zoo/state";
 import { useFetchMyNFTs, useGetAvailableEggs } from "state/zoo/hooks";
-import { useActiveWeb3React, useDrop } from "../../hooks";
+import { useActiveWeb3React, useDrop, useZooKeeper } from "../../hooks";
 import { useMoralis } from "react-moralis";
 import { abbreviateNumber } from "functions/abbreviateNumbers";
 import { accountEllipsis } from "functions/lux";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { Auction, AvailableEgg } from "types";
+import Web3 from "web3";
 
 const PrettoSlider = styled(Slider)({
   color: "#15F195",
@@ -157,6 +158,18 @@ const MarketPlacePage = () => {
   });
 
   const router = useRouter();
+  // const [zooBnbPrice, setZooBnbPrice] = useState(0);
+  // const zooKeeper = useZooKeeper();
+
+  // const getZooBnbPrice = useCallback(async () => {
+  //   const price = await zooKeeper?.BNBPrice();
+  //   const value = Web3.utils.fromWei(price.toString(), "ether");
+  //   setZooBnbPrice(parseFloat(value));
+  // }, [zooKeeper]);
+
+  // useEffect(() => {
+  //   getZooBnbPrice();
+  // }, [getZooBnbPrice]);
 
   const onClickTokenType = (name: string) => {
     console.log("name", name);
@@ -211,7 +224,7 @@ const MarketPlacePage = () => {
       {/* Eggs */}
       <div className="mb-16">
         <div>
-          <h2 className="text-3xl font-bold text-center text-white lg:text-4xl mb-4">
+          <h2 className="mb-4 text-3xl font-bold text-center text-white lg:text-4xl">
             Buy Eggs
           </h2>
         </div>
@@ -235,7 +248,7 @@ const MarketPlacePage = () => {
                             src={item.animation_url}
                             autoPlay
                             loop
-                            className="rounded overflow-hidden max-h-full object-cover"
+                            className="object-cover max-h-full overflow-hidden rounded"
                           />
                         </div>
                       </div>
@@ -375,7 +388,7 @@ const MarketPlacePage = () => {
       {/* Data */}
       <div>
         {category === 0 && (
-          <div className="flex flex-wrap mt-8 -mx-4 justify-center">
+          <div className="flex flex-wrap justify-center mt-8 -mx-4">
             {allAuctions.length > 0 ? (
               allAuctions.map((datum: Auction, index) => {
                 return (
@@ -395,7 +408,7 @@ const MarketPlacePage = () => {
         )}
 
         {category === 1 && (
-          <div className="flex flex-wrap mt-8 -mx-4 justify-center">
+          <div className="flex flex-wrap justify-center mt-8 -mx-4">
             {allAuctions.length > 0 ? (
               allAuctions
                 .filter((auction) => auction.kind === 0)
@@ -417,7 +430,7 @@ const MarketPlacePage = () => {
         )}
 
         {category === 2 && (
-          <div className="flex flex-wrap mt-8 -mx-4 justify-center">
+          <div className="flex flex-wrap justify-center mt-8 -mx-4">
             {allAuctions.length > 0 ? (
               allAuctions
                 .filter((auction) => auction.kind === 1)
