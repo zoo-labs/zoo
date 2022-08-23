@@ -138,7 +138,3 @@ export default function Wallet({ children }) {
     </section>
   );
 }
-
-{
-  /* from-purple to-blue bg-gradient-to-b */
-}

@@ -56,6 +56,7 @@ module.exports = {
           "linear-gradient(180deg, rgba(37, 23, 255, 0.1) -61.88%, rgba(21, 241, 149, 0.1) 93.88%)",
         "auction-gradient":
           "linear-gradient(180deg, #2517FF -61.88%, #15F195 93.88%)",
+        new: "linear-gradient(268.95deg, #2517FF 0.43%, #1D84CA 49.76%, #1FDD8E 99.1%)",
       },
       colors: {
         purple: "#462CA9",
@@ -70,6 +71,7 @@ module.exports = {
         black: "#1F2030",
         "deep-gray": "#23262F",
         muted: "#777E91",
+        "muted-20": "#9E9FA0",
         "dark-pink": "#EF466F",
         orange: "#FF592C",
         "dark-blue": "#020F2C",
@@ -78,6 +80,7 @@ module.exports = {
         dark: "#000",
         steel: "#797979",
         "zoo-green": "#15F195",
+        "zoo-green-1": "#1FDD8E",
         "zoo-yellow": "#F3B04E",
         "dark-gray": "#6D7278",
         "grey-400": "#878787",
