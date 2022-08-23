@@ -249,7 +249,7 @@ video {
   background-size: cover;
 }
 .bg-drop-tree {
-  background: url("/images/bg/drop.svg");
+  background: url("/images/bg/drop-grad.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
