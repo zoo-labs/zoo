@@ -36,12 +36,12 @@ const HeroSection = ({ animal3d }) => {
         // ref={heroContent}
       >
         <div className="mb-6 Hero__content md:mb-12 md:flex md:flex-col md:items-center md:text-center md:max-w-7xl lg:items-start lg:text-left lg:basis-1/2">
-          <p className="mb-2 uppercase text-green">Nfts made Fun.</p>
+          <p className="mb-2 uppercase text-white text-opacity-50">NFTs made Fun.</p>
 
           <h1 className="mb-3 text-4xl font-bold lg:text-7xl lg:mb-6">
             Exotic animals for everyone.
           </h1>
-          <p className="mb-6 text-base text-white lg:text-lg text-opacity-70 md:max-w-xl lg:text-left">
+          <p className="mb-6 text-base text-white lg:text-lg text-opacity-50 md:max-w-xl lg:text-left">
             Pet, play, feed, grow, and breed your very own animal NFT’s in our
             Sims-like metaverse to increase their value and earn greater
             rewards, all while contributing to saving endangered animals.
@@ -49,7 +49,7 @@ const HeroSection = ({ animal3d }) => {
           <div className="flex items-center gap-3">
             <div
               onClick={() => handleFunds(chainId, buyZoo)}
-              className="px-5 py-3 text-sm font-semibold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
+              className="px-5 py-3 text-sm font-semibold text-white rounded-full bg-blue md:text-base md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
             >
               Buy $ZOO
             </div>
