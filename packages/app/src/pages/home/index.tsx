@@ -8,7 +8,7 @@ const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
 //import MyModel from "../../components/ModelViewer/index";
 // sections
 const HeroSection = dynamic(() => import("./HeroSection"));
-const PartnersSection = dynamic(() => import("./PartnersSection"));
+// const PartnersSection = dynamic(() => import("./PartnersSection"));
 const OpportunitySection = dynamic(() => import("./OpportunitySection"));
 // import PopularNftsSection from './PopularNftsSection';
 const MarketPlaceSection = dynamic(() => import("./MarketPlaceSection"));
@@ -38,7 +38,7 @@ export default function Home() {
     <div>
       <HeroSection animal3d={<ModelViewer zoom="35deg"></ModelViewer>} />
 
-      <PartnersSection />
+      { /* <PartnersSection /> */}
       <OpportunitySection />
       {/* <PopularNftsSection /> */}
       <MarketPlaceSection />
