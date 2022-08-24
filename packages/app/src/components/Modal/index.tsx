@@ -117,12 +117,12 @@ export default function Modal({
                 <div
                   className={` ${
                     isMax ? "h-full" : "p-px"
-                  }  w-full rounded bg-gradient-to-b from-btn1  to-btn2`}
+                  }  w-full rounded bg-dark-900`}
                 >
                   <div
                     className={`${
                       !isMax && `rounded p-${padding}`
-                    } flex flex-col w-full h-full  overflow-y-hidden  bg-dark-900`}
+                    } flex flex-col w-full h-full  overflow-y-hidden  bg-black100`}
                     style={{ backgroundColor }}
                   >
                     <div

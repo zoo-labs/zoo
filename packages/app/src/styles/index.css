@@ -224,6 +224,10 @@ video {
   background-color: #111;
 }
 
+.text-secondary {
+  color: #777;
+}
+
 .from-blue {
   --tw-gradient-from: #2517ff;
   --tw-gradient-stops: #27b0e6;
