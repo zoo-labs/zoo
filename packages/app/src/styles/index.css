@@ -228,6 +228,17 @@ video {
   color: #777;
 }
 
+.text-4xl {
+  letter-spacing: -0.05em;
+}
+.text-2xl {
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+.text-3xl {
+  letter-spacing: -0.025em;
+}
+
 .from-blue {
   --tw-gradient-from: #2517ff;
   --tw-gradient-stops: #27b0e6;
@@ -235,13 +246,6 @@ video {
 
 .to-green {
   --tw-gradient-to: #15f195;
-}
-
-.MarketPlace {
-  background: url("https://res.cloudinary.com/diu8hjwwe/image/upload/v1644331325/zoo/images/leaves_fthdmy.png");
-  background-repeat: no-repeat;
-  background-position: bottom right;
-  background-size: 50%;
 }
 
 .dao-bg {

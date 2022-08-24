@@ -156,7 +156,7 @@ function DropTopBar(props: {
               <div className="flex flex-col px-4 pt-2 pb-3 space-y-1">
                 <a
                   id={`marketplace`}
-                  className="p-2 tracking-widest text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="/market"
                 >
                   {i18n._(t`Marketplace`)}
