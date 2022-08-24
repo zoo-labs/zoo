@@ -133,7 +133,6 @@ export default function Menu() {
                 <div className="relative grid gap-6 px-5 py-6 bg-dark-900 sm:gap-8 sm:p-8">
                   <div
                     className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
-                    style={{}}
                   >
                     {state.gifMode === "gif" ? "3D" : "Gif"} Mode
                     <div className="ml-4 sm:ml-14">
@@ -167,7 +166,6 @@ export default function Menu() {
 
                   <div
                     className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
-                    style={{}}
                     onClick={() =>
                       window.open(
                         "https://charts.bogged.finance/0x09E2b83Fe5485a7c8BeAa5DffD1D324A2B2D5c13"
@@ -189,7 +187,6 @@ export default function Menu() {
                   </div>
                   {/* <div
                     className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
-                    style={{}}
                   >
                     Animation
                     <div className="ml-4 sm:ml-14">
@@ -202,7 +199,6 @@ export default function Menu() {
                   </div> */}
                   <div
                     className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
-                    style={{}}
                     onClick={() => window.open("https://github.com/zoo-labs")}
                   >
                     Code
@@ -223,7 +219,6 @@ export default function Menu() {
                   </div>
                   <div
                     className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
-                    style={{}}
                     onClick={() =>
                       window.open(
                         "https://discord.com/channels/@me/878753766248177685/880493331010945095"
@@ -244,7 +239,6 @@ export default function Menu() {
                   </div>
                   <div
                     className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
-                    style={{}}
                     onClick={() =>
                       window.open(
                         "https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
@@ -265,14 +259,12 @@ export default function Menu() {
                   </div>
                   {/* <div
                     className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
-                    style={{}}
                   >
 
                   </div> */}
                   {/* <div
                     onClick={() => toggleTheme()}
                     className='flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white'
-                    style={{}}>
                     Theme
                     <div className='ml-4 sm:ml-14'>
                       {isDark ? <SunIcon fill={isDark ? 'white' : 'text'} width='18px' /> : <MoonIcon fill={isDark ? 'white' : 'textDisabled'} width='18px' />}
@@ -281,7 +273,6 @@ export default function Menu() {
                   {/* <div
                     onClick={() => logout}
                     className='flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white'
-                    style={{}}>
                     Log Out
                     <div className='ml-4 sm:ml-14'>
                       <RiLogoutCircleLine fill='gray' />
