@@ -80,8 +80,8 @@ export default function Wallet({ children }) {
                         setCategory(index);
                       }}
                       className={`${active ? "bg-bid-gradient" : "bg-black"} ${
-                        index === 0 && "rounded-l-xl"
-                      } ${index === 2 && "rounded-r-xl"}
+                        index === 0 && "rounded-l-full"
+                      } ${index === 2 && "rounded-r-full"}
                     ${index !== 2 && "mr-px"}
                     text-base font-semibold py-4 px-3 cursor-pointer inline-block `}
                       key={index}

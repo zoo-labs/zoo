@@ -140,7 +140,7 @@ module.exports = {
         "48px": "48px",
       },
       fontFamily: {
-        sans: ["DM Sans", ...defaultTheme.fontFamily.sans],
+        sans: ["Inter", ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
         label: [
@@ -152,7 +152,7 @@ module.exports = {
         hero: [
           "48px",
           {
-            letterSpacing: "-0.02em;",
+            letterSpacing: "-0.05em",
             lineHeight: "96px",
             fontWeight: 700,
           },
@@ -160,7 +160,7 @@ module.exports = {
       },
       borderRadius: {
         none: "0",
-        px: "1px",
+        px: "2px",
         DEFAULT: "0.625rem",
       },
       boxShadow: {
