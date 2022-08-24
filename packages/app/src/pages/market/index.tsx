@@ -215,9 +215,9 @@ const MarketPlacePage = () => {
 
   return (
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
-      <div className="flex flex-col items-center h-[20vh] bg-[url(/img/plant.png)] bg-contain bg-right-bottom bg-no-repeat">
+      <div className="flex flex-col items-center h-[20vh]">
         <h1 className="mb-4 text-5xl">
-          The <span className="text-green">ZOO</span> Market
+          The <span className="text-blue" style={{ fontWeight: 900 }}>ZOO</span> Market
         </h1>
         <p>Buy, list, and bid on NFT Eggs and Animals.</p>
       </div>
