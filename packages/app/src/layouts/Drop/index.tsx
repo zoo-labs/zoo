@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Footer from "../../components/Footer";
-import Header from "components/Header/drop";
+import Header from "components/Header";
 import Main from "../../components/Main";
 import Popups from "../../components/Popups";
 import { useActiveWeb3React } from "../../hooks";
