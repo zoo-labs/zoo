@@ -247,6 +247,9 @@ video {
 .to-green {
   --tw-gradient-to: #15f195;
 }
+.text-base {
+  letter-spacing: -0.03em;
+}
 
 .dao-bg {
   background: url("/images/bg/dao.svg");
