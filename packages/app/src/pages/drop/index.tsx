@@ -36,10 +36,10 @@ const Drop = ({}: AppProps & {
         <div className="bg-drop-tree min-h-[850px] flex flex-col items-center justify-center w-full px-4 mb-10">
           <div className="max-w-7xl">
             <div className="md:max-w-[698px] mx-auto text-center">
-              <p className="font-bold text-3xl leading-10 md:leading-none md:text-6xl mb-4">
+              <p className="mb-4 text-3xl font-bold leading-10 md:leading-none md:text-6xl">
                 ZOO NFT DROPS
               </p>
-              <p className="font-light text-sm text-muted-20 mb-10 max-w-full overflow-hidden">
+              <p className="max-w-full mb-10 overflow-hidden text-sm font-light text-muted-20">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Dictumst curabitur ullamcorper platea amet egestas suspendisse
                 elementum.
@@ -50,16 +50,16 @@ const Drop = ({}: AppProps & {
                 availableEggs?.map((_: AvailableEgg) => (
                   <div key={_.id} className="relative">
                     <div className="flex items-end justify-center rounded-md w-56 h-[286px] transform duration-100 ease-in-out bg-drop-nft before:bg-new before:w-full before:h-full before:absolute before:opacity-50 before:rounded-[4px]">
-                      <div className="h-full w-full">
+                      <div className="w-full h-full">
                         <video
                           src={_.animation_url}
                           autoPlay
                           loop
-                          className="rounded overflow-hidden max-h-full w-full object-cover"
+                          className="object-cover w-full max-h-full overflow-hidden rounded"
                         />
                       </div>
                       <Link href={`/market/egg/${_.id}`} passHref>
-                        <a className="absolute bottom-2 right-2 h-10 w-10 rounded-full border flex items-center justify-center">
+                        <a className="absolute flex items-center justify-center w-10 h-10 border rounded-full bottom-2 right-2">
                           <Image
                             src="/icons/arrow-right-light.svg"
                             alt=""
@@ -81,16 +81,16 @@ const Drop = ({}: AppProps & {
             </div>
           </div>
         </div>
-        <div className="px-4 max-w-7xl mx-auto">
+        <div className="px-4 mx-auto max-w-7xl">
           <p className="text-center font-bold mb-[62px] text-[42px] leading-10 w-max mx-auto relative before:absolute before:h-1 before:w-[50%] before:inset-x-[28%] before:-top-3 after:h-1 after:absolute after:w-[50%] after:bg-new  after:-bottom-3 after:inset-x-[28%] before:bg-new">
             What is Zoo?
           </p>
           <div className="flex flex-col md:flex-row md:justify-between mb-44">
-            <div className="flex-1 py-4 px-2 pr-5">
-              <p className="font-medium text-4xl mb-4">
+            <div className="flex-1 px-2 py-4 pr-5">
+              <p className="mb-4 text-4xl font-medium">
                 Exotic animals for everyone.
               </p>
-              <p className="text-sm font-normal text-muted-20 leading-7 tracking-tight mb-6">
+              <p className="mb-6 text-sm font-normal leading-7 tracking-tight text-muted-20">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam
                 non in viverra metus id. Pharetra lorem felis at vestibulum,
                 massa nibh justo consectetur tristique. Vestibulum et velit
@@ -99,7 +99,7 @@ const Drop = ({}: AppProps & {
                 vestibulum, massa nibh justo consectetur triste. Vestibulum
                 Pharetraet velit elementum molestie.etus i
               </p>
-              <button className="p-px bg-new rounded-full">
+              <button className="p-px rounded-full bg-new">
                 <button className="bg-[#13152B] py-3.5 px-8 rounded-full">
                   Enter Marketplace
                 </button>
@@ -136,7 +136,7 @@ const Drop = ({}: AppProps & {
             <p className="text-left font-bold mb-3 text-[42px] leading-10 w-max relative before:absolute before:h-1 before:w-[55%] before:left-0 before:-top-3 before:bg-new">
               Our Drops
             </p>
-            <p className="text-muted-20 text-sm leading-7">
+            <p className="text-sm leading-7 text-muted-20">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam non
               in viverra metus id. Pharetra lorem felis at vestibulum, massa
               nibh justo consectetur tristique. Vestibulum
@@ -160,7 +160,7 @@ const Drop = ({}: AppProps & {
                 <p className="font-medium text-[32px] leading-8 mb-[18px]">
                   {_}
                 </p>
-                <p className="text-sm text-muted-20 leading-7 mb-8">
+                <p className="mb-8 text-sm leading-7 text-muted-20">
                   The Siberian tiger is a tiger from a specific population of
                   the Panthera tigris tigris subspecies native to the Russian
                   Far East, Northeast China. It once ranged throughout the
@@ -170,7 +170,9 @@ const Drop = ({}: AppProps & {
                   mainly the Sikhote-Alin mountain region in southwest
                 </p>
                 <div className="text-left flex items-center font-normal mb-3 text-sm leading-10 w-max relative before:absolute before:h-1 before:w-[70%] before:left-0 before:-top-2 before:bg-new cursor-pointer">
-                  <a className="mr-1">View Sumatran Elephant</a>
+                  <a href="/drop/1" className="mr-1">
+                    View Sumatran Elephant
+                  </a>
                   <Image
                     src="/icons/arrow-right.svg"
                     alt=""
@@ -182,21 +184,21 @@ const Drop = ({}: AppProps & {
             </div>
           ))}
           <div className="flex justify-center mb-28">
-            <button className="p-px bg-new rounded-full">
+            <button className="p-px rounded-full bg-new">
               <button className="bg-[#13152B] py-3.5 px-8 rounded-full">
                 View on Marketplace
               </button>
             </button>
           </div>
 
-          <div className="flex flex-col-reverse md:flex-row md:items-center mb-32">
+          <div className="flex flex-col-reverse mb-32 md:flex-row md:items-center">
             <img src="/images/drop/roadmap.png" alt="" />
-            <div className="md:text-right flex-1 mb-5 md:mb-0 md:pl-12">
+            <div className="flex-1 mb-5 md:text-right md:mb-0 md:pl-12">
               <div className="flex flex-col md:items-end">
                 <p className="text-right flex justify-end font-bold mb-3 text-[42px] leading-10 w-max relative before:absolute before:h-1 before:w-[70%] before:left-0 md:before:left-auto before:md:right-0 before:-top-2 before:bg-new cursor-pointer">
                   Our Roadmap
                 </p>
-                <p className="text-sm text-muted-20 leading-7 mb-10">
+                <p className="mb-10 text-sm leading-7 text-muted-20">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   Feugiat dolor, convallis vitae id platea faucibus. Vel
                   consectetur nunc nulla sed mattis fermentum montes, sagittis
@@ -212,8 +214,8 @@ const Drop = ({}: AppProps & {
                         i === 0 ? "border-y" : "border-b"
                       } border-[#3F3F3F]`}
                     >
-                      <p className="text-new-clip text-4xl mr-7">0{i + 1}</p>
-                      <p className="font-light text-lg text-left">
+                      <p className="text-4xl text-new-clip mr-7">0{i + 1}</p>
+                      <p className="text-lg font-light text-left">
                         High quality rendered and equally affordable dropsHigh
                         quality rendered and equally affordable drops
                       </p>
@@ -226,7 +228,7 @@ const Drop = ({}: AppProps & {
             <p className="text-[42px] leading-10 font-bold mb-6">
               Join the <span className="text-new-clip">Community</span>
             </p>
-            <p className="font-light text-lg text-muted-20 leading-8 mb-10">
+            <p className="mb-10 text-lg font-light leading-8 text-muted-20">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
