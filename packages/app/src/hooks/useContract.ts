@@ -95,9 +95,9 @@ export function useContract(
           ? abis[chainIdStr][nameOrAddress.toString()]
           : null;
     } catch (e) {
-      console.error(
-        `Unable to fetch contract ${nameOrAddress} on ${chainIdStr}: address = ${addresses[chainIdStr]["Drop"]}`
-      );
+      // console.log(
+      //   `Unable to fetch contract ${nameOrAddress} on ${chainIdStr}: address = ${addresses[chainIdStr]["Drop"]}`
+      // );
     }
   }
 
