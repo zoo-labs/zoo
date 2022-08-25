@@ -12,7 +12,7 @@ const DropLayout = ({ children, banner = undefined, isMarginTop = true }) => {
     updateGasPrice(library);
   }, [library]);
   return (
-    <div className="z-0 flex flex-col items-center w-full h-screen pb-16 lg:pb-0">
+    <div className="z-0 flex flex-col items-center w-full h-screen pb-16 lg:pb-0 font-made-outer-sans">
       <Header transparent={true} banner={banner} />
       <Main isModal={!isMarginTop} bgColor="bg-drop">
         {children}

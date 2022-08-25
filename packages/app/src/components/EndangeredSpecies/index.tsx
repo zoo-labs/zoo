@@ -16,7 +16,7 @@ const EndangeredSpecies = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex flex-col items-center max-w-lg px-4 py-12 border rounded-lg bg-black100">
+    <div className="flex flex-col items-center max-w-lg px-4 py-12 border border-dark-800 rounded-lg bg-black100">
       <div className="mb-8">
         <h2 className="mb-4 text-xl font-bold text-center lg:text-3xl">
           Save Endangered Species
