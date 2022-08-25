@@ -50,7 +50,6 @@ const ZooItem: NextPage<Props> = ({
           style={{
             fontSize: "24px",
             fontWeight: "500",
-            letterSpacing: "-0.47999998927116394px",
             marginBottom: "20px",
           }}
         >
@@ -107,7 +106,6 @@ const ZooItem: NextPage<Props> = ({
             style={{
               fontSize: "21px",
               fontWeight: "500",
-              letterSpacing: "0px",
               marginBottom: "9px",
             }}
           >

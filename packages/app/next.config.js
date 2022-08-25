@@ -1,4 +1,4 @@
-const withPWA = require("next-pwa");
+const withPWA = require("next-pwa")({})
 const { withSentryConfig } = require("@sentry/nextjs");
 
 const linguiConfig = require("./lingui.config.js");
@@ -8,7 +8,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 const nextConfig = {
-  env: {},
   images: {
     domains: ["raw.githubusercontent.com", "res.cloudinary.com"],
   },
