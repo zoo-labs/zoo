@@ -20,7 +20,6 @@
     "watch": "tsdx watch",
     "test": "tsdx test",
     "prepublish": "tsdx build",
-    "prepare": "husky install",
     "prettier": "prettier --write 'src/**/*.ts' 'test/**/*.ts'"
   },
   "lint-staged": {

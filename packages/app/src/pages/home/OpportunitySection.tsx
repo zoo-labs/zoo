@@ -45,7 +45,7 @@ const OpportunitySection = () => {
     <section className="relative" id="endless-opportunity">
       <div className="px-6 py-16 lg:mt-10">
         <h2 className="mb-16 text-2xl font-semibold text-center md:text-2xl lg:text-4xl">
-          Endless <span className="tracking-widest ">Yield Opportunity</span>
+          Endless Yield Opportunity
         </h2>
 
         <div className="flex flex-col items-center justify-between mx-auto lg:flex-row max-w-7xl">
