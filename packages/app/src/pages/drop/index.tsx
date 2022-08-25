@@ -4,7 +4,12 @@ import DropLayout from "layouts/Drop";
 import { NextComponentType, NextPageContext } from "next";
 import { AppProps } from "next/app";
 import Image from "next/image";
-import React from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useGetAvailableEggs } from "state/zoo/hooks";
+import { AvailableEgg } from "types";
 
 const animals = [
   "Amur Leopard",
@@ -17,9 +22,17 @@ const Drop = ({}: AppProps & {
   Component: NextComponentType<NextPageContext>;
   Layout: (title: string) => void;
 }) => {
+  const router = useRouter();
+  const { availableEggs } = useSelector((state: any) => state.zoo);
+  const getAvailableEggs = useGetAvailableEggs();
+
+  useEffect(() => {
+    getAvailableEggs();
+  }, [getAvailableEggs]);
+
   return (
     <DropLayout isMarginTop={false}>
-      <div className="font-made-outer-sans">
+      <div className="">
         <div className="bg-drop-tree min-h-[850px] flex flex-col items-center justify-center w-full px-4 mb-10">
           <div className="max-w-7xl">
             <div className="md:max-w-[698px] mx-auto text-center">
@@ -33,28 +46,38 @@ const Drop = ({}: AppProps & {
               </p>
             </div>
             <div className="flex items-center justify-center gap-5 min-h-[372px]">
-              {Array(5)
-                .fill(0)
-                .map((_, i) => (
-                  <div key={i} className="relative">
-                    <div className="flex items-end justify-center rounded-md w-56 h-[286px] hover:h-[372px] transform duration-100 ease-in-out bg-drop-nft before:bg-new before:w-full before:h-full before:absolute before:opacity-50 before:rounded-[4px]">
-                      <Image
-                        src="/images/drop/special-egg.svg"
-                        alt=""
-                        width={114}
-                        height={160}
-                      />
-                      <div className="absolute bottom-2 right-2 h-10 w-10 rounded-full border flex items-center justify-center">
-                        <Image
-                          src="/icons/arrow-right-light.svg"
-                          alt=""
-                          width={20}
-                          height={20}
+              {availableEggs.length ? (
+                availableEggs?.map((_: AvailableEgg) => (
+                  <div key={_.id} className="relative">
+                    <div className="flex items-end justify-center rounded-md w-56 h-[286px] transform duration-100 ease-in-out bg-drop-nft before:bg-new before:w-full before:h-full before:absolute before:opacity-50 before:rounded-[4px]">
+                      <div className="h-full w-full">
+                        <video
+                          src={_.animation_url}
+                          autoPlay
+                          loop
+                          className="rounded overflow-hidden max-h-full w-full object-cover"
                         />
                       </div>
+                      <Link href={`/market/egg/${_.id}`} passHref>
+                        <a className="absolute bottom-2 right-2 h-10 w-10 rounded-full border flex items-center justify-center">
+                          <Image
+                            src="/icons/arrow-right-light.svg"
+                            alt=""
+                            width={20}
+                            height={20}
+                          />
+                        </a>
+                      </Link>
                     </div>
                   </div>
-                ))}
+                ))
+              ) : (
+                <div className="px-4 py-12 ">
+                  <p className="text-lg text-center lg:text-3xl">
+                    No eggs available
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -221,7 +244,7 @@ const Drop = ({}: AppProps & {
   );
 };
 
-const NullLayout = ({ children }) => {
+export const NullLayout = ({ children }) => {
   return <>{children}</>;
 };
 
