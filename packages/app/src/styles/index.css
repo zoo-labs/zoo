@@ -173,8 +173,9 @@ canvas {
 
 .logo,
 .lux-font {
-  font-family: "Open Sans", sans-serif, Arial, Helvetica;
+  font-family: "Inter", sans-serif, Arial, Helvetica;
   font-weight: 900;
+  font-size: 1.75em;
 }
 
 video {
@@ -190,7 +191,7 @@ video {
   position: relative;
   bottom: 2px;
   font-weight: bold;
-  font-family: "Open Sans", sans-serif, Arial, Helvetica;
+  font-family: "Inter", sans-serif, Arial, Helvetica;
 }
 
 .AssetList__heading {
@@ -214,7 +215,28 @@ video {
   --tw-gradient-to: #15f195 131.19%;
 }
 .bg-dark-900 {
-  background-color: rgba(22, 21, 34, 1);
+  background-color: #222;
+}
+.bg-dark-800 {
+  background-color: #333;
+}
+.bg-black100 {
+  background-color: #111;
+}
+
+.text-secondary {
+  color: #777;
+}
+
+.text-4xl {
+  letter-spacing: -0.05em;
+}
+.text-2xl {
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+.text-3xl {
+  letter-spacing: -0.025em;
 }
 
 .from-blue {
@@ -224,13 +246,6 @@ video {
 
 .to-green {
   --tw-gradient-to: #15f195;
-}
-
-.MarketPlace {
-  background: url("https://res.cloudinary.com/diu8hjwwe/image/upload/v1644331325/zoo/images/leaves_fthdmy.png");
-  background-repeat: no-repeat;
-  background-position: bottom right;
-  background-size: 50%;
 }
 
 .dao-bg {

@@ -156,9 +156,8 @@ function DropTopBar(props: {
               <div className="flex flex-col px-4 pt-2 pb-3 space-y-1">
                 <a
                   id={`marketplace`}
-                  className="p-2 tracking-widest text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="/market"
-                  style={{ letterSpacing: "2px" }}
                 >
                   {i18n._(t`Marketplace`)}
                 </a>
@@ -168,7 +167,6 @@ function DropTopBar(props: {
                   href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
                   target="_blank"
                   rel="noreferrer"
-                  style={{ letterSpacing: "2px" }}
                 >
                   {i18n._(t`Chart`)}
                 </a>
