@@ -17,11 +17,11 @@ const FaqSection = () => {
           Game FAQ
         </h2>
         <div className="flex flex-col  lg:flex-row lg:flex-wrap lg:items-start lg:justify-between">
-          <div className="flex flex-col mb-8 lg:basis-1/2 lg:max-w-sm">
-            <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
+          <div className="flex flex-col mb-8 lg:basis-1/2 w-full lg:max-w-sm">
+            <h3 className="mb-4 text-xl font-bold text-white lg:text-2xl">
               What is ZOO?
             </h3>
-            <p className="leading-6 text-white lg:max-w-xl">
+            <p className="leading-6 text-muted-40 lg:max-w-xl">
               ZOO is a Liquidity Protocol that exists to bridge tokens and NFTs
               at the intersection of Defi and gaming. Each of our NFTs (animal
               or egg) yield our native currency, $ZOO. Each NFT is
@@ -30,11 +30,11 @@ const FaqSection = () => {
             </p>
           </div>
 
-          <div className="flex flex-col mb-12 lg:basis-1/2 ">
-            <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
+          <div className="flex flex-col mb-12 lg:basis-1/2 w-full ">
+            <h3 className="mb-4 text-xl font-bold text-white lg:text-2xl">
               What are the Key Features in ZOO?
             </h3>
-            <p className="text-white lg:max-w-sm ">
+            <p className="text-muted-40 lg:max-w-sm ">
               {`Our key features include: growing,
               breeding. In the near future we will
               also launch the ZOO AR App which will enable you to
@@ -43,29 +43,29 @@ const FaqSection = () => {
             </p>
           </div>
 
-          <div className="flex flex-col mb-12 lg:basis-1/2">
-            <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
+          <div className="flex flex-col mb-12 lg:basis-1/2 w-full">
+            <h3 className="mb-4 text-xl font-bold text-white lg:text-2xl">
               What is the $ZOO token?
             </h3>
-            <p className="text-white lg:max-w-sm">
+            <p className="text-muted-40 lg:max-w-sm">
               The $ZOO token is the native currency in the game. It allows token
               holders to play, invest, use our NFT marketplace and be part of
               the game.
             </p>
           </div>
 
-          <div className="flex flex-col mb-12 lg:basis-1/2">
-            <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
+          <div className="flex flex-col mb-12 lg:basis-1/2 w-full">
+            <h3 className="mb-4 text-xl font-bold text-white lg:text-2xl">
               How Do I Get Started?
             </h3>
-            <p className="text-white lg:max-w-sm">
+            <p className="text-muted-40 lg:max-w-sm">
               Players will be able to get access to the game through our DApp as
               well as ZOO {`Labs'`} official website.
             </p>
           </div>
-          {/* flex flex-col mb-12 text-left lg:basis-1/2,  pl-4 mb-4 text-xl font-bold text-left text-green lg:text-2xl lg:pl-0, max-w-sm px-4 mx-auto text-white list-disc lg:mx-0*/}
-          <div className="flex flex-col mb-12 lg:basis-1/2">
-            <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
+          {/* flex flex-col mb-12 text-left lg:basis-1/2 w-full,  pl-4 mb-4 text-xl font-bold text-left text-white lg:text-2xl lg:pl-0, max-w-sm px-4 mx-auto text-white list-disc lg:mx-0*/}
+          <div className="flex flex-col mb-12 lg:basis-1/2 w-full">
+            <h3 className="mb-4 text-xl font-bold text-white lg:text-2xl">
               How do I buy $ZOO?
             </h3>
             <li>
@@ -80,11 +80,11 @@ const FaqSection = () => {
             </li>
           </div>
 
-          <div className="flex flex-col mb-12 lg:basis-1/2">
-            <h3 className="mb-4 text-xl font-bold text-green lg:text-2xl">
+          <div className="flex flex-col mb-12 lg:basis-1/2 w-full">
+            <h3 className="mb-4 text-xl font-bold text-white lg:text-2xl">
               Still have questions?
             </h3>
-            <p className="mb-4 text-white lg:max-w-sm">
+            <p className="mb-4 text-muted-40 lg:max-w-sm">
               If you are having difficulty, please{" "}
               <a
                 href="https://discord.gg/wW6Wth6r"
@@ -95,7 +95,7 @@ const FaqSection = () => {
               and post in the #new-player-help channel and our community will be
               happy to help!
             </p>
-            <p className="text-white lg:max-w-sm">
+            <p className="text-muted-40 lg:max-w-sm">
               In addition, a complete list of guides can be found{" "}
               <a href="/blog" className="underline text-green">
                 here

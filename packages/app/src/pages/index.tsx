@@ -4,6 +4,7 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import { loadTranslation } from "../entities";
 import Home from "./home";
+import HomeLayout from "layouts/Home";
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const sessionId = nanoid();
 
@@ -30,3 +31,5 @@ export default function Dashboard(props) {
     </div>
   );
 }
+
+Dashboard.Layout = HomeLayout;
