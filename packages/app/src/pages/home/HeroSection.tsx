@@ -13,7 +13,7 @@ import { handleFunds } from "utils/handleFunds";
 import { useGif } from "context/GifContext";
 import { createRequire } from "module";
 
-const HeroSection = ({ animal3d }) => {
+const HeroSection = () => {
   const { account, library, chainId } = useActiveWeb3React();
   const buyZoo = useBuyZoo();
   const faucet = useFaucet();
@@ -30,60 +30,22 @@ const HeroSection = ({ animal3d }) => {
   // }, []);
 
   return (
-    <section className=" Hero">
-      <div
-        className="px-6 pt-16 pb-16 Hero__inner md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-between"
-        // ref={heroContent}
-      >
+    <div className=" Hero bg-zoo">
+      <div className="min-h-[800px] px-6 pt-16 pb-16 Hero__inner flex items-center lg:max-w-7xl lg:mx-auto">
         <div className="mb-6 Hero__content md:mb-12 md:flex md:flex-col md:items-center md:text-center md:max-w-7xl lg:items-start lg:text-left lg:basis-1/2">
-          <p className="mb-2 uppercase text-white text-opacity-50">NFTs made Fun.</p>
-
-          <h1 className="mb-3 text-4xl font-bold lg:text-7xl lg:mb-6">
-            Exotic animals for everyone.
+          <h1 className="mb-3 text-4xl font-bold lg:text-9xl lg:mb-6">
+            Exotic Animals
           </h1>
-          <p className="mb-6 text-base text-white lg:text-lg text-opacity-50 md:max-w-xl lg:text-left">
-            Pet, play, feed, grow, and breed your very own animal NFT’s in our
-            Sims-like metaverse to increase their value and earn greater
-            rewards, all while contributing to saving endangered animals.
-          </p>
-          <div className="flex items-center gap-3">
-            <div
-              onClick={() => handleFunds(chainId, buyZoo)}
-              className="px-5 py-3 text-sm font-semibold text-white rounded-full bg-blue md:text-base md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
-            >
-              Buy $ZOO
-            </div>
-            <a
-              className="px-5 py-3 text-sm font-semibold text-white border border-gray-100 rounded-full md:text-base md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
-              href="/#endless-opportunity"
-            >
-              Learn More
-            </a>
+
+          <div
+            // onClick={() => handleFunds(chainId, buyZoo)}
+            className="px-5 py-3 text-sm md:text-lg font-semibold text-white rounded-full bg-transparent border-2 border-white md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
+          >
+            Explore the Zoo
           </div>
         </div>
-        <div
-          className="flex justify-center max-w-md bg-red-300 lg:mt-6 Hero__image lg:max-w-xl lg:basis-1/2"
-          // ref={heroImage}
-        >
-          <div className="w-[400px] h-[400px]">{animal3d}</div>
-          {/* {gifMode === "gif" ? (
-            <video autoPlay loop={true} playsInline={true} muted>
-              <source
-                src="https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/hero-video_gum6sk.mov"
-                type="video/mp4"
-              ></source>
-            </video>
-          ) : (
-            <Image
-              src="/img/amur-leopard.png"
-              width={700}
-              height={612}
-              alt="leopard"
-            />
-          )} */}
-        </div>
       </div>
-    </section>
+    </div>
   );
 };
 
