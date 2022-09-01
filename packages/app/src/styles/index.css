@@ -263,6 +263,12 @@ video {
   background-position: center;
   background-size: cover;
 }
+.bg-dropnft {
+  background: url("/images/bg/nft-bg.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
 .bg-drop-tree {
   background: url("/images/bg/drop-grad.svg");
   background-repeat: no-repeat;
