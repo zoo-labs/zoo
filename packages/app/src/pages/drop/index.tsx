@@ -22,13 +22,14 @@ const Drop = ({}: AppProps & {
   Component: NextComponentType<NextPageContext>;
   Layout: (title: string) => void;
 }) => {
-  const router = useRouter();
   const { availableEggs } = useSelector((state: any) => state.zoo);
   const getAvailableEggs = useGetAvailableEggs();
 
   useEffect(() => {
     getAvailableEggs();
   }, [getAvailableEggs]);
+
+  console.log(availableEggs, "drop_avegg");
 
   return (
     <DropLayout isMarginTop={false}>
@@ -99,11 +100,13 @@ const Drop = ({}: AppProps & {
                 vestibulum, massa nibh justo consectetur triste. Vestibulum
                 Pharetraet velit elementum molestie.etus i
               </p>
-              <button className="p-px rounded-full bg-new">
-                <button className="bg-[#13152B] py-3.5 px-8 rounded-full">
-                  Enter Marketplace
+              <Link href="/market" passHref>
+                <button className="p-px rounded-full bg-new">
+                  <button className="bg-[#13152B] py-3.5 px-8 rounded-full">
+                    Enter Marketplace
+                  </button>
                 </button>
-              </button>
+              </Link>
             </div>
             <div className="flex-1">
               <img src="/images/drop/paradise.png" alt="" />
@@ -142,53 +145,56 @@ const Drop = ({}: AppProps & {
               nibh justo consectetur tristique. Vestibulum
             </p>
           </div>
-          {animals.map((_, i) => (
+          {availableEggs.map((_, i) => (
             <div
               key={i}
               className={`flex flex-col ${
                 i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
               } items-center mb-11`}
             >
-              <div className="">
-                <img src="/images/animal.png" alt="" />
+              <div className="bg-dropnft max-w-[464px] w-[40%] md:w-full flex items-center justify-center rounded">
+                <div className="w-full h-[380px]">
+                  <video
+                    src={_.animation_url}
+                    autoPlay
+                    loop
+                    className="object-cover w-full max-h-full overflow-hidden rounded"
+                  />
+                </div>
               </div>
               <div
-                className={`flex-1 mt-5 md:mt-auto ${
+                className={`flex-1 mt-5 md:mt-0 ${
                   i % 2 === 0 ? "md:pl-14" : "md:pr-14"
                 } `}
               >
                 <p className="font-medium text-[32px] leading-8 mb-[18px]">
-                  {_}
+                  {_.name}
                 </p>
                 <p className="mb-8 text-sm leading-7 text-muted-20">
-                  The Siberian tiger is a tiger from a specific population of
-                  the Panthera tigris tigris subspecies native to the Russian
-                  Far East, Northeast China. It once ranged throughout the
-                  Korean Peninsula, north China, and eastern Mongolia. The
-                  population currently inhabits mainly the Sikhote-Alin mountain
-                  region in southwest Primorye The population currently inhabits
-                  mainly the Sikhote-Alin mountain region in southwest
+                  {_.description}
                 </p>
-                <div className="text-left flex items-center font-normal mb-3 text-sm leading-10 w-max relative before:absolute before:h-1 before:w-[70%] before:left-0 before:-top-2 before:bg-new cursor-pointer">
-                  <a href="/drop/1" className="mr-1">
-                    View Sumatran Elephant
-                  </a>
-                  <Image
-                    src="/icons/arrow-right.svg"
-                    alt=""
-                    width={20}
-                    height={20}
-                  />
-                </div>
+                <Link href={`/drop/${_.id}`} passHref>
+                  <div className="text-left flex items-center font-normal mb-3 text-sm leading-10 w-max relative before:absolute before:h-1 before:w-[70%] before:left-0 before:-top-2 before:bg-new cursor-pointer">
+                    <a className="mr-1">View {_.name}</a>
+                    <Image
+                      src="/icons/arrow-right.svg"
+                      alt=""
+                      width={20}
+                      height={20}
+                    />
+                  </div>
+                </Link>
               </div>
             </div>
           ))}
           <div className="flex justify-center mb-28">
-            <button className="p-px rounded-full bg-new">
-              <button className="bg-[#13152B] py-3.5 px-8 rounded-full">
-                View on Marketplace
+            <Link href="/href" passHref>
+              <button className="p-px rounded-full bg-new">
+                <button className="bg-[#13152B] py-3.5 px-8 rounded-full">
+                  View on Marketplace
+                </button>
               </button>
-            </button>
+            </Link>
           </div>
 
           <div className="flex flex-col-reverse mb-32 md:flex-row md:items-center">

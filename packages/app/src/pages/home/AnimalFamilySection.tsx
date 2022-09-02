@@ -118,22 +118,22 @@ const AnimalFamilySection = () => {
 
   return (
     <section className="AnimalFamily">
-      <div className="px-6 py-20 mx-auto max-w-7xl">
-        <h2 className="mb-8 text-3xl font-bold text-center lg:text-4xl">
-          Our Animal Family
-        </h2>
+      <div className="px-6 py-10 md:py-20 mx-auto max-w-7xl">
+        <p className="font-bold text-5xl md:text-center">
+          Or Grab an animal straightaway
+        </p>
         {animalFamilyData.map((data) => {
           return (
             <div
-              className="flex flex-col items-center mb-4 AnimalFamily__nfts"
+              className="w-full flex flex-col items-center mb-4 AnimalFamily__nfts border-b border-dark-gray mt-20"
               key={data.id}
             >
-              <div className="flex flex-col items-center justify-center AnimalFamily__nft lg:flex-row">
-                <div className="flex flex-col items-center w-full h-auto mb-8 AnimalFamily__image lg:basis-1/3">
-                  <div className="p-px mb-8 overflow-hidden  bg-nft-gradient ">
+              <div className="w-full flex flex-col items-center justify-between AnimalFamily__nft lg:flex-row">
+                <div className="flex flex-col items-center w-full h-auto mb-8 AnimalFamily__image lg:basis-1/2">
+                  <div className="p-px mb-8 overflow-hidden  bg-black border rounded-2xl w-full md:w-auto">
                     {gifMode === "gif" ? (
-                      <div className="overflow-hidden rounded">
-                        <div className=" w-[400px] h-[400px]">
+                      <div className="overflow-hidden rounded w-full">
+                        <div className="w-full md:w-[400px] h-[400px]">
                           <ModelViewer
                             usdz={data.usdz}
                             glb={data.glb}
@@ -155,43 +155,21 @@ const AnimalFamilySection = () => {
                     )}
                   </div>
                 </div>
-                <div className="text-center AnimalFamily__name lg:basis-1/3">
-                  <h2 className="mb-6 text-3xl text-center font-bold lg:4xl">
+                <div className="text-center AnimalFamily__name lg:basis-1/2">
+                  <h2 className="mb-10 text-3xl text-center font-bold lg:text-5xl">
                     {data.name}
                   </h2>
                   <a
                     href="/coming-soon"
-                    className="px-8 py-3 text-sm font-semibold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 lg:px-16"
+                    className="px-8 py-4 text-sm font-semibold text-white rounded-full bg-black border md:text-base md:px-6 lg:px-16"
                   >
-                    Coming Soon
+                    Buy Now
                   </a>
-                </div>
-                <div className="px-2 py-6 lg:px-6 lg:basis-1/3 text-center lg:bg-black100 lg:rounded-3xl">
-                  <h3 className="mb-4 text-xl font-bold ">
-                    {data.scientificName}
-                  </h3>
-                  <p className="mb-3 text-grey text-opacity-70 md:px-8 lg:px-0">
-                    {data.description}
-                  </p>
-                  <Link href={`nft-product/${data.slug}`} passHref>
-                    <span className="text-green font-bold underline hover:cursor-pointer">
-                      Learn more
-                    </span>
-                  </Link>
                 </div>
               </div>
             </div>
           );
         })}
-
-        <div className="flex items-center justify-center">
-          <a
-            href="/animal-list"
-            className="px-5 py-3 text-sm border text-center rounded-full font-semibold border-green md:text-base text-green md:px-6 md:py-4 lg:px-20"
-          >
-            See the entire First Generation Animal NFT series
-          </a>
-        </div>
       </div>
     </section>
   );
