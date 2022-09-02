@@ -13,13 +13,6 @@ import { getZooBalance } from "state/zoo/actions";
 import { handleFunds } from "utils/handleFunds";
 
 const OpportunitySection = () => {
-  const { account, library, chainId } = useActiveWeb3React();
-  const buyZoo = useBuyZoo();
-  const [fetching, setFetching] = useState(false);
-  const [confirmation, setConfirmation] = useState(false);
-  const [rejection, setRejection] = useState(false);
-  const faucet = useFaucet();
-  const dispatch = useDispatch();
   const [stage, setStage] = useState("");
   const [hovered, setHovered] = useState(false);
 
