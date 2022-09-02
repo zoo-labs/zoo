@@ -22,7 +22,6 @@ const Drop = ({}: AppProps & {
   Component: NextComponentType<NextPageContext>;
   Layout: (title: string) => void;
 }) => {
-  const router = useRouter();
   const { availableEggs } = useSelector((state: any) => state.zoo);
   const getAvailableEggs = useGetAvailableEggs();
 
