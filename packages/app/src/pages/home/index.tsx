@@ -35,18 +35,48 @@ const gameFi = [
   {
     title: "Set Up Wallet",
     icon: "/icons/empty-wallet.svg",
+    description: (
+      <>
+        Set up your wallet with{" "}
+        <a className="text-activeGreen underline">Metamask</a> and login{" "}
+        <a className="text-activeGreen underline">here</a> to view the Zoo
+        Marketplace. Learn about which wallets are supported{" "}
+        <a className="text-activeGreen underline">here.</a>
+      </>
+    ),
   },
   {
     title: "Create Your Collection",
     icon: "/icons/music-playlist.svg",
+    description: (
+      <>
+        After you have successfully logged in with your wallet you will be able
+        to purchase your very first Zoo Eggs or NFTs and begin feeding your
+        animal currency!
+      </>
+    ),
   },
   {
     title: "Mint and Breed",
     icon: "/icons/breed.svg",
+    description: (
+      <>
+        As you feed your animal just enough $ it will actually mint an older
+        version of itself. Collect the egg, baby, teen and adult version. AND
+        with two adults you can breed another!
+      </>
+    ),
   },
   {
     title: "Marketplace",
     icon: "/icons/shop.svg",
+    description: (
+      <>
+        The Zoo <a className="text-activeGreen underline">Marketplace</a> not
+        only benefits members through its fees but also allows you to buy, sell,
+        make offers and trade for additional benefits $$.
+      </>
+    ),
   },
 ];
 
@@ -73,13 +103,13 @@ const experiences = [
     title: "Actually Saving Animals",
     description:
       "Start earning APY as you lock liquidity into your NFT… like a virtual piggy bank.",
-    // img: "/img/desktop.svg",
+    img: "/img/heart.svg",
   },
   {
     title: "Emotionally Intelligent",
     description:
       "Start earning APY as you lock liquidity into your NFT… like a virtual piggy bank.",
-    // img: "/img/desktop.svg",
+    img: "/img/brain.svg",
   },
 ];
 
@@ -134,10 +164,7 @@ export default function Home() {
                 <p className="my-3 text-4xl text-center font-semibold">
                   {_.title}
                 </p>
-                <p className="text-lg text-center">
-                  Set up your wallet with Metamask and login here to view the
-                  Zoo Marketplace. Learn about which wallets are supported here.
-                </p>
+                <p className="text-lg text-center">{_.description}</p>
               </div>
             ))}
           </div>
