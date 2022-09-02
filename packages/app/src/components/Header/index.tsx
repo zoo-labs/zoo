@@ -68,7 +68,7 @@ function AppBar(props: {
       <Popover
         as="nav"
         className={`z-10 w-full bg-transparent ${
-          !props.isModal && "header-border-b"
+          !props.isModal && !props.transparent && "header-border-b"
         }`}
       >
         {({ open }) => (
