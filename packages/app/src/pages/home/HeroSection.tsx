@@ -31,7 +31,7 @@ const HeroSection = () => {
 
   return (
     <div className=" Hero bg-zoo">
-      <div className="min-h-[800px] px-6 pt-16 pb-16 Hero__inner flex items-center lg:max-w-7xl lg:mx-auto">
+      <div className="min-h-screen md:min-h-[800px] px-6 pt-16 pb-16 Hero__inner flex items-center lg:max-w-7xl lg:mx-auto">
         <div className="mb-6 Hero__content md:mb-12 md:flex md:flex-col md:items-center md:text-center md:max-w-7xl lg:items-start lg:text-left lg:basis-1/2">
           <h1 className="mb-3 text-4xl font-bold lg:text-9xl lg:mb-6">
             Exotic Animals

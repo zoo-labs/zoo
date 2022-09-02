@@ -118,9 +118,9 @@ const AnimalFamilySection = () => {
 
   return (
     <section className="AnimalFamily">
-      <div className="px-6 py-20 mx-auto max-w-7xl">
-        <p className="font-bold text-5xl text-center">
-          Or Grab an amimal straightaway
+      <div className="px-6 py-10 md:py-20 mx-auto max-w-7xl">
+        <p className="font-bold text-5xl md:text-center">
+          Or Grab an animal straightaway
         </p>
         {animalFamilyData.map((data) => {
           return (
@@ -130,10 +130,10 @@ const AnimalFamilySection = () => {
             >
               <div className="w-full flex flex-col items-center justify-between AnimalFamily__nft lg:flex-row">
                 <div className="flex flex-col items-center w-full h-auto mb-8 AnimalFamily__image lg:basis-1/2">
-                  <div className="p-px mb-8 overflow-hidden  bg-black border rounded-2xl">
+                  <div className="p-px mb-8 overflow-hidden  bg-black border rounded-2xl w-full md:w-auto">
                     {gifMode === "gif" ? (
-                      <div className="overflow-hidden rounded">
-                        <div className="w-[400px] h-[400px]">
+                      <div className="overflow-hidden rounded w-full">
+                        <div className="w-full md:w-[400px] h-[400px]">
                           <ModelViewer
                             usdz={data.usdz}
                             glb={data.glb}
