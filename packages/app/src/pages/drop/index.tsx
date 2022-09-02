@@ -29,6 +29,8 @@ const Drop = ({}: AppProps & {
     getAvailableEggs();
   }, [getAvailableEggs]);
 
+  console.log(availableEggs, "drop_avegg");
+
   return (
     <DropLayout isMarginTop={false}>
       <div className="">
@@ -169,13 +171,7 @@ const Drop = ({}: AppProps & {
                   {_.name}
                 </p>
                 <p className="mb-8 text-sm leading-7 text-muted-20">
-                  The Siberian tiger is a tiger from a specific population of
-                  the Panthera tigris tigris subspecies native to the Russian
-                  Far East, Northeast China. It once ranged throughout the
-                  Korean Peninsula, north China, and eastern Mongolia. The
-                  population currently inhabits mainly the Sikhote-Alin mountain
-                  region in southwest Primorye The population currently inhabits
-                  mainly the Sikhote-Alin mountain region in southwest
+                  {_.description}
                 </p>
                 <Link href={`/drop/${_.id}`} passHref>
                   <div className="text-left flex items-center font-normal mb-3 text-sm leading-10 w-max relative before:absolute before:h-1 before:w-[70%] before:left-0 before:-top-2 before:bg-new cursor-pointer">
