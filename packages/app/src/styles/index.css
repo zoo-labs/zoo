@@ -257,6 +257,21 @@ video {
   /* height: 100vh; */
   /* overflow-y: auto; */
 }
+
+.bg-zoo {
+  background: url("/images/bg/zoo.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.bg-giraffes {
+  background: url("/images/bg/giraffes.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 .bg-drop {
   background: url("/images/bg/drop-bg.svg");
   background-repeat: no-repeat;
@@ -302,6 +317,12 @@ video {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
+}
+
+@media screen and (max-width: 720px) {
+  .bg-zoo {
+    background-position: 0 0;
+  }
 }
 
 @media screen and (min-width: 1200px) {
