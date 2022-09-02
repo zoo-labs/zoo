@@ -130,6 +130,7 @@ module.exports = {
         black100: "#1F2030",
         black200: "#292A3E",
         white: "#fff",
+        silverish: "#2C2A2A",
         "dark-white": "rgba(252, 252, 253, 0.1)",
         primary: "#161827",
         "primary-300": "#4F46E5",

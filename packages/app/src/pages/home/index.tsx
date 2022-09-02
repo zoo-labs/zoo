@@ -50,11 +50,37 @@ const gameFi = [
   },
 ];
 
-const animals = [
-  "Amur Leopard",
-  "Siberian Tiger",
-  "Javan Rhino",
-  "Sumatran Elephant",
+const experiences = [
+  {
+    title: "Virtual Piggy Bank",
+    description:
+      "Start earning APY as you lock liquidity into your NFT… like a virtual piggy bank.",
+    img: "/img/desktop.svg",
+  },
+  {
+    title: "Tomagotchi-Esque",
+    description:
+      "Start earning APY as you lock liquidity into your NFT… like a virtual piggy bank.",
+    img: "/img/animals.svg",
+  },
+  {
+    title: "Sustainable Governance",
+    description:
+      "Start earning APY as you lock liquidity into your NFT… like a virtual piggy bank.",
+    img: "/img/partnership.svg",
+  },
+  {
+    title: "Actually Saving Animals",
+    description:
+      "Start earning APY as you lock liquidity into your NFT… like a virtual piggy bank.",
+    // img: "/img/desktop.svg",
+  },
+  {
+    title: "Emotionally Intelligent",
+    description:
+      "Start earning APY as you lock liquidity into your NFT… like a virtual piggy bank.",
+    // img: "/img/desktop.svg",
+  },
 ];
 
 export default function Home() {
@@ -95,7 +121,7 @@ export default function Home() {
       <AnimalFamilySection />
       <section className="AnimalFamily">
         <div className="px-6 py-20 mx-auto max-w-7xl">
-          <p className="font-bold text-5xl text-center mb-16">
+          <p className="font-bold text-5xl md:text-center mb-16">
             GAME-FI For All
           </p>
           <div className="grid lg:grid-cols-2 gap-x-60 gap-y-24">
@@ -105,7 +131,9 @@ export default function Home() {
                 className="flex flex-col justify-center items-center pb-14 border-b-2 border-white"
               >
                 <Image src={_.icon} alt="" width={80} height={80} />
-                <p className="my-3 text-4xl font-semibold">{_.title}</p>
+                <p className="my-3 text-4xl text-center font-semibold">
+                  {_.title}
+                </p>
                 <p className="text-lg text-center">
                   Set up your wallet with Metamask and login here to view the
                   Zoo Marketplace. Learn about which wallets are supported here.
@@ -116,30 +144,33 @@ export default function Home() {
         </div>
       </section>
       <div className="w-full bg-giraffes min-h-[600px] flex items-center justify-center">
-        <p className="text-center max-w-4xl mx-auto font-bold text-8xl">
+        <p className="text-center max-w-4xl mx-auto font-bold text-5xl md:text-8xl">
           Unimaginable Experiences
         </p>
       </div>
       <div className="max-w-7xl mx-auto px-6 pt-24">
-        {animals.map((_, i) => (
+        {experiences.map((experience, i) => (
           <div
             key={i}
-            className={`flex flex-col ${
-              i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-            } items-center mb-11`}
+            className={`w-full flex flex-col ${
+              i % 2 === 1 ? "md:flex-row" : "md:flex-row-reverse"
+            } items-center md:justify-between mb-11`}
           >
-            <div className="flex-1">
-              <img src="/images/animal.png" alt="" />
+            <div className="flex-1 w-full md:w-auto">
+              <div className="w-full bg-16 border border-silverish rounded-xl h-[364px] flex items-center justify-center">
+                <img src={experience.img} alt="" />
+              </div>
             </div>
             <div
-              className={`flex-1 mt-5 md:mt-auto ${
-                i % 2 === 0 ? "md:pl-14" : "md:pr-14"
+              className={`flex-1 mt-5 md:mt-0 ${
+                i % 2 === 1 ? "md:pl-24" : "md:pr-24"
               } `}
             >
-              <p className="font-medium text-[32px] leading-8 mb-[18px]">{_}</p>
-              <p className="mb-8 text-sm leading-7 text-muted-40">
-                Start earning APY as you lock liquidity into your NFT… like a
-                virtual piggy bank.
+              <p className="font-bold text-[42px] leading-none mb-[18px]">
+                {experience.title}
+              </p>
+              <p className="mb-8 font-medium text-[22px] leading-7 text-muted-40">
+                {experience.description}
               </p>
               <div className="w-max px-5 py-3 text-sm md:text-lg font-semibold text-white rounded-full bg-transparent border-2 border-white md:px-6 md:py-4 lg:px-10 hover:cursor-pointer">
                 Learn More
@@ -149,18 +180,18 @@ export default function Home() {
         ))}
       </div>
       <div className="max-w-7xl mx-auto px-6 pt-24">
-        <p className="font-bold text-5xl mb-24 text-center">
+        <p className="font-bold text-5xl mb-24 md:text-center">
           Resources for Getting Started
         </p>
         <div className="w-full relative">
           <div className="overflow-x-auto whitespace-nowrap">
-            <div className="flex flex-col md:flex-row max-h-[290px]">
+            <div className="flex flex-col md:flex-row md:max-h-[290px]">
               {Array(4)
                 .fill(0)
                 .map((_, i) => (
                   <div
                     key={i}
-                    className="rounded-[18px] min-w-[436px] mr-8 border-2 relative"
+                    className="rounded-[18px] w-full md:min-w-[436px] mr-8 border-2 relative mb-6 md:mb-0"
                   >
                     <Image
                       src="/img/tree.png"

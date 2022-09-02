@@ -313,6 +313,12 @@ video {
   text-fill-color: transparent;
 }
 
+@media screen and (max-width: 720px) {
+  .bg-zoo {
+    background-position: 0 0;
+  }
+}
+
 @media screen and (min-width: 1200px) {
   .MarketPlace {
     background-position: center right;

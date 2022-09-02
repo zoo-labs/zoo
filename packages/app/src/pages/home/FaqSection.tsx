@@ -106,7 +106,7 @@ const FaqSection = () => {
         </div>
         <div className="flex items-center justify-center">
           <Link href="/faqs">
-            <a className="px-5 py-3 text-sm border rounded-full font-semibold border-green md:text-base text-green md:px-6 md:py-4 lg:px-20">
+            <a className="px-5 py-3 text-sm border-2 rounded-full font-semibold border-green md:text-base text-green md:px-6 md:py-4 lg:px-20">
               See more
             </a>
           </Link>
