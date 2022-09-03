@@ -259,10 +259,10 @@ video {
 }
 
 .bg-zoo {
-  background: url("/images/bg/zoo.svg");
+  /* background: url("/images/bg/zoo.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: cover; */
 }
 
 .bg-giraffes {
@@ -319,9 +319,13 @@ video {
   text-fill-color: transparent;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 768px) {
   .bg-zoo {
     background-position: 0 0;
+    background: url("/images/bg/zoo.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
   }
 }
 

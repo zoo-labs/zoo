@@ -31,16 +31,27 @@ const HeroSection = () => {
 
   return (
     <div className=" Hero bg-zoo">
-      <div className="min-h-screen md:min-h-[800px] px-6 pt-16 pb-16 Hero__inner flex items-center lg:max-w-7xl lg:mx-auto">
+      <video
+        autoPlay
+        muted
+        loop
+        id="bgVideo"
+        className="invisible md:visible"
+        style={{
+          height: "100vh",
+          minHeight: "100vh",
+          width: "100vw",
+        }}
+      >
+        <source src="/videoes/videoplayback.mp4" type="video/mp4"></source>
+      </video>
+      <div className="absolute z-50 top-0 min-h-screen md:min-h-screen px-6 pt-16 pb-16 Hero__inner flex items-center lg:max-w-7xl lg:mx-auto">
         <div className="mb-6 Hero__content md:mb-12 md:flex md:flex-col md:items-center md:text-center md:max-w-7xl lg:items-start lg:text-left lg:basis-1/2">
           <h1 className="mb-3 text-4xl font-bold lg:text-9xl lg:mb-6">
             Exotic Animals
           </h1>
 
-          <div
-            // onClick={() => handleFunds(chainId, buyZoo)}
-            className="px-5 py-3 text-sm md:text-lg font-semibold text-white rounded-full bg-transparent border-2 border-white md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
-          >
+          <div className="w-max px-5 py-3 text-sm md:text-lg font-semibold text-white rounded-full bg-transparent border-2 border-white md:px-6 md:py-4 lg:px-10 hover:cursor-pointer">
             Explore the Zoo
           </div>
         </div>
