@@ -36,7 +36,7 @@ const OpportunitySection = () => {
 
   return (
     <section className="relative" id="endless-opportunity">
-      <div className="px-6 py-16 lg:mt-10">
+      <div className="px-6 lg:mt-10">
         <div className="flex flex-col items-center justify-between mx-auto lg:flex-row max-w-7xl">
           <EndangeredSpecies />
 
