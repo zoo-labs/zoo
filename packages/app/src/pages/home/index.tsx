@@ -38,10 +38,10 @@ const gameFi = [
     description: (
       <>
         Set up your wallet with{" "}
-        <a className="text-activeGreen underline">Metamask</a> and login{" "}
-        <a className="text-activeGreen underline">here</a> to view the Zoo
+        <a className="underline text-activeGreen">Metamask</a> and login{" "}
+        <a className="underline text-activeGreen">here</a> to view the Zoo
         Marketplace. Learn about which wallets are supported{" "}
-        <a className="text-activeGreen underline">here.</a>
+        <a className="underline text-activeGreen">here.</a>
       </>
     ),
   },
@@ -72,7 +72,7 @@ const gameFi = [
     icon: "/icons/shop.svg",
     description: (
       <>
-        The Zoo <a className="text-activeGreen underline">Marketplace</a> not
+        The Zoo <a className="underline text-activeGreen">Marketplace</a> not
         only benefits members through its fees but also allows you to buy, sell,
         make offers and trade for additional benefits $$.
       </>
@@ -125,22 +125,22 @@ export default function Home() {
       <CardsSection />
       {/* <PartnersSection /> */}
       <OpportunitySection />
-      <div className="mb-32 px-4 max-w-7xl mx-auto flex flex-col gap-36 lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-col px-4 mx-auto mb-32 max-w-7xl gap-36 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex-1">
-          <p className="font-bold text-6xl mb-9">It all starts with one egg.</p>
-          <p className="text-muted-40 text-xl mb-10">
+          <p className="text-6xl font-bold mb-9">It all starts with one egg.</p>
+          <p className="mb-10 text-xl text-muted-40">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget sit
             amet, tortor non. Lacus, elementum gravida ut diam. Sit viverra quam
             tristique ipsum mattis aenean elementum.
           </p>
           <div
             // onClick={() => handleFunds(chainId, buyZoo)}
-            className="px-5 py-3 text-sm md:text-lg font-semibold text-white rounded-full bg-transparent border-2 border-white md:px-6 md:py-4 lg:px-10 hover:cursor-pointer w-max"
+            className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer w-max"
           >
             Start Collecting
           </div>
         </div>
-        <div className="flex-1 border border-white rounded-2xl h-full px-7 py-16 flex items-center justify-center max-w-max">
+        <div className="flex items-center justify-center flex-1 h-full py-16 border border-white rounded-2xl px-7 max-w-max">
           <Image src="/images/egg.svg" alt="" width={467} height={442} />
         </div>
       </div>
@@ -151,17 +151,17 @@ export default function Home() {
       <AnimalFamilySection />
       <section className="AnimalFamily">
         <div className="px-6 py-20 mx-auto max-w-7xl">
-          <p className="font-bold text-5xl md:text-center mb-16">
+          <p className="mb-16 text-5xl font-bold md:text-center">
             GAME-FI For All
           </p>
           <div className="grid lg:grid-cols-2 gap-x-60 gap-y-24">
             {gameFi.map((_, i) => (
               <div
                 key={i}
-                className="flex flex-col justify-center items-center pb-14 border-b-2 border-white"
+                className="flex flex-col items-center justify-center border-b-2 border-white pb-14"
               >
                 <Image src={_.icon} alt="" width={80} height={80} />
-                <p className="my-3 text-4xl text-center font-semibold">
+                <p className="my-3 text-4xl font-semibold text-center">
                   {_.title}
                 </p>
                 <p className="text-lg text-center">{_.description}</p>
@@ -170,12 +170,28 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <div className="w-full bg-giraffes min-h-[600px] flex items-center justify-center">
-        <p className="text-center max-w-4xl mx-auto font-bold text-5xl md:text-8xl">
-          Unimaginable Experiences
-        </p>
+      <div className="flex items-center justify-center w-full bg-giraffes min-h-[50vh]">
+        <div className="relative flex items-center justify-center w-full">
+          <p className="absolute z-50 max-w-4xl text-5xl font-bold text-center md:text-8xl">
+            Unimaginable Experiences
+          </p>
+          {/* <video
+            muted
+            loop
+            autoPlay
+            id="videojkjdkjf"
+            // className="invisible md:visible"
+            style={{
+              height: "100vh",
+              maxHeight: "100vh",
+              width: "100vw",
+            }}
+          >
+            <source src="/videoes/videoplayback.mp4" type="video/mp4"></source>
+          </video> */}
+        </div>
       </div>
-      <div className="max-w-7xl mx-auto px-6 pt-24">
+      <div className="px-6 pt-24 mx-auto max-w-7xl">
         {experiences.map((experience, i) => (
           <div
             key={i}
@@ -199,18 +215,18 @@ export default function Home() {
               <p className="mb-8 font-medium text-[22px] leading-7 text-muted-40">
                 {experience.description}
               </p>
-              <div className="w-max px-5 py-3 text-sm md:text-lg font-semibold text-white rounded-full bg-transparent border-2 border-white md:px-6 md:py-4 lg:px-10 hover:cursor-pointer">
+              <div className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer">
                 Learn More
               </div>
             </div>
           </div>
         ))}
       </div>
-      <div className="max-w-7xl mx-auto px-6 pt-24">
-        <p className="font-bold text-5xl mb-24 md:text-center">
+      <div className="px-6 pt-24 mx-auto max-w-7xl">
+        <p className="mb-24 text-5xl font-bold md:text-center">
           Resources for Getting Started
         </p>
-        <div className="w-full relative">
+        <div className="relative w-full">
           <div className="overflow-x-auto whitespace-nowrap">
             <div className="flex flex-col md:flex-row md:max-h-[290px]">
               {Array(4)
