@@ -34,9 +34,10 @@ const HeroSection = () => {
     <div className="flex items-center justify-center h-screen Hero bg-zoo">
       <div className="w-full m-0 overflow-hidden">
         <div
-          className={`transition duration-1000 ease-in whitespace-nowrap -translate-x-[${
-            activeSlideIndex * 100
-          }%]`}
+          className={`transition duration-1000 ease-in whitespace-nowrap `}
+          style={{
+            transform: `translate3d(${-activeSlideIndex * 100}%, 0, 0)`,
+          }}
         >
           {slides.map((slide, index) => (
             <div
@@ -70,7 +71,6 @@ const HeroSection = () => {
                     height: "100vh",
                     minHeight: "100vh",
                     width: "100vw",
-                    backgroundColor: "white",
                     visibility:
                       index === activeSlideIndex ? "visible" : "hidden",
                   }}
