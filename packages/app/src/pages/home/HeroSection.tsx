@@ -1,28 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-
+import Link from "next/link";
+// format
+import { capitalize } from "functions/format";
 // animation
 import { fadeInFromLeft, fadeInOnScroll } from "animation";
-import { capitalize } from "functions/format";
-
-import { useDispatch, useSelector } from "react-redux";
-import { useBuyZoo } from "state/zoo/hooks";
-import { useActiveWeb3React, useFaucet } from "hooks";
-import { getZooBalance } from "state/zoo/actions";
-import { handleFunds } from "utils/handleFunds";
-import { useGif } from "context/GifContext";
-import { createRequire } from "module";
 
 const HeroSection = () => {
-  const { account, library, chainId } = useActiveWeb3React();
-  const buyZoo = useBuyZoo();
-  const faucet = useFaucet();
-
-  // const heroContent = useRef();
-  // const heroImage = useRef();
-
-  const { state } = useGif();
-  const { gifMode } = state;
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const slides = [
     {
@@ -30,36 +13,42 @@ const HeroSection = () => {
       video: "/videoes/videoplayback.mp4",
       price: 129,
       type: "",
+      uri: "/drop",
     },
     {
       title: "Siberian Tiger",
       video: "/videoes/videoplayback.mp4",
       price: 129,
       type: "tiger",
+      uri: "/drop",
     },
     {
       title: "Sumatran Elephant",
       video: "/videoes/videoplayback.mp4",
       price: 129,
       type: "elephant",
+      uri: "/drop",
     },
     {
       title: "Nubian Giraffe",
       video: "/videoes/videoplayback.mp4",
       price: 129,
       type: "giraffe",
+      uri: "/drop",
     },
     {
       title: "Leopards + More",
       video: "/videoes/videoplayback.mp4",
       price: 129,
       type: "more",
+      uri: "/drop",
     },
     {
       title: "Genesis Eggs",
       video: "/videoes/videoplayback.mp4",
       price: 129,
       type: "eggs",
+      uri: "/drop",
     },
   ];
   const videoRef = useRef(null);
@@ -123,15 +112,17 @@ const HeroSection = () => {
                     {slide.title}
                   </h1>
 
-                  <div
-                    onMouseOut={() => videoCurrent?.play()}
-                    onMouseOver={() => videoCurrent?.pause()}
-                    className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
-                  >
-                    {slide.type
-                      ? `Buy ${capitalize(slide.type)}  - $${slide.price}`
-                      : "Explore the Zoo"}
-                  </div>
+                  <Link href={slide.uri} passHref>
+                    <button
+                      onMouseOut={() => videoCurrent?.play()}
+                      onMouseOver={() => videoCurrent?.pause()}
+                      className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
+                    >
+                      {slide.type
+                        ? `Buy ${capitalize(slide.type)}  - $${slide.price}`
+                        : "Explore the Zoo"}
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
