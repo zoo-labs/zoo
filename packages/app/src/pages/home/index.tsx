@@ -170,26 +170,32 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <div className="flex items-center justify-center w-full bg-giraffes min-h-[50vh]">
-        <div className="relative flex items-center justify-center w-full">
-          <p className="absolute z-50 max-w-4xl text-5xl font-bold text-center md:text-8xl">
-            Unimaginable Experiences
-          </p>
-          {/* <video
-            muted
-            loop
-            autoPlay
-            id="videojkjdkjf"
-            // className="invisible md:visible"
-            style={{
-              height: "100vh",
-              maxHeight: "100vh",
-              width: "100vw",
-            }}
-          >
-            <source src="/videoes/videoplayback.mp4" type="video/mp4"></source>
-          </video> */}
+      <div className="relative">
+        <div className="absolute flex items-center justify-center w-full bg-giraffess min-h-[100vh]">
+          <div className="relative flex items-center justify-center w-full">
+            <p className="absolute z-50 max-w-4xl text-5xl font-bold text-center md:text-8xl">
+              Unimaginable Experiences
+            </p>
+          </div>
         </div>
+        <video
+          autoPlay
+          muted
+          loop
+          id="bgVideo"
+          style={{
+            height: "100vh",
+            minHeight: "100vh",
+            maxHeight: "100vh",
+            width: "100vw",
+            minWidth: "100vw",
+          }}
+        >
+          <source
+            src={"/videoes/trippy_animals_short.mov"}
+            type="video/mp4"
+          ></source>
+        </video>
       </div>
       <div className="px-6 pt-24 mx-auto max-w-7xl">
         {experiences.map((experience, i) => (

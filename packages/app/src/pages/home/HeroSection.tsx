@@ -1,36 +1,55 @@
 import React, { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-
+import Link from "next/link";
+// format
+import { capitalize } from "functions/format";
 // animation
 import { fadeInFromLeft, fadeInOnScroll } from "animation";
-import Tiger from "../../../public/gifs/siberian-tiger.gif";
-
-import { useDispatch, useSelector } from "react-redux";
-import { useBuyZoo } from "state/zoo/hooks";
-import { useActiveWeb3React, useFaucet } from "hooks";
-import { getZooBalance } from "state/zoo/actions";
-import { handleFunds } from "utils/handleFunds";
-import { useGif } from "context/GifContext";
-import { createRequire } from "module";
 
 const HeroSection = () => {
-  const { account, library, chainId } = useActiveWeb3React();
-  const buyZoo = useBuyZoo();
-  const faucet = useFaucet();
-
-  // const heroContent = useRef();
-  // const heroImage = useRef();
-
-  const { state } = useGif();
-  const { gifMode } = state;
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const slides = [
-    { title: " Exotic Animals", video: "/videoes/videoplayback.mp4" },
-    { title: "Siberian Tiger", video: "/videoes/videoplayback.mp4" },
-    { title: "Sumatran Elephant", video: "/videoes/videoplayback.mp4" },
-    { title: "Nubian Giraffe", video: "/videoes/videoplayback.mp4" },
-    { title: "Leopards + More", video: "/videoes/videoplayback.mp4" },
-    { title: "Genesis Eggs", video: "/videoes/videoplayback.mp4" },
+    {
+      title: " Exotic Animals",
+      video: "/videoes/videoplayback.mp4",
+      price: 129,
+      type: "",
+      uri: "/drop",
+    },
+    {
+      title: "Siberian Tiger",
+      video: "/videoes/videoplayback.mp4",
+      price: 129,
+      type: "tiger",
+      uri: "/drop",
+    },
+    {
+      title: "Sumatran Elephant",
+      video: "/videoes/videoplayback.mp4",
+      price: 129,
+      type: "elephant",
+      uri: "/drop",
+    },
+    {
+      title: "Nubian Giraffe",
+      video: "/videoes/videoplayback.mp4",
+      price: 129,
+      type: "giraffe",
+      uri: "/drop",
+    },
+    {
+      title: "Leopards + More",
+      video: "/videoes/videoplayback.mp4",
+      price: 129,
+      type: "more",
+      uri: "/drop",
+    },
+    {
+      title: "Genesis Eggs",
+      video: "/videoes/videoplayback.mp4",
+      price: 129,
+      type: "eggs",
+      uri: "/drop",
+    },
   ];
   const videoRef = useRef(null);
   const videoCurrent = videoRef?.current || null;
@@ -82,16 +101,28 @@ const HeroSection = () => {
           }}
         >
           {slides.map((slide, index) => (
-            <div className={`inline-block w-full h-full `}>
+            <div key={index} className={`inline-block w-full h-full `}>
               <div className="flex items-center justify-center w-full h-full">
                 <div className="w-[80vw] px-4 py-4">
-                  <h1 className="mb-3 text-4xl font-bold break-all lg:text-9xl lg:mb-6 ">
+                  <h1
+                    className="mb-3 text-4xl font-bold break-all lg:text-9xl lg:mb-6 "
+                    onMouseOut={() => videoCurrent?.play()}
+                    onMouseOver={() => videoCurrent?.pause()}
+                  >
                     {slide.title}
                   </h1>
 
-                  <div className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer">
-                    Explore the Zoo
-                  </div>
+                  <Link href={slide.uri} passHref>
+                    <button
+                      onMouseOut={() => videoCurrent?.play()}
+                      onMouseOver={() => videoCurrent?.pause()}
+                      className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
+                    >
+                      {slide.type
+                        ? `Buy ${capitalize(slide.type)}  - $${slide.price}`
+                        : "Explore the Zoo"}
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
