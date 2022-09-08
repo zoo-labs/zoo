@@ -9,6 +9,7 @@ const HeroSection = () => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const slides = [
     {
+      id: 0,
       title: " Exotic Animals",
       video: "/videoes/videoplayback.mp4",
       price: 129,
@@ -16,6 +17,7 @@ const HeroSection = () => {
       uri: "/drop",
     },
     {
+      id: 1,
       title: "Siberian Tiger",
       video: "/videoes/videoplayback.mp4",
       price: 129,
@@ -23,6 +25,7 @@ const HeroSection = () => {
       uri: "/drop",
     },
     {
+      id: 2,
       title: "Sumatran Elephant",
       video: "/videoes/videoplayback.mp4",
       price: 129,
@@ -30,6 +33,7 @@ const HeroSection = () => {
       uri: "/drop",
     },
     {
+      id: 3,
       title: "Nubian Giraffe",
       video: "/videoes/videoplayback.mp4",
       price: 129,
@@ -37,6 +41,7 @@ const HeroSection = () => {
       uri: "/drop",
     },
     {
+      id: 4,
       title: "Leopards + More",
       video: "/videoes/videoplayback.mp4",
       price: 129,
@@ -44,6 +49,7 @@ const HeroSection = () => {
       uri: "/drop",
     },
     {
+      id: 5,
       title: "Genesis Eggs",
       video: "/videoes/videoplayback.mp4",
       price: 129,
@@ -60,6 +66,7 @@ const HeroSection = () => {
         videoCurrent.removeEventListener("timeupdate", handleVideoUpdate);
     }
   }, [videoCurrent]);
+
   const handleVideoUpdate = (event) => {
     const time = event.target.currentTime;
 
@@ -87,46 +94,98 @@ const HeroSection = () => {
           return 0;
       }
     };
-    console.log("activeSwitch", activeSwitch(time), time);
+    // console.log("activeSwitch", activeSwitch(time), time);
     activeSlideIndex !== activeSwitch(time) &&
       setActiveSlideIndex(() => activeSwitch(time));
   };
+
   return (
     <div className="flex items-center justify-center h-screen Hero bg-zoo">
       <div className="relative m-0 -mt-5 overflow-hidden w-ful">
         <div
-          className={`w-[100vw] absolute z-50 h-full transition duration-1000 ease-in whitespace-nowrap mt-4 `}
-          style={{
-            transform: `translate3d(${-activeSlideIndex * 100}%, 0, 0)`,
-          }}
+          className={`flex w-[100vw] absolute z-50 h-full transition duration-1000 ease-in whitespace-nowrap mt-4 `}
+          style={
+            {
+              // transform: `translate3d(${-activeSlideIndex * 100}%, 0, 0)`,
+              // display:
+            }
+          }
         >
-          {slides.map((slide, index) => (
-            <div key={index} className={`inline-block w-full h-full `}>
-              <div className="flex items-center justify-center w-full h-full">
-                <div className="w-[80vw] px-4 py-4">
-                  <h1
-                    className="mb-3 text-4xl font-bold break-all lg:text-9xl lg:mb-6 "
-                    onMouseOut={() => videoCurrent?.play()}
-                    onMouseOver={() => videoCurrent?.pause()}
-                  >
-                    {slide.title}
-                  </h1>
+          {/* {slides.map((slide, index) => {
+            if (slide.id === activeSlideIndex) {
+              return (
+                <div
+                  key={index}
+                  className={`inline-block w-full h-full transition-all duration-1000 ease-in`}
+                  style={{
+                    opacity: 1,
+                  }}
+                >
+                  <div className="flex items-center justify-center w-full h-full">
+                    <div className="w-[80vw] px-4 py-4">
+                      <h1
+                        className="mb-3 text-4xl font-bold break-all lg:text-9xl lg:mb-6 "
+                        onMouseOut={() => videoCurrent?.play()}
+                        onMouseOver={() => videoCurrent?.pause()}
+                      >
+                        {slide.title}
+                      </h1>
 
-                  <Link href={slide.uri} passHref>
-                    <button
+                      <Link href={slide.uri} passHref>
+                        <button
+                          onMouseOut={() => videoCurrent?.play()}
+                          onMouseOver={() => videoCurrent?.pause()}
+                          className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
+                        >
+                          {slide.type
+                            ? `Buy ${capitalize(slide.type)}  - $${slide.price}`
+                            : "Explore the Zoo"}
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              );
+            } else return null;
+          })} */}
+
+          {slides.map((slide, index) => {
+            return (
+              <div
+                key={index}
+                className={`${
+                  slide.id === activeSlideIndex ? "inline-block" : "hidden"
+                } w-screen h-full transition-all duration-1000 ease-in`}
+                style={{
+                  transitionProperty: "display",
+                }}
+              >
+                <div className="flex items-center justify-center w-full h-full">
+                  <div className="w-[80vw] px-4 py-4">
+                    <h1
+                      className="mb-3 text-4xl font-bold break-all lg:text-9xl lg:mb-6 transition-opacity duration-1000 delay-100 opacity-100 ease-in item-animate-down"
                       onMouseOut={() => videoCurrent?.play()}
                       onMouseOver={() => videoCurrent?.pause()}
-                      className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
                     >
-                      {slide.type
-                        ? `Buy ${capitalize(slide.type)}  - $${slide.price}`
-                        : "Explore the Zoo"}
-                    </button>
-                  </Link>
+                      {slide.title}
+                    </h1>
+
+                    <Link href={slide.uri} passHref>
+                      <button
+                        onMouseOut={() => videoCurrent?.play()}
+                        onMouseOver={() => videoCurrent?.pause()}
+                        className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer item-animate-up"
+                      >
+                        {slide.type
+                          ? `Buy ${capitalize(slide.type)}  - $${slide.price}`
+                          : "Explore the Zoo"}
+                      </button>
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         <video
           autoPlay
