@@ -322,6 +322,37 @@ video {
   text-fill-color: transparent;
 }
 
+.item-animate-up {
+  position: relative;
+  animation-name: itemAnimateUp;
+  animation-duration: 3s;
+  animation-fill-mode: both;
+}
+
+.item-animate-down {
+  position: relative;
+  animation-name: itemAnimateDown;
+  animation-duration: 3s;
+  animation-fill-mode: both;
+}
+
+@keyframes itemAnimateDown {
+  from {
+    top: -100px;
+  }
+  to {
+    top: 0px;
+  }
+}
+@keyframes itemAnimateUp {
+  from {
+    top: 100px;
+  }
+  to {
+    top: 0px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .bg-zoo {
     background-position: 0 0;
@@ -480,6 +511,3 @@ video {
   background-color: #15f195 !important;
   color: black;
 }
-
-
-
