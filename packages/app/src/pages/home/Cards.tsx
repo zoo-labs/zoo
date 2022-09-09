@@ -8,7 +8,7 @@ const CardsSection = () => {
   return (
     <div className="max-w-7xl mx-auto pt-32 pb-20 px-6">
       <div className="w-full overflow-x-auto whitespace-nowrap">
-        <div className=" flex gap-8 items-center jjustify-center flex-wrap-">
+        <div className=" flex flex-col md:flow-row gap-8 items-center flex-wrap-">
           {segments.map((segment, i) => (
             <Card
               key={segment}
@@ -32,7 +32,9 @@ const Card = ({ id, segment, active, setActive }) => {
   return (
     <div
       className={`relative rounded-xl border border-muted-50 bg-16 w-full md:w-auto min-w-[300px] transition-all duration-1000 ease-in ${
-        active.id === id ? "min-h-[500px] min-w-[600px] py-6" : "min-h-[280px]"
+        active.id === id
+          ? "min-h-[500px] md:min-w-[600px] py-6"
+          : "min-h-[280px]"
       } flex flex-col items-center justify-center`}
     >
       <p className="text-[42px] leading-[63px] font-semibold">{segment}</p>
@@ -55,7 +57,7 @@ const Card = ({ id, segment, active, setActive }) => {
         <div
           className={`${
             active.id === id ? "block" : "hidden"
-          } text-center mt-11 text-xl font-normal whitespace-normal px-6 transition-all duration-1000 delay-1000`}
+          } text-center mt-11 text-sm md:text-xl font-normal whitespace-normal px-4 md:px-6 transition-all duration-1000 delay-1000`}
         >
           <p className="mb-6">
             Go through entire Zoo Labs Gaming Structure + Zoo White Paper and
