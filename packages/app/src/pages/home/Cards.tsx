@@ -8,7 +8,7 @@ const CardsSection = () => {
   return (
     <div className="max-w-7xl mx-auto pt-32 pb-20 px-6">
       <div className="w-full overflow-x-auto whitespace-nowrap">
-        <div className=" flex flex-col md:flow-row gap-8 items-center flex-wrap-">
+        <div className=" flex flex-col md:flex-row gap-8 items-center flex-wrap-">
           {segments.map((segment, i) => (
             <Card
               key={segment}
