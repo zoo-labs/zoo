@@ -122,6 +122,7 @@ module.exports = {
         "dark-300": "#1D1F2E",
         "gray-50": "rgba(50, 53, 70, 0.5)",
         "gray-100": "#424141",
+        "gray-150": "#272726",
         "low-emphesis": "#575757",
         green: "#14F195",
         activeGreen: "#15F195",
@@ -140,6 +141,7 @@ module.exports = {
         "vote-button": "rgb(74, 169, 86)",
         accent: "#4F46E5",
         16: "#161616",
+        33: "#333333",
       },
       lineHeight: {
         "48px": "48px",
