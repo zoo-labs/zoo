@@ -6,6 +6,7 @@ import { AppProps } from "next/app";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import GameFi from "pages/home/GameFi";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useGetAvailableEggs } from "state/zoo/hooks";
@@ -18,6 +19,53 @@ const animals = [
   "Sumatran Elephant",
 ];
 
+const gameFi = [
+  {
+    title: "Set Up Wallet",
+    icon: "/icons/empty-wallet.svg",
+    description: (
+      <>
+        Set up your wallet with <a className="underline">Metamask</a> and login{" "}
+        <a className="underline">here</a> to view the Zoo Marketplace. Learn
+        about which wallets are supported <a className="underline">here.</a>
+      </>
+    ),
+  },
+  {
+    title: "Create Your Collection",
+    icon: "/icons/music-playlist.svg",
+    description: (
+      <>
+        After you have successfully logged in with your wallet you will be able
+        to purchase your very first Zoo Eggs or NFTs and begin feeding your
+        animal currency!
+      </>
+    ),
+  },
+  {
+    title: "Mint and Breed",
+    icon: "/icons/breed.svg",
+    description: (
+      <>
+        As you feed your animal just enough $ it will actually mint an older
+        version of itself. Collect the egg, baby, teen and adult version. AND
+        with two adults you can breed another!
+      </>
+    ),
+  },
+  {
+    title: "Marketplace",
+    icon: "/icons/shop.svg",
+    description: (
+      <>
+        The Zoo <a className="underline">Marketplace</a> not only benefits
+        members through its fees but also allows you to buy, sell, make offers
+        and trade for additional benefits $$.
+      </>
+    ),
+  },
+];
+
 const Drop = ({}: AppProps & {
   Component: NextComponentType<NextPageContext>;
   Layout: (title: string) => void;
@@ -28,8 +76,6 @@ const Drop = ({}: AppProps & {
   useEffect(() => {
     getAvailableEggs();
   }, [getAvailableEggs]);
-
-  console.log(availableEggs, "drop_avegg");
 
   return (
     <DropLayout isMarginTop={false}>
@@ -50,7 +96,7 @@ const Drop = ({}: AppProps & {
               {availableEggs.length ? (
                 availableEggs?.map((_: AvailableEgg) => (
                   <div key={_.id} className="relative">
-                    <div className="flex items-end justify-center rounded-md w-56 h-[286px] transform duration-100 ease-in-out bg-drop-nft before:bg-new before:w-full before:h-full before:absolute before:opacity-50 before:rounded-[4px]">
+                    <div className="flex items-end justify-center rounded-md w-56 h-[286px] transform duration-100 ease-in-out bg-black border border-33">
                       <div className="w-full h-full">
                         <video
                           src={_.animation_url}
@@ -60,7 +106,7 @@ const Drop = ({}: AppProps & {
                         />
                       </div>
                       <Link href={`/market/egg/${_.id}`} passHref>
-                        <a className="absolute flex items-center justify-center w-10 h-10 border rounded-full bottom-2 right-2">
+                        <a className="absolute flex items-center justify-center w-10 h-10 bg-33 rounded-full bottom-2 right-2">
                           <Image
                             src="/icons/arrow-right-light.svg"
                             alt=""
@@ -83,7 +129,7 @@ const Drop = ({}: AppProps & {
           </div>
         </div>
         <div className="px-4 mx-auto max-w-7xl">
-          <p className="text-center font-bold mb-[62px] text-[42px] leading-10 w-max mx-auto relative before:absolute before:h-1 before:w-[50%] before:inset-x-[28%] before:-top-3 after:h-1 after:absolute after:w-[50%] after:bg-new  after:-bottom-3 after:inset-x-[28%] before:bg-new">
+          <p className="text-center font-bold mb-[62px] text-[42px] leading-10 w-max mx-auto relative before:absolute before:h-[2.5px] before:w-[50%] before:inset-x-[28%] before:-top-3 after:h-[2.5px] after:absolute after:w-[50%] after:bg-black  after:-bottom-3 after:inset-x-[28%] before:bg-black">
             What is Zoo?
           </p>
           <div className="flex flex-col md:flex-row md:justify-between mb-44">
@@ -101,21 +147,30 @@ const Drop = ({}: AppProps & {
                 Pharetraet velit elementum molestie.etus i
               </p>
               <Link href="/market" passHref>
-                <button className="p-px rounded-full bg-new">
-                  <button className="bg-[#13152B] py-3.5 px-8 rounded-full">
-                    Enter Marketplace
-                  </button>
+                <button className="bg-black border border-gray-150 py-3.5 px-8 rounded-full">
+                  Enter Marketplace
                 </button>
               </Link>
             </div>
             <div className="flex-1">
-              <img src="/images/drop/paradise.png" alt="" />
+              {/* <img src="/images/drop/paradise.png" alt="" /> */}
+              <video
+                // autoPlay
+                controls
+                muted
+                // loop
+              >
+                <source
+                  src={"/videoes/trippy_animals_short.mov"}
+                  type="video/mp4"
+                ></source>
+              </video>
             </div>
           </div>
-          <div className="w-full p-px pb-0 bg-new mb-[214px]">
-            <div className="bg-[#0B192D] pt-10 px-6 md:px-12 flex flex-col md:flex-row justify-between relative">
+          <div className="w-full p-px bg-gray-150 mb-[214px]">
+            <div className="bg-black pt-10 px-6 md:px-12 flex flex-col md:flex-row justify-between relative">
               <div className="flex-1 md:max-w-[75%] pb-10">
-                <p className="text-[26px] leading-8 mb-3 text-zoo-green-1">
+                <p className="text-[26px] leading-8 mb-3 text-white">
                   Ready to Hatch?
                 </p>
                 <p className="text-sm text-muted-20">
@@ -129,14 +184,14 @@ const Drop = ({}: AppProps & {
                 </p>
               </div>
               <img
-                src="/images/drop/special-egg.svg"
+                src="/images/drop/white-egg.svg"
                 alt=""
-                className="md:-top-24 md:absolute right-12"
+                className="md:-top-52 md:absolute -right-4"
               />
             </div>
           </div>
           <div className="md:max-w-[45%] mb-10">
-            <p className="text-left font-bold mb-3 text-[42px] leading-10 w-max relative before:absolute before:h-1 before:w-[55%] before:left-0 before:-top-3 before:bg-new">
+            <p className="text-left font-bold mb-3 text-[42px] leading-10 w-max relative before:absolute before:h-1 before:w-[55%] before:left-0 before:-top-3 before:bg-black">
               Our Drops
             </p>
             <p className="text-sm leading-7 text-muted-20">
@@ -153,7 +208,7 @@ const Drop = ({}: AppProps & {
               } items-center mb-11`}
             >
               <div className="bg-dropnft max-w-[464px] w-[40%] md:w-full flex items-center justify-center rounded">
-                <div className="w-full h-[380px]">
+                <div className="w-full h-[435px]">
                   <video
                     src={_.animation_url}
                     autoPlay
@@ -174,7 +229,7 @@ const Drop = ({}: AppProps & {
                   {_.description}
                 </p>
                 <Link href={`/drop/${_.id}`} passHref>
-                  <div className="text-left flex items-center font-normal mb-3 text-sm leading-10 w-max relative before:absolute before:h-1 before:w-[70%] before:left-0 before:-top-2 before:bg-new cursor-pointer">
+                  <div className="text-left flex items-center font-normal mb-3 text-sm leading-10 w-max relative before:absolute before:h-1 before:w-[70%] before:left-0 before:-top-2 before:bg-black cursor-pointer">
                     <a className="mr-1">View {_.name}</a>
                     <Image
                       src="/icons/arrow-right.svg"
@@ -189,15 +244,17 @@ const Drop = ({}: AppProps & {
           ))}
           <div className="flex justify-center mb-28">
             <Link href="/href" passHref>
-              <button className="p-px rounded-full bg-new">
-                <button className="bg-[#13152B] py-3.5 px-8 rounded-full">
+              <button className="p-px rounded-full bg-gray-150">
+                <button className="bg-black py-3.5 px-8 rounded-full">
                   View on Marketplace
                 </button>
               </button>
             </Link>
           </div>
 
-          <div className="flex flex-col-reverse mb-32 md:flex-row md:items-center">
+          <GameFi gameFi={gameFi} />
+
+          {/* <div className="flex flex-col-reverse mb-32 md:flex-row md:items-center">
             <img src="/images/drop/roadmap.png" alt="" />
             <div className="flex-1 mb-5 md:text-right md:mb-0 md:pl-12">
               <div className="flex flex-col md:items-end">
@@ -229,10 +286,11 @@ const Drop = ({}: AppProps & {
                   ))}
               </div>
             </div>
-          </div>
-          <div className="flex flex-col  items-center justify-center text-center max-w-[1109px] mx-auto mb-44">
+          </div> */}
+
+          <div className="flex flex-col  items-center justify-center text-center max-w-[1109px] mx-auto mt-40 mb-44">
             <p className="text-[42px] leading-10 font-bold mb-6">
-              Join the <span className="text-new-clip">Community</span>
+              Join the Community
             </p>
             <p className="mb-10 text-lg font-light leading-8 text-muted-20">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -241,7 +299,7 @@ const Drop = ({}: AppProps & {
               nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
               reprehenderit in voluptate
             </p>
-            <button className="bg-new p-[22px] rounded-full flex items-center text-sm font-bold w-max mx-auto">
+            <button className="bg-black p-[22px] rounded-full flex items-center text-sm font-bold w-max mx-auto">
               <Image src="/icons/discord.svg" alt="" width={24} height={18} />
               <a className="ml-2.5">Join Our Discord</a>
             </button>

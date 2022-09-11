@@ -100,7 +100,7 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen Hero bg-zoo">
+    <div className="flex items-center justify-center h-screen Hero bg-zooo">
       <div className="relative m-0 -mt-5 overflow-hidden w-ful">
         <div
           className={`flex w-[100vw] absolute z-50 h-full transition duration-1000 ease-in whitespace-nowrap mt-4 `}
@@ -111,44 +111,6 @@ const HeroSection = () => {
             }
           }
         >
-          {/* {slides.map((slide, index) => {
-            if (slide.id === activeSlideIndex) {
-              return (
-                <div
-                  key={index}
-                  className={`inline-block w-full h-full transition-all duration-1000 ease-in`}
-                  style={{
-                    opacity: 1,
-                  }}
-                >
-                  <div className="flex items-center justify-center w-full h-full">
-                    <div className="w-[80vw] px-4 py-4">
-                      <h1
-                        className="mb-3 text-4xl font-bold break-all lg:text-9xl lg:mb-6 "
-                        onMouseOut={() => videoCurrent?.play()}
-                        onMouseOver={() => videoCurrent?.pause()}
-                      >
-                        {slide.title}
-                      </h1>
-
-                      <Link href={slide.uri} passHref>
-                        <button
-                          onMouseOut={() => videoCurrent?.play()}
-                          onMouseOver={() => videoCurrent?.pause()}
-                          className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer"
-                        >
-                          {slide.type
-                            ? `Buy ${capitalize(slide.type)}  - $${slide.price}`
-                            : "Explore the Zoo"}
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              );
-            } else return null;
-          })} */}
-
           {slides.map((slide, index) => {
             return (
               <div
@@ -193,12 +155,7 @@ const HeroSection = () => {
           ref={videoRef}
           muted
           id="bgVideo"
-          // className="invisible md:visible"
-          style={{
-            height: "100vh",
-            minHeight: "100vh",
-            width: "100vw",
-          }}
+          className="md:h-screen md:min-h-screen w-screen"
         >
           <source src="/videoes/videoplayback.mp4" type="video/mp4"></source>
         </video>
