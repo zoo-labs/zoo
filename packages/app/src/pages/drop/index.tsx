@@ -1,16 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
+import { useState } from "react";
 import DaoLayout from "layouts/Dao";
 import DropLayout from "layouts/Drop";
 import { NextComponentType, NextPageContext } from "next";
 import { AppProps } from "next/app";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import GameFi from "pages/home/GameFi";
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useGetAvailableEggs } from "state/zoo/hooks";
+import { useGetDrops } from "state/drop/hooks";
+import { addDrops } from "state/drop/action";
 import { AvailableEgg } from "types";
+import dynamic from "next/dynamic";
+
+const ModelViewer = dynamic(() => import("components/ModelViewer"), {
+  ssr: false,
+});
 
 const animals = [
   "Amur Leopard",
@@ -71,11 +78,21 @@ const Drop = ({}: AppProps & {
   Layout: (title: string) => void;
 }) => {
   const { availableEggs } = useSelector((state: any) => state.zoo);
+  const { drops } = useSelector((state: any) => state.drop);
+  const [availableDrops, setAvailableDrops] = useState([]);
   const getAvailableEggs = useGetAvailableEggs();
+  const getDrops = useGetDrops();
 
   useEffect(() => {
-    getAvailableEggs();
-  }, [getAvailableEggs]);
+    // getAvailableEggs();
+    getDrops();
+  }, [getDrops]);
+
+  useEffect(() => {
+    // console.log("dropsbdbbkjaxknc", { availableEggs, drops });
+
+    setAvailableDrops([...drops]);
+  }, [availableEggs, drops]);
 
   return (
     <DropLayout isMarginTop={false}>
@@ -98,12 +115,27 @@ const Drop = ({}: AppProps & {
                   <div key={_.id} className="relative">
                     <div className="flex items-end justify-center rounded-md w-56 h-[286px] transform duration-100 ease-in-out bg-black border border-33">
                       <div className="w-full h-full">
-                        <video
-                          src={_.animation_url}
-                          autoPlay
-                          loop
-                          className="object-cover w-full max-h-full overflow-hidden rounded"
-                        />
+                        {_.kind === 0 || _.kind === 2 ? (
+                          <video
+                            src={_.animation_url}
+                            autoPlay
+                            loop
+                            className="object-cover w-full max-h-full overflow-hidden rounded"
+                          />
+                        ) : (
+                          // <div className="h-[450px] w-[300px]">
+                          //   <ModelViewer
+                          //     glb={datum?.glb_animation_url}
+                          //     usdz={datum?.usdz_animation_url}
+                          //   ></ModelViewer>
+                          // </div>
+                          <Image
+                            src={_.image}
+                            alt=""
+                            width={298}
+                            height={334}
+                          />
+                        )}
                       </div>
                       <Link href={`/market/egg/${_.id}`} passHref>
                         <a className="absolute flex items-center justify-center w-10 h-10 bg-33 rounded-full bottom-2 right-2">
@@ -200,7 +232,7 @@ const Drop = ({}: AppProps & {
               nibh justo consectetur tristique. Vestibulum
             </p>
           </div>
-          {availableEggs.map((_, i) => (
+          {availableDrops.map((_, i) => (
             <div
               key={i}
               className={`flex flex-col ${
@@ -208,13 +240,29 @@ const Drop = ({}: AppProps & {
               } items-center mb-11`}
             >
               <div className="bg-dropnft max-w-[464px] w-[40%] md:w-full flex items-center justify-center rounded">
-                <div className="w-full h-[435px]">
-                  <video
+                <div className="w-full h-[435px] flex items-center justify-center">
+                  {/* <video
                     src={_.animation_url}
                     autoPlay
                     loop
                     className="object-cover w-full max-h-full overflow-hidden rounded"
-                  />
+                  /> */}
+                  {_.kind === 0 || _.kind === 2 ? (
+                    <video
+                      src={_.animation_url}
+                      autoPlay
+                      loop
+                      className="object-cover w-full max-h-full overflow-hidden rounded"
+                    />
+                  ) : (
+                    <div className="h-[435px] w-full">
+                      <ModelViewer
+                        glb={_.glb_animation_url}
+                        usdz={_.usdz_animation_url}
+                      ></ModelViewer>
+                    </div>
+                    // <Image src={_.image} alt="" width={298} height={334} />
+                  )}
                 </div>
               </div>
               <div
@@ -243,7 +291,7 @@ const Drop = ({}: AppProps & {
             </div>
           ))}
           <div className="flex justify-center mb-28">
-            <Link href="/href" passHref>
+            <Link href="/market" passHref>
               <button className="p-px rounded-full bg-gray-150">
                 <button className="bg-black py-3.5 px-8 rounded-full">
                   View on Marketplace

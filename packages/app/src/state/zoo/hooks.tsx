@@ -93,6 +93,7 @@ export function useBuyZoo(): () => void {
     }
   }, [account, chainId, faucet, getZooBalance]);
 }
+
 export function useGetEggs(): (eggs) => void {
   const dispatch = useAppDispatch();
   return useCallback(
@@ -109,6 +110,7 @@ export function useGetEggs(): (eggs) => void {
     [dispatch]
   );
 }
+
 export function useHatch(): (
   dropEggId: number,
   eggId: number,
@@ -194,6 +196,7 @@ export function useHatch(): (
     [account, addPopup, dispatch, dropId, getZooBalance, zoo, zooKeeper]
   );
 }
+
 export function useFetchMyNFTs(): () => Promise<any> {
   const Web3Api = useMoralisWeb3Api();
   console.log("structuredNft fetching nfts", Web3Api);
@@ -358,14 +361,19 @@ export function useGetAvailableEggs(): () => void {
       const eggs: Array<any> = await dropContract?.getAllEggs();
       if (!eggs) return;
       console.log("eggsuseGetAvailableEggs", eggs);
-      [...eggs].map(async (egg) => {
-        console.log("eggsuseGetAvailableEggs__mi_egg", egg, eggs.length);
+      eggs.forEach(async (egg, i) => {
+        // console.log("eggsuseGetAvailableEggs__mi_egg", egg, eggs.length);
         // const data = await (await axios.get(egg.data.metadataURI)).data;
         // const res = await axios.get(egg.data.metadataURI);
         // const data = await res.data;
         const data = await getData(egg.data.metadataURI);
         const { name, description, attributes, image, animation_url } = data;
-        console.log("eggsuseGetAvailableEggs__", data, egg, eggs.length);
+        console.log("eggsuseGetAvailableEggs__", {
+          data,
+          egg,
+          len: eggs.length,
+          index: i,
+        });
 
         const finalEgg: AvailableEgg = {
           bidShares: {
