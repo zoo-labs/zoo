@@ -83,33 +83,35 @@ const SingleDrop = ({}: AppProps & {
               </div>
             </div>
             <p className="mb-5">COLLECTION</p>
-            {collections.map((datum) => (
-              <Link key={datum.id} href={`/drop/${datum.id}`} passHref>
-                <div className="w-full p-2 md:w-1/2 cursor-pointer">
-                  <div className="relative overflow-hidden rounded p-[2px] bg-nft-gradient parent">
-                    <div className="h-[450px] w-full">
-                      {datum.kind === 0 || datum.kind === 2 ? (
-                        <video
-                          autoPlay
-                          loop
-                          src={datum.animation_url}
-                          width={"100%"}
-                          height={350}
-                          className="rounded overflow-hidden max-h-[450px] object-cover"
-                        />
-                      ) : (
-                        <div className="h-[450px] w-full">
-                          <ModelViewer
-                            glb={datum?.glb_animation_url}
-                            usdz={datum?.usdz_animation_url}
-                          ></ModelViewer>
-                        </div>
-                      )}
+            <div className="flex flex-wrap">
+              {collections.map((datum) => (
+                <Link key={datum.id} href={`/drop/${datum.id}`} passHref>
+                  <div className="w-full p-2 md:w-1/2 cursor-pointer">
+                    <div className="relative overflow-hidden rounded p-[2px] bg-nft-gradient parent">
+                      <div className="h-[450px] w-full">
+                        {datum.kind === 0 || datum.kind === 2 ? (
+                          <video
+                            autoPlay
+                            loop
+                            src={datum.animation_url}
+                            width={"100%"}
+                            height={350}
+                            className="rounded overflow-hidden max-h-[450px] object-cover"
+                          />
+                        ) : (
+                          <div className="h-[450px] w-full">
+                            <ModelViewer
+                              glb={datum?.glb_animation_url}
+                              usdz={datum?.usdz_animation_url}
+                            ></ModelViewer>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              ))}
+            </div>
           </div>
           <div
             className="absolute right-0 lg:w-[613px] lg:h-[780px]"
