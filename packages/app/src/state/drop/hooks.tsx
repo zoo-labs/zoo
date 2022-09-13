@@ -35,5 +35,5 @@ export function useGetDrops() {
     };
 
     dispatch(addDrops([...eggs, drop]));
-  }, [dispatch, eggs, getEggs]);
+  }, [dispatch, getEggs]);
 }
