@@ -84,9 +84,9 @@ const Drop = ({}: AppProps & {
   const getDrops = useGetDrops();
 
   useEffect(() => {
-    // getAvailableEggs();
+    getAvailableEggs();
     getDrops();
-  }, [getDrops]);
+  }, [getAvailableEggs, getDrops]);
 
   useEffect(() => {
     // console.log("dropsbdbbkjaxknc", { availableEggs, drops });
@@ -137,7 +137,7 @@ const Drop = ({}: AppProps & {
                           />
                         )}
                       </div>
-                      <Link href={`/market/egg/${_.id}`} passHref>
+                      <Link href={`/drop/${_.id}`} passHref>
                         <a className="absolute flex items-center justify-center w-10 h-10 bg-33 rounded-full bottom-2 right-2">
                           <Image
                             src="/icons/arrow-right-light.svg"
