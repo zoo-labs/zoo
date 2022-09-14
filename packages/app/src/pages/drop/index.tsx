@@ -186,12 +186,7 @@ const Drop = ({}: AppProps & {
             </div>
             <div className="flex-1">
               {/* <img src="/images/drop/paradise.png" alt="" /> */}
-              <video
-                // autoPlay
-                controls
-                muted
-                // loop
-              >
+              <video controls muted>
                 <source
                   src={"/videoes/trippy_animals_short.mov"}
                   type="video/mp4"
