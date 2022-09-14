@@ -41,10 +41,7 @@ const SingleDrop = ({}: AppProps & {
     <DropLayout isMarginTop={false}>
       <div className="max-w-7xl min-h-screen mx-auto my-28">
         <div className="flex flex-col-reverse lg:flex-row items-start min-h-screen px-4 relative">
-          <div
-            className="flex-1 w-full lg
-          ;max-w-[650px] lg:pl-24 lg:pt-28 z-50"
-          >
+          <div className="flex-1 w-full lg:max-w-[650px] lg:pl-24 lg:pt-28 z-50">
             <div className=" lg:pl-20">
               <p className="font-medium text-[32px] leading-9 mb-4">
                 {Number(id) < 9 && 0}
