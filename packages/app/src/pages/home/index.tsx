@@ -1,21 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import _ from "lodash";
-//import ZooBabyAnim from "../../components/Babylon";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
 
-//import MyModel from "../../components/ModelViewer/index";
-// sections
 const HeroSection = dynamic(() => import("./HeroSection"));
-// const PartnersSection = dynamic(() => import("./PartnersSection"));
 const OpportunitySection = dynamic(() => import("./OpportunitySection"));
-// import PopularNftsSection from './PopularNftsSection';
 const MarketPlaceSection = dynamic(() => import("./MarketPlaceSection"));
-const GetStartedSection = dynamic(() => import("./GetStartedSection"));
-const ZooNewsSection = dynamic(() => import("pages/home/ZooNewsSection"));
 const AnimalFamilySection = dynamic(() => import("./AnimalFamilySection"));
 const JoinZooSection = dynamic(() => import("./JoinZooSection"));
 const FaqSection = dynamic(() => import("./FaqSection"));
@@ -119,12 +113,49 @@ export default function Home() {
   console.log("getTypeURIs", typeUri);
   const { tokenTypes } = useTokenTypes();
   console.log("tokenTypes", tokenTypes);
+  const [hideLeft, setHideLeft] = useState(true);
+  const [hideRight, setHideRight] = useState(false);
+
+  const handleMoveRight = () => {
+    if (document.getElementById("carousel").scrollLeft >= window.screen.width) {
+      document.getElementById("carousel").scrollLeft = 0;
+    } else {
+      document.getElementById("carousel").scrollLeft += 800;
+    }
+  };
+  const handleMoveLeft = () => {
+    document.getElementById("carousel").scrollLeft -= 800;
+  };
+
+  const handleScroll = () => {
+    console.log(
+      "the_rhrhjr_ddbj",
+      document.getElementById("carousel").scrollLeft,
+      document.getElementById("carousel").getBoundingClientRect().width
+    );
+    if (document.getElementById("carousel").scrollLeft === 0) {
+      setHideLeft(true);
+    } else {
+      setHideLeft(false);
+    }
+
+    if (document.getElementById("carousel").scrollLeft === 608) {
+      setHideRight(true);
+    } else {
+      setHideRight(false);
+    }
+  };
+
+  useEffect(() => {
+    document
+      .getElementById("carousel")
+      .addEventListener("scroll", (e) => handleScroll());
+  }, [document.getElementById("carousel")?.scrollLeft]);
 
   return (
     <div>
       <HeroSection />
       <CardsSection />
-      {/* <PartnersSection /> */}
       <OpportunitySection />
       <div className="flex flex-col px-4 mx-auto mb-32 max-w-7xl gap-36 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex-1">
@@ -134,10 +165,7 @@ export default function Home() {
             amet, tortor non. Lacus, elementum gravida ut diam. Sit viverra quam
             tristique ipsum mattis aenean elementum.
           </p>
-          <div
-            // onClick={() => handleFunds(chainId, buyZoo)}
-            className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer w-max"
-          >
+          <div className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer w-max">
             Start Collecting
           </div>
         </div>
@@ -214,7 +242,11 @@ export default function Home() {
           Resources for Getting Started
         </p>
         <div className="relative w-full">
-          <div className="overflow-x-auto whitespace-nowrap">
+          <div
+            onScroll={handleScroll}
+            id="carousel"
+            className="overflow-x-auto whitespace-nowrap"
+          >
             <div className="flex flex-col md:flex-row md:max-h-[290px]">
               {Array(4)
                 .fill(0)
@@ -237,14 +269,33 @@ export default function Home() {
                 ))}
             </div>
           </div>
-          <div className="hidden md:block absolute -right-8 cursor-pointer inset-y-[42%]">
-            <Image
-              src="/icons/arrow-right-circle.svg"
-              alt=""
-              width={43}
-              height={43}
-            />
-          </div>
+          {!hideRight && (
+            <button
+              onClick={handleMoveRight}
+              className="hidden md:block absolute -right-8 cursor-pointer inset-y-[42%]"
+            >
+              <Image
+                src="/icons/arrow-right-circle.svg"
+                alt=""
+                width={43}
+                height={43}
+              />
+            </button>
+          )}
+          {!hideLeft && (
+            <button
+              onClick={handleMoveLeft}
+              className="hidden md:block absolute left-0 cursor-pointer inset-y-[42%]"
+            >
+              <Image
+                src="/icons/arrow-right-circle.svg"
+                alt=""
+                width={43}
+                height={43}
+                className="rotate-180"
+              />
+            </button>
+          )}
         </div>
       </div>
       <MarketPlaceSection />
