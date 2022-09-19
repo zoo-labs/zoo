@@ -111,10 +111,10 @@ const NftModal = ({}: AppProps & {
     refetchStuff(nftItem.tokenID, nftItem.tokenUri, nftItem.animation_url);
   }, [refetchStuff, nftItem]);
 
-  useEffect(() => {
-    fetchNFTs();
-    getCreator(nftItem?.id).then((res) => setCreator(res));
-  }, [fetchNFTs, getCreator, nftItem?.id]);
+  // useEffect(() => {
+  //   fetchNFTs();
+  //   getCreator(nftItem?.id).then((res) => setCreator(res));
+  // }, [fetchNFTs, getCreator, nftItem?.id]);
 
   const auction = () => toggleAucionModal();
 
@@ -245,7 +245,7 @@ const NftModal = ({}: AppProps & {
             )}
           </div>
           <div className="flex items-center mb-4">
-            <div className="w-6 h-6 rounded-full bg-nft-gradient" />
+            <div className="w-6 h-6 rounded-full border border-gray-500" />
             <p className="ml-2 text-xl font-bold">Creator: </p>
             <a
               href={`https://testnet.bscscan.com/address/${creator}`}
@@ -257,7 +257,7 @@ const NftModal = ({}: AppProps & {
             </a>
           </div>
           <div className="flex items-center mb-4">
-            <div className="w-6 h-6 rounded-full bg-nft-gradient" />
+            <div className="w-6 h-6 rounded-full border border-gray-500" />
             <p className="ml-2 text-xl font-bold">Current owner: </p>
             <a
               href={`https://testnet.bscscan.com/address/${account}`}
@@ -291,7 +291,7 @@ const NftModal = ({}: AppProps & {
               {nftItem?.stage === 2 && (
                 <Link href={`/wallet/${nftItem?.id}/breed`} passHref>
                   <button
-                    className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-nft-gradient disabled:cursor-not-allowed disabled:opacity-60"
+                    className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer border border-gray-500 disabled:cursor-not-allowed disabled:opacity-60"
                     disabled={loading || feeding}
                   >
                     BREED
@@ -496,7 +496,7 @@ const NftModal = ({}: AppProps & {
   //                     {nftItem?.stage === 2 && (
   //                       <Link href={`/wallet/${nftItem?.id}/breed`} passHref>
   //                         <button
-  //                           className="w-[23%] p-2 mb-1 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-nft-gradient disabled:cursor-not-allowed disabled:opacity-60"
+  //                           className="w-[23%] p-2 mb-1 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer border border-gray-500 disabled:cursor-not-allowed disabled:opacity-60"
   //                           disabled={loading || feeding}
   //                         >
   //                           BREED

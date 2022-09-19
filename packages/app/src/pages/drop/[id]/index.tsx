@@ -10,6 +10,7 @@ import { useGetAvailableEggs } from "state/zoo/hooks";
 import { useGetDrops } from "state/drop/hooks";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { Drop } from "types";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -22,25 +23,25 @@ const SingleDrop = ({}: AppProps & {
   const {
     query: { id },
   } = useRouter();
-  const [collections, setCollections] = useState([]);
-  const [drop, setDrop] = useState<any>({});
+  const [drop, setDrop] = useState<Drop>();
+  const [activeDrop, setActiveDrop] = useState<any>({});
   const { drops } = useSelector((state: any) => state.drop);
-  const getDrops = useGetDrops();
-  useEffect(() => {
-    getDrops();
-  }, [getDrops]);
 
   useEffect(() => {
-    const eggs = drops?.filter((e) => Number(e.id) !== Number(id));
-    const drop_ = drops?.find((e) => Number(e.id) === Number(id));
-    setCollections(eggs);
-    setDrop(drop_);
-  }, [drops, id]);
+    if (drops.length > 0) {
+      const newDrop = drops.filter((drop) => drop.dropId === Number(id))[0];
+
+      setDrop(newDrop);
+
+      setActiveDrop(newDrop.items[0]);
+    }
+  }, [drops]);
+  console.log("activeDrop", activeDrop);
 
   return (
     <DropLayout isMarginTop={false}>
-      <div className="max-w-7xl min-h-screen mx-auto my-28">
-        <div className="flex flex-col-reverse lg:flex-row items-start min-h-screen px-4 relative">
+      <div className="min-h-screen mx-auto max-w-7xl my-28">
+        <div className="relative flex flex-col-reverse items-start min-h-screen px-4 lg:flex-row">
           <div className="flex-1 w-full lg:max-w-[650px] lg:pl-24 lg:pt-28 z-50">
             <div className=" lg:pl-20">
               <p className="font-medium text-[32px] leading-9 mb-4">
@@ -49,7 +50,7 @@ const SingleDrop = ({}: AppProps & {
               </p>
               {/* <img src="/images/zoo-nft-drop.png" alt="" /> */}
               <p className="font-bold text-4xl lg:text-7xl mb-[17.5px] overflow-visible z-50 lg:whitespace-nowrap">
-                {drop?.name}
+                {drop?.title}
                 {/* <span>ZOO NFT D</span>
                 <span>R</span>
                 <span>OP</span> */}
@@ -60,14 +61,14 @@ const SingleDrop = ({}: AppProps & {
             </p>
             <div className="flex items-center mb-24">
               <div className="pr-12">
-                <p className="text-2xl font-bold">-</p>
+                <p className="text-2xl font-bold">{drop?.dropSupply}</p>
                 <p className="mt-0.5 text-[#BCBABA] text-xs font-light">
                   In collection
                 </p>
               </div>
               <div className="px-12 relative before:absolute before:w-px before:h-full before:bg-[#22233A] before:left-0 after:absolute after:w-px after:h-full after:bg-[#22233A] after:right-0 after:top-0">
                 <p className="text-2xl font-bold">
-                  {Number(id) === 100 ? "-" : drop?.supply - drop?.minted}
+                  {drop?.supply - drop?.minted}
                 </p>
                 <p className="mt-0.5 text-[#BCBABA] text-xs font-light">
                   For Sale
@@ -75,7 +76,7 @@ const SingleDrop = ({}: AppProps & {
               </div>
               <div className="pl-12">
                 <p className="text-2xl font-bold">
-                  {Number(id) === 100 ? "-" : drop?.price}
+                  {/* {activeDrop?.price} use the price of items*/}
                 </p>
                 <p className="mt-0.5 text-[#BCBABA] text-xs font-light">
                   Floor price
@@ -84,32 +85,33 @@ const SingleDrop = ({}: AppProps & {
             </div>
             <p className="mb-5">COLLECTION</p>
             <div className="flex flex-wrap">
-              {collections.map((datum) => (
-                <Link key={datum.id} href={`/drop/${datum.id}`} passHref>
-                  <div className="w-full p-2 md:w-1/2 cursor-pointer">
-                    <div className="relative overflow-hidden rounded p-[2px] bg-nft-gradient parent">
-                      <div className="h-[450px] w-full">
-                        {datum.kind === 0 || datum.kind === 2 ? (
-                          <video
-                            autoPlay
-                            loop
-                            src={datum.animation_url}
-                            width={"100%"}
-                            height={350}
-                            className="rounded overflow-hidden max-h-[450px] object-cover"
-                          />
-                        ) : (
-                          <div className="h-[450px] w-full">
-                            <ModelViewer
-                              glb={datum?.glb_animation_url}
-                              usdz={datum?.usdz_animation_url}
-                            ></ModelViewer>
-                          </div>
-                        )}
-                      </div>
+              {drop?.items?.map((datum) => (
+                <div
+                  className="w-full p-2 cursor-pointer md:w-1/2"
+                  onClick={() => setActiveDrop(datum)}
+                >
+                  <div className="relative overflow-hidden rounded p-[2px] parent">
+                    <div className="h-[450px] w-full">
+                      {datum.kind === 0 || datum.kind === 2 ? (
+                        <video
+                          autoPlay
+                          loop
+                          src={datum.animation_url}
+                          width={"100%"}
+                          height={350}
+                          className="rounded overflow-hidden max-h-[450px] object-cover"
+                        />
+                      ) : (
+                        <div className="h-[450px] w-full">
+                          <ModelViewer
+                            glb={datum?.glb_animation_url}
+                            usdz={datum?.usdz_animation_url}
+                          ></ModelViewer>
+                        </div>
+                      )}
                     </div>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           </div>
@@ -124,11 +126,11 @@ const SingleDrop = ({}: AppProps & {
             }}
           >
             {/* <img src="" alt="" /> */}
-            {drop?.kind === 0 || drop?.kind === 2 ? (
+            {activeDrop?.kind === 0 || activeDrop?.kind === 2 ? (
               <video
                 autoPlay
                 loop
-                src={drop?.animation_url}
+                src={activeDrop?.animation_url}
                 width={"100%"}
                 height={350}
                 className="rounded overflow-hidden max-h-[370px]  lg:max-h-[780px] object-cover"
@@ -136,20 +138,20 @@ const SingleDrop = ({}: AppProps & {
             ) : (
               <div className="h-[370px] lg:h-[780px] w-full">
                 <ModelViewer
-                  glb={drop?.glb_animation_url}
-                  usdz={drop?.usdz_animation_url}
+                  glb={activeDrop?.glb_animation_url}
+                  usdz={activeDrop?.usdz_animation_url}
                 ></ModelViewer>
               </div>
             )}
             <div className="relative">
               <div className="absolute right-5 bottom-5">
                 {Number(id) === 100 ? (
-                  <div className="h-36 w-36 rounded-full border-2 flex items-center justify-center font-medium text-sm">
+                  <div className="flex items-center justify-center text-sm font-medium border-2 rounded-full h-36 w-36">
                     COMING SOON
                   </div>
                 ) : (
-                  <Link href={`/market/egg/${id}`} passHref>
-                    <div className="h-24 w-24 rounded-full border-2 flex items-center justify-center font-medium text-sm cursor-pointer">
+                  <Link href={`/market/egg/${activeDrop.id}`} passHref>
+                    <div className="flex items-center justify-center w-24 h-24 text-sm font-medium border-2 rounded-full cursor-pointer">
                       BUY
                     </div>
                   </Link>
