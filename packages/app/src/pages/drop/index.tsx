@@ -14,6 +14,9 @@ import { useGetDrops } from "state/drop/hooks";
 import { addDrops } from "state/drop/action";
 import { AvailableEgg } from "types";
 import dynamic from "next/dynamic";
+import usePlayer from "hooks/usePlayer";
+import { PlayCircleFilled } from "@mui/icons-material";
+import { PauseCircleFilled } from "@mui/icons-material";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -77,6 +80,7 @@ const Drop = ({}: AppProps & {
   Component: NextComponentType<NextPageContext>;
   Layout: (title: string) => void;
 }) => {
+  const { playing, setPlaying } = usePlayer("animals");
   const { availableEggs } = useSelector((state: any) => state.zoo);
   const { drops } = useSelector((state: any) => state.drop);
   const [availableDrops, setAvailableDrops] = useState([]);
@@ -184,9 +188,23 @@ const Drop = ({}: AppProps & {
                 </button>
               </Link>
             </div>
-            <div className="flex-1">
-              {/* <img src="/images/drop/paradise.png" alt="" /> */}
-              <video controls muted>
+            <div className="flex-1 relative">
+              {playing ? (
+                <button
+                  className="player__button"
+                  onClick={() => setPlaying(false)}
+                >
+                  <PauseCircleFilled />
+                </button>
+              ) : (
+                <button
+                  className="player__button"
+                  onClick={() => setPlaying(true)}
+                >
+                  <PlayCircleFilled />
+                </button>
+              )}
+              <video id="player-animals" controls={false} muted>
                 <source
                   src={"/videoes/trippy_animals_short.mov"}
                   type="video/mp4"
@@ -227,7 +245,7 @@ const Drop = ({}: AppProps & {
               nibh justo consectetur tristique. Vestibulum
             </p>
           </div>
-          {availableDrops.map((_, i) => (
+          {availableDrops?.map((_, i) => (
             <div
               key={i}
               className={`flex flex-col ${
@@ -242,9 +260,9 @@ const Drop = ({}: AppProps & {
                     loop
                     className="object-cover w-full max-h-full overflow-hidden rounded"
                   /> */}
-                  {_.kind === 0 || _.kind === 2 ? (
+                  {_?.kind === 0 || _?.kind === 2 ? (
                     <video
-                      src={_.animation_url}
+                      src={_?.animation_url}
                       autoPlay
                       loop
                       className="object-cover w-full max-h-full overflow-hidden rounded"
@@ -252,11 +270,11 @@ const Drop = ({}: AppProps & {
                   ) : (
                     <div className="h-[435px] w-full">
                       <ModelViewer
-                        glb={_.glb_animation_url}
-                        usdz={_.usdz_animation_url}
+                        glb={_?.glb_animation_url}
+                        usdz={_?.usdz_animation_url}
                       ></ModelViewer>
                     </div>
-                    // <Image src={_.image} alt="" width={298} height={334} />
+                    // <Image src={_?.image} alt="" width={298} height={334} />
                   )}
                 </div>
               </div>
@@ -266,14 +284,14 @@ const Drop = ({}: AppProps & {
                 } `}
               >
                 <p className="font-medium text-[32px] leading-8 mb-[18px]">
-                  {_.name}
+                  {_?.name}
                 </p>
                 <p className="mb-8 text-sm leading-7 text-muted-20">
-                  {_.description}
+                  {_?.description}
                 </p>
-                <Link href={`/drop/${_.id}`} passHref>
+                <Link href={`/drop/${_?.id}`} passHref>
                   <div className="text-left flex items-center font-normal mb-3 text-sm leading-10 w-max relative before:absolute before:h-1 before:w-[70%] before:left-0 before:-top-2 before:bg-black cursor-pointer">
-                    <a className="mr-1">View {_.name}</a>
+                    <a className="mr-1">View {_?.name}</a>
                     <Image
                       src="/icons/arrow-right.svg"
                       alt=""
