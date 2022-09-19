@@ -326,11 +326,11 @@ const MarketPlacePage = () => {
         <div
           className="rounded-xl"
           style={{
-            background: "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)",
-            padding: 2,
+            background: "#333",
+            padding: 1,
           }}
         >
-          <div className="flex items-center justify-center w-full h-full bg-black rounded-xl">
+          <div className="flex items-center justify-center w-full h-full bg-[#111] rounded-xl">
             {["All Items", "Eggs", "Animals"].map((value, index) => {
               const active = category === index;
               return (
@@ -360,15 +360,13 @@ const MarketPlacePage = () => {
                       );
                     }
                   }}
-                  className={`text-white text-sm font-bold py-1 px-4 cursor-pointer w-full h-full flex items-center justify-center ${
-                    index !== 2 && "border-r border-blue whitespace-nowrap"
+                  className={`text-white text-sm font-bold py-4 px-6 cursor-pointer w-full h-full flex items-center justify-center ${
+                    index !== 2 && "border-r border-33 whitespace-nowrap"
                   } ${
                     index === 0 ? "rounded-l-xl" : index === 2 && "rounded-r-xl"
                   }`}
                   style={{
-                    background: active
-                      ? "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)"
-                      : "transparent",
+                    background: active ? "black" : "transparent",
                   }}
                   key={index}
                 >
@@ -383,7 +381,7 @@ const MarketPlacePage = () => {
       {/* Tab Navigation */}
       <div className="relative justify-between hidden mb-8 lg:flex">
         <div className="flex items-center justify-between w-full h-12 pl-4 pr-1 text-sm rounded-lg cursor-pointer">
-          <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 w-44">
+          <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-33 border-solid rounded-lg cursor-pointer text-grey-400 w-44">
             {/* <ReactDropdown
                 menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
                 className="dropdown"
@@ -408,11 +406,11 @@ const MarketPlacePage = () => {
         <div
           className="w-full rounded-xl"
           style={{
-            background: "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)",
-            padding: 2,
+            background: "#333",
+            padding: 1,
           }}
         >
-          <div className="flex items-center justify-center w-full h-full bg-black rounded-xl">
+          <div className="flex items-center justify-center w-full h-full bg-[#111] rounded-xl">
             {["All Items", "Eggs", "Animals", "Hybrid"].map((value, index) => {
               const active = category === index;
               return (
@@ -443,14 +441,12 @@ const MarketPlacePage = () => {
                     }
                   }}
                   className={`text-white text-sm font-bold py-1 px-4 cursor-pointer w-full h-full flex items-center justify-center ${
-                    index !== 3 && "border-r border-blue"
+                    index !== 3 && "border-r border-33"
                   } ${
                     index === 0 ? "rounded-l-xl" : index === 3 && "rounded-r-xl"
                   }`}
                   style={{
-                    background: active
-                      ? "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)"
-                      : "transparent",
+                    background: active ? "black" : "transparent",
                   }}
                   key={index}
                 >
@@ -507,7 +503,7 @@ const MarketPlacePage = () => {
         <div className="flex items-end justify-end w-full">
           <button
             onClick={() => setFiltering(!filtering)}
-            className="relative flex items-center justify-center px-6 py-3 font-bold leading-3 text-center border-2 rounded-xl text-grey-400"
+            className="relative flex items-center justify-center px-6 py-3 font-bold leading-3 text-center border border-33 rounded-xl text-grey-400"
           >
             Filter
             <span className="flex items-center justify-center pl-2">
