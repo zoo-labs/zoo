@@ -14,6 +14,9 @@ import { useGetDrops } from "state/drop/hooks";
 import { addDrops } from "state/drop/action";
 import { AvailableEgg } from "types";
 import dynamic from "next/dynamic";
+import usePlayer from "hooks/usePlayer";
+import { PlayCircleFilled } from "@mui/icons-material";
+import { PauseCircleFilled } from "@mui/icons-material";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -77,6 +80,7 @@ const Drop = ({}: AppProps & {
   Component: NextComponentType<NextPageContext>;
   Layout: (title: string) => void;
 }) => {
+  const { playing, setPlaying } = usePlayer("animals");
   const { availableEggs } = useSelector((state: any) => state.zoo);
   const { drops } = useSelector((state: any) => state.drop);
   const getAvailableEggs = useGetAvailableEggs();
@@ -177,9 +181,23 @@ const Drop = ({}: AppProps & {
                 </button>
               </Link>
             </div>
-            <div className="flex-1">
-              {/* <img src="/images/drop/paradise.png" alt="" /> */}
-              <video controls muted>
+            <div className="flex-1 relative">
+              {playing ? (
+                <button
+                  className="player__button"
+                  onClick={() => setPlaying(false)}
+                >
+                  <PauseCircleFilled />
+                </button>
+              ) : (
+                <button
+                  className="player__button"
+                  onClick={() => setPlaying(true)}
+                >
+                  <PlayCircleFilled />
+                </button>
+              )}
+              <video id="player-animals" controls={false} muted>
                 <source
                   src={"/videoes/trippy_animals_short.mov"}
                   type="video/mp4"
