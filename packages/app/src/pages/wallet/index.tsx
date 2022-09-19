@@ -64,7 +64,7 @@ export default function Wallet({ children }) {
       }
     }
   };
-  console.log("myNfts__", myNfts);
+  console.log("allAuctions", allAuctions);
   return (
     <section className="Hero">
       <div className="px-6 pb-16 mt- Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
