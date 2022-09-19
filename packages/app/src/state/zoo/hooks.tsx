@@ -238,7 +238,11 @@ export function useFetchMyNFTs(): () => Promise<any> {
         const deet = await zooKeeper?.tokens(Number(id));
         console.log("d_deets", { deet });
 
-        const data = (await axios.get(deet.data.metadataURI)).data;
+        const data = (
+          await axios.get(
+            `https://zoolabs.mypinata.cloud/ipfs/${deet.data.tokenURI.slice(7)}`
+          )
+        ).data;
         console.log("dataa_IN__useFetchMyNFTs", data);
         const {
           name,
@@ -638,7 +642,11 @@ export function useGetAllAuctions(): () => Promise<void> {
         const tokenMetadataURI = await media?.tokenURI(Number(auction.tokenID));
         const deet = await zooKeeper?.tokens(Number(auction.tokenID));
 
-        const data = (await axios.get(tokenMetadataURI)).data;
+        const data = (
+          await axios.get(
+            `https://zoolabs.mypinata.cloud/ipfs/${deet.data.tokenURI.slice(7)}`
+          )
+        ).data;
         const {
           name,
           attributes,
@@ -649,7 +657,7 @@ export function useGetAllAuctions(): () => Promise<void> {
           usdz_animation_url,
         } = data;
 
-        console.log("auction nft data", data, tokenMetadataURI);
+        console.log("auction nft data", auction);
         const {
           tokenID,
           auctionId,
@@ -673,7 +681,7 @@ export function useGetAllAuctions(): () => Promise<void> {
           curatorFeePercentage,
           // curator,
           // auctionCurrency,
-          amount: Number(amount) / Math.pow(10, 18),
+          amount: Number(amount),
           tokenUri,
           name,
           attributes,
@@ -953,7 +961,7 @@ export function useCreateBid(): (
   return useCallback(
     async (id, amount, success) => {
       console.log("AMOUNT_TO_BID", Number(amount));
-      // const weiAmount = ethers.utils.formatUnits(amount, "wei");
+      const weiAmount = ethers.utils.formatUnits(amount, "wei");
       // console.log("WEI_AMOUNT", weiAmount);
       try {
         dispatch(loading(true));
@@ -966,7 +974,7 @@ export function useCreateBid(): (
           await approval.wait();
           console.log("APPROVAL", approval);
         }
-        const tx = await auction?.createBid(id, `${amount * 10 ** 18}`, {
+        const tx = await auction?.createBid(id, weiAmount, {
           gasLimit: 4000000,
         });
         await tx.wait();

@@ -64,7 +64,7 @@ function PlaceBid({}: AppProps & {
   useEffect(() => {
     getZooBalance();
     getAllAuctions();
-  }, [getZooBalance]);
+  }, []);
   useEffect(() => {
     const NFT = allAuctions.filter((obj) => {
       return String(obj.tokenID) === String(router.query.id);
@@ -92,11 +92,6 @@ function PlaceBid({}: AppProps & {
   };
   return (
     <div className="w-full">
-      <Head>
-        <title>ZOO Marketplace</title>
-        <meta name="description" content="ZOO Marketplace" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <TwoColumComp
         LeftCol={
           <div className="flex items-center justify-center w-full h-full bg-green-g px">
@@ -112,19 +107,19 @@ function PlaceBid({}: AppProps & {
           <div className="w-full bg-[#000] h-full flex flex-col justify-center items-center text-white py-6 px-8 lg:px-24">
             {!account ? (
               <div className="flex flex-col items-center justify-center w-full text-base font-medium">
-                <p className="text-2xl lg:text-4xl font-semibold text-center">
+                <p className="text-2xl font-semibold text-center lg:text-4xl">
                   Connect your wallet to place a bid
                 </p>
-                <div className="flex items-center justify-between w-full text-base font-medium my-6">
-                  <div className="h-px bg-white-30 opacity-50 w-full" />
-                  <p className="text-lg text-white opacity-70 font-medium w-full text-center">
+                <div className="flex items-center justify-between w-full my-6 text-base font-medium">
+                  <div className="w-full h-px opacity-50 bg-white-30" />
+                  <p className="w-full text-lg font-medium text-center text-white opacity-70">
                     SELECT WALLET
                   </p>
-                  <div className="h-px bg-white-30 opacity-50 w-full" />
+                  <div className="w-full h-px opacity-50 bg-white-30" />
                 </div>
                 <button
                   onClick={toggleWallet}
-                  className="w-full py-4 rounded-xl bg-leader-board mb-4"
+                  className="w-full py-4 mb-4 rounded-xl bg-leader-board"
                 >
                   Continue with MetaMask
                 </button>
