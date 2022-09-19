@@ -1,6 +1,15 @@
 import { Toast } from "components/Toast";
 import BigNumber from "bignumber.js";
 
+export interface Drop {
+  title: string;
+  description: string;
+  items: Egg[] | Animal[];
+  supply: number
+  minted: number;
+  dropSupply: number,
+  dropId: number
+}
 export interface Animal {
   owner?: string;
   kind?: number;
