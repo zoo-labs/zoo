@@ -376,7 +376,7 @@ const NFTProduct = ({ animal }) => {
       {/* first row */}
       <div className="gap-4 px-6 pt-20   md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-center">
         <div className="w-full flex items-center justify-center lg:basis-1/2">
-          <div className="p-px  rounded bg-nft-gradient lg:mb-0">
+          <div className="p-px  rounded border border-gray-500 lg:mb-0">
             <div className="h-[300px] w-[300px] lg:h-[800px] lg:w-[600px]  overflow-hidden rounded">
               <ModelViewer
                 usdz={animal.usdz}
@@ -475,7 +475,7 @@ const NFTProduct = ({ animal }) => {
           {animal.images.map((img, index) => {
             return (
               <div
-                className="p-px mb-4 overflow-hidden rounded bg-nft-gradient"
+                className="p-px mb-4 overflow-hidden rounded border border-gray-500"
                 key={index}
               >
                 <div className="overflow-hidden bg-black rounded w-[300px] h-[300px]">

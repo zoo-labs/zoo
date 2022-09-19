@@ -152,7 +152,7 @@ export default function Home() {
   }, [document.getElementById("carousel")?.scrollLeft]);
 
   return (
-    <div>
+    <div className="relative">
       <HeroSection />
       <CardsSection />
       <InfoSection />

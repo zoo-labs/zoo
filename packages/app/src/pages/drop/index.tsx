@@ -83,20 +83,13 @@ const Drop = ({}: AppProps & {
   const { playing, setPlaying } = usePlayer("animals");
   const { availableEggs } = useSelector((state: any) => state.zoo);
   const { drops } = useSelector((state: any) => state.drop);
-  const [availableDrops, setAvailableDrops] = useState([]);
   const getAvailableEggs = useGetAvailableEggs();
   const getDrops = useGetDrops();
 
   useEffect(() => {
     getAvailableEggs();
     getDrops();
-  }, [getAvailableEggs, getDrops]);
-
-  useEffect(() => {
-    // console.log("dropsbdbbkjaxknc", { availableEggs, drops });
-
-    setAvailableDrops([...drops]);
-  }, [availableEggs, drops]);
+  }, []);
 
   return (
     <DropLayout isMarginTop={false}>
@@ -141,8 +134,8 @@ const Drop = ({}: AppProps & {
                           />
                         )}
                       </div>
-                      <Link href={`/drop/${_.id}`} passHref>
-                        <a className="absolute flex items-center justify-center w-10 h-10 bg-33 rounded-full bottom-2 right-2">
+                      <Link href={`/drop/1`} passHref>
+                        <a className="absolute flex items-center justify-center w-10 h-10 rounded-full bg-33 bottom-2 right-2">
                           <Image
                             src="/icons/arrow-right-light.svg"
                             alt=""
@@ -213,7 +206,7 @@ const Drop = ({}: AppProps & {
             </div>
           </div>
           <div className="w-full p-px bg-gray-150 mb-[214px]">
-            <div className="bg-black pt-10 px-6 md:px-12 flex flex-col md:flex-row justify-between relative">
+            <div className="relative flex flex-col justify-between px-6 pt-10 bg-black md:px-12 md:flex-row">
               <div className="flex-1 md:max-w-[75%] pb-10">
                 <p className="text-[26px] leading-8 mb-3 text-white">
                   Ready to Hatch?
@@ -245,69 +238,72 @@ const Drop = ({}: AppProps & {
               nibh justo consectetur tristique. Vestibulum
             </p>
           </div>
-          {availableDrops?.map((_, i) => (
-            <div
-              key={i}
-              className={`flex flex-col ${
-                i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-              } items-center mb-11`}
-            >
-              <div className="bg-dropnft max-w-[464px] w-[40%] md:w-full flex items-center justify-center rounded">
-                <div className="w-full h-[435px] flex items-center justify-center">
-                  {/* <video
-                    src={_.animation_url}
-                    autoPlay
-                    loop
-                    className="object-cover w-full max-h-full overflow-hidden rounded"
-                  /> */}
-                  {_?.kind === 0 || _?.kind === 2 ? (
-                    <video
-                      src={_?.animation_url}
+          {drops.map((drop, i) => {
+            console.log("droppppp", drop);
+            return (
+              <div
+                key={i}
+                className={`flex flex-col ${
+                  i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                } items-center mb-11`}
+              >
+                <div className="bg-dropnft max-w-[464px] w-[40%] md:w-full flex items-center justify-center rounded">
+                  <div className="w-full h-[435px] flex items-center justify-center">
+                    {/* <video
+                      src={_.animation_url}
                       autoPlay
                       loop
                       className="object-cover w-full max-h-full overflow-hidden rounded"
-                    />
-                  ) : (
-                    <div className="h-[435px] w-full">
-                      <ModelViewer
-                        glb={_?.glb_animation_url}
-                        usdz={_?.usdz_animation_url}
-                      ></ModelViewer>
+                    /> */}
+                    {drop?.items[0].kind === 0 || drop?.items[0].kind === 2 ? (
+                      <video
+                        src={drop?.items[0].animation_url}
+                        autoPlay
+                        loop
+                        className="object-cover w-full max-h-full overflow-hidden rounded"
+                      />
+                    ) : (
+                      <div className="h-[435px] w-full">
+                        <ModelViewer
+                          glb={drop.glb_animation_url}
+                          usdz={drop.usdz_animation_url}
+                        ></ModelViewer>
+                      </div>
+                      // <Image src={_.image} alt="" width={298} height={334} />
+                    )}
+                  </div>
+                </div>
+                <div
+                  className={`flex-1 mt-5 md:mt-0 ${
+                    i % 2 === 0 ? "md:pl-14" : "md:pr-14"
+                  } `}
+                >
+                  <p className="font-medium text-[32px] leading-8 mb-[18px]">
+                    {drop.title}
+                  </p>
+                  <p className="mb-8 text-sm leading-7 text-muted-20">
+                    {drop.description}
+                  </p>
+                  <Link href={`/drop/${drop.dropId}`} passHref>
+                    <div className="text-left flex items-center font-normal mb-3 text-sm leading-10 w-max relative before:absolute before:h-1 before:w-[70%] before:left-0 before:-top-2 before:bg-black cursor-pointer">
+                      <a className="mr-1">View {drop.name}</a>
+                      <Image
+                        src="/icons/arrow-right.svg"
+                        alt=""
+                        width={20}
+                        height={20}
+                      />
                     </div>
-                    // <Image src={_?.image} alt="" width={298} height={334} />
-                  )}
+                  </Link>
                 </div>
               </div>
-              <div
-                className={`flex-1 mt-5 md:mt-0 ${
-                  i % 2 === 0 ? "md:pl-14" : "md:pr-14"
-                } `}
-              >
-                <p className="font-medium text-[32px] leading-8 mb-[18px]">
-                  {_?.name}
-                </p>
-                <p className="mb-8 text-sm leading-7 text-muted-20">
-                  {_?.description}
-                </p>
-                <Link href={`/drop/${_?.id}`} passHref>
-                  <div className="text-left flex items-center font-normal mb-3 text-sm leading-10 w-max relative before:absolute before:h-1 before:w-[70%] before:left-0 before:-top-2 before:bg-black cursor-pointer">
-                    <a className="mr-1">View {_?.name}</a>
-                    <Image
-                      src="/icons/arrow-right.svg"
-                      alt=""
-                      width={20}
-                      height={20}
-                    />
-                  </div>
-                </Link>
-              </div>
-            </div>
-          ))}
+            );
+          })}
           <div className="flex justify-center mb-28">
             <Link href="/market" passHref>
               <button className="p-px rounded-full bg-gray-150">
                 <button className="bg-black py-3.5 px-8 rounded-full">
-                  View on Marketplace
+                  View Marketplace
                 </button>
               </button>
             </Link>

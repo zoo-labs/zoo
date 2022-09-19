@@ -100,10 +100,10 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen Hero bg-zooo">
+    <div className="absolute flex items-center justify-center md:relative Hero bg-zooo">
       <div className="relative m-0 -mt-5 overflow-hidden w-ful">
         <div
-          className={`flex w-[100vw] absolute z-50 h-full transition duration-1000 ease-in whitespace-nowrap mt-4 `}
+          className={`flex w-[100vw] absolute  h-full transition duration-1000 ease-in whitespace-nowrap mt-4 `}
           style={
             {
               // transform: `translate3d(${-activeSlideIndex * 100}%, 0, 0)`,
@@ -125,7 +125,7 @@ const HeroSection = () => {
                 <div className="flex items-center justify-center w-full h-full">
                   <div className="w-[80vw] px-4 py-4">
                     <h1
-                      className="mb-3 text-4xl font-bold break-all lg:text-9xl lg:mb-6 transition-opacity duration-1000 delay-100 opacity-100 ease-in item-animate-down"
+                      className="mb-3 text-4xl font-bold break-all transition-opacity duration-1000 ease-in delay-100 opacity-100 lg:text-9xl lg:mb-6 item-animate-down"
                       onMouseOut={() => videoCurrent?.play()}
                       onMouseOver={() => videoCurrent?.pause()}
                     >
@@ -155,7 +155,7 @@ const HeroSection = () => {
           ref={videoRef}
           muted
           id="bgVideo"
-          className="md:h-screen md:min-h-screen w-screen"
+          className="w-screen md:h-screen md:min-h-screen min-w-[100vh]"
         >
           <source src="/videoes/videoplayback.mp4" type="video/mp4"></source>
         </video>

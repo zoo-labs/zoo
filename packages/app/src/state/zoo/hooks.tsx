@@ -195,17 +195,19 @@ export function useHatch(): (
 }
 
 export function useFetchMyNFTs(): () => Promise<any> {
+  const dispatch = useDispatch();
+
   const Web3Api = useMoralisWeb3Api();
   console.log("structuredNft fetching nfts", Web3Api);
 
   const { account, chainId } = useActiveWeb3React();
   const media = useMedia();
   const zooKeeper = useZooKeeper();
-  const dispatch = useDispatch();
 
   return useCallback(async () => {
     // get NFTs for current user on Mainnet
     // bsc nfts
+    console.log("useFetchMyNFTs", chainId);
     try {
       // bsc testnet nfts
       const options: { chain?: any; address: string; token_address: string } = {
@@ -322,7 +324,7 @@ export function useFetchMyNFTs(): () => Promise<any> {
     } catch (error) {
       console.error("error_in_fetch_nfts_func", error);
     }
-  }, [chainId, account, media?.address, Web3Api.account, dispatch, zooKeeper]);
+  }, [chainId, dispatch]);
 }
 
 export function useGetNftTransfers(): () => void {
