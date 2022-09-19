@@ -42,7 +42,7 @@ const TransactionHistory = ({ nftTransfers }) => {
         />
       )}
 
-      <div className="border rounded-lg border-white-30">
+      <div className="rounded-lg">
         <Table className="w-full rounded-lg">
           <tr className="text-left bg-black200 ">
             <th className="hidden p-3 font-bold text-white uppercase lg:table-cell">
