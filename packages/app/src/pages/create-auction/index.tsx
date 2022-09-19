@@ -49,7 +49,7 @@ const CreateAuctionPage = () => {
         </div>
         <div className="flex flex-col lg:flex-row">
           <form
-            className="flex-1 rounded-md p-[1px] bg-nft-gradient"
+            className="flex-1 rounded-md p-[1px] border border-gray-500"
             onSubmit={onSubmit}
           >
             <div className="bg-black px-4 py-4 rounded-md">

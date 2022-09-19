@@ -37,7 +37,7 @@ const MyBidsSection = () => {
     </div>
     // <>
     //   <section className="flex flex-col gap-24 lg:flex-row lg:justify-between lg:px-48">
-    //     <div className="bg-nft-gradient p-0.5 flex flex-col basis-1/2 justify-center rounded-xl">
+    //     <div className="border border-gray-500 p-0.5 flex flex-col basis-1/2 justify-center rounded-xl">
     //       <div className="flex flex-col justify-center h-full bg-black rounded-xl">
     //         <Image
     //           src="/img/egg.png"
@@ -53,7 +53,7 @@ const MyBidsSection = () => {
     //       {/* Address and Price */}
     //       <div className="flex justify-between mb-4">
     //         <div className="flex items-center address">
-    //           <div className="w-12 h-12 mr-3 rounded-full bg-nft-gradient" />
+    //           <div className="w-12 h-12 mr-3 rounded-full border border-gray-500" />
     //           <div className="owner">
     //             <p className="text-grey">Owner</p>
     //             <p>0xd0ae…e3e0</p>

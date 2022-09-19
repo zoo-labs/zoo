@@ -150,6 +150,12 @@ module.exports = {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
+        "4.5xl": [
+          "40px",
+          {
+            lineHeight: "48px",
+          },
+        ],
         label: [
           "12px",
           {

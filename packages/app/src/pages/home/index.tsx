@@ -16,6 +16,7 @@ const FaqSection = dynamic(() => import("./FaqSection"));
 import { useTokenTypes } from "zoo/state";
 import CardsSection from "./Cards";
 import GameFi from "./GameFi";
+import InfoSection from "./InfoSection";
 
 const BASE_NFT_URL = "https://db.zoolabs.io";
 
@@ -32,11 +33,9 @@ const gameFi = [
     icon: "/icons/empty-wallet.svg",
     description: (
       <>
-        Set up your wallet with{" "}
-        <a className="underline text-activeGreen">Metamask</a> and login{" "}
-        <a className="underline text-activeGreen">here</a> to view the Zoo
-        Marketplace. Learn about which wallets are supported{" "}
-        <a className="underline text-activeGreen">here.</a>
+        Set up your wallet with <a className="underline">Metamask</a> and login{" "}
+        <a className="underline">here</a> to view the Zoo Marketplace. Learn
+        about which wallets are supported <a className="underline">here.</a>
       </>
     ),
   },
@@ -67,9 +66,9 @@ const gameFi = [
     icon: "/icons/shop.svg",
     description: (
       <>
-        The Zoo <a className="underline text-activeGreen">Marketplace</a> not
-        only benefits members through its fees but also allows you to buy, sell,
-        make offers and trade for additional benefits $$.
+        The Zoo <a className="underline">Marketplace</a> not only benefits
+        members through its fees but also allows you to buy, sell, make offers
+        and trade for additional benefits $$.
       </>
     ),
   },
@@ -153,23 +152,24 @@ export default function Home() {
   }, [document.getElementById("carousel")?.scrollLeft]);
 
   return (
-    <div>
+    <div className="relative">
       <HeroSection />
       <CardsSection />
-      <OpportunitySection />
+      <InfoSection />
+      {/* <OpportunitySection /> */}
       <div className="flex flex-col px-4 mx-auto mb-32 max-w-7xl gap-36 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex-1">
           <p className="text-6xl font-bold mb-9">It all starts with one egg.</p>
-          <p className="mb-10 text-xl text-muted-40">
+          {/* <p className="mb-10 text-xl text-muted-40">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget sit
             amet, tortor non. Lacus, elementum gravida ut diam. Sit viverra quam
             tristique ipsum mattis aenean elementum.
-          </p>
-          <div className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer w-max">
+          </p> */}
+          <div className="px-5 py-3 text-sm font-medium text-white bg-33 rounded-full md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer w-max">
             Start Collecting
           </div>
         </div>
-        <div className="flex items-center justify-center flex-1 h-full py-16 border border-white rounded-2xl px-7 max-w-max">
+        <div className="flex items-center justify-center flex-1 h-full py-16 border border-33 rounded-2xl px-7 max-w-max">
           <Image src="/images/egg.svg" alt="" width={467} height={442} />
         </div>
       </div>

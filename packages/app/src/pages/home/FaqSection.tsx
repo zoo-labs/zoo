@@ -70,7 +70,7 @@ const FaqSection = () => {
             </h3>
             <li>
               <a
-                className="text-green underline"
+                className=" underline"
                 href="https://prezi.com/i/view/fWOPqU2eZzcqYyVzb5pz"
                 target="_blank"
                 rel="noreferrer"
@@ -86,10 +86,7 @@ const FaqSection = () => {
             </h3>
             <p className="mb-4 text-muted-40 lg:max-w-sm">
               If you are having difficulty, please{" "}
-              <a
-                href="https://discord.gg/wW6Wth6r"
-                className="text-green underline"
-              >
+              <a href="https://discord.gg/wW6Wth6r" className="underline">
                 join our Discord server
               </a>{" "}
               and post in the #new-player-help channel and our community will be
@@ -97,16 +94,15 @@ const FaqSection = () => {
             </p>
             <p className="text-muted-40 lg:max-w-sm">
               In addition, a complete list of guides can be found{" "}
-              <a href="/blog" className="underline text-green">
-                here
+              <a href="/blog" className="underline text-blue">
+                here.
               </a>
-              .
             </p>
           </div>
         </div>
         <div className="flex items-center justify-center">
           <Link href="/faqs">
-            <a className="px-5 py-3 text-sm border-2 rounded-full font-semibold border-green md:text-base text-green md:px-6 md:py-4 lg:px-20">
+            <a className="px-5 py-3 text-sm border-2 rounded-full font-semibold md:text-base text-white md:px-6 md:py-4 lg:px-20">
               See more
             </a>
           </Link>

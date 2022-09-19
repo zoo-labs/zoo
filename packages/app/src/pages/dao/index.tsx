@@ -47,7 +47,7 @@ const Voting = ({}: AppProps & {
         <title>ZOO | DAO</title>
       </Head>
       <div className="min-h-screen flex flex-col lg:flex-row lg:items-start lg:justify-between w-full pt-16 max-w-7xl px-6 md:px-10 mx-auto">
-        <div className="w-full lg:w-[28%] lg:mr-12 bg-nft-gradient p-px rounded-2xl">
+        <div className="w-full lg:w-[28%] lg:mr-12 border border-gray-500 p-px rounded-2xl">
           <div className="dao-bg rounded-2xl h-full py-8">
             <p className="text-center text-4xl font-base mb-2.5 px-6">
               Zoo Voting

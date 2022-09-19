@@ -4,7 +4,7 @@ const Main = ({
   children,
   isModal,
   innerClassName,
-  bgColor = "bg-black",
+  bgColor = "bg-[#111]",
 }: {
   children: React.ReactNode;
   isModal?: boolean;

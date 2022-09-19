@@ -130,7 +130,7 @@ const AnimalFamilySection = () => {
             >
               <div className="w-full flex flex-col items-center justify-between AnimalFamily__nft lg:flex-row">
                 <div className="flex flex-col items-center w-full h-auto mb-8 AnimalFamily__image lg:basis-1/2">
-                  <div className="p-px mb-8 overflow-hidden  bg-black border rounded-2xl w-full md:w-auto">
+                  <div className="p-px mb-8 overflow-hidden  bg-black border border-33 rounded-2xl w-full md:w-auto">
                     {gifMode === "gif" ? (
                       <div className="overflow-hidden rounded w-full">
                         <div className="w-full md:w-[400px] h-[400px]">
@@ -161,7 +161,7 @@ const AnimalFamilySection = () => {
                   </h2>
                   <a
                     href="/coming-soon"
-                    className="px-8 py-4 text-sm font-semibold text-white rounded-full bg-black border md:text-base md:px-6 lg:px-16"
+                    className="px-8 py-4 text-sm font-semibold text-white rounded-full bg-33 md:text-base md:px-6 lg:px-16"
                   >
                     Buy Now
                   </a>

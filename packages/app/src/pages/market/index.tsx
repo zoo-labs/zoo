@@ -17,7 +17,7 @@ import { useModal } from "react-morphing-modal";
 import { useRouter } from "next/router";
 import Wallet from "./wallet";
 import { useTokenTypes } from "zoo/state";
-import { useFetchMyNFTs, useGetAvailableEggs } from "state/zoo/hooks";
+import { useGetAvailableEggs } from "state/zoo/hooks";
 import { useActiveWeb3React, useDrop, useZooKeeper } from "../../hooks";
 import { useMoralis } from "react-moralis";
 import { abbreviateNumber } from "functions/abbreviateNumbers";
@@ -217,7 +217,11 @@ const MarketPlacePage = () => {
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
       <div className="flex flex-col items-center h-[20vh]">
         <h1 className="mb-4 text-5xl">
-          The <span className="text-blue" style={{ fontWeight: 900 }}>ZOO</span> Market
+          The{" "}
+          <span className="text-blue" style={{ fontWeight: 900 }}>
+            ZOO
+          </span>{" "}
+          Market
         </h1>
         <p>Buy, list, and bid on NFT Eggs and Animals.</p>
       </div>
@@ -240,7 +244,7 @@ const MarketPlacePage = () => {
                 >
                   <div className="flex flex-col ">
                     <div className="relative overflow-hidden rounded parent">
-                      <div className="relative overflow-hidden rounded bg-nft-gradient p-[2px] parent w-full">
+                      <div className="relative overflow-hidden rounded border border-gray-500 p-[2px] parent w-full">
                         <div className="h-full w-[300px]">
                           <video
                             src={item.animation_url}
@@ -318,15 +322,15 @@ const MarketPlacePage = () => {
         </div>
       </div> */}
       {/* Tab Navbar */}
-      <div className="relative justify-center hidden mb-8 lg:flex">
+      {/* <div className="relative justify-center hidden mb-8 lg:flex">
         <div
           className="rounded-xl"
           style={{
-            background: "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)",
-            padding: 2,
+            background: "#333",
+            padding: 1,
           }}
         >
-          <div className="flex items-center justify-center w-full h-full bg-black rounded-xl">
+          <div className="flex items-center justify-center w-full h-full bg-[#111] rounded-xl">
             {["All Items", "Eggs", "Animals"].map((value, index) => {
               const active = category === index;
               return (
@@ -356,15 +360,13 @@ const MarketPlacePage = () => {
                       );
                     }
                   }}
-                  className={`text-white text-sm font-bold py-1 px-4 cursor-pointer w-full h-full flex items-center justify-center ${
-                    index !== 2 && "border-r border-blue whitespace-nowrap"
+                  className={`text-white text-sm font-bold py-4 px-6 cursor-pointer w-full h-full flex items-center justify-center ${
+                    index !== 2 && "border-r border-33 whitespace-nowrap"
                   } ${
                     index === 0 ? "rounded-l-xl" : index === 2 && "rounded-r-xl"
                   }`}
                   style={{
-                    background: active
-                      ? "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)"
-                      : "transparent",
+                    background: active ? "black" : "transparent",
                   }}
                   key={index}
                 >
@@ -373,6 +375,368 @@ const MarketPlacePage = () => {
               );
             })}
           </div>
+        </div>
+      </div> */}
+
+      {/* Tab Navigation */}
+      <div className="relative justify-between hidden mb-8 lg:flex">
+        <div className="flex items-center justify-between w-full h-12 pl-4 pr-1 text-sm rounded-lg cursor-pointer">
+          <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-33 border-solid rounded-lg cursor-pointer text-grey-400 w-44">
+            {/* <ReactDropdown
+                menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
+                className="dropdown"
+                options={timeFIlterOption}
+                value={""}
+                placeholder={"Recently added"}
+                placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
+              /> */}
+            <Image
+              src={"/icons/download.svg"}
+              alt=""
+              className="absolute"
+              width={20}
+              height={20}
+            />
+          </div>
+        </div>
+        {/* <div className='flex items-center justify-between h-12 pl-4 pr-1 text-sm border border-gray-600 border-solid rounded-lg cursor-pointer w-44'>
+              Recently added
+              <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} />
+            </div> */}
+        <div
+          className="w-full rounded-xl"
+          style={{
+            background: "#333",
+            padding: 1,
+          }}
+        >
+          <div className="flex items-center justify-center w-full h-full bg-[#111] rounded-xl">
+            {["All Items", "Eggs", "Animals", "Hybrid"].map((value, index) => {
+              const active = category === index;
+              return (
+                <a
+                  onClick={() => {
+                    setCategory(index);
+                    setPage(1);
+                    if (index === 0) {
+                      setData(
+                        [...Object.values(allData)]
+                          .flat(1)
+                          .sort((a: any, b: any) => a.tokenID - b.tokenID)
+                          .slice(0, 8)
+                      );
+                    } else if (index === 3) {
+                      console.log("is hybrid filter");
+                    } else {
+                      setData([]);
+                      setFetching(true);
+                      wait(1500).then(() =>
+                        setData(
+                          [allData[index - 1]]
+                            .flat(1)
+                            .sort((a, b) => a.tokenID - b.tokenID)
+                            .slice(0, 8)
+                        )
+                      );
+                    }
+                  }}
+                  className={`text-white text-sm font-bold py-1 px-4 cursor-pointer w-full h-full flex items-center justify-center ${
+                    index !== 3 && "border-r border-33"
+                  } ${
+                    index === 0 ? "rounded-l-xl" : index === 3 && "rounded-r-xl"
+                  }`}
+                  style={{
+                    background: active ? "black" : "transparent",
+                  }}
+                  key={index}
+                >
+                  {value}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+        {/* <div
+            className="absolute flex justify-center transform left-2/4 -translate-x-2/4"
+            style={{ top: 10 }}
+          >
+            {['All Items', 'Eggs', 'Animals', 'Hybrid'].map((value, index) => {
+              const active = category === index;
+              return (
+                <a
+                  onClick={() => {
+                    setCategory(index);
+                    setPage(1);
+                    if (index === 0) {
+                      setData(
+                        [...Object.values(allData)]
+                          .flat(1)
+                          .sort((a: any, b: any) => a.tokenID - b.tokenID)
+                          .slice(0, 8)
+                      );
+                    } else if (index === 3) {
+                      console.log('is hybrid filter');
+                    } else {
+                      setData([]);
+                      setFetching(true);
+                      wait(1500).then(() =>
+                        setData(
+                          [allData[index - 1]]
+                            .flat(1)
+                            .sort((a, b) => a.tokenID - b.tokenID)
+                            .slice(0, 8)
+                        )
+                      );
+                    }
+                  }}
+                  className={`${
+                    active ? 'bg-white text-gray-900' : 'text-gray-600'
+                  } text-sm rounded-full font-bold py-1 px-4 cursor-pointer`}
+                  key={index}
+                >
+                  {value}
+                </a>
+              );
+            })}
+          </div> */}
+        <div className="hidden">show on tablet viewport</div>
+        <div className="flex items-end justify-end w-full">
+          <button
+            onClick={() => setFiltering(!filtering)}
+            className="relative flex items-center justify-center px-6 py-3 font-bold leading-3 text-center border border-33 rounded-xl text-grey-400"
+          >
+            Filter
+            <span className="flex items-center justify-center pl-2">
+              {!filtering ? (
+                <Filter color="#878787" />
+              ) : (
+                <CloseIcon color="#878787" />
+              )}
+            </span>
+          </button>
+        </div>
+      </div>
+      {/* Search + Filter */}
+
+      <div
+        className={`${
+          !filtering ? "hidden" : "block"
+        } border-t border-solid py-8`}
+        style={{ borderColor: "rgb(107, 114, 128)" }}
+      >
+        <div className="flex flex-wrap items-center justify-between ">
+          <div>
+            <p className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
+              PRICE
+            </p>
+            <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 w-44">
+              {/* <ReactDropdown
+                  menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
+                  className="dropdown"
+                  options={timeFIlterOption}
+                  value={""}
+                  placeholder="Highest Prices"
+                  placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
+                /> */}
+              <Image
+                src={"/icons/download.svg"}
+                alt=""
+                className="absolute top-0"
+                width={20}
+                height={20}
+              />
+            </div>
+          </div>
+          <div>
+            <p className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
+              YIELDS
+            </p>
+            <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 w-44">
+              {/* <ReactDropdown
+                  menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
+                  className="dropdown"
+                  options={timeFIlterOption}
+                  value={""}
+                  placeholder="Highest Yields"
+                  placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
+                /> */}
+              <Image
+                src={"/icons/download.svg"}
+                alt=""
+                className="absolute top-0"
+                width={20}
+                height={20}
+              />
+            </div>
+          </div>
+          <div>
+            <p className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
+              RARITY
+            </p>
+            <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 w-44">
+              {/* <ReactDropdown
+                  menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
+                  className="dropdown"
+                  options={timeFIlterOption}
+                  value={""}
+                  placeholder="Epic"
+                  placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
+                /> */}
+              <Image
+                src={"/icons/download.svg"}
+                alt=""
+                className="absolute top-0"
+                width={20}
+                height={20}
+              />
+            </div>
+          </div>
+
+          <div
+            className=""
+            style={{
+              flex: " 0 0 calc(25% - 32px)",
+              maxWidth: "calc(25% - 32px)",
+              margin: "32px 16px 0",
+            }}
+          >
+            <div>
+              <div className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
+                PRICE RANGE
+              </div>
+              <PrettoSlider
+                onChange={(value, number) => {
+                  setBreadCount(Number(number));
+                }}
+                value={breedCount}
+                valueLabelDisplay="auto"
+                aria-label="slider"
+                step={1}
+                defaultValue={10}
+                min={1}
+                max={100}
+              />
+              <div className="flex justify-between text-xs">
+                <div className="font-semibold">0.01 ETH</div>
+                <div className="font-semibold">10 ETH</div>
+              </div>
+            </div>
+          </div>
+          {/* <div
+              className=""
+              style={{
+                flex: ' 0 0 calc(25% - 32px)',
+                maxWidth: 'calc(25% - 32px)',
+                margin: '32px 16px 0'
+              }}
+            >
+              <div>
+                <div className="mb-4 text-xs font-bold text-gray-400 uppercase">
+                  Age
+                </div>
+                <div className="relative">
+                  <div className="flex items-center justify-between w-full h-12 pl-4 pr-1 text-sm font-semibold text-white border border-gray-600 border-solid rounded-lg cursor-pointer w-44">
+                    Highest Yields
+                    <RiArrowDownCircleLine fill='gray' style={{ fontSize: 25, color: 'red' }} />
+                    <input
+                      type={'number'}
+                      onChange={(e) => {
+                        setAge(parseInt(e.target.value));
+                      }}
+                      placeholder="Age"
+                      className="w-full h-12 text-white bg-transparent border-solid border-none"
+                    ></input>
+                  </div>
+                </div>
+              </div>
+            </div> */}
+          {/* <div
+              className=""
+              style={{
+                flex: ' 0 0 calc(25% - 32px)',
+                maxWidth: 'calc(25% - 32px)',
+                margin: '32px 16px 0'
+              }}
+            >
+              <div>
+                <div className="mb-4 text-xs font-bold text-gray-400 uppercase">
+                  Rarity
+                </div>
+                <div className="relative">
+                  <div className="flex items-center justify-between w-full h-12 pl-4 pr-1 text-sm font-semibold text-white border border-gray-600 border-solid rounded-lg cursor-pointer w-44">
+                    <ReactDropdown
+                      menuClassName="menu absolute top-full"
+                      className="dropdown"
+                      options={options}
+                      value={''}
+                      placeholder="Select an option"
+                    />
+                    <RiArrowDownCircleLine values={"dfghj"} fill='gray' style={{ fontSize: 25, color: 'red' }} />
+                  </div>
+                </div>
+              </div>
+            </div> */}
+
+          {/* <div
+              className=""
+              style={{
+                flex: ' 0 0 calc(25% - 32px)',
+                maxWidth: 'calc(25% - 32px)',
+                margin: '32px 16px 0'
+              }}
+            >
+              <div>
+                <div className="mb-2 text-xs font-bold text-gray-400 uppercase">
+                  Breed Range
+                </div>
+                <PrettoSlider
+                  onChange={(value, number) => {
+                    setBreedRange(number);
+                  }}
+                  value={breedRange}
+                  valueLabelDisplay="auto"
+                  aria-label="slider"
+                  step={1}
+                  defaultValue={2}
+                  min={0}
+                  max={9}
+                />
+                <div className="flex justify-between text-xs">
+                  <div className="font-semibold">0</div>
+                  <div className="font-semibold">9</div>
+                </div>
+              </div>
+            </div> */}
+          {/* <div
+              className=""
+              style={{
+                flex: ' 0 0 calc(25% - 32px)',
+                maxWidth: 'calc(25% - 32px)',
+                margin: '32px 16px 0'
+              }}
+            >
+              <div>
+                <div className="mb-2 text-xs font-bold text-gray-400 uppercase">
+                  Price Range
+                </div>
+                <PrettoSlider
+                  onChange={(value, number) => {
+                    setPriceRange(Number(number));
+                  }}
+                  value={priceRange}
+                  valueLabelDisplay="auto"
+                  aria-label="slider"
+                  step={0.01}
+                  defaultValue={2}
+                  min={0.01}
+                  max={10}
+                />
+                <div className="flex justify-between text-xs">
+                  <div className="font-semibold">0.01 ETH</div>
+                  <div className="font-semibold">10 ETH</div>
+                </div>
+              </div>
+            </div> */}
         </div>
       </div>
 

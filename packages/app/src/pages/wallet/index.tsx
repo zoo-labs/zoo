@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "state";
 import { fadeInOnScroll } from "animation";
 import {
@@ -21,7 +21,7 @@ import { Auction } from "types";
 
 export default function Wallet({ children }) {
   const [category, setCategory] = useState(0);
-  const { Moralis, initialize } = useMoralis();
+  const { Moralis, enableWeb3, isAuthenticated, authenticate } = useMoralis();
 
   const { account, library, chainId } = useActiveWeb3React();
   const buyZoo = useBuyZoo();
@@ -29,6 +29,7 @@ export default function Wallet({ children }) {
   const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
     (state) => state.zoo.zooBalance
   );
+  const dispatch = useDispatch();
   const fetchNFTs = useFetchMyNFTs();
   const getNftTransfers = useGetNftTransfers();
   const { myNfts, nftTransfers, allAuctions, myEggsCount, myAnimalsCount } =
@@ -37,34 +38,33 @@ export default function Wallet({ children }) {
 
   useEffect(() => {
     getAllAuctions();
-  }, [getAllAuctions]);
-  useEffect(() => {
-    fadeInOnScroll(comingSoonRef.current);
   }, []);
+  // useEffect(() => {
+  //   fadeInOnScroll(comingSoonRef.current);
+  // }, []);
 
-  const initMoralis = useCallback(async () => {
+  useEffect(() => {
+    initMoralis();
+  }, [chainId]);
+
+  const initMoralis = async () => {
     if (chainId) {
-      try {
-        // await Moralis.initPlugins();
-        // await Moralis.enableWeb3();
+      console.log("isAuthenticated", isAuthenticated, Moralis);
 
-        if (!Moralis.User.current()) await Moralis.authenticate();
-        fetchNFTs();
-        getNftTransfers();
+      try {
+        await enableWeb3();
+        await fetchNFTs();
+        await getNftTransfers();
+        if (!isAuthenticated) {
+          console.log("hitting here to authenticate user");
+          authenticate();
+        }
       } catch (error) {
-        console.log("error in init", error);
+        console.log("error in inist", error);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [Moralis, chainId, fetchNFTs, getNftTransfers, account]);
-
-  useEffect(() => {
-    console.log("initializingMoralis", { chainId, account });
-    initMoralis().then((res) => {
-      console.log("initializedMoralis");
-    });
-  }, [chainId, account, initMoralis]);
-  console.log("myNfts__", myNfts);
+  };
+  console.log("allAuctions", allAuctions);
   return (
     <section className="Hero">
       <div className="px-6 pb-16 mt- Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
