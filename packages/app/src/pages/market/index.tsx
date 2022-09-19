@@ -217,7 +217,11 @@ const MarketPlacePage = () => {
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
       <div className="flex flex-col items-center h-[20vh]">
         <h1 className="mb-4 text-5xl">
-          The <span className="text-blue" style={{ fontWeight: 900 }}>ZOO</span> Market
+          The{" "}
+          <span className="text-blue" style={{ fontWeight: 900 }}>
+            ZOO
+          </span>{" "}
+          Market
         </h1>
         <p>Buy, list, and bid on NFT Eggs and Animals.</p>
       </div>
@@ -322,11 +326,11 @@ const MarketPlacePage = () => {
         <div
           className="rounded-xl"
           style={{
-            background: "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)",
-            padding: 2,
+            background: "#333",
+            padding: 1,
           }}
         >
-          <div className="flex items-center justify-center w-full h-full bg-black rounded-xl">
+          <div className="flex items-center justify-center w-full h-full bg-[#111] rounded-xl">
             {["All Items", "Eggs", "Animals"].map((value, index) => {
               const active = category === index;
               return (
@@ -356,15 +360,13 @@ const MarketPlacePage = () => {
                       );
                     }
                   }}
-                  className={`text-white text-sm font-bold py-1 px-4 cursor-pointer w-full h-full flex items-center justify-center ${
-                    index !== 2 && "border-r border-blue whitespace-nowrap"
+                  className={`text-white text-sm font-bold py-4 px-6 cursor-pointer w-full h-full flex items-center justify-center ${
+                    index !== 2 && "border-r border-33 whitespace-nowrap"
                   } ${
                     index === 0 ? "rounded-l-xl" : index === 2 && "rounded-r-xl"
                   }`}
                   style={{
-                    background: active
-                      ? "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)"
-                      : "transparent",
+                    background: active ? "black" : "transparent",
                   }}
                   key={index}
                 >
