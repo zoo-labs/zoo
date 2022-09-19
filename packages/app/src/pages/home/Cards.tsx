@@ -1,14 +1,21 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const segments = ["Play", "Feed", "Grow", "Breed"];
 
 const CardsSection = () => {
   const [active, setActive] = useState({ id: null });
+
   return (
-    <div className="max-w-7xl mx-auto pt-32 pb-20 px-6">
-      <div className="w-full overflow-x-auto whitespace-nowrap">
-        <div className=" flex flex-col md:flex-row gap-8 items-center flex-wrap-">
+    <div
+      className={`${
+        active.id === null
+          ? "px-6 pt-32 pb-20"
+          : "lg:px-6 lg:pt-32 lg:pb-20 overflow-hidden"
+      } lg:mx-24`}
+    >
+      <div className="w-full overflow-x-auto overflow-y-hidden whitespace-nowrap">
+        <div className="flex flex-col items-center justify-center gap-8 md:flex-row flex-wrap-">
           {segments.map((segment, i) => (
             <Card
               key={segment}
@@ -31,13 +38,22 @@ const Card = ({ id, segment, active, setActive }) => {
   const handleClose = () => setActive({ id: null });
   return (
     <div
-      className={`relative rounded-xl border border-muted-50 bg-16 w-full md:w-auto min-w-[300px] transition-all duration-1000 ease-in ${
+      className={`  bg-16 w-full md:w-auto min-w-[300px] transition-all duration-500 ease-in min-h-[280px] ${
         active.id === id
-          ? "min-h-[500px] md:min-w-[600px] py-6"
-          : "min-h-[280px]"
-      } flex flex-col items-center justify-center`}
+          ? "lg:rounded-xl lg:border lg:border-muted-50  h-screen lg:h-full z-90 fixed lg:relative"
+          : "rounded-xl border border-muted-50 relative py-6"
+      } flex flex-col items-center justify-center `}
+      style={{
+        transform: active.id === id && "rotateY(180deg)",
+        zIndex: active.id === id && 1000000,
+      }}
     >
-      <p className="text-[42px] leading-[63px] font-semibold">{segment}</p>
+      <p
+        style={{ transform: active.id === id && "rotateY(180deg)" }}
+        className="text-[42px] leading-[63px] font-semibold"
+      >
+        {segment}
+      </p>
       {active.id !== id ? (
         <div
           className={`absolute right-8 bottom-6 rounded-full h-11 w-11 flex items-center justify-center border-2 bg-dark-white border-dashed border-white-20 cursor-pointer`}
@@ -47,6 +63,7 @@ const Card = ({ id, segment, active, setActive }) => {
         </div>
       ) : (
         <div
+          style={{ transform: active.id === id && "rotateY(180deg)" }}
           className={`absolute right-8 top-10 rounded-full flex items-center justify-center cursor-pointer`}
           onClick={handleClose}
         >
@@ -55,9 +72,10 @@ const Card = ({ id, segment, active, setActive }) => {
       )}
       {active.id === id && (
         <div
+          style={{ transform: active.id === id && "rotateY(180deg)" }}
           className={`${
             active.id === id ? "block" : "hidden"
-          } text-center mt-11 text-sm md:text-xl font-normal whitespace-normal px-4 md:px-6 transition-all duration-1000 delay-1000`}
+          } text-center mt-11 text-sm md:text-xl font-normal whitespace-normal px-4 md:px-6`}
         >
           <p className="mb-6">
             Go through entire Zoo Labs Gaming Structure + Zoo White Paper and
