@@ -85,8 +85,9 @@ const SingleDrop = ({}: AppProps & {
             </div>
             <p className="mb-5">COLLECTION</p>
             <div className="flex flex-wrap">
-              {drop?.items?.map((datum) => (
+              {drop?.items?.map((datum, index) => (
                 <div
+                  key={index}
                   className="w-full p-2 cursor-pointer md:w-1/2"
                   onClick={() => setActiveDrop(datum)}
                 >
