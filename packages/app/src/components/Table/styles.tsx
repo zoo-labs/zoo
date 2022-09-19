@@ -10,16 +10,16 @@ export const Table = styled.table`
 
   td,
   th {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid #333;
     padding: 16px;
     padding-left: 48px;
   }
 
   th {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     text-align: left;
-    background-color: #0f0f0f;
+    background-color: #333333;
     color: white;
   }
 `;
