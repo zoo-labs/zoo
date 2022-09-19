@@ -50,6 +50,12 @@
   src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Light\ PERSONAL\ USE.otf");
 }
 
+@layer components {
+  .player__button {
+    @apply absolute inset-x-[50%] inset-y-[45%] z-999;
+  }
+}
+
 .font-made-outer-sans {
   font-family: "Made Outer Sans";
 }
@@ -85,7 +91,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--primary);
+  background-color: #111;
   color: var(--text-primary);
 }
 

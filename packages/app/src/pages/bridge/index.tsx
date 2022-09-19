@@ -567,7 +567,7 @@ const Swap: React.FC<SwapProps> = ({}) => {
             content="Lux Zero Knowledge Privacy Bridge"
           />
         </Head>
-        <div className="p-px bg-nft-gradient rounded-3xl mb-7">
+        <div className="p-px border border-gray-500 rounded-3xl mb-7">
           <div className="py-6 space-y-4 bg-black rounded-3xl z-1">
             {/* Add slippage */}
             <div className="px-5">

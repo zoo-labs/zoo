@@ -54,9 +54,9 @@ const Breed = ({}: AppProps & {
     setPairables(pairables_);
   }, [id, myNfts]);
 
-  useEffect(() => {
-    fetchNFTs();
-  }, [fetchNFTs]);
+  // useEffect(() => {
+  //   fetchNFTs();
+  // }, [fetchNFTs]);
 
   const breed = useCallback(() => {
     if (account) {
@@ -96,16 +96,16 @@ const Breed = ({}: AppProps & {
   return (
     <div className="mt-28">
       <div className="max-w-[777px] w-full mx-auto text-center flex flex-col items-center">
-        <p className="font-bold text-4xl mt-10">Breed Animals</p>
-        <p className="font-light text-base mt-2 text-butter-white mb-9">
+        <p className="mt-10 text-4xl font-bold">Breed Animals</p>
+        <p className="mt-2 text-base font-light text-butter-white mb-9">
           Zoo Labs’ ADULT NFT Animals can each be bred up to 6 times. Any two
           NFT Animals can be bred together and will produce a random egg
           according to rarity tier percentages. The fee for breeding is
           determined by the rarity tier of the rarest animal in the breeding
           pair.
         </p>
-        <div className="flex space-x-14 w-full justify-between items-center mb-11">
-          <div className="bg-nft-gradient p-px rounded-xl flex-1">
+        <div className="flex items-center justify-between w-full space-x-14 mb-11">
+          <div className="flex-1 p-px border border-gray-500 rounded-xl">
             <div className="bg-black rounded-xl w-full h-[350px]">
               <ModelViewer
                 glb={nft?.glb_animation_url}
@@ -117,7 +117,7 @@ const Breed = ({}: AppProps & {
           <img src="/icons/arrange-circle.svg" alt="" width={62} height={62} />
           {pair ? (
             <div
-              className="bg-nft-gradient p-px rounded-xl flex-1"
+              className="flex-1 p-px border border-gray-500 rounded-xl"
               onClick={() => setPair(null)}
             >
               <div className="bg-black rounded-xl w-full h-[350px]">
@@ -129,7 +129,7 @@ const Breed = ({}: AppProps & {
               </div>
             </div>
           ) : (
-            <div className="border border-dashed p-px rounded-xl flex-1">
+            <div className="flex-1 p-px border border-dashed rounded-xl">
               <div className="bg-black rounded-xl w-full h-full min-h-[350px]" />
             </div>
           )}
@@ -141,8 +141,8 @@ const Breed = ({}: AppProps & {
         >
           {!loading ? "Breed" : "Breeding..."}
         </button>
-        <p className="font-bold text-4xl my-10">Select Animal to Pair</p>
-        {/* <p className="font-light text-base mt-2 text-butter-white mb-9">
+        <p className="my-10 text-4xl font-bold">Select Animal to Pair</p>
+        {/* <p className="mt-2 text-base font-light text-butter-white mb-9">
           Zoo Labs’ ADULT NFT Animals can each be bred up to 6 times. Any two
           NFT Animals can be bred together and will produce a random egg
           according to rarity tier percentages. The fee for breeding is
@@ -155,7 +155,7 @@ const Breed = ({}: AppProps & {
               if (nft.id === pair?.id) return false;
               return (
                 <div key={nft.id} onClick={() => setPair(nft)}>
-                  <div className="bg-nft-gradient p-px rounded-xl flex-1">
+                  <div className="flex-1 p-px border border-gray-500 rounded-xl">
                     <div className="bg-black rounded-xl w-[234px]  h-[270px]">
                       <ModelViewer
                         glb={nft.glb_animation_url}
@@ -171,7 +171,7 @@ const Breed = ({}: AppProps & {
               );
             })
           ) : (
-            <p className="font-semibold text-lg">
+            <p className="text-lg font-semibold">
               You don&apos;t have any other animal to breed with :(
             </p>
           )}
