@@ -255,7 +255,7 @@ const InfoPage = () => {
             )}
           </div>
           <div className="flex items-center mb-4">
-            <div className="w-6 h-6 rounded-full bg-nft-gradient" />
+            <div className="w-6 h-6 rounded-full border border-gray-500" />
             <p className="ml-2 text-xl font-bold">Creator: </p>
             <a
               href={`https://testnet.bscscan.com/address/${creator}`}
@@ -267,7 +267,7 @@ const InfoPage = () => {
             </a>
           </div>
           <div className="flex items-center mb-4">
-            <div className="w-6 h-6 rounded-full bg-nft-gradient" />
+            <div className="w-6 h-6 rounded-full border border-gray-500" />
             <p className="ml-2 text-xl font-bold">Current owner: </p>
             <a
               href={`https://testnet.bscscan.com/address/${nft?.tokenOwner}`}

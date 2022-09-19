@@ -200,7 +200,7 @@ const Item = () => {
                   </div>
                   <button
                     className="rounded-full bg-c-grey-200 inline-flex items-center justify-between w-[85px] p-1 pr-2 cursor-pointer"
-                    // onClick={() => setWithZoo(!withZoo)}
+                    onClick={() => setWithZoo(!withZoo)}
                   >
                     <div className="inline-flex items-center">
                       {withZoo ? (
@@ -227,11 +227,11 @@ const Item = () => {
                         </>
                       )}
                     </div>
-                    {/* <img
+                    <img
                       src="/icons/caret-right.png"
                       alt=""
                       className="rounded-full"
-                    /> */}
+                    />
                   </button>
                 </div>
                 <p className="text-xs text-right text-c-grey-100">

@@ -23,7 +23,7 @@ const NftCard = ({
 }: NftCardProps) => {
   return (
     <div className="flex flex-col flex-1 grow">
-      <div className="p-0.5 rounded-lg h-full w-full overflow-hidden mb-6 lg:mb-0 PopularNft_nft bg-nft-gradient">
+      <div className="p-0.5 rounded-lg h-full w-full overflow-hidden mb-6 lg:mb-0 PopularNft_nft border border-gray-500">
         <div className="overflow-hidden bg-black rounded-lg">
           <div className="flex flex-col justify-end object-contain my-8 overflow-hidden text-center PopularNfts__nft-img min-h-nftContainer">
             <>{image && image}</>
@@ -39,7 +39,7 @@ const NftCard = ({
         </div>
         <div className="flex items-center justify-between mb-6">
           <p className="flex items-center text-base text-steel">
-            <span className="w-5 h-5 mr-2 rounded-full bg-nft-gradient" />
+            <span className="w-5 h-5 mr-2 rounded-full border border-gray-500" />
             {address}
           </p>
           <p>{days} Days Left</p>

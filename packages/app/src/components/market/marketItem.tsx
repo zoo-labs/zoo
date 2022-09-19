@@ -45,7 +45,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
         })
       }
     >
-      <div className="relative overflow-hidden rounded p-[2px] bg-nft-gradient parent">
+      <div className="relative overflow-hidden rounded p-[2px] border border-gray-500 parent">
         <div className="h-[450px] w-full">
           {datum.kind === 0 || datum.kind === 2 ? (
             <video

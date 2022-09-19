@@ -19,7 +19,7 @@ const TransactionDetail = ({ evmToAddress, amount, token, bridgeState }) => {
   };
 
   return (
-    <div className={`${show && "bg-nft-gradient"} p-px rounded-3xl`}>
+    <div className={`${show && "border border-gray-500"} p-px rounded-3xl`}>
       <div className={`w-full rounded-3xl bg-black text-white`}>
         <div
           className={`flex items-center justify-center cursor-pointer ${
