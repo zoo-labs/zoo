@@ -434,7 +434,7 @@ export function useGetAvailableEggs(): () => void {
           dispatch(addEgg(finalEgg));
         });
       };
-
+      console.log("all eggs", eggs);
       const eggsPromise = eggs.map((egg) => {
         return structureEgg(egg);
       });
