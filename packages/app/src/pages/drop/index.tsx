@@ -17,6 +17,7 @@ import dynamic from "next/dynamic";
 import usePlayer from "hooks/usePlayer";
 import { PlayCircleFilled } from "@mui/icons-material";
 import { PauseCircleFilled } from "@mui/icons-material";
+import { useZooKeeper } from "hooks";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -85,11 +86,13 @@ const Drop = ({}: AppProps & {
   const { drops } = useSelector((state: any) => state.drop);
   const getAvailableEggs = useGetAvailableEggs();
   const getDrops = useGetDrops();
-
+  const zookeeper = useZooKeeper();
   useEffect(() => {
-    getAvailableEggs();
-    getDrops();
-  }, []);
+    if (zookeeper) {
+      getAvailableEggs();
+      getDrops();
+    }
+  }, [zookeeper]);
 
   return (
     <DropLayout isMarginTop={false}>
@@ -181,7 +184,7 @@ const Drop = ({}: AppProps & {
                 </button>
               </Link>
             </div>
-            <div className="flex-1 relative">
+            <div className="relative flex-1">
               {playing ? (
                 <button
                   className="player__button"
@@ -256,10 +259,8 @@ const Drop = ({}: AppProps & {
                       className="object-cover w-full max-h-full overflow-hidden rounded"
                     /> */}
                     {drop?.items[0].kind === 0 || drop?.items[0].kind === 2 ? (
-                      <video
-                        src={drop?.items[0].animation_url}
-                        autoPlay
-                        loop
+                      <img
+                        src={drop?.image}
                         className="object-cover w-full max-h-full overflow-hidden rounded"
                       />
                     ) : (

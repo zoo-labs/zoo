@@ -4,11 +4,12 @@ import BigNumber from "bignumber.js";
 export interface Drop {
   title: string;
   description: string;
-  items: Egg[] | Animal[];
+  items: AvailableEgg[] | Animal[];
   supply: number
   minted: number;
   dropSupply: number,
-  dropId: number
+  dropId: number,
+  image: string
 }
 export interface Animal {
   owner?: string;
