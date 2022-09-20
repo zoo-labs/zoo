@@ -21,7 +21,7 @@ contract ZooKeeper is Ownable, IZoo, IKeeper {
   using SafeMath for uint256;
   using Counters for Counters.Counter;
 
-  Counters.Counter private dropIDs;
+  Counters.Counter public dropIDs;
   Counters.Counter private whitelistedCount;
 
   struct Feeding{
