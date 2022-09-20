@@ -114,23 +114,15 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
 
         uint256 auctionID = _auctionIDTracker.current();
 
-        auctions[auctionID] = Auction({
-            auctionId: auctionID,
-            tokenID: tokenID,
-            approved: false,
-            amount: 0,
-            duration: duration,
-            firstBidTime: 0,
-            reservePrice: reservePrice,
-            curatorFeePercentage: curatorFeePercentage,
-            addresses: AuctionAddresses({
-            tokenOwner: tokenOwner,
-            auctionCurrency: auctionCurrency,
-            curator: curator,
-            tokenContract: tokenContract,
-            bidder: payable(address(0))
-            })
-        });
+        auctions[auctionID].auctionId = auctionID;
+        auctions[auctionID].tokenID = tokenID;
+        auctions[auctionID].approved = false;
+        auctions[auctionID].amount = 0;
+        auctions[auctionID].duration = duration;
+        auctions[auctionID].firstBidTime = 0;
+        auctions[auctionID].reservePrice = reservePrice;
+        auctions[auctionID].curatorFeePercentage = curatorFeePercentage;
+        auctions[auctionID].addresses = AuctionAddresses({tokenOwner: tokenOwner,auctionCurrency: auctionCurrency,curator: curator,tokenContract: tokenContract,bidder: payable(address(0))});
 
         IERC721(tokenContract).transferFrom(tokenOwner, address(this), tokenID);
 
@@ -294,6 +286,15 @@ contract Auction is IAuctionHouse, ReentrancyGuard, Ownable {
             );
             extended = true;
         }
+
+        auctions[auctionID].auctionHistory.push(AuctionHistory(
+            {
+                amount: amount,
+                bidder: msg.sender,
+                blockNumber: uint40(block.number),
+                time: uint40(block.timestamp)
+            }
+        ));
 
         emit AuctionBid(
             auctionID,
