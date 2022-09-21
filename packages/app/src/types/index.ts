@@ -4,11 +4,12 @@ import BigNumber from "bignumber.js";
 export interface Drop {
   title: string;
   description: string;
-  items: Egg[] | Animal[];
+  items: AvailableEgg[] | Animal[];
   supply: number
   minted: number;
   dropSupply: number,
-  dropId: number
+  dropId: number,
+  image: string
 }
 export interface Animal {
   owner?: string;
@@ -78,8 +79,16 @@ export interface EggAttribute {
   trait_type: string;
   value: string;
 }
+export interface AuctionHistory {
+  value: number
+  from_address: string
+  blockNumber: number
+  block_timestamp: number
+  transaction_hash: string
 
+}
 export interface Auction {
+  auctionHistory: Array<AuctionHistory>
   description: string;
   index: number;
   tokenID: number;
