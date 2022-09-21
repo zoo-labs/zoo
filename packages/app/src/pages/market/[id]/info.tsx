@@ -379,7 +379,7 @@ const InfoPage = () => {
                 console.log("transaction", transaction);
                 return (
                   <TransactionRow
-                    index={index}
+                    key={index}
                     from_address={transaction.from_address}
                     to_address={transaction.to_address}
                     value={transaction.value}
