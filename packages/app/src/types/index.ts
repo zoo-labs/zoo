@@ -79,8 +79,16 @@ export interface EggAttribute {
   trait_type: string;
   value: string;
 }
+export interface AuctionHistory {
+  value: number
+  from_address: string
+  blockNumber: number
+  block_timestamp: number
+  transaction_hash: string
 
+}
 export interface Auction {
+  auctionHistory: Array<AuctionHistory>
   description: string;
   index: number;
   tokenID: number;
