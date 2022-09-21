@@ -32,40 +32,46 @@ export function useGetDrops() {
         const totalSupply = await dropC?.totalSupply();
         const eggs: Array<any> = await dropC?.getAllEggs();
         const { image, description } = await dropC.dropInformation(dropTitle);
-        const eggsPromise = await eggs.map(async (egg) => {
-          const data = await getData(
-            egg.data.metadataURI.substring(0, 7) === "ipfs://"
-              ? ` https://ipfs.io/ipfs/${egg.data.metadataURI.substring(7)}`
-              : egg.data.metadataURI
-          );
+        const eggsPromise = await eggs
+          .filter((eggData) => eggData.exist)
+          .map(async (egg) => {
+            const data = await getData(
+              egg.data.metadataURI.substring(0, 7) === "ipfs://"
+                ? ` https://ipfs.io/ipfs/${egg.data.metadataURI.substring(7)}`
+                : egg.data.metadataURI
+            );
 
-          const { name, description, attributes, image, animation_url } = data;
-          const finalEgg: AvailableEgg = {
-            bidShares: {
-              creator: Number(egg?.bidShares?.creator),
-              owner: Number(egg?.bidShares?.owner),
-              prevOwner: Number(egg?.bidShares?.prevOwner),
-            },
-            birthday: Number(egg.birthday),
-            exist: true,
-            id: Number(egg.id),
-            kind: egg.kind,
-            minted: Number(egg.minted),
-            name: egg.name,
-            description,
-            price: Number(egg.price) / Math.pow(10, 18),
-            supply: Number(egg.supply),
-            timestamp: Number(egg.timestamp),
-            image: `https://zoolabs.mypinata.cloud/ipfs/${image?.slice(7)}`,
-            animation_url: `https://zoolabs.mypinata.cloud/ipfs/${animation_url?.slice(
-              7
-            )}`,
-            attributes,
-          };
-          return finalEgg;
-        });
+            const { name, description, attributes, image, animation_url } =
+              data;
+            console.log("egggggg", egg);
+            const finalEgg: AvailableEgg = {
+              bidShares: {
+                creator: Number(egg?.bidShares?.creator),
+                owner: Number(egg?.bidShares?.owner),
+                prevOwner: Number(egg?.bidShares?.prevOwner),
+              },
+              birthday: Number(egg.birthday),
+              exist: egg?.exist,
+              id: Number(egg.id),
+              kind: egg.kind,
+              minted: Number(egg.minted),
+              name: egg.name,
+              description,
+              price: Number(egg.price) / Math.pow(10, 18),
+              supply: Number(egg.supply),
+              timestamp: Number(egg.timestamp),
+              image: `https://zoolabs.mypinata.cloud/ipfs/${image?.slice(7)}`,
+              animation_url: `https://zoolabs.mypinata.cloud/ipfs/${animation_url?.slice(
+                7
+              )}`,
+              attributes,
+            };
+            return finalEgg;
+          });
         const dropPromise = await Promise.all(eggsPromise)
           .then((eggs) => {
+            console.log("eggsPromise", eggs);
+
             const newDrop: Drop = {
               title: dropTitle,
               description,
@@ -73,7 +79,7 @@ export function useGetDrops() {
               items: eggs,
               supply: eggs.reduce((a, b) => a + b.supply, 0),
               minted: eggs.reduce((a, b) => a + b.minted, 0),
-              dropSupply: Number(totalSupply),
+              dropSupply: eggs.length,
               dropId: 1,
             };
             return newDrop;
@@ -84,6 +90,7 @@ export function useGetDrops() {
     );
     await Promise.all(drops)
       .then((drop: Drop[]) => {
+        console.log("dropsssss", drop);
         dispatch(addDrops(drop));
       })
       .catch((err) => console.error("mi_egg_promiseerror", err));
