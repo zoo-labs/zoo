@@ -61,6 +61,18 @@ export const getEmoji = (rarity) => {
       return ''
   }
 }
+export const getAge = (stage) => {
+  switch (stage) {
+    case 0:
+      return 'BABY'
+    case 1:
+      return 'TEENAGE'
+    case 2:
+      return 'ADULT'
+    default:
+      return ''
+  }
+}
 
 // export const formatError = (err) => {
 //   console.log(err)

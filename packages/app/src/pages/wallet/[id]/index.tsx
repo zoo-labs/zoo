@@ -245,7 +245,7 @@ const NftModal = ({}: AppProps & {
             )}
           </div>
           <div className="flex items-center mb-4">
-            <div className="w-6 h-6 rounded-full border border-gray-500" />
+            <div className="w-6 h-6 border border-gray-500 rounded-full" />
             <p className="ml-2 text-xl font-bold">Creator: </p>
             <a
               href={`https://testnet.bscscan.com/address/${creator}`}
@@ -257,7 +257,7 @@ const NftModal = ({}: AppProps & {
             </a>
           </div>
           <div className="flex items-center mb-4">
-            <div className="w-6 h-6 rounded-full border border-gray-500" />
+            <div className="w-6 h-6 border border-gray-500 rounded-full" />
             <p className="ml-2 text-xl font-bold">Current owner: </p>
             <a
               href={`https://testnet.bscscan.com/address/${account}`}
@@ -291,7 +291,7 @@ const NftModal = ({}: AppProps & {
               {nftItem?.stage === 2 && (
                 <Link href={`/wallet/${nftItem?.id}/breed`} passHref>
                   <button
-                    className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer border border-gray-500 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white border border-gray-500 rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
                     disabled={loading || feeding}
                   >
                     BREED

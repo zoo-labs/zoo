@@ -238,11 +238,7 @@ export function useFetchMyNFTs(): () => Promise<any> {
         const deet = await zooKeeper?.tokens(Number(id));
         console.log("d_deets", { deet });
 
-        const data = (
-          await axios.get(
-            `https://zoolabs.mypinata.cloud/ipfs/${deet.data.tokenURI.slice(7)}`
-          )
-        ).data;
+        const data = (await axios.get(deet.data.metadataURI)).data;
         console.log("dataa_IN__useFetchMyNFTs", data);
         const {
           name,
@@ -642,11 +638,7 @@ export function useGetAllAuctions(): () => Promise<void> {
         const tokenMetadataURI = await media?.tokenURI(Number(auction.tokenID));
         const deet = await zooKeeper?.tokens(Number(auction.tokenID));
 
-        const data = (
-          await axios.get(
-            `https://zoolabs.mypinata.cloud/ipfs/${deet.data.tokenURI.slice(7)}`
-          )
-        ).data;
+        const data = (await axios.get(tokenMetadataURI)).data;
         const {
           name,
           attributes,
