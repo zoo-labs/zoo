@@ -71,11 +71,18 @@ const SingleDrop = ({}: AppProps & {
                 </p>
               </div>
               <div className="pl-12">
-                <p className="text-2xl font-bold">
-                  {Math.min(...drop.items.map((item) => item.price.toFixed(2)))}{" "}
-                  -{" "}
-                  {Math.max(...drop.items.map((item) => item.price.toFixed(2)))}
-                </p>
+                {drop && (
+                  <p className="text-2xl font-bold">
+                    {Math.min(
+                      ...drop?.items.map((item) => item.price.toFixed(2))
+                    )}{" "}
+                    -{" "}
+                    {Math.max(
+                      ...drop?.items.map((item) => item.price.toFixed(2))
+                    )}
+                  </p>
+                )}
+
                 <p className="mt-0.5 text-[#BCBABA] text-xs font-light">
                   Floor price
                 </p>
