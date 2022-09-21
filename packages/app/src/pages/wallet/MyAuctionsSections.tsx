@@ -30,7 +30,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
   const [openMoal, setOpenModal] = React.useState(false);
   const [reservePrice, setReservePrice] = useState<number | undefined>();
   const comingSoonRef = React.useRef();
-  const { account } = useActiveWeb3React();
+  const { account, library } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
   const getAllAuctions = useGetAllAuctions();
   const zooKeeper = useZooKeeper();
@@ -45,10 +45,12 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
   }, [zooKeeper]);
 
   useEffect(() => {
-    getZooBalance();
-    getZooBnbPrice();
-    getAllAuctions();
-  }, [getZooBalance, getZooBnbPrice, getAllAuctions]);
+    if (library) {
+      getZooBalance();
+      getZooBnbPrice();
+      getAllAuctions();
+    }
+  }, [library]);
 
   const amountPriceBNB = zooBnbPrice * Number(auction?.amount);
   const reservePriceBNB = zooBnbPrice * Number(auction?.reservePrice);
@@ -127,7 +129,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
     <>
       <section className="flex flex-col gap-24 my-16 lg:flex-row lg:justify-between lg:px-48">
         <div className="border border-gray-500 p-0.5 flex flex-col basis-1/2 justify-center rounded-xl">
-          <div className="flex flex-col justify-center items-center h-full bg-black rounded-xl">
+          <div className="flex flex-col items-center justify-center h-full bg-black rounded-xl">
             {auction.kind === 0 || auction.kind === 2 ? (
               <video
                 autoPlay
@@ -137,7 +139,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
                 height={350}
               />
             ) : (
-              <div className="h-full w-full">
+              <div className="w-full h-full">
                 <ModelViewer
                   glb={auction?.glb_animation_url}
                   usdz={auction?.usdz_animation_url}
@@ -147,7 +149,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
             )}
           </div>
         </div>
-        <div className="flex flex-col basis-1/2 w-full">
+        <div className="flex flex-col w-full basis-1/2">
           <h2 className="mb-4 text-4xl lg:text-4xl">{auction?.name}</h2>
           {/* Address and Price */}
           <div className="flex justify-between mb-4">
@@ -287,7 +289,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
               </div> */}
 
               <button
-                className="w-full px-4 py-2 mt-8 font-bold text-center text-white rounded bg-blue disabled:cursor-not-allowed cursor-pointer"
+                className="w-full px-4 py-2 mt-8 font-bold text-center text-white rounded cursor-pointer bg-blue disabled:cursor-not-allowed"
                 disabled={auction.reservePrice === reservePrice}
               >
                 Save Changes

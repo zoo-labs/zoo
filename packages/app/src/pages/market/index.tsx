@@ -208,7 +208,7 @@ const MarketPlacePage = () => {
   useEffect(() => {
     getAllAuctions();
     getAvailableEggs();
-  }, [getAllAuctions, getAvailableEggs]);
+  }, []);
 
   console.log("MY availableEggs", availableEggs);
   console.log("MY_Auctionss", allAuctions);
@@ -381,7 +381,7 @@ const MarketPlacePage = () => {
       {/* Tab Navigation */}
       <div className="relative justify-between hidden mb-8 lg:flex">
         <div className="flex items-center justify-between w-full h-12 pl-4 pr-1 text-sm rounded-lg cursor-pointer">
-          <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-33 border-solid rounded-lg cursor-pointer text-grey-400 w-44">
+          <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-solid rounded-lg cursor-pointer border-33 text-grey-400 w-44">
             {/* <ReactDropdown
                 menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
                 className="dropdown"

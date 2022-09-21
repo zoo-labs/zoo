@@ -28,7 +28,7 @@ const Item = () => {
   const getZooBalance = useZoobalance();
   const getAllAuctions = useGetAllAuctions();
   const [zooBnbPrice, setZooBnbPrice] = useState(0);
-
+  const { library } = useActiveWeb3React();
   const getZooBnbPrice = useCallback(async () => {
     const price = await zooKeeper.BNBPrice();
     const value = Web3.utils.fromWei(price.toString(), "ether");
@@ -39,7 +39,7 @@ const Item = () => {
     getAllAuctions();
     getZooBalance();
     getZooBnbPrice();
-  }, [getAllAuctions, getZooBalance, getZooBnbPrice]);
+  }, [library]);
 
   useEffect(() => {
     const _auction = allAuctions.find(
