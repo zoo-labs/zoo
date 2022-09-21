@@ -4,7 +4,6 @@ import moment from "moment";
 import React from "react";
 
 interface TransactionRowProps {
-  index: number;
   from_address: string;
   to_address: string;
   value: number;
@@ -13,7 +12,6 @@ interface TransactionRowProps {
 }
 
 const TransactionRow: React.FC<TransactionRowProps> = ({
-  index,
   from_address,
   to_address,
   value,
@@ -21,7 +19,7 @@ const TransactionRow: React.FC<TransactionRowProps> = ({
   transaction_hash,
 }) => {
   return (
-    <tr key={index}>
+    <tr>
       <td>
         <a
           target={`_blank`}
