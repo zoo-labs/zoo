@@ -72,7 +72,9 @@ const SingleDrop = ({}: AppProps & {
               </div>
               <div className="pl-12">
                 <p className="text-2xl font-bold">
-                  {/* {activeDrop?.price} use the price of items*/}
+                  {Math.min(...drop.items.map((item) => item.price.toFixed(2)))}{" "}
+                  -{" "}
+                  {Math.max(...drop.items.map((item) => item.price.toFixed(2)))}
                 </p>
                 <p className="mt-0.5 text-[#BCBABA] text-xs font-light">
                   Floor price
@@ -87,7 +89,6 @@ const SingleDrop = ({}: AppProps & {
                   onMouseEnter={() => setActiveDrop(datum.id)}
                   onMouseLeave={() => setActiveDrop(0)}
                   className="w-full p-2 cursor-pointer md:w-1/2"
-                  // onClick={() => setActiveDrop(datum)}
                 >
                   <div className="relative overflow-hidden rounded p-[2px] parent">
                     <div className="h-[450px] w-full">
