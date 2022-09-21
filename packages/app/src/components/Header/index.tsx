@@ -60,8 +60,10 @@ function AppBar(props: {
 
   return (
     <header
-      className={`absolute flex-shrink-0 w-full ${
-        !props.isModal && !props.transparent ? "bg-black" : "bg-transparent"
+      className={`absoulte flex-shrink-0 w-full ${
+        !props.isModal && !props.transparent
+          ? " bg-black"
+          : "fixed bg-transparent"
       } z-999`}
     >
       {/* {!props.isModal && <Banner />} */}

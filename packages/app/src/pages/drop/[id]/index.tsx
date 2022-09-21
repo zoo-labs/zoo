@@ -24,19 +24,15 @@ const SingleDrop = ({}: AppProps & {
     query: { id },
   } = useRouter();
   const [drop, setDrop] = useState<Drop>();
-  const [activeDrop, setActiveDrop] = useState<any>({});
+  const [activeDrop, setActiveDrop] = useState(0);
   const { drops } = useSelector((state: any) => state.drop);
 
   useEffect(() => {
     if (drops.length > 0) {
       const newDrop = drops.filter((drop) => drop.dropId === Number(id))[0];
-
       setDrop(newDrop);
-
-      setActiveDrop(newDrop.items[0]);
     }
   }, [drops]);
-  console.log("activeDrop", activeDrop);
 
   return (
     <DropLayout isMarginTop={false}>
@@ -88,8 +84,10 @@ const SingleDrop = ({}: AppProps & {
               {drop?.items?.map((datum, index) => (
                 <div
                   key={index}
+                  onMouseEnter={() => setActiveDrop(datum.id)}
+                  onMouseLeave={() => setActiveDrop(0)}
                   className="w-full p-2 cursor-pointer md:w-1/2"
-                  onClick={() => setActiveDrop(datum)}
+                  // onClick={() => setActiveDrop(datum)}
                 >
                   <div className="relative overflow-hidden rounded p-[2px] parent">
                     <div className="h-[450px] w-full">
@@ -111,6 +109,23 @@ const SingleDrop = ({}: AppProps & {
                         </div>
                       )}
                     </div>
+                    <div
+                      className={`${
+                        activeDrop === datum.id ? "visible" : "hidden"
+                      } absolute right-5 top-5`}
+                    >
+                      {Number(id) === 100 ? (
+                        <div className="flex items-center justify-center text-sm font-medium border-2 rounded-full h-36 w-36">
+                          COMING SOON
+                        </div>
+                      ) : (
+                        <Link href={`/market/egg/${datum.id}`} passHref>
+                          <div className="flex items-center justify-center w-20 h-20 text-sm font-medium border-2 rounded-full cursor-pointer">
+                            BUY
+                          </div>
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -126,39 +141,11 @@ const SingleDrop = ({}: AppProps & {
               backgroundPosition: "center",
             }}
           >
-            {/* <img src="" alt="" /> */}
-            {activeDrop?.kind === 0 || activeDrop?.kind === 2 ? (
-              <video
-                autoPlay
-                loop
-                src={activeDrop?.animation_url}
-                width={"100%"}
-                height={350}
-                className="rounded overflow-hidden max-h-[370px]  lg:max-h-[780px] object-cover"
-              />
-            ) : (
-              <div className="h-[370px] lg:h-[780px] w-full">
-                <ModelViewer
-                  glb={activeDrop?.glb_animation_url}
-                  usdz={activeDrop?.usdz_animation_url}
-                ></ModelViewer>
-              </div>
-            )}
-            <div className="relative">
-              <div className="absolute right-5 bottom-5">
-                {Number(id) === 100 ? (
-                  <div className="flex items-center justify-center text-sm font-medium border-2 rounded-full h-36 w-36">
-                    COMING SOON
-                  </div>
-                ) : (
-                  <Link href={`/market/egg/${activeDrop.id}`} passHref>
-                    <div className="flex items-center justify-center w-24 h-24 text-sm font-medium border-2 rounded-full cursor-pointer">
-                      BUY
-                    </div>
-                  </Link>
-                )}
-              </div>
-            </div>
+            <img
+              className="rounded overflow-hidden max-h-[370px]  lg:max-h-[780px] object-cover"
+              src={drop?.image}
+              alt=""
+            />
           </div>
         </div>
       </div>

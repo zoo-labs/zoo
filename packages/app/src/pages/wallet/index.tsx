@@ -122,7 +122,16 @@ export default function Wallet({ children }) {
             fetchNfts={() => fetchNFTs()}
           />
         ) : category === 1 ? (
-          <MyBidsSection />
+          allAuctions
+            .filter((auction: Auction) =>
+              auction.auctionHistory.some((history) => {
+                console.log("historyyyy", history);
+                return history.from_address === account;
+              })
+            ) // filter auctions that are mine
+            .map((auction: Auction, index: number) => (
+              <MyBidsSection key={index} auction={auction} />
+            ))
         ) : allAuctions.filter(
             (auction: Auction) => auction.tokenOwner === account
           )?.length > 0 ? (
