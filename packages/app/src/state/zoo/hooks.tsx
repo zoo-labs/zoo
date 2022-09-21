@@ -1,7 +1,7 @@
 import { useActiveWeb3React, useFaucet, useZooToken } from "hooks";
 import { useCallback } from "react";
 import { useAppDispatch } from "state/hooks";
-import { Auction, AvailableEgg, Egg } from "types";
+import { Auction, AuctionHistory, AvailableEgg, Egg } from "types";
 
 import { useMoralisWeb3Api } from "react-moralis";
 import {
@@ -238,11 +238,7 @@ export function useFetchMyNFTs(): () => Promise<any> {
         const deet = await zooKeeper?.tokens(Number(id));
         console.log("d_deets", { deet });
 
-        const data = (
-          await axios.get(
-            `https://zoolabs.mypinata.cloud/ipfs/${deet.data.tokenURI.slice(7)}`
-          )
-        ).data;
+        const data = (await axios.get(deet.data.metadataURI)).data;
         console.log("dataa_IN__useFetchMyNFTs", data);
         const {
           name,
@@ -434,7 +430,7 @@ export function useGetAvailableEggs(): () => void {
           dispatch(addEgg(finalEgg));
         });
       };
-
+      console.log("all eggs", eggs);
       const eggsPromise = eggs.map((egg) => {
         return structureEgg(egg);
       });
@@ -630,6 +626,7 @@ export function useGetAllAuctions(): () => Promise<void> {
   const dispatch = useDispatch();
   const media = useMedia(true);
   const zooKeeper = useZooKeeper(true);
+  const { library } = useActiveWeb3React();
   return useCallback(async () => {
     console.log("auction ytfrtdtrsd", auctionContract);
     const na = +new Date();
@@ -642,11 +639,7 @@ export function useGetAllAuctions(): () => Promise<void> {
         const tokenMetadataURI = await media?.tokenURI(Number(auction.tokenID));
         const deet = await zooKeeper?.tokens(Number(auction.tokenID));
 
-        const data = (
-          await axios.get(
-            `https://zoolabs.mypinata.cloud/ipfs/${deet.data.tokenURI.slice(7)}`
-          )
-        ).data;
+        const data = (await axios.get(tokenMetadataURI)).data;
         const {
           name,
           attributes,
@@ -668,12 +661,30 @@ export function useGetAllAuctions(): () => Promise<void> {
           curatorFeePercentage,
           amount,
           kind,
+          auctionHistory,
         } = auction;
+        const auctionHistoryMap = await auctionHistory.map(async (history) => {
+          const hash = await library.getBlock(history.blockNumber);
+          console.log("historyHaash", hash);
+          return {
+            value: Number(history.amount),
+            from_address: history.bidder,
+            blockNumber: history.blockNumber,
+            block_timestamp: new Date(history.time * 1000),
+            transaction_hash: hash.hash,
+          };
+        });
+        const auctionHistoryPromise = await Promise.all(auctionHistoryMap)
+          .then((auctionHistory: AuctionHistory[]) => {
+            return auctionHistory;
+          })
+          .catch((err) => console.error("mi_egg_promiseerror", err));
         const finalAuction: Auction = {
           index,
           description,
           kind: deet?.kind,
           tokenID: Number(tokenID),
+          auctionHistory: auctionHistoryPromise || [],
           tokenOwner: addresses.tokenOwner,
           reservePrice: Number(reservePrice),
           firstBidTime: Number(firstBidTime),
@@ -718,7 +729,7 @@ export function useGetAllAuctions(): () => Promise<void> {
     } catch (error) {
       console.error("error_In_UseGetAllAuctions", error);
     }
-  }, [auctionContract, media, zooKeeper, dispatch]);
+  }, [auctionContract, media, zooKeeper, dispatch, library]);
 }
 
 export function useRemoveAuction(): (
