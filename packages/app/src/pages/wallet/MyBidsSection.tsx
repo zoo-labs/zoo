@@ -227,12 +227,12 @@ const MyBidsSection = ({ auction }: { auction: Auction }) => {
             )}
           </div>
 
-          <Link href={` /market/placebid/${auction.auctionId}`} passHref>
+          <Link href={`/market/placebid/${auction.auctionId}`} passHref>
             <button className="py-2 mb-4 font-semibold text-white rounded bg-blue">
               Increase Bid
             </button>
           </Link>
-          <Link href={`/market/auctions/${auction.auctionId}`} passHref>
+          <Link href={`/market/${auction.auctionId}/info`} passHref>
             <button className="py-2 font-semibold border border-white rounded">
               View Item
             </button>
