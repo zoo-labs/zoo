@@ -271,14 +271,13 @@ const NftModal = ({}: AppProps & {
         </div>
         <div className="w-full lg:w-2/5 border border-white-30 rounded-lg h-auto max-h-fit py-[22px] px-[26px]">
           {nftItem?.kind === 0 || nftItem?.kind === 2 ? (
-            // <button
-            //   className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-leader-board disabled:cursor-not-allowed disabled:opacity-60"
-            //   onClick={() => hatchEgg()}
-            //   disabled={loading || feeding}
-            // >
-            //   HATCH
-            // </button>
-            <></>
+            <button
+              className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-blue disabled:cursor-not-allowed disabled:opacity-60"
+              onClick={() => hatchEgg()}
+              disabled={loading || feeding}
+            >
+              HATCH
+            </button>
           ) : (
             <>
               <button
@@ -302,7 +301,7 @@ const NftModal = ({}: AppProps & {
           )}
 
           <button
-            className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-auction-gradient disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-blue disabled:cursor-not-allowed disabled:opacity-60"
             onClick={() => auction()}
             disabled={loading || feeding}
           >
@@ -326,11 +325,6 @@ const NftModal = ({}: AppProps & {
         nftItem={nftItem}
         success={() => {
           fetchNFTs().then((res) => {
-            console.log(
-              "SGDBDVCHFCBDFC CBF HEF EFD",
-              res?.length,
-              myNfts.length
-            );
             setNftAnimate(myNfts[0]);
             toggleAnimationModal();
             // const nft__ = myNfts.find((n) => n.eggId === nftItem.id);
