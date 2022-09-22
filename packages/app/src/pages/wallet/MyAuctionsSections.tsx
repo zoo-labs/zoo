@@ -234,7 +234,7 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
               Edit Auction
             </button>
           )}
-          <Link href={`/market/auctions/${auction.auctionId}`} passHref>
+          <Link href={`/market/${auction.auctionId}/info`} passHref>
             <button className="py-2 font-semibold border border-white rounded">
               View Item
             </button>
