@@ -418,7 +418,7 @@ export function useGetAvailableEggs(): () => void {
             minted: Number(egg.minted),
             name: egg.name,
             description,
-            price: Number(egg.price) / Math.pow(10, 18),
+            price: Number(egg.price),
             supply: Number(egg.supply),
             timestamp: Number(egg.timestamp),
             image: `https://zoolabs.mypinata.cloud/ipfs/${image?.slice(7)}`,
