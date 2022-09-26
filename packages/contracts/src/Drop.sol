@@ -19,8 +19,15 @@ contract Drop is IDrop, Ownable {
 
     Counters.Counter public eggId;
 
+ struct  DropData {
+    string image;
+    string description;
+  }
+
     // Title of drop
     string override public title;
+
+    mapping(string => DropData) public dropInformation;
 
     string public rareAnimal;
 
@@ -66,11 +73,16 @@ contract Drop is IDrop, Ownable {
         _;
     }
 
-    constructor(string memory _title) {
+    constructor(string memory _title, string memory description, string memory image) {
         title = _title;
         randomLimit = 3;
         rareAnimal = "Javan Rhino";
+        dropInformation[_title] = DropData({description: description, image: image});
     }
+
+    function modifyDrop (string memory description, string memory image) public onlyOwner {
+        dropInformation[title] = DropData({description: description, image: image});
+  }
 
     function getAdultHoodURIs(string memory name, IZoo.AdultHood stage) public view override returns(IMedia.MediaData memory){
         IZoo.URIs storage data = adultHoodURIs[name];
@@ -94,7 +106,9 @@ contract Drop is IDrop, Ownable {
         Egg[] memory availableEggs = new Egg[](eggId.current());
         
         for (uint256 i = 0; i < eggId.current(); i++) {
-            availableEggs[i] = eggs[i + 1];
+            if(eggs[i + 1].exist == true){
+                availableEggs[i] = eggs[i + 1];
+            }
         }
 
         return availableEggs;
@@ -121,6 +135,10 @@ contract Drop is IDrop, Ownable {
     function changeRandomLimit(uint256 limit) override public {
         require(msg.sender == owner() || msg.sender == EggDropAddress || msg.sender == keeperAddress, "not allowed");
         randomLimit = limit;
+    }
+
+    function eggStatus(uint256 egg, bool status) public onlyOwner {
+        eggs[egg].exist = status;
     }
 
 

@@ -64,7 +64,7 @@ export default function Wallet({ children }) {
       }
     }
   };
-  console.log("myNfts__", myNfts);
+  console.log("allAuctions", allAuctions);
   return (
     <section className="Hero">
       <div className="px-6 pb-16 mt- Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
@@ -122,7 +122,16 @@ export default function Wallet({ children }) {
             fetchNfts={() => fetchNFTs()}
           />
         ) : category === 1 ? (
-          <MyBidsSection />
+          allAuctions
+            .filter((auction: Auction) =>
+              auction.auctionHistory.some((history) => {
+                console.log("historyyyy", history);
+                return history.from_address === account;
+              })
+            ) // filter auctions that are mine
+            .map((auction: Auction, index: number) => (
+              <MyBidsSection key={index} auction={auction} />
+            ))
         ) : allAuctions.filter(
             (auction: Auction) => auction.tokenOwner === account
           )?.length > 0 ? (

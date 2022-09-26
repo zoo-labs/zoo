@@ -24,6 +24,7 @@ import { useExpandNFTModal, useShareModal } from "state/application/hooks";
 import NFTExpandedModal from "modals/ExpandNftModal";
 import ShareNFTModal from "modals/ShareNFTModal";
 import { Table } from "components/Table/styles";
+import TransactionRow from "components/Table/TransactionRow";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -31,7 +32,7 @@ const ModelViewer = dynamic(() => import("components/ModelViewer"), {
 const InfoPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { chainId, account } = useActiveWeb3React();
+  const { chainId, account, library } = useActiveWeb3React();
   const { allAuctions } = useSelector((state: any) => state.zoo);
   const [nft, setNft] = useState<Auction>();
   const [creator, setCreator] = useState("");
@@ -58,10 +59,13 @@ const InfoPage = () => {
     ).result;
 
     const _ = nftTransfers.filter((n) => n.token_id === String(id));
-    setTransactions(_);
-    console.log(
-      "SOMESTUFFABOUTTRANSACTION",
-      nftTransfers.filter((n) => n.token_id === String(id))
+    setTransactions(
+      _.map((tx) => {
+        return {
+          ...tx,
+          block_timestamp: new Date(tx.block_timestamp),
+        };
+      })
     );
   }, [Web3Api.token, chainId, id, media?.address]);
 
@@ -120,13 +124,7 @@ const InfoPage = () => {
     getAllAuctions();
     fetchContractNFTTransfers();
     getCreator(nft?.tokenID).then((res) => setCreator(res));
-  }, [
-    getZooBnbPrice,
-    getAllAuctions,
-    fetchContractNFTTransfers,
-    getCreator,
-    nft?.tokenID,
-  ]);
+  }, [library]);
 
   const amountPriceBNB = zooBnbPrice * Number(nft?.amount);
   const reservePriceBNB = zooBnbPrice * Number(nft?.reservePrice);
@@ -255,7 +253,7 @@ const InfoPage = () => {
             )}
           </div>
           <div className="flex items-center mb-4">
-            <div className="w-6 h-6 rounded-full border border-gray-500" />
+            <div className="w-6 h-6 border border-gray-500 rounded-full" />
             <p className="ml-2 text-xl font-bold">Creator: </p>
             <a
               href={`https://testnet.bscscan.com/address/${creator}`}
@@ -267,7 +265,7 @@ const InfoPage = () => {
             </a>
           </div>
           <div className="flex items-center mb-4">
-            <div className="w-6 h-6 rounded-full border border-gray-500" />
+            <div className="w-6 h-6 border border-gray-500 rounded-full" />
             <p className="ml-2 text-xl font-bold">Current owner: </p>
             <a
               href={`https://testnet.bscscan.com/address/${nft?.tokenOwner}`}
@@ -375,43 +373,21 @@ const InfoPage = () => {
               <th>Offer Time</th>
               <th>Hash</th>
             </tr>
-            {transactions.map((transaction, index) => (
-              <tr key={index}>
-                <td>
-                  <a
-                    target={`_blank`}
-                    rel="noopener noreferrer"
-                    href={`https://testnet.bscscan.com/address/${transaction.from_address}`}
-                  >
-                    {shortenAddress(transaction.from_address)}
-                  </a>
-                </td>
-                <td>
-                  <a
-                    target={`_blank`}
-                    rel="noopener noreferrer"
-                    href={`https://testnet.bscscan.com/address/${transaction.to_address}`}
-                  >
-                    {shortenAddress(transaction.to_address)}
-                  </a>
-                </td>
-                <td>{abbreviateNumber(transaction.value)} ZOO</td>
-                <td>
-                  {moment(transaction.block_timestamp).format(
-                    "DD/MM/YYYY / hh:mm A"
-                  )}
-                </td>
-                <td>
-                  <a
-                    target={`_blank`}
-                    rel="noopener noreferrer"
-                    href={`https://testnet.bscscan.com/tx/${transaction.transaction_hash}`}
-                  >
-                    {transaction.transaction_hash.slice(0, 10)}...
-                  </a>
-                </td>
-              </tr>
-            ))}
+            {[...transactions, ...(nft?.auctionHistory ?? [])]
+              .sort((a, b) => b.block_timestamp - a.block_timestamp)
+              .map((transaction, index) => {
+                console.log("transaction", transaction);
+                return (
+                  <TransactionRow
+                    key={index}
+                    from_address={transaction.from_address}
+                    to_address={transaction.to_address}
+                    value={transaction.value}
+                    block_timestamp={transaction.block_timestamp}
+                    transaction_hash={transaction.transaction_hash}
+                  />
+                );
+              })}
           </Table>
         </div>
       </div>

@@ -17,6 +17,13 @@ interface IAuctionHouse {
         address payable bidder;
     }
 
+    struct AuctionHistory{
+        uint256 amount;
+        uint40 time;
+        address bidder;
+        uint40 blockNumber;
+    }
+
     struct Auction {
         uint256 auctionId;
         // ID for the ERC721 token
@@ -37,6 +44,9 @@ interface IAuctionHouse {
         // The address that should receive the funds once the NFT is sold.
         // The address of the current highest bid
         AuctionAddresses addresses;
+
+        AuctionHistory[] auctionHistory;
+
     }
 
     event AuctionCreated(
