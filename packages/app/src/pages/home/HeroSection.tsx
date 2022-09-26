@@ -100,7 +100,7 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="absolute flex items-center justify-center md:relative Hero bg-zooo">
+    <div className=" flex items-center justify-center relative Hero bg-zooo">
       <div className="relative m-0 -mt-5 overflow-hidden w-ful">
         <div
           className={`flex w-[100vw] absolute  h-full transition duration-1000 ease-in whitespace-nowrap mt-4 `}
