@@ -40,7 +40,7 @@ const Card = ({ id, segment, active, setActive }) => {
     <div
       className={`  bg-16 w-full md:w-auto min-w-[300px] transition-all duration-500 ease-in min-h-[280px] ${
         active.id === id
-          ? "lg:rounded-xl lg:border lg:border-muted-50  h-screen lg:h-full z-90 fixed lg:relative"
+          ? "lg:rounded-xl lg:border lg:border-muted-50  h-screen lg:h-full z-90 fixed top-0 lg:relative"
           : "rounded-xl border border-muted-50 relative py-6"
       } flex flex-col items-center justify-center `}
       style={{
