@@ -75,7 +75,8 @@ export function useContract(
   nameOrAddress: string | AddressMap | undefined,
   ABI: any = undefined,
   withSignerIfPossible = true,
-  canUseDefaultProvider = false
+  canUseDefaultProvider = false,
+  altAddress?: string
 ): Contract | null {
   const { library, account, chainId } = useActiveWeb3React();
   const { ethereum } = window;
@@ -107,7 +108,7 @@ export function useContract(
     if (!address || !ABI || !newLibrary) return null;
     try {
       return getContract(
-        address.toString(),
+        altAddress ?? address.toString(),
         ABI,
         newLibrary,
         withSignerIfPossible && account ? account : undefined
@@ -123,12 +124,13 @@ export function useApp(): Contract | null {
   return useContract("App");
 }
 
-export function useDrop(useDefaultProvider?: boolean): Contract | null {
+export function useDrop(useDefaultProvider?: boolean, altAddress?: string): Contract | null {
   return useContract(
     "Drop",
     undefined,
     true,
-    useDefaultProvider ? true : false
+    useDefaultProvider ? true : false,
+    altAddress
   );
 }
 

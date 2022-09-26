@@ -1,7 +1,7 @@
 import { useActiveWeb3React, useFaucet, useZooToken } from "hooks";
 import { useCallback } from "react";
 import { useAppDispatch } from "state/hooks";
-import { Auction, AvailableEgg, Egg } from "types";
+import { Auction, AuctionHistory, AvailableEgg, Egg } from "types";
 
 import { useMoralisWeb3Api } from "react-moralis";
 import {
@@ -418,7 +418,7 @@ export function useGetAvailableEggs(): () => void {
             minted: Number(egg.minted),
             name: egg.name,
             description,
-            price: Number(egg.price) / Math.pow(10, 18),
+            price: Number(egg.price),
             supply: Number(egg.supply),
             timestamp: Number(egg.timestamp),
             image: `https://zoolabs.mypinata.cloud/ipfs/${image?.slice(7)}`,
@@ -430,7 +430,7 @@ export function useGetAvailableEggs(): () => void {
           dispatch(addEgg(finalEgg));
         });
       };
-
+      console.log("all eggs", eggs);
       const eggsPromise = eggs.map((egg) => {
         return structureEgg(egg);
       });
@@ -626,6 +626,7 @@ export function useGetAllAuctions(): () => Promise<void> {
   const dispatch = useDispatch();
   const media = useMedia(true);
   const zooKeeper = useZooKeeper(true);
+  const { library } = useActiveWeb3React();
   return useCallback(async () => {
     console.log("auction ytfrtdtrsd", auctionContract);
     const na = +new Date();
@@ -649,7 +650,7 @@ export function useGetAllAuctions(): () => Promise<void> {
           usdz_animation_url,
         } = data;
 
-        console.log("auction nft data", data, tokenMetadataURI);
+        console.log("auction nft data", auction);
         const {
           tokenID,
           auctionId,
@@ -660,12 +661,30 @@ export function useGetAllAuctions(): () => Promise<void> {
           curatorFeePercentage,
           amount,
           kind,
+          auctionHistory,
         } = auction;
+        const auctionHistoryMap = await auctionHistory.map(async (history) => {
+          const hash = await library.getBlock(history.blockNumber);
+          console.log("historyHaash", hash);
+          return {
+            value: Number(history.amount),
+            from_address: history.bidder,
+            blockNumber: history.blockNumber,
+            block_timestamp: new Date(history.time * 1000),
+            transaction_hash: hash.hash,
+          };
+        });
+        const auctionHistoryPromise = await Promise.all(auctionHistoryMap)
+          .then((auctionHistory: AuctionHistory[]) => {
+            return auctionHistory;
+          })
+          .catch((err) => console.error("mi_egg_promiseerror", err));
         const finalAuction: Auction = {
           index,
           description,
           kind: deet?.kind,
           tokenID: Number(tokenID),
+          auctionHistory: auctionHistoryPromise || [],
           tokenOwner: addresses.tokenOwner,
           reservePrice: Number(reservePrice),
           firstBidTime: Number(firstBidTime),
@@ -673,7 +692,7 @@ export function useGetAllAuctions(): () => Promise<void> {
           curatorFeePercentage,
           // curator,
           // auctionCurrency,
-          amount: Number(amount) / Math.pow(10, 18),
+          amount: Number(amount),
           tokenUri,
           name,
           attributes,
@@ -710,7 +729,7 @@ export function useGetAllAuctions(): () => Promise<void> {
     } catch (error) {
       console.error("error_In_UseGetAllAuctions", error);
     }
-  }, [auctionContract, media, zooKeeper, dispatch]);
+  }, [auctionContract, media, zooKeeper, dispatch, library]);
 }
 
 export function useRemoveAuction(): (
@@ -953,7 +972,7 @@ export function useCreateBid(): (
   return useCallback(
     async (id, amount, success) => {
       console.log("AMOUNT_TO_BID", Number(amount));
-      // const weiAmount = ethers.utils.formatUnits(amount, "wei");
+      const weiAmount = ethers.utils.formatUnits(amount, "wei");
       // console.log("WEI_AMOUNT", weiAmount);
       try {
         dispatch(loading(true));
@@ -966,7 +985,7 @@ export function useCreateBid(): (
           await approval.wait();
           console.log("APPROVAL", approval);
         }
-        const tx = await auction?.createBid(id, `${amount * 10 ** 18}`, {
+        const tx = await auction?.createBid(id, weiAmount, {
           gasLimit: 4000000,
         });
         await tx.wait();

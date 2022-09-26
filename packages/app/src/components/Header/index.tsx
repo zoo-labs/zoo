@@ -39,10 +39,7 @@ function AppBar(props: {
   const { i18n } = useLingui();
   const { account, chainId, library, connector } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
-  const toggleNetworkModal = useNetworkModalToggle();
-  const { CartItems }: { CartItems: CartItem[] } = useAppSelector(
-    (state) => state.store
-  );
+  const [showBg, setShowBg] = useState(false);
   const router = useRouter();
 
   let linkStyle =
@@ -57,11 +54,27 @@ function AppBar(props: {
 
   const chainAddresses =
     (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
+  var scrollTrigger = 60;
 
+  useEffect(() => {
+    window.onscroll = function () {
+      // We add pageYOffset for compatibility with IE.
+      if (
+        window.scrollY >= scrollTrigger ||
+        window.pageYOffset >= scrollTrigger
+      ) {
+        setShowBg(true);
+      } else {
+        setShowBg(false);
+      }
+    };
+  }, []);
   return (
     <header
-      className={`absolute flex-shrink-0 w-full ${
-        !props.isModal && !props.transparent ? "bg-black" : "bg-transparent"
+      className={`absoulte flex-shrink-0 w-full ${
+        !props.isModal && !props.transparent
+          ? " bg-black"
+          : `fixed bg-${showBg ? "black" : "transparent"}`
       } z-999`}
     >
       {/* {!props.isModal && <Banner />} */}
