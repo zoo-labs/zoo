@@ -117,7 +117,7 @@ const HeroSection = () => {
                 key={index}
                 className={`${
                   slide.id === activeSlideIndex ? "inline-block" : "hidden"
-                } w-screen h-full transition-all duration-1000 ease-in`}
+                } w-screen h-full transition-all duration-1000 ease-in z-999`}
                 style={{
                   transitionProperty: "display",
                 }}
