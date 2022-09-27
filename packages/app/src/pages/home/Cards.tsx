@@ -45,6 +45,7 @@ const Card = ({ id, segment, active, setActive }) => {
       } flex flex-col items-center justify-center `}
       style={{
         transform: active.id === id && "rotateY(180deg)",
+        WebkitTransform: active.id === id && "rotateY(180deg)",
         zIndex: active.id === id && 1000000,
       }}
     >
