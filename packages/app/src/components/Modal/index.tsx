@@ -16,6 +16,7 @@ interface ModalProps {
   isFullWidth?: boolean;
   backgroundColor?: string;
   scrollable?: boolean;
+  transitionProps?: any;
 }
 
 export default function Modal({
@@ -31,6 +32,7 @@ export default function Modal({
   isFullWidth,
   backgroundColor,
   scrollable,
+  transitionProps,
 }: ModalProps) {
   let refDiv = useRef(null);
 
@@ -78,7 +80,7 @@ export default function Modal({
         </Dialog>
       </Transition> */}
 
-      <Transition appear show={isOpen} as={Fragment}>
+      <Transition appear show={isOpen} as={Fragment} {...transitionProps}>
         <Dialog
           initialFocus={refDiv}
           as="div"
