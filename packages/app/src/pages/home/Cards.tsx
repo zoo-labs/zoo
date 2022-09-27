@@ -108,19 +108,19 @@ const Card = ({ id, segment, active, setActive }) => {
         <div
           className={`bg-16 w-full md:w-auto min-w-[300px] transition-all duration-500 ease-in min-h-[280px] lg:rounded-xl lg:border lg:border-muted-50  h-screen lg:h-full z-90 fixed top-0 lg:relative flex flex-col items-center justify-center `}
           style={{
-            transform: active.id === id && "rotateY(180deg)",
-            zIndex: active.id === id && 1000000,
+            // transform: active.id === id && "rotateY(180deg)",
+            zIndex: 1000000,
           }}
         >
           <p
-            style={{ transform: active.id === id && "rotateY(180deg)" }}
+            // style={{ transform: active.id === id && "rotateY(180deg)" }}
             className="text-[42px] leading-[63px] font-semibold"
           >
             {segment}
           </p>
           {
             <div
-              style={{ transform: active.id === id && "rotateY(180deg)" }}
+              // style={{ transform: active.id === id && "rotateY(180deg)" }}
               className={`absolute right-8 top-10 rounded-full flex items-center justify-center cursor-pointer`}
               onClick={handleClose}
             >
@@ -129,7 +129,7 @@ const Card = ({ id, segment, active, setActive }) => {
           }
 
           <div
-            style={{ transform: active.id === id && "rotateY(180deg)" }}
+            // style={{ transform: active.id === id && "rotateY(180deg)" }}
             className={`${
               active.id === id ? "block" : "hidden"
             } text-center mt-11 text-sm md:text-xl font-normal whitespace-normal px-4 md:px-6`}
