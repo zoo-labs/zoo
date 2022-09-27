@@ -155,7 +155,7 @@ const HeroSection = () => {
           ref={videoRef}
           muted
           id="bgVideo"
-          className="w-screen md:h-screen md:min-h-screen min-w-[100vh]"
+          className="w-screen md:h-screen md:min-h-screen min-w-[100vh] z-0"
         >
           <source src="/videoes/videoplayback.mp4" type="video/mp4"></source>
         </video>
