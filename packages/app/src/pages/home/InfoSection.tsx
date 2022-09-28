@@ -39,17 +39,20 @@ const InfoSection = () => {
     <section className="relative" id="endless-opportunity">
       <div className="px-6 lg:my-10">
         <div className="flex flex-col items-center justify-between mx-auto lg:flex-row max-w-7xl">
-          <div className="mx-auto max-w-5xl w-full rounded-[20px] bg-black pt-20 pb-16 px-20">
-            <p className="font-semibold text-4.5xl text-white text-center mb-20">
+          <div className="mx-auto max-w-5xl w-full rounded-[20px] bg-black pt-20 pb-16 px-5 md:px-20">
+            <p className="font-semibold text-3xl md:text-4.5xl text-white text-center mb-16 md:mb-20">
               Making the protection of endangered species accessible, profitable
               and fun!
             </p>
             {utils.map(({ title, description, icon }, i) => (
-              <div key={i} className="flex items-center mb-9">
+              <div
+                key={i}
+                className="flex flex-col md:flex-row md:items-center mb-9"
+              >
                 <div className="min-w-[100px]">
                   <img src={icon} alt="" width={78} height={78} />
                 </div>
-                <div className="ml-6">
+                <div className="md:ml-6">
                   <p className="text-xl font-medium text-butter-white">
                     {title}
                   </p>

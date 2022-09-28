@@ -100,7 +100,7 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="absolute flex items-center justify-center md:relative Hero bg-zooo">
+    <div className=" flex items-center justify-center relative Hero bg-zooo">
       <div className="relative m-0 -mt-5 overflow-hidden w-ful">
         <div
           className={`flex w-[100vw] absolute  h-full transition duration-1000 ease-in whitespace-nowrap mt-4 `}
@@ -117,7 +117,7 @@ const HeroSection = () => {
                 key={index}
                 className={`${
                   slide.id === activeSlideIndex ? "inline-block" : "hidden"
-                } w-screen h-full transition-all duration-1000 ease-in`}
+                } w-screen h-full transition-all duration-1000 ease-in z-999`}
                 style={{
                   transitionProperty: "display",
                 }}
@@ -155,7 +155,7 @@ const HeroSection = () => {
           ref={videoRef}
           muted
           id="bgVideo"
-          className="w-screen md:h-screen md:min-h-screen min-w-[100vh]"
+          className="w-screen md:h-screen md:min-h-screen min-w-[100vh] z-0"
         >
           <source src="/videoes/videoplayback.mp4" type="video/mp4"></source>
         </video>
