@@ -110,7 +110,8 @@ export default function Wallet({ children }) {
             </div>
             {account && category === 0 && (
               <p className="font-semibold">
-                {myEggsCount} Eggs - {myAnimalsCount} Animals
+                {myEggsCount} Egg{myEggsCount !== 1 ? "s" : ""} -{" "}
+                {myAnimalsCount} Animal{myAnimalsCount !== 1 ? "s" : ""}
               </p>
             )}
           </div>
