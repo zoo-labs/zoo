@@ -41,9 +41,9 @@ const MarketPlaceSection = () => {
             </video>
           </div>
           <div className="flex flex-col items-center lg:items-start lg:justify-center basis-1/2 lg:max-w-lg lg:mx-auto h-full">
-            <h2 className="mb-8 text-3xl font-light text-center lg:text-4xl lg:text-left">
-              <span className="font-bold">Download ZOO app</span> to track your
-              NFT portfolio, APY, offers, and discover new drops.
+            <h2 className="mb-8 text-3xl font-light text-center lg:text-4xl lg:text-left text-33">
+              <span className="font-bold text-white">Download ZOO app</span> to
+              track your NFT portfolio, APY, offers, and discover new drops.
             </h2>
             <div className="flex items-center gap-3 lg:items-start">
               <Link href="/coming-soon" passHref>
