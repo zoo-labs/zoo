@@ -381,7 +381,7 @@ export default function WalletModal({
           )}
           {walletView !== WALLET_VIEWS.PENDING && (
             <div className="flex flex-col text-center">
-              <div className="text-grey">{i18n._(t`New to Ethereum?`)}</div>
+              <div className="text-grey">{i18n._(t`New to DeFi?`)}</div>
               <ExternalLink href="https://ethereum.org/wallets/" color="blue">
                 {i18n._(t`Learn more about wallets`)}
               </ExternalLink>
