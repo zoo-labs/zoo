@@ -116,7 +116,7 @@ function AppBar(props: {
                                 : `${linkStyle} text-white`
                             }
                           >
-                            {i18n._(t`Market`)}
+                            {i18n._(t`Marketplace`)}
                           </a>
                         </NavLink>
                         <NavLink href="/drop">

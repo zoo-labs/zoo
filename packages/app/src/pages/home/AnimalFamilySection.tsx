@@ -163,7 +163,7 @@ const AnimalFamilySection = () => {
                     href="/coming-soon"
                     className="px-8 py-4 text-sm font-semibold text-white rounded-full bg-33 md:text-base md:px-6 lg:px-16"
                   >
-                    Buy Now
+                    Coming Soon
                   </a>
                 </div>
               </div>

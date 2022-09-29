@@ -14,7 +14,7 @@ const HeroSection = () => {
       video: "/videoes/videoplayback.mp4",
       price: 129,
       type: "",
-      uri: "/drop",
+      uri: "/market",
     },
     {
       id: 1,
@@ -117,7 +117,7 @@ const HeroSection = () => {
                 key={index}
                 className={`${
                   slide.id === activeSlideIndex ? "inline-block" : "hidden"
-                } w-screen h-full transition-all duration-1000 ease-in z-999`}
+                } w-screen h-full transition-all duration-1000 ease-in z-[200]`}
                 style={{
                   transitionProperty: "display",
                 }}
@@ -155,7 +155,7 @@ const HeroSection = () => {
           ref={videoRef}
           muted
           id="bgVideo"
-          className="w-screen md:h-screen md:min-h-screen min-w-[100vh] z-0"
+          className="w-screen md:h-screen md:min-h-screen min-w-[100vh]"
         >
           <source src="/videoes/videoplayback.mp4" type="video/mp4"></source>
         </video>
