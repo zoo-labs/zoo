@@ -160,15 +160,9 @@ export default function Home() {
       <HeroSection />
       <CardsSection />
       <InfoSection />
-      {/* <OpportunitySection /> */}
-      <div className="flex flex-col px-4 mx-auto mb-32 max-w-7xl gap-36 lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-col px-6 mx-auto mb-32 max-w-7xl gap-10 mt-6 lg:mt-0 lg:gap-36 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex-1">
           <p className="text-6xl font-bold mb-9">It all starts with one egg.</p>
-          {/* <p className="mb-10 text-xl text-muted-40">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget sit
-            amet, tortor non. Lacus, elementum gravida ut diam. Sit viverra quam
-            tristique ipsum mattis aenean elementum.
-          </p> */}
           <Link href="/drop" passHref>
             <div className="px-5 py-3 text-sm font-medium text-white bg-33 rounded-full md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer w-max">
               Start Collecting
@@ -179,10 +173,6 @@ export default function Home() {
           <Image src="/images/egg.svg" alt="" width={467} height={442} />
         </div>
       </div>
-      {/* <PopularNftsSection /> */}
-
-      {/* <GetStartedSection /> */}
-      {/* <ZooNewsSection /> */}
       <AnimalFamilySection />
       <GameFi gameFi={gameFi} />
       <div className="relative">
