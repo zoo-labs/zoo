@@ -236,9 +236,11 @@ export default function Home() {
               <p className="mb-8 font-medium text-[22px] leading-7 text-muted-40">
                 {experience.description}
               </p>
-              <div className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer">
-                Learn More
-              </div>
+              <Link href="/coming-soon" passHref>
+                <div className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer">
+                  Learn More
+                </div>
+              </Link>
             </div>
           </div>
         ))}
@@ -257,21 +259,20 @@ export default function Home() {
               {Array(4)
                 .fill(0)
                 .map((_, i) => (
-                  <div
-                    key={i}
-                    className="rounded-[18px] w-full md:min-w-[436px] mr-8 border-2 relative mb-6 md:mb-0"
-                  >
-                    <Image
-                      src="/img/tree.png"
-                      alt=""
-                      width={436}
-                      height={282}
-                      className="rounded-[18px]"
-                    />
-                    <div className="absolute w-full bg-16 rounded-b-[18px] bottom-0 py-5 px-5 text-center font-medium">
-                      How to Add $ZOO Token to Your Wallet
+                  <Link key={i} href="/coming-soon" passHref>
+                    <div className="rounded-[18px] w-full md:min-w-[436px] mr-8 border-2 relative mb-6 md:mb-0">
+                      <Image
+                        src="/img/tree.png"
+                        alt=""
+                        width={436}
+                        height={282}
+                        className="rounded-[18px]"
+                      />
+                      <div className="absolute w-full bg-16 rounded-b-[18px] bottom-0 py-5 px-5 text-center font-medium">
+                        How to Add $ZOO Token to Your Wallet
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
             </div>
           </div>
