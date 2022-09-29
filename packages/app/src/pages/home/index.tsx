@@ -2,6 +2,7 @@
 import _ from "lodash";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
@@ -168,9 +169,11 @@ export default function Home() {
             amet, tortor non. Lacus, elementum gravida ut diam. Sit viverra quam
             tristique ipsum mattis aenean elementum.
           </p> */}
-          <div className="px-5 py-3 text-sm font-medium text-white bg-33 rounded-full md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer w-max">
-            Start Collecting
-          </div>
+          <Link href="/drop" passHref>
+            <div className="px-5 py-3 text-sm font-medium text-white bg-33 rounded-full md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer w-max">
+              Start Collecting
+            </div>
+          </Link>
         </div>
         <div className="flex items-center justify-center flex-1 h-full py-16 border border-33 rounded-2xl px-7 max-w-max">
           <Image src="/images/egg.svg" alt="" width={467} height={442} />
