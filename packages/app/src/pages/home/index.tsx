@@ -66,9 +66,12 @@ const gameFi = [
     icon: "/icons/shop.svg",
     description: (
       <>
-        The Zoo <a className="underline">Marketplace</a> not only benefits
-        members through its fees but also allows you to buy, sell, make offers
-        and trade for additional benefits $$.
+        The Zoo{" "}
+        <a href="/market" className="underline">
+          Marketplace
+        </a>{" "}
+        not only benefits members through its fees but also allows you to buy,
+        sell, make offers and trade for additional benefits $$.
       </>
     ),
   },
