@@ -101,12 +101,11 @@ const Drop = ({}: AppProps & {
           <div className="max-w-7xl">
             <div className="md:max-w-[698px] mx-auto text-center">
               <p className="mb-4 text-3xl font-bold leading-10 md:leading-none md:text-6xl">
-                ZOO NFT DROPS
+                ZOO Origin Egg NFT
               </p>
               <p className="max-w-full mb-10 overflow-hidden text-sm font-light text-muted-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Dictumst curabitur ullamcorper platea amet egestas suspendisse
-                elementum.
+                Upgradeable Egg NFTs hatch into baby animals and mint up to 6
+                animals each for even more ways to earn yield.
               </p>
             </div>
             <div className="flex items-center justify-center gap-5 min-h-[372px]">
@@ -170,13 +169,14 @@ const Drop = ({}: AppProps & {
                 Exotic animals for everyone.
               </p>
               <p className="mb-6 text-sm font-normal leading-7 tracking-tight text-muted-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam
-                non in viverra metus id. Pharetra lorem felis at vestibulum,
-                massa nibh justo consectetur tristique. Vestibulum et velit
-                elementum molestie.Lorem ipst, consectetur adipiscing elit. Diam
-                non in viverra metus id. Pharetra lor f ePharetralis at
-                vestibulum, massa nibh justo consectetur triste. Vestibulum
-                Pharetraet velit elementum molestie.etus i
+                Through our protocol to collateralize NFTs, users will control
+                and own everything they buy and earn. The value of the NFTs is
+                based on their collateral and its rarity. Users collateralize
+                their NFTs by staking any currency against their Egg or Animal.
+                This is then multiplied by the APY and increases your rewards
+                earned! Each NFT is a digital twin of an endangered species in
+                the real-world which also determines its rarities and which
+                animal will be benefited through donation.
               </p>
               <Link href="/market" passHref>
                 <button className="bg-black border border-gray-150 py-3.5 px-8 rounded-full">
@@ -233,12 +233,17 @@ const Drop = ({}: AppProps & {
           </div>
           <div className="md:max-w-[45%] mb-10">
             <p className="text-left font-bold mb-3 text-[42px] leading-10 w-max relative before:absolute before:h-1 before:w-[55%] before:left-0 before:-top-3 before:bg-black">
-              Our Drops
+              Origin Egg Drop
             </p>
             <p className="text-sm leading-7 text-muted-20">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam non
-              in viverra metus id. Pharetra lorem felis at vestibulum, massa
-              nibh justo consectetur tristique. Vestibulum
+              The Zoo Labs Foundation is very passionate about saving endangered
+              animals all over the world. We want to end the extinction of
+              animals and we want to help the world see how important they are
+              to all of us. We also want to inspire people to change
+              animals&apos; lives for the better. We are very committed to
+              creating digital twins of endangered species to raise awareness,
+              enact change and create an animal sanctuary for all Zoo NFT
+              holders.
             </p>
           </div>
           {drops.map((drop, i) => {
