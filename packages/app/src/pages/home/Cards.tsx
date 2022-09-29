@@ -81,7 +81,7 @@ const Card = ({ id, segment, active, setActive }) => {
         </p>
         {active.id !== id ? (
           <div
-            className={`absolute right-8 bottom-6 rounded-full h-11 w-11 flex items-center justify-center border-2 bg-dark-white border-dashed border-white-20 cursor-pointer`}
+            className={`absolute right-8 bottom-6 rounded-full h-11 w-11 flex items-center justify-center border-2 bg-dark-white border-white-20 cursor-pointer`}
             onClick={handleOpen}
           >
             <Image src="/icons/add.svg" alt="" height={24} width={24} />

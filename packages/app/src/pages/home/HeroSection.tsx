@@ -14,7 +14,7 @@ const HeroSection = () => {
       video: "/videoes/videoplayback.mp4",
       price: 129,
       type: "",
-      uri: "/drop",
+      uri: "/market",
     },
     {
       id: 1,
@@ -117,7 +117,7 @@ const HeroSection = () => {
                 key={index}
                 className={`${
                   slide.id === activeSlideIndex ? "inline-block" : "hidden"
-                } w-screen h-full transition-all duration-1000 ease-in z-999`}
+                } w-screen h-full transition-all duration-1000 ease-in z-[200]`}
                 style={{
                   transitionProperty: "display",
                 }}
