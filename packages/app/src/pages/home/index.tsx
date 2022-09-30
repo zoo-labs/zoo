@@ -170,7 +170,13 @@ export default function Home() {
           </Link>
         </div>
         <div className="flex items-center justify-center flex-1 h-full py-16 border border-33 rounded-2xl px-7 max-w-max">
-          <Image src="/images/egg.svg" alt="" width={467} height={442} />
+          <Image
+            src="/images/egg.svg"
+            alt=""
+            width={467}
+            height={442}
+            // className="animate-rotate-y"
+          />
         </div>
       </div>
       <AnimalFamilySection />
@@ -188,13 +194,7 @@ export default function Home() {
           muted
           loop
           id="bgVideo"
-          style={{
-            height: "100vh",
-            minHeight: "100vh",
-            maxHeight: "100vh",
-            width: "100vw",
-            minWidth: "100vw",
-          }}
+          className=" h-screen object-cover min-h-screen max-h-screen w-screen min-w-[100vw]"
         >
           <source
             src={"/videoes/trippy_animals_short.mov"}
