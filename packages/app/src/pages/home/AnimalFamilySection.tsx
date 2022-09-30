@@ -119,7 +119,7 @@ const AnimalFamilySection = () => {
   return (
     <section className="AnimalFamily">
       <div className="px-6 py-10 md:py-20 mx-auto max-w-7xl">
-        <p className="font-bold text-5xl md:text-center">
+        <p className="font-bold text-3xl md:text-5xl md:text-center">
           Or Grab an animal straightaway
         </p>
         {animalFamilyData.map((data) => {

@@ -160,9 +160,11 @@ export default function Home() {
       <HeroSection />
       <CardsSection />
       <InfoSection />
-      <div className="flex flex-col px-6 mx-auto mb-32 max-w-7xl gap-10 mt-6 lg:mt-0 lg:gap-36 lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-col px-6 mx-auto mb-16 md:mb-32 max-w-7xl gap-10 mt-6 lg:mt-0 lg:gap-36 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex-1">
-          <p className="text-6xl font-bold mb-9">It all starts with one egg.</p>
+          <p className="text-3xl md:text-6xl font-bold mb-4 md:mb-9">
+            It all starts with one egg.
+          </p>
           <Link href="/drop" passHref>
             <div className="px-5 py-3 text-sm font-medium text-white bg-33 rounded-full md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer w-max">
               Start Collecting
@@ -220,10 +222,10 @@ export default function Home() {
                 i % 2 === 1 ? "md:pl-24" : "md:pr-24"
               } `}
             >
-              <p className="font-bold text-[42px] leading-none mb-[18px]">
+              <p className="font-bold text-2xl md:text-[42px] md:leading-none mb-3 md:mb-[18px]">
                 {experience.title}
               </p>
-              <p className="mb-8 font-medium text-[22px] leading-7 text-muted-40">
+              <p className="mb-5 md:mb-8 font-medium text-sm md:text-[22px] leading-7 text-muted-40">
                 {experience.description}
               </p>
               <Link href="/coming-soon" passHref>
