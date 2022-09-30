@@ -234,13 +234,15 @@ const Drop = ({}: AppProps & {
                   Ready to Hatch?
                 </p>
                 <p className="text-sm text-muted-20">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam
-                  non in viverra metus id. Pharetra lorem felis at vestibulum,
-                  massa nibh justo consectetur tristique. Vestibulum et velit
-                  elementum molestie.Lorem ipst, consectetur adipiscing elit.
-                  Diam non in viverra metus id. Pharetra lor f ePharetralis at
-                  vestibulum, massa nibh justo consectetur triste. Vestibulum
-                  Pharetraet velit elementum molestie.etus i
+                  Users can incubate their egg to turn it into a baby animal by
+                  “feeding it” the base price. Each Origin Egg can mint up to 6
+                  Animals. But once you incubate the Egg the Egg NFT will be
+                  burned forever and a baby will be born. If you staked
+                  collateral against your egg the staked collateral value will
+                  be added to your baby animal. If you want the collateral value
+                  back but do not want to burn or incubate your egg you can sell
+                  it on the marketplace for its intrinsic value + its collateral
+                  value.
                 </p>
               </div>
               <img
