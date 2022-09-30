@@ -78,13 +78,8 @@ const MarketPlacePage = () => {
   // const toggleBidModal = useBidModalToggle()
   // const toggleAssetModal = useAssetModalToggle()
   const myAuctions = [0, 1];
-  const options = [
-    "Common 🌕",
-    "Uncommon 🌓",
-    "Rare 🔥",
-    "Super Rare ☄️",
-    "Epic 🌟",
-  ];
+  const options = ["Endangered", "Critically-Endangered", "Near-Extinction"];
+  const sortOptions = ["Highest - Lowest", "Lowest - Highest"];
   const timeFIlterOption = [
     "Recently added",
     "Last 24 hours",
@@ -158,18 +153,6 @@ const MarketPlacePage = () => {
   });
 
   const router = useRouter();
-  // const [zooBnbPrice, setZooBnbPrice] = useState(0);
-  // const zooKeeper = useZooKeeper();
-
-  // const getZooBnbPrice = useCallback(async () => {
-  //   const price = await zooKeeper?.BNBPrice();
-  //   const value = Web3.utils.fromWei(price.toString(), "ether");
-  //   setZooBnbPrice(parseFloat(value));
-  // }, [zooKeeper]);
-
-  // useEffect(() => {
-  //   getZooBnbPrice();
-  // }, [getZooBnbPrice]);
 
   const onClickTokenType = (name: string) => {
     console.log("name", name);
@@ -178,40 +161,69 @@ const MarketPlacePage = () => {
     });
   };
 
-  const buyZoo = useBuyZoo();
-
   const { availableEggs, loading, allAuctions } = useSelector(
     (state: any) => state.zoo
   );
+  const [maxPrice, setMaxPrice] = useState<any>(0);
+  const [auctionFilter, setAuctionFilter] = useState([]);
 
-  // const {
-  //   myEggsCount: eggsCount,
-  //   myAnimalsCount: animalsCount,
-  //   myBreedsCount: breedsCount,
-  //   myNfts: myNFTs,
-  // } = useSelector((state: any) => state.zoo);
-  // const { authenticate, isAuthenticated, logout } = useMoralis();
-
-  // const login = useCallback(async () => {
-  //   if (!isAuthenticated) {
-  //     await authenticate({ signingMessage: "Log in using Moralis" })
-  //       .then(function (user) {
-  //         console.log("logged in user:", user);
-  //         console.log(user!.get("ethAddress"));
-  //       })
-  //       .catch(function (error) {
-  //         console.log(error);
-  //       });
-  //   }
-  // }, [authenticate, isAuthenticated]);
+  useEffect(() => {
+    const maxPrice_ = Math.max(
+      ...allAuctions.map((_) => _.reservePrice).filter((_) => !!Number(_))
+    );
+    setMaxPrice(maxPrice_);
+    setAuctionFilter(allAuctions);
+  }, [allAuctions]);
 
   useEffect(() => {
     getAllAuctions();
     getAvailableEggs();
-  }, []);
+  }, [getAllAuctions, getAvailableEggs]);
 
-  console.log("MY availableEggs", availableEggs);
-  console.log("MY_Auctionss", allAuctions);
+  const filterAuctions = useCallback(
+    (type: "price" | "rarity" | "yields", value) => {
+      if (type === "price") {
+        const filter = allAuctions.filter(
+          (auction) => Number(auction.reservePrice) >= Number(value)
+        );
+        setAuctionFilter(filter);
+      }
+      if (type === "rarity") {
+        const filter = allAuctions.filter(
+          (auction) =>
+            auction?.attributes?.find((a) => a.trait_type === "Rarity")
+              ?.value == value.value
+        );
+
+        console.log("jkdnjhbdddshuduhjrfbfhjdbhjf", value);
+        setAuctionFilter(filter);
+      }
+      if (type === "yields") {
+        if (value.value === "Highest - Lowest") {
+          const filter = [...allAuctions].sort(
+            (a, b) =>
+              b?.attributes?.find((a) => a.trait_type === "Yields")?.value -
+              a?.attributes?.find((a) => a.trait_type === "Yields")?.value
+          );
+          const actVal = filter.filter((v) => v);
+          setAuctionFilter(actVal);
+        } else {
+          const filter = [...allAuctions].sort(
+            (a, b) =>
+              a?.attributes?.find((a) => a.trait_type === "Yields")?.value -
+              b?.attributes?.find((a) => a.trait_type === "Yields")?.value
+          );
+          const actVal = filter.filter((v) => v);
+          setAuctionFilter(actVal);
+        }
+      }
+    },
+    [allAuctions]
+  );
+
+  useEffect(() => {
+    console.log("jnshdjsdbsdbd", auctionFilter);
+  }, [auctionFilter]);
 
   return (
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
@@ -319,62 +331,6 @@ const MarketPlacePage = () => {
               </p>
             </div>
           )}
-        </div>
-      </div> */}
-      {/* Tab Navbar */}
-      {/* <div className="relative justify-center hidden mb-8 lg:flex">
-        <div
-          className="rounded-xl"
-          style={{
-            background: "#333",
-            padding: 1,
-          }}
-        >
-          <div className="flex items-center justify-center w-full h-full bg-[#111] rounded-xl">
-            {["All Items", "Eggs", "Animals"].map((value, index) => {
-              const active = category === index;
-              return (
-                <a
-                  onClick={() => {
-                    setCategory(index);
-                    setPage(1);
-                    if (index === 0) {
-                      setData(
-                        [...Object.values(allData)]
-                          .flat(1)
-                          .sort((a: any, b: any) => a.tokenID - b.tokenID)
-                          .slice(0, 8)
-                      );
-                    } else if (index === 1) {
-                      console.log("is hybrid filter");
-                    } else {
-                      setData([]);
-                      setFetching(true);
-                      wait(1500).then(() =>
-                        setData(
-                          [allData[index - 1]]
-                            .flat(1)
-                            .sort((a, b) => a.tokenID - b.tokenID)
-                            .slice(0, 8)
-                        )
-                      );
-                    }
-                  }}
-                  className={`text-white text-sm font-bold py-4 px-6 cursor-pointer w-full h-full flex items-center justify-center ${
-                    index !== 2 && "border-r border-33 whitespace-nowrap"
-                  } ${
-                    index === 0 ? "rounded-l-xl" : index === 2 && "rounded-r-xl"
-                  }`}
-                  style={{
-                    background: active ? "black" : "transparent",
-                  }}
-                  key={index}
-                >
-                  {value}
-                </a>
-              );
-            })}
-          </div>
         </div>
       </div> */}
 
@@ -502,7 +458,14 @@ const MarketPlacePage = () => {
         <div className="hidden">show on tablet viewport</div>
         <div className="flex items-end justify-end w-full">
           <button
-            onClick={() => setFiltering(!filtering)}
+            onClick={() => {
+              if (filtering) {
+                setFiltering(!filtering);
+                setAuctionFilter(allAuctions);
+              } else {
+                setFiltering(!filtering);
+              }
+            }}
             className="relative flex items-center justify-center px-6 py-3 font-bold leading-3 text-center border border-33 rounded-xl text-grey-400"
           >
             Filter
@@ -516,8 +479,8 @@ const MarketPlacePage = () => {
           </button>
         </div>
       </div>
-      {/* Search + Filter */}
 
+      {/* Search + Filter */}
       <div
         className={`${
           !filtering ? "hidden" : "block"
@@ -527,39 +490,18 @@ const MarketPlacePage = () => {
         <div className="flex flex-wrap items-center justify-between ">
           <div>
             <p className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
-              PRICE
-            </p>
-            <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 w-44">
-              {/* <ReactDropdown
-                  menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
-                  className="dropdown"
-                  options={timeFIlterOption}
-                  value={""}
-                  placeholder="Highest Prices"
-                  placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
-                /> */}
-              <Image
-                src={"/icons/download.svg"}
-                alt=""
-                className="absolute top-0"
-                width={20}
-                height={20}
-              />
-            </div>
-          </div>
-          <div>
-            <p className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
               YIELDS
             </p>
             <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 w-44">
-              {/* <ReactDropdown
-                  menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
-                  className="dropdown"
-                  options={timeFIlterOption}
-                  value={""}
-                  placeholder="Highest Yields"
-                  placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
-                /> */}
+              <ReactDropdown
+                menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
+                className="dropdown"
+                options={sortOptions}
+                value={""}
+                onChange={(e) => filterAuctions("yields", e)}
+                placeholder="Highest Yields"
+                placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
+              />
               <Image
                 src={"/icons/download.svg"}
                 alt=""
@@ -573,15 +515,16 @@ const MarketPlacePage = () => {
             <p className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
               RARITY
             </p>
-            <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 w-44">
-              {/* <ReactDropdown
-                  menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
-                  className="dropdown"
-                  options={timeFIlterOption}
-                  value={""}
-                  placeholder="Epic"
-                  placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
-                /> */}
+            <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 min-w-[240px]">
+              <ReactDropdown
+                menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
+                className="dropdown"
+                options={options}
+                value={""}
+                onChange={(e) => filterAuctions("rarity", e)}
+                placeholder="Epic"
+                placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
+              />
               <Image
                 src={"/icons/download.svg"}
                 alt=""
@@ -607,6 +550,7 @@ const MarketPlacePage = () => {
               <PrettoSlider
                 onChange={(value, number) => {
                   setBreadCount(Number(number));
+                  filterAuctions("price", number);
                 }}
                 value={breedCount}
                 valueLabelDisplay="auto"
@@ -614,11 +558,11 @@ const MarketPlacePage = () => {
                 step={1}
                 defaultValue={10}
                 min={1}
-                max={100}
+                max={maxPrice}
               />
               <div className="flex justify-between text-xs">
-                <div className="font-semibold">0.01 ETH</div>
-                <div className="font-semibold">10 ETH</div>
+                <div className="font-semibold">0.01 ZOO</div>
+                <div className="font-semibold">{maxPrice} ZOO</div>
               </div>
             </div>
           </div>
@@ -744,8 +688,8 @@ const MarketPlacePage = () => {
       <div>
         {category === 0 && (
           <div className="flex flex-wrap justify-center mt-8 -mx-4">
-            {allAuctions.length > 0 ? (
-              allAuctions.map((datum: Auction, index) => {
+            {auctionFilter.length > 0 ? (
+              auctionFilter.map((datum: Auction, index) => {
                 return (
                   <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
                     <MarketItem
@@ -764,8 +708,8 @@ const MarketPlacePage = () => {
 
         {category === 1 && (
           <div className="flex flex-wrap justify-center mt-8 -mx-4">
-            {allAuctions.length > 0 ? (
-              allAuctions
+            {auctionFilter.length > 0 ? (
+              auctionFilter
                 .filter((auction) => auction.kind === 0)
                 .map((datum, index) => {
                   return (
@@ -786,8 +730,8 @@ const MarketPlacePage = () => {
 
         {category === 2 && (
           <div className="flex flex-wrap justify-center mt-8 -mx-4">
-            {allAuctions.length > 0 ? (
-              allAuctions
+            {auctionFilter.length > 0 ? (
+              auctionFilter
                 .filter((auction) => auction.kind === 1)
                 .map((datum, index) => {
                   return (
