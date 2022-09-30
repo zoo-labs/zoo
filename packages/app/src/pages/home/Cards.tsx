@@ -41,7 +41,7 @@ const CardsSection = () => {
       } lg:mx-24`}
     >
       <div className="w-full overflow-x-auto overflow-y-hidden whitespace-nowrap">
-        <div className="flex flex-col items-center justify-center gap-8 md:flex-row flex-wrap-">
+        <div className="flex flex-col items-center 2xl:justify-center gap-8 md:flex-row flex-wrap-">
           {segments.map((segment, i) => (
             <Card
               key={segment.id}

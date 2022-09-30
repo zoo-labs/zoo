@@ -36,9 +36,28 @@ const gameFi = [
     icon: "/icons/empty-wallet.svg",
     description: (
       <>
-        Set up your wallet with <a className="underline">Metamask</a> and login{" "}
-        <a className="underline">here</a> to view the Zoo Marketplace. Learn
-        about which wallets are supported <a className="underline">here.</a>
+        Set up your wallet with{" "}
+        <a
+          href="https://metamask.io/"
+          target={"_blank"}
+          rel="noopener noreferrer"
+          className="underline"
+        >
+          Metamask
+        </a>{" "}
+        and login{" "}
+        <a
+          href="https://metamask.io/download"
+          target={"_blank"}
+          rel="noopener noreferrer"
+          className="underline"
+        >
+          here
+        </a>{" "}
+        to view the Zoo Marketplace. Learn about which wallets are supported{" "}
+        <a href="/coming-soon" className="underline">
+          here.
+        </a>
       </>
     ),
   },
