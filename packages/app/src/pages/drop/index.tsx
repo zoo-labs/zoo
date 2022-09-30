@@ -356,11 +356,10 @@ const Drop = ({}: AppProps & {
               Join the Community
             </p>
             <p className="mb-10 text-lg font-light leading-8 text-muted-20">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate
+              Learn about all the new upgrades and features for your animal,
+              join our DAO, and show us some love on our socials. Don’t forget
+              to check out our Medium page for fun and informational content on
+              all things, GameFi, NFTs, Endangered Animals and more!
             </p>
             <button className="bg-black p-[22px] rounded-full flex items-center text-sm font-bold w-max mx-auto">
               <Image src="/icons/discord.svg" alt="" width={24} height={18} />
