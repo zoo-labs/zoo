@@ -9,8 +9,8 @@ import Image from "next/image";
 import LanguageSwitch from "../LanguageSwitch";
 import Link from "next/link";
 import More from "./More";
-import Community from "./Community";
-import Learn from "./Learn";
+import Community from "./Learn";
+import Learn from "./Community";
 import NavLink from "../NavLink";
 import { Popover } from "@headlessui/react";
 import QuestionHelper from "../QuestionHelper";
@@ -106,7 +106,6 @@ function AppBar(props: {
                     </NavLink>
                     <div className="hidden sm:block sm:ml-4">
                       <div className="flex space-x-2">
-                        {/* <Buy /> */}
                         <NavLink href="/market">
                           <a
                             id={`mint-nav-link`}
@@ -128,7 +127,7 @@ function AppBar(props: {
                                 : `${linkStyle} text-white`
                             }
                           >
-                            {i18n._(t`Drop`)}
+                            {i18n._(t`Animals`)}
                           </a>
                         </NavLink>
                         {/* <NavLink href="/bridge">
@@ -296,7 +295,7 @@ function AppBar(props: {
                   </div>
                   <div className="flex -mr-2 sm:hidden">
                     {/* Mobile menu button */}
-                    <Popover.Button className="inline-flex items-center justify-center p-2 rounded-md text-primary hover:text-high-emphesis focus:outline-none">
+                    <Popover.Button className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-high-emphesis focus:outline-none">
                       <span className="sr-only">
                         {i18n._(t`Open main menu`)}
                       </span>
@@ -344,28 +343,28 @@ function AppBar(props: {
               <div className="flex flex-col px-4 pt-2 pb-3 space-y-1">
                 <a
                   id={`marketplace`}
-                  className="p-2 tracking-widest text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  className="p-2 tracking-widest text-baseline text-white hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="/market"
                 >
                   {i18n._(t`Marketplace`)}
                 </a>
                 {/* <a
                   id={`dao`}
-                  className="p-2 tracking-widest text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  className="p-2 tracking-widest text-baseline text-white hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="/dao"
                 >
                   {i18n._(t`Dao`)}
                 </a>
                 <a
                   id={`bridge`}
-                  className="p-2 tracking-widest text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  className="p-2 tracking-widest text-baseline text-white hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="/bridge"
                 >
                   {i18n._(t`Bridge`)}
                 </a> */}
                 <a
                   id={`chart`}
-                  className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  className="p-2 text-baseline text-white hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
                   target="_blank"
                   rel="noreferrer"

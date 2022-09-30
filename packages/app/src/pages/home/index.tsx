@@ -160,15 +160,11 @@ export default function Home() {
       <HeroSection />
       <CardsSection />
       <InfoSection />
-      {/* <OpportunitySection /> */}
-      <div className="flex flex-col px-4 mx-auto mb-32 max-w-7xl gap-36 lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-col px-6 mx-auto mb-16 md:mb-32 max-w-7xl gap-10 mt-6 lg:mt-0 lg:gap-36 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex-1">
-          <p className="text-6xl font-bold mb-9">It all starts with one egg.</p>
-          {/* <p className="mb-10 text-xl text-muted-40">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget sit
-            amet, tortor non. Lacus, elementum gravida ut diam. Sit viverra quam
-            tristique ipsum mattis aenean elementum.
-          </p> */}
+          <p className="text-3xl md:text-6xl font-bold mb-4 md:mb-9">
+            It all starts with one egg.
+          </p>
           <Link href="/drop" passHref>
             <div className="px-5 py-3 text-sm font-medium text-white bg-33 rounded-full md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer w-max">
               Start Collecting
@@ -176,13 +172,15 @@ export default function Home() {
           </Link>
         </div>
         <div className="flex items-center justify-center flex-1 h-full py-16 border border-33 rounded-2xl px-7 max-w-max">
-          <Image src="/images/egg.svg" alt="" width={467} height={442} />
+          <Image
+            src="/images/egg.svg"
+            alt=""
+            width={467}
+            height={442}
+            // className="animate-rotate-y"
+          />
         </div>
       </div>
-      {/* <PopularNftsSection /> */}
-
-      {/* <GetStartedSection /> */}
-      {/* <ZooNewsSection /> */}
       <AnimalFamilySection />
       <GameFi gameFi={gameFi} />
       <div className="relative">
@@ -198,13 +196,7 @@ export default function Home() {
           muted
           loop
           id="bgVideo"
-          style={{
-            height: "100vh",
-            minHeight: "100vh",
-            maxHeight: "100vh",
-            width: "100vw",
-            minWidth: "100vw",
-          }}
+          className=" h-screen object-cover min-h-screen max-h-screen w-screen min-w-[100vw]"
         >
           <source
             src={"/videoes/trippy_animals_short.mov"}
@@ -230,15 +222,17 @@ export default function Home() {
                 i % 2 === 1 ? "md:pl-24" : "md:pr-24"
               } `}
             >
-              <p className="font-bold text-[42px] leading-none mb-[18px]">
+              <p className="font-bold text-2xl md:text-[42px] md:leading-none mb-3 md:mb-[18px]">
                 {experience.title}
               </p>
-              <p className="mb-8 font-medium text-[22px] leading-7 text-muted-40">
+              <p className="mb-5 md:mb-8 font-medium text-sm md:text-[22px] leading-7 text-muted-40">
                 {experience.description}
               </p>
-              <div className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer">
-                Learn More
-              </div>
+              <Link href="/coming-soon" passHref>
+                <div className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer">
+                  Learn More
+                </div>
+              </Link>
             </div>
           </div>
         ))}
@@ -257,21 +251,20 @@ export default function Home() {
               {Array(4)
                 .fill(0)
                 .map((_, i) => (
-                  <div
-                    key={i}
-                    className="rounded-[18px] w-full md:min-w-[436px] mr-8 border-2 relative mb-6 md:mb-0"
-                  >
-                    <Image
-                      src="/img/tree.png"
-                      alt=""
-                      width={436}
-                      height={282}
-                      className="rounded-[18px]"
-                    />
-                    <div className="absolute w-full bg-16 rounded-b-[18px] bottom-0 py-5 px-5 text-center font-medium">
-                      How to Add $ZOO Token to Your Wallet
+                  <Link key={i} href="/coming-soon" passHref>
+                    <div className="rounded-[18px] w-full md:min-w-[436px] mr-8 border-2 relative mb-6 md:mb-0">
+                      <Image
+                        src="/img/tree.png"
+                        alt=""
+                        width={436}
+                        height={282}
+                        className="rounded-[18px]"
+                      />
+                      <div className="absolute w-full bg-16 rounded-b-[18px] bottom-0 py-5 px-5 text-center font-medium">
+                        How to Add $ZOO Token to Your Wallet
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
             </div>
           </div>

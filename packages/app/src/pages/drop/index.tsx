@@ -36,9 +36,28 @@ const gameFi = [
     icon: "/icons/empty-wallet.svg",
     description: (
       <>
-        Set up your wallet with <a className="underline">Metamask</a> and login{" "}
-        <a className="underline">here</a> to view the Zoo Marketplace. Learn
-        about which wallets are supported <a className="underline">here.</a>
+        Set up your wallet with{" "}
+        <a
+          href="https://metamask.io/"
+          target={"_blank"}
+          rel="noopener noreferrer"
+          className="underline"
+        >
+          Metamask
+        </a>{" "}
+        and login{" "}
+        <a
+          href="https://metamask.io/download"
+          target={"_blank"}
+          rel="noopener noreferrer"
+          className="underline"
+        >
+          here
+        </a>{" "}
+        to view the Zoo Marketplace. Learn about which wallets are supported{" "}
+        <a href="/coming-soon" className="underline">
+          here.
+        </a>
       </>
     ),
   },
@@ -215,13 +234,15 @@ const Drop = ({}: AppProps & {
                   Ready to Hatch?
                 </p>
                 <p className="text-sm text-muted-20">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam
-                  non in viverra metus id. Pharetra lorem felis at vestibulum,
-                  massa nibh justo consectetur tristique. Vestibulum et velit
-                  elementum molestie.Lorem ipst, consectetur adipiscing elit.
-                  Diam non in viverra metus id. Pharetra lor f ePharetralis at
-                  vestibulum, massa nibh justo consectetur triste. Vestibulum
-                  Pharetraet velit elementum molestie.etus i
+                  Users can incubate their egg to turn it into a baby animal by
+                  “feeding it” the base price. Each Origin Egg can mint up to 6
+                  Animals. But once you incubate the Egg the Egg NFT will be
+                  burned forever and a baby will be born. If you staked
+                  collateral against your egg the staked collateral value will
+                  be added to your baby animal. If you want the collateral value
+                  back but do not want to burn or incubate your egg you can sell
+                  it on the marketplace for its intrinsic value + its collateral
+                  value.
                 </p>
               </div>
               <img
@@ -356,11 +377,10 @@ const Drop = ({}: AppProps & {
               Join the Community
             </p>
             <p className="mb-10 text-lg font-light leading-8 text-muted-20">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate
+              Learn about all the new upgrades and features for your animal,
+              join our DAO, and show us some love on our socials. Don’t forget
+              to check out our Medium page for fun and informational content on
+              all things, GameFi, NFTs, Endangered Animals and more!
             </p>
             <button className="bg-black p-[22px] rounded-full flex items-center text-sm font-bold w-max mx-auto">
               <Image src="/icons/discord.svg" alt="" width={24} height={18} />
