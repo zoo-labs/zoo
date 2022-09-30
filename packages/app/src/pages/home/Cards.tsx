@@ -1,7 +1,7 @@
 import Modal from "components/Modal";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import { isMobile } from "react-device-detect";
+import React, { useState } from "react";
+import { useMediaQuery } from "@mui/material";
 const segments = [
   {
     id: 1,
@@ -41,7 +41,7 @@ const CardsSection = () => {
       } lg:mx-24`}
     >
       <div className="w-full overflow-x-auto overflow-y-hidden whitespace-nowrap">
-        <div className="flex flex-col items-center gap-8 md:flex-row flex-wrap-">
+        <div className="flex flex-col items-center 2xl:justify-center gap-8 md:flex-row flex-wrap-">
           {segments.map((segment, i) => (
             <Card
               key={segment.id}
@@ -62,6 +62,8 @@ export default CardsSection;
 const Card = ({ id, segment, active, setActive }) => {
   const handleOpen = () => setActive({ id });
   const handleClose = () => setActive({ id: null });
+  const sm = useMediaQuery("(max-width: 640px)");
+
   return (
     <>
       <div
@@ -109,7 +111,7 @@ const Card = ({ id, segment, active, setActive }) => {
       <Modal
         isMax
         scrollable
-        isOpen={active.id === id && isMobile}
+        isOpen={active.id === id && sm}
         onDismiss={handleClose}
         transitionProps={{
           enter: "transform transition duration-[400ms]",
@@ -128,7 +130,7 @@ const Card = ({ id, segment, active, setActive }) => {
             // style={{ transform: active.id === id && "rotateY(180deg)" }}
             className="text-[42px] leading-[63px] font-semibold"
           >
-            {segment}
+            {segment.title}
           </p>
           {
             <div
