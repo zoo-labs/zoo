@@ -25,7 +25,7 @@ export default function Learn() {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 flex w-56 mt-2 origin-top-right divide-gray-100 rounded-md shadow-lg bg-black100 ring-1 ring-black ring-opacity-5 focus:outline-none z-999">
+          <Menu.Items className="absolute right-0 flex min-w-[224px] mt-2 origin-top-right divide-gray-100 rounded-md shadow-lg bg-black100 ring-1 ring-black ring-opacity-5 focus:outline-none z-999">
             <div className="px-2 py-2 lg:py-6">
               <Menu.Item>
                 {({ active }) => (
@@ -33,7 +33,7 @@ export default function Learn() {
                     <a
                       className={`${
                         active ? "bg-black text-white" : "text-white"
-                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                      } hover:bg-black group flex rounded-md items-center w-full min-w-max px-2 py-2 text-sm`}
                     >
                       Our Animals
                     </a>
@@ -129,9 +129,9 @@ export default function Learn() {
                     <a
                       className={`${
                         active ? "bg-black text-white" : "text-white"
-                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm min-w-max`}
                     >
-                      Partnerships{" "}
+                      Zoo foundation
                     </a>
                   </Link>
                 )}
