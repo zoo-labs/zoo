@@ -15,10 +15,10 @@ const GameFi = ({ gameFi }) => {
               className="flex flex-col items-center justify-center border-b-2 border-white pb-14"
             >
               <Image src={_.icon} alt="" width={80} height={80} />
-              <p className="my-3 text-4xl font-semibold text-center">
+              <p className="my-3 text-2xl md:text-4xl font-semibold text-center">
                 {_.title}
               </p>
-              <p className="text-lg text-center">{_.description}</p>
+              <p className="text-sm  md:text-lg text-center">{_.description}</p>
             </div>
           ))}
         </div>
