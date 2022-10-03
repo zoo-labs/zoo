@@ -168,10 +168,10 @@ export default function WalletModal({
               <Option
                 id={`connect-${key}`}
                 key={key}
-                color={"white"}
-                header={"Install Metamask"}
+                color={"#372839"}
+                header={"Open In Metamask"}
                 subheader={null}
-                link={"https://metamask.io/"}
+                link={`https://metamask.app.link/dapp/${window.location.href}`}
                 icon="/images/wallets/metamask.png"
               />
             );
