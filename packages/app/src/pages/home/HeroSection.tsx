@@ -14,7 +14,7 @@ const HeroSection = () => {
       video: "/videoes/videoplayback.mp4",
       price: 129,
       type: "",
-      uri: "/drop",
+      uri: "/market",
     },
     {
       id: 1,
@@ -100,16 +100,10 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="absolute flex items-center justify-center md:relative Hero bg-zooo">
+    <div className=" flex items-center justify-center relative Hero bg-zooo">
       <div className="relative m-0 -mt-5 overflow-hidden w-ful">
         <div
           className={`flex w-[100vw] absolute  h-full transition duration-1000 ease-in whitespace-nowrap mt-4 `}
-          style={
-            {
-              // transform: `translate3d(${-activeSlideIndex * 100}%, 0, 0)`,
-              // display:
-            }
-          }
         >
           {slides.map((slide, index) => {
             return (
@@ -117,13 +111,13 @@ const HeroSection = () => {
                 key={index}
                 className={`${
                   slide.id === activeSlideIndex ? "inline-block" : "hidden"
-                } w-screen h-full transition-all duration-1000 ease-in`}
+                } w-screen mx-auto max-w-7xl h-full transition-all duration-1000 ease-in z-[200]`}
                 style={{
                   transitionProperty: "display",
                 }}
               >
                 <div className="flex items-center justify-center w-full h-full">
-                  <div className="w-[80vw] px-4 py-4">
+                  <div className="w-[100vw] px-4 py-4">
                     <h1
                       className="mb-3 text-4xl font-bold break-all transition-opacity duration-1000 ease-in delay-100 opacity-100 lg:text-9xl lg:mb-6 item-animate-down"
                       onMouseOut={() => videoCurrent?.play()}
@@ -155,7 +149,7 @@ const HeroSection = () => {
           ref={videoRef}
           muted
           id="bgVideo"
-          className="w-screen md:h-screen md:min-h-screen min-w-[100vh]"
+          className="w-screen md:h-screen md:min-h-screen min-w-[100vh] object-cover"
         >
           <source src="/videoes/videoplayback.mp4" type="video/mp4"></source>
         </video>

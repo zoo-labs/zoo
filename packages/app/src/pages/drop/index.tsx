@@ -36,9 +36,28 @@ const gameFi = [
     icon: "/icons/empty-wallet.svg",
     description: (
       <>
-        Set up your wallet with <a className="underline">Metamask</a> and login{" "}
-        <a className="underline">here</a> to view the Zoo Marketplace. Learn
-        about which wallets are supported <a className="underline">here.</a>
+        Set up your wallet with{" "}
+        <a
+          href="https://metamask.io/"
+          target={"_blank"}
+          rel="noopener noreferrer"
+          className="underline"
+        >
+          Metamask
+        </a>{" "}
+        and login{" "}
+        <a
+          href="https://metamask.io/download"
+          target={"_blank"}
+          rel="noopener noreferrer"
+          className="underline"
+        >
+          here
+        </a>{" "}
+        to view the Zoo Marketplace. Learn about which wallets are supported{" "}
+        <a href="/coming-soon" className="underline">
+          here.
+        </a>
       </>
     ),
   },
@@ -101,12 +120,11 @@ const Drop = ({}: AppProps & {
           <div className="max-w-7xl">
             <div className="md:max-w-[698px] mx-auto text-center">
               <p className="mb-4 text-3xl font-bold leading-10 md:leading-none md:text-6xl">
-                ZOO NFT DROPS
+                ZOO Origin Egg NFT
               </p>
               <p className="max-w-full mb-10 overflow-hidden text-sm font-light text-muted-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Dictumst curabitur ullamcorper platea amet egestas suspendisse
-                elementum.
+                Upgradeable Egg NFTs hatch into baby animals and mint up to 6
+                animals each for even more ways to earn yield.
               </p>
             </div>
             <div className="flex items-center justify-center gap-5 min-h-[372px]">
@@ -170,13 +188,14 @@ const Drop = ({}: AppProps & {
                 Exotic animals for everyone.
               </p>
               <p className="mb-6 text-sm font-normal leading-7 tracking-tight text-muted-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam
-                non in viverra metus id. Pharetra lorem felis at vestibulum,
-                massa nibh justo consectetur tristique. Vestibulum et velit
-                elementum molestie.Lorem ipst, consectetur adipiscing elit. Diam
-                non in viverra metus id. Pharetra lor f ePharetralis at
-                vestibulum, massa nibh justo consectetur triste. Vestibulum
-                Pharetraet velit elementum molestie.etus i
+                Through our protocol to collateralize NFTs, users will control
+                and own everything they buy and earn. The value of the NFTs is
+                based on their collateral and its rarity. Users collateralize
+                their NFTs by staking any currency against their Egg or Animal.
+                This is then multiplied by the APY and increases your rewards
+                earned! Each NFT is a digital twin of an endangered species in
+                the real-world which also determines its rarities and which
+                animal will be benefited through donation.
               </p>
               <Link href="/market" passHref>
                 <button className="bg-black border border-gray-150 py-3.5 px-8 rounded-full">
@@ -215,13 +234,15 @@ const Drop = ({}: AppProps & {
                   Ready to Hatch?
                 </p>
                 <p className="text-sm text-muted-20">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam
-                  non in viverra metus id. Pharetra lorem felis at vestibulum,
-                  massa nibh justo consectetur tristique. Vestibulum et velit
-                  elementum molestie.Lorem ipst, consectetur adipiscing elit.
-                  Diam non in viverra metus id. Pharetra lor f ePharetralis at
-                  vestibulum, massa nibh justo consectetur triste. Vestibulum
-                  Pharetraet velit elementum molestie.etus i
+                  Users can incubate their egg to turn it into a baby animal by
+                  “feeding it” the base price. Each Origin Egg can mint up to 6
+                  Animals. But once you incubate the Egg the Egg NFT will be
+                  burned forever and a baby will be born. If you staked
+                  collateral against your egg the staked collateral value will
+                  be added to your baby animal. If you want the collateral value
+                  back but do not want to burn or incubate your egg you can sell
+                  it on the marketplace for its intrinsic value + its collateral
+                  value.
                 </p>
               </div>
               <img
@@ -233,12 +254,17 @@ const Drop = ({}: AppProps & {
           </div>
           <div className="md:max-w-[45%] mb-10">
             <p className="text-left font-bold mb-3 text-[42px] leading-10 w-max relative before:absolute before:h-1 before:w-[55%] before:left-0 before:-top-3 before:bg-black">
-              Our Drops
+              Origin Egg Drop
             </p>
             <p className="text-sm leading-7 text-muted-20">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam non
-              in viverra metus id. Pharetra lorem felis at vestibulum, massa
-              nibh justo consectetur tristique. Vestibulum
+              The Zoo Labs Foundation is very passionate about saving endangered
+              animals all over the world. We want to end the extinction of
+              animals and we want to help the world see how important they are
+              to all of us. We also want to inspire people to change
+              animals&apos; lives for the better. We are very committed to
+              creating digital twins of endangered species to raise awareness,
+              enact change and create an animal sanctuary for all Zoo NFT
+              holders.
             </p>
           </div>
           {drops.map((drop, i) => {
@@ -351,11 +377,10 @@ const Drop = ({}: AppProps & {
               Join the Community
             </p>
             <p className="mb-10 text-lg font-light leading-8 text-muted-20">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate
+              Learn about all the new upgrades and features for your animal,
+              join our DAO, and show us some love on our socials. Don’t forget
+              to check out our Medium page for fun and informational content on
+              all things, GameFi, NFTs, Endangered Animals and more!
             </p>
             <button className="bg-black p-[22px] rounded-full flex items-center text-sm font-bold w-max mx-auto">
               <Image src="/icons/discord.svg" alt="" width={24} height={18} />
