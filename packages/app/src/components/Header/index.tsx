@@ -43,7 +43,7 @@ function AppBar(props: {
   const router = useRouter();
 
   let linkStyle =
-    "p-2 text-baseline hover:text-green focus:text-high-emphesis md:p-3 whitespace-nowrap";
+    "p-0 text-baseline hover:text-green focus:text-high-emphesis md:p-0 whitespace-nowrap m-0";
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[
     account ?? ""
@@ -105,7 +105,7 @@ function AppBar(props: {
                       </div>
                     </NavLink>
                     <div className="hidden sm:block sm:ml-4">
-                      <div className="flex space-x-2">
+                      <div className="flex space-x-5 pl-6">
                         <NavLink href="/market">
                           <a
                             id={`mint-nav-link`}
