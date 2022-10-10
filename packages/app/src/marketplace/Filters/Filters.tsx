@@ -81,7 +81,7 @@ const TestArr = [
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
     usdz: "/models/Tiger/TIGER_ADULT.usdz",
     glb: "/models/Tiger/TIGER_ADULT.glb",
-    category: "hybrid",
+    category: "origin",
     transactionHistory: [
       {
         Event: "Minted",
@@ -426,11 +426,11 @@ const Filters: React.FC<FilterProps> = ({}) => {
 
   return (
     <div className="block w-full">
-      <div className="lg:px-6 pt-16 pb-16 md:flex-col md:items-center lg:mx-auto lg:max-w-7xl">
+      <div className="pt-16 pb-16 lg:px-6 md:flex-col md:items-center lg:mx-auto lg:max-w-7xl">
         <div className="w-full mx-auto mt-20">
           {/* Tab Navigation */}
-          <div className="relative justify-between hiden mb-8 lg:flex space-y-4 lg:space-y-0">
-            <div className="flex items-center justify-between w-full h-12 lg:pl-4 pr-1 text-sm rounded-lg cursor-pointer">
+          <div className="relative justify-between mb-8 space-y-4 hiden lg:flex lg:space-y-0">
+            <div className="flex items-center justify-between w-full h-12 pr-1 text-sm rounded-lg cursor-pointer lg:pl-4">
               <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 lg:w-44">
                 Recently Added
               </div>
@@ -458,7 +458,7 @@ const Filters: React.FC<FilterProps> = ({}) => {
                               .slice(0, 8)
                           );
                         } else if (index === 2) {
-                          console.log("is hybrid filter");
+                          console.log("is origin filter");
                         } else {
                           setData([]);
                           setFetching(true);
@@ -496,7 +496,7 @@ const Filters: React.FC<FilterProps> = ({}) => {
             <div className="flex items-end justify-end w-full">
               <button
                 onClick={() => setFiltering(!filtering)}
-                className="relative flex items-center justify-center px-6 py-3 font-bold leading-3 text-center border-2 rounded-xl text-grey-400 w-full lg:w-auto"
+                className="relative flex items-center justify-center w-full px-6 py-3 font-bold leading-3 text-center border-2 rounded-xl text-grey-400 lg:w-auto"
               >
                 Filter
                 <span className="flex items-center justify-center pl-2">
@@ -518,7 +518,7 @@ const Filters: React.FC<FilterProps> = ({}) => {
             } border-t border-solid py-8`}
             style={{ borderColor: "rgb(107, 114, 128)" }}
           >
-            <div className="flex flex-col lg:flex-row flex-wrap lg:items-center lg:justify-between space-y-3 lg:space-y-0">
+            <div className="flex flex-col flex-wrap space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0">
               <div className="w-full md:w-auto">
                 <p className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
                   PRICE
@@ -656,25 +656,23 @@ const Filters: React.FC<FilterProps> = ({}) => {
             </div>
           </div>
 
-          <div className="flex justify-center flex-wrap mt-16 -mx-4">
+          <div className="flex flex-wrap justify-center mt-16 -mx-4">
             {category === 1 ? (
               availableEggs.map((item) => {
                 return (
                   <div
-                    className="w-ull p-2 m:w-1/2 l:w-1/4"
+                    className="p-2 w-ull m:w-1/2 l:w-1/4"
                     key={item.id}
                     onClick={() => router.push(`/marketplace/egg/${item.id}`)}
                   >
                     <div className="flex flex-col ">
-                      <div className="relative overflow-hidden rounded border border-gray-500 parent">
+                      <div className="relative overflow-hidden border border-gray-500 rounded parent">
                         <div className="h-[350px] w-[300px]">
                           {/* <ModelViewer usdz={item.usdz} glb={item.glb}></ModelViewer> */}
                           <img src="/img/egg.png" alt="" />
                         </div>
                         <div className="absolute top-0 left-0 invisible w-full h-full transition-all duration-300 rounded opacity-0 hover:visible hover:opacity-100">
-                          <div className="absolute px-2 py-1 text-xs font-bold uppercase rounded top-6 left-3 bg-primary ">
-                            {/* {item.bloodline || (item.basic ? "BASIC" : "HYBRID")} */}
-                          </div>
+                          <div className="absolute px-2 py-1 text-xs font-bold uppercase rounded top-6 left-3 bg-primary "></div>
 
                           <a className="absolute inline-flex items-center justify-center h-10 px-4 text-sm transition-all duration-300 transform rounded-full cursor-pointer left-1/2 bottom-6 min-w-max bg-primary -translate-x-2/4">
                             <span>Place a bid</span>
@@ -724,7 +722,7 @@ const Filters: React.FC<FilterProps> = ({}) => {
                             </div>
                             Supply
                           </div>
-                          <span className="text-white font-semibold">
+                          <span className="font-semibold text-white">
                             {item.supply}
                           </span>
                         </div>

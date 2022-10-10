@@ -198,55 +198,53 @@ const Market: React.FC<MarketProps> = ({}) => {
             }}
           >
             <div className="flex items-center justify-center w-full h-full bg-black rounded-xl">
-              {["All Items", "Eggs", "Animals", "Hybrid"].map(
-                (value, index) => {
-                  const active = category === index;
-                  return (
-                    <a
-                      onClick={() => {
-                        setCategory(index);
-                        setPage(1);
-                        if (index === 0) {
+              {["All Items", "Eggs", "Animals"].map((value, index) => {
+                const active = category === index;
+                return (
+                  <a
+                    onClick={() => {
+                      setCategory(index);
+                      setPage(1);
+                      if (index === 0) {
+                        setData(
+                          [...Object.values(allData)]
+                            .flat(1)
+                            .sort((a: any, b: any) => a.tokenID - b.tokenID)
+                            .slice(0, 8)
+                        );
+                      } else if (index === 3) {
+                        console.log("is hybrid filter");
+                      } else {
+                        setData([]);
+                        setFetching(true);
+                        wait(1500).then(() =>
                           setData(
-                            [...Object.values(allData)]
+                            [allData[index - 1]]
                               .flat(1)
-                              .sort((a: any, b: any) => a.tokenID - b.tokenID)
+                              .sort((a, b) => a.tokenID - b.tokenID)
                               .slice(0, 8)
-                          );
-                        } else if (index === 3) {
-                          console.log("is hybrid filter");
-                        } else {
-                          setData([]);
-                          setFetching(true);
-                          wait(1500).then(() =>
-                            setData(
-                              [allData[index - 1]]
-                                .flat(1)
-                                .sort((a, b) => a.tokenID - b.tokenID)
-                                .slice(0, 8)
-                            )
-                          );
-                        }
-                      }}
-                      className={`text-white text-sm font-bold py-1 px-4 cursor-pointer w-full h-full flex items-center justify-center ${
-                        index !== 3 && "border-r border-blue"
-                      } ${
-                        index === 0
-                          ? "rounded-l-xl"
-                          : index === 3 && "rounded-r-xl"
-                      }`}
-                      style={{
-                        background: active
-                          ? "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)"
-                          : "transparent",
-                      }}
-                      key={index}
-                    >
-                      {value}
-                    </a>
-                  );
-                }
-              )}
+                          )
+                        );
+                      }
+                    }}
+                    className={`text-white text-sm font-bold py-1 px-4 cursor-pointer w-full h-full flex items-center justify-center ${
+                      index !== 3 && "border-r border-blue"
+                    } ${
+                      index === 0
+                        ? "rounded-l-xl"
+                        : index === 3 && "rounded-r-xl"
+                    }`}
+                    style={{
+                      background: active
+                        ? "linear-gradient(180deg, #4B31AC 0%, #2703F8 100%)"
+                        : "transparent",
+                    }}
+                    key={index}
+                  >
+                    {value}
+                  </a>
+                );
+              })}
             </div>
           </div>
           {/* <div
