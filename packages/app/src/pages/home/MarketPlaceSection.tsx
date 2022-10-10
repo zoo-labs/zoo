@@ -27,13 +27,57 @@ const MarketPlaceSection = () => {
         <p className="text-base md:text-2xl text-butter-white mb-6 font-normal">
           Follow our social media
         </p>
-        <div className="flex items-center gap-10">
-          <Image src="/icons/twitter.svg" alt="" width={41} height={41} />
-          <Image src="/icons/telegram.svg" alt="" width={41} height={41} />
-          <Image src="/icons/instagram.svg" alt="" width={41} height={41} />
+        <div className="flex items-center">
+          <a
+            href="https://mobile.twitter.com/zoo_labs"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-10"
+          >
+            <Image src="/icons/twitter.svg" alt="" width={41} height={41} />
+          </a>
+          <a
+            href="https://t.me/RealZoolabs"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-10"
+          >
+            <Image src="/icons/telegram.svg" alt="" width={41} height={41} />
+          </a>
+          <a
+            href="https://www.instagram.com/zoolabs.io/"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-10"
+          >
+            <Image src="/icons/instagram.svg" alt="" width={41} height={41} />
+          </a>
+          <a
+            href="https://discord.gg/wW6Wth6r"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-10"
+          >
+            <Image src="/img/discord-large.svg" width={41} height={41} alt="" />
+          </a>
+          <a
+            href="https://zoolabsofficial.medium.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-10"
+          >
+            <Image src="/img/medium-icon.svg" height={41} width={41} alt="" />{" "}
+          </a>
+          <a
+            href="https://www.youtube.com/channel/UCjTd-6h0nbVwz34IihdCUww"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Image src="/img/youtube.svg" width={41} height={41} alt="" />
+          </a>
         </div>
       </div>
-      <div className="w-full bg-[#0D0822]">
+      <div className="w-full bg-[#000]">
         <div className="flex flex-col items-start px-6 mx-auto pb-16 lg:py-8 lg:h-[438px] overflow-y-hidden lg:flex-row-reverse max-w-7xl">
           <div className="relative z-30 flex mb-8 basis-1/2">
             <video autoPlay loop={true} playsInline={true} muted>

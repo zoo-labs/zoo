@@ -88,9 +88,12 @@ const gameFi = [
     icon: "/icons/shop.svg",
     description: (
       <>
-        The Zoo <a className="underline">Marketplace</a> not only benefits
-        members through its fees but also allows you to buy, sell, make offers
-        and trade for additional benefits $$.
+        The Zoo{" "}
+        <a href="/market" className="underline">
+          Marketplace
+        </a>{" "}
+        not only benefits members through its fees but also allows you to buy,
+        sell, make offers and trade for additional benefits $$.
       </>
     ),
   },
@@ -112,6 +115,10 @@ const Drop = ({}: AppProps & {
       getDrops();
     }
   }, [zookeeper]);
+
+  useEffect(() => {
+    setPlaying(true);
+  }, []);
 
   return (
     <DropLayout isMarginTop={false}>
@@ -219,7 +226,7 @@ const Drop = ({}: AppProps & {
                   <PlayCircleFilled />
                 </button>
               )}
-              <video id="player-animals" controls={false} muted>
+              <video id="player-animals" controls={false} muted autoPlay>
                 <source
                   src={"/videoes/trippy_animals_short.mov"}
                   type="video/mp4"
