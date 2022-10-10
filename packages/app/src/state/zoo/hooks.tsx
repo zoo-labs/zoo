@@ -1213,7 +1213,7 @@ export function useGetTokenOwner(): (
   );
 }
 
-// Bread animals   // // Breed two animals and create a hybrid egg
+// Bread animals
 export function useBreed(): (
   tokenA: number,
   tokenB: number,
