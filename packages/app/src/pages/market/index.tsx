@@ -367,7 +367,7 @@ const MarketPlacePage = () => {
           }}
         >
           <div className="flex items-center justify-center w-full h-full bg-[#111] rounded-xl">
-            {["All Items", "Eggs", "Animals", "Hybrid"].map((value, index) => {
+            {["All Items", "Eggs", "Animals"].map((value, index) => {
               const active = category === index;
               return (
                 <a
@@ -416,7 +416,7 @@ const MarketPlacePage = () => {
             className="absolute flex justify-center transform left-2/4 -translate-x-2/4"
             style={{ top: 10 }}
           >
-            {['All Items', 'Eggs', 'Animals', 'Hybrid'].map((value, index) => {
+            {['All Items', 'Eggs', 'Animals'].map((value, index) => {
               const active = category === index;
               return (
                 <a

@@ -37,7 +37,7 @@ export function mapAnimal(animal) {
     currentBid: animal.get('currentBid'),
     imageUrl: animal.get('tokenURI'),
     listed: animal.get('listed'),
-    bloodline: animal.get('kind') === 1 ? 'pure' : 'hybrid',
+    bloodline: animal.get('kind') === 1 ? '' : 'Origin',
     selected: false,
     bred: false,
     breedCount: animal.get('breedCount'),
