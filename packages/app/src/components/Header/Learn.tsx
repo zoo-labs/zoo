@@ -8,7 +8,7 @@ export default function Learn() {
     <div className="text-right relative flex flex-col justify-center">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex w-full text-base font-medium text-white rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 mb-4 md:mb-0">
+          <Menu.Button className="inline-flex w-full text-base text-white rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 mb-4 md:mb-0">
             Learn
             <ChevronDownIcon
               className="w-5 h-5 ml-1 -mr-1 mt-[3px] text-white-200 hover:text-white-100"
