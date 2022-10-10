@@ -3,7 +3,8 @@ import _ from "lodash";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import axios from "axios";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
@@ -118,6 +119,7 @@ export default function Home() {
   console.log("tokenTypes", tokenTypes);
   const [hideLeft, setHideLeft] = useState(true);
   const [hideRight, setHideRight] = useState(false);
+  const [blogs, setBlogs] = useState([]);
 
   const handleMoveRight = () => {
     if (document.getElementById("carousel").scrollLeft >= window.screen.width) {
@@ -155,6 +157,31 @@ export default function Home() {
       .addEventListener("scroll", (e) => handleScroll());
   }, [document.getElementById("carousel")?.scrollLeft]);
 
+  const fetchBlog = useCallback(async () => {
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const rss_url = `https://medium.com/@zoolabsofficial/latest?format=json`;
+    const blog_url = `https://api.rss2json.com/v1/api.json?rss_url=${rss_url}`;
+    const url =
+      "https://v1.nocodeapi.com/thenameisgifted/medium/OWqgfVFTUgEiWXEe";
+    try {
+      const res = await axios.get(url, {
+        headers,
+      });
+      const data = await res.data;
+
+      setBlogs(data);
+      console.log("snjkadhjdbdhjbd_data", data);
+    } catch (error) {
+      console.log("snjkadhjdbdhjbd_error", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchBlog();
+  }, [fetchBlog]);
+
   return (
     <div className="relative">
       <HeroSection />
@@ -171,13 +198,12 @@ export default function Home() {
             </div>
           </Link>
         </div>
-        <div className="flex items-center justify-center flex-1 h-full py-16 border border-33 rounded-2xl px-7 max-w-max">
-          <Image
-            src="/images/egg.svg"
-            alt=""
-            width={467}
-            height={442}
-            // className="animate-rotate-y"
+        <div className="flex items-center justify-center flex-1 h-full max-h-[583px] border border-33 rounded-2xl max-w-max mx-auto">
+          <video
+            src="https://zoolabs.mypinata.cloud/ipfs/QmeoB3GHivCqzvX27E5RZE4nwNXkikdkbv5iiqyqUW3Qwu"
+            autoPlay
+            loop
+            className="object-cover w-full md:min-w-[521px] h-full max-h-[583px] overflow-hidden rounded-2xl"
           />
         </div>
       </div>
@@ -248,24 +274,34 @@ export default function Home() {
             className="overflow-x-auto whitespace-nowrap"
           >
             <div className="flex flex-col md:flex-row md:max-h-[290px]">
-              {Array(4)
-                .fill(0)
-                .map((_, i) => (
-                  <Link key={i} href="/coming-soon" passHref>
-                    <div className="rounded-[18px] w-full md:min-w-[436px] mr-8 border-2 relative mb-6 md:mb-0">
-                      <Image
-                        src="/img/tree.png"
-                        alt=""
-                        width={436}
-                        height={282}
-                        className="rounded-[18px]"
-                      />
-                      <div className="absolute w-full bg-16 rounded-b-[18px] bottom-0 py-5 px-5 text-center font-medium">
-                        How to Add $ZOO Token to Your Wallet
-                      </div>
-                    </div>
-                  </Link>
-                ))}
+              {blogs?.length > 0
+                ? blogs.map((_, i) => (
+                    <Link
+                      key={i}
+                      href={_.link}
+                      target="_black"
+                      rel="noopener noreferrer"
+                      passHref
+                    >
+                      <a
+                        target={"_blank"}
+                        className="rounded-[18px] w-full md:min-w-[436px] mr-8 border-2 relative mb-6 md:mb-0 cursor-pointer"
+                      >
+                        <Image
+                          src="/img/tree.png"
+                          alt=""
+                          width={436}
+                          height={282}
+                          className="rounded-[18px]"
+                        />
+                        <div className="absolute whitespace-normal w-full bg-16 rounded-b-[18px] bottom-0 py-5 px-5 text-center font-medium">
+                          {/* How to Add $ZOO Token to Your Wallet */}
+                          {_.title}
+                        </div>
+                      </a>
+                    </Link>
+                  ))
+                : "No post available"}
             </div>
           </div>
           {!hideRight && (
@@ -299,7 +335,6 @@ export default function Home() {
       </div>
       <MarketPlaceSection />
       <FaqSection />
-      <JoinZooSection />
     </div>
   );
 }
