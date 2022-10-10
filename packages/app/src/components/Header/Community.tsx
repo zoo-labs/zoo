@@ -8,7 +8,7 @@ export default function Community() {
     <div className="relative flex flex-col justify-center text-right">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex w-full px-2 mb-4 text-base font-medium text-white rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 md:mb-0">
+          <Menu.Button className="inline-flex w-full mb-4 text-base text-white rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 md:mb-0">
             Community
             <ChevronDownIcon
               className="w-5 h-5 ml-1 -mr-1 mt-[3px] text-white-200 hover:text-white-100"
