@@ -52,7 +52,7 @@
 
 @layer components {
   .player__button {
-    @apply absolute inset-x-[50%] inset-y-[45%] z-999;
+    @apply absolute inset-x-[50%] top-[40%] z-999;
   }
 }
 

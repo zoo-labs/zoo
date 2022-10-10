@@ -171,13 +171,12 @@ export default function Home() {
             </div>
           </Link>
         </div>
-        <div className="flex items-center justify-center flex-1 h-full py-16 border border-33 rounded-2xl px-7 max-w-max">
-          <Image
-            src="/images/egg.svg"
-            alt=""
-            width={467}
-            height={442}
-            // className="animate-rotate-y"
+        <div className="flex items-center justify-center flex-1 h-full max-h-[583px] border border-33 rounded-2xl max-w-max mx-auto">
+          <video
+            src="https://zoolabs.mypinata.cloud/ipfs/QmeoB3GHivCqzvX27E5RZE4nwNXkikdkbv5iiqyqUW3Qwu"
+            autoPlay
+            loop
+            className="object-cover w-full md:min-w-[521px] h-full max-h-[583px] overflow-hidden rounded-2xl"
           />
         </div>
       </div>
@@ -299,7 +298,6 @@ export default function Home() {
       </div>
       <MarketPlaceSection />
       <FaqSection />
-      <JoinZooSection />
     </div>
   );
 }

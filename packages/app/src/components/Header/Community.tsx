@@ -131,7 +131,7 @@ export default function Community() {
                         active ? "bg-black text-white" : "text-white"
                       } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm min-w-max`}
                     >
-                      Zoo foundation
+                      Zoo Foundation
                     </a>
                   </Link>
                 )}
