@@ -43,7 +43,7 @@ const items = (i18n: I18n) => [
   {
     name: i18n._(t`Discord`),
     description: i18n._(t`Join the community on Discord.`),
-    href: "https://discord.gg/NVPXN4e",
+    href: "https://discord.gg/KsXtbu5g",
     external: true,
   },
   {
@@ -131,9 +131,7 @@ export default function Menu() {
             >
               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                 <div className="relative grid gap-6 px-5 py-6 bg-dark-900 sm:gap-8 sm:p-8">
-                  <div
-                    className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
-                  >
+                  <div className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white">
                     {state.gifMode === "gif" ? "3D" : "Gif"} Mode
                     <div className="ml-4 sm:ml-14">
                       <Toggle
