@@ -88,9 +88,12 @@ const gameFi = [
     icon: "/icons/shop.svg",
     description: (
       <>
-        The Zoo <a className="underline">Marketplace</a> not only benefits
-        members through its fees but also allows you to buy, sell, make offers
-        and trade for additional benefits $$.
+        The Zoo{" "}
+        <a href="/market" className="underline">
+          Marketplace
+        </a>{" "}
+        not only benefits members through its fees but also allows you to buy,
+        sell, make offers and trade for additional benefits $$.
       </>
     ),
   },
@@ -112,6 +115,10 @@ const Drop = ({}: AppProps & {
       getDrops();
     }
   }, [zookeeper]);
+
+  useEffect(() => {
+    setPlaying(true);
+  }, []);
 
   return (
     <DropLayout isMarginTop={false}>
@@ -219,7 +226,7 @@ const Drop = ({}: AppProps & {
                   <PlayCircleFilled />
                 </button>
               )}
-              <video id="player-animals" controls={false} muted>
+              <video id="player-animals" controls={false} muted autoPlay>
                 <source
                   src={"/videoes/trippy_animals_short.mov"}
                   type="video/mp4"
@@ -378,9 +385,7 @@ const Drop = ({}: AppProps & {
             </p>
             <p className="mb-10 text-lg font-light leading-8 text-muted-20">
               Learn about all the new upgrades and features for your animal,
-              join our DAO, and show us some love on our socials. Don’t forget
-              to check out our Medium page for fun and informational content on
-              all things, GameFi, NFTs, Endangered Animals and more!
+              join our DAO, and show us some love on our socials.
             </p>
             <button className="bg-black p-[22px] rounded-full flex items-center text-sm font-bold w-max mx-auto">
               <Image src="/icons/discord.svg" alt="" width={24} height={18} />

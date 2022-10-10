@@ -128,8 +128,8 @@ const AnimalFamilySection = () => {
               className="w-full flex flex-col items-center mb-4 AnimalFamily__nfts border-b border-dark-gray mt-20"
               key={data.id}
             >
-              <div className="w-full flex flex-col items-center justify-between AnimalFamily__nft lg:flex-row">
-                <div className="flex flex-col items-center w-full h-auto mb-8 AnimalFamily__image lg:basis-1/2">
+              <div className="w-full flex flex-col items-center justify-between AnimalFamily__nft lg:flex-row mb-8">
+                <div className="flex flex-col items-center w-full h-auto AnimalFamily__image lg:basis-1/2">
                   <div className="p-px mb-8 overflow-hidden  bg-black border border-33 rounded-2xl w-full md:w-auto">
                     {gifMode === "gif" ? (
                       <div className="overflow-hidden rounded w-full">
@@ -155,8 +155,8 @@ const AnimalFamilySection = () => {
                     )}
                   </div>
                 </div>
-                <div className="text-center AnimalFamily__name lg:basis-1/2">
-                  <h2 className="mb-10 text-3xl text-center font-bold lg:text-5xl">
+                <div className="text-center AnimalFamily__name lg:basis-1/2 mb-5 lg:mb-0">
+                  <h2 className="mb-5 md:mb-10 text-3xl text-center font-bold lg:text-5xl">
                     {data.name}
                   </h2>
                   <a

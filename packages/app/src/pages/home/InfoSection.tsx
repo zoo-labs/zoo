@@ -37,7 +37,7 @@ const utils = [
 const InfoSection = () => {
   return (
     <section className="relative" id="endless-opportunity">
-      <div className="px-6 lg:my-10">
+      <div className="px-6 lg:my-10 lg:mb-44">
         <div className="flex flex-col items-center justify-between mx-auto lg:flex-row max-w-7xl">
           <div className="mx-auto max-w-5xl w-full rounded-[20px] bg-black pt-20 pb-16 px-3 md:px-20">
             <p className="font-semibold text-3xl md:text-4.5xl text-white text-center mb-16 md:mb-20">
