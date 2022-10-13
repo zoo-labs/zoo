@@ -87,7 +87,11 @@ function AppBar(props: {
       >
         {({ open }) => (
           <>
-            <div className="px-4 py-4 mx-auto max-w-7xl">
+            <div
+              className={`px-4 py-4 mx-auto max-w-7xl bg-${
+                open ? "black" : "transparent"
+              } md:bg-transparent`}
+            >
               <div className="flex items-center justify-between">
                 {props.isModal ? (
                   <div className="p-3 bg-black rounded-full">
@@ -341,7 +345,7 @@ function AppBar(props: {
               </div>
             </div>
             {/* Mobile View Navbar Dropdown */}
-            <Popover.Panel className="sm:hidden">
+            <Popover.Panel className="sm:hidden bg-black">
               <div className="flex flex-col px-4 pt-2 pb-3 space-y-1">
                 {/* <a
                   id={`marketplace`}

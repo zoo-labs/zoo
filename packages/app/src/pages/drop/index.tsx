@@ -210,7 +210,7 @@ const Drop = ({}: AppProps & {
                 </button>
               </Link>
             </div>
-            <div className="relative flex-1">
+            <div className="relative flex-1 z-[1]">
               {playing ? (
                 <button
                   className="player__button"
