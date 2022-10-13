@@ -17,7 +17,7 @@ const Partnership = () => {
         className="flex flex-col py-16 items-center max-w-7xl mx-auto px-6"
         ref={partnerRef}
       >
-        <h1 className="text-3xl lg:text-5xl mb-8 font-bold mt-20">
+        <h1 className="text-3xl lg:text-5xl mb-8 font-bold mt-10">
           ZOO Foundation
         </h1>
         <p className="text-center text-xl lg:text-3xl max-w-5xl">
@@ -28,7 +28,7 @@ const Partnership = () => {
         </p>
       </div>
       <div
-        className="bg-green"
+        className="bg-white"
         id="partnerships"
         style={{ marginBottom: "96px" }}
       >
