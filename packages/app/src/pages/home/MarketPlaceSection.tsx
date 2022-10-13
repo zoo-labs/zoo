@@ -53,7 +53,7 @@ const MarketPlaceSection = () => {
             <Image src="/icons/instagram.svg" alt="" width={41} height={41} />
           </a>
           <a
-            href="https://discord.gg/wW6Wth6r"
+            href="https://discord.gg/KsXtbu5g"
             target="_blank"
             rel="noreferrer"
             className="mr-10"
