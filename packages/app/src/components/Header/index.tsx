@@ -343,13 +343,13 @@ function AppBar(props: {
             {/* Mobile View Navbar Dropdown */}
             <Popover.Panel className="sm:hidden">
               <div className="flex flex-col px-4 pt-2 pb-3 space-y-1">
-                <a
+                {/* <a
                   id={`marketplace`}
                   className="p-2 tracking-widest text-baseline text-white hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="/market"
                 >
                   {i18n._(t`Marketplace`)}
-                </a>
+                </a> */}
                 {/* <a
                   id={`dao`}
                   className="p-2 tracking-widest text-baseline text-white hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
@@ -383,6 +383,8 @@ function AppBar(props: {
                 >
                   {i18n._(t`Store`)}
                 </a> */}
+
+                <Marketplace />
 
                 <Community />
 

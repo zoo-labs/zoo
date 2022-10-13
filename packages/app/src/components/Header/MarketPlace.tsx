@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Marketplace() {
   return (
-    <div className="text-right relative flex flex-col justify-center">
+    <div className="text-right relative flex flex-col justify-center px-2 md:px-0">
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="inline-flex w-full text-base text-white rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 mb-4 md:mb-0">
