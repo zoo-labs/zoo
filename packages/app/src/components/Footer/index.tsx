@@ -325,7 +325,7 @@ const Footer = () => {
             <Image src="/img/instagram.svg" height={16} width={16} alt="" />{" "}
           </a>
           <a
-            href="https://discord.gg/wW6Wth6r"
+            href="https://discord.gg/KsXtbu5g"
             target="_blank"
             rel="noreferrer"
           >

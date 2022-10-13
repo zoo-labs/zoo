@@ -30,6 +30,7 @@ import NetworkPopup from "modals/NetworkPopup";
 import { useNetworkModalToggle } from "state/application/hooks";
 import { BackpackRounded } from "@mui/icons-material";
 import { ChevronLeftIcon } from "@heroicons/react/outline";
+import Marketplace from "./MarketPlace";
 
 function AppBar(props: {
   banner?: boolean;
@@ -106,7 +107,7 @@ function AppBar(props: {
                     </NavLink>
                     <div className="hidden sm:block sm:ml-4">
                       <div className="flex space-x-5 pl-6">
-                        <NavLink href="/market">
+                        {/* <NavLink href="/market">
                           <a
                             id={`mint-nav-link`}
                             className={
@@ -117,7 +118,7 @@ function AppBar(props: {
                           >
                             {i18n._(t`Marketplace`)}
                           </a>
-                        </NavLink>
+                        </NavLink> */}
                         <NavLink href="/drop">
                           <a
                             id={`bridge-nav-link`}
@@ -167,6 +168,7 @@ function AppBar(props: {
                           {i18n._(t`Store`)}
                         </a>
                       </NavLink> */}
+                        <Marketplace />
                         <Community />
                         <Learn />
                       </div>
@@ -341,13 +343,13 @@ function AppBar(props: {
             {/* Mobile View Navbar Dropdown */}
             <Popover.Panel className="sm:hidden">
               <div className="flex flex-col px-4 pt-2 pb-3 space-y-1">
-                <a
+                {/* <a
                   id={`marketplace`}
                   className="p-2 tracking-widest text-baseline text-white hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="/market"
                 >
                   {i18n._(t`Marketplace`)}
-                </a>
+                </a> */}
                 {/* <a
                   id={`dao`}
                   className="p-2 tracking-widest text-baseline text-white hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
@@ -381,6 +383,8 @@ function AppBar(props: {
                 >
                   {i18n._(t`Store`)}
                 </a> */}
+
+                <Marketplace />
 
                 <Community />
 

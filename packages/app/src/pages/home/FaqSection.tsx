@@ -86,7 +86,7 @@ const FaqSection = () => {
             </h3>
             <p className="mb-4 text-muted-40 lg:max-w-sm">
               If you are having difficulty, please{" "}
-              <a href="https://discord.gg/wW6Wth6r" className="underline">
+              <a href="https://discord.gg/KsXtbu5g" className="underline">
                 join our Discord server
               </a>{" "}
               and post in the #new-player-help channel and our community will be
