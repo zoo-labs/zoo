@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Community() {
   return (
-    <div className="relative flex flex-col justify-center text-right">
+    <div className="relative flex flex-col justify-center text-right px-2 md:px-0">
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="inline-flex w-full mb-4 text-base text-white rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 md:mb-0">
@@ -85,15 +85,16 @@ export default function Community() {
             <div className="px-2 py-2 lg:py-6">
               <Menu.Item>
                 {({ active }) => (
-                  <Link href="/blog" passHref>
-                    <a
-                      className={`${
-                        active ? "bg-black text-white" : "text-white"
-                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                    >
-                      Blog
-                    </a>
-                  </Link>
+                  <a
+                    href="https://zoolabsofficial.medium.com/"
+                    target={"_blank"}
+                    rel="noopener noreferrer"
+                    className={`${
+                      active ? "bg-black text-white" : "text-white"
+                    } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  >
+                    Blog
+                  </a>
                 )}
               </Menu.Item>
               {/* <Menu.Item>
