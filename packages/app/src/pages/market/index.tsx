@@ -27,16 +27,17 @@ import { Auction, AvailableEgg } from "types";
 import Web3 from "web3";
 
 const PrettoSlider = styled(Slider)({
-  color: "#15F195",
+  color: "#333",
   height: 8,
   "& .MuiSlider-track": {
     border: "none",
+    backgroundColor: "#000",
   },
   "& .MuiSlider-thumb": {
     height: 24,
     width: 24,
-    backgroundColor: "#15F195",
-    border: "2px solid #fff",
+    backgroundColor: "#000",
+    border: "2px solid #333333",
     "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {
       boxShadow: "inherit",
     },
@@ -48,11 +49,11 @@ const PrettoSlider = styled(Slider)({
     lineHeight: 1.2,
     fontSize: 12,
     background: "unset",
-    padding: 0,
+    padding: 2,
     width: 32,
     height: 32,
     borderRadius: "50% 50% 50% 0",
-    backgroundColor: "#15F195",
+    backgroundColor: "#000",
     transformOrigin: "bottom left",
     transform: "translate(50%, -100%) rotate(-45deg) scale(0)",
     "&:before": { display: "none" },
@@ -338,16 +339,16 @@ const MarketPlacePage = () => {
       <div className="relative justify-between hidden mb-8 lg:flex">
         <div className="flex items-center justify-between w-full h-12 pl-4 pr-1 text-sm rounded-lg cursor-pointer">
           <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-solid rounded-lg cursor-pointer border-33 text-grey-400 w-44">
-            {/* <ReactDropdown
-                menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
-                className="dropdown"
-                options={timeFIlterOption}
-                value={""}
-                placeholder={"Recently added"}
-                placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
-              /> */}
+            <ReactDropdown
+              menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
+              className="dropdown"
+              options={timeFIlterOption}
+              value={""}
+              placeholder={"Recently added"}
+              placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
+            />
             <Image
-              src={"/icons/download.svg"}
+              src={"/icons/down.svg"}
               alt=""
               className="absolute"
               width={20}
@@ -367,7 +368,7 @@ const MarketPlacePage = () => {
           }}
         >
           <div className="flex items-center justify-center w-full h-full bg-[#111] rounded-xl">
-            {["All Items", "Eggs", "Animals", "Hybrid"].map((value, index) => {
+            {["All Items", "Eggs", "Animals"].map((value, index) => {
               const active = category === index;
               return (
                 <a
@@ -397,9 +398,9 @@ const MarketPlacePage = () => {
                     }
                   }}
                   className={`text-white text-sm font-bold py-1 px-4 cursor-pointer w-full h-full flex items-center justify-center ${
-                    index !== 3 && "border-r border-33"
+                    index !== 2 && "border-r border-33"
                   } ${
-                    index === 0 ? "rounded-l-xl" : index === 3 && "rounded-r-xl"
+                    index === 0 ? "rounded-l-xl" : index === 2 && "rounded-r-xl"
                   }`}
                   style={{
                     background: active ? "black" : "transparent",
@@ -503,7 +504,7 @@ const MarketPlacePage = () => {
                 placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
               />
               <Image
-                src={"/icons/download.svg"}
+                src={"/icons/down.svg"}
                 alt=""
                 className="absolute top-0"
                 width={20}
@@ -526,7 +527,7 @@ const MarketPlacePage = () => {
                 placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
               />
               <Image
-                src={"/icons/download.svg"}
+                src={"/icons/down.svg"}
                 alt=""
                 className="absolute top-0"
                 width={20}
@@ -540,7 +541,7 @@ const MarketPlacePage = () => {
             style={{
               flex: " 0 0 calc(25% - 32px)",
               maxWidth: "calc(25% - 32px)",
-              margin: "32px 16px 0",
+              margin: "0px 16px",
             }}
           >
             <div>
