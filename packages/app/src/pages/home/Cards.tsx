@@ -67,8 +67,8 @@ const Card = ({ id, segment, active, setActive }) => {
   return (
     <>
       <div
-        className={`  bg-16 w-full md:w-auto ${
-          active.id === id ? "min-w-[600px]" : "min-w-[300px]"
+        className={`  bg-16 w-full md:w-[24%] ${
+          active.id === id ? "min-w-[600px]" : ",,min-w-[300px]"
         } transition-all duration-500 ease-in min-h-[280px] rounded-xl border border-muted-50 relative py-6 flex flex-col items-center justify-center `}
         style={{
           transform: active.id === id && "rotateY(180deg)",
