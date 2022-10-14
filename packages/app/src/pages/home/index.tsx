@@ -207,6 +207,16 @@ export default function Home() {
           />
         </div>
       </div>
+      <div className="flex items-center justify-center flex-col relative">
+        <img
+          src="/img/girl-on-vr.png"
+          alt=""
+          className="md:w-[700px] md:h-[700px] object-cover object-center"
+        />
+        <div className="absolute">
+          <p className="font-bold">Bring them to the Metaverse.</p>
+        </div>
+      </div>
       <AnimalFamilySection />
       <GameFi gameFi={gameFi} />
       <div className="relative">
