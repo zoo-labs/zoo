@@ -50,7 +50,7 @@ const HeroSection = () => {
     },
     {
       id: 5,
-      title: "Genesis Eggs",
+      title: "Origin Eggs",
       video: "/videoes/videoplayback.mp4",
       price: 129,
       type: "eggs",
