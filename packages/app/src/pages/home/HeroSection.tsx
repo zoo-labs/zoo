@@ -151,7 +151,10 @@ const HeroSection = () => {
           id="bgVideo"
           className="w-screen md:h-screen md:min-h-screen min-w-[100vh] object-cover"
         >
-          <source src="/videoes/videoplayback.mov" type="video/mp4"></source>
+          <source
+            src="/videoes/videoplayback-trimmed.mov"
+            type="video/mp4"
+          ></source>
         </video>
       </div>
     </div>

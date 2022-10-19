@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useActiveWeb3React } from "hooks";
@@ -8,9 +8,52 @@ import Web3Status from "../../components/Web3Status";
 import { fadeInOnScroll } from "animation";
 import { i18n } from "@lingui/core";
 import { t } from "@lingui/macro";
+import axios from "axios";
 
 const MarketPlaceSection = () => {
   const { account, chainId, library } = useActiveWeb3React();
+  const [Form, setForm] = useState({
+    email: "",
+  });
+
+  const [succes, setSucces] = useState(false);
+  const [error, seterror] = useState(false);
+
+  const handleSubmit = () => {
+    console.log("sending information");
+
+    const { email } = Form;
+
+    //call api to send obj
+
+    axios
+      .post("/api/subscribe", {
+        email: email,
+      })
+      .then(function (response) {
+        setForm({
+          email: "Succes!",
+        });
+        seterror(false);
+        setSucces(true);
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+        seterror(true);
+        setForm({
+          email: "Error!",
+        });
+      });
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setForm({
+      ...Form,
+      [name]: value,
+    });
+  };
 
   // const marketRef = useRef();
 
@@ -27,7 +70,7 @@ const MarketPlaceSection = () => {
         <p className="text-base md:text-2xl text-butter-white mb-6 font-normal">
           Follow our social media
         </p>
-        <div className="flex items-center">
+        <div className="flex items-center mb-2">
           <a
             href="https://mobile.twitter.com/zoo_labs"
             target="_blank"
@@ -76,6 +119,33 @@ const MarketPlaceSection = () => {
             <Image src="/img/youtube.svg" width={41} height={41} alt="" />
           </a>
         </div>
+        <form>
+          <div className="flex items-center px-2 py-2 border rounded-full">
+            <input
+              placeholder="enter your email"
+              name="email"
+              type="email"
+              value={Form.email}
+              onChange={handleInputChange}
+              className="bg-transparent px-2 w-full md:w-auto"
+            />
+
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleSubmit();
+              }}
+              className="flex"
+            >
+              <Image
+                src="/img/small-circle-button.svg"
+                width={20}
+                height={20}
+                alt=""
+              />
+            </button>
+          </div>
+        </form>
       </div>
       <div className="w-full bg-[#000]">
         <div className="flex flex-col items-start px-6 mx-auto pb-16 lg:py-8 lg:h-[438px] overflow-y-hidden lg:flex-row-reverse max-w-7xl">
