@@ -41,7 +41,7 @@ const CardsSection = () => {
       } lg:mx-24`}
     >
       <div className="w-full overflow-x-auto overflow-y-hidden whitespace-nowrap">
-        <div className="flex flex-col items-center 2xl:justify-center gap-8 md:flex-row flex-wrap-">
+        <div className="grid grid-cols-2 md:flex flex-col items-center 2xl:justify-center gap-5 md:gap-8 md:flex-row flex-wrap-">
           {segments.map((segment, i) => (
             <Card
               key={segment.id}
@@ -69,7 +69,7 @@ const Card = ({ id, segment, active, setActive }) => {
       <div
         className={`  bg-16 w-full md:w-[24%] ${
           active.id === id ? "min-w-[600px]" : ",,min-w-[300px]"
-        } transition-all duration-500 ease-in min-h-[280px] rounded-xl border border-muted-50 relative py-6 flex flex-col items-center justify-center `}
+        } transition-all duration-500 ease-in min-h-[161px] md:min-h-[280px] rounded-xl border border-muted-50 relative py-6 flex flex-col items-center justify-center `}
         style={{
           transform: active.id === id && "rotateY(180deg)",
           // zIndex: active.id === id && 1000000,
@@ -77,13 +77,13 @@ const Card = ({ id, segment, active, setActive }) => {
       >
         <p
           style={{ transform: active.id === id && "rotateY(180deg)" }}
-          className="text-[42px] leading-[63px] font-semibold"
+          className="text-2xl md:text-[42px] md:leading-[63px] md:font-semibold"
         >
           {segment.title}
         </p>
         {active.id !== id ? (
           <div
-            className={`absolute right-8 bottom-6 rounded-full h-11 w-11 flex items-center justify-center border-2 bg-dark-white border-white-20 cursor-pointer`}
+            className={`absolute right-4 md:right-8 bottom-4 md:bottom-6 rounded-full h-6 md:h-11 w-6 md:w-11 flex items-center justify-center border-2 bg-dark-white border-white-20 cursor-pointer`}
             onClick={handleOpen}
           >
             <Image src="/icons/add.svg" alt="" height={24} width={24} />
