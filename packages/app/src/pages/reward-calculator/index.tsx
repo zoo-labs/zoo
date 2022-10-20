@@ -1,4 +1,4 @@
-import { PrettoSlider } from "components/Slider";
+import { MarketTypeSlider, PrettoSlider } from "components/Slider";
 import React, { useState } from "react";
 import {
   LineChart,
@@ -69,19 +69,21 @@ const RewardCalculator = () => {
           <p className="mb-2.5 text-sm font-light md:text-base md:font-normal">
             Term
           </p>
-          <input
-            type="text"
-            className="w-full bg-black border border-33 py-3.5 px-4 rounded"
-          />
+          <select className="w-full bg-black border border-33 py-3.5 px-4 rounded outline-none">
+            <option value="Val">6 months</option>
+            <option value="Val">12 months</option>
+            <option value="Val">18 months</option>
+          </select>
         </div>
         <div className="w-full">
           <p className="mb-2.5 text-sm font-light md:text-base md:font-normal">
             Animal
           </p>
-          <input
-            type="text"
-            className="w-full bg-black border border-33 py-3.5 px-4 rounded"
-          />
+          <select className="w-full bg-black border border-33 py-3.5 px-4 rounded outline-none">
+            <option value="Val">Baby Origin Nubian Giraffe</option>
+            <option value="Val">Baby Origin Hippo</option>
+            <option value="Val">Javan Rhinoceros</option>
+          </select>
         </div>
       </div>
       <div className="grid md:grid-cols-2 gap-4">
@@ -121,7 +123,7 @@ const RewardCalculator = () => {
         <div>
           <p className="mb-4 ">Market Type</p>
           <div className="w-full rounded-2xl border border-33 bg-black py-6">
-            <PrettoSlider
+            <MarketTypeSlider
               onChange={(value, number) => {
                 setEarning(Number(number));
               }}
@@ -134,30 +136,30 @@ const RewardCalculator = () => {
               max={maxPrice}
             />
             <div className="mt-[18px] pl-3 grid grid-cols-7 gap-1 text-[10px] md:text-sm">
-              <div className="flex flex-col items-center justify-center text-center">
+              <div className="flex flex-col items-center h-full justify-between text-center">
                 <p>Super Bearish</p>
                 <p>- 50%</p>
               </div>
-              <div className="flex flex-col items-center justify-center text-center">
+              <div className="flex flex-col items-center h-full justify-between text-center">
                 <p>Bearish</p>
                 <p>- 25%</p>
               </div>
-              <div className="flex flex-col items-center justify-center text-center">
+              <div className="flex flex-col items-center h-full justify-between text-center">
                 <p>Current</p>
               </div>
-              <div className="flex flex-col items-center justify-center text-center">
+              <div className="flex flex-col items-center h-full justify-between text-center">
                 <p>Bullish</p>
                 <p>+50%</p>
               </div>
-              <div className="flex flex-col items-center justify-center text-center">
+              <div className="flex flex-col items-center h-full justify-between text-center">
                 <p>Very Bullish</p>
                 <p>+100%</p>
               </div>
-              <div className="flex flex-col items-center justify-center text-center">
+              <div className="flex flex-col items-center h-full justify-between text-center">
                 <p>Super Bullish</p>
                 <p>+500%</p>
               </div>
-              <div className="flex flex-col items-center justify-center text-center">
+              <div className="flex flex-col items-center h-full justify-between text-center">
                 <p>Moon</p>
                 <p>+1000%</p>
               </div>
