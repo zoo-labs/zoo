@@ -3,13 +3,13 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 
-export default function Learn() {
+export default function Community() {
   return (
     <div className="text-right relative flex flex-col justify-center px-2 md:px-0">
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="inline-flex w-full text-base text-white rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 mb-4 md:mb-0">
-            Learn
+            Community
             <ChevronDownIcon
               className="w-5 h-5 ml-1 -mr-1 mt-[3px] text-white-200 hover:text-white-100"
               aria-hidden="true"
