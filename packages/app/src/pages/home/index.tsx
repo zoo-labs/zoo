@@ -19,6 +19,8 @@ import { useTokenTypes } from "zoo/state";
 import CardsSection from "./Cards";
 import GameFi from "./GameFi";
 import InfoSection from "./InfoSection";
+import StartCollecting from "./StartCollecting";
+import UnimagineableExperience from "./UnimagineableExperience";
 
 const BASE_NFT_URL = "https://db.zoolabs.io";
 
@@ -186,50 +188,27 @@ export default function Home() {
     <div className="relative">
       <HeroSection />
       <CardsSection />
-      <InfoSection />
-      <div className="flex flex-col px-6 mx-auto mb-16 md:mb-32 max-w-7xl gap-10 mt-6 lg:mt-0 lg:gap-36 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex-1">
-          <p className="text-3xl md:text-6xl font-bold mb-4 md:mb-9">
-            It all starts with one egg.
+      <UnimagineableExperience />
+      <StartCollecting />
+      <div className="flex items-center justify-center flex-col relative">
+        <img
+          src="/img/girl-on-vr.png"
+          alt=""
+          className="md:w-[700px] md:h-[700px] object-cover object-center"
+        />
+        <div className="absolute bottom-10 md:bottom-20 flex flex-col items-center justify-center">
+          <p className="text-2xl md:text-4xl mb-3 font-bold">
+            Bring them to the Metaverse.
           </p>
-          <Link href="/drop" passHref>
-            <div className="px-5 py-3 text-sm font-medium text-white bg-33 rounded-full md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer w-max">
-              Start Collecting
-            </div>
-          </Link>
-        </div>
-        <div className="flex items-center justify-center flex-1 h-full max-h-[583px] border border-33 rounded-2xl max-w-max mx-auto">
-          <video
-            src="https://zoolabs.mypinata.cloud/ipfs/QmeoB3GHivCqzvX27E5RZE4nwNXkikdkbv5iiqyqUW3Qwu"
-            autoPlay
-            loop
-            className="object-cover w-full md:min-w-[521px] h-full max-h-[583px] overflow-hidden rounded-2xl"
-          />
+          <button className="text-[10px] md:text-sm font-medium px-4 py-2 md:to-primary-300 rounded-full bg-33">
+            Visit ZOO Penthouse
+          </button>
         </div>
       </div>
+      <InfoSection />
       <AnimalFamilySection />
       <GameFi gameFi={gameFi} />
-      <div className="relative">
-        <div className="absolute flex items-center justify-center w-full bg-giraffess min-h-[100vh]">
-          <div className="relative flex items-center justify-center w-full">
-            <p className="absolute z-50 max-w-4xl text-5xl font-bold text-center md:text-8xl">
-              Unimaginable Experiences
-            </p>
-          </div>
-        </div>
-        <video
-          autoPlay
-          muted
-          loop
-          id="bgVideo"
-          className=" h-screen object-cover min-h-screen max-h-screen w-screen min-w-[100vw]"
-        >
-          <source
-            src={"/videoes/trippy_animals_short.mov"}
-            type="video/mp4"
-          ></source>
-        </video>
-      </div>
+
       <div className="px-6 pt-24 mx-auto max-w-7xl">
         {experiences.map((experience, i) => (
           <div
