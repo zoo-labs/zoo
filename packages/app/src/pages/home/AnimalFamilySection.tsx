@@ -14,34 +14,36 @@ const ModelViewer = dynamic(() => import("components/ModelViewer"), {
 
 const animalFamilyData = [
   {
-    id: "1",
-    cameraZ: 100,
-    upLimit: 120,
-    lowLimit: 40,
-    usdz: "/models/Elephant/ELEPHANT_ADULT.usdz",
-    glb: "/models/Elephant/ELEPHANT_ADULT.glb",
-    usdz_baby: "/models/Elephant/ELEPHANT_BABY.usdz",
-    glb_baby: "/models/Elephant/ELEPHANT_BABY.glb",
-    usdz_teen: "/models/Elephant/ELEPHANT_TEEN.usdz",
-    glb_teen: "/models/Elephant/ELEPHANT_TEEN.glb",
+    id: "3",
+    cameraZ: 50,
+    upLimit: 80,
+    lowLimit: 35,
+    usdz: "/models/Tiger/TIGER_ADULT.usdz",
+    glb: "/models/Tiger/TIGER_ADULT.glb",
+    usdz_baby: "/models/Tiger/TIGER_BABY.usdz",
+    glb_baby: "/models/Tiger/TIGER_BABY.glb",
+    usdz_teen: "/models/Tiger/TIGER_TEEN.usdz",
+    glb_teen: "/models/Tiger/TIGER_TEEN.glb",
     image:
-      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
-    gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330488/zoo/sumatran-elephant_bowsev.mov",
-    name: "Sumatran Elephant",
-    slug: "sumatran-elephant",
-    scientificName: " Elephas Maximus Sumatranus",
-    description: `Sumatran elephants feed on a variety of plants and deposit seeds
-    wherever they go, contributing to a healthy forest ecosystem.
-    They also share their lush forest habitat with other endangered
-    species.`,
-    status: "Critically Endangered",
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
+    gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
+    name: "Siberian Tiger",
+    slug: "siberian-tiger",
+    scientificName: "Panthera Tigris Altaica",
+    description: `The Siberian tiger is a tiger from a specific population of the
+    Panthera tigris tigris subspecies native to the Russian Far
+    East, Northeast China. It once ranged throughout the Korean
+    Peninsula, north China, and eastern Mongolia. The population
+    currently inhabits mainly the Sikhote-Alin mountain region in
+    southwest Primorye Province in East Russia.`,
+    status: "endangered",
     population: "2,400 - 2,800",
     size: "6.6 - 10.5 Feet",
     habitat: "Tropical Forests",
     images: [
-      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
-      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
-      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332888/zoo/images/sumatran-elephant_s3nww5.png",
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
+      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
     ],
   },
   {
@@ -77,39 +79,6 @@ const animalFamilyData = [
       "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332905/zoo/images/javan-rhino_aoxijc.png",
     ],
   },
-  {
-    id: "3",
-    cameraZ: 50,
-    upLimit: 80,
-    lowLimit: 35,
-    usdz: "/models/Tiger/TIGER_ADULT.usdz",
-    glb: "/models/Tiger/TIGER_ADULT.glb",
-    usdz_baby: "/models/Tiger/TIGER_BABY.usdz",
-    glb_baby: "/models/Tiger/TIGER_BABY.glb",
-    usdz_teen: "/models/Tiger/TIGER_TEEN.usdz",
-    glb_teen: "/models/Tiger/TIGER_TEEN.glb",
-    image:
-      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
-    gif: "https://res.cloudinary.com/diu8hjwwe/video/upload/v1644330487/zoo/siberian-tiger_gn44b5.mov",
-    name: "Siberian Tiger",
-    slug: "siberian-tiger",
-    scientificName: "Panthera Tigris Altaica",
-    description: `The Siberian tiger is a tiger from a specific population of the
-    Panthera tigris tigris subspecies native to the Russian Far
-    East, Northeast China. It once ranged throughout the Korean
-    Peninsula, north China, and eastern Mongolia. The population
-    currently inhabits mainly the Sikhote-Alin mountain region in
-    southwest Primorye Province in East Russia.`,
-    status: "endangered",
-    population: "2,400 - 2,800",
-    size: "6.6 - 10.5 Feet",
-    habitat: "Tropical Forests",
-    images: [
-      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
-      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
-      "https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332724/zoo/images/siberian-tiger_djt67i.png",
-    ],
-  },
 ];
 
 const AnimalFamilySection = () => {
@@ -119,10 +88,54 @@ const AnimalFamilySection = () => {
   return (
     <section className="AnimalFamily">
       <div className="px-6 py-10 md:py-20 mx-auto max-w-7xl">
-        <p className="font-bold text-3xl md:text-5xl md:text-center">
-          Or Grab an animal straightaway
+        <p className="font-bold text-3xl md:text-5xl text-center">
+          The Animals
         </p>
-        {animalFamilyData.map((data) => {
+        <p className="text-[10px] md:text-sm text-white text-center mb-14">
+          Coming Soon{" "}
+          <Link href="/animal-list" passHref>
+            <span className="font-bold">See All</span>
+          </Link>
+        </p>
+
+        <div className="grid grid-cols-2 gap-2">
+          {animalFamilyData.map((data) => {
+            return (
+              <div
+                className="w-full flex flex-col items-center mb-4 AnimalFamily__nfts"
+                key={data.id}
+              >
+                <div className="flex flex-col items-center w-full h-auto AnimalFamily__image">
+                  <div className="p-px mb-8 overflow-hidden  bg-black border border-33 rounded-2xl w-full md:w-auto">
+                    {gifMode === "gif" ? (
+                      <div className="overflow-hidden rounded w-full">
+                        <div className="w-full md:w-[400px] h-[196px] md:h-[400px]">
+                          <ModelViewer
+                            usdz={data.usdz}
+                            glb={data.glb}
+                          ></ModelViewer>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="overflow-hidden bg-black rounded-lg">
+                        <video
+                          autoPlay
+                          loop={true}
+                          playsInline={true}
+                          muted
+                          className="overflow-hidden rounded"
+                        >
+                          <source src={data.gif}></source>
+                        </video>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        {/* {animalFamilyData.map((data) => {
           return (
             <div
               className="w-full flex flex-col items-center mb-4 AnimalFamily__nfts border-b border-dark-gray mt-20"
@@ -169,7 +182,7 @@ const AnimalFamilySection = () => {
               </div>
             </div>
           );
-        })}
+        })} */}
       </div>
     </section>
   );
