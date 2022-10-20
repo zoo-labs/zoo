@@ -25,8 +25,8 @@ const SingleAnimal = ({ data }) => {
     }
   }, [category, data]);
   return (
-    <div className="overflow-hidden rounded relative">
-      <div className=" w-[400px] h-[400px]">{renderAnimal}</div>
+    <div className="overflow-hidden rounded relative w-full">
+      <div className=" w-[100%] h-[400px]">{renderAnimal}</div>
       <div className="absolute  left-0 right-0 bottom-2 max-w-[245px] mx-auto w-full flex items-center rounded-full bg-glass-50">
         <div
           onClick={() => setCategory("baby")}

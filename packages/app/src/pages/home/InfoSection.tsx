@@ -3,7 +3,7 @@ import React from "react";
 
 const utils = [
   {
-    title: "Anti-Rugging Tax",
+    title: "Stability Tax",
     description:
       "Zoo Labs will impose a 8% tax for the $ZOO token in order to keep moving forward and keep liquidity high. The tax will enure a sustainable ecosystem. The tax will be split in half where 4% will go to the ZOO DAO and 4% will go to the liquidity pool.",
     icon: "/icons/line-across-circle-1.svg",
