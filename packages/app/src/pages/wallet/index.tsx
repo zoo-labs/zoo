@@ -69,9 +69,9 @@ export default function Wallet({ children }) {
     <section className="Hero">
       <div className="px-6 pb-16 mt- Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
         <div className="flex flex-col items-center justify-between px-2 pt-12 md:px-6 lg:flex-row lg:max-w-7xl lg:mx-auto">
-          <div className="p-px rounded-full bg-blue">
+          <div className="p-0.5 rounded-full bg-black">
             <div className="bg-black rounded-full ">
-              <div className="flex items-center rounded-full w-max bg-blue">
+              <div className="flex items-center rounded-full w-max bg-black">
                 {["My Wallet", "My Bids", "My Auctions"].map((value, index) => {
                   const active = category === index;
                   return (
@@ -79,11 +79,13 @@ export default function Wallet({ children }) {
                       onClick={() => {
                         setCategory(index);
                       }}
-                      className={`${active ? "bg-bid-gradient" : "bg-black"} ${
-                        index === 0 && "rounded-l-full"
-                      } ${index === 2 && "rounded-r-full"}
+                      className={`bg-33 ${index === 0 && "rounded-l-full"} ${
+                        index === 2 && "rounded-r-full"
+                      }
                     ${index !== 2 && "mr-px"}
-                    text-base font-semibold py-4 px-3 cursor-pointer inline-block `}
+                    text-base font-semibold py-4 px-3 cursor-pointer inline-block ${
+                      active ? "text-white" : "text-black"
+                    }`}
                       key={index}
                     >
                       {value}
