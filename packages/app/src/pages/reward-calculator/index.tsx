@@ -1,5 +1,6 @@
 import { MarketTypeSlider, PrettoSlider } from "components/Slider";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   LineChart,
   CartesianGrid,
@@ -10,6 +11,7 @@ import {
   Line,
   ResponsiveContainer,
 } from "recharts";
+import { useGetAvailableEggs } from "state/zoo/hooks";
 
 const data = [
   {
@@ -45,8 +47,31 @@ const data = [
 ];
 
 const RewardCalculator = () => {
+  const { availableEggs } = useSelector((state: any) => state.zoo);
+  const getAvailableEggs = useGetAvailableEggs();
   const [earning, setEarning] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100);
+  const [data_, setData] = useState([]);
+  const [timeFrame, setTimeFrame] = useState(null);
+  const [animalYield, setAnimalYield] = useState(null);
+
+  const handleChange = () => {
+    const arr = [];
+    if (!timeFrame || !animalYield) return [];
+    for (let i = 1; i <= timeFrame; i++) {
+      arr.push({
+        name: `Month ${i}`,
+        amt: i * animalYield,
+      });
+    }
+    return arr;
+  };
+
+  const data = useMemo(handleChange, [animalYield, timeFrame]);
+
+  useEffect(() => {
+    getAvailableEggs();
+  }, [getAvailableEggs]);
 
   return (
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
@@ -69,20 +94,39 @@ const RewardCalculator = () => {
           <p className="mb-2.5 text-sm font-light md:text-base md:font-normal">
             Term
           </p>
-          <select className="w-full bg-black border border-33 py-3.5 px-4 rounded outline-none">
-            <option value="Val">6 months</option>
-            <option value="Val">12 months</option>
-            <option value="Val">18 months</option>
+          <select
+            onChange={(e) => setTimeFrame(Number(e.target.value))}
+            className="w-full bg-black border border-33 py-3.5 px-4 rounded outline-none"
+          >
+            <option value={null} selected disabled>
+              Terms
+            </option>
+            <option value={6}>6 months</option>
+            <option value={12}>12 months</option>
+            <option value={18}>18 months</option>
           </select>
         </div>
         <div className="w-full">
           <p className="mb-2.5 text-sm font-light md:text-base md:font-normal">
             Animal
           </p>
-          <select className="w-full bg-black border border-33 py-3.5 px-4 rounded outline-none">
-            <option value="Val">Baby Origin Nubian Giraffe</option>
-            <option value="Val">Baby Origin Hippo</option>
-            <option value="Val">Javan Rhinoceros</option>
+          <select
+            onChange={(e) => setAnimalYield(Number(e.target.value))}
+            className="w-full bg-black border border-33 py-3.5 px-4 rounded outline-none"
+          >
+            <option value={null} selected disabled>
+              Animal
+            </option>
+            {availableEggs?.map((egg) => {
+              const yield_ = egg.attributes?.find(
+                (attribute) => attribute?.trait_type === "Yields"
+              )?.value;
+              return (
+                <option key={egg.id} value={yield_}>
+                  {egg.name}
+                </option>
+              );
+            })}
           </select>
         </div>
       </div>
