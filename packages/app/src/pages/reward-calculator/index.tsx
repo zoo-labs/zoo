@@ -87,6 +87,7 @@ const RewardCalculator = () => {
           </p>
           <input
             type="text"
+            disabled
             className="w-full bg-black border border-33 py-3.5 px-4 rounded"
           />
         </div>
