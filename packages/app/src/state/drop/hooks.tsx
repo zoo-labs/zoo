@@ -95,5 +95,5 @@ export function useGetDrops() {
         dispatch(addDrops(drop));
       })
       .catch((err) => console.error("mi_egg_promiseerror", err));
-  }, [dispatch, zooKeeper]);
+  }, [dispatch, library, zooKeeper]);
 }
