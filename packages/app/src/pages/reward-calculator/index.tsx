@@ -51,7 +51,6 @@ const RewardCalculator = () => {
   const getAvailableEggs = useGetAvailableEggs();
   const [earning, setEarning] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100);
-  const [data_, setData] = useState([]);
   const [timeFrame, setTimeFrame] = useState(null);
   const [animalYield, setAnimalYield] = useState(null);
 
@@ -135,34 +134,40 @@ const RewardCalculator = () => {
         <div>
           <p className="mb-4 ">Zoo Earning Outlook</p>
           <div className="w-full rounded-2xl border border-33 bg-black py-6 h-[305px]">
-            <ResponsiveContainer width={"100%"} height="100%">
-              <LineChart
-                data={data}
-                margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  vertical={false}
-                  color="#333333"
-                  opacity={0.24}
-                />
-                <XAxis
-                  dataKey="name"
-                  tickLine={false}
-                  // minTickGap={10}
-                  padding={{ left: 25 }}
-                  tick={{ fontSize: 10 }}
-                />
-                <YAxis
-                  axisLine={false}
-                  tickLine={false}
-                  domain={[0, "auto"]}
-                  tick={{ fontSize: 10 }}
-                />
-                <Tooltip />
-                <Line type="monotone" dataKey="amt" stroke="#fff" />
-              </LineChart>
-            </ResponsiveContainer>
+            {data?.length === 0 ? (
+              <p className="flex justify-center items-center h-full w-full m-auto text-center align-middle">
+                Select Term and Animal to show data
+              </p>
+            ) : (
+              <ResponsiveContainer width={"100%"} height="100%">
+                <LineChart
+                  data={data}
+                  margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    vertical={false}
+                    color="#333333"
+                    opacity={0.24}
+                  />
+                  <XAxis
+                    dataKey="name"
+                    tickLine={false}
+                    minTickGap={10}
+                    padding={{ left: 0 }}
+                    tick={{ fontSize: 10 }}
+                  />
+                  <YAxis
+                    axisLine={false}
+                    tickLine={false}
+                    domain={[0, "auto"]}
+                    tick={{ fontSize: 10 }}
+                  />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="amt" stroke="#fff" />
+                </LineChart>
+              </ResponsiveContainer>
+            )}
           </div>
         </div>
         <div>
