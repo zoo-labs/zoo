@@ -23,16 +23,21 @@ const SingleDrop = ({}: AppProps & {
   const {
     query: { id },
   } = useRouter();
+  const getDrops = useGetDrops();
   const [drop, setDrop] = useState<Drop>();
   const [activeDrop, setActiveDrop] = useState(0);
   const { drops } = useSelector((state: any) => state.drop);
+
+  useEffect(() => {
+    getDrops();
+  }, [getDrops]);
 
   useEffect(() => {
     if (drops.length > 0) {
       const newDrop = drops.filter((drop) => drop.dropId === Number(id))[0];
       setDrop(newDrop);
     }
-  }, [drops]);
+  }, [drops, id]);
 
   return (
     <DropLayout isMarginTop={false}>
