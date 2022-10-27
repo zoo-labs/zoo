@@ -80,7 +80,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
               className="flex items-center justify-center flex-shrink-0 px-2 ml-2 text-xs font-bold uppercase rounded-sm primary"
               style={{ boxShadow: "inset 0 0 0 1px rgb(140, 79, 248)" }}
             >
-              {reservePriceBNB} BNB
+              {datum?.reservePrice} ZOO
             </div>
           </div>
           <div className="flex ">
@@ -131,7 +131,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
             Highest bid
           </div>
           <div className="text-xs font-semibold text-gray-500">
-            {amountBNB} BNB
+            {datum?.amount} ZOO
           </div>
         </div>
       </div>

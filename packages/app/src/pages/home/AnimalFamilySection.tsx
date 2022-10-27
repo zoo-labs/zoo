@@ -7,6 +7,7 @@ import { useGif } from "context/GifContext";
 
 import dynamic from "next/dynamic";
 import SingleAnimal from "./SingleAnimal";
+import { useSelector } from "react-redux";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -84,9 +85,57 @@ const animalFamilyData = [
 const AnimalFamilySection = () => {
   const { state } = useGif();
   const { gifMode } = state;
+  const { availableEggs } = useSelector((state: any) => state.zoo);
+
+  console.log("jdknfjdfkdbdfscaamds", availableEggs);
 
   return (
     <section className="AnimalFamily">
+      <div className="px-6 py-10 md:py-20 mx-auto max-w-7xl">
+        <p className="font-bold text-3xl md:text-5xl text-center mb-14">
+          The Origin Eggs
+        </p>
+
+        <div className="grid grid-cols-3 gap-2">
+          {availableEggs.map((data) => {
+            return (
+              <div
+                className="w-full flex flex-col items-center mb-4 AnimalFamily__nfts bg-black border border-33 rounded-md pb-1.5"
+                key={data.id}
+              >
+                <div className="flex flex-col items-center w-full h-[198px] md:h-[400px] AnimalFamily__image">
+                  <div className="p-px mb-2.5 overflow-hidden h-full w-full">
+                    <div className="overflow-hidden bg-black rounded-md h-full w-full">
+                      <video
+                        autoPlay
+                        loop={true}
+                        playsInline={true}
+                        muted
+                        className="overflow-hidden rounded object-cover object-center max-h-full w-full"
+                      >
+                        <source src={data.animation_url}></source>
+                      </video>
+                    </div>
+                  </div>
+                </div>
+                <div className="px-1.5 w-full text-center">
+                  {/* <p className="text-xs font-bold text-33">210/429</p> */}
+                  <p className="mt-[3px] text-xs md:text-base font-medium text-white mb-1">
+                    {data.name}
+                  </p>
+                  <Link href={`/market/egg/${data.id}`} passHref>
+                    <button className="outline-none w-full bg-33 rounded-md py-2 flex items-center justify-center">
+                      <p className="mr-2 text-[10px] md:text-sm">
+                        {data.price} ZOO
+                      </p>
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
       <div className="px-6 py-10 md:py-20 mx-auto max-w-7xl">
         <p className="font-bold text-3xl md:text-5xl text-center">
           The Animals
@@ -106,9 +155,9 @@ const AnimalFamilySection = () => {
                 key={data.id}
               >
                 <div className="flex flex-col items-center w-full h-auto AnimalFamily__image">
-                  <div className="p-px mb-8 overflow-hidden  bg-black border border-33 rounded-2xl w-full md:w-auto">
+                  <div className="p-px mb-8 overflow-hidden  bg-black border border-33 rounded-md w-full md:w-auto">
                     {gifMode === "gif" ? (
-                      <div className="overflow-hidden rounded w-full">
+                      <div className="overflow-hidden rounded-md w-full">
                         <div className="w-full md:w-[400px] h-[196px] md:h-[400px]">
                           <ModelViewer
                             usdz={data.usdz}
@@ -117,13 +166,13 @@ const AnimalFamilySection = () => {
                         </div>
                       </div>
                     ) : (
-                      <div className="overflow-hidden bg-black rounded-lg">
+                      <div className="overflow-hidden bg-black rounded-md">
                         <video
                           autoPlay
                           loop={true}
                           playsInline={true}
                           muted
-                          className="overflow-hidden rounded"
+                          className="overflow-hidden rounded-md"
                         >
                           <source src={data.gif}></source>
                         </video>
