@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import DaoLayout from "layouts/Dao";
 import DropLayout from "layouts/Drop";
 import { NextComponentType, NextPageContext } from "next";
@@ -114,11 +114,74 @@ const Drop = ({}: AppProps & {
       getAvailableEggs();
       getDrops();
     }
-  }, [zookeeper]);
+  }, [getAvailableEggs, getDrops, zookeeper]);
 
   useEffect(() => {
     setPlaying(true);
   }, []);
+
+  const Drops = useMemo(() => {
+    return drops.map((drop, i) => {
+      console.log("droppppp", drop);
+      return (
+        <div
+          key={i}
+          className={`flex flex-col ${
+            i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+          } items-center mb-11`}
+        >
+          <div className="bg-dropnft max-w-[464px] w-[40%] md:w-full flex items-center justify-center rounded">
+            <div className="w-full h-[435px] flex items-center justify-center">
+              {/* <video
+                      src={_.animation_url}
+                      autoPlay
+                      loop
+                      className="object-cover w-full max-h-full overflow-hidden rounded"
+                    /> */}
+              {drop?.items[0].kind === 0 || drop?.items[0].kind === 2 ? (
+                <img
+                  src={drop?.image}
+                  alt=""
+                  className="object-cover w-full max-h-full overflow-hidden rounded"
+                />
+              ) : (
+                <div className="h-[435px] w-full">
+                  <ModelViewer
+                    glb={drop.glb_animation_url}
+                    usdz={drop.usdz_animation_url}
+                  ></ModelViewer>
+                </div>
+                // <Image src={_.image} alt="" width={298} height={334} />
+              )}
+            </div>
+          </div>
+          <div
+            className={`flex-1 mt-5 md:mt-0 ${
+              i % 2 === 0 ? "md:pl-14" : "md:pr-14"
+            } `}
+          >
+            <p className="font-medium text-[32px] leading-8 mb-[18px]">
+              {drop.title}
+            </p>
+            <p className="mb-8 text-sm leading-7 text-muted-20">
+              {drop.description}
+            </p>
+            <Link href={`/drop/${drop.dropId}`} passHref>
+              <div className="text-left flex items-center font-normal mb-3 text-sm leading-10 w-max relative before:absolute before:h-1 before:w-[70%] before:left-0 before:-top-2 before:bg-black cursor-pointer">
+                <a className="mr-1">View {drop.name}</a>
+                <Image
+                  src="/icons/arrow-right.svg"
+                  alt=""
+                  width={20}
+                  height={20}
+                />
+              </div>
+            </Link>
+          </div>
+        </div>
+      );
+    });
+  }, [drops]);
 
   return (
     <DropLayout isMarginTop={false}>
@@ -129,16 +192,16 @@ const Drop = ({}: AppProps & {
               <p className="mb-4 text-3xl font-bold leading-10 md:leading-none md:text-6xl">
                 ZOO Origin Egg NFT
               </p>
-              <p className="max-w-full mb-10 overflow-hidden text-sm font-light text-muted-20">
+              <p className="max-w-full mb-10 md:overflow-hidden text-sm font-light text-muted-20">
                 Upgradeable Egg NFTs hatch into baby animals and mint up to 6
                 animals each for even more ways to earn yield.
               </p>
             </div>
-            <div className="flex items-center justify-center gap-5 min-h-[372px]">
+            <div className="flex items-center justify-center gap-3 md:gap-5 min-h-[200px] md:min-h-[372px]">
               {availableEggs.length ? (
                 availableEggs?.map((_: AvailableEgg) => (
-                  <div key={_.id} className="relative">
-                    <div className="flex items-end justify-center rounded-md w-56 h-[286px] transform duration-100 ease-in-out bg-black border border-33">
+                  <div key={_.id} className="relative w-[30%] md:w-auto">
+                    <div className="flex items-end justify-center rounded-md w-full h-32 md:w-56 md:h-[286px] transform duration-100 ease-in-out bg-black border border-33">
                       <div className="w-full h-full">
                         {_.kind === 0 || _.kind === 2 ? (
                           <video
@@ -163,7 +226,7 @@ const Drop = ({}: AppProps & {
                         )}
                       </div>
                       <Link href={`/market/egg/${_.id}`} passHref>
-                        <a className="absolute flex items-center justify-center w-10 h-10 rounded-full bg-33 bottom-2 right-2">
+                        <a className="absolute flex items-center justify-center w-6 md:w-10 h-6 md:h-10 rounded-full bg-33 bottom-2 right-2">
                           <Image
                             src="/icons/arrow-right-light.svg"
                             alt=""
@@ -274,65 +337,7 @@ const Drop = ({}: AppProps & {
               holders.
             </p>
           </div>
-          {drops.map((drop, i) => {
-            console.log("droppppp", drop);
-            return (
-              <div
-                key={i}
-                className={`flex flex-col ${
-                  i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                } items-center mb-11`}
-              >
-                <div className="bg-dropnft max-w-[464px] w-[40%] md:w-full flex items-center justify-center rounded">
-                  <div className="w-full h-[435px] flex items-center justify-center">
-                    {/* <video
-                      src={_.animation_url}
-                      autoPlay
-                      loop
-                      className="object-cover w-full max-h-full overflow-hidden rounded"
-                    /> */}
-                    {drop?.items[0].kind === 0 || drop?.items[0].kind === 2 ? (
-                      <img
-                        src={drop?.image}
-                        className="object-cover w-full max-h-full overflow-hidden rounded"
-                      />
-                    ) : (
-                      <div className="h-[435px] w-full">
-                        <ModelViewer
-                          glb={drop.glb_animation_url}
-                          usdz={drop.usdz_animation_url}
-                        ></ModelViewer>
-                      </div>
-                      // <Image src={_.image} alt="" width={298} height={334} />
-                    )}
-                  </div>
-                </div>
-                <div
-                  className={`flex-1 mt-5 md:mt-0 ${
-                    i % 2 === 0 ? "md:pl-14" : "md:pr-14"
-                  } `}
-                >
-                  <p className="font-medium text-[32px] leading-8 mb-[18px]">
-                    {drop.title}
-                  </p>
-                  <p className="mb-8 text-sm leading-7 text-muted-20">
-                    {drop.description}
-                  </p>
-                  <Link href={`/drop/${drop.dropId}`} passHref>
-                    <div className="text-left flex items-center font-normal mb-3 text-sm leading-10 w-max relative before:absolute before:h-1 before:w-[70%] before:left-0 before:-top-2 before:bg-black cursor-pointer">
-                      <a className="mr-1">View {drop.name}</a>
-                      <Image
-                        src="/icons/arrow-right.svg"
-                        alt=""
-                        width={20}
-                        height={20}
-                      />
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            );
-          })}
+          {Drops}
           <div className="flex justify-center mb-28">
             <Link href="/market" passHref>
               <button className="p-px rounded-full bg-gray-150">

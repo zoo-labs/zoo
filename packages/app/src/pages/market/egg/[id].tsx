@@ -37,7 +37,7 @@ const Item = () => {
   const { id } = router.query;
   const { account } = useActiveWeb3React();
   const [egg, setEgg] = useState<AvailableEgg>(null);
-  const [withZoo, setWithZoo] = useState(false);
+  const [withZoo, setWithZoo] = useState(true);
   const { availableEggs, loading, zooBalance, bnbBalance } = useSelector(
     (state: any) => state.zoo
   );

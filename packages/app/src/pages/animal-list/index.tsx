@@ -177,7 +177,7 @@ const AnimalList = () => {
         {animalFamilyData.map((animal, index) => (
           <div
             key={animal.id}
-            className="p-px  overflow-hidden rounded border border-gray-500 lg:max-w-md m-4  "
+            className="p-px  overflow-hidden rounded border border-gray-500 mx-auto w-full lg:max-w-md m-4  "
           >
             {gifMode === "gif" ? (
               <div className="overflow-hidden rounded ">
