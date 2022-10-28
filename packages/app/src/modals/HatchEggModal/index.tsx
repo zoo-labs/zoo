@@ -54,9 +54,7 @@ export default function HatchEggModal({ nftItem, success }) {
 
   const calculateTimeLeft = useCallback(() => {
     const startDate = new Date(nftItem?.timestamp * 1000);
-    const endDate = startDate.setHours(
-      startDate.getHours() + hatchEggWaitPeriod
-    );
+    const endDate = startDate.setMinutes(startDate.getMinutes() + 2);
     const difference = +new Date(endDate) - +new Date();
 
     let timeLeft: any = {};
