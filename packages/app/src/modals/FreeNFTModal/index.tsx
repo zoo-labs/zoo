@@ -82,7 +82,7 @@ export default function FreeNFTModal({ nft }: { nft: any }) {
           <button
             onClick={freeNft}
             disabled={loading}
-            className={`py-4 w-52 bg-bid-leader-board rounded-xl mb-7 outline-none focus:outline-none ${
+            className={`py-4 w-52 bg-blue rounded-xl mb-7 outline-none focus:outline-none ${
               loading && "opacity-30 disabled:cursor-not-allowed"
             }`}
           >

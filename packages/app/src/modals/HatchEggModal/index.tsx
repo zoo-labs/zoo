@@ -118,7 +118,7 @@ export default function HatchEggModal({ nftItem, success }) {
             Hatch Egg text
           </p> */}
           <button
-            className={`py-4 w-52 bg-bid-gradient rounded-xl mb-7 disabled:cursor-not-allowed ${
+            className={`py-4 w-52 bg-blue rounded-xl mb-7 disabled:cursor-not-allowed ${
               loading && "opacity-60"
             }`}
             disabled={loading || timeLeft}
