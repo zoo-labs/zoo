@@ -52,48 +52,50 @@ export default function HatchEggModal({ nftItem, success }) {
     }
   }, [account, hatchEgg, nftItem, success, toggleWallet]);
 
-  const calculateTimeLeft = useCallback(() => {
-    const startDate = new Date(nftItem?.timestamp * 1000);
-    const endDate = startDate.setMinutes(startDate.getMinutes() + 2);
-    const difference = +new Date(endDate) - +new Date();
+  // const calculateTimeLeft = useCallback(() => {
+  //   const startDate = new Date(nftItem?.timestamp * 1000);
+  //   const endDate = startDate.setHours(
+  //     startDate.getHours() + hatchEggWaitPeriod
+  //   );
+  //   const difference = +new Date(endDate) - +new Date();
 
-    let timeLeft: any = {};
+  //   let timeLeft: any = {};
 
-    if (difference > 0) {
-      timeLeft = {
-        d: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        h: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        m: Math.floor((difference / 1000 / 60) % 60),
-        s: Math.floor((difference / 1000) % 60),
-      };
-      return timeLeft;
-    } else {
-      return false;
-    }
-  }, [hatchEggWaitPeriod, nftItem?.timestamp]);
+  //   if (difference > 0) {
+  //     timeLeft = {
+  //       d: Math.floor(difference / (1000 * 60 * 60 * 24)),
+  //       h: Math.floor((difference / (1000 * 60 * 60)) % 24),
+  //       m: Math.floor((difference / 1000 / 60) % 60),
+  //       s: Math.floor((difference / 1000) % 60),
+  //     };
+  //     return timeLeft;
+  //   } else {
+  //     return false;
+  //   }
+  // }, [hatchEggWaitPeriod, nftItem?.timestamp]);
 
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  // const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      !timeLeft && clearInterval(interval);
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     !timeLeft && clearInterval(interval);
+  //     setTimeLeft(calculateTimeLeft());
+  //   }, 1000);
 
-    return () => clearTimeout(interval);
-  }, [calculateTimeLeft, timeLeft]);
+  //   return () => clearTimeout(interval);
+  // }, [calculateTimeLeft, timeLeft]);
 
   function getModalContent() {
     return (
       <div className="flex flex-col items-center justify-center space-y-4 bg-black rounded-xl relative h-[80vh]">
-        <div className="w-3/5 absolute right-8 top-7 font-semibold">
+        <div className="absolute w-3/5 font-semibold right-8 top-7">
           <ModalHeader
             title="Ready to Hatch?"
             className="w-full"
             onClose={toggleModal}
           />
         </div>
-        <div className="h-px w-full bg-white opacity-10" />
+        <div className="w-full h-px bg-white opacity-10" />
         <div className="w-full flex flex-col items-center justify-center space-y-6 max-w-[486px]">
           <div className="bg-black rounded-xl h-[310px] w-full flex flex-col justify-center items-center">
             <video
@@ -121,10 +123,11 @@ export default function HatchEggModal({ nftItem, success }) {
             className={`py-4 w-52 bg-blue rounded-xl mb-7 disabled:cursor-not-allowed ${
               loading && "opacity-60"
             }`}
-            disabled={loading || timeLeft}
+            // disabled={loading || timeLeft}
+            disabled={loading}
             onClick={handleHatchEgg}
           >
-            {loading
+            {/* {loading
               ? "Hatching..."
               : !timeLeft
               ? "Hatch Egg"
@@ -134,7 +137,8 @@ export default function HatchEggModal({ nftItem, success }) {
                 timeLeft.m +
                 "m " +
                 timeLeft.s +
-                "s"}
+                "s"} */}
+            {loading ? "Hatching..." : "Hatch Egg"}
           </button>
         </div>
       </div>
