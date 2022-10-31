@@ -281,7 +281,7 @@ const NftModal = ({}: AppProps & {
           ) : (
             <>
               <button
-                className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-leader-board disabled:cursor-not-allowed disabled:opacity-60"
+                className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-blue disabled:cursor-not-allowed disabled:opacity-60"
                 onClick={() => feed()}
                 disabled={loading || feeding}
               >
