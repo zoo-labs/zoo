@@ -119,7 +119,7 @@ export default function AuctionModal({
           <button
             onClick={() => handleAuction(duration, reservePrice, 0)}
             disabled={loading}
-            className={`py-4 w-52 bg-bid-gradient rounded-xl mb-7 outline-none focus:outline-none ${
+            className={`py-4 w-52 bg-blue rounded-xl mb-7 outline-none focus:outline-none ${
               loading && "opacity-30 disabled:cursor-not-allowed"
             }`}
           >
