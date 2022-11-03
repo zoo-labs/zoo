@@ -25,6 +25,8 @@ import NFTExpandedModal from "modals/ExpandNftModal";
 import ShareNFTModal from "modals/ShareNFTModal";
 import { Table } from "components/Table/styles";
 import TransactionRow from "components/Table/TransactionRow";
+import FragmentLayout from "layouts/Fragment";
+import Layout from "layouts/Default";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -138,263 +140,268 @@ const InfoPage = () => {
 
   console.log("NFTTTT_ANDAUCTION", nft);
   return (
-    <div className="px-6 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
-      <div className="showcase min-h-[564px] flex items-center justify-center relative">
-        {nft?.kind === 0 || nft?.kind === 2 ? (
-          <video
-            autoPlay
-            loop
-            src={nft.animation_url}
-            width={300}
-            height={350}
-          />
-        ) : (
-          <div className="h-[564px] w-full">
-            <ModelViewer
-              // zoom="35deg"
-              glb={nft?.glb_animation_url}
-              usdz={nft?.usdz_animation_url}
-            ></ModelViewer>
-          </div>
-        )}
-        <div className="absolute bottom-0 flex items-center justify-end w-full gap-3 right">
-          <button
-            onClick={toggleShare}
-            className="flex items-center justify-center gap-3 px-5 py-3 bg-gray-100 rounded-full"
-          >
-            <Image src="/icons/upload.svg" alt="" width={18} height={18} />
-            <span className="font-medium">Share</span>
-          </button>
-          <button
-            className="flex items-center justify-center gap-3 py-3.5 px-3.5 bg-gray-100 rounded-full"
-            onClick={toggleExpand}
-          >
-            <CropFreeRoundedIcon width={18} height={18} />
-          </button>
-          <button
-            className="flex items-center justify-center gap-3 py-3.5 px-3.5 bg-gray-100 rounded-full"
-            onClick={refresh}
-          >
-            <RefreshIcon width={18} height={18} />
-          </button>
-        </div>
-      </div>
-      <div className="flex flex-col mb-5 space-x-12 space-y-12 lg:flex-row lg:items-start py-9 ">
-        <div className="w-full lg:w-3/5">
-          <p className="font-semibold text-[56px] mb-2">{nft?.name}</p>
-          <div className="flex gap-x-4">
-            <div className="flex items-center gap-2">
-              <Image src="/icons/status.svg" alt="" height={26} width={20} />
-              <div>
-                <p className="text-sm font-medium">
-                  {nft?.attributes && nft?.attributes[0]?.trait_type}
-                </p>
-                <p className="font-medium text-[10px]">
-                  {nft?.attributes && nft?.attributes[0]?.value}
-                </p>
-              </div>
+    <Layout bg="bg-black">
+      <div className="px-6 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
+        <div className="showcase min-h-[564px] flex items-center justify-center relative">
+          {nft?.kind === 0 || nft?.kind === 2 ? (
+            <video
+              autoPlay
+              loop
+              src={nft.animation_url}
+              width={300}
+              height={350}
+            />
+          ) : (
+            <div className="h-[564px] w-full">
+              <ModelViewer
+                // zoom="35deg"
+                glb={nft?.glb_animation_url}
+                usdz={nft?.usdz_animation_url}
+              ></ModelViewer>
             </div>
-            <div className="flex items-center gap-2">
-              <Image
-                src="/icons/population.svg"
-                alt=""
-                height={26}
-                width={20}
-              />
-              <div>
-                <p className="text-sm font-medium">
-                  {nft?.attributes && nft?.attributes[1]?.trait_type}
-                </p>
-                <p className="font-medium text-[10px]">
-                  {nft?.attributes && nft?.attributes[1]?.value}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Image src="/icons/react.svg" alt="" height={26} width={20} />
-              <div>
-                <p className="text-sm font-medium">
-                  {nft?.attributes && nft?.attributes[2]?.trait_type}
-                </p>
-                <p className="font-medium text-[10px]">
-                  {nft?.attributes && nft?.attributes[2]?.value}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="my-5">
-            <p className="mb-3 text-xl font-semibold">Description</p>
-            <hr className="w-full h-px mb-10 opacity-40" />
-            {nft?.description ? (
-              <p className="text-justify">{nft?.description}</p>
-            ) : (
-              <>
-                <p className="mb-7">
-                  Introducing Only1 Origin NFTs and Creator Staking Pool - where
-                  Defi meets social in only1. Each creator passed KYC will be
-                  minted a Origin-NFT, which they can associate with perks and
-                  rewards and trade it in the marketplace. Users on the platform
-                  can stake $LIKE tokens on individual creators and earn based
-                  on the pool’s APY, which adjusts according to the creator’s
-                  engagement.
-                </p>
-                <p>
-                  Only1 believes that the future of NFTs will serve a key
-                  function within the tech world and that utility NFTs will
-                  inevitably spill into other verticals outside gaming. They
-                  also think art and collectible NFTs will slowly be replaced by
-                  utility NFTs, and hence have made them an integral part of
-                  their concept and earning mechanisms. There are two main
-                  methods that Only1 uses to prioritize social engagement
-                  between fans and influencers. ‍
-                </p>
-              </>
-            )}
-          </div>
-          <div className="flex items-center mb-4">
-            <div className="w-6 h-6 border border-gray-500 rounded-full" />
-            <p className="ml-2 text-xl font-bold">Creator: </p>
-            <a
-              href={`https://testnet.bscscan.com/address/${creator}`}
-              target="_blank"
-              rel={"noreferrer noopener"}
-              className="ml-4 text-xl font-bold text-steel"
+          )}
+          <div className="absolute bottom-0 flex items-center justify-end w-full gap-3 right">
+            <button
+              onClick={toggleShare}
+              className="flex items-center justify-center gap-3 px-5 py-3 bg-gray-100 rounded-full"
             >
-              {creator ? shortenAddress(creator) : ""}
-            </a>
-          </div>
-          <div className="flex items-center mb-4">
-            <div className="w-6 h-6 border border-gray-500 rounded-full" />
-            <p className="ml-2 text-xl font-bold">Current owner: </p>
-            <a
-              href={`https://testnet.bscscan.com/address/${nft?.tokenOwner}`}
-              target="_blank"
-              rel={"noreferrer noopener"}
-              className="ml-4 text-xl font-bold text-steel"
+              <Image src="/icons/upload.svg" alt="" width={18} height={18} />
+              <span className="font-medium">Share</span>
+            </button>
+            <button
+              className="flex items-center justify-center gap-3 py-3.5 px-3.5 bg-gray-100 rounded-full"
+              onClick={toggleExpand}
             >
-              {nft?.tokenOwner ? shortenAddress(nft?.tokenOwner) : ""}
-            </a>
+              <CropFreeRoundedIcon width={18} height={18} />
+            </button>
+            <button
+              className="flex items-center justify-center gap-3 py-3.5 px-3.5 bg-gray-100 rounded-full"
+              onClick={refresh}
+            >
+              <RefreshIcon width={18} height={18} />
+            </button>
           </div>
         </div>
-        <div className="w-full lg:w-2/5 border border-white-30 rounded-lg h-auto max-h-fit py-[22px] px-[26px]">
-          <div className="flex items-center justify-end">
-            {nft?.firstBidTime ? (
-              Object.keys(ttimeLeft).length > 0 ? (
-                <div className="py-2 text-xs font-medium rounded-full bg-zoo-green px-7">
-                  Active
+        <div className="flex flex-col mb-5 space-x-12 space-y-12 lg:flex-row lg:items-start py-9 ">
+          <div className="w-full lg:w-3/5">
+            <p className="font-semibold text-[56px] mb-2">{nft?.name}</p>
+            <div className="flex gap-x-4">
+              <div className="flex items-center gap-2">
+                <Image src="/icons/status.svg" alt="" height={26} width={20} />
+                <div>
+                  <p className="text-sm font-medium">
+                    {nft?.attributes && nft?.attributes[0]?.trait_type}
+                  </p>
+                  <p className="font-medium text-[10px]">
+                    {nft?.attributes && nft?.attributes[0]?.value}
+                  </p>
                 </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Image
+                  src="/icons/population.svg"
+                  alt=""
+                  height={26}
+                  width={20}
+                />
+                <div>
+                  <p className="text-sm font-medium">
+                    {nft?.attributes && nft?.attributes[1]?.trait_type}
+                  </p>
+                  <p className="font-medium text-[10px]">
+                    {nft?.attributes && nft?.attributes[1]?.value}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Image src="/icons/react.svg" alt="" height={26} width={20} />
+                <div>
+                  <p className="text-sm font-medium">
+                    {nft?.attributes && nft?.attributes[2]?.trait_type}
+                  </p>
+                  <p className="font-medium text-[10px]">
+                    {nft?.attributes && nft?.attributes[2]?.value}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="my-5">
+              <p className="mb-3 text-xl font-semibold">Description</p>
+              <hr className="w-full h-px mb-10 opacity-40" />
+              {nft?.description ? (
+                <p className="text-justify">{nft?.description}</p>
               ) : (
-                <div className="py-2 text-xs font-medium rounded-full bg-red px-7">
-                  Ended
-                </div>
-              )
-            ) : (
-              <div className="py-2 text-xs font-medium rounded-full bg-yellow px-7">
-                No Bid
-              </div>
-            )}
-          </div>
-          <div>
-            <div className="flex  space-x-3.5 mb-2 flex-col">
-              <p className="text-sm font-normal text-white opacity-60">
-                Reserve Price
-              </p>
-
-              <div className="flex items-center space-x-3.5">
-                <p className="text-2xl font-semibold">
-                  {abbreviateNumber(nft?.reservePrice)} ZOO
-                </p>
-                <p className="font-medium text-base text-[#909090]">
-                  ({abbreviateNumber(reservePriceBNB)} BNB)
-                </p>
-              </div>
+                <>
+                  <p className="mb-7">
+                    Introducing Only1 Origin NFTs and Creator Staking Pool -
+                    where Defi meets social in only1. Each creator passed KYC
+                    will be minted a Origin-NFT, which they can associate with
+                    perks and rewards and trade it in the marketplace. Users on
+                    the platform can stake $LIKE tokens on individual creators
+                    and earn based on the pool’s APY, which adjusts according to
+                    the creator’s engagement.
+                  </p>
+                  <p>
+                    Only1 believes that the future of NFTs will serve a key
+                    function within the tech world and that utility NFTs will
+                    inevitably spill into other verticals outside gaming. They
+                    also think art and collectible NFTs will slowly be replaced
+                    by utility NFTs, and hence have made them an integral part
+                    of their concept and earning mechanisms. There are two main
+                    methods that Only1 uses to prioritize social engagement
+                    between fans and influencers. ‍
+                  </p>
+                </>
+              )}
             </div>
-            <div className="flex space-x-3.5 mb-2 flex-col">
-              <p className="text-sm font-normal text-white opacity-60">
-                Last Bid Price
-              </p>
-              <div className="flex items-center space-x-3.5">
-                <p className="text-2xl font-semibold">
-                  {abbreviateNumber(nft?.amount)} ZOO
-                </p>
-              </div>
+            <div className="flex items-center mb-4">
+              <div className="w-6 h-6 border border-gray-500 rounded-full" />
+              <p className="ml-2 text-xl font-bold">Creator: </p>
+              <a
+                href={`https://testnet.bscscan.com/address/${creator}`}
+                target="_blank"
+                rel={"noreferrer noopener"}
+                className="ml-4 text-xl font-bold text-steel"
+              >
+                {creator ? shortenAddress(creator) : ""}
+              </a>
+            </div>
+            <div className="flex items-center mb-4">
+              <div className="w-6 h-6 border border-gray-500 rounded-full" />
+              <p className="ml-2 text-xl font-bold">Current owner: </p>
+              <a
+                href={`https://testnet.bscscan.com/address/${nft?.tokenOwner}`}
+                target="_blank"
+                rel={"noreferrer noopener"}
+                className="ml-4 text-xl font-bold text-steel"
+              >
+                {nft?.tokenOwner ? shortenAddress(nft?.tokenOwner) : ""}
+              </a>
+            </div>
+          </div>
+          <div className="w-full lg:w-2/5 border border-white-30 rounded-lg h-auto max-h-fit py-[22px] px-[26px]">
+            <div className="flex items-center justify-end">
+              {nft?.firstBidTime ? (
+                Object.keys(ttimeLeft).length > 0 ? (
+                  <div className="py-2 text-xs font-medium rounded-full bg-zoo-green px-7">
+                    Active
+                  </div>
+                ) : (
+                  <div className="py-2 text-xs font-medium rounded-full bg-red px-7">
+                    Ended
+                  </div>
+                )
+              ) : (
+                <div className="py-2 text-xs font-medium rounded-full bg-yellow px-7">
+                  No Bid
+                </div>
+              )}
             </div>
             <div>
-              <p className="text-white opacity-60 text-sm font-normal mb-2.5">
-                Auction Duration
-              </p>
-              <p className="font-semibold text-[40px] mb-[41px]">
-                {nft?.firstBidTime
-                  ? Object.keys(ttimeLeft).length > 0
-                    ? ttimeLeft.d
-                      ? `${ttimeLeft.d} Day${ttimeLeft.d > 1 ? "s" : ""}  Left`
-                      : ttimeLeft.h
-                      ? `${ttimeLeft.h} Hr${ttimeLeft.h > 1 ? "s" : ""} : ${
-                          ttimeLeft.m
-                        } Min${ttimeLeft.m > 1 ? "s" : ""}`
-                      : `${ttimeLeft.m} Minutes Left`
-                    : "Auction has ended"
-                  : "Auction has not started yet"}
-              </p>
+              <div className="flex  space-x-3.5 mb-2 flex-col">
+                <p className="text-sm font-normal text-white opacity-60">
+                  Reserve Price
+                </p>
+
+                <div className="flex items-center space-x-3.5">
+                  <p className="text-2xl font-semibold">
+                    {abbreviateNumber(nft?.reservePrice)} ZOO
+                  </p>
+                  <p className="font-medium text-base text-[#909090]">
+                    ({abbreviateNumber(reservePriceBNB)} BNB)
+                  </p>
+                </div>
+              </div>
+              <div className="flex space-x-3.5 mb-2 flex-col">
+                <p className="text-sm font-normal text-white opacity-60">
+                  Last Bid Price
+                </p>
+                <div className="flex items-center space-x-3.5">
+                  <p className="text-2xl font-semibold">
+                    {abbreviateNumber(nft?.amount)} ZOO
+                  </p>
+                </div>
+              </div>
+              <div>
+                <p className="text-white opacity-60 text-sm font-normal mb-2.5">
+                  Auction Duration
+                </p>
+                <p className="font-semibold text-[40px] mb-[41px]">
+                  {nft?.firstBidTime
+                    ? Object.keys(ttimeLeft).length > 0
+                      ? ttimeLeft.d
+                        ? `${ttimeLeft.d} Day${
+                            ttimeLeft.d > 1 ? "s" : ""
+                          }  Left`
+                        : ttimeLeft.h
+                        ? `${ttimeLeft.h} Hr${ttimeLeft.h > 1 ? "s" : ""} : ${
+                            ttimeLeft.m
+                          } Min${ttimeLeft.m > 1 ? "s" : ""}`
+                        : `${ttimeLeft.m} Minutes Left`
+                      : "Auction has ended"
+                    : "Auction has not started yet"}
+                </p>
+              </div>
             </div>
+            {nft?.firstBidTime && Object.keys(ttimeLeft).length === 0 ? (
+              ""
+            ) : (
+              <Link href={`/market/placebid/${id}`} passHref>
+                <button className="py-[18px] w-full bg-leader-board rounded-[4px]">
+                  {nft?.tokenOwner === account
+                    ? "Edit Your Auction"
+                    : "Place Bid"}
+                </button>
+              </Link>
+            )}
           </div>
-          {nft?.firstBidTime && Object.keys(ttimeLeft).length === 0 ? (
-            ""
-          ) : (
-            <Link href={`/market/placebid/${id}`} passHref>
-              <button className="py-[18px] w-full bg-leader-board rounded-[4px]">
-                {nft?.tokenOwner === account
-                  ? "Edit Your Auction"
-                  : "Place Bid"}
-              </button>
-            </Link>
-          )}
         </div>
-      </div>
-      <div className="w-full mb-10">
-        <div className="w-full border rounded-lg border-white-30 ">
-          <div className="flex items-center justify-between px-12 py-4">
-            <p>Current Bids</p>
-            <Image
-              src="/icons/caaret-down.svg"
-              alt=""
-              width={15}
-              height={8}
-              onClick={() => setShowTable(!showTable)}
-              className="cursor-pointer"
-            />
+        <div className="w-full mb-10">
+          <div className="w-full border rounded-lg border-white-30 ">
+            <div className="flex items-center justify-between px-12 py-4">
+              <p>Current Bids</p>
+              <Image
+                src="/icons/caaret-down.svg"
+                alt=""
+                width={15}
+                height={8}
+                onClick={() => setShowTable(!showTable)}
+                className="cursor-pointer"
+              />
+            </div>
+            <Table className={`w-full rounded-b-lg ${!showTable && "hidden"}`}>
+              <tr className="">
+                <th>From</th>
+                <th>To</th>
+                <th>Price</th>
+                <th>Offer Time</th>
+                <th>Hash</th>
+              </tr>
+              {[...transactions, ...(nft?.auctionHistory ?? [])]
+                .sort((a, b) => b.block_timestamp - a.block_timestamp)
+                .map((transaction, index) => {
+                  console.log("transaction", transaction);
+                  return (
+                    <TransactionRow
+                      key={index}
+                      from_address={transaction.from_address}
+                      to_address={transaction.to_address}
+                      value={transaction.value}
+                      block_timestamp={transaction.block_timestamp}
+                      transaction_hash={transaction.transaction_hash}
+                    />
+                  );
+                })}
+            </Table>
           </div>
-          <Table className={`w-full rounded-b-lg ${!showTable && "hidden"}`}>
-            <tr className="">
-              <th>From</th>
-              <th>To</th>
-              <th>Price</th>
-              <th>Offer Time</th>
-              <th>Hash</th>
-            </tr>
-            {[...transactions, ...(nft?.auctionHistory ?? [])]
-              .sort((a, b) => b.block_timestamp - a.block_timestamp)
-              .map((transaction, index) => {
-                console.log("transaction", transaction);
-                return (
-                  <TransactionRow
-                    key={index}
-                    from_address={transaction.from_address}
-                    to_address={transaction.to_address}
-                    value={transaction.value}
-                    block_timestamp={transaction.block_timestamp}
-                    transaction_hash={transaction.transaction_hash}
-                  />
-                );
-              })}
-          </Table>
         </div>
+        <ShareNFTModal nft={nft} />
+        <NFTExpandedModal nft={nft} />
       </div>
-      <ShareNFTModal nft={nft} />
-      <NFTExpandedModal nft={nft} />
-    </div>
+    </Layout>
   );
 };
 
 export default InfoPage;
+InfoPage.Layout = FragmentLayout;
