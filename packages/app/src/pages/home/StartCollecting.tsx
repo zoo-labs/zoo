@@ -3,7 +3,7 @@ import React from "react";
 
 const StartCollecting = () => {
   return (
-    <div className="flex flex-col px-6 mx-auto mb-16 md:mb-32 max-w-7xl gap-10 mt-6 lg:gap-36 lg:flex-row lg:items-center lg:justify-between">
+    <div className="flex flex-col px-6 mx-auto -mb-32 max-w-7xl gap-10 mt-6 lg:gap-36 lg:flex-row lg:items-center lg:justify-between">
       <div className="flex-1">
         <p className="text-3xl md:text-6xl font-bold mb-4 md:mb-9">
           It all starts with one egg.

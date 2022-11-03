@@ -190,11 +190,12 @@ export default function Home() {
       <CardsSection />
       <UnimagineableExperience />
       <StartCollecting />
-      <div className="flex items-center justify-center flex-col relative">
+      <div className="flex items-center justify-center flex-col relative mb-10">
         <img
-          src="/img/girl-on-vr.png"
+          // src="/img/girl-on-vr.png"
+          src="https://cdn.discordapp.com/attachments/922779586314506240/1036785476046180457/Untitled_design1.png"
           alt=""
-          className="md:w-[700px] md:h-[700px] object-cover object-center"
+          className="md:w-[700px] md:h-[900px] object-cover object-center"
         />
         <div className="absolute bottom-10 md:bottom-20 flex flex-col items-center justify-center">
           <p className="text-2xl md:text-4xl mb-3 font-bold">

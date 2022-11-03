@@ -29,7 +29,7 @@ const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
               className="rounded overflow-hidden max-h-[450px] object-cover"
             />
           ) : (
-            <div className="h-[450px] w-[300px]">
+            <div className="h-[450px] w-[300px] bg-black">
               <ModelViewer
                 glb={datum?.glb_animation_url}
                 usdz={datum?.usdz_animation_url}
