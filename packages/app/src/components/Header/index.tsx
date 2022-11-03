@@ -36,6 +36,7 @@ function AppBar(props: {
   banner?: boolean;
   isModal?: boolean;
   transparent?: boolean;
+  arrowBg?: string;
 }): JSX.Element {
   const { i18n } = useLingui();
   const { account, chainId, library, connector } = useActiveWeb3React();
@@ -94,7 +95,11 @@ function AppBar(props: {
             >
               <div className="flex items-center justify-between">
                 {props.isModal ? (
-                  <div className="p-3 bg-black rounded-full">
+                  <div
+                    className={`p-3 ${
+                      props.arrowBg ?? "bg-black"
+                    } rounded-full`}
+                  >
                     <ChevronLeftIcon
                       onClick={() => history.back()}
                       width={24}

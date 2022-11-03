@@ -94,7 +94,7 @@ function PlaceBid({}: AppProps & {
     <div className="w-full">
       <TwoColumComp
         LeftCol={
-          <div className="flex items-center justify-center w-full h-full bg-green-g px">
+          <div className="flex items-center justify-center w-full h-full bg-black px">
             <CardNft
               nft={nft}
               className="h-full lg:w-full"
@@ -104,7 +104,7 @@ function PlaceBid({}: AppProps & {
           </div>
         }
         RightCol={
-          <div className="w-full bg-[#000] h-full flex flex-col justify-center items-center text-white py-6 px-8 lg:px-24">
+          <div className="w-full bg-green-g h-full flex flex-col justify-center items-center text-white py-6 px-8 lg:px-24">
             {!account ? (
               <div className="flex flex-col items-center justify-center w-full text-base font-medium">
                 <p className="text-2xl font-semibold text-center lg:text-4xl">
