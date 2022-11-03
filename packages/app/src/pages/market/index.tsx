@@ -49,6 +49,15 @@ const MarketPlacePage = () => {
     "Last 30 days",
     "Last 90 days",
   ];
+  const animalFilterOption = [
+    "Sumatran Elephant",
+    "Javan Rhino",
+    "Siberian Tiger",
+    "Amur Leopard",
+    "Pygmy Hippo",
+    "Nubian Giraffe",
+    "Red Wolf",
+  ];
   const [fetching, setFetching] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
 
@@ -126,6 +135,8 @@ const MarketPlacePage = () => {
   const { availableEggs, loading, allAuctions } = useSelector(
     (state: any) => state.zoo
   );
+  const [eggOptions, setEggs] = useState([]);
+  const [animalOptions, setAnimals] = useState([]);
   const [maxPrice, setMaxPrice] = useState<any>(0);
   const [auctionFilter, setAuctionFilter] = useState([]);
 
@@ -142,8 +153,13 @@ const MarketPlacePage = () => {
     getAvailableEggs();
   }, [getAllAuctions, getAvailableEggs]);
 
+  useEffect(() => {
+    const e = availableEggs?.map((egg) => `${egg.name} Egg`);
+    setEggs(e);
+  }, [availableEggs]);
+
   const filterAuctions = useCallback(
-    (type: "price" | "rarity" | "yields", value) => {
+    (type: "price" | "rarity" | "yields" | "egg" | "animal", value) => {
       if (type === "price") {
         const filter = allAuctions.filter(
           (auction) => Number(auction.reservePrice) >= Number(value)
@@ -179,13 +195,16 @@ const MarketPlacePage = () => {
           setAuctionFilter(actVal);
         }
       }
+      if (type === "egg" || type === "animal") {
+        const filter = allAuctions.filter(
+          (auction) =>
+            auction.name?.toLowerCase() === value?.value?.toLowerCase()
+        );
+        setAuctionFilter(filter);
+      }
     },
     [allAuctions]
   );
-
-  useEffect(() => {
-    console.log("jnshdjsdbsdbd", auctionFilter);
-  }, [auctionFilter]);
 
   return (
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
@@ -336,6 +355,7 @@ const MarketPlacePage = () => {
                   onClick={() => {
                     setCategory(index);
                     setPage(1);
+                    setAuctionFilter(allAuctions);
                     if (index === 0) {
                       setData(
                         [...Object.values(allData)]
@@ -461,7 +481,7 @@ const MarketPlacePage = () => {
                 options={sortOptions}
                 value={""}
                 onChange={(e) => filterAuctions("yields", e)}
-                placeholder="Highest Yields"
+                placeholder="-"
                 placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
               />
               <Image
@@ -484,7 +504,7 @@ const MarketPlacePage = () => {
                 options={options}
                 value={""}
                 onChange={(e) => filterAuctions("rarity", e)}
-                placeholder="Epic"
+                placeholder="-"
                 placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
               />
               <Image
@@ -496,7 +516,56 @@ const MarketPlacePage = () => {
               />
             </div>
           </div>
-
+          {category === 1 && (
+            <div>
+              <p className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
+                EGG TYPE
+              </p>
+              <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 min-w-[240px]">
+                <ReactDropdown
+                  menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
+                  className="dropdown"
+                  options={eggOptions}
+                  value={""}
+                  onChange={(e) => filterAuctions("egg", e)}
+                  placeholder="-"
+                  placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
+                />
+                <Image
+                  src={"/icons/down.svg"}
+                  alt=""
+                  className="absolute top-0"
+                  width={20}
+                  height={20}
+                />
+              </div>
+            </div>
+          )}
+          {category === 2 && (
+            <div>
+              <p className="mb-2 text-sm font-normal uppercase md:text-lg text-grey-400">
+                ANIMAL TYPE
+              </p>
+              <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-white border-solid rounded-lg cursor-pointer text-grey-400 min-w-[240px]">
+                <ReactDropdown
+                  menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
+                  className="dropdown"
+                  options={animalFilterOption}
+                  value={""}
+                  onChange={(e) => filterAuctions("animal", e)}
+                  placeholder="-"
+                  placeholderClassName="menu absolute -ml-4 pl-4 top-3 flex flex-col w-full"
+                />
+                <Image
+                  src={"/icons/down.svg"}
+                  alt=""
+                  className="absolute top-0"
+                  width={20}
+                  height={20}
+                />
+              </div>
+            </div>
+          )}
           <div
             className=""
             style={{
