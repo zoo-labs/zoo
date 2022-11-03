@@ -7,7 +7,7 @@ import Popups from "../../components/Popups";
 import { useActiveWeb3React } from "../../hooks";
 import { updateGasPrice } from "../../state/network/actions";
 
-const Layout = ({ children, banner = undefined }) => {
+const Layout = ({ children, banner = undefined, bg = "bg-[#111]" }) => {
   const { library } = useActiveWeb3React();
   useEffect(() => {
     updateGasPrice(library);
@@ -15,7 +15,9 @@ const Layout = ({ children, banner = undefined }) => {
   return (
     <div className="z-0 flex flex-col items-center w-full h-screen pb-16 lg:pb-0">
       <Header banner={banner} />
-      <Main isModal={false}>{children}</Main>
+      <Main isModal={false} bgColor={bg}>
+        {children}
+      </Main>
       <Popups />
       <Footer />
     </div>
