@@ -18,6 +18,7 @@ import { handleFunds } from "utils/handleFunds";
 import { useActiveWeb3React } from "hooks";
 import { useMoralis } from "react-moralis";
 import { Auction } from "types";
+import EmptyBidSection from "./EmptyBidSection";
 
 export default function Wallet({ children }) {
   const [category, setCategory] = useState(0);
@@ -125,16 +126,25 @@ export default function Wallet({ children }) {
             fetchNfts={() => fetchNFTs()}
           />
         ) : category === 1 ? (
-          allAuctions
-            .filter((auction: Auction) =>
-              auction.auctionHistory.some((history) => {
-                console.log("historyyyy", history);
-                return history.from_address === account;
-              })
-            ) // filter auctions that are mine
-            .map((auction: Auction, index: number) => (
-              <MyBidsSection key={index} auction={auction} />
-            ))
+          allAuctions.filter((auction: Auction) =>
+            auction.auctionHistory.some((history) => {
+              console.log("historyyyy", history);
+              return history.from_address === account;
+            })
+          )?.length > 0 ? (
+            allAuctions
+              .filter((auction: Auction) =>
+                auction.auctionHistory.some((history) => {
+                  console.log("historyyyy", history);
+                  return history.from_address === account;
+                })
+              ) // filter bids that are mine
+              .map((auction: Auction, index: number) => (
+                <MyBidsSection key={index} auction={auction} />
+              ))
+          ) : (
+            <EmptyBidSection />
+          )
         ) : allAuctions.filter(
             (auction: Auction) => auction.tokenOwner === account
           )?.length > 0 ? (

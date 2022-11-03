@@ -38,6 +38,7 @@ import { abbreviateNumber } from "functions/abbreviateNumbers";
 import { shortenAddress } from "functions";
 import CropFreeRoundedIcon from "@mui/icons-material/CropFreeRounded";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
+import FragmentLayout from "layouts/Fragment";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -130,215 +131,218 @@ const NftModal = ({}: AppProps & {
   console.log("the_chosen_nftItem", nftItem);
 
   return (
-    <div className="px-6 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
-      <div className="showcase min-h-[564px] flex items-center justify-center relative">
-        {nftItem?.kind === 0 || nftItem?.kind === 2 ? (
-          <video
-            autoPlay
-            loop
-            src={nftItem.token_uri}
-            width={300}
-            height={350}
-          />
-        ) : (
-          <div className="h-[564px] w-full">
-            <ModelViewer
-              // zoom="35deg"
-              glb={nftItem?.glb_animation_url}
-              usdz={nftItem?.usdz_animation_url}
-            ></ModelViewer>
-          </div>
-        )}
-        <div className="absolute bottom-0 flex items-center justify-end w-full gap-3 right">
-          {/* <button
+    <ModalLayout bg="bg-black" arrowBg="bg-dark-900">
+      <div className="px-6 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
+        <div className="showcase min-h-[564px] flex items-center justify-center relative">
+          {nftItem?.kind === 0 || nftItem?.kind === 2 ? (
+            <video
+              autoPlay
+              loop
+              src={nftItem.token_uri}
+              width={300}
+              height={350}
+            />
+          ) : (
+            <div className="h-[564px] w-full">
+              <ModelViewer
+                // zoom="35deg"
+                glb={nftItem?.glb_animation_url}
+                usdz={nftItem?.usdz_animation_url}
+              ></ModelViewer>
+            </div>
+          )}
+          <div className="absolute bottom-0 flex items-center justify-end w-full gap-3 right">
+            {/* <button
             onClick={toggleShare}
             className="flex items-center justify-center gap-3 px-5 py-3 bg-gray-100 rounded-full"
           >
             <Image src="/icons/upload.svg" alt="" width={18} height={18} />
             <span className="font-medium">Share</span>
           </button> */}
-          <button
-            className="flex items-center justify-center gap-3 py-3.5 px-3.5 bg-gray-100 rounded-full"
-            onClick={toggleExpand}
-          >
-            <CropFreeRoundedIcon width={18} height={18} />
-          </button>
-          <button
-            className="flex items-center justify-center gap-3 py-3.5 px-3.5 bg-gray-100 rounded-full"
-            onClick={refresh}
-          >
-            <RefreshIcon width={18} height={18} />
-          </button>
-        </div>
-      </div>
-      <div className="flex flex-col mb-5 space-x-12 space-y-12 lg:flex-row lg:items-start py-9 ">
-        <div className="w-full lg:w-3/5">
-          <p className="font-semibold text-[56px] mb-2">{nftItem?.name}</p>
-          <div className="flex gap-x-4">
-            <div className="flex items-center gap-2">
-              <Image src="/icons/status.svg" alt="" height={26} width={20} />
-              <div>
-                <p className="text-sm font-medium">
-                  {nftItem?.attributes && nftItem?.attributes[0]?.trait_type}
-                </p>
-                <p className="font-medium text-[10px]">
-                  {nftItem?.attributes && nftItem?.attributes[0]?.value}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Image
-                src="/icons/population.svg"
-                alt=""
-                height={26}
-                width={20}
-              />
-              <div>
-                <p className="text-sm font-medium">
-                  {nftItem?.attributes && nftItem?.attributes[1]?.trait_type}
-                </p>
-                <p className="font-medium text-[10px]">
-                  {nftItem?.attributes && nftItem?.attributes[1]?.value}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Image src="/icons/react.svg" alt="" height={26} width={20} />
-              <div>
-                <p className="text-sm font-medium">
-                  {nftItem?.attributes && nftItem?.attributes[2]?.trait_type}
-                </p>
-                <p className="font-medium text-[10px]">
-                  {nftItem?.attributes && nftItem?.attributes[2]?.value}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="my-5">
-            <p className="mb-3 text-xl font-semibold">Description</p>
-            <hr className="w-full h-px mb-10 opacity-40" />
-            {nftItem?.description ? (
-              <p className="text-justify">{nftItem?.description}</p>
-            ) : (
-              <>
-                <p className="mb-7">
-                  Introducing Only1 Origin NFTs and Creator Staking Pool - where
-                  Defi meets social in only1. Each creator passed KYC will be
-                  minted a Origin-NFT, which they can associate with perks and
-                  rewards and trade it in the marketplace. Users on the platform
-                  can stake $LIKE tokens on individual creators and earn based
-                  on the pool’s APY, which adjusts according to the creator’s
-                  engagement.
-                </p>
-                <p>
-                  Only1 believes that the future of NFTs will serve a key
-                  function within the tech world and that utility NFTs will
-                  inevitably spill into other verticals outside gaming. They
-                  also think art and collectible NFTs will slowly be replaced by
-                  utility NFTs, and hence have made them an integral part of
-                  their concept and earning mechanisms. There are two main
-                  methods that Only1 uses to prioritize social engagement
-                  between fans and influencers. ‍
-                </p>
-              </>
-            )}
-          </div>
-          <div className="flex items-center mb-4">
-            <div className="w-6 h-6 border border-gray-500 rounded-full" />
-            <p className="ml-2 text-xl font-bold">Creator: </p>
-            <a
-              href={`https://testnet.bscscan.com/address/${creator}`}
-              target="_blank"
-              rel={"noreferrer noopener"}
-              className="ml-4 text-xl font-bold text-steel"
-            >
-              {creator ? shortenAddress(creator) : ""}
-            </a>
-          </div>
-          <div className="flex items-center mb-4">
-            <div className="w-6 h-6 border border-gray-500 rounded-full" />
-            <p className="ml-2 text-xl font-bold">Current owner: </p>
-            <a
-              href={`https://testnet.bscscan.com/address/${account}`}
-              target="_blank"
-              rel={"noreferrer noopener"}
-              className="ml-4 text-xl font-bold text-steel"
-            >
-              {account ? shortenAddress(account) : ""}
-            </a>
-          </div>
-        </div>
-        <div className="w-full lg:w-2/5 border border-white-30 rounded-lg h-auto max-h-fit py-[22px] px-[26px]">
-          {nftItem?.kind === 0 || nftItem?.kind === 2 ? (
             <button
-              className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-blue disabled:cursor-not-allowed disabled:opacity-60"
-              onClick={() => hatchEgg()}
-              disabled={loading || feeding}
+              className="flex items-center justify-center gap-3 py-3.5 px-3.5 bg-gray-100 rounded-full"
+              onClick={toggleExpand}
             >
-              HATCH
+              <CropFreeRoundedIcon width={18} height={18} />
             </button>
-          ) : (
-            <>
+            <button
+              className="flex items-center justify-center gap-3 py-3.5 px-3.5 bg-gray-100 rounded-full"
+              onClick={refresh}
+            >
+              <RefreshIcon width={18} height={18} />
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-col mb-5 space-x-12 space-y-12 lg:flex-row lg:items-start py-9 ">
+          <div className="w-full lg:w-3/5">
+            <p className="font-semibold text-[56px] mb-2">{nftItem?.name}</p>
+            <div className="flex gap-x-4">
+              <div className="flex items-center gap-2">
+                <Image src="/icons/status.svg" alt="" height={26} width={20} />
+                <div>
+                  <p className="text-sm font-medium">
+                    {nftItem?.attributes && nftItem?.attributes[0]?.trait_type}
+                  </p>
+                  <p className="font-medium text-[10px]">
+                    {nftItem?.attributes && nftItem?.attributes[0]?.value}
+                  </p>
+                </div>
+              </div>
+              {/* <div className="flex items-center gap-2">
+                <Image
+                  src="/icons/population.svg"
+                  alt=""
+                  height={26}
+                  width={20}
+                />
+                <div>
+                  <p className="text-sm font-medium">
+                    {nftItem?.attributes && nftItem?.attributes[1]?.trait_type}
+                  </p>
+                  <p className="font-medium text-[10px]">
+                    {nftItem?.attributes && nftItem?.attributes[1]?.value}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Image src="/icons/react.svg" alt="" height={26} width={20} />
+                <div>
+                  <p className="text-sm font-medium">
+                    {nftItem?.attributes && nftItem?.attributes[2]?.trait_type}
+                  </p>
+                  <p className="font-medium text-[10px]">
+                    {nftItem?.attributes && nftItem?.attributes[2]?.value}
+                  </p>
+                </div>
+              </div> */}
+            </div>
+
+            <div className="my-5">
+              <p className="mb-3 text-xl font-semibold">Description</p>
+              <hr className="w-full h-px mb-10 opacity-40" />
+              {nftItem?.description ? (
+                <p className="text-justify">{nftItem?.description}</p>
+              ) : (
+                "- "
+                // <>
+                //   <p className="mb-7">
+                //     Introducing Only1 Origin NFTs and Creator Staking Pool -
+                //     where Defi meets social in only1. Each creator passed KYC
+                //     will be minted a Origin-NFT, which they can associate with
+                //     perks and rewards and trade it in the marketplace. Users on
+                //     the platform can stake $LIKE tokens on individual creators
+                //     and earn based on the pool’s APY, which adjusts according to
+                //     the creator’s engagement.
+                //   </p>
+                //   <p>
+                //     Only1 believes that the future of NFTs will serve a key
+                //     function within the tech world and that utility NFTs will
+                //     inevitably spill into other verticals outside gaming. They
+                //     also think art and collectible NFTs will slowly be replaced
+                //     by utility NFTs, and hence have made them an integral part
+                //     of their concept and earning mechanisms. There are two main
+                //     methods that Only1 uses to prioritize social engagement
+                //     between fans and influencers. ‍
+                //   </p>
+                // </>
+              )}
+            </div>
+            <div className="flex items-center mb-4">
+              <div className="w-6 h-6 border border-gray-500 rounded-full" />
+              <p className="ml-2 text-xl font-bold">Creator: </p>
+              <a
+                href={`https://testnet.bscscan.com/address/${creator}`}
+                target="_blank"
+                rel={"noreferrer noopener"}
+                className="ml-4 text-xl font-bold text-steel"
+              >
+                {creator ? shortenAddress(creator) : ""}
+              </a>
+            </div>
+            <div className="flex items-center mb-4">
+              <div className="w-6 h-6 border border-gray-500 rounded-full" />
+              <p className="ml-2 text-xl font-bold">Current owner: </p>
+              <a
+                href={`https://testnet.bscscan.com/address/${account}`}
+                target="_blank"
+                rel={"noreferrer noopener"}
+                className="ml-4 text-xl font-bold text-steel"
+              >
+                {account ? shortenAddress(account) : ""}
+              </a>
+            </div>
+          </div>
+          <div className="w-full lg:w-2/5 border border-white-30 rounded-lg h-auto max-h-fit py-[22px] px-[26px]">
+            {nftItem?.kind === 0 || nftItem?.kind === 2 ? (
               <button
                 className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-blue disabled:cursor-not-allowed disabled:opacity-60"
-                onClick={() => feed()}
+                onClick={() => hatchEgg()}
                 disabled={loading || feeding}
               >
-                FEED
+                HATCH
               </button>
-              {nftItem?.stage === 2 && (
-                <Link href={`/wallet/${nftItem?.id}/breed`} passHref>
-                  <button
-                    className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white border border-gray-500 rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
-                    disabled={loading || feeding}
-                  >
-                    BREED
-                  </button>
-                </Link>
-              )}
-            </>
-          )}
+            ) : (
+              <>
+                <button
+                  className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-blue disabled:cursor-not-allowed disabled:opacity-60"
+                  onClick={() => feed()}
+                  disabled={loading || feeding}
+                >
+                  FEED
+                </button>
+                {nftItem?.stage === 2 && (
+                  <Link href={`/wallet/${nftItem?.id}/breed`} passHref>
+                    <button
+                      className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white border border-gray-500 rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+                      disabled={loading || feeding}
+                    >
+                      BREED
+                    </button>
+                  </Link>
+                )}
+              </>
+            )}
 
-          <button
-            className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-blue disabled:cursor-not-allowed disabled:opacity-60"
-            onClick={() => auction()}
-            disabled={loading || feeding}
-          >
-            AUCTION
-          </button>
-          {nftItem && (nftItem.kind === 1 || nftItem.kind === 3) && (
             <button
-              className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white border rounded-lg cursor-pointer border-white-30 bg-white-10 disabled:cursor-not-allowed disabled:opacity-60"
-              onClick={() => freeNft()}
+              className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-blue disabled:cursor-not-allowed disabled:opacity-60"
+              onClick={() => auction()}
               disabled={loading || feeding}
             >
-              FREE
+              AUCTION
             </button>
-          )}
+            {nftItem && (nftItem.kind === 1 || nftItem.kind === 3) && (
+              <button
+                className="w-full p-4 mb-4 mr-2 text-sm font-bold text-center text-white rounded-lg cursor-pointer bg-blue disabled:cursor-not-allowed disabled:opacity-60"
+                onClick={() => freeNft()}
+                disabled={loading || feeding}
+              >
+                FREE
+              </button>
+            )}
+          </div>
         </div>
-      </div>
 
-      <ShareNFTModal nft={nftItem} />
-      <NFTExpandedModal isAuction={false} nft={nftItem} />
-      <HatchEggModal
-        nftItem={nftItem}
-        success={() => {
-          fetchNFTs().then((res) => {
-            setNftAnimate(myNfts[0]);
-            toggleAnimationModal();
-            // const nft__ = myNfts.find((n) => n.eggId === nftItem.id);
-            // setNftItem(nft__);
-          });
-        }}
-      />
-      <FreeNFTModal nft={nftItem} />
-      <AuctionModal nft={nftItem} />
-      <ShareNFTModal nft={nftItem} />
-      {Object.keys(nftAnimate).length > 0 && (
-        <HatchEggAnimationModal nft={nftAnimate} />
-      )}
-    </div>
+        <ShareNFTModal nft={nftItem} />
+        <NFTExpandedModal isAuction={false} nft={nftItem} />
+        <HatchEggModal
+          nftItem={nftItem}
+          success={() => {
+            fetchNFTs().then((res) => {
+              setNftAnimate(myNfts[0]);
+              toggleAnimationModal();
+              // const nft__ = myNfts.find((n) => n.eggId === nftItem.id);
+              // setNftItem(nft__);
+            });
+          }}
+        />
+        <FreeNFTModal nft={nftItem} />
+        <AuctionModal nft={nftItem} />
+        <ShareNFTModal nft={nftItem} />
+        {Object.keys(nftAnimate).length > 0 && (
+          <HatchEggAnimationModal nft={nftAnimate} />
+        )}
+      </div>
+    </ModalLayout>
   );
 
   // return (
@@ -578,5 +582,5 @@ const NftModal = ({}: AppProps & {
   // );
 };
 
-NftModal.Layout = ModalLayout;
+NftModal.Layout = FragmentLayout;
 export default NftModal;
