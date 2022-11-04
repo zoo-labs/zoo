@@ -9,11 +9,13 @@ import { ApplicationModal } from "../../state/application/actions";
 import Modal from "../../components/Modal";
 import ModalHeader from "../../components/ModalHeader";
 import { useSelector } from "react-redux";
-import { useFreeNFT } from "state/zoo/hooks";
+import { useFreeNFT, useTransferZoo } from "state/zoo/hooks";
 import { useActiveWeb3React } from "hooks/useActiveWeb3React";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
+import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
+import Web3 from "web3";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -25,10 +27,9 @@ export default function NetworkMigrationModal() {
   );
   const toggleModal = useNetworkMigrationModalToggle();
   // important that these are destructed from the account-specific web3-react context
-  const { account } = useActiveWeb3React();
-  const { loading } = useSelector((state: any) => state.zoo);
-
-  const copyBurnAddress = () => {};
+  const [copied, setCopied] = useState(false);
+  const { loading, zooBalance } = useSelector((state: any) => state.zoo);
+  const transferTokens = useTransferZoo();
 
   const calculateTimeLeft = () => {
     const endDate = new Date("11-09-2022 00:00").toUTCString();
@@ -47,7 +48,6 @@ export default function NetworkMigrationModal() {
 
     return timeLeft;
   };
-
   const [ttimeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   useEffect(() => {
@@ -60,6 +60,34 @@ export default function NetworkMigrationModal() {
 
     return () => clearTimeout(interval);
   }, []);
+
+  useEffect(() => {
+    if (copied) {
+      setTimeout(() => setCopied(false), 1500);
+    }
+  }, [copied]);
+
+  const copyBurnAddress = () => {
+    navigator.clipboard
+      .writeText("0x000000000000000000000000000000000000dEaD")
+      .then(() => setCopied(true));
+  };
+
+  const handleBurn = () => {
+    console.log("mi__Ballakss", zooBalance);
+    transferTokens(
+      "0x000000000000000000000000000000000000dEaD",
+      "0x" +
+        Web3.utils
+          .toBN(
+            Web3.utils.toWei(
+              (zooBalance - 0.00001)?.toString(),
+              "ether"
+            ) as unknown as string
+          )
+          .toString(16)
+    );
+  };
 
   const renderCountDown = useMemo(() => {
     return (
@@ -99,7 +127,7 @@ export default function NetworkMigrationModal() {
             AIRDROPPED TO YOU!
           </p>
           <button
-            onClick={() => {}}
+            onClick={handleBurn}
             disabled={loading}
             className={`py-4 w-full bg-[#2517FF] rounded-full mb-3 outline-none focus:outline-none ${
               loading && "opacity-30 disabled:cursor-not-allowed"
@@ -112,7 +140,11 @@ export default function NetworkMigrationModal() {
             className="flex items-center justify-center cursor-pointer"
           >
             <p className="mr-1.5">Copy Burn Adddress</p>
-            <ContentCopyOutlinedIcon style={{ fontSize: 14 }} />
+            {copied ? (
+              <CheckRoundedIcon style={{ fontSize: 14 }} />
+            ) : (
+              <ContentCopyOutlinedIcon style={{ fontSize: 14 }} />
+            )}
           </a>
         </div>
       </div>
