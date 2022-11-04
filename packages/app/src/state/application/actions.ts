@@ -42,6 +42,7 @@ export enum ApplicationModal {
   CAST_VOTE,
   COUNTDOWN,
   SHARE,
+  NETWORK_MIGRATION,
 }
 
 export const updateBlockNumber = createAction<{
