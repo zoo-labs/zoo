@@ -81,7 +81,7 @@ export default function NetworkMigrationModal() {
         Web3.utils
           .toBN(
             Web3.utils.toWei(
-              (zooBalance - 0.00001)?.toString(),
+              zooBalance?.toString(),
               "ether"
             ) as unknown as string
           )
