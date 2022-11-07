@@ -79,8 +79,8 @@ export function useBuyZoo(): () => void {
     try {
       console.log(account);
       faucet
-        .fund(account)
-        .send({ from: account })
+        ?.fund(account)
+        ?.send({ from: account })
         .then(async () => {
           getZooBalance();
           return 2;
@@ -558,7 +558,7 @@ export function useTransferZoo(): (
         });
         await tx.wait();
         console.log(tx);
-        dispatch(getBalance());
+        getBalance();
         addPopup({
           txn: {
             hash: null,
