@@ -7430,7 +7430,7 @@
           ]
         },
         "ZOO": {
-          "address": "0x19263F2b4693da0991c4Df046E4bAA5386F5735E",
+          "address": "0x09E2b83Fe5485a7c8BeAa5DffD1D324A2B2D5c13",
           "abi": [
             {
               "inputs": [],
@@ -10173,7 +10173,7 @@
           ]
         },
         "ZOO": {
-          "address": "0x09E2b83Fe5485a7c8BeAa5DffD1D324A2B2D5c13",
+          "address": "0xf05c992929ad237ef1dd24d55010c9f1b3b94211",
           "abi": [
             {
               "inputs": [],
