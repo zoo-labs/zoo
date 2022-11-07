@@ -76,8 +76,8 @@ export function useBuyZoo(): () => void {
     try {
       console.log(account);
       faucet
-        .fund(account)
-        .send({ from: account })
+        ?.fund(account)
+        ?.send({ from: account })
         .then(async () => {
           getZooBalance();
           return 2;
@@ -586,9 +586,14 @@ export function useBuyEggWithBnB(): (
   );
 }
 
-export function useTransferZoo(): (recipient: string, amount: number) => void {
+export function useTransferZoo(): (
+  recipient: string,
+  amount: number | string
+) => void {
   const addPopup = useAddPopup();
   const zoo = useZooToken();
+  const getBalance = useZoobalance();
+  const dispatch = useDispatch();
   return useCallback(
     async (recipient, amount) => {
       if (!zoo) return;
@@ -599,6 +604,7 @@ export function useTransferZoo(): (recipient: string, amount: number) => void {
         });
         await tx.wait();
         console.log(tx);
+        getBalance();
         addPopup({
           txn: {
             hash: null,
@@ -617,7 +623,7 @@ export function useTransferZoo(): (recipient: string, amount: number) => void {
         });
       }
     },
-    [addPopup, zoo]
+    [addPopup, dispatch, getBalance, zoo]
   );
 }
 
