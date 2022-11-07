@@ -58,6 +58,10 @@ export function useWalletModalToggle(): () => void {
   return useToggleModal(ApplicationModal.WALLET);
 }
 
+export function useNetworkMigrationModalToggle(): () => void {
+  return useToggleModal(ApplicationModal.NETWORK_MIGRATION);
+}
+
 export function useHatchEggModal(): () => void {
   return useToggleModal(ApplicationModal.HATCH_EGG);
 }
