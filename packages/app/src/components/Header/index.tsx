@@ -30,6 +30,7 @@ import NetworkPopup from "modals/NetworkPopup";
 import { useNetworkModalToggle } from "state/application/hooks";
 import { BackpackRounded } from "@mui/icons-material";
 import { ChevronLeftIcon } from "@heroicons/react/outline";
+import Banner from "components/Banner";
 
 function AppBar(props: {
   banner?: boolean;
@@ -64,7 +65,7 @@ function AppBar(props: {
         !props.isModal && !props.transparent ? "bg-black" : "bg-transparent"
       } z-999`}
     >
-      {/* {!props.isModal && <Banner />} */}
+      {!props.isModal && props.banner && <Banner type="network_migration" />}
       <Popover
         as="nav"
         className={`z-10 w-full bg-transparent ${

@@ -3,12 +3,15 @@ const HowOffline = ({ onClick }) => {
     <div>
       <h2 className="pb-6 text-xl">How do offline asks work?</h2>
       <p className="mb-10">
-        An offline Ask will allow buyers to place a Bid without sending funds to the smart contract. The buyer will need
-        to send you the funds directly as an "over the counter" deal. Example, they can send you a bank wire transfer.
+        An offline Ask will allow buyers to place a Bid without sending funds to
+        the smart contract. The buyer will need to send you the funds directly
+        as an &quot; over the counter&quot; deal. Example, they can send you a
+        bank wire transfer.
       </p>
       <p className="mb-8">
-        After you have verified receipt of the funds you can accept the bid. Accepting the offline bid will transfer
-        ownership of the NFT to the buyer.
+        After you have verified receipt of the funds you can accept the bid.
+        Accepting the offline bid will transfer ownership of the NFT to the
+        buyer.
       </p>
       <button
         type="button"
@@ -18,7 +21,7 @@ const HowOffline = ({ onClick }) => {
         Ok
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default HowOffline
+export default HowOffline;
