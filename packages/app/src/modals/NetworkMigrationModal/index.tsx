@@ -4,6 +4,7 @@ import {
   useModalOpen,
   useWalletModalToggle,
   useNetworkMigrationModalToggle,
+  useAddPopup,
 } from "../../state/application/hooks";
 import { ApplicationModal } from "../../state/application/actions";
 import Modal from "../../components/Modal";
@@ -32,7 +33,7 @@ export default function NetworkMigrationModal() {
   const { loading, zooBalance } = useSelector((state: any) => state.zoo);
   const toggleWalletModal = useWalletModalToggle();
   const transferTokens = useTransferZoo();
-
+  const addPopup = useAddPopup();
   const calculateTimeLeft = () => {
     const endDate = new Date("11-15-2022 00:00").toUTCString();
     const difference = +new Date(endDate) - +new Date();
@@ -64,6 +65,10 @@ export default function NetworkMigrationModal() {
   }, []);
 
   useEffect(() => {
+    localStorage.setItem("new_session", "true");
+  }, []);
+
+  useEffect(() => {
     if (copied) {
       setTimeout(() => setCopied(false), 1500);
     }
@@ -79,6 +84,16 @@ export default function NetworkMigrationModal() {
     console.log("mi__Ballakss", zooBalance);
     if (!account) {
       toggleWalletModal();
+      return;
+    }
+    if (zooBalance - 0.00001 <= 0) {
+      addPopup({
+        txn: {
+          hash: null,
+          summary: `You don't have any Zoo token to burn`,
+          success: false,
+        },
+      });
       return;
     }
     transferTokens(
@@ -118,17 +133,19 @@ export default function NetworkMigrationModal() {
 
   function getModalContent() {
     return (
-      <div className="flex flex-col items-center justify-center space-y-4 bg-black rounded-xl">
+      <div className="flex flex-col items-center justify-center space-y-4 bg-black rounded-xl w-full">
         <div className="absolute right-8 top-7">
           <ModalHeader onClose={toggleModal} />
         </div>
-        <div className="flex flex-col text-center items-center justify-center space-y-6 max-w-[486px] py-10 px-10">
-          <p className="mb-4 text-4xl font-bold">ETH NETWORK MIGRATION</p>
+        <div className="flex flex-col text-center items-center justify-center space-y-6 md:max-w-[486px] py-10 px-7 md:px-10">
+          <p className="mb-4 text-2xl md:text-4xl font-bold">
+            ETH NETWORK MIGRATION
+          </p>
           <div className="flex flex-col justify-center items-center">
-            <p className="mb-5">TIME LEFT TO BURN</p>
+            <p className="text-sm md:text-base mb-5">TIME LEFT TO BURN</p>
             {renderCountDown}
           </div>
-          <p className="text-base font-normal text-white text-center">
+          <p className="text-sm md:text-base font-normal text-white text-center">
             *** YOU MUST BURN YOUR TOKENS TO ENSURE YOU HAVE THE NEW TOKEN
             AIRDROPPED TO YOU!
           </p>
@@ -136,14 +153,14 @@ export default function NetworkMigrationModal() {
             onClick={handleBurn}
             disabled={loading || (!ttimeLeft.d && !ttimeLeft.h && !ttimeLeft.m)}
             className={
-              "py-4 w-full bg-[#2517FF] rounded-full mb-3 outline-none focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed"
+              "py-4 w-full bg-[#2517FF] rounded-full mb-3 outline-none focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed text-sm md:text-base"
             }
           >
             {loading ? "Burning $ZOO tokens..." : " Burn Your $ZOO Tokens"}
           </button>
           <a
             onClick={copyBurnAddress}
-            className="flex items-center justify-center cursor-pointer"
+            className="flex items-center justify-center cursor-pointer text-sm md:text-base"
           >
             <p className="mr-1.5">Copy Burn Adddress</p>
             {copied ? (
@@ -165,7 +182,6 @@ export default function NetworkMigrationModal() {
       maxHeight={90}
       padding={0}
       maxWidth={600}
-      // backgroundColor="transparent"
     >
       {getModalContent()}
     </Modal>

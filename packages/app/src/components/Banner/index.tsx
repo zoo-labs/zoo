@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { XIcon } from "@heroicons/react/outline";
 import Copy from "components/AccountDetails/Copy";
 import Typography from "components/Typography";
@@ -10,6 +10,15 @@ const Banner: FC<{ type?: "default" | "network_migration" }> = ({
 }) => {
   const [showBanner, setShowBanner] = useState(true);
   const toggleNetworkMigrationModal = useNetworkMigrationModalToggle();
+  const newSession = localStorage.getItem("new_session");
+
+  useEffect(() => {
+    if (!newSession) {
+      setTimeout(() => {
+        toggleNetworkMigrationModal();
+      }, 20000);
+    }
+  }, [newSession, toggleNetworkMigrationModal]);
 
   return (
     <>
@@ -21,7 +30,7 @@ const Banner: FC<{ type?: "default" | "network_migration" }> = ({
                 <span className="block text-left ">
                   <Typography
                     onClick={toggleNetworkMigrationModal}
-                    className="hidden p-1 ml-1 text-xs font-bold text-left underline md:block text-green xs:w-full"
+                    className=" p-1 ml-1 text-xs font-bold text-left underline block text-green xs:w-full"
                   >
                     <a>Migrate network to get new tokens</a>
                   </Typography>
