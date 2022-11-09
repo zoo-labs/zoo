@@ -1,70 +1,81 @@
-import { formatDateAgo, formatNumber, shortenAddress } from '../../../../functions'
-import React from 'react'
-import { useTable, usePagination, useSortBy } from 'react-table'
-import { classNames } from '../../../../functions'
-import { ArrowRightIcon, ArrowLeftIcon } from '@heroicons/react/outline'
+import {
+  formatDateAgo,
+  formatNumber,
+  shortenAddress,
+} from "../../../../functions";
+import React from "react";
+import { useTable, usePagination, useSortBy } from "react-table";
+import { classNames } from "../../../../functions";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/outline";
 
-import { useMemo } from 'react'
+import { useMemo } from "react";
 
 interface TransactionListProps {
   transactions: {
     symbols: {
-      incoming: string
-      outgoing: string
-    }
-    incomingAmt: number
-    outgoingAmt: number
-    address: string
-    time: Date
-  }[]
+      incoming: string;
+      outgoing: string;
+    };
+    incomingAmt: number;
+    outgoingAmt: number;
+    address: string;
+    time: Date;
+  }[];
 }
 
-export default function TransactionList({ transactions }: TransactionListProps): JSX.Element {
+export default function TransactionList({
+  transactions,
+}: TransactionListProps): JSX.Element {
   const columns = useMemo(
     () => [
       {
-        Header: 'Type',
-        accessor: 'symbols',
-        Cell: (props) => `Swap ${props.value?.incoming} for ${props.value?.outgoing}`,
-        align: 'left',
+        Header: "Type",
+        accessor: "symbols",
+        Cell: (props) =>
+          `Swap ${props.value?.incoming} for ${props.value?.outgoing}`,
+        align: "left",
       },
       {
-        Header: 'Value',
-        accessor: 'value',
+        Header: "Value",
+        accessor: "value",
         Cell: (props) => formatNumber(props.value, true),
-        align: 'right',
+        align: "right",
       },
       {
-        Header: 'Incoming',
-        accessor: 'incomingAmt',
-        align: 'right',
+        Header: "Incoming",
+        accessor: "incomingAmt",
+        align: "right",
       },
       {
-        Header: 'Outgoing',
-        accessor: 'outgoingAmt',
-        align: 'right',
+        Header: "Outgoing",
+        accessor: "outgoingAmt",
+        align: "right",
       },
       {
-        Header: 'Address',
-        accessor: 'address',
-        Cell: (props) => <a href={`https://etherscan.com/address/${props.value}`}>{shortenAddress(props.value)}</a>,
-        align: 'right',
+        Header: "Address",
+        accessor: "address",
+        Cell: (props) => (
+          <a href={`https://etherscan.com/address/${props.value}`}>
+            {shortenAddress(props.value)}
+          </a>
+        ),
+        align: "right",
       },
       {
-        Header: 'Time',
-        accessor: 'time',
+        Header: "Time",
+        accessor: "time",
         Cell: (props) => formatDateAgo(props.value),
-        align: 'right',
+        align: "right",
       },
     ],
     []
-  )
+  );
 
   return (
     <>
       <Table columns={columns} data={transactions ?? []} />
     </>
-  )
+  );
 }
 
 function Table({ columns, data }) {
@@ -89,29 +100,37 @@ function Table({ columns, data }) {
     },
     useSortBy,
     usePagination
-  )
+  );
 
   return (
     <div>
       <div className="w-full overflow-x-auto">
-        <table className="w-auto min-w-full border-collapse table-fixed" {...getTableProps()}>
+        <table
+          className="w-auto min-w-full border-collapse table-fixed"
+          {...getTableProps()}
+        >
           <thead className="w-full h-12 border-b border-gray-800">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroups.map((headerGroup, index) => (
+              <tr key={index} {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column, i) => (
-                  <th {...column.getHeaderProps()}>
-                    <div className={classNames(i === 0 && 'pl-2', i === headerGroup.headers.length - 1 && 'pr-2')}>
-                      <div className={classNames('w-full font-bold')}>
+                  <th key={i} {...column.getHeaderProps()}>
+                    <div
+                      className={classNames(
+                        i === 0 && "pl-2",
+                        i === headerGroup.headers.length - 1 && "pr-2"
+                      )}
+                    >
+                      <div className={classNames("w-full font-bold")}>
                         <div
                           className={classNames(
-                            column.align === 'right' && `justify-end`,
-                            column.align === 'left' && 'justify-start',
-                            i !== 0 && 'ml-2',
-                            i !== columns.length - 1 && 'mr-2',
-                            'whitespace-nowrap flex flex-row xl:mx-auto'
+                            column.align === "right" && `justify-end`,
+                            column.align === "left" && "justify-start",
+                            i !== 0 && "ml-2",
+                            i !== columns.length - 1 && "mr-2",
+                            "whitespace-nowrap flex flex-row xl:mx-auto"
                           )}
                         >
-                          {column.render('Header')}
+                          {column.render("Header")}
                         </div>
                       </div>
                     </div>
@@ -120,32 +139,42 @@ function Table({ columns, data }) {
               </tr>
             ))}
           </thead>
-          <tbody className="w-full border-t border-b border-gray-800" {...getTableBodyProps()}>
+          <tbody
+            className="w-full border-t border-b border-gray-800"
+            {...getTableBodyProps()}
+          >
             {page.map((row, i) => {
-              prepareRow(row)
+              prepareRow(row);
               return (
-                <tr {...row.getRowProps()}>
+                <tr key={i} {...row.getRowProps()}>
                   {row.cells.map((cell, cI) => {
                     return (
-                      <td className={classNames(i === 0 && 'pt-4', 'pl-0 pr-0 pb-4')} {...cell.getCellProps()}>
+                      <td
+                        key={cI}
+                        className={classNames(
+                          i === 0 && "pt-4",
+                          "pl-0 pr-0 pb-4"
+                        )}
+                        {...cell.getCellProps()}
+                      >
                         <div className="flex items-center text-secondary">
                           <div
                             className={classNames(
-                              cell.column.align === 'right' && `text-right`,
-                              cell.column.align === 'left' && 'text-left',
-                              cI !== 0 && 'ml-2',
-                              cI !== row.cells.length - 1 && 'mr-2',
-                              'w-full xl:mx-auto whitespace-nowrap'
+                              cell.column.align === "right" && `text-right`,
+                              cell.column.align === "left" && "text-left",
+                              cI !== 0 && "ml-2",
+                              cI !== row.cells.length - 1 && "mr-2",
+                              "w-full xl:mx-auto whitespace-nowrap"
                             )}
                           >
-                            {cell.render('Cell')}
+                            {cell.render("Cell")}
                           </div>
                         </div>
                       </td>
-                    )
+                    );
                   })}
                 </tr>
-              )
+              );
             })}
           </tbody>
         </table>
@@ -154,22 +183,30 @@ function Table({ columns, data }) {
         <div />
         <div className="flex">
           <div className="text-sm text-secondary">
-            {`${pageSize * pageIndex + 1}-${pageSize * (pageIndex + 1)} of ${rows.length}`}
+            {`${pageSize * pageIndex + 1}-${pageSize * (pageIndex + 1)} of ${
+              rows.length
+            }`}
           </div>
           <button
             onClick={() => previousPage()}
-            className={classNames(!canPreviousPage ? 'opacity-50 hover:cursor-default' : '', 'ml-3')}
+            className={classNames(
+              !canPreviousPage ? "opacity-50 hover:cursor-default" : "",
+              "ml-3"
+            )}
           >
             <ArrowLeftIcon width={16} height={16} />
           </button>
           <button
             onClick={() => nextPage()}
-            className={classNames(!canNextPage ? 'opacity-50 hover:cursor-default' : '', 'ml-3')}
+            className={classNames(
+              !canNextPage ? "opacity-50 hover:cursor-default" : "",
+              "ml-3"
+            )}
           >
             <ArrowRightIcon width={16} height={16} />
           </button>
         </div>
       </div>
     </div>
-  )
+  );
 }

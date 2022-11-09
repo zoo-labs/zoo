@@ -128,10 +128,10 @@ export default function NetworkMigrationModal() {
           </p>
           <button
             onClick={handleBurn}
-            disabled={loading}
-            className={`py-4 w-full bg-[#2517FF] rounded-full mb-3 outline-none focus:outline-none ${
-              loading && "opacity-30 disabled:cursor-not-allowed"
-            }`}
+            disabled={loading || (!ttimeLeft.d && !ttimeLeft.h && !ttimeLeft.m)}
+            className={`py-4 w-full bg-[#2517FF] rounded-full mb-3 outline-none focus:outline-none
+              disabled:opacity-60 disabled:cursor-not-allowed
+            `}
           >
             {loading ? "Burning $ZOO tokens..." : " Burn Your $ZOO Tokens"}
           </button>
