@@ -93,17 +93,17 @@ export default function NetworkMigrationModal() {
     return (
       <div className="flex items-start justify-center">
         <div className="flex flex-col items-center justify-center">
-          <p className="text-3xl font-semibold mb-2">{ttimeLeft.d}</p>
+          <p className="text-3xl font-semibold mb-2">{ttimeLeft.d ?? 0}</p>
           <p className="text-xs">DAYS</p>
         </div>
         <p className="text-3xl font-semibold ml-4">:</p>
         <div className="mx-4 flex flex-col items-center justify-center">
-          <p className="text-3xl font-semibold mb-2">{ttimeLeft.h}</p>
+          <p className="text-3xl font-semibold mb-2">{ttimeLeft.h ?? 0}</p>
           <p className="text-xs">HOURS</p>
         </div>
         <p className="text-3xl font-semibold mr-4">:</p>
         <div className="flex flex-col items-center justify-center">
-          <p className="text-3xl font-semibold mb-2">{ttimeLeft.m}</p>
+          <p className="text-3xl font-semibold mb-2">{ttimeLeft.m ?? 0}</p>
           <p className="text-xs">MINUTES</p>
         </div>
       </div>
