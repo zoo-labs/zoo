@@ -28,11 +28,13 @@ export default function NetworkMigrationModal() {
   const toggleModal = useNetworkMigrationModalToggle();
   // important that these are destructed from the account-specific web3-react context
   const [copied, setCopied] = useState(false);
+  const { account } = useActiveWeb3React();
   const { loading, zooBalance } = useSelector((state: any) => state.zoo);
+  const toggleWalletModal = useWalletModalToggle();
   const transferTokens = useTransferZoo();
 
   const calculateTimeLeft = () => {
-    const endDate = new Date("11-09-2022 00:00").toUTCString();
+    const endDate = new Date("11-15-2022 00:00").toUTCString();
     const difference = +new Date(endDate) - +new Date();
 
     let timeLeft: any = {};
@@ -75,13 +77,17 @@ export default function NetworkMigrationModal() {
 
   const handleBurn = () => {
     console.log("mi__Ballakss", zooBalance);
+    if (!account) {
+      toggleWalletModal();
+      return;
+    }
     transferTokens(
       "0x000000000000000000000000000000000000dEaD",
       "0x" +
         Web3.utils
           .toBN(
             Web3.utils.toWei(
-              zooBalance?.toString(),
+              (zooBalance - 0.00001)?.toString(),
               "ether"
             ) as unknown as string
           )
@@ -129,9 +135,9 @@ export default function NetworkMigrationModal() {
           <button
             onClick={handleBurn}
             disabled={loading || (!ttimeLeft.d && !ttimeLeft.h && !ttimeLeft.m)}
-            className={`py-4 w-full bg-[#2517FF] rounded-full mb-3 outline-none focus:outline-none
-              disabled:opacity-60 disabled:cursor-not-allowed
-            `}
+            className={
+              "py-4 w-full bg-[#2517FF] rounded-full mb-3 outline-none focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed"
+            }
           >
             {loading ? "Burning $ZOO tokens..." : " Burn Your $ZOO Tokens"}
           </button>

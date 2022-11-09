@@ -78,7 +78,7 @@ export function useBuyZoo(): () => void {
 
     try {
       console.log(account);
-      faucet
+      await faucet
         .fund(account)
         .send({ from: account })
         .then(async () => {
@@ -88,6 +88,7 @@ export function useBuyZoo(): () => void {
         .catch((e) => {
           console.error("ISSUE USING FAUCET \n", e);
         });
+      getZooBalance();
     } catch (e) {
       console.error("ISSUE USING FAUCET \n", e);
     }
@@ -558,7 +559,7 @@ export function useTransferZoo(): (
         });
         await tx.wait();
         console.log(tx);
-        dispatch(getBalance());
+        getBalance();
         addPopup({
           txn: {
             hash: null,
