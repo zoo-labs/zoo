@@ -107,7 +107,7 @@ function AppBar(props: {
                             {i18n._(t`Market`)}
                           </a>
                         </NavLink>
-                        <NavLink href="/drop">
+                        {/* <NavLink href="/drop">
                           <a
                             id={`bridge-nav-link`}
                             className={
@@ -118,7 +118,7 @@ function AppBar(props: {
                           >
                             {i18n._(t`DROP`)}
                           </a>
-                        </NavLink>
+                        </NavLink> */}
                         {/* <NavLink href="/bridge">
                           <a
                             id={`bridge-nav-link`}

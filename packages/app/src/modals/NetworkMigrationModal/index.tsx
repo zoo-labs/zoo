@@ -35,7 +35,9 @@ export default function NetworkMigrationModal() {
   const transferTokens = useTransferZoo();
   const addPopup = useAddPopup();
   const calculateTimeLeft = () => {
-    const endDate = new Date("11-15-2022 00:00").toUTCString();
+    const endDate_ = new Date("2022/11/15 00:00").toUTCString();
+    const endDate = new Date("2022/11/15 00:00").toLocaleString('en-US', {timeZone: 'America/New_York'})
+    console.log("dshjdhdsjadgvdshbshjas", +new Date(endDate))
     const difference = +new Date(endDate) - +new Date();
 
     let timeLeft: any = {};
