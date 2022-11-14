@@ -45,7 +45,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
         })
       }
     >
-      <div className="relative overflow-hidden rounded p-[2px] border border-gray-500 parent">
+      <div className="relative overflow-hidden rounded p-[2px] border border-gray-500 parent bg-black">
         <div className="h-[450px] w-full">
           {datum.kind === 0 || datum.kind === 2 ? (
             <video
@@ -57,7 +57,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
               className="rounded overflow-hidden max-h-[450px] object-cover"
             />
           ) : (
-            <div className="h-[450px] w-[300px] bg-black">
+            <div className="h-[450px] min-w-[300px]">
               <ModelViewer
                 glb={datum?.glb_animation_url}
                 usdz={datum?.usdz_animation_url}
@@ -112,7 +112,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
                   ${
                     datum.attributes.length !== index + 1 &&
                     "after:h-[24px] after:absolute after:w-px after:inset-y-[25%] after:right-0 after:bg-[#3D3D3D] after:content-[''] after:ml-0.5 "
-                  } w-full`}
+                  } w-full text-ellipsis whitespace-nowrap overflow-clip`}
                   key={index}
                 >
                   <div>

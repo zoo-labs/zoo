@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,6 +8,8 @@ import { useGif } from "context/GifContext";
 import dynamic from "next/dynamic";
 import SingleAnimal from "./SingleAnimal";
 import { useSelector } from "react-redux";
+import { useGetAvailableEggs } from "state/zoo/hooks";
+import { useZooKeeper } from "hooks";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -86,8 +88,14 @@ const AnimalFamilySection = () => {
   const { state } = useGif();
   const { gifMode } = state;
   const { availableEggs } = useSelector((state: any) => state.zoo);
+  const getAvailableEggs = useGetAvailableEggs();
+  const zookeeper = useZooKeeper();
 
-  console.log("jdknfjdfkdbdfscaamds", availableEggs);
+  useEffect(() => {
+    if (zookeeper) {
+      getAvailableEggs();
+    }
+  }, [getAvailableEggs, zookeeper]);
 
   return (
     <section className="AnimalFamily">
