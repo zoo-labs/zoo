@@ -110,13 +110,13 @@ function MyApp({
     console.log("useEagerWalletConnect", chainId);
     useEffect(() => {
       if (chainId) {
-        const isTestnet = chainId === ChainId.BSC_TESTNET;
-        const isMainnet = chainId === ChainId.BSC;
+        const isTestnet = chainId === ChainId.GÖRLI;
+        const isMainnet = chainId === ChainId.MAINNET;
 
         if (isTestnet || isMainnet) {
           connector.activate(chainId);
         } else {
-          connector.activate(ChainId.BSC_TESTNET);
+          connector.activate(ChainId.GÖRLI);
         }
       } else {
         connector.activate();
@@ -214,11 +214,11 @@ function MyApp({
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
           crossOrigin="anonymous"
         />
-        <link 
+        <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Inter:200,300,400,500,600,700,800,900"
         />
-          </Head>
+      </Head>
       {/* 
   // @ts-ignore */}
       <I18nProvider i18n={i18n} forceRenderOnLocaleChange={false}>
