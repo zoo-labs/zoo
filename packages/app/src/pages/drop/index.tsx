@@ -211,12 +211,6 @@ const Drop = ({}: AppProps & {
                             className="object-cover w-full max-h-full overflow-hidden rounded"
                           />
                         ) : (
-                          // <div className="h-[450px] w-[300px]">
-                          //   <ModelViewer
-                          //     glb={datum?.glb_animation_url}
-                          //     usdz={datum?.usdz_animation_url}
-                          //   ></ModelViewer>
-                          // </div>
                           <Image
                             src={_.image}
                             alt=""
@@ -315,15 +309,10 @@ const Drop = ({}: AppProps & {
                   value.
                 </p>
               </div>
-              {/* <img
-                src="/images/drop/white-egg.svg"
-                alt=""
-                className="md:-top-52 md:absolute -right-4"
-              /> */}
             </div>
           </div>
-          <div className="md:max-w-[45%] mb-10">
-            <p className="text-left font-bold mb-3 text-[42px] leading-10 w-max relative before:absolute before:h-1 before:w-[55%] before:left-0 before:-top-3 before:bg-black">
+          <div className="md:max-w-[65%] mx-auto text-center mb-10">
+            <p className="text-center font-bold mb-3 text-[42px] leading-10 w-max mx-auto relative before:absolute before:h-1 before:w-[55%] before:inset-x-[25%] before:-top-3 before:bg-black">
               Origin Egg Drop
             </p>
             <p className="text-sm leading-7 text-muted-20">
