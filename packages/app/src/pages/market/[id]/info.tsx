@@ -163,7 +163,7 @@ const InfoPage = () => {
     <div className="px-6 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
       <div className="flex flex-col md:flex-row md:items-center gap-24 mb-[91px]">
         <div className="bg-black border border-33 rounded-[14px] py-5 px-10">
-          <div className="showcase h-[351px] flex items-center justify-center relative">
+          <div className="showcase h-[351px] md:h-[450px] flex items-center justify-center relative">
             {nft?.kind === 0 || nft?.kind === 2 ? (
               <video
                 autoPlay
@@ -171,7 +171,7 @@ const InfoPage = () => {
                 src={nft.animation_url}
                 width={300}
                 height={350}
-                className="max-h-[350px]"
+                className="max-h-[350px] md:max-h-[450px]"
               />
             ) : (
               <div className="h-[350px] w-full">
@@ -211,16 +211,16 @@ const InfoPage = () => {
           <p className="mb-0.5 text-sm font-medium">DESCRIPTIONS</p>
           <div className="h-px bg-white w-full mb-2" />
           <p className="text-sm mb-8">{nft?.description}</p>
-          <div className="flex items-center mb-[22px]">
-            <div className="w-full md:w-auto mr-3">
+          <div className="flex flex-col iitems-center mb-[22px]">
+            <div className="w-full md:w-auto mb-1">
               <p className="text-white mb-1.5">Current Bid: </p>
               <p className="text-2xl font-semibold">
                 {abbreviateNumber(nft?.amount)} ZOO
               </p>
             </div>
-            <div className="w-full bg-white border-33 text-black rounded-md py-2.5 md:w-[197px] text-center">
-              <p className="text-base font-medium mb-1">Bid Amount</p>
-              <p className="text-[10px] font-light">{minBid} ZOO or more</p>
+            <div className="w-full rounded-md py-2.5">
+              <p className="text-white mb-1.5">Bid Amount:</p>
+              <p className="text-2xl font-semibold">{minBid} ZOO or more</p>
             </div>
           </div>
           <div className="flex flex-col md:flex-row items-center gap-3">
