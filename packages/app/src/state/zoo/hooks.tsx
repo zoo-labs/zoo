@@ -682,10 +682,6 @@ export function useGetAllAuctions(): () => Promise<void> {
         const endDate = new Date(firstBidTime * 1000 + duration * 1000);
         const difference = +new Date(endDate) - +new Date();
 
-        console.log("the_distance", {
-          difference,
-          firstBidTime: Number(firstBidTime),
-        });
         if (difference <= 0 && Number(firstBidTime)) return;
         const finalAuction: Auction = {
           index,
