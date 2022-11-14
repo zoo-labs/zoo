@@ -274,7 +274,7 @@ const Drop = ({}: AppProps & {
               </Link>
             </div>
             <div className="relative flex-1 z-[1]">
-              {playing ? (
+              {/* {playing ? (
                 <button
                   className="player__button"
                   onClick={() => setPlaying(false)}
@@ -288,7 +288,7 @@ const Drop = ({}: AppProps & {
                 >
                   <PlayCircleFilled />
                 </button>
-              )}
+              )} */}
               <video id="player-animals" controls={false} muted autoPlay>
                 <source
                   src={"/videoes/trippy_animals_short.mov"}
@@ -299,7 +299,7 @@ const Drop = ({}: AppProps & {
           </div>
           <div className="w-full p-px bg-gray-150 mb-[214px]">
             <div className="relative flex flex-col justify-between px-6 pt-10 bg-black md:px-12 md:flex-row">
-              <div className="flex-1 md:max-w-[75%] pb-10">
+              <div className="flex-1 md:max-w-[95%] pb-10">
                 <p className="text-[26px] leading-8 mb-3 text-white">
                   Ready to Hatch?
                 </p>
@@ -315,11 +315,11 @@ const Drop = ({}: AppProps & {
                   value.
                 </p>
               </div>
-              <img
+              {/* <img
                 src="/images/drop/white-egg.svg"
                 alt=""
                 className="md:-top-52 md:absolute -right-4"
-              />
+              /> */}
             </div>
           </div>
           <div className="md:max-w-[45%] mb-10">
