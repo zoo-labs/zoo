@@ -211,12 +211,6 @@ const Drop = ({}: AppProps & {
                             className="object-cover w-full max-h-full overflow-hidden rounded"
                           />
                         ) : (
-                          // <div className="h-[450px] w-[300px]">
-                          //   <ModelViewer
-                          //     glb={datum?.glb_animation_url}
-                          //     usdz={datum?.usdz_animation_url}
-                          //   ></ModelViewer>
-                          // </div>
                           <Image
                             src={_.image}
                             alt=""
@@ -274,7 +268,7 @@ const Drop = ({}: AppProps & {
               </Link>
             </div>
             <div className="relative flex-1 z-[1]">
-              {playing ? (
+              {/* {playing ? (
                 <button
                   className="player__button"
                   onClick={() => setPlaying(false)}
@@ -288,7 +282,7 @@ const Drop = ({}: AppProps & {
                 >
                   <PlayCircleFilled />
                 </button>
-              )}
+              )} */}
               <video id="player-animals" controls={false} muted autoPlay>
                 <source
                   src={"/videoes/trippy_animals_short.mov"}
@@ -299,7 +293,7 @@ const Drop = ({}: AppProps & {
           </div>
           <div className="w-full p-px bg-gray-150 mb-[214px]">
             <div className="relative flex flex-col justify-between px-6 pt-10 bg-black md:px-12 md:flex-row">
-              <div className="flex-1 md:max-w-[75%] pb-10">
+              <div className="flex-1 md:max-w-[95%] pb-10">
                 <p className="text-[26px] leading-8 mb-3 text-white">
                   Ready to Hatch?
                 </p>
@@ -315,15 +309,10 @@ const Drop = ({}: AppProps & {
                   value.
                 </p>
               </div>
-              <img
-                src="/images/drop/white-egg.svg"
-                alt=""
-                className="md:-top-52 md:absolute -right-4"
-              />
             </div>
           </div>
-          <div className="md:max-w-[45%] mb-10">
-            <p className="text-left font-bold mb-3 text-[42px] leading-10 w-max relative before:absolute before:h-1 before:w-[55%] before:left-0 before:-top-3 before:bg-black">
+          <div className="md:max-w-[65%] mx-auto text-center mb-10">
+            <p className="text-center font-bold mb-3 text-[42px] leading-10 w-max mx-auto relative before:absolute before:h-1 before:w-[55%] before:inset-x-[25%] before:-top-3 before:bg-black">
               Origin Egg Drop
             </p>
             <p className="text-sm leading-7 text-muted-20">
