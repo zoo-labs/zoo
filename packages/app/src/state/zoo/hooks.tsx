@@ -685,6 +685,10 @@ export function useGetAllAuctions(): () => Promise<void> {
             return auctionHistory;
           })
           .catch((err) => console.error("mi_egg_promiseerror", err));
+        const endDate = new Date(firstBidTime * 1000 + duration * 1000);
+        const difference = +new Date(endDate) - +new Date();
+
+        if (difference <= 0 && Number(firstBidTime)) return;
         const finalAuction: Auction = {
           index,
           description,
@@ -729,7 +733,7 @@ export function useGetAllAuctions(): () => Promise<void> {
             : "",
         };
 
-        console.log("finaAuction", finalAuction, auction);
+        console.log("finalAuction", finalAuction, auction);
         dispatch(addAuctionNft(finalAuction as any));
       });
     } catch (error) {
