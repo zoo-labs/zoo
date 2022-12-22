@@ -218,7 +218,7 @@ const InfoPage = () => {
                 <span className="text-[10px] text-muted-50">[16 Bids]</span>
               </div>
               <p className="text-2xl font-semibold">
-               {abbreviateNumber(nft?.amount)} ZOO
+                {abbreviateNumber(nft?.amount)} ZOO
               </p>
             </div>
             <div className=" rounded-md py-2 text-black bg-white text-center px-8">
@@ -325,9 +325,7 @@ const InfoPage = () => {
             </p>
           </div>
           <div className="bg-33 p-3.5 rounded">
-            <p className="text-2xl font-bold text-[#7D7D7D]">
-              Scientific Name
-            </p>
+            <p className="text-2xl font-bold text-[#7D7D7D]">Scientific Name</p>
             <p className="text-lg font-bold text-white">Canis Rufus</p>
           </div>
           <div className="bg-33 p-3.5 rounded">
@@ -339,6 +337,56 @@ const InfoPage = () => {
               Emotionally Intelligent ?
             </p>
             <p className="text-lg font-bold text-white">Coming Soon</p>
+          </div>
+        </div>
+
+        <div>
+          <div className="hidden border-b border-[#fff] lg:block pt-8 pb-4 w-1/3 mb-4">
+            <p className="uppercase font-semibold text-2xl mt-8">Browse</p>
+          </div>
+          <div className="grid lg:grid-cols-5 gap-4 mt-8">
+            {[1, 2, 3, 4, 5].map((data, index) => {
+              return (
+                <div
+                  key={index}
+                  className="border border-t border-[#333333] rounded-xl p-4"
+                >
+                  <div className="showcase h-[200px] flex items-center justify-center relative">
+                    {nft?.kind === 0 || nft?.kind === 2 ? (
+                      <video
+                        autoPlay
+                        loop
+                        src={nft.animation_url}
+                        width={300}
+                        height={200}
+                        className="max-h-[200px]"
+                      />
+                    ) : (
+                      <div className="h-[200px] w-full">
+                        <ModelViewer
+                          // zoom="35deg"
+                          glb={nft?.glb_animation_url}
+                          usdz={nft?.usdz_animation_url}
+                        ></ModelViewer>
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-center text-sm">
+                    #1234{" "}
+                    <span className="font-bold text-[#333333]">20/13</span>
+                  </p>
+                  <p className="text-center font-bold mt-1">
+                    Baby Amur Leopard
+                  </p>
+                  <div className="flex justify-center items-center bg-[#333333] py-2 rounded-lg mt-4">
+                    <p className="w-6 h-6 bg-white rounded-full text-[#333333] text-[10px] font-semibold flex items-center justify-center">
+                      ZOO
+                    </p>
+                    <p className="text-sm font-bold ml-2">220.4M</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
         <ShareNFTModal nft={nft} />
