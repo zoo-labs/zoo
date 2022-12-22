@@ -347,42 +347,53 @@ const InfoPage = () => {
           <div className="grid lg:grid-cols-5 gap-4 mt-8">
             {[1, 2, 3, 4, 5].map((data, index) => {
               return (
-                <div
-                  key={index}
-                  className="border border-t border-[#333333] rounded-xl p-4"
-                >
-                  <div className="showcase h-[200px] flex items-center justify-center relative">
-                    {nft?.kind === 0 || nft?.kind === 2 ? (
-                      <video
-                        autoPlay
-                        loop
-                        src={nft.animation_url}
-                        width={300}
-                        height={200}
-                        className="max-h-[200px]"
-                      />
-                    ) : (
-                      <div className="h-[200px] w-full">
-                        <ModelViewer
-                          // zoom="35deg"
-                          glb={nft?.glb_animation_url}
-                          usdz={nft?.usdz_animation_url}
-                        ></ModelViewer>
-                      </div>
-                    )}
-                  </div>
-                  <p className="text-center text-sm">
-                    #1234{" "}
-                    <span className="font-bold text-[#333333]">20/13</span>
-                  </p>
-                  <p className="text-center font-bold mt-1">
-                    Baby Amur Leopard
-                  </p>
-                  <div className="flex justify-center items-center bg-[#333333] py-2 rounded-lg mt-4">
-                    <p className="w-6 h-6 bg-white rounded-full text-[#333333] text-[10px] font-semibold flex items-center justify-center">
-                      ZOO
+                <div key={index}>
+                  <div className="border border-t border-[#333333] rounded-xl p-4">
+                    <div className="flex items-center w-12 h-12 intials-backdrop z-30 sticky bg-red rounded-full uppercase justify-center">
+                      <p className="text-3xl font-bold">E</p>
+                    </div>
+                    <div className="showcase h-[200px] flex items-center justify-center relative -mt-8">
+                      {nft?.kind === 0 || nft?.kind === 2 ? (
+                        <video
+                          autoPlay
+                          loop
+                          src={nft.animation_url}
+                          width={300}
+                          height={200}
+                          className="max-h-[200px]"
+                        />
+                      ) : (
+                        <div className="h-[200px] w-full">
+                          <ModelViewer
+                            // zoom="35deg"
+                            glb={nft?.glb_animation_url}
+                            usdz={nft?.usdz_animation_url}
+                          ></ModelViewer>
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-center text-sm">
+                      #1234{" "}
+                      <span className="font-bold text-[#333333]">20/13</span>
                     </p>
-                    <p className="text-sm font-bold ml-2">220.4M</p>
+                    <p className="text-center font-bold mt-1">
+                      Baby Amur Leopard
+                    </p>
+                    <div className="flex justify-center items-center bg-[#333333] py-2 rounded-lg mt-4">
+                      <p className="w-6 h-6 bg-white rounded-full text-[#333333] text-[10px] font-semibold flex items-center justify-center">
+                        ZOO
+                      </p>
+                      <p className="text-sm font-bold ml-2">220.4M</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-center mt-4">
+                    <span className="mr-2 text-lg">View Item</span>
+                    <Image
+                      src="/icons/link-white.svg"
+                      alt=""
+                      width={15}
+                      height={15}
+                    />
                   </div>
                 </div>
               );
