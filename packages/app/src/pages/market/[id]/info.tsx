@@ -160,8 +160,8 @@ const InfoPage = () => {
   console.log("ddnsahjdbhjshdjhdshgajdcahjcvd", nft);
 
   return (
-    <div className="px-6 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
-      <div className="flex flex-col md:flex-row md:items-center gap-24 mb-[91px]">
+    <div className="pb-16 md:flex-col md:items-center lg:flex-row ">
+      <div className="flex flex-col md:flex-row md:items-center gap-24 mb-[91px] -mt-20 py-20 px-28 bg-product-view lg:max-w-7xl lg:mx-auto">
         <div className="bg-black border border-33 rounded-[14px] py-5 px-10">
           <div className="showcase h-[351px] md:h-[450px] flex items-center justify-center relative">
             {nft?.kind === 0 || nft?.kind === 2 ? (
@@ -211,16 +211,19 @@ const InfoPage = () => {
           <p className="mb-0.5 text-sm font-medium">DESCRIPTIONS</p>
           <div className="h-px bg-white w-full mb-2" />
           <p className="text-sm mb-8">{nft?.description}</p>
-          <div className="flex flex-col iitems-center mb-[22px]">
-            <div className="w-full md:w-auto mb-1">
-              <p className="text-white mb-1.5">Current Bid: </p>
+          <div className="flex flex-row items-center mb-[22px] w-full lg:w-11/12 ">
+            <div className="mb-1 mr-4">
+              <div className="flex items-center">
+                <p className="text-white mr-2 text-sm">Current Bid: </p>
+                <span className="text-[10px] text-muted-50">[16 Bids]</span>
+              </div>
               <p className="text-2xl font-semibold">
                 {abbreviateNumber(nft?.amount)} ZOO
               </p>
             </div>
-            <div className="w-full rounded-md py-2.5">
-              <p className="text-white mb-1.5">Bid Amount:</p>
-              <p className="text-2xl font-semibold">{minBid} ZOO or more</p>
+            <div className=" rounded-md py-2 text-black bg-white text-center px-8">
+              <p className="text-sm">Bid Amount</p>
+              <p className="text-[8px] font-[400]">{minBid} ZOO or more</p>
             </div>
           </div>
           <div className="flex flex-col md:flex-row items-center gap-3">
@@ -249,92 +252,157 @@ const InfoPage = () => {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center gap-12 mb-12">
-        <p className="px-3 font-black text-lg pb-3 border-b border-white cursor-pointer">
-          Properties
-        </p>
-        <a
-          href={nft?.tokenUri}
-          target="_blank"
-          rel="noreferrer"
-          className="px-3 font-base text-lg pb-3 flex items-center cursor-pointer"
-        >
-          <p className="mr-1">Metadata</p>
-          <Image src="/icons/link-white.svg" alt="" width={11} height={11} />
-        </a>
+      <div className="px-6 lg:max-w-7xl lg:mx-auto">
+        <div className="flex items-center justify-center gap-12 mb-12">
+          <p className="px-3 font-black text-lg pb-3 border-b border-white cursor-pointer">
+            Properties
+          </p>
+          <a
+            href={nft?.tokenUri}
+            target="_blank"
+            rel="noreferrer"
+            className="px-3 font-base text-lg pb-3 flex items-center cursor-pointer"
+          >
+            <p className="mr-1">Metadata</p>
+            <Image src="/icons/link-white.svg" alt="" width={11} height={11} />
+          </a>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-4 mb-2.5 md:mb-4">
+          <div className="bg-33 p-3.5 rounded">
+            <p className="text-2xl font-bold text-[#7D7D7D]">Generations</p>
+            <p className="text-lg font-bold text-white">
+              {[0, 1].includes(nft?.kind) ? "Genesis" : "Hybrid"}
+            </p>
+          </div>
+          <div className="bg-33 p-3.5 rounded">
+            <p className="text-2xl font-bold text-[#7D7D7D]">
+              Breeding Allowed
+            </p>
+            <p className="text-lg font-bold text-white">7 X</p>
+          </div>
+          <div className="bg-33 p-3.5 rounded">
+            <p className="text-2xl font-bold text-[#7D7D7D]">Value</p>
+            <p className="text-lg font-bold text-white">{nft?.reservePrice}</p>
+          </div>
+          <div className="bg-33 p-3.5 rounded">
+            <p className="text-2xl font-bold text-[#7D7D7D]">Multiplier APY</p>
+            <p className="text-lg font-bold text-white">22%</p>
+          </div>
+          <div className="bg-33 p-3.5 rounded">
+            <p className="text-2xl font-bold text-[#7D7D7D]">Mint Possible</p>
+            <p className="text-lg font-bold text-white">
+              {nft?.kind === 0 ? "YES" : "NO"}
+            </p>
+          </div>
+          <div className="bg-33 p-3.5 rounded">
+            <p className="text-2xl font-bold text-[#7D7D7D]">NFT</p>
+            <p className="text-lg font-bold text-white">
+              {[0, 2].includes(nft?.kind) ? "MP4" : "3D, USDZ, GLB"}
+            </p>
+          </div>
+          <div className="bg-33 p-3.5 rounded">
+            <p className="text-2xl font-bold text-[#7D7D7D]">Maturity</p>
+            <p className="text-lg font-bold text-white">
+              {[0, 2].includes(nft?.kind)
+                ? "Baby"
+                : nft?.attributes && nft?.attributes[1]?.value}
+            </p>
+          </div>
+          <div className="bg-33 p-3.5 rounded">
+            <p className="text-2xl font-bold text-[#7D7D7D]">
+              {nft?.attributes && nft?.attributes[0]?.trait_type}
+            </p>
+            <p className="text-lg font-bold text-white">
+              {nft?.attributes && nft?.attributes[0]?.value}
+            </p>
+          </div>
+        </div>
+        <div className="grid md:grid-cols-2 gap-2.5 md:gap-4">
+          <div className="bg-33 p-3.5 rounded">
+            <p className="text-2xl font-bold text-[#7D7D7D]">Habitat</p>
+            <p className="text-lg font-bold text-white">
+              Forest, wetlands & bushlands
+            </p>
+          </div>
+          <div className="bg-33 p-3.5 rounded">
+            <p className="text-2xl font-bold text-[#7D7D7D]">Scientific Name</p>
+            <p className="text-lg font-bold text-white">Canis Rufus</p>
+          </div>
+          <div className="bg-33 p-3.5 rounded">
+            <p className="text-2xl font-bold text-[#7D7D7D]">Distribution</p>
+            <p className="text-lg font-bold text-white">North America</p>
+          </div>
+          <div className="bg-33 p-3.5 rounded">
+            <p className="text-2xl font-bold text-[#7D7D7D]">
+              Emotionally Intelligent ?
+            </p>
+            <p className="text-lg font-bold text-white">Coming Soon</p>
+          </div>
+        </div>
+
+        <div>
+          <div className="hidden border-b border-[#fff] lg:block pt-8 pb-4 w-1/3 mb-4">
+            <p className="uppercase font-semibold text-2xl mt-8">Browse</p>
+          </div>
+          <div className="grid lg:grid-cols-5 gap-4 mt-8">
+            {[1, 2, 3, 4, 5].map((data, index) => {
+              return (
+                <div key={index}>
+                  <div className="border border-t border-[#333333] rounded-xl p-4">
+                    <div className="flex items-center w-12 h-12 intials-backdrop z-30 sticky bg-red rounded-full uppercase justify-center">
+                      <p className="text-3xl font-bold">E</p>
+                    </div>
+                    <div className="showcase h-[200px] flex items-center justify-center relative -mt-8">
+                      {nft?.kind === 0 || nft?.kind === 2 ? (
+                        <video
+                          autoPlay
+                          loop
+                          src={nft.animation_url}
+                          width={300}
+                          height={200}
+                          className="max-h-[200px]"
+                        />
+                      ) : (
+                        <div className="h-[200px] w-full">
+                          <ModelViewer
+                            // zoom="35deg"
+                            glb={nft?.glb_animation_url}
+                            usdz={nft?.usdz_animation_url}
+                          ></ModelViewer>
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-center text-sm">
+                      #1234{" "}
+                      <span className="font-bold text-[#333333]">20/13</span>
+                    </p>
+                    <p className="text-center font-bold mt-1">
+                      Baby Amur Leopard
+                    </p>
+                    <div className="flex justify-center items-center bg-[#333333] py-2 rounded-lg mt-4">
+                      <p className="w-6 h-6 bg-white rounded-full text-[#333333] text-[10px] font-semibold flex items-center justify-center">
+                        ZOO
+                      </p>
+                      <p className="text-sm font-bold ml-2">220.4M</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-center mt-4">
+                    <span className="mr-2 text-lg">View Item</span>
+                    <Image
+                      src="/icons/link-white.svg"
+                      alt=""
+                      width={15}
+                      height={15}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <ShareNFTModal nft={nft} />
+        <NFTExpandedModal nft={nft} />
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-4 mb-2.5 md:mb-4">
-        <div className="bg-33 p-3.5 rounded">
-          <p className="text-base font-bold text-[#7D7D7D]">Generations</p>
-          <p className="text-lg font-bold text-white">
-            {[0, 1].includes(nft?.kind) ? "Genesis" : "Hybrid"}
-          </p>
-        </div>
-        <div className="bg-33 p-3.5 rounded">
-          <p className="text-base font-bold text-[#7D7D7D]">Breeding Allowed</p>
-          <p className="text-lg font-bold text-white">7 X</p>
-        </div>
-        <div className="bg-33 p-3.5 rounded">
-          <p className="text-base font-bold text-[#7D7D7D]">Value</p>
-          <p className="text-lg font-bold text-white">{nft?.reservePrice}</p>
-        </div>
-        <div className="bg-33 p-3.5 rounded">
-          <p className="text-base font-bold text-[#7D7D7D]">Multiplier APY</p>
-          <p className="text-lg font-bold text-white">22%</p>
-        </div>
-        <div className="bg-33 p-3.5 rounded">
-          <p className="text-base font-bold text-[#7D7D7D]">Mint Possible</p>
-          <p className="text-lg font-bold text-white">
-            {nft?.kind === 0 ? "YES" : "NO"}
-          </p>
-        </div>
-        <div className="bg-33 p-3.5 rounded">
-          <p className="text-base font-bold text-[#7D7D7D]">NFT</p>
-          <p className="text-lg font-bold text-white">
-            {[0, 2].includes(nft?.kind) ? "MP4" : "3D, USDZ, GLB"}
-          </p>
-        </div>
-        <div className="bg-33 p-3.5 rounded">
-          <p className="text-base font-bold text-[#7D7D7D]">Maturity</p>
-          <p className="text-lg font-bold text-white">
-            {[0, 2].includes(nft?.kind)
-              ? "Baby"
-              : nft?.attributes && nft?.attributes[1]?.value}
-          </p>
-        </div>
-        <div className="bg-33 p-3.5 rounded">
-          <p className="text-base font-bold text-[#7D7D7D]">
-            {nft?.attributes && nft?.attributes[0]?.trait_type}
-          </p>
-          <p className="text-lg font-bold text-white">
-            {nft?.attributes && nft?.attributes[0]?.value}
-          </p>
-        </div>
-      </div>
-      <div className="grid md:grid-cols-2 gap-2.5 md:gap-4">
-        <div className="bg-33 p-3.5 rounded">
-          <p className="text-base font-bold text-[#7D7D7D]">Habitat</p>
-          <p className="text-lg font-bold text-white">
-            Forest, wetlands & bushlands
-          </p>
-        </div>
-        <div className="bg-33 p-3.5 rounded">
-          <p className="text-base font-bold text-[#7D7D7D]">Scientific Name</p>
-          <p className="text-lg font-bold text-white">Canis Rufus</p>
-        </div>
-        <div className="bg-33 p-3.5 rounded">
-          <p className="text-base font-bold text-[#7D7D7D]">Distribution</p>
-          <p className="text-lg font-bold text-white">North America</p>
-        </div>
-        <div className="bg-33 p-3.5 rounded">
-          <p className="text-base font-bold text-[#7D7D7D]">
-            Emotionally Intelligent ?
-          </p>
-          <p className="text-lg font-bold text-white">Coming Soon</p>
-        </div>
-      </div>
-      <ShareNFTModal nft={nft} />
-      <NFTExpandedModal nft={nft} />
     </div>
   );
 };
