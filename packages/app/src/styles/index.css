@@ -267,6 +267,13 @@ video {
   /* overflow-y: auto; */
 }
 
+.bg-product-view {
+  background: url("/images/bg/product-view-bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 .bg-zoo {
   /* background: url("/images/bg/zoo.svg");
   background-repeat: no-repeat;
@@ -298,6 +305,10 @@ video {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+}
+
+.intials-backdrop {
+  filter: drop-shadow(1.94946px 1.94946px 19.4946px #ff592c);
 }
 
 .bg-drop-nft {
