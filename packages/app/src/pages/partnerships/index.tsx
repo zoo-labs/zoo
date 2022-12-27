@@ -13,21 +13,58 @@ const Partnership = () => {
   }, []);
   return (
     <section>
-      <div
-        className="flex flex-col py-16 items-center max-w-7xl mx-auto px-6"
-        ref={partnerRef}
-      >
-        <h1 className="text-3xl lg:text-5xl mb-8 font-bold mt-10">
-          ZOO Foundation
-        </h1>
-        <p className="text-center text-xl lg:text-3xl max-w-5xl">
-          The ZOO foundation donates 10% of all gaming fees in efforts to save
-          endangered species. Every animal in our game is a representation of an
-          animal that is endangered. We have commited our donations to the
-          following organizations. Click any of them to visit their website.
-        </p>
+      <div className="flex flex-row py-8 items-center max-w-7xl mx-auto px-6 ">
+        <div className="w-7/12" ref={partnerRef}>
+          <h1 className="text-3xl lg:text-6xl mb-8 font-bold mt-10 w-11/12 leading-loose">
+            Join the
+            <br />
+            ZooLabs Foundation’s journey to save the endangered animals.
+          </h1>
+          <p className="text-left text-[#8A8A8A] text-sm lg:text-lg max-w-5xl">
+            Protect mother nature and her species before its too late.
+          </p>
+        </div>
+
+        <div className="w-5/12">
+          {/* <Image src={"/images/sheep.png"} alt="" width={200} height={200}/>
+           */}
+          <div className="relative w-full h-96 overflow-y-hidden">
+            <Image
+              src={"/images/sheep.png"}
+              width="100%"
+              height="100%"
+              alt=""
+              layout="fill"
+              className="object-cover"
+            />
+          </div>
+        </div>
       </div>
-      <div
+
+      <div className="flex flex-row py-8 items-center max-w-7xl mx-auto px-6 ">
+        <div className="w-full">
+          <div className="hidden border-t border-[#333333] lg:block pt-8 w-full">
+            <p className="uppercase text-2xl font-bold">A ZOO SANCTUARY</p>
+            <p className="mt-4 text-lg">
+              “It is our driving purpose to deepen the connection humans have
+              with animals by creating sustainable animal sanctuaries for
+              endangered species. Share the Zoo Sanctuary with local visitors,
+              educators, host fundraisers/events, and get the Zoo Community as
+              involved as possible to saving endangered animals all over the
+              world. You could save a life today w/ a monthly donation or a
+              one-time contribution. “
+            </p>
+          </div>
+          <div className="hidden border-t border-[#333333] lg:block pt-8 w-full mt-16 mb-8">
+            <p className="uppercase text-2xl font-bold">MAKE A DONATION</p>
+            <p className="mt-4 text-lg">
+              Once we have tax-exemption status you will be able to write off up
+              to 100% of your donation.
+            </p>
+          </div>
+        </div>
+      </div>
+      {/* <div
         className="bg-white"
         id="partnerships"
         style={{ marginBottom: "96px" }}
@@ -109,7 +146,7 @@ const Partnership = () => {
             />
           </Link>{" "}
         </div>
-      </div>
+      </div> */}
     </section>
   );
 };
