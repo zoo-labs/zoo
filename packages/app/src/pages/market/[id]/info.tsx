@@ -349,8 +349,8 @@ const InfoPage = () => {
               return (
                 <div key={index}>
                   <div className="border border-t border-[#333333] rounded-xl p-4">
-                    <div className="flex items-center w-12 h-12 intials-backdrop z-30 sticky bg-red rounded-full uppercase justify-center">
-                      <p className="text-3xl font-bold">E</p>
+                    <div className="flex items-center w-12 h-12 intials-backdrop z-30 sticky bg-[#FF592C] rounded-full uppercase justify-center">
+                      <p className="text-3xl font-bold">R</p>
                     </div>
                     <div className="showcase h-[200px] flex items-center justify-center relative -mt-8">
                       {nft?.kind === 0 || nft?.kind === 2 ? (
