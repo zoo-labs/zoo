@@ -7,7 +7,7 @@ import Popups from "../../components/Popups";
 import { useActiveWeb3React } from "../../hooks";
 import { updateGasPrice } from "../../state/network/actions";
 
-const Layout = ({ children, banner = undefined, bg = "bg-[#111]" }) => {
+const Layout = ({ children, banner = undefined, bg = "bg-[#000]" }) => {
   const { library } = useActiveWeb3React();
   useEffect(() => {
     updateGasPrice(library);
