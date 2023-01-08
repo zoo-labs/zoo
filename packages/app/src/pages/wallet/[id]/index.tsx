@@ -124,6 +124,7 @@ const NftModal = ({}: AppProps & {
   }, [id, myNfts]);
 
   console.log("the_chosen_nftIte", nftItem);
+  
 
   return (
     <ModalLayout bg="bg-black" arrowBg="bg-dark-900">

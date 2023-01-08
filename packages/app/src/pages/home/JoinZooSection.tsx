@@ -22,7 +22,7 @@ const JoinZooSection = () => {
             <Image src="/img/twitter-large.svg" width={32} height={32} alt="" />
           </a>
           <a
-            href="https://t.me/RealZoolabs"
+            href="https://t.me/zooofficial"
             target="_blank"
             rel="noreferrer"
             className="mr-8"
