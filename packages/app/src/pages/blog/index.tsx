@@ -70,7 +70,7 @@ const Blog = () => {
           className="flex items-center text-center flex-col"
           ref={blogHeaderRef}
         >
-          <h1 className="text-5xl lg:text-7xl text-white font-bold mb-6 mt-20 lg:mt-12">
+          <h1 className="text-[44px] leading-4 lg:text-7xl text-white font-bold mb-6 mt-20 lg:mt-12">
             ZOO Blog
           </h1>
           <p className="w-96 mb-20">

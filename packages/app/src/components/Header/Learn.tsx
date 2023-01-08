@@ -84,7 +84,7 @@ export default function Community() {
               <Menu.Item>
                 {({ active }) => (
                   <a
-                    href="https://t.me/RealZoolabs"
+                    href="https://t.me/zooofficial"
                     target="_blank"
                     rel="noreferrer"
                     className={`${

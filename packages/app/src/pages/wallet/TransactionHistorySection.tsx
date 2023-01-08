@@ -30,9 +30,9 @@ const TransactionHistory = ({ nftTransfers }) => {
 
   return (
     <div className="px-4 py-12 max-w-7xl">
-      <h2 className="mb-12 text-4xl font-bold text-center lg:text-5xl">
+      <h1 className="mb-12 text-4xl font-bold text-center lg:text-[44px] leading-4">
         Transaction History
-      </h2>
+      </h1>
       {copied && (
         <Alert
           message={`copied!`}
