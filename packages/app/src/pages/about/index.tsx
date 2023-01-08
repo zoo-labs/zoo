@@ -19,9 +19,9 @@ const About = () => {
           className="mb-6 text-center lg:text-left"
           ref={getStartedContentRef}
         >
-          <h2 className="mb-6 text-3xl font-bold md:text-4xl lg:text-5xl mt-20 lg:mt-16">
+          <h1 className="mb-6 text-3xl font-bold md:text-4xl lg:text-[44px] leading-4 mt-20 lg:mt-16">
             Make yield and do good.
-          </h2>
+          </h1>
           <p className="mb-6 text-base text-white lg:text-lg lg:mb-8 text-opacity-70 md:max-w-2xl">
             ZOO is a DeFi game that allows players to collect NFT animals
             representative of endangered species in the real world. Based on
