@@ -197,9 +197,9 @@ const NftModal = ({}: AppProps & {
             </div>
           </div>
           <div className="flex-1">
-            <p className="font-semibold text-5xl mb-[26px]">
+            <h1 className="font-semibold text-[44px] leading-4 mb-[26px]">
               {nftItem?.name || "--"}
-            </p>
+            </h1>
 
             <div className="flex mt-4 mb-8">
               <div className="py-2 px-3 text-sm bg-[#333333] font-bold rounded-lg mr-4 w-44 flex items-center justify-between">
