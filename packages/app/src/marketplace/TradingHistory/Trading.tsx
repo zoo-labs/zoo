@@ -58,7 +58,7 @@ const Trading = ({
 }) => {
   return (
     <div className="w-full bg-transparent min-h-[800px]">
-      <h3 className="mb-12 text-center mt-10 text-2xl md:text-5xl text-white font-medium">{TitleMain}</h3>
+      <h1 className="mb-12 text-center mt-10 text-2xl md:text-[44px] leading-4 text-white font-medium">{TitleMain}</h1>
 
       <TableContainer className="w-full  border-[#292A3E] rounded-2xl p-2 overflow-auto whitespace-nowrap">
         <thead className="p-2 bg-[#292A3E]">

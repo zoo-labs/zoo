@@ -244,9 +244,9 @@ export default function Home() {
         ))}
       </div>
       <div className="px-6 pt-24 mx-auto max-w-7xl">
-        <p className="mb-24 text-5xl font-bold md:text-center">
+        <h1 className="mb-24 text-[44px] leading-4 font-bold md:text-center">
           Resources for Getting Started
-        </p>
+        </h1>
         <div className="relative w-full">
           <div
             onScroll={handleScroll}

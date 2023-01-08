@@ -5,9 +5,9 @@ const UnimagineableExperience = () => {
     <div className="relative">
       <div className="absolute flex items-center justify-center w-full bg-giraffess min-h-[100vh]">
         <div className="relative flex items-center justify-center w-full">
-          <p className="absolute z-50 max-w-4xl text-5xl font-bold text-center md:text-8xl">
+          <h1 className="absolute z-50 max-w-4xl text-[44px] leading-4 font-bold text-center md:text-8xl">
             Unimaginable Experiences
-          </p>
+          </h1>
         </div>
       </div>
       <video

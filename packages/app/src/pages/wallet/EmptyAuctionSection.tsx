@@ -18,7 +18,7 @@ const EmptyAuctionSection = () => {
           className="flex flex-col items-center justify-center text-center "
           ref={comingSoonRef}
         >
-          <h1 className="mb-8 text-4xl font-bold lg:text-5xl">
+          <h1 className="mb-8 text-4xl font-bold lg:text-[44px] leading-4">
             You have no Auction
           </h1>
           <p>
