@@ -209,7 +209,7 @@ const MarketPlacePage = () => {
   return (
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
       <div className="flex flex-col items-center h-[20vh]">
-        <h1 className="mb-4 text-5xl">
+        <h1 className="mb-4 text-[44px] leading-4">
           The{" "}
           <span className="text-blue" style={{ fontWeight: 900 }}>
             ZOO

@@ -100,9 +100,9 @@ const AnimalFamilySection = () => {
   return (
     <section className="AnimalFamily">
       <div className="px-6 py-10 md:py-20 mx-auto max-w-7xl">
-        <p className="font-bold text-3xl md:text-5xl text-center mb-14">
+        <h1 className="font-bold text-3xl md:text-[44px] leading-4 text-center mb-14">
           The Origin Eggs
-        </p>
+        </h1>
 
         <div className="grid grid-cols-3 gap-2">
           {availableEggs.map((data) => {
@@ -145,10 +145,10 @@ const AnimalFamilySection = () => {
         </div>
       </div>
       <div className="px-6 py-10 md:py-20 mx-auto max-w-7xl">
-        <p className="font-bold text-3xl md:text-5xl text-center">
+        <h1 className="font-bold text-3xl md:text-[44px] leading-4 text-center">
           The Animals
-        </p>
-        <p className="text-[10px] md:text-sm text-white text-center mb-14">
+        </h1>
+        <p className="text-[10px] md:text-sm text-white text-center mb-14 mt-8">
           Coming Soon{" "}
           <Link href="/animal-list" passHref>
             <span className="font-bold">See All</span>
@@ -226,7 +226,7 @@ const AnimalFamilySection = () => {
                   </div>
                 </div>
                 <div className="text-center AnimalFamily__name lg:basis-1/2 mb-5 lg:mb-0">
-                  <h2 className="mb-5 md:mb-10 text-3xl text-center font-bold lg:text-5xl">
+                  <h2 className="mb-5 md:mb-10 text-3xl text-center font-bold lg:text-[44px] leading-4">
                     {data.name}
                   </h2>
                   <a

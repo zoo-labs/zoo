@@ -8,9 +8,9 @@ const JoinZooSection = () => {
   return (
     <section className="bg-purple100" id="newsletter">
       <div className="flex flex-col items-center justify-center px-6 py-16 mx-auto max-w-7xl">
-        <h2 className="mb-6 text-3xl font-semibold text-center lg:text-5xl">
+        <h1 className="mb-6 text-3xl font-semibold text-center lg:text-[44px] leading-4">
           Join the ZOO family!
-        </h2>
+        </h1>
         <p className="mb-4 text-xl">Follow us on social media</p>
         <div className="flex items-center mb-6">
           <a

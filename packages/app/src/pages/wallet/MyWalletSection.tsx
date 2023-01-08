@@ -85,7 +85,7 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
   return (
     <div>
       <div className="py-12">
-        {/* <h1 className="mb-8 text-3xl text-center lg:text-5xl">My Nfts</h1> */}
+        {/* <h1 className="mb-8 text-3xl text-center lg:text-[44px] leading-4">My Nfts</h1> */}
 
         {/* Tab Navbar */}
         <div className="relative hidden justify-center mb-8">
