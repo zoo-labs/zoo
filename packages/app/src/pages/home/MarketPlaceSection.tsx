@@ -80,7 +80,7 @@ const MarketPlaceSection = () => {
             <Image src="/icons/twitter.svg" alt="" width={41} height={41} />
           </a>
           <a
-            href="https://t.me/RealZoolabs"
+            href="https://t.me/zooofficial"
             target="_blank"
             rel="noreferrer"
             className="mr-10"

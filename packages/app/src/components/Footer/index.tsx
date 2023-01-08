@@ -309,7 +309,7 @@ const Footer = () => {
             <Image src="/img/twitter.svg" height={16} width={16} alt="" />{" "}
           </a>
           <a
-            href="https://t.me/RealZoolabs"
+            href="https://t.me/zooofficial"
             target="_blank"
             rel="noreferrer"
             className="mr-2"
