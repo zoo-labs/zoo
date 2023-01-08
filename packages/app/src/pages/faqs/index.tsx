@@ -144,7 +144,7 @@ const Faqs = () => {
   return (
     <div className="">
       <div className="px-4 pt-16 pb-16 mx-auto lg:max-w-7xl">
-        <h1 className="mt-20 mb-8 text-4xl font-bold text-center lg:text-5xl lg:mt-16">
+        <h1 className="mt-20 mb-8 text-4xl font-bold text-center lg:text-[44px] leading-4 lg:mt-16">
           Frequently asked questions
         </h1>
 
