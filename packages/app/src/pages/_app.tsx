@@ -114,9 +114,9 @@ function MyApp({
         const isMainnet = chainId === ChainId.MAINNET;
 
         if (isTestnet || isMainnet) {
-          connector.activate(chainId);
+          connector.activate();
         } else {
-          connector.activate(ChainId.GÖRLI);
+          connector.activate();
         }
       } else {
         connector.activate();
