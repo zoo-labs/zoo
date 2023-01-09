@@ -129,17 +129,6 @@ function MyApp({
     useEagerWalletConnect();
     return null;
   };
-  // const getAnimals = async () => {
-  //   try {
-  //     const animals = [];
-  //     for (const animal of await queryAnimals()) {
-  //       animals.push(mapAnimal(animal));
-  //     }
-  //     dispatch(addAnimals(animals));
-  //   } catch (e) {
-  //     console.error("ISSUE GETTING ANIMAL \n", e);
-  //   }
-  // };
 
   return (
     <Fragment>
