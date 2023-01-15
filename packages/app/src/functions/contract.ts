@@ -52,10 +52,7 @@ export function getArcherRouterContract(chainId: number, library: Web3Provider, 
 }
 
 export async function switchChain(chainId, library, account) {
-  console.debug(
-    `Switching to chain ${chainId}`,
-    SUPPORTED_NETWORKS[chainId]
-  );
+
   const params = SUPPORTED_NETWORKS[chainId];
   try {
     await library?.send("wallet_switchEthereumChain", [
