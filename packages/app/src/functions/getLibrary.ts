@@ -21,7 +21,6 @@ export default function getLibrary(provider: any): Web3Provider {
   library.detectNetwork().then((network) => {
     const networkPollingInterval = NETWORK_POLLING_INTERVALS[network.chainId]
     if (networkPollingInterval) {
-      console.debug('Setting polling interval', networkPollingInterval)
       library.pollingInterval = networkPollingInterval
     }
   })
