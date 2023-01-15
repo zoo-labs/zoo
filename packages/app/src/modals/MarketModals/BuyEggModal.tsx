@@ -62,7 +62,6 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
     await Object.values(myEggs).forEach((egg) => {
       newEggs.push(egg);
     });
-    console.log("");
     const emptyLength = 3 - newEggs.length;
     for (let index = 0; index < emptyLength; index++) {
       newEggs.push({});
@@ -147,7 +146,6 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
           .then((res) => {
             toastClear();
             toastInfo("Transaction submitted.");
-            console.log("bought egg in bnb", res);
 
             setDisabled(false);
             dispatch(getZooBalance());
@@ -175,7 +173,6 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
           .then((res) => {
             toastClear();
             toastInfo("Transaction submitted.");
-            console.log("bought egg", res);
 
             setDisabled(false);
             dispatch(getZooBalance());
@@ -196,7 +193,6 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
         toastError("Unable to purchase eggs. Try again later.");
       }
     }
-    // console.log(testEggs)
     // dispatch(addEggs(testEggs))
     // toggleBuyEggModal()
   };

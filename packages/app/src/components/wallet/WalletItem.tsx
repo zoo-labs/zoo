@@ -14,7 +14,6 @@ interface IndexProps {
 }
 
 const Index: React.FC<IndexProps> = ({ datum, onClick }) => {
-  console.log("DATAUM", datum);
   return (
     <div className="flex flex-col " onClick={onClick}>
       <div className="relative overflow-hidden rounded p-[2px] border border-gray-500 parent">

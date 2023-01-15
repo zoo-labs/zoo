@@ -42,7 +42,6 @@ export default function AuctionModal({
   }, [edit, nft]);
 
   const successCallback = useCallback(() => {
-    console.log("success");
     auctionModalOpen && toggleModal();
     push("/market");
   }, [auctionModalOpen, push, toggleModal]);

@@ -344,7 +344,7 @@ const MakeProposals = () => {
                           choices,
                           creator,
                         } as Proposal,
-                        () => (console.log("dhdhvshgvd"), setLoading(false)),
+                        () => ( setLoading(false)),
                         () => {
                           resetValues();
                           setTimeout(() => router.push("/dao"), 1000);

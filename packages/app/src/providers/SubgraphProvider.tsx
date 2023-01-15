@@ -29,6 +29,5 @@ const fallbackClient =
 export const SubgraphProvider = ({ children }) => {
   const { chainId } = useActiveWeb3React();
   const client = clients[chainId] || fallbackClient;
-  console.log("subgraph client is", client);
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };

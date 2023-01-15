@@ -137,12 +137,9 @@ const Swap: React.FC<SwapProps> = ({}) => {
       getQuote(newAmount, side);
     } else {
       if (side === Field.INPUT) {
-        console.log("okurrrrurhuinsjcd");
         newAmount.to = (value - value * 0.001).toString();
       } else {
-        console.log("init value", newAmount);
         const newVal = value * 0.001;
-        console.log(" value * 0.001 value", value, newVal);
 
         newAmount.from = (newVal + value).toString();
       }
@@ -156,9 +153,7 @@ const Swap: React.FC<SwapProps> = ({}) => {
     } else {
       dispatch(updateError(null));
     }
-    console.log("newAmountssssss", newAmount);
     if (side) {
-      console.log("side exisststsss currentSelectSide", side);
       updateCurrentSelectSide(side);
     }
     dispatch(updateCurrentAmount(newAmount));
@@ -203,18 +198,11 @@ const Swap: React.FC<SwapProps> = ({}) => {
 
     try {
       const amt = Web3.utils.toWei(currentAmount[Field.INPUT].toString()); // Convert intialAmt toWei
-      console.log(
-        "teleportContractBurn2:",
-        teleportContractBurn2,
-        amt,
-        currentTrade[Field.INPUT].address
-      );
 
       const tx = await teleportContractBurn2.bridgeBurn(
         amt,
         currentTrade[Field.INPUT].address
       ); // Burn coins
-      console.log("txxxxx:", tx);
 
       let cnt = 0;
 
@@ -240,26 +228,16 @@ const Swap: React.FC<SwapProps> = ({}) => {
       // });
 
       const receipt = await tx.wait();
-      console.log("Receipt:", receipt, receipt.status === 1);
 
       if (receipt.status !== 1) {
-        console.log("Transaction Failure.");
-
         return;
       } else {
-        console.log("Receipt received");
         teleportContractBurn2.off("BridgeBurned");
         teleportContractBurn2.removeAllListeners(["BridgeBurned"]);
 
         if (cnt == 0) {
           setBridgeState({ ...bridgeState, status: "BURNED" });
-          console.log(
-            "cookie array:",
-            amt,
-            cnt,
-            tx,
-            currentAmount[Field.INPUT].name
-          );
+
           await handleMint(
             amt,
             cnt,
@@ -278,16 +256,12 @@ const Swap: React.FC<SwapProps> = ({}) => {
   }
 
   async function setNets() {
-    console.log("currentTrade", currentTrade);
-    console.log("teleportContract", teleportContract);
     const fromNetRadio = activeChains?.from;
     const toNetRadio = activeChains?.to;
-    console.log("chains", fromNetRadio, toNetRadio);
     let teleportContractBurn2;
     try {
       if (fromNetRadio == "43113" && toNetRadio == "4") {
         // && tokenName == "LuxBTC" => check if token is LBTC or LETH
-        console.log("from lux to eth chain");
         setTeleportContractBurn(
           altContract("TELEPORT", 43113, account, library)
         ); //set contract burn to teleport lux contract
@@ -308,18 +282,13 @@ const Swap: React.FC<SwapProps> = ({}) => {
       }, 2000);
     }
 
-    console.log("TeleportContract TeleportContractBurn", TeleportContractBurn);
-    console.log("TeleportContract TeleportContractMint", TeleportContractMint);
-    console.log("teleportContractBurn2", teleportContractBurn2);
     return teleportContractBurn2;
   }
 
   //async function handleMint(amount, cnt, fromNetId, toNetId, receipt, tx){
   async function handleMint(amount, cnt, fromNetId, toNetId, tx, msgSig) {
     const amtNoWei = Web3.utils.fromWei(amount.toString());
-    console.log("amtNoWei", Number(amtNoWei), "cnt", cnt);
     const txid = tx.hash;
-    console.log("txid:", txid);
 
     if (Number(amtNoWei) > 0 && cnt == 0) {
       const toNetIdHash = Web3.utils.keccak256(toNetId.toString());
@@ -343,31 +312,22 @@ const Swap: React.FC<SwapProps> = ({}) => {
         "/toTargetAddrHash/" +
         toTargetAddrHash;
 
-      console.log("cmd", cmd);
-
       fetch(cmd)
         .then((response) => response.json())
         .then(async (result) => {
-          console.log("Data:", result);
-
           if (result.signature && result.hashedTxId) {
             // Set globals
-            console.log("result here", result);
+
             setBridgeState({ ...bridgeState, ...result, status: "MINTED" });
           } else if (Number(result.output) === -1) {
-            console.log("Duplicate transaction.");
             return;
           } else if (Number(result.output) === -3) {
-            console.log("Gas price error.");
             return;
           } else if (Number(result.output) === -4) {
-            console.log("Unknown Error.");
             return;
           } else if (Number(result.output) === -5) {
-            console.log("Front Run Attempt.");
             return;
           } else {
-            console.log("Bad transaction.");
             return;
           }
         })
@@ -384,65 +344,31 @@ const Swap: React.FC<SwapProps> = ({}) => {
 
   //Complete transaction after minting
   async function completeTransaction() {
-    console.log("CompleteTransaction - switching to:", activeChains);
     const { signature, hashedTxId, status } = bridgeState;
     await setNets();
     if (chainId !== activeChains?.to) {
       await switchChain(activeChains?.to, library, account);
     }
-    console.log("completeTransaction 1", TeleportContractMint);
     try {
       if (!TeleportContractMint) {
-        console.log(
-          " completeTransaction TeleportContractMintError:",
-          TeleportContractMint
-        );
         throw new Error(" completeTransaction Bad contract mint object.");
       }
-      console.log("completeTransaction 2");
 
       // Check if key exists to know if transaction was already completed.
       const keyExists = await TeleportContractMint.keyExistsTx(
         bridgeState?.signature
       );
-
-      console.log("keyExists", keyExists);
-
-      if (keyExists) {
-        console.log("key exists");
-      }
     } catch (err) {
-      console.log("completeTransaction Transaction Failure. 1", err);
       // setBridgeState({ ...bridgeState, status: "FAILED" });
       return;
     }
-    console.log("completeTransaction 3", signature, hashedTxId, status);
 
     if (signature && hashedTxId && status !== "SUCCESS") {
       setBridgeState({ ...bridgeState, status: "TRANSFERING" });
-      console.log("completeTransaction 4", bridgeState);
 
       try {
         const toNetIdHash = Web3.utils.keccak256(activeChains?.to.toString());
         const toTargetAddrHash = Web3.utils.keccak256(evmToAddress); //Web3.utils.keccak256(evmToAddress.slice(2));
-        console.log(
-          "completeTransaction 5",
-          "toTargetAddrHash",
-          toTargetAddrHash,
-          "toNetIdHash",
-          toNetIdHash,
-          "currentAmount",
-          currentAmount[Field.INPUT],
-          "currentAmount[Field.INPUT]",
-          "hashedTxId",
-          hashedTxId,
-          "signature",
-          signature,
-          " currentTrade[Field.OUTPUT].address",
-          currentTrade[Field.OUTPUT].address,
-          "activeChains?.to",
-          activeChains?.to
-        );
 
         const tx = await TeleportContractMint.bridgeMintStealth(
           Web3.utils.toWei(currentAmount[Field.INPUT].toString()),
@@ -456,7 +382,6 @@ const Swap: React.FC<SwapProps> = ({}) => {
             gasLimit: 4000000,
           }
         );
-        console.log("completeTransaction 6 TX: in TeleportContractMint", tx);
 
         const receipt = await tx.wait();
 
@@ -469,26 +394,15 @@ const Swap: React.FC<SwapProps> = ({}) => {
           "BridgeMinted",
           async (recip, tokenAddr, amount) => {
             let feesNoWei = 0;
-            console.log("Recipient:", recip);
-            console.log("Amount:", amount.toString());
+
             const amtNoWei = Web3.utils.fromWei(amount.toString());
             const initialAmt = Web3.utils.fromWei(
               currentAmount[Field.OUTPUT].toString()
             );
-            console.log("amtNoWei", amtNoWei, initialAmt);
             if (Number(amtNoWei) > 0) {
               const fees = Number(initialAmt) - Number(amtNoWei);
               feesNoWei = parseFloat(fees.toFixed(10));
             }
-
-            console.log(
-              "Amount:",
-              amtNoWei,
-              "Fees:",
-              feesNoWei,
-              "Token Address:",
-              tokenAddr
-            );
 
             if (Number(amtNoWei) > 0) {
               if (receipt !== undefined) {
@@ -516,10 +430,7 @@ const Swap: React.FC<SwapProps> = ({}) => {
           }
         );
 
-        console.log("Receipt:", receipt, receipt.status === 1);
-
         if (receipt.status !== 1) {
-          console.log("Transaction Failure.");
           setBridgeState({
             ...bridgeState,
             status: "FAILED",
@@ -527,7 +438,6 @@ const Swap: React.FC<SwapProps> = ({}) => {
           });
           return;
         } else {
-          console.log("Receipt received");
           if (bridgeState.status !== "SUCCESS") {
             setBridgeState({
               ...bridgeState,
@@ -796,7 +706,6 @@ const Swap: React.FC<SwapProps> = ({}) => {
                       bridgeState?.status === "FAILED" //Take this out
                     ) {
                       completeTransaction();
-                      console.log("activechainssss", activeChains);
                     } else if (bridgeState?.status === "SUCCESS") {
                       setBridgeState({ status: "IDLE" });
                     } else {

@@ -23,9 +23,10 @@ function makeStore(preloadedState = undefined) {
       getDefaultMiddleware({
         thunk: true,
         immutableCheck: true,
-        serializableCheck: {
-          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        },
+        serializableCheck: false
+        // {
+        //   ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        // },
       }),
     devTools: process.env.NODE_ENV === 'development',
     preloadedState,

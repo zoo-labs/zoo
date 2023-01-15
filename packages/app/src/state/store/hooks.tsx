@@ -45,7 +45,6 @@ export function useCart(): [
 ] {
   const dispatch = useAppDispatch();
   const addToCart = useCallback((cartItem) => {
-    console.log("adding to cart", cartItem);
     dispatch(addCartItem(cartItem));
   }, []);
   const removeFromCart = useCallback((id) => {
@@ -68,7 +67,6 @@ export function useAllProducts(): (
   callback?: (val: Array<Product>) => void
 ) => void {
   const dispatch = useDispatch();
-  console.log("getting products");
 
   return useCallback(async (startDate, endDate, noLimit, callback) => {
     const products: Array<Product> = [];
@@ -79,7 +77,6 @@ export function useAllProducts(): (
       const data = { ...doc.data(), id: doc.id } as Product;
       products.push(data);
     });
-    console.log("products", products);
     if (callback) {
       callback(products);
     } else {

@@ -22,7 +22,6 @@ const WALLET_VIEWS = {
 
 export default function HatchEggModal({ nftItem, success }) {
   // important that these are destructed from the account-specific web3-react context
-  console.log("NFT_TO_HATCH", nftItem);
   const hatchEggWaitPeriod: number = Number(
     process.env.NEXT_PUBLIC_HATCH_EGG_WAIT_PERIOD
   );
@@ -36,11 +35,7 @@ export default function HatchEggModal({ nftItem, success }) {
   const hatchEgg = useHatch();
   const toggleWallet = useWalletModalToggle();
   const handleHatchEgg = useCallback(() => {
-    console.log("Clicked");
     if (account) {
-      console.log("Hatching", {
-        nftItem,
-      });
       hatchEgg(
         nftItem.dropId,
         // nftItem.kind === 0 ? nftItem.id : nftItem.dropEgg,

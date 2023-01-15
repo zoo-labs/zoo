@@ -438,7 +438,6 @@ export function useTeleportContract(): (chain) => Contract | null {
   return useCallback(
     (chain) => {
       const contract = altContract("TELEPORT", chain, account, library);
-      console.log("hitting burnContract", chain, contract);
 
       return contract;
     },
@@ -451,7 +450,6 @@ export function useLbtcContract(chain?): Contract | null {
 }
 export const altContract = (nameOrAddress, chain, account, library) => {
   let chainIdStr = chain ? chain : "4";
-  console.log("useGetCurrentBalances", nameOrAddress, chain);
   let address: string | undefined = nameOrAddress;
   let ABI;
   if (!isAddress(nameOrAddress) || nameOrAddress === AddressZero) {
@@ -470,7 +468,6 @@ export const altContract = (nameOrAddress, chain, account, library) => {
       library,
       account ? account : undefined
     );
-    console.log("fetching contracrt", contract);
     return contract;
   } catch (error) {
     console.error("Failed to get contract", error);

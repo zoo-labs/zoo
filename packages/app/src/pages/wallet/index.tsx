@@ -50,14 +50,11 @@ export default function Wallet({ children }) {
 
   const initMoralis = async () => {
     if (chainId) {
-      console.log("isAuthenticated", isAuthenticated, Moralis);
-
       try {
         await enableWeb3();
         await fetchNFTs();
         await getNftTransfers();
         if (!isAuthenticated) {
-          console.log("hitting here to authenticate user");
           authenticate();
         }
       } catch (error) {
@@ -65,14 +62,13 @@ export default function Wallet({ children }) {
       }
     }
   };
-  console.log("allAuctions", allAuctions);
   return (
     <section className="Hero">
       <div className="px-6 pb-16 mt- Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
         <div className="flex flex-col items-center justify-between px-2 pt-12 md:px-6 lg:flex-row lg:max-w-7xl lg:mx-auto">
           <div className="p-0.5 rounded-full bg-black">
             <div className="bg-black rounded-full ">
-              <div className="flex items-center rounded-full w-max bg-black">
+              <div className="flex items-center bg-black rounded-full w-max">
                 {["My Wallet", "My Bids", "My Auctions"].map((value, index) => {
                   const active = category === index;
                   return (
@@ -128,14 +124,12 @@ export default function Wallet({ children }) {
         ) : category === 1 ? (
           allAuctions.filter((auction: Auction) =>
             auction.auctionHistory.some((history) => {
-              console.log("historyyyy", history);
               return history.from_address === account;
             })
           )?.length > 0 ? (
             allAuctions
               .filter((auction: Auction) =>
                 auction.auctionHistory.some((history) => {
-                  console.log("historyyyy", history);
                   return history.from_address === account;
                 })
               ) // filter bids that are mine

@@ -90,7 +90,6 @@ export default createReducer(initialState, (builder) =>
       }
     })
     .addCase(updateMyNfts, (state, { payload: nft }: { payload: MyNFT }) => {
-      console.log("updateMyNfts", nft);
       if (nft && !isEmptyObj(nft)) {
         state.myNfts[nft.index] = nft;
       }
@@ -98,7 +97,6 @@ export default createReducer(initialState, (builder) =>
     .addCase(
       addAuctionNft,
       (state, { payload: auction }: { payload: Auction }) => {
-        console.log("update auction", auction);
         if (auction && !isEmptyObj(auction)) {
           state.allAuctions[auction.index] = auction;
         }
