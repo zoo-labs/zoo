@@ -28,7 +28,7 @@ export const getMetaData = async (metadataURI, from?) => {
 export function useGetDrops() {
   const dispatch = useDispatch();
   const zooKeeper = useZooKeeper();
-  const { library } = useActiveWeb3React();
+  const { library, chainId } = useActiveWeb3React();
 
   return useCallback(async () => {
     const drops = await [...Array(zooKeeper.dropIDs()).keys()]?.map(
@@ -36,13 +36,14 @@ export function useGetDrops() {
         const dropAddress = await zooKeeper.drops(dropId + 1);
         const dropC = getContract(
           dropAddress,
-          abis["97"]["Drop"],
+          abis[chainId.toString()]["Drop"],
           library,
           undefined
         );
         const dropTitle = await dropC.title();
         const totalSupply = await dropC?.totalSupply();
         const eggs: Array<any> = await dropC?.getAllEggs();
+        console.log("eggs", eggs);
         const { image, description } = await dropC.dropInformation(dropTitle);
         const eggsPromise = await eggs
           .filter((eggData) => eggData.exist)
