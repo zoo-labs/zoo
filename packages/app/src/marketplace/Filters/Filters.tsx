@@ -337,8 +337,6 @@ const Filters: React.FC<FilterProps> = ({}) => {
   const getAvailableEggs = useGetAvailableEggs();
   const { availableEggs } = useSelector((state: any) => state.zoo);
 
-  console.log("all_availableEggs", availableEggs);
-
   // const useStyles = makeStyles({
   //   select: {
   //     '&:after': {
@@ -414,7 +412,6 @@ const Filters: React.FC<FilterProps> = ({}) => {
   const router = useRouter();
 
   const onClickTokenType = (name: string) => {
-    console.log("name", name);
     router.push(`${router.pathname}?name=${name}`, undefined, {
       shallow: true,
     });
@@ -458,7 +455,6 @@ const Filters: React.FC<FilterProps> = ({}) => {
                               .slice(0, 8)
                           );
                         } else if (index === 2) {
-                          console.log("is origin filter");
                         } else {
                           setData([]);
                           setFetching(true);
@@ -738,7 +734,7 @@ const Filters: React.FC<FilterProps> = ({}) => {
                     <MarketItem
                       datum={datum}
                       applyMaxWidth={false}
-                      placeBid={() => (setActiveItem(datum), console.log(""))}
+                      placeBid={() => setActiveItem(datum)}
                     />
                   </div>
                 );

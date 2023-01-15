@@ -145,7 +145,6 @@ const AccountDetails: FC<AccountDetailsProps> = ({
                 color="gray"
                 size="xs"
                 onClick={() => {
-                  console.log(connector);
                   connector.deactivate();
                 }}
               >

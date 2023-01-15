@@ -1,33 +1,41 @@
-import { isNativeCurrency } from '@zoolabs/sdk'
-import { useCallback } from 'react'
-import { useActiveWeb3React, useContract } from '../hooks'
-import { useGasPrice } from '../state/network/hooks'
-import { useTransactionPopups } from '../state/transactions/hooks'
-import { TokenId } from './types'
+import { isNativeCurrency } from "@zoolabs/sdk";
+import { useCallback } from "react";
+import { useActiveWeb3React, useContract } from "../hooks";
+import { useGasPrice } from "../state/network/hooks";
+import { useTransactionPopups } from "../state/transactions/hooks";
+import { TokenId } from "./types";
 
 export type LazyRemoveBidButtonProps = {
-  dropId: TokenId
-  name: string
-  currency: string
-  onError?: (error) => void
-  onRemove?: (dropId: TokenId) => void
-}
+  dropId: TokenId;
+  name: string;
+  currency: string;
+  onError?: (error) => void;
+  onRemove?: (dropId: TokenId) => void;
+};
 
-export const LazyRemoveBidButton = ({ dropId, name, currency, onError, onRemove }: LazyRemoveBidButtonProps) => {
-  const { account } = useActiveWeb3React()
-  const gasPrice = useGasPrice()
-  const app = useContract('App')
-  const media = useContract('Media')
+export const LazyRemoveBidButton = ({
+  dropId,
+  name,
+  currency,
+  onError,
+  onRemove,
+}: LazyRemoveBidButtonProps) => {
+  const { account } = useActiveWeb3React();
+  const gasPrice = useGasPrice();
+  const app = useContract("App");
+  const media = useContract("Media");
 
-  const { addErrorPopup, addTransactionPopup } = useTransactionPopups()
+  const { addErrorPopup, addTransactionPopup } = useTransactionPopups();
 
   const removeBid = useCallback(async () => {
     try {
-      const txSummary = `Removed Bid for ${name}`
+      const txSummary = `Removed Bid for ${name}`;
 
-      console.log('app.removeLazyBid', dropId, { from: account, gasPrice })
-      const tx = await app.removeLazyBid(dropId, name, { from: account, gasPrice })
-      addTransactionPopup(tx, txSummary)
+      const tx = await app.removeLazyBid(dropId, name, {
+        from: account,
+        gasPrice,
+      });
+      addTransactionPopup(tx, txSummary);
       // if (isNativeCurrency(currency)) {
       // } else {
       //   console.log('media.removeBid', dropId, { from: account, gasPrice })
@@ -35,13 +43,12 @@ export const LazyRemoveBidButton = ({ dropId, name, currency, onError, onRemove 
       //   addTransactionPopup(tx, txSummary)
       // }
 
-      onRemove && onRemove(dropId)
-
+      onRemove && onRemove(dropId);
     } catch (error) {
-      addErrorPopup(error)
-      onError && onError(error)
+      addErrorPopup(error);
+      onError && onError(error);
     }
-  }, [app, media, account, dropId, currency])
+  }, [app, media, account, dropId, currency]);
 
   return (
     <button
@@ -51,5 +58,5 @@ export const LazyRemoveBidButton = ({ dropId, name, currency, onError, onRemove 
     >
       Remove Bid
     </button>
-  )
-}
+  );
+};

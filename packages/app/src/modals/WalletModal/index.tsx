@@ -40,7 +40,6 @@ export default function WalletModal({
   confirmedTransactions: string[]; // hashes of confirmed
   ENSName?: string;
 }) {
-  // console.log({ ENSName })
   // important that these are destructed from the account-specific web3-react context
   const { chainId, account, accounts, active, isActivating, connector, error } =
     useActiveWeb3React();
@@ -161,7 +160,6 @@ export default function WalletModal({
         if (option.name === "Portis") {
           return null;
         }
-        console.log("here", window.web3, window.ethereum, option);
         if (!window.web3 && !window.ethereum) {
           if (option.name === "MetaMask") {
             return (
@@ -182,7 +180,6 @@ export default function WalletModal({
                   isActivating
                     ? () => console.log("is activating")
                     : () => {
-                        console.log("clicked me 1", option.connector);
                         option.connector instanceof WalletConnect ||
                         option.connector instanceof Network
                           ? option.connector.activate(
@@ -213,7 +210,6 @@ export default function WalletModal({
                 isActivating
                   ? () => console.log("is activating")
                   : () => {
-                      console.log("clicked me 1", option.connector);
                       option.connector instanceof WalletConnect ||
                       option.connector instanceof Network
                         ? option.connector.activate(
@@ -257,7 +253,6 @@ export default function WalletModal({
               />
             );
           } else {
-            console.log("hereeeee o");
             return null; // dont want to return install twice
           }
         }
@@ -280,18 +275,11 @@ export default function WalletModal({
               isActivating
                 ? () => console.log("is activatinggggg")
                 : () => {
-                    console.log("clicked me 2", option.connector);
-                    console.log(
-                      "connector_instanceof",
-                      option.connector instanceof WalletConnect
-                    );
-
                     option.connector instanceof WalletConnect ||
                     option.connector instanceof Network
-                      ? (console.log("clicked me oksndvvdjn", option.connector),
-                        option.connector.activate(
+                      ? option.connector.activate(
                           chainId === -1 ? undefined : chainId
-                        ))
+                        )
                       : option.connector.activate(
                           chainId === -1
                             ? undefined

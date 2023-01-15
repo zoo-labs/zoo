@@ -115,7 +115,6 @@ export default function ExchangePanel({
             } `}
             onClick={() => {
               if (onCurrencySelect) {
-                console.log("opening modal", modalOpen);
                 setModalOpen(true);
               }
             }}

@@ -84,7 +84,6 @@ const MarketPlacePage = () => {
   const MarketAnimals = markets.filter((item, index) => item.type === "animal");
 
   const { tokenTypes } = useTokenTypes();
-  console.log("tokenTypes", tokenTypes);
   useEffect(() => {
     setData(
       [...Object.values(allData)]
@@ -126,7 +125,6 @@ const MarketPlacePage = () => {
   const router = useRouter();
 
   const onClickTokenType = (name: string) => {
-    console.log("name", name);
     router.push(`${router.pathname}?name=${name}`, undefined, {
       shallow: true,
     });
@@ -173,7 +171,6 @@ const MarketPlacePage = () => {
               ?.value == value.value
         );
 
-        console.log("jkdnjhbdddshuduhjrfbfhjdbhjf", value);
         setAuctionFilter(filter);
       }
       if (type === "yields") {
@@ -722,7 +719,10 @@ const MarketPlacePage = () => {
             {auctionFilter.length > 0 ? (
               auctionFilter.map((datum: Auction, index) => {
                 return (
-                  <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
+                  <div
+                    key={index}
+                    className="w-full p-2 sm:w-1/2 md:w-1/3 lg:w-1/4"
+                  >
                     <MarketItem
                       datum={datum}
                       applyMaxWidth={false}

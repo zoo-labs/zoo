@@ -18,7 +18,7 @@ export default function NetworkPopup({ userEthBalance, NATIVE }) {
 
   if (!chainId) return null;
   return (
-    <Popover className="relative ml-auto md:m-0">
+    <Popover className="relative ml-auto cursor-pointer md:m-0">
       {({ open }) => (
         <>
           <Popover.Button
@@ -64,7 +64,7 @@ export default function NetworkPopup({ userEthBalance, NATIVE }) {
                           <p className="ml-4 text-lg font-semibold">
                             {NETWORK_LABEL[key]}
                           </p>
-                          <div className="w-2 h-2 rounded-full bg-green absolute right-4 inset-y-6" />
+                          <div className="absolute w-2 h-2 rounded-full bg-green right-4 inset-y-6" />
                         </button>
                       );
                     }
@@ -74,9 +74,7 @@ export default function NetworkPopup({ userEthBalance, NATIVE }) {
                         onClick={() => {
                           const params = SUPPORTED_NETWORKS[key];
                           cookie.set("chainId", key);
-                          console.log("NetworkModal.onClick", {
-                            chainId: params.chainId,
-                          });
+
                           if (DEFAULT_METAMASK_CHAIN_ID.includes(key)) {
                             library?.send("wallet_switchEthereumChain", [
                               { chainId: params.chainId },

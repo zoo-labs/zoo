@@ -53,8 +53,6 @@ export const AcceptBidButton = ({
     try {
       const txSummary = `Accepted Bid for ${tokenType} ${tokenId}`;
 
-      console.log(ethers.utils.formatEther(bid.amount));
-
       if (isNativeCurrency(bid.currency)) {
         const tx = await app.acceptBid(tokenId, bid, {
           from: account,

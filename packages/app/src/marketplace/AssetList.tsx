@@ -1,33 +1,42 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { GetTriggerProps, OpenModal, TriggerProps } from 'react-morphing-modal/dist/types'
-import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'
-import Link from 'next/link'
-import { useContract } from '../hooks'
-import Asset from './Asset'
-import _ from 'lodash'
-import { newNft } from '../functions/assets'
-import { useQuery, gql } from '@apollo/client'
-import { useRouter } from 'next/router'
-import { ethers } from 'ethers'
-import { useTokenTypes } from './state'
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import {
+  GetTriggerProps,
+  OpenModal,
+  TriggerProps,
+} from "react-morphing-modal/dist/types";
+import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi";
+import Link from "next/link";
+import { useContract } from "../hooks";
+import Asset from "./Asset";
+import _ from "lodash";
+import { newNft } from "../functions/assets";
+import { useQuery, gql } from "@apollo/client";
+import { useRouter } from "next/router";
+import { ethers } from "ethers";
+import { useTokenTypes } from "./state";
 
 const getPages = (total: number, perPage: number) => {
-  var chunks: number[] = Array(Math.floor(total / perPage)).fill(perPage)
-  var remainder = total % perPage
+  var chunks: number[] = Array(Math.floor(total / perPage)).fill(perPage);
+  var remainder = total % perPage;
   if (remainder > 0) {
-    chunks.push(remainder)
+    chunks.push(remainder);
   }
-  return chunks
-}
+  return chunks;
+};
 
 export type MediaFilter = {
-  owner?: string
-  contentURI_contains?: string
-  metadataURI_contains?: string
-}
+  owner?: string;
+  contentURI_contains?: string;
+  metadataURI_contains?: string;
+};
 
 const GET_ASSETS = gql`
-  query GetAssets($where: Media_filter, $skip: Int, $first: Int, $orderBy: Media_orderBy) {
+  query GetAssets(
+    $where: Media_filter
+    $skip: Int
+    $first: Int
+    $orderBy: Media_orderBy
+  ) {
     medias(skip: $skip, first: $first, where: $where, orderBy: $orderBy) {
       id
       contentURI
@@ -38,7 +47,7 @@ const GET_ASSETS = gql`
       }
     }
   }
-`
+`;
 
 const Empty = ({ empty }) =>
   empty ? (
@@ -47,27 +56,27 @@ const Empty = ({ empty }) =>
     <div className="py-3">
       <Link href="/mint">Mint and list the first.</Link>
     </div>
-  )
+  );
 
 export type AssetListProps = {
-  title: string
-  tokenType?: string
-  tokenName?: string
-  totalMinted?: number
-  perPage?: number
-  cols?: number
-  where?: MediaFilter
-  orderBy?: string
-  className?: string
-  autoPlay?: boolean
-  showPageNumbers?: boolean
-  animate?: boolean
-  large?: boolean
-  empty?: JSX.Element
-  getTriggerProps?: GetTriggerProps
-  onLoadAssets?: (assets: object[]) => void
-  openModal?: OpenModal
-} & React.HTMLAttributes<HTMLDivElement>
+  title: string;
+  tokenType?: string;
+  tokenName?: string;
+  totalMinted?: number;
+  perPage?: number;
+  cols?: number;
+  where?: MediaFilter;
+  orderBy?: string;
+  className?: string;
+  autoPlay?: boolean;
+  showPageNumbers?: boolean;
+  animate?: boolean;
+  large?: boolean;
+  empty?: JSX.Element;
+  getTriggerProps?: GetTriggerProps;
+  onLoadAssets?: (assets: object[]) => void;
+  openModal?: OpenModal;
+} & React.HTMLAttributes<HTMLDivElement>;
 
 const AssetList = ({
   animate,
@@ -78,24 +87,22 @@ const AssetList = ({
   empty,
   where = {},
   perPage = 6,
-  orderBy = 'id',
+  orderBy = "id",
   showPageNumbers = true,
 }: AssetListProps) => {
-  const router = useRouter()
-  const [totalPages, setTotalPages] = useState(1)
-  const [assets, setAssets] = useState([])
-  const [page, setPage] = useState(1)
-  const [pageOffset, setPageOffset] = useState(0)
+  const router = useRouter();
+  const [totalPages, setTotalPages] = useState(1);
+  const [assets, setAssets] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageOffset, setPageOffset] = useState(0);
 
   const filter = {
     ...where,
-  }
+  };
 
   if (filter.owner) {
-    filter.owner = where.owner.toLowerCase()
+    filter.owner = where.owner.toLowerCase();
   }
-
-  console.log('filter', filter)
 
   const { loading, error, data } = useQuery(GET_ASSETS, {
     variables: {
@@ -104,39 +111,41 @@ const AssetList = ({
       skip: pageOffset,
       first: perPage || 100,
     },
-    fetchPolicy: 'no-cache',
+    fetchPolicy: "no-cache",
     pollInterval: 10000,
-  })
+  });
 
   useEffect(() => {
     if (totalMinted) {
-      setTotalPages(Math.ceil(totalMinted / perPage))
+      setTotalPages(Math.ceil(totalMinted / perPage));
     }
-  }, [totalMinted])
+  }, [totalMinted]);
 
   const previousPage = useCallback(() => {
     if (page > 1) {
-      setPage(page - 1)
+      setPage(page - 1);
     }
-  }, [page])
+  }, [page]);
 
   const nextPage = useCallback(() => {
     if (page < totalPages) {
-      setPage(page + 1)
+      setPage(page + 1);
     }
-  }, [page, totalPages])
+  }, [page, totalPages]);
 
   useEffect(() => {
-    setPageOffset(page * perPage - perPage)
-  }, [page])
+    setPageOffset(page * perPage - perPage);
+  }, [page]);
 
   useEffect(() => {
-    setAssets(data?.medias || [])
-  }, [data])
+    setAssets(data?.medias || []);
+  }, [data]);
 
   const onClick = (tokenId: number | string) => {
-    router.push(`${router.pathname}?tokenId=${tokenId}`, undefined, { shallow: true })
-  }
+    router.push(`${router.pathname}?tokenId=${tokenId}`, undefined, {
+      shallow: true,
+    });
+  };
 
   return (
     <div className={`AssetList pb-10 mb-10 border-b-gray-900 border-b-2`}>
@@ -147,7 +156,7 @@ const AssetList = ({
             <div
               onClick={previousPage}
               className={`p-2 mr-3 rounded-full cursor-pointer ${
-                page > 1 ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'
+                page > 1 ? "bg-gray-700" : "bg-gray-900 text-gray-600"
               }`}
             >
               <HiOutlineChevronLeft size={16} />
@@ -160,7 +169,7 @@ const AssetList = ({
             <div
               onClick={nextPage}
               className={`p-2 ml-3 rounded-full cursor-pointer ${
-                page < totalPages ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'
+                page < totalPages ? "bg-gray-700" : "bg-gray-900 text-gray-600"
               }`}
             >
               <HiOutlineChevronRight size={16} />
@@ -186,7 +195,7 @@ const AssetList = ({
         page === 1 && <Empty empty={empty} />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default AssetList
+export default AssetList;

@@ -157,8 +157,6 @@ const InfoPage = () => {
     setNft(_nft);
   }, [allAuctions, id]);
 
-  console.log("ddnsahjdbhjshdjhdshgajdcahjcvd", nft);
-
   return (
     <div className="pb-16 md:flex-col md:items-center lg:flex-row ">
       <div className="flex flex-col md:flex-row md:items-center gap-24 mb-[91px] -mt-20 py-20 px-28 bg-product-view lg:max-w-7xl lg:mx-auto">
@@ -184,10 +182,10 @@ const InfoPage = () => {
             )}
           </div>
           <div className="flex items-center justify-between gap-6 mt-2">
-            <div>
+            {/* <div>
               <p className="mb-0.5 text-xs font-semibold">Mints Left?</p>
               <p className="text-[#979797] font-light text-xs">1 Mint</p>
-            </div>
+            </div> */}
             <div>
               <p className="mb-0.5 text-xs font-semibold">Time Left:</p>
               <p className="text-[#979797] font-light text-xs">
@@ -203,30 +201,32 @@ const InfoPage = () => {
           </div>
         </div>
         <div className="flex-1">
-          <p className="font-light mb-3">
+          <p className="mb-3 font-light">
             {[0, 1].includes(nft?.kind) ? "Genesis" : "Hybrid"} #{nft?.tokenID}
           </p>
-          <h1 className="font-semibold text-[44px] leading-4 mb-[26px]">{nft?.name}</h1>
+          <h1 className="font-semibold text-[44px] leading-4 mb-[26px]">
+            {nft?.name}
+          </h1>
 
           <p className="mb-0.5 text-sm font-medium">DESCRIPTIONS</p>
-          <div className="h-px bg-white w-full mb-2" />
-          <p className="text-sm mb-8">{nft?.description}</p>
+          <div className="w-full h-px mb-2 bg-white" />
+          <p className="mb-8 text-sm">{nft?.description}</p>
           <div className="flex flex-row items-center mb-[22px] w-full lg:w-11/12 ">
             <div className="mb-1 mr-4">
               <div className="flex items-center">
-                <p className="text-white mr-2 text-sm">Current Bid: </p>
+                <p className="mr-2 text-sm text-white">Current Bid: </p>
                 <span className="text-[10px] text-muted-50">[16 Bids]</span>
               </div>
               <p className="text-2xl font-semibold">
                 {abbreviateNumber(nft?.amount)} ZOO
               </p>
             </div>
-            <div className=" rounded-md py-2 text-black bg-white text-center px-8">
+            <div className="px-8 py-2 text-center text-black bg-white rounded-md ">
               <p className="text-sm">Bid Amount</p>
               <p className="text-[8px] font-[400]">{minBid} ZOO or more</p>
             </div>
           </div>
-          <div className="flex flex-col md:flex-row items-center gap-3">
+          <div className="flex flex-col items-center gap-3 md:flex-row">
             {nft?.firstBidTime && Object.keys(ttimeLeft).length === 0 ? (
               ""
             ) : (
@@ -254,14 +254,14 @@ const InfoPage = () => {
       </div>
       <div className="px-6 lg:max-w-7xl lg:mx-auto">
         <div className="flex items-center justify-center gap-12 mb-12">
-          <p className="px-3 font-black text-lg pb-3 border-b border-white cursor-pointer">
+          <p className="px-3 pb-3 text-lg font-black border-b border-white cursor-pointer">
             Properties
           </p>
           <a
             href={nft?.tokenUri}
             target="_blank"
             rel="noreferrer"
-            className="px-3 font-base text-lg pb-3 flex items-center cursor-pointer"
+            className="flex items-center px-3 pb-3 text-lg cursor-pointer font-base"
           >
             <p className="mr-1">Metadata</p>
             <Image src="/icons/link-white.svg" alt="" width={11} height={11} />
@@ -342,9 +342,9 @@ const InfoPage = () => {
 
         <div>
           <div className="hidden border-b border-[#fff] lg:block pt-8 pb-4 w-1/3 mb-4">
-            <p className="uppercase font-semibold text-2xl mt-8">Browse</p>
+            <p className="mt-8 text-2xl font-semibold uppercase">Browse</p>
           </div>
-          <div className="grid lg:grid-cols-5 gap-4 mt-8">
+          <div className="grid gap-4 mt-8 lg:grid-cols-5">
             {[1, 2, 3, 4, 5].map((data, index) => {
               return (
                 <div key={index}>
@@ -372,18 +372,18 @@ const InfoPage = () => {
                         </div>
                       )}
                     </div>
-                    <p className="text-center text-sm">
+                    <p className="text-sm text-center">
                       #1234{" "}
                       <span className="font-bold text-[#333333]">20/13</span>
                     </p>
-                    <p className="text-center font-bold mt-1">
+                    <p className="mt-1 font-bold text-center">
                       Baby Amur Leopard
                     </p>
                     <div className="flex justify-center items-center bg-[#333333] py-2 rounded-lg mt-4">
                       <p className="w-6 h-6 bg-white rounded-full text-[#333333] text-[10px] font-semibold flex items-center justify-center">
                         ZOO
                       </p>
-                      <p className="text-sm font-bold ml-2">220.4M</p>
+                      <p className="ml-2 text-sm font-bold">220.4M</p>
                     </div>
                   </div>
                   <div className="flex items-center justify-center mt-4">

@@ -46,7 +46,6 @@ const Item = () => {
       (e: any) => e?.auctionId?.toString() === id?.toString()
     );
     setAuction(_auction);
-    console.log("AUCTION_AUXTIO", _auction);
   }, [allAuctions, id]);
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[
@@ -54,7 +53,6 @@ const Item = () => {
   ];
   const auctionPriceBNB = zooBnbPrice * Number(auction?.amount);
 
-  console.log("the_chosen_auction__", auction);
   return (
     <>
       <div className="flex flex-col px-5 mx-auto mt-20 lg:flex-row gap-11 lg:items-center lg:px-10 max-w-7xl">

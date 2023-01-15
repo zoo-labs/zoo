@@ -87,7 +87,6 @@ export function CurrencySearch({
   let allTokens = useAllTokens();
   const history = useRouter();
 
-  console.log("allTokens", allTokens);
 
   // if (currencyList) {
   //   allTokens = Object.keys(allTokens).reduce((obj, key) => {

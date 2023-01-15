@@ -189,15 +189,12 @@ export function useVotingApproveCallback(
   // console.log('currentAllowance', currentAllowance)
   // check the current approval status
   const approvalState: ApprovalState = useMemo(() => {
-    console.log("state 1");
 
     if (!amountToApprove || !spender) return ApprovalState.UNKNOWN;
     // if (amountToApprove.currency.isNative) return ApprovalState.APPROVED
     // we might not have enough data to know whether or not we need to approve
-    console.log("state 2", amountToApprove, spender, voterAllowance);
 
     if (voterAllowance == null) return ApprovalState.UNKNOWN;
-    console.log("state 3", voterAllowance);
 
     // amountToApprove will be defined if currentAllowance is
     const state =
@@ -212,7 +209,6 @@ export function useVotingApproveCallback(
 
   const tokenContract = useZooToken();
   const addTransaction = useTransactionAdder();
-  console.log("tokenContract", tokenContract);
   const approve = useCallback(async (): Promise<void> => {
     if (approvalState !== ApprovalState.NOT_APPROVED) {
       console.error("approve was called unnecessarily", approvalState);
