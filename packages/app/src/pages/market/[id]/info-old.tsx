@@ -138,7 +138,6 @@ const InfoPage = () => {
     setNft(_nft);
   }, [allAuctions, id]);
 
-  console.log("NFTTTT_ANDAUCTION", nft);
   return (
     <Layout bg="bg-black">
       <div className="px-6 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
@@ -381,7 +380,6 @@ const InfoPage = () => {
               {[...transactions, ...(nft?.auctionHistory ?? [])]
                 .sort((a, b) => b.block_timestamp - a.block_timestamp)
                 .map((transaction, index) => {
-                  console.log("transaction", transaction);
                   return (
                     <TransactionRow
                       key={index}

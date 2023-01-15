@@ -22,11 +22,9 @@ const ShopDetails = () => {
   const [color, setColor] = useState<string>();
   const [adendums, setAdendums] = useState<string[]>();
 
-  console.log("store", Products, CartItems);
   useEffect(() => {
     if (Products) {
       const data = Products.find((products) => products.id === id);
-      console.log("products here", Products, id, data);
 
       setProduct(data);
     }

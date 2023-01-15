@@ -22,7 +22,6 @@ const firebaseConfig = {
 function initFirebase() {
     if (typeof window !== undefined) {
         initializeApp(firebaseConfig);
-        console.log("Firebase has been init successfully");
     }
 }
 

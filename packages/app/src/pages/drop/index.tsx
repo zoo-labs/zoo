@@ -121,8 +121,12 @@ const Drop = ({}: AppProps & {
   }, []);
 
   const Drops = useMemo(() => {
-    return drops.map((drop, i) => {
-      console.log("droppppp", drop);
+    console.log("droppppps", drops);
+
+    return drops?.map((drop, i) => {
+      if (!drop) {
+        return;
+      }
       return (
         <div
           key={i}
@@ -192,7 +196,7 @@ const Drop = ({}: AppProps & {
               <p className="mb-4 text-3xl font-bold leading-10 md:leading-none md:text-6xl">
                 ZOO Origin Egg NFT
               </p>
-              <p className="max-w-full mb-10 md:overflow-hidden text-sm font-light text-muted-20">
+              <p className="max-w-full mb-10 text-sm font-light md:overflow-hidden text-muted-20">
                 Upgradeable Egg NFTs hatch into baby animals and mint up to 6
                 animals each for even more ways to earn yield.
               </p>
@@ -220,7 +224,7 @@ const Drop = ({}: AppProps & {
                         )}
                       </div>
                       <Link href={`/market/egg/${_.id}`} passHref>
-                        <a className="absolute flex items-center justify-center w-6 md:w-10 h-6 md:h-10 rounded-full bg-33 bottom-2 right-2">
+                        <a className="absolute flex items-center justify-center w-6 h-6 rounded-full md:w-10 md:h-10 bg-33 bottom-2 right-2">
                           <Image
                             src="/icons/arrow-right-light.svg"
                             alt=""

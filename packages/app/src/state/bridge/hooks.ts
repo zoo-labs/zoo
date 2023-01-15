@@ -68,10 +68,8 @@ export function useGetAvailableTokens(): (chain?: number) => void {
         }
       };
       const tokens = result.tokens
-      console.log('customtojks', tokens)
 
       const resultTokens = chain == 43113 ? customTokens : { ...customTokens, ...tokens, };
-      console.log('{ [chain]: resultTokens }', { [chain]: resultTokens })
       dispatch(fetchTokens({ [chain]: resultTokens }));
 
     } catch (error) {
@@ -179,7 +177,6 @@ export function useFetchUserBalances(): () => void {
       // })
 
       for (const chain of Object.values(activeChains)) {
-        console.log('useFetchUserBalances chain', chain)
         //GET NONE SUPPORTED CHAIN ID BALANCE (LUX)
         const options: { chain?: any; address: string } = {
           chain: SUPPORTED_NETWORKS[chain as string].chainId,
@@ -198,11 +195,9 @@ export function useFetchUserBalances(): () => void {
           }
         ];
         balances = { ...balances, [chain as number]: newbalances }
-        console.log("balanceeee useFetchUserBalances", balances);
 
       }
 
-      console.log("balanceeee  newbalances newbalances", balances);
       dispatch(fetchBalances(balances));
       // getCurrentBalances();
     } catch (error) {
@@ -266,7 +261,6 @@ const customChainFunc = async (lBTCContract, account) => {
     (await lBTCContract?.balanceOf(account)).toString(),
     "ether"
   );
-  console.log('lBTCContract value of balance', value)
   return value;
 }
 // Object.keys(currentTrade).forEach(async (trade) => {
@@ -289,7 +283,6 @@ export function useGetQuote(): (
   const { currentTrade, currentSelectSide } = useAppSelector(
     (state: AppState) => state.bridge
   );
-  console.log("currentSelectSide in quite", currentSelectSide);
   return useCallback(
     async (currentAmount, side) => {
       const newSide = side || currentSelectSide;
@@ -298,13 +291,10 @@ export function useGetQuote(): (
         if (!currentTrade.from || !currentTrade.to || !currentAmount[newSide])
           return;
         // const amount = Number(toAmount * 10 ** currentTrade.from.decimals);
-        console.log("useGetQuote", currentAmount, newSide, currentTrade);
         const amount = Moralis.Units.Token(
           currentAmount[newSide],
           currentTrade[newSide].decimals
         ).toString();
-        console.log("amount here is", amount);
-        console.log("currentTrade here is", currentTrade);
 
         const quote = await Moralis.Plugins.oneInch.quote({
           chain: "eth", // The blockchain you want to use (eth/bsc/polygon)
@@ -313,7 +303,6 @@ export function useGetQuote(): (
             currentTrade[newSide === "from" ? "to" : "from"].address, // The token you want to receive
           amount,
         });
-        console.log("quoteeeeeee", quote);
         dispatch(
           updateCurrentAmount({
             ...currentAmount,
@@ -323,10 +312,7 @@ export function useGetQuote(): (
             ).toFixed(8),
           })
         );
-        console.log(
-          "to amount value ",
-          (quote.toTokenAmount / 10 ** quote.toToken.decimals).toFixed(8)
-        );
+
       } catch (error) {
         console.log("error useGetQuote,", error);
         // console.log(
@@ -362,7 +348,6 @@ export function useSwap(): () => void {
         fromAddress: account, // Your wallet address
         amount: amount,
       });
-      console.log(allowance);
       if (!allowance) {
         await Moralis.Plugins.oneInch.approve({
           chain: "eth", // The blockchain you want to use (eth/bsc/polygon)
@@ -380,7 +365,6 @@ export function useSwap(): () => void {
         fromAddress: account, // Your wallet address
         slippage: 1,
       });
-      console.log("receipt here is", receipt);
       //   alert("Swap Complete");
       notify("Swap Complete", "success");
 

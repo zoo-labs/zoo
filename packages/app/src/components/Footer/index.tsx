@@ -21,7 +21,6 @@ const Footer = () => {
   const [error, seterror] = useState(false);
 
   const handleSubmit = () => {
-    console.log("sending information");
 
     const { email } = Form;
 
@@ -37,7 +36,6 @@ const Footer = () => {
         });
         seterror(false);
         setSucces(true);
-        console.log(response);
       })
       .catch(function (error) {
         console.log(error);
@@ -150,7 +148,7 @@ const Footer = () => {
               </div> */}
             </div>
           </div>
-          <div className="flex flex-col px-6 p-16 basis-1/3 text-grey h-full">
+          <div className="flex flex-col h-full p-16 px-6 basis-1/3 text-grey">
             {/* <div className="mb-0">
               {!account ? (
                 <a href="#">

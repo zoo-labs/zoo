@@ -21,7 +21,6 @@ export interface ProductInterface {
 
 const ProductsSection = () => {
   const { Products } = useAppSelector((state) => state.store);
-  console.log("Products in section", Products);
   return (
     <div className="w-full mt-[64px]">
       <div className="px-4 mx-auto max-w-7xl">

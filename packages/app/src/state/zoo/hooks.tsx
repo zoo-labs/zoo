@@ -37,6 +37,7 @@ import { SUPPORTED_NETWORKS } from "config/networks";
 import { MyNFT } from "./types";
 import axios from "axios";
 import { ethers } from "ethers";
+import { getMetaData } from "state/drop/hooks";
 
 // helper that can take a ethers library transaction response and add it to the list of transactions
 export function useZoobalance(): () => void {
@@ -49,7 +50,6 @@ export function useZoobalance(): () => void {
     try {
       if (!account) return;
       if (!chainId) return;
-      console.log("zooToken", zooToken);
       const decimals = await zooToken.decimals();
       const rawBalance = await zooToken.balanceOf(account);
       const divisor = parseFloat(Math.pow(10, decimals).toString());
@@ -64,7 +64,6 @@ export function useZoobalance(): () => void {
 export function useBuyZoo(): () => void {
   const { chainId, account } = useActiveWeb3React();
   const faucet = useFaucet();
-  console.log("buying zoo");
 
   const dispatch = useAppDispatch();
   const zooToken = useZooToken();
@@ -74,7 +73,6 @@ export function useBuyZoo(): () => void {
     if (!chainId) return;
 
     try {
-      console.log(account);
       faucet
         ?.fund(account)
         ?.send({ from: account })
@@ -118,31 +116,23 @@ export function useHatch(): (
   const media = useMedia();
   const { account } = useActiveWeb3React();
   const zoo = useZooToken();
-  const dropId = process.env.NEXT_PUBLIC_DROP_ID;
+  const dropId = process.env.NEXT_PUBLIC_DROP_ID || 1;
   const dispatch = useAppDispatch();
   const getZooBalance = useZoobalance();
   return useCallback(
     async (dropEggId, eggId, success) => {
       if (!zooKeeper) return;
-      console.log("zooKeeper_usehatch", {
-        dropEggid: Number(dropEggId),
-        dropId: Number(dropId),
-        eggId: Number(eggId),
-        zooKeeper: zooKeeper.address,
-      });
+
       try {
         dispatch(loading(true));
         const approval = await zoo?.allowance(account, zooKeeper.address);
-        console.log("approval_", Number(approval));
 
         if (Number(approval) <= 0) {
-          console.log("approving_media");
           await zoo
             ?.approve(zooKeeper.address, MaxUint256, {
               gasLimit: 4000000,
             })
             .then((tx) => {
-              console.log("approval", tx);
               tx.wait();
             })
             .catch((err) => {
@@ -198,7 +188,6 @@ export function useFetchMyNFTs(): () => Promise<any> {
   const dispatch = useDispatch();
 
   const Web3Api = useMoralisWeb3Api();
-  console.log("structuredNft fetching nfts", Web3Api);
 
   const { account, chainId } = useActiveWeb3React();
   const media = useMedia();
@@ -207,7 +196,6 @@ export function useFetchMyNFTs(): () => Promise<any> {
   return useCallback(async () => {
     // get NFTs for current user on Mainnet
     // bsc nfts
-    console.log("useFetchMyNFTs", chainId);
     try {
       // bsc testnet nfts
       const options: { chain?: any; address: string; token_address: string } = {
@@ -218,28 +206,21 @@ export function useFetchMyNFTs(): () => Promise<any> {
 
       let returnNFTs = [];
 
-      console.log("GETTING_USERS_NFTS->", {
-        chain: SUPPORTED_NETWORKS[chainId]?.chainId,
-        address: account,
-        token_address: media?.address,
-        chainId,
-      });
-
       const nfts = await Web3Api.account.getNFTsForContract(options);
       const structuredNft = nfts.result;
       let newStruct = [];
       let _eggsCount = 0;
       let _animalsCount = 0;
       let _breedCount = 0;
-      console.log("structuredNft_useFetchMyNFTs", structuredNft);
       structuredNft.forEach(async (nft, index) => {
         const id = nft.token_id;
 
         const deet = await zooKeeper?.tokens(Number(id));
-        console.log("d_deets", { deet });
 
-        const data = (await axios.get(deet.data.metadataURI)).data;
-        console.log("dataa_IN__useFetchMyNFTs", data);
+        const data = await getMetaData(
+          deet.data.metadataURI,
+          "dataa_IN__useFetchMyNFTs"
+        );
         const {
           name,
           attributes,
@@ -253,7 +234,6 @@ export function useFetchMyNFTs(): () => Promise<any> {
         else if (deet?.kind === 1) _animalsCount++;
         else if (deet?.kind === 2) _eggsCount++;
         else if (deet?.kind === 3) _animalsCount++;
-        console.log("countINDJJW", deet?.kind, _eggsCount);
         dispatch(eggsCount(_eggsCount));
         dispatch(animalsCount(_animalsCount));
         dispatch(breedsCount(_breedCount));
@@ -309,15 +289,8 @@ export function useFetchMyNFTs(): () => Promise<any> {
             : "",
         };
 
-        console.log("updateMyNfts updating my nfts here with", newNft);
         dispatch(updateMyNfts(newNft));
         returnNFTs = [newNft, ...returnNFTs];
-      });
-
-      console.log("count_of_thigns", {
-        _eggsCount,
-        _animalsCount,
-        _breedCount,
       });
 
       return returnNFTs;
@@ -342,7 +315,6 @@ export function useGetNftTransfers(): () => void {
     };
 
     const bscNFTs = await Web3Api.account.getNFTTransfers(options);
-    console.log("bscNFTs", bscNFTs.result);
     dispatch(addNftTTransfers(bscNFTs.result.slice(0, 10)));
   }, [chainId, account, media?.address, Web3Api.account, dispatch]);
 }
@@ -430,7 +402,6 @@ export function useGetAvailableEggs(): () => void {
           dispatch(addEgg(finalEgg));
         });
       };
-      console.log("all eggs", eggs);
       const eggsPromise = eggs.map((egg) => {
         return structureEgg(egg);
       });
@@ -458,35 +429,25 @@ export function useBuyEgg(): (
   const getZooBalance = useZoobalance();
   return useCallback(
     async (eggId, quantity, success) => {
-      console.log("buying_eggggg", { eggId, quantity, dropId, zooKeeper });
       if (!zooKeeper) return;
       try {
         dispatch(loading(true));
         const approval = await zoo?.allowance(account, zooKeeper.address);
-        console.log("approval_buy_egg", Number(approval));
         if (Number(approval) <= 0) {
-          console.log("approving_zoo_keeper");
           await zoo
             ?.approve(zooKeeper.address, MaxUint256, {
               gasLimit: 4000000,
             })
             .then((tx) => {
-              console.log("approval", tx);
               tx.wait();
             });
         }
-        console.log("eggId_dropId_quantity", {
-          eggId,
-          dropId,
-          quantity,
-          approval,
-        });
+
         const tx = await zooKeeper.buyEggs(eggId, dropId, quantity, {
           gasLimit: 4000000,
         });
         await tx.wait();
         getZooBalance();
-        console.log("tx_in_buy_egg", tx);
         addPopup({
           txn: {
             hash: null,
@@ -530,35 +491,21 @@ export function useBuyEggWithBnB(): (
   const getZooBalance = useZoobalance();
   return useCallback(
     async (eggId, quantity, success) => {
-      console.log("buying_eggggg_w_bnb", {
-        eggId,
-        quantity,
-        dropId,
-        zooKeeper,
-        bnb,
-      });
       if (!zooKeeper) return;
       try {
         dispatch(loading(true));
         const approval = await bnb?.allowance(account, zooKeeper.address);
-        console.log(
-          "approval_approving_media",
-          Number(approval),
-          isNaN(Number(approval))
-        );
+
         if (Number(approval) <= 0 || isNaN(Number(approval))) {
-          console.log("approving_media");
           const approving = await bnb?.approve(zooKeeper.address, MaxUint256, {
             gasLimit: 4000000,
           });
           approving?.wait();
-          console.log("approval_approved", approving);
         }
         const tx = await zooKeeper.buyEggsWithBNB(eggId, dropId, quantity, {
           gasLimit: 4000000,
         });
         await tx.wait();
-        console.log(tx);
         getZooBalance();
         addPopup({
           txn: {
@@ -603,7 +550,6 @@ export function useTransferZoo(): (
           gasLimit: 4000000,
         });
         await tx.wait();
-        console.log(tx);
         getBalance();
         addPopup({
           txn: {
@@ -634,18 +580,16 @@ export function useGetAllAuctions(): () => Promise<void> {
   const zooKeeper = useZooKeeper(true);
   const { library } = useActiveWeb3React();
   return useCallback(async () => {
-    console.log("auction ytfrtdtrsd", auctionContract);
     const na = +new Date();
     try {
       const auctions = await auctionContract?.getAllAuctions();
-      console.log("auctions__await", auctions);
       await auctions?.map(async (auction, index: number) => {
         if (Number(auction.reservePrice) === 0) return false;
         const tokenUri = await media?.tokenURI(Number(auction.tokenID));
         const tokenMetadataURI = await media?.tokenURI(Number(auction.tokenID));
         const deet = await zooKeeper?.tokens(Number(auction.tokenID));
-
-        const data = (await axios.get(tokenMetadataURI)).data;
+        // const { data } = await axios.get(tokenMetadataURI);
+        const data = await getMetaData(tokenMetadataURI, "useGetAllAuctions");
         const {
           name,
           attributes,
@@ -656,7 +600,6 @@ export function useGetAllAuctions(): () => Promise<void> {
           usdz_animation_url,
         } = data;
 
-        console.log("auction nft data", auction);
         const {
           tokenID,
           auctionId,
@@ -671,7 +614,6 @@ export function useGetAllAuctions(): () => Promise<void> {
         } = auction;
         const auctionHistoryMap = await auctionHistory.map(async (history) => {
           const hash = await library.getBlock(history.blockNumber);
-          console.log("historyHaash", hash);
           return {
             value: Number(history.amount),
             from_address: history.bidder,
@@ -733,7 +675,6 @@ export function useGetAllAuctions(): () => Promise<void> {
             : "",
         };
 
-        console.log("finalAuction", finalAuction, auction);
         dispatch(addAuctionNft(finalAuction as any));
       });
     } catch (error) {
@@ -800,26 +741,12 @@ export function useApproveTokenWithMedia(): (
       if (!chainId) return;
       if (!media) return;
 
-      // console.log('form_usdjndks', {
-      //   tokenId,
-      //   spender,
-      //   media,
-      // })
-      console.log("form_usdjndks", {
-        media: media.address,
-        spender: spender,
-        same: media.address === spender,
-      });
-
       try {
-        console.log("about to approve token", tokenId, spender);
         const trx = await media?.setApprovalForAll(spender, true, {
           gasLimit: 4000000,
         });
 
-        console.log("I'm approving");
         await trx.wait();
-        console.log("approved");
 
         addTransaction(trx, {
           summary: "Approve " + tokenId,
@@ -856,19 +783,16 @@ export function useCreateAuction(): (
     async (tokenID, duration, reservePrice, curatorFeePercentage, success) => {
       if (!auction) return;
       dispatch(loading(true));
-      console.log("auction", auction, auctionCurrency);
       try {
         const isApproved = await tokenContract?.isApprovedForAll(
           account,
           auction?.address
         );
         if (!isApproved) {
-          console.log("not approved");
           const approval = await approveTokenWithMedia(
             Number(tokenID),
             auction?.address
           );
-          console.log("approval", approval);
           if (!approval) {
             dispatch(loading(false));
             return;
@@ -981,19 +905,15 @@ export function useCreateBid(): (
   const getZooBalance = useZoobalance();
   return useCallback(
     async (id, amount, success) => {
-      console.log("AMOUNT_TO_BID", Number(amount));
       const weiAmount = ethers.utils.formatUnits(amount, "wei");
-      // console.log("WEI_AMOUNT", weiAmount);
       try {
         dispatch(loading(true));
         const approved = await zoo?.allowance(account, auction?.address);
-        console.log("AUCTION_APPROVED", Number(approved));
         if (!approved || Number(approved) <= 0) {
           const approval = await zoo?.approve(auction?.address, MaxUint256, {
             gasLimit: 4000000,
           });
           await approval.wait();
-          console.log("APPROVAL", approval);
         }
         const tx = await auction?.createBid(id, weiAmount, {
           gasLimit: 4000000,
@@ -1054,33 +974,26 @@ export function useFeed(): (animalID: number) => void {
   const getZooBalance = useZoobalance();
   return useCallback(
     async (animalId) => {
-      console.log("feeding_animal", zooKeeper, { animalId, dropId });
       if (!zooKeeper) return;
       try {
         dispatch(loading(true));
         const approval = await zoo?.allowance(account, zooKeeper.address);
-        console.log("approval_approving_media", Number(approval));
         if (Number(approval) <= 0) {
-          console.log("approving_media");
           await zoo
             ?.approve(zooKeeper.address, MaxUint256, {
               gasLimit: 4000000,
             })
             .then((tx) => {
-              console.log("approval", tx);
               tx.wait();
             });
         }
         const mediaApproval = await zoo?.allowance(account, media.address);
-        console.log("approval_approving_media", Number(mediaApproval));
         if (Number(mediaApproval) <= 0) {
-          console.log("approving_media");
           await media
             ?.setApprovalForAll(zooKeeper.address, true, {
               gasLimit: 4000000,
             })
             .then((tx) => {
-              console.log("mediaApproval", tx);
               tx.wait();
             });
         }
@@ -1089,7 +1002,6 @@ export function useFeed(): (animalID: number) => void {
         });
         await tx.wait();
         getZooBalance();
-        console.log(tx);
         fetchMyNfts()
           .then(() => {
             dispatch(loading(false));
@@ -1146,7 +1058,6 @@ export function useFeedCount(): (
 
   return useCallback(
     async (animalId) => {
-      console.log("feeding_animal", zooKeeper, { animalId });
       if (!zooKeeper) return;
       try {
         const tx = await zooKeeper?.feededTimes(animalId);
@@ -1191,9 +1102,7 @@ export function useEditAuction(): (
             success: true,
           },
         });
-        console.log("EDITED AUCTION", tx);
       } catch (error) {
-        console.log("EDIT_AUCTION_ERROR", error);
         getZooBalance();
         addPopup({
           txn: {
@@ -1216,7 +1125,6 @@ export function useGetTokenOwner(): (
   return useCallback(
     async (id) => {
       const owner: string = await media.tokenCreators(id);
-      console.log("OWNER OF THE TOKEN", owner);
       return owner;
     },
     [media]
@@ -1237,7 +1145,6 @@ export function useBreed(): (
   const fetchNFTs = useFetchMyNFTs();
   return useCallback(
     async (tokenA, tokenB, successCallback) => {
-      console.log("breeding_eggggg", { dropId, tokenA, tokenB, zooKeeper });
       if (!zooKeeper) return;
       try {
         dispatch(loading(true));
@@ -1305,7 +1212,6 @@ export function useFreeNFT(): (tokenId: number, success?: () => void) => void {
         const tx = await zooKeeper?.freeAnimal(id);
         await tx.wait();
         getZooBalance();
-        console.log("SUCCESSFULLY FREED THE ITEM e", id);
         await fetchMyNfts()
           .then(() => {
             dispatch(loading(false));
@@ -1351,13 +1257,6 @@ export function useRefreshMetadata(): (
   const dispatch = useDispatch();
   return useCallback(
     async (tokenId, tokenUri, metadataURI) => {
-      console.log("the_nft_to_fetch", {
-        tokenId,
-        tokenUri,
-        metadataURI,
-        media,
-        zooKeeper,
-      });
       try {
         dispatch(loading(true));
         // await media?.setApprovalForAll(zooKeeper.address, true, {

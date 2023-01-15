@@ -57,7 +57,6 @@ function PlaceBid({}: AppProps & {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Bid placed!");
   };
 
   // console.log('zooBalance', zooBalance)
@@ -71,13 +70,10 @@ function PlaceBid({}: AppProps & {
     });
     setNft(NFT[0]);
     setBidPrice(minBid);
-    console.log("NFTTTT_ANDAUCTION_", NFT[0]?.tokenOwner === account);
   }, [account, allAuctions, minBid, router.query.id]);
 
-  console.log("NFTTTT_ANDAUCTION", nft, allAuctions, minBid);
   const handleClick = () => {
     if (nft?.tokenOwner === account) {
-      console.log("You own this token and placed this auction");
       toggleAuctionModal();
     } else {
       placeBid(Number(nft?.auctionId), Number(bidPrice), () => {
@@ -87,7 +83,6 @@ function PlaceBid({}: AppProps & {
   };
 
   const handleRemoveAuction = () => {
-    console.log("Remove auction");
     removeAuction(nft.auctionId, () => router.push("/market"));
   };
   return (
@@ -104,7 +99,7 @@ function PlaceBid({}: AppProps & {
           </div>
         }
         RightCol={
-          <div className="w-full bg-green-g h-full flex flex-col justify-center items-center text-white py-6 px-8 lg:px-24">
+          <div className="flex flex-col items-center justify-center w-full h-full px-8 py-6 text-white bg-green-g lg:px-24">
             {!account ? (
               <div className="flex flex-col items-center justify-center w-full text-base font-medium">
                 <p className="text-2xl font-semibold text-center lg:text-4xl">

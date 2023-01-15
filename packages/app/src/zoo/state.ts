@@ -284,7 +284,6 @@ export const usePrice = () => {
   };
 
   const getUsdPrice = (symbol: string): number => {
-    console.log("symbol", symbol);
     return getPrices(symbol)?.usd || 0;
   };
 

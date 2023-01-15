@@ -111,7 +111,6 @@ const useLimitOrderApproveCallback = () => {
         ]),
       }
     } catch (e) {
-      console.log(e)
       return {
         outcome: e.code === 4001 ? BentoApproveOutcome.REJECTED : BentoApproveOutcome.FAILED,
       }

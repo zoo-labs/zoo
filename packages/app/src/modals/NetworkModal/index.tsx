@@ -73,9 +73,7 @@ export default function NetworkModal(): JSX.Element | null {
                 toggleNetworkModal();
                 const params = SUPPORTED_NETWORKS[key];
                 cookie.set("chainId", key);
-                console.log("NetworkModal.onClick", {
-                  chainId: params.chainId,
-                });
+
                 if (DEFAULT_METAMASK_CHAIN_ID.includes(key)) {
                   library?.send("wallet_switchEthereumChain", [
                     { chainId: params.chainId },

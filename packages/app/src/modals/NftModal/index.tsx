@@ -32,7 +32,6 @@ const NftModal: React.FC<NftModalProps> = ({
   const toggleNftModal = useMyNftModalToggle();
   const mount = async () => {};
 
-  console.log("the_chosen_nftItem", nftItem);
   return (
     <>
       <Modal
