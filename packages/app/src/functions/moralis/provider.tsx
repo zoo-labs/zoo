@@ -23,9 +23,9 @@ export const MoralisProvider: React.FC = ({
   });
 
   const { applicationID, serverURL } = moralisConfig(chainId);
-  console.log(
-    `Moralis.initialize appID: ${applicationID} serverURL: ${serverURL}`
-  );
+  // console.log(
+  //   `Moralis.initialize appID: ${applicationID} serverURL: ${serverURL}`
+  // );
   // Moralis.initialize(applicationID);
   // Moralis.serverURL = serverURL;
 

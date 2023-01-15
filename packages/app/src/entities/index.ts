@@ -75,3 +75,11 @@ export function initTranslation(i18n: I18n): void {
         pseudo: { plurals: en }
     })
 }
+
+export function convertIpfsUrl(url): string {
+    if (url) {
+        return url.substring(0, 7) === "ipfs://"
+            ? `https://zoolabs.mypinata.cloud/ipfs/${url.substring(7)}`
+            : url
+    } else { return '' }
+}

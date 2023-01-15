@@ -59,13 +59,11 @@ const MyAuctionSection = ({ auction }: { auction: Auction }) => {
     fadeInOnScroll(comingSoonRef.current);
   }, []);
 
-  console.log("THE_SINGLE_AUCC", auction);
   useEffect(() => {
     setReservePrice(auction?.reservePrice);
   }, [auction?.reservePrice]);
 
   const successCallback = useCallback(() => {
-    console.log("success");
     setOpenModal(false);
   }, []);
 

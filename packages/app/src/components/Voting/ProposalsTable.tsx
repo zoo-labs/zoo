@@ -24,7 +24,6 @@ const ProposalsTable = ({
     return format(date, "MMMM dd, yyyy | hh:mm a");
   };
   useEffect(() => {
-    console.log("ProposalsTable", proposals, type, state);
     _setProposals(filteredProposals(proposals, type, state));
   }, [proposals, state, type]);
 
@@ -102,7 +101,7 @@ const ProposalsTable = ({
     <>
       {_proposals?.length === 0 ? (
         <p
-          className="border border-white-10 rounded-2xl py-10 text-xl font-semibold text-center px-5 mb-10"
+          className="px-5 py-10 mb-10 text-xl font-semibold text-center border border-white-10 rounded-2xl"
           style={{
             backdropFilter: "blur(100px)",
           }}
@@ -125,7 +124,7 @@ const ProposalsTable = ({
           return (
             <div
               key={_.id}
-              className="border border-white-10 rounded-2xl py-6 px-5 mb-10 cursor-pointer"
+              className="px-5 py-6 mb-10 border cursor-pointer border-white-10 rounded-2xl"
               style={{
                 backdropFilter: "blur(100px)",
               }}
@@ -140,7 +139,7 @@ const ProposalsTable = ({
             >
               <div className="flex items-center justify-between mb-1">
                 <div className="flex items-center">
-                  <p className="text-activeGreen text-sm font-light mr-6">
+                  <p className="mr-6 text-sm font-light text-activeGreen">
                     {state === ProposalState.PENDING
                       ? ` Starts ${getDay(new Date(_.startTime))}`
                       : ` Ends ${getDay(new Date(_.endTime))}`}

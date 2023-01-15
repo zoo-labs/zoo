@@ -27,13 +27,7 @@ export function useAddProposal() {
   return useCallback(
     async (value, startTimestamp, endTimestamp, successCallback) => {
       try {
-        console.log(
-          "add proposal",
-          value,
-          startTimestamp,
-          endTimestamp,
-          contract
-        );
+
 
         const proposal = await contract?.addProposals(
           value,
@@ -44,7 +38,6 @@ export function useAddProposal() {
           }
         );
         const tx = await proposal.wait();
-        console.log("addProposals,value", tx);
         // startLoader()
         addPopup({
           txn: {
@@ -77,7 +70,6 @@ export function useGetAllProposals() {
   return useCallback(async () => {
     const proposals = await contract?.getAllProposals();
     const structuredProposals: any = [];
-    console.log("proposals proposals proposals", proposals);
 
     if (!proposals) {
       dispatch(getAllProposals([]));
@@ -109,7 +101,6 @@ export function useGetAllProposals() {
           voteCount,
           ...res,
         };
-        console.log("proposalItem", proposalItem);
         structuredProposals.push(proposalItem);
       } catch (error) {
         console.log("error here is proposalItem", error);
@@ -156,13 +147,11 @@ export function useVoteProposal() {
   return useCallback(
     async (proposal, choice, successCallback, errorCallback) => {
       try {
-        console.log("add proposal", proposal, choice, contract);
         dispatch(voteProposal(true));
         const vote = await contract?.voteProposal(proposal, choice, {
           gasLimit: 2000000,
         });
         const tx = await vote.wait();
-        console.log("voteProposal passed", tx);
         dispatch(voteProposal(false));
         successCallback();
         addPopup({

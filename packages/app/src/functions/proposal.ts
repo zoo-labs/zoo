@@ -17,7 +17,7 @@ export const getProposalState = (proposal: Proposal) => {
 };
 
 export const filteredProposals = (proposals: Proposal[], type: number, state: string) => proposals.filter((proposal) => {
-    console.log('proposal', proposal, getProposalState(proposal), state)
+    // console.log('proposal', proposal, getProposalState(proposal), state)
     const proposalPass = type === 3
         ? getProposalState(proposal) === state
         : getProposalState(proposal) === state &&

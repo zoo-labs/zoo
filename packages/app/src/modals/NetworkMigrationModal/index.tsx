@@ -74,7 +74,6 @@ export default function NetworkMigrationModal() {
   };
 
   const handleBurn = () => {
-    console.log("mi__Ballakss", zooBalance);
     transferTokens(
       "0x000000000000000000000000000000000000dEaD",
       "0x" +
@@ -93,17 +92,17 @@ export default function NetworkMigrationModal() {
     return (
       <div className="flex items-start justify-center">
         <div className="flex flex-col items-center justify-center">
-          <p className="text-3xl font-semibold mb-2">{ttimeLeft.d}</p>
+          <p className="mb-2 text-3xl font-semibold">{ttimeLeft.d}</p>
           <p className="text-xs">DAYS</p>
         </div>
-        <p className="text-3xl font-semibold ml-4">:</p>
-        <div className="mx-4 flex flex-col items-center justify-center">
-          <p className="text-3xl font-semibold mb-2">{ttimeLeft.h}</p>
+        <p className="ml-4 text-3xl font-semibold">:</p>
+        <div className="flex flex-col items-center justify-center mx-4">
+          <p className="mb-2 text-3xl font-semibold">{ttimeLeft.h}</p>
           <p className="text-xs">HOURS</p>
         </div>
-        <p className="text-3xl font-semibold mr-4">:</p>
+        <p className="mr-4 text-3xl font-semibold">:</p>
         <div className="flex flex-col items-center justify-center">
-          <p className="text-3xl font-semibold mb-2">{ttimeLeft.m}</p>
+          <p className="mb-2 text-3xl font-semibold">{ttimeLeft.m}</p>
           <p className="text-xs">MINUTES</p>
         </div>
       </div>
@@ -118,11 +117,11 @@ export default function NetworkMigrationModal() {
         </div>
         <div className="flex flex-col text-center items-center justify-center space-y-6 max-w-[486px] py-10 px-10">
           <p className="mb-4 text-4xl font-bold">ETH NETWORK MIGRATION</p>
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col items-center justify-center">
             <p className="mb-5">TIME LEFT TO BURN</p>
             {renderCountDown}
           </div>
-          <p className="text-base font-normal text-white text-center">
+          <p className="text-base font-normal text-center text-white">
             *** YOU MUST BURN YOUR TOKENS TO ENSURE YOU HAVE THE NEW TOKEN
             AIRDROPPED TO YOU!
           </p>

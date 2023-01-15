@@ -54,11 +54,7 @@ export const SetSaleBidButton = ({
       const txSummary = `Placed Bid for ${name}`;
 
       if (isNativeCurrency(currencyToken.address) && !offline) {
-        console.log("app.setLazyBid", bid, {
-          from: account,
-          gasPrice,
-          value: bid.amount,
-        });
+
         const tx = await app.setLazyBid(dropId, name, bid, {
           from: account,
           gasPrice,
@@ -66,9 +62,7 @@ export const SetSaleBidButton = ({
         });
         addTransactionPopup(tx, txSummary);
       } else {
-        console.log(bid);
-        console.log("app.setLazyBidERC20", bid, { from: account, gasPrice });
-        const tx = await app.setLazyBidERC20(dropId, name, bid, {
+                      const tx = await app.setLazyBidERC20(dropId, name, bid, {
           from: account,
           gasPrice,
         });
@@ -87,7 +81,6 @@ export const SetSaleBidButton = ({
         .catch(console.log);
     }
   }, [account]);
-  console.log("isAllowed", isAllowed);
   return (
     <>
       <button
