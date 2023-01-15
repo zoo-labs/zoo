@@ -30,9 +30,7 @@ const ExternalLink: FC<ExternalLinkProps> = ({
     (event: React.MouseEvent<HTMLAnchorElement>) => {
       // don't prevent default, don't redirect if it's a new tab
       if (target === "_blank" || event.ctrlKey || event.metaKey) {
-        ReactGA.outboundLink({ label: href }, () => {
-          console.debug("Fired outbound link event", href);
-        });
+        ReactGA.outboundLink({ label: href }, () => {});
       } else {
         event.preventDefault();
         // send a ReactGA event and then trigger a location change

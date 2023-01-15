@@ -24,7 +24,7 @@ export default function Updater(): null {
   const fetchAllListsCallback = useCallback(() => {
     if (!isWindowVisible) return
     Object.keys(lists).forEach((url) =>
-      fetchList(url).catch((error) => console.debug('interval list fetching error', error))
+      fetchList(url).catch((error) => null)
     )
   }, [fetchList, isWindowVisible, lists])
 
@@ -36,7 +36,7 @@ export default function Updater(): null {
     Object.keys(lists).forEach((listUrl) => {
       const list = lists[listUrl]
       if (!list.current && !list.loadingRequestId && !list.error) {
-        fetchList(listUrl).catch((error) => console.debug('list added fetching error', error))
+        fetchList(listUrl).catch((error) => null)
       }
     })
   }, [dispatch, fetchList, library, lists])
@@ -46,7 +46,7 @@ export default function Updater(): null {
     UNSUPPORTED_LIST_URLS.forEach((listUrl) => {
       const list = lists[listUrl]
       if (!list || (!list.current && !list.loadingRequestId && !list.error)) {
-        fetchList(listUrl).catch((error) => console.debug('list added fetching error', error))
+        fetchList(listUrl).catch((error) => null)
       }
     })
   }, [dispatch, fetchList, library, lists])
@@ -67,9 +67,9 @@ export default function Updater(): null {
             if (bump >= min) {
               dispatch(acceptListUpdate(listUrl))
             } else {
-              console.error(
-                `List at url ${listUrl} could not automatically update because the version bump was only PATCH/MINOR while the update had breaking changes and should have been MAJOR`
-              )
+              // console.error(
+              //   `List at url ${listUrl} could not automatically update because the version bump was only PATCH/MINOR while the update had breaking changes and should have been MAJOR`
+              // )
             }
             break
 
