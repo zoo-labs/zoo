@@ -121,8 +121,6 @@ const Drop = ({}: AppProps & {
   }, []);
 
   const Drops = useMemo(() => {
-    console.log("droppppps", drops);
-
     return drops?.map((drop, i) => {
       if (!drop) {
         return;
