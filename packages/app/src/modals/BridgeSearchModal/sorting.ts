@@ -7,7 +7,6 @@ import { Balance, Token, TokenSelect } from 'state/bridge/types'
 // compare two token amounts with highest one coming first
 function balanceComparator(balanceA?: TokenSelect[Field.INPUT], balanceB?: TokenSelect[Field.OUTPUT]) {
   if (balanceA && balanceB) {
-    console.log('returning here balanceA && balanceB')
     return balanceA > balanceB ? -1 : balanceA === balanceB ? 0 : 1
   } else if (balanceA && balanceA > 0) {
     return -1
@@ -26,7 +25,6 @@ function getTokenComparator(balances: Balance[]): (tokenA: Token, tokenB: Token)
     // sort by balances
     const balanceA = balances.find(bal => bal.symbol === tokenA.symbol)?.balance || '0'
     const balanceB = balances.find(bal => bal.symbol === tokenB.symbol)?.balance || '0'
-    console.log('balanceA', balanceA, balanceB)
     const balanceComp = balanceComparator(parseFloat(balanceA), parseFloat(balanceB))
     if (balanceComp !== 0) return balanceComp
 

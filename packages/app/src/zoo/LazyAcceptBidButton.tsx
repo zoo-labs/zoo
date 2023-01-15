@@ -52,8 +52,6 @@ export const LazyAcceptBidButton = ({
     try {
       const txSummary = `Accepted Bid for ${name}`;
 
-      console.log(ethers.utils.formatEther(bid.amount));
-
       const tx = await app.acceptLazyBid(dropId, name, bid, {
         from: account,
         gasPrice,

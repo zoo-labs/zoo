@@ -264,7 +264,7 @@ export function KashiProvider({ children }) {
       const logPairs = (await getPairs(bentoBoxContract, chainId)).filter(
         (pair) => !BLACKLISTED_ORACLES.includes(pair.oracle)
       );
-      console.log({ logPairs });
+      // console.log({ logPairs });
 
       // Filter all pairs by supported oracles and verify the oracle setup
 
@@ -286,7 +286,7 @@ export function KashiProvider({ children }) {
       const pairs = rpcToObj(
         await boringHelperContract.pollKashiPairs(account, allPairAddresses)
       );
-      console.log({ pairs });
+      // console.log({ pairs });
 
       // Get a list of all tokens in the pairs
       const pairTokens = new Tokens();

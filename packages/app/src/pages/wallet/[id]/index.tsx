@@ -39,6 +39,7 @@ import { shortenAddress } from "functions";
 import CropFreeRoundedIcon from "@mui/icons-material/CropFreeRounded";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import FragmentLayout from "layouts/Fragment";
+import { convertIpfsUrl } from "../../../entities/index";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -124,13 +125,12 @@ const NftModal = ({}: AppProps & {
   }, [id, myNfts]);
 
   console.log("the_chosen_nftIte", nftItem);
-  
 
   return (
     <ModalLayout bg="bg-black" arrowBg="bg-dark-900">
       <div className="px-6 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
-        {/* <div className="w-full flex mb-20">
-          <div className="w-1/2 mt-20 p-20">
+        {/* <div className="flex w-full mb-20">
+          <div className="w-1/2 p-20 mt-20">
             <div className=" bg-black border border-33 rounded-[14px] py-5 px-10">
               <div className=" showcase min-h-[564px] flex items-center justify-center relative">
                 {nftItem?.kind === 0 || nftItem?.kind === 2 ? (
@@ -149,7 +149,7 @@ const NftModal = ({}: AppProps & {
                     ></ModelViewer>
                   </div>
                 )}
-                <div className="absolute bottom-0 flex items-center justify-center z-20 w-full gap-3 right">
+                <div className="absolute bottom-0 z-20 flex items-center justify-center w-full gap-3 right">
                   <button
                     className="flex items-center justify-center gap-3 py-3.5 px-3.5 bg-gray-100 rounded-full"
                     onClick={toggleExpand}
@@ -166,7 +166,7 @@ const NftModal = ({}: AppProps & {
               </div>
             </div>
           </div>
-          <div className="w-1/2 flex flex-col mb-5 space-x-12 space-y-12 lg:flex-row lg:items-start py-9 ">
+          <div className="flex flex-col w-1/2 mb-5 space-x-12 space-y-12 lg:flex-row lg:items-start py-9 ">
             
           </div>
         </div> */}
@@ -177,7 +177,7 @@ const NftModal = ({}: AppProps & {
                 <video
                   autoPlay
                   loop
-                  src={nftItem.animation_url}
+                  src={convertIpfsUrl(nftItem?.animation_url)}
                   width={300}
                   height={350}
                   className="max-h-[350px] md:max-h-[450px]"
@@ -201,11 +201,11 @@ const NftModal = ({}: AppProps & {
               {nftItem?.name || "--"}
             </h1>
 
-            <div className="flex mt-4 mb-8">
+            {/* <div className="flex mt-4 mb-8">
               <div className="py-2 px-3 text-sm bg-[#333333] font-bold rounded-lg mr-4 w-44 flex items-center justify-between">
                 <div>
                   <p className="text-[#7D7D7D] text-sm ">Collateral Value</p>
-                  <p className="text-white text-lg">$8,200</p>
+                  <p className="text-lg text-white">$8,200</p>
                 </div>
                 <Image
                   src="/icons/rounded-add.svg"
@@ -217,7 +217,7 @@ const NftModal = ({}: AppProps & {
               <div className="py-2 px-3 text-sm bg-[#333333] font-bold rounded-lg mr-4 w-44 flex items-center justify-between">
                 <div>
                   <p className="text-[#7D7D7D] text-sm ">Total Value</p>
-                  <p className="text-white text-lg">$11,200</p>
+                  <p className="text-lg text-white">$11,200</p>
                 </div>
                 <Image
                   src="/icons/rounded-add.svg"
@@ -226,13 +226,13 @@ const NftModal = ({}: AppProps & {
                   alt=""
                 />
               </div>
-            </div>
+            </div> */}
 
             <p className="mb-0.5 text-sm font-medium">DESCRIPTIONS</p>
-            <div className="h-px bg-white w-full mb-2" />
-            <p className="text-sm mb-8">{nftItem?.description || "--"}</p>
+            <div className="w-full h-px mb-2 bg-white" />
+            <p className="mb-8 text-sm">{nftItem?.description || "--"}</p>
             <div className=" mb-[22px] w-full">
-              <div className="w-full lg:w-full grid grid-cols-2 gap-4 rounded-lg h-auto max-h-fit ">
+              <div className="grid w-full h-auto grid-cols-2 gap-4 rounded-lg lg:w-full max-h-fit ">
                 {nftItem?.kind === 0 || nftItem?.kind === 2 ? (
                   <button
                     className="w-full p-4 mb-4 mr-2 text-sm font-normal text-center text-white rounded-lg cursor-pointer bg-blue disabled:cursor-not-allowed disabled:opacity-60"
@@ -280,40 +280,23 @@ const NftModal = ({}: AppProps & {
                   </button>
                 )}
               </div>
-              <button className=" border border-gray-500 p-4 rounded-lg w-full">
+              <button className="w-full p-4 border border-gray-500 rounded-lg ">
                 Sell
               </button>
             </div>
           </div>
         </div>
 
-        <ShareNFTModal nft={nftItem} />
-        <NFTExpandedModal isAuction={false} nft={nftItem} />
-        <HatchEggModal
-          nftItem={nftItem}
-          success={() => {
-            fetchNFTs().then((res) => {
-              setNftAnimate(myNfts[0]);
-              toggleAnimationModal();
-            });
-          }}
-        />
-        <FreeNFTModal nft={nftItem} />
-        <AuctionModal nft={nftItem} />
-        <ShareNFTModal nft={nftItem} />
-        {Object.keys(nftAnimate).length > 0 && (
-          <HatchEggAnimationModal nft={nftAnimate} />
-        )}
         <div className="px-6 lg:max-w-7xl lg:mx-auto">
           <div className="flex items-center justify-center gap-12 mb-12">
-            <p className="px-3 font-black text-lg pb-3 border-b border-white cursor-pointer">
+            <p className="px-3 pb-3 text-lg font-black border-b border-white cursor-pointer">
               Properties
             </p>
             <a
               href={nftItem?.tokenUri}
               target="_blank"
               rel="noreferrer"
-              className="px-3 font-base text-lg pb-3 flex items-center cursor-pointer"
+              className="flex items-center px-3 pb-3 text-lg cursor-pointer font-base"
             >
               <p className="mr-1">Metadata</p>
               <Image
@@ -405,9 +388,9 @@ const NftModal = ({}: AppProps & {
 
           <div>
             <div className="hidden border-b border-[#fff] lg:block pt-8 pb-4 w-1/3 mb-4">
-              <p className="uppercase font-semibold text-2xl mt-8">Browse</p>
+              <p className="mt-8 text-2xl font-semibold uppercase">Browse</p>
             </div>
-            <div className="grid lg:grid-cols-5 gap-4 mt-8">
+            <div className="grid gap-4 mt-8 lg:grid-cols-5">
               {[1, 2, 3, 4, 5].map((data, index) => {
                 return (
                   <div key={index}>
@@ -435,18 +418,18 @@ const NftModal = ({}: AppProps & {
                           </div>
                         )}
                       </div>
-                      <p className="text-center text-sm">
+                      <p className="text-sm text-center">
                         #1234{" "}
                         <span className="font-bold text-[#333333]">20/13</span>
                       </p>
-                      <p className="text-center font-bold mt-1">
+                      <p className="mt-1 font-bold text-center">
                         Baby Amur Leopard
                       </p>
                       <div className="flex justify-center items-center bg-[#333333] py-2 rounded-lg mt-4">
                         <p className="w-6 h-6 bg-white rounded-full text-[#333333] text-[10px] font-semibold flex items-center justify-center">
                           ZOO
                         </p>
-                        <p className="text-sm font-bold ml-2">220.4M</p>
+                        <p className="ml-2 text-sm font-bold">220.4M</p>
                       </div>
                     </div>
                     <div className="flex items-center justify-center mt-4">
@@ -463,14 +446,30 @@ const NftModal = ({}: AppProps & {
               })}
             </div>
           </div>
-          <ShareNFTModal nft={nftItem} />
-          <NFTExpandedModal nft={nftItem} />
+          {/* <ShareNFTModal nft={nftItem} />
+          <NFTExpandedModal nft={nftItem} /> */}
         </div>
       </div>
+      <ShareNFTModal nft={nftItem} />
+      <NFTExpandedModal isAuction={false} nft={nftItem} />
+      <HatchEggModal
+        nftItem={nftItem}
+        success={() => {
+          fetchNFTs().then((res) => {
+            setNftAnimate(myNfts[0]);
+            toggleAnimationModal();
+          });
+        }}
+      />
+      <FreeNFTModal nft={nftItem} />
+      <AuctionModal nft={nftItem} />
+      <ShareNFTModal nft={nftItem} />
+      {Object.keys(nftAnimate).length > 0 && (
+        <HatchEggAnimationModal nft={nftAnimate} />
+      )}
     </ModalLayout>
   );
 };
 
 NftModal.Layout = FragmentLayout;
 export default NftModal;
-

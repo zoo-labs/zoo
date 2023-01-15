@@ -47,7 +47,6 @@ const BabylonAnim = ({
     //  scene.gravity = new BABYLON.Vector3(0, -0.9, 0);
     tiger = SceneLoader.ImportMeshAsync("", "/models/", animal, scene).then(
       (result) => {
-        console.log("ImportMeshAsync", result);
 
         scene.createDefaultCamera(true, true, true);
         scene.activeCamera.useAutoRotationBehavior = false;
@@ -112,7 +111,7 @@ const BabylonAnim = ({
     }
   };
   return (
-    <div className="h-full w-full flex flex-col justify-center items-center ">
+    <div className="flex flex-col items-center justify-center w-full h-full ">
       <div className="w-full  h-[500px]">
         <SceneComponent
           antialias

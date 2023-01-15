@@ -14,21 +14,20 @@ const ModelViewer = dynamic(() => import("components/ModelViewer"), {
 export default function NFTExpandedModal({ nft, isAuction = true }) {
   const modalOpen = useModalOpen(ApplicationModal.EXPAND_NFT);
   const toggleModal = useExpandNFTModal();
-  console.log("nft_to_expand", nft);
 
   function getModalContent() {
     return (
-      <div className="flex flex-col space-y-4 bg-black h-screen">
-        <div className="px-10 py-5 absolute" style={{ zIndex: 9999 }}>
+      <div className="flex flex-col h-screen space-y-4 bg-black">
+        <div className="absolute px-10 py-5" style={{ zIndex: 9999 }}>
           <ModalHeader
             title={``}
             onClose={toggleModal}
-            className="m-4 absolute"
+            className="absolute m-4"
           />
         </div>
-        <div className="flex justify-center items-center space-y-6 h-full">
+        <div className="flex items-center justify-center h-full space-y-6">
           <div
-            className="relative mb- w-full h-full flex justify-center items-center"
+            className="relative flex items-center justify-center w-full h-full mb-"
             style={{}}
           >
             {nft?.kind === 0 || nft?.kind === 2 ? (
@@ -54,7 +53,7 @@ export default function NFTExpandedModal({ nft, isAuction = true }) {
                 height={350}
               />
             ) : (
-              <div className="h-full w-full">
+              <div className="w-full h-full">
                 <ModelViewer
                   // zoom="35deg"
                   glb={nft?.glb_animation_url}

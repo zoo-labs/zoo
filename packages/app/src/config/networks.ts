@@ -203,9 +203,10 @@ export const SUPPORTED_NETWORKS: {
       decimals: 18,
     },
     rpcUrls: [
+      "https://data-seed-prebsc-1-s1.binance.org:8545",
       "https://speedy-nodes-nyc.moralis.io/1afec1fde198890860916a06/bsc/testnet",
     ],
-    blockExplorerUrls: ["https://testnet.bscscan.com/"],
+    blockExplorerUrls: ["https://explorer.binance.org/smart-testnet", "https://testnet.bscscan.com/"],
   },
   [ChainId.MATIC]: {
     chainId: "0x89",

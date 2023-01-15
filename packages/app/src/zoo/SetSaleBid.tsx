@@ -86,12 +86,10 @@ const SetSaleBid = ({ dropId, name, children }) => {
     if (parseFloat(value) < minAmount || isInsufficient) {
       setIsValid(false);
     } else {
-      console.log("setting is valid to true");
       setIsValid(true);
     }
     if (currencyBalance) {
       setBalance(numberWithCommas(currencyBalance.toFixed(0)));
-      console.log("hitting currencyBalance", currencyBalance);
       setIsInsufficient(
         parseFloat(value) > parseFloat(currencyBalance.toFixed(0))
       );

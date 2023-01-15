@@ -38,7 +38,6 @@ export const pinJSONToIPFS = (JSONBody) => {
     })
     .then(function (response) {
       //handle response here
-      console.log("IPFS_res", response);
       return response.data.IpfsHash;
     })
     .catch(function (error) {
@@ -58,15 +57,12 @@ export function useCreateProposals(): (
   const blockNumber = useBlockNumber();
   const addProposal = useAddProposal();
   const addPopup = useAddPopup();
-  console.log("creting proposals");
 
   return useCallback(
     async (data: Proposal, callback, successCallback) => {
-      console.log("dataaaa", data);
       if (!account) return;
       if (!chainId) return;
 
-      console.log("dd");
       const {
         title,
         description,
@@ -90,7 +86,6 @@ export function useCreateProposals(): (
         !endTime ||
         !startTime
       ) {
-        console.log("kindly complete the form");
         toast.error("kindly complete the form");
         addPopup({
           txn: {
@@ -103,7 +98,6 @@ export function useCreateProposals(): (
         return;
       }
 
-      console.log("votingPower", votingPower);
       const _startTime = new Date(
         new Date(startDate).getFullYear(),
         new Date(startDate).getMonth(),
@@ -125,7 +119,6 @@ export function useCreateProposals(): (
 
       try {
         const signature = await signMessage(`${blockNumber}`, account, library);
-        console.log("signature oooo", signature);
         const payload = {
           title,
           description,
@@ -145,7 +138,6 @@ export function useCreateProposals(): (
         };
 
         const proposal = await pinJSONToIPFS(payload);
-        console.log("proposal proposal", proposal);
 
         await addProposal(
           proposal,
@@ -191,7 +183,6 @@ export function useHandleVoteProposal(): (
   const router = useRouter();
   return useCallback(
     async (data, vote, successCallback) => {
-      console.log("about_vote", account);
       if (!account) {
         toggleWallet();
         return;
@@ -216,7 +207,6 @@ export function useHandleVoteProposal(): (
 
       if (!approvalState) {
         const allowed = await approve();
-        console.log("allowedsss", allowed);
       }
       const payload = {
         timestamp: new Date().getTime(),
@@ -229,11 +219,10 @@ export function useHandleVoteProposal(): (
         data.proposalIpfs,
         vote === "approve" ? true : false,
         () => {
-          console.log("_proposal", data);
           successCallback && successCallback();
           toggleCastVoteModal();
         },
-        () => {}
+        () => { }
       );
     },
     [
@@ -259,7 +248,6 @@ export function useGetVotingAmount(): (
       approvedTimes: Number(votingAmount?.approvedTimes),
       disapprovedTimes: Number(votingAmount?.dissaprovedTimes),
     };
-    console.log("_votingDeet", struct, votingAmount);
     return struct;
   }, []);
 }

@@ -107,7 +107,6 @@ function MyApp({
 
   const useEagerWalletConnect = () => {
     const { chainId, connector } = useActiveWeb3React();
-    console.log("useEagerWalletConnect", chainId);
     useEffect(() => {
       if (chainId) {
         const isTestnet = chainId === ChainId.GÖRLI;
