@@ -38,6 +38,7 @@ import { MyNFT } from "./types";
 import axios from "axios";
 import { ethers } from "ethers";
 import { getMetaData } from "state/drop/hooks";
+import { convertIpfsUrl } from "entities";
 
 // helper that can take a ethers library transaction response and add it to the list of transactions
 export function useZoobalance(): () => void {
@@ -323,84 +324,39 @@ export function useGetAvailableEggs(): () => void {
   const dispatch = useAppDispatch();
   const dropContract = useDrop(true);
   const { account } = useActiveWeb3React();
-  const getData = async (uri) => {
-    const res = await axios.get(uri);
-    return res.data;
-  };
+
   return useCallback(async () => {
     try {
       const eggs: Array<any> = await dropContract?.getAllEggs();
       if (!eggs) return;
-      // eggs.forEach(async (egg, i) => {
-      //   // console.log("eggsuseGetAvailableEggs__mi_egg", egg, eggs.length);
-      //   // const data = await (await axios.get(egg.data.metadataURI)).data;
-      //   // const res = await axios.get(egg.data.metadataURI);
-      //   // const data = await res.data;
-      //   const data = await getData(egg.data.metadataURI);
-      //   const { name, description, attributes, image, animation_url } = data;
-      //   console.log("eggsuseGetAvailableEggs__", {
-      //     data,
-      //     egg,
-      //     len: eggs.length,
-      //     index: i,
-      //   });
-
-      //   const finalEgg: AvailableEgg = {
-      //     bidShares: {
-      //       creator: Number(egg?.bidShares?.creator),
-      //       owner: Number(egg?.bidShares?.owner),
-      //       prevOwner: Number(egg?.bidShares?.prevOwner),
-      //     },
-      //     birthday: Number(egg.birthday),
-      //     exist: true,
-      //     id: Number(egg.id),
-      //     kind: egg.kind,
-      //     minted: Number(egg.minted),
-      //     name: egg.name,
-      //     description,
-      //     price: Number(egg.price) / Math.pow(10, 18),
-      //     supply: Number(egg.supply),
-      //     timestamp: Number(egg.timestamp),
-      //     image: `https://zoolabs.mypinata.cloud/ipfs/${image?.slice(7)}`,
-      //     animation_url: `https://zoolabs.mypinata.cloud/ipfs/${animation_url?.slice(
-      //       7
-      //     )}`,
-      //     attributes,
-      //   };
-      //   console.log("finalEgg", finalEgg);
-      //   dispatch(addEgg(finalEgg));
-      // });
-
       const structureEgg = async (egg: any) => {
-        return getData(
-          egg.data.metadataURI.substring(0, 7) === "ipfs://"
-            ? ` https://ipfs.io/ipfs/${egg.data.metadataURI.substring(7)}`
-            : egg.data.metadataURI
-        ).then(({ name, description, attributes, image, animation_url }) => {
-          const finalEgg: AvailableEgg = {
-            bidShares: {
-              creator: Number(egg?.bidShares?.creator),
-              owner: Number(egg?.bidShares?.owner),
-              prevOwner: Number(egg?.bidShares?.prevOwner),
-            },
-            birthday: Number(egg.birthday),
-            exist: true,
-            id: Number(egg.id),
-            kind: egg.kind,
-            minted: Number(egg.minted),
-            name: egg.name,
-            description,
-            price: Number(egg.price),
-            supply: Number(egg.supply),
-            timestamp: Number(egg.timestamp),
-            image: `https://zoolabs.mypinata.cloud/ipfs/${image?.slice(7)}`,
-            animation_url: `https://zoolabs.mypinata.cloud/ipfs/${animation_url?.slice(
-              7
-            )}`,
-            attributes,
-          };
-          dispatch(addEgg(finalEgg));
-        });
+        return getMetaData(egg.data.metadataURI).then(
+          ({ name, description, attributes, image, animation_url }) => {
+            const finalEgg: AvailableEgg = {
+              bidShares: {
+                creator: Number(egg?.bidShares?.creator),
+                owner: Number(egg?.bidShares?.owner),
+                prevOwner: Number(egg?.bidShares?.prevOwner),
+              },
+              birthday: Number(egg.birthday),
+              exist: true,
+              id: Number(egg.id),
+              kind: egg.kind,
+              minted: Number(egg.minted),
+              name: egg.name,
+              description,
+              price: Number(egg.price),
+              supply: Number(egg.supply),
+              timestamp: Number(egg.timestamp),
+              image: `https://zoolabs.mypinata.cloud/ipfs/${image?.slice(7)}`,
+              animation_url: `https://zoolabs.mypinata.cloud/ipfs/${animation_url?.slice(
+                7
+              )}`,
+              attributes,
+            };
+            dispatch(addEgg(finalEgg));
+          }
+        );
       };
       const eggsPromise = eggs.map((egg) => {
         return structureEgg(egg);
