@@ -45,11 +45,6 @@ export const SetBidButton = ({
       const txSummary = `Placed Bid for ${tokenType} ${tokenId}`;
 
       if (isNativeCurrency(currencyToken.address)) {
-        console.log("app.setBid", bid, {
-          from: account,
-          gasPrice,
-          value: bid.amount,
-        });
         const tx = await app.setBid(tokenId, bid, {
           from: account,
           gasPrice,
@@ -57,7 +52,6 @@ export const SetBidButton = ({
         });
         addTransactionPopup(tx, txSummary);
       } else {
-        console.log("media.setBid", bid, { from: account, gasPrice });
         const tx = await media.setBid(tokenId, bid, {
           from: account,
           gasPrice,

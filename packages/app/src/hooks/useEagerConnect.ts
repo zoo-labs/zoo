@@ -11,7 +11,6 @@ function useEagerConnect() {
 
   useEffect(() => {
     injected.isAuthorized().then((isAuthorized) => {
-      console.log("chain id changed here 2");
 
       if (isAuthorized) {
         connector.activate(injected, undefined, true)
@@ -23,7 +22,6 @@ function useEagerConnect() {
         }
       }
     })
-    console.log("chain id changed here 3");
 
   }, []) // intentionally only running on mount (make sure it's only mounted once :))
 

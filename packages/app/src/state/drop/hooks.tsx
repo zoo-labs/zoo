@@ -8,21 +8,32 @@ import { addEgg } from "state/zoo/actions";
 import { AvailableEgg, Drop } from "types";
 import { useGetAvailableEggs } from "../zoo/hooks";
 import { addDrops } from "./action";
+import { convertIpfsUrl } from "../../entities/index";
+
+export const getMetaData = async (metadataURI, from?) => {
+  const uri = convertIpfsUrl(metadataURI);
+  try {
+    const res = await axios.get(uri, {
+      headers: {
+        Accept: "text/plain",
+      },
+    });
+    // console.log("getting data 2", res.data);
+    return res.data;
+  } catch (err) {
+    console.log("getting data error", err, "from", from, "uri", metadataURI);
+  }
+};
 
 export function useGetDrops() {
   const dispatch = useDispatch();
   const zooKeeper = useZooKeeper();
   const { library } = useActiveWeb3React();
-  const getData = async (uri) => {
-    const res = await axios.get(uri);
-    return res.data;
-  };
+
   return useCallback(async () => {
     const drops = await [...Array(zooKeeper.dropIDs()).keys()]?.map(
       async (dropId, index) => {
-        console.log("idddd", dropId);
         const dropAddress = await zooKeeper.drops(dropId + 1);
-        console.log("dropAddress", dropAddress);
         const dropC = getContract(
           dropAddress,
           abis["97"]["Drop"],
@@ -36,15 +47,10 @@ export function useGetDrops() {
         const eggsPromise = await eggs
           .filter((eggData) => eggData.exist)
           .map(async (egg) => {
-            const data = await getData(
-              egg.data.metadataURI.substring(0, 7) === "ipfs://"
-                ? ` https://ipfs.io/ipfs/${egg.data.metadataURI.substring(7)}`
-                : egg.data.metadataURI
-            );
+            const data = await getMetaData(egg.data.metadataURI);
 
             const { name, description, attributes, image, animation_url } =
               data;
-            console.log("egggggg", egg);
             const finalEgg: AvailableEgg = {
               bidShares: {
                 creator: Number(egg?.bidShares?.creator),
@@ -71,8 +77,6 @@ export function useGetDrops() {
           });
         const dropPromise = await Promise.all(eggsPromise)
           .then((eggs) => {
-            console.log("eggsPromise", eggs);
-
             const newDrop: Drop = {
               title: dropTitle,
               description,
@@ -91,7 +95,6 @@ export function useGetDrops() {
     );
     await Promise.all(drops)
       .then((drop: Drop[]) => {
-        console.log("dropsssss", drop);
         dispatch(addDrops(drop));
       })
       .catch((err) => console.error("mi_egg_promiseerror", err));

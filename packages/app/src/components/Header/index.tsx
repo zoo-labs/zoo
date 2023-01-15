@@ -116,7 +116,7 @@ function AppBar(props: {
                       </div>
                     </NavLink>
                     <div className="hidden sm:block sm:ml-4">
-                      <div className="flex space-x-5 pl-6">
+                      <div className="flex pl-6 space-x-5">
                         {/* <NavLink href="/market">
                           <a
                             id={`mint-nav-link`}
@@ -191,7 +191,7 @@ function AppBar(props: {
                     <div
                       className={`${
                         account &&
-                        "flex flex-row-reverse items-center bg-black border border-white-20 rounded-[10px] p-1"
+                        "flex flex-row-reverse items-center bg-black border border-white-20 rounded-[10px] p-1 cursor-pointer"
                       }`}
                     >
                       <Web3Status
@@ -199,16 +199,7 @@ function AppBar(props: {
                         className="font-bold bg-black border border-green text-green"
                       />
                       {account && chainId && userEthBalance && (
-                        <>
-                          {/* <div
-                            className="py-2 pl-1 mr-2 font-semibold text-white cursor-pointer"
-                            onClick={toggleNetworkModal}
-                          >
-                            {userEthBalance?.toFixed(3)}{" "}
-                            {NATIVE[chainId]?.symbol || "ETH"}
-                          </div> */}
-                          <NetworkPopup {...{ userEthBalance, NATIVE }} />
-                        </>
+                        <NetworkPopup {...{ userEthBalance, NATIVE }} />
                       )}
                     </div>
                     <Link href="/wallet" passHref>
@@ -307,7 +298,7 @@ function AppBar(props: {
                   </div>
                   <div className="flex -mr-2 sm:hidden">
                     {/* Mobile menu button */}
-                    <Popover.Button className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-high-emphesis focus:outline-none">
+                    <Popover.Button className="inline-flex items-center justify-center p-2 text-white rounded-md hover:text-high-emphesis focus:outline-none">
                       <span className="sr-only">
                         {i18n._(t`Open main menu`)}
                       </span>
@@ -351,32 +342,32 @@ function AppBar(props: {
               </div>
             </div>
             {/* Mobile View Navbar Dropdown */}
-            <Popover.Panel className="sm:hidden bg-black">
+            <Popover.Panel className="bg-black sm:hidden">
               <div className="flex flex-col px-4 pt-2 pb-3 space-y-1">
                 {/* <a
                   id={`marketplace`}
-                  className="p-2 tracking-widest text-baseline text-white hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  className="p-2 tracking-widest text-white text-baseline hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="/market"
                 >
                   {i18n._(t`Marketplace`)}
                 </a> */}
                 {/* <a
                   id={`dao`}
-                  className="p-2 tracking-widest text-baseline text-white hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  className="p-2 tracking-widest text-white text-baseline hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="/dao"
                 >
                   {i18n._(t`Dao`)}
                 </a>
                 <a
                   id={`bridge`}
-                  className="p-2 tracking-widest text-baseline text-white hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  className="p-2 tracking-widest text-white text-baseline hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="/bridge"
                 >
                   {i18n._(t`Bridge`)}
                 </a> */}
                 <a
                   id={`chart`}
-                  className="p-2 text-baseline text-white hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                  className="p-2 text-white text-baseline hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   href="https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"
                   target="_blank"
                   rel="noreferrer"

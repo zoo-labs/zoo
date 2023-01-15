@@ -41,7 +41,6 @@ export default function CastVoteModal({
   );
 
   const { loading, voterAllowance } = useSelector((state: any) => state.voting);
-  console.log("votingPower", votingPower);
 
   function getModalContent() {
     return (
@@ -52,11 +51,11 @@ export default function CastVoteModal({
           onClose={toggleCastVoteModal}
         />
         <div className="flex flex-col pb-8">
-          <p className="mb- font-medium text-white text-sm">VOTING FOR</p>
+          <p className="text-sm font-medium text-white mb-">VOTING FOR</p>
           <p className="mb-5 text-2xl font-semibold text-white">
             {vote === "approve" ? "Approve" : "Disapprove"}
           </p>
-          <p className="mb-1 font-medium text-white text-sm">
+          <p className="mb-1 text-sm font-medium text-white">
             YOUR VOTING POWER
           </p>
           <p
@@ -108,11 +107,7 @@ export default function CastVoteModal({
                   : "bg-space-grey text-space-gray-600"
               } rounded-full mb-3`}
               onClick={async () => {
-                console.log("allowedsss");
-
                 const allowed = await approve();
-                console.log("allowedsss", allowed);
-                console.log("approvalState", approvalState);
               }}
               disabled={votingPower < 1 || loading}
             >
