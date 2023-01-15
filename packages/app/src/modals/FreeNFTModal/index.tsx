@@ -29,7 +29,6 @@ export default function FreeNFTModal({ nft }: { nft: any }) {
   const freeNftF = useFreeNFT();
 
   const successCallback = useCallback(() => {
-    console.log("success");
     push("/wallet");
     freeNftModalOpen && toggleModal();
   }, [freeNftModalOpen, push, toggleModal]);

@@ -62,7 +62,6 @@ const Item = () => {
     setZooBnbPrice(parseFloat(value));
   };
   const handleBuyZoo = useCallback(() => {
-    console.log("Clicked");
     if (account) {
       buyZoo();
     } else {
@@ -72,14 +71,10 @@ const Item = () => {
 
   const handleBuyEgg = useCallback(
     (eggId, quantity) => {
-      console.log("Clicked");
       if (account) {
         if (withZoo) {
-          console.log("withzoo");
           buyEgg(eggId, quantity, () => router.push("/wallet"));
         } else {
-          console.log("withbnb");
-
           buyEggWithBnB(eggId, quantity, () => router.push("/wallet"));
           // buyEgg(eggId, quantity, () => router.push('/dashboard'))
         }
@@ -110,7 +105,6 @@ const Item = () => {
     }
   };
 
-  console.log("the_chosen_egg__", egg);
   return (
     <>
       <div className="flex flex-col px-5 mx-auto mt-20 lg:flex-row gap-11 lg:items-center lg:px-10 max-w-7xl">

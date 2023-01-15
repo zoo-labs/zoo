@@ -32,7 +32,6 @@ const MovingModelviewer = ({ glb = '/models/Eggs/Egg.glb', usdz = '', zoom = 'au
         ></model-viewer>`
   useEffect(() => {
     setTimeout(() => {
-      console.log('10 seconds')
       setGlbSource(Arr[CurrentModel])
       setCurrentModel(CurrentModel + 1)
 

@@ -74,13 +74,13 @@ const Wallet: React.FC<WalletProps> = ({}) => {
       }
 
       setDisableApprove(true);
-      console.log("Processing approval...");
-      console.log("zooToken", zooToken);
-      console.log("zooKeeper", zooKeeper);
+      // console.log("Processing approval...");
+      // console.log("zooToken", zooToken);
+      // console.log("zooKeeper", zooKeeper);
 
       // Increase allowance
       const supply = await zooToken.totalSupply();
-      console.log("library", library);
+      // console.log("library", library);
       // const allowance = useAllowance(zooKeeper.options.address)
       const tx = zooToken
         .approve(zooKeeper.options.address)
@@ -90,13 +90,13 @@ const Wallet: React.FC<WalletProps> = ({}) => {
         setAllowance(true);
         setDisableApprove(false);
         setKeepApprove(false);
-        console.log("Approval success!");
-        console.log("approved", tx);
+        // console.log("Approval success!");
+        // console.log("approved", tx);
       }
     } catch (error) {
       console.error("APPROVE ERROR", error);
       setDisableApprove(false);
-      console.log("Failed to approve account");
+      // console.log("Failed to approve account");
     }
   };
 

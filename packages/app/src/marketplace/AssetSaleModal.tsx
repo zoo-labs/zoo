@@ -1,76 +1,77 @@
-import { useRouter } from 'next/router'
-import { Modal } from 'react-morphing-modal'
-import { HiOutlineChevronLeft } from 'react-icons/hi'
-import AssetSale from './AssetSale'
-import React, { useEffect, useRef, useState } from 'react'
-import { useTokenType } from './state'
-import HowReservations from './HowReservations'
-import SetSaleBid from './SetSaleBid'
-import LazySetAsk from './LazySetAsk'
-import HowOffline from './HowOffline'
-import LazyBidList from './LazyBidList'
-import { Bid, GraphLazyBid } from './types'
-import LazyBidModal from './LazyBidModal'
-import { useActiveWeb3React } from '../hooks'
-import Web3Connect from '../components/Web3Connect'
+import { useRouter } from "next/router";
+import { Modal } from "react-morphing-modal";
+import { HiOutlineChevronLeft } from "react-icons/hi";
+import AssetSale from "./AssetSale";
+import React, { useEffect, useRef, useState } from "react";
+import { useTokenType } from "./state";
+import HowReservations from "./HowReservations";
+import SetSaleBid from "./SetSaleBid";
+import LazySetAsk from "./LazySetAsk";
+import HowOffline from "./HowOffline";
+import LazyBidList from "./LazyBidList";
+import { Bid, GraphLazyBid } from "./types";
+import LazyBidModal from "./LazyBidModal";
+import { useActiveWeb3React } from "../hooks";
+import Web3Connect from "../components/Web3Connect";
 
 const defaultShow = {
   setAsk: false,
   setBid: false,
   howReservations: false,
   howOffline: false,
-}
+};
 
-const NoBids = () => <div>Be the first to place a bid.</div>
+const NoBids = () => <div>Be the first to place a bid.</div>;
 
-const NoAsks = () => <div>Be the first to place a bid.</div>
+const NoAsks = () => <div>Be the first to place a bid.</div>;
 
-const DROP_ID = 1
+const DROP_ID = 1;
 
 const AssetModal = (props: any) => {
-  const router = useRouter()
-  const assetModalRef = useRef(null)
-  const { name: tokenTypeName } = router.query
-  const { modalProps } = props
-  const [tokenId, setTokenTypeName] = useState(null)
+  const router = useRouter();
+  const assetModalRef = useRef(null);
+  const { name: tokenTypeName } = router.query;
+  const { modalProps } = props;
+  const [tokenId, setTokenTypeName] = useState(null);
   // const { ask, highest, getUsdAmount, contentURI, formattedAmount, isOwner, symbol, usdAmount } = {} as any
-  const { ask, highest, getUsdAmount, contentURI, metadataURI, formattedAmount, isOwner, symbol, usdAmount } =
-    useTokenType(props.dropId, tokenTypeName as string)
-  const [show, setShow] = useState(defaultShow)
-  const [showBidModal, setShowBidModal] = useState(false)
-  const [modalBid, setModalBid] = useState(null)
+  const {
+    ask,
+    highest,
+    getUsdAmount,
+    contentURI,
+    metadataURI,
+    formattedAmount,
+    isOwner,
+    symbol,
+    usdAmount,
+  } = useTokenType(props.dropId, tokenTypeName as string);
+  const [show, setShow] = useState(defaultShow);
+  const [showBidModal, setShowBidModal] = useState(false);
+  const [modalBid, setModalBid] = useState(null);
 
-  const { account } = useActiveWeb3React()
+  const { account } = useActiveWeb3React();
 
   const showSection = (section) => {
-    setShow({ ...defaultShow, [section]: true })
-  }
+    setShow({ ...defaultShow, [section]: true });
+  };
 
   const onClose = () => {
-    router.push(router.pathname)
-    modalProps.close()
-  }
+    router.push(router.pathname);
+    modalProps.close();
+  };
 
   useEffect(() => {
-    setTokenTypeName(tokenTypeName)
-
-    console.log('token name', tokenTypeName)
-
-    console.log('router.pathname', router.pathname)
-    console.log('router.query', router.query)
-    console.log('router.aspath', router.asPath)
+    setTokenTypeName(tokenTypeName);
 
     if (tokenTypeName) {
-      console.log('token name', tokenTypeName)
-
-      props.openModal && props.openModal(assetModalRef, { id: tokenTypeName })
+      props.openModal && props.openModal(assetModalRef, { id: tokenTypeName });
     }
-  }, [tokenTypeName])
+  }, [tokenTypeName]);
 
   const onClickBid = (bid: GraphLazyBid) => {
-    setModalBid(bid)
-    setShowBidModal(!showBidModal)
-  }
+    setModalBid(bid);
+    setShowBidModal(!showBidModal);
+  };
 
   return (
     <>
@@ -82,7 +83,10 @@ const AssetModal = (props: any) => {
         onClose={() => setShowBidModal(!showBidModal)}
       />
       <Modal {...props.modalProps} padding={0} closeButton={false}>
-        <div ref={assetModalRef} className="grid md:grid-cols-2 gap-30 sm:grid-cols-1">
+        <div
+          ref={assetModalRef}
+          className="grid md:grid-cols-2 gap-30 sm:grid-cols-1"
+        >
           <div className="">
             <div
               onClick={onClose}
@@ -119,13 +123,16 @@ const AssetModal = (props: any) => {
                   {isOwner ? (
                     <div>
                       {show.howOffline ? (
-                        <HowOffline onClick={() => showSection('setAsk')} />
+                        <HowOffline onClick={() => showSection("setAsk")} />
                       ) : (
                         <>
-                          <LazySetAsk dropId={DROP_ID} name={tokenTypeName as string}>
+                          <LazySetAsk
+                            dropId={DROP_ID}
+                            name={tokenTypeName as string}
+                          >
                             <p
                               className="pt-8 text-center text-gray-500 cursor-pointer"
-                              onClick={() => showSection('howOffline')}
+                              onClick={() => showSection("howOffline")}
                             >
                               How do offline asks work?
                             </p>
@@ -143,13 +150,18 @@ const AssetModal = (props: any) => {
                   ) : (
                     <div>
                       {show.howReservations ? (
-                        <HowReservations onClick={() => showSection('setBid')} />
+                        <HowReservations
+                          onClick={() => showSection("setBid")}
+                        />
                       ) : (
                         <>
-                          <SetSaleBid dropId={DROP_ID} name={tokenTypeName as string}>
+                          <SetSaleBid
+                            dropId={DROP_ID}
+                            name={tokenTypeName as string}
+                          >
                             <p
                               className="pt-8 text-center text-gray-500 cursor-pointer"
-                              onClick={() => showSection('howReservations')}
+                              onClick={() => showSection("howReservations")}
                             >
                               How do bids work?
                             </p>
@@ -175,7 +187,7 @@ const AssetModal = (props: any) => {
         </div>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default AssetModal
+export default AssetModal;

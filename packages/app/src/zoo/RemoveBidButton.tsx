@@ -32,11 +32,9 @@ export const RemoveBidButton = ({
       const txSummary = `Removed Bid for ${tokenType} ${tokenId}`;
 
       if (isNativeCurrency(currency)) {
-        console.log("app.removeBid", tokenId, { from: account, gasPrice });
         const tx = await app.removeBid(tokenId, { from: account, gasPrice });
         addTransactionPopup(tx, txSummary);
       } else {
-        console.log("media.removeBid", tokenId, { from: account, gasPrice });
         const tx = await media.removeBid(tokenId, { from: account, gasPrice });
         addTransactionPopup(tx, txSummary);
       }
