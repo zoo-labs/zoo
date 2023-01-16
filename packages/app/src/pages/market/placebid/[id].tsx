@@ -22,6 +22,7 @@ import AuctionModal from "modals/Auction";
 import ModalLayout from "layouts/Modal";
 import { NextComponentType, NextPageContext } from "next";
 import { AppProps } from "next/app";
+import CustomLoader from "components/CustomLoader";
 
 function PlaceBid({}: AppProps & {
   Component: NextComponentType<NextPageContext> & {
@@ -46,6 +47,7 @@ function PlaceBid({}: AppProps & {
   }, [nft]);
 
   const [minBid, setMinBid] = useState<number | any>(minBidFunc());
+  const [isLoadingAuction, setIsLoadingAuction] = useState<boolean>(true);
 
   useEffect(() => {
     setMinBid(minBidFunc());
@@ -62,7 +64,7 @@ function PlaceBid({}: AppProps & {
   // console.log('zooBalance', zooBalance)
   useEffect(() => {
     getZooBalance();
-    getAllAuctions();
+    getAllAuctions(setIsLoadingAuction);
   }, []);
   useEffect(() => {
     const NFT = allAuctions.filter((obj) => {
@@ -87,142 +89,146 @@ function PlaceBid({}: AppProps & {
   };
   return (
     <div className="w-full">
-      <TwoColumComp
-        LeftCol={
-          <div className="flex items-center justify-center w-full h-full bg-black px">
-            <CardNft
-              nft={nft}
-              className="h-full lg:w-full"
-              showDetails={false}
-              onNFTClick={() => {}}
-            />
-          </div>
-        }
-        RightCol={
-          <div className="flex flex-col items-center justify-center w-full h-full px-8 py-6 text-white bg-green-g lg:px-24">
-            {!account ? (
-              <div className="flex flex-col items-center justify-center w-full text-base font-medium">
-                <p className="text-2xl font-semibold text-center lg:text-4xl">
-                  Connect your wallet to place a bid
-                </p>
-                <div className="flex items-center justify-between w-full my-6 text-base font-medium">
-                  <div className="w-full h-px opacity-50 bg-white-30" />
-                  <p className="w-full text-lg font-medium text-center text-white opacity-70">
-                    SELECT WALLET
+      {isLoadingAuction ? (
+        <CustomLoader />
+      ) : (
+        <TwoColumComp
+          LeftCol={
+            <div className="flex items-center justify-center w-full h-full bg-black px">
+              <CardNft
+                nft={nft}
+                className="h-full lg:w-full"
+                showDetails={false}
+                onNFTClick={() => {}}
+              />
+            </div>
+          }
+          RightCol={
+            <div className="flex flex-col items-center justify-center w-full h-full px-8 py-6 text-white bg-green-g lg:px-24">
+              {!account ? (
+                <div className="flex flex-col items-center justify-center w-full text-base font-medium">
+                  <p className="text-2xl font-semibold text-center lg:text-4xl">
+                    Connect your wallet to place a bid
                   </p>
-                  <div className="w-full h-px opacity-50 bg-white-30" />
+                  <div className="flex items-center justify-between w-full my-6 text-base font-medium">
+                    <div className="w-full h-px opacity-50 bg-white-30" />
+                    <p className="w-full text-lg font-medium text-center text-white opacity-70">
+                      SELECT WALLET
+                    </p>
+                    <div className="w-full h-px opacity-50 bg-white-30" />
+                  </div>
+                  <button
+                    onClick={toggleWallet}
+                    className="w-full py-4 mb-4 rounded-xl bg-leader-board"
+                  >
+                    Continue with MetaMask
+                  </button>
+                  <a href="#" className="text-white-30">
+                    How do I get a wallet?
+                  </a>
                 </div>
-                <button
-                  onClick={toggleWallet}
-                  className="w-full py-4 mb-4 rounded-xl bg-leader-board"
-                >
-                  Continue with MetaMask
-                </button>
-                <a href="#" className="text-white-30">
-                  How do I get a wallet?
-                </a>
-              </div>
-            ) : (
-              <>
-                <div className="flex items-center justify-between w-full mb-5 text-base font-medium">
-                  <p className="text-base font-semibold">
-                    {nft?.tokenOwner === account
-                      ? "Your Auction"
-                      : "Place a Bid"}
-                  </p>
-                  <div className="flex items-center font-medium">
-                    <p className="text-a1">
-                      Your Balance:{" "}
-                      <span className="text-white">
-                        {" "}
-                        {zooBalance?.toLocaleString(undefined, {
-                          maximumFractionDigits: 2,
-                        })}{" "}
+              ) : (
+                <>
+                  <div className="flex items-center justify-between w-full mb-5 text-base font-medium">
+                    <p className="text-base font-semibold">
+                      {nft?.tokenOwner === account
+                        ? "Your Auction"
+                        : "Place a Bid"}
+                    </p>
+                    <div className="flex items-center font-medium">
+                      <p className="text-a1">
+                        Your Balance:{" "}
+                        <span className="text-white">
+                          {" "}
+                          {zooBalance?.toLocaleString(undefined, {
+                            maximumFractionDigits: 2,
+                          })}{" "}
+                          ZOO
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <form onSubmit={handleSubmit} className="w-full">
+                    <div className="relative w-full">
+                      <input
+                        type="number"
+                        className="rounded-xl pl-4 pr-14 py-5 bg-cut-grey w-full placeholder:text-[#878787] placeholder:text-lg"
+                        value={
+                          nft?.tokenOwner === account ? nft?.amount : bidPrice
+                        }
+                        onChange={(e) => setBidPrice(e.target.value)}
+                        disabled={nft?.tokenOwner === account}
+                      />
+                      <span className="absolute right-0 mb-4 mr-4 text-base font-semibold text-white inset-y-5">
                         ZOO
                       </span>
-                    </p>
-                  </div>
-                </div>
-                <form onSubmit={handleSubmit} className="w-full">
-                  <div className="relative w-full">
-                    <input
-                      type="number"
-                      className="rounded-xl pl-4 pr-14 py-5 bg-cut-grey w-full placeholder:text-[#878787] placeholder:text-lg"
-                      value={
-                        nft?.tokenOwner === account ? nft?.amount : bidPrice
-                      }
-                      onChange={(e) => setBidPrice(e.target.value)}
-                      disabled={nft?.tokenOwner === account}
-                    />
-                    <span className="absolute right-0 mb-4 mr-4 text-base font-semibold text-white inset-y-5">
+                    </div>
+                    {bidPrice < minBid && (
+                      <p className="mt-2 text-red">
+                        The minimum bid for this auction is {minBid} ZOO
+                      </p>
+                    )}
+                    <p className="mt-4 mb-1.5 text-base font-normal">
+                      {nft?.tokenOwner === account
+                        ? "You must be paid at least"
+                        : "You must pay at least"}{" "}
+                      {minBid?.toLocaleString(undefined, {
+                        maximumFractionDigits: 2,
+                      })}{" "}
                       ZOO
-                    </span>
-                  </div>
-                  {bidPrice < minBid && (
-                    <p className="mt-2 text-red">
-                      The minimum bid for this auction is {minBid} ZOO
                     </p>
-                  )}
-                  <p className="mt-4 mb-1.5 text-base font-normal">
-                    {nft?.tokenOwner === account
-                      ? "You must be paid at least"
-                      : "You must pay at least"}{" "}
-                    {minBid?.toLocaleString(undefined, {
-                      maximumFractionDigits: 2,
-                    })}{" "}
-                    ZOO
-                  </p>
-                  <p className="text-base font-normal mb-11">
-                    The next bid must be 3% more than the current bid
-                  </p>
-                  {nft?.tokenOwner === account ? (
-                    nft?.amount <= 0 ? (
-                      <>
-                        <button
-                          className="py-[12px] w-full rounded-[4px] bg-leader-board mb-4 disabled:cursor-not-allowed"
-                          onClick={handleClick}
-                          disabled={loading}
-                        >
-                          Edit Auction
-                        </button>
+                    <p className="text-base font-normal mb-11">
+                      The next bid must be 3% more than the current bid
+                    </p>
+                    {nft?.tokenOwner === account ? (
+                      nft?.amount <= 0 ? (
+                        <>
+                          <button
+                            className="py-[12px] w-full rounded-[4px] bg-leader-board mb-4 disabled:cursor-not-allowed"
+                            onClick={handleClick}
+                            disabled={loading}
+                          >
+                            Edit Auction
+                          </button>
+                          <button
+                            className="py-[12px] w-full rounded-[4px] border border-leader-board bg-[#2A2C41] mb-4"
+                            onClick={handleRemoveAuction}
+                            disabled={loading}
+                          >
+                            Remove Auction
+                          </button>
+                        </>
+                      ) : (
                         <button
                           className="py-[12px] w-full rounded-[4px] border border-leader-board bg-[#2A2C41] mb-4"
-                          onClick={handleRemoveAuction}
-                          disabled={loading}
+                          // onClick={handleRemoveAuction}
+                          disabled={true}
                         >
-                          Remove Auction
+                          You can not edit this auction
                         </button>
-                      </>
+                      )
                     ) : (
                       <button
-                        className="py-[12px] w-full rounded-[4px] border border-leader-board bg-[#2A2C41] mb-4"
-                        // onClick={handleRemoveAuction}
-                        disabled={true}
+                        className="py-[12px] w-full rounded-[4px] bg-leader-board mb-4 disabled:cursor-not-allowed"
+                        onClick={handleClick}
+                        disabled={bidPrice < minBid || loading}
                       >
-                        You can not edit this auction
+                        Place Bid
                       </button>
-                    )
-                  ) : (
-                    <button
-                      className="py-[12px] w-full rounded-[4px] bg-leader-board mb-4 disabled:cursor-not-allowed"
-                      onClick={handleClick}
-                      disabled={bidPrice < minBid || loading}
-                    >
-                      Place Bid
-                    </button>
-                  )}
-                </form>
-                <p className="w-full mb-4 text-base font-normal text-left">
-                  You cannot withdraw a bid once submitted
-                </p>
-                <a className="flex items-end text-lg font-bold text-zoo-green">
-                  How do auctions work?
-                </a>
-              </>
-            )}
-          </div>
-        }
-      />
+                    )}
+                  </form>
+                  <p className="w-full mb-4 text-base font-normal text-left">
+                    You cannot withdraw a bid once submitted
+                  </p>
+                  <a className="flex items-end text-lg font-bold text-zoo-green">
+                    How do auctions work?
+                  </a>
+                </>
+              )}
+            </div>
+          }
+        />
+      )}
 
       <AuctionModal nft={nft} edit={true} />
     </div>
