@@ -197,7 +197,7 @@ const NftModal = ({}: AppProps & {
             </div>
           </div>
           <div className="flex-1">
-            <h1 className="font-semibold text-[44px] leading-4 mb-[26px]">
+            <h1 className="font-semibold text-[44px] leading-[3rem] lg:leading-4 mb-[26px]">
               {nftItem?.name || "--"}
             </h1>
 

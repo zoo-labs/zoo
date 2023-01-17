@@ -244,7 +244,7 @@ export default function Home() {
         ))}
       </div>
       <div className="px-6 pt-24 mx-auto max-w-7xl">
-        <h1 className="mb-24 text-[44px] leading-4 font-bold md:text-center">
+        <h1 className="mb-24 text-[44px] leading-[3rem] lg:leading-4 font-bold md:text-center">
           Resources for Getting Started
         </h1>
         <div className="relative w-full">

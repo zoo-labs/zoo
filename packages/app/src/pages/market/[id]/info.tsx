@@ -207,7 +207,7 @@ const InfoPage = () => {
           <p className="mb-3 font-light">
             {[0, 1].includes(nft?.kind) ? "Genesis" : "Hybrid"} #{nft?.tokenID}
           </p>
-          <h1 className="font-semibold text-[44px] leading-[3rem] lg:leading-4 mb-[26px]">
+          <h1 className="font-semibold text-[44px] leading-[3rem] lg:leading-[3rem] lg:leading-4 mb-[26px]">
             {nft?.name}
           </h1>
 
