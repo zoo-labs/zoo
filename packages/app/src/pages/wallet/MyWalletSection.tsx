@@ -126,7 +126,7 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
         </div>
 
         <div className="flex flex-wrap items-center justify-center w-full gap-4 mb-4">
-          <div className="flex flex-col md:flex-row items-start justify-center w-full gap-x-2.5 gap-y-8 flex-wrap">
+          <div className="flex flex-col md:flex-row items-start justify-center w-full gap-x-2.5 gap-y-8 flex-wrap cursor-pointer">
             {filteredNfts.map((nft: MyNFT, index) => {
               const { kind, name, id, dropId, stage, token_uri } = nft;
               console.log("nftttt", nft);
