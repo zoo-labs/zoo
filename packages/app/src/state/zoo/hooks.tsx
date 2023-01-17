@@ -529,114 +529,126 @@ export function useTransferZoo(): (
   );
 }
 
-export function useGetAllAuctions(): () => Promise<void> {
+export function useGetAllAuctions(): (
+  setLoading?: (val: boolean) => void
+) => Promise<void> {
   const auctionContract = useAuction(true);
   const dispatch = useDispatch();
   const media = useMedia(true);
   const zooKeeper = useZooKeeper(true);
   const { library } = useActiveWeb3React();
-  return useCallback(async () => {
-    const na = +new Date();
-    try {
-      const auctions = await auctionContract?.getAllAuctions();
-      await auctions?.map(async (auction, index: number) => {
-        if (Number(auction.reservePrice) === 0) return false;
-        const tokenUri = await media?.tokenURI(Number(auction.tokenID));
-        const tokenMetadataURI = await media?.tokenURI(Number(auction.tokenID));
-        const deet = await zooKeeper?.tokens(Number(auction.tokenID));
-        // const { data } = await axios.get(tokenMetadataURI);
-        const data = await getMetaData(tokenMetadataURI, "useGetAllAuctions");
-        const {
-          name,
-          attributes,
-          description,
-          image,
-          animation_url,
-          glb_animation_url,
-          usdz_animation_url,
-        } = data;
+  return useCallback(
+    async (setLoading) => {
+      const na = +new Date();
+      try {
+        setLoading && setLoading(true);
+        const auctions = await auctionContract?.getAllAuctions();
+        await auctions?.map(async (auction, index: number) => {
+          if (Number(auction.reservePrice) === 0) return false;
+          const tokenUri = await media?.tokenURI(Number(auction.tokenID));
+          const tokenMetadataURI = await media?.tokenURI(
+            Number(auction.tokenID)
+          );
+          const deet = await zooKeeper?.tokens(Number(auction.tokenID));
+          // const { data } = await axios.get(tokenMetadataURI);
+          const data = await getMetaData(tokenMetadataURI, "useGetAllAuctions");
+          const {
+            name,
+            attributes,
+            description,
+            image,
+            animation_url,
+            glb_animation_url,
+            usdz_animation_url,
+          } = data;
 
-        const {
-          tokenID,
-          auctionId,
-          addresses,
-          reservePrice,
-          firstBidTime,
-          duration,
-          curatorFeePercentage,
-          amount,
-          kind,
-          auctionHistory,
-        } = auction;
-        const auctionHistoryMap = await auctionHistory.map(async (history) => {
-          const hash = await library.getBlock(history.blockNumber);
-          return {
-            value: Number(history.amount),
-            from_address: history.bidder,
-            blockNumber: history.blockNumber,
-            block_timestamp: new Date(history.time * 1000),
-            transaction_hash: hash.hash,
+          const {
+            tokenID,
+            auctionId,
+            addresses,
+            reservePrice,
+            firstBidTime,
+            duration,
+            curatorFeePercentage,
+            amount,
+            kind,
+            auctionHistory,
+          } = auction;
+          const auctionHistoryMap = await auctionHistory.map(
+            async (history) => {
+              const hash = await library.getBlock(history.blockNumber);
+              return {
+                value: Number(history.amount),
+                from_address: history.bidder,
+                blockNumber: history.blockNumber,
+                block_timestamp: new Date(history.time * 1000),
+                transaction_hash: hash.hash,
+              };
+            }
+          );
+          const auctionHistoryPromise = await Promise.all(auctionHistoryMap)
+            .then((auctionHistory: AuctionHistory[]) => {
+              return auctionHistory;
+            })
+            .catch((err) => console.error("mi_egg_promiseerror", err));
+          const endDate = new Date(firstBidTime * 1000 + duration * 1000);
+          const difference = +new Date(endDate) - +new Date();
+
+          if (difference <= 0 && Number(firstBidTime)) return;
+          const finalAuction: Auction = {
+            index,
+            description,
+            kind: deet?.kind,
+            tokenID: Number(tokenID),
+            auctionHistory: auctionHistoryPromise || [],
+            tokenOwner: addresses.tokenOwner,
+            reservePrice: Number(reservePrice),
+            firstBidTime: Number(firstBidTime),
+            duration: Number(duration),
+            curatorFeePercentage,
+            // curator,
+            // auctionCurrency,
+            amount: Number(amount),
+            tokenUri,
+            name,
+            attributes,
+            auctionId,
+            image: image
+              ? `https://zoolabs.mypinata.cloud/ipfs/${image.slice(7)}`
+              : usdz_animation_url
+              ? `https://zoolabs.mypinata.cloud/ipfs/${usdz_animation_url.slice(
+                  7
+                )}`
+              : "",
+            animation_url: animation_url
+              ? `https://zoolabs.mypinata.cloud/ipfs/${animation_url.slice(7)}`
+              : usdz_animation_url
+              ? `https://zoolabs.mypinata.cloud/ipfs/${usdz_animation_url.slice(
+                  7
+                )}`
+              : "",
+            glb_animation_url: glb_animation_url
+              ? `https://zoolabs.mypinata.cloud/ipfs/${glb_animation_url.slice(
+                  7
+                )}`
+              : "",
+            usdz_animation_url: usdz_animation_url
+              ? `https://zoolabs.mypinata.cloud/ipfs/${usdz_animation_url.slice(
+                  7
+                )}`
+              : "",
           };
+
+          await dispatch(addAuctionNft(finalAuction as any));
+          setLoading && setLoading(false);
         });
-        const auctionHistoryPromise = await Promise.all(auctionHistoryMap)
-          .then((auctionHistory: AuctionHistory[]) => {
-            return auctionHistory;
-          })
-          .catch((err) => console.error("mi_egg_promiseerror", err));
-        const endDate = new Date(firstBidTime * 1000 + duration * 1000);
-        const difference = +new Date(endDate) - +new Date();
-
-        if (difference <= 0 && Number(firstBidTime)) return;
-        const finalAuction: Auction = {
-          index,
-          description,
-          kind: deet?.kind,
-          tokenID: Number(tokenID),
-          auctionHistory: auctionHistoryPromise || [],
-          tokenOwner: addresses.tokenOwner,
-          reservePrice: Number(reservePrice),
-          firstBidTime: Number(firstBidTime),
-          duration: Number(duration),
-          curatorFeePercentage,
-          // curator,
-          // auctionCurrency,
-          amount: Number(amount),
-          tokenUri,
-          name,
-          attributes,
-          auctionId,
-          image: image
-            ? `https://zoolabs.mypinata.cloud/ipfs/${image.slice(7)}`
-            : usdz_animation_url
-            ? `https://zoolabs.mypinata.cloud/ipfs/${usdz_animation_url.slice(
-                7
-              )}`
-            : "",
-          animation_url: animation_url
-            ? `https://zoolabs.mypinata.cloud/ipfs/${animation_url.slice(7)}`
-            : usdz_animation_url
-            ? `https://zoolabs.mypinata.cloud/ipfs/${usdz_animation_url.slice(
-                7
-              )}`
-            : "",
-          glb_animation_url: glb_animation_url
-            ? `https://zoolabs.mypinata.cloud/ipfs/${glb_animation_url.slice(
-                7
-              )}`
-            : "",
-          usdz_animation_url: usdz_animation_url
-            ? `https://zoolabs.mypinata.cloud/ipfs/${usdz_animation_url.slice(
-                7
-              )}`
-            : "",
-        };
-
-        dispatch(addAuctionNft(finalAuction as any));
-      });
-    } catch (error) {
-      console.error("error_In_UseGetAllAuctions", error);
-    }
-  }, [auctionContract, media, zooKeeper, dispatch, library]);
+      } catch (error) {
+        setLoading && setLoading(false);
+        console.error("error_In_UseGetAllAuctions", error);
+      }
+    },
+    [auctionContract, media, zooKeeper, dispatch, library]
+  );
 }
 
 export function useRemoveAuction(): (

@@ -20,6 +20,7 @@ import ReactGA from "react-ga";
 import { Provider as ReduxProvider, useDispatch } from "react-redux";
 import TransactionUpdater from "../state/transactions/updater";
 import UserUpdater from "../state/user/updater";
+import NextNProgress from 'nextjs-progressbar'
 // import Web3ReactManager from "../components/Web3ReactManager";
 // import { Web3ReactProvider } from "@web3-react/core";
 import dynamic from "next/dynamic";
@@ -226,6 +227,14 @@ function MyApp({
                     <MulticallUpdater />
                   </>
                   <GlobalHooks />
+                  <NextNProgress
+                    color="#fff"
+                    startPosition={0.3}
+                    stopDelayMs={200}
+                    height={4}
+                    showOnShallow={true}
+                    options={{ showSpinner: false }}
+                  />
                   <MoralisProvider
                     serverUrl="https://hyrix9h7cyfi.usemoralis.com:2053/server"
                     appId="ILIieVqZyWlL0ErAjiG9L1X6fep2KEFkKczcGOmJ"
