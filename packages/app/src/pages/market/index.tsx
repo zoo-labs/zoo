@@ -19,13 +19,10 @@ import Wallet from "./wallet";
 import { useTokenTypes } from "zoo/state";
 import { useGetAvailableEggs } from "state/zoo/hooks";
 import { useActiveWeb3React, useDrop, useZooKeeper } from "../../hooks";
-import { useMoralis } from "react-moralis";
-import { abbreviateNumber } from "functions/abbreviateNumbers";
-import { accountEllipsis } from "functions/lux";
-import { FaMoneyBillWave } from "react-icons/fa";
 import { Auction, AvailableEgg } from "types";
 import Web3 from "web3";
 import { PrettoSlider } from "components/Slider";
+import CustomLoader from "components/CustomLoader";
 
 const MarketPlacePage = () => {
   const zooBalance = useSelector<AppState, AppState["zoo"]["zooBalance"]>(
@@ -60,6 +57,7 @@ const MarketPlacePage = () => {
   ];
   const [fetching, setFetching] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [isLoadingAuctions, setIsLoadingAuctions] = useState(true);
 
   const [activeItem, setActiveItem] = useState({});
   const [hotData, setHotData] = useState([]);
@@ -147,7 +145,7 @@ const MarketPlacePage = () => {
   }, [allAuctions]);
 
   useEffect(() => {
-    getAllAuctions();
+    getAllAuctions(setIsLoadingAuctions);
     getAvailableEggs();
   }, [getAllAuctions, getAvailableEggs]);
 
@@ -715,26 +713,34 @@ const MarketPlacePage = () => {
       {/* Data */}
       <div>
         {category === 0 && (
-          <div className="flex flex-wrap justify-center mt-8 -mx-4">
-            {auctionFilter.length > 0 ? (
-              auctionFilter.map((datum: Auction, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="w-full p-2 sm:w-1/2 md:w-1/3 lg:w-1/4"
-                  >
-                    <MarketItem
-                      datum={datum}
-                      applyMaxWidth={false}
-                      placeBid={() => (setActiveItem(datum), console.log(""))}
-                    />
-                  </div>
-                );
-              })
+          <>
+            {isLoadingAuctions ? (
+              <CustomLoader/>
             ) : (
-              <div className="w-full py-16 text-center">No auctions</div>
+              <div className="flex flex-wrap justify-center mt-8 -mx-4">
+                {auctionFilter.length > 0 ? (
+                  auctionFilter.map((datum: Auction, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="w-full p-2 sm:w-1/2 md:w-1/3 lg:w-1/4"
+                      >
+                        <MarketItem
+                          datum={datum}
+                          applyMaxWidth={false}
+                          placeBid={() => (
+                            setActiveItem(datum), console.log("")
+                          )}
+                        />
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="w-full py-16 text-center">No auctions</div>
+                )}
+              </div>
             )}
-          </div>
+          </>
         )}
 
         {category === 1 && (
