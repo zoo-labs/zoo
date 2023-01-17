@@ -12,6 +12,7 @@ import ModalHeader from "../../components/ModalHeader";
 import { useSelector } from "react-redux";
 import { useHatch } from "state/zoo/hooks";
 import { useMedia, useZooToken } from "hooks";
+import { CirclularLoader } from "components/CustomLoader";
 
 const WALLET_VIEWS = {
   OPTIONS: "options",
@@ -31,6 +32,7 @@ export default function HatchEggModal({ nftItem, success }) {
   const zookeeper = useZooToken();
   const hatchEggModalOpen = useModalOpen(ApplicationModal.HATCH_EGG);
 
+
   const toggleModal = useHatchEggModal();
   const hatchEgg = useHatch();
   const toggleWallet = useWalletModalToggle();
@@ -40,7 +42,9 @@ export default function HatchEggModal({ nftItem, success }) {
         nftItem.dropId,
         // nftItem.kind === 0 ? nftItem.id : nftItem.dropEgg,
         nftItem.id,
-        () => success()
+        () => {
+          success();
+        }
       );
     } else {
       toggleWallet();
@@ -115,7 +119,7 @@ export default function HatchEggModal({ nftItem, success }) {
             Hatch Egg text
           </p> */}
           <button
-            className={`py-4 w-52 bg-blue rounded-xl mb-7 disabled:cursor-not-allowed ${
+            className={`py-4 w-52 bg-blue rounded-xl mb-7 disabled:cursor-not-allowed flex justify-center items-center ${
               loading && "opacity-60"
             }`}
             // disabled={loading || timeLeft}
@@ -133,7 +137,7 @@ export default function HatchEggModal({ nftItem, success }) {
                 "m " +
                 timeLeft.s +
                 "s"} */}
-            {loading ? "Hatching..." : "Hatch Egg"}
+            {loading ? <CirclularLoader /> : "Hatch Egg"}
           </button>
         </div>
       </div>
