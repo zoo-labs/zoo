@@ -100,7 +100,7 @@ const AnimalFamilySection = () => {
   return (
     <section className="AnimalFamily">
       <div className="px-6 py-10 md:py-20 mx-auto max-w-7xl">
-        <h1 className="font-bold text-3xl md:text-[44px] leading-4 text-center mb-14">
+        <h1 className="font-bold text-3xl md:text-[44px] leading-[3rem] lg:leading-4 text-center mb-14">
           The Origin Eggs
         </h1>
 
@@ -145,7 +145,7 @@ const AnimalFamilySection = () => {
         </div>
       </div>
       <div className="px-6 py-10 md:py-20 mx-auto max-w-7xl">
-        <h1 className="font-bold text-3xl md:text-[44px] leading-4 text-center">
+        <h1 className="font-bold text-3xl md:text-[44px] leading-[3rem] lg:leading-4 text-center">
           The Animals
         </h1>
         <p className="text-[10px] md:text-sm text-white text-center mb-14 mt-8">
@@ -226,7 +226,7 @@ const AnimalFamilySection = () => {
                   </div>
                 </div>
                 <div className="text-center AnimalFamily__name lg:basis-1/2 mb-5 lg:mb-0">
-                  <h2 className="mb-5 md:mb-10 text-3xl text-center font-bold lg:text-[44px] leading-4">
+                  <h2 className="mb-5 md:mb-10 text-3xl text-center font-bold lg:text-[44px] leading-[3rem] lg:leading-4">
                     {data.name}
                   </h2>
                   <a
