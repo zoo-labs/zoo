@@ -87,7 +87,7 @@ const CurrencyInputPanel: FC<CurrencyInputPanelProps> = ({
             <div className="flex flex-col items-start">
               <div className="w-full">
                 <Input.Numeric
-                  className="w-full text-2xl leading-4 bg-transparent"
+                  className="w-full text-2xl leading-[3rem] lg:leading-4 bg-transparent"
                   id="token-amount-input"
                   value={fields[field]}
                   onUserInput={(val) => handleInput(val, field)}

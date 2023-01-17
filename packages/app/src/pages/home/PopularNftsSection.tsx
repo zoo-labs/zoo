@@ -21,7 +21,7 @@ const PopularNftsSection = () => {
     <section>
       <div className="max-w-7xl mx-auto px-6 lg:pb-20">
         <div className="flex flex-col items-center">
-          <h1 className="text-2xl md:text-2xl lg:text-[44px] leading-4 text-center mb-4 font-semibold">
+          <h1 className="text-2xl md:text-2xl lg:text-[44px] leading-[3rem] lg:leading-4 text-center mb-4 font-semibold">
             Popular NFTs
           </h1>
           <p className="text-base lg:text-lg mb-6 lg:mb-8 text-white text-center text-opacity-70 md:max-w-xl ">
