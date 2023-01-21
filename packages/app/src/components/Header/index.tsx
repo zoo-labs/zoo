@@ -138,7 +138,7 @@ function AppBar(props: {
                                 : `${linkStyle} text-white`
                             }
                           >
-                            {i18n._(t`Drops`)}
+                            {i18n._(t`Animal Drops`)}
                           </a>
                         </NavLink>
                         {/* <NavLink href="/bridge">
