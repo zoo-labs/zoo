@@ -231,7 +231,7 @@ function MyApp({
                     color="#fff"
                     startPosition={0.3}
                     stopDelayMs={200}
-                    height={4}
+                    height={2}
                     showOnShallow={true}
                     options={{ showSpinner: false }}
                   />
