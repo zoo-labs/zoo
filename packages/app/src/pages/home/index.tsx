@@ -21,6 +21,7 @@ import GameFi from "./GameFi";
 import InfoSection from "./InfoSection";
 import StartCollecting from "./StartCollecting";
 import UnimagineableExperience from "./UnimagineableExperience";
+import BuyEggSection from "components/BuyEggSection";
 
 const BASE_NFT_URL = "https://db.zoolabs.io";
 
@@ -187,7 +188,8 @@ export default function Home() {
   return (
     <div className="relative">
       <HeroSection />
-      <CardsSection />
+      {/* <CardsSection /> */}
+      <BuyEggSection/>
       <UnimagineableExperience />
       <StartCollecting />
       <div className="flex items-center justify-center flex-col relative mb-10">
