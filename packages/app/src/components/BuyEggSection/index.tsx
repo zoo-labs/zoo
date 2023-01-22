@@ -41,7 +41,7 @@ const BuyEggSection: FC<BuyEggSectionProps> = ({}) => {
             {availableEggs.map((data) => {
               return (
                 <div
-                  className="w-full flex flex-col items-center mb-4 AnimalFamily__nfts bg-black rounded-md pb-1.5"
+                  className="w-full flex flex-col items-center mb-4 AnimalFamily__nfts bg-black rounded-md pb-4"
                   key={data.id}
                 >
                   <div className="flex flex-col items-center w-full h-[300px] AnimalFamily__image">
@@ -59,9 +59,9 @@ const BuyEggSection: FC<BuyEggSectionProps> = ({}) => {
                       </div>
                     </div>
                   </div>
-                  <div className="px-1.5 w-full text-center flex justify-end">
+                  <div className="pr-4 w-full text-center flex justify-end">
                     <Link href={`/market/egg/${data.id}`} passHref>
-                      <button className="outline-none rounded-full bg-33 w-12 h-12 flex items-center justify-center">
+                      <button className="outline-none rounded-full bg-33 w-12 h-12 flex items-center justify-center ">
                           <Image
                             src="/icons/forward-arrow.svg"
                             width={24}
