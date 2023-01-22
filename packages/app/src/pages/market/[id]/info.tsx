@@ -159,29 +159,32 @@ const InfoPage = () => {
 
   return (
     <div className="pb-16 md:flex-col md:items-center lg:flex-row ">
-      <div className="flex flex-col md:flex-row md:items-center gap-24 mb-[91px] -mt-20 py-20 px-28 bg-product-view lg:max-w-7xl lg:mx-auto">
-        <div className="bg-black border border-33 rounded-[14px] py-5 px-10">
-          <div className="showcase h-[351px] md:h-[450px] flex items-center justify-center relative">
-            {nft?.kind === 0 || nft?.kind === 2 ? (
-              <video
-                autoPlay
-                loop
-                src={nft.animation_url}
-                width={300}
-                height={350}
-                className="max-h-[350px] md:max-h-[450px]"
-              />
-            ) : (
-              <div className="h-[350px] w-full">
-                <ModelViewer
-                  // zoom="35deg"
-                  glb={nft?.glb_animation_url}
-                  usdz={nft?.usdz_animation_url}
-                ></ModelViewer>
-              </div>
-            )}
+      <div className="flex flex-col md:flex-row md:items-center gap-24 mb-[91px] -mt-20 py-20 lg:px-28 px-8 bg-product-view lg:max-w-7xl lg:mx-auto">
+        <div className="bg-black border border-33 rounded-[14px] py-5 ">
+          <div className="px-10">
+            <div className="showcase h-[351px] md:h-[450px] flex items-center justify-center relative">
+              {nft?.kind === 0 || nft?.kind === 2 ? (
+                <video
+                  autoPlay
+                  loop
+                  src={nft.animation_url}
+                  width={300}
+                  height={350}
+                  className="max-h-[350px] md:max-h-[450px]"
+                />
+              ) : (
+                <div className="h-[350px] w-full">
+                  <ModelViewer
+                    // zoom="35deg"
+                    glb={nft?.glb_animation_url}
+                    usdz={nft?.usdz_animation_url}
+                  ></ModelViewer>
+                </div>
+              )}
+            </div>
           </div>
-          <div className="flex items-center justify-between gap-6 mt-2">
+
+          <div className="flex items-center justify-between gap-6 mt-2 mx-4 lg:mx-10">
             {/* <div>
               <p className="mb-0.5 text-xs font-semibold">Mints Left?</p>
               <p className="text-[#979797] font-light text-xs">1 Mint</p>
@@ -204,7 +207,7 @@ const InfoPage = () => {
           <p className="mb-3 font-light">
             {[0, 1].includes(nft?.kind) ? "Genesis" : "Hybrid"} #{nft?.tokenID}
           </p>
-          <h1 className="font-semibold text-[44px] leading-4 mb-[26px]">
+          <h1 className="font-semibold text-[44px] leading-[3rem] lg:leading-[3rem] lg:leading-4 mb-[26px]">
             {nft?.name}
           </h1>
 

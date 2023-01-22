@@ -75,7 +75,7 @@ const RewardCalculator = () => {
   return (
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
       <div className="flex flex-col items-center mb-16">
-        <h1 className="mb-5 text-2xl md:text-[44px] leading-4 text-bold">
+        <h1 className="mb-5 text-2xl md:text-[44px] leading-[3rem] lg:leading-4 text-bold">
           NFT Reward Calculator
         </h1>
       </div>

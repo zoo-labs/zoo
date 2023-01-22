@@ -47,8 +47,8 @@ export default function FreeNFTModal({ nft }: { nft: any }) {
         <div className="absolute right-8 top-7">
           <ModalHeader onClose={toggleModal} />
         </div>
-        <div className="flex flex-col items-center justify-center space-y-6 max-w-[486px]">
-          <div className="bg-black rounded-xl h-[310px] w-full flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center justify-center space-y-6 max-w-[486px] pb-8">
+          <div className="bg-black rounded-xl h-[310px] w-full flex flex-col justify-center items-center pb-8 overflow-y-auto">
             {nft?.kind === 0 || nft?.kind === 2 ? (
               <video
                 autoPlay
@@ -81,7 +81,7 @@ export default function FreeNFTModal({ nft }: { nft: any }) {
           <button
             onClick={freeNft}
             disabled={loading}
-            className={`py-4 w-52 bg-blue rounded-xl mb-7 outline-none focus:outline-none ${
+            className={`py-4 w-52 bg-blue rounded-xl outline-none focus:outline-none mb-8 ${
               loading && "opacity-30 disabled:cursor-not-allowed"
             }`}
           >

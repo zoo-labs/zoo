@@ -320,55 +320,65 @@ export function useGetNftTransfers(): () => void {
   }, [chainId, account, media?.address, Web3Api.account, dispatch]);
 }
 
-export function useGetAvailableEggs(): () => void {
+export function useGetAvailableEggs(): (
+  setLoading?: (val: boolean) => void
+) => void {
   const dispatch = useAppDispatch();
   const dropContract = useDrop(true);
   const { account } = useActiveWeb3React();
 
-  return useCallback(async () => {
-    try {
-      const eggs: Array<any> = await dropContract?.getAllEggs();
-      if (!eggs) return;
-      const structureEgg = async (egg: any) => {
-        return getMetaData(egg.data.metadataURI).then(
-          ({ name, description, attributes, image, animation_url }) => {
-            const finalEgg: AvailableEgg = {
-              bidShares: {
-                creator: Number(egg?.bidShares?.creator),
-                owner: Number(egg?.bidShares?.owner),
-                prevOwner: Number(egg?.bidShares?.prevOwner),
-              },
-              birthday: Number(egg.birthday),
-              exist: true,
-              id: Number(egg.id),
-              kind: egg.kind,
-              minted: Number(egg.minted),
-              name: egg.name,
-              description,
-              price: Number(egg.price),
-              supply: Number(egg.supply),
-              timestamp: Number(egg.timestamp),
-              image: `https://zoolabs.mypinata.cloud/ipfs/${image?.slice(7)}`,
-              animation_url: `https://zoolabs.mypinata.cloud/ipfs/${animation_url?.slice(
-                7
-              )}`,
-              attributes,
-            };
-            dispatch(addEgg(finalEgg));
-          }
-        );
-      };
-      const eggsPromise = eggs.map((egg) => {
-        return structureEgg(egg);
-      });
+  return useCallback(
 
-      Promise.all(eggsPromise)
-        .then(() => {})
-        .catch((err) => console.error("mi_egg_promiseerror", err));
-    } catch (error) {
-      console.log("error_in_useGetAvailableEggs", error);
-    }
-  }, [dispatch, dropContract]);
+    async (setLoading) => {
+      try {
+        setLoading && setLoading(true);
+        const eggs: Array<any> = await dropContract?.getAllEggs();
+        if (!eggs) return;
+        const structureEgg = async (egg: any) => {
+          return getMetaData(egg.data.metadataURI).then(
+            ({ name, description, attributes, image, animation_url }) => {
+              const finalEgg: AvailableEgg = {
+                bidShares: {
+                  creator: Number(egg?.bidShares?.creator),
+                  owner: Number(egg?.bidShares?.owner),
+                  prevOwner: Number(egg?.bidShares?.prevOwner),
+                },
+                birthday: Number(egg.birthday),
+                exist: true,
+                id: Number(egg.id),
+                kind: egg.kind,
+                minted: Number(egg.minted),
+                name: egg.name,
+                description,
+                price: Number(egg.price),
+                supply: Number(egg.supply),
+                timestamp: Number(egg.timestamp),
+                image: `https://zoolabs.mypinata.cloud/ipfs/${image?.slice(7)}`,
+                animation_url: `https://zoolabs.mypinata.cloud/ipfs/${animation_url?.slice(
+                  7
+                )}`,
+                attributes,
+              };
+              dispatch(addEgg(finalEgg));
+            }
+          );
+        };
+        const eggsPromise = await eggs.map((egg) => {
+          return structureEgg(egg);
+        });
+
+        await Promise.all(eggsPromise)
+          .then(() => {})
+          .catch((err) => console.error("mi_egg_promiseerror", err));
+
+        setLoading && setLoading(false);
+      } catch (error) {
+        console.log("error_in_useGetAvailableEggs", error);
+        setLoading && setLoading(false);
+      }
+    },
+    [dispatch, dropContract]
+  );
 }
 
 export function useBuyEgg(): (
