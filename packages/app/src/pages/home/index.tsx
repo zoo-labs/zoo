@@ -191,8 +191,8 @@ export default function Home() {
       {/* <CardsSection /> */}
       <BuyEggSection/>
       <UnimagineableExperience />
-      <StartCollecting />
-      <div className="flex items-center justify-center flex-col relative mb-10">
+      {/* <StartCollecting /> */}
+      {/* <div className="flex items-center justify-center flex-col relative mb-10">
         <img
           // src="/img/girl-on-vr.png"
           src="https://cdn.discordapp.com/attachments/922779586314506240/1036785476046180457/Untitled_design1.png"
@@ -207,7 +207,7 @@ export default function Home() {
             Visit ZOO Penthouse
           </button>
         </div>
-      </div>
+      </div> */}
       <InfoSection />
       <AnimalFamilySection />
       <GameFi gameFi={gameFi} />
