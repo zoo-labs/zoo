@@ -81,15 +81,15 @@ const BidsCard = ({
             {/* <h1 className="p-2 m-2 text-center ">{AuctionTime}</h1> */}
             <div className="flex items-center justify-center gap-7">
               <div className="flex flex-col items-center">
-                <h1 className="text-[44px] leading-4 text-white font-medium">{timeLeft[0]}</h1>
+                <h1 className="text-[44px] leading-[3rem] lg:leading-4 text-white font-medium">{timeLeft[0]}</h1>
                 <p className="text-muted">Hrs</p>
               </div>
               <div className="flex flex-col items-center">
-                <h1 className="text-[44px] leading-4 text-white font-medium">{timeLeft[1]}</h1>
+                <h1 className="text-[44px] leading-[3rem] lg:leading-4 text-white font-medium">{timeLeft[1]}</h1>
                 <p className="text-muted">Min</p>
               </div>
               <div className="flex flex-col items-center">
-                <h1 className="text-[44px] leading-4 text-white font-medium">{timeLeft[2]}</h1>
+                <h1 className="text-[44px] leading-[3rem] lg:leading-4 text-white font-medium">{timeLeft[2]}</h1>
                 <p className="text-muted">Sec</p>
               </div>
             </div>

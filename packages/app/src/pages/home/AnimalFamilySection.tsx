@@ -100,7 +100,7 @@ const AnimalFamilySection = () => {
   return (
     <section className="AnimalFamily">
       <div className="px-6 py-10 md:py-20 mx-auto max-w-7xl">
-        <h1 className="font-bold text-3xl md:text-[44px] leading-4 text-center mb-14">
+        <h1 className="font-bold text-3xl md:text-[44px] leading-[3rem] lg:leading-4 text-center mb-14">
           The Origin Eggs
         </h1>
 
@@ -145,7 +145,7 @@ const AnimalFamilySection = () => {
         </div>
       </div>
       <div className="px-6 py-10 md:py-20 mx-auto max-w-7xl">
-        <h1 className="font-bold text-3xl md:text-[44px] leading-4 text-center">
+        <h1 className="font-bold text-3xl md:text-[44px] leading-[3rem] lg:leading-4 text-center">
           The Animals
         </h1>
         <p className="text-[10px] md:text-sm text-white text-center mb-14 mt-8">
@@ -226,7 +226,7 @@ const AnimalFamilySection = () => {
                   </div>
                 </div>
                 <div className="text-center AnimalFamily__name lg:basis-1/2 mb-5 lg:mb-0">
-                  <h2 className="mb-5 md:mb-10 text-3xl text-center font-bold lg:text-[44px] leading-4">
+                  <h2 className="mb-5 md:mb-10 text-3xl text-center font-bold lg:text-[44px] leading-[3rem] lg:leading-4">
                     {data.name}
                   </h2>
                   <a
@@ -246,92 +246,3 @@ const AnimalFamilySection = () => {
 };
 
 export default AnimalFamilySection;
-
-{
-  /* Another section */
-}
-{
-  /* <div className="flex flex-col items-center mb-4 AnimalFamily__nfts">
-          <div className="flex flex-col items-center justify-center AnimalFamily__nft lg:flex-row">
-            <div className="flex flex-col items-center w-full h-auto mb-8 AnimalFamily__image lg:basis-1/3">
-              <Image
-                src="/img/javan-rhino.png"
-                width={373}
-                height={373}
-                alt=""
-              />
-            </div>
-            <div className="text-center AnimalFamily__name lg:basis-1/3">
-              <h2 className="mb-6 text-3xl font-bold lg:4xl">Javan Rhino</h2>
-              <a
-                href="/nft"
-                className="px-8 py-3 text-sm font-bold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 lg:px-16"
-              >
-                Buy NFT
-              </a>
-            </div>
-            <div className="px-2 py-6 lg:px-6 lg:basis-1/3 lg:bg-black100 lg:rounded-3xl">
-              <h3 className="mb-4 text-xl font-bold ">Rhinoceros Sondaicus</h3>
-              <p className="mb-3 text-grey text-opacity-70">
-                Once the most widespread of Asian rhinoceroses, the Javan
-                rhinoceros ranged from the islands of Java and Sumatra,
-                throughout Southeast Asia, and into India and China. The species
-                is critically endangered, with only one known population in the
-                wild, and no individuals in captivity. It is possibly the rarest
-                large mammal on Earth.
-              </p>
-              <a
-                href=""
-                rel="noreferrer"
-                className="font-bold underline text-green"
-              >
-                Learn more
-              </a>
-            </div>
-          </div>
-        </div> */
-}
-{
-  /* Another section */
-}
-{
-  /* <div className="flex flex-col items-center AnimalFamily__nfts ">
-          <div className="flex flex-col items-center justify-center AnimalFamily__nft lg:flex-row">
-            <div className="flex flex-col items-center w-full h-auto mb-8 AnimalFamily__image lg:basis-1/3">
-              <Image
-                src="/img/siberian-tiger.png"
-                width={373}
-                height={373}
-                alt=""
-              />
-            </div>
-            <div className="text-center AnimalFamily__name lg:basis-1/3">
-              <h2 className="mb-6 text-3xl font-bold lg:4xl">Siberian Tiger</h2>
-              <a
-                href="/nft"
-                className="px-8 py-3 text-sm font-bold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 lg:px-16"
-              >
-                Buy NFT
-              </a>
-            </div>
-            <div className="px-2 py-6 lg:px-6 lg:basis-1/3 lg:bg-black100 lg:rounded-3xl">
-              <h3 className="mb-4 text-xl font-bold ">Siberian Tiger</h3>
-              <p className="mb-3 text-grey text-opacity-70">
-                The Siberian tiger is a tiger from a specific population of the
-                Panthera tigris tigris subspecies native to the Russian Far
-                East, Northeast China. It once ranged throughout the Korean
-                Peninsula, north China, and eastern Mongolia. The population
-                currently inhabits mainly the Sikhote-Alin mountain region in
-                southwest Primorye Province in East Russia.
-              </p>
-              <a
-                href=""
-                rel="noreferrer"
-                className="font-bold underline text-green"
-              >
-                Learn more
-              </a>
-            </div>
-          </div>
-        </div> */
-}

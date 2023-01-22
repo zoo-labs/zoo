@@ -15,7 +15,7 @@ const TradingHistory = () => {
         </ul>
 
         <div
-          className="rounded-xl tracking-tight not-italic py-8 px-3.5 text-xs leading-4 font-bold text-center bg-trading-history">
+          className="rounded-xl tracking-tight not-italic py-8 px-3.5 text-xs leading-[3rem] lg:leading-4 font-bold text-center bg-trading-history">
           <ul className="flex pb-8 border-b border-trading-history-border-b">
             <li className="mr-24">BOUGHT EGG</li>
             <li className="mr-24">12054184</li>

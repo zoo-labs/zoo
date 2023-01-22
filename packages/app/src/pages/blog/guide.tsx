@@ -32,7 +32,7 @@ const Guide = () => {
         {/* Zoo Intro*/}
         <div className="flex flex-row justify-between py-12">
           <div className="lg:basis-1/2">
-            <h1 className="text-4xl lg:text-[44px] leading-4 font-bold mb-8 mt-12 lg:mt-0">
+            <h1 className="text-4xl lg:text-[44px] leading-[3rem] lg:leading-4 font-bold mb-8 mt-12 lg:mt-0">
               How to claim your free $ZOO{" "}
             </h1>
             <nav className="flex gap-12 text-sm lg:text-lg uppercase mb-8">
