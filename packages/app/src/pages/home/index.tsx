@@ -22,6 +22,8 @@ import InfoSection from "./InfoSection";
 import StartCollecting from "./StartCollecting";
 import UnimagineableExperience from "./UnimagineableExperience";
 import BuyEggSection from "components/BuyEggSection";
+import ReliableGovernance from "./ReliableGovernance";
+import WhatToDo from "./WhatToDo";
 
 const BASE_NFT_URL = "https://db.zoolabs.io";
 
@@ -188,28 +190,10 @@ export default function Home() {
   return (
     <div className="relative">
       <HeroSection />
-      {/* <CardsSection /> */}
-      <BuyEggSection/>
+      <BuyEggSection />
       <UnimagineableExperience />
-      {/* <StartCollecting /> */}
-      {/* <div className="flex items-center justify-center flex-col relative mb-10">
-        <img
-          // src="/img/girl-on-vr.png"
-          src="https://cdn.discordapp.com/attachments/922779586314506240/1036785476046180457/Untitled_design1.png"
-          alt=""
-          className="md:w-[700px] md:h-[900px] object-cover object-center"
-        />
-        <div className="absolute bottom-10 md:bottom-20 flex flex-col items-center justify-center">
-          <p className="text-2xl md:text-4xl mb-3 font-bold">
-            Bring them to the Metaverse.
-          </p>
-          <button className="text-[10px] md:text-sm font-medium px-4 py-2 md:to-primary-300 rounded-full bg-33">
-            Visit ZOO Penthouse
-          </button>
-        </div>
-      </div> */}
-      <InfoSection />
-      <AnimalFamilySection />
+      <ReliableGovernance />
+      <WhatToDo />
       <GameFi gameFi={gameFi} />
 
       <div className="px-6 pt-24 mx-auto max-w-7xl">
