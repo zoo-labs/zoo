@@ -155,27 +155,36 @@ const MarketPlaceSection = () => {
             </video>
           </div>
           <div className="flex flex-col items-center lg:items-start lg:justify-center basis-1/2 lg:max-w-lg lg:mx-auto h-full">
-            <h2 className="mb-8 text-2xl font-light text-center lg:text-4xl lg:text-left text-33">
-              <span className="font-bold text-white">Download ZOO app</span> to
-              track your NFT portfolio, APY, offers, and discover new drops.
+            <h2 className="mb-4 text-4xl font-semibold text-center lg:text-5xl lg:text-left text-[#A6A6A6]">
+              We love animals.
             </h2>
-            <div className="flex items-center gap-3 lg:items-start">
-              <Link href="/coming-soon" passHref>
+            <p className="text-sm sm:text-base mt-4 text-[#A6A6A6] mb-24 sm:mt-0 sm:mb-8 text-left">
+              The Zoo Labs Foundation is dedicated to saving and preserving
+              endangered species. Our 501c3 is controlled by the Zoo DAO and
+              allocates a portion of its liquidity to supporting animals in real
+              life! The foundation will begin supporting the animals we hve
+              created digital twins of, the Zoo NFT Animals.We need your help by
+              playing the Zoo game, making a donation, or joining our DAO.
+            </p>
+            <div className="grid grid-cols-2 w-full gap-4">
+              <div className="px-2 lg:px-6 py-3 text-[16px] font-semibold bg-[#A6A6A6] text-[#000000] flex items-center justify-between rounded-full md:text-lg w-full hover:cursor-pointer">
+                <span className="mr-2">Donate Now</span>
                 <Image
-                  src="/img/app-store.png"
+                  src="/icons/forward-arrow-black.svg"
+                  width={32}
+                  height={32}
                   alt=""
-                  width={146}
-                  height={47}
                 />
-              </Link>
-              <Link href="/coming-soon" passHref>
+              </div>
+              <div className="px-2 lg:px-6 py-3 text-[16px] font-semibold bg-transparent border border-[#A6A6A6] text-[#A6A6A6] flex items-center justify-between rounded-full w-full md:text-lg md:px-6 hover:cursor-pointer">
+                <span className="mr-2">Join Dao</span>
                 <Image
-                  src="/img/google-play.png"
+                  src="/icons/forward-arrow-gray.svg"
+                  width={32}
+                  height={32}
                   alt=""
-                  width={146}
-                  height={47}
                 />
-              </Link>
+              </div>
             </div>
           </div>
         </div>

@@ -82,28 +82,27 @@ const WhatToDo = () => {
         ))}
       </div>
       <div className="md:w-3/4 mx-auto mt-24">
-      <div
-        className={`w-full flex flex-col md:flex-row items-center md:justify-between mb-11`}
-      >
-        <div className="w-1/2">
-          <p className="font-bold text-2xl md:text-[44px] text-center w-[70%] md:leading-[64px] mb-3 md:mb-[18px] mx-auto">
-          It all starts with 1 egg.
-          </p>
-         
-          <Link href="/coming-soon" passHref>
-            <div className="px-5 py-3 text-[16px] font-semibold bg-black text-white flex items-center rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer mx-auto">
-              <span className="mr-2">Start Collecting</span>
-             
+        <div
+          className={`w-full flex flex-col md:flex-row items-center md:justify-between mb-11`}
+        >
+          <div className="w-1/2">
+            <p className="font-bold text-2xl md:text-[44px] text-center w-[70%] md:leading-[64px] mb-3 md:mb-[18px] mx-auto">
+              It all starts with 1 egg.
+            </p>
+
+            <Link href="/coming-soon" passHref>
+              <div className="px-5 py-3 text-[16px] font-semibold bg-black text-white flex items-center rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer mx-auto">
+                <span className="mr-2">Start Collecting</span>
+              </div>
+            </Link>
+          </div>
+          <div className="flex-1 w-full md:w-1/2">
+            <div className="w-2/3 mx-auto bg-black  rounded-xl h-[364px] flex items-center justify-center ">
+              <img src={"/images/egg.png"} alt="" />
             </div>
-          </Link>
-        </div>
-        <div className="flex-1 w-full md:w-1/2">
-          <div className="w-2/3 mx-auto bg-black  rounded-xl h-[364px] flex items-center justify-center ">
-            <img src={"/images/egg.png"} alt="" />
           </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };
