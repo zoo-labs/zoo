@@ -6,7 +6,7 @@ import { NextComponentType, NextPageContext } from "next";
 import { AppProps } from "next/app";
 import Image from "next/image";
 import Link from "next/link";
-import GameFi from "pages/home/GameFi";
+import GrabAnimal from "pages/home/GrabAnimal";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useGetAvailableEggs } from "state/zoo/hooks";
@@ -30,7 +30,7 @@ const animals = [
   "Sumatran Elephant",
 ];
 
-const gameFi = [
+const grabAnimal = [
   {
     title: "Set Up Wallet",
     icon: "/icons/empty-wallet.svg",
@@ -339,7 +339,7 @@ const Drop = ({}: AppProps & {
             </Link>
           </div>
 
-          <GameFi gameFi={gameFi} />
+          <GrabAnimal grabAnimal={grabAnimal} />
 
           {/* <div className="flex flex-col-reverse mb-32 md:flex-row md:items-center">
             <img src="/images/drop/roadmap.png" alt="" />
