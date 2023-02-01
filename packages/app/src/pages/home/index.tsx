@@ -17,7 +17,7 @@ const JoinZooSection = dynamic(() => import("./JoinZooSection"));
 const FaqSection = dynamic(() => import("./FaqSection"));
 import { useTokenTypes } from "zoo/state";
 import CardsSection from "./Cards";
-import GameFi from "./GameFi";
+import GrabAnimal from "./GrabAnimal";
 import InfoSection from "./InfoSection";
 import StartCollecting from "./StartCollecting";
 import UnimagineableExperience from "./UnimagineableExperience";
@@ -34,10 +34,10 @@ const getTypeURIs = (type: string) => {
   };
 };
 
-const gameFi = [
+const grabAnimal = [
   {
-    title: "Set Up Wallet",
-    icon: "/icons/empty-wallet.svg",
+    title: "Sumatran Elephant",
+    icon: "/images/elephant.png",
     description: (
       <>
         Set up your wallet with <a className="underline">Metamask</a> and login{" "}
@@ -47,8 +47,8 @@ const gameFi = [
     ),
   },
   {
-    title: "Create Your Collection",
-    icon: "/icons/music-playlist.svg",
+    title: "Siberian Tiger",
+    icon: "/images/tiger.png",
     description: (
       <>
         After you have successfully logged in with your wallet you will be able
@@ -57,28 +57,26 @@ const gameFi = [
       </>
     ),
   },
+];
+
+const grabAnimal2 = [
   {
-    title: "Mint and Breed",
-    icon: "/icons/breed.svg",
+    title: "Breed up to 7X",
+    icon: "/images/circle-tiger.png",
     description: (
       <>
-        As you feed your animal just enough $ it will actually mint an older
-        version of itself. Collect the egg, baby, teen and adult version. AND
-        with two adults you can breed another!
+        First generation can breed up to 7x, while every latter generation will
+        be able to breed 1 less time.
       </>
     ),
   },
   {
-    title: "Marketplace",
-    icon: "/icons/shop.svg",
+    title: "Virtual Piggy Bank",
+    icon: "/images/hippo.png",
     description: (
       <>
-        The Zoo{" "}
-        <a href="/market" className="underline">
-          Marketplace
-        </a>{" "}
-        not only benefits members through its fees but also allows you to buy,
-        sell, make offers and trade for additional benefits $$.
+        Start earning rewards as you lock liquidity into your NFT… like a
+        virtual piggy bank.
       </>
     ),
   },
@@ -194,7 +192,7 @@ export default function Home() {
       <UnimagineableExperience />
       <ReliableGovernance />
       <WhatToDo />
-      <GameFi gameFi={gameFi} />
+      <GrabAnimal grabAnimal={grabAnimal} grabAnimal2={grabAnimal2} />
 
       <div className="px-6 pt-24 mx-auto max-w-7xl">
         {experiences.map((experience, i) => (
