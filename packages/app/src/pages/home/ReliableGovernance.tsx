@@ -1,0 +1,40 @@
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+
+const ReliableGovernance = () => {
+  return (
+    <div className="md:w-3/4 mx-auto mt-24">
+      <div
+        className={`w-full flex flex-col md:flex-row items-center md:justify-between mb-11`}
+      >
+        <div className="w-1/2">
+          <p className="font-bold text-2xl md:text-[44px] md:leading-none mb-3 md:mb-[18px]">
+            Reliable Governance
+          </p>
+          <p className="mb-5 md:mb-8 font-medium text-sm md:text-[20px] leading-7 text-muted-40">
+            Our DAO leverages holographic consensus and quadratic voting.
+          </p>
+          <Link href="/coming-soon" passHref>
+            <div className="px-5 py-3 text-[16px] font-semibold bg-black text-white flex items-center rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer">
+              <span className="mr-2">Learn More</span>
+              <Image
+                src="/icons/forward-arrow.svg"
+                width={24}
+                height={24}
+                alt=""
+              />
+            </div>
+          </Link>
+        </div>
+        <div className="flex-1 w-full md:w-1/2">
+          <div className="w-full bg-black  rounded-xl h-[364px] flex items-center justify-center">
+            <img src={"/img/partnership.svg"} alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ReliableGovernance;
