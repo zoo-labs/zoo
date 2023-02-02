@@ -4,7 +4,7 @@ import React from "react";
 
 const GrabAnimal = ({ grabAnimal, grabAnimal2 }) => {
   return (
-    <section className="AnimalFamily">
+    <section className="AnimalFamily mt-40">
       <div className="px-6 py-20 mx-auto max-w-7xl">
         <h1 className="mb-4 text-[44px] leading-[3rem] lg:leading-4 font-bold md:text-center">
           Or Grab an animal straightaway
@@ -35,13 +35,13 @@ const GrabAnimal = ({ grabAnimal, grabAnimal2 }) => {
                   </div>
                 </div>
                 <div className="w-1/2">
-                  <p className="font-bold text-2xl md:text-[44px] text-center w-[40%] md:leading-[64px] mb-3 md:mb-[18px] mx-auto">
+                  <p className="font-bold text-2xl md:text-[44px] text-center w-[40%] md:leading-[58px] mb-3 md:mb-[18px] mx-auto">
                     {_.title}
                   </p>
 
                   <Link href="/coming-soon" passHref>
-                    <div className="px-5 py-3 text-[16px] font-semibold bg-black text-white flex items-center rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer mx-auto">
-                      <span className="mr-2">Buy Now</span>
+                    <div className="px-5 py-3 text-[16px] font-semibold bg-black text-white flex items-center rounded-full w-max md:text-lg lg:px-16 hover:cursor-pointer mx-auto">
+                      <span className="">Buy Now</span>
                     </div>
                   </Link>
                 </div>
