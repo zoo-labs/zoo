@@ -4,7 +4,8 @@ import React from "react";
 
 const ReliableGovernance = () => {
   return (
-    <div className="md:w-3/4 mx-auto mt-24">
+  <div className="max-w-7xl mx-auto">
+      <div className="w-5/6 mx-auto mt-24">
       <div
         className={`w-full flex flex-col md:flex-row items-center md:justify-between mb-11`}
       >
@@ -16,7 +17,7 @@ const ReliableGovernance = () => {
             Our DAO leverages holographic consensus and quadratic voting.
           </p>
           <Link href="/coming-soon" passHref>
-            <div className="px-5 py-3 text-[16px] font-semibold bg-black text-white flex items-center rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer">
+            <div className="px-5 py-3 text-[16px] font-semibold bg-black text-white flex items-center justify-between rounded-full w-48 md:text-lg md:px-6 lg:px-4 hover:cursor-pointer ">
               <span className="mr-2">Learn More</span>
               <Image
                 src="/icons/forward-arrow.svg"
@@ -34,6 +35,7 @@ const ReliableGovernance = () => {
         </div>
       </div>
     </div>
+  </div>
   );
 };
 

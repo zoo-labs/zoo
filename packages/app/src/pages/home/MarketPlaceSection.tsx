@@ -79,12 +79,12 @@ const MarketPlaceSection = ({ slideData }) => {
           <div className="flex flex-col items-start px-6 mx-auto pb-16 lg:py-8 lg:h-[438px] overflow-y-hidden lg:flex-row-reverse max-w-7xl">
             <div className="relative z-30 flex flex-col mb-8 basis-1/2">
               <div className="flex justify-end">
-                <div className="w-3/4">
+                <div className="w-3/4 text-[#A6A6A6]">
                   <div className="border-[#6D7278] text-[#6D7278] border-b-[2px] pb-3 flex w-full"></div>
                   <div className="border-[#6D7278] text-[#6D7278] border-b-[2px] pb-4 flex items-center w-full mt-8">
                     <div className="w-2/5 text-4xl font-semibold">16,000+</div>
                     <div className="w-3/5 text-lg ">
-                      <p className="w-5/6">
+                      <p className="w-5/6 text-[#A4A7AE]">
                         endangered species threatened with extinction
                       </p>
                     </div>
@@ -92,7 +92,7 @@ const MarketPlaceSection = ({ slideData }) => {
                   <div className="border-[#6D7278] text-[#6D7278] border-b-[2px] pb-4 flex items-center w-full mt-8">
                     <div className="w-2/5 text-4xl font-semibold">82%</div>
                     <div className="w-3/5 text-lg ">
-                      <p className="w-5/6">
+                      <p className="w-5/6 text-[#A4A7AE]">
                         of spending dedicated to conservation
                       </p>
                     </div>
@@ -100,14 +100,14 @@ const MarketPlaceSection = ({ slideData }) => {
                   <div className="border-[#6D7278] text-[#6D7278] border-b-[2px] pb-4 flex items-center w-full mt-8">
                     <div className="w-2/5 text-4xl font-semibold">100%</div>
                     <div className="w-3/5 text-lg ">
-                      <p className="w-5/6">controlled by members of Zoo DAO</p>
+                      <p className="w-5/6 text-[#A4A7AE]">controlled by members of Zoo DAO</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div className="flex flex-col items-center lg:items-start lg:justify-center basis-1/2 lg:max-w-lg lg:mx-auto h-full">
-              <h2 className="mb-4 text-4xl font-semibold text-center lg:text-5xl lg:text-left text-[#A6A6A6]">
+              <h2 className="mb-8 text-4xl font-semibold text-center lg:text-5xl lg:text-left text-[#A6A6A6]">
                 We love animals.
               </h2>
               <p className="text-sm sm:text-base mt-4 text-[#A6A6A6] mb-24 sm:mt-0 sm:mb-8 text-left">
