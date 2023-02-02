@@ -50,7 +50,7 @@ const GrabAnimal = ({ grabAnimal, grabAnimal2 }) => {
           ))}
         </div>
         <div className="grid grid-cols-2 gap-16 mt-32 w-4/5 mx-auto">
-          {grabAnimal2.map((_, i) => (
+          {grabAnimal2?.map((_, i) => (
             <div key={i}>
               <div className="mx-auto bg-black justify-center  rounded-xl h-[364px] flex items-center ">
                 <div className="relative lg:w-[400px] h-64 overflow-y-hidden bg-[#151516] ">
