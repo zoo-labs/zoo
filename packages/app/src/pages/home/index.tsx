@@ -82,6 +82,46 @@ const grabAnimal2 = [
   },
 ];
 
+const slideData = [
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  
+];
+
 const experiences = [
   {
     title: "Virtual Piggy Bank",
@@ -296,7 +336,7 @@ export default function Home() {
           )}
         </div>
       </div> */}
-      <MarketPlaceSection />
+      <MarketPlaceSection slideData={slideData}/>
       <FaqSection />
     </div>
   );

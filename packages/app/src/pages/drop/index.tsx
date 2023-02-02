@@ -339,7 +339,7 @@ const Drop = ({}: AppProps & {
             </Link>
           </div>
 
-          <GrabAnimal grabAnimal={grabAnimal} />
+          <GrabAnimal grabAnimal={grabAnimal} grabAnimal2={grabAnimal}/>
 
           {/* <div className="flex flex-col-reverse mb-32 md:flex-row md:items-center">
             <img src="/images/drop/roadmap.png" alt="" />

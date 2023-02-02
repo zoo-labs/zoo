@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useActiveWeb3React } from "hooks";
+import Slider from "react-slick";
 import Web3Status from "../../components/Web3Status";
 
 // animation
@@ -10,7 +11,7 @@ import { i18n } from "@lingui/core";
 import { t } from "@lingui/macro";
 import axios from "axios";
 
-const MarketPlaceSection = () => {
+const MarketPlaceSection = ({ slideData }) => {
   const { account, chainId, library } = useActiveWeb3React();
   const [Form, setForm] = useState({
     email: "",
@@ -18,6 +19,16 @@ const MarketPlaceSection = () => {
 
   const [succes, setSucces] = useState(false);
   const [error, seterror] = useState(false);
+  const [sliderRef, setSliderRef] = useState(null)
+
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
 
   const handleSubmit = () => {
     console.log("sending information");
@@ -134,8 +145,31 @@ const MarketPlaceSection = () => {
       </div>
       <div className="px-6 mx-auto pb-16 lg:pb-28 lg:pt-14 max-w-7xl text-center flex flex-col items-center">
         <p className="font-semibold text-3xl md:text-5xl text-white mb-1">
-        Resources for Getting Started
+          Resources for Getting Started
         </p>
+        <div className="mt-16">
+          {/* <div className="flex gap-6 oveflow-x-auto ">
+            {slideData &&
+              slideData.map((_, i) => (
+                <Slider ref={setSliderRef} {...settings} key={i} className="">
+                  <div className=" bg-gray-100 rounded-xl">
+                    <div className="flex justify-between mb-8 h-full w-full ">
+                      <div className="w-full h-[220px] rounded-xl">
+                        <img
+                          src={_.icon}
+                          className="object-cover object-center w-full h-full rounded-t-xl"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between mb-8 px-4">
+                      <p className="font-semibold">Quantity</p>
+                    </div>
+                  </div>
+                </Slider>
+              ))}
+          </div> */}
+        </div>
       </div>
     </section>
   );
