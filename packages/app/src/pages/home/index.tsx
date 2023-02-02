@@ -124,41 +124,41 @@ export default function Home() {
   const [hideRight, setHideRight] = useState(false);
   const [blogs, setBlogs] = useState([]);
 
-  const handleMoveRight = () => {
-    if (document.getElementById("carousel").scrollLeft >= window.screen.width) {
-      document.getElementById("carousel").scrollLeft = 0;
-    } else {
-      document.getElementById("carousel").scrollLeft += 800;
-    }
-  };
-  const handleMoveLeft = () => {
-    document.getElementById("carousel").scrollLeft -= 800;
-  };
+  // const handleMoveRight = () => {
+  //   if (document.getElementById("carousel").scrollLeft >= window.screen.width) {
+  //     document.getElementById("carousel").scrollLeft = 0;
+  //   } else {
+  //     document.getElementById("carousel").scrollLeft += 800;
+  //   }
+  // };
+  // const handleMoveLeft = () => {
+  //   document.getElementById("carousel").scrollLeft -= 800;
+  // };
 
-  const handleScroll = () => {
-    console.log(
-      "the_rhrhjr_ddbj",
-      document.getElementById("carousel").scrollLeft,
-      document.getElementById("carousel").getBoundingClientRect().width
-    );
-    if (document.getElementById("carousel").scrollLeft === 0) {
-      setHideLeft(true);
-    } else {
-      setHideLeft(false);
-    }
+  // const handleScroll = () => {
+  //   console.log(
+  //     "the_rhrhjr_ddbj",
+  //     document.getElementById("carousel").scrollLeft,
+  //     document.getElementById("carousel").getBoundingClientRect().width
+  //   );
+  //   if (document.getElementById("carousel").scrollLeft === 0) {
+  //     setHideLeft(true);
+  //   } else {
+  //     setHideLeft(false);
+  //   }
 
-    if (document.getElementById("carousel").scrollLeft === 608) {
-      setHideRight(true);
-    } else {
-      setHideRight(false);
-    }
-  };
+  //   if (document.getElementById("carousel").scrollLeft === 608) {
+  //     setHideRight(true);
+  //   } else {
+  //     setHideRight(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    document
-      .getElementById("carousel")
-      .addEventListener("scroll", (e) => handleScroll());
-  }, [document.getElementById("carousel")?.scrollLeft]);
+  // useEffect(() => {
+  //   document
+  //     .getElementById("carousel")
+  //     .addEventListener("scroll", (e) => handleScroll());
+  // }, [document.getElementById("carousel")?.scrollLeft]);
 
   const fetchBlog = useCallback(async () => {
     const headers = {
@@ -194,7 +194,7 @@ export default function Home() {
       <WhatToDo />
       <GrabAnimal grabAnimal={grabAnimal} grabAnimal2={grabAnimal2} />
 
-      <div className="px-6 pt-24 mx-auto max-w-7xl">
+      {/* <div className="px-6 pt-24 mx-auto max-w-7xl">
         {experiences.map((experience, i) => (
           <div
             key={i}
@@ -226,8 +226,8 @@ export default function Home() {
             </div>
           </div>
         ))}
-      </div>
-      <div className="px-6 pt-24 mx-auto max-w-7xl">
+      </div> */}
+      {/* <div className="px-6 pt-24 mx-auto max-w-7xl">
         <h1 className="mb-24 text-[44px] leading-[3rem] lg:leading-4 font-bold md:text-center">
           Resources for Getting Started
         </h1>
@@ -259,7 +259,6 @@ export default function Home() {
                           className="rounded-[18px]"
                         />
                         <div className="absolute whitespace-normal w-full bg-16 rounded-b-[18px] bottom-0 py-5 px-5 text-center font-medium">
-                          {/* How to Add $ZOO Token to Your Wallet */}
                           {_.title}
                         </div>
                       </a>
@@ -296,7 +295,7 @@ export default function Home() {
             </button>
           )}
         </div>
-      </div>
+      </div> */}
       <MarketPlaceSection />
       <FaqSection />
     </div>
