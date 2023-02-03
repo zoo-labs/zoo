@@ -10,6 +10,7 @@ import { useLingui } from "@lingui/react";
 import { useActiveWeb3React } from "hooks";
 import Web3Status from "../Web3Status";
 import { useState } from "react";
+import { notify } from "../../components/alertMessage";
 import axios from "axios";
 const Footer = () => {
   const { account, chainId, library } = useActiveWeb3React();
@@ -21,7 +22,6 @@ const Footer = () => {
   const [error, seterror] = useState(false);
 
   const handleSubmit = () => {
-
     const { email } = Form;
 
     //call api to send obj
@@ -204,6 +204,34 @@ const Footer = () => {
               new features and events!
             </p>
             <form>
+              <div
+                className={`border-[2px] border-[#353945] rounded-[90px] w-full flex items-center`}
+              >
+                <input
+                  className="h-full py-3 w-full rounded-[90px] bg-transparent px-2 placeholder:text-[#777E91] placeholder:text-[14px] placeholder:font-[400] outline-none"
+                  placeholder="Enter your email"
+                  name="email"
+                  type="email"
+                  value={Form.email}
+                  onChange={handleInputChange}
+                />
+                <button
+                  className="mr-2 flex items-center"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSubmit();
+                  }}
+                >
+                  <Image
+                    src="/icons/small-circle.svg"
+                    width={40}
+                    height={40}
+                    alt=""
+                  />
+                </button>
+              </div>
+            </form>
+            {/* <form>
               <div className="flex items-center px-2 py-2 border rounded-full">
                 <input
                   placeholder="enter your email"
@@ -229,7 +257,7 @@ const Footer = () => {
                   />
                 </button>
               </div>
-            </form>
+            </form> */}
           </div>
           {/* {chainId && chainId in ANALYTICS_URL && (
           <ExternalLink

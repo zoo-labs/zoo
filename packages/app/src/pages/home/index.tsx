@@ -14,7 +14,7 @@ const OpportunitySection = dynamic(() => import("./OpportunitySection"));
 const MarketPlaceSection = dynamic(() => import("./MarketPlaceSection"));
 const AnimalFamilySection = dynamic(() => import("./AnimalFamilySection"));
 const JoinZooSection = dynamic(() => import("./JoinZooSection"));
-const FaqSection = dynamic(() => import("./FaqSection"));
+const FaqSection = dynamic(() => import("./ZooFooter"));
 import { useTokenTypes } from "zoo/state";
 import CardsSection from "./Cards";
 import GrabAnimal from "./GrabAnimal";
@@ -233,109 +233,6 @@ export default function Home() {
       <ReliableGovernance />
       <WhatToDo />
       <GrabAnimal grabAnimal={grabAnimal} grabAnimal2={grabAnimal2} />
-
-      {/* <div className="px-6 pt-24 mx-auto max-w-7xl">
-        {experiences.map((experience, i) => (
-          <div
-            key={i}
-            className={`w-full flex flex-col ${
-              i % 2 === 1 ? "md:flex-row" : "md:flex-row-reverse"
-            } items-center md:justify-between mb-11`}
-          >
-            <div className="flex-1 w-full md:w-auto">
-              <div className="w-full bg-16 border border-silverish rounded-xl h-[364px] flex items-center justify-center">
-                <img src={experience.img} alt="" />
-              </div>
-            </div>
-            <div
-              className={`flex-1 mt-5 md:mt-0 ${
-                i % 2 === 1 ? "md:pl-24" : "md:pr-24"
-              } `}
-            >
-              <p className="font-bold text-2xl md:text-[42px] md:leading-none mb-3 md:mb-[18px]">
-                {experience.title}
-              </p>
-              <p className="mb-5 md:mb-8 font-medium text-sm md:text-[22px] leading-7 text-muted-40">
-                {experience.description}
-              </p>
-              <Link href="/coming-soon" passHref>
-                <div className="px-5 py-3 text-sm font-semibold text-white bg-transparent border-2 border-white rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer">
-                  Learn More
-                </div>
-              </Link>
-            </div>
-          </div>
-        ))}
-      </div> */}
-      {/* <div className="px-6 pt-24 mx-auto max-w-7xl">
-        <h1 className="mb-24 text-[44px] leading-[3rem] lg:leading-4 font-bold md:text-center">
-          Resources for Getting Started
-        </h1>
-        <div className="relative w-full">
-          <div
-            onScroll={handleScroll}
-            id="carousel"
-            className="overflow-x-auto whitespace-nowrap"
-          >
-            <div className="flex flex-col md:flex-row md:max-h-[290px]">
-              {blogs?.length > 0
-                ? blogs.map((_, i) => (
-                    <Link
-                      key={i}
-                      href={_.link}
-                      target="_black"
-                      rel="noopener noreferrer"
-                      passHref
-                    >
-                      <a
-                        target={"_blank"}
-                        className="rounded-[18px] w-full md:min-w-[436px] mr-8 border-2 relative mb-6 md:mb-0 cursor-pointer"
-                      >
-                        <Image
-                          src="/img/tree.png"
-                          alt=""
-                          width={436}
-                          height={282}
-                          className="rounded-[18px]"
-                        />
-                        <div className="absolute whitespace-normal w-full bg-16 rounded-b-[18px] bottom-0 py-5 px-5 text-center font-medium">
-                          {_.title}
-                        </div>
-                      </a>
-                    </Link>
-                  ))
-                : "No post available"}
-            </div>
-          </div>
-          {!hideRight && (
-            <button
-              onClick={handleMoveRight}
-              className="hidden md:block absolute -right-8 cursor-pointer inset-y-[42%]"
-            >
-              <Image
-                src="/icons/arrow-right-circle.svg"
-                alt=""
-                width={43}
-                height={43}
-              />
-            </button>
-          )}
-          {!hideLeft && (
-            <button
-              onClick={handleMoveLeft}
-              className="hidden md:block absolute left-0 cursor-pointer inset-y-[42%]"
-            >
-              <Image
-                src="/icons/arrow-right-circle.svg"
-                alt=""
-                width={43}
-                height={43}
-                className="rotate-180"
-              />
-            </button>
-          )}
-        </div>
-      </div> */}
       <MarketPlaceSection slideData={slideData}/>
       <FaqSection />
     </div>
