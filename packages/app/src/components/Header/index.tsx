@@ -42,7 +42,7 @@ function AppBar(props: {
   const { i18n } = useLingui();
   const { account, chainId, library, connector } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
-  const [showBg, setShowBg] = useState(false);
+  const [showBg, setShowBg] = useState(true);
   const router = useRouter();
 
   let linkStyle =
@@ -59,19 +59,19 @@ function AppBar(props: {
     (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
   var scrollTrigger = 60;
 
-  useEffect(() => {
-    window.onscroll = function () {
-      // We add pageYOffset for compatibility with IE.
-      if (
-        window.scrollY >= scrollTrigger ||
-        window.pageYOffset >= scrollTrigger
-      ) {
-        setShowBg(true);
-      } else {
-        setShowBg(false);
-      }
-    };
-  }, []);
+  // useEffect(() => {
+  //   window.onscroll = function () {
+  //     // We add pageYOffset for compatibility with IE.
+  //     if (
+  //       window.scrollY >= scrollTrigger ||
+  //       window.pageYOffset >= scrollTrigger
+  //     ) {
+  //       setShowBg(true);
+  //     } else {
+  //       setShowBg(false);
+  //     }
+  //   };
+  // }, []);
   return (
     <header
       className={`absoulte flex-shrink-0 w-full ${
