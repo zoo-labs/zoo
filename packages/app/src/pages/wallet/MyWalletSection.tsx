@@ -132,12 +132,16 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
               const { kind, name, id, dropId, stage, token_uri } = nft;
               console.log("nftttt", nft);
               return (
-                <WalletItem
+                // <WalletItem
+                //   key={id}
+                //   datum={nft}
+                //   onClick={() => route.push(`/wallet/${id}`)}
+                // />
+                <NewNFTCard
+                  nftItem={nft}
                   key={id}
-                  datum={nft}
                   onClick={() => route.push(`/wallet/${id}`)}
                 />
-                // <NewNFTCard nftItem={nft} key={index} />
               );
             })}
           </div>
