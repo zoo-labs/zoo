@@ -55,7 +55,7 @@ const FaqSection = () => {
     <section id="faqs" className="">
       <div className=" border-[#353945] border-t-[1px] border-b-[1px]  mb-8 px-8 grid lg:grid-cols-3">
         <div className="flex justify-between py-16  border-[#353945] border-r-[1px] ">
-          <p className="text-3xl font-bold lg:text-[48px] leading-[72px] ml-20">
+          <p className="text-3xl font-bold lg:text-[48px] leading-[72px] ml-8 2xl:ml-20">
             ZOO
           </p>
           <div className="grid w-2/4 mt-8 gap-4 font-[500] ">
