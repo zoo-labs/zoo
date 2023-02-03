@@ -109,7 +109,7 @@ function AppBar(props: {
                     />{" "}
                   </div>
                 ) : (
-                  <div className="flex flex-1  items-center">
+                  <div className="flex  items-center">
                     <NavLink href="/">
                       <div className=" h-full pl-2 cursor-pointer logo w-[70px] flex">
                         ZOO
@@ -118,7 +118,7 @@ function AppBar(props: {
                   </div>
                 )}
                 {!props.isModal && (
-                  <div className="hidden sm:block  mx-auto">
+                  <div className="hidden sm:block ">
                     <div className="flex pl-6 space-x-5">
                     <Marketplace />
                       <NavLink href="/drop">
@@ -138,7 +138,7 @@ function AppBar(props: {
                     </div>
                   </div>
                 )}
-                <div className="flex flex-1  items-center justify-end w-full">
+                <div className="flex items-center justify-end">
                   <div className=" text-xs flex flex-row-reverse items-center rounded p-0.5 whitespace-nowrap  font-bold select-none pointer-events-auto">
                     <More />
                     <div
