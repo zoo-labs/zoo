@@ -34,6 +34,7 @@ import AuctionModal from "modals/Auction";
 import HatchEggAnimationModal from "modals/HatchEggModal/Animation";
 import { AvailableEgg } from "types";
 import WalletItem from "components/wallet/WalletItem";
+import NewNFTCard from "components/NewNFTCard";
 
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
@@ -131,9 +132,14 @@ const MyWalletSection = ({ myNfts, nftTransfers, fetchNfts }) => {
               const { kind, name, id, dropId, stage, token_uri } = nft;
               console.log("nftttt", nft);
               return (
-                <WalletItem
+                // <WalletItem
+                //   key={id}
+                //   datum={nft}
+                //   onClick={() => route.push(`/wallet/${id}`)}
+                // />
+                <NewNFTCard
+                  nftItem={nft}
                   key={id}
-                  datum={nft}
                   onClick={() => route.push(`/wallet/${id}`)}
                 />
               );

@@ -20,6 +20,7 @@ import { useMoralis } from "react-moralis";
 import { Auction } from "types";
 import EmptyBidSection from "./EmptyBidSection";
 import CustomLoader from "components/CustomLoader";
+import Image from "next/image";
 
 export default function Wallet({ children }) {
   const [category, setCategory] = useState(0);
@@ -103,20 +104,45 @@ export default function Wallet({ children }) {
         </div>
         <div className="flex flex-col justify-between px-2 pt-4 md:items-center md:px-6 lg:flex-row lg:max-w-7xl lg:mx-auto">
           <div className="">
-            <p className="text-lg font-bold md:text-xl">Wallet Balance </p>
-            <div className="flex items-center mb-7">
-              <p className="text-base font-bold text-white md:text-2xl">
+            <p className="text-[32px] font-[400] md:text-xl mt-4">Wallet Value</p>
+            <div className="flex items-center mb-10 mt-6">
+              <p className="text-base font-bold text-white md:text-[56px] ">
                 {numberWithCommas(zooBalance.toFixed(2))} $ZOO
               </p>
-              <button
+              {/* <button
                 onClick={() => handleFunds(chainId, buyZoo)}
                 className="px-5 py-3 ml-4 text-sm font-semibold text-white rounded-full bg-blue md:text-base md:px-6 md:py-3 lg:px-6"
               >
                 Buy $ZOO
-              </button>
+              </button> */}
+            </div>
+            <div className="flex">
+              <div className="bg-[#333333] w-56 h-16 rounded-[5px] px-4 flex items-center justify-between">
+                <div>
+                  <p className="text-[14px]">Collateral Staked</p>
+                  <p className="font-[500] text-[20px]">$15,600.42</p>
+                </div>
+                <button className="flex items-center">
+                  <Image
+                    src="/icons/add-circle.svg"
+                    width={20}
+                    height={20}
+                    alt=""
+                  />
+                </button>
+              </div>
+              <div className="bg-blue w-56 h-16 rounded-[5px] px-4 text-center flex items-center justify-center ml-4 cursor-pointer">
+                <p className="text-[14px] text-center">Start a Pool</p>
+              </div>
+              <div
+                onClick={() => handleFunds(chainId, buyZoo)}
+                className="bg-blue w-56 h-16 rounded-[5px] px-4 text-center flex items-center justify-center ml-4 cursor-pointer"
+              >
+                <p className="text-[14px] text-center">Buy $ZOO</p>
+              </div>
             </div>
             {account && category === 0 && (
-              <p className="font-semibold">
+              <p className="font-semibold mt-8">
                 {myEggsCount} Egg{myEggsCount !== 1 ? "s" : ""} -{" "}
                 {myAnimalsCount} Animal{myAnimalsCount !== 1 ? "s" : ""}
               </p>
