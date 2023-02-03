@@ -17,11 +17,13 @@ const JoinZooSection = dynamic(() => import("./JoinZooSection"));
 const FaqSection = dynamic(() => import("./FaqSection"));
 import { useTokenTypes } from "zoo/state";
 import CardsSection from "./Cards";
-import GameFi from "./GameFi";
+import GrabAnimal from "./GrabAnimal";
 import InfoSection from "./InfoSection";
 import StartCollecting from "./StartCollecting";
 import UnimagineableExperience from "./UnimagineableExperience";
 import BuyEggSection from "components/BuyEggSection";
+import ReliableGovernance from "./ReliableGovernance";
+import WhatToDo from "./WhatToDo";
 
 const BASE_NFT_URL = "https://db.zoolabs.io";
 
@@ -32,10 +34,10 @@ const getTypeURIs = (type: string) => {
   };
 };
 
-const gameFi = [
+const grabAnimal = [
   {
-    title: "Set Up Wallet",
-    icon: "/icons/empty-wallet.svg",
+    title: "Sumatran Elephant",
+    icon: "/images/elephant.png",
     description: (
       <>
         Set up your wallet with <a className="underline">Metamask</a> and login{" "}
@@ -45,8 +47,8 @@ const gameFi = [
     ),
   },
   {
-    title: "Create Your Collection",
-    icon: "/icons/music-playlist.svg",
+    title: "Siberian Tiger",
+    icon: "/images/tiger.png",
     description: (
       <>
         After you have successfully logged in with your wallet you will be able
@@ -55,31 +57,69 @@ const gameFi = [
       </>
     ),
   },
+];
+
+const grabAnimal2 = [
   {
-    title: "Mint and Breed",
-    icon: "/icons/breed.svg",
+    title: "Breed up to 7X",
+    icon: "/images/circle-tiger.png",
     description: (
       <>
-        As you feed your animal just enough $ it will actually mint an older
-        version of itself. Collect the egg, baby, teen and adult version. AND
-        with two adults you can breed another!
+        First generation can breed up to 7x, while every latter generation will
+        be able to breed 1 less time.
       </>
     ),
   },
   {
-    title: "Marketplace",
-    icon: "/icons/shop.svg",
+    title: "Virtual Piggy Bank",
+    icon: "/images/hippo.png",
     description: (
       <>
-        The Zoo{" "}
-        <a href="/market" className="underline">
-          Marketplace
-        </a>{" "}
-        not only benefits members through its fees but also allows you to buy,
-        sell, make offers and trade for additional benefits $$.
+        Start earning rewards as you lock liquidity into your NFT… like a
+        virtual piggy bank.
       </>
     ),
   },
+];
+
+const slideData = [
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  {
+    title: "How to set up a metamask wallet",
+    icon: "/images/tree.png",
+  },
+  
 ];
 
 const experiences = [
@@ -124,41 +164,41 @@ export default function Home() {
   const [hideRight, setHideRight] = useState(false);
   const [blogs, setBlogs] = useState([]);
 
-  const handleMoveRight = () => {
-    if (document.getElementById("carousel").scrollLeft >= window.screen.width) {
-      document.getElementById("carousel").scrollLeft = 0;
-    } else {
-      document.getElementById("carousel").scrollLeft += 800;
-    }
-  };
-  const handleMoveLeft = () => {
-    document.getElementById("carousel").scrollLeft -= 800;
-  };
+  // const handleMoveRight = () => {
+  //   if (document.getElementById("carousel").scrollLeft >= window.screen.width) {
+  //     document.getElementById("carousel").scrollLeft = 0;
+  //   } else {
+  //     document.getElementById("carousel").scrollLeft += 800;
+  //   }
+  // };
+  // const handleMoveLeft = () => {
+  //   document.getElementById("carousel").scrollLeft -= 800;
+  // };
 
-  const handleScroll = () => {
-    console.log(
-      "the_rhrhjr_ddbj",
-      document.getElementById("carousel").scrollLeft,
-      document.getElementById("carousel").getBoundingClientRect().width
-    );
-    if (document.getElementById("carousel").scrollLeft === 0) {
-      setHideLeft(true);
-    } else {
-      setHideLeft(false);
-    }
+  // const handleScroll = () => {
+  //   console.log(
+  //     "the_rhrhjr_ddbj",
+  //     document.getElementById("carousel").scrollLeft,
+  //     document.getElementById("carousel").getBoundingClientRect().width
+  //   );
+  //   if (document.getElementById("carousel").scrollLeft === 0) {
+  //     setHideLeft(true);
+  //   } else {
+  //     setHideLeft(false);
+  //   }
 
-    if (document.getElementById("carousel").scrollLeft === 608) {
-      setHideRight(true);
-    } else {
-      setHideRight(false);
-    }
-  };
+  //   if (document.getElementById("carousel").scrollLeft === 608) {
+  //     setHideRight(true);
+  //   } else {
+  //     setHideRight(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    document
-      .getElementById("carousel")
-      .addEventListener("scroll", (e) => handleScroll());
-  }, [document.getElementById("carousel")?.scrollLeft]);
+  // useEffect(() => {
+  //   document
+  //     .getElementById("carousel")
+  //     .addEventListener("scroll", (e) => handleScroll());
+  // }, [document.getElementById("carousel")?.scrollLeft]);
 
   const fetchBlog = useCallback(async () => {
     const headers = {
@@ -188,31 +228,13 @@ export default function Home() {
   return (
     <div className="relative">
       <HeroSection />
-      {/* <CardsSection /> */}
-      <BuyEggSection/>
+      <BuyEggSection />
       <UnimagineableExperience />
-      {/* <StartCollecting /> */}
-      {/* <div className="flex items-center justify-center flex-col relative mb-10">
-        <img
-          // src="/img/girl-on-vr.png"
-          src="https://cdn.discordapp.com/attachments/922779586314506240/1036785476046180457/Untitled_design1.png"
-          alt=""
-          className="md:w-[700px] md:h-[900px] object-cover object-center"
-        />
-        <div className="absolute bottom-10 md:bottom-20 flex flex-col items-center justify-center">
-          <p className="text-2xl md:text-4xl mb-3 font-bold">
-            Bring them to the Metaverse.
-          </p>
-          <button className="text-[10px] md:text-sm font-medium px-4 py-2 md:to-primary-300 rounded-full bg-33">
-            Visit ZOO Penthouse
-          </button>
-        </div>
-      </div> */}
-      <InfoSection />
-      <AnimalFamilySection />
-      <GameFi gameFi={gameFi} />
+      <ReliableGovernance />
+      <WhatToDo />
+      <GrabAnimal grabAnimal={grabAnimal} grabAnimal2={grabAnimal2} />
 
-      <div className="px-6 pt-24 mx-auto max-w-7xl">
+      {/* <div className="px-6 pt-24 mx-auto max-w-7xl">
         {experiences.map((experience, i) => (
           <div
             key={i}
@@ -244,8 +266,8 @@ export default function Home() {
             </div>
           </div>
         ))}
-      </div>
-      <div className="px-6 pt-24 mx-auto max-w-7xl">
+      </div> */}
+      {/* <div className="px-6 pt-24 mx-auto max-w-7xl">
         <h1 className="mb-24 text-[44px] leading-[3rem] lg:leading-4 font-bold md:text-center">
           Resources for Getting Started
         </h1>
@@ -277,7 +299,6 @@ export default function Home() {
                           className="rounded-[18px]"
                         />
                         <div className="absolute whitespace-normal w-full bg-16 rounded-b-[18px] bottom-0 py-5 px-5 text-center font-medium">
-                          {/* How to Add $ZOO Token to Your Wallet */}
                           {_.title}
                         </div>
                       </a>
@@ -314,8 +335,8 @@ export default function Home() {
             </button>
           )}
         </div>
-      </div>
-      <MarketPlaceSection />
+      </div> */}
+      <MarketPlaceSection slideData={slideData}/>
       <FaqSection />
     </div>
   );
