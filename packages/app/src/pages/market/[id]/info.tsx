@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import dynamic from "next/dynamic";
 import { Auction } from "types";
 import { shortenAddress } from "functions";
+import MarketItem from "../../../components/market/marketItem";
 import { abbreviateNumber } from "functions/abbreviateNumbers";
 import {
   useGetAllAuctions,
@@ -49,6 +50,7 @@ const InfoPage = () => {
   const toggleExpand = useExpandNFTModal();
   const toggleShare = useShareModal();
   const refetchStuff = useRefreshMetadata();
+  const [activeItem, setActiveItem] = useState({});
   const minBidFunc = useCallback(() => {
     const curatorFeePercentage = 5 / 100;
     if (nft?.amount > 0) {
@@ -347,7 +349,26 @@ const InfoPage = () => {
           <div className="hidden border-b border-[#fff] lg:block pt-8 pb-4 w-1/3 mb-4">
             <p className="mt-8 text-2xl font-semibold uppercase">Browse</p>
           </div>
-          <div className="grid gap-4 mt-8 lg:grid-cols-5">
+          <div className="flex flex-wrap justify-center mt-8 -mx-4">
+            {allAuctions.length > 0 ? (
+              allAuctions
+                .filter((auction) => auction.kind === 0)
+                .map((datum, index) => {
+                  return (
+                    <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
+                      <MarketItem
+                        datum={datum}
+                        applyMaxWidth={false}
+                        placeBid={() => (setActiveItem(datum), console.log(""))}
+                      />
+                    </div>
+                  );
+                })
+            ) : (
+              <div className="w-full py-16 text-center">No auctions</div>
+            )}
+          </div>
+          {/* <div className="grid gap-4 mt-8 lg:grid-cols-5">
             {[1, 2, 3, 4, 5].map((data, index) => {
               return (
                 <div key={index}>
@@ -401,7 +422,7 @@ const InfoPage = () => {
                 </div>
               );
             })}
-          </div>
+          </div> */}
         </div>
         <ShareNFTModal nft={nft} />
         <NFTExpandedModal nft={nft} />
