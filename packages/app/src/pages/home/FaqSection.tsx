@@ -13,101 +13,6 @@ const FaqSection = () => {
 
   return (
     <section id="faqs" className="">
-      {/* <div className="px-6 py-20 mx-auto max-w-7xl">
-        <h2 className="mb-10 text-3xl font-bold text-center lg:text-4xl lg:mb-20">
-          Game FAQ
-        </h2>
-        <div className="flex flex-col  lg:flex-row lg:flex-wrap lg:items-start lg:justify-between">
-          <div className="flex flex-col mb-8 lg:basis-1/2 w-full lg:max-w-sm">
-            <h3 className="mb-4 text-xl font-bold text-white lg:text-2xl">
-              What is ZOO?
-            </h3>
-            <p className="leading-6 text-muted-40 lg:max-w-xl">
-              ZOO is a Liquidity Protocol that exists to bridge tokens and NFTs
-              at the intersection of Defi and gaming. Each of our NFTs (animal
-              or egg) yield our native currency, $ZOO. Each NFT is
-              collateralized by $ZOO, which appreciates over time based on
-              rarity, age and by playing our game.{" "}
-            </p>
-          </div>
-
-          <div className="flex flex-col mb-12 lg:basis-1/2 w-full ">
-            <h3 className="mb-4 text-xl font-bold text-white lg:text-2xl">
-              What are the Key Features in ZOO?
-            </h3>
-            <p className="text-muted-40 lg:max-w-sm ">
-              {`Our key features include: growing,
-              breeding. In the near future we will
-              also launch the ZOO AR App which will enable you to
-              play with your animals in AR. With the app you will be able
-              to see your NFT and pet, play, shake hands and more.`}
-            </p>
-          </div>
-
-          <div className="flex flex-col mb-12 lg:basis-1/2 w-full">
-            <h3 className="mb-4 text-xl font-bold text-white lg:text-2xl">
-              What is the $ZOO token?
-            </h3>
-            <p className="text-muted-40 lg:max-w-sm">
-              The $ZOO token is the native currency in the game. It allows token
-              holders to play, invest, use our NFT marketplace and be part of
-              the game.
-            </p>
-          </div>
-
-          <div className="flex flex-col mb-12 lg:basis-1/2 w-full">
-            <h3 className="mb-4 text-xl font-bold text-white lg:text-2xl">
-              How Do I Get Started?
-            </h3>
-            <p className="text-muted-40 lg:max-w-sm">
-              Players will be able to get access to the game through our DApp as
-              well as ZOO {`Labs'`} official website.
-            </p>
-          </div>
-          <div className="flex flex-col mb-12 lg:basis-1/2 w-full">
-            <h3 className="mb-4 text-xl font-bold text-white lg:text-2xl">
-              How do I buy $ZOO?
-            </h3>
-            <li>
-              <a
-                className=" underline"
-                href="https://prezi.com/i/view/fWOPqU2eZzcqYyVzb5pz"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Click here
-              </a>
-            </li>
-          </div>
-
-          <div className="flex flex-col mb-12 lg:basis-1/2 w-full">
-            <h3 className="mb-4 text-xl font-bold text-white lg:text-2xl">
-              Still have questions?
-            </h3>
-            <p className="mb-4 text-muted-40 lg:max-w-sm">
-              If you are having difficulty, please{" "}
-              <a href="https://discord.gg/KsXtbu5g" className="underline">
-                join our Discord server
-              </a>{" "}
-              and post in the #new-player-help channel and our community will be
-              happy to help!
-            </p>
-            <p className="text-muted-40 lg:max-w-sm">
-              In addition, a complete list of guides can be found{" "}
-              <a href="/blog" className="underline text-blue">
-                here.
-              </a>
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center justify-center">
-          <Link href="/faqs">
-            <a className="px-5 py-3 text-sm border-2 rounded-full font-semibold md:text-base text-white md:px-6 md:py-4 lg:px-20">
-              See more
-            </a>
-          </Link>
-        </div>
-      </div> */}
       <div className=" border-[#353945] border-t-[1px] border-b-[1px]  mb-8 px-8 grid lg:grid-cols-3">
         <div className="flex justify-between py-16  border-[#353945] border-r-[1px] ">
           <p className="text-3xl font-bold lg:text-[48px] leading-[72px] ml-20">
@@ -122,13 +27,15 @@ const FaqSection = () => {
             <CustomLink title="Marketplace" link={"/"} />
           </div>
         </div>
-        <div className="flex  my-auto  border-[#353945] border-r-[1px] ">
-          <div className="grid gap-4 mx-auto text-left font-[500]">
-            <CustomLink title="My Profile" link={"/"} />
-            <CustomLink title="Connect Wallet" link={"/"} />
-            <CustomLink title="Whitepaper" link={"/"} />
-            <CustomLink title="FAQ" link={"/"} />
-            <CustomLink title="Contact Us" link={"/"} />
+        <div className="flex  border-[#353945] border-r-[1px] ">
+          <div className="h-full my-auto mx-auto flex items-center">
+            <div className="grid gap-6 mx-auto text-left font-[500]">
+              <CustomLink title="My Profile" link={"/"} />
+              <CustomLink title="Connect Wallet" link={"/"} />
+              <CustomLink title="Whitepaper" link={"/"} />
+              <CustomLink title="FAQ" link={"/"} />
+              <CustomLink title="Contact Us" link={"/"} />
+            </div>
           </div>
         </div>
         <div className="my-auto">
@@ -157,6 +64,20 @@ const FaqSection = () => {
           </div>
         </div>
       </div>
+      <div className=" max-w-7xl mx-auto flex mt-8 mb-16">
+        <div className="flex items-center w-3/4 mx-auto justify-between">
+          <p className="text-[12px]">
+            Copyright © 2021 ZOO Labs INC. All rights reserved
+          </p>
+          <div className="flex items-center gap-6 ">
+            <CustomIconLink link="/" icon="/icons/instagram_negative.svg" />
+            <CustomIconLink link="/" icon="/icons/twitter_negative.svg" />
+            <CustomIconLink link="/" icon="/icons/discord_negative.svg" />
+            <CustomIconLink link="/" icon="/icons/telegram_negativ.svg" />
+            <CustomIconLink link="/" icon="/icons/medium_negative.svg" />
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
@@ -167,6 +88,16 @@ const CustomLink = ({ link, title }) => {
   return (
     <Link href={link}>
       <a>{title}</a>
+    </Link>
+  );
+};
+
+const CustomIconLink = ({ link, icon }) => {
+  return (
+    <Link href={link}>
+      <a target={"_blank"} rel="noopenner noreferrer">
+        <Image src={icon} width={16} height={16} alt="" />
+      </a>
     </Link>
   );
 };
