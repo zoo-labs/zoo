@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 // animation
 import { fadeInOnScroll } from "animation";
+import axios from "axios";
 import Image from "next/image";
 
 const FaqSection = () => {
@@ -10,6 +11,45 @@ const FaqSection = () => {
   // useEffect(() => {
   //   fadeInOnScroll(faqsRef.current);
   // }, []);
+
+  const [Form, setForm] = useState({
+    email: "",
+  });
+  const [succes, setSucces] = useState(false);
+  const [error, seterror] = useState(false);
+
+  const handleSubmit = () => {
+    const { email } = Form;
+
+    //call api to send obj
+
+    axios
+      .post("/api/subscribe", {
+        email: email,
+      })
+      .then(function (response) {
+        setForm({
+          email: "Succes!",
+        });
+        seterror(false);
+        setSucces(true);
+      })
+      .catch(function (error) {
+        console.log(error);
+        seterror(true);
+        setForm({
+          email: "Error!",
+        });
+      });
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setForm({
+      ...Form,
+      [name]: value,
+    });
+  };
 
   return (
     <section id="faqs" className="">
@@ -45,22 +85,34 @@ const FaqSection = () => {
               Subscribe to our newsletter to get the first notice on upgrades,
               new features and events!
             </p>
-            <div
-              className={`border-[2px] border-[#353945] rounded-[90px] w-2/3 flex items-center`}
-            >
-              <input
-                className="h-full py-3 w-full rounded-[90px] bg-transparent px-2 placeholder:text-[#777E91] placeholder:text-[14px] placeholder:font-[400]"
-                placeholder="Enter your email"
-              />
-              <button className="mr-2 flex items-center">
-                <Image
-                  src="/icons/small-circle.svg"
-                  width={40}
-                  height={40}
-                  alt=""
+            <form>
+              <div
+                className={`border-[2px] border-[#353945] rounded-[90px] w-full flex items-center`}
+              >
+                <input
+                  className="h-full py-3 w-full rounded-[90px] bg-transparent px-2 placeholder:text-[#777E91] placeholder:text-[14px] placeholder:font-[400] outline-none"
+                  placeholder="Enter your email"
+                  name="email"
+                  type="email"
+                  value={Form.email}
+                  onChange={handleInputChange}
                 />
-              </button>
-            </div>
+                <button
+                  className="mr-2 flex items-center"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSubmit();
+                  }}
+                >
+                  <Image
+                    src="/icons/small-circle.svg"
+                    width={40}
+                    height={40}
+                    alt=""
+                  />
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
