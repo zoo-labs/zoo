@@ -5,7 +5,7 @@ import { fadeInOnScroll } from "animation";
 import axios from "axios";
 import Image from "next/image";
 
-const FaqSection = () => {
+const ZooFooter = () => {
   // const faqsRef = React.useRef();
 
   // useEffect(() => {
@@ -64,7 +64,6 @@ const FaqSection = () => {
             <CustomLink title="Community" link={"/"} />
             <CustomLink title="Press" link={"/"} />
             <CustomLink title="Learn" link={"/"} />
-            <CustomLink title="Marketplace" link={"/"} />
           </div>
         </div>
         <div className="flex  border-[#353945] border-r-[1px] ">
@@ -134,7 +133,7 @@ const FaqSection = () => {
   );
 };
 
-export default FaqSection;
+export default ZooFooter;
 
 const CustomLink = ({ link, title }) => {
   return (

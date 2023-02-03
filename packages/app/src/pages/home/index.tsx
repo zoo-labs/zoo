@@ -14,7 +14,7 @@ const OpportunitySection = dynamic(() => import("./OpportunitySection"));
 const MarketPlaceSection = dynamic(() => import("./MarketPlaceSection"));
 const AnimalFamilySection = dynamic(() => import("./AnimalFamilySection"));
 const JoinZooSection = dynamic(() => import("./JoinZooSection"));
-const FaqSection = dynamic(() => import("./FaqSection"));
+const FaqSection = dynamic(() => import("./ZooFooter"));
 import { useTokenTypes } from "zoo/state";
 import CardsSection from "./Cards";
 import GrabAnimal from "./GrabAnimal";
