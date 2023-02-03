@@ -109,84 +109,37 @@ function AppBar(props: {
                     />{" "}
                   </div>
                 ) : (
-                  <div className="flex items-center">
+                  <div className="flex flex-1  items-center">
                     <NavLink href="/">
                       <div className=" h-full pl-2 cursor-pointer logo w-[70px] flex">
                         ZOO
                       </div>
                     </NavLink>
-                    <div className="hidden sm:block sm:ml-4">
-                      <div className="flex pl-6 space-x-5">
-                        {/* <NavLink href="/market">
-                          <a
-                            id={`mint-nav-link`}
-                            className={
-                              router.pathname == "/market"
-                                ? `${linkStyle} text-green text-bold`
-                                : `${linkStyle} text-white`
-                            }
-                          >
-                            {i18n._(t`Marketplace`)}
-                          </a>
-                        </NavLink> */}
-                        <NavLink href="/drop">
-                          <a
-                            id={`bridge-nav-link`}
-                            className={
-                              router.pathname == "/drop"
-                                ? `${linkStyle} text-green text-bold`
-                                : `${linkStyle} text-white`
-                            }
-                          >
-                            {i18n._(t`Animal Drops`)}
-                          </a>
-                        </NavLink>
-                        {/* <NavLink href="/bridge">
-                          <a
-                            id={`bridge-nav-link`}
-                            className={
-                              router.pathname == "/bridge"
-                                ? `${linkStyle} text-green text-bold`
-                                : `${linkStyle} text-white`
-                            }
-                          >
-                            {i18n._(t`Bridge`)}
-                          </a>
-                        </NavLink>
-                        <NavLink href="/dao">
-                          <a
-                            id={`dao-nav-link`}
-                            className={
-                              router.pathname == "/dao"
-                                ? `${linkStyle} text-green text-bold`
-                                : `${linkStyle} text-white`
-                            }
-                          >
-                            {i18n._(t`DAO`)}
-                          </a>
-                        </NavLink> */}
-
-                        {/* <NavLink href="/store">
+                  </div>
+                )}
+                {!props.isModal && (
+                  <div className="hidden sm:block  mx-auto">
+                    <div className="flex pl-6 space-x-5">
+                    <Marketplace />
+                      <NavLink href="/drop">
                         <a
-                          id={`store`}
+                          id={`bridge-nav-link`}
                           className={
-                            router.pathname == "/store"
+                            router.pathname == "/drop"
                               ? `${linkStyle} text-green text-bold`
                               : `${linkStyle} text-white`
                           }
                         >
-                          {i18n._(t`Store`)}
+                          {i18n._(t`Animal Drops`)}
                         </a>
-                      </NavLink> */}
-                        <Marketplace />
-                        <Community />
-                        <Learn />
-                      </div>
+                      </NavLink>
+                      <Community />
+                      <Learn />
                     </div>
                   </div>
                 )}
-                <div className="flex items-center justify-end w-full">
-                  <div className=" w-3/4 text-xs flex flex-row-reverse items-center rounded p-0.5 whitespace-nowrap  font-bold select-none pointer-events-auto">
+                <div className="flex flex-1  items-center justify-end w-full">
+                  <div className=" text-xs flex flex-row-reverse items-center rounded p-0.5 whitespace-nowrap  font-bold select-none pointer-events-auto">
                     <More />
                     <div
                       className={`${

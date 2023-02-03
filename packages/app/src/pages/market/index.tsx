@@ -203,15 +203,77 @@ const MarketPlacePage = () => {
 
   return (
     <div className="px-6 pt-16 pb-16 md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
-      <div className="flex flex-col items-center h-[20vh]">
-        <h1 className="mb-4 text-[44px] leading-[3rem] lg:leading-4">
-          The{" "}
-          <span className="text-blue" style={{ fontWeight: 900 }}>
-            ZOO
-          </span>{" "}
-          Market
-        </h1>
-        <p>Buy, list, and bid on NFT Eggs and Animals.</p>
+      <div className="h-[20vh] text-left flex justify-between">
+        <div>
+          <h1 className="mb-4 text-[20px] text-[#7D7D7D] leading-[3rem] lg:leading-4 text-left">
+            ZOO Marketplace
+          </h1>
+          <p className="mb-4 text-[32px] text-white leading-[3rem] lg:leading-[40px] font-[600] w-3/5">
+            Find the purrr-fect NFT Animals to add to your ZOO!
+          </p>
+          <div className="flex">
+            <div className="bg-[#333333] w-56 h-16 rounded-[5px] px-4 flex items-center justify-between">
+              <div>
+                <p className="text-[14px]">Your Balance</p>
+                <p className="font-[500] text-[20px]">$15,600.42</p>
+              </div>
+              <button className="flex items-center">
+                <Image
+                  src="/icons/add-circle.svg"
+                  width={20}
+                  height={20}
+                  alt=""
+                />
+              </button>
+            </div>
+            <div className="bg-blue w-56 h-16 rounded-[5px] px-4 text-center flex items-center justify-center ml-4 cursor-pointer">
+              <p className="text-[14px] text-center">Search Pools</p>
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center">
+          <button className="mr-4">
+            <Image
+              src={"/icons/market-package.svg"}
+              width={40}
+              height={40}
+              alt=""
+            />
+          </button>
+          <button className="mr-4">
+            <Image
+              src={"/icons/market-sweep.svg"}
+              width={40}
+              height={40}
+              alt=""
+              className="mr-4"
+            />
+          </button>
+          <button
+            className=""
+            onClick={() => {
+              if (filtering) {
+                setFiltering(!filtering);
+                setAuctionFilter(allAuctions);
+              } else {
+                setFiltering(!filtering);
+              }
+            }}
+          >
+            {!filtering ? (
+              <Image
+                src={"/icons/market-filter.svg"}
+                width={40}
+                height={40}
+                alt=""
+              />
+            ) : (
+              <CloseIcon width="48" color="#878787" />
+            )}
+            {/* */}
+          </button>
+        </div>
+        {/* <p>Buy, list, and bid on NFT Eggs and Animals.</p> */}
       </div>
       {/* Eggs */}
       {/* <div className="mb-16">
@@ -311,7 +373,7 @@ const MarketPlacePage = () => {
       </div> */}
 
       {/* Tab Navigation */}
-      <div className="relative justify-between hidden mb-8 lg:flex">
+      <div className="relative justify-between hidden mb-8 lg:flex mt-40">
         <div className="flex items-center justify-between w-full h-12 pl-4 pr-1 text-sm rounded-lg cursor-pointer">
           <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-solid rounded-lg cursor-pointer border-33 text-grey-400 w-44">
             <ReactDropdown
@@ -433,7 +495,7 @@ const MarketPlacePage = () => {
             })}
           </div> */}
         <div className="hidden">show on tablet viewport</div>
-        <div className="flex items-end justify-end w-full">
+        {/* <div className="flex items-end justify-end w-full">
           <button
             onClick={() => {
               if (filtering) {
@@ -454,7 +516,7 @@ const MarketPlacePage = () => {
               )}
             </span>
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Search + Filter */}
@@ -715,7 +777,7 @@ const MarketPlacePage = () => {
         {category === 0 && (
           <>
             {isLoadingAuctions ? (
-              <CustomLoader/>
+              <CustomLoader />
             ) : (
               <div className="flex flex-wrap justify-center mt-8 -mx-4">
                 {auctionFilter.length > 0 ? (
