@@ -5,6 +5,7 @@ import {
   useFeed,
   useFeedCount,
   useFetchMyNFTs,
+  useGetAllAuctions,
   useGetTokenOwner,
   useRefreshMetadata,
 } from "state/zoo/hooks";
@@ -18,6 +19,7 @@ import {
   useExpandNFTModal,
 } from "state/application/hooks";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import MarketItem from "../../../components/market/marketItem";
 import ShareIcon from "@mui/icons-material/Share";
 import Image from "next/image";
 import AccessAlarmRoundedIcon from "@mui/icons-material/AccessAlarmRounded";
@@ -40,6 +42,7 @@ import CropFreeRoundedIcon from "@mui/icons-material/CropFreeRounded";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import FragmentLayout from "layouts/Fragment";
 import { convertIpfsUrl } from "../../../entities/index";
+import NewNFTCard from "components/NewNFTCard";
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
@@ -50,7 +53,7 @@ const NftModal = ({}: AppProps & {
     Layout: (title: string) => void;
   };
 }) => {
-  const { account } = useActiveWeb3React();
+  const { account, library } = useActiveWeb3React();
   const { myNfts, loading } = useSelector((state: any) => state.zoo);
   const toggleAnimationModal = useHatchEggAnimationModal();
   const toggleHatchEggModal = useHatchEggModal();
@@ -60,6 +63,7 @@ const NftModal = ({}: AppProps & {
   const [feeding, setFeeding] = useState(false);
   const [creator, setCreator] = useState("");
   const toggleFreeNFTModal = useFreeNftModal();
+  const { allAuctions } = useSelector((state: any) => state.zoo);
   const toggleExpand = useExpandNFTModal();
   const router = useRouter();
   const fetchNFTs = useFetchMyNFTs();
@@ -71,6 +75,15 @@ const NftModal = ({}: AppProps & {
   const refetchStuff = useRefreshMetadata();
   const toggleShare = useShareModal();
   const { id } = router.query;
+
+  const getAllAuctions = useGetAllAuctions();
+
+  const [activeItem, setActiveItem] = useState({});
+
+
+  useEffect(() => {
+    getAllAuctions();
+  }, [library]);
 
   const feed = async () => {
     setFeeding(true);
@@ -390,60 +403,26 @@ const NftModal = ({}: AppProps & {
             <div className="hidden border-b border-[#fff] lg:block pt-8 pb-4 w-1/3 mb-4">
               <p className="mt-8 text-2xl font-semibold uppercase">Browse</p>
             </div>
-            <div className="grid gap-4 mt-8 lg:grid-cols-5">
-              {[1, 2, 3, 4, 5].map((data, index) => {
-                return (
-                  <div key={index}>
-                    <div className="border border-t border-[#333333] rounded-xl p-4">
-                      <div className="flex items-center w-12 h-12 intials-backdrop z-30 sticky bg-[#FF592C] rounded-full uppercase justify-center">
-                        <p className="text-3xl font-bold">R</p>
+            <div className="flex flex-wrap justify-center mt-8 -mx-4">
+              {allAuctions.length > 0 ? (
+                allAuctions
+                  .filter((auction) => auction.kind === 0)
+                  .map((datum, index) => {
+                    return (
+                      <div key={index} className="w-full p-2 md:w-1/2 xl:w-1/4">
+                        <MarketItem
+                          datum={datum}
+                          applyMaxWidth={false}
+                          placeBid={() => (
+                            setActiveItem(datum), console.log("")
+                          )}
+                        />
                       </div>
-                      <div className="showcase h-[200px] flex items-center justify-center relative -mt-8">
-                        {nftItem?.kind === 0 || nftItem?.kind === 2 ? (
-                          <video
-                            autoPlay
-                            loop
-                            src={nftItem.animation_url}
-                            width={300}
-                            height={200}
-                            className="max-h-[200px]"
-                          />
-                        ) : (
-                          <div className="h-[200px] w-full">
-                            <ModelViewer
-                              // zoom="35deg"
-                              glb={nftItem?.glb_animation_url}
-                              usdz={nftItem?.usdz_animation_url}
-                            ></ModelViewer>
-                          </div>
-                        )}
-                      </div>
-                      <p className="text-sm text-center">
-                        #1234{" "}
-                        <span className="font-bold text-[#333333]">20/13</span>
-                      </p>
-                      <p className="mt-1 font-bold text-center">
-                        Baby Amur Leopard
-                      </p>
-                      <div className="flex justify-center items-center bg-[#333333] py-2 rounded-lg mt-4">
-                        <p className="w-6 h-6 bg-white rounded-full text-[#333333] text-[10px] font-semibold flex items-center justify-center">
-                          ZOO
-                        </p>
-                        <p className="ml-2 text-sm font-bold">220.4M</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-center mt-4">
-                      <span className="mr-2 text-lg">View Item</span>
-                      <Image
-                        src="/icons/link-white.svg"
-                        alt=""
-                        width={15}
-                        height={15}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
+                    );
+                  })
+              ) : (
+                <div className="w-full py-16 text-center">No auctions</div>
+              )}
             </div>
           </div>
           {/* <ShareNFTModal nft={nftItem} />
