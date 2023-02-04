@@ -76,8 +76,8 @@ export default function Wallet({ children }) {
       <div className="px-6 pb-16 mt- Hero__inner md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto">
         <div className="flex flex-col items-center justify-between px-2 pt-12 md:px-6 lg:flex-row lg:max-w-7xl lg:mx-auto">
           <div className="p-0.5 rounded-full bg-black">
-            <div className="bg-black rounded-full ">
-              <div className="flex items-center bg-black rounded-full w-max">
+            <div className="">
+              <div className="flex items-center  w-max">
                 {["My Wallet", "My Bids", "My Auctions"].map((value, index) => {
                   const active = category === index;
                   return (
@@ -85,12 +85,12 @@ export default function Wallet({ children }) {
                       onClick={() => {
                         setCategory(index);
                       }}
-                      className={`bg-33 ${index === 0 && "rounded-l-full"} ${
-                        index === 2 && "rounded-r-full"
+                      className={` ${index === 0 && ""} ${
+                        index === 2 && ""
                       }
                     ${index !== 2 && "mr-px"}
-                    text-base font-semibold py-4 px-3 cursor-pointer inline-block ${
-                      active ? "text-white" : "text-black"
+                    text-base font-semibold py-4 px-3 cursor-pointer inline-block text-white ${
+                      active ? " border-b-2 border-[#2517FF]" : ""
                     }`}
                       key={index}
                     >
@@ -117,7 +117,8 @@ export default function Wallet({ children }) {
               </button> */}
             </div>
             <div className="flex">
-              <div className="bg-[#333333] w-56 h-16 rounded-[5px] px-4 flex items-center justify-between">
+              {/* for v2 */}
+              {/* <div className="bg-[#333333] w-56 h-16 rounded-[5px] px-4 flex items-center justify-between">
                 <div>
                   <p className="text-[14px]">Collateral Staked</p>
                   <p className="font-[500] text-[20px]">$15,600.42</p>
@@ -133,10 +134,10 @@ export default function Wallet({ children }) {
               </div>
               <div className="bg-blue w-56 h-16 rounded-[5px] px-4 text-center flex items-center justify-center ml-4 cursor-pointer">
                 <p className="text-[14px] text-center">Start a Pool</p>
-              </div>
+              </div> */}
               <div
                 onClick={() => handleFunds(chainId, buyZoo)}
-                className="bg-blue w-56 h-16 rounded-[5px] px-4 text-center flex items-center justify-center ml-4 cursor-pointer"
+                className="bg-blue w-56 h-16 rounded-[5px] px-4 text-center flex items-center justify-center cursor-pointer"
               >
                 <p className="text-[14px] text-center">Buy $ZOO</p>
               </div>
