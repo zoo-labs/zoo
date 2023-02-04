@@ -211,7 +211,7 @@ const MarketPlacePage = () => {
           <p className="mb-4 text-[32px] text-white leading-[3rem] lg:leading-[40px] font-[600] w-3/5">
             Find the purrr-fect NFT Animals to add to your ZOO!
           </p>
-          <div className="flex">
+          {/* <div className="flex">
             <div className="bg-[#333333] w-56 h-16 rounded-[5px] px-4 flex items-center justify-between">
               <div>
                 <p className="text-[14px]">Your Balance</p>
@@ -229,7 +229,7 @@ const MarketPlacePage = () => {
             <div className="bg-blue w-56 h-16 rounded-[5px] px-4 text-center flex items-center justify-center ml-4 cursor-pointer">
               <p className="text-[14px] text-center">Search Pools</p>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="flex items-center">
           <button className="mr-4">
@@ -373,8 +373,8 @@ const MarketPlacePage = () => {
       </div> */}
 
       {/* Tab Navigation */}
-      <div className="relative justify-between hidden mb-8 lg:flex mt-40">
-        <div className="flex items-center justify-between w-full h-12 pl-4 pr-1 text-sm rounded-lg cursor-pointer">
+      <div className="relative justify-between hidden mb-8 lg:flex mt-8">
+        <div className="flex items-center justify-between w-full h-12  pr-1 text-sm rounded-lg cursor-pointer">
           <div className="relative flex items-center justify-between w-full h-12 pl-4 pr-4 text-sm font-semibold border border-solid rounded-lg cursor-pointer border-33 text-grey-400 w-44">
             <ReactDropdown
               menuClassName="menu absolute -ml-4 pl-4 py-1 top-full bg-white flex flex-col w-full"
