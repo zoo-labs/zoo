@@ -311,6 +311,10 @@ video {
   filter: drop-shadow(1.94946px 1.94946px 19.4946px #ff592c);
 }
 
+.animals-backdrop{
+  filter: drop-shadow(0px 2px 20px rgba(255, 255, 255, 0.3));
+}
+
 .intials-backdrop-e {
   filter: drop-shadow(1.86323px 1.86323px 18.6323px #979797);
 }

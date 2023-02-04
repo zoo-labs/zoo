@@ -1,6 +1,7 @@
 import BabylonAnim from "components/Babylon";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { useState } from "react";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
@@ -371,41 +372,167 @@ const productsData = [
 //nubian-giraffe
 
 const NFTProduct = ({ animal }) => {
+  const [activeTab, setActiveTab] = useState("decription");
   return (
-    <div className="NFTProduct mt-16 flex flex-col ">
+    <div className="NFTProduct -mt-20 pt-20 flex flex-col bg-[#333333]">
       {/* first row */}
-      <div className="gap-4 px-6 pt-20   md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-center">
+      <div
+        // className="gap-4 px-6  md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-center"
+        className="w-full md:flex lg:flex-row lg:max-w-7xl lg:mx-auto gap-4"
+      >
         <div className="w-full flex items-center justify-center lg:basis-1/2">
-          <div className="p-px  rounded border border-gray-500 lg:mb-0">
-            <div className="h-[300px] w-[300px] lg:h-[800px] lg:w-[600px]  overflow-hidden rounded">
+          <div className="rounded lg:mb-0 h-[900px] w-full bg-[#000000] overflow-hidden relative">
+            <div className="flex justify-end">
+              <div className="bg-[#333333] w-48 h-12 mb-20 rounded-l uppercase text-white flex items-center justify-center text-[20px]">
+                ENDANGERED
+              </div>
+            </div>
+            <div className="h-[300px] w-[300px] lg:h-[400px] lg:w-[500px]  overflow-hidden rounded bg">
               <ModelViewer
                 usdz={animal.usdz}
                 zoom="50deg"
                 glb={animal.glb}
               ></ModelViewer>
             </div>
+            <div className="absolute bottom-0 flex text-white p-2 lg:p-4 w-full gap-4">
+              <button className="h-20 bg-33 rounded w-full mr-2">Browse</button>
+              <button className="h-20 border rounded w-full flex items-center justify-center mr-4">
+                <span className="mr-2">Sweep</span>
+                <Image
+                  src="/icons/sweep-icon.svg"
+                  width={24}
+                  height={24}
+                  alt=""
+                />
+              </button>
+              <button>
+                <Image
+                  src="/images/calculator.png"
+                  width={120}
+                  height={120}
+                  alt=""
+                />
+              </button>
+            </div>
           </div>
         </div>
 
         <div
-          className="flex flex-col items-start justify-between gap-2 px-4 py-12 rounded bg-black100 lg:basis-1/2 lg:h-[800px]"
+          className="flex flex-col items-start gap-2 px-4 py-12 rounded bg-black lg:basis-1/2  lg:h-[900px]"
           key={animal.id}
         >
-          <h2 className="mb-8 text-3xl font-bold text-center lg:text-4xl">
+          <h2 className="mb-8 text-3xl font-bold text-center lg:text-[96px] mt-16">
             {animal.name}
           </h2>
 
-          <div className="basis-2/3">
-            <div
+          <div className="basis-2/3 w-[650px]">
+            {/* <div
               className="text-lg"
               dangerouslySetInnerHTML={{ __html: animal?.description }}
-            />
+            /> */}
+            <p className="pb-4 text-[24px] uppercase border-white cursor-pointer mt-4">
+              Properties
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-2.5 md:gap-4 mb-2.5 md:mb-4">
+              <div className="bg-33 p-3.5 rounded">
+                <p className="text-2xl font-bold text-[#7D7D7D]">Maturity</p>
+                <p className="text-lg font-bold text-white">
+                  {[0, 2].includes(animal?.kind)
+                    ? "Baby"
+                    : animal?.attributes && animal?.attributes[1]?.value}{" "}
+                  --
+                </p>
+              </div>
+              <div className="bg-33 p-3.5 rounded">
+                <p className="text-2xl font-bold text-[#7D7D7D]">Generations</p>
+                <p className="text-lg font-bold text-white">7 X</p>
+              </div>
+              <div className="bg-33 p-3.5 rounded">
+                <p className="text-2xl font-bold text-[#7D7D7D]">Status</p>
+                <p className="text-lg font-bold text-white">
+                  {animal?.reservePrice}--
+                </p>
+              </div>
+              <div className="bg-33 p-3.5 rounded">
+                <p className="text-2xl font-bold text-[#7D7D7D]">Rewards</p>
+                <p className="text-lg font-bold text-white">22%</p>
+              </div>
+              <div className="bg-33 p-3.5 rounded">
+                <p className="text-2xl font-bold text-[#7D7D7D]">
+                  Original Egg Price{" "}
+                  <span className="text-white font-bold">(OEP)</span>
+                </p>
+                <p className="text-lg font-bold text-white">
+                  {animal?.kind === 0 ? "YES" : "NO"}
+                </p>
+              </div>
+              <div className="bg-33 p-3.5 rounded">
+                <p className="text-2xl font-bold text-[#7D7D7D]">
+                  Price to Mint
+                </p>
+                <p className="text-lg font-bold text-white">
+                  {[0, 2].includes(animal?.kind) ? "MP4" : "3D, USDZ, GLB"}
+                </p>
+              </div>
+              <div className="bg-33 p-3.5 rounded">
+                <p className="text-2xl font-bold text-[#7D7D7D]">
+                  Scientific Name
+                </p>
+                <p className="text-lg font-bold text-white">
+                  {[0, 2].includes(animal?.kind)
+                    ? "Baby"
+                    : animal?.attributes && animal?.attributes[1]?.value}
+                  --
+                </p>
+              </div>
+              <div className="bg-33 p-3.5 rounded">
+                <p className="text-2xl font-bold text-[#7D7D7D]">
+                  Boosts Allowed
+                </p>
+                <p className="text-lg font-bold text-white">
+                  {animal?.attributes && animal?.attributes[0]?.value} --
+                </p>
+              </div>
+            </div>
+            <div className="mt-8">
+              <p className="text-[#7D7D7D] text-[16px]">Click to</p>
+            </div>
+
+            <div className="flex flex-col  items-center lg:flex-row justify-evenly mt-8">
+              {animal.images.map((img, index) => {
+                return (
+                  <div
+                    className="p-px mb-4 overflow-hidden animals-backdrop"
+                    key={index}
+                  >
+                    <div className="overflow-hidden bg-black w-[120px] h-[120px]">
+                      <ModelViewer usdz={img.usdz} glb={img.glb}></ModelViewer>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
 
+      <div className="lg:max-w-7xl mx-auto mt-8">
+        <div className="flex font-[800] text-[20px] leading-[24px]">
+          <button
+            onClick={() => setActiveTab("description")}
+            className="border-b-[2px] border-white"
+          >
+            Description
+          </button>
+        </div>
+        <div
+          className="text-lg mt-4"
+          dangerouslySetInnerHTML={{ __html: animal?.description }}
+        />
+      </div>
+
       {/* second row */}
-      <div className="flex flex-col justify-center items-center lg:justify-items-center   gap-4 lg:grid lg:grid-cols-3 rounded bg-black100 lg:basis-1/2 mt-10 w-full p-5">
+      {/* <div className="flex flex-col justify-center items-center lg:justify-items-center   gap-4 lg:grid lg:grid-cols-3 rounded bg-black100 lg:basis-1/2 mt-10 w-full p-5">
         <div className="w-[200px] flex items-center mb-8  ">
           <Image src="/img/status-icon.svg" width={48} height={48} alt="" />
           <span className="ml-4">
@@ -462,7 +589,7 @@ const NFTProduct = ({ animal }) => {
             <p className="text-xs">{animal.weight}</p>
           </span>
         </div>
-      </div>
+      </div> */}
 
       {/* Third Row */}
 
