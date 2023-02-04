@@ -16,11 +16,11 @@ const GrabAnimal = ({ grabAnimal, grabAnimal2 }) => {
               key={i}
             >
               <div
-                className={`w-full flex flex-col md:flex-row items-center md:justify-between mb-11 bg-red-100`}
+                className={`w-full flex flex-col md:flex-row items-center md:justify-between mb-11`}
               >
                 <div className="flex-1 w-full md:w-1/2">
                   <div className="!w-full mx-auto bg-black justify-center  rounded-xl h-[364px] flex items-center ">
-                    <div className="relative lg:w-[550px] h-80 overflow-y-hidden bg-[#151516] ">
+                    <div className="relative lg:w-[550px] h-80 overflow-y-hidden  ">
                       {_.icon && (
                         <Image
                           src={_.icon}
@@ -53,7 +53,7 @@ const GrabAnimal = ({ grabAnimal, grabAnimal2 }) => {
           {grabAnimal2?.map((_, i) => (
             <div key={i}>
               <div className="mx-auto bg-black justify-center  rounded-xl h-[364px] flex items-center ">
-                <div className="relative lg:w-[400px] h-64 overflow-y-hidden bg-[#151516] ">
+                <div className="relative lg:w-[400px] h-64 overflow-y-hidden  ">
                   {_.icon && (
                     <Image
                       src={_.icon}
