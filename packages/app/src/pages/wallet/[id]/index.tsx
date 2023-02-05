@@ -80,7 +80,6 @@ const NftModal = ({}: AppProps & {
 
   const [activeItem, setActiveItem] = useState({});
 
-
   useEffect(() => {
     getAllAuctions();
   }, [library]);

@@ -135,7 +135,9 @@ const Guide = () => {
               alt=""
             />
           </div>
-          <h2 className="text-2xl lg:text-4xl text-blue">Add $ZOO on Metamask</h2>
+          <h2 className="text-2xl lg:text-4xl text-blue">
+            Add $ZOO on Metamask
+          </h2>
         </div>
       </div>
       <div className="py-8 lg:py-16 flex gap-12 justify-center">
@@ -338,7 +340,9 @@ const Guide = () => {
               alt=""
             />
           </div>
-          <h2 className="text-2xl lg:text-4xl text-blue">Add $ZOO on Trust Wallet</h2>
+          <h2 className="text-2xl lg:text-4xl text-blue">
+            Add $ZOO on Trust Wallet
+          </h2>
         </div>
       </div>
       <div className="py-8 lg:py-16 flex gap-12 justify-center">

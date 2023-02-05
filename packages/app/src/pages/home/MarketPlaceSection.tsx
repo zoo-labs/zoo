@@ -19,8 +19,7 @@ const MarketPlaceSection = ({ slideData }) => {
 
   const [succes, setSucces] = useState(false);
   const [error, seterror] = useState(false);
-  const [sliderRef, setSliderRef] = useState(null)
-
+  const [sliderRef, setSliderRef] = useState(null);
 
   const settings = {
     dots: true,
@@ -100,7 +99,9 @@ const MarketPlaceSection = ({ slideData }) => {
                   <div className="border-[#6D7278] text-[#6D7278] border-b-[2px] pb-4 flex items-center w-full mt-8">
                     <div className="w-2/5 text-4xl font-semibold">100%</div>
                     <div className="w-3/5 text-lg ">
-                      <p className="w-5/6 text-[#A4A7AE]">controlled by members of Zoo DAO</p>
+                      <p className="w-5/6 text-[#A4A7AE]">
+                        controlled by members of Zoo DAO
+                      </p>
                     </div>
                   </div>
                 </div>
