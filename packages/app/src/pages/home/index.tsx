@@ -119,7 +119,6 @@ const slideData = [
     title: "How to set up a metamask wallet",
     icon: "/images/tree.png",
   },
-  
 ];
 
 const experiences = [
@@ -225,6 +224,31 @@ export default function Home() {
     fetchBlog();
   }, [fetchBlog]);
 
+  const fetchBlog = useCallback(async () => {
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const rss_url = `https://medium.com/@zoolabsofficial/latest?format=json`;
+    const blog_url = `https://api.rss2json.com/v1/api.json?rss_url=${rss_url}`;
+    const url =
+      "https://v1.nocodeapi.com/thenameisgifted/medium/OWqgfVFTUgEiWXEe";
+    try {
+      const res = await axios.get(url, {
+        headers,
+      });
+      const data = await res.data;
+
+      setBlogs(data);
+      console.log("snjkadhjdbdhjbd_data", data);
+    } catch (error) {
+      console.log("snjkadhjdbdhjbd_error", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchBlog();
+  }, [fetchBlog]);
+
   return (
     <div className="relative">
       <HeroSection />
@@ -233,7 +257,7 @@ export default function Home() {
       <ReliableGovernance />
       <WhatToDo />
       <GrabAnimal grabAnimal={grabAnimal} grabAnimal2={grabAnimal2} />
-      <MarketPlaceSection slideData={slideData}/>
+      <MarketPlaceSection slideData={slideData} />
       <FaqSection />
     </div>
   );

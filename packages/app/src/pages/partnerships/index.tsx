@@ -116,12 +116,14 @@ const Partnership = () => {
 
       <div className="flex flex-row py-8 items-center max-w-7xl mx-auto">
         <div className=" mr-16">
-        <UiSwitch
-          sx={{ m: 1 }}
-          checked={checked}
-          onChange={() => setChecked(!checked)}
-        />
-        <p className="text-[12px] font-[300] text-xl ml-3">Switch to Monthly</p>
+          <UiSwitch
+            sx={{ m: 1 }}
+            checked={checked}
+            onChange={() => setChecked(!checked)}
+          />
+          <p className="text-[12px] font-[300] text-xl ml-3">
+            Switch to Monthly
+          </p>
         </div>
         <input
           placeholder="Enter Amount"

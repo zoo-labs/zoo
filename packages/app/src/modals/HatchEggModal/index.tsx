@@ -32,7 +32,6 @@ export default function HatchEggModal({ nftItem, success }) {
   const zookeeper = useZooToken();
   const hatchEggModalOpen = useModalOpen(ApplicationModal.HATCH_EGG);
 
-
   const toggleModal = useHatchEggModal();
   const hatchEgg = useHatch();
   const toggleWallet = useWalletModalToggle();

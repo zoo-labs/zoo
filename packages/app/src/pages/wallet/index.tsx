@@ -85,9 +85,7 @@ export default function Wallet({ children }) {
                       onClick={() => {
                         setCategory(index);
                       }}
-                      className={` ${index === 0 && ""} ${
-                        index === 2 && ""
-                      }
+                      className={` ${index === 0 && ""} ${index === 2 && ""}
                     ${index !== 2 && "mr-px"}
                     text-base font-semibold py-4 px-3 cursor-pointer inline-block text-white ${
                       active ? " border-b-2 border-[#2517FF]" : ""
@@ -104,7 +102,9 @@ export default function Wallet({ children }) {
         </div>
         <div className="flex flex-col justify-between px-2 pt-4 md:items-center md:px-6 lg:flex-row lg:max-w-7xl lg:mx-auto">
           <div className="">
-            <p className="text-[32px] font-[400] md:text-xl mt-4">Wallet Value</p>
+            <p className="text-[32px] font-[400] md:text-xl mt-4">
+              Wallet Value
+            </p>
             <div className="flex items-center mb-10 mt-6">
               <p className="text-base font-bold text-white md:text-[56px] ">
                 {numberWithCommas(zooBalance.toFixed(2))} $ZOO

@@ -59,15 +59,21 @@ const ArtBoard = () => {
                   {/* <div className="flex justify-center"> */}
                   <div className="flex justify-between px-20 text-center">
                     <div className="w-1/3">
-                      <h1 className="text-[44px] leading-[3rem] lg:leading-4 font-medium">01</h1>
+                      <h1 className="text-[44px] leading-[3rem] lg:leading-4 font-medium">
+                        01
+                      </h1>
                       <p className="text-bold text-[18] text-[#6D7278]">Hrs</p>
                     </div>
                     <div className="w-1/3">
-                      <h1 className="text-[44px] leading-[3rem] lg:leading-4 font-medium">23</h1>
+                      <h1 className="text-[44px] leading-[3rem] lg:leading-4 font-medium">
+                        23
+                      </h1>
                       <p className="text-bold text-[18] text-[#6D7278]">Min</p>
                     </div>
                     <div className="w-1/3">
-                      <h1 className="text-[44px] leading-[3rem] lg:leading-4 font-medium">17</h1>
+                      <h1 className="text-[44px] leading-[3rem] lg:leading-4 font-medium">
+                        17
+                      </h1>
                       <p className="text-bold text-[18] text-[#6D7278]">Sec</p>
                     </div>
                   </div>
@@ -135,15 +141,21 @@ const ArtBoard = () => {
                   {/* <div className="flex justify-center"> */}
                   <div className="flex justify-between px-20 text-center">
                     <div className="w-1/3">
-                      <h1 className="text-[44px] leading-[3rem] lg:leading-4 font-medium">01</h1>
+                      <h1 className="text-[44px] leading-[3rem] lg:leading-4 font-medium">
+                        01
+                      </h1>
                       <p className="text-bold text-[18] text-[#6D7278]">Hrs</p>
                     </div>
                     <div className="w-1/3">
-                      <h1 className="text-[44px] leading-[3rem] lg:leading-4 font-medium">23</h1>
+                      <h1 className="text-[44px] leading-[3rem] lg:leading-4 font-medium">
+                        23
+                      </h1>
                       <p className="text-bold text-[18] text-[#6D7278]">Min</p>
                     </div>
                     <div className="w-1/3">
-                      <h1 className="text-[44px] leading-[3rem] lg:leading-4 font-medium">17</h1>
+                      <h1 className="text-[44px] leading-[3rem] lg:leading-4 font-medium">
+                        17
+                      </h1>
                       <p className="text-bold text-[18] text-[#6D7278]">Sec</p>
                     </div>
                   </div>

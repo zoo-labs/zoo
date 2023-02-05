@@ -120,7 +120,7 @@ function AppBar(props: {
                 {!props.isModal && (
                   <div className="hidden sm:block ">
                     <div className="flex pl-6 space-x-5">
-                    <Marketplace />
+                      <Marketplace />
                       <NavLink href="/drop">
                         <a
                           id={`bridge-nav-link`}
