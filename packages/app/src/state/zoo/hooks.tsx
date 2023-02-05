@@ -328,7 +328,6 @@ export function useGetAvailableEggs(): (
   const { account } = useActiveWeb3React();
 
   return useCallback(
-
     async (setLoading) => {
       try {
         setLoading && setLoading(true);

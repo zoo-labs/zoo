@@ -36,7 +36,12 @@ const About = () => {
           </a>
         </div>
         <div className="flex flex-col items-center" ref={getStartedImageRef}>
-          <Image src="https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332367/zoo/images/zoo-hippo_dn5vrq.png" width={603} height={450} alt="" />
+          <Image
+            src="https://res.cloudinary.com/diu8hjwwe/image/upload/v1644332367/zoo/images/zoo-hippo_dn5vrq.png"
+            width={603}
+            height={450}
+            alt=""
+          />
         </div>
       </div>
     </section>

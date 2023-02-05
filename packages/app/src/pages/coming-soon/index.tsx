@@ -17,7 +17,9 @@ const ComingSoon = () => {
           className="flex flex-col items-center justify-center text-center "
           ref={comingSoonRef}
         >
-          <h1 className="text-4xl lg:text-[44px] leading-[3rem] lg:leading-4 font-bold mb-8">Coming Soon</h1>
+          <h1 className="text-4xl lg:text-[44px] leading-[3rem] lg:leading-4 font-bold mb-8">
+            Coming Soon
+          </h1>
           <p>
             Go pack to the{" "}
             <Link href="/">

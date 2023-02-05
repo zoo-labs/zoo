@@ -1,36 +1,39 @@
-import React from 'react'
-import dynamic from 'next/dynamic'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
-import { useEditAuctionModalToggle, useIncreaseBidModalToggle } from 'state/application/hooks'
-const ModelViewer = dynamic(() => import('../../components/ModelViewer'), {
+import React from "react";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import {
+  useEditAuctionModalToggle,
+  useIncreaseBidModalToggle,
+} from "state/application/hooks";
+const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
-})
+});
 
 const BidsCard = ({
-  glb = '',
-  usdz = '',
+  glb = "",
+  usdz = "",
   itemId = 1,
-  ownerAdd = '8xbxbddb',
+  ownerAdd = "8xbxbddb",
   CurrentBid = 3,
   StartingBid = 2,
-  greenNum = '10200',
-  AuctionTime = '6:20:00',
-  typeOfNft = 'Egg',
+  greenNum = "10200",
+  AuctionTime = "6:20:00",
+  typeOfNft = "Egg",
   bid = true,
 }) => {
-  const router = useRouter()
-  const timeLeft = AuctionTime.split(':')
-  const toggleEditAuctionModal = useEditAuctionModalToggle()
-  const toggleIncreaseBidModal = useIncreaseBidModalToggle()
+  const router = useRouter();
+  const timeLeft = AuctionTime.split(":");
+  const toggleEditAuctionModal = useEditAuctionModalToggle();
+  const toggleIncreaseBidModal = useIncreaseBidModalToggle();
 
   const handleFunc = () => {
     if (bid) {
-      toggleIncreaseBidModal()
+      toggleIncreaseBidModal();
     } else {
-      toggleEditAuctionModal()
+      toggleEditAuctionModal();
     }
-  }
+  };
 
   return (
     <div className="w-full min-h-full  grid grid-cols-1 md:grid-cols-2">
@@ -59,7 +62,8 @@ const BidsCard = ({
             <div>
               <h1 className="text-sm text-muted font-medium">Reserve Price</h1>
               <h1 className="text-lg font-bold text-white ">
-                {StartingBid} ETH <span className="text-primary-green">$6800</span>
+                {StartingBid} ETH{" "}
+                <span className="text-primary-green">$6800</span>
               </h1>
             </div>
           </div>
@@ -69,7 +73,9 @@ const BidsCard = ({
           <div className="h-[300px] flex flex-col justify-center align-middle">
             <h1 className="text-center text-white font-medium">Current Bid</h1>
 
-            <h1 className=" text-6xl font-bold my-2 text-white text-center ">{Number(CurrentBid).toFixed(2)} ETH</h1>
+            <h1 className=" text-6xl font-bold my-2 text-white text-center ">
+              {Number(CurrentBid).toFixed(2)} ETH
+            </h1>
             <h1 className="text-primary-green text-xl font-black text-center mb-10">
               $
               {Number(greenNum)?.toLocaleString(undefined, {
@@ -77,34 +83,45 @@ const BidsCard = ({
               })}
             </h1>
 
-            <h1 className="text-center text-white font-medium">Auction ending in</h1>
+            <h1 className="text-center text-white font-medium">
+              Auction ending in
+            </h1>
             {/* <h1 className="p-2 m-2 text-center ">{AuctionTime}</h1> */}
             <div className="flex items-center justify-center gap-7">
               <div className="flex flex-col items-center">
-                <h1 className="text-[44px] leading-[3rem] lg:leading-4 text-white font-medium">{timeLeft[0]}</h1>
+                <h1 className="text-[44px] leading-[3rem] lg:leading-4 text-white font-medium">
+                  {timeLeft[0]}
+                </h1>
                 <p className="text-muted">Hrs</p>
               </div>
               <div className="flex flex-col items-center">
-                <h1 className="text-[44px] leading-[3rem] lg:leading-4 text-white font-medium">{timeLeft[1]}</h1>
+                <h1 className="text-[44px] leading-[3rem] lg:leading-4 text-white font-medium">
+                  {timeLeft[1]}
+                </h1>
                 <p className="text-muted">Min</p>
               </div>
               <div className="flex flex-col items-center">
-                <h1 className="text-[44px] leading-[3rem] lg:leading-4 text-white font-medium">{timeLeft[2]}</h1>
+                <h1 className="text-[44px] leading-[3rem] lg:leading-4 text-white font-medium">
+                  {timeLeft[2]}
+                </h1>
                 <p className="text-muted">Sec</p>
               </div>
             </div>
           </div>
         </div>
         <div className="h-[98px] w-[300px] lg:w-[400px] flex flex-col rounded-xl mt-2">
-          <button className="py-3 bg-[#2517FF] mt-3 border-transparent rounded-md" onClick={handleFunc}>
-            {bid ? 'INCREASE BID' : 'EDIT AUCTION'}
+          <button
+            className="py-3 bg-[#2517FF] mt-3 border-transparent rounded-md"
+            onClick={handleFunc}
+          >
+            {bid ? "INCREASE BID" : "EDIT AUCTION"}
           </button>
 
           <button
             className="py-3 bg-transparent border border-white  rounded-md mt-3"
             onClick={() =>
               router.push({
-                pathname: '/marketplace/[ownerId]/[itemId]',
+                pathname: "/marketplace/[ownerId]/[itemId]",
                 query: {
                   ownerId: ownerAdd,
                   itemId,
@@ -112,12 +129,12 @@ const BidsCard = ({
               })
             }
           >
-            {bid ? 'VIEW BID' : 'VIEW ITEM'}
+            {bid ? "VIEW BID" : "VIEW ITEM"}
           </button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default BidsCard
+export default BidsCard;

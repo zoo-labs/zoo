@@ -216,7 +216,7 @@ const Footer = () => {
                   onChange={handleInputChange}
                 />
                 <button
-                  className="mr-2 flex items-center"
+                  className="flex items-center mr-2"
                   onClick={(e) => {
                     e.preventDefault();
                     handleSubmit();

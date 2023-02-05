@@ -12,7 +12,7 @@ const ComingSoon = () => {
   }, []);
   return (
     <div className="">
-      <div className="max-w-7xl mx-auto py-20 px-4">
+      <div className="px-4 py-20 mx-auto max-w-7xl">
         <div
           className="flex flex-col items-center justify-center text-center "
           ref={comingSoonRef}
@@ -21,7 +21,7 @@ const ComingSoon = () => {
           <p>
             Go pack to the{" "}
             <Link href="/">
-              <a className="text-green underline">home page</a>
+              <a className="underline text-green">home page</a>
             </Link>
           </p>
         </div>

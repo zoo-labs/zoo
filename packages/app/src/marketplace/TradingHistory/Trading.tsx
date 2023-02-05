@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const TableContainer = styled.table`
   border-collapse: separate;
@@ -46,7 +46,7 @@ const TableContainer = styled.table`
   tr:last-child td:last-child {
     border-bottom-right-radius: 15px;
   }
-`
+`;
 
 const Trading = ({
   children,
@@ -58,22 +58,32 @@ const Trading = ({
 }) => {
   return (
     <div className="w-full bg-transparent min-h-[800px]">
-      <h1 className="mb-12 text-center mt-10 text-2xl md:text-[44px] leading-[3rem] lg:leading-4 text-white font-medium">{TitleMain}</h1>
+      <h1 className="mb-12 text-center mt-10 text-2xl md:text-[44px] leading-[3rem] lg:leading-4 text-white font-medium">
+        {TitleMain}
+      </h1>
 
       <TableContainer className="w-full  border-[#292A3E] rounded-2xl p-2 overflow-auto whitespace-nowrap">
         <thead className="p-2 bg-[#292A3E]">
           <tr className="">
-            <th className="text-xs md:text-base  text-left p-4 px-10 py-6 text-white  ">{TitleA}</th>
-            <th className="text-xs md:text-base  text-center p-4 text-white  ">{TitleB}</th>
-            <th className="text-xs md:text-base  text-center p-4 text-white  ">{TitleC}</th>
-            <th className="text-xs md:text-base  text-center p-4 text-white  ">{TitleD}</th>
+            <th className="text-xs md:text-base  text-left p-4 px-10 py-6 text-white  ">
+              {TitleA}
+            </th>
+            <th className="text-xs md:text-base  text-center p-4 text-white  ">
+              {TitleB}
+            </th>
+            <th className="text-xs md:text-base  text-center p-4 text-white  ">
+              {TitleC}
+            </th>
+            <th className="text-xs md:text-base  text-center p-4 text-white  ">
+              {TitleD}
+            </th>
             <th className="text-xs md:text-base  text-center p-4 text-white  " />
           </tr>
         </thead>
         <tbody className="p-2">{children}</tbody>
       </TableContainer>
     </div>
-  )
-}
+  );
+};
 
-export default Trading
+export default Trading;

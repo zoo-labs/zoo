@@ -182,8 +182,7 @@ const Index: React.FC<IndexProps> = ({ datum, applyMaxWidth, placeBid }) => {
             new Date(new Date().getTime() + datum.duration * 1000),
             "YYYYMMDD"
           ).fromNow()}
-          <span className="font-bold text-[#333333]">
-          </span>
+          <span className="font-bold text-[#333333]"></span>
         </p>
         <p className="mt-1 font-bold text-center">
           {datum.name || "Egg"} {datum.kind === 0 ? "(Origin)" : ""}{" "}
