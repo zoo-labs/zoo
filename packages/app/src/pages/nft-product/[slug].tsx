@@ -2,6 +2,8 @@ import BabylonAnim from "components/Babylon";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import CustomTooltip from "components/CustomTooltip";
+import Link from "next/link";
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
@@ -369,10 +371,63 @@ const productsData = [
   },
 ];
 
+const utilities = [
+  {
+    title: "Play 👩‍💻🕹️",
+    link: "",
+  },
+  {
+    title: "Hatch 🐣",
+    link: "",
+  },
+  {
+    title: "Pools 🐋",
+    link: "",
+  },
+  {
+    title: "Feed 🍼 💳",
+    link: "",
+  },
+  {
+    title: "Burning 🔥",
+    link: "",
+  },
+  {
+    title: "Buy / Sell 🛍️",
+    link: "",
+  },
+  {
+    title: "Grow 💗 🐥",
+    link: "",
+  },
+  {
+    title: "Boosts 💲↗️",
+    link: "",
+  },
+  {
+    title: "Make Offers 🕊️",
+    link: "",
+  },
+  {
+    title: "Breed 🥚",
+    link: "",
+  },
+  {
+    title: "Earns 🎁️ 🤑",
+    link: "",
+  },
+  {
+    title: "Metaverse 👽",
+    link: "",
+  },
+];
+
 //nubian-giraffe
 
 const NFTProduct = ({ animal }) => {
   const [activeTab, setActiveTab] = useState("decription");
+
+  console.log(animal, "animal");
   return (
     <div className="NFTProduct -mt-20 pt-20 flex flex-col bg-[#333333]">
       {/* first row */}
@@ -381,13 +436,23 @@ const NFTProduct = ({ animal }) => {
         className="w-full md:flex lg:flex-row lg:max-w-7xl lg:mx-auto gap-4"
       >
         <div className="w-full flex items-center justify-center lg:basis-1/2">
-          <div className="rounded lg:mb-0 h-[900px] w-full bg-[#000000] overflow-hidden relative">
-            <div className="flex justify-end">
-              <div className="bg-[#333333] w-48 h-12 mb-20 rounded-l uppercase text-white flex items-center justify-center text-[20px]">
-                ENDANGERED
-              </div>
+          <div className="rounded lg:mb-0 lg:h-[960px] w-full bg-[#000000] overflow-hidden relative">
+            <div className="mt-4 ml-4">
+              {animal?.status && (
+                <CustomTooltip title={animal?.status}>
+                  <div
+                    className={`flex items-center w-12 h-12 z-30 sticky ${
+                      animal?.status[0] == "E"
+                        ? "bg-[#333333] intials-backdrop-e"
+                        : "bg-[#FF592C] intials-backdrop "
+                    } rounded-full uppercase justify-center`}
+                  >
+                    <p className="text-3xl font-bold">{animal.status[0]}</p>
+                  </div>
+                </CustomTooltip>
+              )}
             </div>
-            <div className="h-[300px] w-[300px] lg:h-[400px] lg:w-[500px]  overflow-hidden rounded bg">
+            <div className="h-[300px] w-[300px] lg:h-[400px] lg:w-[600px]  overflow-hidden rounded bg mx-auto">
               <ModelViewer
                 usdz={animal.usdz}
                 zoom="50deg"
@@ -418,10 +483,10 @@ const NFTProduct = ({ animal }) => {
         </div>
 
         <div
-          className="flex flex-col items-start gap-2 px-4 py-12 rounded bg-black lg:basis-1/2  lg:h-[900px]"
+          className="flex flex-col items-start gap-2 px-4 py-8 rounded bg-black lg:basis-1/2  lg:h-[960px]"
           key={animal.id}
         >
-          <h2 className="mb-8 text-3xl font-bold text-center lg:text-[96px] mt-16">
+          <h2 className="mb-8 text-3xl font-bold text-left lg:text-[96px] leading-[96px]">
             {animal.name}
           </h2>
 
@@ -531,6 +596,34 @@ const NFTProduct = ({ animal }) => {
         />
       </div>
 
+      <div className="pt-24 mx-auto max-w-7xl w-full">
+        <h1 className="text-3xl md:text-[44px] leading-[3rem] lg:leading-4 font-bold text-center">
+          What can you do with your NFT?
+        </h1>
+        <p className="text-sm sm:text-base mt-4 mb-24 sm:mt-12 sm:mb-16 text-center">
+          The Zoo NFTs have value and unique{" "}
+          <a className="italic underline">utility!</a>
+        </p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {utilities.map((data, index) => (
+            <div
+              className="border bg-black p-2 rounded font-[600] text-[36px] flex items-center justify-between"
+              key={index}
+            >
+              <p>{data?.title}</p>
+              <Link href={data?.link} passHref={true}>
+                <Image
+                  src="/icons/forward-arrow.svg"
+                  width={32}
+                  height={32}
+                  alt=""
+                />
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* second row */}
       {/* <div className="flex flex-col justify-center items-center lg:justify-items-center   gap-4 lg:grid lg:grid-cols-3 rounded bg-black100 lg:basis-1/2 mt-10 w-full p-5">
         <div className="w-[200px] flex items-center mb-8  ">
@@ -594,12 +687,12 @@ const NFTProduct = ({ animal }) => {
       {/* Third Row */}
 
       <div className="px-6 pt-16 pb-16 md:flex md:flex-col lg:max-w-7xl lg:mx-auto w-full">
-        {/* <h2 className="mb-8 text-3xl font-bold text-center lg:text-4xl">
-          View Available {animal.name}
-        </h2> */}
-
+        <h1 className="text-3xl md:text-[44px] leading-[3rem] lg:leading-4 font-bold text-center my-16 underline">
+          View {animal.name}
+        </h1>
         <div className="flex flex-col  items-center lg:flex-row justify-evenly">
           {animal.images.map((img, index) => {
+            console.log(img, "jjd img");
             return (
               <div
                 className="p-px mb-4 overflow-hidden rounded border border-gray-500"
