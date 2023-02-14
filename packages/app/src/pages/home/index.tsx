@@ -14,7 +14,7 @@ const OpportunitySection = dynamic(() => import("./OpportunitySection"));
 const MarketPlaceSection = dynamic(() => import("./MarketPlaceSection"));
 const AnimalFamilySection = dynamic(() => import("./AnimalFamilySection"));
 const JoinZooSection = dynamic(() => import("./JoinZooSection"));
-const FaqSection = dynamic(() => import("./ZooFooter"));
+const FaqSection = dynamic(() => import("../../components/Footer"));
 import { useTokenTypes } from "zoo/state";
 import CardsSection from "./Cards";
 import GrabAnimal from "./GrabAnimal";
@@ -224,30 +224,6 @@ export default function Home() {
     fetchBlog();
   }, [fetchBlog]);
 
-  const fetchBlog = useCallback(async () => {
-    const headers = {
-      "Content-Type": "application/json",
-    };
-    const rss_url = `https://medium.com/@zoolabsofficial/latest?format=json`;
-    const blog_url = `https://api.rss2json.com/v1/api.json?rss_url=${rss_url}`;
-    const url =
-      "https://v1.nocodeapi.com/thenameisgifted/medium/OWqgfVFTUgEiWXEe";
-    try {
-      const res = await axios.get(url, {
-        headers,
-      });
-      const data = await res.data;
-
-      setBlogs(data);
-      console.log("snjkadhjdbdhjbd_data", data);
-    } catch (error) {
-      console.log("snjkadhjdbdhjbd_error", error);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchBlog();
-  }, [fetchBlog]);
 
   return (
     <div className="relative">
