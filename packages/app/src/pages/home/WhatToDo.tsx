@@ -56,7 +56,7 @@ const utilities = [
 const WhatToDo = () => {
   return (
     <div className="px-6 pt-24 mx-auto max-w-7xl">
-      <h1 className=" text-[44px] leading-[3rem] lg:leading-4 font-bold md:text-center">
+      <h1 className="text-3xl md:text-[44px] leading-[3rem] lg:leading-4 font-bold text-center">
         What can you do with your NFT?
       </h1>
       <p className="text-sm sm:text-base mt-4 mb-24 sm:mt-12 sm:mb-16 text-center">
@@ -81,12 +81,12 @@ const WhatToDo = () => {
           </div>
         ))}
       </div>
-      <div className="md:w-3/4 mx-auto mt-24">
+      <div className="lg:w-3/4 mx-auto mt-24">
         <div
-          className={`w-full flex flex-col md:flex-row items-center md:justify-between mb-11`}
+          className={`w-full flex flex-col-reverse lg:flex-row items-center md:justify-between mb-11`}
         >
-          <div className="w-1/2">
-            <p className="font-bold text-2xl md:text-[44px] text-center w-[70%] md:leading-[64px] mb-3 md:mb-[18px] mx-auto">
+          <div className="md:w-1/2 mt-8 lg:mt-0">
+            <p className="font-bold  text-3xl md:text-[44px] text-center w-full lg:w-[70%] md:leading-[64px] mb-3 md:mb-[18px] mx-auto">
               It all starts with 1 egg.
             </p>
 

@@ -74,15 +74,15 @@ const MarketPlaceSection = ({ slideData }) => {
   return (
     <section className="w-full mt-28">
       <div className=" bg-[#000]">
-        <div className="w-4/5 mx-auto">
-          <div className="flex flex-col items-start px-6 mx-auto pb-16 lg:py-8 lg:h-[438px] overflow-y-hidden lg:flex-row-reverse max-w-7xl">
-            <div className="relative z-30 flex flex-col mb-8 basis-1/2">
-              <div className="flex justify-end">
-                <div className="w-3/4 text-[#A6A6A6]">
+        <div className="md:w-4/5 mx-auto">
+          <div className="flex flex-col-reverse items-start px-6 mx-auto pb-16 lg:py-8 lg:h-[438px] overflow-y-hidden lg:flex-row-reverse max-w-7xl">
+            <div className="relative z-30 flex flex-col mb-8 lg:basis-1/2">
+              <div className="flex lg:justify-end">
+                <div className="lg:w-3/4 text-[#A6A6A6]">
                   <div className="border-[#6D7278] text-[#6D7278] border-b-[2px] pb-3 flex w-full"></div>
                   <div className="border-[#6D7278] text-[#6D7278] border-b-[2px] pb-4 flex items-center w-full mt-8">
                     <div className="w-2/5 text-4xl font-semibold">16,000+</div>
-                    <div className="w-3/5 text-lg ">
+                    <div className="w-3/5 text-lg flex justify-end md:justify-start ">
                       <p className="w-5/6 text-[#A4A7AE]">
                         endangered species threatened with extinction
                       </p>
@@ -90,7 +90,7 @@ const MarketPlaceSection = ({ slideData }) => {
                   </div>
                   <div className="border-[#6D7278] text-[#6D7278] border-b-[2px] pb-4 flex items-center w-full mt-8">
                     <div className="w-2/5 text-4xl font-semibold">82%</div>
-                    <div className="w-3/5 text-lg ">
+                    <div className="w-3/5 text-lg flex justify-end md:justify-start">
                       <p className="w-5/6 text-[#A4A7AE]">
                         of spending dedicated to conservation
                       </p>
@@ -98,17 +98,15 @@ const MarketPlaceSection = ({ slideData }) => {
                   </div>
                   <div className="border-[#6D7278] text-[#6D7278] border-b-[2px] pb-4 flex items-center w-full mt-8">
                     <div className="w-2/5 text-4xl font-semibold">100%</div>
-                    <div className="w-3/5 text-lg ">
-                      <p className="w-5/6 text-[#A4A7AE]">
-                        controlled by members of Zoo DAO
-                      </p>
+                    <div className="w-3/5 text-lg flex justify-end md:justify-start">
+                      <p className="w-5/6 text-[#A4A7AE] ">controlled by members of Zoo DAO</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div className="flex flex-col items-center lg:items-start lg:justify-center basis-1/2 lg:max-w-lg lg:mx-auto h-full">
-              <h2 className="mb-8 text-4xl font-semibold text-center lg:text-5xl lg:text-left text-[#A6A6A6]">
+              <h2 className="mt-16 lg:mt-0 mb-8 text-4xl font-semibold text-center lg:text-5xl lg:text-left text-[#A6A6A6]">
                 We love animals.
               </h2>
               <p className="text-sm sm:text-base mt-4 text-[#A6A6A6] mb-24 sm:mt-0 sm:mb-8 text-left">
@@ -120,7 +118,7 @@ const MarketPlaceSection = ({ slideData }) => {
                 help by playing the Zoo game, making a donation, or joining our
                 DAO.
               </p>
-              <div className="grid grid-cols-2 w-full gap-4">
+              <div className="grid grid-cols-2 w-full gap-4 mb-8 md:m">
                 <div className="px-2 lg:px-6 py-3 text-[16px] font-semibold bg-[#A6A6A6] text-[#000000] flex items-center justify-between rounded-full md:text-lg w-full hover:cursor-pointer">
                   <span className="mr-2">Donate Now</span>
                   <Image
@@ -145,7 +143,7 @@ const MarketPlaceSection = ({ slideData }) => {
         </div>
       </div>
       <div className="px-6 mx-auto pb-16 lg:pb-28 lg:pt-14 max-w-7xl text-center flex flex-col items-center">
-        <p className="font-semibold text-3xl md:text-5xl text-white mb-1">
+        <p className="font-semibold text-3xl md:text-5xl text-white mb-1 mt-8">
           Resources for Getting Started
         </p>
         <div className="mt-16">
