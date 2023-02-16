@@ -23,7 +23,7 @@ const Nft = () => {
           ref={nftImageRef}
         >
           <div style={{ minHeight: "299px" }}>
-            <Image src="/img/egg.png" width={300} height={300} alt="" />
+            <Image src="/img/egg.gif" width={300} height={300} alt="" />
           </div>
           <button className="bg-gradient-to-b from-purple to-blue text-white font-semibold text-sm md:text-base px-5 py-3 md:px-6 md:py-4 lg:px-10 rounded-full">
             Place bid

@@ -98,11 +98,10 @@ const Breed = ({}: AppProps & {
       <div className="max-w-[777px] w-full mx-auto text-center flex flex-col items-center">
         <p className="mt-10 text-4xl font-bold">Breed Animals</p>
         <p className="mt-2 text-base font-light text-butter-white mb-9">
-          Zoo Labs’ ADULT NFT Animals can each be bred up to 6 times. Any two
-          NFT Animals can be bred together and will produce a random egg
-          according to rarity tier percentages. The fee for breeding is
-          determined by the rarity tier of the rarest animal in the breeding
-          pair.
+          Zoo Labs’ ADULT NFT Animals can each be bred up to 6 times. Two adult
+          NFT Animals of the same species can be bred together and will produce an egg
+          accordinng to its rarity. The fee for breeding is
+          determined by the rarity tier of the parents.
         </p>
         <div className="flex items-center justify-between w-full space-x-14 mb-11">
           <div className="flex-1 p-px border border-gray-500 rounded-xl">
