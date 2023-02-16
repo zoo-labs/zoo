@@ -24,13 +24,13 @@ const About = () => {
           </h1>
           <p className="mb-6 text-base text-white lg:text-lg lg:mb-8 text-opacity-70 md:max-w-2xl">
             ZOO is a DeFi game that allows players to collect NFT animals
-            representative of endangered species in the real world. Based on
-            your game interactions users make more or less $ZOO.
+            that save endangered species in the real world, based on
+            your game interactions you make more or less $ZOO.
           </p>
 
           <a
             href="/blog"
-            className="px-5 py-3 text-sm text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 md:py-4 lg:px-10"
+            className="px-4 py-2 text-sm text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-8 md:py-4 lg:px-12"
           >
             Get Started
           </a>
