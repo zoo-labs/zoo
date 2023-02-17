@@ -98,7 +98,7 @@ const WhatToDo = () => {
           </div>
           <div className="flex-1 w-full md:w-1/2">
             <div className="w-full mx-auto bg-black  rounded-xl h-[540px] flex items-center justify-center mt-24">
-              <img src={"/images/egg.png"} alt="" />
+              <img src={"/images/egg.gif"} alt="" />
             </div>
           </div>
         </div>
