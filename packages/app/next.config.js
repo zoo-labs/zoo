@@ -1,4 +1,4 @@
-const withPWA = require("next-pwa")({})
+const withPWA = require("next-pwa")
 const { withSentryConfig } = require("@sentry/nextjs");
 
 const linguiConfig = require("./lingui.config.js");
