@@ -19,16 +19,13 @@
     "build": "tsdx build",
     "watch": "tsdx watch",
     "test": "tsdx test",
-    "prepublish": "tsdx build",
-    "prettier": "prettier --write 'src/**/*.ts' 'test/**/*.ts'"
+    "prepublish": "tsdx build"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "yarn lint",
-      "yarn test --bail --passWithNoTests --findRelatedTests",
-      "prettier --write"
-    ],
-    "*.md": "prettier --write"
+      "yarn test --bail --passWithNoTests --findRelatedTests"
+    ]
   },
   "dependencies": {
     "@types/memory-cache": "^0.2.1",
@@ -69,7 +66,6 @@
     "@ethersproject/signing-key": "^5.4.0",
     "@ethersproject/solidity": "^5.4.0",
     "@ethersproject/transactions": "^5.4.0",
-    "@sushiswap/prettier-config": "^0.1.0",
     "@types/big.js": "^6.1.0",
     "babel-plugin-transform-jsbi-to-bigint": "^1.4.0",
     "eip-712": "^0.4.3",
