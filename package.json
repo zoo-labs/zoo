@@ -1,6 +1,6 @@
 {
   "name": "@zoolabs/zoo",
-  "version": "1.0.0",
+  "version": "5.0.0",
   "author": "Zoo Labs Limited <hi@zoolabs.io> (https://zoolabs.io)",
   "license": "MIT",
   "keywords": [
@@ -68,11 +68,7 @@
   },
   "workspaces": {
     "packages": [
-<<<<<<< HEAD
       "app","contracts","core","lab","sdk","ui","zdk"
-=======
-      "app","contracts","core","lab","sdk","ui"
->>>>>>> main
     ],
     "nohoist": [
       "**/@openzeppelin/contracts-upgradeable/**",
