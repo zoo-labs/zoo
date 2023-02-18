@@ -2,7 +2,7 @@ import {
   AcceptBidModal,
   AcceptBidStep,
   useTokens,
-} from '@reservoir0x/reservoir-kit-ui'
+} from '@zoolabs/ui'
 import { cloneElement, ComponentProps, FC, ReactNode, useContext } from 'react'
 import { CSS } from '@stitches/react'
 import { SWRResponse } from 'swr'

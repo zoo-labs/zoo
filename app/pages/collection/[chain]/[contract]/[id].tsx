@@ -11,7 +11,7 @@ import {
   useDynamicTokens,
   useTokenOpenseaBanned,
   useUserTokens,
-} from '@reservoir0x/reservoir-kit-ui'
+} from '@zoolabs/ui'
 import Layout from 'components/Layout'
 import {
   Flex,

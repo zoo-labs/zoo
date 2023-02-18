@@ -13,7 +13,7 @@ import { List, AcceptBid } from 'components/buttons'
 import Image from 'next/image'
 import { useIntersectionObserver } from 'usehooks-ts'
 import LoadingSpinner from '../common/LoadingSpinner'
-import { useTokens, useUserTokens } from '@reservoir0x/reservoir-kit-ui'
+import { useTokens, useUserTokens } from '@zoolabs/ui'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faBolt,

@@ -1,6 +1,6 @@
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { CartPopover, useCart } from '@reservoir0x/reservoir-kit-ui'
+import { CartPopover, useCart } from '@zoolabs/ui'
 import { Flex, Button, Text } from 'components/primitives'
 
 const CartButton = () => {

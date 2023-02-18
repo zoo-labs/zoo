@@ -10,7 +10,7 @@ import {
   useCollectionActivity,
   useDynamicTokens,
   useAttributes,
-} from '@reservoir0x/reservoir-kit-ui'
+} from '@zoolabs/ui'
 import { paths } from '@reservoir0x/reservoir-sdk'
 import Layout from 'components/Layout'
 import { useEffect, useRef, useState } from 'react'

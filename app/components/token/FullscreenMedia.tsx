@@ -13,7 +13,7 @@ import {
   TokenMedia,
   useTokens,
   extractMediaType,
-} from '@reservoir0x/reservoir-kit-ui'
+} from '@zoolabs/ui'
 import { motion } from 'framer-motion'
 
 type Props = {

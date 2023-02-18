@@ -1,4 +1,4 @@
-import { useCollections, useTokens } from '@reservoir0x/reservoir-kit-ui'
+import { useCollections, useTokens } from '@zoolabs/ui'
 import { Anchor, Button, Flex, Text, Tooltip } from 'components/primitives'
 import { ComponentPropsWithoutRef, FC, useRef, useState } from 'react'
 import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'

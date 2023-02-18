@@ -3,7 +3,7 @@ import { useChainCurrency } from '../../hooks'
 import { constants } from 'ethers'
 import { styled } from '../../stitches.config'
 import { StyledComponent } from '@stitches/react/types/styled-component'
-import { useReservoirClient } from '@reservoir0x/reservoir-kit-ui'
+import { useReservoirClient } from '@zoolabs/ui'
 
 type Props = {
   address: string

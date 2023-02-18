@@ -4,7 +4,7 @@ import {
   extractMediaType,
   TokenMedia,
   useDynamicTokens,
-} from '@reservoir0x/reservoir-kit-ui'
+} from '@zoolabs/ui'
 import AddToCart from 'components/buttons/AddToCart'
 import BuyNow from 'components/buttons/BuyNow'
 import {
