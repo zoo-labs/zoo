@@ -1,4 +1,4 @@
-import { useTokens } from '@reservoir0x/reservoir-kit-ui'
+import { useTokens } from '@zoolabs/ui'
 import { Flex, FormatCryptoCurrency, Text } from 'components/primitives'
 import { useMarketplaceChain } from 'hooks'
 import { FC } from 'react'

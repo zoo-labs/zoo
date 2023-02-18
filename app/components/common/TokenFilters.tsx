@@ -5,7 +5,7 @@ import { CollapsibleContent } from 'components/primitives/Collapsible'
 import { paths } from '@reservoir0x/reservoir-sdk'
 import Image from 'next/image'
 import { NAVBAR_HEIGHT } from 'components/navbar'
-import { useUserCollections } from '@reservoir0x/reservoir-kit-ui'
+import { useUserCollections } from '@zoolabs/ui'
 
 type Collections =
   | paths['/users/{user}/collections/v2']['get']['responses']['200']['schema']['collections']

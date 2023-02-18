@@ -1,4 +1,4 @@
-import { useTokens } from '@reservoir0x/reservoir-kit-ui'
+import { useTokens } from '@zoolabs/ui'
 import { AcceptBid, Bid, BuyNow, List } from 'components/buttons'
 import AddToCart from 'components/buttons/AddToCart'
 import CancelBid from 'components/buttons/CancelBid'

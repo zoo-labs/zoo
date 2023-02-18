@@ -21,7 +21,7 @@ import {
   lightTheme as reservoirLightTheme,
   ReservoirKitTheme,
   CartProvider,
-} from '@reservoir0x/reservoir-kit-ui'
+} from '@zoolabs/ui'
 import { FC, useEffect, useState } from 'react'
 import { HotkeysProvider } from 'react-hotkeys-hook'
 import ToastContextProvider from 'context/ToastContextProvider'

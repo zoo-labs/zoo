@@ -1,7 +1,7 @@
 import {
   useCollectionActivity,
   useUsersActivity,
-} from '@reservoir0x/reservoir-kit-ui'
+} from '@zoolabs/ui'
 import { FC, useEffect, useRef } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import {
