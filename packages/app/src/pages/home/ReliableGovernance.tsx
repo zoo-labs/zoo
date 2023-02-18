@@ -16,9 +16,9 @@ const ReliableGovernance = () => {
         <p className="mb-5 md:mb-8 font-medium text-sm md:text-[20px] leading-7 text-muted-40 text-center lg:text-left mt-4">
           Our DAO leverages holographic consensus and quadratic voting.
         </p>
-        <Link href="/coming-soon" passHref>
+        <Link href="https://zoolabs.gitbook.io/whitepaper/" passHref>
           <div className="px-5 py-3 text-[16px] font-semibold bg-black text-white flex items-center justify-between rounded-full w-48 md:text-lg md:px-6 lg:px-4 hover:cursor-pointer mx-auto lg:ml-0 mt-8">
-            <span className="mr-2">Learn More</span>
+            <span className="mr-4">Learn More</span>
             <Image
               src="/icons/forward-arrow.svg"
               width={24}
