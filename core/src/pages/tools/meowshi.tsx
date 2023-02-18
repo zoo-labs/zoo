@@ -1,5 +1,5 @@
 import { ArrowDownIcon, InformationCircleIcon } from "@heroicons/react/solid";
-import { ChainId, Currency, Token } from "@zoolabs/sdk";
+import { ChainId, Currency, Token } from "@zoolabs/zdk";
 import { MEOW, SUSHI, XSUSHI } from "../../config/tokens";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 

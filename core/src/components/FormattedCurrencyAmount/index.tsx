@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Fraction, JSBI } from "@zoolabs/sdk";
+import { Currency, CurrencyAmount, Fraction, JSBI } from "@zoolabs/zdk";
 
 import React from "react";
 

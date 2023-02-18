@@ -1,4 +1,4 @@
-import { ChainId, Currency, CurrencyAmount, Price, Token, USDC } from '@zoolabs/sdk'
+import { ChainId, Currency, CurrencyAmount, Price, Token, USDC } from '@zoolabs/zdk'
 
 import { useActiveWeb3React } from '../hooks/useActiveWeb3React'
 import { useMemo } from 'react'

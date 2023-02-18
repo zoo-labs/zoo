@@ -7,7 +7,7 @@ import TransactionConfirmationModal, {
 } from "../../modals/TransactionConfirmationModal";
 
 import Button from "../../components/Button";
-import { ChainId } from "@zoolabs/sdk";
+import { ChainId } from "@zoolabs/zdk";
 import Dots from "../../components/Dots";
 import { parseUnits } from "@ethersproject/units";
 import { t } from "@lingui/macro";

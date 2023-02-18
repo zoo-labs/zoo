@@ -1,4 +1,4 @@
-// import { CurrencyAmount, JSBI, Token } from '@zoolabs/sdk'
+// import { CurrencyAmount, JSBI, Token } from '@zoolabs/zdk'
 
 // import { t } from '@lingui/macro'
 // import { tryParseAmount } from '../../functions'

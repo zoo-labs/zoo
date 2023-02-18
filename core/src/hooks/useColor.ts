@@ -1,4 +1,4 @@
-import { ChainId, Token } from '@zoolabs/sdk'
+import { ChainId, Token } from '@zoolabs/zdk'
 import { useLayoutEffect, useState } from 'react'
 
 import Vibrant from 'node-vibrant'

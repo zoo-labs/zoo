@@ -89,7 +89,7 @@
     "@web3-react/walletlink-connector": "^6.2.11",
     "@web3auth/web3auth": "^1.2.1",
     "@welldone-software/why-did-you-render": "^6.2.3",
-    "@zoolabs/sdk": "^1.0.0",
+    "@zoolabs/zdk": "^1.0.0",
     "axios": "^0.26.1",
     "babylonjs": "^4.2.1",
     "babylonjs-hook": "^0.1.0",

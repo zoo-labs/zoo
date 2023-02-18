@@ -9,7 +9,7 @@ import {
   NATIVE,
   Percent,
   WNATIVE,
-} from "@zoolabs/sdk";
+} from "@zoolabs/zdk";
 import React, { useCallback, useState } from "react";
 import ReactGA from "react-ga";
 import Button, { ButtonError } from "../../components/Button";

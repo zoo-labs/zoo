@@ -1,4 +1,4 @@
-import { ChainId } from '@zoolabs/sdk'
+import { ChainId } from '@zoolabs/zdk'
 import useSWR, { SWRConfiguration } from 'swr'
 import { useActiveWeb3React } from '../../../hooks'
 import { getBar, getBarHistory } from '../fetchers/bar'

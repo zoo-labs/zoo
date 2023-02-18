@@ -6,7 +6,7 @@ import {
   ROUTER_ADDRESS,
   TradeType,
   Trade as V2Trade,
-} from "@zoolabs/sdk";
+} from "@zoolabs/zdk";
 import { useCallback, useMemo } from "react";
 import {
   useHasPendingApproval,
@@ -20,7 +20,7 @@ import { useActiveWeb3React } from "./useActiveWeb3React";
 import { useTokenAllowance } from "./useTokenAllowance";
 import { useTokenContract, useZooToken } from "./useContract";
 import { wait } from "../functions/zoo";
-import { ChainId } from "@zoolabs/sdk";
+import { ChainId } from "@zoolabs/zdk";
 import { useDispatch, useSelector } from "react-redux";
 import addresses from "constants/addresses";
 import { getVoterAllowance } from "state/voting/actions";

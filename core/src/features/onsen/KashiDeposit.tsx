@@ -1,6 +1,6 @@
 import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
-import { BENTOBOX_ADDRESS, CurrencyAmount, WNATIVE } from "@zoolabs/sdk";
+import { BENTOBOX_ADDRESS, CurrencyAmount, WNATIVE } from "@zoolabs/zdk";
 import React, { useState } from "react";
 import Button, { ButtonError } from "../../components/Button";
 import Dots from "../../components/Dots";

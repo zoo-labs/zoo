@@ -8,7 +8,7 @@ import {
   TradeOptions,
   TradeOptionsDeadline,
   TradeType,
-} from '@zoolabs/sdk'
+} from '@zoolabs/zdk'
 
 import { getAddress } from '@ethersproject/address'
 import invariant from 'tiny-invariant'

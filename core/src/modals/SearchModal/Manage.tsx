@@ -6,7 +6,7 @@ import CurrencyModalView from "./CurrencyModalView";
 import ManageLists from "./ManageLists";
 import ManageTokens from "./ManageTokens";
 import ModalHeader from "../../components/ModalHeader";
-import { Token } from "@zoolabs/sdk";
+import { Token } from "@zoolabs/zdk";
 import { TokenList } from "@uniswap/token-lists";
 import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";

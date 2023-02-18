@@ -1,4 +1,4 @@
-// import { ChainId } from '@zoolabs/sdk'
+// import { ChainId } from '@zoolabs/zdk'
 // import { NetworkContextName } from '../constants'
 // import { Web3Provider } from '@ethersproject/providers'
 // import { Web3ReactContextInterface } from '@web3-react/core/dist/types'

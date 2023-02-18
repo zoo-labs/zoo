@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { CURRENCY_SYMBOL_LOGO, CurrencySymbol } from "@zoolabs/sdk";
+import { CURRENCY_SYMBOL_LOGO, CurrencySymbol } from "@zoolabs/zdk";
 
 export type CurrencyLogoProps = {
   symbol: CurrencySymbol | string;

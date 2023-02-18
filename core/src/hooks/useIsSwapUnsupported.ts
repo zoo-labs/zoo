@@ -1,4 +1,4 @@
-import { Currency, Token } from '@zoolabs/sdk'
+import { Currency, Token } from '@zoolabs/zdk'
 
 import { useMemo } from 'react'
 import { useUnsupportedTokens } from './Tokens'

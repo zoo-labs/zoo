@@ -1,6 +1,6 @@
 // CONVENTION isFoo -> boolean
 
-import { Token } from '@zoolabs/sdk'
+import { Token } from '@zoolabs/zdk'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { TokenAddressMap } from '../state/lists/hooks'

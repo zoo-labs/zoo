@@ -1,5 +1,5 @@
 import { EyeIcon, PencilIcon } from '@heroicons/react/solid'
-import { BigintIsh, Currency, Token, ZERO_ADDRESS } from '@zoolabs/sdk'
+import { BigintIsh, Currency, Token, ZERO_ADDRESS } from '@zoolabs/zdk'
 import { useEffect, useState } from 'react'
 import TimeAgo from 'react-timeago'
 import { getCurrencyTokenLowerCase } from '../config/currencies'

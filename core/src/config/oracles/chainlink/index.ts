@@ -1,7 +1,7 @@
 import ARBITRUM from './mappings/arbitrum'
 import AVALANCHE from './mappings/avalanche'
 import BSC from './mappings/bsc'
-import { ChainId } from '@zoolabs/sdk'
+import { ChainId } from '@zoolabs/zdk'
 import HECO from './mappings/heco'
 import KOVAN from './mappings/kovan'
 import MAINNET from './mappings/mainnet'

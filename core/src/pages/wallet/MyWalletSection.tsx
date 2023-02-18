@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
-import { ChainId, Currency, NATIVE, SUSHI_ADDRESS } from "@zoolabs/sdk";
+import { ChainId, Currency, NATIVE, SUSHI_ADDRESS } from "@zoolabs/zdk";
 import { numberWithCommas } from "functions";
 import Image from "next/image";
 import Link from "next/link";

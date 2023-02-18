@@ -1,4 +1,4 @@
-import { Currency, BigintIsh, Token } from '@zoolabs/sdk'
+import { Currency, BigintIsh, Token } from '@zoolabs/zdk'
 import { BigNumber } from 'ethers'
 
 export type TokenId = string | number

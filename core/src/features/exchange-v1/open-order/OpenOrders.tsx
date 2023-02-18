@@ -3,7 +3,7 @@ import React, { FC, useState } from "react";
 import Badge from "../../../components/Badge";
 import Button from "../../../components/Button";
 import CurrencyLogo from "../../../components/CurrencyLogo";
-import { LimitOrder } from "@zoolabs/sdk";
+import { LimitOrder } from "@zoolabs/zdk";
 import Lottie from "lottie-react";
 import NavLink from "../../../components/NavLink";
 import Pagination from "./Pagination";

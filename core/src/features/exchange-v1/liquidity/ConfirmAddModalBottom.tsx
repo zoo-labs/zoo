@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Fraction, Percent } from "@zoolabs/sdk";
+import { Currency, CurrencyAmount, Fraction, Percent } from "@zoolabs/zdk";
 
 import Button from "../../../components/Button";
 import { Field } from "../../../state/mint/actions";

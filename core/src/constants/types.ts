@@ -1,4 +1,4 @@
-import { ChainId } from "@zoolabs/sdk";
+import { ChainId } from "@zoolabs/zdk";
 
 export enum ConnectorNames {
   Injected = 'injected',

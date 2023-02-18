@@ -26,7 +26,7 @@ import {
   Token,
   USDC,
   ZERO,
-} from "@zoolabs/sdk";
+} from "@zoolabs/zdk";
 import { getAddress } from "@ethersproject/address";
 import { Chef, PairType } from "./enum";
 import { useKashiPair } from "../kashi/context";

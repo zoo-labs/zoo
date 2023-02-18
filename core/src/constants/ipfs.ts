@@ -1,4 +1,4 @@
-import { ChainId } from '@zoolabs/sdk'
+import { ChainId } from '@zoolabs/zdk'
 import localhostUploads from '../ipfs/localhost.json'
 
 export default {

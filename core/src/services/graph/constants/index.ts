@@ -1,4 +1,4 @@
-import { ChainId } from '@zoolabs/sdk'
+import { ChainId } from '@zoolabs/zdk'
 const THE_GRAPH = 'https://api.thegraph.com'
 const NAS_GRAPH = 'https://graph.kkt.one/node'
 const HYPER_GRAPH = 'https://q.hg.network'

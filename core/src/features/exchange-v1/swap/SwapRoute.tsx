@@ -1,4 +1,4 @@
-import { Currency, Trade, TradeType } from "@zoolabs/sdk";
+import { Currency, Trade, TradeType } from "@zoolabs/zdk";
 import React, { Fragment, memo } from "react";
 
 import { ChevronRightIcon } from "@heroicons/react/outline";

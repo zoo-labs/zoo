@@ -1,5 +1,5 @@
 import { ADDITIONAL_BASES, BASES_TO_CHECK_TRADES_AGAINST, CUSTOM_BASES } from '../config/routing'
-import { Currency, Token } from '@zoolabs/sdk'
+import { Currency, Token } from '@zoolabs/zdk'
 
 import flatMap from 'lodash/flatMap'
 import { useActiveWeb3React } from './useActiveWeb3React'

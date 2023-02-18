@@ -11,7 +11,7 @@ import {
   useTokens,
 } from "../../../services/graph";
 
-import { ChainId } from "@zoolabs/sdk";
+import { ChainId } from "@zoolabs/zdk";
 import { getFraction } from "../../../functions";
 import { uniq } from "lodash";
 import { useActiveWeb3React } from "../../../hooks";

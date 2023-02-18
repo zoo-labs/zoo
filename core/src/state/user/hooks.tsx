@@ -11,7 +11,7 @@ import {
   Percent,
   Token,
   computePairAddress,
-} from "@zoolabs/sdk";
+} from "@zoolabs/zdk";
 import {
   SerializedPair,
   SerializedToken,
