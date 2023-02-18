@@ -28,10 +28,16 @@ const BuyEggSection: FC<BuyEggSectionProps> = ({}) => {
     <div>
       <div className="px-6 py-10 md:py-20 mx-auto max-w-5xl 2xl:max-w-6xl">
         <h1 className="font-bold text-3xl md:text-[44px] leading-[3rem] lg:leading-4 text-center ">
-          Buy Origin Egg NFTs.
+       
+        <Link href="/drop"> 
+       Buy Gen 0 NFTs.
+       </Link> 
+
         </h1>
         <p className="text-sm sm:text-base mt-4 mb-8 sm:mt-12 sm:mb-16 text-center">
-          Each Origin Egg can mint 1,500+ NFTs.
+          <Link href="/drop"> 
+            Each Egg from the Gen 0 drop could mint 1,500+ NFT Animals.
+          </Link> 
         </p>
 
         {isLoadingEggs ? (
