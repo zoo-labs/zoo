@@ -1,4 +1,4 @@
-import { ChainId } from "@zoolabs/sdk";
+import { ChainId } from "@zoolabs/zdk";
 import NavLink from "../../components/NavLink";
 import React from "react";
 import { useActiveWeb3React } from "../../hooks";

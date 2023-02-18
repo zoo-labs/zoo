@@ -1,4 +1,4 @@
-import { Currency, Token } from "@zoolabs/sdk";
+import { Currency, Token } from "@zoolabs/zdk";
 import React, { useCallback, useEffect, useState } from "react";
 
 import CurrencyModalView from "./CurrencyModalView";

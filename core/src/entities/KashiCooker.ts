@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { ChainId, WNATIVE } from '@zoolabs/sdk'
+import { ChainId, WNATIVE } from '@zoolabs/zdk'
 import { getProviderOrSigner, getSigner } from '../functions/contract'
 
 import { AddressZero } from '@ethersproject/constants'

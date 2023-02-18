@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { ARCHER_GAS_URI } from '../config/archer'
-import { ChainId } from '@zoolabs/sdk'
+import { ChainId } from '@zoolabs/zdk'
 import useActiveWeb3React from './useActiveWeb3React'
 
 type T = Record<string, string>

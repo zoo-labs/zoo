@@ -1,4 +1,4 @@
-import { ChainId, Currency, Percent } from "@zoolabs/sdk";
+import { ChainId, Currency, Percent } from "@zoolabs/zdk";
 import React, { FC, useState } from "react";
 
 import Gas from "../../components/Gas";

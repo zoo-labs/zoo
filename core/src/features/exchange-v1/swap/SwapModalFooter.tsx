@@ -1,4 +1,4 @@
-import { Currency, TradeType, Trade as V2Trade } from "@zoolabs/sdk";
+import { Currency, TradeType, Trade as V2Trade } from "@zoolabs/zdk";
 import React, { ReactNode } from "react";
 
 import { ButtonError } from "../../../components/Button";

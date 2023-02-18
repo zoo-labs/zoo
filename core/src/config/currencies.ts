@@ -1,4 +1,4 @@
-import { ChainId, Currency, getCurrencyMap, getSymbolCurrency, CurrencySymbol, Token } from '@zoolabs/sdk'
+import { ChainId, Currency, getCurrencyMap, getSymbolCurrency, CurrencySymbol, Token } from '@zoolabs/zdk'
 import contractsJson from '../contracts.json'
 
 export const contracts = contractsJson

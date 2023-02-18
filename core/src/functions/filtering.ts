@@ -1,4 +1,4 @@
-import { Token } from '@zoolabs/sdk'
+import { Token } from '@zoolabs/zdk'
 import { TokenInfo } from '@uniswap/token-lists'
 import { isAddress } from './validate'
 import { useMemo } from 'react'

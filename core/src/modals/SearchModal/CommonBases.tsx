@@ -1,4 +1,4 @@
-import { ChainId, Currency, Token, currencyEquals } from "@zoolabs/sdk";
+import { ChainId, Currency, Token, currencyEquals } from "@zoolabs/zdk";
 
 import { AutoColumn } from "../../components/Column";
 import { AutoRow } from "../../components/Row";

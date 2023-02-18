@@ -1,4 +1,4 @@
-import { ChainId } from "@zoolabs/sdk";
+import { ChainId } from "@zoolabs/zdk";
 import { isEnvironment } from "../functions/environment";
 
 const Arbitrum =

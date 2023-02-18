@@ -1,4 +1,4 @@
-import { ChainId, Currency, CurrencyAmount, Ether, JSBI, NATIVE, Token } from '@zoolabs/sdk'
+import { ChainId, Currency, CurrencyAmount, Ether, JSBI, NATIVE, Token } from '@zoolabs/zdk'
 import { useMultipleContractSingleData, useSingleContractMultipleData } from '../multicall/hooks'
 
 import ERC20_ABI from '../../constants/abis/erc20.json'

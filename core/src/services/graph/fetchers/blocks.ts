@@ -1,7 +1,7 @@
 import { blockQuery, blocksQuery, massBlocksQuery } from '../queries'
 import { getUnixTime, startOfHour, subDays, subHours } from 'date-fns'
 
-import { ChainId } from '@zoolabs/sdk'
+import { ChainId } from '@zoolabs/zdk'
 import { GRAPH_HOST } from '../constants'
 import { request } from 'graphql-request'
 

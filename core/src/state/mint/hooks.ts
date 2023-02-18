@@ -1,5 +1,5 @@
 import { AppDispatch, AppState } from '../index'
-import { Currency, CurrencyAmount, JSBI, Pair, Percent, Price, Token } from '@zoolabs/sdk'
+import { Currency, CurrencyAmount, JSBI, Pair, Percent, Price, Token } from '@zoolabs/zdk'
 import { Field, typeInput } from './actions'
 import { PairState, useV2Pair } from '../../hooks/useV2Pairs'
 import { useCallback, useMemo } from 'react'

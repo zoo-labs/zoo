@@ -7,7 +7,7 @@ import {
 import React, { FC, Fragment } from "react";
 import { Trans, useLingui } from "@lingui/react";
 
-import { ChainId } from "@zoolabs/sdk";
+import { ChainId } from "@zoolabs/zdk";
 import HeadlessUIModal from "../../components/Modal/HeadlessUIModal";
 import Image from "next/image";
 import NavLink from "../../components/NavLink";

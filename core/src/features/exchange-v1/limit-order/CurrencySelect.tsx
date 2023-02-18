@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useState } from "react";
 
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import { Currency } from "@zoolabs/sdk";
+import { Currency } from "@zoolabs/zdk";
 import CurrencyLogo from "../../../components/CurrencyLogo";
 import CurrencySearchModal from "../../../modals/SearchModal/CurrencySearchModal";
 import Lottie from "lottie-react";

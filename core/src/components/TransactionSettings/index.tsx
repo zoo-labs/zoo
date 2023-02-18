@@ -6,7 +6,7 @@ import {
 } from "../../state/user/hooks";
 
 import { DEFAULT_DEADLINE_FROM_NOW } from "../../constants";
-import { Percent } from "@zoolabs/sdk";
+import { Percent } from "@zoolabs/zdk";
 import QuestionHelper from "../QuestionHelper";
 import Typography from "../Typography";
 import { classNames } from "../../functions";

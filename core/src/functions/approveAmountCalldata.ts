@@ -1,4 +1,4 @@
-import { BigintIsh, Currency, CurrencyAmount, JSBI } from '@zoolabs/sdk'
+import { BigintIsh, Currency, CurrencyAmount, JSBI } from '@zoolabs/zdk'
 
 import { Interface } from '@ethersproject/abi'
 

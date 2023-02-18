@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, FACTORY_ADDRESS, Pair, computePairAddress } from '@zoolabs/sdk'
+import { Currency, CurrencyAmount, FACTORY_ADDRESS, Pair, computePairAddress } from '@zoolabs/zdk'
 
 import IUniswapV2PairABI from '@sushiswap/core/build/abi/IUniswapV2Pair.json'
 import { Interface } from '@ethersproject/abi'

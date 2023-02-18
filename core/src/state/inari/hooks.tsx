@@ -1,5 +1,5 @@
 import { useAppSelector } from "../hooks";
-import { Token } from "@zoolabs/sdk";
+import { Token } from "@zoolabs/zdk";
 import { tryParseAmount } from "../../functions";
 import useStakeSushiToBentoStrategy from "./strategies/useStakeSushiToBentoStrategy";
 import { DerivedInariState, InariState } from "./types";

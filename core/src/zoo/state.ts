@@ -8,7 +8,7 @@ import {
   Token,
   ZERO_ADDRESS,
   cachedFetch,
-} from "@zoolabs/sdk";
+} from "@zoolabs/zdk";
 import { ethers } from "ethers";
 import { useQuery, gql } from "@apollo/client";
 import queryString from "query-string";

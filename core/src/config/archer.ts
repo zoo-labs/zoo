@@ -1,4 +1,4 @@
-import { ChainId, JSBI } from '@zoolabs/sdk'
+import { ChainId, JSBI } from '@zoolabs/zdk'
 
 import { BigNumber } from '@ethersproject/bignumber'
 

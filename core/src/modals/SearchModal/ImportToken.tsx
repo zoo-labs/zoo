@@ -1,5 +1,5 @@
 import { AutoRow, RowFixed } from "../../components/Row";
-import { Currency, Token } from "@zoolabs/sdk";
+import { Currency, Token } from "@zoolabs/zdk";
 
 import { AlertTriangle } from "react-feather";
 import { AutoColumn } from "../../components/Column";

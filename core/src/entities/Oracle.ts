@@ -1,4 +1,4 @@
-import { CHAINLINK_ORACLE_ADDRESS, ChainId, Token } from '@zoolabs/sdk'
+import { CHAINLINK_ORACLE_ADDRESS, ChainId, Token } from '@zoolabs/zdk'
 
 import { AddressZero } from '@ethersproject/constants'
 import { CHAINLINK_PRICE_FEED_MAP } from '../config/chainlink'

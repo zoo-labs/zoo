@@ -1,4 +1,4 @@
-import { isNativeCurrency } from "@zoolabs/sdk";
+import { isNativeCurrency } from "@zoolabs/zdk";
 import { ethers } from "ethers";
 import { useCallback, useEffect, useState } from "react";
 import { useActiveWeb3React, useContract } from "../hooks";

@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, JSBI } from '@zoolabs/sdk'
+import { Currency, CurrencyAmount, JSBI } from '@zoolabs/zdk'
 
 import { parseUnits } from '@ethersproject/units'
 

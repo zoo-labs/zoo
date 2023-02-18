@@ -1,5 +1,5 @@
 import { BscConnector } from '@binance-chain/bsc-connector'
-import { ChainId } from '@zoolabs/sdk'
+import { ChainId } from '@zoolabs/zdk'
 import { FortmaticConnector } from '../entities/FortmaticConnector'
 import { InjectedConnector } from '@web3-react/injected-connector'
 // import { NetworkConnector } from '../entities/NetworkConnector'

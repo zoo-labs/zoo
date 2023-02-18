@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { getAddress } from '@ethersproject/address'
 import { AddressZero } from '@ethersproject/constants'
-import { WNATIVE_ADDRESS } from '@zoolabs/sdk'
+import { WNATIVE_ADDRESS } from '@zoolabs/zdk'
 import { useActiveWeb3React } from './useActiveWeb3React'
 import { useBentoBoxContract } from './useContract'
 import { useCallback } from 'react'

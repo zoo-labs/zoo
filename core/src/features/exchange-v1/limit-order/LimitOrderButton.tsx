@@ -1,5 +1,5 @@
 import { ApprovalState, useApproveCallback } from "../../../hooks";
-import { BENTOBOX_ADDRESS, ChainId, Currency } from "@zoolabs/sdk";
+import { BENTOBOX_ADDRESS, ChainId, Currency } from "@zoolabs/zdk";
 import Button, { ButtonProps } from "../../../components/Button";
 import { Field, setFromBentoBalance } from "../../../state/limit-order/actions";
 import React, { FC, useCallback, useState } from "react";
@@ -19,7 +19,7 @@ import Alert from "../../../components/Alert";
 import { AppDispatch } from "../../../state";
 import ConfirmLimitOrderModal from "./ConfirmLimitOrderModal";
 import Dots from "../../../components/Dots";
-import { LimitOrder } from "@zoolabs/sdk";
+import { LimitOrder } from "@zoolabs/zdk";
 import { OrderExpiration } from "../../../state/limit-order/reducer";
 import { t } from "@lingui/macro";
 import { useActiveWeb3React } from "../../../hooks/useActiveWeb3React";

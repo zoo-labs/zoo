@@ -9,7 +9,7 @@ import {
   poolsV2Query,
 } from '../queries'
 
-import { ChainId } from '@zoolabs/sdk'
+import { ChainId } from '@zoolabs/zdk'
 import { GRAPH_HOST } from '../constants'
 import { getTokenSubset } from './exchange'
 import { request } from 'graphql-request'

@@ -1,5 +1,5 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/outline";
-import { CurrencyAmount, JSBI, Pair, Percent, Token } from "@zoolabs/sdk";
+import { CurrencyAmount, JSBI, Pair, Percent, Token } from "@zoolabs/zdk";
 import React, { useState } from "react";
 import { currencyId, unwrappedToken } from "../../functions/currency";
 

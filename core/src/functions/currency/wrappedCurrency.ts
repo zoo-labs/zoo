@@ -1,4 +1,4 @@
-import { ChainId, Currency, NATIVE, WNATIVE } from '@zoolabs/sdk'
+import { ChainId, Currency, NATIVE, WNATIVE } from '@zoolabs/zdk'
 
 export function unwrappedToken(currency: Currency): Currency {
   if (currency.isNative) return currency

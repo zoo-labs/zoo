@@ -1,4 +1,4 @@
-import { ChainId, Currency, NATIVE, WNATIVE } from '@zoolabs/sdk'
+import { ChainId, Currency, NATIVE, WNATIVE } from '@zoolabs/zdk'
 
 import { tryParseAmount } from '../functions/parse'
 import { useActiveWeb3React } from './useActiveWeb3React'

@@ -1,4 +1,4 @@
-import { ChainId, NATIVE } from "@zoolabs/sdk";
+import { ChainId, NATIVE } from "@zoolabs/zdk";
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 

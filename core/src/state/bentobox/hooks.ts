@@ -1,4 +1,4 @@
-import { KASHI_ADDRESS, USDC_ADDRESS, WNATIVE_ADDRESS } from '@zoolabs/sdk'
+import { KASHI_ADDRESS, USDC_ADDRESS, WNATIVE_ADDRESS } from '@zoolabs/zdk'
 import { useBentoBoxContract, useBoringHelperContract, useContract } from '../../hooks/useContract'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 

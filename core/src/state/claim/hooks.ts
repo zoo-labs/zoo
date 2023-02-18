@@ -1,4 +1,4 @@
-import { ChainId, Currency, CurrencyAmount, JSBI, Token } from '@zoolabs/sdk'
+import { ChainId, Currency, CurrencyAmount, JSBI, Token } from '@zoolabs/zdk'
 import { getAddress, isAddress } from '@ethersproject/address'
 import { useEffect, useState } from 'react'
 

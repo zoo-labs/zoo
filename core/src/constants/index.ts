@@ -1,4 +1,4 @@
-import { ChainId, JSBI, Percent } from '@zoolabs/sdk'
+import { ChainId, JSBI, Percent } from '@zoolabs/zdk'
 
 export * from './contracts'
 

@@ -1,4 +1,4 @@
-import { CurrencyAmount, Token } from '@zoolabs/sdk'
+import { CurrencyAmount, Token } from '@zoolabs/zdk'
 import { serializeBalancesMap } from './hooks'
 
 describe('Wallet Hooks', () => {

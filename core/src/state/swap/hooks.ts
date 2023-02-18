@@ -9,7 +9,7 @@ import {
   TradeType,
   Trade as V2Trade,
   WNATIVE_ADDRESS,
-} from '@zoolabs/sdk'
+} from '@zoolabs/zdk'
 import { DEFAULT_ARCHER_ETH_TIP, DEFAULT_ARCHER_GAS_ESTIMATE } from '../../config/archer'
 import {
   EstimatedSwapCall,

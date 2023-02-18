@@ -1,4 +1,4 @@
-import { isNativeCurrency } from "@zoolabs/sdk";
+import { isNativeCurrency } from "@zoolabs/zdk";
 import { useCallback } from "react";
 import { useActiveWeb3React, useContract } from "../hooks";
 import { useGasPrice } from "../state/network/hooks";

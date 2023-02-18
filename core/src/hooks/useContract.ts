@@ -21,7 +21,7 @@ import {
   SUSHI_ADDRESS,
   TIMELOCK_ADDRESS,
   WNATIVE_ADDRESS,
-} from "@zoolabs/sdk";
+} from "@zoolabs/zdk";
 import { ethers } from "ethers";
 import { useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";

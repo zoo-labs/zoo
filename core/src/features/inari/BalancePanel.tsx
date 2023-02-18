@@ -1,4 +1,4 @@
-import { CurrencyAmount, Token } from "@zoolabs/sdk";
+import { CurrencyAmount, Token } from "@zoolabs/zdk";
 import React, { FC, useCallback } from "react";
 import {
   useDerivedInariState,

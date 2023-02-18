@@ -1,4 +1,4 @@
-import { ChainId, CurrencyAmount, Ether } from "@zoolabs/sdk";
+import { ChainId, CurrencyAmount, Ether } from "@zoolabs/zdk";
 import {
   useUserArcherETHTip,
   useUserArcherGasPrice,

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Player from 'react-player'
-import { BigintIsh, ZERO_ADDRESS } from '@zoolabs/sdk'
+import { BigintIsh, ZERO_ADDRESS } from '@zoolabs/zdk'
 import { getContent, useTokenType } from './state'
 import { Ask, Bid, GraphBid, HighestBid } from './types'
 import { useActiveWeb3React, useContract } from '../hooks'

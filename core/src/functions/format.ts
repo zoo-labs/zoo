@@ -1,6 +1,6 @@
 // CONVENTION formatFoo -> string
 
-import { BigintIsh, Currency, CurrencyAmount, Fraction, JSBI, Price } from '@zoolabs/sdk'
+import { BigintIsh, Currency, CurrencyAmount, Fraction, JSBI, Price } from '@zoolabs/zdk'
 
 import { BigNumberish } from '@ethersproject/bignumber'
 import { formatUnits } from '@ethersproject/units'

@@ -1,4 +1,4 @@
-import { Currency, TradeType, Trade as V2Trade } from "@zoolabs/sdk";
+import { Currency, TradeType, Trade as V2Trade } from "@zoolabs/zdk";
 import React, { useMemo } from "react";
 
 import FormattedPriceImpact from "../exchange-v1/swap/FormattedPriceImpact";

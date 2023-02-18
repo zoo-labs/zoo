@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, JSBI, Percent, Token, TradeType, Trade as V2Trade } from '@zoolabs/sdk'
+import { Currency, CurrencyAmount, JSBI, Percent, Token, TradeType, Trade as V2Trade } from '@zoolabs/zdk'
 import { DAI, SUSHI, USDC } from '../config/tokens'
 import { useMemo, useState } from 'react'
 

@@ -2,7 +2,7 @@ import {
   ApprovalState,
   useApproveCallback,
 } from "../../hooks/useApproveCallback";
-import { BENTOBOX_ADDRESS, WNATIVE_ADDRESS } from "@zoolabs/sdk";
+import { BENTOBOX_ADDRESS, WNATIVE_ADDRESS } from "@zoolabs/zdk";
 import useKashiApproveCallback, {
   BentoApprovalState,
 } from "../../hooks/useKashiApproveCallback";

@@ -1,4 +1,4 @@
-import { Currency, Token, ZERO_ADDRESS } from '@zoolabs/sdk'
+import { Currency, Token, ZERO_ADDRESS } from '@zoolabs/zdk'
 import { formatCurrencyFromRawAmount } from '../functions'
 import { formatError } from '../functions/lux'
 import { useActiveWeb3React, useContract } from '../hooks'

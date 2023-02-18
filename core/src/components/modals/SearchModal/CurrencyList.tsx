@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Token } from "@zoolabs/sdk";
+import { Currency, CurrencyAmount, Token } from "@zoolabs/zdk";
 import React, {
   CSSProperties,
   MutableRefObject,

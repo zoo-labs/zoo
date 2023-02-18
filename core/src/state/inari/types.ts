@@ -1,4 +1,4 @@
-import { ChainId, CurrencyAmount, Token } from '@zoolabs/sdk'
+import { ChainId, CurrencyAmount, Token } from '@zoolabs/zdk'
 import { BaseStrategyWithBentoBoxTraitHook } from './traits/useBentoBoxTrait'
 import { BaseStrategyWithHasPermitTokenHook } from './traits/useHasPermitTokenTrait'
 import { BaseStrategyHook } from './strategies/useBaseStrategy'

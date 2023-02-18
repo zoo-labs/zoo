@@ -1,4 +1,4 @@
-import { ChainId } from '@zoolabs/sdk'
+import { ChainId } from '@zoolabs/zdk'
 
 export const sortData = (data: Array<any>, byType: string) => {
   return data.sort((a, b) => Number(b.tokenID) - Number(a.tokenID))

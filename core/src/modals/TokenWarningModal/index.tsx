@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 
 import { ImportToken } from "../SearchModal/ImportToken";
 import Modal from "../../components/Modal";
-import { Token } from "@zoolabs/sdk";
+import { Token } from "@zoolabs/zdk";
 
 export default function TokenWarningModal({
   isOpen,

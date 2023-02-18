@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, JSBI, Pair, Percent, Token, ZERO } from '@zoolabs/sdk'
+import { Currency, CurrencyAmount, JSBI, Pair, Percent, Token, ZERO } from '@zoolabs/zdk'
 import { Field, typeInput } from './actions'
 import { useAppDispatch, useAppSelector } from '../hooks'
 

@@ -11,7 +11,7 @@ import {
   Percent,
   WNATIVE,
   ZERO,
-} from "@zoolabs/sdk";
+} from "@zoolabs/zdk";
 import React, { useCallback, useMemo, useState } from "react";
 import {
   calculateSlippageAmount,

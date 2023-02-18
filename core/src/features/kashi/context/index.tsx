@@ -7,7 +7,7 @@ import {
   USDC_ADDRESS,
   WNATIVE,
   WNATIVE_ADDRESS,
-} from "@zoolabs/sdk";
+} from "@zoolabs/zdk";
 import React, {
   createContext,
   useCallback,

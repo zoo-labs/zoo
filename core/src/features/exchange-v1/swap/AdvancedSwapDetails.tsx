@@ -6,7 +6,7 @@ import {
   Percent,
   TradeType,
   Trade as V2Trade,
-} from "@zoolabs/sdk";
+} from "@zoolabs/zdk";
 import React, { useMemo } from "react";
 import { RowBetween, RowFixed } from "../../../components/Row";
 
