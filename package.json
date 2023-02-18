@@ -68,7 +68,11 @@
   },
   "workspaces": {
     "packages": [
+<<<<<<< HEAD
       "app","contracts","core","lab","sdk","ui","zdk"
+=======
+      "app","contracts","core","lab","sdk","ui"
+>>>>>>> main
     ],
     "nohoist": [
       "**/@openzeppelin/contracts-upgradeable/**",
