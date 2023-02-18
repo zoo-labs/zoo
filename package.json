@@ -68,7 +68,7 @@
   },
   "workspaces": {
     "packages": [
-      "packages/*"
+      "app","contracts", "lab","moralis","sdk","subgraph"
     ],
     "nohoist": [
       "**/@openzeppelin/contracts-upgradeable/**",
