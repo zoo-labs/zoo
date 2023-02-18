@@ -5,7 +5,7 @@ import {
   SUSHISWAP_MULTISWAPPER_ADDRESS,
   SUSHISWAP_MULTI_EXACT_SWAPPER_ADDRESS,
   WNATIVE,
-} from "@zoolabs/sdk";
+} from "@zoolabs/zdk";
 import React, { useContext, useMemo, useState } from "react";
 import { Warning, Warnings } from "../../entities/Warnings";
 import { ZERO, e10, maximum, minimum } from "../../functions/math";

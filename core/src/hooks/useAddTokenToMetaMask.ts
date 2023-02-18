@@ -1,4 +1,4 @@
-import { Currency, Token } from '@zoolabs/sdk'
+import { Currency, Token } from '@zoolabs/zdk'
 import { useCallback, useState } from 'react'
 
 import { getCurrencyLogoUrls } from './../components/CurrencyLogo'

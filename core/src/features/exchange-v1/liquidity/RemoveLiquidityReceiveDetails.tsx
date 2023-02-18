@@ -1,4 +1,4 @@
-import { Currency, NATIVE, WNATIVE, currencyEquals } from "@zoolabs/sdk";
+import { Currency, NATIVE, WNATIVE, currencyEquals } from "@zoolabs/zdk";
 
 import { AutoColumn } from "../../../components/Column";
 import CurrencyLogo from "../../../components/CurrencyLogo";

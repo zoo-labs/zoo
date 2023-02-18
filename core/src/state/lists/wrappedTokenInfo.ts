@@ -1,4 +1,4 @@
-import { Currency, Token } from '@zoolabs/sdk'
+import { Currency, Token } from '@zoolabs/zdk'
 import { Tags, TokenInfo } from '@uniswap/token-lists'
 
 import { TokenList } from '@uniswap/token-lists/dist/types'

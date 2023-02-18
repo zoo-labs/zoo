@@ -1,4 +1,4 @@
-import { JSBI, Percent } from '@zoolabs/sdk'
+import { JSBI, Percent } from '@zoolabs/zdk'
 
 // converts a basis points value to a sdk percent
 export function basisPointsToPercent(num: number): Percent {

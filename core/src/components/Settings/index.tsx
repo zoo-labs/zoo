@@ -1,4 +1,4 @@
-import { ChainId, Percent } from "@zoolabs/sdk";
+import { ChainId, Percent } from "@zoolabs/zdk";
 import React, { useRef, useState } from "react";
 import {
   useExpertModeManager,

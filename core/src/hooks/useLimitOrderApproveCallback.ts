@@ -1,5 +1,5 @@
 import { AddressZero, HashZero } from '@ethersproject/constants'
-import { STOP_LIMIT_ORDER_ADDRESS, Token, getSignatureWithProviderBentobox } from '@zoolabs/sdk'
+import { STOP_LIMIT_ORDER_ADDRESS, Token, getSignatureWithProviderBentobox } from '@zoolabs/zdk'
 import { ZERO, calculateGasMargin } from '../functions'
 import { setFromBentoBalance, setLimitOrderApprovalPending } from '../state/limit-order/actions'
 import { useBentoBoxContract, useLimitOrderHelperContract } from './useContract'

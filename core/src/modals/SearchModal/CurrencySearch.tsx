@@ -1,4 +1,4 @@
-import { ChainId, Currency, NATIVE, Token } from "@zoolabs/sdk";
+import { ChainId, Currency, NATIVE, Token } from "@zoolabs/zdk";
 import React, {
   KeyboardEvent,
   RefObject,

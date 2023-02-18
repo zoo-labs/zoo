@@ -7,7 +7,7 @@ import Button from "../../components/Button";
 import KashiCooker from "../../entities/KashiCooker";
 import SmartNumberInput from "./SmartNumberInput";
 import TransactionReviewList from "./TransactionReview";
-import { WNATIVE } from "@zoolabs/sdk";
+import { WNATIVE } from "@zoolabs/zdk";
 import { Warnings } from "../../entities/Warnings";
 import WarningsList from "./WarningsList";
 import { formatNumber } from "../../functions/format";

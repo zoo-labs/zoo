@@ -1,4 +1,4 @@
-import { CurrencyAmount, Token } from '@zoolabs/sdk'
+import { CurrencyAmount, Token } from '@zoolabs/zdk'
 import { useActiveWeb3React, useInariContract } from '../../../hooks'
 import useTrait, { BaseTrait } from './useTrait'
 

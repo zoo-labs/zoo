@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Percent } from "@zoolabs/sdk";
+import { Currency, CurrencyAmount, Percent } from "@zoolabs/zdk";
 import React, { useMemo } from "react";
 
 import { t } from "@lingui/macro";

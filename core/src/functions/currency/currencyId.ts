@@ -1,4 +1,4 @@
-import { ChainId, Currency } from '@zoolabs/sdk'
+import { ChainId, Currency } from '@zoolabs/zdk'
 
 export function currencyId(currency: Currency): string {
   if ([ChainId.CELO].includes(currency.chainId)) {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CurrencyAmount } from '@zoolabs/sdk'
+import { CurrencyAmount } from '@zoolabs/zdk'
 import { i18n } from '@lingui/core'
 import { t } from '@lingui/macro'
 import { shortenAddress, shortenString } from '../functions'

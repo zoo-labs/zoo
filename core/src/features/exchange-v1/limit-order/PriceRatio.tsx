@@ -1,4 +1,4 @@
-import { Currency, Price } from "@zoolabs/sdk";
+import { Currency, Price } from "@zoolabs/zdk";
 import { FC, useState } from "react";
 import {
   useDerivedLimitOrderInfo,

@@ -1,4 +1,4 @@
-import { Currency, Percent, Price } from "@zoolabs/sdk";
+import { Currency, Percent, Price } from "@zoolabs/zdk";
 
 import { Field } from "../../../state/mint/actions";
 import { ONE_BIPS } from "../../../constants";

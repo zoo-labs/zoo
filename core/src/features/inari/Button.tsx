@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useState } from "react";
 import { ApprovalState, useActiveWeb3React } from "../../hooks";
-import { ZERO } from "@zoolabs/sdk";
+import { ZERO } from "@zoolabs/zdk";
 import Button, { ButtonProps } from "../../components/Button";
 import { useLingui } from "@lingui/react";
 import { t } from "@lingui/macro";

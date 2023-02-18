@@ -1,4 +1,4 @@
-import { ChainId, Currency, WNATIVE } from "@zoolabs/sdk";
+import { ChainId, Currency, WNATIVE } from "@zoolabs/zdk";
 import React, { FunctionComponent, useMemo } from "react";
 
 import Logo from "../Logo";

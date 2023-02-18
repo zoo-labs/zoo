@@ -1,4 +1,4 @@
-import { JSBI, Percent } from '@zoolabs/sdk'
+import { JSBI, Percent } from '@zoolabs/zdk'
 
 import { basisPointsToPercent } from './basisPointsToPercent'
 

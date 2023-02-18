@@ -1,4 +1,4 @@
-import { ChainId, SUSHI_ADDRESS } from '@zoolabs/sdk'
+import { ChainId, SUSHI_ADDRESS } from '@zoolabs/zdk'
 import { SUSHI, XSUSHI } from '../../../config/tokens'
 import { StrategyGeneralInfo, StrategyHook, StrategyTokenDefinitions } from '../types'
 import { useEffect, useMemo } from 'react'

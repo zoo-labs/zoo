@@ -1,4 +1,4 @@
-import { Currency } from "@zoolabs/sdk";
+import { Currency } from "@zoolabs/zdk";
 import CurrencyLogo from "../CurrencyLogo";
 import React from "react";
 import { classNames } from "../../functions";

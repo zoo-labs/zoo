@@ -1,4 +1,4 @@
-import { ChainId } from "@zoolabs/sdk";
+import { ChainId } from "@zoolabs/zdk";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { useActiveWeb3React } from "../hooks";
 

@@ -1,4 +1,4 @@
-import { ChainId, Currency, NATIVE, SUSHI_ADDRESS } from "@zoolabs/sdk";
+import { ChainId, Currency, NATIVE, SUSHI_ADDRESS } from "@zoolabs/zdk";
 import { Feature, featureEnabled } from "../../functions/feature";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";

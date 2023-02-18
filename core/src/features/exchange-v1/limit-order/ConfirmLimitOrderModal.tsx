@@ -12,7 +12,7 @@ import CurrencyLogo from "../../../components/CurrencyLogo";
 import { Field } from "../../../state/limit-order/actions";
 import Modal from "../../../components/Modal";
 import { Trans } from "@lingui/react";
-import { USDC } from "@zoolabs/sdk";
+import { USDC } from "@zoolabs/zdk";
 import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 

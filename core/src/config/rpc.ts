@@ -1,4 +1,4 @@
-import { ChainId } from '@zoolabs/sdk'
+import { ChainId } from '@zoolabs/zdk'
 
 const rpc = {
   [ChainId.MAINNET]: 'https://speedy-nodes-nyc.moralis.io/758308e03c71d6246942fad2/eth/ropsten',

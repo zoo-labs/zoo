@@ -1,4 +1,4 @@
-import { Currency, Price } from "@zoolabs/sdk";
+import { Currency, Price } from "@zoolabs/zdk";
 import React, { useCallback } from "react";
 
 import Typography from "../../../components/Typography";

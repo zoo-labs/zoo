@@ -7,7 +7,7 @@ import {
   currencyEquals,
   Percent,
   WNATIVE,
-} from "@zoolabs/sdk";
+} from "@zoolabs/zdk";
 import React, { useCallback, useState } from "react";
 import Alert from "../../components/Alert";
 import Button, { ButtonError } from "../../components/Button";
