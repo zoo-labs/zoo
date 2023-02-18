@@ -89,3 +89,5 @@ lokalise.yaml
 /packages/subgraph/tests/integration-tests/**/bin
 /packages/subgraph/tests/integration-tests/**/abis
 /packages/subgraph/tests/integration-tests/**/truffle_outputnode_modules
+
+.sedbak
