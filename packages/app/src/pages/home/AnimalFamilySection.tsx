@@ -72,7 +72,7 @@ const animalFamilyData = [
     is critically endangered, with only one known population in the
     wild, and no individuals in captivity. It is possibly the rarest
     large mammal on Earth.`,
-    status: "Critically Endangered",
+    status: "Endangered",
     population: "18",
     size: "6.6 - 10.5 Feet",
     habitat: "Forests",
