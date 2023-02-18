@@ -26,7 +26,7 @@ const productsData = [
     
     <p class="mb-6">In 2012, the Sumatran elephant was changed from “Endangered” to “Critically Endangered” because half of its population has been lost in one generation—a decline that is largely due to habitat loss and as a result human-elephant conflict.</p>
    `,
-    status: "Critically Endangered",
+    status: "Endangered",
     scientificName: "Elephas Maximus Sumatranus",
     habitat: "Broadleaf, moist tropical forest",
     population: "2,400 - 2,800",
@@ -77,7 +77,7 @@ const productsData = [
     <p class="mb-6">These 2+ ton herbivores can live from 30-45 years and are solitary animals, except for mating pairs and mothers with young. Despite their already extremely small population, they have held on after being declared virtually extinct in 2011.</p>
     <p class="mb-6">The decline of the Javan rhinoceros is attributed to poaching, primarily for their horns, which are highly valued in traditional Chinese medicine, fetching as much as US$30,000 per kg on the black market. Poaching ultimately wiped out the species in Vietnam.</p>
     `,
-    status: "Critically Endangered",
+    status: "Endangered",
     population: "Less than 100",
     size: "3 meters (10 ft)",
     habitat: "Tropical forests",
@@ -374,51 +374,51 @@ const productsData = [
 const utilities = [
   {
     title: "Play 👩‍💻🕹️",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/differentiators/zoo-dao",
   },
   {
     title: "Hatch 🐣",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/differentiators/zoo-dao",
   },
   {
     title: "Pools 🐋",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/differentiators/zoo-dao",
   },
   {
     title: "Feed 🍼 💳",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/differentiators/zoo-dao",
   },
   {
     title: "Burning 🔥",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/differentiators/zoo-dao",
   },
   {
     title: "Buy / Sell 🛍️",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/differentiators/zoo-dao",
   },
   {
     title: "Grow 💗 🐥",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/differentiators/zoo-dao",
   },
   {
     title: "Boosts 💲↗️",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/differentiators/zoo-dao",
   },
   {
     title: "Make Offers 🕊️",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/differentiators/zoo-dao",
   },
   {
     title: "Breed 🥚",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/differentiators/zoo-dao",
   },
   {
     title: "Earns 🎁️ 🤑",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/differentiators/zoo-dao",
   },
   {
     title: "Metaverse 👽",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/differentiators/zoo-dao",
   },
 ];
 
@@ -464,7 +464,7 @@ const NFTProduct = ({ animal }) => {
               <button className="h-20 border rounded w-full flex items-center justify-center mr-4">
                 <span className="mr-2">Sweep</span>
                 <Image
-                  src="/icons/sweep-icon.svg"
+                  src="/icons/market-sweep.svg"
                   width={24}
                   height={24}
                   alt=""
@@ -472,7 +472,7 @@ const NFTProduct = ({ animal }) => {
               </button>
               <button>
                 <Image
-                  src="/images/calculator.png"
+                  src="/images/reward.svg"
                   width={120}
                   height={120}
                   alt=""
@@ -502,15 +502,12 @@ const NFTProduct = ({ animal }) => {
               <div className="bg-33 p-3.5 rounded">
                 <p className="text-2xl font-bold text-[#7D7D7D]">Maturity</p>
                 <p className="text-lg font-bold text-white">
-                  {[0, 2].includes(animal?.kind)
-                    ? "Baby"
-                    : animal?.attributes && animal?.attributes[1]?.value}{" "}
-                  --
+                  Egg, Baby, Teen, Adult
                 </p>
               </div>
               <div className="bg-33 p-3.5 rounded">
                 <p className="text-2xl font-bold text-[#7D7D7D]">Generations</p>
-                <p className="text-lg font-bold text-white">7 X</p>
+                <p className="text-lg font-bold text-white"> 1 - 7 </p>
               </div>
               <div className="bg-33 p-3.5 rounded">
                 <p className="text-2xl font-bold text-[#7D7D7D]">Status</p>
