@@ -1,8 +1,8 @@
 {
   "name": "@zoolabs/zdk",
   "license": "MIT",
-  "version": "1.0.0",
-  "description": "Classic SDK for building applications on top of Zoo.",
+  "version": "4.0.0",
+  "description": "SDK for building applications on top of Zoo.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
