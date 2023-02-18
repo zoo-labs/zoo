@@ -1,4 +1,4 @@
-import { ListModal, ListStep, useTokens } from '@reservoir0x/reservoir-kit-ui'
+import { ListModal, ListStep, useTokens } from '@zoolabs/ui'
 import { Button } from 'components/primitives'
 import {
   cloneElement,

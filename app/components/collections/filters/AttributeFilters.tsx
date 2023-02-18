@@ -1,4 +1,4 @@
-import { useAttributes } from '@reservoir0x/reservoir-kit-ui'
+import { useAttributes } from '@zoolabs/ui'
 import { Box } from 'components/primitives'
 import { FC } from 'react'
 import { AttributeSelector } from './AttributeSelector'

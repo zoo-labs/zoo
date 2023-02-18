@@ -1,4 +1,4 @@
-import { BidModal, BidStep } from '@reservoir0x/reservoir-kit-ui'
+import { BidModal, BidStep } from '@zoolabs/ui'
 import { Button } from 'components/primitives'
 import { cloneElement, ComponentProps, FC, useContext } from 'react'
 import { CSS } from '@stitches/react'

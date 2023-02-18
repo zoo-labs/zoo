@@ -2,7 +2,7 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 import {
   CancelListingModal,
   CancelListingStep,
-} from '@reservoir0x/reservoir-kit-ui'
+} from '@zoolabs/ui'
 import { FC, ReactElement, useContext, cloneElement } from 'react'
 import { SWRResponse } from 'swr'
 import { useNetwork, useSigner, useSwitchNetwork } from 'wagmi'

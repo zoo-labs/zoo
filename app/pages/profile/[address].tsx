@@ -22,7 +22,7 @@ import {
   useDynamicTokens,
   useUserCollections,
   useUserTokens,
-} from '@reservoir0x/reservoir-kit-ui'
+} from '@zoolabs/ui'
 import TokenCard from 'components/collections/TokenCard'
 import { TokenFilters } from 'components/common/TokenFilters'
 import { useMounted, useMarketplaceChain } from '../../hooks'
