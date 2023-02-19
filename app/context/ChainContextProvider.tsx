@@ -62,7 +62,7 @@ const ChainContextProvider: FC<any> = ({ children }) => {
           })
           .catch(() => {})
       } else {
-        setLastSelectedChain(+chainId)
+        setLastSelectedChain(chainId)
         if (routePrefix && routeChain?.id !== +chainId) {
           router.push('/')
         }

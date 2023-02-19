@@ -15,7 +15,7 @@ import { useDebounce } from 'usehooks-ts'
 import { useMediaQuery } from 'react-responsive'
 
 import Link from 'next/link'
-import { paths } from '@reservoir0x/reservoir-sdk'
+import { paths } from '@zoolabs/sdk'
 import { useMarketplaceChain } from 'hooks'
 import LoadingSpinner from 'components/common/LoadingSpinner'
 import { OpenSeaVerified } from 'components/common/OpenSeaVerified'

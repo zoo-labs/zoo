@@ -11,7 +11,7 @@ import {
   useDynamicTokens,
   useAttributes,
 } from '@zoolabs/ui'
-import { paths } from '@reservoir0x/reservoir-sdk'
+import { paths } from '@zoolabs/sdk'
 import Layout from 'components/Layout'
 import { useEffect, useRef, useState } from 'react'
 import { truncateAddress } from 'utils/truncate'

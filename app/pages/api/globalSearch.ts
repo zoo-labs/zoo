@@ -1,6 +1,6 @@
 import { ethers } from 'ethers'
 import fetcher from 'utils/fetcher'
-import { paths } from '@reservoir0x/reservoir-sdk'
+import { paths } from '@zoolabs/sdk'
 import supportedChains, { DefaultChain } from 'utils/chains'
 
 const COLLECTION_SET_ID = process.env.NEXT_PUBLIC_COLLECTION_SET_ID
@@ -21,7 +21,7 @@ type Collection = NonNullable<
 >[0]
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
 }
 
 export default async function handler(req: Request) {

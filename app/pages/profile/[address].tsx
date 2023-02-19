@@ -5,7 +5,7 @@ import {
   NextPage,
 } from 'next'
 import { Text, Flex, Box, Grid } from '../../components/primitives'
-import { paths } from '@reservoir0x/reservoir-sdk'
+import { paths } from '@zoolabs/sdk'
 import Layout from 'components/Layout'
 import fetcher, { basicFetcher } from 'utils/fetcher'
 import { useIntersectionObserver } from 'usehooks-ts'

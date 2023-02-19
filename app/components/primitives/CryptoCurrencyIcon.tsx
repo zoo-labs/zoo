@@ -3,7 +3,7 @@ import { useChainCurrency } from '../../hooks'
 import { constants } from 'ethers'
 import { styled } from '../../stitches.config'
 import { StyledComponent } from '@stitches/react/types/styled-component'
-import { useReservoirClient } from '@zoolabs/ui'
+import { useZooClient } from '@zoolabs/ui'
 
 type Props = {
   address: string
@@ -17,8 +17,8 @@ const CryptoCurrencyIcon: FC<Props> = ({
   chainId,
   css,
 }) => {
-  const client = useReservoirClient()
-  const chain = client?.chains?.find((chain) =>
+  const client = useZooClient()
+  const chain = client?.chains?.find((chain:any) =>
     chainId !== undefined ? chain.id === chainId : chain.default
   )
 
