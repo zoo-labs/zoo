@@ -113,20 +113,23 @@ const MarketPlaceSection = ({ slideData }) => {
                 The Zoo Labs Foundation is dedicated to saving and preserving
                 endangered species. Our 501c3 is controlled by the Zoo DAO and
                 allocates a portion of its liquidity to supporting animals in
-                real life! The foundation will begin supporting the animals we
-                hve created digital twins of, the Zoo NFT Animals.We need your
-                help by playing the Zoo game, making a donation, or joining our
+                real life! The foundation will begin supporting the species of animals we
+                have created NFTs of, the Zoo Animals. By participating in the Zoo ecosystem you are 
+                also aiding in the efforts to save endangered species in the real world.
+                Contribute further by having a top-ranked "Zoo", making a donation, or joining our
                 DAO.
               </p>
               <div className="grid grid-cols-2 w-full gap-4 mb-8 md:m">
                 <div className="px-2 lg:px-6 py-3 text-[16px] font-semibold bg-[#A6A6A6] text-[#000000] flex items-center justify-between rounded-full md:text-lg w-full hover:cursor-pointer">
-                  <span className="mr-2">Donate Now</span>
-                  <Image
-                    src="/icons/forward-arrow-black.svg"
-                    width={32}
-                    height={32}
-                    alt=""
-                  />
+                  <Link href="/partnerships">
+                    <span className="mr-2">Donate Now</span>
+                    <Image
+                      src="/icons/forward-arrow-black.svg"
+                      width={32}
+                      height={32}
+                      alt=""
+                    />
+                  </Link>
                 </div>
                 <div className="px-2 lg:px-6 py-3 text-[16px] font-semibold bg-transparent border border-[#A6A6A6] text-[#A6A6A6] flex items-center justify-between rounded-full w-full md:text-lg md:px-6 hover:cursor-pointer">
                   <span className="mr-2">Join Dao</span>
