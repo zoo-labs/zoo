@@ -1,4 +1,4 @@
-import { setParams } from '@reservoir0x/reservoir-sdk'
+import { setParams } from '@zoolabs/sdk'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import supportedChains, { DefaultChain } from 'utils/chains'
 import { constants } from 'ethers'
