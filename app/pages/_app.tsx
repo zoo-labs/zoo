@@ -2,7 +2,7 @@ import { Inter } from '@next/font/google'
 import type { AppContext, AppProps } from 'next/app'
 import { default as NextApp } from 'next/app'
 import { ThemeProvider, useTheme } from 'next-themes'
-import { darkTheme, globalReset } from 'stitches.config'
+import { globalReset, darkTheme as stitchesDarkTheme } from 'stitches.config'
 import '@rainbow-me/rainbowkit/styles.css'
 import {
   RainbowKitProvider,
@@ -16,10 +16,10 @@ import { publicProvider } from 'wagmi/providers/public'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 import {
-  ReservoirKitProvider,
-  darkTheme as reservoirDarkTheme,
-  lightTheme as reservoirLightTheme,
-  ReservoirKitTheme,
+  ZooProvider,
+  darkTheme,
+  lightTheme,
+  zooTheme as defaultTheme,
   CartProvider,
 } from '@zoolabs/ui'
 import { FC, useEffect, useState } from 'react'
@@ -52,7 +52,7 @@ const { chains, provider } = configureChains(supportedChains, [
 ])
 
 const { connectors } = getDefaultWallets({
-  appName: 'Reservoir Hub',
+  appName: 'Zoo',
   chains,
 })
 
@@ -63,7 +63,7 @@ const wagmiClient = createClient({
 })
 
 //CONFIGURABLE: Here you can override any of the theme tokens provided by RK: https://docs.reservoir.tools/docs/reservoir-kit-theming-and-customization
-const reservoirKitThemeOverrides = {
+const themeOverrides = {
   headlineFont: inter.style.fontFamily,
   font: inter.style.fontFamily,
   primaryColor: '#6E56CB',
@@ -76,7 +76,7 @@ function AppWrapper(props: AppProps & { baseUrl: string }) {
       attribute="class"
       defaultTheme="dark"
       value={{
-        dark: darkTheme.className,
+        dark: stitchesDarkTheme.className,
         light: 'light',
       }}
     >
@@ -100,8 +100,8 @@ function MyApp({
 
   const { theme } = useTheme()
   const marketplaceChain = useMarketplaceChain()
-  const [reservoirKitTheme, setReservoirKitTheme] = useState<
-    ReservoirKitTheme | undefined
+  const [currentTheme, setTheme] = useState<
+    defaultTheme | undefined
   >()
   const [rainbowKitTheme, setRainbowKitTheme] = useState<
     | ReturnType<typeof rainbowDarkTheme>
@@ -111,14 +111,14 @@ function MyApp({
 
   useEffect(() => {
     if (theme == 'dark') {
-      setReservoirKitTheme(reservoirDarkTheme(reservoirKitThemeOverrides))
+      setTheme(darkTheme(themeOverrides))
       setRainbowKitTheme(
         rainbowDarkTheme({
           borderRadius: 'small',
         })
       )
     } else {
-      setReservoirKitTheme(reservoirLightTheme(reservoirKitThemeOverrides))
+      setTheme(lightTheme(themeOverrides))
       setRainbowKitTheme(
         rainbowLightTheme({
           borderRadius: 'small',
@@ -135,11 +135,11 @@ function MyApp({
         attribute="class"
         defaultTheme="dark"
         value={{
-          dark: darkTheme.className,
+          dark: stitchesDarkTheme.className,
           light: 'light',
         }}
       >
-        <ReservoirKitProvider
+        <ZooProvider
           options={{
             //CONFIGURABLE: Override any configuration available in RK: https://docs.reservoir.tools/docs/reservoirkit-ui#configuring-reservoirkit-ui
             // Note that you should at the very least configure the source with your own domain
@@ -153,7 +153,7 @@ function MyApp({
             // source: 'YOUR_DOMAIN',
             normalizeRoyalties: NORMALIZE_ROYALTIES,
           }}
-          theme={reservoirKitTheme}
+          theme={currentTheme}
         >
           <CartProvider>
             <Tooltip.Provider>
@@ -168,7 +168,7 @@ function MyApp({
               </RainbowKitProvider>
             </Tooltip.Provider>
           </CartProvider>
-        </ReservoirKitProvider>
+        </ZooProvider>
       </ThemeProvider>
     </HotkeysProvider>
   )

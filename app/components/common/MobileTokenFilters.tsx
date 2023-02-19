@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { FullscreenModal } from 'components/common/FullscreenModal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { paths } from '@reservoir0x/reservoir-sdk'
+import { paths } from '@zoolabs/sdk'
 import { useUserCollections } from '@zoolabs/ui'
 import { NAVBAR_HEIGHT_MOBILE } from 'components/navbar'
 
