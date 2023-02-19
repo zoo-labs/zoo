@@ -129,7 +129,7 @@ const SingleDrop = ({}: AppProps & {
                     >
                       {Number(id) === 100 ? (
                         <div className="flex items-center justify-center text-sm font-medium border-2 rounded-full h-36 w-36">
-                          COMING SOON
+                          Coming Soon
                         </div>
                       ) : (
                         <Link href={`/market/egg/${datum.id}`} passHref>
