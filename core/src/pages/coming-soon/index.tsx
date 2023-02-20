@@ -21,7 +21,7 @@ const ComingSoon = () => {
             Coming Soon
           </h1>
           <p>
-            Go pack to the{" "}
+            Go back to the{" "}
             <Link href="/">
               <a className="text-green underline">homepage</a>
             </Link>
