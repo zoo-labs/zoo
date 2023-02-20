@@ -91,3 +91,4 @@ lokalise.yaml
 /packages/subgraph/tests/integration-tests/**/truffle_outputnode_modules
 
 *.sedbak
+.parcel-cache/
