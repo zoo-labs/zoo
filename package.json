@@ -96,7 +96,7 @@
   },
   "engines": {
     "node": ">=12",
-    "yarn": ">=2"
+    "yarn": ">=1"
   },
   "workspaces": {
     "packages": [
@@ -114,6 +114,5 @@
       "**/@zoolabs/hardhat",
       "**/@zoolabs/solidity"
     ]
-  },
-  "packageManager": "yarn@3.4.1"
+  }
 }
