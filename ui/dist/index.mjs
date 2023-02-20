@@ -1,4 +1,5 @@
-import $bNXjM$react, {createContext as $bNXjM$createContext, useState as $bNXjM$useState, useRef as $bNXjM$useRef, useCallback as $bNXjM$useCallback, useEffect as $bNXjM$useEffect, useContext as $bNXjM$useContext, useSyncExternalStore as $bNXjM$useSyncExternalStore, useMemo as $bNXjM$useMemo, forwardRef as $bNXjM$forwardRef} from "react";
+import {jsx as $bNXjM$jsx, jsxs as $bNXjM$jsxs, Fragment as $bNXjM$Fragment} from "react/jsx-runtime";
+import {createContext as $bNXjM$createContext, useState as $bNXjM$useState, useRef as $bNXjM$useRef, useCallback as $bNXjM$useCallback, useEffect as $bNXjM$useEffect, useContext as $bNXjM$useContext, useSyncExternalStore as $bNXjM$useSyncExternalStore, useMemo as $bNXjM$useMemo, forwardRef as $bNXjM$forwardRef} from "react";
 import $bNXjM$swr, {SWRConfig as $bNXjM$SWRConfig, useSWRConfig as $bNXjM$useSWRConfig} from "swr";
 import {redDark as $bNXjM$redDark, indigoDark as $bNXjM$indigoDark, indigoDarkA as $bNXjM$indigoDarkA, slateDark as $bNXjM$slateDark, blackA as $bNXjM$blackA, green as $bNXjM$green, indigo as $bNXjM$indigo, indigoA as $bNXjM$indigoA, red as $bNXjM$red, gray as $bNXjM$gray, whiteA as $bNXjM$whiteA} from "@radix-ui/colors";
 import {createClient as $bNXjM$createClient, setParams as $bNXjM$setParams, isOpenSeaBanned as $bNXjM$isOpenSeaBanned, getClient as $bNXjM$getClient} from "@zoolabs/sdk";
@@ -27,22 +28,23 @@ import * as $bNXjM$wagmichains from "wagmi/chains";
 //Providers
 
 
-const $c5818e6b099fc301$export$8e9bfb060b52dac8 = (overrides)=>{
+
+const $35e7883cc4a3f817$export$8e9bfb060b52dac8 = (overrides)=>{
     return {
         radii: {
-            borderRadius: (overrides === null || overrides === void 0 ? void 0 : overrides.borderRadius) || "4px"
+            borderRadius: overrides?.borderRadius || "4px"
         },
         fonts: {
-            body: (overrides === null || overrides === void 0 ? void 0 : overrides.font) || "sans-serif",
-            button: (overrides === null || overrides === void 0 ? void 0 : overrides.buttonFont) || (overrides === null || overrides === void 0 ? void 0 : overrides.font) || "sans-serif",
-            headline: (overrides === null || overrides === void 0 ? void 0 : overrides.headlineFont) || (overrides === null || overrides === void 0 ? void 0 : overrides.font) || "sans-serif"
+            body: overrides?.font || "sans-serif",
+            button: overrides?.buttonFont || overrides?.font || "sans-serif",
+            headline: overrides?.headlineFont || overrides?.font || "sans-serif"
         }
     };
 };
 
 
-function $8c44bcbd64890509$export$2e2bcd8739ae039(overrides) {
-    let sharedTheme = (0, $c5818e6b099fc301$export$8e9bfb060b52dac8)(overrides);
+function $1b804d6c5a50513c$export$2e2bcd8739ae039(overrides) {
+    let sharedTheme = (0, $35e7883cc4a3f817$export$8e9bfb060b52dac8)(overrides);
     return {
         colors: {
             ...(0, $bNXjM$redDark),
@@ -59,9 +61,9 @@ function $8c44bcbd64890509$export$2e2bcd8739ae039(overrides) {
             accentBgActive: "$indigo5",
             accentLine: "$indigo6",
             accentBorder: "$indigo7",
-            accentBorderHover: (overrides === null || overrides === void 0 ? void 0 : overrides.primaryColor) || "$indigo8",
-            accentSolid: (overrides === null || overrides === void 0 ? void 0 : overrides.primaryColor) || "$indigo9",
-            accentSolidHover: (overrides === null || overrides === void 0 ? void 0 : overrides.primaryHoverColor) || (overrides === null || overrides === void 0 ? void 0 : overrides.primaryColor) || "$indigo10",
+            accentBorderHover: overrides?.primaryColor || "$indigo8",
+            accentSolid: overrides?.primaryColor || "$indigo9",
+            accentSolidHover: overrides?.primaryHoverColor || overrides?.primaryColor || "$indigo10",
             accentText: "$indigo11",
             accentTextContrast: "$indigo12",
             // neutral colors
@@ -91,8 +93,8 @@ function $8c44bcbd64890509$export$2e2bcd8739ae039(overrides) {
             secondaryText: "$indigoA11",
             secondaryTextContrast: "$indigoA12",
             // general colors
-            borderColor: (overrides === null || overrides === void 0 ? void 0 : overrides.borderColor) || "$neutralBorder",
-            textColor: (overrides === null || overrides === void 0 ? void 0 : overrides.textColor) || "$neutralTextContrast",
+            borderColor: overrides?.borderColor || "$neutralBorder",
+            textColor: overrides?.textColor || "$neutralTextContrast",
             focusColor: "$neutralTextContrast",
             errorText: "$red12",
             errorAccent: "$red10",
@@ -100,17 +102,17 @@ function $8c44bcbd64890509$export$2e2bcd8739ae039(overrides) {
             // component colors
             reservoirLogoColor: "#ECEDEE",
             inputBackground: "$neutralBgHover",
-            buttonTextColor: (overrides === null || overrides === void 0 ? void 0 : overrides.buttonTextColor) || "white",
-            buttonTextHoverColor: (overrides === null || overrides === void 0 ? void 0 : overrides.buttonTextHoverColor) || "white",
-            overlayBackground: (overrides === null || overrides === void 0 ? void 0 : overrides.overlayBackground) || "$blackA10",
-            headerBackground: (overrides === null || overrides === void 0 ? void 0 : overrides.headerBackground) || "$neutralBgHover",
-            footerBackground: (overrides === null || overrides === void 0 ? void 0 : overrides.footerBackground) || "$neutralBg",
-            contentBackground: (overrides === null || overrides === void 0 ? void 0 : overrides.contentBackground) || "$neutralBgSubtle",
-            wellBackground: (overrides === null || overrides === void 0 ? void 0 : overrides.wellBackground) || "$neutralBase",
-            popoverBackground: (overrides === null || overrides === void 0 ? void 0 : overrides.popoverBackground) || "$neutralBgActive"
+            buttonTextColor: overrides?.buttonTextColor || "white",
+            buttonTextHoverColor: overrides?.buttonTextHoverColor || "white",
+            overlayBackground: overrides?.overlayBackground || "$blackA10",
+            headerBackground: overrides?.headerBackground || "$neutralBgHover",
+            footerBackground: overrides?.footerBackground || "$neutralBg",
+            contentBackground: overrides?.contentBackground || "$neutralBgSubtle",
+            wellBackground: overrides?.wellBackground || "$neutralBase",
+            popoverBackground: overrides?.popoverBackground || "$neutralBgActive"
         },
         assets: {
-            ethIcon: (overrides === null || overrides === void 0 ? void 0 : overrides.ethIcon) || "purple"
+            ethIcon: overrides?.ethIcon || "purple"
         },
         ...sharedTheme
     };
@@ -119,25 +121,27 @@ function $8c44bcbd64890509$export$2e2bcd8739ae039(overrides) {
 
 
 
+
 var $70ec4a103fdcb416$exports = {};
 $70ec4a103fdcb416$exports = JSON.parse('{"name":"@zoolabs/ui","description":"ZDK is the official frontend kit to get you building dApps with the Zoo Protocol.","version":"5.9.5","author":"Zoo Labs Foundation","license":"MIT","source":"src/index.ts","exports":"./dist/index.mjs","module":"dist/index.mjs","types":"dist/index.d.ts","type":"module","files":["dist"],"keywords":["nft","zoo","zoolabs","protocol","sdk"],"sideEffects":false,"scripts":{"clean":"rm -rf dist","version":"yarn version","version:package":"sh ../../scripts/package-version.sh","version:update":"yarn version ${0}; PACKAGE_VERSION=$(yarn version:package); git add -A; git commit -m \\"\uD83C\uDF89 Release ui package v$PACKAGE_VERSION\\"; git push","version:prerelease":"yarn version prerelease; RC_VERSION=$(yarn version:package); git add -A; git commit -m \\"✨ Prerelease ui package v$RC_VERSION\\"; git push;","changelog":"node ../../scripts/generate-changelog.js package=ui"},"dependencies":{"@fortawesome/fontawesome-svg-core":"^6.3.0","@fortawesome/free-solid-svg-icons":"^6.3.0","@fortawesome/react-fontawesome":"^0.2.0","@radix-ui/colors":"^0.1.8","@radix-ui/react-dialog":"1.0.2","@radix-ui/react-popover":"1.0.3","@radix-ui/react-scroll-area":"1.0.2","@radix-ui/react-select":"1.2.0","@radix-ui/react-switch":"1.0.1","@radix-ui/react-toggle-group":"^1.0.2","@react-hookz/web":"^22.0.0","@stitches/react":"^1.3.1-1","@zoolabs/sdk":"5.4.3","dayjs":"^1.11.7","flatpickr":"^4.6.13","framer-motion":"^9.0.4","react-flatpickr":"^3.10.13","swr":"2.0.3"},"peerDependencies":{"ethers":"^5.7.2","react":"^18.0","react-dom":"^18.0","wagmi":"^0.11.0"},"repository":{"type":"git","url":"https://github.com/zoolabs/zdk"}}');
 
 
-const $c0c48baf657fe29c$export$c2432d5cebe1723e = /*#__PURE__*/ (0, $bNXjM$createContext)(null);
-const $c0c48baf657fe29c$export$bf730ab0ed25211d = function({ children: children , options: options  }) {
+const $c216485f70235e8a$export$c2432d5cebe1723e = /*#__PURE__*/ (0, $bNXjM$createContext)(null);
+const $c216485f70235e8a$export$bf730ab0ed25211d = function({ children: children , options: options  }) {
     const [clientContext, _] = (0, $bNXjM$useState)((0, $bNXjM$createClient)({
         ...options,
         uiVersion: (0, $70ec4a103fdcb416$exports.version)
     }));
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement($c0c48baf657fe29c$export$c2432d5cebe1723e.Provider, {
-        value: clientContext
-    }, children);
+    return /*#__PURE__*/ (0, $bNXjM$jsx)($c216485f70235e8a$export$c2432d5cebe1723e.Provider, {
+        value: clientContext,
+        children: children
+    });
 };
 
 
 
 
-const { createTheme: $cd784f5a4171372f$export$25d302a5b900a763 , keyframes: $cd784f5a4171372f$export$d25ddfdf17c3ad3e , styled: $cd784f5a4171372f$export$3817b7a54a07cec7 , globalCss: $cd784f5a4171372f$export$db53682eef82cc11 , getCssText: $cd784f5a4171372f$export$681e449128971c74 , theme: $cd784f5a4171372f$export$bca14c5b3b88a9c9 , config: $cd784f5a4171372f$export$e506a1d27d1eaa20  } = (0, $bNXjM$createStitches)({
+const { createTheme: $fcefeedae0fec8b6$export$25d302a5b900a763 , keyframes: $fcefeedae0fec8b6$export$d25ddfdf17c3ad3e , styled: $fcefeedae0fec8b6$export$3817b7a54a07cec7 , globalCss: $fcefeedae0fec8b6$export$db53682eef82cc11 , getCssText: $fcefeedae0fec8b6$export$681e449128971c74 , theme: $fcefeedae0fec8b6$export$bca14c5b3b88a9c9 , config: $fcefeedae0fec8b6$export$e506a1d27d1eaa20  } = (0, $bNXjM$createStitches)({
     theme: {
         space: {
             1: "4px",
@@ -238,7 +242,7 @@ const { createTheme: $cd784f5a4171372f$export$25d302a5b900a763 , keyframes: $cd7
 
 
 
-const $b1c8a39eb43ca2af$export$a6f1ecf08e412113 = (apiKey, clientVersion)=>{
+const $0a64ae8247e4abb5$export$a6f1ecf08e412113 = (apiKey, clientVersion)=>{
     const headers = {
         "x-rkui-version": (0, $70ec4a103fdcb416$exports.version)
     };
@@ -246,7 +250,7 @@ const $b1c8a39eb43ca2af$export$a6f1ecf08e412113 = (apiKey, clientVersion)=>{
     if (clientVersion) headers["x-rkc-version"] = clientVersion;
     return headers;
 };
-const $b1c8a39eb43ca2af$export$77754e0ac9f8aba3 = (params)=>{
+const $0a64ae8247e4abb5$export$77754e0ac9f8aba3 = (params)=>{
     let resource;
     let apiKey;
     let clientVersion;
@@ -255,21 +259,21 @@ const $b1c8a39eb43ca2af$export$77754e0ac9f8aba3 = (params)=>{
         apiKey = params[1];
         clientVersion = params[2];
     } else resource = params;
-    const headers = $b1c8a39eb43ca2af$export$a6f1ecf08e412113(apiKey, clientVersion);
+    const headers = $0a64ae8247e4abb5$export$a6f1ecf08e412113(apiKey, clientVersion);
     return fetch(resource, {
         headers: headers
     }).then((res)=>res.json()).catch((e)=>{
         throw e;
     });
 };
-const $b1c8a39eb43ca2af$export$6f9d915eee0c027b = {
-    fetcher: $b1c8a39eb43ca2af$export$77754e0ac9f8aba3,
+const $0a64ae8247e4abb5$export$6f9d915eee0c027b = {
+    fetcher: $0a64ae8247e4abb5$export$77754e0ac9f8aba3,
     revalidateOnFocus: false
 };
 
 
 
-const $8570be72bf178211$var$fpFadeInDown = (0, $cd784f5a4171372f$export$d25ddfdf17c3ad3e)({
+const $99462434649fe8bd$var$fpFadeInDown = (0, $fcefeedae0fec8b6$export$d25ddfdf17c3ad3e)({
     "0%": {
         opacity: 0,
         transform: "translate3d(0, -20px, 0)"
@@ -279,7 +283,7 @@ const $8570be72bf178211$var$fpFadeInDown = (0, $cd784f5a4171372f$export$d25ddfdf
         transform: "translate3d(0, 0, 0)"
     }
 });
-const $8570be72bf178211$var$calendarCss = (0, $cd784f5a4171372f$export$db53682eef82cc11)({
+const $99462434649fe8bd$var$calendarCss = (0, $fcefeedae0fec8b6$export$db53682eef82cc11)({
     ".flatpickr-calendar": {
         opacity: 0,
         display: "none",
@@ -317,7 +321,7 @@ const $8570be72bf178211$var$calendarCss = (0, $cd784f5a4171372f$export$db53682ee
         top: 2
     },
     ".flatpickr-calendar.animate.open": {
-        animation: `${$8570be72bf178211$var$fpFadeInDown} 300ms cubic-bezier(0.23, 1, 0.32, 1)`
+        animation: `${$99462434649fe8bd$var$fpFadeInDown} 300ms cubic-bezier(0.23, 1, 0.32, 1)`
     },
     ".flatpickr-calendar.static": {
         position: "absolute",
@@ -903,11 +907,11 @@ const $8570be72bf178211$var$calendarCss = (0, $cd784f5a4171372f$export$db53682ee
         }
     }
 });
-var $8570be72bf178211$export$2e2bcd8739ae039 = $8570be72bf178211$var$calendarCss;
+var $99462434649fe8bd$export$2e2bcd8739ae039 = $99462434649fe8bd$var$calendarCss;
 
 
 
-const $4414dcc25586e423$var$useMutationObservable = (callback, el, options)=>{
+const $a541419cb138b974$var$useMutationObservable = (callback, el, options)=>{
     const [observer, setObserver] = (0, $bNXjM$useState)(null);
     (0, $bNXjM$useEffect)(()=>{
         if (observer) observer.disconnect();
@@ -925,12 +929,12 @@ const $4414dcc25586e423$var$useMutationObservable = (callback, el, options)=>{
     ]);
     return observer;
 };
-var $4414dcc25586e423$export$2e2bcd8739ae039 = $4414dcc25586e423$var$useMutationObservable;
+var $a541419cb138b974$export$2e2bcd8739ae039 = $a541419cb138b974$var$useMutationObservable;
 
 
-const $b02c8f73abc110da$export$2c657da244d00bd6 = /*#__PURE__*/ (0, $bNXjM$createContext)(undefined);
-const $b02c8f73abc110da$export$f66a1c3c9465af21 = /*#__PURE__*/ (0, $bNXjM$createContext)({});
-const $b02c8f73abc110da$var$defaultOptions = {
+const $b15843e937ac72b8$export$2c657da244d00bd6 = /*#__PURE__*/ (0, $bNXjM$createContext)(undefined);
+const $b15843e937ac72b8$export$f66a1c3c9465af21 = /*#__PURE__*/ (0, $bNXjM$createContext)({});
+const $b15843e937ac72b8$var$defaultOptions = {
     chains: [
         {
             baseApiUrl: "https://api.reservoir.tools",
@@ -939,12 +943,12 @@ const $b02c8f73abc110da$var$defaultOptions = {
         }
     ]
 };
-const $b02c8f73abc110da$var$classNameObserverOptions = {
+const $b15843e937ac72b8$var$classNameObserverOptions = {
     attributeFilter: [
         "class"
     ]
 };
-const $b02c8f73abc110da$export$e400fd05a10fd94a = function({ children: children , options: options = $b02c8f73abc110da$var$defaultOptions , theme: theme , swrOptions: swrOptions = {}  }) {
+const $b15843e937ac72b8$export$e400fd05a10fd94a = function({ children: children , options: options = $b15843e937ac72b8$var$defaultOptions , theme: theme , swrOptions: swrOptions = {}  }) {
     const [globalTheme, setGlobalTheme] = (0, $bNXjM$useState)();
     const [providerOptions, setProviderOptions] = (0, $bNXjM$useState)({});
     const currentTheme = (0, $bNXjM$useRef)(null);
@@ -956,10 +960,10 @@ const $b02c8f73abc110da$export$e400fd05a10fd94a = function({ children: children 
     }, [
         currentTheme
     ]);
-    (0, $4414dcc25586e423$export$2e2bcd8739ae039)(classNameCallback, typeof window !== "undefined" ? document.body : null, $b02c8f73abc110da$var$classNameObserverOptions);
-    (0, $8570be72bf178211$export$2e2bcd8739ae039)();
+    (0, $a541419cb138b974$export$2e2bcd8739ae039)(classNameCallback, typeof window !== "undefined" ? document.body : null, $b15843e937ac72b8$var$classNameObserverOptions);
+    (0, $99462434649fe8bd$export$2e2bcd8739ae039)();
     (0, $bNXjM$useEffect)(()=>{
-        let newTheme = (0, $cd784f5a4171372f$export$25d302a5b900a763)(theme ? theme : (0, $8c44bcbd64890509$export$2e2bcd8739ae039)());
+        let newTheme = (0, $fcefeedae0fec8b6$export$25d302a5b900a763)(theme ? theme : (0, $1b804d6c5a50513c$export$2e2bcd8739ae039)());
         let oldTheme = currentTheme.current;
         currentTheme.current = newTheme;
         document.body.classList.add(newTheme);
@@ -973,18 +977,22 @@ const $b02c8f73abc110da$export$e400fd05a10fd94a = function({ children: children 
     }, [
         options
     ]);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement($b02c8f73abc110da$export$2c657da244d00bd6.Provider, {
-        value: globalTheme
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($b02c8f73abc110da$export$f66a1c3c9465af21.Provider, {
-        value: providerOptions
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $c0c48baf657fe29c$export$bf730ab0ed25211d), {
-        options: options
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$SWRConfig), {
-        value: {
-            ...(0, $b1c8a39eb43ca2af$export$6f9d915eee0c027b),
-            ...swrOptions
-        }
-    }, children))));
+    return /*#__PURE__*/ (0, $bNXjM$jsx)($b15843e937ac72b8$export$2c657da244d00bd6.Provider, {
+        value: globalTheme,
+        children: /*#__PURE__*/ (0, $bNXjM$jsx)($b15843e937ac72b8$export$f66a1c3c9465af21.Provider, {
+            value: providerOptions,
+            children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c216485f70235e8a$export$bf730ab0ed25211d), {
+                options: options,
+                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$SWRConfig), {
+                    value: {
+                        ...(0, $0a64ae8247e4abb5$export$6f9d915eee0c027b),
+                        ...swrOptions
+                    },
+                    children: children
+                })
+            })
+        })
+    });
 };
 
 
@@ -992,20 +1000,20 @@ const $b02c8f73abc110da$export$e400fd05a10fd94a = function({ children: children 
 
 
 
-function $d528109b46c9ca01$export$2e2bcd8739ae039() {
-    return (0, $bNXjM$useContext)((0, $c0c48baf657fe29c$export$c2432d5cebe1723e));
+function $c6195489119ab58a$export$2e2bcd8739ae039() {
+    return (0, $bNXjM$useContext)((0, $c216485f70235e8a$export$c2432d5cebe1723e));
 }
 
 
-function $df4107d62d11f8f8$export$2e2bcd8739ae039(collection, chainId, swrOptions = {}) {
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const chain = chainId !== undefined ? client === null || client === void 0 ? void 0 : client.chains.find((chain)=>chain.id === chainId) : client === null || client === void 0 ? void 0 : client.currentChain();
-    const pathname = `${chain === null || chain === void 0 ? void 0 : chain.baseApiUrl}/collections/${collection}/attributes/all/v2`;
+function $a77f332d243f1426$export$2e2bcd8739ae039(collection, chainId, swrOptions = {}) {
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const chain = chainId !== undefined ? client?.chains.find((chain)=>chain.id === chainId) : client?.currentChain();
+    const pathname = `${chain?.baseApiUrl}/collections/${collection}/attributes/all/v2`;
     const path = collection ? new URL(pathname) : null;
     const { data: data , mutate: mutate , error: error , isValidating: isValidating  } = (0, $bNXjM$swr)(path ? [
         path.href,
-        chain === null || chain === void 0 ? void 0 : chain.apiKey,
-        client === null || client === void 0 ? void 0 : client.version
+        chain?.apiKey,
+        client?.version
     ] : null, null, {
         revalidateOnMount: true,
         ...swrOptions
@@ -1024,8 +1032,7 @@ function $df4107d62d11f8f8$export$2e2bcd8739ae039(collection, chainId, swrOption
 
 
 
-function $b513d475db95414d$export$2e2bcd8739ae039(getKey, options, limit) {
-    var _a, _b, _c;
+function $3da80fe4336107c2$export$2e2bcd8739ae039(getKey, options, limit) {
     const { mutate: globalMutate  } = (0, $bNXjM$useSWRConfig)();
     const [keys, setKeys] = (0, $bNXjM$useState)([]);
     const response = (0, $bNXjM$swrinfinite)((pageIndex, previousPageData)=>{
@@ -1040,8 +1047,8 @@ function $b513d475db95414d$export$2e2bcd8739ae039(getKey, options, limit) {
     const { size: size , error: error , setSize: setSize , mutate: mutate  } = response;
     const data = response.data;
     let hasNextPage;
-    if (limit !== undefined) hasNextPage = size === 0 || Boolean(((_b = (_a = data === null || data === void 0 ? void 0 : data[size - 1]) === null || _a === void 0 ? void 0 : _a.collections) === null || _b === void 0 ? void 0 : _b.length) === limit);
-    else hasNextPage = size === 0 || Boolean((_c = data === null || data === void 0 ? void 0 : data[size - 1]) === null || _c === void 0 ? void 0 : _c.continuation);
+    if (limit !== undefined) hasNextPage = size === 0 || Boolean(data?.[size - 1]?.collections?.length === limit);
+    else hasNextPage = size === 0 || Boolean(data?.[size - 1]?.continuation);
     const isFetchingInitialData = !data && !error && size > 0;
     const isFetchingPage = size > 0 && (isFetchingInitialData || data && typeof data[size - 1] === "undefined");
     const fetchNextPage = ()=>{
@@ -1072,29 +1079,28 @@ function $b513d475db95414d$export$2e2bcd8739ae039(getKey, options, limit) {
 }
 
 
-function $d2a483d2a9b1fd6c$export$2e2bcd8739ae039(options, swrOptions = {}, enabled = true, chainId) {
-    var _a, _b;
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const response = (0, $b513d475db95414d$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
+function $ed463f024c26b3ca$export$2e2bcd8739ae039(options, swrOptions = {}, enabled = true, chainId) {
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const response = (0, $3da80fe4336107c2$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
         if (!enabled) return null;
-        const chain = chainId !== undefined ? client === null || client === void 0 ? void 0 : client.chains.find((chain)=>chain.id === chainId) : client === null || client === void 0 ? void 0 : client.currentChain();
-        const url = new URL(`${(chain === null || chain === void 0 ? void 0 : chain.baseApiUrl) || ""}/orders/bids/v5`);
+        const chain = chainId !== undefined ? client?.chains.find((chain)=>chain.id === chainId) : client?.currentChain();
+        const url = new URL(`${chain?.baseApiUrl || ""}/orders/bids/v5`);
         let query = options || {};
-        if (query.normalizeRoyalties === undefined && (client === null || client === void 0 ? void 0 : client.normalizeRoyalties) !== undefined) query.normalizeRoyalties = client === null || client === void 0 ? void 0 : client.normalizeRoyalties;
+        if (query.normalizeRoyalties === undefined && client?.normalizeRoyalties !== undefined) query.normalizeRoyalties = client?.normalizeRoyalties;
         if (previousPageData && !previousPageData.continuation) return null;
         else if (previousPageData && pageIndex > 0) query.continuation = previousPageData.continuation;
         (0, $bNXjM$setParams)(url, query);
         return [
             url.href,
-            chain === null || chain === void 0 ? void 0 : chain.apiKey,
-            client === null || client === void 0 ? void 0 : client.version
+            chain?.apiKey,
+            client?.version
         ];
     }, {
         revalidateOnMount: true,
         revalidateFirstPage: false,
         ...swrOptions
     });
-    const bids = (_b = (_a = response.data) === null || _a === void 0 ? void 0 : _a.flatMap((page)=>page.orders)) !== null && _b !== void 0 ? _b : [];
+    const bids = response.data?.flatMap((page)=>page.orders) ?? [];
     return {
         ...response,
         data: bids
@@ -1106,14 +1112,15 @@ function $d2a483d2a9b1fd6c$export$2e2bcd8739ae039(options, swrOptions = {}, enab
 
 
 
-function $b6adfc9a883b8132$export$2e2bcd8739ae039(chainId) {
+
+function $16fcb794e07c5eb8$export$2e2bcd8739ae039(chainId) {
     const { chains: chains  } = (0, $bNXjM$useNetwork)();
-    return $b6adfc9a883b8132$export$de76f26780462518(chains, chainId);
+    return $16fcb794e07c5eb8$export$de76f26780462518(chains, chainId);
 }
-const $b6adfc9a883b8132$export$de76f26780462518 = (chains, chainId)=>{
+const $16fcb794e07c5eb8$export$de76f26780462518 = (chains, chainId)=>{
     const client = (0, $bNXjM$getClient)();
     const reservoirChain = chainId ? client.chains.find((chain)=>chain.id === chainId) : client.currentChain();
-    let chain = chains.find((chain)=>(reservoirChain === null || reservoirChain === void 0 ? void 0 : reservoirChain.id) === chain.id);
+    let chain = chains.find((chain)=>reservoirChain?.id === chain.id);
     if (!chain && chains.length > 0) chain = chains[0];
     const ETHChains = [
         (0, $bNXjM$mainnet).id,
@@ -1124,7 +1131,7 @@ const $b6adfc9a883b8132$export$de76f26780462518 = (chains, chainId)=>{
         symbol: "ETH",
         decimals: 18,
         address: (0, $bNXjM$constants).AddressZero,
-        chainId: (chain === null || chain === void 0 ? void 0 : chain.id) || (0, $bNXjM$mainnet).id
+        chainId: chain?.id || (0, $bNXjM$mainnet).id
     };
     else return {
         ...chain.nativeCurrency,
@@ -1139,20 +1146,20 @@ const $b6adfc9a883b8132$export$de76f26780462518 = (chains, chainId)=>{
 
 
 
-const $89f2b3089832dcbb$var$isSafariBrowser = ()=>typeof window !== "undefined" && navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") <= -1;
-function $89f2b3089832dcbb$export$a81f732198733497(num, fixed) {
+const $e70e85f6f4e64430$var$isSafariBrowser = ()=>typeof window !== "undefined" && navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") <= -1;
+function $e70e85f6f4e64430$export$a81f732198733497(num, fixed) {
     const re = new RegExp("^-?\\d+(?:.\\d{0," + (fixed || -1) + "})?");
     const fixedNum = num.toString().match(re);
     return fixedNum ? fixedNum[0] : num;
 }
-function $89f2b3089832dcbb$export$f5dd818bff069720(amount, maximumFractionDigits = 2) {
+function $e70e85f6f4e64430$export$f5dd818bff069720(amount, maximumFractionDigits = 2) {
     const { format: format  } = new Intl.NumberFormat("en-US", {
         maximumFractionDigits: maximumFractionDigits
     });
     if (!amount) return "-";
     return format(amount);
 }
-const $89f2b3089832dcbb$var$truncateFractionAndFormat = (parts, digits)=>{
+const $e70e85f6f4e64430$var$truncateFractionAndFormat = (parts, digits)=>{
     return parts.map(({ type: type , value: value  })=>{
         if (type !== "fraction" || !value || value.length < digits) return value;
         let formattedValue = "";
@@ -1165,11 +1172,11 @@ const $89f2b3089832dcbb$var$truncateFractionAndFormat = (parts, digits)=>{
  * @param amount An ETH amount
  * @param maximumFractionDigits Number of decimal digits
  * @returns returns the ETH value as a `string` or `-` if the amount is `null` or `undefined`
- */ function $89f2b3089832dcbb$export$87710fd8420713d9(amount, maximumFractionDigits, decimals = 18) {
+ */ function $e70e85f6f4e64430$export$87710fd8420713d9(amount, maximumFractionDigits, decimals = 18) {
     if (typeof amount === "undefined" || amount === null) return "-";
     const amountToFormat = typeof amount === "number" ? amount : +(0, $bNXjM$utils).formatUnits(amount, decimals);
     const amountFraction = `${amount}`.split(".")[1];
-    const isSafari = $89f2b3089832dcbb$var$isSafariBrowser();
+    const isSafari = $e70e85f6f4e64430$var$isSafariBrowser();
     const formatOptions = {
         minimumFractionDigits: 0,
         maximumFractionDigits: 20,
@@ -1204,7 +1211,7 @@ const $89f2b3089832dcbb$var$truncateFractionAndFormat = (parts, digits)=>{
             const compactIdentifier = parts.find((part)=>part.type === "compact");
             const integerIndex = parts.findIndex((part)=>part.type === "integer");
             const integer = parts[integerIndex];
-            if ((compactIdentifier === null || compactIdentifier === void 0 ? void 0 : compactIdentifier.value) === "K" && integer) {
+            if (compactIdentifier?.value === "K" && integer) {
                 const fraction = `${amount}`.replace(integer.value, "")[0];
                 if (fraction && Number(fraction) > 0) parts.splice(integerIndex + 1, 0, {
                     type: "decimal",
@@ -1218,9 +1225,9 @@ const $89f2b3089832dcbb$var$truncateFractionAndFormat = (parts, digits)=>{
     }
     if (parts && parts.length > 0) {
         const lowestValue = Number(`0.${new Array(maximumFractionDigits).join("0")}1`);
-        if (amountToFormat > 1000) return $89f2b3089832dcbb$var$truncateFractionAndFormat(parts, 1);
+        if (amountToFormat > 1000) return $e70e85f6f4e64430$var$truncateFractionAndFormat(parts, 1);
         else if (amountToFormat < 1 && amountToFormat < lowestValue) return `< ${lowestValue}`;
-        else return $89f2b3089832dcbb$var$truncateFractionAndFormat(parts, maximumFractionDigits);
+        else return $e70e85f6f4e64430$var$truncateFractionAndFormat(parts, maximumFractionDigits);
     } else return typeof amount === "string" || typeof amount === "number" ? `${amount}` : "";
 }
 
@@ -1228,22 +1235,22 @@ const $89f2b3089832dcbb$var$truncateFractionAndFormat = (parts, digits)=>{
 
 
 
-var $7e85f260486c536b$export$de7bcda3c490bf18;
+let $588062ced050a0db$export$de7bcda3c490bf18;
 (function(CheckoutStatus) {
     CheckoutStatus[CheckoutStatus["Idle"] = 0] = "Idle";
     CheckoutStatus[CheckoutStatus["Approving"] = 1] = "Approving";
     CheckoutStatus[CheckoutStatus["Finalizing"] = 2] = "Finalizing";
     CheckoutStatus[CheckoutStatus["Complete"] = 3] = "Complete";
-})($7e85f260486c536b$export$de7bcda3c490bf18 || ($7e85f260486c536b$export$de7bcda3c490bf18 = {}));
-var $7e85f260486c536b$export$6adf53dcf2d42374;
+})($588062ced050a0db$export$de7bcda3c490bf18 || ($588062ced050a0db$export$de7bcda3c490bf18 = {}));
+let $588062ced050a0db$export$6adf53dcf2d42374;
 (function(CheckoutTransactionError) {
     CheckoutTransactionError[CheckoutTransactionError["Unknown"] = 0] = "Unknown";
     CheckoutTransactionError[CheckoutTransactionError["PiceMismatch"] = 1] = "PiceMismatch";
     CheckoutTransactionError[CheckoutTransactionError["InsufficientBalance"] = 2] = "InsufficientBalance";
     CheckoutTransactionError[CheckoutTransactionError["UserDenied"] = 3] = "UserDenied";
-})($7e85f260486c536b$export$6adf53dcf2d42374 || ($7e85f260486c536b$export$6adf53dcf2d42374 = {}));
-const $7e85f260486c536b$var$CartStorageKey = `reservoirkit.cart.${(0, $70ec4a103fdcb416$exports.version)}`;
-function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: referrerFeeBps , persist: persist = true  }) {
+})($588062ced050a0db$export$6adf53dcf2d42374 || ($588062ced050a0db$export$6adf53dcf2d42374 = {}));
+const $588062ced050a0db$var$CartStorageKey = `reservoirkit.cart.${(0, $70ec4a103fdcb416$exports.version)}`;
+function $588062ced050a0db$var$cartStore({ referrer: referrer , referrerFeeBps: referrerFeeBps , persist: persist = true  }) {
     const { chains: chains  } = (0, $bNXjM$useNetwork)();
     const { switchNetworkAsync: switchNetworkAsync  } = (0, $bNXjM$useSwitchNetwork)();
     const cartData = (0, $bNXjM$useRef)({
@@ -1255,14 +1262,13 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
         transaction: null
     });
     const subscribers = (0, $bNXjM$useRef)(new Set());
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
     (0, $bNXjM$useEffect)(()=>{
-        var _a;
         if (persist && typeof window !== "undefined" && window.localStorage) {
-            const storedCart = window.localStorage.getItem($7e85f260486c536b$var$CartStorageKey);
+            const storedCart = window.localStorage.getItem($588062ced050a0db$var$CartStorageKey);
             if (storedCart) {
                 const rehydratedCart = JSON.parse(storedCart);
-                const currency = getCartCurrency(rehydratedCart.items, ((_a = rehydratedCart.chain) === null || _a === void 0 ? void 0 : _a.id) || 1);
+                const currency = getCartCurrency(rehydratedCart.items, rehydratedCart.chain?.id || 1);
                 const pools = calculatePools(rehydratedCart.items);
                 const { totalPrice: totalPrice , referrerFee: referrerFee  } = calculatePricing(rehydratedCart.items, currency, cartData.current.referrerFeeBps);
                 cartData.current = {
@@ -1280,10 +1286,9 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
         }
     }, []);
     (0, $bNXjM$useEffect)(()=>{
-        var _a;
         const feeBps = referrer !== undefined && referrerFeeBps !== undefined ? referrerFeeBps : undefined;
         const referrerAddress = referrer !== undefined && referrerFeeBps !== undefined ? referrer : undefined;
-        const currency = getCartCurrency(cartData.current.items, ((_a = cartData.current.chain) === null || _a === void 0 ? void 0 : _a.id) || 1);
+        const currency = getCartCurrency(cartData.current.items, cartData.current.chain?.id || 1);
         const pools = calculatePools(cartData.current.items);
         const { totalPrice: totalPrice , referrerFee: referrerFee  } = calculatePricing(cartData.current.items, currency, feeBps);
         cartData.current = {
@@ -1314,7 +1319,7 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
     }, []);
     const commit = (0, $bNXjM$useCallback)(()=>{
         subscribers.current.forEach((callback)=>callback());
-        if (persist && typeof window !== "undefined" && window.localStorage) window.localStorage.setItem($7e85f260486c536b$var$CartStorageKey, JSON.stringify(cartData.current));
+        if (persist && typeof window !== "undefined" && window.localStorage) window.localStorage.setItem($588062ced050a0db$var$CartStorageKey, JSON.stringify(cartData.current));
     }, [
         persist
     ]);
@@ -1339,9 +1344,8 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
     const calculatePricing = (0, $bNXjM$useCallback)((items, currency, referrerFeeBps)=>{
         let referrerFee = 0;
         let subtotal = items.reduce((total, { price: price  })=>{
-            var _a, _b, _c;
-            let amount = (_a = price === null || price === void 0 ? void 0 : price.amount) === null || _a === void 0 ? void 0 : _a.decimal;
-            if (((_b = price === null || price === void 0 ? void 0 : price.currency) === null || _b === void 0 ? void 0 : _b.contract) !== (currency === null || currency === void 0 ? void 0 : currency.contract)) amount = (_c = price === null || price === void 0 ? void 0 : price.amount) === null || _c === void 0 ? void 0 : _c.native;
+            let amount = price?.amount?.decimal;
+            if (price?.currency?.contract !== currency?.contract) amount = price?.amount?.native;
             return total += amount || 0;
         }, 0);
         if (referrerFeeBps) {
@@ -1354,18 +1358,17 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
         };
     }, []);
     const getCartCurrency = (0, $bNXjM$useCallback)((items, chainId)=>{
-        var _a;
         let currencies = new Set();
         let currenciesData = {};
         for(let i = 0; i < items.length; i++){
-            const currency = (_a = items[i].price) === null || _a === void 0 ? void 0 : _a.currency;
-            if (currency === null || currency === void 0 ? void 0 : currency.contract) {
+            const currency = items[i].price?.currency;
+            if (currency?.contract) {
                 currencies.add(currency.contract);
                 currenciesData[currency.contract] = currency;
             }
             if (currencies.size > 1) break;
         }
-        if (currencies.size > 1) return (0, $b6adfc9a883b8132$export$de76f26780462518)(chains, chainId);
+        if (currencies.size > 1) return (0, $16fcb794e07c5eb8$export$de76f26780462518)(chains, chainId);
         else if (currencies.size > 0) return Object.values(currenciesData)[0];
     }, [
         chains
@@ -1375,25 +1378,22 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
             tokens: [],
             flaggedStatuses: {}
         };
-        const reservoirChain = client === null || client === void 0 ? void 0 : client.chains.find((chain)=>{
-            var _a;
-            return chain.id === ((_a = cartData.current.chain) === null || _a === void 0 ? void 0 : _a.id);
-        });
-        const url = new URL(`${reservoirChain === null || reservoirChain === void 0 ? void 0 : reservoirChain.baseApiUrl}/tokens/v5`);
+        const reservoirChain = client?.chains.find((chain)=>chain.id === cartData.current.chain?.id);
+        const url = new URL(`${reservoirChain?.baseApiUrl}/tokens/v5`);
         const query = {
             tokens: tokenIds,
             limit: 100,
             includeDynamicPricing: true
         };
-        if ((client === null || client === void 0 ? void 0 : client.normalizeRoyalties) !== undefined) query.normalizeRoyalties = client === null || client === void 0 ? void 0 : client.normalizeRoyalties;
+        if (client?.normalizeRoyalties !== undefined) query.normalizeRoyalties = client?.normalizeRoyalties;
         (0, $bNXjM$setParams)(url, query);
         const params = [
             url.href
         ];
-        if (reservoirChain === null || reservoirChain === void 0 ? void 0 : reservoirChain.apiKey) params.push(reservoirChain.apiKey);
-        if (client === null || client === void 0 ? void 0 : client.version) params.push(client.version);
+        if (reservoirChain?.apiKey) params.push(reservoirChain.apiKey);
+        if (client?.version) params.push(client.version);
         const promises = await Promise.allSettled([
-            (0, $b1c8a39eb43ca2af$export$77754e0ac9f8aba3)(params),
+            (0, $0a64ae8247e4abb5$export$77754e0ac9f8aba3)(params),
             (0, $bNXjM$isOpenSeaBanned)(tokenIds)
         ]);
         const response = promises[0].status === "fulfilled" ? promises[0].value : {};
@@ -1406,11 +1406,10 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
         client
     ]);
     const convertTokenToItem = (0, $bNXjM$useCallback)((tokenData)=>{
-        var _a, _b, _c, _d, _e;
         const token = tokenData.token;
         const market = tokenData.market;
-        if (!(token === null || token === void 0 ? void 0 : token.tokenId) || !((_a = token.collection) === null || _a === void 0 ? void 0 : _a.id)) return;
-        const dynamicPricing = (_b = market === null || market === void 0 ? void 0 : market.floorAsk) === null || _b === void 0 ? void 0 : _b.dynamicPricing;
+        if (!token?.tokenId || !token.collection?.id) return;
+        const dynamicPricing = market?.floorAsk?.dynamicPricing;
         return {
             token: {
                 id: token.tokenId,
@@ -1420,9 +1419,9 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
                 id: token.collection.id,
                 name: token.collection.name || ""
             },
-            price: (dynamicPricing === null || dynamicPricing === void 0 ? void 0 : dynamicPricing.kind) === "pool" ? undefined : (_c = market === null || market === void 0 ? void 0 : market.floorAsk) === null || _c === void 0 ? void 0 : _c.price,
-            poolId: (dynamicPricing === null || dynamicPricing === void 0 ? void 0 : dynamicPricing.kind) === "pool" ? (_d = dynamicPricing.data) === null || _d === void 0 ? void 0 : _d.pool : undefined,
-            poolPrices: (dynamicPricing === null || dynamicPricing === void 0 ? void 0 : dynamicPricing.kind) === "pool" ? (_e = dynamicPricing.data) === null || _e === void 0 ? void 0 : _e.prices : undefined,
+            price: dynamicPricing?.kind === "pool" ? undefined : market?.floorAsk?.price,
+            poolId: dynamicPricing?.kind === "pool" ? dynamicPricing.data?.pool : undefined,
+            poolPrices: dynamicPricing?.kind === "pool" ? dynamicPricing.data?.prices : undefined,
             isBannedOnOpensea: token.isFlagged
         };
     }, []);
@@ -1450,9 +1449,8 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
         commit
     ]);
     const add = (0, $bNXjM$useCallback)(async (items, chainId)=>{
-        var _a, _b;
         try {
-            if (cartData.current.chain && chainId != ((_a = cartData.current.chain) === null || _a === void 0 ? void 0 : _a.id)) throw `ChainId: ${chainId}, is different than the cart chainId (${(_b = cartData.current.chain) === null || _b === void 0 ? void 0 : _b.id})`;
+            if (cartData.current.chain && chainId != cartData.current.chain?.id) throw `ChainId: ${chainId}, is different than the cart chainId (${cartData.current.chain?.id})`;
             if (cartData.current.isValidating) throw "Currently validating, adding items temporarily disabled";
             const updatedItems = [
                 ...cartData.current.items
@@ -1461,18 +1459,17 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
             const tokensToFetch = [];
             const tokens = [];
             items.forEach((item)=>{
-                var _a, _b, _c;
                 const token = item;
                 const asyncToken = item;
                 if (token.token) {
-                    if (!currentIds.includes(`${(_b = (_a = token.token) === null || _a === void 0 ? void 0 : _a.collection) === null || _b === void 0 ? void 0 : _b.id}:${(_c = token.token) === null || _c === void 0 ? void 0 : _c.tokenId}`)) tokens.push(token);
+                    if (!currentIds.includes(`${token.token?.collection?.id}:${token.token?.tokenId}`)) tokens.push(token);
                 } else if (asyncToken && asyncToken.id && !currentIds.includes(asyncToken.id)) tokensToFetch.push(asyncToken.id);
             });
             if (tokensToFetch.length > 0) {
                 cartData.current.isValidating = true;
                 subscribers.current.forEach((callback)=>callback());
                 const { tokens: fetchedTokens , flaggedStatuses: flaggedStatuses  } = await fetchTokens(tokensToFetch);
-                fetchedTokens === null || fetchedTokens === void 0 || fetchedTokens.forEach((tokenData)=>{
+                fetchedTokens?.forEach((tokenData)=>{
                     const item = convertTokenToItem(tokenData);
                     if (item) {
                         const id = `${item.collection.id}:${item.token.id}`;
@@ -1497,7 +1494,7 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
                 currency: currency,
                 pools: pools
             };
-            if (!cartData.current.chain) cartData.current.chain = (client === null || client === void 0 ? void 0 : client.chains.find((chain)=>chain.id === chainId)) || (client === null || client === void 0 ? void 0 : client.currentChain()) || undefined;
+            if (!cartData.current.chain) cartData.current.chain = client?.chains.find((chain)=>chain.id === chainId) || client?.currentChain() || undefined;
             commit();
         } catch (e) {
             if (cartData.current.isValidating) {
@@ -1511,7 +1508,6 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
         commit
     ]);
     const remove = (0, $bNXjM$useCallback)((ids)=>{
-        var _a;
         if (cartData.current.isValidating) {
             console.warn("Currently validating, removing items temporarily disabled");
             return;
@@ -1521,7 +1517,7 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
             return !ids.includes(key);
         });
         const pools = calculatePools(updatedItems);
-        const currency = getCartCurrency(updatedItems, ((_a = cartData.current.chain) === null || _a === void 0 ? void 0 : _a.id) || 1);
+        const currency = getCartCurrency(updatedItems, cartData.current.chain?.id || 1);
         const { totalPrice: totalPrice , referrerFee: referrerFee  } = calculatePricing(updatedItems, currency, cartData.current.referrerFeeBps);
         cartData.current = {
             ...cartData.current,
@@ -1535,7 +1531,6 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
         commit();
     }, []);
     const validate = (0, $bNXjM$useCallback)(async ()=>{
-        var _a;
         try {
             if (cartData.current.items.length === 0) return false;
             cartData.current = {
@@ -1549,33 +1544,31 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
                 return tokens;
             }, []);
             const { tokens: tokens , flaggedStatuses: flaggedStatuses  } = await fetchTokens(tokenIds);
-            const tokenMap = (tokens === null || tokens === void 0 ? void 0 : tokens.reduce((tokens, token)=>{
-                var _a, _b;
-                if (((_a = token.token) === null || _a === void 0 ? void 0 : _a.tokenId) && ((_b = token.token.collection) === null || _b === void 0 ? void 0 : _b.id)) tokens[`${token.token.collection.id}:${token.token.tokenId}`] = token;
+            const tokenMap = tokens?.reduce((tokens, token)=>{
+                if (token.token?.tokenId && token.token.collection?.id) tokens[`${token.token.collection.id}:${token.token.tokenId}`] = token;
                 return tokens;
-            }, {})) || {};
+            }, {}) || {};
             const items = cartData.current.items.map((item)=>{
-                var _a, _b, _c, _d, _e, _f, _g, _h, _j;
                 const token = tokenMap[`${item.collection.id}:${item.token.id}`];
                 const flaggedStatus = flaggedStatuses ? flaggedStatuses[`${item.collection.id}:${item.token.id}`] : undefined;
                 if (token) {
-                    const dynamicPricing = (_b = (_a = token.market) === null || _a === void 0 ? void 0 : _a.floorAsk) === null || _b === void 0 ? void 0 : _b.dynamicPricing;
+                    const dynamicPricing = token.market?.floorAsk?.dynamicPricing;
                     const updatedItem = {
                         ...item,
                         previousPrice: item.price,
-                        price: (_d = (_c = token.market) === null || _c === void 0 ? void 0 : _c.floorAsk) === null || _d === void 0 ? void 0 : _d.price,
-                        poolId: (dynamicPricing === null || dynamicPricing === void 0 ? void 0 : dynamicPricing.kind) === "pool" ? (_e = dynamicPricing.data) === null || _e === void 0 ? void 0 : _e.pool : undefined,
-                        poolPrices: (dynamicPricing === null || dynamicPricing === void 0 ? void 0 : dynamicPricing.kind) === "pool" ? (_f = dynamicPricing.data) === null || _f === void 0 ? void 0 : _f.prices : undefined
+                        price: token.market?.floorAsk?.price,
+                        poolId: dynamicPricing?.kind === "pool" ? dynamicPricing.data?.pool : undefined,
+                        poolPrices: dynamicPricing?.kind === "pool" ? dynamicPricing.data?.prices : undefined
                     };
-                    if ((_g = token.token) === null || _g === void 0 ? void 0 : _g.name) updatedItem.token.name = token.token.name;
-                    if ((_j = (_h = token.token) === null || _h === void 0 ? void 0 : _h.collection) === null || _j === void 0 ? void 0 : _j.name) updatedItem.collection.name = token.token.collection.name;
+                    if (token.token?.name) updatedItem.token.name = token.token.name;
+                    if (token.token?.collection?.name) updatedItem.collection.name = token.token.collection.name;
                     if (flaggedStatus !== undefined) updatedItem.isBannedOnOpensea = flaggedStatus;
                     return updatedItem;
                 }
                 return item;
             });
             const pools = calculatePools(items);
-            const currency = getCartCurrency(items, ((_a = cartData.current.chain) === null || _a === void 0 ? void 0 : _a.id) || 1);
+            const currency = getCartCurrency(items, cartData.current.chain?.id || 1);
             const { totalPrice: totalPrice , referrerFee: referrerFee  } = calculatePricing(items, currency, cartData.current.referrerFeeBps);
             cartData.current = {
                 ...cartData.current,
@@ -1599,38 +1592,36 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
         fetchTokens
     ]);
     const checkout = (0, $bNXjM$useCallback)(async (options = {})=>{
-        var _a, _b, _c, _d, _e;
         if (!client) throw "Zoo SDK not initialized";
         const { chain: activeChain  } = await (0, $bNXjM$getNetwork)();
-        if (cartData.current.chain && ((_a = cartData.current.chain) === null || _a === void 0 ? void 0 : _a.id) !== (activeChain === null || activeChain === void 0 ? void 0 : activeChain.id)) {
-            const chain = await (switchNetworkAsync === null || switchNetworkAsync === void 0 ? void 0 : switchNetworkAsync(cartData.current.chain.id));
-            if ((chain === null || chain === void 0 ? void 0 : chain.id) !== cartData.current.chain.id) throw "Active chain does not match cart chain";
+        if (cartData.current.chain && cartData.current.chain?.id !== activeChain?.id) {
+            const chain = await switchNetworkAsync?.(cartData.current.chain.id);
+            if (chain?.id !== cartData.current.chain.id) throw "Active chain does not match cart chain";
         }
         const signer = await (0, $bNXjM$fetchSigner)({
-            chainId: (_b = cartData.current.chain) === null || _b === void 0 ? void 0 : _b.id
+            chainId: cartData.current.chain?.id
         });
         if (!signer) throw "Signer not available";
         let isMixedCurrency = false;
         const tokens = cartData.current.items.reduce((items, { token: token , collection: collection , price: price  })=>{
-            var _a, _b;
             if (price) {
                 const contract = collection.id.split(":")[0];
-                items === null || items === void 0 || items.push({
+                items?.push({
                     tokenId: token.id,
                     contract: contract
                 });
-                if (((_a = price.currency) === null || _a === void 0 ? void 0 : _a.contract) != ((_b = cartData.current.currency) === null || _b === void 0 ? void 0 : _b.contract)) isMixedCurrency = true;
+                if (price.currency?.contract != cartData.current.currency?.contract) isMixedCurrency = true;
             }
             return items;
         }, []);
         if (!tokens || tokens.length === 0) throw "Cart is empty";
-        const chainCurrency = (0, $b6adfc9a883b8132$export$de76f26780462518)(chains, ((_c = cartData.current.chain) === null || _c === void 0 ? void 0 : _c.id) || 1);
+        const chainCurrency = (0, $16fcb794e07c5eb8$export$de76f26780462518)(chains, cartData.current.chain?.id || 1);
         const currencyChain = client.chains.find((chain)=>chainCurrency.chainId = chain.id);
         const expectedPrice = cartData.current.totalPrice;
         if (isMixedCurrency) options.currency = (0, $bNXjM$constants).AddressZero;
         if (cartData.current.referrer && cartData.current.referrerFeeBps) {
-            const price = (0, $89f2b3089832dcbb$export$a81f732198733497)(expectedPrice, ((_d = cartData.current.currency) === null || _d === void 0 ? void 0 : _d.decimals) || 18);
-            const fee = (0, $bNXjM$utils).parseUnits(`${price}`, (_e = cartData.current.currency) === null || _e === void 0 ? void 0 : _e.decimals).mul(cartData.current.referrerFeeBps).div(10000);
+            const price = (0, $e70e85f6f4e64430$export$a81f732198733497)(expectedPrice, cartData.current.currency?.decimals || 18);
+            const fee = (0, $bNXjM$utils).parseUnits(`${price}`, cartData.current.currency?.decimals).mul(cartData.current.referrerFeeBps).div(10000);
             const atomicUnitsFee = (0, $bNXjM$formatUnits)(fee, 0);
             options.feesOnTop = [
                 `${cartData.current.referrer}:${atomicUnitsFee}`
@@ -1645,7 +1636,7 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
                 id: transactionId,
                 chain: cartData.current.chain || currencyChain || client.chains[0],
                 items: cartData.current.items,
-                status: $7e85f260486c536b$export$de7bcda3c490bf18.Approving
+                status: $588062ced050a0db$export$de7bcda3c490bf18.Approving
             }
         };
         commit();
@@ -1655,20 +1646,18 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
             tokens: tokens,
             options: options,
             onProgress: (steps)=>{
-                var _a, _b;
                 if (!steps) return;
                 if (transactionId != cartData.current.pendingTransactionId) return;
-                let status = ((_a = cartData.current.transaction) === null || _a === void 0 ? void 0 : _a.status) || $7e85f260486c536b$export$de7bcda3c490bf18.Approving;
+                let status = cartData.current.transaction?.status || $588062ced050a0db$export$de7bcda3c490bf18.Approving;
                 const executableSteps = steps.filter((step)=>step.items && step.items.length > 0);
                 let currentStepItem;
                 executableSteps.findIndex((step)=>{
-                    var _a;
-                    currentStepItem = (_a = step.items) === null || _a === void 0 ? void 0 : _a.find((item)=>item.status === "incomplete");
+                    currentStepItem = step.items?.find((item)=>item.status === "incomplete");
                     return currentStepItem;
                 });
                 if (currentStepItem) {
                     if (currentStepItem.txHash) {
-                        status = $7e85f260486c536b$export$de7bcda3c490bf18.Finalizing;
+                        status = $588062ced050a0db$export$de7bcda3c490bf18.Finalizing;
                         if (cartData.current.items.length > 0) {
                             cartData.current.items = [];
                             cartData.current.pools = {};
@@ -1677,11 +1666,8 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
                             cartData.current.chain = undefined;
                         }
                     }
-                } else if (steps.every((step)=>{
-                    var _a;
-                    return !step.items || step.items.length == 0 || ((_a = step.items) === null || _a === void 0 ? void 0 : _a.every((item)=>item.status === "complete"));
-                })) status = $7e85f260486c536b$export$de7bcda3c490bf18.Complete;
-                if (((_b = cartData.current.transaction) === null || _b === void 0 ? void 0 : _b.status) != status && (status === $7e85f260486c536b$export$de7bcda3c490bf18.Finalizing || status === $7e85f260486c536b$export$de7bcda3c490bf18.Complete)) {
+                } else if (steps.every((step)=>!step.items || step.items.length == 0 || step.items?.every((item)=>item.status === "complete"))) status = $588062ced050a0db$export$de7bcda3c490bf18.Complete;
+                if (cartData.current.transaction?.status != status && (status === $588062ced050a0db$export$de7bcda3c490bf18.Finalizing || status === $588062ced050a0db$export$de7bcda3c490bf18.Complete)) {
                     cartData.current.items = [];
                     cartData.current.pools = {};
                     cartData.current.totalPrice = 0;
@@ -1691,23 +1677,22 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
                 if (cartData.current.transaction) {
                     cartData.current.transaction.status = status;
                     if (currentStepItem) {
-                        cartData.current.transaction.txHash = currentStepItem === null || currentStepItem === void 0 ? void 0 : currentStepItem.txHash;
+                        cartData.current.transaction.txHash = currentStepItem?.txHash;
                         cartData.current.transaction.steps = steps;
                     }
                 }
                 commit();
             }
         }).catch((e)=>{
-            var _a;
             if (transactionId != cartData.current.pendingTransactionId) return;
             let error = e;
-            let errorType = $7e85f260486c536b$export$6adf53dcf2d42374.Unknown;
-            if ((error === null || error === void 0 ? void 0 : error.message) && (error === null || error === void 0 ? void 0 : error.message.includes("ETH balance"))) errorType = $7e85f260486c536b$export$6adf53dcf2d42374.InsufficientBalance;
-            else if ((error === null || error === void 0 ? void 0 : error.code) && (error === null || error === void 0 ? void 0 : error.code) == 4001) errorType = $7e85f260486c536b$export$6adf53dcf2d42374.UserDenied;
+            let errorType = $588062ced050a0db$export$6adf53dcf2d42374.Unknown;
+            if (error?.message && error?.message.includes("ETH balance")) errorType = $588062ced050a0db$export$6adf53dcf2d42374.InsufficientBalance;
+            else if (error?.code && error?.code == 4001) errorType = $588062ced050a0db$export$6adf53dcf2d42374.UserDenied;
             else {
                 let message = "Oops, something went wrong. Please try again.";
-                if ((error === null || error === void 0 ? void 0 : error.type) && (error === null || error === void 0 ? void 0 : error.type) === "price mismatch") {
-                    errorType = $7e85f260486c536b$export$6adf53dcf2d42374.PiceMismatch;
+                if (error?.type && error?.type === "price mismatch") {
+                    errorType = $588062ced050a0db$export$6adf53dcf2d42374.PiceMismatch;
                     message = error.message;
                 }
                 //@ts-ignore: Should be fixed in an update to typescript
@@ -1716,10 +1701,10 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
                 });
             }
             if (cartData.current.transaction) {
-                cartData.current.transaction.status = $7e85f260486c536b$export$de7bcda3c490bf18.Idle;
+                cartData.current.transaction.status = $588062ced050a0db$export$de7bcda3c490bf18.Idle;
                 cartData.current.transaction.error = error;
                 cartData.current.transaction.errorType = errorType;
-                if (((_a = cartData.current.chain) === null || _a === void 0 ? void 0 : _a.id) == cartData.current.transaction.chain.id) {
+                if (cartData.current.chain?.id == cartData.current.transaction.chain.id) {
                     const items = [
                         ...cartData.current.transaction.items
                     ];
@@ -1753,21 +1738,22 @@ function $7e85f260486c536b$var$cartStore({ referrer: referrer , referrerFeeBps: 
         checkout: checkout
     };
 }
-const $7e85f260486c536b$export$5558332cef65f159 = /*#__PURE__*/ (0, $bNXjM$createContext)(null);
-const $7e85f260486c536b$export$9081b9c87ee4e12e = function({ children: children , referrer: referrer , referrerFeeBps: referrerFeeBps , persist: persist  }) {
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement($7e85f260486c536b$export$5558332cef65f159.Provider, {
-        value: $7e85f260486c536b$var$cartStore({
+const $588062ced050a0db$export$5558332cef65f159 = /*#__PURE__*/ (0, $bNXjM$createContext)(null);
+const $588062ced050a0db$export$9081b9c87ee4e12e = function({ children: children , referrer: referrer , referrerFeeBps: referrerFeeBps , persist: persist  }) {
+    return /*#__PURE__*/ (0, $bNXjM$jsx)($588062ced050a0db$export$5558332cef65f159.Provider, {
+        value: $588062ced050a0db$var$cartStore({
             referrer: referrer,
             referrerFeeBps: referrerFeeBps,
             persist: persist
-        })
-    }, children);
+        }),
+        children: children
+    });
 };
 
 
 
-function $81f7c865d754f2b5$export$2e2bcd8739ae039(selector) {
-    const cart = (0, $bNXjM$useContext)((0, $7e85f260486c536b$export$5558332cef65f159));
+function $50bacb8bed3891ec$export$2e2bcd8739ae039(selector) {
+    const cart = (0, $bNXjM$useContext)((0, $588062ced050a0db$export$5558332cef65f159));
     if (!cart) throw new Error("Cart not found");
     const data = (0, $bNXjM$useSyncExternalStore)(cart.subscribe, ()=>selector(cart.get()), ()=>selector(cart.get()));
     const { clear: clear , remove: remove , add: add , validate: validate , checkout: checkout , clearTransaction: clearTransaction  } = cart;
@@ -1785,13 +1771,12 @@ function $81f7c865d754f2b5$export$2e2bcd8739ae039(selector) {
 
 
 
-function $c5db61a73ead0d6d$export$2e2bcd8739ae039(options, swrOptions = {}, chainId) {
-    var _a, _b;
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const chain = chainId !== undefined ? client === null || client === void 0 ? void 0 : client.chains.find((chain)=>chain.id === chainId) : client === null || client === void 0 ? void 0 : client.currentChain();
-    const response = (0, $b513d475db95414d$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
+function $6006670c0a098975$export$2e2bcd8739ae039(options, swrOptions = {}, chainId) {
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const chain = chainId !== undefined ? client?.chains.find((chain)=>chain.id === chainId) : client?.currentChain();
+    const response = (0, $3da80fe4336107c2$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
         if (!options || !options.collection && !options.collectionsSetId && !options.community) return null;
-        const url = new URL(`${chain === null || chain === void 0 ? void 0 : chain.baseApiUrl}/collections/activity/v5`);
+        const url = new URL(`${chain?.baseApiUrl}/collections/activity/v5`);
         let query = {
             ...options
         };
@@ -1800,15 +1785,15 @@ function $c5db61a73ead0d6d$export$2e2bcd8739ae039(options, swrOptions = {}, chai
         (0, $bNXjM$setParams)(url, query);
         return [
             url.href,
-            chain === null || chain === void 0 ? void 0 : chain.apiKey,
-            client === null || client === void 0 ? void 0 : client.version
+            chain?.apiKey,
+            client?.version
         ];
     }, {
         revalidateOnMount: true,
         revalidateFirstPage: false,
         ...swrOptions
     });
-    const activities = (_b = (_a = response.data) === null || _a === void 0 ? void 0 : _a.flatMap((page)=>page.activities)) !== null && _b !== void 0 ? _b : [];
+    const activities = response.data?.flatMap((page)=>page.activities) ?? [];
     return {
         ...response,
         data: activities
@@ -1817,31 +1802,30 @@ function $c5db61a73ead0d6d$export$2e2bcd8739ae039(options, swrOptions = {}, chai
 
 
 
-function $ff2494fa019b599a$export$2e2bcd8739ae039(options, swrOptions = {}, chainId) {
-    var _a, _b;
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const chain = chainId !== undefined ? client === null || client === void 0 ? void 0 : client.chains.find((chain)=>chain.id === chainId) : client === null || client === void 0 ? void 0 : client.currentChain();
-    const response = (0, $b513d475db95414d$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
+function $38f38860f7db3263$export$2e2bcd8739ae039(options, swrOptions = {}, chainId) {
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const chain = chainId !== undefined ? client?.chains.find((chain)=>chain.id === chainId) : client?.currentChain();
+    const response = (0, $3da80fe4336107c2$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
         if (!options) return null;
-        const url = new URL(`${chain === null || chain === void 0 ? void 0 : chain.baseApiUrl}/collections/v5`);
+        const url = new URL(`${chain?.baseApiUrl}/collections/v5`);
         let query = {
             ...options
         };
         if (previousPageData && !previousPageData.continuation) return null;
         else if (previousPageData && pageIndex > 0) query.continuation = previousPageData.continuation;
-        if (query.normalizeRoyalties === undefined && (client === null || client === void 0 ? void 0 : client.normalizeRoyalties) !== undefined) query.normalizeRoyalties = client.normalizeRoyalties;
+        if (query.normalizeRoyalties === undefined && client?.normalizeRoyalties !== undefined) query.normalizeRoyalties = client.normalizeRoyalties;
         (0, $bNXjM$setParams)(url, query);
         return [
             url.href,
-            chain === null || chain === void 0 ? void 0 : chain.apiKey,
-            client === null || client === void 0 ? void 0 : client.version
+            chain?.apiKey,
+            client?.version
         ];
     }, {
         revalidateOnMount: true,
         revalidateFirstPage: false,
         ...swrOptions
     });
-    const collections = (_b = (_a = response.data) === null || _a === void 0 ? void 0 : _a.flatMap((page)=>(page === null || page === void 0 ? void 0 : page.collections) || [])) !== null && _b !== void 0 ? _b : [];
+    const collections = response.data?.flatMap((page)=>page?.collections || []) ?? [];
     return {
         ...response,
         data: collections
@@ -1851,31 +1835,30 @@ function $ff2494fa019b599a$export$2e2bcd8739ae039(options, swrOptions = {}, chai
 
 
 
-function $2ae380ce592f7932$export$2e2bcd8739ae039(options, swrOptions = {}, chainId) {
-    var _a, _b;
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const chain = chainId !== undefined ? client === null || client === void 0 ? void 0 : client.chains.find((chain)=>chain.id === chainId) : client === null || client === void 0 ? void 0 : client.currentChain();
-    const response = (0, $b513d475db95414d$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
+function $54bf018b076821f1$export$2e2bcd8739ae039(options, swrOptions = {}, chainId) {
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const chain = chainId !== undefined ? client?.chains.find((chain)=>chain.id === chainId) : client?.currentChain();
+    const response = (0, $3da80fe4336107c2$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
         if (!options) return null;
-        const url = new URL(`${chain === null || chain === void 0 ? void 0 : chain.baseApiUrl}/tokens/v5`);
+        const url = new URL(`${chain?.baseApiUrl}/tokens/v5`);
         let query = {
             ...options
         };
         if (previousPageData && !previousPageData.continuation) return null;
         else if (previousPageData && pageIndex > 0) query.continuation = previousPageData.continuation;
-        if (query.normalizeRoyalties === undefined && (client === null || client === void 0 ? void 0 : client.normalizeRoyalties) !== undefined) query.normalizeRoyalties = client.normalizeRoyalties;
+        if (query.normalizeRoyalties === undefined && client?.normalizeRoyalties !== undefined) query.normalizeRoyalties = client.normalizeRoyalties;
         (0, $bNXjM$setParams)(url, query);
         return [
             url.href,
-            chain === null || chain === void 0 ? void 0 : chain.apiKey,
-            client === null || client === void 0 ? void 0 : client.version
+            chain?.apiKey,
+            client?.version
         ];
     }, {
         revalidateOnMount: true,
         revalidateFirstPage: false,
         ...swrOptions
     });
-    const tokens = (_b = (_a = response.data) === null || _a === void 0 ? void 0 : _a.flatMap((page)=>page.tokens)) !== null && _b !== void 0 ? _b : [];
+    const tokens = response.data?.flatMap((page)=>page.tokens) ?? [];
     return {
         ...response,
         data: tokens
@@ -1883,16 +1866,15 @@ function $2ae380ce592f7932$export$2e2bcd8739ae039(options, swrOptions = {}, chai
 }
 
 
-function $aa619651e0e4758e$export$2e2bcd8739ae039(options = {}, swrOptions = {}, chainId) {
-    var _a;
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const tokensResponse = (0, $2ae380ce592f7932$export$2e2bcd8739ae039)({
+function $75e58b92a1baee06$export$2e2bcd8739ae039(options = {}, swrOptions = {}, chainId) {
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const tokensResponse = (0, $54bf018b076821f1$export$2e2bcd8739ae039)({
         includeDynamicPricing: true,
         ...options
     }, swrOptions, chainId);
-    const { data: cartItems , ...cartActions } = (0, $81f7c865d754f2b5$export$2e2bcd8739ae039)((cart)=>cart.items);
-    const { data: cartPools  } = (0, $81f7c865d754f2b5$export$2e2bcd8739ae039)((cart)=>cart.pools);
-    const { data: cartChain  } = (0, $81f7c865d754f2b5$export$2e2bcd8739ae039)((cart)=>cart.chain);
+    const { data: cartItems , ...cartActions } = (0, $50bacb8bed3891ec$export$2e2bcd8739ae039)((cart)=>cart.items);
+    const { data: cartPools  } = (0, $50bacb8bed3891ec$export$2e2bcd8739ae039)((cart)=>cart.pools);
+    const { data: cartChain  } = (0, $50bacb8bed3891ec$export$2e2bcd8739ae039)((cart)=>cart.chain);
     const cartRequiresReordering = (0, $bNXjM$useMemo)(()=>Object.values(cartPools).some((pool)=>pool.itemCount > 1), [
         cartPools
     ]);
@@ -1905,31 +1887,29 @@ function $aa619651e0e4758e$export$2e2bcd8739ae039(options = {}, swrOptions = {},
         cartItems
     ]);
     let dynamicTokens;
-    if (cartChain && (chainId === (cartChain === null || cartChain === void 0 ? void 0 : cartChain.id) || chainId === undefined && ((_a = client === null || client === void 0 ? void 0 : client.currentChain()) === null || _a === void 0 ? void 0 : _a.id) === (cartChain === null || cartChain === void 0 ? void 0 : cartChain.id))) {
+    if (cartChain && (chainId === cartChain?.id || chainId === undefined && client?.currentChain()?.id === cartChain?.id)) {
         dynamicTokens = tokensResponse.data.map((tokenData)=>{
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
-            const id = `${(_b = (_a = tokenData === null || tokenData === void 0 ? void 0 : tokenData.token) === null || _a === void 0 ? void 0 : _a.collection) === null || _b === void 0 ? void 0 : _b.id}:${(_c = tokenData === null || tokenData === void 0 ? void 0 : tokenData.token) === null || _c === void 0 ? void 0 : _c.tokenId}`;
+            const id = `${tokenData?.token?.collection?.id}:${tokenData?.token?.tokenId}`;
             const cartItem = itemsMap[id];
             const dynamicTokenData = {
                 ...tokenData,
                 isInCart: cartItem !== undefined
             };
-            const floorAsk = (_d = tokenData === null || tokenData === void 0 ? void 0 : tokenData.market) === null || _d === void 0 ? void 0 : _d.floorAsk;
-            const isInPool = ((_e = floorAsk === null || floorAsk === void 0 ? void 0 : floorAsk.dynamicPricing) === null || _e === void 0 ? void 0 : _e.kind) === "pool";
-            const poolId = isInPool ? (_g = (_f = floorAsk === null || floorAsk === void 0 ? void 0 : floorAsk.dynamicPricing) === null || _f === void 0 ? void 0 : _f.data) === null || _g === void 0 ? void 0 : _g.pool : undefined;
-            const poolPrices = isInPool ? (_j = (_h = floorAsk === null || floorAsk === void 0 ? void 0 : floorAsk.dynamicPricing) === null || _h === void 0 ? void 0 : _h.data) === null || _j === void 0 ? void 0 : _j.prices : undefined;
+            const floorAsk = tokenData?.market?.floorAsk;
+            const isInPool = floorAsk?.dynamicPricing?.kind === "pool";
+            const poolId = isInPool ? floorAsk?.dynamicPricing?.data?.pool : undefined;
+            const poolPrices = isInPool ? floorAsk?.dynamicPricing?.data?.prices : undefined;
             if (cartItem) {
-                if (((_k = dynamicTokenData.market) === null || _k === void 0 ? void 0 : _k.floorAsk) && cartItem.poolId && cartItem.price && ((_l = cartItem.price.amount) === null || _l === void 0 ? void 0 : _l.decimal) != ((_o = (_m = dynamicTokenData.market) === null || _m === void 0 ? void 0 : _m.floorAsk) === null || _o === void 0 ? void 0 : _o.price)) dynamicTokenData.market.floorAsk.price = cartItem.price;
-            } else if (isInPool && poolId && poolPrices && floorAsk && ((_p = dynamicTokenData.market) === null || _p === void 0 ? void 0 : _p.floorAsk)) {
+                if (dynamicTokenData.market?.floorAsk && cartItem.poolId && cartItem.price && cartItem.price.amount?.decimal != dynamicTokenData.market?.floorAsk?.price) dynamicTokenData.market.floorAsk.price = cartItem.price;
+            } else if (isInPool && poolId && poolPrices && floorAsk && dynamicTokenData.market?.floorAsk) {
                 const nextPoolCartIndex = cartPools[poolId] ? cartPools[poolId].itemCount : 0;
                 if (poolPrices && poolPrices[nextPoolCartIndex]) dynamicTokenData.market.floorAsk.price = poolPrices[nextPoolCartIndex];
             }
             return dynamicTokenData;
         });
         if (cartRequiresReordering && (!options || !options.sortBy || options.sortBy === "floorAskPrice")) dynamicTokens.sort((a, b)=>{
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const aPrice = ((_d = (_c = (_b = (_a = a.market) === null || _a === void 0 ? void 0 : _a.floorAsk) === null || _b === void 0 ? void 0 : _b.price) === null || _c === void 0 ? void 0 : _c.amount) === null || _d === void 0 ? void 0 : _d.decimal) || 0;
-            const bPrice = ((_h = (_g = (_f = (_e = b.market) === null || _e === void 0 ? void 0 : _e.floorAsk) === null || _f === void 0 ? void 0 : _f.price) === null || _g === void 0 ? void 0 : _g.amount) === null || _h === void 0 ? void 0 : _h.decimal) || 0;
+            const aPrice = a.market?.floorAsk?.price?.amount?.decimal || 0;
+            const bPrice = b.market?.floorAsk?.price?.amount?.decimal || 0;
             if (!options || !options.sortDirection || options.sortDirection === "asc") return aPrice - bPrice;
             else return aPrice + bPrice;
         });
@@ -1944,29 +1924,28 @@ function $aa619651e0e4758e$export$2e2bcd8739ae039(options = {}, swrOptions = {},
 
 
 
-function $2c6663ee0e1f1b5c$export$2e2bcd8739ae039(options, swrOptions = {}, enabled = true, chainId) {
-    var _a, _b;
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const chain = chainId !== undefined ? client === null || client === void 0 ? void 0 : client.chains.find((chain)=>chain.id === chainId) : client === null || client === void 0 ? void 0 : client.currentChain();
-    const response = (0, $b513d475db95414d$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
+function $40f16bae928ea461$export$2e2bcd8739ae039(options, swrOptions = {}, enabled = true, chainId) {
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const chain = chainId !== undefined ? client?.chains.find((chain)=>chain.id === chainId) : client?.currentChain();
+    const response = (0, $3da80fe4336107c2$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
         if (!enabled) return null;
-        const url = new URL(`${(chain === null || chain === void 0 ? void 0 : chain.baseApiUrl) || ""}/orders/asks/v4`);
+        const url = new URL(`${chain?.baseApiUrl || ""}/orders/asks/v4`);
         let query = options || {};
-        if (query.normalizeRoyalties === undefined && (client === null || client === void 0 ? void 0 : client.normalizeRoyalties) !== undefined) query.normalizeRoyalties = client.normalizeRoyalties;
+        if (query.normalizeRoyalties === undefined && client?.normalizeRoyalties !== undefined) query.normalizeRoyalties = client.normalizeRoyalties;
         if (previousPageData && !previousPageData.continuation) return null;
         else if (previousPageData && pageIndex > 0) query.continuation = previousPageData.continuation;
         (0, $bNXjM$setParams)(url, query);
         return [
             url.href,
-            chain === null || chain === void 0 ? void 0 : chain.apiKey,
-            client === null || client === void 0 ? void 0 : client.version
+            chain?.apiKey,
+            client?.version
         ];
     }, {
         revalidateOnMount: true,
         revalidateFirstPage: false,
         ...swrOptions
     });
-    const listings = (_b = (_a = response.data) === null || _a === void 0 ? void 0 : _a.flatMap((page)=>page.orders)) !== null && _b !== void 0 ? _b : [];
+    const listings = response.data?.flatMap((page)=>page.orders) ?? [];
     return {
         ...response,
         data: listings
@@ -1975,7 +1954,7 @@ function $2c6663ee0e1f1b5c$export$2e2bcd8739ae039(options, swrOptions = {}, enab
 
 
 
-function $b132071166110005$export$2e2bcd8739ae039(query, swrOptions, chainId) {
+function $2503c60624d9b72b$export$2e2bcd8739ae039(query, swrOptions, chainId) {
     const { address: address  } = (0, $bNXjM$useAccount)();
     let queryOptions = {
         maker: address
@@ -1984,12 +1963,12 @@ function $b132071166110005$export$2e2bcd8739ae039(query, swrOptions, chainId) {
         ...queryOptions,
         ...query
     };
-    return (0, $2c6663ee0e1f1b5c$export$2e2bcd8739ae039)(queryOptions, swrOptions, address !== undefined, chainId);
+    return (0, $40f16bae928ea461$export$2e2bcd8739ae039)(queryOptions, swrOptions, address !== undefined, chainId);
 }
 
 
 
-function $814406954658880f$export$2e2bcd8739ae039(contract, tokenId) {
+function $9898620691963117$export$2e2bcd8739ae039(contract, tokenId) {
     const [isBanned, setIsBanned] = (0, $bNXjM$useState)(false);
     (0, $bNXjM$useEffect)(()=>{
         if (contract && tokenId) {
@@ -2012,33 +1991,31 @@ function $814406954658880f$export$2e2bcd8739ae039(contract, tokenId) {
 
 
 
-function $a0fdce9009639dc6$export$2e2bcd8739ae039(user, options, swrOptions = {}, chainId) {
-    var _a, _b;
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const chain = chainId !== undefined ? client === null || client === void 0 ? void 0 : client.chains.find((chain)=>chain.id === chainId) : client === null || client === void 0 ? void 0 : client.currentChain();
+function $fdff2793179dd2d0$export$2e2bcd8739ae039(user, options, swrOptions = {}, chainId) {
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const chain = chainId !== undefined ? client?.chains.find((chain)=>chain.id === chainId) : client?.currentChain();
     let defaultLimit = 20;
-    const response = (0, $b513d475db95414d$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
-        var _a;
+    const response = (0, $3da80fe4336107c2$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
         if (!user) return null;
-        const url = new URL(`${(chain === null || chain === void 0 ? void 0 : chain.baseApiUrl) || ""}/users/${user}/collections/v2`);
+        const url = new URL(`${chain?.baseApiUrl || ""}/users/${user}/collections/v2`);
         let query = {
-            offset: pageIndex * ((options === null || options === void 0 ? void 0 : options.limit) || defaultLimit),
-            limit: (options === null || options === void 0 ? void 0 : options.limit) || defaultLimit,
+            offset: pageIndex * (options?.limit || defaultLimit),
+            limit: options?.limit || defaultLimit,
             ...options
         };
-        if ((previousPageData === null || previousPageData === void 0 ? void 0 : previousPageData.collections) && ((_a = previousPageData === null || previousPageData === void 0 ? void 0 : previousPageData.collections) === null || _a === void 0 ? void 0 : _a.length) === 0) return null;
+        if (previousPageData?.collections && previousPageData?.collections?.length === 0) return null;
         (0, $bNXjM$setParams)(url, query);
         return [
             url.href,
-            chain === null || chain === void 0 ? void 0 : chain.apiKey,
-            client === null || client === void 0 ? void 0 : client.version
+            chain?.apiKey,
+            client?.version
         ];
     }, {
         revalidateOnMount: true,
         revalidateFirstPage: false,
         ...swrOptions
-    }, (options === null || options === void 0 ? void 0 : options.limit) || defaultLimit);
-    const collections = (_b = (_a = response.data) === null || _a === void 0 ? void 0 : _a.flatMap((page)=>page.collections)) !== null && _b !== void 0 ? _b : [];
+    }, options?.limit || defaultLimit);
+    const collections = response.data?.flatMap((page)=>page.collections) ?? [];
     return {
         ...response,
         data: collections
@@ -2047,13 +2024,12 @@ function $a0fdce9009639dc6$export$2e2bcd8739ae039(user, options, swrOptions = {}
 
 
 
-function $ea6a5a4aadbe73c6$export$2e2bcd8739ae039(users, options, swrOptions = {}, chainId) {
-    var _a, _b;
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const chain = chainId !== undefined ? client === null || client === void 0 ? void 0 : client.chains.find((chain)=>chain.id === chainId) : client === null || client === void 0 ? void 0 : client.currentChain();
-    const response = (0, $b513d475db95414d$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
+function $a977118e24599639$export$2e2bcd8739ae039(users, options, swrOptions = {}, chainId) {
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const chain = chainId !== undefined ? client?.chains.find((chain)=>chain.id === chainId) : client?.currentChain();
+    const response = (0, $3da80fe4336107c2$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
         if (!users) return null;
-        const url = new URL(`${chain === null || chain === void 0 ? void 0 : chain.baseApiUrl}/users/activity/v5`);
+        const url = new URL(`${chain?.baseApiUrl}/users/activity/v5`);
         let query = {
             ...options,
             users: users
@@ -2063,15 +2039,15 @@ function $ea6a5a4aadbe73c6$export$2e2bcd8739ae039(users, options, swrOptions = {
         (0, $bNXjM$setParams)(url, query);
         return [
             url.href,
-            chain === null || chain === void 0 ? void 0 : chain.apiKey,
-            client === null || client === void 0 ? void 0 : client.version
+            chain?.apiKey,
+            client?.version
         ];
     }, {
         revalidateOnMount: true,
         revalidateFirstPage: false,
         ...swrOptions
     });
-    const activities = (_b = (_a = response.data) === null || _a === void 0 ? void 0 : _a.flatMap((page)=>page.activities)) !== null && _b !== void 0 ? _b : [];
+    const activities = response.data?.flatMap((page)=>page.activities) ?? [];
     return {
         ...response,
         data: activities
@@ -2080,31 +2056,30 @@ function $ea6a5a4aadbe73c6$export$2e2bcd8739ae039(users, options, swrOptions = {
 
 
 
-function $6c04a5e57562cf4e$export$2e2bcd8739ae039(user, options, swrOptions = {}, chainId) {
-    var _a, _b;
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const chain = chainId !== undefined ? client === null || client === void 0 ? void 0 : client.chains.find((chain)=>chain.id === chainId) : client === null || client === void 0 ? void 0 : client.currentChain();
-    const response = (0, $b513d475db95414d$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
+function $7ef173c8b4177008$export$2e2bcd8739ae039(user, options, swrOptions = {}, chainId) {
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const chain = chainId !== undefined ? client?.chains.find((chain)=>chain.id === chainId) : client?.currentChain();
+    const response = (0, $3da80fe4336107c2$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
         if (!user) return null;
-        const url = new URL(`${chain === null || chain === void 0 ? void 0 : chain.baseApiUrl}/users/${user}/tokens/v6`);
+        const url = new URL(`${chain?.baseApiUrl}/users/${user}/tokens/v6`);
         let query = {
             ...options
         };
         if (previousPageData && !previousPageData.continuation) return null;
         else if (previousPageData && pageIndex > 0) query.continuation = previousPageData.continuation;
-        if (query.normalizeRoyalties === undefined && (client === null || client === void 0 ? void 0 : client.normalizeRoyalties) !== undefined) query.normalizeRoyalties = client.normalizeRoyalties;
+        if (query.normalizeRoyalties === undefined && client?.normalizeRoyalties !== undefined) query.normalizeRoyalties = client.normalizeRoyalties;
         (0, $bNXjM$setParams)(url, query);
         return [
             url.href,
-            chain === null || chain === void 0 ? void 0 : chain.apiKey,
-            client === null || client === void 0 ? void 0 : client.version
+            chain?.apiKey,
+            client?.version
         ];
     }, {
         revalidateOnMount: true,
         revalidateFirstPage: false,
         ...swrOptions
     });
-    const tokens = (_b = (_a = response.data) === null || _a === void 0 ? void 0 : _a.flatMap((page)=>page.tokens)) !== null && _b !== void 0 ? _b : [];
+    const tokens = response.data?.flatMap((page)=>page.tokens) ?? [];
     return {
         ...response,
         data: tokens
@@ -2113,29 +2088,28 @@ function $6c04a5e57562cf4e$export$2e2bcd8739ae039(user, options, swrOptions = {}
 
 
 
-function $bac434731ae4dec3$export$2e2bcd8739ae039(user, options, swrOptions = {}, chainId) {
-    var _a, _b;
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const chain = chainId !== undefined ? client === null || client === void 0 ? void 0 : client.chains.find((chain)=>chain.id === chainId) : client === null || client === void 0 ? void 0 : client.currentChain();
-    const response = (0, $b513d475db95414d$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
+function $b3db166a82febb11$export$2e2bcd8739ae039(user, options, swrOptions = {}, chainId) {
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const chain = chainId !== undefined ? client?.chains.find((chain)=>chain.id === chainId) : client?.currentChain();
+    const response = (0, $3da80fe4336107c2$export$2e2bcd8739ae039)((pageIndex, previousPageData)=>{
         if (!user) return null;
-        const url = new URL(`${(chain === null || chain === void 0 ? void 0 : chain.baseApiUrl) || ""}/orders/users/${user}/top-bids/v2`);
+        const url = new URL(`${chain?.baseApiUrl || ""}/orders/users/${user}/top-bids/v2`);
         let query = options || {};
         if (previousPageData && !previousPageData.continuation) return null;
         else if (previousPageData && pageIndex > 0) query.continuation = previousPageData.continuation;
-        if (query.normalizeRoyalties === undefined && (client === null || client === void 0 ? void 0 : client.normalizeRoyalties) !== undefined) query.normalizeRoyalties = client.normalizeRoyalties;
+        if (query.normalizeRoyalties === undefined && client?.normalizeRoyalties !== undefined) query.normalizeRoyalties = client.normalizeRoyalties;
         (0, $bNXjM$setParams)(url, query);
         return [
             url.href,
-            chain === null || chain === void 0 ? void 0 : chain.apiKey,
-            client === null || client === void 0 ? void 0 : client.version
+            chain?.apiKey,
+            client?.version
         ];
     }, {
         revalidateOnMount: true,
         revalidateFirstPage: false,
         ...swrOptions
     });
-    const bids = (_b = (_a = response.data) === null || _a === void 0 ? void 0 : _a.flatMap((page)=>page.topBids)) !== null && _b !== void 0 ? _b : [];
+    const bids = response.data?.flatMap((page)=>page.topBids) ?? [];
     return {
         ...response,
         data: bids
@@ -2145,8 +2119,8 @@ function $bac434731ae4dec3$export$2e2bcd8739ae039(user, options, swrOptions = {}
 
 
 
-function $d211a606bb97df6f$export$2e2bcd8739ae039(overrides) {
-    let sharedTheme = (0, $c5818e6b099fc301$export$8e9bfb060b52dac8)(overrides);
+function $5ca18e7553dfd06e$export$2e2bcd8739ae039(overrides) {
+    let sharedTheme = (0, $35e7883cc4a3f817$export$8e9bfb060b52dac8)(overrides);
     return {
         colors: {
             ...(0, $bNXjM$indigo),
@@ -2164,9 +2138,9 @@ function $d211a606bb97df6f$export$2e2bcd8739ae039(overrides) {
             accentBgActive: "$indigo5",
             accentLine: "$indigo6",
             accentBorder: "$indigo7",
-            accentBorderHover: (overrides === null || overrides === void 0 ? void 0 : overrides.primaryColor) || "$indigo8",
-            accentSolid: (overrides === null || overrides === void 0 ? void 0 : overrides.primaryColor) || "$indigo9",
-            accentSolidHover: (overrides === null || overrides === void 0 ? void 0 : overrides.primaryHoverColor) || (overrides === null || overrides === void 0 ? void 0 : overrides.primaryColor) || "$indigo10",
+            accentBorderHover: overrides?.primaryColor || "$indigo8",
+            accentSolid: overrides?.primaryColor || "$indigo9",
+            accentSolidHover: overrides?.primaryHoverColor || overrides?.primaryColor || "$indigo10",
             accentText: "$indigo11",
             accentTextContrast: "$indigo12",
             // neutral colors
@@ -2196,26 +2170,26 @@ function $d211a606bb97df6f$export$2e2bcd8739ae039(overrides) {
             secondaryText: "$indigoA11",
             secondaryTextContrast: "$indigoA12",
             // general colors
-            borderColor: (overrides === null || overrides === void 0 ? void 0 : overrides.borderColor) || "$neutralBorder",
-            textColor: (overrides === null || overrides === void 0 ? void 0 : overrides.textColor) || "$neutralTextContrast",
+            borderColor: overrides?.borderColor || "$neutralBorder",
+            textColor: overrides?.textColor || "$neutralTextContrast",
             focusColor: "$neutralTextContrast",
             errorText: "$red12",
             errorAccent: "$red10",
             successAccent: "$green10",
             // component colors
             reservoirLogoColor: "#11181C",
-            buttonTextColor: (overrides === null || overrides === void 0 ? void 0 : overrides.buttonTextColor) || "white",
-            buttonTextHoverColor: (overrides === null || overrides === void 0 ? void 0 : overrides.buttonTextHoverColor) || "white",
+            buttonTextColor: overrides?.buttonTextColor || "white",
+            buttonTextHoverColor: overrides?.buttonTextHoverColor || "white",
             inputBackground: "$neutralBgHover",
-            overlayBackground: (overrides === null || overrides === void 0 ? void 0 : overrides.overlayBackground) || "$blackA10",
-            headerBackground: (overrides === null || overrides === void 0 ? void 0 : overrides.headerBackground) || "$neutralBgHover",
-            footerBackground: (overrides === null || overrides === void 0 ? void 0 : overrides.footerBackground) || "$neutralBgHover",
-            contentBackground: (overrides === null || overrides === void 0 ? void 0 : overrides.contentBackground) || "$neutralBgSubtle",
-            wellBackground: (overrides === null || overrides === void 0 ? void 0 : overrides.wellBackground) || "$gray3",
-            popoverBackground: (overrides === null || overrides === void 0 ? void 0 : overrides.popoverBackground) || "$neutralBase"
+            overlayBackground: overrides?.overlayBackground || "$blackA10",
+            headerBackground: overrides?.headerBackground || "$neutralBgHover",
+            footerBackground: overrides?.footerBackground || "$neutralBgHover",
+            contentBackground: overrides?.contentBackground || "$neutralBgSubtle",
+            wellBackground: overrides?.wellBackground || "$gray3",
+            popoverBackground: overrides?.popoverBackground || "$neutralBase"
         },
         assets: {
-            ethIcon: (overrides === null || overrides === void 0 ? void 0 : overrides.ethIcon) || "gray"
+            ethIcon: overrides?.ethIcon || "gray"
         },
         ...sharedTheme
     };
@@ -2224,7 +2198,8 @@ function $d211a606bb97df6f$export$2e2bcd8739ae039(overrides) {
 
 
 
-const $a330a8a12212b45c$var$useCopyToClipboard = (successTime = 1000)=>{
+
+const $2663f1ccb598096e$var$useCopyToClipboard = (successTime = 1000)=>{
     const [copied, setCopied] = (0, $bNXjM$useState)(false);
     const copy = (content)=>{
         navigator.clipboard.writeText(content ? content : "");
@@ -2240,20 +2215,21 @@ const $a330a8a12212b45c$var$useCopyToClipboard = (successTime = 1000)=>{
         copied: copied
     };
 };
-var $a330a8a12212b45c$export$2e2bcd8739ae039 = $a330a8a12212b45c$var$useCopyToClipboard;
+var $2663f1ccb598096e$export$2e2bcd8739ae039 = $2663f1ccb598096e$var$useCopyToClipboard;
 
 
-const $eae8553d9b344d57$var$useFallbackState = (defaultValue, state)=>{
+const $d115e0b00eaf4565$var$useFallbackState = (defaultValue, state)=>{
     const _state = (0, $bNXjM$useState)(defaultValue);
     if (state) return state;
     return _state;
 };
-var $eae8553d9b344d57$export$2e2bcd8739ae039 = $eae8553d9b344d57$var$useFallbackState;
+var $d115e0b00eaf4565$export$2e2bcd8739ae039 = $d115e0b00eaf4565$var$useFallbackState;
 
 
 
 
-const $4fb5cf8c028cd3ca$export$ec39d0bf2d6d1efb = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("a", {
+
+const $31d3f3a80135a993$export$ec39d0bf2d6d1efb = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("a", {
     backgroundColor: "transparent",
     cursor: "pointer",
     fontFamily: "$body",
@@ -2299,21 +2275,22 @@ const $4fb5cf8c028cd3ca$export$ec39d0bf2d6d1efb = (0, $cd784f5a4171372f$export$3
         weight: "heavy"
     }
 });
-var $4fb5cf8c028cd3ca$export$2e2bcd8739ae039 = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ children: children , ...props }, forwardedRef)=>/*#__PURE__*/ (0, $bNXjM$react).createElement($4fb5cf8c028cd3ca$export$ec39d0bf2d6d1efb, {
+var $31d3f3a80135a993$export$2e2bcd8739ae039 = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ children: children , ...props }, forwardedRef)=>/*#__PURE__*/ (0, $bNXjM$jsx)($31d3f3a80135a993$export$ec39d0bf2d6d1efb, {
         ref: forwardedRef,
         ...props,
-        tabIndex: 0
-    }, children));
+        tabIndex: 0,
+        children: children
+    }));
 
 
-var $e8aed2f843739ce1$export$2e2bcd8739ae039 = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("div", {
+var $e779e4a6b41db55c$export$2e2bcd8739ae039 = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("div", {
     boxSizing: "border-box",
     borderStyle: "solid",
     borderWidth: 0
 });
 
 
-const $047ffb48b5200c33$var$Button = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("button", {
+const $f8f1c7bd1550c954$var$Button = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("button", {
     backgroundColor: "transparent",
     backgroundImage: "none",
     outline: "none",
@@ -2448,11 +2425,11 @@ const $047ffb48b5200c33$var$Button = (0, $cd784f5a4171372f$export$3817b7a54a07ce
         size: "medium"
     }
 });
-var $047ffb48b5200c33$export$2e2bcd8739ae039 = $047ffb48b5200c33$var$Button;
+var $f8f1c7bd1550c954$export$2e2bcd8739ae039 = $f8f1c7bd1550c954$var$Button;
 
 
 
-const $2d0e38270a599885$var$flexCss = {
+const $a08469b1b360d6cf$var$flexCss = {
     display: "flex",
     boxSizing: "border-box",
     borderStyle: "solid",
@@ -2516,13 +2493,15 @@ const $2d0e38270a599885$var$flexCss = {
         }
     }
 };
-var $2d0e38270a599885$export$2e2bcd8739ae039 = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("div", $2d0e38270a599885$var$flexCss);
-const $2d0e38270a599885$export$d31dc64e78f336f = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)((0, $bNXjM$motion).div, $2d0e38270a599885$var$flexCss);
+var $a08469b1b360d6cf$export$2e2bcd8739ae039 = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("div", $a08469b1b360d6cf$var$flexCss);
+const $a08469b1b360d6cf$export$d31dc64e78f336f = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)((0, $bNXjM$motion).div, $a08469b1b360d6cf$var$flexCss);
 
 
 
 
-var $6c5e8bd3b530a312$export$2e2bcd8739ae039 = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("span", {
+
+
+var $3d59341a2d8e6cce$export$2e2bcd8739ae039 = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("span", {
     color: "$textColor",
     fontFamily: "$body",
     letterSpacing: 0,
@@ -2623,21 +2602,26 @@ var $6c5e8bd3b530a312$export$2e2bcd8739ae039 = (0, $cd784f5a4171372f$export$3817
 });
 
 
-const $cf3aa5761abbbe4b$var$FormatCrypto = ({ amount: amount , maximumFractionDigits: maximumFractionDigits = 4 , decimals: decimals = 18 , css: css , textStyle: textStyle = "subtitle2" , textColor: textColor = "base" , children: children  })=>{
-    const value = (0, $89f2b3089832dcbb$export$87710fd8420713d9)(amount, maximumFractionDigits, decimals);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+const $bf339e6c548bf9af$var$FormatCrypto = ({ amount: amount , maximumFractionDigits: maximumFractionDigits = 4 , decimals: decimals = 18 , css: css , textStyle: textStyle = "subtitle2" , textColor: textColor = "base" , children: children  })=>{
+    const value = (0, $e70e85f6f4e64430$export$87710fd8420713d9)(amount, maximumFractionDigits, decimals);
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         align: "center",
         css: {
             gap: "$1"
-        }
-    }, value !== "-" ? children : null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: textStyle,
-        color: textColor,
-        css: css,
-        as: "p"
-    }, value));
+        },
+        children: [
+            value !== "-" ? children : null,
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                style: textStyle,
+                color: textColor,
+                css: css,
+                as: "p",
+                children: value
+            })
+        ]
+    });
 };
-var $cf3aa5761abbbe4b$export$2e2bcd8739ae039 = $cf3aa5761abbbe4b$var$FormatCrypto;
+var $bf339e6c548bf9af$export$2e2bcd8739ae039 = $bf339e6c548bf9af$var$FormatCrypto;
 
 
 
@@ -2645,92 +2629,120 @@ var $cf3aa5761abbbe4b$export$2e2bcd8739ae039 = $cf3aa5761abbbe4b$var$FormatCrypt
 
 
 
-var $306938e2b0161f22$export$2e2bcd8739ae039 = ()=>/*#__PURE__*/ (0, $bNXjM$react).createElement("svg", {
+
+
+
+var $58d8f754e898a64f$export$2e2bcd8739ae039 = ()=>/*#__PURE__*/ (0, $bNXjM$jsx)("svg", {
         width: "auto",
         height: "100%",
         viewBox: "5 0 15 24",
         fill: "none",
-        xmlns: "http://www.w3.org/2000/svg"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M11.9441 17.97L4.58008 13.62L11.9431 24L19.3131 13.62L11.9411 17.97H11.9441V17.97ZM12.0561 0L4.69008 12.223L12.0551 16.577L19.4201 12.227L12.0561 0Z",
-        fill: "black"
-    }));
+        xmlns: "http://www.w3.org/2000/svg",
+        children: /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+            d: "M11.9441 17.97L4.58008 13.62L11.9431 24L19.3131 13.62L11.9411 17.97H11.9441V17.97ZM12.0561 0L4.69008 12.223L12.0551 16.577L19.4201 12.227L12.0561 0Z",
+            fill: "black"
+        })
+    });
 
 
 
-var $40284287a4f71e90$export$2e2bcd8739ae039 = ()=>/*#__PURE__*/ (0, $bNXjM$react).createElement("svg", {
+
+var $81efeccddbef40a5$export$2e2bcd8739ae039 = ()=>/*#__PURE__*/ (0, $bNXjM$jsxs)("svg", {
         width: "auto",
         height: "100%",
         viewBox: "5 0 15 24",
         fill: "none",
-        xmlns: "http://www.w3.org/2000/svg"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement("g", {
-        clipPath: "url(#clip0_2127_56739)"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M11.9979 0L11.8369 0.546928V16.4161L11.9979 16.5767L19.3641 12.2225L11.9979 0Z",
-        fill: "#343434"
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M11.9979 0L4.63159 12.2225L11.9979 16.5767V8.87428V0Z",
-        fill: "#8C8C8C"
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M11.998 17.9714L11.9072 18.0821V23.7349L11.998 23.9999L19.3686 13.6195L11.998 17.9714Z",
-        fill: "#3C3C3B"
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M11.9979 23.9999V17.9714L4.63159 13.6195L11.9979 23.9999Z",
-        fill: "#8C8C8C"
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M11.998 16.5767L19.3642 12.2225L11.998 8.87427V16.5767Z",
-        fill: "#141414"
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M4.63159 12.2225L11.9979 16.5767V8.87427L4.63159 12.2225Z",
-        fill: "#393939"
-    })), /*#__PURE__*/ (0, $bNXjM$react).createElement("defs", null, /*#__PURE__*/ (0, $bNXjM$react).createElement("clipPath", {
-        id: "clip0_2127_56739"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement("rect", {
-        width: "24",
-        height: "24",
-        fill: "white"
-    }))));
+        xmlns: "http://www.w3.org/2000/svg",
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsxs)("g", {
+                clipPath: "url(#clip0_2127_56739)",
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                        d: "M11.9979 0L11.8369 0.546928V16.4161L11.9979 16.5767L19.3641 12.2225L11.9979 0Z",
+                        fill: "#343434"
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                        d: "M11.9979 0L4.63159 12.2225L11.9979 16.5767V8.87428V0Z",
+                        fill: "#8C8C8C"
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                        d: "M11.998 17.9714L11.9072 18.0821V23.7349L11.998 23.9999L19.3686 13.6195L11.998 17.9714Z",
+                        fill: "#3C3C3B"
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                        d: "M11.9979 23.9999V17.9714L4.63159 13.6195L11.9979 23.9999Z",
+                        fill: "#8C8C8C"
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                        d: "M11.998 16.5767L19.3642 12.2225L11.998 8.87427V16.5767Z",
+                        fill: "#141414"
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                        d: "M4.63159 12.2225L11.9979 16.5767V8.87427L4.63159 12.2225Z",
+                        fill: "#393939"
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)("defs", {
+                children: /*#__PURE__*/ (0, $bNXjM$jsx)("clipPath", {
+                    id: "clip0_2127_56739",
+                    children: /*#__PURE__*/ (0, $bNXjM$jsx)("rect", {
+                        width: "24",
+                        height: "24",
+                        fill: "white"
+                    })
+                })
+            })
+        ]
+    });
 
 
 
-var $0e1984759916943c$export$2e2bcd8739ae039 = ()=>/*#__PURE__*/ (0, $bNXjM$react).createElement("svg", {
+
+var $760403efeeaf3296$export$2e2bcd8739ae039 = ()=>/*#__PURE__*/ (0, $bNXjM$jsxs)("svg", {
         width: "auto",
         height: "100%",
         viewBox: "5 0 15 24",
         fill: "none",
-        xmlns: "http://www.w3.org/2000/svg"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M12.3654 8.87477V0L5 12.2224L12.3654 8.87477Z",
-        fill: "#8A92B2"
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M12.3654 16.5772V8.87477L5 12.2224L12.3654 16.5772ZM12.3654 8.87477L19.7322 12.2224L12.3654 0V8.87477Z",
-        fill: "#62688F"
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M12.3655 8.87476V16.5772L19.7322 12.2224L12.3655 8.87476Z",
-        fill: "#454A75"
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M12.3654 17.972L5 13.6199L12.3654 23.9999V17.972Z",
-        fill: "#8A92B2"
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M19.7363 13.6199L12.3655 17.972V23.9999L19.7363 13.6199Z",
-        fill: "#62688F"
-    }));
+        xmlns: "http://www.w3.org/2000/svg",
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                d: "M12.3654 8.87477V0L5 12.2224L12.3654 8.87477Z",
+                fill: "#8A92B2"
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                d: "M12.3654 16.5772V8.87477L5 12.2224L12.3654 16.5772ZM12.3654 8.87477L19.7322 12.2224L12.3654 0V8.87477Z",
+                fill: "#62688F"
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                d: "M12.3655 8.87476V16.5772L19.7322 12.2224L12.3655 8.87476Z",
+                fill: "#454A75"
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                d: "M12.3654 17.972L5 13.6199L12.3654 23.9999V17.972Z",
+                fill: "#8A92B2"
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                d: "M19.7363 13.6199L12.3655 17.972V23.9999L19.7363 13.6199Z",
+                fill: "#62688F"
+            })
+        ]
+    });
 
 
-const $328c1bed1b17d5a9$var$EthLogo = ()=>{
-    const themeContext = (0, $bNXjM$useContext)((0, $b02c8f73abc110da$export$2c657da244d00bd6));
+const $94f006d5638f6dfb$var$EthLogo = ()=>{
+    const themeContext = (0, $bNXjM$useContext)((0, $b15843e937ac72b8$export$2c657da244d00bd6));
     const ethIcon = themeContext && themeContext ? themeContext["assets"]["ethIcon"]["value"] : "glyph";
     switch(ethIcon){
         case "glyph":
-            return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $306938e2b0161f22$export$2e2bcd8739ae039), null);
+            return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $58d8f754e898a64f$export$2e2bcd8739ae039), {});
         case "gray":
-            return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $40284287a4f71e90$export$2e2bcd8739ae039), null);
+            return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $81efeccddbef40a5$export$2e2bcd8739ae039), {});
         case "purple":
-            return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0e1984759916943c$export$2e2bcd8739ae039), null);
+            return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $760403efeeaf3296$export$2e2bcd8739ae039), {});
     }
 };
-var $328c1bed1b17d5a9$export$2e2bcd8739ae039 = $328c1bed1b17d5a9$var$EthLogo;
+var $94f006d5638f6dfb$export$2e2bcd8739ae039 = $94f006d5638f6dfb$var$EthLogo;
 
 
 
@@ -2738,90 +2750,103 @@ var $328c1bed1b17d5a9$export$2e2bcd8739ae039 = $328c1bed1b17d5a9$var$EthLogo;
 
 
 
-const $fc1497f0cb88da4d$var$wrappedContracts = {
+const $412f709ff46d543e$var$wrappedContracts = {
     1: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     5: "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
     137: "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270"
 };
-var $fc1497f0cb88da4d$export$2e2bcd8739ae039 = $fc1497f0cb88da4d$var$wrappedContracts;
+var $412f709ff46d543e$export$2e2bcd8739ae039 = $412f709ff46d543e$var$wrappedContracts;
 
 
 
-var $d2bb58d56227b6dc$export$2e2bcd8739ae039 = ()=>/*#__PURE__*/ (0, $bNXjM$react).createElement("svg", {
+
+var $ce1f74d0add013e9$export$2e2bcd8739ae039 = ()=>/*#__PURE__*/ (0, $bNXjM$jsxs)("svg", {
         width: "auto",
         height: "100%",
         viewBox: "0 0 15 24",
         fill: "none",
-        xmlns: "http://www.w3.org/2000/svg"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M7.49721 0L0 12.4432L7.49721 9.03511V0Z",
-        fill: "#AE1955"
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M7.49721 9.03506L0 12.4432L7.49721 16.8767V9.03506Z",
-        fill: "#801D45"
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M14.9959 12.4433L7.49731 0V9.03511L14.9959 12.4433Z",
-        fill: "#801D45"
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M7.49731 16.8767L14.9959 12.4432L11.2466 10.7391L7.49731 9.03506V16.8767Z",
-        fill: "#641D3B"
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M0 13.8661L7.49721 24.4337V18.2968L0 13.8661Z",
-        fill: "#AE1955"
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("path", {
-        d: "M7.49731 18.2968V24.4337L15.0001 13.8661L7.49731 18.2968Z",
-        fill: "#801D45"
-    }));
+        xmlns: "http://www.w3.org/2000/svg",
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                d: "M7.49721 0L0 12.4432L7.49721 9.03511V0Z",
+                fill: "#AE1955"
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                d: "M7.49721 9.03506L0 12.4432L7.49721 16.8767V9.03506Z",
+                fill: "#801D45"
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                d: "M14.9959 12.4433L7.49731 0V9.03511L14.9959 12.4433Z",
+                fill: "#801D45"
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                d: "M7.49731 16.8767L14.9959 12.4432L11.2466 10.7391L7.49731 9.03506V16.8767Z",
+                fill: "#641D3B"
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                d: "M0 13.8661L7.49721 24.4337V18.2968L0 13.8661Z",
+                fill: "#AE1955"
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)("path", {
+                d: "M7.49731 18.2968V24.4337L15.0001 13.8661L7.49731 18.2968Z",
+                fill: "#801D45"
+            })
+        ]
+    });
 
 
-const $cc9dff2d7173bce5$var$StyledImg = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("img", {});
-const $cc9dff2d7173bce5$var$CryptoCurrencyIcon = ({ address: address = (0, $bNXjM$constants).AddressZero , chainId: chainId , css: css  })=>{
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const chainCurrency = (0, $b6adfc9a883b8132$export$2e2bcd8739ae039)(chainId);
-    const chain = client === null || client === void 0 ? void 0 : client.chains.find((chain)=>chain.id === chainCurrency.chainId);
+const $bb13850b05622906$var$StyledImg = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("img", {});
+const $bb13850b05622906$var$CryptoCurrencyIcon = ({ address: address = (0, $bNXjM$constants).AddressZero , chainId: chainId , css: css  })=>{
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const chainCurrency = (0, $16fcb794e07c5eb8$export$2e2bcd8739ae039)(chainId);
+    const chain = client?.chains.find((chain)=>chain.id === chainCurrency.chainId);
     if (chainCurrency.symbol === "ETH") {
-        if ((0, $bNXjM$constants).AddressZero === address) return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
+        if ((0, $bNXjM$constants).AddressZero === address) return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
             css: {
                 display: "flex",
                 ...css
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $328c1bed1b17d5a9$export$2e2bcd8739ae039), null));
-        if ((0, $fc1497f0cb88da4d$export$2e2bcd8739ae039)[chainCurrency.chainId] === address) return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
+            },
+            children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $94f006d5638f6dfb$export$2e2bcd8739ae039), {})
+        });
+        if ((0, $412f709ff46d543e$export$2e2bcd8739ae039)[chainCurrency.chainId] === address) return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
             css: {
                 display: "flex",
                 ...css
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $d2bb58d56227b6dc$export$2e2bcd8739ae039), null));
+            },
+            children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $ce1f74d0add013e9$export$2e2bcd8739ae039), {})
+        });
     }
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement($cc9dff2d7173bce5$var$StyledImg, {
-        src: `${chain === null || chain === void 0 ? void 0 : chain.baseApiUrl}/redirect/currency/${address}/icon/v1`,
+    return /*#__PURE__*/ (0, $bNXjM$jsx)($bb13850b05622906$var$StyledImg, {
+        src: `${chain?.baseApiUrl}/redirect/currency/${address}/icon/v1`,
         css: css
     });
 };
-var $cc9dff2d7173bce5$export$2e2bcd8739ae039 = $cc9dff2d7173bce5$var$CryptoCurrencyIcon;
+var $bb13850b05622906$export$2e2bcd8739ae039 = $bb13850b05622906$var$CryptoCurrencyIcon;
 
 
-const $192d6b4cbdbbf127$var$FormatCryptoCurrency = ({ amount: amount , address: address = (0, $bNXjM$constants).AddressZero , maximumFractionDigits: maximumFractionDigits , logoWidth: logoWidth = 14 , textStyle: textStyle , css: css , textColor: textColor , decimals: decimals , chainId: chainId  })=>{
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $cf3aa5761abbbe4b$export$2e2bcd8739ae039), {
+const $c370900a6d71021a$var$FormatCryptoCurrency = ({ amount: amount , address: address = (0, $bNXjM$constants).AddressZero , maximumFractionDigits: maximumFractionDigits , logoWidth: logoWidth = 14 , textStyle: textStyle , css: css , textColor: textColor , decimals: decimals , chainId: chainId  })=>{
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bf339e6c548bf9af$export$2e2bcd8739ae039), {
         css: css,
         textColor: textColor,
         textStyle: textStyle,
         amount: amount,
         maximumFractionDigits: maximumFractionDigits,
-        decimals: decimals
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $cc9dff2d7173bce5$export$2e2bcd8739ae039), {
-        css: {
-            height: logoWidth
-        },
-        address: address,
-        chainId: chainId
-    }));
+        decimals: decimals,
+        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bb13850b05622906$export$2e2bcd8739ae039), {
+            css: {
+                height: logoWidth
+            },
+            address: address,
+            chainId: chainId
+        })
+    });
 };
-var $192d6b4cbdbbf127$export$2e2bcd8739ae039 = $192d6b4cbdbbf127$var$FormatCryptoCurrency;
+var $c370900a6d71021a$export$2e2bcd8739ae039 = $c370900a6d71021a$var$FormatCryptoCurrency;
 
 
 
-const $6a6c14d54fb307eb$var$FormatCurrency = ({ amount: amount , maximumFractionDigits: maximumFractionDigits = 2 , currency: currency = "USD" , ...props })=>{
+
+const $208ab5b0155991db$var$FormatCurrency = ({ amount: amount , maximumFractionDigits: maximumFractionDigits = 2 , currency: currency = "USD" , ...props })=>{
     const [formattedValue, setFormattedValue] = (0, $bNXjM$useState)("");
     (0, $bNXjM$useEffect)(()=>{
         if (amount) {
@@ -2837,19 +2862,21 @@ const $6a6c14d54fb307eb$var$FormatCurrency = ({ amount: amount , maximumFraction
         amount,
         maximumFractionDigits
     ]);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
         ...props,
         style: props.style || "subtitle2",
-        color: props.color || "base"
-    }, formattedValue);
+        color: props.color || "base",
+        children: formattedValue
+    });
 };
-var $6a6c14d54fb307eb$export$2e2bcd8739ae039 = $6a6c14d54fb307eb$var$FormatCurrency;
+var $208ab5b0155991db$export$2e2bcd8739ae039 = $208ab5b0155991db$var$FormatCurrency;
 
 
 
 
 
-const $b348cba042fa8022$var$StyledInput = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("input", {
+
+const $a235eda53948b6ff$var$StyledInput = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("input", {
     all: "unset",
     width: "100%",
     px: 16,
@@ -2874,62 +2901,70 @@ const $b348cba042fa8022$var$StyledInput = (0, $cd784f5a4171372f$export$3817b7a54
         "-moz-appearance": "textfield"
     }
 });
-const $b348cba042fa8022$export$f5b8910cec6cf069 = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ children: children , icon: icon , containerCss: containerCss , iconCss: iconCss , ...props }, forwardedRef)=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+const $a235eda53948b6ff$export$f5b8910cec6cf069 = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ children: children , icon: icon , containerCss: containerCss , iconCss: iconCss , ...props }, forwardedRef)=>/*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         css: {
             ...containerCss,
             position: "relative"
-        }
-    }, icon && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            position: "absolute",
-            top: "50%",
-            transform: "translateY(-50%)",
-            left: 16,
-            color: "$neutralTextContrast",
-            pointerEvents: "none",
-            ...iconCss
-        }
-    }, icon), /*#__PURE__*/ (0, $bNXjM$react).createElement($b348cba042fa8022$var$StyledInput, {
-        css: {
-            pl: icon ? 48 : 16,
-            ...props.css
         },
-        ref: forwardedRef,
-        ...props
-    })));
-var $b348cba042fa8022$export$2e2bcd8739ae039 = $b348cba042fa8022$export$f5b8910cec6cf069;
+        children: [
+            icon && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                css: {
+                    position: "absolute",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    left: 16,
+                    color: "$neutralTextContrast",
+                    pointerEvents: "none",
+                    ...iconCss
+                },
+                children: icon
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)($a235eda53948b6ff$var$StyledInput, {
+                css: {
+                    pl: icon ? 48 : 16,
+                    ...props.css
+                },
+                ref: forwardedRef,
+                ...props
+            })
+        ]
+    }));
+var $a235eda53948b6ff$export$2e2bcd8739ae039 = $a235eda53948b6ff$export$f5b8910cec6cf069;
 
 
 
 
 
 
-const $0c83fbef8350e27e$var$LoaderContainer = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("div", {
+
+const $0ff8966798df47ad$var$LoaderContainer = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("div", {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     color: "$neutralText"
 });
-function $0c83fbef8350e27e$export$2e2bcd8739ae039(props) {
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement($0c83fbef8350e27e$var$LoaderContainer, {
-        ...props
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$motion).div, {
-        initial: {
-            rotate: 0
-        },
-        transition: {
-            repeat: Infinity,
-            duration: 1,
-            ease: "linear"
-        },
-        animate: {
-            rotate: 360
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        icon: (0, $bNXjM$faSpinner),
-        width: 20,
-        height: 20
-    })));
+function $0ff8966798df47ad$export$2e2bcd8739ae039(props) {
+    return /*#__PURE__*/ (0, $bNXjM$jsx)($0ff8966798df47ad$var$LoaderContainer, {
+        ...props,
+        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$motion).div, {
+            initial: {
+                rotate: 0
+            },
+            transition: {
+                repeat: Infinity,
+                duration: 1,
+                ease: "linear"
+            },
+            animate: {
+                rotate: 360
+            },
+            children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                icon: (0, $bNXjM$faSpinner),
+                width: 20,
+                height: 20
+            })
+        })
+    });
 }
 
 
@@ -2938,7 +2973,8 @@ function $0c83fbef8350e27e$export$2e2bcd8739ae039(props) {
 
 
 
-const $932fe82d4750e082$var$StyledTrigger = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Trigger, {
+
+const $f6c56793b47f1e35$var$StyledTrigger = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Trigger, {
     boxSizing: "border-box",
     borderWidth: 0,
     width: "100%",
@@ -2959,7 +2995,7 @@ const $932fe82d4750e082$var$StyledTrigger = (0, $cd784f5a4171372f$export$3817b7a
         boxShadow: "0 0 0 2px $$focusColor"
     }
 });
-const $932fe82d4750e082$var$StyledContent = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Content, {
+const $f6c56793b47f1e35$var$StyledContent = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Content, {
     backgroundColor: "$inputBackground",
     color: "$textColor",
     borderRadius: "$borderRadius",
@@ -2967,41 +3003,61 @@ const $932fe82d4750e082$var$StyledContent = (0, $cd784f5a4171372f$export$3817b7a
     $$focusColor: "$colors$accentBorderHover",
     boxShadow: "0 0 0 2px $$focusColor"
 });
-const $932fe82d4750e082$var$textCss = {
+const $f6c56793b47f1e35$var$textCss = {
     color: "$textColor",
     fontFamily: "$body",
     letterSpacing: 0
 };
-const $932fe82d4750e082$var$StyledItemText = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$ItemText, $932fe82d4750e082$var$textCss);
-const $932fe82d4750e082$var$StyledValue = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Value, $932fe82d4750e082$var$textCss);
-const $932fe82d4750e082$var$SelectDownIcon = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ ...props }, forwardedRef)=>/*#__PURE__*/ (0, $bNXjM$react).createElement($bNXjM$Icon, {
+const $f6c56793b47f1e35$var$StyledItemText = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$ItemText, $f6c56793b47f1e35$var$textCss);
+const $f6c56793b47f1e35$var$StyledValue = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Value, $f6c56793b47f1e35$var$textCss);
+const $f6c56793b47f1e35$var$SelectDownIcon = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ ...props }, forwardedRef)=>/*#__PURE__*/ (0, $bNXjM$jsx)($bNXjM$Icon, {
         asChild: true,
         ref: forwardedRef,
-        ...props
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            color: "$neutralSolidHover"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        icon: (0, $bNXjM$faChevronDown),
-        width: "14",
-        color: ""
-    }))));
-const $932fe82d4750e082$export$863d5f18a1f54f2d = ({ children: children , trigger: trigger , css: css , ...props })=>/*#__PURE__*/ (0, $bNXjM$react).createElement($bNXjM$Root, {
-        ...props
-    }, trigger ? trigger : /*#__PURE__*/ (0, $bNXjM$react).createElement($932fe82d4750e082$var$StyledTrigger, {
-        css: {
-            ...$932fe82d4750e082$var$textCss,
-            ...css
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($932fe82d4750e082$var$StyledValue, {
-        placeholder: props.placeholder
-    }, props.value), /*#__PURE__*/ (0, $bNXjM$react).createElement($932fe82d4750e082$var$SelectDownIcon, null)), /*#__PURE__*/ (0, $bNXjM$react).createElement($bNXjM$Portal, {
-        style: {
-            zIndex: 1000000
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($932fe82d4750e082$var$StyledContent, null, /*#__PURE__*/ (0, $bNXjM$react).createElement($bNXjM$ScrollUpButton, null), /*#__PURE__*/ (0, $bNXjM$react).createElement($bNXjM$Viewport, null, children), /*#__PURE__*/ (0, $bNXjM$react).createElement($bNXjM$ScrollDownButton, null))));
-const $932fe82d4750e082$var$StyledItem = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Item, {
+        ...props,
+        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+            css: {
+                color: "$neutralSolidHover"
+            },
+            children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                icon: (0, $bNXjM$faChevronDown),
+                width: "14",
+                color: ""
+            })
+        })
+    }));
+const $f6c56793b47f1e35$export$863d5f18a1f54f2d = ({ children: children , trigger: trigger , css: css , ...props })=>/*#__PURE__*/ (0, $bNXjM$jsxs)($bNXjM$Root, {
+        ...props,
+        children: [
+            trigger ? trigger : /*#__PURE__*/ (0, $bNXjM$jsxs)($f6c56793b47f1e35$var$StyledTrigger, {
+                css: {
+                    ...$f6c56793b47f1e35$var$textCss,
+                    ...css
+                },
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)($f6c56793b47f1e35$var$StyledValue, {
+                        placeholder: props.placeholder,
+                        children: props.value
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)($f6c56793b47f1e35$var$SelectDownIcon, {})
+                ]
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)($bNXjM$Portal, {
+                style: {
+                    zIndex: 1000000
+                },
+                children: /*#__PURE__*/ (0, $bNXjM$jsxs)($f6c56793b47f1e35$var$StyledContent, {
+                    children: [
+                        /*#__PURE__*/ (0, $bNXjM$jsx)($bNXjM$ScrollUpButton, {}),
+                        /*#__PURE__*/ (0, $bNXjM$jsx)($bNXjM$Viewport, {
+                            children: children
+                        }),
+                        /*#__PURE__*/ (0, $bNXjM$jsx)($bNXjM$ScrollDownButton, {})
+                    ]
+                })
+            })
+        ]
+    });
+const $f6c56793b47f1e35$var$StyledItem = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Item, {
     cursor: "pointer",
     py: "$3",
     px: "$4",
@@ -3012,12 +3068,12 @@ const $932fe82d4750e082$var$StyledItem = (0, $cd784f5a4171372f$export$3817b7a54a
         background: "$neutralBgActive"
     }
 });
-$932fe82d4750e082$export$863d5f18a1f54f2d.Item = $932fe82d4750e082$var$StyledItem;
-$932fe82d4750e082$export$863d5f18a1f54f2d.ItemText = $932fe82d4750e082$var$StyledItemText;
-$932fe82d4750e082$export$863d5f18a1f54f2d.Trigger = $932fe82d4750e082$var$StyledTrigger;
-$932fe82d4750e082$export$863d5f18a1f54f2d.Value = $932fe82d4750e082$var$StyledValue;
-$932fe82d4750e082$export$863d5f18a1f54f2d.DownIcon = $932fe82d4750e082$var$SelectDownIcon;
-var $932fe82d4750e082$export$2e2bcd8739ae039 = $932fe82d4750e082$export$863d5f18a1f54f2d;
+$f6c56793b47f1e35$export$863d5f18a1f54f2d.Item = $f6c56793b47f1e35$var$StyledItem;
+$f6c56793b47f1e35$export$863d5f18a1f54f2d.ItemText = $f6c56793b47f1e35$var$StyledItemText;
+$f6c56793b47f1e35$export$863d5f18a1f54f2d.Trigger = $f6c56793b47f1e35$var$StyledTrigger;
+$f6c56793b47f1e35$export$863d5f18a1f54f2d.Value = $f6c56793b47f1e35$var$StyledValue;
+$f6c56793b47f1e35$export$863d5f18a1f54f2d.DownIcon = $f6c56793b47f1e35$var$SelectDownIcon;
+var $f6c56793b47f1e35$export$2e2bcd8739ae039 = $f6c56793b47f1e35$export$863d5f18a1f54f2d;
 
 
 
@@ -3025,87 +3081,109 @@ var $932fe82d4750e082$export$2e2bcd8739ae039 = $932fe82d4750e082$export$863d5f18
 
 
 
-const $914dcae46ee80bba$var$Progress = ({ title: title , txHash: txHash , blockExplorerBaseUrl: blockExplorerBaseUrl  })=>{
-    var _a;
+
+const $168bea4f9c9e5bd1$var$Progress = ({ title: title , txHash: txHash , blockExplorerBaseUrl: blockExplorerBaseUrl  })=>{
     const { chain: activeChain  } = (0, $bNXjM$useNetwork)();
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         direction: "column",
         css: {
             alignItems: "center",
             gap: "$4",
             mt: "$5",
             mb: "$3"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "h6"
-    }, title), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            color: "$neutralText"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        icon: txHash ? (0, $bNXjM$faCube) : (0, $bNXjM$faWallet),
-        style: {
-            width: "32px",
-            height: "32px",
-            marginTop: "12px 0px"
-        }
-    })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4fb5cf8c028cd3ca$export$2e2bcd8739ae039), {
-        color: "primary",
-        weight: "medium",
-        css: {
-            fontSize: 12,
-            visibility: txHash ? "visible" : "hidden"
         },
-        href: blockExplorerBaseUrl,
-        target: "_blank"
-    }, "View on ", ((_a = activeChain === null || activeChain === void 0 ? void 0 : activeChain.blockExplorers) === null || _a === void 0 ? void 0 : _a.default.name) || "Etherscan"));
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                style: "h6",
+                children: title
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                css: {
+                    color: "$neutralText"
+                },
+                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                    icon: txHash ? (0, $bNXjM$faCube) : (0, $bNXjM$faWallet),
+                    style: {
+                        width: "32px",
+                        height: "32px",
+                        marginTop: "12px 0px"
+                    }
+                })
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $31d3f3a80135a993$export$2e2bcd8739ae039), {
+                color: "primary",
+                weight: "medium",
+                css: {
+                    fontSize: 12,
+                    visibility: txHash ? "visible" : "hidden"
+                },
+                href: blockExplorerBaseUrl,
+                target: "_blank",
+                children: [
+                    "View on ",
+                    activeChain?.blockExplorers?.default.name || "Etherscan"
+                ]
+            })
+        ]
+    });
 };
-var $914dcae46ee80bba$export$2e2bcd8739ae039 = $914dcae46ee80bba$var$Progress;
+var $168bea4f9c9e5bd1$export$2e2bcd8739ae039 = $168bea4f9c9e5bd1$var$Progress;
 
 
 
 
 
 
-const $4befe8050591e2e6$var$Arrow = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Arrow, {
+
+const $364926f073e51b94$var$Arrow = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Arrow, {
     width: 15,
     height: 7,
     fill: "$popoverBackground"
 });
-const $4befe8050591e2e6$var$Content = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Content1, {
+const $364926f073e51b94$var$Content = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Content1, {
     filter: "drop-shadow(0px 2px 16px rgba(0, 0, 0, 0.75))",
     zIndex: 1000
 });
-const $4befe8050591e2e6$var$RKPopover = ({ children: children , content: content , side: side = "bottom" , width: width = "100%" , ...props })=>{
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement($bNXjM$Root1, {
-        ...props
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($bNXjM$Trigger1, {
-        style: {
-            backgroundColor: "transparent",
-            borderWidth: 0,
-            cursor: "pointer",
-            padding: 0
-        }
-    }, children), /*#__PURE__*/ (0, $bNXjM$react).createElement($4befe8050591e2e6$var$Content, {
-        side: side
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($4befe8050591e2e6$var$Arrow, null), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            p: "$3",
-            maxWidth: 320,
-            overflowY: "auto",
-            maxHeight: 322,
-            width: width,
-            borderRadius: 8,
-            backgroundColor: "$popoverBackground"
-        }
-    }, content)));
+const $364926f073e51b94$var$RKPopover = ({ children: children , content: content , side: side = "bottom" , width: width = "100%" , ...props })=>{
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)($bNXjM$Root1, {
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)($bNXjM$Trigger1, {
+                style: {
+                    backgroundColor: "transparent",
+                    borderWidth: 0,
+                    cursor: "pointer",
+                    padding: 0
+                },
+                children: children
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsxs)($364926f073e51b94$var$Content, {
+                side: side,
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)($364926f073e51b94$var$Arrow, {}),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                        css: {
+                            p: "$3",
+                            maxWidth: 320,
+                            overflowY: "auto",
+                            maxHeight: 322,
+                            width: width,
+                            borderRadius: 8,
+                            backgroundColor: "$popoverBackground"
+                        },
+                        children: content
+                    })
+                ]
+            })
+        ]
+    });
 };
-$4befe8050591e2e6$var$RKPopover.Root = $bNXjM$Root1;
-$4befe8050591e2e6$var$RKPopover.Portal = $bNXjM$Portal1;
-$4befe8050591e2e6$var$RKPopover.Trigger = $bNXjM$Trigger1;
-$4befe8050591e2e6$var$RKPopover.Arrow = $4befe8050591e2e6$var$Arrow;
-$4befe8050591e2e6$var$RKPopover.Content = $4befe8050591e2e6$var$Content;
-var $4befe8050591e2e6$export$2e2bcd8739ae039 = $4befe8050591e2e6$var$RKPopover;
+$364926f073e51b94$var$RKPopover.Root = $bNXjM$Root1;
+$364926f073e51b94$var$RKPopover.Portal = $bNXjM$Portal1;
+$364926f073e51b94$var$RKPopover.Trigger = $bNXjM$Trigger1;
+$364926f073e51b94$var$RKPopover.Arrow = $364926f073e51b94$var$Arrow;
+$364926f073e51b94$var$RKPopover.Content = $364926f073e51b94$var$Content;
+var $364926f073e51b94$export$2e2bcd8739ae039 = $364926f073e51b94$var$RKPopover;
 
 
 
@@ -3120,7 +3198,9 @@ var $4befe8050591e2e6$export$2e2bcd8739ae039 = $4befe8050591e2e6$var$RKPopover;
 
 
 
-const $387df40176bedb86$var$useMediaQuery = (query)=>{
+
+
+const $53071302e811b792$var$useMediaQuery = (query)=>{
     const [matches, setMatches] = (0, $bNXjM$useState)(false);
     (0, $bNXjM$useEffect)(()=>{
         const media = window.matchMedia(query);
@@ -3136,35 +3216,36 @@ const $387df40176bedb86$var$useMediaQuery = (query)=>{
     ]);
     return matches;
 };
-var $387df40176bedb86$export$2e2bcd8739ae039 = $387df40176bedb86$var$useMediaQuery;
+var $53071302e811b792$export$2e2bcd8739ae039 = $53071302e811b792$var$useMediaQuery;
 
 
-const $f79bf669cee3d06a$export$c6fdb837b070b4ff = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Overlay, {
+const $f631ed2def755485$export$c6fdb837b070b4ff = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Overlay, {
     backgroundColor: "$overlayBackground",
     position: "fixed",
     inset: 0,
     zIndex: 1000
 });
-const $f79bf669cee3d06a$export$a14718312a4275d3 = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ ...props }, forwardedRef)=>/*#__PURE__*/ (0, $bNXjM$react).createElement($f79bf669cee3d06a$export$c6fdb837b070b4ff, {
+const $f631ed2def755485$export$a14718312a4275d3 = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ ...props }, forwardedRef)=>/*#__PURE__*/ (0, $bNXjM$jsx)($f631ed2def755485$export$c6fdb837b070b4ff, {
         ...props,
         forceMount: true,
-        asChild: true
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$motion).div, {
-        ref: forwardedRef,
-        transition: {
-            duration: 0.5
-        },
-        initial: {
-            opacity: 0
-        },
-        animate: {
-            opacity: 1
-        },
-        exit: {
-            opacity: 0
-        }
-    })));
-const $f79bf669cee3d06a$export$7c6e2c02157bb7d2 = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Content2, {
+        asChild: true,
+        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$motion).div, {
+            ref: forwardedRef,
+            transition: {
+                duration: 0.5
+            },
+            initial: {
+                opacity: 0
+            },
+            animate: {
+                opacity: 1
+            },
+            exit: {
+                opacity: 0
+            }
+        })
+    }));
+const $f631ed2def755485$export$7c6e2c02157bb7d2 = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Content2, {
     backgroundColor: "$contentBackground",
     borderRadius: "$borderRadius",
     $$shadowColor: "$colors$gray7",
@@ -3185,8 +3266,8 @@ const $f79bf669cee3d06a$export$7c6e2c02157bb7d2 = (0, $cd784f5a4171372f$export$3
         border: 0
     }
 });
-const $f79bf669cee3d06a$export$43a7eb3180015c73 = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ children: children , ...props }, forwardedRef)=>{
-    const isMobile = (0, $387df40176bedb86$export$2e2bcd8739ae039)("(max-width: 520px)");
+const $f631ed2def755485$export$43a7eb3180015c73 = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ children: children , ...props }, forwardedRef)=>{
+    const isMobile = (0, $53071302e811b792$export$2e2bcd8739ae039)("(max-width: 520px)");
     const animation = isMobile ? {
         initial: {
             opacity: 0,
@@ -3223,22 +3304,23 @@ const $f79bf669cee3d06a$export$43a7eb3180015c73 = /*#__PURE__*/ (0, $bNXjM$forwa
             transform: "translateX(-50%)"
         }
     };
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement($f79bf669cee3d06a$export$7c6e2c02157bb7d2, {
+    return /*#__PURE__*/ (0, $bNXjM$jsx)($f631ed2def755485$export$7c6e2c02157bb7d2, {
         forceMount: true,
         asChild: true,
-        ...props
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$motion).div, {
-        key: isMobile + "modal",
-        ref: forwardedRef,
-        transition: {
-            type: isMobile ? "tween" : "spring",
-            duration: 0.5
-        },
-        ...animation
-    }, children));
+        ...props,
+        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$motion).div, {
+            ref: forwardedRef,
+            transition: {
+                type: isMobile ? "tween" : "spring",
+                duration: 0.5
+            },
+            ...animation,
+            children: children
+        }, isMobile + "modal")
+    });
 });
-const $f79bf669cee3d06a$var$StyledAnimatedContent = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($f79bf669cee3d06a$export$43a7eb3180015c73, {});
-const $f79bf669cee3d06a$export$3ddf2d174ce01153 = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ children: children , trigger: trigger , portalProps: portalProps , onOpenChange: onOpenChange , open: open , size: size , ...props }, forwardedRef)=>{
+const $f631ed2def755485$var$StyledAnimatedContent = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($f631ed2def755485$export$43a7eb3180015c73, {});
+const $f631ed2def755485$export$3ddf2d174ce01153 = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ children: children , trigger: trigger , portalProps: portalProps , onOpenChange: onOpenChange , open: open , size: size , ...props }, forwardedRef)=>{
     const [dialogOpen, setDialogOpen] = (0, $bNXjM$useState)(false);
     (0, $bNXjM$useEffect)(()=>{
         if (open !== undefined && open !== dialogOpen) {
@@ -3248,98 +3330,128 @@ const $f79bf669cee3d06a$export$3ddf2d174ce01153 = /*#__PURE__*/ (0, $bNXjM$forwa
     }, [
         open
     ]);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement($bNXjM$Root2, {
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)($bNXjM$Root2, {
         onOpenChange: (open)=>{
             setDialogOpen(open);
             if (onOpenChange) onOpenChange(open);
         },
-        open: dialogOpen
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($bNXjM$DialogTrigger, {
-        asChild: true
-    }, trigger), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$AnimatePresence), null, dialogOpen && /*#__PURE__*/ (0, $bNXjM$react).createElement($bNXjM$DialogPortal, {
-        forceMount: true,
-        ...portalProps
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($f79bf669cee3d06a$export$a14718312a4275d3, null), /*#__PURE__*/ (0, $bNXjM$react).createElement($f79bf669cee3d06a$var$StyledAnimatedContent, {
-        ref: forwardedRef,
-        ...props,
-        forceMount: true,
-        css: {
-            maxWidth: size === (0, $32de3362490c9117$export$e8598848ef5f29c0).MD ? 516 : 750
-        }
-    }, children))));
+        open: dialogOpen,
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)($bNXjM$DialogTrigger, {
+                asChild: true,
+                children: trigger
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$AnimatePresence), {
+                children: dialogOpen && /*#__PURE__*/ (0, $bNXjM$jsxs)($bNXjM$DialogPortal, {
+                    forceMount: true,
+                    ...portalProps,
+                    children: [
+                        /*#__PURE__*/ (0, $bNXjM$jsx)($f631ed2def755485$export$a14718312a4275d3, {}),
+                        /*#__PURE__*/ (0, $bNXjM$jsx)($f631ed2def755485$var$StyledAnimatedContent, {
+                            ref: forwardedRef,
+                            ...props,
+                            forceMount: true,
+                            css: {
+                                maxWidth: size === (0, $b86bf9f1e9f1a187$export$e8598848ef5f29c0).MD ? 516 : 750
+                            },
+                            children: children
+                        })
+                    ]
+                })
+            })
+        ]
+    });
 });
 
 
 // import { ProviderOptionsContext } from '../ZooProvider'
-const $32de3362490c9117$var$Title = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Title, {
+const $b86bf9f1e9f1a187$var$Title = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Title, {
     margin: 0
 });
-var $32de3362490c9117$export$e8598848ef5f29c0;
+let $b86bf9f1e9f1a187$export$e8598848ef5f29c0;
 (function(ModalSize) {
     ModalSize[ModalSize["MD"] = 0] = "MD";
     ModalSize[ModalSize["LG"] = 1] = "LG";
-})($32de3362490c9117$export$e8598848ef5f29c0 || ($32de3362490c9117$export$e8598848ef5f29c0 = {}));
-const $32de3362490c9117$export$2b77a92f1a5ad772 = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ title: title , children: children , trigger: trigger , onBack: onBack , open: open , size: size = $32de3362490c9117$export$e8598848ef5f29c0.MD , onOpenChange: onOpenChange , loading: loading , onPointerDownOutside: onPointerDownOutside , onFocusCapture: onFocusCapture  }, forwardedRef)=>{
+})($b86bf9f1e9f1a187$export$e8598848ef5f29c0 || ($b86bf9f1e9f1a187$export$e8598848ef5f29c0 = {}));
+const $b86bf9f1e9f1a187$export$2b77a92f1a5ad772 = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ title: title , children: children , trigger: trigger , onBack: onBack , open: open , size: size = $b86bf9f1e9f1a187$export$e8598848ef5f29c0.MD , onOpenChange: onOpenChange , loading: loading , onPointerDownOutside: onPointerDownOutside , onFocusCapture: onFocusCapture  }, forwardedRef)=>{
     // const providerOptionsContext = useContext(ProviderOptionsContext)
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $f79bf669cee3d06a$export$3ddf2d174ce01153), {
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $f631ed2def755485$export$3ddf2d174ce01153), {
         ref: forwardedRef,
         trigger: trigger,
         open: open,
         onOpenChange: onOpenChange,
         size: size,
         onPointerDownOutside: onPointerDownOutside,
-        onFocusCapture: onFocusCapture
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        css: {
-            p: 16,
-            backgroundColor: "$headerBackground",
-            alignItems: "center",
-            justifyContent: "space-between",
-            borderTopRightRadius: "$borderRadius",
-            borderTopLeftRadius: "$borderRadius"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($32de3362490c9117$var$Title, {
-        css: {
-            alignItems: "center",
-            display: "flex"
-        }
-    }, onBack && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-        color: "ghost",
-        size: "none",
-        css: {
-            mr: "$2",
-            color: "$neutralText"
-        },
-        onClick: onBack
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        icon: (0, $bNXjM$faChevronLeft),
-        width: 16,
-        height: 16
-    })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "h6"
-    }, title)), /*#__PURE__*/ (0, $bNXjM$react).createElement($bNXjM$Close, {
-        asChild: true
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-        color: "ghost",
-        size: "none",
-        css: {
-            color: "$neutralText"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        icon: (0, $bNXjM$faClose),
-        width: 16,
-        height: 16
-    })))), loading && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0c83fbef8350e27e$export$2e2bcd8739ae039), {
-        css: {
-            minHeight: 242,
-            backgroundColor: "$contentBackground"
-        }
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            maxHeight: "85vh",
-            overflowY: "auto"
-        }
-    }, children));
+        onFocusCapture: onFocusCapture,
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                css: {
+                    p: 16,
+                    backgroundColor: "$headerBackground",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    borderTopRightRadius: "$borderRadius",
+                    borderTopLeftRadius: "$borderRadius"
+                },
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsxs)($b86bf9f1e9f1a187$var$Title, {
+                        css: {
+                            alignItems: "center",
+                            display: "flex"
+                        },
+                        children: [
+                            onBack && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                color: "ghost",
+                                size: "none",
+                                css: {
+                                    mr: "$2",
+                                    color: "$neutralText"
+                                },
+                                onClick: onBack,
+                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                    icon: (0, $bNXjM$faChevronLeft),
+                                    width: 16,
+                                    height: 16
+                                })
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                style: "h6",
+                                children: title
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)($bNXjM$Close, {
+                        asChild: true,
+                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                            color: "ghost",
+                            size: "none",
+                            css: {
+                                color: "$neutralText"
+                            },
+                            children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                icon: (0, $bNXjM$faClose),
+                                width: 16,
+                                height: 16
+                            })
+                        })
+                    })
+                ]
+            }),
+            loading && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $0ff8966798df47ad$export$2e2bcd8739ae039), {
+                css: {
+                    minHeight: 242,
+                    backgroundColor: "$contentBackground"
+                }
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                css: {
+                    maxHeight: "85vh",
+                    overflowY: "auto"
+                },
+                children: children
+            })
+        ]
+    });
 });
 
 
@@ -3351,8 +3463,10 @@ const $32de3362490c9117$export$2b77a92f1a5ad772 = /*#__PURE__*/ (0, $bNXjM$forwa
 
 
 
-function $e1524f6deddb4ab1$export$2e2bcd8739ae039({ message: message , css: css  }) {
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+
+
+function $4c76c4b4e6d5247c$export$2e2bcd8739ae039({ message: message , css: css  }) {
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         css: {
             color: "$errorAccent",
             p: "$4",
@@ -3360,22 +3474,28 @@ function $e1524f6deddb4ab1$export$2e2bcd8739ae039({ message: message , css: css 
             background: "$wellBackground",
             ...css
         },
-        align: "center"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        icon: (0, $bNXjM$faCircleExclamation),
-        width: 16,
-        height: 16
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "body2",
-        color: "errorLight"
-    }, message || "Oops, something went wrong. Please try again."));
+        align: "center",
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                icon: (0, $bNXjM$faCircleExclamation),
+                width: 16,
+                height: 16
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                style: "body2",
+                color: "errorLight",
+                children: message || "Oops, something went wrong. Please try again."
+            })
+        ]
+    });
 }
 
 
 
 
 
-var $f31400a2975ed70a$export$2e2bcd8739ae039 = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("div", {
+
+var $72bd45ddbf898068$export$2e2bcd8739ae039 = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("div", {
     display: "grid",
     variants: {
         align: {
@@ -3430,138 +3550,180 @@ var $f31400a2975ed70a$export$2e2bcd8739ae039 = (0, $cd784f5a4171372f$export$3817
 });
 
 
-const $6b8b18ed6981903c$var$Img = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("img", {
+const $bd031fc677b64fb0$var$Img = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("img", {
     height: 56,
     width: 56
 });
-const $6b8b18ed6981903c$var$TokenPrimitive = ({ img: img , name: name , collection: collection , currencyContract: currencyContract , currencyDecimals: currencyDecimals , expires: expires , warning: warning , isOffer: isOffer , source: source , usdPrice: usdPrice , price: price , isUnavailable: isUnavailable  })=>{
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        css: {
-            justifyContent: "space-between",
-            alignItems: "center"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2",
-        color: "subtle",
-        css: {
-            mb: 10,
-            display: "block"
-        }
-    }, name ? "Item" : "Collection"), isOffer && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2",
-        color: "subtle",
-        css: {
-            mb: 10,
-            display: "block"
-        }
-    }, "Offer")), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        css: {
-            justifyContent: "space-between"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        css: {
-            alignItems: "center",
-            gap: 8
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($6b8b18ed6981903c$var$Img, {
-        src: img,
-        alt: name,
-        css: {
-            borderRadius: 4,
-            overflow: "hidden",
-            visibility: !img || img.length === 0 ? "hidden" : "visible",
-            flexShrink: 0,
-            objectFit: "cover"
-        }
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $f31400a2975ed70a$export$2e2bcd8739ae039), {
-        css: {
-            rowGap: 2
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "h6",
-        ellipsify: true,
-        color: isUnavailable ? "subtle" : "base"
-    }, name ? name : collection), name && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "body2",
-        color: isUnavailable ? "subtle" : "base"
-    }, collection), !!expires && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "tiny"
-    }, "Expires ", expires))), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $f31400a2975ed70a$export$2e2bcd8739ae039), {
-        css: {
-            justifyItems: "end",
-            alignContent: "start",
-            rowGap: 4
-        }
-    }, source && /*#__PURE__*/ (0, $bNXjM$react).createElement($6b8b18ed6981903c$var$Img, {
-        src: source,
-        alt: "Source Icon",
-        css: {
-            w: 17,
-            h: 17,
-            borderRadius: 99999,
-            overflow: "hidden"
-        }
-    }), price ? /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
-        amount: price,
-        textColor: isUnavailable ? "subtle" : "base",
-        address: currencyContract,
-        decimals: currencyDecimals,
-        logoWidth: 14.5
-    }) : /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2",
-        color: isUnavailable ? "subtle" : "base"
-    }, "--"), usdPrice ? /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6a6c14d54fb307eb$export$2e2bcd8739ae039), {
-        amount: usdPrice,
-        style: "tiny",
-        color: "subtle"
-    }) : null, warning && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2",
-        color: "error"
-    }, warning))));
+const $bd031fc677b64fb0$var$TokenPrimitive = ({ img: img , name: name , collection: collection , currencyContract: currencyContract , currencyDecimals: currencyDecimals , expires: expires , warning: warning , isOffer: isOffer , source: source , usdPrice: usdPrice , price: price , isUnavailable: isUnavailable  })=>{
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                css: {
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                },
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                        style: "subtitle2",
+                        color: "subtle",
+                        css: {
+                            mb: 10,
+                            display: "block"
+                        },
+                        children: name ? "Item" : "Collection"
+                    }),
+                    isOffer && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                        style: "subtitle2",
+                        color: "subtle",
+                        css: {
+                            mb: 10,
+                            display: "block"
+                        },
+                        children: "Offer"
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                css: {
+                    justifyContent: "space-between"
+                },
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        css: {
+                            alignItems: "center",
+                            gap: 8
+                        },
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)($bd031fc677b64fb0$var$Img, {
+                                src: img,
+                                alt: name,
+                                css: {
+                                    borderRadius: 4,
+                                    overflow: "hidden",
+                                    visibility: !img || img.length === 0 ? "hidden" : "visible",
+                                    flexShrink: 0,
+                                    objectFit: "cover"
+                                }
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $72bd45ddbf898068$export$2e2bcd8739ae039), {
+                                css: {
+                                    rowGap: 2
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "h6",
+                                        ellipsify: true,
+                                        color: isUnavailable ? "subtle" : "base",
+                                        children: name ? name : collection
+                                    }),
+                                    name && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "body2",
+                                        color: isUnavailable ? "subtle" : "base",
+                                        children: collection
+                                    }),
+                                    !!expires && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "tiny",
+                                        children: [
+                                            "Expires ",
+                                            expires
+                                        ]
+                                    })
+                                ]
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $72bd45ddbf898068$export$2e2bcd8739ae039), {
+                        css: {
+                            justifyItems: "end",
+                            alignContent: "start",
+                            rowGap: 4
+                        },
+                        children: [
+                            source && /*#__PURE__*/ (0, $bNXjM$jsx)($bd031fc677b64fb0$var$Img, {
+                                src: source,
+                                alt: "Source Icon",
+                                css: {
+                                    w: 17,
+                                    h: 17,
+                                    borderRadius: 99999,
+                                    overflow: "hidden"
+                                }
+                            }),
+                            price ? /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
+                                amount: price,
+                                textColor: isUnavailable ? "subtle" : "base",
+                                address: currencyContract,
+                                decimals: currencyDecimals,
+                                logoWidth: 14.5
+                            }) : /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                style: "subtitle2",
+                                color: isUnavailable ? "subtle" : "base",
+                                children: "--"
+                            }),
+                            usdPrice ? /*#__PURE__*/ (0, $bNXjM$jsx)((0, $208ab5b0155991db$export$2e2bcd8739ae039), {
+                                amount: usdPrice,
+                                style: "tiny",
+                                color: "subtle"
+                            }) : null,
+                            warning && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                style: "subtitle2",
+                                color: "error",
+                                children: warning
+                            })
+                        ]
+                    })
+                ]
+            })
+        ]
+    });
 };
-var $6b8b18ed6981903c$export$2e2bcd8739ae039 = $6b8b18ed6981903c$var$TokenPrimitive;
+var $bd031fc677b64fb0$export$2e2bcd8739ae039 = $bd031fc677b64fb0$var$TokenPrimitive;
 
 
-const $88f47796acff5c21$var$TokenLineItem = ({ tokenDetails: tokenDetails , collection: collection , usdConversion: usdConversion = 0 , isSuspicious: isSuspicious , isUnavailable: isUnavailable , price: price , warning: warning , currency: currency , expires: expires , isOffer: isOffer , sourceImg: sourceImg  })=>{
-    var _a, _b, _c, _d, _e;
+const $c5f5dee31b69b8f3$var$TokenLineItem = ({ tokenDetails: tokenDetails , collection: collection , usdConversion: usdConversion = 0 , isSuspicious: isSuspicious , isUnavailable: isUnavailable , price: price , warning: warning , currency: currency , expires: expires , isOffer: isOffer , sourceImg: sourceImg  })=>{
     if (!tokenDetails) return null;
     const usdPrice = price * usdConversion;
-    const name = ((_a = tokenDetails === null || tokenDetails === void 0 ? void 0 : tokenDetails.token) === null || _a === void 0 ? void 0 : _a.name) || `#${(_b = tokenDetails === null || tokenDetails === void 0 ? void 0 : tokenDetails.token) === null || _b === void 0 ? void 0 : _b.tokenId}`;
-    const collectionName = ((_d = (_c = tokenDetails === null || tokenDetails === void 0 ? void 0 : tokenDetails.token) === null || _c === void 0 ? void 0 : _c.collection) === null || _d === void 0 ? void 0 : _d.name) || (collection === null || collection === void 0 ? void 0 : collection.name) || "";
-    const img = ((_e = tokenDetails === null || tokenDetails === void 0 ? void 0 : tokenDetails.token) === null || _e === void 0 ? void 0 : _e.image) ? tokenDetails.token.image : collection === null || collection === void 0 ? void 0 : collection.image;
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
+    const name = tokenDetails?.token?.name || `#${tokenDetails?.token?.tokenId}`;
+    const collectionName = tokenDetails?.token?.collection?.name || collection?.name || "";
+    const img = tokenDetails?.token?.image ? tokenDetails.token.image : collection?.image;
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
         css: {
             p: "$4",
             borderBottom: "1px solid $borderColor"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6b8b18ed6981903c$export$2e2bcd8739ae039), {
-        img: img,
-        name: name,
-        price: price,
-        usdPrice: usdPrice,
-        collection: collectionName,
-        currencyContract: currency === null || currency === void 0 ? void 0 : currency.contract,
-        currencyDecimals: currency === null || currency === void 0 ? void 0 : currency.decimals,
-        expires: expires,
-        warning: warning,
-        source: sourceImg || "",
-        isUnavailable: isUnavailable,
-        isOffer: isOffer
-    }), !!isSuspicious && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e1524f6deddb4ab1$export$2e2bcd8739ae039), {
-        css: {
-            p: "$3",
-            mt: "$3",
-            borderRadius: 4
         },
-        message: "Token is not tradable on OpenSea"
-    }));
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bd031fc677b64fb0$export$2e2bcd8739ae039), {
+                img: img,
+                name: name,
+                price: price,
+                usdPrice: usdPrice,
+                collection: collectionName,
+                currencyContract: currency?.contract,
+                currencyDecimals: currency?.decimals,
+                expires: expires,
+                warning: warning,
+                source: sourceImg || "",
+                isUnavailable: isUnavailable,
+                isOffer: isOffer
+            }),
+            !!isSuspicious && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $4c76c4b4e6d5247c$export$2e2bcd8739ae039), {
+                css: {
+                    p: "$3",
+                    mt: "$3",
+                    borderRadius: 4
+                },
+                message: "Token is not tradable on OpenSea"
+            })
+        ]
+    });
 };
-var $88f47796acff5c21$export$2e2bcd8739ae039 = $88f47796acff5c21$var$TokenLineItem;
+var $c5f5dee31b69b8f3$export$2e2bcd8739ae039 = $c5f5dee31b69b8f3$var$TokenLineItem;
 
 
 
 
-function $9f52dec49aff5538$export$2e2bcd8739ae039(vs_currency, symbols = "eth") {
+
+function $742accbc1cb453a5$export$2e2bcd8739ae039(vs_currency, symbols = "eth") {
     const { data: data  } = (0, $bNXjM$swr)(vs_currency ? `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${vs_currency}&symbols=${symbols}` : null, null, {
         refreshInterval: 300000
     });
@@ -3575,29 +3737,28 @@ function $9f52dec49aff5538$export$2e2bcd8739ae039(vs_currency, symbols = "eth") 
 
 
 
-var $165aa30a64b97a1b$export$b41ddf00b39567e8;
+let $537a8475c59a6e21$export$b41ddf00b39567e8;
 (function(BuyStep) {
     BuyStep[BuyStep["Checkout"] = 0] = "Checkout";
     BuyStep[BuyStep["Approving"] = 1] = "Approving";
     BuyStep[BuyStep["AddFunds"] = 2] = "AddFunds";
     BuyStep[BuyStep["Complete"] = 3] = "Complete";
     BuyStep[BuyStep["Unavailable"] = 4] = "Unavailable";
-})($165aa30a64b97a1b$export$b41ddf00b39567e8 || ($165aa30a64b97a1b$export$b41ddf00b39567e8 = {}));
-const $165aa30a64b97a1b$export$8913f774683cde87 = ({ open: open , tokenId: tokenId , collectionId: collectionId , orderId: orderId , referrer: referrer , referrerFeeBps: referrerFeeBps , normalizeRoyalties: normalizeRoyalties , children: children  })=>{
-    var _a, _b, _c, _d, _e, _f, _g;
+})($537a8475c59a6e21$export$b41ddf00b39567e8 || ($537a8475c59a6e21$export$b41ddf00b39567e8 = {}));
+const $537a8475c59a6e21$export$8913f774683cde87 = ({ open: open , tokenId: tokenId , collectionId: collectionId , orderId: orderId , referrer: referrer , referrerFeeBps: referrerFeeBps , normalizeRoyalties: normalizeRoyalties , children: children  })=>{
     const { data: signer  } = (0, $bNXjM$useSigner)();
     const [totalPrice, setTotalPrice] = (0, $bNXjM$useState)(0);
     const [referrerFee, setReferrerFee] = (0, $bNXjM$useState)(0);
-    const [buyStep, setBuyStep] = (0, $bNXjM$useState)($165aa30a64b97a1b$export$b41ddf00b39567e8.Checkout);
+    const [buyStep, setBuyStep] = (0, $bNXjM$useState)($537a8475c59a6e21$export$b41ddf00b39567e8.Checkout);
     const [transactionError, setTransactionError] = (0, $bNXjM$useState)();
     const [hasEnoughCurrency, setHasEnoughCurrency] = (0, $bNXjM$useState)(true);
     const [stepData, setStepData] = (0, $bNXjM$useState)(null);
     const [steps, setSteps] = (0, $bNXjM$useState)(null);
     const [quantity, setQuantity] = (0, $bNXjM$useState)(1);
     const { chain: activeChain  } = (0, $bNXjM$useNetwork)();
-    const blockExplorerBaseUrl = ((_b = (_a = activeChain === null || activeChain === void 0 ? void 0 : activeChain.blockExplorers) === null || _a === void 0 ? void 0 : _a.default) === null || _b === void 0 ? void 0 : _b.url) || "https://etherscan.io";
-    const contract = collectionId ? collectionId === null || collectionId === void 0 ? void 0 : collectionId.split(":")[0] : undefined;
-    const { data: tokens , mutate: mutateTokens  } = (0, $2ae380ce592f7932$export$2e2bcd8739ae039)(open && {
+    const blockExplorerBaseUrl = activeChain?.blockExplorers?.default?.url || "https://etherscan.io";
+    const contract = collectionId ? collectionId?.split(":")[0] : undefined;
+    const { data: tokens , mutate: mutateTokens  } = (0, $54bf018b076821f1$export$2e2bcd8739ae039)(open && {
         tokens: [
             `${contract}:${tokenId}`
         ],
@@ -3605,26 +3766,26 @@ const $165aa30a64b97a1b$export$8913f774683cde87 = ({ open: open , tokenId: token
     }, {
         revalidateFirstPage: true
     });
-    const { data: collections , mutate: mutateCollection  } = (0, $ff2494fa019b599a$export$2e2bcd8739ae039)(open && {
+    const { data: collections , mutate: mutateCollection  } = (0, $38f38860f7db3263$export$2e2bcd8739ae039)(open && {
         id: collectionId,
         normalizeRoyalties: normalizeRoyalties
     });
     const collection = collections && collections[0] ? collections[0] : undefined;
     const token = tokens && tokens.length > 0 ? tokens[0] : undefined;
-    const { data: listings , mutate: mutateListings , isValidating: isValidatingListing  } = (0, $2c6663ee0e1f1b5c$export$2e2bcd8739ae039)({
+    const { data: listings , mutate: mutateListings , isValidating: isValidatingListing  } = (0, $40f16bae928ea461$export$2e2bcd8739ae039)({
         token: `${contract}:${tokenId}`,
-        ids: orderId ? orderId : (_d = (_c = token === null || token === void 0 ? void 0 : token.market) === null || _c === void 0 ? void 0 : _c.floorAsk) === null || _d === void 0 ? void 0 : _d.id,
+        ids: orderId ? orderId : token?.market?.floorAsk?.id,
         normalizeRoyalties: normalizeRoyalties,
         status: "active"
     }, {
         revalidateFirstPage: true
-    }, open && (((_f = (_e = token === null || token === void 0 ? void 0 : token.market) === null || _e === void 0 ? void 0 : _e.floorAsk) === null || _f === void 0 ? void 0 : _f.id) !== undefined || orderId) ? true : false);
+    }, open && (token?.market?.floorAsk?.id !== undefined || orderId) ? true : false);
     const listing = listings && listings[0] && listings[0].status === "active" ? listings[0] : undefined;
-    const currency = (_g = listing === null || listing === void 0 ? void 0 : listing.price) === null || _g === void 0 ? void 0 : _g.currency;
-    const usdPrice = (0, $9f52dec49aff5538$export$2e2bcd8739ae039)(open && token ? "USD" : undefined, currency === null || currency === void 0 ? void 0 : currency.symbol);
+    const currency = listing?.price?.currency;
+    const usdPrice = (0, $742accbc1cb453a5$export$2e2bcd8739ae039)(open && token ? "USD" : undefined, currency?.symbol);
     const feeUsd = referrerFee * (usdPrice || 0);
     const totalUsd = totalPrice * (usdPrice || 0);
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
     const buyToken = (0, $bNXjM$useCallback)(()=>{
         if (!signer) {
             const error = new Error("Missing a signer");
@@ -3641,11 +3802,11 @@ const $165aa30a64b97a1b$export$8913f774683cde87 = ({ open: open , tokenId: token
             setTransactionError(error);
             throw error;
         }
-        const contract = collectionId === null || collectionId === void 0 ? void 0 : collectionId.split(":")[0];
+        const contract = collectionId?.split(":")[0];
         let options = {};
         if (referrer && referrerFeeBps) {
-            const price = (0, $89f2b3089832dcbb$export$a81f732198733497)(totalPrice, (currency === null || currency === void 0 ? void 0 : currency.decimals) || 18);
-            const fee = (0, $bNXjM$utils).parseUnits(`${price}`, currency === null || currency === void 0 ? void 0 : currency.decimals).mul(referrerFeeBps).div(10000);
+            const price = (0, $e70e85f6f4e64430$export$a81f732198733497)(totalPrice, currency?.decimals || 18);
+            const fee = (0, $bNXjM$utils).parseUnits(`${price}`, currency?.decimals).mul(referrerFeeBps).div(10000);
             const atomicUnitsFee = (0, $bNXjM$formatUnits)(fee, 0);
             options.feesOnTop = [
                 `${referrer}:${atomicUnitsFee}`
@@ -3653,7 +3814,7 @@ const $165aa30a64b97a1b$export$8913f774683cde87 = ({ open: open , tokenId: token
         } else if (referrer === null && referrerFeeBps === null) delete options.feesOnTop;
         if (quantity > 1) options.quantity = quantity;
         if (normalizeRoyalties !== undefined) options.normalizeRoyalties = normalizeRoyalties;
-        setBuyStep($165aa30a64b97a1b$export$b41ddf00b39567e8.Approving);
+        setBuyStep($537a8475c59a6e21$export$b41ddf00b39567e8.Approving);
         let orderIds = orderId ? [
             orderId
         ] : undefined;
@@ -3675,8 +3836,7 @@ const $165aa30a64b97a1b$export$8913f774683cde87 = ({ open: open , tokenId: token
                 let stepCount = executableSteps.length;
                 let currentStepItem;
                 const currentStepIndex = executableSteps.findIndex((step)=>{
-                    var _a;
-                    currentStepItem = (_a = step.items) === null || _a === void 0 ? void 0 : _a.find((item)=>item.status === "incomplete");
+                    currentStepItem = step.items?.find((item)=>item.status === "incomplete");
                     return currentStepItem;
                 });
                 const currentStep = currentStepIndex > -1 ? executableSteps[currentStepIndex] : executableSteps[stepCount - 1];
@@ -3686,17 +3846,14 @@ const $165aa30a64b97a1b$export$8913f774683cde87 = ({ open: open , tokenId: token
                     currentStep: currentStep,
                     currentStepItem: currentStepItem
                 });
-                else if (steps.every((step)=>{
-                    var _a;
-                    return !step.items || step.items.length == 0 || ((_a = step.items) === null || _a === void 0 ? void 0 : _a.every((item)=>item.status === "complete"));
-                })) setBuyStep($165aa30a64b97a1b$export$b41ddf00b39567e8.Complete);
+                else if (steps.every((step)=>!step.items || step.items.length == 0 || step.items?.every((item)=>item.status === "complete"))) setBuyStep($537a8475c59a6e21$export$b41ddf00b39567e8.Complete);
             },
             options: options
         }).catch((e)=>{
             const error = e;
-            if (error && (error === null || error === void 0 ? void 0 : error.message) && (error === null || error === void 0 ? void 0 : error.message.includes("ETH balance"))) setHasEnoughCurrency(false);
+            if (error && error?.message && error?.message.includes("ETH balance")) setHasEnoughCurrency(false);
             else {
-                const errorType = error === null || error === void 0 ? void 0 : error.type;
+                const errorType = error?.type;
                 let message = "Oops, something went wrong. Please try again.";
                 if (errorType && errorType === "price mismatch") message = error.message;
                 const transactionError = new Error(message, {
@@ -3707,7 +3864,7 @@ const $165aa30a64b97a1b$export$8913f774683cde87 = ({ open: open , tokenId: token
                 mutateCollection();
                 mutateTokens();
             }
-            setBuyStep($165aa30a64b97a1b$export$b41ddf00b39567e8.Checkout);
+            setBuyStep($537a8475c59a6e21$export$b41ddf00b39567e8.Checkout);
             setStepData(null);
             setSteps(null);
         });
@@ -3728,23 +3885,22 @@ const $165aa30a64b97a1b$export$8913f774683cde87 = ({ open: open , tokenId: token
         mutateCollection
     ]);
     (0, $bNXjM$useEffect)(()=>{
-        var _a, _b, _c, _d;
         if (listing) {
-            if ((_b = (_a = listing.price) === null || _a === void 0 ? void 0 : _a.amount) === null || _b === void 0 ? void 0 : _b.decimal) {
-                let floorPrice = (_d = (_c = listing.price) === null || _c === void 0 ? void 0 : _c.amount) === null || _d === void 0 ? void 0 : _d.decimal;
+            if (listing.price?.amount?.decimal) {
+                let floorPrice = listing.price?.amount?.decimal;
                 if (referrerFeeBps && referrer) {
                     const fee = referrerFeeBps / 10000 * floorPrice;
                     floorPrice = floorPrice + fee;
                     setReferrerFee(fee);
                 }
                 setTotalPrice(floorPrice * quantity);
-                setBuyStep($165aa30a64b97a1b$export$b41ddf00b39567e8.Checkout);
+                setBuyStep($537a8475c59a6e21$export$b41ddf00b39567e8.Checkout);
             } else {
-                setBuyStep($165aa30a64b97a1b$export$b41ddf00b39567e8.Unavailable);
+                setBuyStep($537a8475c59a6e21$export$b41ddf00b39567e8.Unavailable);
                 setTotalPrice(0);
             }
         } else if (!listing && !isValidatingListing && token) {
-            setBuyStep($165aa30a64b97a1b$export$b41ddf00b39567e8.Unavailable);
+            setBuyStep($537a8475c59a6e21$export$b41ddf00b39567e8.Unavailable);
             setTotalPrice(0);
         }
     }, [
@@ -3759,15 +3915,15 @@ const $165aa30a64b97a1b$export$8913f774683cde87 = ({ open: open , tokenId: token
     const { address: address  } = (0, $bNXjM$useAccount)();
     const { data: balance  } = (0, $bNXjM$useBalance)({
         address: address,
-        token: (currency === null || currency === void 0 ? void 0 : currency.contract) !== (0, $bNXjM$constants).AddressZero ? currency === null || currency === void 0 ? void 0 : currency.contract : undefined,
+        token: currency?.contract !== (0, $bNXjM$constants).AddressZero ? currency?.contract : undefined,
         watch: open,
-        formatUnits: currency === null || currency === void 0 ? void 0 : currency.decimals
+        formatUnits: currency?.decimals
     });
     (0, $bNXjM$useEffect)(()=>{
         if (balance) {
-            const totalPriceTruncated = (0, $89f2b3089832dcbb$export$a81f732198733497)(totalPrice, (currency === null || currency === void 0 ? void 0 : currency.decimals) || 18);
+            const totalPriceTruncated = (0, $e70e85f6f4e64430$export$a81f732198733497)(totalPrice, currency?.decimals || 18);
             if (!balance.value) setHasEnoughCurrency(false);
-            else if (balance.value.lt((0, $bNXjM$utils).parseUnits(`${totalPriceTruncated}`, currency === null || currency === void 0 ? void 0 : currency.decimals))) setHasEnoughCurrency(false);
+            else if (balance.value.lt((0, $bNXjM$utils).parseUnits(`${totalPriceTruncated}`, currency?.decimals))) setHasEnoughCurrency(false);
             else setHasEnoughCurrency(true);
         }
     }, [
@@ -3777,7 +3933,7 @@ const $165aa30a64b97a1b$export$8913f774683cde87 = ({ open: open , tokenId: token
     ]);
     (0, $bNXjM$useEffect)(()=>{
         if (!open) {
-            setBuyStep($165aa30a64b97a1b$export$b41ddf00b39567e8.Checkout);
+            setBuyStep($537a8475c59a6e21$export$b41ddf00b39567e8.Checkout);
             setTransactionError(null);
             setStepData(null);
             setSteps(null);
@@ -3786,519 +3942,677 @@ const $165aa30a64b97a1b$export$8913f774683cde87 = ({ open: open , tokenId: token
     }, [
         open
     ]);
-    const isBanned = (0, $814406954658880f$export$2e2bcd8739ae039)(open ? contract : undefined, tokenId);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, children({
-        loading: !listing && isValidatingListing || !token,
-        token: token,
-        collection: collection,
-        listing: listing,
-        quantityAvailable: (listing === null || listing === void 0 ? void 0 : listing.quantityRemaining) || 1,
-        currency: currency,
-        totalPrice: totalPrice,
-        referrerFee: referrerFee,
-        buyStep: buyStep,
-        transactionError: transactionError,
-        hasEnoughCurrency: hasEnoughCurrency,
-        feeUsd: feeUsd,
-        totalUsd: totalUsd,
-        usdPrice: usdPrice,
-        isBanned: isBanned,
-        balance: balance === null || balance === void 0 ? void 0 : balance.value,
-        address: address,
-        blockExplorerBaseUrl: blockExplorerBaseUrl,
-        steps: steps,
-        stepData: stepData,
-        quantity: quantity,
-        setQuantity: setQuantity,
-        setBuyStep: setBuyStep,
-        buyToken: buyToken
-    }));
+    const isBanned = (0, $9898620691963117$export$2e2bcd8739ae039)(open ? contract : undefined, tokenId);
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$Fragment), {
+        children: children({
+            loading: !listing && isValidatingListing || !token,
+            token: token,
+            collection: collection,
+            listing: listing,
+            quantityAvailable: listing?.quantityRemaining || 1,
+            currency: currency,
+            totalPrice: totalPrice,
+            referrerFee: referrerFee,
+            buyStep: buyStep,
+            transactionError: transactionError,
+            hasEnoughCurrency: hasEnoughCurrency,
+            feeUsd: feeUsd,
+            totalUsd: totalUsd,
+            usdPrice: usdPrice,
+            isBanned: isBanned,
+            balance: balance?.value,
+            address: address,
+            blockExplorerBaseUrl: blockExplorerBaseUrl,
+            steps: steps,
+            stepData: stepData,
+            quantity: quantity,
+            setQuantity: setQuantity,
+            setBuyStep: setBuyStep,
+            buyToken: buyToken
+        })
+    });
 };
 
 
 
 
-const $b97ee65c4e02eab3$var$ProgressBar = ({ value: value , max: max , ...props })=>{
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+
+const $fe4973a3dd519dab$var$ProgressBar = ({ value: value , max: max , ...props })=>{
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         ...props,
         css: {
             width: "100%",
             gap: "$2",
             ...props.css
-        }
-    }, [
-        ...Array(max)
-    ].map((_item, i)=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            key: i,
-            css: {
-                height: 4,
-                borderRadius: 99999,
-                flex: 1,
-                background: "linear-gradient(to left, $neutralBorderHover 50%, $accentSolid 50%) right",
-                backgroundSize: "200% 100%",
-                backgroundPosition: i + 1 <= value ? "left" : "right",
-                transition: "all 0.5s ease"
-            }
-        })));
+        },
+        children: [
+            ...Array(max)
+        ].map((_item, i)=>/*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                css: {
+                    height: 4,
+                    borderRadius: 99999,
+                    flex: 1,
+                    background: "linear-gradient(to left, $neutralBorderHover 50%, $accentSolid 50%) right",
+                    backgroundSize: "200% 100%",
+                    backgroundPosition: i + 1 <= value ? "left" : "right",
+                    transition: "all 0.5s ease"
+                }
+            }, i))
+    });
 };
-var $b97ee65c4e02eab3$export$2e2bcd8739ae039 = $b97ee65c4e02eab3$var$ProgressBar;
+var $fe4973a3dd519dab$export$2e2bcd8739ae039 = $fe4973a3dd519dab$var$ProgressBar;
 
 
 
-function $2ab11b88f5d133c9$var$titleForStep(step) {
+function $ad2cbb1f5242b499$var$titleForStep(step) {
     switch(step){
-        case (0, $165aa30a64b97a1b$export$b41ddf00b39567e8).AddFunds:
+        case (0, $537a8475c59a6e21$export$b41ddf00b39567e8).AddFunds:
             return "Add Funds";
-        case (0, $165aa30a64b97a1b$export$b41ddf00b39567e8).Unavailable:
+        case (0, $537a8475c59a6e21$export$b41ddf00b39567e8).Unavailable:
             return "Selected item is no longer Available";
         default:
             return "Complete Checkout";
     }
 }
-function $2ab11b88f5d133c9$export$7055e49b90860ae6({ openState: openState , trigger: trigger , tokenId: tokenId , collectionId: collectionId , orderId: orderId , referrer: referrer , referrerFeeBps: referrerFeeBps , normalizeRoyalties: normalizeRoyalties , onPurchaseComplete: onPurchaseComplete , onPurchaseError: onPurchaseError , onClose: onClose , onGoToToken: onGoToToken  }) {
-    const [open, setOpen] = (0, $eae8553d9b344d57$export$2e2bcd8739ae039)(openState ? openState[0] : false, openState);
-    const { copy: copyToClipboard , copied: copied  } = (0, $a330a8a12212b45c$export$2e2bcd8739ae039)();
+function $ad2cbb1f5242b499$export$7055e49b90860ae6({ openState: openState , trigger: trigger , tokenId: tokenId , collectionId: collectionId , orderId: orderId , referrer: referrer , referrerFeeBps: referrerFeeBps , normalizeRoyalties: normalizeRoyalties , onPurchaseComplete: onPurchaseComplete , onPurchaseError: onPurchaseError , onClose: onClose , onGoToToken: onGoToToken  }) {
+    const [open, setOpen] = (0, $d115e0b00eaf4565$export$2e2bcd8739ae039)(openState ? openState[0] : false, openState);
+    const { copy: copyToClipboard , copied: copied  } = (0, $2663f1ccb598096e$export$2e2bcd8739ae039)();
     const { chain: activeChain  } = (0, $bNXjM$useNetwork)();
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $165aa30a64b97a1b$export$8913f774683cde87), {
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $537a8475c59a6e21$export$8913f774683cde87), {
         open: open,
         tokenId: tokenId,
         collectionId: collectionId,
         orderId: orderId,
         referrer: referrer,
         referrerFeeBps: referrerFeeBps,
-        normalizeRoyalties: normalizeRoyalties
-    }, ({ loading: loading , token: token , collection: collection , listing: listing , quantityAvailable: quantityAvailable , quantity: quantity , currency: currency , totalPrice: totalPrice , referrerFee: referrerFee , buyStep: buyStep , transactionError: transactionError , hasEnoughCurrency: hasEnoughCurrency , steps: steps , stepData: stepData , feeUsd: feeUsd , totalUsd: totalUsd , usdPrice: usdPrice , isBanned: isBanned , balance: balance , address: address , blockExplorerBaseUrl: blockExplorerBaseUrl , setQuantity: setQuantity , setBuyStep: setBuyStep , buyToken: buyToken  })=>{
-        var _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
-        const title = $2ab11b88f5d133c9$var$titleForStep(buyStep);
-        (0, $bNXjM$useEffect)(()=>{
-            if (buyStep === (0, $165aa30a64b97a1b$export$b41ddf00b39567e8).Complete && onPurchaseComplete) {
-                const data = {
-                    tokenId: tokenId,
-                    collectionId: collectionId,
-                    maker: address
-                };
-                if (steps) data.steps = steps;
-                onPurchaseComplete(data);
-            }
-        }, [
-            buyStep
-        ]);
-        (0, $bNXjM$useEffect)(()=>{
-            if (transactionError && onPurchaseError) {
-                const data = {
-                    tokenId: tokenId,
-                    collectionId: collectionId,
-                    maker: address
-                };
-                onPurchaseError(transactionError, data);
-            }
-        }, [
-            transactionError
-        ]);
-        const executableSteps = (steps === null || steps === void 0 ? void 0 : steps.filter((step)=>step.items && step.items.length > 0)) || [];
-        const lastStepItems = ((_b = executableSteps[executableSteps.length - 1]) === null || _b === void 0 ? void 0 : _b.items) || [];
-        let finalTxHash = (_c = lastStepItems[lastStepItems.length - 1]) === null || _c === void 0 ? void 0 : _c.txHash;
-        let price = (((_e = (_d = listing === null || listing === void 0 ? void 0 : listing.price) === null || _d === void 0 ? void 0 : _d.amount) === null || _e === void 0 ? void 0 : _e.decimal) || 0) * quantity;
-        if (!price && ((_g = (_f = token === null || token === void 0 ? void 0 : token.token) === null || _f === void 0 ? void 0 : _f.lastSell) === null || _g === void 0 ? void 0 : _g.value)) price = token === null || token === void 0 ? void 0 : token.token.lastSell.value;
-        const sourceImg = (listing === null || listing === void 0 ? void 0 : listing.source) ? listing === null || listing === void 0 ? void 0 : listing.source["icon"] : undefined;
-        return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $32de3362490c9117$export$2b77a92f1a5ad772), {
-            trigger: trigger,
-            title: title,
-            onBack: buyStep == (0, $165aa30a64b97a1b$export$b41ddf00b39567e8).AddFunds ? ()=>{
-                setBuyStep((0, $165aa30a64b97a1b$export$b41ddf00b39567e8).Checkout);
-            } : null,
-            open: open,
-            onOpenChange: (open)=>{
-                if (!open && onClose) {
+        normalizeRoyalties: normalizeRoyalties,
+        children: ({ loading: loading , token: token , collection: collection , listing: listing , quantityAvailable: quantityAvailable , quantity: quantity , currency: currency , totalPrice: totalPrice , referrerFee: referrerFee , buyStep: buyStep , transactionError: transactionError , hasEnoughCurrency: hasEnoughCurrency , steps: steps , stepData: stepData , feeUsd: feeUsd , totalUsd: totalUsd , usdPrice: usdPrice , isBanned: isBanned , balance: balance , address: address , blockExplorerBaseUrl: blockExplorerBaseUrl , setQuantity: setQuantity , setBuyStep: setBuyStep , buyToken: buyToken  })=>{
+            const title = $ad2cbb1f5242b499$var$titleForStep(buyStep);
+            (0, $bNXjM$useEffect)(()=>{
+                if (buyStep === (0, $537a8475c59a6e21$export$b41ddf00b39567e8).Complete && onPurchaseComplete) {
                     const data = {
                         tokenId: tokenId,
                         collectionId: collectionId,
                         maker: address
                     };
-                    onClose(data, stepData, buyStep);
+                    if (steps) data.steps = steps;
+                    onPurchaseComplete(data);
                 }
-                setOpen(open);
-            },
-            loading: loading
-        }, buyStep === (0, $165aa30a64b97a1b$export$b41ddf00b39567e8).Unavailable && !loading && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $88f47796acff5c21$export$2e2bcd8739ae039), {
-            tokenDetails: token,
-            collection: collection,
-            isSuspicious: isBanned,
-            usdConversion: usdPrice || 0,
-            isUnavailable: true,
-            price: price,
-            currency: currency,
-            sourceImg: sourceImg
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            onClick: ()=>{
-                setOpen(false);
-            },
-            css: {
-                m: "$4"
-            }
-        }, "Close")), buyStep === (0, $165aa30a64b97a1b$export$b41ddf00b39567e8).Checkout && !loading && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column"
-        }, transactionError && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                color: "$errorAccent",
-                p: "$4",
-                gap: "$2",
-                background: "$wellBackground"
-            },
-            align: "center"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faCircleExclamation),
-            width: 16,
-            height: 16
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body2",
-            color: "errorLight"
-        }, transactionError.message)), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $88f47796acff5c21$export$2e2bcd8739ae039), {
-            tokenDetails: token,
-            collection: collection,
-            usdConversion: usdPrice || 0,
-            isSuspicious: isBanned,
-            price: price,
-            currency: currency,
-            sourceImg: sourceImg
-        }), quantityAvailable > 1 && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                pt: "$4",
-                px: "$4"
-            },
-            align: "center",
-            justify: "between"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body2",
-            color: "subtle"
-        }, quantityAvailable, " listings are available at this price"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039), {
-            css: {
-                minWidth: 77,
-                width: "auto",
-                flexGrow: 0
-            },
-            value: `${quantity}`,
-            onValueChange: (value)=>{
-                setQuantity(Number(value));
-            }
-        }, [
-            ...Array(quantityAvailable)
-        ].map((_a, i)=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039).Item, {
-                key: i,
-                value: `${i + 1}`
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039).ItemText, null, i + 1))))), referrerFee > 0 && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            align: "center",
-            justify: "between",
-            css: {
-                pt: "$4",
-                px: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle2"
-        }, "Referral Fee"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
-            amount: referrerFee,
-            address: currency === null || currency === void 0 ? void 0 : currency.contract,
-            decimals: currency === null || currency === void 0 ? void 0 : currency.decimals
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            justify: "end"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6a6c14d54fb307eb$export$2e2bcd8739ae039), {
-            amount: feeUsd,
-            color: "subtle",
-            css: {
-                pr: "$4"
-            }
-        }))), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            align: "center",
-            justify: "between",
-            css: {
-                pt: "$4",
-                px: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "h6"
-        }, "Total"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
-            textStyle: "h6",
-            amount: totalPrice,
-            address: currency === null || currency === void 0 ? void 0 : currency.contract,
-            decimals: currency === null || currency === void 0 ? void 0 : currency.decimals
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            justify: "end"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6a6c14d54fb307eb$export$2e2bcd8739ae039), {
-            amount: totalUsd,
-            color: "subtle",
-            css: {
-                mr: "$4"
-            }
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                width: "100%"
-            }
-        }, hasEnoughCurrency ? /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            onClick: buyToken,
-            css: {
-                width: "100%"
-            },
-            color: "primary"
-        }, "Checkout") : /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column",
-            align: "center"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            align: "center",
-            css: {
-                mb: "$3"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            css: {
-                mr: "$3"
-            },
-            color: "error",
-            style: "body2"
-        }, "Insufficient Balance"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
-            amount: balance,
-            address: currency === null || currency === void 0 ? void 0 : currency.contract,
-            decimals: currency === null || currency === void 0 ? void 0 : currency.decimals,
-            textStyle: "body2"
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            onClick: ()=>{
-                setBuyStep((0, $165aa30a64b97a1b$export$b41ddf00b39567e8).AddFunds);
-            },
-            css: {
-                width: "100%"
-            }
-        }, "Add Funds")))), buyStep === (0, $165aa30a64b97a1b$export$b41ddf00b39567e8).Approving && token && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $88f47796acff5c21$export$2e2bcd8739ae039), {
-            tokenDetails: token,
-            collection: collection,
-            usdConversion: usdPrice || 0,
-            isSuspicious: isBanned,
-            price: price,
-            currency: currency,
-            sourceImg: sourceImg
-        }), stepData && stepData.totalSteps > 1 && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $b97ee65c4e02eab3$export$2e2bcd8739ae039), {
-            css: {
-                px: "$4",
-                mt: "$3"
-            },
-            value: (stepData === null || stepData === void 0 ? void 0 : stepData.stepProgress) || 0,
-            max: (stepData === null || stepData === void 0 ? void 0 : stepData.totalSteps) || 0
-        }), !stepData && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0c83fbef8350e27e$export$2e2bcd8739ae039), {
-            css: {
-                height: 206
-            }
-        }), stepData && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $914dcae46ee80bba$export$2e2bcd8739ae039), {
-            title: (stepData === null || stepData === void 0 ? void 0 : stepData.currentStep.action) || "",
-            txHash: stepData === null || stepData === void 0 ? void 0 : stepData.currentStepItem.txHash,
-            blockExplorerBaseUrl: `${blockExplorerBaseUrl}/tx/${stepData === null || stepData === void 0 ? void 0 : stepData.currentStepItem.txHash}`
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            disabled: true,
-            css: {
-                m: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0c83fbef8350e27e$export$2e2bcd8739ae039), null), (stepData === null || stepData === void 0 ? void 0 : stepData.currentStepItem.txHash) ? "Waiting for transaction to be validated" : "Waiting for approval...")), buyStep === (0, $165aa30a64b97a1b$export$b41ddf00b39567e8).Complete && token && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                py: "$5",
-                flexDirection: "column",
-                alignItems: "center",
-                textAlign: "center"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "h5",
-            css: {
-                mb: 24
-            }
-        }, "Congratulations!"), /*#__PURE__*/ (0, $bNXjM$react).createElement("img", {
-            src: (_h = token === null || token === void 0 ? void 0 : token.token) === null || _h === void 0 ? void 0 : _h.image,
-            style: {
-                width: 100,
-                height: 100
-            }
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                mb: 24,
-                mt: "$2",
-                maxWidth: "100%"
-            },
-            align: "center",
-            justify: "center"
-        }, !!((_k = (_j = token.token) === null || _j === void 0 ? void 0 : _j.collection) === null || _k === void 0 ? void 0 : _k.image) && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                mr: "$1"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement("img", {
-            src: (_m = (_l = token.token) === null || _l === void 0 ? void 0 : _l.collection) === null || _m === void 0 ? void 0 : _m.image,
-            style: {
-                width: 24,
-                height: 24,
-                borderRadius: "50%"
-            }
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle2",
-            css: {
-                maxWidth: "100%"
-            },
-            ellipsify: true
-        }, ((_o = token === null || token === void 0 ? void 0 : token.token) === null || _o === void 0 ? void 0 : _o.name) ? (_p = token === null || token === void 0 ? void 0 : token.token) === null || _p === void 0 ? void 0 : _p.name : `#${(_q = token === null || token === void 0 ? void 0 : token.token) === null || _q === void 0 ? void 0 : _q.tokenId}`)), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                mb: "$2"
-            },
-            align: "center"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                color: "$successAccent",
-                mr: "$2"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faCheckCircle)
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body1"
-        }, "Your transaction went through successfully")), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4fb5cf8c028cd3ca$export$2e2bcd8739ae039), {
-            color: "primary",
-            weight: "medium",
-            css: {
-                fontSize: 12
-            },
-            href: `${blockExplorerBaseUrl}/tx/${finalTxHash}`,
-            target: "_blank"
-        }, "View on", " ", ((_r = activeChain === null || activeChain === void 0 ? void 0 : activeChain.blockExplorers) === null || _r === void 0 ? void 0 : _r.default.name) || "Etherscan")), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                flexDirection: "column",
-                gap: "$3",
-                "@bp1": {
-                    flexDirection: "row"
+            }, [
+                buyStep
+            ]);
+            (0, $bNXjM$useEffect)(()=>{
+                if (transactionError && onPurchaseError) {
+                    const data = {
+                        tokenId: tokenId,
+                        collectionId: collectionId,
+                        maker: address
+                    };
+                    onPurchaseError(transactionError, data);
                 }
-            }
-        }, !!onGoToToken ? /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            onClick: ()=>{
-                setOpen(false);
-            },
-            css: {
-                flex: 1
-            },
-            color: "ghost"
-        }, "Close"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            style: {
-                flex: 1
-            },
-            color: "primary",
-            onClick: ()=>{
-                onGoToToken();
-            }
-        }, "Go to Token")) : /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            onClick: ()=>{
-                setOpen(false);
-            },
-            style: {
-                flex: 1
-            },
-            color: "primary"
-        }, "Close"))), buyStep === (0, $165aa30a64b97a1b$export$b41ddf00b39567e8).AddFunds && token && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                py: "$5",
-                flexDirection: "column",
-                alignItems: "center",
-                textAlign: "center"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                color: "$neutralText"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faExchange),
-            style: {
-                width: "32px",
-                height: "32px",
-                margin: "12px 0px"
-            }
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle1",
-            css: {
-                my: 24
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4befe8050591e2e6$export$2e2bcd8739ae039), {
-            content: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-                style: "body2"
-            }, "Trade one crypto for another on a crypto exchange. Popular decentralized exchanges include", " ", /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4fb5cf8c028cd3ca$export$2e2bcd8739ae039), {
-                css: {
-                    fontSize: 12
+            }, [
+                transactionError
+            ]);
+            const executableSteps = steps?.filter((step)=>step.items && step.items.length > 0) || [];
+            const lastStepItems = executableSteps[executableSteps.length - 1]?.items || [];
+            let finalTxHash = lastStepItems[lastStepItems.length - 1]?.txHash;
+            let price = (listing?.price?.amount?.decimal || 0) * quantity;
+            if (!price && token?.token?.lastSell?.value) price = token?.token.lastSell.value;
+            const sourceImg = listing?.source ? listing?.source["icon"] : undefined;
+            return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $b86bf9f1e9f1a187$export$2b77a92f1a5ad772), {
+                trigger: trigger,
+                title: title,
+                onBack: buyStep == (0, $537a8475c59a6e21$export$b41ddf00b39567e8).AddFunds ? ()=>{
+                    setBuyStep((0, $537a8475c59a6e21$export$b41ddf00b39567e8).Checkout);
+                } : null,
+                open: open,
+                onOpenChange: (open)=>{
+                    if (!open && onClose) {
+                        const data = {
+                            tokenId: tokenId,
+                            collectionId: collectionId,
+                            maker: address
+                        };
+                        onClose(data, stepData, buyStep);
+                    }
+                    setOpen(open);
                 },
-                href: "https://app.uniswap.org/",
-                target: "_blank",
-                color: "primary"
-            }, "Uniswap"), ",", " ", /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4fb5cf8c028cd3ca$export$2e2bcd8739ae039), {
-                css: {
-                    fontSize: 12
-                },
-                href: "https://app.sushi.com/",
-                target: "_blank",
-                color: "primary"
-            }, "SushiSwap"), " ", "and many others.")
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            as: "span",
-            color: "accent"
-        }, "Exchange currencies")), " ", "or transfer funds to your", /*#__PURE__*/ (0, $bNXjM$react).createElement("br", null), " wallet address below:"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                width: "100%",
-                position: "relative"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                pointerEvents: "none",
-                opacity: copied ? 1 : 0,
-                position: "absolute",
-                inset: 0,
-                borderRadius: 8,
-                transition: "all 200ms ease-in-out",
-                pl: "$4",
-                alignItems: "center",
-                zIndex: 3,
-                textAlign: "left",
-                background: "$neutralBg"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body1"
-        }, "Copied Address!")), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $b348cba042fa8022$export$2e2bcd8739ae039), {
-            readOnly: true,
-            onClick: ()=>copyToClipboard(address),
-            value: address || "",
-            css: {
-                color: "$neutralText",
-                textAlign: "left"
-            }
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                position: "absolute",
-                right: "$3",
-                top: "50%",
-                touchEvents: "none",
-                transform: "translateY(-50%)",
-                color: "$neutralText",
-                pointerEvents: "none"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faCopy),
-            width: 16,
-            height: 16
-        })))), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            css: {
-                m: "$4"
-            },
-            color: "primary",
-            onClick: ()=>copyToClipboard(address)
-        }, "Copy Wallet Address")));
+                loading: loading,
+                children: [
+                    buyStep === (0, $537a8475c59a6e21$export$b41ddf00b39567e8).Unavailable && !loading && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c5f5dee31b69b8f3$export$2e2bcd8739ae039), {
+                                tokenDetails: token,
+                                collection: collection,
+                                isSuspicious: isBanned,
+                                usdConversion: usdPrice || 0,
+                                isUnavailable: true,
+                                price: price,
+                                currency: currency,
+                                sourceImg: sourceImg
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                onClick: ()=>{
+                                    setOpen(false);
+                                },
+                                css: {
+                                    m: "$4"
+                                },
+                                children: "Close"
+                            })
+                        ]
+                    }),
+                    buyStep === (0, $537a8475c59a6e21$export$b41ddf00b39567e8).Checkout && !loading && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        children: [
+                            transactionError && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                css: {
+                                    color: "$errorAccent",
+                                    p: "$4",
+                                    gap: "$2",
+                                    background: "$wellBackground"
+                                },
+                                align: "center",
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                        icon: (0, $bNXjM$faCircleExclamation),
+                                        width: 16,
+                                        height: 16
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "body2",
+                                        color: "errorLight",
+                                        children: transactionError.message
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c5f5dee31b69b8f3$export$2e2bcd8739ae039), {
+                                tokenDetails: token,
+                                collection: collection,
+                                usdConversion: usdPrice || 0,
+                                isSuspicious: isBanned,
+                                price: price,
+                                currency: currency,
+                                sourceImg: sourceImg
+                            }),
+                            quantityAvailable > 1 && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                css: {
+                                    pt: "$4",
+                                    px: "$4"
+                                },
+                                align: "center",
+                                justify: "between",
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "body2",
+                                        color: "subtle",
+                                        children: [
+                                            quantityAvailable,
+                                            " listings are available at this price"
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039), {
+                                        css: {
+                                            minWidth: 77,
+                                            width: "auto",
+                                            flexGrow: 0
+                                        },
+                                        value: `${quantity}`,
+                                        onValueChange: (value)=>{
+                                            setQuantity(Number(value));
+                                        },
+                                        children: [
+                                            ...Array(quantityAvailable)
+                                        ].map((_a, i)=>/*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039).Item, {
+                                                value: `${i + 1}`,
+                                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039).ItemText, {
+                                                    children: i + 1
+                                                })
+                                            }, i))
+                                    })
+                                ]
+                            }),
+                            referrerFee > 0 && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        align: "center",
+                                        justify: "between",
+                                        css: {
+                                            pt: "$4",
+                                            px: "$4"
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                style: "subtitle2",
+                                                children: "Referral Fee"
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
+                                                amount: referrerFee,
+                                                address: currency?.contract,
+                                                decimals: currency?.decimals
+                                            })
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        justify: "end",
+                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $208ab5b0155991db$export$2e2bcd8739ae039), {
+                                            amount: feeUsd,
+                                            color: "subtle",
+                                            css: {
+                                                pr: "$4"
+                                            }
+                                        })
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                align: "center",
+                                justify: "between",
+                                css: {
+                                    pt: "$4",
+                                    px: "$4"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "h6",
+                                        children: "Total"
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
+                                        textStyle: "h6",
+                                        amount: totalPrice,
+                                        address: currency?.contract,
+                                        decimals: currency?.decimals
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                justify: "end",
+                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $208ab5b0155991db$export$2e2bcd8739ae039), {
+                                    amount: totalUsd,
+                                    color: "subtle",
+                                    css: {
+                                        mr: "$4"
+                                    }
+                                })
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                css: {
+                                    p: "$4",
+                                    width: "100%"
+                                },
+                                children: hasEnoughCurrency ? /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                    onClick: buyToken,
+                                    css: {
+                                        width: "100%"
+                                    },
+                                    color: "primary",
+                                    children: "Checkout"
+                                }) : /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                    direction: "column",
+                                    align: "center",
+                                    children: [
+                                        /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                            align: "center",
+                                            css: {
+                                                mb: "$3"
+                                            },
+                                            children: [
+                                                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                    css: {
+                                                        mr: "$3"
+                                                    },
+                                                    color: "error",
+                                                    style: "body2",
+                                                    children: "Insufficient Balance"
+                                                }),
+                                                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
+                                                    amount: balance,
+                                                    address: currency?.contract,
+                                                    decimals: currency?.decimals,
+                                                    textStyle: "body2"
+                                                })
+                                            ]
+                                        }),
+                                        /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                            onClick: ()=>{
+                                                setBuyStep((0, $537a8475c59a6e21$export$b41ddf00b39567e8).AddFunds);
+                                            },
+                                            css: {
+                                                width: "100%"
+                                            },
+                                            children: "Add Funds"
+                                        })
+                                    ]
+                                })
+                            })
+                        ]
+                    }),
+                    buyStep === (0, $537a8475c59a6e21$export$b41ddf00b39567e8).Approving && token && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c5f5dee31b69b8f3$export$2e2bcd8739ae039), {
+                                tokenDetails: token,
+                                collection: collection,
+                                usdConversion: usdPrice || 0,
+                                isSuspicious: isBanned,
+                                price: price,
+                                currency: currency,
+                                sourceImg: sourceImg
+                            }),
+                            stepData && stepData.totalSteps > 1 && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $fe4973a3dd519dab$export$2e2bcd8739ae039), {
+                                css: {
+                                    px: "$4",
+                                    mt: "$3"
+                                },
+                                value: stepData?.stepProgress || 0,
+                                max: stepData?.totalSteps || 0
+                            }),
+                            !stepData && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $0ff8966798df47ad$export$2e2bcd8739ae039), {
+                                css: {
+                                    height: 206
+                                }
+                            }),
+                            stepData && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $168bea4f9c9e5bd1$export$2e2bcd8739ae039), {
+                                title: stepData?.currentStep.action || "",
+                                txHash: stepData?.currentStepItem.txHash,
+                                blockExplorerBaseUrl: `${blockExplorerBaseUrl}/tx/${stepData?.currentStepItem.txHash}`
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                disabled: true,
+                                css: {
+                                    m: "$4"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $0ff8966798df47ad$export$2e2bcd8739ae039), {}),
+                                    stepData?.currentStepItem.txHash ? "Waiting for transaction to be validated" : "Waiting for approval..."
+                                ]
+                            })
+                        ]
+                    }),
+                    buyStep === (0, $537a8475c59a6e21$export$b41ddf00b39567e8).Complete && token && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                css: {
+                                    p: "$4",
+                                    py: "$5",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    textAlign: "center"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "h5",
+                                        css: {
+                                            mb: 24
+                                        },
+                                        children: "Congratulations!"
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)("img", {
+                                        src: token?.token?.image,
+                                        style: {
+                                            width: 100,
+                                            height: 100
+                                        }
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        css: {
+                                            mb: 24,
+                                            mt: "$2",
+                                            maxWidth: "100%"
+                                        },
+                                        align: "center",
+                                        justify: "center",
+                                        children: [
+                                            !!token.token?.collection?.image && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    mr: "$1"
+                                                },
+                                                children: /*#__PURE__*/ (0, $bNXjM$jsx)("img", {
+                                                    src: token.token?.collection?.image,
+                                                    style: {
+                                                        width: 24,
+                                                        height: 24,
+                                                        borderRadius: "50%"
+                                                    }
+                                                })
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                style: "subtitle2",
+                                                css: {
+                                                    maxWidth: "100%"
+                                                },
+                                                ellipsify: true,
+                                                children: token?.token?.name ? token?.token?.name : `#${token?.token?.tokenId}`
+                                            })
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        css: {
+                                            mb: "$2"
+                                        },
+                                        align: "center",
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    color: "$successAccent",
+                                                    mr: "$2"
+                                                },
+                                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                                    icon: (0, $bNXjM$faCheckCircle)
+                                                })
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                style: "body1",
+                                                children: "Your transaction went through successfully"
+                                            })
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $31d3f3a80135a993$export$2e2bcd8739ae039), {
+                                        color: "primary",
+                                        weight: "medium",
+                                        css: {
+                                            fontSize: 12
+                                        },
+                                        href: `${blockExplorerBaseUrl}/tx/${finalTxHash}`,
+                                        target: "_blank",
+                                        children: [
+                                            "View on",
+                                            " ",
+                                            activeChain?.blockExplorers?.default.name || "Etherscan"
+                                        ]
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                css: {
+                                    p: "$4",
+                                    flexDirection: "column",
+                                    gap: "$3",
+                                    "@bp1": {
+                                        flexDirection: "row"
+                                    }
+                                },
+                                children: !!onGoToToken ? /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                                    children: [
+                                        /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                            onClick: ()=>{
+                                                setOpen(false);
+                                            },
+                                            css: {
+                                                flex: 1
+                                            },
+                                            color: "ghost",
+                                            children: "Close"
+                                        }),
+                                        /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                            style: {
+                                                flex: 1
+                                            },
+                                            color: "primary",
+                                            onClick: ()=>{
+                                                onGoToToken();
+                                            },
+                                            children: "Go to Token"
+                                        })
+                                    ]
+                                }) : /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                    onClick: ()=>{
+                                        setOpen(false);
+                                    },
+                                    style: {
+                                        flex: 1
+                                    },
+                                    color: "primary",
+                                    children: "Close"
+                                })
+                            })
+                        ]
+                    }),
+                    buyStep === (0, $537a8475c59a6e21$export$b41ddf00b39567e8).AddFunds && token && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                css: {
+                                    p: "$4",
+                                    py: "$5",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    textAlign: "center"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                        css: {
+                                            color: "$neutralText"
+                                        },
+                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                            icon: (0, $bNXjM$faExchange),
+                                            style: {
+                                                width: "32px",
+                                                height: "32px",
+                                                margin: "12px 0px"
+                                            }
+                                        })
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "subtitle1",
+                                        css: {
+                                            my: 24
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $364926f073e51b94$export$2e2bcd8739ae039), {
+                                                content: /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                    style: "body2",
+                                                    children: [
+                                                        "Trade one crypto for another on a crypto exchange. Popular decentralized exchanges include",
+                                                        " ",
+                                                        /*#__PURE__*/ (0, $bNXjM$jsx)((0, $31d3f3a80135a993$export$2e2bcd8739ae039), {
+                                                            css: {
+                                                                fontSize: 12
+                                                            },
+                                                            href: "https://app.uniswap.org/",
+                                                            target: "_blank",
+                                                            color: "primary",
+                                                            children: "Uniswap"
+                                                        }),
+                                                        ",",
+                                                        " ",
+                                                        /*#__PURE__*/ (0, $bNXjM$jsx)((0, $31d3f3a80135a993$export$2e2bcd8739ae039), {
+                                                            css: {
+                                                                fontSize: 12
+                                                            },
+                                                            href: "https://app.sushi.com/",
+                                                            target: "_blank",
+                                                            color: "primary",
+                                                            children: "SushiSwap"
+                                                        }),
+                                                        " ",
+                                                        "and many others."
+                                                    ]
+                                                }),
+                                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                    as: "span",
+                                                    color: "accent",
+                                                    children: "Exchange currencies"
+                                                })
+                                            }),
+                                            " ",
+                                            "or transfer funds to your",
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)("br", {}),
+                                            " wallet address below:"
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                        css: {
+                                            width: "100%",
+                                            position: "relative"
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    pointerEvents: "none",
+                                                    opacity: copied ? 1 : 0,
+                                                    position: "absolute",
+                                                    inset: 0,
+                                                    borderRadius: 8,
+                                                    transition: "all 200ms ease-in-out",
+                                                    pl: "$4",
+                                                    alignItems: "center",
+                                                    zIndex: 3,
+                                                    textAlign: "left",
+                                                    background: "$neutralBg"
+                                                },
+                                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                    style: "body1",
+                                                    children: "Copied Address!"
+                                                })
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a235eda53948b6ff$export$2e2bcd8739ae039), {
+                                                readOnly: true,
+                                                onClick: ()=>copyToClipboard(address),
+                                                value: address || "",
+                                                css: {
+                                                    color: "$neutralText",
+                                                    textAlign: "left"
+                                                }
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    position: "absolute",
+                                                    right: "$3",
+                                                    top: "50%",
+                                                    touchEvents: "none",
+                                                    transform: "translateY(-50%)",
+                                                    color: "$neutralText",
+                                                    pointerEvents: "none"
+                                                },
+                                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                                    icon: (0, $bNXjM$faCopy),
+                                                    width: 16,
+                                                    height: 16
+                                                })
+                                            })
+                                        ]
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                css: {
+                                    m: "$4"
+                                },
+                                color: "primary",
+                                onClick: ()=>copyToClipboard(address),
+                                children: "Copy Wallet Address"
+                            })
+                        ]
+                    })
+                ]
+            });
+        }
     });
 }
-$2ab11b88f5d133c9$export$7055e49b90860ae6.Custom = (0, $165aa30a64b97a1b$export$8913f774683cde87);
+$ad2cbb1f5242b499$export$7055e49b90860ae6.Custom = (0, $537a8475c59a6e21$export$8913f774683cde87);
 
 
 
@@ -4311,10 +4625,12 @@ $2ab11b88f5d133c9$export$7055e49b90860ae6.Custom = (0, $165aa30a64b97a1b$export$
 
 
 
-function $5f3bc7a484134d6f$export$2e2bcd8739ae039(marketplaces, tokenId, collectionId) {
+
+
+function $4b83afa1b914556e$export$2e2bcd8739ae039(marketplaces, tokenId, collectionId) {
     const [unapprovedMarketplaces, setUnapprovedMarketplaces] = (0, $bNXjM$useState)([]);
     const [isFetching, setIsFetching] = (0, $bNXjM$useState)(false);
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
     const { data: signer  } = (0, $bNXjM$useSigner)();
     (0, $bNXjM$useEffect)(()=>{
         if (signer && client && tokenId && collectionId && marketplaces.length > 0) {
@@ -4366,7 +4682,7 @@ function $5f3bc7a484134d6f$export$2e2bcd8739ae039(marketplaces, tokenId, collect
 }
 
 
-var $52d583b64f2aa54f$export$2e2bcd8739ae039 = ()=>{
+var $c07b724742ae0148$export$2e2bcd8739ae039 = ()=>{
     const client = (0, $bNXjM$getClient)();
     let reservoirTitleEl = document.querySelector("meta[property='reservoir:title']");
     let title = null;
@@ -4390,15 +4706,15 @@ var $52d583b64f2aa54f$export$2e2bcd8739ae039 = ()=>{
 
 
 
-function $3d109679c104715a$export$2e2bcd8739ae039(listingEnabledOnly, chainId) {
+function $f34980509523d2a6$export$2e2bcd8739ae039(listingEnabledOnly, chainId) {
     const [marketplaces, setMarketplaces] = (0, $bNXjM$useState)([]);
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const chain = chainId !== undefined ? client === null || client === void 0 ? void 0 : client.chains.find((chain)=>chain.id === chainId) : client === null || client === void 0 ? void 0 : client.currentChain();
-    const path = new URL(`${chain === null || chain === void 0 ? void 0 : chain.baseApiUrl}/admin/get-marketplaces`);
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const chain = chainId !== undefined ? client?.chains.find((chain)=>chain.id === chainId) : client?.currentChain();
+    const path = new URL(`${chain?.baseApiUrl}/admin/get-marketplaces`);
     const { data: data  } = (0, $bNXjM$swrimmutable)([
         path.href,
-        chain === null || chain === void 0 ? void 0 : chain.apiKey,
-        client === null || client === void 0 ? void 0 : client.version
+        chain?.apiKey,
+        client?.version
     ], null);
     (0, $bNXjM$useEffect)(()=>{
         if (data && data.marketplaces) {
@@ -4406,12 +4722,12 @@ function $3d109679c104715a$export$2e2bcd8739ae039(listingEnabledOnly, chainId) {
             if (listingEnabledOnly) updatedMarketplaces = updatedMarketplaces.filter((marketplace)=>marketplace.listingEnabled && marketplace.orderbook !== "x2y2");
             updatedMarketplaces.forEach((marketplace)=>{
                 if (marketplace.orderbook === "reservoir") {
-                    const data = (0, $52d583b64f2aa54f$export$2e2bcd8739ae039)();
+                    const data = (0, $c07b724742ae0148$export$2e2bcd8739ae039)();
                     marketplace.name = data.title;
-                    marketplace.feeBps = (client === null || client === void 0 ? void 0 : client.marketplaceFee) ? client.marketplaceFee : 0;
+                    marketplace.feeBps = client?.marketplaceFee ? client.marketplaceFee : 0;
                     marketplace.fee = {
-                        bps: (client === null || client === void 0 ? void 0 : client.marketplaceFee) || 0,
-                        percent: ((client === null || client === void 0 ? void 0 : client.marketplaceFee) || 0) / 100
+                        bps: client?.marketplaceFee || 0,
+                        percent: (client?.marketplaceFee || 0) / 100
                     };
                     if (data.icon) marketplace.imageUrl = data.icon;
                 }
@@ -4432,7 +4748,7 @@ function $3d109679c104715a$export$2e2bcd8739ae039(listingEnabledOnly, chainId) {
 }
 
 
-function $5c08fcb745f832ab$export$2e2bcd8739ae039(contract, tokenId, swrOptions = {}) {
+function $3abd2be8eb42ad0c$export$2e2bcd8739ae039(contract, tokenId, swrOptions = {}) {
     const path = new URL(`https://api.opensea.io/api/v1/asset/${contract}/${tokenId}`);
     const { data: data , mutate: mutate , error: error , isValidating: isValidating  } = (0, $bNXjM$swr)(contract && tokenId ? [
         path.href
@@ -4456,7 +4772,7 @@ function $5c08fcb745f832ab$export$2e2bcd8739ae039(contract, tokenId, swrOptions 
 
 
 
-const $f4cb7002f21420c9$var$expirationOptions = [
+const $abb5dec08fcac72e$var$expirationOptions = [
     {
         text: "1 Hour",
         value: "hour",
@@ -4506,18 +4822,18 @@ const $f4cb7002f21420c9$var$expirationOptions = [
         relativeTimeUnit: "M"
     }
 ];
-var $f4cb7002f21420c9$export$2e2bcd8739ae039 = $f4cb7002f21420c9$var$expirationOptions;
+var $abb5dec08fcac72e$export$2e2bcd8739ae039 = $abb5dec08fcac72e$var$expirationOptions;
 
 
 
-var $4f8e6d03fa0f27e5$export$7f4afd65e1e67072;
+let $052d60b4fc42e2f9$export$7f4afd65e1e67072;
 (function(ListStep) {
     ListStep[ListStep["SelectMarkets"] = 0] = "SelectMarkets";
     ListStep[ListStep["SetPrice"] = 1] = "SetPrice";
     ListStep[ListStep["ListItem"] = 2] = "ListItem";
     ListStep[ListStep["Complete"] = 3] = "Complete";
-})($4f8e6d03fa0f27e5$export$7f4afd65e1e67072 || ($4f8e6d03fa0f27e5$export$7f4afd65e1e67072 = {}));
-const $4f8e6d03fa0f27e5$var$isCurrencyAllowed = (currency, marketplace, openseaPaymentTokens)=>{
+})($052d60b4fc42e2f9$export$7f4afd65e1e67072 || ($052d60b4fc42e2f9$export$7f4afd65e1e67072 = {}));
+const $052d60b4fc42e2f9$var$isCurrencyAllowed = (currency, marketplace, openseaPaymentTokens)=>{
     if (marketplace.listingEnabled) {
         if (currency.contract === (0, $bNXjM$constants).AddressZero) return true;
         switch(marketplace.orderbook){
@@ -4529,30 +4845,29 @@ const $4f8e6d03fa0f27e5$var$isCurrencyAllowed = (currency, marketplace, openseaP
     }
     return false;
 };
-const $4f8e6d03fa0f27e5$export$5cb91f178b51ac3 = ({ open: open , tokenId: tokenId , collectionId: collectionId , currencies: currencies , normalizeRoyalties: normalizeRoyalties , children: children  })=>{
-    var _a, _b, _c;
+const $052d60b4fc42e2f9$export$5cb91f178b51ac3 = ({ open: open , tokenId: tokenId , collectionId: collectionId , currencies: currencies , normalizeRoyalties: normalizeRoyalties , children: children  })=>{
     const { data: signer  } = (0, $bNXjM$useSigner)();
     const account = (0, $bNXjM$useAccount)();
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const [listStep, setListStep] = (0, $bNXjM$useState)($4f8e6d03fa0f27e5$export$7f4afd65e1e67072.SelectMarkets);
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const [listStep, setListStep] = (0, $bNXjM$useState)($052d60b4fc42e2f9$export$7f4afd65e1e67072.SelectMarkets);
     const [listingData, setListingData] = (0, $bNXjM$useState)([]);
-    const [allMarketplaces] = (0, $3d109679c104715a$export$2e2bcd8739ae039)(true);
-    const [marketplaces, setMarketplaces] = (0, $3d109679c104715a$export$2e2bcd8739ae039)(true);
+    const [allMarketplaces] = (0, $f34980509523d2a6$export$2e2bcd8739ae039)(true);
+    const [marketplaces, setMarketplaces] = (0, $f34980509523d2a6$export$2e2bcd8739ae039)(true);
     const [loadedInitalPrice, setLoadedInitalPrice] = (0, $bNXjM$useState)(false);
     const [transactionError, setTransactionError] = (0, $bNXjM$useState)();
     const [stepData, setStepData] = (0, $bNXjM$useState)(null);
     const [localMarketplace, setLocalMarketplace] = (0, $bNXjM$useState)(null);
-    const chainCurrency = (0, $b6adfc9a883b8132$export$2e2bcd8739ae039)();
+    const chainCurrency = (0, $16fcb794e07c5eb8$export$2e2bcd8739ae039)();
     const defaultCurrency = {
         contract: chainCurrency.address,
         symbol: chainCurrency.symbol
     };
     const [currency, setCurrency] = (0, $bNXjM$useState)(currencies && currencies[0] ? currencies[0] : defaultCurrency);
     const [quantity, setQuantity] = (0, $bNXjM$useState)(1);
-    const contract = collectionId ? collectionId === null || collectionId === void 0 ? void 0 : collectionId.split(":")[0] : undefined;
-    const { data: unapprovedMarketplaces , isFetching: isFetchingUnapprovedMarketplaces  } = (0, $5f3bc7a484134d6f$export$2e2bcd8739ae039)(marketplaces, open ? tokenId : undefined, open ? contract : undefined);
-    const [expirationOption, setExpirationOption] = (0, $bNXjM$useState)((0, $f4cb7002f21420c9$export$2e2bcd8739ae039)[5]);
-    const { data: tokens  } = (0, $2ae380ce592f7932$export$2e2bcd8739ae039)(open && {
+    const contract = collectionId ? collectionId?.split(":")[0] : undefined;
+    const { data: unapprovedMarketplaces , isFetching: isFetchingUnapprovedMarketplaces  } = (0, $4b83afa1b914556e$export$2e2bcd8739ae039)(marketplaces, open ? tokenId : undefined, open ? contract : undefined);
+    const [expirationOption, setExpirationOption] = (0, $bNXjM$useState)((0, $abb5dec08fcac72e$export$2e2bcd8739ae039)[5]);
+    const { data: tokens  } = (0, $54bf018b076821f1$export$2e2bcd8739ae039)(open && {
         tokens: [
             `${contract}:${tokenId}`
         ],
@@ -4561,22 +4876,22 @@ const $4f8e6d03fa0f27e5$export$5cb91f178b51ac3 = ({ open: open , tokenId: tokenI
     }, {
         revalidateFirstPage: true
     });
-    const { data: collections  } = (0, $ff2494fa019b599a$export$2e2bcd8739ae039)(open && {
+    const { data: collections  } = (0, $38f38860f7db3263$export$2e2bcd8739ae039)(open && {
         id: collectionId,
         normalizeRoyalties: normalizeRoyalties
     });
-    const { response: openSeaToken  } = (0, $5c08fcb745f832ab$export$2e2bcd8739ae039)(open ? contract : undefined, open ? tokenId : undefined);
-    const paymentTokens = (_a = openSeaToken === null || openSeaToken === void 0 ? void 0 : openSeaToken.collection) === null || _a === void 0 ? void 0 : _a.payment_tokens;
+    const { response: openSeaToken  } = (0, $3abd2be8eb42ad0c$export$2e2bcd8739ae039)(open ? contract : undefined, open ? tokenId : undefined);
+    const paymentTokens = openSeaToken?.collection?.payment_tokens;
     const collection = collections && collections[0] ? collections[0] : undefined;
     const token = tokens && tokens.length > 0 ? tokens[0] : undefined;
-    const is1155 = ((_b = token === null || token === void 0 ? void 0 : token.token) === null || _b === void 0 ? void 0 : _b.kind) === "erc1155";
-    const { data: userTokens  } = (0, $6c04a5e57562cf4e$export$2e2bcd8739ae039)(open && is1155 ? account.address : undefined, {
+    const is1155 = token?.token?.kind === "erc1155";
+    const { data: userTokens  } = (0, $7ef173c8b4177008$export$2e2bcd8739ae039)(open && is1155 ? account.address : undefined, {
         tokens: [
             `${contract}:${tokenId}`
         ]
     });
-    const quantityAvailable = is1155 && userTokens[0] ? Number(((_c = userTokens[0].ownership) === null || _c === void 0 ? void 0 : _c.tokenCount) || 1) : 1;
-    const usdPrice = (0, $9f52dec49aff5538$export$2e2bcd8739ae039)(open ? "USD" : undefined, currency.symbol);
+    const quantityAvailable = is1155 && userTokens[0] ? Number(userTokens[0].ownership?.tokenCount || 1) : 1;
+    const usdPrice = (0, $742accbc1cb453a5$export$2e2bcd8739ae039)(open ? "USD" : undefined, currency.symbol);
     const toggleMarketplace = (marketplace)=>{
         const updatedMarketplaces = marketplaces.map((market)=>{
             if (market.name == marketplace.name) return {
@@ -4603,7 +4918,7 @@ const $4f8e6d03fa0f27e5$export$5cb91f178b51ac3 = ({ open: open , tokenId: tokenI
     (0, $bNXjM$useEffect)(()=>{
         if (open && token && collection && !loadedInitalPrice && allMarketplaces.length > 0) {
             let updatedMarketplaces = allMarketplaces.map((marketplace)=>{
-                const listingEnabled = $4f8e6d03fa0f27e5$var$isCurrencyAllowed(currency, marketplace, paymentTokens || [
+                const listingEnabled = $052d60b4fc42e2f9$var$isCurrencyAllowed(currency, marketplace, paymentTokens || [
                     chainCurrency
                 ]);
                 return {
@@ -4627,7 +4942,7 @@ const $4f8e6d03fa0f27e5$export$5cb91f178b51ac3 = ({ open: open , tokenId: tokenI
     (0, $bNXjM$useEffect)(()=>{
         if (open && loadedInitalPrice) {
             let updatedMarketplaces = allMarketplaces.map((marketplace)=>{
-                const listingEnabled = $4f8e6d03fa0f27e5$var$isCurrencyAllowed(currency, marketplace, paymentTokens || [
+                const listingEnabled = $052d60b4fc42e2f9$var$isCurrencyAllowed(currency, marketplace, paymentTokens || [
                     chainCurrency
                 ]);
                 return {
@@ -4651,7 +4966,7 @@ const $4f8e6d03fa0f27e5$export$5cb91f178b51ac3 = ({ open: open , tokenId: tokenI
     ]);
     (0, $bNXjM$useEffect)(()=>{
         if (!open) {
-            setListStep($4f8e6d03fa0f27e5$export$7f4afd65e1e67072.SelectMarkets);
+            setListStep($052d60b4fc42e2f9$export$7f4afd65e1e67072.SelectMarkets);
             setTransactionError(null);
             if (marketplaces.length > 0) setMarketplaces(marketplaces.map((marketplace)=>{
                 return {
@@ -4661,7 +4976,7 @@ const $4f8e6d03fa0f27e5$export$5cb91f178b51ac3 = ({ open: open , tokenId: tokenI
             }));
             setLoadedInitalPrice(false);
             setStepData(null);
-            setExpirationOption((0, $f4cb7002f21420c9$export$2e2bcd8739ae039)[5]);
+            setExpirationOption((0, $abb5dec08fcac72e$export$2e2bcd8739ae039)[5]);
             setQuantity(1);
         }
         setCurrency(currencies && currencies[0] ? currencies[0] : defaultCurrency);
@@ -4688,7 +5003,7 @@ const $4f8e6d03fa0f27e5$export$5cb91f178b51ac3 = ({ open: open , tokenId: tokenI
         const listingData = [];
         let expirationTime = null;
         if (expirationOption.relativeTime && expirationOption.relativeTimeUnit) expirationTime = (0, $bNXjM$dayjs)().add(expirationOption.relativeTime, expirationOption.relativeTimeUnit).unix().toString();
-        const contract = collectionId ? collectionId === null || collectionId === void 0 ? void 0 : collectionId.split(":")[0] : undefined;
+        const contract = collectionId ? collectionId?.split(":")[0] : undefined;
         marketplaces.forEach((market)=>{
             if (market.isSelected) {
                 const listing = {
@@ -4709,7 +5024,7 @@ const $4f8e6d03fa0f27e5$export$5cb91f178b51ac3 = ({ open: open , tokenId: tokenI
             }
         });
         setListingData(listingData);
-        setListStep($4f8e6d03fa0f27e5$export$7f4afd65e1e67072.ListItem);
+        setListStep($052d60b4fc42e2f9$export$7f4afd65e1e67072.ListItem);
         client.actions.listToken({
             listings: listingData.map((data)=>data.listing),
             signer: signer,
@@ -4729,7 +5044,7 @@ const $4f8e6d03fa0f27e5$export$5cb91f178b51ac3 = ({ open: open , tokenId: tokenI
                 if (incompleteStepIndex === null || incompleteStepItemIndex === null) {
                     const currentStep = executableSteps[executableSteps.length - 1];
                     const currentStepItem = currentStep.items ? currentStep.items[currentStep.items.length] : null;
-                    setListStep($4f8e6d03fa0f27e5$export$7f4afd65e1e67072.Complete);
+                    setListStep($052d60b4fc42e2f9$export$7f4afd65e1e67072.Complete);
                     setStepData({
                         totalSteps: stepCount,
                         stepProgress: stepCount,
@@ -4739,7 +5054,7 @@ const $4f8e6d03fa0f27e5$export$5cb91f178b51ac3 = ({ open: open , tokenId: tokenI
                 } else {
                     const currentStep = executableSteps[incompleteStepIndex];
                     const currentStepItem = currentStep.items ? currentStep.items[incompleteStepItemIndex] : null;
-                    const listings = (currentStepItem === null || currentStepItem === void 0 ? void 0 : currentStepItem.orderIndex) !== undefined ? listingData[currentStepItem.orderIndex] : listingData[listingData.length - 1];
+                    const listings = currentStepItem?.orderIndex !== undefined ? listingData[currentStepItem.orderIndex] : listingData[listingData.length - 1];
                     setStepData({
                         totalSteps: stepCount,
                         stepProgress: incompleteStepIndex,
@@ -4750,7 +5065,7 @@ const $4f8e6d03fa0f27e5$export$5cb91f178b51ac3 = ({ open: open , tokenId: tokenI
             }
         }).catch((e)=>{
             const error = e;
-            const transactionError = new Error((error === null || error === void 0 ? void 0 : error.message) || "", {
+            const transactionError = new Error(error?.message || "", {
                 cause: error
             });
             setTransactionError(transactionError);
@@ -4765,36 +5080,38 @@ const $4f8e6d03fa0f27e5$export$5cb91f178b51ac3 = ({ open: open , tokenId: tokenI
         currency,
         quantity
     ]);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, children({
-        token: token,
-        quantityAvailable: quantityAvailable,
-        collection: collection,
-        listStep: listStep,
-        usdPrice: usdPrice,
-        expirationOption: expirationOption,
-        expirationOptions: $f4cb7002f21420c9$export$2e2bcd8739ae039,
-        marketplaces: marketplaces,
-        unapprovedMarketplaces: unapprovedMarketplaces,
-        isFetchingUnapprovedMarketplaces: isFetchingUnapprovedMarketplaces,
-        localMarketplace: localMarketplace,
-        listingData: listingData,
-        transactionError: transactionError,
-        stepData: stepData,
-        currencies: currencies || [
-            defaultCurrency
-        ],
-        currency: currency,
-        quantity: quantity,
-        setListStep: setListStep,
-        toggleMarketplace: toggleMarketplace,
-        setMarketPrice: setMarketPrice,
-        setCurrency: setCurrency,
-        setExpirationOption: setExpirationOption,
-        setQuantity: setQuantity,
-        listToken: listToken
-    }));
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$Fragment), {
+        children: children({
+            token: token,
+            quantityAvailable: quantityAvailable,
+            collection: collection,
+            listStep: listStep,
+            usdPrice: usdPrice,
+            expirationOption: expirationOption,
+            expirationOptions: $abb5dec08fcac72e$export$2e2bcd8739ae039,
+            marketplaces: marketplaces,
+            unapprovedMarketplaces: unapprovedMarketplaces,
+            isFetchingUnapprovedMarketplaces: isFetchingUnapprovedMarketplaces,
+            localMarketplace: localMarketplace,
+            listingData: listingData,
+            transactionError: transactionError,
+            stepData: stepData,
+            currencies: currencies || [
+                defaultCurrency
+            ],
+            currency: currency,
+            quantity: quantity,
+            setListStep: setListStep,
+            toggleMarketplace: toggleMarketplace,
+            setMarketPrice: setMarketPrice,
+            setCurrency: setCurrency,
+            setExpirationOption: setExpirationOption,
+            setQuantity: setQuantity,
+            listToken: listToken
+        })
+    });
 };
-$4f8e6d03fa0f27e5$export$5cb91f178b51ac3.displayName = "ListModalRenderer";
+$052d60b4fc42e2f9$export$5cb91f178b51ac3.displayName = "ListModalRenderer";
 
 
 
@@ -4804,7 +5121,9 @@ $4f8e6d03fa0f27e5$export$5cb91f178b51ac3.displayName = "ListModalRenderer";
 
 
 
-const $41c0733f04961a6e$var$optimizeImage = (imageHref, width)=>{
+
+
+const $f9fd95002ef41b13$var$optimizeImage = (imageHref, width)=>{
     if (!imageHref) return "";
     let url = new URL(imageHref);
     if (url.host === "lh3.googleusercontent.com") {
@@ -4816,10 +5135,10 @@ const $41c0733f04961a6e$var$optimizeImage = (imageHref, width)=>{
     }
     return imageHref;
 };
-var $41c0733f04961a6e$export$2e2bcd8739ae039 = $41c0733f04961a6e$var$optimizeImage;
+var $f9fd95002ef41b13$export$2e2bcd8739ae039 = $f9fd95002ef41b13$var$optimizeImage;
 
 
-const $5a75332ebc07f028$var$Img = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("img", {
+const $80495cdca85acd8c$var$Img = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("img", {
     width: "100%",
     "@bp1": {
         height: 150,
@@ -4827,10 +5146,9 @@ const $5a75332ebc07f028$var$Img = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)
     },
     borderRadius: "$borderRadius"
 });
-const $5a75332ebc07f028$var$Token = ({ token: token , collection: collection  })=>{
-    var _a, _b, _c, _d, _e;
-    const img = (0, $41c0733f04961a6e$export$2e2bcd8739ae039)(((_a = token === null || token === void 0 ? void 0 : token.token) === null || _a === void 0 ? void 0 : _a.image) ? token.token.image : collection === null || collection === void 0 ? void 0 : collection.image, 600);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
+const $80495cdca85acd8c$var$Token = ({ token: token , collection: collection  })=>{
+    const img = (0, $f9fd95002ef41b13$export$2e2bcd8739ae039)(token?.token?.image ? token.token.image : collection?.image, 600);
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
         css: {
             mr: "$4",
             width: 120,
@@ -4838,36 +5156,47 @@ const $5a75332ebc07f028$var$Token = ({ token: token , collection: collection  })
                 mr: 0,
                 width: "100%"
             }
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2",
-        color: "subtle",
-        css: {
-            mb: "$1",
-            display: "block"
-        }
-    }, "Item"), /*#__PURE__*/ (0, $bNXjM$react).createElement($5a75332ebc07f028$var$Img, {
-        src: img,
-        css: {
-            mb: "$2",
-            visibility: !img || img.length === 0 ? "hidden" : "visible",
-            objectFit: "cover"
-        }
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "h6",
-        css: {
-            flex: 1
         },
-        as: "h6",
-        ellipsify: true
-    }, ((_b = token === null || token === void 0 ? void 0 : token.token) === null || _b === void 0 ? void 0 : _b.name) || `#${(_c = token === null || token === void 0 ? void 0 : token.token) === null || _c === void 0 ? void 0 : _c.tokenId}`), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2",
-        color: "subtle",
-        as: "p",
-        ellipsify: true
-    }, (_e = (_d = token === null || token === void 0 ? void 0 : token.token) === null || _d === void 0 ? void 0 : _d.collection) === null || _e === void 0 ? void 0 : _e.name)));
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                style: "subtitle2",
+                color: "subtle",
+                css: {
+                    mb: "$1",
+                    display: "block"
+                },
+                children: "Item"
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)($80495cdca85acd8c$var$Img, {
+                src: img,
+                css: {
+                    mb: "$2",
+                    visibility: !img || img.length === 0 ? "hidden" : "visible",
+                    objectFit: "cover"
+                }
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                style: "h6",
+                css: {
+                    flex: 1
+                },
+                as: "h6",
+                ellipsify: true,
+                children: token?.token?.name || `#${token?.token?.tokenId}`
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                    style: "subtitle2",
+                    color: "subtle",
+                    as: "p",
+                    ellipsify: true,
+                    children: token?.token?.collection?.name
+                })
+            })
+        ]
+    });
 };
-var $5a75332ebc07f028$export$2e2bcd8739ae039 = $5a75332ebc07f028$var$Token;
+var $80495cdca85acd8c$export$2e2bcd8739ae039 = $80495cdca85acd8c$var$Token;
 
 
 
@@ -4875,21 +5204,23 @@ var $5a75332ebc07f028$export$2e2bcd8739ae039 = $5a75332ebc07f028$var$Token;
 
 
 
-const $689711b6f5d8de5a$var$FormatWrappedCurrency = ({ logoWidth: logoWidth , ...props })=>{
+
+
+const $39af25d905d8680a$var$FormatWrappedCurrency = ({ logoWidth: logoWidth , ...props })=>{
     const { chain: activeChain , chains: chains  } = (0, $bNXjM$useNetwork)();
-    let chain = chains.find((chain)=>(activeChain === null || activeChain === void 0 ? void 0 : activeChain.id) === chain.id);
+    let chain = chains.find((chain)=>activeChain?.id === chain.id);
     if (!chain && chains.length > 0) chain = chains[0];
     else chain = activeChain;
-    const contractAddress = (chain === null || chain === void 0 ? void 0 : chain.id) !== undefined && chain.id in (0, $fc1497f0cb88da4d$export$2e2bcd8739ae039) ? (0, $fc1497f0cb88da4d$export$2e2bcd8739ae039)[chain.id] : (0, $fc1497f0cb88da4d$export$2e2bcd8739ae039)[1];
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
+    const contractAddress = chain?.id !== undefined && chain.id in (0, $412f709ff46d543e$export$2e2bcd8739ae039) ? (0, $412f709ff46d543e$export$2e2bcd8739ae039)[chain.id] : (0, $412f709ff46d543e$export$2e2bcd8739ae039)[1];
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
         ...props,
         address: contractAddress
     });
 };
-var $689711b6f5d8de5a$export$2e2bcd8739ae039 = $689711b6f5d8de5a$var$FormatWrappedCurrency;
+var $39af25d905d8680a$export$2e2bcd8739ae039 = $39af25d905d8680a$var$FormatWrappedCurrency;
 
 
-const $3076e9a453312234$var$Stat = ({ label: label , value: value , asNative: asNative = false , asWrapped: asWrapped = false , ...props })=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+const $54a2afd53a200e25$var$Stat = ({ label: label , value: value , asNative: asNative = false , asWrapped: asWrapped = false , ...props })=>/*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         align: "center",
         justify: "between",
         className: "rk-stat-well",
@@ -4899,60 +5230,71 @@ const $3076e9a453312234$var$Stat = ({ label: label , value: value , asNative: as
             borderRadius: "$borderRadius",
             overflow: "hidden"
         },
-        ...props
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        css: {
-            flex: 1,
-            minWidth: "0",
-            alignItems: "center",
-            gap: "$2",
-            mr: "$1"
-        }
-    }, label), asNative && !asWrapped && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
-        amount: value,
-        textStyle: "subtitle2"
-    }), asWrapped && !asNative && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $689711b6f5d8de5a$export$2e2bcd8739ae039), {
-        amount: value,
-        textStyle: "subtitle2"
-    }), !asNative && !asWrapped && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2",
-        as: "p",
-        css: {
-            marginLeft: "$2"
-        },
-        ellipsify: true
-    }, value ? value : "-"));
-$3076e9a453312234$var$Stat.toString = ()=>".rk-stat-well";
-var $3076e9a453312234$export$2e2bcd8739ae039 = $3076e9a453312234$var$Stat;
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                css: {
+                    flex: 1,
+                    minWidth: "0",
+                    alignItems: "center",
+                    gap: "$2",
+                    mr: "$1"
+                },
+                children: label
+            }),
+            asNative && !asWrapped && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
+                amount: value,
+                textStyle: "subtitle2"
+            }),
+            asWrapped && !asNative && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $39af25d905d8680a$export$2e2bcd8739ae039), {
+                amount: value,
+                textStyle: "subtitle2"
+            }),
+            !asNative && !asWrapped && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                style: "subtitle2",
+                as: "p",
+                css: {
+                    marginLeft: "$2"
+                },
+                ellipsify: true,
+                children: value ? value : "-"
+            })
+        ]
+    });
+$54a2afd53a200e25$var$Stat.toString = ()=>".rk-stat-well";
+var $54a2afd53a200e25$export$2e2bcd8739ae039 = $54a2afd53a200e25$var$Stat;
 
 
 
 
 
 
-const $6ca758f3c020e004$var$InfoTooltip = ({ side: side , content: content , width: width , kind: kind = "info"  })=>{
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4befe8050591e2e6$export$2e2bcd8739ae039), {
+
+const $f1a77cb69cf0ff83$var$InfoTooltip = ({ side: side , content: content , width: width , kind: kind = "info"  })=>{
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $364926f073e51b94$export$2e2bcd8739ae039), {
         side: side,
         width: width,
-        content: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
+        content: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
             style: "body2",
-            as: "p"
-        }, content)
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            color: kind === "error" ? "$errorAccent" : "$neutralText"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        icon: (0, $bNXjM$faInfoCircle)
-    })));
+            as: "p",
+            children: content
+        }),
+        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+            css: {
+                color: kind === "error" ? "$errorAccent" : "$neutralText"
+            },
+            children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                icon: (0, $bNXjM$faInfoCircle)
+            })
+        })
+    });
 };
-var $6ca758f3c020e004$export$2e2bcd8739ae039 = $6ca758f3c020e004$var$InfoTooltip;
+var $f1a77cb69cf0ff83$export$2e2bcd8739ae039 = $f1a77cb69cf0ff83$var$InfoTooltip;
 
 
-const $0071ebddf0b814d0$var$TokenStats = ({ token: token , collection: collection  })=>{
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
-    let attributeFloor = ((_a = token === null || token === void 0 ? void 0 : token.token) === null || _a === void 0 ? void 0 : _a.attributes) ? Math.max(...token.token.attributes.map((attr)=>Number(attr.floorAskPrice)), 0) : 0;
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+const $519a41638a8ab3e1$var$TokenStats = ({ token: token , collection: collection  })=>{
+    let attributeFloor = token?.token?.attributes ? Math.max(...token.token.attributes.map((attr)=>Number(attr.floorAskPrice)), 0) : 0;
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         css: {
             width: "100%",
             flexDirection: "row",
@@ -4961,92 +5303,112 @@ const $0071ebddf0b814d0$var$TokenStats = ({ token: token , collection: collectio
                 flexDirection: "column"
             },
             p: "$4"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $5a75332ebc07f028$export$2e2bcd8739ae039), {
-        collection: collection,
-        token: token
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            flex: 1,
-            mt: "$4",
-            [`& ${0, $3076e9a453312234$export$2e2bcd8739ae039}:not(:last-child)`]: {
-                mb: "$1"
-            },
-            mb: "$3"
-        }
-    }, [
-        {
-            id: 0,
-            label: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-                style: "subtitle2",
-                color: "subtle",
-                css: {
-                    minWidth: "0"
-                },
-                ellipsify: true
-            }, "Creator Royalties"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6ca758f3c020e004$export$2e2bcd8739ae039), {
-                side: "right",
-                width: 200,
-                content: "A fee on every order that goes to the collection creator."
-            })),
-            value: (((_b = collection === null || collection === void 0 ? void 0 : collection.royalties) === null || _b === void 0 ? void 0 : _b.bps) || 0) * 0.01 + "%"
         },
-        {
-            id: 1,
-            label: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-                style: "subtitle2",
-                color: "subtle",
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $80495cdca85acd8c$export$2e2bcd8739ae039), {
+                collection: collection,
+                token: token
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
                 css: {
-                    minWidth: "0"
+                    flex: 1,
+                    mt: "$4",
+                    [`& ${0, $54a2afd53a200e25$export$2e2bcd8739ae039}:not(:last-child)`]: {
+                        mb: "$1"
+                    },
+                    mb: "$3"
                 },
-                ellipsify: true
-            }, "Last Sale"),
-            value: ((_d = (_c = token === null || token === void 0 ? void 0 : token.token) === null || _c === void 0 ? void 0 : _c.lastSell) === null || _d === void 0 ? void 0 : _d.value) || null,
-            asNative: true
-        },
-        {
-            id: 2,
-            label: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-                style: "subtitle2",
-                color: "subtle",
-                css: {
-                    minWidth: "0"
-                },
-                ellipsify: true
-            }, "Collection Floor"),
-            value: ((_g = (_f = (_e = collection === null || collection === void 0 ? void 0 : collection.floorAsk) === null || _e === void 0 ? void 0 : _e.price) === null || _f === void 0 ? void 0 : _f.amount) === null || _g === void 0 ? void 0 : _g.native) || 0,
-            asNative: true
-        },
-        {
-            id: 3,
-            label: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-                style: "subtitle2",
-                color: "subtle",
-                css: {
-                    minWidth: "0"
-                },
-                ellipsify: true
-            }, "Highest Trait Floor"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6ca758f3c020e004$export$2e2bcd8739ae039), {
-                side: "right",
-                width: 200,
-                content: "The floor price of the most valuable trait of a token."
-            })),
-            value: attributeFloor || ((_k = (_j = (_h = collection === null || collection === void 0 ? void 0 : collection.floorAsk) === null || _h === void 0 ? void 0 : _h.price) === null || _j === void 0 ? void 0 : _j.amount) === null || _k === void 0 ? void 0 : _k.native) || 0,
-            asNative: true
-        }
-    ].map((stat)=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $3076e9a453312234$export$2e2bcd8739ae039), {
-            key: stat.id,
-            ...stat
-        }))));
+                children: [
+                    {
+                        id: 0,
+                        label: /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                            children: [
+                                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                    style: "subtitle2",
+                                    color: "subtle",
+                                    css: {
+                                        minWidth: "0"
+                                    },
+                                    ellipsify: true,
+                                    children: "Creator Royalties"
+                                }),
+                                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f1a77cb69cf0ff83$export$2e2bcd8739ae039), {
+                                    side: "right",
+                                    width: 200,
+                                    content: "A fee on every order that goes to the collection creator."
+                                })
+                            ]
+                        }),
+                        value: (collection?.royalties?.bps || 0) * 0.01 + "%"
+                    },
+                    {
+                        id: 1,
+                        label: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                            style: "subtitle2",
+                            color: "subtle",
+                            css: {
+                                minWidth: "0"
+                            },
+                            ellipsify: true,
+                            children: "Last Sale"
+                        }),
+                        value: token?.token?.lastSell?.value || null,
+                        asNative: true
+                    },
+                    {
+                        id: 2,
+                        label: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                            style: "subtitle2",
+                            color: "subtle",
+                            css: {
+                                minWidth: "0"
+                            },
+                            ellipsify: true,
+                            children: "Collection Floor"
+                        }),
+                        value: collection?.floorAsk?.price?.amount?.native || 0,
+                        asNative: true
+                    },
+                    {
+                        id: 3,
+                        label: /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                            children: [
+                                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                    style: "subtitle2",
+                                    color: "subtle",
+                                    css: {
+                                        minWidth: "0"
+                                    },
+                                    ellipsify: true,
+                                    children: "Highest Trait Floor"
+                                }),
+                                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f1a77cb69cf0ff83$export$2e2bcd8739ae039), {
+                                    side: "right",
+                                    width: 200,
+                                    content: "The floor price of the most valuable trait of a token."
+                                })
+                            ]
+                        }),
+                        value: attributeFloor || collection?.floorAsk?.price?.amount?.native || 0,
+                        asNative: true
+                    }
+                ].map((stat)=>/*#__PURE__*/ (0, $bNXjM$jsx)((0, $54a2afd53a200e25$export$2e2bcd8739ae039), {
+                        ...stat
+                    }, stat.id))
+            })
+        ]
+    });
 };
-var $0071ebddf0b814d0$export$2e2bcd8739ae039 = $0071ebddf0b814d0$var$TokenStats;
+var $519a41638a8ab3e1$export$2e2bcd8739ae039 = $519a41638a8ab3e1$var$TokenStats;
 
 
 
 
 
 
-const $0ed28259b52e67f5$var$StyledSwitch = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Root3, {
+
+
+const $fb67612d0e69ecfd$var$StyledSwitch = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Root3, {
     all: "unset",
     cursor: "pointer",
     width: 46,
@@ -5063,7 +5425,7 @@ const $0ed28259b52e67f5$var$StyledSwitch = (0, $cd784f5a4171372f$export$3817b7a5
         boxShadow: "0 0 0 2px $$focusColor"
     }
 });
-const $0ed28259b52e67f5$var$Thumb = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Thumb, {
+const $fb67612d0e69ecfd$var$Thumb = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Thumb, {
     display: "block",
     width: 20,
     height: 20,
@@ -5078,113 +5440,147 @@ const $0ed28259b52e67f5$var$Thumb = (0, $cd784f5a4171372f$export$3817b7a54a07cec
         transform: "translateX(22px)"
     }
 });
-const $0ed28259b52e67f5$var$Switch = (props)=>/*#__PURE__*/ (0, $bNXjM$react).createElement($0ed28259b52e67f5$var$StyledSwitch, {
-        ...props
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($0ed28259b52e67f5$var$Thumb, null));
-var $0ed28259b52e67f5$export$2e2bcd8739ae039 = $0ed28259b52e67f5$var$Switch;
-
-
-const $f732261e3d7bee95$var$MarketplaceToggle = ({ marketplace: marketplace , onSelection: onSelection , ...props })=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+const $fb67612d0e69ecfd$var$Switch = (props)=>/*#__PURE__*/ (0, $bNXjM$jsx)($fb67612d0e69ecfd$var$StyledSwitch, {
         ...props,
-        align: "center"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            mr: "$2"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement("img", {
-        src: marketplace.imageUrl,
-        style: {
-            height: 32,
-            width: 32,
-            borderRadius: 4
-        }
-    })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "body3",
-        css: {
-            flex: 1
-        }
-    }, marketplace.name), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2",
-        color: "subtle",
-        css: {
-            mr: "$2"
-        }
-    }, "Marketplace fee: ", (marketplace.feeBps || 0) * 100, "%"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0ed28259b52e67f5$export$2e2bcd8739ae039), {
-        checked: marketplace.isSelected,
-        onCheckedChange: onSelection
-    }));
-var $f732261e3d7bee95$export$2e2bcd8739ae039 = $f732261e3d7bee95$var$MarketplaceToggle;
+        children: /*#__PURE__*/ (0, $bNXjM$jsx)($fb67612d0e69ecfd$var$Thumb, {})
+    });
+var $fb67612d0e69ecfd$export$2e2bcd8739ae039 = $fb67612d0e69ecfd$var$Switch;
 
 
-
-
-
-const $2d065ad7a194554d$var$MarketplacePriceInput = ({ marketplace: marketplace , collection: collection , currency: currency , usdPrice: usdPrice , quantity: quantity = 1 , onChange: onChange , onBlur: onBlur , ...props })=>{
-    var _a, _b;
-    let profit = (1 - (((_a = marketplace.fee) === null || _a === void 0 ? void 0 : _a.percent) || 0) / 100 - (((_b = collection === null || collection === void 0 ? void 0 : collection.royalties) === null || _b === void 0 ? void 0 : _b.bps) || 0) * 0.0001) * Number(marketplace.truePrice) * quantity;
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+const $5c16ecaec8679bd8$var$MarketplaceToggle = ({ marketplace: marketplace , onSelection: onSelection , ...props })=>/*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         ...props,
-        align: "center"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            mr: "$2"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement("img", {
-        src: marketplace.imageUrl,
-        style: {
-            height: 32,
-            width: 32,
-            borderRadius: 4
-        }
-    })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        align: "center"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            width: "auto",
-            height: 20
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $cc9dff2d7173bce5$export$2e2bcd8739ae039), {
-        css: {
-            height: 18
-        },
-        address: currency.contract
-    })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "body1",
-        color: "subtle",
-        css: {
-            ml: "$1",
-            mr: "$4"
-        },
-        as: "p"
-    }, currency.symbol)), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            flex: 1
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $b348cba042fa8022$export$2e2bcd8739ae039), {
-        type: "number",
-        value: marketplace.price,
-        onChange: onChange,
-        onBlur: onBlur,
-        placeholder: "Enter a listing price"
-    })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        direction: "column",
-        align: "end",
-        css: {
-            ml: "$3"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
-        amount: profit,
-        address: currency.contract,
-        decimals: currency.decimals,
-        textStyle: "h6",
-        logoWidth: 18
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6a6c14d54fb307eb$export$2e2bcd8739ae039), {
-        amount: profit * (usdPrice || 0),
-        style: "subtitle2",
-        color: "subtle"
-    })));
+        align: "center",
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                css: {
+                    mr: "$2"
+                },
+                children: /*#__PURE__*/ (0, $bNXjM$jsx)("img", {
+                    src: marketplace.imageUrl,
+                    style: {
+                        height: 32,
+                        width: 32,
+                        borderRadius: 4
+                    }
+                })
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                style: "body3",
+                css: {
+                    flex: 1
+                },
+                children: marketplace.name
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                style: "subtitle2",
+                color: "subtle",
+                css: {
+                    mr: "$2"
+                },
+                children: [
+                    "Marketplace fee: ",
+                    (marketplace.feeBps || 0) * 100,
+                    "%"
+                ]
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $fb67612d0e69ecfd$export$2e2bcd8739ae039), {
+                checked: marketplace.isSelected,
+                onCheckedChange: onSelection
+            })
+        ]
+    });
+var $5c16ecaec8679bd8$export$2e2bcd8739ae039 = $5c16ecaec8679bd8$var$MarketplaceToggle;
+
+
+
+
+
+
+const $ddb0bb2694bbe877$var$MarketplacePriceInput = ({ marketplace: marketplace , collection: collection , currency: currency , usdPrice: usdPrice , quantity: quantity = 1 , onChange: onChange , onBlur: onBlur , ...props })=>{
+    let profit = (1 - (marketplace.fee?.percent || 0) / 100 - (collection?.royalties?.bps || 0) * 0.0001) * Number(marketplace.truePrice) * quantity;
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+        ...props,
+        align: "center",
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                css: {
+                    mr: "$2"
+                },
+                children: /*#__PURE__*/ (0, $bNXjM$jsx)("img", {
+                    src: marketplace.imageUrl,
+                    style: {
+                        height: 32,
+                        width: 32,
+                        borderRadius: 4
+                    }
+                })
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                align: "center",
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                        css: {
+                            width: "auto",
+                            height: 20
+                        },
+                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bb13850b05622906$export$2e2bcd8739ae039), {
+                            css: {
+                                height: 18
+                            },
+                            address: currency.contract
+                        })
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                        style: "body1",
+                        color: "subtle",
+                        css: {
+                            ml: "$1",
+                            mr: "$4"
+                        },
+                        as: "p",
+                        children: currency.symbol
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                css: {
+                    flex: 1
+                },
+                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a235eda53948b6ff$export$2e2bcd8739ae039), {
+                    type: "number",
+                    value: marketplace.price,
+                    onChange: onChange,
+                    onBlur: onBlur,
+                    placeholder: "Enter a listing price"
+                })
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                direction: "column",
+                align: "end",
+                css: {
+                    ml: "$3"
+                },
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
+                        amount: profit,
+                        address: currency.contract,
+                        decimals: currency.decimals,
+                        textStyle: "h6",
+                        logoWidth: 18
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $208ab5b0155991db$export$2e2bcd8739ae039), {
+                        amount: profit * (usdPrice || 0),
+                        style: "subtitle2",
+                        color: "subtle"
+                    })
+                ]
+            })
+        ]
+    });
 };
-var $2d065ad7a194554d$export$2e2bcd8739ae039 = $2d065ad7a194554d$var$MarketplacePriceInput;
+var $ddb0bb2694bbe877$export$2e2bcd8739ae039 = $ddb0bb2694bbe877$var$MarketplacePriceInput;
+
+
 
 
 
@@ -5198,7 +5594,7 @@ var $2d065ad7a194554d$export$2e2bcd8739ae039 = $2d065ad7a194554d$var$Marketplace
 
 
 (0, $bNXjM$dayjs).extend((0, $bNXjM$dayjspluginrelativeTimejs));
-function $59ff1a3b34f7a14d$export$2e2bcd8739ae039(timestamp) {
+function $c952bf73c842abfc$export$2e2bcd8739ae039(timestamp) {
     const [timeSince, setTimeSince] = (0, $bNXjM$useState)("");
     (0, $bNXjM$useEffect)(()=>{
         if (timestamp) setTimeSince((0, $bNXjM$dayjs).unix(timestamp).fromNow());
@@ -5210,13 +5606,13 @@ function $59ff1a3b34f7a14d$export$2e2bcd8739ae039(timestamp) {
 }
 
 
-const $3bb1af0666db3e1e$var$Img = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("img", {
+const $795f98f363cfb9c9$var$Img = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("img", {
     width: 16,
     height: 16
 });
-const $3bb1af0666db3e1e$var$ListingStat = ({ listing: listing , marketImg: marketImg , currency: currency , ...props })=>{
-    const timeSince = (0, $59ff1a3b34f7a14d$export$2e2bcd8739ae039)(listing.expirationTime ? +listing.expirationTime : 0);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+const $795f98f363cfb9c9$var$ListingStat = ({ listing: listing , marketImg: marketImg , currency: currency , ...props })=>{
+    const timeSince = (0, $c952bf73c842abfc$export$2e2bcd8739ae039)(listing.expirationTime ? +listing.expirationTime : 0);
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         direction: "column",
         className: "rk-stat-well",
         css: {
@@ -5225,30 +5621,39 @@ const $3bb1af0666db3e1e$var$ListingStat = ({ listing: listing , marketImg: marke
             borderRadius: "$borderRadius",
             gap: "$1"
         },
-        ...props
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        justify: "between"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
-        amount: listing.weiPrice,
-        textStyle: "subtitle2",
-        address: currency.contract,
-        decimals: currency.decimals
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement($3bb1af0666db3e1e$var$Img, {
-        src: marketImg
-    })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2",
-        color: "subtle",
-        as: "p",
-        css: {
-            flex: 1
-        }
-    }, listing.expirationTime ? `Expires ${timeSince}` : "No Expiration"));
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                justify: "between",
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
+                        amount: listing.weiPrice,
+                        textStyle: "subtitle2",
+                        address: currency.contract,
+                        decimals: currency.decimals
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)($795f98f363cfb9c9$var$Img, {
+                        src: marketImg
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                style: "subtitle2",
+                color: "subtle",
+                as: "p",
+                css: {
+                    flex: 1
+                },
+                children: listing.expirationTime ? `Expires ${timeSince}` : "No Expiration"
+            })
+        ]
+    });
 };
-$3bb1af0666db3e1e$var$ListingStat.toString = ()=>".rk-stat-well";
-var $3bb1af0666db3e1e$export$2e2bcd8739ae039 = $3bb1af0666db3e1e$var$ListingStat;
+$795f98f363cfb9c9$var$ListingStat.toString = ()=>".rk-stat-well";
+var $795f98f363cfb9c9$export$2e2bcd8739ae039 = $795f98f363cfb9c9$var$ListingStat;
 
 
-const $b9b5b6bbb1caea15$var$TokenListingDetails = ({ token: token , collection: collection , listingData: listingData , currency: currency  })=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+const $f13a27bb3fdcaf1d$var$TokenListingDetails = ({ token: token , collection: collection , listingData: listingData , currency: currency  })=>/*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         css: {
             width: "100%",
             flexDirection: "row",
@@ -5257,44 +5662,49 @@ const $b9b5b6bbb1caea15$var$TokenListingDetails = ({ token: token , collection: 
                 flexDirection: "column"
             },
             p: "$4"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $5a75332ebc07f028$export$2e2bcd8739ae039), {
-        collection: collection,
-        token: token
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            flex: 1,
-            mt: "$4",
-            [`& ${0, $3076e9a453312234$export$2e2bcd8739ae039}:not(:last-child)`]: {
-                mb: "$1"
-            },
-            mb: "$3"
-        }
-    }, listingData.map((data, i)=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $3bb1af0666db3e1e$export$2e2bcd8739ae039), {
-            key: i,
-            listing: data.listing,
-            marketImg: data.marketplace.imageUrl || "",
-            currency: currency
-        }))));
-var $b9b5b6bbb1caea15$export$2e2bcd8739ae039 = $b9b5b6bbb1caea15$var$TokenListingDetails;
+        },
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $80495cdca85acd8c$export$2e2bcd8739ae039), {
+                collection: collection,
+                token: token
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                css: {
+                    flex: 1,
+                    mt: "$4",
+                    [`& ${0, $54a2afd53a200e25$export$2e2bcd8739ae039}:not(:last-child)`]: {
+                        mb: "$1"
+                    },
+                    mb: "$3"
+                },
+                children: listingData.map((data, i)=>/*#__PURE__*/ (0, $bNXjM$jsx)((0, $795f98f363cfb9c9$export$2e2bcd8739ae039), {
+                        listing: data.listing,
+                        marketImg: data.marketplace.imageUrl || "",
+                        currency: currency
+                    }, i))
+            })
+        ]
+    });
+var $f13a27bb3fdcaf1d$export$2e2bcd8739ae039 = $f13a27bb3fdcaf1d$var$TokenListingDetails;
 
 
 
 
 
 
-const $13fa4523da6dbccd$var$Img = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("img", {
+
+const $10061c592b503910$var$Img = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("img", {
     width: 56,
     height: 56,
     borderRadius: 4,
     objectFit: "cover"
 });
-const $13fa4523da6dbccd$var$ProgressDot = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
+const $10061c592b503910$var$ProgressDot = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
     borderRadius: "50%",
     width: 5,
     height: 5
 });
-const $13fa4523da6dbccd$var$loadingStart = (0, $cd784f5a4171372f$export$d25ddfdf17c3ad3e)({
+const $10061c592b503910$var$loadingStart = (0, $fcefeedae0fec8b6$export$d25ddfdf17c3ad3e)({
     "0%": {
         transform: "scale(0.8)",
         backgroundColor: "$neutralSolid"
@@ -5308,7 +5718,7 @@ const $13fa4523da6dbccd$var$loadingStart = (0, $cd784f5a4171372f$export$d25ddfdf
         backgroundColor: "$neutralSolid"
     }
 });
-const $13fa4523da6dbccd$var$loadingMiddle = (0, $cd784f5a4171372f$export$d25ddfdf17c3ad3e)({
+const $10061c592b503910$var$loadingMiddle = (0, $fcefeedae0fec8b6$export$d25ddfdf17c3ad3e)({
     "0%": {
         transform: "scale(0.8)",
         backgroundColor: "$neutralSolid"
@@ -5326,7 +5736,7 @@ const $13fa4523da6dbccd$var$loadingMiddle = (0, $cd784f5a4171372f$export$d25ddfd
         backgroundColor: "$neutralSolid"
     }
 });
-const $13fa4523da6dbccd$var$loadingEnd = (0, $cd784f5a4171372f$export$d25ddfdf17c3ad3e)({
+const $10061c592b503910$var$loadingEnd = (0, $fcefeedae0fec8b6$export$d25ddfdf17c3ad3e)({
     "0%": {
         transform: "scale(0.8)",
         backgroundColor: "$neutralSolid"
@@ -5344,49 +5754,59 @@ const $13fa4523da6dbccd$var$loadingEnd = (0, $cd784f5a4171372f$export$d25ddfdf17
         backgroundColor: "$neutralSolid"
     }
 });
-const $13fa4523da6dbccd$var$TransactionProgress = ({ fromImg: fromImg , toImg: toImg , ...props })=>{
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+const $10061c592b503910$var$TransactionProgress = ({ fromImg: fromImg , toImg: toImg , ...props })=>{
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         ...props,
-        align: "center"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($13fa4523da6dbccd$var$Img, {
-        src: fromImg
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        css: {
-            gap: "$1",
-            mx: 23
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($13fa4523da6dbccd$var$ProgressDot, {
-        css: {
-            animation: `${$13fa4523da6dbccd$var$loadingStart} 1s ease-in-out infinite`
-        }
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement($13fa4523da6dbccd$var$ProgressDot, {
-        css: {
-            animation: `${$13fa4523da6dbccd$var$loadingMiddle} 1s ease-in-out infinite`
-        }
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement($13fa4523da6dbccd$var$ProgressDot, {
-        css: {
-            animation: `${$13fa4523da6dbccd$var$loadingEnd} 1s ease-in-out infinite`
-        }
-    })), /*#__PURE__*/ (0, $bNXjM$react).createElement($13fa4523da6dbccd$var$Img, {
-        src: toImg
-    }));
+        align: "center",
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)($10061c592b503910$var$Img, {
+                src: fromImg
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                css: {
+                    gap: "$1",
+                    mx: 23
+                },
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)($10061c592b503910$var$ProgressDot, {
+                        css: {
+                            animation: `${$10061c592b503910$var$loadingStart} 1s ease-in-out infinite`
+                        }
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)($10061c592b503910$var$ProgressDot, {
+                        css: {
+                            animation: `${$10061c592b503910$var$loadingMiddle} 1s ease-in-out infinite`
+                        }
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)($10061c592b503910$var$ProgressDot, {
+                        css: {
+                            animation: `${$10061c592b503910$var$loadingEnd} 1s ease-in-out infinite`
+                        }
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)($10061c592b503910$var$Img, {
+                src: toImg
+            })
+        ]
+    });
 };
-var $13fa4523da6dbccd$export$2e2bcd8739ae039 = $13fa4523da6dbccd$var$TransactionProgress;
+var $10061c592b503910$export$2e2bcd8739ae039 = $10061c592b503910$var$TransactionProgress;
 
 
 
 
 
-const $79a9c4ae6d63e150$var$Image = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("img", {});
-const $79a9c4ae6d63e150$var$Span = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("span", {});
-const $79a9c4ae6d63e150$var$ContentContainer = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+const $a93b26d073373c23$var$Image = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("img", {});
+const $a93b26d073373c23$var$Span = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("span", {});
+const $a93b26d073373c23$var$ContentContainer = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
     width: "100%",
     flexDirection: "column",
     "@bp1": {
         flexDirection: "row"
     }
 });
-const $79a9c4ae6d63e150$var$MainContainer = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+const $a93b26d073373c23$var$MainContainer = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
     flex: 1,
     borderColor: "$borderColor",
     borderTopWidth: 1,
@@ -5399,561 +5819,783 @@ const $79a9c4ae6d63e150$var$MainContainer = (0, $cd784f5a4171372f$export$3817b7a
         direction: "column"
     }
 });
-const $79a9c4ae6d63e150$var$MINIMUM_AMOUNT = 0.000001;
-function $79a9c4ae6d63e150$export$d23efc006864db2f({ openState: openState , trigger: trigger , tokenId: tokenId , collectionId: collectionId , currencies: currencies , nativeOnly: nativeOnly , normalizeRoyalties: normalizeRoyalties , onGoToToken: onGoToToken , onListingComplete: onListingComplete , onListingError: onListingError , onClose: onClose  }) {
-    const [open, setOpen] = (0, $eae8553d9b344d57$export$2e2bcd8739ae039)(openState ? openState[0] : false, openState);
+const $a93b26d073373c23$var$MINIMUM_AMOUNT = 0.000001;
+function $a93b26d073373c23$export$d23efc006864db2f({ openState: openState , trigger: trigger , tokenId: tokenId , collectionId: collectionId , currencies: currencies , nativeOnly: nativeOnly , normalizeRoyalties: normalizeRoyalties , onGoToToken: onGoToToken , onListingComplete: onListingComplete , onListingError: onListingError , onClose: onClose  }) {
+    const [open, setOpen] = (0, $d115e0b00eaf4565$export$2e2bcd8739ae039)(openState ? openState[0] : false, openState);
     const [stepTitle, setStepTitle] = (0, $bNXjM$useState)("");
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const reservoirChain = client === null || client === void 0 ? void 0 : client.currentChain();
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const reservoirChain = client?.currentChain();
     const [marketplacesToApprove, setMarketplacesToApprove] = (0, $bNXjM$useState)([]);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4f8e6d03fa0f27e5$export$5cb91f178b51ac3), {
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $052d60b4fc42e2f9$export$5cb91f178b51ac3), {
         open: open,
         tokenId: tokenId,
         collectionId: collectionId,
         currencies: currencies,
-        normalizeRoyalties: normalizeRoyalties
-    }, ({ token: token , quantityAvailable: quantityAvailable , collection: collection , usdPrice: usdPrice , listStep: listStep , expirationOption: expirationOption , expirationOptions: expirationOptions , marketplaces: marketplaces , unapprovedMarketplaces: unapprovedMarketplaces , localMarketplace: localMarketplace , listingData: listingData , transactionError: transactionError , stepData: stepData , currencies: currencies , currency: currency , quantity: quantity , setListStep: setListStep , listToken: listToken , setMarketPrice: setMarketPrice , setCurrency: setCurrency , toggleMarketplace: toggleMarketplace , setExpirationOption: setExpirationOption , setQuantity: setQuantity  })=>{
-        var _b, _c, _d, _e, _f, _g, _h;
-        const tokenImage = token && ((_b = token.token) === null || _b === void 0 ? void 0 : _b.image) ? token.token.image : collection === null || collection === void 0 ? void 0 : collection.image;
-        (0, $bNXjM$useEffect)(()=>{
-            if (stepData) {
-                const isNativeOrder = stepData.listingData.marketplace.orderbook === "reservoir";
-                const isSeaportOrder = stepData.listingData.marketplace.orderKind === "seaport";
-                const marketplaceName = isNativeOrder && isSeaportOrder ? `${stepData.listingData.marketplace.name} (on Seaport)` : stepData.listingData.marketplace.name;
-                switch(stepData.currentStep.kind){
-                    case "transaction":
-                        setStepTitle(`Approve ${marketplaceName} to access item\nin your wallet`);
-                        break;
-                    case "signature":
-                        setStepTitle(`Confirm listing on ${marketplaceName}\nin your wallet`);
-                        break;
+        normalizeRoyalties: normalizeRoyalties,
+        children: ({ token: token , quantityAvailable: quantityAvailable , collection: collection , usdPrice: usdPrice , listStep: listStep , expirationOption: expirationOption , expirationOptions: expirationOptions , marketplaces: marketplaces , unapprovedMarketplaces: unapprovedMarketplaces , localMarketplace: localMarketplace , listingData: listingData , transactionError: transactionError , stepData: stepData , currencies: currencies , currency: currency , quantity: quantity , setListStep: setListStep , listToken: listToken , setMarketPrice: setMarketPrice , setCurrency: setCurrency , toggleMarketplace: toggleMarketplace , setExpirationOption: setExpirationOption , setQuantity: setQuantity  })=>{
+            const tokenImage = token && token.token?.image ? token.token.image : collection?.image;
+            (0, $bNXjM$useEffect)(()=>{
+                if (stepData) {
+                    const isNativeOrder = stepData.listingData.marketplace.orderbook === "reservoir";
+                    const isSeaportOrder = stepData.listingData.marketplace.orderKind === "seaport";
+                    const marketplaceName = isNativeOrder && isSeaportOrder ? `${stepData.listingData.marketplace.name} (on Seaport)` : stepData.listingData.marketplace.name;
+                    switch(stepData.currentStep.kind){
+                        case "transaction":
+                            setStepTitle(`Approve ${marketplaceName} to access item\nin your wallet`);
+                            break;
+                        case "signature":
+                            setStepTitle(`Confirm listing on ${marketplaceName}\nin your wallet`);
+                            break;
+                    }
                 }
-            }
-        }, [
-            stepData
-        ]);
-        (0, $bNXjM$useEffect)(()=>{
-            if (unapprovedMarketplaces.length > 0) {
-                const unapprovedNames = unapprovedMarketplaces.reduce((names, marketplace)=>{
-                    if (marketplace.name && (localMarketplace === null || localMarketplace === void 0 ? void 0 : localMarketplace.orderKind) !== marketplace.orderKind) names.push(marketplace.name);
-                    return names;
-                }, []);
-                setMarketplacesToApprove(marketplaces.filter((marketplace)=>marketplace.isSelected && marketplace.name && unapprovedNames.includes(marketplace.name)));
-            } else setMarketplacesToApprove([]);
-        }, [
-            unapprovedMarketplaces,
-            marketplaces,
-            localMarketplace
-        ]);
-        (0, $bNXjM$useEffect)(()=>{
-            if (listStep === (0, $4f8e6d03fa0f27e5$export$7f4afd65e1e67072).Complete && onListingComplete) {
-                const data = {
-                    tokenId: tokenId,
-                    collectionId: collectionId,
-                    listings: listingData
-                };
-                onListingComplete(data);
-            }
-        }, [
-            listStep
-        ]);
-        (0, $bNXjM$useEffect)(()=>{
-            if (transactionError && onListingError) {
-                const data = {
-                    tokenId: tokenId,
-                    collectionId: collectionId,
-                    listings: listingData
-                };
-                onListingError(transactionError, data);
-            }
-        }, [
-            transactionError
-        ]);
-        const availableMarketplaces = marketplaces.filter((market)=>{
-            const isNative = market.orderbook === "reservoir";
-            return nativeOnly ? market.listingEnabled && isNative : market.listingEnabled;
-        });
-        const selectedMarketplaces = availableMarketplaces.filter((marketplace)=>marketplace.isSelected);
-        const quantitySelectionAvailable = selectedMarketplaces.every((marketplace)=>marketplace.orderbook === "reservoir" || marketplace.orderbook === "opensea");
-        return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $32de3362490c9117$export$2b77a92f1a5ad772), {
-            trigger: trigger,
-            size: (0, $32de3362490c9117$export$e8598848ef5f29c0).LG,
-            title: "List Item for sale",
-            open: open,
-            onOpenChange: (open)=>{
-                if (!open && onClose) {
+            }, [
+                stepData
+            ]);
+            (0, $bNXjM$useEffect)(()=>{
+                if (unapprovedMarketplaces.length > 0) {
+                    const unapprovedNames = unapprovedMarketplaces.reduce((names, marketplace)=>{
+                        if (marketplace.name && localMarketplace?.orderKind !== marketplace.orderKind) names.push(marketplace.name);
+                        return names;
+                    }, []);
+                    setMarketplacesToApprove(marketplaces.filter((marketplace)=>marketplace.isSelected && marketplace.name && unapprovedNames.includes(marketplace.name)));
+                } else setMarketplacesToApprove([]);
+            }, [
+                unapprovedMarketplaces,
+                marketplaces,
+                localMarketplace
+            ]);
+            (0, $bNXjM$useEffect)(()=>{
+                if (listStep === (0, $052d60b4fc42e2f9$export$7f4afd65e1e67072).Complete && onListingComplete) {
                     const data = {
                         tokenId: tokenId,
                         collectionId: collectionId,
                         listings: listingData
                     };
-                    onClose(data, stepData, listStep);
+                    onListingComplete(data);
                 }
-                setOpen(open);
-            },
-            loading: !token
-        }, token && listStep == (0, $4f8e6d03fa0f27e5$export$7f4afd65e1e67072).SelectMarkets && /*#__PURE__*/ (0, $bNXjM$react).createElement($79a9c4ae6d63e150$var$ContentContainer, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0071ebddf0b814d0$export$2e2bcd8739ae039), {
-            token: token,
-            collection: collection
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement($79a9c4ae6d63e150$var$MainContainer, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                flex: 1
-            }
-        }, currencies.length > 1 ? /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle1",
-            as: (0, $2d0e38270a599885$export$2e2bcd8739ae039),
-            css: {
-                mb: "$4",
-                gap: "$2",
-                alignItems: "center"
-            }
-        }, "List item in", /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039), {
-            trigger: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039).Trigger, {
-                css: {
-                    width: "auto",
-                    p: 0,
-                    backgroundColor: "transparent"
+            }, [
+                listStep
+            ]);
+            (0, $bNXjM$useEffect)(()=>{
+                if (transactionError && onListingError) {
+                    const data = {
+                        tokenId: tokenId,
+                        collectionId: collectionId,
+                        listings: listingData
+                    };
+                    onListingError(transactionError, data);
                 }
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039).Value, {
-                asChild: true
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-                align: "center"
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $cc9dff2d7173bce5$export$2e2bcd8739ae039), {
-                address: currency.contract,
-                css: {
-                    height: 18
-                }
-            }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-                style: "subtitle1",
-                color: "subtle",
-                css: {
-                    ml: "$1"
-                }
-            }, currency.symbol), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039).DownIcon, {
-                style: {
-                    marginLeft: 6
-                }
-            })))),
-            value: currency.contract,
-            onValueChange: (value)=>{
-                const option = currencies.find((option)=>option.contract == value);
-                if (option) setCurrency(option);
-            }
-        }, currencies.map((option)=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039).Item, {
-                key: option.contract,
-                value: option.contract
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039).ItemText, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-                align: "center",
-                css: {
-                    gap: "$1"
-                }
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $cc9dff2d7173bce5$export$2e2bcd8739ae039), {
-                address: option.contract,
-                css: {
-                    height: 18
-                }
-            }), option.symbol)))))) : /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle1",
-            as: "h3",
-            css: {
-                mb: "$4"
-            }
-        }, availableMarketplaces.length > 1 ? "Select Marketplaces" : "Available Marketplace"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle2",
-            as: "p",
-            color: "subtle"
-        }, "Default"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            align: "center",
-            css: {
-                mb: "$4",
-                mt: "$2"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                mr: "$2"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement("img", {
-            src: (localMarketplace === null || localMarketplace === void 0 ? void 0 : localMarketplace.imageUrl) || "",
-            style: {
-                height: 32,
-                width: 32,
-                borderRadius: 4,
-                visibility: (localMarketplace === null || localMarketplace === void 0 ? void 0 : localMarketplace.imageUrl) ? "visible" : "hidden"
-            }
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                mr: "$2",
-                flex: 1
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body3"
-        }, localMarketplace === null || localMarketplace === void 0 ? void 0 : localMarketplace.name), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                alignItems: "center",
-                gap: 8
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body3",
-            color: "subtle",
-            as: "div"
-        }, "on Zoo"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6ca758f3c020e004$export$2e2bcd8739ae039), {
-            side: "bottom",
-            width: 200,
-            content: "Listings made on this marketplace will be distributed across the reservoir ecosystem"
-        }))), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle2",
-            color: "subtle",
-            css: {
-                mr: "$2"
-            }
-        }, "Marketplace fee:", " ", (((_c = localMarketplace === null || localMarketplace === void 0 ? void 0 : localMarketplace.fee) === null || _c === void 0 ? void 0 : _c.bps) || 0) / 10000 * 100, "%")), availableMarketplaces.length > 1 && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle2",
-            color: "subtle",
-            as: "p",
-            css: {
-                mb: "$2"
-            }
-        }, "Select other marketplaces to list on"), availableMarketplaces.filter((marketplace)=>marketplace.orderbook !== "reservoir").map((marketplace)=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-                key: marketplace.name,
-                css: {
-                    mb: "$3"
-                }
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $f732261e3d7bee95$export$2e2bcd8739ae039), {
-                marketplace: marketplace,
-                onSelection: ()=>{
-                    toggleMarketplace(marketplace);
-                }
-            })))), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                width: "100%"
-            }
-        }, marketplacesToApprove.length > 0 && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            color: "accent",
-            style: "subtitle2",
-            css: {
-                my: 10,
-                width: "100%",
-                textAlign: "center",
-                display: "block"
-            }
-        }, `Additional Gas fee required to approve listing (${marketplacesToApprove.map((marketplace)=>marketplace.name).join(", ")})`), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            onClick: ()=>setListStep((0, $4f8e6d03fa0f27e5$export$7f4afd65e1e67072).SetPrice),
-            css: {
-                width: "100%"
-            }
-        }, "Set your price")))), token && listStep == (0, $4f8e6d03fa0f27e5$export$7f4afd65e1e67072).SetPrice && /*#__PURE__*/ (0, $bNXjM$react).createElement($79a9c4ae6d63e150$var$ContentContainer, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0071ebddf0b814d0$export$2e2bcd8739ae039), {
-            token: token,
-            collection: collection
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement($79a9c4ae6d63e150$var$MainContainer, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                flex: 1
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            align: "center",
-            css: {
-                mb: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            color: "ghost",
-            size: "none",
-            css: {
-                mr: "$2",
-                color: "$neutralText"
-            },
-            onClick: ()=>setListStep((0, $4f8e6d03fa0f27e5$export$7f4afd65e1e67072).SelectMarkets)
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faChevronLeft),
-            width: 16,
-            height: 16
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle1",
-            as: "h3"
-        }, "Set Your Price")), quantityAvailable > 1 && quantitySelectionAvailable && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                mb: "$2"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            as: "div",
-            css: {
-                mb: "$2"
-            },
-            style: "subtitle2",
-            color: "subtle"
-        }, "Quantity"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039), {
-            value: `${quantity}`,
-            onValueChange: (value)=>{
-                setQuantity(Number(value));
-            }
-        }, [
-            ...Array(quantityAvailable)
-        ].map((_a, i)=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039).Item, {
-                key: i,
-                value: `${i + 1}`
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039).ItemText, null, i + 1))))), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body2",
-            css: {
-                mb: 24,
-                display: "inline-block"
-            }
-        }, quantityAvailable, " items available")), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                mb: "$2"
-            },
-            justify: "between"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle2",
-            color: "subtle",
-            as: "p"
-        }, quantityAvailable > 1 && quantitySelectionAvailable ? "Unit Price" : "Price"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                alignItems: "center",
-                gap: 8
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle2",
-            color: "subtle",
-            as: "p"
-        }, quantityAvailable > 1 && quantitySelectionAvailable ? "Total Profit" : "Profit"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6ca758f3c020e004$export$2e2bcd8739ae039), {
-            side: "left",
-            width: 200,
-            content: `How much ${currency.symbol} you will receive after marketplace fees and creator royalties are subtracted.`
-        }))), selectedMarketplaces.map((marketplace)=>{
-            var _b, _c, _d, _e;
-            return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-                key: marketplace.name,
-                css: {
-                    mb: "$3"
-                }
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d065ad7a194554d$export$2e2bcd8739ae039), {
-                marketplace: marketplace,
-                collection: collection,
-                currency: currency,
-                usdPrice: usdPrice,
-                quantity: quantity,
-                onChange: (e)=>{
-                    setMarketPrice(e.target.value, marketplace);
+            }, [
+                transactionError
+            ]);
+            const availableMarketplaces = marketplaces.filter((market)=>{
+                const isNative = market.orderbook === "reservoir";
+                return nativeOnly ? market.listingEnabled && isNative : market.listingEnabled;
+            });
+            const selectedMarketplaces = availableMarketplaces.filter((marketplace)=>marketplace.isSelected);
+            const quantitySelectionAvailable = selectedMarketplaces.every((marketplace)=>marketplace.orderbook === "reservoir" || marketplace.orderbook === "opensea");
+            return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $b86bf9f1e9f1a187$export$2b77a92f1a5ad772), {
+                trigger: trigger,
+                size: (0, $b86bf9f1e9f1a187$export$e8598848ef5f29c0).LG,
+                title: "List Item for sale",
+                open: open,
+                onOpenChange: (open)=>{
+                    if (!open && onClose) {
+                        const data = {
+                            tokenId: tokenId,
+                            collectionId: collectionId,
+                            listings: listingData
+                        };
+                        onClose(data, stepData, listStep);
+                    }
+                    setOpen(open);
                 },
-                onBlur: ()=>{
-                    if (marketplace.price === "") setMarketPrice(0, marketplace);
-                }
-            }), marketplace.truePrice !== "" && marketplace.truePrice !== null && Number(marketplace.truePrice) !== 0 && Number(marketplace.truePrice) < $79a9c4ae6d63e150$var$MINIMUM_AMOUNT && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-                style: "body2",
-                color: "error"
-            }, "Amount must be higher than ", $79a9c4ae6d63e150$var$MINIMUM_AMOUNT)), collection && ((_d = (_c = (_b = collection === null || collection === void 0 ? void 0 : collection.floorAsk) === null || _b === void 0 ? void 0 : _b.price) === null || _c === void 0 ? void 0 : _c.amount) === null || _d === void 0 ? void 0 : _d.native) !== undefined && marketplace.truePrice !== "" && marketplace.truePrice !== null && Number(marketplace.truePrice) !== 0 && Number(marketplace.truePrice) >= $79a9c4ae6d63e150$var$MINIMUM_AMOUNT && currency.contract === (0, $bNXjM$constants).AddressZero && Number(marketplace.truePrice) < ((_e = collection === null || collection === void 0 ? void 0 : collection.floorAsk) === null || _e === void 0 ? void 0 : _e.price.amount.native) && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-                style: "body2",
-                color: "error"
-            }, "Price is", " ", Math.round((collection.floorAsk.price.amount.native - +marketplace.truePrice) / ((collection.floorAsk.price.amount.native + +marketplace.truePrice) / 2) * 100000) / 1000, "% below the floor")));
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                mb: "$3",
-                mt: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            as: "div",
-            css: {
-                mb: "$2"
-            },
-            style: "subtitle2",
-            color: "subtle"
-        }, "Expiration Date"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039), {
-            value: (expirationOption === null || expirationOption === void 0 ? void 0 : expirationOption.text) || "",
-            onValueChange: (value)=>{
-                const option = expirationOptions.find((option)=>option.value == value);
-                if (option) setExpirationOption(option);
-            }
-        }, expirationOptions.map((option)=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039).Item, {
-                key: option.text,
-                value: option.value
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039).ItemText, null, option.text)))))), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                width: "100%"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            disabled: selectedMarketplaces.some((marketplace)=>marketplace.price === "" || marketplace.price == 0 || Number(marketplace.price) < $79a9c4ae6d63e150$var$MINIMUM_AMOUNT),
-            onClick: listToken,
-            css: {
-                width: "100%"
-            }
-        }, "List for sale")))), token && listStep == (0, $4f8e6d03fa0f27e5$export$7f4afd65e1e67072).ListItem && /*#__PURE__*/ (0, $bNXjM$react).createElement($79a9c4ae6d63e150$var$ContentContainer, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $b9b5b6bbb1caea15$export$2e2bcd8739ae039), {
-            token: token,
-            collection: collection,
-            listingData: listingData,
-            currency: currency
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement($79a9c4ae6d63e150$var$MainContainer, {
-            css: {
-                p: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $b97ee65c4e02eab3$export$2e2bcd8739ae039), {
-            value: (stepData === null || stepData === void 0 ? void 0 : stepData.stepProgress) || 0,
-            max: (stepData === null || stepData === void 0 ? void 0 : stepData.totalSteps) || 0
-        }), transactionError && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e1524f6deddb4ab1$export$2e2bcd8739ae039), {
-            css: {
-                mt: 24
-            }
-        }), stepData && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            css: {
-                textAlign: "center",
-                mt: 48,
-                mb: 28
-            },
-            style: "subtitle1"
-        }, stepTitle), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $13fa4523da6dbccd$export$2e2bcd8739ae039), {
-            justify: "center",
-            fromImg: tokenImage,
-            toImg: (stepData === null || stepData === void 0 ? void 0 : stepData.listingData.marketplace.imageUrl) || ""
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            css: {
-                textAlign: "center",
-                mt: 24,
-                maxWidth: 395,
-                mx: "auto",
-                mb: "$4"
-            },
-            style: "body3",
-            color: "subtle"
-        }, stepData === null || stepData === void 0 ? void 0 : stepData.currentStep.description)), !stepData && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                height: "100%"
-            },
-            justify: "center",
-            align: "center"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0c83fbef8350e27e$export$2e2bcd8739ae039), null)), !transactionError && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            css: {
-                width: "100%",
-                mt: "auto"
-            },
-            disabled: true
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0c83fbef8350e27e$export$2e2bcd8739ae039), null), "Waiting for Approval"), transactionError && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                mt: "auto",
-                gap: 10
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            color: "secondary",
-            css: {
-                flex: 1
-            },
-            onClick: ()=>setListStep((0, $4f8e6d03fa0f27e5$export$7f4afd65e1e67072).SetPrice)
-        }, "Edit Listing"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            css: {
-                flex: 1
-            },
-            onClick: ()=>listToken()
-        }, "Retry")))), token && listStep == (0, $4f8e6d03fa0f27e5$export$7f4afd65e1e67072).Complete && /*#__PURE__*/ (0, $bNXjM$react).createElement($79a9c4ae6d63e150$var$ContentContainer, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $b9b5b6bbb1caea15$export$2e2bcd8739ae039), {
-            token: token,
-            collection: collection,
-            listingData: listingData,
-            currency: currency
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement($79a9c4ae6d63e150$var$MainContainer, {
-            css: {
-                p: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $b97ee65c4e02eab3$export$2e2bcd8739ae039), {
-            value: (stepData === null || stepData === void 0 ? void 0 : stepData.totalSteps) || 0,
-            max: (stepData === null || stepData === void 0 ? void 0 : stepData.totalSteps) || 0
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            align: "center",
-            justify: "center",
-            direction: "column",
-            css: {
-                flex: 1,
-                textAlign: "center",
-                py: "$5"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                color: "$successAccent",
-                mb: 24
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faCheckCircle),
-            size: "3x"
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "h5",
-            css: {
-                mb: "$2"
-            },
-            as: "h5"
-        }, "Your item has been listed!"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body3",
-            color: "subtle",
-            as: "p",
-            css: {
-                mb: 24,
-                maxWidth: 300,
-                overflow: "hidden"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            color: "accent",
-            ellipsify: true,
-            style: "body3"
-        }, ((_d = token === null || token === void 0 ? void 0 : token.token) === null || _d === void 0 ? void 0 : _d.name) ? (_e = token === null || token === void 0 ? void 0 : token.token) === null || _e === void 0 ? void 0 : _e.name : `#${(_f = token === null || token === void 0 ? void 0 : token.token) === null || _f === void 0 ? void 0 : _f.tokenId}`), " ", "from", " ", /*#__PURE__*/ (0, $bNXjM$react).createElement($79a9c4ae6d63e150$var$Span, {
-            css: {
-                color: "$accentText"
-            }
-        }, (_h = (_g = token === null || token === void 0 ? void 0 : token.token) === null || _g === void 0 ? void 0 : _g.collection) === null || _h === void 0 ? void 0 : _h.name), " ", "has been listed for sale"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle2",
-            as: "p",
-            css: {
-                mb: "$3"
-            }
-        }, "View Listing on"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                gap: "$3"
-            }
-        }, listingData.map((data)=>{
-            var _b, _c;
-            const source = data.listing.orderbook === "reservoir" && (client === null || client === void 0 ? void 0 : client.source) ? client === null || client === void 0 ? void 0 : client.source : data.marketplace.name;
-            return /*#__PURE__*/ (0, $bNXjM$react).createElement("a", {
-                key: data.listing.orderbook,
-                target: "_blank",
-                href: `${reservoirChain === null || reservoirChain === void 0 ? void 0 : reservoirChain.baseApiUrl}/redirect/sources/${source}/tokens/${(_b = token.token) === null || _b === void 0 ? void 0 : _b.contract}:${(_c = token === null || token === void 0 ? void 0 : token.token) === null || _c === void 0 ? void 0 : _c.tokenId}/link/v2`
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement($79a9c4ae6d63e150$var$Image, {
-                css: {
-                    width: 24
-                },
-                src: data.marketplace.imageUrl
-            }));
-        }))), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                flexDirection: "column",
-                gap: "$3",
-                "@bp1": {
-                    flexDirection: "row"
-                }
-            }
-        }, !!onGoToToken ? /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            onClick: ()=>{
-                setOpen(false);
-            },
-            css: {
-                flex: 1
-            },
-            color: "secondary"
-        }, "Close"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            style: {
-                flex: 1
-            },
-            color: "primary",
-            onClick: ()=>{
-                onGoToToken();
-            }
-        }, "Go to Token")) : /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            onClick: ()=>{
-                setOpen(false);
-            },
-            style: {
-                flex: 1
-            },
-            color: "primary"
-        }, "Close")))));
+                loading: !token,
+                children: [
+                    token && listStep == (0, $052d60b4fc42e2f9$export$7f4afd65e1e67072).SelectMarkets && /*#__PURE__*/ (0, $bNXjM$jsxs)($a93b26d073373c23$var$ContentContainer, {
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $519a41638a8ab3e1$export$2e2bcd8739ae039), {
+                                token: token,
+                                collection: collection
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)($a93b26d073373c23$var$MainContainer, {
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                        css: {
+                                            p: "$4",
+                                            flex: 1
+                                        },
+                                        children: [
+                                            currencies.length > 1 ? /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                style: "subtitle1",
+                                                as: (0, $a08469b1b360d6cf$export$2e2bcd8739ae039),
+                                                css: {
+                                                    mb: "$4",
+                                                    gap: "$2",
+                                                    alignItems: "center"
+                                                },
+                                                children: [
+                                                    "List item in",
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039), {
+                                                        trigger: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039).Trigger, {
+                                                            css: {
+                                                                width: "auto",
+                                                                p: 0,
+                                                                backgroundColor: "transparent"
+                                                            },
+                                                            children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039).Value, {
+                                                                asChild: true,
+                                                                children: /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                                    align: "center",
+                                                                    children: [
+                                                                        /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bb13850b05622906$export$2e2bcd8739ae039), {
+                                                                            address: currency.contract,
+                                                                            css: {
+                                                                                height: 18
+                                                                            }
+                                                                        }),
+                                                                        /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                                            style: "subtitle1",
+                                                                            color: "subtle",
+                                                                            css: {
+                                                                                ml: "$1"
+                                                                            },
+                                                                            children: currency.symbol
+                                                                        }),
+                                                                        /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039).DownIcon, {
+                                                                            style: {
+                                                                                marginLeft: 6
+                                                                            }
+                                                                        })
+                                                                    ]
+                                                                })
+                                                            })
+                                                        }),
+                                                        value: currency.contract,
+                                                        onValueChange: (value)=>{
+                                                            const option = currencies.find((option)=>option.contract == value);
+                                                            if (option) setCurrency(option);
+                                                        },
+                                                        children: currencies.map((option)=>/*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039).Item, {
+                                                                value: option.contract,
+                                                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039).ItemText, {
+                                                                    children: /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                                        align: "center",
+                                                                        css: {
+                                                                            gap: "$1"
+                                                                        },
+                                                                        children: [
+                                                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bb13850b05622906$export$2e2bcd8739ae039), {
+                                                                                address: option.contract,
+                                                                                css: {
+                                                                                    height: 18
+                                                                                }
+                                                                            }),
+                                                                            option.symbol
+                                                                        ]
+                                                                    })
+                                                                })
+                                                            }, option.contract))
+                                                    })
+                                                ]
+                                            }) : /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                style: "subtitle1",
+                                                as: "h3",
+                                                css: {
+                                                    mb: "$4"
+                                                },
+                                                children: availableMarketplaces.length > 1 ? "Select Marketplaces" : "Available Marketplace"
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                style: "subtitle2",
+                                                as: "p",
+                                                color: "subtle",
+                                                children: "Default"
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                align: "center",
+                                                css: {
+                                                    mb: "$4",
+                                                    mt: "$2"
+                                                },
+                                                children: [
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                                        css: {
+                                                            mr: "$2"
+                                                        },
+                                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)("img", {
+                                                            src: localMarketplace?.imageUrl || "",
+                                                            style: {
+                                                                height: 32,
+                                                                width: 32,
+                                                                borderRadius: 4,
+                                                                visibility: localMarketplace?.imageUrl ? "visible" : "hidden"
+                                                            }
+                                                        })
+                                                    }),
+                                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                                        css: {
+                                                            mr: "$2",
+                                                            flex: 1
+                                                        },
+                                                        children: [
+                                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                                style: "body3",
+                                                                children: localMarketplace?.name
+                                                            }),
+                                                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                                css: {
+                                                                    alignItems: "center",
+                                                                    gap: 8
+                                                                },
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                                        style: "body3",
+                                                                        color: "subtle",
+                                                                        as: "div",
+                                                                        children: "on Zoo"
+                                                                    }),
+                                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f1a77cb69cf0ff83$export$2e2bcd8739ae039), {
+                                                                        side: "bottom",
+                                                                        width: 200,
+                                                                        content: "Listings made on this marketplace will be distributed across the reservoir ecosystem"
+                                                                    })
+                                                                ]
+                                                            })
+                                                        ]
+                                                    }),
+                                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                        style: "subtitle2",
+                                                        color: "subtle",
+                                                        css: {
+                                                            mr: "$2"
+                                                        },
+                                                        children: [
+                                                            "Marketplace fee:",
+                                                            " ",
+                                                            (localMarketplace?.fee?.bps || 0) / 10000 * 100,
+                                                            "%"
+                                                        ]
+                                                    })
+                                                ]
+                                            }),
+                                            availableMarketplaces.length > 1 && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                style: "subtitle2",
+                                                color: "subtle",
+                                                as: "p",
+                                                css: {
+                                                    mb: "$2"
+                                                },
+                                                children: "Select other marketplaces to list on"
+                                            }),
+                                            availableMarketplaces.filter((marketplace)=>marketplace.orderbook !== "reservoir").map((marketplace)=>/*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                                    css: {
+                                                        mb: "$3"
+                                                    },
+                                                    children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $5c16ecaec8679bd8$export$2e2bcd8739ae039), {
+                                                        marketplace: marketplace,
+                                                        onSelection: ()=>{
+                                                            toggleMarketplace(marketplace);
+                                                        }
+                                                    })
+                                                }, marketplace.name))
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                        css: {
+                                            p: "$4",
+                                            width: "100%"
+                                        },
+                                        children: [
+                                            marketplacesToApprove.length > 0 && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                color: "accent",
+                                                style: "subtitle2",
+                                                css: {
+                                                    my: 10,
+                                                    width: "100%",
+                                                    textAlign: "center",
+                                                    display: "block"
+                                                },
+                                                children: `Additional Gas fee required to approve listing (${marketplacesToApprove.map((marketplace)=>marketplace.name).join(", ")})`
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                                onClick: ()=>setListStep((0, $052d60b4fc42e2f9$export$7f4afd65e1e67072).SetPrice),
+                                                css: {
+                                                    width: "100%"
+                                                },
+                                                children: "Set your price"
+                                            })
+                                        ]
+                                    })
+                                ]
+                            })
+                        ]
+                    }),
+                    token && listStep == (0, $052d60b4fc42e2f9$export$7f4afd65e1e67072).SetPrice && /*#__PURE__*/ (0, $bNXjM$jsxs)($a93b26d073373c23$var$ContentContainer, {
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $519a41638a8ab3e1$export$2e2bcd8739ae039), {
+                                token: token,
+                                collection: collection
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)($a93b26d073373c23$var$MainContainer, {
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                        css: {
+                                            p: "$4",
+                                            flex: 1
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                align: "center",
+                                                css: {
+                                                    mb: "$4"
+                                                },
+                                                children: [
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                                        color: "ghost",
+                                                        size: "none",
+                                                        css: {
+                                                            mr: "$2",
+                                                            color: "$neutralText"
+                                                        },
+                                                        onClick: ()=>setListStep((0, $052d60b4fc42e2f9$export$7f4afd65e1e67072).SelectMarkets),
+                                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                                            icon: (0, $bNXjM$faChevronLeft),
+                                                            width: 16,
+                                                            height: 16
+                                                        })
+                                                    }),
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                        style: "subtitle1",
+                                                        as: "h3",
+                                                        children: "Set Your Price"
+                                                    })
+                                                ]
+                                            }),
+                                            quantityAvailable > 1 && quantitySelectionAvailable && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                                                children: [
+                                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                                        css: {
+                                                            mb: "$2"
+                                                        },
+                                                        children: [
+                                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                                as: "div",
+                                                                css: {
+                                                                    mb: "$2"
+                                                                },
+                                                                style: "subtitle2",
+                                                                color: "subtle",
+                                                                children: "Quantity"
+                                                            }),
+                                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039), {
+                                                                value: `${quantity}`,
+                                                                onValueChange: (value)=>{
+                                                                    setQuantity(Number(value));
+                                                                },
+                                                                children: [
+                                                                    ...Array(quantityAvailable)
+                                                                ].map((_a, i)=>/*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039).Item, {
+                                                                        value: `${i + 1}`,
+                                                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039).ItemText, {
+                                                                            children: i + 1
+                                                                        })
+                                                                    }, i))
+                                                            })
+                                                        ]
+                                                    }),
+                                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                        style: "body2",
+                                                        css: {
+                                                            mb: 24,
+                                                            display: "inline-block"
+                                                        },
+                                                        children: [
+                                                            quantityAvailable,
+                                                            " items available"
+                                                        ]
+                                                    })
+                                                ]
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    mb: "$2"
+                                                },
+                                                justify: "between",
+                                                children: [
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                        style: "subtitle2",
+                                                        color: "subtle",
+                                                        as: "p",
+                                                        children: quantityAvailable > 1 && quantitySelectionAvailable ? "Unit Price" : "Price"
+                                                    }),
+                                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                        css: {
+                                                            alignItems: "center",
+                                                            gap: 8
+                                                        },
+                                                        children: [
+                                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                                style: "subtitle2",
+                                                                color: "subtle",
+                                                                as: "p",
+                                                                children: quantityAvailable > 1 && quantitySelectionAvailable ? "Total Profit" : "Profit"
+                                                            }),
+                                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f1a77cb69cf0ff83$export$2e2bcd8739ae039), {
+                                                                side: "left",
+                                                                width: 200,
+                                                                content: `How much ${currency.symbol} you will receive after marketplace fees and creator royalties are subtracted.`
+                                                            })
+                                                        ]
+                                                    })
+                                                ]
+                                            }),
+                                            selectedMarketplaces.map((marketplace)=>/*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                                    css: {
+                                                        mb: "$3"
+                                                    },
+                                                    children: [
+                                                        /*#__PURE__*/ (0, $bNXjM$jsx)((0, $ddb0bb2694bbe877$export$2e2bcd8739ae039), {
+                                                            marketplace: marketplace,
+                                                            collection: collection,
+                                                            currency: currency,
+                                                            usdPrice: usdPrice,
+                                                            quantity: quantity,
+                                                            onChange: (e)=>{
+                                                                setMarketPrice(e.target.value, marketplace);
+                                                            },
+                                                            onBlur: ()=>{
+                                                                if (marketplace.price === "") setMarketPrice(0, marketplace);
+                                                            }
+                                                        }),
+                                                        marketplace.truePrice !== "" && marketplace.truePrice !== null && Number(marketplace.truePrice) !== 0 && Number(marketplace.truePrice) < $a93b26d073373c23$var$MINIMUM_AMOUNT && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                                            children: /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                                style: "body2",
+                                                                color: "error",
+                                                                children: [
+                                                                    "Amount must be higher than ",
+                                                                    $a93b26d073373c23$var$MINIMUM_AMOUNT
+                                                                ]
+                                                            })
+                                                        }),
+                                                        collection && collection?.floorAsk?.price?.amount?.native !== undefined && marketplace.truePrice !== "" && marketplace.truePrice !== null && Number(marketplace.truePrice) !== 0 && Number(marketplace.truePrice) >= $a93b26d073373c23$var$MINIMUM_AMOUNT && currency.contract === (0, $bNXjM$constants).AddressZero && Number(marketplace.truePrice) < collection?.floorAsk?.price.amount.native && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                                            children: /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                                style: "body2",
+                                                                color: "error",
+                                                                children: [
+                                                                    "Price is",
+                                                                    " ",
+                                                                    Math.round((collection.floorAsk.price.amount.native - +marketplace.truePrice) / ((collection.floorAsk.price.amount.native + +marketplace.truePrice) / 2) * 100000) / 1000,
+                                                                    "% below the floor"
+                                                                ]
+                                                            })
+                                                        })
+                                                    ]
+                                                }, marketplace.name)),
+                                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    mb: "$3",
+                                                    mt: "$4"
+                                                },
+                                                children: [
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                        as: "div",
+                                                        css: {
+                                                            mb: "$2"
+                                                        },
+                                                        style: "subtitle2",
+                                                        color: "subtle",
+                                                        children: "Expiration Date"
+                                                    }),
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039), {
+                                                        value: expirationOption?.text || "",
+                                                        onValueChange: (value)=>{
+                                                            const option = expirationOptions.find((option)=>option.value == value);
+                                                            if (option) setExpirationOption(option);
+                                                        },
+                                                        children: expirationOptions.map((option)=>/*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039).Item, {
+                                                                value: option.value,
+                                                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039).ItemText, {
+                                                                    children: option.text
+                                                                })
+                                                            }, option.text))
+                                                    })
+                                                ]
+                                            })
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                        css: {
+                                            p: "$4",
+                                            width: "100%"
+                                        },
+                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                            disabled: selectedMarketplaces.some((marketplace)=>marketplace.price === "" || marketplace.price == 0 || Number(marketplace.price) < $a93b26d073373c23$var$MINIMUM_AMOUNT),
+                                            onClick: listToken,
+                                            css: {
+                                                width: "100%"
+                                            },
+                                            children: "List for sale"
+                                        })
+                                    })
+                                ]
+                            })
+                        ]
+                    }),
+                    token && listStep == (0, $052d60b4fc42e2f9$export$7f4afd65e1e67072).ListItem && /*#__PURE__*/ (0, $bNXjM$jsxs)($a93b26d073373c23$var$ContentContainer, {
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f13a27bb3fdcaf1d$export$2e2bcd8739ae039), {
+                                token: token,
+                                collection: collection,
+                                listingData: listingData,
+                                currency: currency
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)($a93b26d073373c23$var$MainContainer, {
+                                css: {
+                                    p: "$4"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $fe4973a3dd519dab$export$2e2bcd8739ae039), {
+                                        value: stepData?.stepProgress || 0,
+                                        max: stepData?.totalSteps || 0
+                                    }),
+                                    transactionError && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $4c76c4b4e6d5247c$export$2e2bcd8739ae039), {
+                                        css: {
+                                            mt: 24
+                                        }
+                                    }),
+                                    stepData && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    textAlign: "center",
+                                                    mt: 48,
+                                                    mb: 28
+                                                },
+                                                style: "subtitle1",
+                                                children: stepTitle
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $10061c592b503910$export$2e2bcd8739ae039), {
+                                                justify: "center",
+                                                fromImg: tokenImage,
+                                                toImg: stepData?.listingData.marketplace.imageUrl || ""
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    textAlign: "center",
+                                                    mt: 24,
+                                                    maxWidth: 395,
+                                                    mx: "auto",
+                                                    mb: "$4"
+                                                },
+                                                style: "body3",
+                                                color: "subtle",
+                                                children: stepData?.currentStep.description
+                                            })
+                                        ]
+                                    }),
+                                    !stepData && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        css: {
+                                            height: "100%"
+                                        },
+                                        justify: "center",
+                                        align: "center",
+                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $0ff8966798df47ad$export$2e2bcd8739ae039), {})
+                                    }),
+                                    !transactionError && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                        css: {
+                                            width: "100%",
+                                            mt: "auto"
+                                        },
+                                        disabled: true,
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $0ff8966798df47ad$export$2e2bcd8739ae039), {}),
+                                            "Waiting for Approval"
+                                        ]
+                                    }),
+                                    transactionError && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        css: {
+                                            mt: "auto",
+                                            gap: 10
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                                color: "secondary",
+                                                css: {
+                                                    flex: 1
+                                                },
+                                                onClick: ()=>setListStep((0, $052d60b4fc42e2f9$export$7f4afd65e1e67072).SetPrice),
+                                                children: "Edit Listing"
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    flex: 1
+                                                },
+                                                onClick: ()=>listToken(),
+                                                children: "Retry"
+                                            })
+                                        ]
+                                    })
+                                ]
+                            })
+                        ]
+                    }),
+                    token && listStep == (0, $052d60b4fc42e2f9$export$7f4afd65e1e67072).Complete && /*#__PURE__*/ (0, $bNXjM$jsxs)($a93b26d073373c23$var$ContentContainer, {
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f13a27bb3fdcaf1d$export$2e2bcd8739ae039), {
+                                token: token,
+                                collection: collection,
+                                listingData: listingData,
+                                currency: currency
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)($a93b26d073373c23$var$MainContainer, {
+                                css: {
+                                    p: "$4"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $fe4973a3dd519dab$export$2e2bcd8739ae039), {
+                                        value: stepData?.totalSteps || 0,
+                                        max: stepData?.totalSteps || 0
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        align: "center",
+                                        justify: "center",
+                                        direction: "column",
+                                        css: {
+                                            flex: 1,
+                                            textAlign: "center",
+                                            py: "$5"
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    color: "$successAccent",
+                                                    mb: 24
+                                                },
+                                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                                    icon: (0, $bNXjM$faCheckCircle),
+                                                    size: "3x"
+                                                })
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                style: "h5",
+                                                css: {
+                                                    mb: "$2"
+                                                },
+                                                as: "h5",
+                                                children: "Your item has been listed!"
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                style: "body3",
+                                                color: "subtle",
+                                                as: "p",
+                                                css: {
+                                                    mb: 24,
+                                                    maxWidth: 300,
+                                                    overflow: "hidden"
+                                                },
+                                                children: [
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                        color: "accent",
+                                                        ellipsify: true,
+                                                        style: "body3",
+                                                        children: token?.token?.name ? token?.token?.name : `#${token?.token?.tokenId}`
+                                                    }),
+                                                    " ",
+                                                    "from",
+                                                    " ",
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)($a93b26d073373c23$var$Span, {
+                                                        css: {
+                                                            color: "$accentText"
+                                                        },
+                                                        children: token?.token?.collection?.name
+                                                    }),
+                                                    " ",
+                                                    "has been listed for sale"
+                                                ]
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                style: "subtitle2",
+                                                as: "p",
+                                                css: {
+                                                    mb: "$3"
+                                                },
+                                                children: "View Listing on"
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    gap: "$3"
+                                                },
+                                                children: listingData.map((data)=>{
+                                                    const source = data.listing.orderbook === "reservoir" && client?.source ? client?.source : data.marketplace.name;
+                                                    return /*#__PURE__*/ (0, $bNXjM$jsx)("a", {
+                                                        target: "_blank",
+                                                        href: `${reservoirChain?.baseApiUrl}/redirect/sources/${source}/tokens/${token.token?.contract}:${token?.token?.tokenId}/link/v2`,
+                                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)($a93b26d073373c23$var$Image, {
+                                                            css: {
+                                                                width: 24
+                                                            },
+                                                            src: data.marketplace.imageUrl
+                                                        })
+                                                    }, data.listing.orderbook);
+                                                })
+                                            })
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        css: {
+                                            flexDirection: "column",
+                                            gap: "$3",
+                                            "@bp1": {
+                                                flexDirection: "row"
+                                            }
+                                        },
+                                        children: !!onGoToToken ? /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                                            children: [
+                                                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                                    onClick: ()=>{
+                                                        setOpen(false);
+                                                    },
+                                                    css: {
+                                                        flex: 1
+                                                    },
+                                                    color: "secondary",
+                                                    children: "Close"
+                                                }),
+                                                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                                    style: {
+                                                        flex: 1
+                                                    },
+                                                    color: "primary",
+                                                    onClick: ()=>{
+                                                        onGoToToken();
+                                                    },
+                                                    children: "Go to Token"
+                                                })
+                                            ]
+                                        }) : /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                            onClick: ()=>{
+                                                setOpen(false);
+                                            },
+                                            style: {
+                                                flex: 1
+                                            },
+                                            color: "primary",
+                                            children: "Close"
+                                        })
+                                    })
+                                ]
+                            })
+                        ]
+                    })
+                ]
+            });
+        }
     });
 }
-$79a9c4ae6d63e150$export$d23efc006864db2f.Custom = (0, $4f8e6d03fa0f27e5$export$5cb91f178b51ac3);
+$a93b26d073373c23$export$d23efc006864db2f.Custom = (0, $052d60b4fc42e2f9$export$5cb91f178b51ac3);
+
+
 
 
 
@@ -5963,9 +6605,9 @@ $79a9c4ae6d63e150$export$d23efc006864db2f.Custom = (0, $4f8e6d03fa0f27e5$export$
 
 
 //@ts-ignore
-const $0a9bc92ea8e9309f$var$Flatpickr = (0, $bNXjM$reactflatpickr).default;
-var $0a9bc92ea8e9309f$export$2e2bcd8739ae039 = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ options: options , onChange: onChange , value: value , defaultValue: defaultValue , ...inputProps }, forwardedRef)=>{
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement($0a9bc92ea8e9309f$var$Flatpickr, {
+const $6b118f5ec5d1b565$var$Flatpickr = (0, $bNXjM$reactflatpickr).default;
+var $6b118f5ec5d1b565$export$2e2bcd8739ae039 = /*#__PURE__*/ (0, $bNXjM$forwardRef)(({ options: options , onChange: onChange , value: value , defaultValue: defaultValue , ...inputProps }, forwardedRef)=>{
+    return /*#__PURE__*/ (0, $bNXjM$jsx)($6b118f5ec5d1b565$var$Flatpickr, {
         ref: forwardedRef,
         value: value,
         options: {
@@ -5975,7 +6617,7 @@ var $0a9bc92ea8e9309f$export$2e2bcd8739ae039 = /*#__PURE__*/ (0, $bNXjM$forwardR
         onChange: onChange,
         defaultValue: defaultValue,
         render: ({ defaultValue: defaultValue  }, ref)=>{
-            return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $b348cba042fa8022$export$2e2bcd8739ae039), {
+            return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a235eda53948b6ff$export$2e2bcd8739ae039), {
                 ...inputProps,
                 ref: ref,
                 defaultValue: defaultValue
@@ -5990,10 +6632,11 @@ var $0a9bc92ea8e9309f$export$2e2bcd8739ae039 = /*#__PURE__*/ (0, $bNXjM$forwardR
 
 
 
-function $48b2325641a03029$export$2e2bcd8739ae039(params) {
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const chain = client === null || client === void 0 ? void 0 : client.currentChain();
-    const contractAddress = (chain === null || chain === void 0 ? void 0 : chain.id) !== undefined && chain.id in (0, $fc1497f0cb88da4d$export$2e2bcd8739ae039) ? (0, $fc1497f0cb88da4d$export$2e2bcd8739ae039)[chain.id] : (0, $fc1497f0cb88da4d$export$2e2bcd8739ae039)[(0, $bNXjM$mainnet).id];
+
+function $f3391f204d4b73fa$export$2e2bcd8739ae039(params) {
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const chain = client?.currentChain();
+    const contractAddress = chain?.id !== undefined && chain.id in (0, $412f709ff46d543e$export$2e2bcd8739ae039) ? (0, $412f709ff46d543e$export$2e2bcd8739ae039)[chain.id] : (0, $412f709ff46d543e$export$2e2bcd8739ae039)[(0, $bNXjM$mainnet).id];
     const balance = (0, $bNXjM$useBalance)({
         ...params,
         token: contractAddress
@@ -6011,17 +6654,17 @@ function $48b2325641a03029$export$2e2bcd8739ae039(params) {
 
 
 
-const $01bdb556a641353f$var$wrappedContractNames = {
+const $88f0697a4443230c$var$wrappedContractNames = {
     1: "WETH",
     5: "WETH",
     137: "WMATIC"
 };
-var $01bdb556a641353f$export$2e2bcd8739ae039 = $01bdb556a641353f$var$wrappedContractNames;
+var $88f0697a4443230c$export$2e2bcd8739ae039 = $88f0697a4443230c$var$wrappedContractNames;
 
 
 
-const $cbcfe2ab7e278624$var$expirationOptions = [
-    ...(0, $f4cb7002f21420c9$export$2e2bcd8739ae039),
+const $97f9e638db55049c$var$expirationOptions = [
+    ...(0, $abb5dec08fcac72e$export$2e2bcd8739ae039),
     {
         text: "Custom",
         value: "custom",
@@ -6029,30 +6672,30 @@ const $cbcfe2ab7e278624$var$expirationOptions = [
         relativeTimeUnit: null
     }
 ];
-var $cbcfe2ab7e278624$export$7a92ddb9e11f37f7;
+let $97f9e638db55049c$export$7a92ddb9e11f37f7;
 (function(BidStep) {
     BidStep[BidStep["SetPrice"] = 0] = "SetPrice";
     BidStep[BidStep["Offering"] = 1] = "Offering";
     BidStep[BidStep["Complete"] = 2] = "Complete";
-})($cbcfe2ab7e278624$export$7a92ddb9e11f37f7 || ($cbcfe2ab7e278624$export$7a92ddb9e11f37f7 = {}));
-const $cbcfe2ab7e278624$export$89d91658eb2b6698 = ({ open: open , tokenId: tokenId , collectionId: collectionId , attribute: attribute , normalizeRoyalties: normalizeRoyalties , children: children  })=>{
+})($97f9e638db55049c$export$7a92ddb9e11f37f7 || ($97f9e638db55049c$export$7a92ddb9e11f37f7 = {}));
+const $97f9e638db55049c$export$89d91658eb2b6698 = ({ open: open , tokenId: tokenId , collectionId: collectionId , attribute: attribute , normalizeRoyalties: normalizeRoyalties , children: children  })=>{
     const { data: signer  } = (0, $bNXjM$useSigner)();
-    const [bidStep, setBidStep] = (0, $bNXjM$useState)($cbcfe2ab7e278624$export$7a92ddb9e11f37f7.SetPrice);
+    const [bidStep, setBidStep] = (0, $bNXjM$useState)($97f9e638db55049c$export$7a92ddb9e11f37f7.SetPrice);
     const [transactionError, setTransactionError] = (0, $bNXjM$useState)();
     const [bidAmount, setBidAmount] = (0, $bNXjM$useState)("");
-    const [expirationOption, setExpirationOption] = (0, $bNXjM$useState)($cbcfe2ab7e278624$var$expirationOptions[3]);
+    const [expirationOption, setExpirationOption] = (0, $bNXjM$useState)($97f9e638db55049c$var$expirationOptions[3]);
     const [hasEnoughNativeCurrency, setHasEnoughNativeCurrency] = (0, $bNXjM$useState)(false);
     const [hasEnoughWrappedCurrency, setHasEnoughWrappedCurrency] = (0, $bNXjM$useState)(false);
     const [amountToWrap, setAmountToWrap] = (0, $bNXjM$useState)("");
     const [stepData, setStepData] = (0, $bNXjM$useState)(null);
     const [bidData, setBidData] = (0, $bNXjM$useState)(null);
-    const contract = collectionId ? collectionId === null || collectionId === void 0 ? void 0 : collectionId.split(":")[0] : undefined;
+    const contract = collectionId ? collectionId?.split(":")[0] : undefined;
     const [trait, setTrait] = (0, $bNXjM$useState)(attribute);
     const [attributes, setAttributes] = (0, $bNXjM$useState)();
-    const chainCurrency = (0, $b6adfc9a883b8132$export$2e2bcd8739ae039)();
-    const wrappedContractAddress = chainCurrency.chainId in (0, $fc1497f0cb88da4d$export$2e2bcd8739ae039) ? (0, $fc1497f0cb88da4d$export$2e2bcd8739ae039)[chainCurrency.chainId] : (0, $fc1497f0cb88da4d$export$2e2bcd8739ae039)[1];
-    const wrappedContractName = chainCurrency.chainId in (0, $01bdb556a641353f$export$2e2bcd8739ae039) ? (0, $01bdb556a641353f$export$2e2bcd8739ae039)[chainCurrency.chainId] : (0, $01bdb556a641353f$export$2e2bcd8739ae039)[1];
-    const { data: tokens  } = (0, $2ae380ce592f7932$export$2e2bcd8739ae039)(open && tokenId !== undefined && {
+    const chainCurrency = (0, $16fcb794e07c5eb8$export$2e2bcd8739ae039)();
+    const wrappedContractAddress = chainCurrency.chainId in (0, $412f709ff46d543e$export$2e2bcd8739ae039) ? (0, $412f709ff46d543e$export$2e2bcd8739ae039)[chainCurrency.chainId] : (0, $412f709ff46d543e$export$2e2bcd8739ae039)[1];
+    const wrappedContractName = chainCurrency.chainId in (0, $88f0697a4443230c$export$2e2bcd8739ae039) ? (0, $88f0697a4443230c$export$2e2bcd8739ae039)[chainCurrency.chainId] : (0, $88f0697a4443230c$export$2e2bcd8739ae039)[1];
+    const { data: tokens  } = (0, $54bf018b076821f1$export$2e2bcd8739ae039)(open && tokenId !== undefined && {
         tokens: [
             `${contract}:${tokenId}`
         ],
@@ -6061,37 +6704,37 @@ const $cbcfe2ab7e278624$export$89d91658eb2b6698 = ({ open: open , tokenId: token
     }, {
         revalidateFirstPage: true
     });
-    const { data: traits  } = (0, $df4107d62d11f8f8$export$2e2bcd8739ae039)(open && !tokenId ? collectionId : undefined);
-    const { data: collections  } = (0, $ff2494fa019b599a$export$2e2bcd8739ae039)(open && {
+    const { data: traits  } = (0, $a77f332d243f1426$export$2e2bcd8739ae039)(open && !tokenId ? collectionId : undefined);
+    const { data: collections  } = (0, $38f38860f7db3263$export$2e2bcd8739ae039)(open && {
         id: collectionId,
         includeTopBid: true,
         normalizeRoyalties: normalizeRoyalties
     });
     const collection = collections && collections[0] ? collections[0] : undefined;
     const token = tokens && tokens.length > 0 ? tokens[0] : undefined;
-    const usdPrice = (0, $9f52dec49aff5538$export$2e2bcd8739ae039)(open ? "USD" : undefined, wrappedContractName);
+    const usdPrice = (0, $742accbc1cb453a5$export$2e2bcd8739ae039)(open ? "USD" : undefined, wrappedContractName);
     const bidAmountUsd = +bidAmount * (usdPrice || 0);
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
     const { address: address  } = (0, $bNXjM$useAccount)();
     const { data: balance  } = (0, $bNXjM$useBalance)({
         address: address,
         watch: open
     });
-    const { balance: { data: wrappedBalance  } , contractAddress: contractAddress  } = (0, $48b2325641a03029$export$2e2bcd8739ae039)({
+    const { balance: { data: wrappedBalance  } , contractAddress: contractAddress  } = (0, $f3391f204d4b73fa$export$2e2bcd8739ae039)({
         address: address,
         watch: open
     });
     const { chain: chain  } = (0, $bNXjM$useNetwork)();
-    const uniswapConvertLink = (chain === null || chain === void 0 ? void 0 : chain.id) === (0, $bNXjM$mainnet).id || (chain === null || chain === void 0 ? void 0 : chain.id) === (0, $bNXjM$goerli).id ? `https://app.uniswap.org/#/swap?theme=dark&exactAmount=${amountToWrap}&chain=${(chain === null || chain === void 0 ? void 0 : chain.network) || "mainnet"}&inputCurrency=eth&outputCurrency=${contractAddress}` : `https://app.uniswap.org/#/swap?theme=dark&exactAmount=${amountToWrap}`;
+    const uniswapConvertLink = chain?.id === (0, $bNXjM$mainnet).id || chain?.id === (0, $bNXjM$goerli).id ? `https://app.uniswap.org/#/swap?theme=dark&exactAmount=${amountToWrap}&chain=${chain?.network || "mainnet"}&inputCurrency=eth&outputCurrency=${contractAddress}` : `https://app.uniswap.org/#/swap?theme=dark&exactAmount=${amountToWrap}`;
     (0, $bNXjM$useEffect)(()=>{
         if (bidAmount !== "") {
             const bid = (0, $bNXjM$parseEther)(bidAmount);
-            if (!(wrappedBalance === null || wrappedBalance === void 0 ? void 0 : wrappedBalance.value) || (wrappedBalance === null || wrappedBalance === void 0 ? void 0 : wrappedBalance.value.lt(bid))) {
+            if (!wrappedBalance?.value || wrappedBalance?.value.lt(bid)) {
                 setHasEnoughWrappedCurrency(false);
-                const wrappedAmount = (wrappedBalance === null || wrappedBalance === void 0 ? void 0 : wrappedBalance.value) || (0, $bNXjM$constants).Zero;
+                const wrappedAmount = wrappedBalance?.value || (0, $bNXjM$constants).Zero;
                 const amountToWrap = bid.sub(wrappedAmount);
-                setAmountToWrap((0, $89f2b3089832dcbb$export$87710fd8420713d9)(bid.sub(wrappedAmount), 5));
-                if (!(balance === null || balance === void 0 ? void 0 : balance.value) || balance.value.lt(amountToWrap)) setHasEnoughNativeCurrency(false);
+                setAmountToWrap((0, $e70e85f6f4e64430$export$87710fd8420713d9)(bid.sub(wrappedAmount), 5));
+                if (!balance?.value || balance.value.lt(amountToWrap)) setHasEnoughNativeCurrency(false);
                 else setHasEnoughNativeCurrency(true);
             } else {
                 setHasEnoughWrappedCurrency(true);
@@ -6116,8 +6759,8 @@ const $cbcfe2ab7e278624$export$89d91658eb2b6698 = ({ open: open , tokenId: token
     ]);
     (0, $bNXjM$useEffect)(()=>{
         if (!open) {
-            setBidStep($cbcfe2ab7e278624$export$7a92ddb9e11f37f7.SetPrice);
-            setExpirationOption($cbcfe2ab7e278624$var$expirationOptions[3]);
+            setBidStep($97f9e638db55049c$export$7a92ddb9e11f37f7.SetPrice);
+            setExpirationOption($97f9e638db55049c$var$expirationOptions[3]);
             setHasEnoughNativeCurrency(false);
             setHasEnoughWrappedCurrency(false);
             setAmountToWrap("");
@@ -6130,7 +6773,7 @@ const $cbcfe2ab7e278624$export$89d91658eb2b6698 = ({ open: open , tokenId: token
     }, [
         open
     ]);
-    const isBanned = (0, $814406954658880f$export$2e2bcd8739ae039)(open ? contract : undefined, tokenId);
+    const isBanned = (0, $9898620691963117$export$2e2bcd8739ae039)(open ? contract : undefined, tokenId);
     const placeBid = (0, $bNXjM$useCallback)(()=>{
         if (!signer) {
             const error = new Error("Missing a signer");
@@ -6147,18 +6790,18 @@ const $cbcfe2ab7e278624$export$89d91658eb2b6698 = ({ open: open , tokenId: token
             setTransactionError(error);
             throw error;
         }
-        setBidStep($cbcfe2ab7e278624$export$7a92ddb9e11f37f7.Offering);
+        setBidStep($97f9e638db55049c$export$7a92ddb9e11f37f7.Offering);
         setTransactionError(null);
         setBidData(null);
         const bid = {
             weiPrice: (0, $bNXjM$parseEther)(`${bidAmount}`).toString(),
             orderbook: "reservoir",
             orderKind: "seaport",
-            attributeKey: trait === null || trait === void 0 ? void 0 : trait.key,
-            attributeValue: trait === null || trait === void 0 ? void 0 : trait.value
+            attributeKey: trait?.key,
+            attributeValue: trait?.value
         };
         if (tokenId && collectionId) {
-            const contract = collectionId ? collectionId === null || collectionId === void 0 ? void 0 : collectionId.split(":")[0] : undefined;
+            const contract = collectionId ? collectionId?.split(":")[0] : undefined;
             bid.token = `${contract}:${tokenId}`;
         } else if (collectionId) bid.collection = collectionId;
         if (expirationOption.relativeTime) {
@@ -6189,10 +6832,10 @@ const $cbcfe2ab7e278624$export$89d91658eb2b6698 = ({ open: open , tokenId: token
                     stepProgress: incompleteStepIndex,
                     currentStep: executableSteps[incompleteStepIndex]
                 });
-                else setBidStep($cbcfe2ab7e278624$export$7a92ddb9e11f37f7.Complete);
+                else setBidStep($97f9e638db55049c$export$7a92ddb9e11f37f7.Complete);
             }
         }).catch((e)=>{
-            const transactionError = new Error((e === null || e === void 0 ? void 0 : e.message) || "", {
+            const transactionError = new Error(e?.message || "", {
                 cause: e
             });
             setTransactionError(transactionError);
@@ -6206,35 +6849,37 @@ const $cbcfe2ab7e278624$export$89d91658eb2b6698 = ({ open: open , tokenId: token
         expirationOption,
         trait
     ]);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, children({
-        token: token,
-        collection: collection,
-        attributes: attributes,
-        usdPrice: usdPrice,
-        isBanned: isBanned,
-        balance: balance,
-        wrappedBalance: wrappedBalance,
-        wrappedContractName: wrappedContractName,
-        wrappedContractAddress: wrappedContractAddress,
-        uniswapConvertLink: uniswapConvertLink,
-        bidAmount: bidAmount,
-        bidData: bidData,
-        bidAmountUsd: bidAmountUsd,
-        bidStep: bidStep,
-        hasEnoughNativeCurrency: hasEnoughNativeCurrency,
-        hasEnoughWrappedCurrency: hasEnoughWrappedCurrency,
-        amountToWrap: amountToWrap,
-        transactionError: transactionError,
-        expirationOption: expirationOption,
-        expirationOptions: $cbcfe2ab7e278624$var$expirationOptions,
-        stepData: stepData,
-        setBidStep: setBidStep,
-        setBidAmount: setBidAmount,
-        setExpirationOption: setExpirationOption,
-        setTrait: setTrait,
-        trait: trait,
-        placeBid: placeBid
-    }));
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$Fragment), {
+        children: children({
+            token: token,
+            collection: collection,
+            attributes: attributes,
+            usdPrice: usdPrice,
+            isBanned: isBanned,
+            balance: balance,
+            wrappedBalance: wrappedBalance,
+            wrappedContractName: wrappedContractName,
+            wrappedContractAddress: wrappedContractAddress,
+            uniswapConvertLink: uniswapConvertLink,
+            bidAmount: bidAmount,
+            bidData: bidData,
+            bidAmountUsd: bidAmountUsd,
+            bidStep: bidStep,
+            hasEnoughNativeCurrency: hasEnoughNativeCurrency,
+            hasEnoughWrappedCurrency: hasEnoughWrappedCurrency,
+            amountToWrap: amountToWrap,
+            transactionError: transactionError,
+            expirationOption: expirationOption,
+            expirationOptions: $97f9e638db55049c$var$expirationOptions,
+            stepData: stepData,
+            setBidStep: setBidStep,
+            setBidAmount: setBidAmount,
+            setExpirationOption: setExpirationOption,
+            setTrait: setTrait,
+            trait: trait,
+            placeBid: placeBid
+        })
+    });
 };
 
 
@@ -6244,7 +6889,9 @@ const $cbcfe2ab7e278624$export$89d91658eb2b6698 = ({ open: open , tokenId: token
 
 
 
-const $12e1ae5e8ec2ec66$var$Img = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("img", {
+
+
+const $41951e97176ed3db$var$Img = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("img", {
     width: "100%",
     "@bp1": {
         height: 100,
@@ -6252,10 +6899,9 @@ const $12e1ae5e8ec2ec66$var$Img = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)
     },
     borderRadius: "$borderRadius"
 });
-const $12e1ae5e8ec2ec66$var$TokenStatsHeader = ({ token: token , collection: collection  })=>{
-    var _a, _b, _c;
-    const img = (0, $41c0733f04961a6e$export$2e2bcd8739ae039)(((_a = token === null || token === void 0 ? void 0 : token.token) === null || _a === void 0 ? void 0 : _a.image) ? token.token.image : collection === null || collection === void 0 ? void 0 : collection.image, 600);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
+const $41951e97176ed3db$var$TokenStatsHeader = ({ token: token , collection: collection  })=>{
+    const img = (0, $f9fd95002ef41b13$export$2e2bcd8739ae039)(token?.token?.image ? token.token.image : collection?.image, 600);
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
         css: {
             mr: "$4",
             marginBottom: "$4",
@@ -6264,36 +6910,47 @@ const $12e1ae5e8ec2ec66$var$TokenStatsHeader = ({ token: token , collection: col
                 mr: 0,
                 width: "100%"
             }
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2",
-        color: "subtle",
-        css: {
-            mb: "$1",
-            display: "block"
-        }
-    }, token ? "Item" : "Collection"), /*#__PURE__*/ (0, $bNXjM$react).createElement($12e1ae5e8ec2ec66$var$Img, {
-        src: img,
-        css: {
-            mb: "$2",
-            visibility: !img || img.length === 0 ? "hidden" : "visible",
-            objectFit: "cover"
-        }
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "h6",
-        css: {
-            flex: 1
         },
-        as: "h6",
-        ellipsify: true
-    }, (token === null || token === void 0 ? void 0 : token.token) ? token.token.name || `#${token.token.tokenId}` : collection === null || collection === void 0 ? void 0 : collection.name), token && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2",
-        color: "subtle",
-        as: "p",
-        ellipsify: true
-    }, (_c = (_b = token === null || token === void 0 ? void 0 : token.token) === null || _b === void 0 ? void 0 : _b.collection) === null || _c === void 0 ? void 0 : _c.name)));
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                style: "subtitle2",
+                color: "subtle",
+                css: {
+                    mb: "$1",
+                    display: "block"
+                },
+                children: token ? "Item" : "Collection"
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)($41951e97176ed3db$var$Img, {
+                src: img,
+                css: {
+                    mb: "$2",
+                    visibility: !img || img.length === 0 ? "hidden" : "visible",
+                    objectFit: "cover"
+                }
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                style: "h6",
+                css: {
+                    flex: 1
+                },
+                as: "h6",
+                ellipsify: true,
+                children: token?.token ? token.token.name || `#${token.token.tokenId}` : collection?.name
+            }),
+            token && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                    style: "subtitle2",
+                    color: "subtle",
+                    as: "p",
+                    ellipsify: true,
+                    children: token?.token?.collection?.name
+                })
+            })
+        ]
+    });
 };
-var $12e1ae5e8ec2ec66$export$2e2bcd8739ae039 = $12e1ae5e8ec2ec66$var$TokenStatsHeader;
+var $41951e97176ed3db$export$2e2bcd8739ae039 = $41951e97176ed3db$var$TokenStatsHeader;
 
 
 
@@ -6301,10 +6958,11 @@ var $12e1ae5e8ec2ec66$export$2e2bcd8739ae039 = $12e1ae5e8ec2ec66$var$TokenStatsH
 
 
 
-const $b13eaad68fcdfd4f$var$SelectedAttribute = ({ attributeKey: attributeKey , attributeValue: attributeValue  })=>{
-    const isMobile = (0, $387df40176bedb86$export$2e2bcd8739ae039)("(max-width: 520px)");
+
+const $51656bc7b25f7d5f$var$SelectedAttribute = ({ attributeKey: attributeKey , attributeValue: attributeValue  })=>{
+    const isMobile = (0, $53071302e811b792$export$2e2bcd8739ae039)("(max-width: 520px)");
     if (!attributeKey || !attributeValue) return null;
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         css: {
             padding: "$2",
             borderRadius: 4,
@@ -6318,80 +6976,97 @@ const $b13eaad68fcdfd4f$var$SelectedAttribute = ({ attributeKey: attributeKey , 
                 justifyContent: "start",
                 width: "fit-content"
             }
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        color: "accent",
-        style: "subtitle2"
-    }, attributeKey, `${isMobile ? "" : ":"}`), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2",
-        css: {
-            maxWidth: 200,
-            overflow: "hidden",
-            textOverflow: "ellipsis"
-        }
-    }, attributeValue));
+        },
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                color: "accent",
+                style: "subtitle2",
+                children: [
+                    attributeKey,
+                    `${isMobile ? "" : ":"}`
+                ]
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                style: "subtitle2",
+                css: {
+                    maxWidth: 200,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis"
+                },
+                children: attributeValue
+            })
+        ]
+    });
 };
-var $b13eaad68fcdfd4f$export$2e2bcd8739ae039 = $b13eaad68fcdfd4f$var$SelectedAttribute;
+var $51656bc7b25f7d5f$export$2e2bcd8739ae039 = $51656bc7b25f7d5f$var$SelectedAttribute;
 
 
-const $a578cc4b3440b8fa$var$TokenStats = ({ token: token , collection: collection , trait: trait  })=>{
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+const $8a5afc850b23a4a7$var$TokenStats = ({ token: token , collection: collection , trait: trait  })=>{
     let stats = [];
     stats.push({
         id: 0,
-        label: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle2",
-            color: "subtle",
-            css: {
-                minWidth: "0"
-            },
-            ellipsify: true
-        }, "Creator Royalties"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6ca758f3c020e004$export$2e2bcd8739ae039), {
-            side: "right",
-            width: 200,
-            content: "A fee on every order that goes to the collection creator."
-        })),
-        value: (((_a = collection === null || collection === void 0 ? void 0 : collection.royalties) === null || _a === void 0 ? void 0 : _a.bps) || 0) * 0.01 + "%"
+        label: /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+            children: [
+                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                    style: "subtitle2",
+                    color: "subtle",
+                    css: {
+                        minWidth: "0"
+                    },
+                    ellipsify: true,
+                    children: "Creator Royalties"
+                }),
+                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f1a77cb69cf0ff83$export$2e2bcd8739ae039), {
+                    side: "right",
+                    width: 200,
+                    content: "A fee on every order that goes to the collection creator."
+                })
+            ]
+        }),
+        value: (collection?.royalties?.bps || 0) * 0.01 + "%"
     }, {
         id: 1,
-        label: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
+        label: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
             style: "subtitle2",
             color: "subtle",
             css: {
                 minWidth: "0"
             },
-            ellipsify: true
-        }, "Highest Offer"),
-        value: token ? ((_e = (_d = (_c = (_b = token.market) === null || _b === void 0 ? void 0 : _b.topBid) === null || _c === void 0 ? void 0 : _c.price) === null || _d === void 0 ? void 0 : _d.amount) === null || _e === void 0 ? void 0 : _e.native) || null : ((_h = (_g = (_f = collection === null || collection === void 0 ? void 0 : collection.topBid) === null || _f === void 0 ? void 0 : _f.price) === null || _g === void 0 ? void 0 : _g.amount) === null || _h === void 0 ? void 0 : _h.native) || null,
+            ellipsify: true,
+            children: "Highest Offer"
+        }),
+        value: token ? token.market?.topBid?.price?.amount?.native || null : collection?.topBid?.price?.amount?.native || null,
         asWrapped: true
     });
     if (token) stats.push({
         id: 2,
-        label: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
+        label: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
             style: "subtitle2",
             color: "subtle",
             css: {
                 minWidth: "0"
             },
-            ellipsify: true
-        }, "List Price"),
-        value: ((_m = (_l = (_k = (_j = token.market) === null || _j === void 0 ? void 0 : _j.floorAsk) === null || _k === void 0 ? void 0 : _k.price) === null || _l === void 0 ? void 0 : _l.amount) === null || _m === void 0 ? void 0 : _m.native) || null,
+            ellipsify: true,
+            children: "List Price"
+        }),
+        value: token.market?.floorAsk?.price?.amount?.native || null,
         asNative: true
     });
     else if (!token && collection) stats.push({
         id: 2,
-        label: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
+        label: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
             style: "subtitle2",
             color: "subtle",
             css: {
                 minWidth: "0"
             },
-            ellipsify: true
-        }, "Floor"),
-        value: ((_q = (_p = (_o = collection === null || collection === void 0 ? void 0 : collection.floorAsk) === null || _o === void 0 ? void 0 : _o.price) === null || _p === void 0 ? void 0 : _p.amount) === null || _q === void 0 ? void 0 : _q.native) || null,
+            ellipsify: true,
+            children: "Floor"
+        }),
+        value: collection?.floorAsk?.price?.amount?.native || null,
         asNative: true
     });
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         css: {
             width: "100%",
             flexDirection: "row",
@@ -6400,33 +7075,41 @@ const $a578cc4b3440b8fa$var$TokenStats = ({ token: token , collection: collectio
                 flexDirection: "column"
             },
             p: "$4"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $12e1ae5e8ec2ec66$export$2e2bcd8739ae039), {
-        collection: collection,
-        token: token
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $f31400a2975ed70a$export$2e2bcd8739ae039), {
-        css: {
-            flex: 1,
-            alignContent: "start",
-            width: "100%",
-            gridTemplateColumns: "repeat(1, minmax(0, 1fr))"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $b13eaad68fcdfd4f$export$2e2bcd8739ae039), {
-        attributeKey: trait === null || trait === void 0 ? void 0 : trait.key,
-        attributeValue: trait === null || trait === void 0 ? void 0 : trait.value
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            flex: 1,
-            [`& ${0, $3076e9a453312234$export$2e2bcd8739ae039}:not(:last-child)`]: {
-                mb: "$1"
-            }
-        }
-    }, stats.map((stat)=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $3076e9a453312234$export$2e2bcd8739ae039), {
-            key: stat.id,
-            ...stat
-        })))));
+        },
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $41951e97176ed3db$export$2e2bcd8739ae039), {
+                collection: collection,
+                token: token
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $72bd45ddbf898068$export$2e2bcd8739ae039), {
+                css: {
+                    flex: 1,
+                    alignContent: "start",
+                    width: "100%",
+                    gridTemplateColumns: "repeat(1, minmax(0, 1fr))"
+                },
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $51656bc7b25f7d5f$export$2e2bcd8739ae039), {
+                        attributeKey: trait?.key,
+                        attributeValue: trait?.value
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                        css: {
+                            flex: 1,
+                            [`& ${0, $54a2afd53a200e25$export$2e2bcd8739ae039}:not(:last-child)`]: {
+                                mb: "$1"
+                            }
+                        },
+                        children: stats.map((stat)=>/*#__PURE__*/ (0, $bNXjM$jsx)((0, $54a2afd53a200e25$export$2e2bcd8739ae039), {
+                                ...stat
+                            }, stat.id))
+                    })
+                ]
+            })
+        ]
+    });
 };
-var $a578cc4b3440b8fa$export$2e2bcd8739ae039 = $a578cc4b3440b8fa$var$TokenStats;
+var $8a5afc850b23a4a7$export$2e2bcd8739ae039 = $8a5afc850b23a4a7$var$TokenStats;
 
 
 
@@ -6441,15 +7124,16 @@ var $a578cc4b3440b8fa$export$2e2bcd8739ae039 = $a578cc4b3440b8fa$var$TokenStats;
 
 
 
-const $15af49ae333c5287$var$TransactionBidDetails = ({ token: token , collection: collection , bidData: bidData  })=>{
+
+const $9f138a5099b04af6$var$TransactionBidDetails = ({ token: token , collection: collection , bidData: bidData  })=>{
     const [value, setValue] = (0, $bNXjM$useState)("");
-    const timeSince = (0, $59ff1a3b34f7a14d$export$2e2bcd8739ae039)((bidData === null || bidData === void 0 ? void 0 : bidData.expirationTime) ? +bidData.expirationTime : 0);
+    const timeSince = (0, $c952bf73c842abfc$export$2e2bcd8739ae039)(bidData?.expirationTime ? +bidData.expirationTime : 0);
     (0, $bNXjM$useEffect)(()=>{
         setValue(bidData ? (0, $bNXjM$formatEther)(bidData.weiPrice) : "");
     }, [
         bidData
     ]);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         css: {
             width: "100%",
             flexDirection: "row",
@@ -6458,44 +7142,62 @@ const $15af49ae333c5287$var$TransactionBidDetails = ({ token: token , collection
                 flexDirection: "column"
             },
             p: "$4"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $12e1ae5e8ec2ec66$export$2e2bcd8739ae039), {
-        collection: collection,
-        token: token
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            flex: 1,
-            mb: "$3"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $b13eaad68fcdfd4f$export$2e2bcd8739ae039), {
-        attributeKey: bidData === null || bidData === void 0 ? void 0 : bidData.attributeKey,
-        attributeValue: bidData === null || bidData === void 0 ? void 0 : bidData.attributeValue
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        direction: "column",
-        className: "rk-stat-well",
-        css: {
-            backgroundColor: "$wellBackground",
-            p: "$2",
-            borderRadius: "$borderRadius",
-            gap: "$1"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        justify: "between"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2"
-    }, "Offer Price"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $689711b6f5d8de5a$export$2e2bcd8739ae039), {
-        amount: +value,
-        textStyle: "subtitle2"
-    })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2",
-        color: "subtle",
-        as: "p",
-        css: {
-            flex: 1
-        }
-    }, (bidData === null || bidData === void 0 ? void 0 : bidData.expirationTime) ? `Expires ${timeSince}` : "No Expiration"))));
+        },
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $41951e97176ed3db$export$2e2bcd8739ae039), {
+                collection: collection,
+                token: token
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                css: {
+                    flex: 1,
+                    mb: "$3"
+                },
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $51656bc7b25f7d5f$export$2e2bcd8739ae039), {
+                        attributeKey: bidData?.attributeKey,
+                        attributeValue: bidData?.attributeValue
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        className: "rk-stat-well",
+                        css: {
+                            backgroundColor: "$wellBackground",
+                            p: "$2",
+                            borderRadius: "$borderRadius",
+                            gap: "$1"
+                        },
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                justify: "between",
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "subtitle2",
+                                        children: "Offer Price"
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $39af25d905d8680a$export$2e2bcd8739ae039), {
+                                        amount: +value,
+                                        textStyle: "subtitle2"
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                style: "subtitle2",
+                                color: "subtle",
+                                as: "p",
+                                css: {
+                                    flex: 1
+                                },
+                                children: bidData?.expirationTime ? `Expires ${timeSince}` : "No Expiration"
+                            })
+                        ]
+                    })
+                ]
+            })
+        ]
+    });
 };
-var $15af49ae333c5287$export$2e2bcd8739ae039 = $15af49ae333c5287$var$TransactionBidDetails;
+var $9f138a5099b04af6$export$2e2bcd8739ae039 = $9f138a5099b04af6$var$TransactionBidDetails;
 
 
 
@@ -6504,20 +7206,22 @@ var $15af49ae333c5287$export$2e2bcd8739ae039 = $15af49ae333c5287$var$Transaction
 
 
 
-const $39f9504a9ac3c26a$var$SCROLLBAR_SIZE = 10;
-const $39f9504a9ac3c26a$var$ScrollArea = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Root4, {
+
+
+const $cc145f97c30ab30a$var$SCROLLBAR_SIZE = 10;
+const $cc145f97c30ab30a$var$ScrollArea = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Root4, {
     height: 322,
     borderRadius: "$space$2",
     overflow: "hidden",
     boxShadow: `0 2px 10px $inputBackground`
 });
-const $39f9504a9ac3c26a$var$ScrollAreaViewport = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Viewport1, {
+const $cc145f97c30ab30a$var$ScrollAreaViewport = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Viewport1, {
     backgroundColor: "transparent",
     width: "100%",
     height: "100%",
     borderRadius: "inherit"
 });
-const $39f9504a9ac3c26a$var$ScrollAreaScrollbar = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Scrollbar, {
+const $cc145f97c30ab30a$var$ScrollAreaScrollbar = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Scrollbar, {
     display: "flex",
     // ensures no selection
     userSelect: "none",
@@ -6530,17 +7234,17 @@ const $39f9504a9ac3c26a$var$ScrollAreaScrollbar = (0, $cd784f5a4171372f$export$3
         background: "$inputBackground"
     },
     '&[data-orientation="vertical"]': {
-        width: $39f9504a9ac3c26a$var$SCROLLBAR_SIZE
+        width: $cc145f97c30ab30a$var$SCROLLBAR_SIZE
     },
     '&[data-orientation="horizontal"]': {
         flexDirection: "column",
-        height: $39f9504a9ac3c26a$var$SCROLLBAR_SIZE
+        height: $cc145f97c30ab30a$var$SCROLLBAR_SIZE
     }
 });
-const $39f9504a9ac3c26a$var$ScrollAreaThumb = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Thumb1, {
+const $cc145f97c30ab30a$var$ScrollAreaThumb = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Thumb1, {
     flex: 1,
     background: "$wellBackground",
-    borderRadius: $39f9504a9ac3c26a$var$SCROLLBAR_SIZE,
+    borderRadius: $cc145f97c30ab30a$var$SCROLLBAR_SIZE,
     // increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html
     position: "relative",
     "&::before": {
@@ -6555,38 +7259,47 @@ const $39f9504a9ac3c26a$var$ScrollAreaThumb = (0, $cd784f5a4171372f$export$3817b
         minHeight: 44
     }
 });
-const $39f9504a9ac3c26a$var$ScrollAreaCorner = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)($bNXjM$Corner, {
+const $cc145f97c30ab30a$var$ScrollAreaCorner = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)($bNXjM$Corner, {
     background: "$wellBackground"
 });
-const $39f9504a9ac3c26a$var$RKScrollArea = ({ children: children , ...props })=>{
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement($39f9504a9ac3c26a$var$ScrollArea, {
-        ...props
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($39f9504a9ac3c26a$var$ScrollAreaViewport, null, children), /*#__PURE__*/ (0, $bNXjM$react).createElement($39f9504a9ac3c26a$var$ScrollAreaScrollbar, {
-        orientation: "vertical"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($39f9504a9ac3c26a$var$ScrollAreaThumb, null)), /*#__PURE__*/ (0, $bNXjM$react).createElement($39f9504a9ac3c26a$var$ScrollAreaScrollbar, {
-        orientation: "horizontal"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($39f9504a9ac3c26a$var$ScrollAreaThumb, null)), /*#__PURE__*/ (0, $bNXjM$react).createElement($39f9504a9ac3c26a$var$ScrollAreaCorner, null));
+const $cc145f97c30ab30a$var$RKScrollArea = ({ children: children , ...props })=>{
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)($cc145f97c30ab30a$var$ScrollArea, {
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)($cc145f97c30ab30a$var$ScrollAreaViewport, {
+                children: children
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)($cc145f97c30ab30a$var$ScrollAreaScrollbar, {
+                orientation: "vertical",
+                children: /*#__PURE__*/ (0, $bNXjM$jsx)($cc145f97c30ab30a$var$ScrollAreaThumb, {})
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)($cc145f97c30ab30a$var$ScrollAreaScrollbar, {
+                orientation: "horizontal",
+                children: /*#__PURE__*/ (0, $bNXjM$jsx)($cc145f97c30ab30a$var$ScrollAreaThumb, {})
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)($cc145f97c30ab30a$var$ScrollAreaCorner, {})
+        ]
+    });
 };
-$39f9504a9ac3c26a$var$RKScrollArea.Root = $39f9504a9ac3c26a$var$ScrollArea;
-$39f9504a9ac3c26a$var$RKScrollArea.Viewport = $39f9504a9ac3c26a$var$ScrollAreaViewport;
-$39f9504a9ac3c26a$var$RKScrollArea.Scrollbar = $39f9504a9ac3c26a$var$ScrollAreaScrollbar;
-$39f9504a9ac3c26a$var$RKScrollArea.Thumb = $39f9504a9ac3c26a$var$ScrollAreaThumb;
-$39f9504a9ac3c26a$var$RKScrollArea.Corner = $39f9504a9ac3c26a$var$ScrollAreaCorner;
-var $39f9504a9ac3c26a$export$2e2bcd8739ae039 = $39f9504a9ac3c26a$var$RKScrollArea;
+$cc145f97c30ab30a$var$RKScrollArea.Root = $cc145f97c30ab30a$var$ScrollArea;
+$cc145f97c30ab30a$var$RKScrollArea.Viewport = $cc145f97c30ab30a$var$ScrollAreaViewport;
+$cc145f97c30ab30a$var$RKScrollArea.Scrollbar = $cc145f97c30ab30a$var$ScrollAreaScrollbar;
+$cc145f97c30ab30a$var$RKScrollArea.Thumb = $cc145f97c30ab30a$var$ScrollAreaThumb;
+$cc145f97c30ab30a$var$RKScrollArea.Corner = $cc145f97c30ab30a$var$ScrollAreaCorner;
+var $cc145f97c30ab30a$export$2e2bcd8739ae039 = $cc145f97c30ab30a$var$RKScrollArea;
 
 
 
-const $591bb95089aa7207$var$AttributeSelector = ({ attributes: attributes , setTrait: setTrait , setOpen: setOpen , tokenCount: tokenCount  })=>{
+const $6f4174f8fd0c1da3$var$AttributeSelector = ({ attributes: attributes , setTrait: setTrait , setOpen: setOpen , tokenCount: tokenCount  })=>{
     const [results, setResults] = (0, $bNXjM$useState)([]);
     const [query, setQuery] = (0, $bNXjM$useState)("");
     (0, $bNXjM$useEffect)(()=>{
         if (query === "") setResults(attributes);
         else {
             let results = [];
-            attributes === null || attributes === void 0 || attributes.forEach((attribute)=>{
-                var _a;
-                const values = (_a = attribute.values) === null || _a === void 0 ? void 0 : _a.filter(({ value: value  })=>value.toLowerCase().includes(query.toLowerCase()));
-                if (values && values.length > 0) results === null || results === void 0 || results.push({
+            attributes?.forEach((attribute)=>{
+                const values = attribute.values?.filter(({ value: value  })=>value.toLowerCase().includes(query.toLowerCase()));
+                if (values && values.length > 0) results?.push({
                     ...attribute,
                     values: values
                 });
@@ -6599,7 +7312,7 @@ const $591bb95089aa7207$var$AttributeSelector = ({ attributes: attributes , setT
         query
     ]);
     if (!attributes) return null;
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
         css: {
             maxWidth: 500,
             zIndex: 1000,
@@ -6607,120 +7320,145 @@ const $591bb95089aa7207$var$AttributeSelector = ({ attributes: attributes , setT
             overflowY: "auto",
             borderRadius: "$space$2",
             backgroundColor: "$popoverBackground"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $b348cba042fa8022$export$2e2bcd8739ae039), {
-        css: {
-            marginBottom: "$4",
-            padding: "$space$4 $space$4 $space$4 48px"
         },
-        placeholder: "Filter attribute",
-        value: query,
-        onChange: (e)=>setQuery(e.target.value),
-        iconCss: {
-            top: "26px",
-            color: "$neutralText"
-        },
-        icon: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faMagnifyingGlass),
-            width: 16,
-            height: 16
-        })
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $39f9504a9ac3c26a$export$2e2bcd8739ae039), {
-        css: {
-            minWidth: "80vw",
-            "@bp1": {
-                minWidth: 468
-            }
-        }
-    }, results === null || results === void 0 ? void 0 : results.map(({ key: key , values: values  })=>{
-        if ((values === null || values === void 0 ? void 0 : values.length) === 0) return null;
-        return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            key: key,
-            css: {
-                paddingRight: "$4",
-                marginBottom: 24
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle1",
-            color: "accent",
-            as: "div",
-            css: {
-                marginBottom: "$4"
-            }
-        }, key), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $f31400a2975ed70a$export$2e2bcd8739ae039), {
-            css: {
-                gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-                gap: "$2",
-                "@bp1": {
-                    gridTemplateColumns: "repeat(3, minmax(0, 1fr))"
-                }
-            }
-        }, values === null || values === void 0 ? void 0 : values.map(({ value: value , count: count , floorAskPrice: floorAskPrice  })=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-                key: value,
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a235eda53948b6ff$export$2e2bcd8739ae039), {
                 css: {
-                    display: "grid",
-                    alignContent: "space-between",
-                    cursor: "pointer",
-                    backgroundColor: "$contentBackground",
-                    borderRadius: "$space$2",
-                    $$shadowColor: "$colors$gray7",
-                    boxShadow: "box-shadow: 0px 2px 16px $$shadowColor",
-                    border: "1px solid $borderColor",
-                    width: "100%",
-                    padding: "12px 16px"
+                    marginBottom: "$4",
+                    padding: "$space$4 $space$4 $space$4 48px"
                 },
-                as: "button",
-                onClick: ()=>{
-                    setTrait({
-                        key: key,
-                        value: value,
-                        floorAskPrice: floorAskPrice
-                    });
-                    setOpen(false);
-                }
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-                justify: "between",
-                css: {
-                    gap: "$2",
-                    marginBottom: "$1"
-                }
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-                css: {
-                    maxWidth: 85,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    textAlign: "start"
+                placeholder: "Filter attribute",
+                value: query,
+                onChange: (e)=>setQuery(e.target.value),
+                iconCss: {
+                    top: "26px",
+                    color: "$neutralText"
                 },
-                style: "subtitle2"
-            }, value), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
+                icon: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                    icon: (0, $bNXjM$faMagnifyingGlass),
+                    width: 16,
+                    height: 16
+                })
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $cc145f97c30ab30a$export$2e2bcd8739ae039), {
                 css: {
-                    flex: "none"
-                }
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
-                amount: floorAskPrice,
-                logoWidth: 10,
-                maximumFractionDigits: 1,
-                textStyle: "subtitle2"
-            }))), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-                justify: "between",
-                css: {
-                    gap: "$2"
-                }
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-                style: "body2",
-                color: "subtle"
-            }, count && tokenCount ? `${Math.round(count / tokenCount * 100)}%` : "-"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-                style: "body2",
-                color: "subtle"
-            }, "floor"))))));
-    })));
+                    minWidth: "80vw",
+                    "@bp1": {
+                        minWidth: 468
+                    }
+                },
+                children: results?.map(({ key: key , values: values  })=>{
+                    if (values?.length === 0) return null;
+                    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                        css: {
+                            paddingRight: "$4",
+                            marginBottom: 24
+                        },
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                style: "subtitle1",
+                                color: "accent",
+                                as: "div",
+                                css: {
+                                    marginBottom: "$4"
+                                },
+                                children: key
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $72bd45ddbf898068$export$2e2bcd8739ae039), {
+                                css: {
+                                    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                                    gap: "$2",
+                                    "@bp1": {
+                                        gridTemplateColumns: "repeat(3, minmax(0, 1fr))"
+                                    }
+                                },
+                                children: values?.map(({ value: value , count: count , floorAskPrice: floorAskPrice  })=>/*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                        css: {
+                                            display: "grid",
+                                            alignContent: "space-between",
+                                            cursor: "pointer",
+                                            backgroundColor: "$contentBackground",
+                                            borderRadius: "$space$2",
+                                            $$shadowColor: "$colors$gray7",
+                                            boxShadow: "box-shadow: 0px 2px 16px $$shadowColor",
+                                            border: "1px solid $borderColor",
+                                            width: "100%",
+                                            padding: "12px 16px"
+                                        },
+                                        as: "button",
+                                        onClick: ()=>{
+                                            setTrait({
+                                                key: key,
+                                                value: value,
+                                                floorAskPrice: floorAskPrice
+                                            });
+                                            setOpen(false);
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                justify: "between",
+                                                css: {
+                                                    gap: "$2",
+                                                    marginBottom: "$1"
+                                                },
+                                                children: [
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                        css: {
+                                                            maxWidth: 85,
+                                                            overflow: "hidden",
+                                                            textOverflow: "ellipsis",
+                                                            textAlign: "start"
+                                                        },
+                                                        style: "subtitle2",
+                                                        children: value
+                                                    }),
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                                        css: {
+                                                            flex: "none"
+                                                        },
+                                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
+                                                            amount: floorAskPrice,
+                                                            logoWidth: 10,
+                                                            maximumFractionDigits: 1,
+                                                            textStyle: "subtitle2"
+                                                        })
+                                                    })
+                                                ]
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                justify: "between",
+                                                css: {
+                                                    gap: "$2"
+                                                },
+                                                children: [
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                        style: "body2",
+                                                        color: "subtle",
+                                                        children: count && tokenCount ? `${Math.round(count / tokenCount * 100)}%` : "-"
+                                                    }),
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                        style: "body2",
+                                                        color: "subtle",
+                                                        children: "floor"
+                                                    })
+                                                ]
+                                            })
+                                        ]
+                                    }, value))
+                            })
+                        ]
+                    }, key);
+                })
+            })
+        ]
+    });
 };
-var $591bb95089aa7207$export$2e2bcd8739ae039 = $591bb95089aa7207$var$AttributeSelector;
+var $6f4174f8fd0c1da3$export$2e2bcd8739ae039 = $6f4174f8fd0c1da3$var$AttributeSelector;
 
 
 
 
-const $08cec714c259c17e$var$PseudoInput = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("div", {
+const $4369b30d085782f5$var$PseudoInput = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("div", {
     all: "unset",
     width: "auto",
     padding: "$4",
@@ -6731,28 +7469,28 @@ const $08cec714c259c17e$var$PseudoInput = (0, $cd784f5a4171372f$export$3817b7a54
     color: "$neutralText",
     backgroundColor: "$inputBackground"
 });
-var $08cec714c259c17e$export$2e2bcd8739ae039 = $08cec714c259c17e$var$PseudoInput;
+var $4369b30d085782f5$export$2e2bcd8739ae039 = $4369b30d085782f5$var$PseudoInput;
 
 
 
-function $a9286f985fbece47$var$titleForStep(step) {
+function $5f98c9e3399e3959$var$titleForStep(step) {
     switch(step){
-        case (0, $cbcfe2ab7e278624$export$7a92ddb9e11f37f7).SetPrice:
+        case (0, $97f9e638db55049c$export$7a92ddb9e11f37f7).SetPrice:
             return "Make an Offer";
-        case (0, $cbcfe2ab7e278624$export$7a92ddb9e11f37f7).Offering:
+        case (0, $97f9e638db55049c$export$7a92ddb9e11f37f7).Offering:
             return "Complete Offer";
-        case (0, $cbcfe2ab7e278624$export$7a92ddb9e11f37f7).Complete:
+        case (0, $97f9e638db55049c$export$7a92ddb9e11f37f7).Complete:
             return "Offer Submitted";
     }
 }
-const $a9286f985fbece47$var$ContentContainer = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+const $5f98c9e3399e3959$var$ContentContainer = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
     width: "100%",
     flexDirection: "column",
     "@bp1": {
         flexDirection: "row"
     }
 });
-const $a9286f985fbece47$var$MainContainer = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+const $5f98c9e3399e3959$var$MainContainer = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
     flex: 1,
     borderColor: "$borderColor",
     borderTopWidth: 1,
@@ -6765,496 +7503,657 @@ const $a9286f985fbece47$var$MainContainer = (0, $cd784f5a4171372f$export$3817b7a
         direction: "column"
     }
 });
-const $a9286f985fbece47$var$minimumDate = (0, $bNXjM$dayjs)().add(1, "h").format("MM/DD/YYYY h:mm A");
-function $a9286f985fbece47$export$556cfc4a654987bd({ openState: openState , trigger: trigger , tokenId: tokenId , collectionId: collectionId , attribute: attribute , normalizeRoyalties: normalizeRoyalties , onViewOffers: onViewOffers , onClose: onClose , onBidComplete: onBidComplete , onBidError: onBidError  }) {
-    const [open, setOpen] = (0, $eae8553d9b344d57$export$2e2bcd8739ae039)(openState ? openState[0] : false, openState);
+const $5f98c9e3399e3959$var$minimumDate = (0, $bNXjM$dayjs)().add(1, "h").format("MM/DD/YYYY h:mm A");
+function $5f98c9e3399e3959$export$556cfc4a654987bd({ openState: openState , trigger: trigger , tokenId: tokenId , collectionId: collectionId , attribute: attribute , normalizeRoyalties: normalizeRoyalties , onViewOffers: onViewOffers , onClose: onClose , onBidComplete: onBidComplete , onBidError: onBidError  }) {
+    const [open, setOpen] = (0, $d115e0b00eaf4565$export$2e2bcd8739ae039)(openState ? openState[0] : false, openState);
     const datetimeElement = (0, $bNXjM$useRef)(null);
     const [stepTitle, setStepTitle] = (0, $bNXjM$useState)("");
     const [localMarketplace, setLocalMarketplace] = (0, $bNXjM$useState)(null);
     const [attributesSelectable, setAttributesSelectable] = (0, $bNXjM$useState)(false);
     (0, $bNXjM$useEffect)(()=>{
-        setLocalMarketplace((0, $52d583b64f2aa54f$export$2e2bcd8739ae039)());
+        setLocalMarketplace((0, $c07b724742ae0148$export$2e2bcd8739ae039)());
     }, []);
     const [attributeSelectorOpen, setAttributeSelectorOpen] = (0, $bNXjM$useState)(false);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $cbcfe2ab7e278624$export$89d91658eb2b6698), {
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $97f9e638db55049c$export$89d91658eb2b6698), {
         open: open,
         tokenId: tokenId,
         collectionId: collectionId,
         attribute: attribute,
-        normalizeRoyalties: normalizeRoyalties
-    }, ({ token: token , collection: collection , attributes: attributes , bidStep: bidStep , expirationOption: expirationOption , expirationOptions: expirationOptions , wrappedBalance: wrappedBalance , wrappedContractName: wrappedContractName , wrappedContractAddress: wrappedContractAddress , bidAmount: bidAmount , bidAmountUsd: bidAmountUsd , hasEnoughNativeCurrency: hasEnoughNativeCurrency , hasEnoughWrappedCurrency: hasEnoughWrappedCurrency , amountToWrap: amountToWrap , balance: balance , uniswapConvertLink: uniswapConvertLink , transactionError: transactionError , stepData: stepData , bidData: bidData , isBanned: isBanned , setBidAmount: setBidAmount , setExpirationOption: setExpirationOption , setBidStep: setBidStep , setTrait: setTrait , trait: trait , placeBid: placeBid  })=>{
-        var _a, _b;
-        const [expirationDate, setExpirationDate] = (0, $bNXjM$useState)("");
-        const tokenCount = (collection === null || collection === void 0 ? void 0 : collection.tokenCount) ? +collection.tokenCount : undefined;
-        const itemImage = token && ((_a = token.token) === null || _a === void 0 ? void 0 : _a.image) ? (_b = token.token) === null || _b === void 0 ? void 0 : _b.image : collection === null || collection === void 0 ? void 0 : collection.image;
-        (0, $bNXjM$useEffect)(()=>{
-            if (stepData) switch(stepData.currentStep.kind){
-                case "signature":
-                    setStepTitle("Confirm Offer");
-                    break;
-                default:
-                    setStepTitle(stepData.currentStep.action);
-                    break;
-            }
-        }, [
-            stepData
-        ]);
-        (0, $bNXjM$useEffect)(()=>{
-            if (expirationOption && expirationOption.relativeTime) {
-                const newExpirationTime = expirationOption.relativeTimeUnit ? (0, $bNXjM$dayjs)().add(expirationOption.relativeTime, expirationOption.relativeTimeUnit) : (0, $bNXjM$dayjs).unix(expirationOption.relativeTime);
-                setExpirationDate(newExpirationTime.format("MM/DD/YYYY h:mm A"));
-            } else setExpirationDate("");
-        }, [
-            expirationOption
-        ]);
-        (0, $bNXjM$useEffect)(()=>{
-            if (bidStep === (0, $cbcfe2ab7e278624$export$7a92ddb9e11f37f7).Complete && onBidComplete) {
-                const data = {
-                    tokenId: tokenId,
-                    collectionId: collectionId,
-                    bidData: bidData
-                };
-                onBidComplete(data);
-            }
-        }, [
-            bidStep
-        ]);
-        (0, $bNXjM$useEffect)(()=>{
-            if (transactionError && onBidError) {
-                const data = {
-                    tokenId: tokenId,
-                    collectionId: collectionId,
-                    bidData: bidData
-                };
-                onBidError(transactionError, data);
-            }
-        }, [
-            transactionError
-        ]);
-        (0, $bNXjM$useEffect)(()=>{
-            if (open && attributes && !tokenId && attribute) setTrait(attribute);
-            else setTrait(undefined);
-            if (open && attributes && !tokenId) {
-                let attributeCount = 0;
-                for(let i = 0; i < attributes.length; i++){
-                    attributeCount += attributes[i].attributeCount || 0;
-                    if (attributeCount >= 2000) break;
+        normalizeRoyalties: normalizeRoyalties,
+        children: ({ token: token , collection: collection , attributes: attributes , bidStep: bidStep , expirationOption: expirationOption , expirationOptions: expirationOptions , wrappedBalance: wrappedBalance , wrappedContractName: wrappedContractName , wrappedContractAddress: wrappedContractAddress , bidAmount: bidAmount , bidAmountUsd: bidAmountUsd , hasEnoughNativeCurrency: hasEnoughNativeCurrency , hasEnoughWrappedCurrency: hasEnoughWrappedCurrency , amountToWrap: amountToWrap , balance: balance , uniswapConvertLink: uniswapConvertLink , transactionError: transactionError , stepData: stepData , bidData: bidData , isBanned: isBanned , setBidAmount: setBidAmount , setExpirationOption: setExpirationOption , setBidStep: setBidStep , setTrait: setTrait , trait: trait , placeBid: placeBid  })=>{
+            const [expirationDate, setExpirationDate] = (0, $bNXjM$useState)("");
+            const tokenCount = collection?.tokenCount ? +collection.tokenCount : undefined;
+            const itemImage = token && token.token?.image ? token.token?.image : collection?.image;
+            (0, $bNXjM$useEffect)(()=>{
+                if (stepData) switch(stepData.currentStep.kind){
+                    case "signature":
+                        setStepTitle("Confirm Offer");
+                        break;
+                    default:
+                        setStepTitle(stepData.currentStep.action);
+                        break;
                 }
-                if (attributeCount >= 2000) setAttributesSelectable(false);
-                else setAttributesSelectable(true);
-            } else setAttributesSelectable(false);
-        }, [
-            open,
-            attributes
-        ]);
-        return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $32de3362490c9117$export$2b77a92f1a5ad772), {
-            size: bidStep !== (0, $cbcfe2ab7e278624$export$7a92ddb9e11f37f7).Complete ? (0, $32de3362490c9117$export$e8598848ef5f29c0).LG : (0, $32de3362490c9117$export$e8598848ef5f29c0).MD,
-            trigger: trigger,
-            title: $a9286f985fbece47$var$titleForStep(bidStep),
-            open: open,
-            onOpenChange: (open)=>{
-                if (!open && onClose) {
+            }, [
+                stepData
+            ]);
+            (0, $bNXjM$useEffect)(()=>{
+                if (expirationOption && expirationOption.relativeTime) {
+                    const newExpirationTime = expirationOption.relativeTimeUnit ? (0, $bNXjM$dayjs)().add(expirationOption.relativeTime, expirationOption.relativeTimeUnit) : (0, $bNXjM$dayjs).unix(expirationOption.relativeTime);
+                    setExpirationDate(newExpirationTime.format("MM/DD/YYYY h:mm A"));
+                } else setExpirationDate("");
+            }, [
+                expirationOption
+            ]);
+            (0, $bNXjM$useEffect)(()=>{
+                if (bidStep === (0, $97f9e638db55049c$export$7a92ddb9e11f37f7).Complete && onBidComplete) {
                     const data = {
                         tokenId: tokenId,
                         collectionId: collectionId,
                         bidData: bidData
                     };
-                    onClose(data, stepData, bidStep);
+                    onBidComplete(data);
                 }
-                setOpen(open);
-            },
-            loading: !collection,
-            onPointerDownOutside: (e)=>{
-                var _a, _b;
-                if (e.target instanceof Element && ((_b = (_a = datetimeElement.current) === null || _a === void 0 ? void 0 : _a.flatpickr) === null || _b === void 0 ? void 0 : _b.calendarContainer) && datetimeElement.current.flatpickr.calendarContainer.contains(e.target)) e.preventDefault();
-            },
-            onFocusCapture: (e)=>{
-                e.stopPropagation();
-            }
-        }, bidStep === (0, $cbcfe2ab7e278624$export$7a92ddb9e11f37f7).SetPrice && collection && /*#__PURE__*/ (0, $bNXjM$react).createElement($a9286f985fbece47$var$ContentContainer, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $a578cc4b3440b8fa$export$2e2bcd8739ae039), {
-            token: token ? token : undefined,
-            collection: collection,
-            trait: trait
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement($a9286f985fbece47$var$MainContainer, {
-            css: {
-                p: "$4"
-            }
-        }, isBanned && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e1524f6deddb4ab1$export$2e2bcd8739ae039), {
-            message: "Token is not tradable on OpenSea",
-            css: {
-                mb: "$2",
-                p: "$2",
-                borderRadius: 4
-            }
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            justify: "between"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "tiny"
-        }, "Offer Amount"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            as: (0, $2d0e38270a599885$export$2e2bcd8739ae039),
-            css: {
-                gap: "$1"
-            },
-            align: "center",
-            style: "tiny"
-        }, "Balance:", " ", /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $689711b6f5d8de5a$export$2e2bcd8739ae039), {
-            logoWidth: 10,
-            textStyle: "tiny",
-            amount: wrappedBalance === null || wrappedBalance === void 0 ? void 0 : wrappedBalance.value
-        }), " ")), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                mt: "$2",
-                gap: 20
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            as: (0, $2d0e38270a599885$export$2e2bcd8739ae039),
-            css: {
-                gap: "$2",
-                ml: "$3",
-                flexShrink: 0
-            },
-            align: "center",
-            style: "body1",
-            color: "subtle"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $cc9dff2d7173bce5$export$2e2bcd8739ae039), {
-            css: {
-                height: 20
-            },
-            address: wrappedContractAddress
-        }), wrappedContractName), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $b348cba042fa8022$export$2e2bcd8739ae039), {
-            type: "number",
-            value: bidAmount,
-            onChange: (e)=>{
-                setBidAmount(e.target.value);
-            },
-            placeholder: "Enter price here",
-            containerCss: {
-                width: "100%"
-            },
-            css: {
-                color: "$neutralText",
-                textAlign: "left"
-            }
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6a6c14d54fb307eb$export$2e2bcd8739ae039), {
-            css: {
-                marginLeft: "auto",
-                mt: "$2",
-                display: "inline-block",
-                minHeight: 15
-            },
-            style: "tiny",
-            amount: bidAmountUsd
-        }), attributes && attributes.length > 0 && (attributesSelectable || trait) && !tokenId && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            as: (0, $e8aed2f843739ce1$export$2e2bcd8739ae039),
-            css: {
-                mb: "$2"
-            },
-            style: "tiny"
-        }, "Attributes"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4befe8050591e2e6$export$2e2bcd8739ae039).Root, {
-            open: attributeSelectorOpen,
-            onOpenChange: attributesSelectable ? setAttributeSelectorOpen : undefined
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4befe8050591e2e6$export$2e2bcd8739ae039).Trigger, {
-            asChild: true
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $08cec714c259c17e$export$2e2bcd8739ae039), null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            justify: "between",
-            css: {
-                gap: "$2",
-                alignItems: "center",
-                color: "$neutralText"
-            }
-        }, trait ? /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                maxWidth: 385,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            color: "accent",
-            style: "subtitle1"
-        }, trait === null || trait === void 0 ? void 0 : trait.key, ":", " "), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle1"
-        }, trait === null || trait === void 0 ? void 0 : trait.value)), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                alignItems: "center",
-                gap: "$2"
-            }
-        }, (trait === null || trait === void 0 ? void 0 : trait.floorAskPrice) && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                flex: "none"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
-            amount: trait === null || trait === void 0 ? void 0 : trait.floorAskPrice,
-            maximumFractionDigits: 2,
-            logoWidth: 11
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            style: {
-                cursor: "pointer"
-            },
-            onClick: (e)=>{
-                e.preventDefault();
-                setTrait(undefined);
-            },
-            icon: (0, $bNXjM$faClose),
-            width: 16,
-            height: 16
-        }))) : /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            css: {
-                color: "$neutralText"
-            }
-        }, "All Attributes"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faChevronDown),
-            width: 16,
-            height: 16
-        }))))), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4befe8050591e2e6$export$2e2bcd8739ae039).Content, {
-            sideOffset: -50
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $591bb95089aa7207$export$2e2bcd8739ae039), {
-            attributes: attributes,
-            tokenCount: tokenCount,
-            setTrait: setTrait,
-            setOpen: setAttributeSelectorOpen
-        })))), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            as: (0, $e8aed2f843739ce1$export$2e2bcd8739ae039),
-            css: {
-                mt: "$4",
-                mb: "$2"
-            },
-            style: "tiny"
-        }, "Expiration Date"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                gap: "$2",
-                mb: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039), {
-            css: {
-                flex: 1,
-                "@bp1": {
-                    width: 160,
-                    flexDirection: "row"
+            }, [
+                bidStep
+            ]);
+            (0, $bNXjM$useEffect)(()=>{
+                if (transactionError && onBidError) {
+                    const data = {
+                        tokenId: tokenId,
+                        collectionId: collectionId,
+                        bidData: bidData
+                    };
+                    onBidError(transactionError, data);
                 }
-            },
-            value: (expirationOption === null || expirationOption === void 0 ? void 0 : expirationOption.text) || "",
-            onValueChange: (value)=>{
-                const option = expirationOptions.find((option)=>option.value == value);
-                if (option) setExpirationOption(option);
-            }
-        }, expirationOptions.map((option)=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039).Item, {
-                key: option.text,
-                value: option.value
-            }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $932fe82d4750e082$export$2e2bcd8739ae039).ItemText, null, option.text)))), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0a9bc92ea8e9309f$export$2e2bcd8739ae039), {
-            ref: datetimeElement,
-            icon: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-                icon: (0, $bNXjM$faCalendar),
-                width: 14,
-                height: 16
-            }),
-            value: expirationDate,
-            options: {
-                minDate: $a9286f985fbece47$var$minimumDate,
-                enableTime: true,
-                minuteIncrement: 1
-            },
-            defaultValue: expirationDate,
-            onChange: (e)=>{
-                if (Array.isArray(e)) {
-                    const customOption = expirationOptions.find((option)=>option.value === "custom");
-                    if (customOption) setExpirationOption({
-                        ...customOption,
-                        relativeTime: e[0] / 1000
-                    });
-                }
-            },
-            containerCss: {
-                width: 46,
-                "@bp1": {
-                    flex: 1,
-                    width: "100%"
-                }
-            },
-            css: {
-                padding: 0,
-                "@bp1": {
-                    padding: "12px 16px 12px 48px"
-                }
-            }
-        })), bidAmount === "" && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            disabled: true,
-            css: {
-                width: "100%",
-                mt: "auto"
-            }
-        }, "Enter a Price"), bidAmount !== "" && hasEnoughWrappedCurrency && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            onClick: placeBid,
-            css: {
-                width: "100%",
-                mt: "auto"
-            }
-        }, token && token.token ? "Make an Offer" : trait ? "Make an Attribute Offer" : "Make a Collection Offer"), bidAmount !== "" && !hasEnoughWrappedCurrency && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                width: "100%",
-                mt: "auto"
-            }
-        }, !hasEnoughNativeCurrency && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                gap: "$2",
-                mt: 10
-            },
-            justify: "center"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body2",
-            color: "error"
-        }, (balance === null || balance === void 0 ? void 0 : balance.symbol) || "ETH", " Balance"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
-            amount: balance === null || balance === void 0 ? void 0 : balance.value
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                gap: "$2",
-                mt: 10,
-                overflow: "hidden",
-                flexDirection: "column-reverse",
-                "@bp1": {
-                    flexDirection: "row"
-                }
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            css: {
-                flex: "1 0 auto"
-            },
-            color: "secondary",
-            onClick: ()=>{
-                window.open(uniswapConvertLink, "_blank");
-            }
-        }, "Convert Manually"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            css: {
-                flex: 1,
-                maxHeight: 44
-            },
-            disabled: !hasEnoughNativeCurrency,
-            onClick: placeBid
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "h6",
-            color: "button",
-            ellipsify: true
-        }, "Convert ", amountToWrap, " ", (balance === null || balance === void 0 ? void 0 : balance.symbol) || "ETH", " ", "for me")))))), bidStep === (0, $cbcfe2ab7e278624$export$7a92ddb9e11f37f7).Offering && collection && /*#__PURE__*/ (0, $bNXjM$react).createElement($a9286f985fbece47$var$ContentContainer, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $15af49ae333c5287$export$2e2bcd8739ae039), {
-            token: token ? token : undefined,
-            collection: collection,
-            bidData: bidData
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement($a9286f985fbece47$var$MainContainer, {
-            css: {
-                p: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $b97ee65c4e02eab3$export$2e2bcd8739ae039), {
-            value: (stepData === null || stepData === void 0 ? void 0 : stepData.stepProgress) || 0,
-            max: (stepData === null || stepData === void 0 ? void 0 : stepData.totalSteps) || 0
-        }), transactionError && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e1524f6deddb4ab1$export$2e2bcd8739ae039), {
-            css: {
-                mt: 24
-            }
-        }), stepData && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            css: {
-                textAlign: "center",
-                mt: 48,
-                mb: 28
-            },
-            style: "subtitle1"
-        }, stepTitle), stepData.currentStep.kind === "signature" && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $13fa4523da6dbccd$export$2e2bcd8739ae039), {
-            justify: "center",
-            fromImg: itemImage || "",
-            toImg: (localMarketplace === null || localMarketplace === void 0 ? void 0 : localMarketplace.icon) || ""
-        }), stepData.currentStep.kind !== "signature" && // <WethApproval style={{ margin: '0 auto' }} />
-        /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            align: "center",
-            justify: "center"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                background: "$neutalLine",
-                borderRadius: 8
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $cc9dff2d7173bce5$export$2e2bcd8739ae039), {
-            css: {
-                height: 56,
-                width: 56
-            },
-            address: wrappedContractAddress
-        }))), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            css: {
-                textAlign: "center",
-                mt: 24,
-                maxWidth: 395,
-                mx: "auto",
-                mb: "$4"
-            },
-            style: "body3",
-            color: "subtle"
-        }, stepData === null || stepData === void 0 ? void 0 : stepData.currentStep.description)), !stepData && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                height: "100%"
-            },
-            justify: "center",
-            align: "center"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0c83fbef8350e27e$export$2e2bcd8739ae039), null)), !transactionError && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            css: {
-                width: "100%",
-                mt: "auto"
-            },
-            disabled: true
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0c83fbef8350e27e$export$2e2bcd8739ae039), null), "Waiting for Approval"), transactionError && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                mt: "auto",
-                gap: 10
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            color: "secondary",
-            css: {
-                flex: 1
-            },
-            onClick: ()=>setBidStep((0, $cbcfe2ab7e278624$export$7a92ddb9e11f37f7).SetPrice)
-        }, "Edit Offer"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            css: {
-                flex: 1
-            },
-            onClick: placeBid
-        }, "Retry")))), bidStep === (0, $cbcfe2ab7e278624$export$7a92ddb9e11f37f7).Complete && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column",
-            align: "center",
-            css: {
-                p: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                color: "$successAccent",
-                mt: 48
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faCheckCircle),
-            style: {
-                width: "32px",
-                height: "32px"
-            }
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "h5",
-            css: {
-                textAlign: "center",
-                mt: 36,
-                mb: 80
-            }
-        }, "Offer Submitted!"), onViewOffers ? /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            css: {
-                width: "100%"
-            },
-            onClick: ()=>{
-                onViewOffers();
-            }
-        }, "View Offers") : /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            css: {
-                width: "100%"
-            },
-            onClick: ()=>{
-                setOpen(false);
-            }
-        }, "Close")));
+            }, [
+                transactionError
+            ]);
+            (0, $bNXjM$useEffect)(()=>{
+                if (open && attributes && !tokenId && attribute) setTrait(attribute);
+                else setTrait(undefined);
+                if (open && attributes && !tokenId) {
+                    let attributeCount = 0;
+                    for(let i = 0; i < attributes.length; i++){
+                        attributeCount += attributes[i].attributeCount || 0;
+                        if (attributeCount >= 2000) break;
+                    }
+                    if (attributeCount >= 2000) setAttributesSelectable(false);
+                    else setAttributesSelectable(true);
+                } else setAttributesSelectable(false);
+            }, [
+                open,
+                attributes
+            ]);
+            return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $b86bf9f1e9f1a187$export$2b77a92f1a5ad772), {
+                size: bidStep !== (0, $97f9e638db55049c$export$7a92ddb9e11f37f7).Complete ? (0, $b86bf9f1e9f1a187$export$e8598848ef5f29c0).LG : (0, $b86bf9f1e9f1a187$export$e8598848ef5f29c0).MD,
+                trigger: trigger,
+                title: $5f98c9e3399e3959$var$titleForStep(bidStep),
+                open: open,
+                onOpenChange: (open)=>{
+                    if (!open && onClose) {
+                        const data = {
+                            tokenId: tokenId,
+                            collectionId: collectionId,
+                            bidData: bidData
+                        };
+                        onClose(data, stepData, bidStep);
+                    }
+                    setOpen(open);
+                },
+                loading: !collection,
+                onPointerDownOutside: (e)=>{
+                    if (e.target instanceof Element && datetimeElement.current?.flatpickr?.calendarContainer && datetimeElement.current.flatpickr.calendarContainer.contains(e.target)) e.preventDefault();
+                },
+                onFocusCapture: (e)=>{
+                    e.stopPropagation();
+                },
+                children: [
+                    bidStep === (0, $97f9e638db55049c$export$7a92ddb9e11f37f7).SetPrice && collection && /*#__PURE__*/ (0, $bNXjM$jsxs)($5f98c9e3399e3959$var$ContentContainer, {
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $8a5afc850b23a4a7$export$2e2bcd8739ae039), {
+                                token: token ? token : undefined,
+                                collection: collection,
+                                trait: trait
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)($5f98c9e3399e3959$var$MainContainer, {
+                                css: {
+                                    p: "$4"
+                                },
+                                children: [
+                                    isBanned && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $4c76c4b4e6d5247c$export$2e2bcd8739ae039), {
+                                        message: "Token is not tradable on OpenSea",
+                                        css: {
+                                            mb: "$2",
+                                            p: "$2",
+                                            borderRadius: 4
+                                        }
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        justify: "between",
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                style: "tiny",
+                                                children: "Offer Amount"
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                as: (0, $a08469b1b360d6cf$export$2e2bcd8739ae039),
+                                                css: {
+                                                    gap: "$1"
+                                                },
+                                                align: "center",
+                                                style: "tiny",
+                                                children: [
+                                                    "Balance:",
+                                                    " ",
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $39af25d905d8680a$export$2e2bcd8739ae039), {
+                                                        logoWidth: 10,
+                                                        textStyle: "tiny",
+                                                        amount: wrappedBalance?.value
+                                                    }),
+                                                    " "
+                                                ]
+                                            })
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        css: {
+                                            mt: "$2",
+                                            gap: 20
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                as: (0, $a08469b1b360d6cf$export$2e2bcd8739ae039),
+                                                css: {
+                                                    gap: "$2",
+                                                    ml: "$3",
+                                                    flexShrink: 0
+                                                },
+                                                align: "center",
+                                                style: "body1",
+                                                color: "subtle",
+                                                children: [
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bb13850b05622906$export$2e2bcd8739ae039), {
+                                                        css: {
+                                                            height: 20
+                                                        },
+                                                        address: wrappedContractAddress
+                                                    }),
+                                                    wrappedContractName
+                                                ]
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a235eda53948b6ff$export$2e2bcd8739ae039), {
+                                                type: "number",
+                                                value: bidAmount,
+                                                onChange: (e)=>{
+                                                    setBidAmount(e.target.value);
+                                                },
+                                                placeholder: "Enter price here",
+                                                containerCss: {
+                                                    width: "100%"
+                                                },
+                                                css: {
+                                                    color: "$neutralText",
+                                                    textAlign: "left"
+                                                }
+                                            })
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $208ab5b0155991db$export$2e2bcd8739ae039), {
+                                        css: {
+                                            marginLeft: "auto",
+                                            mt: "$2",
+                                            display: "inline-block",
+                                            minHeight: 15
+                                        },
+                                        style: "tiny",
+                                        amount: bidAmountUsd
+                                    }),
+                                    attributes && attributes.length > 0 && (attributesSelectable || trait) && !tokenId && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                as: (0, $e779e4a6b41db55c$export$2e2bcd8739ae039),
+                                                css: {
+                                                    mb: "$2"
+                                                },
+                                                style: "tiny",
+                                                children: "Attributes"
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $364926f073e51b94$export$2e2bcd8739ae039).Root, {
+                                                open: attributeSelectorOpen,
+                                                onOpenChange: attributesSelectable ? setAttributeSelectorOpen : undefined,
+                                                children: [
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $364926f073e51b94$export$2e2bcd8739ae039).Trigger, {
+                                                        asChild: true,
+                                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $4369b30d085782f5$export$2e2bcd8739ae039), {
+                                                            children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                                justify: "between",
+                                                                css: {
+                                                                    gap: "$2",
+                                                                    alignItems: "center",
+                                                                    color: "$neutralText"
+                                                                },
+                                                                children: trait ? /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                                                                    children: [
+                                                                        /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                                                            css: {
+                                                                                maxWidth: 385,
+                                                                                overflow: "hidden",
+                                                                                textOverflow: "ellipsis",
+                                                                                whiteSpace: "nowrap"
+                                                                            },
+                                                                            children: [
+                                                                                /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                                                    color: "accent",
+                                                                                    style: "subtitle1",
+                                                                                    children: [
+                                                                                        trait?.key,
+                                                                                        ":",
+                                                                                        " "
+                                                                                    ]
+                                                                                }),
+                                                                                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                                                    style: "subtitle1",
+                                                                                    children: trait?.value
+                                                                                })
+                                                                            ]
+                                                                        }),
+                                                                        /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                                            css: {
+                                                                                alignItems: "center",
+                                                                                gap: "$2"
+                                                                            },
+                                                                            children: [
+                                                                                trait?.floorAskPrice && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                                                                    css: {
+                                                                                        flex: "none"
+                                                                                    },
+                                                                                    children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
+                                                                                        amount: trait?.floorAskPrice,
+                                                                                        maximumFractionDigits: 2,
+                                                                                        logoWidth: 11
+                                                                                    })
+                                                                                }),
+                                                                                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                                                                    style: {
+                                                                                        cursor: "pointer"
+                                                                                    },
+                                                                                    onClick: (e)=>{
+                                                                                        e.preventDefault();
+                                                                                        setTrait(undefined);
+                                                                                    },
+                                                                                    icon: (0, $bNXjM$faClose),
+                                                                                    width: 16,
+                                                                                    height: 16
+                                                                                })
+                                                                            ]
+                                                                        })
+                                                                    ]
+                                                                }) : /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                                                                    children: [
+                                                                        /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                                            css: {
+                                                                                color: "$neutralText"
+                                                                            },
+                                                                            children: "All Attributes"
+                                                                        }),
+                                                                        /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                                                            icon: (0, $bNXjM$faChevronDown),
+                                                                            width: 16,
+                                                                            height: 16
+                                                                        })
+                                                                    ]
+                                                                })
+                                                            })
+                                                        })
+                                                    }),
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $364926f073e51b94$export$2e2bcd8739ae039).Content, {
+                                                        sideOffset: -50,
+                                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $6f4174f8fd0c1da3$export$2e2bcd8739ae039), {
+                                                            attributes: attributes,
+                                                            tokenCount: tokenCount,
+                                                            setTrait: setTrait,
+                                                            setOpen: setAttributeSelectorOpen
+                                                        })
+                                                    })
+                                                ]
+                                            })
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        as: (0, $e779e4a6b41db55c$export$2e2bcd8739ae039),
+                                        css: {
+                                            mt: "$4",
+                                            mb: "$2"
+                                        },
+                                        style: "tiny",
+                                        children: "Expiration Date"
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        css: {
+                                            gap: "$2",
+                                            mb: "$4"
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    flex: 1,
+                                                    "@bp1": {
+                                                        width: 160,
+                                                        flexDirection: "row"
+                                                    }
+                                                },
+                                                value: expirationOption?.text || "",
+                                                onValueChange: (value)=>{
+                                                    const option = expirationOptions.find((option)=>option.value == value);
+                                                    if (option) setExpirationOption(option);
+                                                },
+                                                children: expirationOptions.map((option)=>/*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039).Item, {
+                                                        value: option.value,
+                                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f6c56793b47f1e35$export$2e2bcd8739ae039).ItemText, {
+                                                            children: option.text
+                                                        })
+                                                    }, option.text))
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $6b118f5ec5d1b565$export$2e2bcd8739ae039), {
+                                                ref: datetimeElement,
+                                                icon: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                                    icon: (0, $bNXjM$faCalendar),
+                                                    width: 14,
+                                                    height: 16
+                                                }),
+                                                value: expirationDate,
+                                                options: {
+                                                    minDate: $5f98c9e3399e3959$var$minimumDate,
+                                                    enableTime: true,
+                                                    minuteIncrement: 1
+                                                },
+                                                defaultValue: expirationDate,
+                                                onChange: (e)=>{
+                                                    if (Array.isArray(e)) {
+                                                        const customOption = expirationOptions.find((option)=>option.value === "custom");
+                                                        if (customOption) setExpirationOption({
+                                                            ...customOption,
+                                                            relativeTime: e[0] / 1000
+                                                        });
+                                                    }
+                                                },
+                                                containerCss: {
+                                                    width: 46,
+                                                    "@bp1": {
+                                                        flex: 1,
+                                                        width: "100%"
+                                                    }
+                                                },
+                                                css: {
+                                                    padding: 0,
+                                                    "@bp1": {
+                                                        padding: "12px 16px 12px 48px"
+                                                    }
+                                                }
+                                            })
+                                        ]
+                                    }),
+                                    bidAmount === "" && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                        disabled: true,
+                                        css: {
+                                            width: "100%",
+                                            mt: "auto"
+                                        },
+                                        children: "Enter a Price"
+                                    }),
+                                    bidAmount !== "" && hasEnoughWrappedCurrency && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                        onClick: placeBid,
+                                        css: {
+                                            width: "100%",
+                                            mt: "auto"
+                                        },
+                                        children: token && token.token ? "Make an Offer" : trait ? "Make an Attribute Offer" : "Make a Collection Offer"
+                                    }),
+                                    bidAmount !== "" && !hasEnoughWrappedCurrency && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                        css: {
+                                            width: "100%",
+                                            mt: "auto"
+                                        },
+                                        children: [
+                                            !hasEnoughNativeCurrency && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    gap: "$2",
+                                                    mt: 10
+                                                },
+                                                justify: "center",
+                                                children: [
+                                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                        style: "body2",
+                                                        color: "error",
+                                                        children: [
+                                                            balance?.symbol || "ETH",
+                                                            " Balance"
+                                                        ]
+                                                    }),
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
+                                                        amount: balance?.value
+                                                    })
+                                                ]
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    gap: "$2",
+                                                    mt: 10,
+                                                    overflow: "hidden",
+                                                    flexDirection: "column-reverse",
+                                                    "@bp1": {
+                                                        flexDirection: "row"
+                                                    }
+                                                },
+                                                children: [
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                                        css: {
+                                                            flex: "1 0 auto"
+                                                        },
+                                                        color: "secondary",
+                                                        onClick: ()=>{
+                                                            window.open(uniswapConvertLink, "_blank");
+                                                        },
+                                                        children: "Convert Manually"
+                                                    }),
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                                        css: {
+                                                            flex: 1,
+                                                            maxHeight: 44
+                                                        },
+                                                        disabled: !hasEnoughNativeCurrency,
+                                                        onClick: placeBid,
+                                                        children: /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                            style: "h6",
+                                                            color: "button",
+                                                            ellipsify: true,
+                                                            children: [
+                                                                "Convert ",
+                                                                amountToWrap,
+                                                                " ",
+                                                                balance?.symbol || "ETH",
+                                                                " ",
+                                                                "for me"
+                                                            ]
+                                                        })
+                                                    })
+                                                ]
+                                            })
+                                        ]
+                                    })
+                                ]
+                            })
+                        ]
+                    }),
+                    bidStep === (0, $97f9e638db55049c$export$7a92ddb9e11f37f7).Offering && collection && /*#__PURE__*/ (0, $bNXjM$jsxs)($5f98c9e3399e3959$var$ContentContainer, {
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $9f138a5099b04af6$export$2e2bcd8739ae039), {
+                                token: token ? token : undefined,
+                                collection: collection,
+                                bidData: bidData
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)($5f98c9e3399e3959$var$MainContainer, {
+                                css: {
+                                    p: "$4"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $fe4973a3dd519dab$export$2e2bcd8739ae039), {
+                                        value: stepData?.stepProgress || 0,
+                                        max: stepData?.totalSteps || 0
+                                    }),
+                                    transactionError && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $4c76c4b4e6d5247c$export$2e2bcd8739ae039), {
+                                        css: {
+                                            mt: 24
+                                        }
+                                    }),
+                                    stepData && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    textAlign: "center",
+                                                    mt: 48,
+                                                    mb: 28
+                                                },
+                                                style: "subtitle1",
+                                                children: stepTitle
+                                            }),
+                                            stepData.currentStep.kind === "signature" && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $10061c592b503910$export$2e2bcd8739ae039), {
+                                                justify: "center",
+                                                fromImg: itemImage || "",
+                                                toImg: localMarketplace?.icon || ""
+                                            }),
+                                            stepData.currentStep.kind !== "signature" && // <WethApproval style={{ margin: '0 auto' }} />
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                align: "center",
+                                                justify: "center",
+                                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                    css: {
+                                                        background: "$neutalLine",
+                                                        borderRadius: 8
+                                                    },
+                                                    children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bb13850b05622906$export$2e2bcd8739ae039), {
+                                                        css: {
+                                                            height: 56,
+                                                            width: 56
+                                                        },
+                                                        address: wrappedContractAddress
+                                                    })
+                                                })
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    textAlign: "center",
+                                                    mt: 24,
+                                                    maxWidth: 395,
+                                                    mx: "auto",
+                                                    mb: "$4"
+                                                },
+                                                style: "body3",
+                                                color: "subtle",
+                                                children: stepData?.currentStep.description
+                                            })
+                                        ]
+                                    }),
+                                    !stepData && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        css: {
+                                            height: "100%"
+                                        },
+                                        justify: "center",
+                                        align: "center",
+                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $0ff8966798df47ad$export$2e2bcd8739ae039), {})
+                                    }),
+                                    !transactionError && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                        css: {
+                                            width: "100%",
+                                            mt: "auto"
+                                        },
+                                        disabled: true,
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $0ff8966798df47ad$export$2e2bcd8739ae039), {}),
+                                            "Waiting for Approval"
+                                        ]
+                                    }),
+                                    transactionError && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        css: {
+                                            mt: "auto",
+                                            gap: 10
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                                color: "secondary",
+                                                css: {
+                                                    flex: 1
+                                                },
+                                                onClick: ()=>setBidStep((0, $97f9e638db55049c$export$7a92ddb9e11f37f7).SetPrice),
+                                                children: "Edit Offer"
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                                css: {
+                                                    flex: 1
+                                                },
+                                                onClick: placeBid,
+                                                children: "Retry"
+                                            })
+                                        ]
+                                    })
+                                ]
+                            })
+                        ]
+                    }),
+                    bidStep === (0, $97f9e638db55049c$export$7a92ddb9e11f37f7).Complete && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        align: "center",
+                        css: {
+                            p: "$4"
+                        },
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                css: {
+                                    color: "$successAccent",
+                                    mt: 48
+                                },
+                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                    icon: (0, $bNXjM$faCheckCircle),
+                                    style: {
+                                        width: "32px",
+                                        height: "32px"
+                                    }
+                                })
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                style: "h5",
+                                css: {
+                                    textAlign: "center",
+                                    mt: 36,
+                                    mb: 80
+                                },
+                                children: "Offer Submitted!"
+                            }),
+                            onViewOffers ? /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                css: {
+                                    width: "100%"
+                                },
+                                onClick: ()=>{
+                                    onViewOffers();
+                                },
+                                children: "View Offers"
+                            }) : /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                css: {
+                                    width: "100%"
+                                },
+                                onClick: ()=>{
+                                    setOpen(false);
+                                },
+                                children: "Close"
+                            })
+                        ]
+                    })
+                ]
+            });
+        }
     });
 }
-$a9286f985fbece47$export$556cfc4a654987bd.Custom = (0, $cbcfe2ab7e278624$export$89d91658eb2b6698);
+$5f98c9e3399e3959$export$556cfc4a654987bd.Custom = (0, $97f9e638db55049c$export$89d91658eb2b6698);
 
 
 
@@ -7265,7 +8164,10 @@ $a9286f985fbece47$export$556cfc4a654987bd.Custom = (0, $cbcfe2ab7e278624$export$
 
 
 
-var $aa77feef8abf8642$export$f4dd52ca63b5fdde;
+
+
+
+let $56323ed10ce02ae6$export$f4dd52ca63b5fdde;
 (function(AcceptBidStep) {
     AcceptBidStep[AcceptBidStep["Checkout"] = 0] = "Checkout";
     AcceptBidStep[AcceptBidStep["ApproveMarketplace"] = 1] = "ApproveMarketplace";
@@ -7273,19 +8175,18 @@ var $aa77feef8abf8642$export$f4dd52ca63b5fdde;
     AcceptBidStep[AcceptBidStep["Finalizing"] = 3] = "Finalizing";
     AcceptBidStep[AcceptBidStep["Complete"] = 4] = "Complete";
     AcceptBidStep[AcceptBidStep["Unavailable"] = 5] = "Unavailable";
-})($aa77feef8abf8642$export$f4dd52ca63b5fdde || ($aa77feef8abf8642$export$f4dd52ca63b5fdde = {}));
-const $aa77feef8abf8642$export$2d08bd3f57775802 = ({ open: open , tokenId: tokenId , bidId: bidId , collectionId: collectionId , normalizeRoyalties: normalizeRoyalties , children: children  })=>{
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0;
+})($56323ed10ce02ae6$export$f4dd52ca63b5fdde || ($56323ed10ce02ae6$export$f4dd52ca63b5fdde = {}));
+const $56323ed10ce02ae6$export$2d08bd3f57775802 = ({ open: open , tokenId: tokenId , bidId: bidId , collectionId: collectionId , normalizeRoyalties: normalizeRoyalties , children: children  })=>{
     const { data: signer  } = (0, $bNXjM$useSigner)();
     const [stepData, setStepData] = (0, $bNXjM$useState)(null);
     const [totalPrice, setTotalPrice] = (0, $bNXjM$useState)(0);
-    const [acceptBidStep, setAcceptBidStep] = (0, $bNXjM$useState)($aa77feef8abf8642$export$f4dd52ca63b5fdde.Checkout);
+    const [acceptBidStep, setAcceptBidStep] = (0, $bNXjM$useState)($56323ed10ce02ae6$export$f4dd52ca63b5fdde.Checkout);
     const [transactionError, setTransactionError] = (0, $bNXjM$useState)();
     const [txHash, setTxHash] = (0, $bNXjM$useState)(null);
     const { chain: activeChain  } = (0, $bNXjM$useNetwork)();
-    const etherscanBaseUrl = ((_b = (_a = activeChain === null || activeChain === void 0 ? void 0 : activeChain.blockExplorers) === null || _a === void 0 ? void 0 : _a.etherscan) === null || _b === void 0 ? void 0 : _b.url) || "https://etherscan.io";
-    const contract = collectionId ? collectionId === null || collectionId === void 0 ? void 0 : collectionId.split(":")[0] : undefined;
-    const { data: tokens , mutate: mutateTokens  } = (0, $2ae380ce592f7932$export$2e2bcd8739ae039)(open && {
+    const etherscanBaseUrl = activeChain?.blockExplorers?.etherscan?.url || "https://etherscan.io";
+    const contract = collectionId ? collectionId?.split(":")[0] : undefined;
+    const { data: tokens , mutate: mutateTokens  } = (0, $54bf018b076821f1$export$2e2bcd8739ae039)(open && {
         tokens: [
             `${contract}:${tokenId}`
         ],
@@ -7294,11 +8195,11 @@ const $aa77feef8abf8642$export$2d08bd3f57775802 = ({ open: open , tokenId: token
     }, {
         revalidateFirstPage: true
     });
-    const { data: collections , mutate: mutateCollection  } = (0, $ff2494fa019b599a$export$2e2bcd8739ae039)(open && {
+    const { data: collections , mutate: mutateCollection  } = (0, $38f38860f7db3263$export$2e2bcd8739ae039)(open && {
         id: collectionId,
         normalizeRoyalties: normalizeRoyalties
     });
-    const { data: bids , isValidating: isFetchingBidData , mutate: mutateBids  } = (0, $d2a483d2a9b1fd6c$export$2e2bcd8739ae039)({
+    const { data: bids , isValidating: isFetchingBidData , mutate: mutateBids  } = (0, $ed463f024c26b3ca$export$2e2bcd8739ae039)({
         ids: bidId,
         status: "active",
         includeCriteriaMetadata: true,
@@ -7309,25 +8210,25 @@ const $aa77feef8abf8642$export$2d08bd3f57775802 = ({ open: open , tokenId: token
     const bid = bids && bids[0] ? bids[0] : undefined;
     const collection = collections && collections[0] ? collections[0] : undefined;
     const token = tokens && tokens.length > 0 ? tokens[0] : undefined;
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
     let feeBreakdown;
     let source;
     let expiration;
     let bidAmount = 0;
     let bidAmountCurrency;
     let ethBidAmount;
-    if (acceptBidStep !== $aa77feef8abf8642$export$f4dd52ca63b5fdde.Unavailable) {
-        source = bidId ? bid === null || bid === void 0 ? void 0 : bid.source : (_d = (_c = token === null || token === void 0 ? void 0 : token.market) === null || _c === void 0 ? void 0 : _c.topBid) === null || _d === void 0 ? void 0 : _d.source;
-        expiration = bidId ? bid === null || bid === void 0 ? void 0 : bid.expiration : (_f = (_e = token === null || token === void 0 ? void 0 : token.market) === null || _e === void 0 ? void 0 : _e.topBid) === null || _f === void 0 ? void 0 : _f.validUntil;
-        bidAmount = bidId ? ((_h = (_g = bid === null || bid === void 0 ? void 0 : bid.price) === null || _g === void 0 ? void 0 : _g.amount) === null || _h === void 0 ? void 0 : _h.decimal) || 0 : ((_m = (_l = (_k = (_j = token === null || token === void 0 ? void 0 : token.market) === null || _j === void 0 ? void 0 : _j.topBid) === null || _k === void 0 ? void 0 : _k.price) === null || _l === void 0 ? void 0 : _l.amount) === null || _m === void 0 ? void 0 : _m.decimal) || 0;
-        bidAmountCurrency = bidId ? (_o = bid === null || bid === void 0 ? void 0 : bid.price) === null || _o === void 0 ? void 0 : _o.currency : (_r = (_q = (_p = token === null || token === void 0 ? void 0 : token.market) === null || _p === void 0 ? void 0 : _p.topBid) === null || _q === void 0 ? void 0 : _q.price) === null || _r === void 0 ? void 0 : _r.currency;
-        ethBidAmount = bidId ? (_t = (_s = bid === null || bid === void 0 ? void 0 : bid.price) === null || _s === void 0 ? void 0 : _s.amount) === null || _t === void 0 ? void 0 : _t.native : (_x = (_w = (_v = (_u = token === null || token === void 0 ? void 0 : token.market) === null || _u === void 0 ? void 0 : _u.floorAsk) === null || _v === void 0 ? void 0 : _v.price) === null || _w === void 0 ? void 0 : _w.amount) === null || _x === void 0 ? void 0 : _x.native;
-        feeBreakdown = bidId ? bid === null || bid === void 0 ? void 0 : bid.feeBreakdown : (_z = (_y = token === null || token === void 0 ? void 0 : token.market) === null || _y === void 0 ? void 0 : _y.topBid) === null || _z === void 0 ? void 0 : _z.feeBreakdown;
+    if (acceptBidStep !== $56323ed10ce02ae6$export$f4dd52ca63b5fdde.Unavailable) {
+        source = bidId ? bid?.source : token?.market?.topBid?.source;
+        expiration = bidId ? bid?.expiration : token?.market?.topBid?.validUntil;
+        bidAmount = bidId ? bid?.price?.amount?.decimal || 0 : token?.market?.topBid?.price?.amount?.decimal || 0;
+        bidAmountCurrency = bidId ? bid?.price?.currency : token?.market?.topBid?.price?.currency;
+        ethBidAmount = bidId ? bid?.price?.amount?.native : token?.market?.floorAsk?.price?.amount?.native;
+        feeBreakdown = bidId ? bid?.feeBreakdown : token?.market?.topBid?.feeBreakdown;
     }
-    const usdPrice = (0, $9f52dec49aff5538$export$2e2bcd8739ae039)(open && bidAmountCurrency ? "USD" : undefined, bidAmountCurrency === null || bidAmountCurrency === void 0 ? void 0 : bidAmountCurrency.symbol);
+    const usdPrice = (0, $742accbc1cb453a5$export$2e2bcd8739ae039)(open && bidAmountCurrency ? "USD" : undefined, bidAmountCurrency?.symbol);
     const totalUsd = totalPrice * (usdPrice || 0);
     const fees = {
-        creatorRoyalties: ((_0 = collection === null || collection === void 0 ? void 0 : collection.royalties) === null || _0 === void 0 ? void 0 : _0.bps) || 0,
+        creatorRoyalties: collection?.royalties?.bps || 0,
         feeBreakdown: feeBreakdown
     };
     const acceptBid = (0, $bNXjM$useCallback)(()=>{
@@ -7353,7 +8254,7 @@ const $aa77feef8abf8642$export$2d08bd3f57775802 = ({ open: open , tokenId: token
             ...options,
             orderId: bidId
         };
-        setAcceptBidStep($aa77feef8abf8642$export$f4dd52ca63b5fdde.Confirming);
+        setAcceptBidStep($56323ed10ce02ae6$export$f4dd52ca63b5fdde.Confirming);
         client.actions.acceptOffer({
             expectedPrice: totalPrice,
             signer: signer,
@@ -7362,16 +8263,14 @@ const $aa77feef8abf8642$export$2d08bd3f57775802 = ({ open: open , tokenId: token
                 contract: contract
             },
             onProgress: (steps)=>{
-                var _a;
                 if (!steps) return;
                 const executableSteps = steps.filter((step)=>step.items && step.items.length > 0);
                 let stepCount = executableSteps.length;
                 let currentStepItem;
                 let currentStepIndex = 0;
                 executableSteps.find((step, index)=>{
-                    var _a;
                     currentStepIndex = index;
-                    currentStepItem = (_a = step.items) === null || _a === void 0 ? void 0 : _a.find((item)=>item.status === "incomplete");
+                    currentStepItem = step.items?.find((item)=>item.status === "incomplete");
                     return currentStepItem;
                 });
                 const currentStep = currentStepIndex > -1 ? executableSteps[currentStepIndex] : executableSteps[stepCount - 1];
@@ -7381,17 +8280,14 @@ const $aa77feef8abf8642$export$2d08bd3f57775802 = ({ open: open , tokenId: token
                         currentStep: currentStep,
                         currentStepItem: currentStepItem
                     });
-                    if (currentStepIndex !== executableSteps.length - 1) setAcceptBidStep($aa77feef8abf8642$export$f4dd52ca63b5fdde.ApproveMarketplace);
+                    if (currentStepIndex !== executableSteps.length - 1) setAcceptBidStep($56323ed10ce02ae6$export$f4dd52ca63b5fdde.ApproveMarketplace);
                     else if (currentStepItem.txHash) {
                         setTxHash(currentStepItem.txHash);
-                        setAcceptBidStep($aa77feef8abf8642$export$f4dd52ca63b5fdde.Finalizing);
-                    } else setAcceptBidStep($aa77feef8abf8642$export$f4dd52ca63b5fdde.Confirming);
-                } else if (executableSteps.every((step)=>{
-                    var _a;
-                    return !step.items || step.items.length == 0 || ((_a = step.items) === null || _a === void 0 ? void 0 : _a.every((item)=>item.status === "complete"));
-                })) {
-                    setAcceptBidStep($aa77feef8abf8642$export$f4dd52ca63b5fdde.Complete);
-                    const lastStepItem = currentStep.items ? currentStep.items[((_a = currentStep.items) === null || _a === void 0 ? void 0 : _a.length) - 1] : undefined;
+                        setAcceptBidStep($56323ed10ce02ae6$export$f4dd52ca63b5fdde.Finalizing);
+                    } else setAcceptBidStep($56323ed10ce02ae6$export$f4dd52ca63b5fdde.Confirming);
+                } else if (executableSteps.every((step)=>!step.items || step.items.length == 0 || step.items?.every((item)=>item.status === "complete"))) {
+                    setAcceptBidStep($56323ed10ce02ae6$export$f4dd52ca63b5fdde.Complete);
+                    const lastStepItem = currentStep.items ? currentStep.items[currentStep.items?.length - 1] : undefined;
                     if (lastStepItem) setStepData({
                         totalSteps: stepCount,
                         currentStep: currentStep,
@@ -7402,14 +8298,14 @@ const $aa77feef8abf8642$export$2d08bd3f57775802 = ({ open: open , tokenId: token
             options: options
         }).catch((e)=>{
             const error = e;
-            const errorType = error === null || error === void 0 ? void 0 : error.type;
+            const errorType = error?.type;
             let message = "Oops, something went wrong. Please try again.";
             if (errorType && errorType === "price mismatch") message = error.message;
             const transactionError = new Error(message, {
                 cause: error
             });
             setTransactionError(transactionError);
-            setAcceptBidStep($aa77feef8abf8642$export$f4dd52ca63b5fdde.Checkout);
+            setAcceptBidStep($56323ed10ce02ae6$export$f4dd52ca63b5fdde.Checkout);
             setStepData(null);
             if (bidId) mutateBids();
             mutateCollection();
@@ -7426,27 +8322,26 @@ const $aa77feef8abf8642$export$2d08bd3f57775802 = ({ open: open , tokenId: token
         mutateBids
     ]);
     (0, $bNXjM$useEffect)(()=>{
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
         if (bidId) {
             let price = 0;
-            if (bid && bid.status === "active" && ((_b = (_a = bid.price) === null || _a === void 0 ? void 0 : _a.netAmount) === null || _b === void 0 ? void 0 : _b.native) && ((_e = (_d = (_c = bid.criteria) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.collection) === null || _e === void 0 ? void 0 : _e.id) === collectionId) {
-                if (((_f = bid.criteria) === null || _f === void 0 ? void 0 : _f.kind) === "token") {
+            if (bid && bid.status === "active" && bid.price?.netAmount?.native && bid.criteria?.data?.collection?.id === collectionId) {
+                if (bid.criteria?.kind === "token") {
                     const tokenSetPieces = bid.tokenSetId.split(":");
                     const bidTokenId = tokenSetPieces[tokenSetPieces.length - 1];
-                    if (tokenId === bidTokenId) price = (_h = (_g = bid.price) === null || _g === void 0 ? void 0 : _g.netAmount) === null || _h === void 0 ? void 0 : _h.native;
-                } else price = (_k = (_j = bid.price) === null || _j === void 0 ? void 0 : _j.netAmount) === null || _k === void 0 ? void 0 : _k.native;
+                    if (tokenId === bidTokenId) price = bid.price?.netAmount?.native;
+                } else price = bid.price?.netAmount?.native;
             }
             if (!isFetchingBidData) {
                 setTotalPrice(price);
-                setAcceptBidStep(price > 0 ? $aa77feef8abf8642$export$f4dd52ca63b5fdde.Checkout : $aa77feef8abf8642$export$f4dd52ca63b5fdde.Unavailable);
+                setAcceptBidStep(price > 0 ? $56323ed10ce02ae6$export$f4dd52ca63b5fdde.Checkout : $56323ed10ce02ae6$export$f4dd52ca63b5fdde.Unavailable);
             }
         } else if (token) {
-            let topBid = (_p = (_o = (_m = (_l = token.market) === null || _l === void 0 ? void 0 : _l.topBid) === null || _m === void 0 ? void 0 : _m.price) === null || _o === void 0 ? void 0 : _o.netAmount) === null || _p === void 0 ? void 0 : _p.native;
+            let topBid = token.market?.topBid?.price?.netAmount?.native;
             if (topBid) {
                 setTotalPrice(topBid);
-                setAcceptBidStep($aa77feef8abf8642$export$f4dd52ca63b5fdde.Checkout);
+                setAcceptBidStep($56323ed10ce02ae6$export$f4dd52ca63b5fdde.Checkout);
             } else {
-                setAcceptBidStep($aa77feef8abf8642$export$f4dd52ca63b5fdde.Unavailable);
+                setAcceptBidStep($56323ed10ce02ae6$export$f4dd52ca63b5fdde.Unavailable);
                 setTotalPrice(0);
             }
         }
@@ -7459,7 +8354,7 @@ const $aa77feef8abf8642$export$2d08bd3f57775802 = ({ open: open , tokenId: token
     const { address: address  } = (0, $bNXjM$useAccount)();
     (0, $bNXjM$useEffect)(()=>{
         if (!open) {
-            setAcceptBidStep($aa77feef8abf8642$export$f4dd52ca63b5fdde.Checkout);
+            setAcceptBidStep($56323ed10ce02ae6$export$f4dd52ca63b5fdde.Checkout);
             setTxHash(null);
             setStepData(null);
             setTransactionError(null);
@@ -7467,28 +8362,30 @@ const $aa77feef8abf8642$export$2d08bd3f57775802 = ({ open: open , tokenId: token
     }, [
         open
     ]);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, children({
-        loading: bidId ? isFetchingBidData || !token : !token,
-        token: token,
-        collection: collection,
-        source: source,
-        expiration: expiration,
-        totalPrice: totalPrice,
-        bidAmount: bidAmount,
-        bidAmountCurrency: bidAmountCurrency,
-        ethBidAmount: ethBidAmount,
-        fees: fees,
-        acceptBidStep: acceptBidStep,
-        transactionError: transactionError,
-        txHash: txHash,
-        totalUsd: totalUsd,
-        usdPrice: usdPrice,
-        address: address,
-        etherscanBaseUrl: etherscanBaseUrl,
-        acceptBid: acceptBid,
-        setAcceptBidStep: setAcceptBidStep,
-        stepData: stepData
-    }));
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$Fragment), {
+        children: children({
+            loading: bidId ? isFetchingBidData || !token : !token,
+            token: token,
+            collection: collection,
+            source: source,
+            expiration: expiration,
+            totalPrice: totalPrice,
+            bidAmount: bidAmount,
+            bidAmountCurrency: bidAmountCurrency,
+            ethBidAmount: ethBidAmount,
+            fees: fees,
+            acceptBidStep: acceptBidStep,
+            transactionError: transactionError,
+            txHash: txHash,
+            totalUsd: totalUsd,
+            usdPrice: usdPrice,
+            address: address,
+            etherscanBaseUrl: etherscanBaseUrl,
+            acceptBid: acceptBid,
+            setAcceptBidStep: setAcceptBidStep,
+            stepData: stepData
+        })
+    });
 };
 
 
@@ -7496,74 +8393,106 @@ const $aa77feef8abf8642$export$2d08bd3f57775802 = ({ open: open , tokenId: token
 
 
 
-const $12c30bd3adb13c8e$export$b25a304ec7d746bb = ({ acceptBidStep: acceptBidStep , etherscanBaseUrl: etherscanBaseUrl , marketplace: marketplace , tokenImage: tokenImage , stepData: stepData  })=>{
-    var _a;
+const $fbf72147e3a614fb$export$b25a304ec7d746bb = ({ acceptBidStep: acceptBidStep , etherscanBaseUrl: etherscanBaseUrl , marketplace: marketplace , tokenImage: tokenImage , stepData: stepData  })=>{
     const { chain: activeChain  } = (0, $bNXjM$useNetwork)();
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         direction: "column",
         css: {
             alignItems: "center",
             gap: "$4",
             mt: "$5",
             mb: "$3"
-        }
-    }, acceptBidStep == (0, $aa77feef8abf8642$export$f4dd52ca63b5fdde).ApproveMarketplace && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "h6",
-        css: {
-            mb: 28
-        }
-    }, stepData && stepData.totalSteps > 2 ? stepData.currentStep.action : `Approve ${marketplace === null || marketplace === void 0 ? void 0 : marketplace.name} to access item in your wallet`), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        css: {
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 22,
-            mb: 24
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $13fa4523da6dbccd$export$2e2bcd8739ae039), {
-        fromImg: tokenImage || "",
-        toImg: marketplace === null || marketplace === void 0 ? void 0 : marketplace.image
-    })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2",
-        css: {
-            mx: 56,
-            textAlign: "center"
-        }
-    }, stepData && stepData.totalSteps > 2 ? stepData.currentStep.description : `We’ll ask your approval for the ${marketplace === null || marketplace === void 0 ? void 0 : marketplace.name} exchange to
-            access your token. This is a one-time only operation per collection.`)), acceptBidStep == (0, $aa77feef8abf8642$export$f4dd52ca63b5fdde).Confirming && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "h6"
-    }, "Confirm transaction in your wallet"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            color: "$neutralText"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        icon: (0, $bNXjM$faWallet),
-        style: {
-            width: "32px",
-            height: "32px",
-            margin: "12px 0px"
-        }
-    }))), acceptBidStep == (0, $aa77feef8abf8642$export$f4dd52ca63b5fdde).Finalizing && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "h6"
-    }, "Finalizing on blockchain"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-        css: {
-            color: "$neutralText"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        icon: (0, $bNXjM$faCube),
-        style: {
-            width: "32px",
-            height: "32px",
-            margin: "12px 0px"
-        }
-    })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4fb5cf8c028cd3ca$export$2e2bcd8739ae039), {
-        color: "primary",
-        weight: "medium",
-        css: {
-            fontSize: 12
         },
-        href: etherscanBaseUrl,
-        target: "_blank"
-    }, "View on ", ((_a = activeChain === null || activeChain === void 0 ? void 0 : activeChain.blockExplorers) === null || _a === void 0 ? void 0 : _a.default.name) || "Etherscan")));
+        children: [
+            acceptBidStep == (0, $56323ed10ce02ae6$export$f4dd52ca63b5fdde).ApproveMarketplace && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                        style: "h6",
+                        css: {
+                            mb: 28
+                        },
+                        children: stepData && stepData.totalSteps > 2 ? stepData.currentStep.action : `Approve ${marketplace?.name} to access item in your wallet`
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        css: {
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            gap: 22,
+                            mb: 24
+                        },
+                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $10061c592b503910$export$2e2bcd8739ae039), {
+                            fromImg: tokenImage || "",
+                            toImg: marketplace?.image
+                        })
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                        style: "subtitle2",
+                        css: {
+                            mx: 56,
+                            textAlign: "center"
+                        },
+                        children: stepData && stepData.totalSteps > 2 ? stepData.currentStep.description : `We’ll ask your approval for the ${marketplace?.name} exchange to
+            access your token. This is a one-time only operation per collection.`
+                    })
+                ]
+            }),
+            acceptBidStep == (0, $56323ed10ce02ae6$export$f4dd52ca63b5fdde).Confirming && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                        style: "h6",
+                        children: "Confirm transaction in your wallet"
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                        css: {
+                            color: "$neutralText"
+                        },
+                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                            icon: (0, $bNXjM$faWallet),
+                            style: {
+                                width: "32px",
+                                height: "32px",
+                                margin: "12px 0px"
+                            }
+                        })
+                    })
+                ]
+            }),
+            acceptBidStep == (0, $56323ed10ce02ae6$export$f4dd52ca63b5fdde).Finalizing && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                        style: "h6",
+                        children: "Finalizing on blockchain"
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                        css: {
+                            color: "$neutralText"
+                        },
+                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                            icon: (0, $bNXjM$faCube),
+                            style: {
+                                width: "32px",
+                                height: "32px",
+                                margin: "12px 0px"
+                            }
+                        })
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $31d3f3a80135a993$export$2e2bcd8739ae039), {
+                        color: "primary",
+                        weight: "medium",
+                        css: {
+                            fontSize: 12
+                        },
+                        href: etherscanBaseUrl,
+                        target: "_blank",
+                        children: [
+                            "View on ",
+                            activeChain?.blockExplorers?.default.name || "Etherscan"
+                        ]
+                    })
+                ]
+            })
+        ]
+    });
 };
 
 
@@ -7575,10 +8504,11 @@ const $12c30bd3adb13c8e$export$b25a304ec7d746bb = ({ acceptBidStep: acceptBidSte
 
 
 
-const $2164e8e27afee8f5$var$Fees = ({ fees: { feeBreakdown: feeBreakdown  } , marketplace: marketplace  })=>{
+
+const $ad71e86fdcf8771a$var$Fees = ({ fees: { feeBreakdown: feeBreakdown  } , marketplace: marketplace  })=>{
     // Return null when there are no fees
-    if (!(feeBreakdown && (feeBreakdown === null || feeBreakdown === void 0 ? void 0 : feeBreakdown.length) > 0)) return null;
-    const parsedFeeBreakdown = feeBreakdown === null || feeBreakdown === void 0 ? void 0 : feeBreakdown.map(({ bps: bps , kind: kind  })=>{
+    if (!(feeBreakdown && feeBreakdown?.length > 0)) return null;
+    const parsedFeeBreakdown = feeBreakdown?.map(({ bps: bps , kind: kind  })=>{
         const percentage = bps ? bps * 0.01 : 0;
         let name = "";
         let tooltipMessage = null;
@@ -7601,297 +8531,385 @@ const $2164e8e27afee8f5$var$Fees = ({ fees: { feeBreakdown: feeBreakdown  } , ma
             tooltipMessage: tooltipMessage
         };
     });
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         css: {
             px: "$4",
             mt: "$4",
             flexDirection: "column"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "subtitle2",
-        color: "subtle",
-        css: {
-            mb: "$2"
-        }
-    }, "Fees"), parsedFeeBreakdown === null || parsedFeeBreakdown === void 0 ? void 0 : parsedFeeBreakdown.map(({ name: name , percentage: percentage , tooltipMessage: tooltipMessage  }, i)=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            key: i,
-            css: {
-                justifyContent: "space-between",
-                mb: "$2"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                alignItems: "center",
-                gap: 8
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle2",
-            color: "subtle"
-        }, name), tooltipMessage && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6ca758f3c020e004$export$2e2bcd8739ae039), {
-            side: "right",
-            width: 200,
-            content: tooltipMessage
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle2"
-        }, percentage, "%"))));
+        },
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                style: "subtitle2",
+                color: "subtle",
+                css: {
+                    mb: "$2"
+                },
+                children: "Fees"
+            }),
+            parsedFeeBreakdown?.map(({ name: name , percentage: percentage , tooltipMessage: tooltipMessage  }, i)=>/*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                    css: {
+                        justifyContent: "space-between",
+                        mb: "$2"
+                    },
+                    children: [
+                        /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                            css: {
+                                alignItems: "center",
+                                gap: 8
+                            },
+                            children: [
+                                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                    style: "subtitle2",
+                                    color: "subtle",
+                                    children: name
+                                }),
+                                tooltipMessage && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f1a77cb69cf0ff83$export$2e2bcd8739ae039), {
+                                    side: "right",
+                                    width: 200,
+                                    content: tooltipMessage
+                                })
+                            ]
+                        }),
+                        /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                            style: "subtitle2",
+                            children: [
+                                percentage,
+                                "%"
+                            ]
+                        })
+                    ]
+                }, i))
+        ]
+    });
 };
-var $2164e8e27afee8f5$export$2e2bcd8739ae039 = $2164e8e27afee8f5$var$Fees;
+var $ad71e86fdcf8771a$export$2e2bcd8739ae039 = $ad71e86fdcf8771a$var$Fees;
 
 
 
 
-function $d6d53122c35a288f$var$titleForStep(step) {
+function $0b4a951eb65dd888$var$titleForStep(step) {
     switch(step){
-        case (0, $aa77feef8abf8642$export$f4dd52ca63b5fdde).Unavailable:
+        case (0, $56323ed10ce02ae6$export$f4dd52ca63b5fdde).Unavailable:
             return "Selected item is no longer available";
         default:
             return "Accept Offer";
     }
 }
-function $d6d53122c35a288f$export$91ee3fa7c9f4e6c2({ openState: openState , trigger: trigger , tokenId: tokenId , collectionId: collectionId , bidId: bidId , normalizeRoyalties: normalizeRoyalties , onBidAccepted: onBidAccepted , onClose: onClose , onBidAcceptError: onBidAcceptError , onCurrentStepUpdate: onCurrentStepUpdate  }) {
-    const [open, setOpen] = (0, $eae8553d9b344d57$export$2e2bcd8739ae039)(openState ? openState[0] : false, openState);
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
+function $0b4a951eb65dd888$export$91ee3fa7c9f4e6c2({ openState: openState , trigger: trigger , tokenId: tokenId , collectionId: collectionId , bidId: bidId , normalizeRoyalties: normalizeRoyalties , onBidAccepted: onBidAccepted , onClose: onClose , onBidAcceptError: onBidAcceptError , onCurrentStepUpdate: onCurrentStepUpdate  }) {
+    const [open, setOpen] = (0, $d115e0b00eaf4565$export$2e2bcd8739ae039)(openState ? openState[0] : false, openState);
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
     const { chain: activeChain  } = (0, $bNXjM$useNetwork)();
-    const reservoirChain = client === null || client === void 0 ? void 0 : client.currentChain();
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $aa77feef8abf8642$export$2d08bd3f57775802), {
+    const reservoirChain = client?.currentChain();
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $56323ed10ce02ae6$export$2d08bd3f57775802), {
         open: open,
         tokenId: tokenId,
         collectionId: collectionId,
         bidId: bidId,
-        normalizeRoyalties: normalizeRoyalties
-    }, ({ loading: loading , token: token , collection: collection , source: source , expiration: expiration , totalPrice: totalPrice , bidAmount: bidAmount , bidAmountCurrency: bidAmountCurrency , ethBidAmount: ethBidAmount , fees: fees , acceptBidStep: acceptBidStep , transactionError: transactionError , txHash: txHash , totalUsd: totalUsd , usdPrice: usdPrice , address: address , etherscanBaseUrl: etherscanBaseUrl , stepData: stepData , acceptBid: acceptBid  })=>{
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
-        const title = $d6d53122c35a288f$var$titleForStep(acceptBidStep);
-        (0, $bNXjM$useEffect)(()=>{
-            if (acceptBidStep === (0, $aa77feef8abf8642$export$f4dd52ca63b5fdde).Complete && onBidAccepted) {
-                const data = {
-                    tokenId: tokenId,
-                    collectionId: collectionId,
-                    maker: address
-                };
-                if (txHash) data.txHash = txHash;
-                onBidAccepted(data);
-            }
-        }, [
-            acceptBidStep
-        ]);
-        (0, $bNXjM$useEffect)(()=>{
-            if (transactionError && onBidAcceptError) {
-                const data = {
-                    tokenId: tokenId,
-                    collectionId: collectionId,
-                    maker: address
-                };
-                onBidAcceptError(transactionError, data);
-            }
-        }, [
-            transactionError
-        ]);
-        (0, $bNXjM$useEffect)(()=>{
-            if (stepData && onCurrentStepUpdate) onCurrentStepUpdate(stepData);
-        }, [
-            stepData
-        ]);
-        const floorPrice = (_d = (_c = (_b = (_a = token === null || token === void 0 ? void 0 : token.market) === null || _a === void 0 ? void 0 : _a.floorAsk) === null || _b === void 0 ? void 0 : _b.price) === null || _c === void 0 ? void 0 : _c.amount) === null || _d === void 0 ? void 0 : _d.native;
-        const difference = floorPrice && ethBidAmount ? (floorPrice - ethBidAmount) / floorPrice * 100 : undefined;
-        const warning = difference && difference > 50 ? `${difference}% lower than floor price` : undefined;
-        const marketplace = {
-            name: (source === null || source === void 0 ? void 0 : source.name) || "Marketplace",
-            image: (source === null || source === void 0 ? void 0 : source.icon) || ""
-        };
-        const tokenImage = ((_e = token === null || token === void 0 ? void 0 : token.token) === null || _e === void 0 ? void 0 : _e.image) || ((_g = (_f = token === null || token === void 0 ? void 0 : token.token) === null || _f === void 0 ? void 0 : _f.collection) === null || _g === void 0 ? void 0 : _g.image);
-        const expires = (0, $59ff1a3b34f7a14d$export$2e2bcd8739ae039)(expiration);
-        return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $32de3362490c9117$export$2b77a92f1a5ad772), {
-            trigger: trigger,
-            title: title,
-            open: open,
-            onOpenChange: (open)=>{
-                if (!open && onClose) {
+        normalizeRoyalties: normalizeRoyalties,
+        children: ({ loading: loading , token: token , collection: collection , source: source , expiration: expiration , totalPrice: totalPrice , bidAmount: bidAmount , bidAmountCurrency: bidAmountCurrency , ethBidAmount: ethBidAmount , fees: fees , acceptBidStep: acceptBidStep , transactionError: transactionError , txHash: txHash , totalUsd: totalUsd , usdPrice: usdPrice , address: address , etherscanBaseUrl: etherscanBaseUrl , stepData: stepData , acceptBid: acceptBid  })=>{
+            const title = $0b4a951eb65dd888$var$titleForStep(acceptBidStep);
+            (0, $bNXjM$useEffect)(()=>{
+                if (acceptBidStep === (0, $56323ed10ce02ae6$export$f4dd52ca63b5fdde).Complete && onBidAccepted) {
                     const data = {
                         tokenId: tokenId,
                         collectionId: collectionId,
                         maker: address
                     };
-                    onClose(data, stepData, acceptBidStep);
+                    if (txHash) data.txHash = txHash;
+                    onBidAccepted(data);
                 }
-                setOpen(open);
-            },
-            loading: loading
-        }, acceptBidStep === (0, $aa77feef8abf8642$export$f4dd52ca63b5fdde).Unavailable && !loading && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $88f47796acff5c21$export$2e2bcd8739ae039), {
-            tokenDetails: token,
-            collection: collection,
-            usdConversion: usdPrice || 0,
-            isUnavailable: true,
-            price: bidAmount,
-            warning: warning,
-            currency: bidAmountCurrency,
-            expires: expires,
-            isOffer: true,
-            sourceImg: (source === null || source === void 0 ? void 0 : source.icon) ? source.icon : undefined
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            onClick: ()=>setOpen(false),
-            css: {
-                m: "$4"
-            }
-        }, "Close")), acceptBidStep === (0, $aa77feef8abf8642$export$f4dd52ca63b5fdde).Checkout && !loading && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column"
-        }, transactionError && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                color: "$errorAccent",
-                p: "$4",
-                gap: "$2",
-                background: "$wellBackground"
-            },
-            align: "center"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faCircleExclamation),
-            width: 16,
-            height: 16
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body2",
-            color: "errorLight"
-        }, transactionError.message)), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $88f47796acff5c21$export$2e2bcd8739ae039), {
-            tokenDetails: token,
-            collection: collection,
-            usdConversion: usdPrice || 0,
-            price: bidAmount,
-            warning: warning,
-            currency: bidAmountCurrency,
-            expires: expires,
-            isOffer: true,
-            sourceImg: (source === null || source === void 0 ? void 0 : source.icon) ? source.icon : undefined
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2164e8e27afee8f5$export$2e2bcd8739ae039), {
-            fees: fees,
-            marketplace: marketplace.name
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            align: "center",
-            justify: "between",
-            css: {
-                px: "$4",
-                mt: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "h6"
-        }, "You Get"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
-            textStyle: "h6",
-            amount: totalPrice,
-            address: bidAmountCurrency === null || bidAmountCurrency === void 0 ? void 0 : bidAmountCurrency.contract,
-            logoWidth: 16
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            justify: "end"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6a6c14d54fb307eb$export$2e2bcd8739ae039), {
-            amount: totalUsd,
-            color: "subtle",
-            css: {
-                mr: "$4"
-            }
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            style: {
-                flex: 1,
-                marginBottom: 16,
-                marginTop: 16,
-                marginRight: 16,
-                marginLeft: 16
-            },
-            color: "primary",
-            onClick: acceptBid
-        }, "Accept")), (acceptBidStep === (0, $aa77feef8abf8642$export$f4dd52ca63b5fdde).Confirming || acceptBidStep === (0, $aa77feef8abf8642$export$f4dd52ca63b5fdde).Finalizing || acceptBidStep === (0, $aa77feef8abf8642$export$f4dd52ca63b5fdde).ApproveMarketplace) && token && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $88f47796acff5c21$export$2e2bcd8739ae039), {
-            tokenDetails: token,
-            collection: collection,
-            usdConversion: usdPrice || 0,
-            price: bidAmount,
-            warning: warning,
-            currency: bidAmountCurrency,
-            expires: expires,
-            isOffer: true,
-            sourceImg: (source === null || source === void 0 ? void 0 : source.icon) ? source.icon : undefined
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $12c30bd3adb13c8e$export$b25a304ec7d746bb), {
-            acceptBidStep: acceptBidStep,
-            etherscanBaseUrl: `${etherscanBaseUrl}/tx/${txHash}`,
-            marketplace: marketplace,
-            tokenImage: tokenImage,
-            stepData: stepData
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            disabled: true,
-            css: {
-                m: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0c83fbef8350e27e$export$2e2bcd8739ae039), null), acceptBidStep === (0, $aa77feef8abf8642$export$f4dd52ca63b5fdde).Confirming ? "Waiting for approval..." : "Waiting for transaction to be validated")), acceptBidStep === (0, $aa77feef8abf8642$export$f4dd52ca63b5fdde).Complete && token && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                py: "$5",
-                flexDirection: "column",
-                alignItems: "center",
-                textAlign: "center"
-            }
-        }, " ", /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                color: "$successAccent",
-                mb: 24
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faCheckCircle),
-            fontSize: 32
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "h5",
-            css: {
-                mb: 8
-            }
-        }, "Bid accepted!"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                mb: 24,
-                maxWidth: "100%"
-            },
-            align: "center",
-            justify: "center"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle2",
-            css: {
-                maxWidth: "100%"
-            },
-            ellipsify: true
-        }, "You’ve sold", " ", /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4fb5cf8c028cd3ca$export$2e2bcd8739ae039), {
-            color: "primary",
-            weight: "medium",
-            css: {
-                fontSize: 12
-            },
-            href: `${reservoirChain === null || reservoirChain === void 0 ? void 0 : reservoirChain.baseApiUrl}/redirect/sources/${client === null || client === void 0 ? void 0 : client.source}/tokens/${(_h = token.token) === null || _h === void 0 ? void 0 : _h.contract}:${(_j = token === null || token === void 0 ? void 0 : token.token) === null || _j === void 0 ? void 0 : _j.tokenId}/link/v2`,
-            target: "_blank"
-        }, ((_k = token === null || token === void 0 ? void 0 : token.token) === null || _k === void 0 ? void 0 : _k.name) ? (_l = token === null || token === void 0 ? void 0 : token.token) === null || _l === void 0 ? void 0 : _l.name : `#${(_m = token === null || token === void 0 ? void 0 : token.token) === null || _m === void 0 ? void 0 : _m.tokenId}`), " ", "from the ", (_p = (_o = token === null || token === void 0 ? void 0 : token.token) === null || _o === void 0 ? void 0 : _o.collection) === null || _p === void 0 ? void 0 : _p.name, " collection.")), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4fb5cf8c028cd3ca$export$2e2bcd8739ae039), {
-            color: "primary",
-            weight: "medium",
-            css: {
-                fontSize: 12
-            },
-            href: `${etherscanBaseUrl}/tx/${txHash}`,
-            target: "_blank"
-        }, "View on", " ", ((_q = activeChain === null || activeChain === void 0 ? void 0 : activeChain.blockExplorers) === null || _q === void 0 ? void 0 : _q.default.name) || "Etherscan")), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                flexDirection: "column",
-                gap: "$3",
-                "@bp1": {
-                    flexDirection: "row"
+            }, [
+                acceptBidStep
+            ]);
+            (0, $bNXjM$useEffect)(()=>{
+                if (transactionError && onBidAcceptError) {
+                    const data = {
+                        tokenId: tokenId,
+                        collectionId: collectionId,
+                        maker: address
+                    };
+                    onBidAcceptError(transactionError, data);
                 }
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            css: {
-                width: "100%"
-            },
-            onClick: ()=>{
-                setOpen(false);
-            }
-        }, "Done"))));
+            }, [
+                transactionError
+            ]);
+            (0, $bNXjM$useEffect)(()=>{
+                if (stepData && onCurrentStepUpdate) onCurrentStepUpdate(stepData);
+            }, [
+                stepData
+            ]);
+            const floorPrice = token?.market?.floorAsk?.price?.amount?.native;
+            const difference = floorPrice && ethBidAmount ? (floorPrice - ethBidAmount) / floorPrice * 100 : undefined;
+            const warning = difference && difference > 50 ? `${difference}% lower than floor price` : undefined;
+            const marketplace = {
+                name: source?.name || "Marketplace",
+                image: source?.icon || ""
+            };
+            const tokenImage = token?.token?.image || token?.token?.collection?.image;
+            const expires = (0, $c952bf73c842abfc$export$2e2bcd8739ae039)(expiration);
+            return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $b86bf9f1e9f1a187$export$2b77a92f1a5ad772), {
+                trigger: trigger,
+                title: title,
+                open: open,
+                onOpenChange: (open)=>{
+                    if (!open && onClose) {
+                        const data = {
+                            tokenId: tokenId,
+                            collectionId: collectionId,
+                            maker: address
+                        };
+                        onClose(data, stepData, acceptBidStep);
+                    }
+                    setOpen(open);
+                },
+                loading: loading,
+                children: [
+                    acceptBidStep === (0, $56323ed10ce02ae6$export$f4dd52ca63b5fdde).Unavailable && !loading && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c5f5dee31b69b8f3$export$2e2bcd8739ae039), {
+                                tokenDetails: token,
+                                collection: collection,
+                                usdConversion: usdPrice || 0,
+                                isUnavailable: true,
+                                price: bidAmount,
+                                warning: warning,
+                                currency: bidAmountCurrency,
+                                expires: expires,
+                                isOffer: true,
+                                sourceImg: source?.icon ? source.icon : undefined
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                onClick: ()=>setOpen(false),
+                                css: {
+                                    m: "$4"
+                                },
+                                children: "Close"
+                            })
+                        ]
+                    }),
+                    acceptBidStep === (0, $56323ed10ce02ae6$export$f4dd52ca63b5fdde).Checkout && !loading && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        children: [
+                            transactionError && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                css: {
+                                    color: "$errorAccent",
+                                    p: "$4",
+                                    gap: "$2",
+                                    background: "$wellBackground"
+                                },
+                                align: "center",
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                        icon: (0, $bNXjM$faCircleExclamation),
+                                        width: 16,
+                                        height: 16
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "body2",
+                                        color: "errorLight",
+                                        children: transactionError.message
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c5f5dee31b69b8f3$export$2e2bcd8739ae039), {
+                                tokenDetails: token,
+                                collection: collection,
+                                usdConversion: usdPrice || 0,
+                                price: bidAmount,
+                                warning: warning,
+                                currency: bidAmountCurrency,
+                                expires: expires,
+                                isOffer: true,
+                                sourceImg: source?.icon ? source.icon : undefined
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $ad71e86fdcf8771a$export$2e2bcd8739ae039), {
+                                fees: fees,
+                                marketplace: marketplace.name
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                align: "center",
+                                justify: "between",
+                                css: {
+                                    px: "$4",
+                                    mt: "$4"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "h6",
+                                        children: "You Get"
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
+                                        textStyle: "h6",
+                                        amount: totalPrice,
+                                        address: bidAmountCurrency?.contract,
+                                        logoWidth: 16
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                justify: "end",
+                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $208ab5b0155991db$export$2e2bcd8739ae039), {
+                                    amount: totalUsd,
+                                    color: "subtle",
+                                    css: {
+                                        mr: "$4"
+                                    }
+                                })
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                style: {
+                                    flex: 1,
+                                    marginBottom: 16,
+                                    marginTop: 16,
+                                    marginRight: 16,
+                                    marginLeft: 16
+                                },
+                                color: "primary",
+                                onClick: acceptBid,
+                                children: "Accept"
+                            })
+                        ]
+                    }),
+                    (acceptBidStep === (0, $56323ed10ce02ae6$export$f4dd52ca63b5fdde).Confirming || acceptBidStep === (0, $56323ed10ce02ae6$export$f4dd52ca63b5fdde).Finalizing || acceptBidStep === (0, $56323ed10ce02ae6$export$f4dd52ca63b5fdde).ApproveMarketplace) && token && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c5f5dee31b69b8f3$export$2e2bcd8739ae039), {
+                                tokenDetails: token,
+                                collection: collection,
+                                usdConversion: usdPrice || 0,
+                                price: bidAmount,
+                                warning: warning,
+                                currency: bidAmountCurrency,
+                                expires: expires,
+                                isOffer: true,
+                                sourceImg: source?.icon ? source.icon : undefined
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $fbf72147e3a614fb$export$b25a304ec7d746bb), {
+                                acceptBidStep: acceptBidStep,
+                                etherscanBaseUrl: `${etherscanBaseUrl}/tx/${txHash}`,
+                                marketplace: marketplace,
+                                tokenImage: tokenImage,
+                                stepData: stepData
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                disabled: true,
+                                css: {
+                                    m: "$4"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $0ff8966798df47ad$export$2e2bcd8739ae039), {}),
+                                    acceptBidStep === (0, $56323ed10ce02ae6$export$f4dd52ca63b5fdde).Confirming ? "Waiting for approval..." : "Waiting for transaction to be validated"
+                                ]
+                            })
+                        ]
+                    }),
+                    acceptBidStep === (0, $56323ed10ce02ae6$export$f4dd52ca63b5fdde).Complete && token && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                css: {
+                                    p: "$4",
+                                    py: "$5",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    textAlign: "center"
+                                },
+                                children: [
+                                    " ",
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                        css: {
+                                            color: "$successAccent",
+                                            mb: 24
+                                        },
+                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                            icon: (0, $bNXjM$faCheckCircle),
+                                            fontSize: 32
+                                        })
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "h5",
+                                        css: {
+                                            mb: 8
+                                        },
+                                        children: "Bid accepted!"
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        css: {
+                                            mb: 24,
+                                            maxWidth: "100%"
+                                        },
+                                        align: "center",
+                                        justify: "center",
+                                        children: /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                            style: "subtitle2",
+                                            css: {
+                                                maxWidth: "100%"
+                                            },
+                                            ellipsify: true,
+                                            children: [
+                                                "You’ve sold",
+                                                " ",
+                                                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $31d3f3a80135a993$export$2e2bcd8739ae039), {
+                                                    color: "primary",
+                                                    weight: "medium",
+                                                    css: {
+                                                        fontSize: 12
+                                                    },
+                                                    href: `${reservoirChain?.baseApiUrl}/redirect/sources/${client?.source}/tokens/${token.token?.contract}:${token?.token?.tokenId}/link/v2`,
+                                                    target: "_blank",
+                                                    children: token?.token?.name ? token?.token?.name : `#${token?.token?.tokenId}`
+                                                }),
+                                                " ",
+                                                "from the ",
+                                                token?.token?.collection?.name,
+                                                " collection."
+                                            ]
+                                        })
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $31d3f3a80135a993$export$2e2bcd8739ae039), {
+                                        color: "primary",
+                                        weight: "medium",
+                                        css: {
+                                            fontSize: 12
+                                        },
+                                        href: `${etherscanBaseUrl}/tx/${txHash}`,
+                                        target: "_blank",
+                                        children: [
+                                            "View on",
+                                            " ",
+                                            activeChain?.blockExplorers?.default.name || "Etherscan"
+                                        ]
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                css: {
+                                    p: "$4",
+                                    flexDirection: "column",
+                                    gap: "$3",
+                                    "@bp1": {
+                                        flexDirection: "row"
+                                    }
+                                },
+                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                    css: {
+                                        width: "100%"
+                                    },
+                                    onClick: ()=>{
+                                        setOpen(false);
+                                    },
+                                    children: "Done"
+                                })
+                            })
+                        ]
+                    })
+                ]
+            });
+        }
     });
 }
-$d6d53122c35a288f$export$91ee3fa7c9f4e6c2.Custom = (0, $aa77feef8abf8642$export$2d08bd3f57775802);
+$0b4a951eb65dd888$export$91ee3fa7c9f4e6c2.Custom = (0, $56323ed10ce02ae6$export$2d08bd3f57775802);
 
 
 
@@ -7901,22 +8919,23 @@ $d6d53122c35a288f$export$91ee3fa7c9f4e6c2.Custom = (0, $aa77feef8abf8642$export$
 
 
 
-var $2162ba735da1218d$export$c5c5c857eaef0fde;
+
+
+let $a77cc70c3ee0a162$export$c5c5c857eaef0fde;
 (function(CancelStep) {
     CancelStep[CancelStep["Cancel"] = 0] = "Cancel";
     CancelStep[CancelStep["Approving"] = 1] = "Approving";
     CancelStep[CancelStep["Complete"] = 2] = "Complete";
-})($2162ba735da1218d$export$c5c5c857eaef0fde || ($2162ba735da1218d$export$c5c5c857eaef0fde = {}));
-const $2162ba735da1218d$export$d2f670ba420b64c2 = ({ open: open , bidId: bidId , normalizeRoyalties: normalizeRoyalties , children: children  })=>{
-    var _a, _b, _c, _d, _e, _f;
+})($a77cc70c3ee0a162$export$c5c5c857eaef0fde || ($a77cc70c3ee0a162$export$c5c5c857eaef0fde = {}));
+const $a77cc70c3ee0a162$export$d2f670ba420b64c2 = ({ open: open , bidId: bidId , normalizeRoyalties: normalizeRoyalties , children: children  })=>{
     const { data: signer  } = (0, $bNXjM$useSigner)();
-    const [cancelStep, setCancelStep] = (0, $bNXjM$useState)($2162ba735da1218d$export$c5c5c857eaef0fde.Cancel);
+    const [cancelStep, setCancelStep] = (0, $bNXjM$useState)($a77cc70c3ee0a162$export$c5c5c857eaef0fde.Cancel);
     const [transactionError, setTransactionError] = (0, $bNXjM$useState)();
     const [stepData, setStepData] = (0, $bNXjM$useState)(null);
     const [steps, setSteps] = (0, $bNXjM$useState)(null);
     const { chain: activeChain  } = (0, $bNXjM$useNetwork)();
-    const blockExplorerBaseUrl = ((_a = activeChain === null || activeChain === void 0 ? void 0 : activeChain.blockExplorers) === null || _a === void 0 ? void 0 : _a.default.url) || "https://etherscan.io";
-    const { data: bids , isFetchingPage: isFetchingPage  } = (0, $d2a483d2a9b1fd6c$export$2e2bcd8739ae039)({
+    const blockExplorerBaseUrl = activeChain?.blockExplorers?.default.url || "https://etherscan.io";
+    const { data: bids , isFetchingPage: isFetchingPage  } = (0, $ed463f024c26b3ca$export$2e2bcd8739ae039)({
         ids: bidId,
         normalizeRoyalties: normalizeRoyalties,
         includeCriteriaMetadata: true
@@ -7924,11 +8943,11 @@ const $2162ba735da1218d$export$d2f670ba420b64c2 = ({ open: open , bidId: bidId ,
         revalidateFirstPage: true
     }, open && bidId ? true : false);
     const bid = bids && bids[0] ? bids[0] : undefined;
-    const currency = (_b = bid === null || bid === void 0 ? void 0 : bid.price) === null || _b === void 0 ? void 0 : _b.currency;
-    const coinConversion = (0, $9f52dec49aff5538$export$2e2bcd8739ae039)(open && bid ? "USD" : undefined, currency === null || currency === void 0 ? void 0 : currency.symbol);
+    const currency = bid?.price?.currency;
+    const coinConversion = (0, $742accbc1cb453a5$export$2e2bcd8739ae039)(open && bid ? "USD" : undefined, currency?.symbol);
     const usdPrice = coinConversion !== undefined && coinConversion !== null ? Number(coinConversion) : 0;
-    const totalUsd = usdPrice * (((_d = (_c = bid === null || bid === void 0 ? void 0 : bid.price) === null || _c === void 0 ? void 0 : _c.amount) === null || _d === void 0 ? void 0 : _d.decimal) || 0);
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
+    const totalUsd = usdPrice * (bid?.price?.amount?.decimal || 0);
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
     const cancelOrder = (0, $bNXjM$useCallback)(()=>{
         if (!signer) {
             const error = new Error("Missing a signer");
@@ -7945,7 +8964,7 @@ const $2162ba735da1218d$export$d2f670ba420b64c2 = ({ open: open , bidId: bidId ,
             setTransactionError(error);
             throw error;
         }
-        setCancelStep($2162ba735da1218d$export$c5c5c857eaef0fde.Approving);
+        setCancelStep($a77cc70c3ee0a162$export$c5c5c857eaef0fde.Approving);
         client.actions.cancelOrder({
             id: bidId,
             signer: signer,
@@ -7956,8 +8975,7 @@ const $2162ba735da1218d$export$d2f670ba420b64c2 = ({ open: open , bidId: bidId ,
                 let stepCount = executableSteps.length;
                 let currentStepItem;
                 const currentStepIndex = executableSteps.findIndex((step)=>{
-                    var _a;
-                    currentStepItem = (_a = step.items) === null || _a === void 0 ? void 0 : _a.find((item)=>item.status === "incomplete");
+                    currentStepItem = step.items?.find((item)=>item.status === "incomplete");
                     return currentStepItem;
                 });
                 const currentStep = currentStepIndex > -1 ? executableSteps[currentStepIndex] : executableSteps[stepCount - 1];
@@ -7967,10 +8985,7 @@ const $2162ba735da1218d$export$d2f670ba420b64c2 = ({ open: open , bidId: bidId ,
                     currentStep: currentStep,
                     currentStepItem: currentStepItem
                 });
-                else if (steps.every((step)=>{
-                    var _a;
-                    return !step.items || step.items.length == 0 || ((_a = step.items) === null || _a === void 0 ? void 0 : _a.every((item)=>item.status === "complete"));
-                })) setCancelStep($2162ba735da1218d$export$c5c5c857eaef0fde.Complete);
+                else if (steps.every((step)=>!step.items || step.items.length == 0 || step.items?.every((item)=>item.status === "complete"))) setCancelStep($a77cc70c3ee0a162$export$c5c5c857eaef0fde.Complete);
             }
         }).catch((e)=>{
             const error = e;
@@ -7979,7 +8994,7 @@ const $2162ba735da1218d$export$d2f670ba420b64c2 = ({ open: open , bidId: bidId ,
                 cause: error
             });
             setTransactionError(transactionError);
-            setCancelStep($2162ba735da1218d$export$c5c5c857eaef0fde.Cancel);
+            setCancelStep($a77cc70c3ee0a162$export$c5c5c857eaef0fde.Cancel);
             setStepData(null);
             setSteps(null);
         });
@@ -7990,7 +9005,7 @@ const $2162ba735da1218d$export$d2f670ba420b64c2 = ({ open: open , bidId: bidId ,
     ]);
     (0, $bNXjM$useEffect)(()=>{
         if (!open) {
-            setCancelStep($2162ba735da1218d$export$c5c5c857eaef0fde.Cancel);
+            setCancelStep($a77cc70c3ee0a162$export$c5c5c857eaef0fde.Cancel);
             setTransactionError(null);
             setStepData(null);
             setSteps(null);
@@ -7999,21 +9014,23 @@ const $2162ba735da1218d$export$d2f670ba420b64c2 = ({ open: open , bidId: bidId ,
         open
     ]);
     let tokenId;
-    if (((_e = bid === null || bid === void 0 ? void 0 : bid.criteria) === null || _e === void 0 ? void 0 : _e.kind) === "token") tokenId = (_f = bid === null || bid === void 0 ? void 0 : bid.tokenSetId) === null || _f === void 0 ? void 0 : _f.split(":")[2];
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, children({
-        loading: isFetchingPage !== undefined ? isFetchingPage : true,
-        bid: bid,
-        tokenId: tokenId,
-        cancelStep: cancelStep,
-        transactionError: transactionError,
-        usdPrice: usdPrice,
-        totalUsd: totalUsd,
-        blockExplorerBaseUrl: blockExplorerBaseUrl,
-        steps: steps,
-        stepData: stepData,
-        setCancelStep: setCancelStep,
-        cancelOrder: cancelOrder
-    }));
+    if (bid?.criteria?.kind === "token") tokenId = bid?.tokenSetId?.split(":")[2];
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$Fragment), {
+        children: children({
+            loading: isFetchingPage !== undefined ? isFetchingPage : true,
+            bid: bid,
+            tokenId: tokenId,
+            cancelStep: cancelStep,
+            transactionError: transactionError,
+            usdPrice: usdPrice,
+            totalUsd: totalUsd,
+            blockExplorerBaseUrl: blockExplorerBaseUrl,
+            steps: steps,
+            stepData: stepData,
+            setCancelStep: setCancelStep,
+            cancelOrder: cancelOrder
+        })
+    });
 };
 
 
@@ -8023,205 +9040,282 @@ const $2162ba735da1218d$export$d2f670ba420b64c2 = ({ open: open , bidId: bidId ,
 
 
 
-function $59811dcd8bb1eb8e$export$89d1e00b7fa831db({ openState: openState , bidId: bidId , trigger: trigger , normalizeRoyalties: normalizeRoyalties , onClose: onClose , onCancelComplete: onCancelComplete , onCancelError: onCancelError  }) {
-    const [open, setOpen] = (0, $eae8553d9b344d57$export$2e2bcd8739ae039)(openState ? openState[0] : false, openState);
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
+function $0e222eb8e6425c4a$export$89d1e00b7fa831db({ openState: openState , bidId: bidId , trigger: trigger , normalizeRoyalties: normalizeRoyalties , onClose: onClose , onCancelComplete: onCancelComplete , onCancelError: onCancelError  }) {
+    const [open, setOpen] = (0, $d115e0b00eaf4565$export$2e2bcd8739ae039)(openState ? openState[0] : false, openState);
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
     const { chain: activeChain  } = (0, $bNXjM$useNetwork)();
-    const reservoirChain = client === null || client === void 0 ? void 0 : client.currentChain();
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2162ba735da1218d$export$d2f670ba420b64c2), {
+    const reservoirChain = client?.currentChain();
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a77cc70c3ee0a162$export$d2f670ba420b64c2), {
         bidId: bidId,
         open: open,
-        normalizeRoyalties: normalizeRoyalties
-    }, ({ loading: loading , bid: bid , tokenId: tokenId , cancelStep: cancelStep , transactionError: transactionError , stepData: stepData , totalUsd: totalUsd , blockExplorerBaseUrl: blockExplorerBaseUrl , cancelOrder: cancelOrder  })=>{
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17;
-        const expires = (0, $59ff1a3b34f7a14d$export$2e2bcd8739ae039)(bid === null || bid === void 0 ? void 0 : bid.expiration);
-        const collectionId = (_c = (_b = (_a = bid === null || bid === void 0 ? void 0 : bid.criteria) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.collection) === null || _c === void 0 ? void 0 : _c.id;
-        const bidImg = tokenId ? `${reservoirChain === null || reservoirChain === void 0 ? void 0 : reservoirChain.baseApiUrl}/redirect/tokens/${collectionId}:${tokenId}/image/v1` : `${reservoirChain === null || reservoirChain === void 0 ? void 0 : reservoirChain.baseApiUrl}/redirect/collections/${collectionId}/image/v1`;
-        const isAttributeOffer = ((_d = bid === null || bid === void 0 ? void 0 : bid.criteria) === null || _d === void 0 ? void 0 : _d.kind) === "attribute";
-        (0, $bNXjM$useEffect)(()=>{
-            if (cancelStep === (0, $2162ba735da1218d$export$c5c5c857eaef0fde).Complete && onCancelComplete) {
-                const data = {
-                    bid: bid,
-                    stepData: stepData
-                };
-                onCancelComplete(data);
-            }
-        }, [
-            cancelStep
-        ]);
-        (0, $bNXjM$useEffect)(()=>{
-            if (transactionError && onCancelError) {
-                const data = {
-                    bid: bid,
-                    stepData: stepData
-                };
-                onCancelError(transactionError, data);
-            }
-        }, [
-            transactionError
-        ]);
-        const isBidAvailable = bid && (bid.status === "active" || bid.status === "inactive") && !loading;
-        return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $32de3362490c9117$export$2b77a92f1a5ad772), {
-            trigger: trigger,
-            title: "Cancel Offer",
-            open: open,
-            onOpenChange: (open)=>{
-                if (!open && onClose) {
+        normalizeRoyalties: normalizeRoyalties,
+        children: ({ loading: loading , bid: bid , tokenId: tokenId , cancelStep: cancelStep , transactionError: transactionError , stepData: stepData , totalUsd: totalUsd , blockExplorerBaseUrl: blockExplorerBaseUrl , cancelOrder: cancelOrder  })=>{
+            const expires = (0, $c952bf73c842abfc$export$2e2bcd8739ae039)(bid?.expiration);
+            const collectionId = bid?.criteria?.data?.collection?.id;
+            const bidImg = tokenId ? `${reservoirChain?.baseApiUrl}/redirect/tokens/${collectionId}:${tokenId}/image/v1` : `${reservoirChain?.baseApiUrl}/redirect/collections/${collectionId}/image/v1`;
+            const isAttributeOffer = bid?.criteria?.kind === "attribute";
+            (0, $bNXjM$useEffect)(()=>{
+                if (cancelStep === (0, $a77cc70c3ee0a162$export$c5c5c857eaef0fde).Complete && onCancelComplete) {
                     const data = {
                         bid: bid,
                         stepData: stepData
                     };
-                    onClose(data, cancelStep);
+                    onCancelComplete(data);
                 }
-                setOpen(open);
-            },
-            loading: loading
-        }, !isBidAvailable && !loading && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column",
-            justify: "center",
-            css: {
-                px: "$4",
-                py: "$6"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "h6",
-            css: {
-                textAlign: "center"
-            }
-        }, "Selected bid is no longer available")), isBidAvailable && cancelStep === (0, $2162ba735da1218d$export$c5c5c857eaef0fde).Cancel && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column"
-        }, transactionError && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                color: "$errorAccent",
-                p: "$4",
-                gap: "$2",
-                background: "$wellBackground"
-            },
-            align: "center"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faCircleExclamation),
-            width: 16,
-            height: 16
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body2",
-            color: "errorLight"
-        }, transactionError.message)), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                borderBottom: "1px solid $borderColor"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6b8b18ed6981903c$export$2e2bcd8739ae039), {
-            img: bidImg,
-            name: (_g = (_f = (_e = bid === null || bid === void 0 ? void 0 : bid.criteria) === null || _e === void 0 ? void 0 : _e.data) === null || _f === void 0 ? void 0 : _f.token) === null || _g === void 0 ? void 0 : _g.name,
-            price: (_j = (_h = bid === null || bid === void 0 ? void 0 : bid.price) === null || _h === void 0 ? void 0 : _h.amount) === null || _j === void 0 ? void 0 : _j.decimal,
-            usdPrice: totalUsd,
-            collection: ((_m = (_l = (_k = bid === null || bid === void 0 ? void 0 : bid.criteria) === null || _k === void 0 ? void 0 : _k.data) === null || _l === void 0 ? void 0 : _l.collection) === null || _m === void 0 ? void 0 : _m.name) || "",
-            currencyContract: (_p = (_o = bid === null || bid === void 0 ? void 0 : bid.price) === null || _o === void 0 ? void 0 : _o.currency) === null || _p === void 0 ? void 0 : _p.contract,
-            currencyDecimals: (_r = (_q = bid === null || bid === void 0 ? void 0 : bid.price) === null || _q === void 0 ? void 0 : _q.currency) === null || _r === void 0 ? void 0 : _r.decimals,
-            expires: expires,
-            source: ((_s = bid === null || bid === void 0 ? void 0 : bid.source) === null || _s === void 0 ? void 0 : _s.icon) || "",
-            isOffer: true
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body3",
-            color: "subtle",
-            css: {
-                mt: "$3",
-                mr: "$3",
-                ml: "$3",
-                textAlign: "center"
-            }
-        }, "This will cancel your offer. You will be asked to confirm this cancelation from your wallet."), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            onClick: cancelOrder,
-            css: {
-                m: "$4"
-            }
-        }, "Continue to Cancel")), cancelStep === (0, $2162ba735da1218d$export$c5c5c857eaef0fde).Approving && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                borderBottom: "1px solid $borderColor"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6b8b18ed6981903c$export$2e2bcd8739ae039), {
-            img: bidImg,
-            name: (_v = (_u = (_t = bid === null || bid === void 0 ? void 0 : bid.criteria) === null || _t === void 0 ? void 0 : _t.data) === null || _u === void 0 ? void 0 : _u.token) === null || _v === void 0 ? void 0 : _v.name,
-            price: (_x = (_w = bid === null || bid === void 0 ? void 0 : bid.price) === null || _w === void 0 ? void 0 : _w.amount) === null || _x === void 0 ? void 0 : _x.decimal,
-            usdPrice: totalUsd,
-            collection: ((_0 = (_z = (_y = bid === null || bid === void 0 ? void 0 : bid.criteria) === null || _y === void 0 ? void 0 : _y.data) === null || _z === void 0 ? void 0 : _z.collection) === null || _0 === void 0 ? void 0 : _0.name) || "",
-            currencyContract: (_2 = (_1 = bid === null || bid === void 0 ? void 0 : bid.price) === null || _1 === void 0 ? void 0 : _1.currency) === null || _2 === void 0 ? void 0 : _2.contract,
-            currencyDecimals: (_4 = (_3 = bid === null || bid === void 0 ? void 0 : bid.price) === null || _3 === void 0 ? void 0 : _3.currency) === null || _4 === void 0 ? void 0 : _4.decimals,
-            expires: expires,
-            source: ((_5 = bid === null || bid === void 0 ? void 0 : bid.source) === null || _5 === void 0 ? void 0 : _5.icon) || "",
-            isOffer: true
-        })), !stepData && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0c83fbef8350e27e$export$2e2bcd8739ae039), {
-            css: {
-                height: 206
-            }
-        }), stepData && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $914dcae46ee80bba$export$2e2bcd8739ae039), {
-            title: (stepData === null || stepData === void 0 ? void 0 : stepData.currentStepItem.txHash) ? "Finalizing on blockchain" : "Confirm cancelation in your wallet",
-            txHash: stepData === null || stepData === void 0 ? void 0 : stepData.currentStepItem.txHash,
-            blockExplorerBaseUrl: `${blockExplorerBaseUrl}/tx/${stepData === null || stepData === void 0 ? void 0 : stepData.currentStepItem.txHash}`
-        }), isAttributeOffer && !(stepData === null || stepData === void 0 ? void 0 : stepData.currentStepItem.txHash) && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            justify: "center"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body3",
-            color: "subtle",
-            css: {
-                maxWidth: 400,
-                textAlign: "center",
-                mx: "$3"
-            }
-        }, "This will cancel your offer on all items that were included in this attribute offer."))), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            disabled: true,
-            css: {
-                m: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0c83fbef8350e27e$export$2e2bcd8739ae039), null), (stepData === null || stepData === void 0 ? void 0 : stepData.currentStepItem.txHash) ? "Waiting for transaction to be validated" : "Waiting for approval...")), cancelStep === (0, $2162ba735da1218d$export$c5c5c857eaef0fde).Complete && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                py: "$5",
-                flexDirection: "column",
-                alignItems: "center",
-                textAlign: "center"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "h5",
-            css: {
-                mb: "$2"
-            }
-        }, "Offer Canceled!"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body3",
-            color: "subtle",
-            css: {
-                mb: 24
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, "Your", " ", /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body3",
-            color: "accent"
-        }, (_6 = bid === null || bid === void 0 ? void 0 : bid.source) === null || _6 === void 0 ? void 0 : _6.name), " ", "offer for", " ", /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body3",
-            color: "accent"
-        }, ((_9 = (_8 = (_7 = bid === null || bid === void 0 ? void 0 : bid.criteria) === null || _7 === void 0 ? void 0 : _7.data) === null || _8 === void 0 ? void 0 : _8.token) === null || _9 === void 0 ? void 0 : _9.name) || ((_12 = (_11 = (_10 = bid === null || bid === void 0 ? void 0 : bid.criteria) === null || _10 === void 0 ? void 0 : _10.data) === null || _11 === void 0 ? void 0 : _11.collection) === null || _12 === void 0 ? void 0 : _12.name), " "), "at ", (_14 = (_13 = bid === null || bid === void 0 ? void 0 : bid.price) === null || _13 === void 0 ? void 0 : _13.amount) === null || _14 === void 0 ? void 0 : _14.decimal, " ", (_16 = (_15 = bid === null || bid === void 0 ? void 0 : bid.price) === null || _15 === void 0 ? void 0 : _15.currency) === null || _16 === void 0 ? void 0 : _16.symbol, " has been canceled.")), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4fb5cf8c028cd3ca$export$2e2bcd8739ae039), {
-            color: "primary",
-            weight: "medium",
-            css: {
-                fontSize: 12
-            },
-            href: `${blockExplorerBaseUrl}/tx/${stepData === null || stepData === void 0 ? void 0 : stepData.currentStepItem.txHash}`,
-            target: "_blank"
-        }, "View on", " ", ((_17 = activeChain === null || activeChain === void 0 ? void 0 : activeChain.blockExplorers) === null || _17 === void 0 ? void 0 : _17.default.name) || "Etherscan")), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            onClick: ()=>{
-                setOpen(false);
-            },
-            css: {
-                m: "$4"
-            }
-        }, "Close")));
+            }, [
+                cancelStep
+            ]);
+            (0, $bNXjM$useEffect)(()=>{
+                if (transactionError && onCancelError) {
+                    const data = {
+                        bid: bid,
+                        stepData: stepData
+                    };
+                    onCancelError(transactionError, data);
+                }
+            }, [
+                transactionError
+            ]);
+            const isBidAvailable = bid && (bid.status === "active" || bid.status === "inactive") && !loading;
+            return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $b86bf9f1e9f1a187$export$2b77a92f1a5ad772), {
+                trigger: trigger,
+                title: "Cancel Offer",
+                open: open,
+                onOpenChange: (open)=>{
+                    if (!open && onClose) {
+                        const data = {
+                            bid: bid,
+                            stepData: stepData
+                        };
+                        onClose(data, cancelStep);
+                    }
+                    setOpen(open);
+                },
+                loading: loading,
+                children: [
+                    !isBidAvailable && !loading && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        justify: "center",
+                        css: {
+                            px: "$4",
+                            py: "$6"
+                        },
+                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                            style: "h6",
+                            css: {
+                                textAlign: "center"
+                            },
+                            children: "Selected bid is no longer available"
+                        })
+                    }),
+                    isBidAvailable && cancelStep === (0, $a77cc70c3ee0a162$export$c5c5c857eaef0fde).Cancel && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        children: [
+                            transactionError && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                css: {
+                                    color: "$errorAccent",
+                                    p: "$4",
+                                    gap: "$2",
+                                    background: "$wellBackground"
+                                },
+                                align: "center",
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                        icon: (0, $bNXjM$faCircleExclamation),
+                                        width: 16,
+                                        height: 16
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "body2",
+                                        color: "errorLight",
+                                        children: transactionError.message
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                css: {
+                                    p: "$4",
+                                    borderBottom: "1px solid $borderColor"
+                                },
+                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bd031fc677b64fb0$export$2e2bcd8739ae039), {
+                                    img: bidImg,
+                                    name: bid?.criteria?.data?.token?.name,
+                                    price: bid?.price?.amount?.decimal,
+                                    usdPrice: totalUsd,
+                                    collection: bid?.criteria?.data?.collection?.name || "",
+                                    currencyContract: bid?.price?.currency?.contract,
+                                    currencyDecimals: bid?.price?.currency?.decimals,
+                                    expires: expires,
+                                    source: bid?.source?.icon || "",
+                                    isOffer: true
+                                })
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                style: "body3",
+                                color: "subtle",
+                                css: {
+                                    mt: "$3",
+                                    mr: "$3",
+                                    ml: "$3",
+                                    textAlign: "center"
+                                },
+                                children: "This will cancel your offer. You will be asked to confirm this cancelation from your wallet."
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                onClick: cancelOrder,
+                                css: {
+                                    m: "$4"
+                                },
+                                children: "Continue to Cancel"
+                            })
+                        ]
+                    }),
+                    cancelStep === (0, $a77cc70c3ee0a162$export$c5c5c857eaef0fde).Approving && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                css: {
+                                    p: "$4",
+                                    borderBottom: "1px solid $borderColor"
+                                },
+                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bd031fc677b64fb0$export$2e2bcd8739ae039), {
+                                    img: bidImg,
+                                    name: bid?.criteria?.data?.token?.name,
+                                    price: bid?.price?.amount?.decimal,
+                                    usdPrice: totalUsd,
+                                    collection: bid?.criteria?.data?.collection?.name || "",
+                                    currencyContract: bid?.price?.currency?.contract,
+                                    currencyDecimals: bid?.price?.currency?.decimals,
+                                    expires: expires,
+                                    source: bid?.source?.icon || "",
+                                    isOffer: true
+                                })
+                            }),
+                            !stepData && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $0ff8966798df47ad$export$2e2bcd8739ae039), {
+                                css: {
+                                    height: 206
+                                }
+                            }),
+                            stepData && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $168bea4f9c9e5bd1$export$2e2bcd8739ae039), {
+                                        title: stepData?.currentStepItem.txHash ? "Finalizing on blockchain" : "Confirm cancelation in your wallet",
+                                        txHash: stepData?.currentStepItem.txHash,
+                                        blockExplorerBaseUrl: `${blockExplorerBaseUrl}/tx/${stepData?.currentStepItem.txHash}`
+                                    }),
+                                    isAttributeOffer && !stepData?.currentStepItem.txHash && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        justify: "center",
+                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                            style: "body3",
+                                            color: "subtle",
+                                            css: {
+                                                maxWidth: 400,
+                                                textAlign: "center",
+                                                mx: "$3"
+                                            },
+                                            children: "This will cancel your offer on all items that were included in this attribute offer."
+                                        })
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                disabled: true,
+                                css: {
+                                    m: "$4"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $0ff8966798df47ad$export$2e2bcd8739ae039), {}),
+                                    stepData?.currentStepItem.txHash ? "Waiting for transaction to be validated" : "Waiting for approval..."
+                                ]
+                            })
+                        ]
+                    }),
+                    cancelStep === (0, $a77cc70c3ee0a162$export$c5c5c857eaef0fde).Complete && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                css: {
+                                    p: "$4",
+                                    py: "$5",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    textAlign: "center"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "h5",
+                                        css: {
+                                            mb: "$2"
+                                        },
+                                        children: "Offer Canceled!"
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "body3",
+                                        color: "subtle",
+                                        css: {
+                                            mb: 24
+                                        },
+                                        children: /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                                            children: [
+                                                "Your",
+                                                " ",
+                                                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                    style: "body3",
+                                                    color: "accent",
+                                                    children: bid?.source?.name
+                                                }),
+                                                " ",
+                                                "offer for",
+                                                " ",
+                                                /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                    style: "body3",
+                                                    color: "accent",
+                                                    children: [
+                                                        bid?.criteria?.data?.token?.name || bid?.criteria?.data?.collection?.name,
+                                                        " "
+                                                    ]
+                                                }),
+                                                "at ",
+                                                bid?.price?.amount?.decimal,
+                                                " ",
+                                                bid?.price?.currency?.symbol,
+                                                " has been canceled."
+                                            ]
+                                        })
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $31d3f3a80135a993$export$2e2bcd8739ae039), {
+                                        color: "primary",
+                                        weight: "medium",
+                                        css: {
+                                            fontSize: 12
+                                        },
+                                        href: `${blockExplorerBaseUrl}/tx/${stepData?.currentStepItem.txHash}`,
+                                        target: "_blank",
+                                        children: [
+                                            "View on",
+                                            " ",
+                                            activeChain?.blockExplorers?.default.name || "Etherscan"
+                                        ]
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                onClick: ()=>{
+                                    setOpen(false);
+                                },
+                                css: {
+                                    m: "$4"
+                                },
+                                children: "Close"
+                            })
+                        ]
+                    })
+                ]
+            });
+        }
     });
 }
-$59811dcd8bb1eb8e$export$89d1e00b7fa831db.Custom = (0, $2162ba735da1218d$export$d2f670ba420b64c2);
+$0e222eb8e6425c4a$export$89d1e00b7fa831db.Custom = (0, $a77cc70c3ee0a162$export$d2f670ba420b64c2);
 
 
 
@@ -8231,22 +9325,23 @@ $59811dcd8bb1eb8e$export$89d1e00b7fa831db.Custom = (0, $2162ba735da1218d$export$
 
 
 
-var $efe427dbb69e4848$export$c5c5c857eaef0fde;
+
+
+let $92f34bd13bb54e67$export$c5c5c857eaef0fde;
 (function(CancelStep) {
     CancelStep[CancelStep["Cancel"] = 0] = "Cancel";
     CancelStep[CancelStep["Approving"] = 1] = "Approving";
     CancelStep[CancelStep["Complete"] = 2] = "Complete";
-})($efe427dbb69e4848$export$c5c5c857eaef0fde || ($efe427dbb69e4848$export$c5c5c857eaef0fde = {}));
-const $efe427dbb69e4848$export$784ecbb108ae6a2c = ({ open: open , listingId: listingId , normalizeRoyalties: normalizeRoyalties , children: children  })=>{
-    var _a, _b, _c, _d, _e, _f;
+})($92f34bd13bb54e67$export$c5c5c857eaef0fde || ($92f34bd13bb54e67$export$c5c5c857eaef0fde = {}));
+const $92f34bd13bb54e67$export$784ecbb108ae6a2c = ({ open: open , listingId: listingId , normalizeRoyalties: normalizeRoyalties , children: children  })=>{
     const { data: signer  } = (0, $bNXjM$useSigner)();
-    const [cancelStep, setCancelStep] = (0, $bNXjM$useState)($efe427dbb69e4848$export$c5c5c857eaef0fde.Cancel);
+    const [cancelStep, setCancelStep] = (0, $bNXjM$useState)($92f34bd13bb54e67$export$c5c5c857eaef0fde.Cancel);
     const [transactionError, setTransactionError] = (0, $bNXjM$useState)();
     const [stepData, setStepData] = (0, $bNXjM$useState)(null);
     const [steps, setSteps] = (0, $bNXjM$useState)(null);
     const { chain: activeChain  } = (0, $bNXjM$useNetwork)();
-    const blockExplorerBaseUrl = ((_a = activeChain === null || activeChain === void 0 ? void 0 : activeChain.blockExplorers) === null || _a === void 0 ? void 0 : _a.default.url) || "https://etherscan.io";
-    const { data: listings , isFetchingPage: isFetchingPage  } = (0, $2c6663ee0e1f1b5c$export$2e2bcd8739ae039)({
+    const blockExplorerBaseUrl = activeChain?.blockExplorers?.default.url || "https://etherscan.io";
+    const { data: listings , isFetchingPage: isFetchingPage  } = (0, $40f16bae928ea461$export$2e2bcd8739ae039)({
         ids: listingId,
         normalizeRoyalties: normalizeRoyalties,
         includeCriteriaMetadata: true
@@ -8254,11 +9349,11 @@ const $efe427dbb69e4848$export$784ecbb108ae6a2c = ({ open: open , listingId: lis
         revalidateFirstPage: true
     }, open && listingId ? true : false);
     const listing = listings && listings[0] ? listings[0] : undefined;
-    const currency = (_b = listing === null || listing === void 0 ? void 0 : listing.price) === null || _b === void 0 ? void 0 : _b.currency;
-    const coinConversion = (0, $9f52dec49aff5538$export$2e2bcd8739ae039)(open && listing ? "USD" : undefined, currency === null || currency === void 0 ? void 0 : currency.symbol);
+    const currency = listing?.price?.currency;
+    const coinConversion = (0, $742accbc1cb453a5$export$2e2bcd8739ae039)(open && listing ? "USD" : undefined, currency?.symbol);
     const usdPrice = coinConversion !== undefined && coinConversion !== null ? Number(coinConversion) : 0;
-    const totalUsd = usdPrice * (((_d = (_c = listing === null || listing === void 0 ? void 0 : listing.price) === null || _c === void 0 ? void 0 : _c.amount) === null || _d === void 0 ? void 0 : _d.decimal) || 0);
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
+    const totalUsd = usdPrice * (listing?.price?.amount?.decimal || 0);
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
     const cancelOrder = (0, $bNXjM$useCallback)(()=>{
         if (!signer) {
             const error = new Error("Missing a signer");
@@ -8275,7 +9370,7 @@ const $efe427dbb69e4848$export$784ecbb108ae6a2c = ({ open: open , listingId: lis
             setTransactionError(error);
             throw error;
         }
-        setCancelStep($efe427dbb69e4848$export$c5c5c857eaef0fde.Approving);
+        setCancelStep($92f34bd13bb54e67$export$c5c5c857eaef0fde.Approving);
         client.actions.cancelOrder({
             id: listingId,
             signer: signer,
@@ -8286,8 +9381,7 @@ const $efe427dbb69e4848$export$784ecbb108ae6a2c = ({ open: open , listingId: lis
                 let stepCount = executableSteps.length;
                 let currentStepItem;
                 const currentStepIndex = executableSteps.findIndex((step)=>{
-                    var _a;
-                    currentStepItem = (_a = step.items) === null || _a === void 0 ? void 0 : _a.find((item)=>item.status === "incomplete");
+                    currentStepItem = step.items?.find((item)=>item.status === "incomplete");
                     return currentStepItem;
                 });
                 const currentStep = currentStepIndex > -1 ? executableSteps[currentStepIndex] : executableSteps[stepCount - 1];
@@ -8297,10 +9391,7 @@ const $efe427dbb69e4848$export$784ecbb108ae6a2c = ({ open: open , listingId: lis
                     currentStep: currentStep,
                     currentStepItem: currentStepItem
                 });
-                else if (steps.every((step)=>{
-                    var _a;
-                    return !step.items || step.items.length == 0 || ((_a = step.items) === null || _a === void 0 ? void 0 : _a.every((item)=>item.status === "complete"));
-                })) setCancelStep($efe427dbb69e4848$export$c5c5c857eaef0fde.Complete);
+                else if (steps.every((step)=>!step.items || step.items.length == 0 || step.items?.every((item)=>item.status === "complete"))) setCancelStep($92f34bd13bb54e67$export$c5c5c857eaef0fde.Complete);
             }
         }).catch((e)=>{
             const error = e;
@@ -8310,7 +9401,7 @@ const $efe427dbb69e4848$export$784ecbb108ae6a2c = ({ open: open , listingId: lis
                 cause: error
             });
             setTransactionError(transactionError);
-            setCancelStep($efe427dbb69e4848$export$c5c5c857eaef0fde.Cancel);
+            setCancelStep($92f34bd13bb54e67$export$c5c5c857eaef0fde.Cancel);
             setStepData(null);
             setSteps(null);
         });
@@ -8321,7 +9412,7 @@ const $efe427dbb69e4848$export$784ecbb108ae6a2c = ({ open: open , listingId: lis
     ]);
     (0, $bNXjM$useEffect)(()=>{
         if (!open) {
-            setCancelStep($efe427dbb69e4848$export$c5c5c857eaef0fde.Cancel);
+            setCancelStep($92f34bd13bb54e67$export$c5c5c857eaef0fde.Cancel);
             setTransactionError(null);
             setStepData(null);
             setSteps(null);
@@ -8329,23 +9420,25 @@ const $efe427dbb69e4848$export$784ecbb108ae6a2c = ({ open: open , listingId: lis
     }, [
         open
     ]);
-    const tokenId = (_e = listing === null || listing === void 0 ? void 0 : listing.tokenSetId) === null || _e === void 0 ? void 0 : _e.split(":")[2];
-    const contract = (_f = listing === null || listing === void 0 ? void 0 : listing.tokenSetId) === null || _f === void 0 ? void 0 : _f.split(":")[1];
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, children({
-        loading: isFetchingPage !== undefined ? isFetchingPage : true,
-        listing: listing,
-        tokenId: tokenId,
-        contract: contract,
-        cancelStep: cancelStep,
-        transactionError: transactionError,
-        usdPrice: usdPrice,
-        totalUsd: totalUsd,
-        blockExplorerBaseUrl: blockExplorerBaseUrl,
-        steps: steps,
-        stepData: stepData,
-        setCancelStep: setCancelStep,
-        cancelOrder: cancelOrder
-    }));
+    const tokenId = listing?.tokenSetId?.split(":")[2];
+    const contract = listing?.tokenSetId?.split(":")[1];
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$Fragment), {
+        children: children({
+            loading: isFetchingPage !== undefined ? isFetchingPage : true,
+            listing: listing,
+            tokenId: tokenId,
+            contract: contract,
+            cancelStep: cancelStep,
+            transactionError: transactionError,
+            usdPrice: usdPrice,
+            totalUsd: totalUsd,
+            blockExplorerBaseUrl: blockExplorerBaseUrl,
+            steps: steps,
+            stepData: stepData,
+            setCancelStep: setCancelStep,
+            cancelOrder: cancelOrder
+        })
+    });
 };
 
 
@@ -8355,198 +9448,271 @@ const $efe427dbb69e4848$export$784ecbb108ae6a2c = ({ open: open , listingId: lis
 
 
 
-function $c5210bf23d1c52b3$export$5ccdc2f8532db25b({ openState: openState , listingId: listingId , trigger: trigger , normalizeRoyalties: normalizeRoyalties , onClose: onClose , onCancelComplete: onCancelComplete , onCancelError: onCancelError  }) {
-    const [open, setOpen] = (0, $eae8553d9b344d57$export$2e2bcd8739ae039)(openState ? openState[0] : false, openState);
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
+function $93ba2f12ea89aa2b$export$5ccdc2f8532db25b({ openState: openState , listingId: listingId , trigger: trigger , normalizeRoyalties: normalizeRoyalties , onClose: onClose , onCancelComplete: onCancelComplete , onCancelError: onCancelError  }) {
+    const [open, setOpen] = (0, $d115e0b00eaf4565$export$2e2bcd8739ae039)(openState ? openState[0] : false, openState);
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
     const { chain: activeChain  } = (0, $bNXjM$useNetwork)();
-    const reservoirChain = client === null || client === void 0 ? void 0 : client.currentChain();
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $efe427dbb69e4848$export$784ecbb108ae6a2c), {
+    const reservoirChain = client?.currentChain();
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $92f34bd13bb54e67$export$784ecbb108ae6a2c), {
         listingId: listingId,
         open: open,
-        normalizeRoyalties: normalizeRoyalties
-    }, ({ loading: loading , listing: listing , tokenId: tokenId , contract: contract , cancelStep: cancelStep , transactionError: transactionError , stepData: stepData , totalUsd: totalUsd , blockExplorerBaseUrl: blockExplorerBaseUrl , cancelOrder: cancelOrder  })=>{
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13;
-        const expires = (0, $59ff1a3b34f7a14d$export$2e2bcd8739ae039)(listing === null || listing === void 0 ? void 0 : listing.expiration);
-        const listingImg = tokenId ? `${reservoirChain === null || reservoirChain === void 0 ? void 0 : reservoirChain.baseApiUrl}/redirect/tokens/${contract}:${tokenId}/image/v1` : `${reservoirChain === null || reservoirChain === void 0 ? void 0 : reservoirChain.baseApiUrl}/redirect/collections/${contract}/image/v1`;
-        (0, $bNXjM$useEffect)(()=>{
-            if (cancelStep === (0, $efe427dbb69e4848$export$c5c5c857eaef0fde).Complete && onCancelComplete) {
-                const data = {
-                    listing: listing,
-                    stepData: stepData
-                };
-                onCancelComplete(data);
-            }
-        }, [
-            cancelStep
-        ]);
-        (0, $bNXjM$useEffect)(()=>{
-            if (transactionError && onCancelError) {
-                const data = {
-                    listing: listing,
-                    stepData: stepData
-                };
-                onCancelError(transactionError, data);
-            }
-        }, [
-            transactionError
-        ]);
-        const isListingAvailable = listing && (listing.status === "active" || listing.status === "inactive") && !loading;
-        return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $32de3362490c9117$export$2b77a92f1a5ad772), {
-            trigger: trigger,
-            title: "Cancel Listing",
-            open: open,
-            onOpenChange: (open)=>{
-                if (!open && onClose) {
+        normalizeRoyalties: normalizeRoyalties,
+        children: ({ loading: loading , listing: listing , tokenId: tokenId , contract: contract , cancelStep: cancelStep , transactionError: transactionError , stepData: stepData , totalUsd: totalUsd , blockExplorerBaseUrl: blockExplorerBaseUrl , cancelOrder: cancelOrder  })=>{
+            const expires = (0, $c952bf73c842abfc$export$2e2bcd8739ae039)(listing?.expiration);
+            const listingImg = tokenId ? `${reservoirChain?.baseApiUrl}/redirect/tokens/${contract}:${tokenId}/image/v1` : `${reservoirChain?.baseApiUrl}/redirect/collections/${contract}/image/v1`;
+            (0, $bNXjM$useEffect)(()=>{
+                if (cancelStep === (0, $92f34bd13bb54e67$export$c5c5c857eaef0fde).Complete && onCancelComplete) {
                     const data = {
                         listing: listing,
                         stepData: stepData
                     };
-                    onClose(data, cancelStep);
+                    onCancelComplete(data);
                 }
-                setOpen(open);
-            },
-            loading: loading
-        }, !isListingAvailable && !loading && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column",
-            justify: "center",
-            css: {
-                px: "$4",
-                py: "$6"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "h6",
-            css: {
-                textAlign: "center"
-            }
-        }, "Selected listing is no longer available")), isListingAvailable && cancelStep === (0, $efe427dbb69e4848$export$c5c5c857eaef0fde).Cancel && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column"
-        }, transactionError && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                color: "$errorAccent",
-                p: "$4",
-                gap: "$2",
-                background: "$wellBackground"
-            },
-            align: "center"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faCircleExclamation),
-            width: 16,
-            height: 16
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body2",
-            color: "errorLight"
-        }, transactionError.message)), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                borderBottom: "1px solid $borderColor"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6b8b18ed6981903c$export$2e2bcd8739ae039), {
-            img: listingImg,
-            name: (_c = (_b = (_a = listing.criteria) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.token) === null || _c === void 0 ? void 0 : _c.name,
-            price: (_e = (_d = listing === null || listing === void 0 ? void 0 : listing.price) === null || _d === void 0 ? void 0 : _d.amount) === null || _e === void 0 ? void 0 : _e.decimal,
-            usdPrice: totalUsd,
-            collection: ((_h = (_g = (_f = listing.criteria) === null || _f === void 0 ? void 0 : _f.data) === null || _g === void 0 ? void 0 : _g.collection) === null || _h === void 0 ? void 0 : _h.name) || "",
-            currencyContract: (_k = (_j = listing.price) === null || _j === void 0 ? void 0 : _j.currency) === null || _k === void 0 ? void 0 : _k.contract,
-            currencyDecimals: (_m = (_l = listing === null || listing === void 0 ? void 0 : listing.price) === null || _l === void 0 ? void 0 : _l.currency) === null || _m === void 0 ? void 0 : _m.decimals,
-            expires: expires,
-            source: ((_o = listing === null || listing === void 0 ? void 0 : listing.source) === null || _o === void 0 ? void 0 : _o.icon) || ""
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body3",
-            color: "subtle",
-            css: {
-                mt: "$3",
-                mr: "$3",
-                ml: "$3",
-                textAlign: "center"
-            }
-        }, "This will cancel your listing. You will be asked to confirm this cancelation from your wallet."), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            onClick: cancelOrder,
-            css: {
-                m: "$4"
-            }
-        }, "Continue to Cancel")), cancelStep === (0, $efe427dbb69e4848$export$c5c5c857eaef0fde).Approving && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                borderBottom: "1px solid $borderColor"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6b8b18ed6981903c$export$2e2bcd8739ae039), {
-            img: listingImg,
-            name: (_r = (_q = (_p = listing === null || listing === void 0 ? void 0 : listing.criteria) === null || _p === void 0 ? void 0 : _p.data) === null || _q === void 0 ? void 0 : _q.token) === null || _r === void 0 ? void 0 : _r.name,
-            price: (_t = (_s = listing === null || listing === void 0 ? void 0 : listing.price) === null || _s === void 0 ? void 0 : _s.amount) === null || _t === void 0 ? void 0 : _t.decimal,
-            usdPrice: totalUsd,
-            collection: ((_w = (_v = (_u = listing === null || listing === void 0 ? void 0 : listing.criteria) === null || _u === void 0 ? void 0 : _u.data) === null || _v === void 0 ? void 0 : _v.collection) === null || _w === void 0 ? void 0 : _w.name) || "",
-            currencyContract: (_y = (_x = listing === null || listing === void 0 ? void 0 : listing.price) === null || _x === void 0 ? void 0 : _x.currency) === null || _y === void 0 ? void 0 : _y.contract,
-            currencyDecimals: (_0 = (_z = listing === null || listing === void 0 ? void 0 : listing.price) === null || _z === void 0 ? void 0 : _z.currency) === null || _0 === void 0 ? void 0 : _0.decimals,
-            expires: expires,
-            source: ((_1 = listing === null || listing === void 0 ? void 0 : listing.source) === null || _1 === void 0 ? void 0 : _1.icon) || ""
-        })), !stepData && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0c83fbef8350e27e$export$2e2bcd8739ae039), {
-            css: {
-                height: 206
-            }
-        }), stepData && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $914dcae46ee80bba$export$2e2bcd8739ae039), {
-            title: (stepData === null || stepData === void 0 ? void 0 : stepData.currentStepItem.txHash) ? "Finalizing on blockchain" : "Confirm cancelation in your wallet",
-            txHash: stepData === null || stepData === void 0 ? void 0 : stepData.currentStepItem.txHash,
-            blockExplorerBaseUrl: `${blockExplorerBaseUrl}/tx/${stepData === null || stepData === void 0 ? void 0 : stepData.currentStepItem.txHash}`
-        })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            disabled: true,
-            css: {
-                m: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0c83fbef8350e27e$export$2e2bcd8739ae039), null), (stepData === null || stepData === void 0 ? void 0 : stepData.currentStepItem.txHash) ? "Waiting for transaction to be validated" : "Waiting for approval...")), cancelStep === (0, $efe427dbb69e4848$export$c5c5c857eaef0fde).Complete && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column"
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                p: "$4",
-                py: "$5",
-                flexDirection: "column",
-                alignItems: "center",
-                textAlign: "center"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "h5",
-            css: {
-                mb: "$2"
-            }
-        }, "Listing Canceled!"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body3",
-            color: "subtle",
-            css: {
-                mb: 24
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, "Your", " ", /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body3",
-            color: "accent"
-        }, (_2 = listing === null || listing === void 0 ? void 0 : listing.source) === null || _2 === void 0 ? void 0 : _2.name), " ", "listing for", " ", /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body3",
-            color: "accent"
-        }, ((_5 = (_4 = (_3 = listing === null || listing === void 0 ? void 0 : listing.criteria) === null || _3 === void 0 ? void 0 : _3.data) === null || _4 === void 0 ? void 0 : _4.token) === null || _5 === void 0 ? void 0 : _5.name) || ((_8 = (_7 = (_6 = listing === null || listing === void 0 ? void 0 : listing.criteria) === null || _6 === void 0 ? void 0 : _6.data) === null || _7 === void 0 ? void 0 : _7.collection) === null || _8 === void 0 ? void 0 : _8.name), " "), "at ", (_10 = (_9 = listing === null || listing === void 0 ? void 0 : listing.price) === null || _9 === void 0 ? void 0 : _9.amount) === null || _10 === void 0 ? void 0 : _10.decimal, " ", (_12 = (_11 = listing === null || listing === void 0 ? void 0 : listing.price) === null || _11 === void 0 ? void 0 : _11.currency) === null || _12 === void 0 ? void 0 : _12.symbol, " has been canceled.")), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4fb5cf8c028cd3ca$export$2e2bcd8739ae039), {
-            color: "primary",
-            weight: "medium",
-            css: {
-                fontSize: 12
-            },
-            href: `${blockExplorerBaseUrl}/tx/${stepData === null || stepData === void 0 ? void 0 : stepData.currentStepItem.txHash}`,
-            target: "_blank"
-        }, "View on", " ", ((_13 = activeChain === null || activeChain === void 0 ? void 0 : activeChain.blockExplorers) === null || _13 === void 0 ? void 0 : _13.default.name) || "Etherscan")), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            onClick: ()=>{
-                setOpen(false);
-            },
-            css: {
-                m: "$4"
-            }
-        }, "Close")));
+            }, [
+                cancelStep
+            ]);
+            (0, $bNXjM$useEffect)(()=>{
+                if (transactionError && onCancelError) {
+                    const data = {
+                        listing: listing,
+                        stepData: stepData
+                    };
+                    onCancelError(transactionError, data);
+                }
+            }, [
+                transactionError
+            ]);
+            const isListingAvailable = listing && (listing.status === "active" || listing.status === "inactive") && !loading;
+            return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $b86bf9f1e9f1a187$export$2b77a92f1a5ad772), {
+                trigger: trigger,
+                title: "Cancel Listing",
+                open: open,
+                onOpenChange: (open)=>{
+                    if (!open && onClose) {
+                        const data = {
+                            listing: listing,
+                            stepData: stepData
+                        };
+                        onClose(data, cancelStep);
+                    }
+                    setOpen(open);
+                },
+                loading: loading,
+                children: [
+                    !isListingAvailable && !loading && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        justify: "center",
+                        css: {
+                            px: "$4",
+                            py: "$6"
+                        },
+                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                            style: "h6",
+                            css: {
+                                textAlign: "center"
+                            },
+                            children: "Selected listing is no longer available"
+                        })
+                    }),
+                    isListingAvailable && cancelStep === (0, $92f34bd13bb54e67$export$c5c5c857eaef0fde).Cancel && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        children: [
+                            transactionError && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                css: {
+                                    color: "$errorAccent",
+                                    p: "$4",
+                                    gap: "$2",
+                                    background: "$wellBackground"
+                                },
+                                align: "center",
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                        icon: (0, $bNXjM$faCircleExclamation),
+                                        width: 16,
+                                        height: 16
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "body2",
+                                        color: "errorLight",
+                                        children: transactionError.message
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                css: {
+                                    p: "$4",
+                                    borderBottom: "1px solid $borderColor"
+                                },
+                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bd031fc677b64fb0$export$2e2bcd8739ae039), {
+                                    img: listingImg,
+                                    name: listing.criteria?.data?.token?.name,
+                                    price: listing?.price?.amount?.decimal,
+                                    usdPrice: totalUsd,
+                                    collection: listing.criteria?.data?.collection?.name || "",
+                                    currencyContract: listing.price?.currency?.contract,
+                                    currencyDecimals: listing?.price?.currency?.decimals,
+                                    expires: expires,
+                                    source: listing?.source?.icon || ""
+                                })
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                style: "body3",
+                                color: "subtle",
+                                css: {
+                                    mt: "$3",
+                                    mr: "$3",
+                                    ml: "$3",
+                                    textAlign: "center"
+                                },
+                                children: "This will cancel your listing. You will be asked to confirm this cancelation from your wallet."
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                onClick: cancelOrder,
+                                css: {
+                                    m: "$4"
+                                },
+                                children: "Continue to Cancel"
+                            })
+                        ]
+                    }),
+                    cancelStep === (0, $92f34bd13bb54e67$export$c5c5c857eaef0fde).Approving && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                                css: {
+                                    p: "$4",
+                                    borderBottom: "1px solid $borderColor"
+                                },
+                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bd031fc677b64fb0$export$2e2bcd8739ae039), {
+                                    img: listingImg,
+                                    name: listing?.criteria?.data?.token?.name,
+                                    price: listing?.price?.amount?.decimal,
+                                    usdPrice: totalUsd,
+                                    collection: listing?.criteria?.data?.collection?.name || "",
+                                    currencyContract: listing?.price?.currency?.contract,
+                                    currencyDecimals: listing?.price?.currency?.decimals,
+                                    expires: expires,
+                                    source: listing?.source?.icon || ""
+                                })
+                            }),
+                            !stepData && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $0ff8966798df47ad$export$2e2bcd8739ae039), {
+                                css: {
+                                    height: 206
+                                }
+                            }),
+                            stepData && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$Fragment), {
+                                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $168bea4f9c9e5bd1$export$2e2bcd8739ae039), {
+                                    title: stepData?.currentStepItem.txHash ? "Finalizing on blockchain" : "Confirm cancelation in your wallet",
+                                    txHash: stepData?.currentStepItem.txHash,
+                                    blockExplorerBaseUrl: `${blockExplorerBaseUrl}/tx/${stepData?.currentStepItem.txHash}`
+                                })
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                disabled: true,
+                                css: {
+                                    m: "$4"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $0ff8966798df47ad$export$2e2bcd8739ae039), {}),
+                                    stepData?.currentStepItem.txHash ? "Waiting for transaction to be validated" : "Waiting for approval..."
+                                ]
+                            })
+                        ]
+                    }),
+                    cancelStep === (0, $92f34bd13bb54e67$export$c5c5c857eaef0fde).Complete && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        direction: "column",
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                css: {
+                                    p: "$4",
+                                    py: "$5",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    textAlign: "center"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "h5",
+                                        css: {
+                                            mb: "$2"
+                                        },
+                                        children: "Listing Canceled!"
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "body3",
+                                        color: "subtle",
+                                        css: {
+                                            mb: 24
+                                        },
+                                        children: /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $bNXjM$Fragment), {
+                                            children: [
+                                                "Your",
+                                                " ",
+                                                /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                    style: "body3",
+                                                    color: "accent",
+                                                    children: listing?.source?.name
+                                                }),
+                                                " ",
+                                                "listing for",
+                                                " ",
+                                                /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                    style: "body3",
+                                                    color: "accent",
+                                                    children: [
+                                                        listing?.criteria?.data?.token?.name || listing?.criteria?.data?.collection?.name,
+                                                        " "
+                                                    ]
+                                                }),
+                                                "at ",
+                                                listing?.price?.amount?.decimal,
+                                                " ",
+                                                listing?.price?.currency?.symbol,
+                                                " has been canceled."
+                                            ]
+                                        })
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $31d3f3a80135a993$export$2e2bcd8739ae039), {
+                                        color: "primary",
+                                        weight: "medium",
+                                        css: {
+                                            fontSize: 12
+                                        },
+                                        href: `${blockExplorerBaseUrl}/tx/${stepData?.currentStepItem.txHash}`,
+                                        target: "_blank",
+                                        children: [
+                                            "View on",
+                                            " ",
+                                            activeChain?.blockExplorers?.default.name || "Etherscan"
+                                        ]
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                onClick: ()=>{
+                                    setOpen(false);
+                                },
+                                css: {
+                                    m: "$4"
+                                },
+                                children: "Close"
+                            })
+                        ]
+                    })
+                ]
+            });
+        }
     });
 }
-$c5210bf23d1c52b3$export$5ccdc2f8532db25b.Custom = (0, $efe427dbb69e4848$export$784ecbb108ae6a2c);
+$93ba2f12ea89aa2b$export$5ccdc2f8532db25b.Custom = (0, $92f34bd13bb54e67$export$784ecbb108ae6a2c);
 
 
 
 
 
-let $ca93d88a5126365d$var$modelViewerInjected = false;
-const $ca93d88a5126365d$var$importScript = (src)=>{
+
+let $34d36a7c680f3f16$var$modelViewerInjected = false;
+const $34d36a7c680f3f16$var$importScript = (src)=>{
     if (document) {
         const script = document.createElement("script");
         script.async = true;
@@ -8555,17 +9721,17 @@ const $ca93d88a5126365d$var$importScript = (src)=>{
         document.body.appendChild(script);
     }
 };
-const $ca93d88a5126365d$var$useModelViewer = (enabled)=>{
+const $34d36a7c680f3f16$var$useModelViewer = (enabled)=>{
     (0, $bNXjM$useEffect)(()=>{
-        if (enabled && !$ca93d88a5126365d$var$modelViewerInjected) {
-            $ca93d88a5126365d$var$modelViewerInjected = true;
-            $ca93d88a5126365d$var$importScript("https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js");
+        if (enabled && !$34d36a7c680f3f16$var$modelViewerInjected) {
+            $34d36a7c680f3f16$var$modelViewerInjected = true;
+            $34d36a7c680f3f16$var$importScript("https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js");
         }
     }, [
         enabled
     ]);
 };
-var $ca93d88a5126365d$export$2e2bcd8739ae039 = $ca93d88a5126365d$var$useModelViewer;
+var $34d36a7c680f3f16$export$2e2bcd8739ae039 = $34d36a7c680f3f16$var$useModelViewer;
 
 
 
@@ -8574,7 +9740,8 @@ var $ca93d88a5126365d$export$2e2bcd8739ae039 = $ca93d88a5126365d$var$useModelVie
 
 
 
-const $bb281b66815ebd2e$var$MediaPlayButton = ({ mediaRef: mediaRef  })=>{
+
+const $612d895dc0e4af81$var$MediaPlayButton = ({ mediaRef: mediaRef  })=>{
     const [playing, setPlaying] = (0, $bNXjM$useState)(false);
     (0, $bNXjM$useEffect)(()=>{
         if (mediaRef.current) {
@@ -8594,7 +9761,7 @@ const $bb281b66815ebd2e$var$MediaPlayButton = ({ mediaRef: mediaRef  })=>{
     }, [
         mediaRef
     ]);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
         css: {
             zIndex: 5,
             position: "absolute",
@@ -8620,14 +9787,15 @@ const $bb281b66815ebd2e$var$MediaPlayButton = ({ mediaRef: mediaRef  })=>{
                 if (mediaRef.current.paused) mediaRef.current.play();
                 else mediaRef.current.pause();
             }
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        icon: playing ? (0, $bNXjM$faPause) : (0, $bNXjM$faPlay),
-        width: 24,
-        height: 24
-    }));
+        },
+        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+            icon: playing ? (0, $bNXjM$faPause) : (0, $bNXjM$faPlay),
+            width: 24,
+            height: 24
+        })
+    });
 };
-var $bb281b66815ebd2e$export$2e2bcd8739ae039 = $bb281b66815ebd2e$var$MediaPlayButton;
+var $612d895dc0e4af81$export$2e2bcd8739ae039 = $612d895dc0e4af81$var$MediaPlayButton;
 
 
 
@@ -8635,11 +9803,11 @@ var $bb281b66815ebd2e$export$2e2bcd8739ae039 = $bb281b66815ebd2e$var$MediaPlayBu
 
 
 
-const $abe685c09335c99c$var$TokenFallback = ({ style: style , className: className , token: token , chainId: chainId , onRefreshClicked: onRefreshClicked  })=>{
-    var _a, _b;
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const reservoirChain = chainId ? client === null || client === void 0 ? void 0 : client.chains.find((chain)=>chain.id === chainId) : client === null || client === void 0 ? void 0 : client.currentChain();
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+
+const $10d057445baf6773$var$TokenFallback = ({ style: style , className: className , token: token , chainId: chainId , onRefreshClicked: onRefreshClicked  })=>{
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const reservoirChain = chainId ? client?.chains.find((chain)=>chain.id === chainId) : client?.currentChain();
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         justify: "center",
         align: "center",
         direction: "column",
@@ -8649,50 +9817,56 @@ const $abe685c09335c99c$var$TokenFallback = ({ style: style , className: classNa
             p: "$2",
             ...style
         },
-        className: className
-    }, ((_a = token === null || token === void 0 ? void 0 : token.collection) === null || _a === void 0 ? void 0 : _a.image) && /*#__PURE__*/ (0, $bNXjM$react).createElement("img", {
-        style: {
-            width: 64,
-            height: 64,
-            objectFit: "cover",
-            borderRadius: 8
-        },
-        src: (_b = token === null || token === void 0 ? void 0 : token.collection) === null || _b === void 0 ? void 0 : _b.image
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "body3",
-        css: {
-            textAlign: "center"
-        }
-    }, "No Content Available"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-        color: "secondary",
-        onClick: ()=>{
-            var _a;
-            if (!reservoirChain) throw "ZooClient missing chain configuration";
-            onRefreshClicked();
-            const url = `${reservoirChain === null || reservoirChain === void 0 ? void 0 : reservoirChain.baseApiUrl}/tokens/refresh/v1`;
-            const body = {
-                token: `${(_a = token === null || token === void 0 ? void 0 : token.collection) === null || _a === void 0 ? void 0 : _a.id}:${token === null || token === void 0 ? void 0 : token.tokenId}`
-            };
-            const headers = {
-                ...(0, $b1c8a39eb43ca2af$export$a6f1ecf08e412113)(reservoirChain === null || reservoirChain === void 0 ? void 0 : reservoirChain.apiKey, client === null || client === void 0 ? void 0 : client.version),
-                "Content-Type": "application/json"
-            };
-            fetch(url, {
-                headers: headers,
-                method: "POST",
-                body: JSON.stringify(body)
-            }).then((res)=>res.json()).catch((e)=>{
-                throw e;
-            });
-        }
-    }, "Refresh"));
+        className: className,
+        children: [
+            token?.collection?.image && /*#__PURE__*/ (0, $bNXjM$jsx)("img", {
+                style: {
+                    width: 64,
+                    height: 64,
+                    objectFit: "cover",
+                    borderRadius: 8
+                },
+                src: token?.collection?.image
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                style: "body3",
+                css: {
+                    textAlign: "center"
+                },
+                children: "No Content Available"
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                color: "secondary",
+                onClick: ()=>{
+                    if (!reservoirChain) throw "ZooClient missing chain configuration";
+                    onRefreshClicked();
+                    const url = `${reservoirChain?.baseApiUrl}/tokens/refresh/v1`;
+                    const body = {
+                        token: `${token?.collection?.id}:${token?.tokenId}`
+                    };
+                    const headers = {
+                        ...(0, $0a64ae8247e4abb5$export$a6f1ecf08e412113)(reservoirChain?.apiKey, client?.version),
+                        "Content-Type": "application/json"
+                    };
+                    fetch(url, {
+                        headers: headers,
+                        method: "POST",
+                        body: JSON.stringify(body)
+                    }).then((res)=>res.json()).catch((e)=>{
+                        throw e;
+                    });
+                },
+                children: "Refresh"
+            })
+        ]
+    });
 };
-var $abe685c09335c99c$export$2e2bcd8739ae039 = $abe685c09335c99c$var$TokenFallback;
+var $10d057445baf6773$export$2e2bcd8739ae039 = $10d057445baf6773$var$TokenFallback;
 
 
-const $5f886409e3581c27$export$b7d45a46da28b4d3 = (token)=>{
+const $965711be26a09bce$export$b7d45a46da28b4d3 = (token)=>{
     let extension = null;
-    if (token === null || token === void 0 ? void 0 : token.media) {
+    if (token?.media) {
         const pieces = token.media.split("/");
         const file = pieces && pieces[pieces.length - 1] ? pieces[pieces.length - 1] : null;
         const matches = file ? file.match("(\\.[^.]+)$") : null;
@@ -8700,15 +9874,14 @@ const $5f886409e3581c27$export$b7d45a46da28b4d3 = (token)=>{
     }
     return extension ? extension : null;
 };
-const $5f886409e3581c27$var$TokenMedia = ({ preview: preview , token: token , style: style , className: className , modelViewerOptions: modelViewerOptions = {} , videoOptions: videoOptions = {} , audioOptions: audioOptions = {} , iframeOptions: iframeOptions = {} , fallback: fallback , onError: onError = ()=>{} , onRefreshToken: onRefreshToken = ()=>{}  })=>{
-    var _a, _b;
+const $965711be26a09bce$var$TokenMedia = ({ preview: preview , token: token , style: style , className: className , modelViewerOptions: modelViewerOptions = {} , videoOptions: videoOptions = {} , audioOptions: audioOptions = {} , iframeOptions: iframeOptions = {} , fallback: fallback , onError: onError = ()=>{} , onRefreshToken: onRefreshToken = ()=>{}  })=>{
     const mediaRef = (0, $bNXjM$useRef)(null);
-    const themeContext = (0, $bNXjM$useContext)((0, $b02c8f73abc110da$export$2c657da244d00bd6));
-    let borderRadius = ((_b = (_a = themeContext === null || themeContext === void 0 ? void 0 : themeContext.radii) === null || _a === void 0 ? void 0 : _a.borderRadius) === null || _b === void 0 ? void 0 : _b.value) || "0";
+    const themeContext = (0, $bNXjM$useContext)((0, $b15843e937ac72b8$export$2c657da244d00bd6));
+    let borderRadius = themeContext?.radii?.borderRadius?.value || "0";
     const [error, setError] = (0, $bNXjM$useState)(null);
-    const media = token === null || token === void 0 ? void 0 : token.media;
-    const tokenPreview = token === null || token === void 0 ? void 0 : token.image;
-    const mediaType = $5f886409e3581c27$export$b7d45a46da28b4d3(token);
+    const media = token?.media;
+    const tokenPreview = token?.image;
+    const mediaType = $965711be26a09bce$export$b7d45a46da28b4d3(token);
     const defaultStyle = {
         width: "150px",
         height: "150px",
@@ -8720,9 +9893,9 @@ const $5f886409e3581c27$var$TokenMedia = ({ preview: preview , token: token , st
         ...defaultStyle,
         ...style
     };
-    (0, $ca93d88a5126365d$export$2e2bcd8739ae039)(!preview && mediaType && (mediaType === "gltf" || mediaType === "glb") ? true : false);
+    (0, $34d36a7c680f3f16$export$2e2bcd8739ae039)(!preview && mediaType && (mediaType === "gltf" || mediaType === "glb") ? true : false);
     const [measurements, containerRef] = (0, $bNXjM$useMeasure)();
-    const isContainerLarge = ((measurements === null || measurements === void 0 ? void 0 : measurements.width) || 0) >= 360;
+    const isContainerLarge = (measurements?.width || 0) >= 360;
     if (!token && !preview) {
         console.warn("A token object or a media url are required!");
         return null;
@@ -8730,7 +9903,7 @@ const $5f886409e3581c27$var$TokenMedia = ({ preview: preview , token: token , st
     if (error || !media && !tokenPreview) {
         let fallbackElement;
         if (fallback) fallbackElement = fallback(mediaType);
-        if (!fallbackElement) fallbackElement = /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $abe685c09335c99c$export$2e2bcd8739ae039), {
+        if (!fallbackElement) fallbackElement = /*#__PURE__*/ (0, $bNXjM$jsx)((0, $10d057445baf6773$export$2e2bcd8739ae039), {
             style: style,
             className: className,
             token: token,
@@ -8742,7 +9915,7 @@ const $5f886409e3581c27$var$TokenMedia = ({ preview: preview , token: token , st
         setError(e);
         onError(e.nativeEvent);
     };
-    if (preview || !media) return /*#__PURE__*/ (0, $bNXjM$react).createElement("img", {
+    if (preview || !media) return /*#__PURE__*/ (0, $bNXjM$jsx)("img", {
         alt: "Token Image",
         src: tokenPreview,
         style: {
@@ -8753,59 +9926,83 @@ const $5f886409e3581c27$var$TokenMedia = ({ preview: preview , token: token , st
         onError: onErrorCb
     });
     // VIDEO
-    if (mediaType === "mp4") return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
+    if (mediaType === "mp4") return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
         className: className,
         style: computedStyle,
-        ref: containerRef
-    }, !isContainerLarge && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bb281b66815ebd2e$export$2e2bcd8739ae039), {
-        mediaRef: mediaRef
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("video", {
-        style: computedStyle,
-        className: className,
-        poster: tokenPreview,
-        ...videoOptions,
-        controls: isContainerLarge,
-        loop: true,
-        playsInline: true,
-        onError: onErrorCb,
-        ref: mediaRef
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement("source", {
-        src: media,
-        type: "video/mp4"
-    }), "Your browser does not support the", /*#__PURE__*/ (0, $bNXjM$react).createElement("code", null, "video"), " element."));
+        ref: containerRef,
+        children: [
+            !isContainerLarge && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $612d895dc0e4af81$export$2e2bcd8739ae039), {
+                mediaRef: mediaRef
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsxs)("video", {
+                style: computedStyle,
+                className: className,
+                poster: tokenPreview,
+                ...videoOptions,
+                controls: isContainerLarge,
+                loop: true,
+                playsInline: true,
+                onError: onErrorCb,
+                ref: mediaRef,
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)("source", {
+                        src: media,
+                        type: "video/mp4"
+                    }),
+                    "Your browser does not support the",
+                    /*#__PURE__*/ (0, $bNXjM$jsx)("code", {
+                        children: "video"
+                    }),
+                    " element."
+                ]
+            })
+        ]
+    });
     // AUDIO
-    if (mediaType === "wav" || mediaType === "mp3") return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
+    if (mediaType === "wav" || mediaType === "mp3") return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
         className: className,
         style: computedStyle,
-        ref: containerRef
-    }, !isContainerLarge && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bb281b66815ebd2e$export$2e2bcd8739ae039), {
-        mediaRef: mediaRef
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("img", {
-        alt: "Audio Poster",
-        src: tokenPreview,
-        style: {
-            position: "absolute",
-            height: "100%",
-            width: "100%",
-            visibility: !tokenPreview || tokenPreview.length === 0 ? "hidden" : "visible",
-            objectFit: "cover"
-        },
-        onError: onErrorCb
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement("audio", {
-        src: media,
-        ...audioOptions,
-        onError: onErrorCb,
-        ref: mediaRef,
-        controls: isContainerLarge,
-        style: {
-            position: "absolute",
-            bottom: 16,
-            left: 16,
-            width: "calc(100% - 32px)"
-        }
-    }, "Your browser does not support the", /*#__PURE__*/ (0, $bNXjM$react).createElement("code", null, "audio"), " element."));
+        ref: containerRef,
+        children: [
+            !isContainerLarge && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $612d895dc0e4af81$export$2e2bcd8739ae039), {
+                mediaRef: mediaRef
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)("img", {
+                alt: "Audio Poster",
+                src: tokenPreview,
+                style: {
+                    position: "absolute",
+                    height: "100%",
+                    width: "100%",
+                    visibility: !tokenPreview || tokenPreview.length === 0 ? "hidden" : "visible",
+                    objectFit: "cover"
+                },
+                onError: onErrorCb
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsxs)("audio", {
+                src: media,
+                ...audioOptions,
+                onError: onErrorCb,
+                ref: mediaRef,
+                controls: isContainerLarge,
+                style: {
+                    position: "absolute",
+                    bottom: 16,
+                    left: 16,
+                    width: "calc(100% - 32px)"
+                },
+                children: [
+                    "Your browser does not support the",
+                    /*#__PURE__*/ (0, $bNXjM$jsx)("code", {
+                        children: "audio"
+                    }),
+                    " element."
+                ]
+            })
+        ]
+    });
     // 3D
-    if (mediaType === "gltf" || mediaType === "glb") return /*#__PURE__*/ (0, $bNXjM$react).createElement("model-viewer", {
+    if (mediaType === "gltf" || mediaType === "glb") return /*#__PURE__*/ (0, $bNXjM$jsx)("model-viewer", {
         src: media,
         ar: true,
         "ar-modes": "webxr scene-viewer quick-look",
@@ -8820,7 +10017,7 @@ const $5f886409e3581c27$var$TokenMedia = ({ preview: preview , token: token , st
         onError: onErrorCb
     });
     //Image
-    if (mediaType === "png" || mediaType === "jpeg" || mediaType === "jpg" || mediaType === "gif") return /*#__PURE__*/ (0, $bNXjM$react).createElement("img", {
+    if (mediaType === "png" || mediaType === "jpeg" || mediaType === "jpg" || mediaType === "gif") return /*#__PURE__*/ (0, $bNXjM$jsx)("img", {
         alt: "Token Image",
         src: media,
         className: className,
@@ -8831,7 +10028,7 @@ const $5f886409e3581c27$var$TokenMedia = ({ preview: preview , token: token , st
         onError: onErrorCb
     });
     // HTML
-    if (mediaType === "html" || mediaType === null || mediaType === undefined || mediaType === "other" || mediaType === "svg") return /*#__PURE__*/ (0, $bNXjM$react).createElement("iframe", {
+    if (mediaType === "html" || mediaType === null || mediaType === undefined || mediaType === "other" || mediaType === "svg") return /*#__PURE__*/ (0, $bNXjM$jsx)("iframe", {
         style: computedStyle,
         className: className,
         src: media,
@@ -8839,7 +10036,7 @@ const $5f886409e3581c27$var$TokenMedia = ({ preview: preview , token: token , st
         frameBorder: "0",
         ...iframeOptions
     });
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement("img", {
+    return /*#__PURE__*/ (0, $bNXjM$jsx)("img", {
         alt: "Token Image",
         src: tokenPreview,
         style: {
@@ -8850,7 +10047,7 @@ const $5f886409e3581c27$var$TokenMedia = ({ preview: preview , token: token , st
         onError: onErrorCb
     });
 };
-var $5f886409e3581c27$export$2e2bcd8739ae039 = $5f886409e3581c27$var$TokenMedia;
+var $965711be26a09bce$export$2e2bcd8739ae039 = $965711be26a09bce$var$TokenMedia;
 
 
 
@@ -8870,13 +10067,15 @@ var $5f886409e3581c27$export$2e2bcd8739ae039 = $5f886409e3581c27$var$TokenMedia;
 
 
 
-const $e4e31e0063ea765c$var$CartItemImage = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)("img", {
+
+
+const $d75deef711b420b1$var$CartItemImage = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)("img", {
     width: 56,
     height: 56,
     borderRadius: 4,
     objectFit: "cover"
 });
-const $e4e31e0063ea765c$var$CloseButton = (0, $cd784f5a4171372f$export$3817b7a54a07cec7)((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
+const $d75deef711b420b1$var$CloseButton = (0, $fcefeedae0fec8b6$export$3817b7a54a07cec7)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
     position: "absolute",
     width: 24,
     height: 24,
@@ -8888,15 +10087,14 @@ const $e4e31e0063ea765c$var$CloseButton = (0, $cd784f5a4171372f$export$3817b7a54
         corners: "circle"
     }
 });
-const $e4e31e0063ea765c$var$CartItem = ({ item: item , usdConversion: usdConversion , tokenUrl: tokenUrl  })=>{
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+const $d75deef711b420b1$var$CartItem = ({ item: item , usdConversion: usdConversion , tokenUrl: tokenUrl  })=>{
     const { token: token , collection: collection , isBannedOnOpensea: isBannedOnOpensea  } = item;
     const contract = collection.id.split(":")[0];
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
-    const { remove: remove , data: cartCurrency  } = (0, $81f7c865d754f2b5$export$2e2bcd8739ae039)((cart)=>cart.currency);
-    const { data: cartChain  } = (0, $81f7c865d754f2b5$export$2e2bcd8739ae039)((cart)=>cart.chain);
-    let price = ((_b = (_a = item.price) === null || _a === void 0 ? void 0 : _a.currency) === null || _b === void 0 ? void 0 : _b.contract) !== (cartCurrency === null || cartCurrency === void 0 ? void 0 : cartCurrency.contract) ? (_d = (_c = item.price) === null || _c === void 0 ? void 0 : _c.amount) === null || _d === void 0 ? void 0 : _d.native : (_f = (_e = item.price) === null || _e === void 0 ? void 0 : _e.amount) === null || _f === void 0 ? void 0 : _f.decimal;
-    let previousPrice = ((_h = (_g = item.previousPrice) === null || _g === void 0 ? void 0 : _g.currency) === null || _h === void 0 ? void 0 : _h.contract) !== (cartCurrency === null || cartCurrency === void 0 ? void 0 : cartCurrency.contract) ? (_k = (_j = item.previousPrice) === null || _j === void 0 ? void 0 : _j.amount) === null || _k === void 0 ? void 0 : _k.native : (_m = (_l = item.previousPrice) === null || _l === void 0 ? void 0 : _l.amount) === null || _m === void 0 ? void 0 : _m.decimal;
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
+    const { remove: remove , data: cartCurrency  } = (0, $50bacb8bed3891ec$export$2e2bcd8739ae039)((cart)=>cart.currency);
+    const { data: cartChain  } = (0, $50bacb8bed3891ec$export$2e2bcd8739ae039)((cart)=>cart.chain);
+    let price = item.price?.currency?.contract !== cartCurrency?.contract ? item.price?.amount?.native : item.price?.amount?.decimal;
+    let previousPrice = item.previousPrice?.currency?.contract !== cartCurrency?.contract ? item.previousPrice?.amount?.native : item.previousPrice?.amount?.decimal;
     let priceDiff = 0;
     let priceIncrease = false;
     let priceDecrease = false;
@@ -8906,15 +10104,15 @@ const $e4e31e0063ea765c$var$CartItem = ({ item: item , usdConversion: usdConvers
         priceDecrease = price < previousPrice;
     }
     const usdPrice = (usdConversion || 0) * (price || 0);
-    const reservoirChain = client === null || client === void 0 ? void 0 : client.chains.find((chain)=>(cartChain === null || cartChain === void 0 ? void 0 : cartChain.id) === chain.id);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+    const reservoirChain = client?.chains.find((chain)=>cartChain?.id === chain.id);
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         onClick: ()=>{
-            const chain = Object.values($bNXjM$wagmichains).find((chain)=>(cartChain === null || cartChain === void 0 ? void 0 : cartChain.id) === chain.id);
+            const chain = Object.values($bNXjM$wagmichains).find((chain)=>cartChain?.id === chain.id);
             let url = tokenUrl;
             if (!url && cartChain) {
                 let tokenMetaKey = null;
                 if (cartChain.id === (0, $bNXjM$mainnet).id) tokenMetaKey = "reservoir:token-url-mainnet";
-                else tokenMetaKey = `reservoir:token-url-${chain === null || chain === void 0 ? void 0 : chain.name.toLowerCase()}`;
+                else tokenMetaKey = `reservoir:token-url-${chain?.name.toLowerCase()}`;
                 const tokenMetaTag = document.querySelector(`meta[property='${tokenMetaKey}']`);
                 if (tokenMetaTag) url = tokenMetaTag.getAttribute("content") || undefined;
             }
@@ -8928,160 +10126,218 @@ const $e4e31e0063ea765c$var$CartItem = ({ item: item , usdConversion: usdConvers
             cursor: "pointer",
             "&:hover": {
                 backgroundColor: "$neutralBgHover",
-                [`& ${$e4e31e0063ea765c$var$CloseButton}`]: {
+                [`& ${$d75deef711b420b1$var$CloseButton}`]: {
                     background: "$errorAccent"
                 }
             }
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        css: {
-            position: "relative",
-            minWidth: 0,
-            flexShrink: 0
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement($e4e31e0063ea765c$var$CartItemImage, {
-        src: `${reservoirChain === null || reservoirChain === void 0 ? void 0 : reservoirChain.baseApiUrl}/redirect/tokens/${contract}:${token.id}/image/v1`,
-        css: !price ? {
-            filter: "grayscale(1)"
-        } : {}
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement($e4e31e0063ea765c$var$CloseButton, {
-        css: {
-            background: item.isBannedOnOpensea || !item.price ? "$errorAccent" : "$neutralSolid"
         },
-        onClick: (e)=>{
-            e.stopPropagation();
-            e.preventDefault();
-            remove([
-                `${collection.id}:${token.id}`
-            ]);
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        icon: (0, $bNXjM$faClose),
-        width: "16",
-        height: "16"
-    }))), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        direction: "column",
-        justify: "center",
-        css: {
-            gap: 2,
-            ml: "$2",
-            minWidth: 0
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        align: "center",
-        css: {
-            gap: "$1"
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "h6",
-        color: price ? undefined : "subtle",
-        ellipsify: true
-    }, token.name ? token.name : `#${token.id}`), isBannedOnOpensea && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6ca758f3c020e004$export$2e2bcd8739ae039), {
-        side: "bottom",
-        width: 200,
-        content: "Item not tradeable on OpenSea",
-        kind: "error"
-    })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "body2",
-        color: "subtle",
-        ellipsify: true
-    }, collection.name), !price && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "body2",
-        color: "error"
-    }, "Item no longer available"), priceIncrease && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        css: {
-            gap: "$1",
-            color: "$accentSolidHover"
-        },
-        align: "center"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        width: "11",
-        icon: (0, $bNXjM$faArrowUp)
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "body2",
-        color: "accent"
-    }, "Price has gone up ", (0, $89f2b3089832dcbb$export$f5dd818bff069720)(priceDiff), "%")), priceDecrease && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        css: {
-            gap: "$1",
-            color: "$accentSolidHover"
-        },
-        align: "center"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        width: "11",
-        icon: (0, $bNXjM$faArrowDown)
-    }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        style: "body2",
-        color: "accent"
-    }, "Price went down ", (0, $89f2b3089832dcbb$export$f5dd818bff069720)(priceDiff), "%"))), price && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-        direction: "column",
-        justify: "center",
-        css: {
-            ml: "auto",
-            flexShrink: 0,
-            gap: "$1",
-            "> div": {
-                ml: "auto"
-            }
-        }
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
-        textStyle: "subtitle2",
-        amount: price,
-        address: cartCurrency === null || cartCurrency === void 0 ? void 0 : cartCurrency.contract,
-        decimals: cartCurrency === null || cartCurrency === void 0 ? void 0 : cartCurrency.decimals,
-        logoWidth: 12,
-        chainId: cartChain === null || cartChain === void 0 ? void 0 : cartChain.id
-    }), usdPrice && usdPrice > 0 && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6a6c14d54fb307eb$export$2e2bcd8739ae039), {
-        amount: usdPrice,
-        style: "tiny",
-        color: "subtle",
-        css: {
-            textAlign: "end"
-        }
-    })));
+        children: [
+            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                css: {
+                    position: "relative",
+                    minWidth: 0,
+                    flexShrink: 0
+                },
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)($d75deef711b420b1$var$CartItemImage, {
+                        src: `${reservoirChain?.baseApiUrl}/redirect/tokens/${contract}:${token.id}/image/v1`,
+                        css: !price ? {
+                            filter: "grayscale(1)"
+                        } : {}
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)($d75deef711b420b1$var$CloseButton, {
+                        css: {
+                            background: item.isBannedOnOpensea || !item.price ? "$errorAccent" : "$neutralSolid"
+                        },
+                        onClick: (e)=>{
+                            e.stopPropagation();
+                            e.preventDefault();
+                            remove([
+                                `${collection.id}:${token.id}`
+                            ]);
+                        },
+                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                            icon: (0, $bNXjM$faClose),
+                            width: "16",
+                            height: "16"
+                        })
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                direction: "column",
+                justify: "center",
+                css: {
+                    gap: 2,
+                    ml: "$2",
+                    minWidth: 0
+                },
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        align: "center",
+                        css: {
+                            gap: "$1"
+                        },
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                style: "h6",
+                                color: price ? undefined : "subtle",
+                                ellipsify: true,
+                                children: token.name ? token.name : `#${token.id}`
+                            }),
+                            isBannedOnOpensea && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f1a77cb69cf0ff83$export$2e2bcd8739ae039), {
+                                side: "bottom",
+                                width: 200,
+                                content: "Item not tradeable on OpenSea",
+                                kind: "error"
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                        style: "body2",
+                        color: "subtle",
+                        ellipsify: true,
+                        children: collection.name
+                    }),
+                    !price && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                        style: "body2",
+                        color: "error",
+                        children: "Item no longer available"
+                    }),
+                    priceIncrease && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        css: {
+                            gap: "$1",
+                            color: "$accentSolidHover"
+                        },
+                        align: "center",
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                width: "11",
+                                icon: (0, $bNXjM$faArrowUp)
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                style: "body2",
+                                color: "accent",
+                                children: [
+                                    "Price has gone up ",
+                                    (0, $e70e85f6f4e64430$export$f5dd818bff069720)(priceDiff),
+                                    "%"
+                                ]
+                            })
+                        ]
+                    }),
+                    priceDecrease && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                        css: {
+                            gap: "$1",
+                            color: "$accentSolidHover"
+                        },
+                        align: "center",
+                        children: [
+                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                width: "11",
+                                icon: (0, $bNXjM$faArrowDown)
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                style: "body2",
+                                color: "accent",
+                                children: [
+                                    "Price went down ",
+                                    (0, $e70e85f6f4e64430$export$f5dd818bff069720)(priceDiff),
+                                    "%"
+                                ]
+                            })
+                        ]
+                    })
+                ]
+            }),
+            price && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                direction: "column",
+                justify: "center",
+                css: {
+                    ml: "auto",
+                    flexShrink: 0,
+                    gap: "$1",
+                    "> div": {
+                        ml: "auto"
+                    }
+                },
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
+                        textStyle: "subtitle2",
+                        amount: price,
+                        address: cartCurrency?.contract,
+                        decimals: cartCurrency?.decimals,
+                        logoWidth: 12,
+                        chainId: cartChain?.id
+                    }),
+                    usdPrice && usdPrice > 0 && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $208ab5b0155991db$export$2e2bcd8739ae039), {
+                        amount: usdPrice,
+                        style: "tiny",
+                        color: "subtle",
+                        css: {
+                            textAlign: "end"
+                        }
+                    })
+                ]
+            })
+        ]
+    });
 };
-var $e4e31e0063ea765c$export$2e2bcd8739ae039 = $e4e31e0063ea765c$var$CartItem;
+var $d75deef711b420b1$export$2e2bcd8739ae039 = $d75deef711b420b1$var$CartItem;
 
 
 
 
 
 
-const $222c8aa5dfa51d20$var$CartToast = ({ kind: kind = "success" , message: message , link: link  })=>{
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
+
+const $7ae733b262346b1b$var$CartToast = ({ kind: kind = "success" , message: message , link: link  })=>{
+    return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
         css: {
             width: "100%",
             background: "$wellBackground",
             p: "$2",
             borderRadius: "$borderRadius",
             mb: "$2"
-        }
-    }, kind === "success" && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        color: "success"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        icon: (0, $bNXjM$faCircleCheck),
-        width: "16",
-        height: "16"
-    })), kind === "error" && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        color: "error"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        icon: (0, $bNXjM$faTriangleExclamation),
-        width: "16",
-        height: "16"
-    })), kind === "warning" && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        color: "error"
-    }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-        icon: (0, $bNXjM$faCircleInfo),
-        width: "16",
-        height: "16"
-    })), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-        css: {
-            ml: "$1",
-            mt: 3
         },
-        style: "body2"
-    }, message), link);
+        children: [
+            kind === "success" && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                color: "success",
+                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                    icon: (0, $bNXjM$faCircleCheck),
+                    width: "16",
+                    height: "16"
+                })
+            }),
+            kind === "error" && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                color: "error",
+                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                    icon: (0, $bNXjM$faTriangleExclamation),
+                    width: "16",
+                    height: "16"
+                })
+            }),
+            kind === "warning" && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                color: "error",
+                children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                    icon: (0, $bNXjM$faCircleInfo),
+                    width: "16",
+                    height: "16"
+                })
+            }),
+            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                css: {
+                    ml: "$1",
+                    mt: 3
+                },
+                style: "body2",
+                children: message
+            }),
+            link
+        ]
+    });
 };
-var $222c8aa5dfa51d20$export$2e2bcd8739ae039 = $222c8aa5dfa51d20$var$CartToast;
+var $7ae733b262346b1b$export$2e2bcd8739ae039 = $7ae733b262346b1b$var$CartToast;
 
 
 
@@ -9090,19 +10346,19 @@ var $222c8aa5dfa51d20$export$2e2bcd8739ae039 = $222c8aa5dfa51d20$var$CartToast;
 
 
 
-const $1a4e327b5574831a$export$6c07efeb053daea6 = ({ open: open , children: children  })=>{
-    var _a, _b, _c;
-    const client = (0, $d528109b46c9ca01$export$2e2bcd8739ae039)();
+
+const $208cf8c19944ad35$export$6c07efeb053daea6 = ({ open: open , children: children  })=>{
+    const client = (0, $c6195489119ab58a$export$2e2bcd8739ae039)();
     const [hasEnoughCurrency, setHasEnoughCurrency] = (0, $bNXjM$useState)(true);
-    const { data: data , clear: clear , clearTransaction: clearTransaction , validate: validate , remove: remove , add: add , checkout: checkout  } = (0, $81f7c865d754f2b5$export$2e2bcd8739ae039)((cart)=>cart);
+    const { data: data , clear: clear , clearTransaction: clearTransaction , validate: validate , remove: remove , add: add , checkout: checkout  } = (0, $50bacb8bed3891ec$export$2e2bcd8739ae039)((cart)=>cart);
     const { isValidating: isValidating , totalPrice: totalPrice , items: items , currency: currency , transaction: transaction , referrerFee: referrerFee , chain: cartChain  } = data;
-    const usdPrice = (0, $9f52dec49aff5538$export$2e2bcd8739ae039)(open ? "USD" : undefined, (currency === null || currency === void 0 ? void 0 : currency.symbol) || (currency === null || currency === void 0 ? void 0 : currency.name));
+    const usdPrice = (0, $742accbc1cb453a5$export$2e2bcd8739ae039)(open ? "USD" : undefined, currency?.symbol || currency?.name);
     const { chains: chains  } = (0, $bNXjM$useNetwork)();
-    const chain = chains.find((chain)=>chain.id === (transaction === null || transaction === void 0 ? void 0 : transaction.chain.id));
-    const blockExplorerBaseUrl = ((_b = (_a = chain === null || chain === void 0 ? void 0 : chain.blockExplorers) === null || _a === void 0 ? void 0 : _a.default) === null || _b === void 0 ? void 0 : _b.url) || "https://etherscan.io";
+    const chain = chains.find((chain)=>chain.id === transaction?.chain.id);
+    const blockExplorerBaseUrl = chain?.blockExplorers?.default?.url || "https://etherscan.io";
     (0, $bNXjM$useEffect)(()=>{
         if (open) validate();
-        else if ((transaction === null || transaction === void 0 ? void 0 : transaction.status) === (0, $7e85f260486c536b$export$de7bcda3c490bf18).Complete || (transaction === null || transaction === void 0 ? void 0 : transaction.error)) clearTransaction();
+        else if (transaction?.status === (0, $588062ced050a0db$export$de7bcda3c490bf18).Complete || transaction?.error) clearTransaction();
     }, [
         open
     ]);
@@ -9112,25 +10368,22 @@ const $1a4e327b5574831a$export$6c07efeb053daea6 = ({ open: open , children: chil
     const unavailableItems = (0, $bNXjM$useMemo)(()=>items.filter((item)=>!item.price), [
         items
     ]);
-    const priceChangeItems = (0, $bNXjM$useMemo)(()=>items.filter(({ previousPrice: previousPrice , price: price  })=>{
-            var _a, _b, _c;
-            return previousPrice && ((_a = price === null || price === void 0 ? void 0 : price.amount) === null || _a === void 0 ? void 0 : _a.decimal) !== undefined && ((_b = previousPrice.amount) === null || _b === void 0 ? void 0 : _b.decimal) !== ((_c = price === null || price === void 0 ? void 0 : price.amount) === null || _c === void 0 ? void 0 : _c.decimal);
-        }), [
+    const priceChangeItems = (0, $bNXjM$useMemo)(()=>items.filter(({ previousPrice: previousPrice , price: price  })=>previousPrice && price?.amount?.decimal !== undefined && previousPrice.amount?.decimal !== price?.amount?.decimal), [
         items
     ]);
     const { address: address  } = (0, $bNXjM$useAccount)();
     const { data: balance  } = (0, $bNXjM$useBalance)({
-        chainId: (cartChain === null || cartChain === void 0 ? void 0 : cartChain.id) || ((_c = client === null || client === void 0 ? void 0 : client.currentChain()) === null || _c === void 0 ? void 0 : _c.id),
+        chainId: cartChain?.id || client?.currentChain()?.id,
         address: address,
-        token: (currency === null || currency === void 0 ? void 0 : currency.contract) !== (0, $bNXjM$constants).AddressZero ? currency === null || currency === void 0 ? void 0 : currency.contract : undefined,
+        token: currency?.contract !== (0, $bNXjM$constants).AddressZero ? currency?.contract : undefined,
         watch: open,
-        formatUnits: currency === null || currency === void 0 ? void 0 : currency.decimals
+        formatUnits: currency?.decimals
     });
     (0, $bNXjM$useEffect)(()=>{
         if (balance) {
-            const totalPriceTruncated = (0, $89f2b3089832dcbb$export$a81f732198733497)(totalPrice, (currency === null || currency === void 0 ? void 0 : currency.decimals) || 18);
+            const totalPriceTruncated = (0, $e70e85f6f4e64430$export$a81f732198733497)(totalPrice, currency?.decimals || 18);
             if (!balance.value) setHasEnoughCurrency(false);
-            else if (balance.value.lt((0, $bNXjM$utils).parseUnits(`${totalPriceTruncated}`, currency === null || currency === void 0 ? void 0 : currency.decimals))) setHasEnoughCurrency(false);
+            else if (balance.value.lt((0, $bNXjM$utils).parseUnits(`${totalPriceTruncated}`, currency?.decimals))) setHasEnoughCurrency(false);
             else setHasEnoughCurrency(true);
         }
     }, [
@@ -9139,37 +10392,39 @@ const $1a4e327b5574831a$export$6c07efeb053daea6 = ({ open: open , children: chil
         currency
     ]);
     (0, $bNXjM$useEffect)(()=>{
-        if (hasEnoughCurrency && (transaction === null || transaction === void 0 ? void 0 : transaction.errorType) === (0, $7e85f260486c536b$export$6adf53dcf2d42374).InsufficientBalance) setHasEnoughCurrency(false);
+        if (hasEnoughCurrency && transaction?.errorType === (0, $588062ced050a0db$export$6adf53dcf2d42374).InsufficientBalance) setHasEnoughCurrency(false);
     }, [
         transaction
     ]);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$react).Fragment, null, children({
-        loading: isValidating,
-        items: items,
-        flaggedItems: flaggedItems,
-        unavailableItems: unavailableItems,
-        priceChangeItems: priceChangeItems,
-        currency: currency,
-        totalPrice: totalPrice,
-        referrerFee: referrerFee,
-        usdPrice: usdPrice,
-        hasEnoughCurrency: hasEnoughCurrency,
-        balance: balance === null || balance === void 0 ? void 0 : balance.value,
-        transaction: transaction,
-        blockExplorerBaseUrl: blockExplorerBaseUrl,
-        cartChain: cartChain,
-        checkout: checkout,
-        clear: clear,
-        remove: remove,
-        add: add,
-        validate: validate
-    }));
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$Fragment), {
+        children: children({
+            loading: isValidating,
+            items: items,
+            flaggedItems: flaggedItems,
+            unavailableItems: unavailableItems,
+            priceChangeItems: priceChangeItems,
+            currency: currency,
+            totalPrice: totalPrice,
+            referrerFee: referrerFee,
+            usdPrice: usdPrice,
+            hasEnoughCurrency: hasEnoughCurrency,
+            balance: balance?.value,
+            transaction: transaction,
+            blockExplorerBaseUrl: blockExplorerBaseUrl,
+            cartChain: cartChain,
+            checkout: checkout,
+            clear: clear,
+            remove: remove,
+            add: add,
+            validate: validate
+        })
+    });
 };
-var $1a4e327b5574831a$export$2e2bcd8739ae039 = $1a4e327b5574831a$export$6c07efeb053daea6;
+var $208cf8c19944ad35$export$2e2bcd8739ae039 = $208cf8c19944ad35$export$6c07efeb053daea6;
 
 
 
-const $c54420514bf08041$var$scaleUp = (0, $cd784f5a4171372f$export$d25ddfdf17c3ad3e)({
+const $e0049ac10b4d489f$var$scaleUp = (0, $fcefeedae0fec8b6$export$d25ddfdf17c3ad3e)({
     "0%": {
         opacity: 0,
         transform: "scale(0.9) translateY(-10px)"
@@ -9179,7 +10434,7 @@ const $c54420514bf08041$var$scaleUp = (0, $cd784f5a4171372f$export$d25ddfdf17c3a
         transform: "scale(1) translateY(0)"
     }
 });
-const $c54420514bf08041$var$scaleDown = (0, $cd784f5a4171372f$export$d25ddfdf17c3ad3e)({
+const $e0049ac10b4d489f$var$scaleDown = (0, $fcefeedae0fec8b6$export$d25ddfdf17c3ad3e)({
     "0%": {
         opacity: 1,
         transform: "scale(1) translateY(0)"
@@ -9189,10 +10444,10 @@ const $c54420514bf08041$var$scaleDown = (0, $cd784f5a4171372f$export$d25ddfdf17c
         transform: "scale(0.9) translateY(-10px)"
     }
 });
-const $c54420514bf08041$var$CONTENT_OFFSET = 8;
-function $c54420514bf08041$export$15123b0cb184ed6e({ trigger: trigger , side: side , openState: openState , tokenUrl: tokenUrl  }) {
+const $e0049ac10b4d489f$var$CONTENT_OFFSET = 8;
+function $e0049ac10b4d489f$export$15123b0cb184ed6e({ trigger: trigger , side: side , openState: openState , tokenUrl: tokenUrl  }) {
     const [popoverTrigger, setPopoverTrigger] = (0, $bNXjM$useState)(null);
-    const [open, setOpen] = (0, $eae8553d9b344d57$export$2e2bcd8739ae039)(openState ? openState[0] : false, openState);
+    const [open, setOpen] = (0, $d115e0b00eaf4565$export$2e2bcd8739ae039)(openState ? openState[0] : false, openState);
     // const providerOptionsContext = useContext(ProviderOptionsContext)
     const [displayPendingTransaction, setDisplayPendingTransaction] = (0, $bNXjM$useState)(false);
     const [purchaseComplete, setPurchaseComplete] = (0, $bNXjM$useState)(false);
@@ -9204,345 +10459,449 @@ function $c54420514bf08041$export$15123b0cb184ed6e({ trigger: trigger , side: si
     }, [
         open
     ]);
-    const triggerBottom = (0, $bNXjM$useMemo)(()=>((popoverTrigger === null || popoverTrigger === void 0 ? void 0 : popoverTrigger.offsetTop) || 0) + ((popoverTrigger === null || popoverTrigger === void 0 ? void 0 : popoverTrigger.offsetHeight) || 0) + $c54420514bf08041$var$CONTENT_OFFSET, [
+    const triggerBottom = (0, $bNXjM$useMemo)(()=>(popoverTrigger?.offsetTop || 0) + (popoverTrigger?.offsetHeight || 0) + $e0049ac10b4d489f$var$CONTENT_OFFSET, [
         trigger
     ]);
-    return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $1a4e327b5574831a$export$2e2bcd8739ae039), {
-        open: open
-    }, ({ loading: loading , items: items , flaggedItems: flaggedItems , unavailableItems: unavailableItems , priceChangeItems: priceChangeItems , totalPrice: totalPrice , referrerFee: referrerFee , usdPrice: usdPrice , hasEnoughCurrency: hasEnoughCurrency , balance: balance , currency: currency , transaction: transaction , blockExplorerBaseUrl: blockExplorerBaseUrl , cartChain: cartChain , remove: remove , clear: clear , checkout: checkout  })=>{
-        (0, $bNXjM$useEffect)(()=>{
-            if ((transaction === null || transaction === void 0 ? void 0 : transaction.status) === (0, $7e85f260486c536b$export$de7bcda3c490bf18).Complete) {
-                setDisplayPendingTransaction(false);
-                setPurchaseComplete(true);
-            }
-        }, [
-            transaction === null || transaction === void 0 ? void 0 : transaction.status
-        ]);
-        const flaggedItemsSubject = flaggedItems.length > 1 ? "items" : "item";
-        const unavailableItemsSubject = unavailableItems.length > 1 ? "items" : "item";
-        const priceChangeItemsSubject = priceChangeItems.length > 1 ? "items prices" : "item price";
-        const isCartEmpty = items.length === 0;
-        const hasValidItems = items.length > unavailableItems.length;
-        return /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4befe8050591e2e6$export$2e2bcd8739ae039).Root, {
-            modal: true,
-            open: open,
-            onOpenChange: setOpen
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4befe8050591e2e6$export$2e2bcd8739ae039).Trigger, {
-            asChild: true,
-            ref: setPopoverTrigger
-        }, trigger), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4befe8050591e2e6$export$2e2bcd8739ae039).Content, {
-            side: side,
-            sideOffset: $c54420514bf08041$var$CONTENT_OFFSET,
-            css: {
-                display: "flex",
-                flexDirection: "column",
-                zIndex: 1001,
-                transformOrigin: "var(--radix-popover-content-transform-origin)",
-                animation: `${open ? $c54420514bf08041$var$scaleUp : $c54420514bf08041$var$scaleDown} 0.2s ease-in-out`,
-                overflowY: "auto",
-                borderRadius: "$borderRadius",
-                $$shadowColor: "$colors$gray7",
-                boxShadow: "box-shadow: 0px 2px 16px $$shadowColor",
-                border: "1px solid $borderColor",
-                p: 24,
-                minHeight: 500,
-                width: 395,
-                maxHeight: `calc(100vh - ${triggerBottom || 0}px - (25px * 2) - 10px)`,
-                backgroundColor: "$contentBackground",
-                boxSizing: "border-box",
-                "@media(max-width: 520px)": {
-                    height: `calc(100vh - ${triggerBottom || 0}px - (25px * 2))`,
-                    width: "100vw",
-                    minHeight: "100%"
-                }
-            }
-        }, loading && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0c83fbef8350e27e$export$2e2bcd8739ae039), {
-            css: {
-                backgroundColor: "$contentBackground",
-                position: "absolute",
-                inset: 0,
-                opacity: 0.6,
-                zIndex: 10000
-            }
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            align: "center",
-            css: {
-                mb: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "h6"
-        }, "Cart"), !isCartEmpty && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            align: "center",
-            justify: "center",
-            css: {
-                background: "$accentBgActive",
-                height: 20,
-                width: 20,
-                borderRadius: "99999px",
-                ml: "$2"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle2"
-        }, items.length)), !isCartEmpty && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle2",
-            color: "accent",
-            css: {
-                cursor: "pointer",
-                ml: 24,
-                "&:hover": {
-                    color: "$accentSolidHover"
-                }
-            },
-            onClick: clear
-        }, "Clear All"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            size: "none",
-            color: "ghost",
-            css: {
-                color: "$neutralSolid",
-                ml: "auto"
-            },
-            onClick: ()=>{
-                setOpen(false);
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faClose),
-            width: "16",
-            height: "16"
-        }))), flaggedItems.length > 0 && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $222c8aa5dfa51d20$export$2e2bcd8739ae039), {
-            kind: "warning",
-            message: `${flaggedItems.length} ${flaggedItemsSubject} not tradeable on OpenSea`,
-            link: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-                color: "accent",
-                style: "subtitle2",
-                css: {
-                    ml: "auto",
-                    mt: 3,
-                    cursor: "pointer"
-                },
-                onClick: (e)=>{
-                    e.preventDefault();
-                    remove(flaggedItems.map((item)=>`${item.collection.id}:${item.token.id}`));
-                }
-            }, "Remove ", flaggedItemsSubject)
-        }), unavailableItems.length > 0 && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $222c8aa5dfa51d20$export$2e2bcd8739ae039), {
-            kind: "error",
-            message: `${unavailableItems.length} ${unavailableItemsSubject} no longer available`,
-            link: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-                color: "accent",
-                style: "subtitle2",
-                css: {
-                    ml: "auto",
-                    mt: 3,
-                    cursor: "pointer"
-                },
-                onClick: (e)=>{
-                    e.preventDefault();
-                    remove(unavailableItems.map((item)=>`${item.collection.id}:${item.token.id}`));
-                }
-            }, "Remove ", unavailableItemsSubject)
-        }), priceChangeItems.length > 0 && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $222c8aa5dfa51d20$export$2e2bcd8739ae039), {
-            kind: "warning",
-            message: `${priceChangeItems.length} ${priceChangeItemsSubject} updated`
-        }), (transaction === null || transaction === void 0 ? void 0 : transaction.error) && transaction.errorType !== (0, $7e85f260486c536b$export$6adf53dcf2d42374).UserDenied && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $222c8aa5dfa51d20$export$2e2bcd8739ae039), {
-            kind: "error",
-            message: transaction.error.message
-        }), purchaseComplete && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $222c8aa5dfa51d20$export$2e2bcd8739ae039), {
-            message: `Transaction Complete`,
-            link: /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4fb5cf8c028cd3ca$export$2e2bcd8739ae039), {
-                href: `${blockExplorerBaseUrl}/tx/${transaction === null || transaction === void 0 ? void 0 : transaction.txHash}`,
-                target: "_blank",
-                css: {
-                    ml: "auto",
-                    fontSize: 12,
-                    mt: 2
-                },
-                weight: "medium",
-                color: "primary"
-            }, "Etherscan")
-        }), !isCartEmpty && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column",
-            css: {
-                gap: "$4",
-                mb: "$4",
-                overflowY: "auto",
-                mx: -24
-            }
-        }, items.map((item)=>/*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e4e31e0063ea765c$export$2e2bcd8739ae039), {
-                key: `${item.collection.id}:${item.token.id}`,
-                item: item,
-                usdConversion: usdPrice,
-                tokenUrl: tokenUrl
-            }))), isCartEmpty && !(displayPendingTransaction && (transaction === null || transaction === void 0 ? void 0 : transaction.status) === (0, $7e85f260486c536b$export$de7bcda3c490bf18).Finalizing) && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column",
-            align: "center",
-            justify: "center",
-            css: {
-                color: "$neutralBorderHover",
-                flex: 1,
-                gap: "$5"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faShoppingCart),
-            width: "30",
-            height: "30",
-            style: {
-                height: 30
-            }
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body3",
-            color: "subtle"
-        }, "No items in your cart")), displayPendingTransaction && (transaction === null || transaction === void 0 ? void 0 : transaction.status) === (0, $7e85f260486c536b$export$de7bcda3c490bf18).Finalizing && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column",
-            align: "center",
-            justify: "center",
-            css: {
-                color: "$neutralBorderHover",
-                flex: 1,
-                gap: "$5"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "h6"
-        }, "Finalizing on blockchain"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faCube),
-            width: "24"
-        }), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $4fb5cf8c028cd3ca$export$2e2bcd8739ae039), {
-            href: `${blockExplorerBaseUrl}/tx/${transaction === null || transaction === void 0 ? void 0 : transaction.txHash}`,
-            color: "primary",
-            weight: "medium",
-            target: "_blank",
-            css: {
-                fontSize: 12
-            }
-        }, "View on Etherscan")), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column",
-            css: {
-                mt: "auto",
-                pb: 10
-            }
-        }, !isCartEmpty && referrerFee ? /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                mb: "$4"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "subtitle2"
-        }, "Referrer Fee"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column",
-            justify: "center",
-            css: {
-                ml: "auto",
-                gap: "$1",
-                "> div": {
-                    ml: "auto"
-                }
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
-            textStyle: "subtitle2",
-            amount: referrerFee,
-            address: currency === null || currency === void 0 ? void 0 : currency.contract,
-            decimals: currency === null || currency === void 0 ? void 0 : currency.decimals,
-            logoWidth: 12,
-            chainId: cartChain === null || cartChain === void 0 ? void 0 : cartChain.id
-        }), usdPrice && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6a6c14d54fb307eb$export$2e2bcd8739ae039), {
-            amount: usdPrice * referrerFee,
-            style: "subtitle2",
-            color: "subtle",
-            css: {
-                textAlign: "end"
-            }
-        }))) : null, !isCartEmpty && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            css: {
-                mb: 28
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "h6"
-        }, "Total"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            direction: "column",
-            justify: "center",
-            css: {
-                ml: "auto",
-                gap: "$1",
-                "> div": {
-                    ml: "auto"
-                }
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
-            textStyle: "h6",
-            amount: totalPrice,
-            address: currency === null || currency === void 0 ? void 0 : currency.contract,
-            decimals: currency === null || currency === void 0 ? void 0 : currency.decimals,
-            logoWidth: 18,
-            chainId: cartChain === null || cartChain === void 0 ? void 0 : cartChain.id
-        }), usdPrice && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6a6c14d54fb307eb$export$2e2bcd8739ae039), {
-            amount: usdPrice * totalPrice,
-            style: "subtitle2",
-            color: "subtle",
-            css: {
-                textAlign: "end"
-            }
-        }))), displayPendingTransaction && (transaction === null || transaction === void 0 ? void 0 : transaction.status) === (0, $7e85f260486c536b$export$de7bcda3c490bf18).Approving && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body2",
-            color: "subtle",
-            css: {
-                mb: "$2",
-                textAlign: "center"
-            }
-        }, "Please confirm purchase in your wallet", " "), !hasEnoughCurrency && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $2d0e38270a599885$export$2e2bcd8739ae039), {
-            align: "center",
-            justify: "center",
-            css: {
-                mb: "$2",
-                gap: "$2"
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $6c5e8bd3b530a312$export$2e2bcd8739ae039), {
-            style: "body2",
-            color: "error"
-        }, "Insufficient balance"), /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $192d6b4cbdbbf127$export$2e2bcd8739ae039), {
-            textStyle: "body2",
-            amount: balance,
-            address: currency === null || currency === void 0 ? void 0 : currency.contract,
-            decimals: currency === null || currency === void 0 ? void 0 : currency.decimals,
-            logoWidth: 10
-        })), isCartEmpty && !displayPendingTransaction && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            disabled: true
-        }, "Select Items to Buy"), !isCartEmpty && hasValidItems && ((transaction === null || transaction === void 0 ? void 0 : transaction.status) === (0, $7e85f260486c536b$export$de7bcda3c490bf18).Idle || !displayPendingTransaction) && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            disabled: !hasEnoughCurrency,
-            onClick: async ()=>{
-                checkout().then(()=>{
-                    setDisplayPendingTransaction(true);
-                }).catch((e)=>{
-                    console.error(e);
+    return /*#__PURE__*/ (0, $bNXjM$jsx)((0, $208cf8c19944ad35$export$2e2bcd8739ae039), {
+        open: open,
+        children: ({ loading: loading , items: items , flaggedItems: flaggedItems , unavailableItems: unavailableItems , priceChangeItems: priceChangeItems , totalPrice: totalPrice , referrerFee: referrerFee , usdPrice: usdPrice , hasEnoughCurrency: hasEnoughCurrency , balance: balance , currency: currency , transaction: transaction , blockExplorerBaseUrl: blockExplorerBaseUrl , cartChain: cartChain , remove: remove , clear: clear , checkout: checkout  })=>{
+            (0, $bNXjM$useEffect)(()=>{
+                if (transaction?.status === (0, $588062ced050a0db$export$de7bcda3c490bf18).Complete) {
                     setDisplayPendingTransaction(false);
-                });
-            }
-        }, hasEnoughCurrency ? "Purchase" : "Add Funds to Purchase"), !isCartEmpty && !hasValidItems && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            color: "secondary",
-            onClick: ()=>{
-                clear();
-            }
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $bNXjM$FontAwesomeIcon), {
-            icon: (0, $bNXjM$faRefresh),
-            width: "16",
-            height: "16"
-        }), "Refresh Cart"), displayPendingTransaction && (transaction === null || transaction === void 0 ? void 0 : transaction.status) === (0, $7e85f260486c536b$export$de7bcda3c490bf18).Approving && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            disabled: true
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0c83fbef8350e27e$export$2e2bcd8739ae039), null), "Waiting for Approval..."), displayPendingTransaction && (transaction === null || transaction === void 0 ? void 0 : transaction.status) === (0, $7e85f260486c536b$export$de7bcda3c490bf18).Finalizing && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $047ffb48b5200c33$export$2e2bcd8739ae039), {
-            disabled: true
-        }, /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $0c83fbef8350e27e$export$2e2bcd8739ae039), null), "Waiting to be Validated..."))), open && /*#__PURE__*/ (0, $bNXjM$react).createElement((0, $e8aed2f843739ce1$export$2e2bcd8739ae039), {
-            css: {
-                backgroundColor: "$overlayBackground",
-                position: "fixed",
-                inset: 0,
-                zIndex: 1000
-            }
-        }));
+                    setPurchaseComplete(true);
+                }
+            }, [
+                transaction?.status
+            ]);
+            const flaggedItemsSubject = flaggedItems.length > 1 ? "items" : "item";
+            const unavailableItemsSubject = unavailableItems.length > 1 ? "items" : "item";
+            const priceChangeItemsSubject = priceChangeItems.length > 1 ? "items prices" : "item price";
+            const isCartEmpty = items.length === 0;
+            const hasValidItems = items.length > unavailableItems.length;
+            return /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $364926f073e51b94$export$2e2bcd8739ae039).Root, {
+                modal: true,
+                open: open,
+                onOpenChange: setOpen,
+                children: [
+                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $364926f073e51b94$export$2e2bcd8739ae039).Trigger, {
+                        asChild: true,
+                        ref: setPopoverTrigger,
+                        children: trigger
+                    }),
+                    /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $364926f073e51b94$export$2e2bcd8739ae039).Content, {
+                        side: side,
+                        sideOffset: $e0049ac10b4d489f$var$CONTENT_OFFSET,
+                        css: {
+                            display: "flex",
+                            flexDirection: "column",
+                            zIndex: 1001,
+                            transformOrigin: "var(--radix-popover-content-transform-origin)",
+                            animation: `${open ? $e0049ac10b4d489f$var$scaleUp : $e0049ac10b4d489f$var$scaleDown} 0.2s ease-in-out`,
+                            overflowY: "auto",
+                            borderRadius: "$borderRadius",
+                            $$shadowColor: "$colors$gray7",
+                            boxShadow: "box-shadow: 0px 2px 16px $$shadowColor",
+                            border: "1px solid $borderColor",
+                            p: 24,
+                            minHeight: 500,
+                            width: 395,
+                            maxHeight: `calc(100vh - ${triggerBottom || 0}px - (25px * 2) - 10px)`,
+                            backgroundColor: "$contentBackground",
+                            boxSizing: "border-box",
+                            "@media(max-width: 520px)": {
+                                height: `calc(100vh - ${triggerBottom || 0}px - (25px * 2))`,
+                                width: "100vw",
+                                minHeight: "100%"
+                            }
+                        },
+                        children: [
+                            loading && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $0ff8966798df47ad$export$2e2bcd8739ae039), {
+                                css: {
+                                    backgroundColor: "$contentBackground",
+                                    position: "absolute",
+                                    inset: 0,
+                                    opacity: 0.6,
+                                    zIndex: 10000
+                                }
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                align: "center",
+                                css: {
+                                    mb: "$4"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "h6",
+                                        children: "Cart"
+                                    }),
+                                    !isCartEmpty && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        align: "center",
+                                        justify: "center",
+                                        css: {
+                                            background: "$accentBgActive",
+                                            height: 20,
+                                            width: 20,
+                                            borderRadius: "99999px",
+                                            ml: "$2"
+                                        },
+                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                            style: "subtitle2",
+                                            children: items.length
+                                        })
+                                    }),
+                                    !isCartEmpty && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "subtitle2",
+                                        color: "accent",
+                                        css: {
+                                            cursor: "pointer",
+                                            ml: 24,
+                                            "&:hover": {
+                                                color: "$accentSolidHover"
+                                            }
+                                        },
+                                        onClick: clear,
+                                        children: "Clear All"
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                        size: "none",
+                                        color: "ghost",
+                                        css: {
+                                            color: "$neutralSolid",
+                                            ml: "auto"
+                                        },
+                                        onClick: ()=>{
+                                            setOpen(false);
+                                        },
+                                        children: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                            icon: (0, $bNXjM$faClose),
+                                            width: "16",
+                                            height: "16"
+                                        })
+                                    })
+                                ]
+                            }),
+                            flaggedItems.length > 0 && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $7ae733b262346b1b$export$2e2bcd8739ae039), {
+                                kind: "warning",
+                                message: `${flaggedItems.length} ${flaggedItemsSubject} not tradeable on OpenSea`,
+                                link: /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                    color: "accent",
+                                    style: "subtitle2",
+                                    css: {
+                                        ml: "auto",
+                                        mt: 3,
+                                        cursor: "pointer"
+                                    },
+                                    onClick: (e)=>{
+                                        e.preventDefault();
+                                        remove(flaggedItems.map((item)=>`${item.collection.id}:${item.token.id}`));
+                                    },
+                                    children: [
+                                        "Remove ",
+                                        flaggedItemsSubject
+                                    ]
+                                })
+                            }),
+                            unavailableItems.length > 0 && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $7ae733b262346b1b$export$2e2bcd8739ae039), {
+                                kind: "error",
+                                message: `${unavailableItems.length} ${unavailableItemsSubject} no longer available`,
+                                link: /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                    color: "accent",
+                                    style: "subtitle2",
+                                    css: {
+                                        ml: "auto",
+                                        mt: 3,
+                                        cursor: "pointer"
+                                    },
+                                    onClick: (e)=>{
+                                        e.preventDefault();
+                                        remove(unavailableItems.map((item)=>`${item.collection.id}:${item.token.id}`));
+                                    },
+                                    children: [
+                                        "Remove ",
+                                        unavailableItemsSubject
+                                    ]
+                                })
+                            }),
+                            priceChangeItems.length > 0 && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $7ae733b262346b1b$export$2e2bcd8739ae039), {
+                                kind: "warning",
+                                message: `${priceChangeItems.length} ${priceChangeItemsSubject} updated`
+                            }),
+                            transaction?.error && transaction.errorType !== (0, $588062ced050a0db$export$6adf53dcf2d42374).UserDenied && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $7ae733b262346b1b$export$2e2bcd8739ae039), {
+                                kind: "error",
+                                message: transaction.error.message
+                            }),
+                            purchaseComplete && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $7ae733b262346b1b$export$2e2bcd8739ae039), {
+                                message: `Transaction Complete`,
+                                link: /*#__PURE__*/ (0, $bNXjM$jsx)((0, $31d3f3a80135a993$export$2e2bcd8739ae039), {
+                                    href: `${blockExplorerBaseUrl}/tx/${transaction?.txHash}`,
+                                    target: "_blank",
+                                    css: {
+                                        ml: "auto",
+                                        fontSize: 12,
+                                        mt: 2
+                                    },
+                                    weight: "medium",
+                                    color: "primary",
+                                    children: "Etherscan"
+                                })
+                            }),
+                            !isCartEmpty && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                direction: "column",
+                                css: {
+                                    gap: "$4",
+                                    mb: "$4",
+                                    overflowY: "auto",
+                                    mx: -24
+                                },
+                                children: items.map((item)=>/*#__PURE__*/ (0, $bNXjM$jsx)((0, $d75deef711b420b1$export$2e2bcd8739ae039), {
+                                        item: item,
+                                        usdConversion: usdPrice,
+                                        tokenUrl: tokenUrl
+                                    }, `${item.collection.id}:${item.token.id}`))
+                            }),
+                            isCartEmpty && !(displayPendingTransaction && transaction?.status === (0, $588062ced050a0db$export$de7bcda3c490bf18).Finalizing) && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                direction: "column",
+                                align: "center",
+                                justify: "center",
+                                css: {
+                                    color: "$neutralBorderHover",
+                                    flex: 1,
+                                    gap: "$5"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                        icon: (0, $bNXjM$faShoppingCart),
+                                        width: "30",
+                                        height: "30",
+                                        style: {
+                                            height: 30
+                                        }
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "body3",
+                                        color: "subtle",
+                                        children: "No items in your cart"
+                                    })
+                                ]
+                            }),
+                            displayPendingTransaction && transaction?.status === (0, $588062ced050a0db$export$de7bcda3c490bf18).Finalizing && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                direction: "column",
+                                align: "center",
+                                justify: "center",
+                                css: {
+                                    color: "$neutralBorderHover",
+                                    flex: 1,
+                                    gap: "$5"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "h6",
+                                        children: "Finalizing on blockchain"
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                        icon: (0, $bNXjM$faCube),
+                                        width: "24"
+                                    }),
+                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $31d3f3a80135a993$export$2e2bcd8739ae039), {
+                                        href: `${blockExplorerBaseUrl}/tx/${transaction?.txHash}`,
+                                        color: "primary",
+                                        weight: "medium",
+                                        target: "_blank",
+                                        css: {
+                                            fontSize: 12
+                                        },
+                                        children: "View on Etherscan"
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                direction: "column",
+                                css: {
+                                    mt: "auto",
+                                    pb: 10
+                                },
+                                children: [
+                                    !isCartEmpty && referrerFee ? /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        css: {
+                                            mb: "$4"
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                style: "subtitle2",
+                                                children: "Referrer Fee"
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                direction: "column",
+                                                justify: "center",
+                                                css: {
+                                                    ml: "auto",
+                                                    gap: "$1",
+                                                    "> div": {
+                                                        ml: "auto"
+                                                    }
+                                                },
+                                                children: [
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
+                                                        textStyle: "subtitle2",
+                                                        amount: referrerFee,
+                                                        address: currency?.contract,
+                                                        decimals: currency?.decimals,
+                                                        logoWidth: 12,
+                                                        chainId: cartChain?.id
+                                                    }),
+                                                    usdPrice && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $208ab5b0155991db$export$2e2bcd8739ae039), {
+                                                        amount: usdPrice * referrerFee,
+                                                        style: "subtitle2",
+                                                        color: "subtle",
+                                                        css: {
+                                                            textAlign: "end"
+                                                        }
+                                                    })
+                                                ]
+                                            })
+                                        ]
+                                    }) : null,
+                                    !isCartEmpty && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        css: {
+                                            mb: 28
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                style: "h6",
+                                                children: "Total"
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                                direction: "column",
+                                                justify: "center",
+                                                css: {
+                                                    ml: "auto",
+                                                    gap: "$1",
+                                                    "> div": {
+                                                        ml: "auto"
+                                                    }
+                                                },
+                                                children: [
+                                                    /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
+                                                        textStyle: "h6",
+                                                        amount: totalPrice,
+                                                        address: currency?.contract,
+                                                        decimals: currency?.decimals,
+                                                        logoWidth: 18,
+                                                        chainId: cartChain?.id
+                                                    }),
+                                                    usdPrice && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $208ab5b0155991db$export$2e2bcd8739ae039), {
+                                                        amount: usdPrice * totalPrice,
+                                                        style: "subtitle2",
+                                                        color: "subtle",
+                                                        css: {
+                                                            textAlign: "end"
+                                                        }
+                                                    })
+                                                ]
+                                            })
+                                        ]
+                                    }),
+                                    displayPendingTransaction && transaction?.status === (0, $588062ced050a0db$export$de7bcda3c490bf18).Approving && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                        style: "body2",
+                                        color: "subtle",
+                                        css: {
+                                            mb: "$2",
+                                            textAlign: "center"
+                                        },
+                                        children: [
+                                            "Please confirm purchase in your wallet",
+                                            " "
+                                        ]
+                                    }),
+                                    !hasEnoughCurrency && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $a08469b1b360d6cf$export$2e2bcd8739ae039), {
+                                        align: "center",
+                                        justify: "center",
+                                        css: {
+                                            mb: "$2",
+                                            gap: "$2"
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $3d59341a2d8e6cce$export$2e2bcd8739ae039), {
+                                                style: "body2",
+                                                color: "error",
+                                                children: "Insufficient balance"
+                                            }),
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $c370900a6d71021a$export$2e2bcd8739ae039), {
+                                                textStyle: "body2",
+                                                amount: balance,
+                                                address: currency?.contract,
+                                                decimals: currency?.decimals,
+                                                logoWidth: 10
+                                            })
+                                        ]
+                                    }),
+                                    isCartEmpty && !displayPendingTransaction && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                        disabled: true,
+                                        children: "Select Items to Buy"
+                                    }),
+                                    !isCartEmpty && hasValidItems && (transaction?.status === (0, $588062ced050a0db$export$de7bcda3c490bf18).Idle || !displayPendingTransaction) && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                        disabled: !hasEnoughCurrency,
+                                        onClick: async ()=>{
+                                            checkout().then(()=>{
+                                                setDisplayPendingTransaction(true);
+                                            }).catch((e)=>{
+                                                console.error(e);
+                                                setDisplayPendingTransaction(false);
+                                            });
+                                        },
+                                        children: hasEnoughCurrency ? "Purchase" : "Add Funds to Purchase"
+                                    }),
+                                    !isCartEmpty && !hasValidItems && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                        color: "secondary",
+                                        onClick: ()=>{
+                                            clear();
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $bNXjM$FontAwesomeIcon), {
+                                                icon: (0, $bNXjM$faRefresh),
+                                                width: "16",
+                                                height: "16"
+                                            }),
+                                            "Refresh Cart"
+                                        ]
+                                    }),
+                                    displayPendingTransaction && transaction?.status === (0, $588062ced050a0db$export$de7bcda3c490bf18).Approving && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                        disabled: true,
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $0ff8966798df47ad$export$2e2bcd8739ae039), {}),
+                                            "Waiting for Approval..."
+                                        ]
+                                    }),
+                                    displayPendingTransaction && transaction?.status === (0, $588062ced050a0db$export$de7bcda3c490bf18).Finalizing && /*#__PURE__*/ (0, $bNXjM$jsxs)((0, $f8f1c7bd1550c954$export$2e2bcd8739ae039), {
+                                        disabled: true,
+                                        children: [
+                                            /*#__PURE__*/ (0, $bNXjM$jsx)((0, $0ff8966798df47ad$export$2e2bcd8739ae039), {}),
+                                            "Waiting to be Validated..."
+                                        ]
+                                    })
+                                ]
+                            })
+                        ]
+                    }),
+                    open && /*#__PURE__*/ (0, $bNXjM$jsx)((0, $e779e4a6b41db55c$export$2e2bcd8739ae039), {
+                        css: {
+                            backgroundColor: "$overlayBackground",
+                            position: "fixed",
+                            inset: 0,
+                            zIndex: 1000
+                        }
+                    })
+                ]
+            });
+        }
     });
 }
-$c54420514bf08041$export$15123b0cb184ed6e.Custom = (0, $1a4e327b5574831a$export$2e2bcd8739ae039);
-var $c54420514bf08041$export$2e2bcd8739ae039 = $c54420514bf08041$export$15123b0cb184ed6e;
+$e0049ac10b4d489f$export$15123b0cb184ed6e.Custom = (0, $208cf8c19944ad35$export$2e2bcd8739ae039);
+var $e0049ac10b4d489f$export$2e2bcd8739ae039 = $e0049ac10b4d489f$export$15123b0cb184ed6e;
 
 
 
 
 
-export {$b02c8f73abc110da$export$e400fd05a10fd94a as ZooProvider, $c0c48baf657fe29c$export$bf730ab0ed25211d as ZooClientProvider, $ff2494fa019b599a$export$2e2bcd8739ae039 as useCollections, $c5db61a73ead0d6d$export$2e2bcd8739ae039 as useCollectionActivity, $ea6a5a4aadbe73c6$export$2e2bcd8739ae039 as useUsersActivity, $d528109b46c9ca01$export$2e2bcd8739ae039 as useZooClient, $2ae380ce592f7932$export$2e2bcd8739ae039 as useTokens, $814406954658880f$export$2e2bcd8739ae039 as useTokenOpenseaBanned, $2c6663ee0e1f1b5c$export$2e2bcd8739ae039 as useListings, $b132071166110005$export$2e2bcd8739ae039 as useOwnerListings, $df4107d62d11f8f8$export$2e2bcd8739ae039 as useAttributes, $d2a483d2a9b1fd6c$export$2e2bcd8739ae039 as useBids, $6c04a5e57562cf4e$export$2e2bcd8739ae039 as useUserTokens, $bac434731ae4dec3$export$2e2bcd8739ae039 as useUserTopBids, $a0fdce9009639dc6$export$2e2bcd8739ae039 as useUserCollections, $81f7c865d754f2b5$export$2e2bcd8739ae039 as useCart, $aa619651e0e4758e$export$2e2bcd8739ae039 as useDynamicTokens, $d211a606bb97df6f$export$2e2bcd8739ae039 as lightTheme, $8c44bcbd64890509$export$2e2bcd8739ae039 as darkTheme, $2ab11b88f5d133c9$export$7055e49b90860ae6 as BuyModal, $165aa30a64b97a1b$export$b41ddf00b39567e8 as BuyStep, $79a9c4ae6d63e150$export$d23efc006864db2f as ListModal, $4f8e6d03fa0f27e5$export$7f4afd65e1e67072 as ListStep, $a9286f985fbece47$export$556cfc4a654987bd as BidModal, $cbcfe2ab7e278624$export$7a92ddb9e11f37f7 as BidStep, $d6d53122c35a288f$export$91ee3fa7c9f4e6c2 as AcceptBidModal, $aa77feef8abf8642$export$f4dd52ca63b5fdde as AcceptBidStep, $59811dcd8bb1eb8e$export$89d1e00b7fa831db as CancelBidModal, $2162ba735da1218d$export$c5c5c857eaef0fde as CancelBidStep, $c5210bf23d1c52b3$export$5ccdc2f8532db25b as CancelListingModal, $efe427dbb69e4848$export$c5c5c857eaef0fde as CancelListingStep, $5f886409e3581c27$export$2e2bcd8739ae039 as TokenMedia, $5f886409e3581c27$export$b7d45a46da28b4d3 as extractMediaType, $c54420514bf08041$export$2e2bcd8739ae039 as CartPopover, $7e85f260486c536b$export$9081b9c87ee4e12e as CartProvider};
+export {$b15843e937ac72b8$export$e400fd05a10fd94a as ZooProvider, $c216485f70235e8a$export$bf730ab0ed25211d as ZooClientProvider, $38f38860f7db3263$export$2e2bcd8739ae039 as useCollections, $6006670c0a098975$export$2e2bcd8739ae039 as useCollectionActivity, $a977118e24599639$export$2e2bcd8739ae039 as useUsersActivity, $c6195489119ab58a$export$2e2bcd8739ae039 as useZooClient, $54bf018b076821f1$export$2e2bcd8739ae039 as useTokens, $9898620691963117$export$2e2bcd8739ae039 as useTokenOpenseaBanned, $40f16bae928ea461$export$2e2bcd8739ae039 as useListings, $2503c60624d9b72b$export$2e2bcd8739ae039 as useOwnerListings, $a77f332d243f1426$export$2e2bcd8739ae039 as useAttributes, $ed463f024c26b3ca$export$2e2bcd8739ae039 as useBids, $7ef173c8b4177008$export$2e2bcd8739ae039 as useUserTokens, $b3db166a82febb11$export$2e2bcd8739ae039 as useUserTopBids, $fdff2793179dd2d0$export$2e2bcd8739ae039 as useUserCollections, $50bacb8bed3891ec$export$2e2bcd8739ae039 as useCart, $75e58b92a1baee06$export$2e2bcd8739ae039 as useDynamicTokens, $5ca18e7553dfd06e$export$2e2bcd8739ae039 as lightTheme, $1b804d6c5a50513c$export$2e2bcd8739ae039 as darkTheme, $ad2cbb1f5242b499$export$7055e49b90860ae6 as BuyModal, $537a8475c59a6e21$export$b41ddf00b39567e8 as BuyStep, $a93b26d073373c23$export$d23efc006864db2f as ListModal, $052d60b4fc42e2f9$export$7f4afd65e1e67072 as ListStep, $5f98c9e3399e3959$export$556cfc4a654987bd as BidModal, $97f9e638db55049c$export$7a92ddb9e11f37f7 as BidStep, $0b4a951eb65dd888$export$91ee3fa7c9f4e6c2 as AcceptBidModal, $56323ed10ce02ae6$export$f4dd52ca63b5fdde as AcceptBidStep, $0e222eb8e6425c4a$export$89d1e00b7fa831db as CancelBidModal, $a77cc70c3ee0a162$export$c5c5c857eaef0fde as CancelBidStep, $93ba2f12ea89aa2b$export$5ccdc2f8532db25b as CancelListingModal, $92f34bd13bb54e67$export$c5c5c857eaef0fde as CancelListingStep, $965711be26a09bce$export$2e2bcd8739ae039 as TokenMedia, $965711be26a09bce$export$b7d45a46da28b4d3 as extractMediaType, $e0049ac10b4d489f$export$2e2bcd8739ae039 as CartPopover, $588062ced050a0db$export$9081b9c87ee4e12e as CartProvider};
 //# sourceMappingURL=index.mjs.map

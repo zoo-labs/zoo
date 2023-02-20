@@ -1226,7 +1226,7 @@ export function useTokens(options?: TokensQuery | false, swrOptions?: SWRInfinit
     isValidating: boolean;
     isLoading: boolean;
 };
-export function useZooClient(): import("@zoolabs/sdk").ZooClient | null;
+export function useZooClient(): import("~/../sdk/dist").ZooClient | null;
 export function useTokenOpenseaBanned(contract?: string, tokenId?: number | string): boolean;
 type AsksQuery = paths['/orders/asks/v4']['get']['parameters']['query'];
 export function useListings(options: AsksQuery, swrOptions?: SWRInfiniteConfiguration, enabled?: boolean, chainId?: number): {
@@ -2700,7 +2700,7 @@ export function useCart<SelectorOutput>(selector: (store: Cart) => SelectorOutpu
     checkout: (options?: Partial<Omit<{
         orderIds?: string[] | undefined;
         rawOrders?: {
-            kind: "opensea" | "looks-rare" | "zeroex-v4" | "seaport" | "x2y2" | "universe" | "infinity" | "flow" | "rarible" | "sudoswap" | "nftx";
+            kind: "flow" | "infinity" | "x2y2" | "opensea" | "looks-rare" | "universe" | "zeroex-v4" | "seaport" | "rarible" | "sudoswap" | "nftx";
             data: {
                 [key: string]: unknown;
             };
@@ -2722,7 +2722,7 @@ export function useCart<SelectorOutput>(selector: (store: Cart) => SelectorOutpu
         skipBalanceCheck?: boolean | undefined;
         allowInactiveOrderIds?: boolean | undefined;
         x2y2ApiKey?: string | undefined;
-    }, "source" | "tokens" | "orderIds" | "rawOrders">> | undefined) => Promise<void>;
+    }, "source" | "orderIds" | "rawOrders" | "tokens">> | undefined) => Promise<void>;
     set: (value: Partial<Cart>) => void;
 };
 type DynamicTokens = (ReturnType<typeof useTokens>['data'][0] & {
@@ -2852,7 +2852,7 @@ export function useDynamicTokens(options?: Parameters<typeof useTokens>['0'], sw
     checkout: (options?: Partial<Omit<{
         orderIds?: string[] | undefined;
         rawOrders?: {
-            kind: "opensea" | "looks-rare" | "zeroex-v4" | "seaport" | "x2y2" | "universe" | "infinity" | "flow" | "rarible" | "sudoswap" | "nftx";
+            kind: "flow" | "infinity" | "x2y2" | "opensea" | "looks-rare" | "universe" | "zeroex-v4" | "seaport" | "rarible" | "sudoswap" | "nftx";
             data: {
                 [key: string]: unknown;
             };
@@ -2874,7 +2874,7 @@ export function useDynamicTokens(options?: Parameters<typeof useTokens>['0'], sw
         skipBalanceCheck?: boolean | undefined;
         allowInactiveOrderIds?: boolean | undefined;
         x2y2ApiKey?: string | undefined;
-    }, "source" | "tokens" | "orderIds" | "rawOrders">> | undefined) => Promise<void>;
+    }, "source" | "orderIds" | "rawOrders" | "tokens">> | undefined) => Promise<void>;
     set: (value: Partial<Cart>) => void;
     data: DynamicTokens;
     hasNextPage: boolean;
@@ -3757,7 +3757,7 @@ export declare namespace BuyModal {
                 errorData?: any;
                 action: string;
                 description: string;
-                kind: "signature" | "transaction";
+                kind: "transaction" | "signature";
                 items?: {
                     status: "complete" | "incomplete";
                     data?: any;
@@ -4370,8 +4370,8 @@ export declare namespace BidModal {
                 attributeValue?: string | undefined;
                 quantity?: number | undefined;
                 weiPrice: string;
-                orderKind?: "looks-rare" | "zeroex-v4" | "seaport" | "x2y2" | "universe" | "forward" | "infinity" | "flow" | undefined;
-                orderbook?: "opensea" | "looks-rare" | "x2y2" | "reservoir" | "universe" | "infinity" | "flow" | undefined;
+                orderKind?: "flow" | "infinity" | "x2y2" | "looks-rare" | "universe" | "zeroex-v4" | "seaport" | "forward" | undefined;
+                orderbook?: "flow" | "infinity" | "x2y2" | "reservoir" | "opensea" | "looks-rare" | "universe" | undefined;
                 orderbookApiKey?: string | undefined;
                 automatedRoyalties?: boolean | undefined;
                 fees?: string[] | undefined;
@@ -4824,7 +4824,7 @@ export declare namespace CancelBidModal {
                 errorData?: any;
                 action: string;
                 description: string;
-                kind: "signature" | "transaction";
+                kind: "transaction" | "signature";
                 items?: {
                     status: "complete" | "incomplete";
                     data?: any;
@@ -4940,7 +4940,7 @@ export declare namespace CancelListingModal {
                 errorData?: any;
                 action: string;
                 description: string;
-                kind: "signature" | "transaction";
+                kind: "transaction" | "signature";
                 items?: {
                     status: "complete" | "incomplete";
                     data?: any;
@@ -5287,7 +5287,7 @@ export declare namespace CartPopover {
             transaction?: {
                 id?: string | undefined;
                 txHash?: string | undefined;
-                chain: import("@zoolabs/sdk").ZooChain;
+                chain: import("~/../sdk/dist").ZooChain;
                 items: {
                     token: {
                         id: string;
@@ -5369,7 +5369,7 @@ export declare namespace CartPopover {
                     errorData?: any;
                     action: string;
                     description: string;
-                    kind: "signature" | "transaction";
+                    kind: "transaction" | "signature";
                     items?: {
                         status: "complete" | "incomplete";
                         data?: any;
@@ -5380,11 +5380,11 @@ export declare namespace CartPopover {
                 }[] | undefined;
             } | null | undefined;
             blockExplorerBaseUrl: string;
-            cartChain: import("@zoolabs/sdk").ZooChain | undefined;
+            cartChain: import("~/../sdk/dist").ZooChain | undefined;
             checkout: (options?: Partial<Omit<{
                 orderIds?: string[] | undefined;
                 rawOrders?: {
-                    kind: "opensea" | "looks-rare" | "zeroex-v4" | "seaport" | "x2y2" | "universe" | "infinity" | "flow" | "rarible" | "sudoswap" | "nftx";
+                    kind: "flow" | "infinity" | "x2y2" | "opensea" | "looks-rare" | "universe" | "zeroex-v4" | "seaport" | "rarible" | "sudoswap" | "nftx";
                     data: {
                         [key: string]: unknown;
                     };
@@ -5406,7 +5406,7 @@ export declare namespace CartPopover {
                 skipBalanceCheck?: boolean | undefined;
                 allowInactiveOrderIds?: boolean | undefined;
                 x2y2ApiKey?: string | undefined;
-            }, "source" | "tokens" | "orderIds" | "rawOrders">> | undefined) => Promise<void>;
+            }, "source" | "orderIds" | "rawOrders" | "tokens">> | undefined) => Promise<void>;
             clear: () => void;
             remove: (ids: string[]) => void;
             add: (items: ({

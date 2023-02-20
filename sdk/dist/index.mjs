@@ -20,15 +20,15 @@ function $parcel$exportWildcard(dest, source) {
 
   return dest;
 }
-var $fc674cd0863de20b$exports = {};
+var $63606961de7cfbf3$exports = {};
 
-$parcel$export($fc674cd0863de20b$exports, "ZooClient", () => $fc674cd0863de20b$export$f29e902efe386198);
-$parcel$export($fc674cd0863de20b$exports, "getClient", () => $fc674cd0863de20b$export$6bb76d6eba7e258c);
-$parcel$export($fc674cd0863de20b$exports, "createClient", () => $fc674cd0863de20b$export$5d730b7aed1a3eb0);
+$parcel$export($63606961de7cfbf3$exports, "ZooClient", () => $63606961de7cfbf3$export$f29e902efe386198);
+$parcel$export($63606961de7cfbf3$exports, "getClient", () => $63606961de7cfbf3$export$6bb76d6eba7e258c);
+$parcel$export($63606961de7cfbf3$exports, "createClient", () => $63606961de7cfbf3$export$5d730b7aed1a3eb0);
 
 
 
-async function $687a7783fd478e3b$export$f014594cc879f602(request, dataParser, maximumAttempts = 15, attemptCount = 0) {
+async function $1f074173aef8d3e6$export$f014594cc879f602(request, dataParser, maximumAttempts = 15, attemptCount = 0) {
     if (attemptCount >= maximumAttempts) throw `Failed to get data after ${attemptCount} attempt(s), aborting`;
     async function getData() {
         let res = await (0, $4mq6z$axios).request(request);
@@ -41,9 +41,9 @@ async function $687a7783fd478e3b$export$f014594cc879f602(request, dataParser, ma
     // The response is still unchanged. Check again in five seconds
     await new Promise((resolve)=>setTimeout(resolve, 5000));
     attemptCount++;
-    await $687a7783fd478e3b$export$f014594cc879f602(request, dataParser, maximumAttempts, attemptCount);
+    await $1f074173aef8d3e6$export$f014594cc879f602(request, dataParser, maximumAttempts, attemptCount);
 }
-async function $687a7783fd478e3b$export$d2c70568ef790b87(request, validate, maximumAttempts = 15, attemptCount = 0) {
+async function $1f074173aef8d3e6$export$d2c70568ef790b87(request, validate, maximumAttempts = 15, attemptCount = 0) {
     if (attemptCount >= maximumAttempts) throw `Failed to get an ok response after ${attemptCount} attempt(s), aborting`;
     const res = await (0, $4mq6z$axios).request(request);
     if (!validate) validate = (res)=>res.status === 200;
@@ -52,7 +52,7 @@ async function $687a7783fd478e3b$export$d2c70568ef790b87(request, validate, maxi
         // The response is still unchanged. Check again in five seconds
         await new Promise((resolve)=>setTimeout(resolve, 5000));
         attemptCount++;
-        await $687a7783fd478e3b$export$d2c70568ef790b87(request, validate, maximumAttempts, attemptCount);
+        await $1f074173aef8d3e6$export$d2c70568ef790b87(request, validate, maximumAttempts, attemptCount);
     }
     return true;
 }
@@ -82,23 +82,21 @@ async function $687a7783fd478e3b$export$d2c70568ef790b87(request, validate, maxi
  *
  * @param url An URL instance
  * @param query An object containing all needed query params.
- */ function $36e844bf1398f57b$export$dc1827290674c112(url, query) {
+ */ function $647b25b545ba3e6d$export$dc1827290674c112(url, query) {
     Object.keys(query).map((key)=>{
-        var _a;
         let value = query[key];
         if (value !== undefined) {
             if (Array.isArray(value)) value.forEach((item)=>{
                 url.searchParams.append(key, item);
             });
-            else url.searchParams.append(key, (_a = query[key]) === null || _a === void 0 ? void 0 : _a.toString());
+            else url.searchParams.append(key, query[key]?.toString());
         }
         return url;
     });
 }
 
 
-async function $93bc29f5073032e6$export$21ece85d7636deb(request, signer, setState, newJson, expectedPrice) {
-    var _a, _b, _c;
+async function $a89c379ae92dec7a$export$21ece85d7636deb(request, signer, setState, newJson, expectedPrice) {
     try {
         let json = newJson;
         if (!request.headers) request.headers = {
@@ -107,10 +105,10 @@ async function $93bc29f5073032e6$export$21ece85d7636deb(request, signer, setStat
             "x-rkc-version": "0.4.0",
             "x-rkui-version": "0.9.0"
         };
-        const client = (0, $fc674cd0863de20b$export$6bb76d6eba7e258c)();
-        const currentChain = client === null || client === void 0 ? void 0 : client.currentChain();
-        if (currentChain === null || currentChain === void 0 ? void 0 : currentChain.baseApiUrl) request.baseURL = currentChain.baseApiUrl;
-        if (currentChain === null || currentChain === void 0 ? void 0 : currentChain.apiKey) request.headers["x-api-key"] = currentChain.apiKey;
+        const client = (0, $63606961de7cfbf3$export$6bb76d6eba7e258c)();
+        const currentChain = client?.currentChain();
+        if (currentChain?.baseApiUrl) request.baseURL = currentChain.baseApiUrl;
+        if (currentChain?.apiKey) request.headers["x-api-key"] = currentChain.apiKey;
         if (!json) {
             const res = await (0, $4mq6z$axios).request(request);
             json = res.data;
@@ -118,8 +116,8 @@ async function $93bc29f5073032e6$export$21ece85d7636deb(request, signer, setStat
         }
         // Handle errors
         if (json.error || !json.steps) throw json;
-        const isBuy = (_a = request.url) === null || _a === void 0 ? void 0 : _a.includes("/execute/buy");
-        const isSell = (_b = request.url) === null || _b === void 0 ? void 0 : _b.includes("/execute/sell");
+        const isBuy = request.url?.includes("/execute/buy");
+        const isSell = request.url?.includes("/execute/sell");
         // Handle price changes to protect users from paying more
         // than expected when buying and selling for less than expected
         if (json.path && expectedPrice) {
@@ -142,14 +140,14 @@ async function $93bc29f5073032e6$export$21ece85d7636deb(request, signer, setStat
                 json.steps[0].error = error.message;
                 json.steps[0].errorData = json.path;
                 setState([
-                    ...json === null || json === void 0 ? void 0 : json.steps
+                    ...json?.steps
                 ]);
                 throw error;
             }
         }
         // Update state on first call or recursion
         setState([
-            ...json === null || json === void 0 ? void 0 : json.steps
+            ...json?.steps
         ]);
         let incompleteStepIndex = -1;
         let incompleteStepItemIndex = -1;
@@ -170,10 +168,9 @@ async function $93bc29f5073032e6$export$21ece85d7636deb(request, signer, setStat
         let stepItem = stepItems[incompleteStepItemIndex];
         // If step item is missing data, poll until it is ready
         if (!stepItem.data) {
-            json = await (0, $687a7783fd478e3b$export$f014594cc879f602)(request, (json)=>{
-                var _a, _b;
+            json = await (0, $1f074173aef8d3e6$export$f014594cc879f602)(request, (json)=>{
                 const data = json;
-                return ((_b = (_a = data === null || data === void 0 ? void 0 : data.steps) === null || _a === void 0 ? void 0 : _a[incompleteStepIndex].items) === null || _b === void 0 ? void 0 : _b[incompleteStepItemIndex].data) ? true : false;
+                return data?.steps?.[incompleteStepIndex].items?.[incompleteStepItemIndex].data ? true : false;
             });
             if (!json.steps || !json.steps[incompleteStepIndex].items) throw json;
             const items = json.steps[incompleteStepIndex].items;
@@ -187,9 +184,9 @@ async function $93bc29f5073032e6$export$21ece85d7636deb(request, signer, setStat
             case "transaction":
                 {
                     const tx = await signer.sendTransaction(stepData);
-                    if ((_c = json.steps[incompleteStepIndex].items) === null || _c === void 0 ? void 0 : _c[incompleteStepItemIndex]) stepItem.txHash = tx.hash;
+                    if (json.steps[incompleteStepIndex].items?.[incompleteStepItemIndex]) stepItem.txHash = tx.hash;
                     setState([
-                        ...json === null || json === void 0 ? void 0 : json.steps
+                        ...json?.steps
                     ]);
                     await tx.wait();
                     //Implicitly poll the confirmation url to confirm the transaction went through
@@ -201,8 +198,8 @@ async function $93bc29f5073032e6$export$21ece85d7636deb(request, signer, setStat
                         "x-rkui-version": "0.9.0"
                     };
                     if (request.headers && request.headers["x-api-key"]) headers["x-api-key"] = request.headers["x-api-key"];
-                    client === null || client === void 0 || client.uiVersion;
-                    await (0, $687a7783fd478e3b$export$d2c70568ef790b87)({
+                    client?.uiVersion;
+                    await (0, $1f074173aef8d3e6$export$d2c70568ef790b87)({
                         url: confirmationUrl.href,
                         method: "get",
                         headers: headers
@@ -214,8 +211,8 @@ async function $93bc29f5073032e6$export$21ece85d7636deb(request, signer, setStat
                             const queryParams = {
                                 txHash: stepItem.txHash
                             };
-                            (0, $36e844bf1398f57b$export$dc1827290674c112)(indexerConfirmationUrl, queryParams);
-                            await (0, $687a7783fd478e3b$export$d2c70568ef790b87)({
+                            (0, $647b25b545ba3e6d$export$dc1827290674c112)(indexerConfirmationUrl, queryParams);
+                            await (0, $1f074173aef8d3e6$export$d2c70568ef790b87)({
                                 url: indexerConfirmationUrl.href,
                                 method: "get",
                                 headers: headers
@@ -270,12 +267,12 @@ async function $93bc29f5073032e6$export$21ece85d7636deb(request, signer, setStat
                             if (res.status > 299 || res.status < 200) throw res.data;
                             stepItem.orderId = res.data.orderId;
                             setState([
-                                ...json === null || json === void 0 ? void 0 : json.steps
+                                ...json?.steps
                             ]);
                         } catch (err) {
                             json.steps[incompleteStepIndex].error = "Your order could not be posted.";
                             setState([
-                                ...json === null || json === void 0 ? void 0 : json.steps
+                                ...json?.steps
                             ]);
                             throw err;
                         }
@@ -288,9 +285,9 @@ async function $93bc29f5073032e6$export$21ece85d7636deb(request, signer, setStat
         delete step.message;
         stepItem.status = "complete";
         // Recursively call executeSteps()
-        await $93bc29f5073032e6$export$21ece85d7636deb(request, signer, setState, json);
+        await $a89c379ae92dec7a$export$21ece85d7636deb(request, signer, setState, json);
     } catch (err) {
-        const error = new Error(err === null || err === void 0 ? void 0 : err.message);
+        const error = new Error(err?.message);
         console.error(error);
         throw err;
     }
@@ -298,14 +295,14 @@ async function $93bc29f5073032e6$export$21ece85d7636deb(request, signer, setStat
 
 
 
-function $ab4c5b6add749096$export$b5fe3f66a567bec0(config = {}) {
-    const client = (0, $fc674cd0863de20b$export$6bb76d6eba7e258c)();
+function $abfac63fd1119cf4$export$b5fe3f66a567bec0(config = {}) {
+    const client = (0, $63606961de7cfbf3$export$6bb76d6eba7e258c)();
     const currentChain = client.currentChain();
     const headers = {
         "Content-Type": "application/json",
         "x-rkc-version": "0.4.0"
     };
-    if (currentChain === null || currentChain === void 0 ? void 0 : currentChain.apiKey) headers["x-api-key"] = currentChain.apiKey;
+    if (currentChain?.apiKey) headers["x-api-key"] = currentChain.apiKey;
     return (0, $4mq6z$axios).request({
         headers: headers,
         ...config
@@ -313,13 +310,12 @@ function $ab4c5b6add749096$export$b5fe3f66a567bec0(config = {}) {
 }
 
 
-async function $3578b68922ba0b40$export$ed27da83bcbea2e5(data) {
-    var _a;
+async function $c759a5b848c3f340$export$ed27da83bcbea2e5(data) {
     const { token: token , expectedPrice: expectedPrice , signer: signer , onProgress: onProgress  } = data;
     const taker = await signer.getAddress();
-    const client = (0, $fc674cd0863de20b$export$6bb76d6eba7e258c)();
+    const client = (0, $63606961de7cfbf3$export$6bb76d6eba7e258c)();
     const options = data.options || {};
-    const baseApiUrl = (_a = client.currentChain()) === null || _a === void 0 ? void 0 : _a.baseApiUrl;
+    const baseApiUrl = client.currentChain()?.baseApiUrl;
     if (!client.currentChain()) throw new ReferenceError("ZooClient missing chain configuration");
     try {
         const params = {
@@ -329,7 +325,7 @@ async function $3578b68922ba0b40$export$ed27da83bcbea2e5(data) {
             ...options
         };
         if (client.normalizeRoyalties !== undefined && params.normalizeRoyalties === undefined) params.normalizeRoyalties = client.normalizeRoyalties;
-        await (0, $93bc29f5073032e6$export$21ece85d7636deb)({
+        await (0, $a89c379ae92dec7a$export$21ece85d7636deb)({
             url: `${baseApiUrl}/execute/sell/v6`,
             method: "post",
             data: params
@@ -339,7 +335,7 @@ async function $3578b68922ba0b40$export$ed27da83bcbea2e5(data) {
         const data = {
             token: `${token.contract}:${token.tokenId}`
         };
-        (0, $ab4c5b6add749096$export$b5fe3f66a567bec0)({
+        (0, $abfac63fd1119cf4$export$b5fe3f66a567bec0)({
             method: "POST",
             url: `${baseApiUrl}/tokens/refresh/v1`,
             data: JSON.stringify(data)
@@ -351,13 +347,12 @@ async function $3578b68922ba0b40$export$ed27da83bcbea2e5(data) {
 
 
 
-async function $a80f03dc07cf3a91$export$5e1997c166a16792(data) {
-    var _a;
+async function $31cb625494aa0d5b$export$5e1997c166a16792(data) {
     const { tokens: tokens , orderIds: orderIds , rawOrders: rawOrders , expectedPrice: expectedPrice , signer: signer , onProgress: onProgress  } = data;
     const taker = await signer.getAddress();
-    const client = (0, $fc674cd0863de20b$export$6bb76d6eba7e258c)();
+    const client = (0, $63606961de7cfbf3$export$6bb76d6eba7e258c)();
     const options = data.options || {};
-    const baseApiUrl = (_a = client.currentChain()) === null || _a === void 0 ? void 0 : _a.baseApiUrl;
+    const baseApiUrl = client.currentChain()?.baseApiUrl;
     if (!baseApiUrl) throw new ReferenceError("ZooClient missing chain configuration");
     if ((!tokens || !tokens.length) && (!data.orderIds || !data.orderIds.length) && !data.rawOrders) {
         console.debug(data);
@@ -373,11 +368,11 @@ async function $a80f03dc07cf3a91$export$5e1997c166a16792(data) {
             source: client.source || "",
             ...options
         };
-        if (tokens) params.tokens = tokens === null || tokens === void 0 ? void 0 : tokens.map((token)=>`${token.contract}:${token.tokenId}`);
+        if (tokens) params.tokens = tokens?.map((token)=>`${token.contract}:${token.tokenId}`);
         else if (orderIds) params.orderIds = orderIds;
         else if (rawOrders) params.rawOrders = rawOrders;
         if (client.normalizeRoyalties !== undefined && params.normalizeRoyalties === undefined) params.normalizeRoyalties = client.normalizeRoyalties;
-        await (0, $93bc29f5073032e6$export$21ece85d7636deb)({
+        await (0, $a89c379ae92dec7a$export$21ece85d7636deb)({
             url: `${baseApiUrl}/execute/buy/v6`,
             method: "post",
             data: params
@@ -388,7 +383,7 @@ async function $a80f03dc07cf3a91$export$5e1997c166a16792(data) {
             const data = {
                 token: `${token.contract}:${token.tokenId}`
             };
-            (0, $ab4c5b6add749096$export$b5fe3f66a567bec0)({
+            (0, $abfac63fd1119cf4$export$b5fe3f66a567bec0)({
                 method: "POST",
                 url: `${baseApiUrl}/tokens/refresh/v1`,
                 data: JSON.stringify(data)
@@ -401,19 +396,18 @@ async function $a80f03dc07cf3a91$export$5e1997c166a16792(data) {
 
 
 
-async function $5a5394e7716c7898$export$1d5423ff89b08a3c(data) {
-    var _a;
+async function $ad2aa4cd981c9917$export$1d5423ff89b08a3c(data) {
     const { id: id , signer: signer , onProgress: onProgress  } = data;
-    const client = (0, $fc674cd0863de20b$export$6bb76d6eba7e258c)();
+    const client = (0, $63606961de7cfbf3$export$6bb76d6eba7e258c)();
     const options = data.options || {};
-    const baseApiUrl = (_a = client.currentChain()) === null || _a === void 0 ? void 0 : _a.baseApiUrl;
+    const baseApiUrl = client.currentChain()?.baseApiUrl;
     if (!baseApiUrl) throw new ReferenceError("ZooClient missing chain configuration");
     try {
         const params = {
             id: id,
             ...options
         };
-        await (0, $93bc29f5073032e6$export$21ece85d7636deb)({
+        await (0, $a89c379ae92dec7a$export$21ece85d7636deb)({
             url: `${baseApiUrl}/execute/cancel/v2`,
             params: params
         }, signer, onProgress);
@@ -428,16 +422,11 @@ async function $5a5394e7716c7898$export$1d5423ff89b08a3c(data) {
 
 
 
-var $d7d887a3e64a76d0$exports = {};
-$d7d887a3e64a76d0$exports = JSON.parse('{"name":"@zoolabs/sdk","version":"5.4.3","description":"An SDK that can be used in any javascript/typescript context to easily interact with Zoo liquidity APIs","source":"src/index.ts","module":"dist/index.mjs","type":"module","types":"dist/index.d.ts","author":"Zoo Labs Foundation","license":"MIT","files":["dist"],"scripts":{"build":"tsc -p .","clean":"rm -rf dist","version":"yarn version","version:package":"sh ../../scripts/package-version.sh","version:update":"yarn version ${0}; PACKAGE_VERSION=$(yarn version:package); git add -A; git commit -m \\"\uD83C\uDF89 Release client package v$PACKAGE_VERSION\\"; git push","syncApi":"node ./sync-api.mjs","changelog":"node ../../scripts/generate-changelog.js package=sdk"},"repository":{"type":"git","url":"https://github.com/zoo-labs/zdk"},"sideEffects":false,"keywords":["nft","zoo","zoo-sdk","zdk","protocol","sdk"],"peerDependencies":{"ethers":"^5.7.2"},"dependencies":{"@types/node":"^18.14.0","axios":"^1.3.3","typescript":"^4.9.5"},"publishConfig":{"access":"public"},"devDependencies":{"@babel/core":"^7.20.12","openapi-typescript":"^6.1.0"}}');
-
-
-async function $1c1078d75c9f24df$export$c5dd9dc6df16df31(data) {
-    var _a, _b;
+async function $cdcfb7335e58885c$export$c5dd9dc6df16df31(data) {
     const { listings: listings , signer: signer , onProgress: onProgress = ()=>{} , precheck: precheck  } = data;
-    const client = (0, $fc674cd0863de20b$export$6bb76d6eba7e258c)();
+    const client = (0, $63606961de7cfbf3$export$6bb76d6eba7e258c)();
     const maker = await signer.getAddress();
-    const baseApiUrl = (_a = client.currentChain()) === null || _a === void 0 ? void 0 : _a.baseApiUrl;
+    const baseApiUrl = client.currentChain()?.baseApiUrl;
     if (!baseApiUrl) throw new ReferenceError("ZooClient missing chain configuration");
     try {
         const data = {
@@ -456,19 +445,19 @@ async function $1c1078d75c9f24df$export$c5dd9dc6df16df31(data) {
             method: "post",
             data: data,
             headers: {
-                "x-rkc-version": (0, $d7d887a3e64a76d0$exports.version)
+                "x-rkc-version": "0.4.0"
             }
         };
         if (precheck) {
-            const apiKey = (_b = client.currentChain()) === null || _b === void 0 ? void 0 : _b.apiKey;
+            const apiKey = client.currentChain()?.apiKey;
             if (apiKey && request.headers) request.headers["x-api-key"] = apiKey;
-            if ((client === null || client === void 0 ? void 0 : client.uiVersion) && request.headers) request.headers["x-rkui-version"] = client.uiVersion;
+            if (client?.uiVersion && request.headers) request.headers["x-rkui-version"] = client.uiVersion;
             const res = await (0, $4mq6z$axios).request(request);
             if (res.status !== 200) throw res.data;
             const data = res.data;
             onProgress(data["steps"]);
             return data["steps"];
-        } else await (0, $93bc29f5073032e6$export$21ece85d7636deb)(request, signer, onProgress);
+        } else await (0, $a89c379ae92dec7a$export$21ece85d7636deb)(request, signer, onProgress);
         return true;
     } catch (err) {
         console.error(err);
@@ -479,11 +468,10 @@ async function $1c1078d75c9f24df$export$c5dd9dc6df16df31(data) {
 
 
 
-async function $19e3360e57cbdd5f$export$6d65a5902ff15306({ bids: bids , signer: signer , onProgress: onProgress  }) {
-    var _a;
-    const client = (0, $fc674cd0863de20b$export$6bb76d6eba7e258c)();
+async function $974a8862ee28a959$export$6d65a5902ff15306({ bids: bids , signer: signer , onProgress: onProgress  }) {
+    const client = (0, $63606961de7cfbf3$export$6bb76d6eba7e258c)();
     const maker = await signer.getAddress();
-    const baseApiUrl = (_a = client.currentChain()) === null || _a === void 0 ? void 0 : _a.baseApiUrl;
+    const baseApiUrl = client.currentChain()?.baseApiUrl;
     if (!baseApiUrl) throw new ReferenceError("ZooClient missing configuration");
     try {
         const data = {
@@ -501,7 +489,7 @@ async function $19e3360e57cbdd5f$export$6d65a5902ff15306({ bids: bids , signer: 
             if (!("automatedRoyalties" in bid) && "automatedRoyalties" in client) bid.automatedRoyalties = client.automatedRoyalties;
         });
         data.params = bids;
-        await (0, $93bc29f5073032e6$export$21ece85d7636deb)({
+        await (0, $a89c379ae92dec7a$export$21ece85d7636deb)({
             url: `${baseApiUrl}/execute/bid/v4`,
             method: "post",
             data: data
@@ -514,30 +502,30 @@ async function $19e3360e57cbdd5f$export$6d65a5902ff15306({ bids: bids , signer: 
 }
 
 
-const $7eac3262c9d81e1a$var$actions = {
-    acceptOffer: $3578b68922ba0b40$export$ed27da83bcbea2e5,
-    buyToken: $a80f03dc07cf3a91$export$5e1997c166a16792,
-    cancelOrder: $5a5394e7716c7898$export$1d5423ff89b08a3c,
-    listToken: $1c1078d75c9f24df$export$c5dd9dc6df16df31,
-    placeBid: $19e3360e57cbdd5f$export$6d65a5902ff15306
+const $d5566eff14828706$var$actions = {
+    acceptOffer: $c759a5b848c3f340$export$ed27da83bcbea2e5,
+    buyToken: $31cb625494aa0d5b$export$5e1997c166a16792,
+    cancelOrder: $ad2aa4cd981c9917$export$1d5423ff89b08a3c,
+    listToken: $cdcfb7335e58885c$export$c5dd9dc6df16df31,
+    placeBid: $974a8862ee28a959$export$6d65a5902ff15306
 };
-var $7eac3262c9d81e1a$export$2e2bcd8739ae039 = $7eac3262c9d81e1a$var$actions;
+var $d5566eff14828706$export$2e2bcd8739ae039 = $d5566eff14828706$var$actions;
 
 
-var $7b499f039cd2c001$exports = {};
+var $30cb609612a5109b$exports = {};
 
-$parcel$export($7b499f039cd2c001$exports, "executeSteps", () => $93bc29f5073032e6$export$21ece85d7636deb);
-$parcel$export($7b499f039cd2c001$exports, "setParams", () => $36e844bf1398f57b$export$dc1827290674c112);
-$parcel$export($7b499f039cd2c001$exports, "pollUntilOk", () => $687a7783fd478e3b$export$d2c70568ef790b87);
-$parcel$export($7b499f039cd2c001$exports, "pollUntilHasData", () => $687a7783fd478e3b$export$f014594cc879f602);
-$parcel$export($7b499f039cd2c001$exports, "isOpenSeaBanned", () => $5ffb320f51f29c3d$export$feaa73ad8ed3f2b9);
-$parcel$export($7b499f039cd2c001$exports, "request", () => $ab4c5b6add749096$export$b5fe3f66a567bec0);
-
-
+$parcel$export($30cb609612a5109b$exports, "executeSteps", () => $a89c379ae92dec7a$export$21ece85d7636deb);
+$parcel$export($30cb609612a5109b$exports, "setParams", () => $647b25b545ba3e6d$export$dc1827290674c112);
+$parcel$export($30cb609612a5109b$exports, "pollUntilOk", () => $1f074173aef8d3e6$export$d2c70568ef790b87);
+$parcel$export($30cb609612a5109b$exports, "pollUntilHasData", () => $1f074173aef8d3e6$export$f014594cc879f602);
+$parcel$export($30cb609612a5109b$exports, "isOpenSeaBanned", () => $dc98aca5039a1d2b$export$feaa73ad8ed3f2b9);
+$parcel$export($30cb609612a5109b$exports, "request", () => $abfac63fd1119cf4$export$b5fe3f66a567bec0);
 
 
 
-async function $5ffb320f51f29c3d$export$feaa73ad8ed3f2b9(ids) {
+
+
+async function $dc98aca5039a1d2b$export$feaa73ad8ed3f2b9(ids) {
     let url = "https://api.opensea.io/api/v1/assets";
     ids.forEach((id, i)=>{
         const [contract, tokenId] = id.split(":");
@@ -546,9 +534,9 @@ async function $5ffb320f51f29c3d$export$feaa73ad8ed3f2b9(ids) {
     });
     const res = await (0, $4mq6z$axios).get(url);
     const json = res.data;
-    const client = (0, $fc674cd0863de20b$export$6bb76d6eba7e258c)();
-    const currentChain = client === null || client === void 0 ? void 0 : client.currentChain();
-    const baseApiUrl = currentChain === null || currentChain === void 0 ? void 0 : currentChain.apiKey;
+    const client = (0, $63606961de7cfbf3$export$6bb76d6eba7e258c)();
+    const currentChain = client?.currentChain();
+    const baseApiUrl = currentChain?.apiKey;
     const statuses = json.assets.reduce((statuses, asset)=>{
         statuses[`${asset.asset_contract.address}:${asset.token_id}`] = !asset.supports_wyvern;
         return statuses;
@@ -566,7 +554,7 @@ async function $5ffb320f51f29c3d$export$feaa73ad8ed3f2b9(ids) {
                 flag: status ? 1 : 0
             };
             if (apiKey) headers["x-api-key"] = apiKey;
-            if (client === null || client === void 0 ? void 0 : client.uiVersion) headers["x-rkui-version"] = client.uiVersion;
+            if (client?.uiVersion) headers["x-rkui-version"] = client.uiVersion;
             (0, $4mq6z$axios).post(`${baseApiUrl}/tokens/flag/v1`, JSON.stringify(body), {
                 headers: headers
             }).catch(()=>{});
@@ -579,15 +567,15 @@ async function $5ffb320f51f29c3d$export$feaa73ad8ed3f2b9(ids) {
 
 
 
-
-let $fc674cd0863de20b$var$_client;
-class $fc674cd0863de20b$export$f29e902efe386198 {
+let $63606961de7cfbf3$var$_client;
+class $63606961de7cfbf3$export$f29e902efe386198 {
+    utils = {
+        ...$30cb609612a5109b$exports
+    };
+    actions = (0, $d5566eff14828706$export$2e2bcd8739ae039);
     constructor(options){
-        this.utils = {
-            ...$7b499f039cd2c001$exports
-        };
-        this.actions = (0, $7eac3262c9d81e1a$export$2e2bcd8739ae039);
-        this.version = (0, $d7d887a3e64a76d0$exports.version);
+        this.version = "0.4.0" // hardcode this for now
+        ;
         this.chains = options.chains;
         this.uiVersion = options.uiVersion;
         this.automatedRoyalties = options.automatedRoyalties;
@@ -621,29 +609,29 @@ class $fc674cd0863de20b$export$f29e902efe386198 {
         return null;
     }
 }
-function $fc674cd0863de20b$export$6bb76d6eba7e258c() {
+function $63606961de7cfbf3$export$6bb76d6eba7e258c() {
     //throw an error
-    return $fc674cd0863de20b$var$_client;
+    return $63606961de7cfbf3$var$_client;
 }
-function $fc674cd0863de20b$export$5d730b7aed1a3eb0(options) {
-    if (!$fc674cd0863de20b$var$_client) $fc674cd0863de20b$var$_client = new $fc674cd0863de20b$export$f29e902efe386198(options);
-    else $fc674cd0863de20b$var$_client.configure(options);
-    return $fc674cd0863de20b$var$_client;
+function $63606961de7cfbf3$export$5d730b7aed1a3eb0(options) {
+    if (!$63606961de7cfbf3$var$_client) $63606961de7cfbf3$var$_client = new $63606961de7cfbf3$export$f29e902efe386198(options);
+    else $63606961de7cfbf3$var$_client.configure(options);
+    return $63606961de7cfbf3$var$_client;
 }
 
 
 
-var $4096c3b3ea054668$exports = {};
-var $b92a430bd4a69747$exports = {};
+var $7da7428cf263c8f9$exports = {};
+var $0f5d1df90d4e0898$exports = {};
 /**
  * This file was auto-generated by openapi-typescript.
  * Do not make direct changes to the file.
  */ 
 
-$parcel$exportWildcard($4096c3b3ea054668$exports, $b92a430bd4a69747$exports);
+$parcel$exportWildcard($7da7428cf263c8f9$exports, $0f5d1df90d4e0898$exports);
 
 
 
 
-export {$fc674cd0863de20b$export$f29e902efe386198 as ZooClient, $fc674cd0863de20b$export$6bb76d6eba7e258c as getClient, $fc674cd0863de20b$export$5d730b7aed1a3eb0 as createClient, $93bc29f5073032e6$export$21ece85d7636deb as executeSteps, $36e844bf1398f57b$export$dc1827290674c112 as setParams, $687a7783fd478e3b$export$d2c70568ef790b87 as pollUntilOk, $687a7783fd478e3b$export$f014594cc879f602 as pollUntilHasData, $5ffb320f51f29c3d$export$feaa73ad8ed3f2b9 as isOpenSeaBanned, $ab4c5b6add749096$export$b5fe3f66a567bec0 as request};
+export {$63606961de7cfbf3$export$f29e902efe386198 as ZooClient, $63606961de7cfbf3$export$6bb76d6eba7e258c as getClient, $63606961de7cfbf3$export$5d730b7aed1a3eb0 as createClient, $a89c379ae92dec7a$export$21ece85d7636deb as executeSteps, $647b25b545ba3e6d$export$dc1827290674c112 as setParams, $1f074173aef8d3e6$export$d2c70568ef790b87 as pollUntilOk, $1f074173aef8d3e6$export$f014594cc879f602 as pollUntilHasData, $dc98aca5039a1d2b$export$feaa73ad8ed3f2b9 as isOpenSeaBanned, $abfac63fd1119cf4$export$b5fe3f66a567bec0 as request};
 //# sourceMappingURL=index.mjs.map

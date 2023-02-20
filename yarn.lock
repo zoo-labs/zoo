@@ -11749,6 +11749,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-flatpickr@npm:^3.8.8":
+  version: 3.8.8
+  resolution: "@types/react-flatpickr@npm:3.8.8"
+  dependencies:
+    "@types/react": "*"
+    flatpickr: ^4.0.6
+  checksum: d6894bdf3f1d6f96db582751cac5f287c1144f94ea460de97fcb8266571d3a4255f17ab057582117b29dbce8131935894ea78518066850f4cdd07b26a2155bf2
+  languageName: node
+  linkType: hard
+
 "@types/react-icons@npm:^3.0.0":
   version: 3.0.0
   resolution: "@types/react-icons@npm:3.0.0"
@@ -13046,6 +13056,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wagmi/chains@npm:0.2.8":
+  version: 0.2.8
+  resolution: "@wagmi/chains@npm:0.2.8"
+  peerDependencies:
+    typescript: ">=4.9.4"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: f68b16fa0620fe4162ad3412735a5c239f59c9a7b15e900a217ff7403d74c8a262fdcd77ab0b37cbc747e78c2c197272d9340d9ef091525d5e335e91905d3def
+  languageName: node
+  linkType: hard
+
 "@wagmi/connectors@npm:0.2.5":
   version: 0.2.5
   resolution: "@wagmi/connectors@npm:0.2.5"
@@ -13072,6 +13094,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wagmi/connectors@npm:0.2.6":
+  version: 0.2.6
+  resolution: "@wagmi/connectors@npm:0.2.6"
+  dependencies:
+    "@coinbase/wallet-sdk": ^3.5.4
+    "@ledgerhq/connect-kit-loader": ^1.0.1
+    "@safe-global/safe-apps-provider": ^0.15.2
+    "@safe-global/safe-apps-sdk": ^7.9.0
+    "@walletconnect/ethereum-provider": ^1.8.0
+    "@walletconnect/universal-provider": 2.3.3
+    "@web3modal/standalone": ^2.1.1
+    abitype: ^0.3.0
+    eventemitter3: ^4.0.7
+  peerDependencies:
+    "@wagmi/core": ">=0.9.x"
+    ethers: ">=5.5.1 <6"
+    typescript: ">=4.9.4"
+  peerDependenciesMeta:
+    "@wagmi/core":
+      optional: true
+    typescript:
+      optional: true
+  checksum: 48c763d4b8ac072bce36df52de3c847f3fb61261c340e5cff58ffdefa0b686c07059f76c3fc6cd32e04fff417109ec97e115f7e80812fec6422094f4eca5cfae
+  languageName: node
+  linkType: hard
+
 "@wagmi/core@npm:0.9.5":
   version: 0.9.5
   resolution: "@wagmi/core@npm:0.9.5"
@@ -13088,6 +13136,25 @@ __metadata:
     typescript:
       optional: true
   checksum: 9253aa5791a8fcf315c3bfe77b41fdf69fc01c17aab480a756773883085679d1132052df8f64137a85ab2ec2692962429ffe7adced6827ce8b0a185991aae1c3
+  languageName: node
+  linkType: hard
+
+"@wagmi/core@npm:0.9.6":
+  version: 0.9.6
+  resolution: "@wagmi/core@npm:0.9.6"
+  dependencies:
+    "@wagmi/chains": 0.2.8
+    "@wagmi/connectors": 0.2.6
+    abitype: ^0.3.0
+    eventemitter3: ^4.0.7
+    zustand: ^4.3.1
+  peerDependencies:
+    ethers: ">=5.5.1 <6"
+    typescript: ">=4.9.4"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 3d052510dbb513d564308cb1374bc99cabd6ba18005d969799c9ead054ab5c177901eb23350b08bfd6a2a2faa0c08bd89fde62bb8b96f9141e71060b960608f2
   languageName: node
   linkType: hard
 
@@ -14794,6 +14861,7 @@ __metadata:
     "@radix-ui/react-toggle-group": ^1.0.2
     "@react-hookz/web": ^22.0.0
     "@stitches/react": ^1.3.1-1
+    "@types/react-flatpickr": ^3.8.8
     "@zoolabs/sdk": 5.4.3
     dayjs: ^1.11.7
     flatpickr: ^4.6.13
@@ -14881,6 +14949,7 @@ __metadata:
     process: ^0.11.10
     replace-in-files: ^3.0.0
     typescript: ^4.9.5
+    wagmi: ^0.11.0
   languageName: unknown
   linkType: soft
 
@@ -25980,7 +26049,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flatpickr@npm:^4.6.13, flatpickr@npm:^4.6.2":
+"flatpickr@npm:^4.0.6, flatpickr@npm:^4.6.13, flatpickr@npm:^4.6.2":
   version: 4.6.13
   resolution: "flatpickr@npm:4.6.13"
   checksum: 2cca1b8dc974e7673b51174ee3f0679ae3a6b79525a0c53bf49b87455ef358354e64acfd60b312e44cef208aab9750a1a48df32a0914046a53de6d9403742304
@@ -49283,6 +49352,27 @@ __metadata:
     typescript:
       optional: true
   checksum: fda0aef1fce52a6a8f9f048623629a42237ff768e8a9d8b93548f00baec4693fd2b7a19c49090e857f7bf58e325aada42a341ec0867149e555f4a6cc8d5f1cbf
+  languageName: node
+  linkType: hard
+
+"wagmi@npm:^0.11.0":
+  version: 0.11.6
+  resolution: "wagmi@npm:0.11.6"
+  dependencies:
+    "@tanstack/query-sync-storage-persister": ^4.14.5
+    "@tanstack/react-query": ^4.14.5
+    "@tanstack/react-query-persist-client": ^4.14.5
+    "@wagmi/core": 0.9.6
+    abitype: ^0.3.0
+    use-sync-external-store: ^1.2.0
+  peerDependencies:
+    ethers: ">=5.5.1 <6"
+    react: ">=17.0.0"
+    typescript: ">=4.9.4"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 98f1227650bcc7a92184da2b8b7adfb91b60d1135a41597e13f929aecbe698b54af076d8b532c0d4599cf3e5e57b2d39ce4c9b998e8f7a48042f09afdcb48aab
   languageName: node
   linkType: hard
 

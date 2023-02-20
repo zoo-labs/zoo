@@ -1,6 +1,6 @@
 import actions from './actions'
 import * as utils from '../utils'
-import { version } from '../../package.json'
+// import { version } from '../../package.json'
 
 export type ZooChain = {
   id: number
@@ -46,7 +46,7 @@ export class ZooClient {
   readonly actions: ZooClientActions = actions
 
   constructor(options: ZooClientOptions) {
-    this.version = version
+    this.version = '0.4.0' // hardcode this for now
     this.chains = options.chains
     this.uiVersion = options.uiVersion
     this.automatedRoyalties = options.automatedRoyalties
