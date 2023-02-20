@@ -19,7 +19,7 @@ import {
   ZooProvider,
   darkTheme,
   lightTheme,
-  zooTheme as defaultTheme,
+  Theme,
   CartProvider,
 } from '@zoolabs/ui'
 import { FC, useEffect, useState } from 'react'
@@ -101,7 +101,7 @@ function MyApp({
   const { theme } = useTheme()
   const marketplaceChain = useMarketplaceChain()
   const [currentTheme, setTheme] = useState<
-    defaultTheme | undefined
+    Theme | undefined
   >()
   const [rainbowKitTheme, setRainbowKitTheme] = useState<
     | ReturnType<typeof rainbowDarkTheme>
