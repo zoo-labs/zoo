@@ -2,6 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+const ModelViewer = dynamic(() => import("components/ModelViewer"), {
+  ssr: false,
+});
+
 const GrabAnimal = ({ grabAnimal, grabAnimal2 }) => {
   return (
     <section className="AnimalFamily md:mt-40">
