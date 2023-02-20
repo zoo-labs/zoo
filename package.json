@@ -5,10 +5,10 @@
   "license": "MIT",
   "keywords": [
     "ethereum",
-    "react",
-    "uniswap",
-    "workspaces",
-    "yarn"
+    "nft",
+    "zoo",
+    "zoolabs",
+    "marketplace"
   ],
   "private": true,
   "scripts": {
@@ -17,6 +17,7 @@
     "build:app": "yarn workspace @zoolabs/app build",
     "build:lab": "yarn workspace @zoolabs/lab build",
     "build:zdk": "yarn workspace @zoolabs/zdk build",
+    "build:core": "yarn workspace @zoolabs/core build",
     "clean": "rm -rf packages/app/build && rm -rf packages/contracts/artifacts && rm -rf packages/contracts/cache && rm -rf packages/contracts/types",
     "start": "yarn workspace @zoolabs/app start",
     "start:lab": "yarn workspace @zoolabs/lab start",
@@ -31,6 +32,7 @@
     "deploy:mainnet": "yarn workspace @zoolabs/contracts deploy:mainnet",
     "deploy:testnet": "yarn workspace @zoolabs/contracts deploy:testnet",
     "dev": "yarn workspace @zoolabs/app dev",
+    "dev:core": "yarn workspace @zoolabs/core dev",
     "configure": "yarn workspace @zoolabs/contracts configure",
     "configure:testnet": "yarn workspace @zoolabs/contracts configure:testnet",
     "configure:mainnet": "yarn workspace @zoolabs/contracts configure:mainnet",
@@ -63,17 +65,21 @@
     "subgraph:deploy-mainnet": "yarn workspace @zoolabs/subgraph deploy:mainnet",
     "subgraph:start": "yarn workspace @zoolabs/subgraph start",
     "graphnode:start": "yarn workspace @zoolabs/graphnode start",
-    "format": "yarn workspace @zoolabs/app format && yarn workspace @zoolabs/contracts format && yarn workspace @zoolabs/moralis format",
-    "postinstall": "rimraf node_modules/babel-loader"
+    "format": "yarn workspace @zoolabs/app format && yarn workspace @zoolabs/contracts format && yarn workspace @zoolabs/moralis format"
   },
   "workspaces": {
     "packages": [
-      "app","contracts","core","lab","sdk","ui","zdk"
+      "app",
+      "contracts",
+      "core",
+      "lab",
+      "ui",
+      "zdk"
     ],
     "nohoist": [
       "**/@openzeppelin/contracts-upgradeable/**",
       "**/@openzeppelin/contracts",
-      "**/@zoolabs/framework",
+      "**/@zoolabs/hardhat",
       "**/@zoolabs/solidity"
     ]
   }
