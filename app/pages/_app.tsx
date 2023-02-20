@@ -1,0 +1,193 @@
+import { Inter } from '@next/font/google'
+import type { AppContext, AppProps } from 'next/app'
+import { default as NextApp } from 'next/app'
+import { ThemeProvider, useTheme } from 'next-themes'
+import { globalReset, darkTheme as stitchesDarkTheme } from 'stitches.config'
+import '@rainbow-me/rainbowkit/styles.css'
+import {
+  RainbowKitProvider,
+  getDefaultWallets,
+  darkTheme as rainbowDarkTheme,
+  lightTheme as rainbowLightTheme,
+} from '@rainbow-me/rainbowkit'
+import { WagmiConfig, createClient, configureChains } from 'wagmi'
+import * as Tooltip from '@radix-ui/react-tooltip'
+import { publicProvider } from 'wagmi/providers/public'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+
+import {
+  ZooProvider,
+  darkTheme,
+  lightTheme,
+  Theme,
+  CartProvider,
+} from '@zoolabs/ui'
+import { FC, useEffect, useState } from 'react'
+import { HotkeysProvider } from 'react-hotkeys-hook'
+import ToastContextProvider from 'context/ToastContextProvider'
+import supportedChains from 'utils/chains'
+import { useMarketplaceChain } from 'hooks'
+import ChainContextProvider from 'context/ChainContextProvider'
+import AnalyticsProvider from 'components/AnalyticsProvider'
+
+const inter = Inter({
+  subsets: ['latin'],
+})
+
+export const NORMALIZE_ROYALTIES = process.env.NEXT_PUBLIC_NORMALIZE_ROYALTIES
+  ? process.env.NEXT_PUBLIC_NORMALIZE_ROYALTIES === 'true'
+  : false
+
+export const COLLECTION_SET_ID = process.env.NEXT_PUBLIC_COLLECTION_SET_ID
+  ? process.env.NEXT_PUBLIC_COLLECTION_SET_ID
+  : undefined
+
+export const COMMUNITY = process.env.NEXT_PUBLIC_COMMUNITY
+  ? process.env.NEXT_PUBLIC_COMMUNITY
+  : undefined
+
+const { chains, provider } = configureChains(supportedChains, [
+  alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID || '' }),
+  publicProvider(),
+])
+
+const { connectors } = getDefaultWallets({
+  appName: 'Zoo',
+  chains,
+})
+
+const wagmiClient = createClient({
+  autoConnect: true,
+  connectors,
+  provider,
+})
+
+//CONFIGURABLE: Here you can override any of the theme tokens provided by RK: https://docs.reservoir.tools/docs/reservoir-kit-theming-and-customization
+const themeOverrides = {
+  headlineFont: inter.style.fontFamily,
+  font: inter.style.fontFamily,
+  primaryColor: '#6E56CB',
+  primaryHoverColor: '#644fc1',
+}
+
+function AppWrapper(props: AppProps & { baseUrl: string }) {
+  return (
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="dark"
+      value={{
+        dark: stitchesDarkTheme.className,
+        light: 'light',
+      }}
+    >
+      <WagmiConfig client={wagmiClient}>
+        <ChainContextProvider>
+          <AnalyticsProvider>
+            <MyApp {...props} />
+          </AnalyticsProvider>
+        </ChainContextProvider>
+      </WagmiConfig>
+    </ThemeProvider>
+  )
+}
+
+function MyApp({
+  Component,
+  pageProps,
+  baseUrl,
+}: AppProps & { baseUrl: string }) {
+  globalReset()
+
+  const { theme } = useTheme()
+  const marketplaceChain = useMarketplaceChain()
+  const [currentTheme, setTheme] = useState<
+    Theme | undefined
+  >()
+  const [rainbowKitTheme, setRainbowKitTheme] = useState<
+    | ReturnType<typeof rainbowDarkTheme>
+    | ReturnType<typeof rainbowLightTheme>
+    | undefined
+  >()
+
+  useEffect(() => {
+    if (theme == 'dark') {
+      setTheme(darkTheme(themeOverrides))
+      setRainbowKitTheme(
+        rainbowDarkTheme({
+          borderRadius: 'small',
+        })
+      )
+    } else {
+      setTheme(lightTheme(themeOverrides))
+      setRainbowKitTheme(
+        rainbowLightTheme({
+          borderRadius: 'small',
+        })
+      )
+    }
+  }, [theme])
+
+  const FunctionalComponent = Component as FC
+
+  return (
+    <HotkeysProvider>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="dark"
+        value={{
+          dark: stitchesDarkTheme.className,
+          light: 'light',
+        }}
+      >
+        <ZooProvider
+          options={{
+            //CONFIGURABLE: Override any configuration available in RK: https://docs.reservoir.tools/docs/reservoirkit-ui#configuring-reservoirkit-ui
+            // Note that you should at the very least configure the source with your own domain
+            chains: supportedChains.map(({ proxyApi, id }) => {
+              return {
+                id,
+                baseApiUrl: `${baseUrl}${marketplaceChain.proxyApi}`,
+                default: marketplaceChain.id === id,
+              }
+            }),
+            // source: 'YOUR_DOMAIN',
+            normalizeRoyalties: NORMALIZE_ROYALTIES,
+          }}
+          theme={currentTheme}
+        >
+          <CartProvider>
+            <Tooltip.Provider>
+              <RainbowKitProvider
+                chains={chains}
+                theme={rainbowKitTheme}
+                modalSize="compact"
+              >
+                <ToastContextProvider>
+                  <FunctionalComponent {...pageProps} />
+                </ToastContextProvider>
+              </RainbowKitProvider>
+            </Tooltip.Provider>
+          </CartProvider>
+        </ZooProvider>
+      </ThemeProvider>
+    </HotkeysProvider>
+  )
+}
+
+AppWrapper.getInitialProps = async (appContext: AppContext) => {
+  // calls page's `getInitialProps` and fills `appProps.pageProps`
+  const appProps = await NextApp.getInitialProps(appContext)
+  let baseUrl = ''
+
+  if (appContext.ctx.req?.headers.host) {
+    const host = appContext.ctx.req?.headers.host
+    baseUrl = `${host.includes('localhost') ? 'http' : 'https'}://${host}`
+  } else if (process.env.NEXT_PUBLIC_HOST_URL) {
+    baseUrl = process.env.NEXT_PUBLIC_HOST_URL || ''
+  }
+  baseUrl = baseUrl.replace(/\/$/, '')
+
+  return { ...appProps, baseUrl }
+}
+
+export default AppWrapper
