@@ -65,7 +65,7 @@ const grabAnimal2 = [
     icon: "/images/circle-tiger.png",
     description: (
       <>
-        First generation can breed up to 7x, while every latter generation will
+        First generation can breed up to 7x, while every future generation will
         be able to breed 1 less time.
       </>
     ),

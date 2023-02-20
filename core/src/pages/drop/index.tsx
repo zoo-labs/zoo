@@ -67,7 +67,7 @@ const grabAnimal = [
     description: (
       <>
         After you have successfully logged in with your wallet you will be able
-        to purchase your very first Zoo Eggs or NFTs and begin feeding your
+        to purchase your very first Zoo NFTs and begin feeding your
         animal currency!
       </>
     ),
@@ -93,7 +93,7 @@ const grabAnimal = [
           Marketplace
         </a>{" "}
         not only benefits members through its fees but also allows you to buy,
-        sell, make offers and trade for additional benefits $$.
+        sell, make offers and trade for additional profit.
       </>
     ),
   },
@@ -256,12 +256,12 @@ const Drop = ({}: AppProps & {
               <p className="mb-6 text-sm font-normal leading-7 tracking-tight text-muted-20">
                 Through our protocol to collateralize NFTs, users will control
                 and own everything they buy and earn. The value of the NFTs is
-                based on their collateral and its rarity. Users collateralize
-                their NFTs by staking any currency against their Egg or Animal.
-                This is then multiplied by the APY and increases your rewards
-                earned! Each NFT is a digital twin of an endangered species in
-                the real-world which also determines its rarities and which
-                animal will be benefited through donation.
+                based on their collateral and its rarity. Users can collateralize
+                their NFTs by staking any currency against their Animal.
+                In turn you are rewarded with a boost which will then be multiplied to
+                increases your rewards earned! Each NFT is a digital twin of an endangered species in
+                the real-world. The species determines the rarity and which
+                animal will be benefited through future donation.
               </p>
               <Link href="/market" passHref>
                 <button className="bg-black border border-gray-150 py-3.5 px-8 rounded-full">
@@ -301,14 +301,11 @@ const Drop = ({}: AppProps & {
                 </p>
                 <p className="text-sm text-muted-20">
                   Users can incubate their egg to turn it into a baby animal by
-                  “feeding it” the base price. Each Origin Egg can mint up to 6
+                  “feeding it” the base price. Each Gen 0 Egg can mint up to 7 generations of
                   Animals. But once you incubate the Egg the Egg NFT will be
-                  burned forever and a baby will be born. If you staked
-                  collateral against your egg the staked collateral value will
-                  be added to your baby animal. If you want the collateral value
+                  burned forever and a baby will be born. If you want the collateral value
                   back but do not want to burn or incubate your egg you can sell
-                  it on the marketplace for its intrinsic value + its collateral
-                  value.
+                  it on the marketplace for a higher value then you may have spent previously. 
                 </p>
               </div>
             </div>
@@ -324,8 +321,7 @@ const Drop = ({}: AppProps & {
               to all of us. We also want to inspire people to change
               animals&apos; lives for the better. We are very committed to
               creating digital twins of endangered species to raise awareness,
-              enact change and create an animal sanctuary for all Zoo NFT
-              holders.
+              enact change to save animals from extinction.
             </p>
           </div>
           {Drops}
@@ -381,7 +377,7 @@ const Drop = ({}: AppProps & {
             </p>
             <p className="mb-10 text-lg font-light leading-8 text-muted-20">
               Learn about all the new upgrades and features for your animal,
-              join our DAO, and show us some love on our socials.
+              join our DAO, and show us some love by following our socials.
             </p>
             <button className="bg-black p-[22px] rounded-full flex items-center text-sm font-bold w-max mx-auto">
               <Image src="/icons/discord.svg" alt="" width={24} height={18} />
