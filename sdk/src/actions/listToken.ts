@@ -3,7 +3,6 @@ import { Signer } from 'ethers'
 import { getClient } from '.'
 import { executeSteps } from '../utils/executeSteps'
 import axios, { AxiosRequestConfig } from 'axios'
-import { version } from '../../package.json'
 
 type ListTokenBody = NonNullable<
   paths['/execute/list/v4']['post']['parameters']['body']['body']
@@ -69,7 +68,7 @@ export async function listToken(
       method: 'post',
       data,
       headers: {
-        'x-rkc-version': version,
+        'x-rkc-version': '0.4.0',
       },
     }
 
