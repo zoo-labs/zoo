@@ -1,23 +1,28 @@
 {
   "name": "@zoolabs/zoo",
-  "version": "1.0.0",
-  "author": "Zoo Labs Limited <hi@zoolabs.io> (https://zoolabs.io)",
+  "version": "5.0.0",
+  "author": "Zoo Labs Foundation <hi@zoolabs.io> (https://zoolabs.io)",
   "license": "MIT",
   "keywords": [
     "ethereum",
-    "react",
-    "uniswap",
-    "workspaces",
-    "yarn"
+    "nft",
+    "zoo",
+    "zoolabs",
+    "marketplace"
   ],
   "private": true,
   "scripts": {
     "build": "yarn build:all",
-    "build:all": "yarn build:sdk && yarn build:app",
+    "build:all": "yarn build:zdk && yarn build:app",
     "build:app": "yarn workspace @zoolabs/app build",
     "build:lab": "yarn workspace @zoolabs/lab build",
-    "build:sdk": "yarn workspace @zoolabs/sdk build",
-    "clean": "rm -rf packages/app/build && rm -rf packages/contracts/artifacts && rm -rf packages/contracts/cache && rm -rf packages/contracts/types",
+    "build:packages": "parcel build --no-cache sdk ui && yarn build:fix-type-defs",
+    "build:fix-type-defs": "node ./scripts/fix-type-defs-imports",
+    "build:zdk": "yarn workspace @zoolabs/zdk build",
+    "build:core": "yarn workspace @zoolabs/core build",
+    "clean": "rm -rf packages/app/.next && rm -rf contracts/artifacts && rm -rf contracts/cache && rm -rf contracts/types",
+    "typecheck": "tsc --skipLibCheck --noEmit -p .",
+    "reset": "yarn clean && rm -rf node_modules .yarn/cache .parcel-cache",
     "start": "yarn workspace @zoolabs/app start",
     "start:lab": "yarn workspace @zoolabs/lab start",
     "account": "yarn workspace @zoolabs/contracts account",
@@ -31,6 +36,7 @@
     "deploy:mainnet": "yarn workspace @zoolabs/contracts deploy:mainnet",
     "deploy:testnet": "yarn workspace @zoolabs/contracts deploy:testnet",
     "dev": "yarn workspace @zoolabs/app dev",
+    "dev:core": "yarn workspace @zoolabs/core dev",
     "configure": "yarn workspace @zoolabs/contracts configure",
     "configure:testnet": "yarn workspace @zoolabs/contracts configure:testnet",
     "configure:mainnet": "yarn workspace @zoolabs/contracts configure:mainnet",
@@ -63,18 +69,51 @@
     "subgraph:deploy-mainnet": "yarn workspace @zoolabs/subgraph deploy:mainnet",
     "subgraph:start": "yarn workspace @zoolabs/subgraph start",
     "graphnode:start": "yarn workspace @zoolabs/graphnode start",
-    "format": "yarn workspace @zoolabs/app format && yarn workspace @zoolabs/contracts format && yarn workspace @zoolabs/moralis format",
-    "postinstall": "rimraf node_modules/babel-loader"
+    "format": "yarn workspace @zoolabs/app format && yarn workspace @zoolabs/contracts format && yarn workspace @zoolabs/moralis format"
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.18.6",
+    "@parcel/babel-plugin-transform-runtime": "^2.8.3",
+    "@parcel/babel-preset-env": "^2.8.3",
+    "@parcel/config-default": "^2.8.3",
+    "@parcel/optimizer-data-url": "2.8.3",
+    "@parcel/packager-ts": "2.8.3",
+    "@parcel/transformer-inline-string": "2.8.3",
+    "@parcel/transformer-typescript-tsc": "^2.8.3",
+    "@parcel/transformer-typescript-types": "^2.8.3",
+    "@types/node": "^18.14.0",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "buffer": "^6.0.3",
+    "ethers": "^5.7.2",
+    "gitlog": "^4.0.4",
+    "parcel": "^2.8.3",
+    "prettier": "^2.8.4",
+    "process": "^0.11.10",
+    "replace-in-files": "^3.0.0",
+    "typescript": "^4.9.5",
+    "wagmi": "^0.11.6"
+  },
+  "engines": {
+    "node": ">=12",
+    "yarn": ">=2"
   },
   "workspaces": {
     "packages": [
-      "packages/*"
+      "app",
+      "contracts",
+      "core",
+      "lab",
+      "sdk",
+      "ui",
+      "zdk"
     ],
     "nohoist": [
       "**/@openzeppelin/contracts-upgradeable/**",
       "**/@openzeppelin/contracts",
-      "**/@zoolabs/framework",
+      "**/@zoolabs/hardhat",
       "**/@zoolabs/solidity"
     ]
-  }
+  },
+  "packageManager": "yarn@3.4.1"
 }
