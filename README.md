@@ -1,11 +1,11 @@
-# ZOO
+# zoo
 
 ![App CI](https://github.com/zoo-labs/zoo/actions/workflows/app.yml/badge.svg)
 ![Contracts CI](https://github.com/zoo-labs/zoo/actions/workflows/contracts.yml/badge.svg)
 
 > Wildlife Conservation Powered by DeFi.
 
-# 🏄‍♂️ Quick Start
+### 🏄‍♂️ Quick Start
 
 Prerequisites: [Node](https://nodejs.org/) plus [Yarn](https://yarnpkg.com/) and [Git](https://git-scm.com/downloads)
 
