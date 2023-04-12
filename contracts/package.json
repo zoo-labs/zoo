@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers",
     "@tenderly/hardhat-tenderly": "^1.0.12",
     "@typechain/ethers-v5": "^7.0.1",
     "@typechain/hardhat": "^2.3.0",
@@ -14,7 +15,7 @@
     "@types/node": "^16.7.2",
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
-    "chalk": "^5.2.0",
+    "chalk": "4.1.2",
     "ethers": "^5.7.2",
     "hardhat": "^2.12.7",
     "hardhat-deploy": "^0.9.29",
