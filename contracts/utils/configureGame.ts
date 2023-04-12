@@ -37,7 +37,7 @@ export default async function configureGame(keeper: any, drop: any) {
     await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
   })
 
-  await drop.configureEggs(1, 2)
+  await drop.configureEggs(1)
 
   // // Add rarities
   rarities.sort(function (a, b) {
@@ -49,7 +49,7 @@ export default async function configureGame(keeper: any, drop: any) {
 
   // Add animals
   animals.map(async (v) => {
-    await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI)
+    await drop.setAnimal(v.name, v.rarity, v.tokenURI, v.metadataURI, v.tokenURI, v.metadataURI, v.tokenURI, v.metadataURI)
   })
 
   // Add hybrids

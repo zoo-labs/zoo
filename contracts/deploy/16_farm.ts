@@ -11,11 +11,11 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const [deployer] = await ethers.getSigners()
 
   const tokenAddress = (await deployments.get('ZOO')).address
-  const daoAddress = (await deployments.get('DAO')).address
+  // const daoAddress = (await deployments.get('DAO')).address
 
   await deploy('Farm', {
     from: deployer.address,
-    args: [daoAddress, 10, tokenAddress, 100, 0, 20],
+    args: ["0xed0446524Bd2a9947FaEc138f8Dc0639Ac7eEA21", 10, tokenAddress, 100, 0, 20],
     log: true,
   })
 }

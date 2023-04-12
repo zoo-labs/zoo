@@ -17,7 +17,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     log: true,
   })
   
-
+  return
   if (hre.network.name == 'mainnet') return
 
   const zooAddress = await ethers.getContract('ZOO')
