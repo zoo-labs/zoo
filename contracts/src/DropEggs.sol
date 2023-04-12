@@ -8,7 +8,7 @@ import { IDrop } from "./interfaces/IDrop.sol";
 import { Counters } from "@openzeppelin/contracts/utils/Counters.sol";
 import { IKeeper } from "./interfaces/IKeeper.sol";
 
-contract DropEggs is Ownable {
+contract DropEggs1 is Ownable {
     using SafeMath for uint256;
 
     using Counters for Counters.Counter;
