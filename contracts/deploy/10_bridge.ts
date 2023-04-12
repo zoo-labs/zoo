@@ -2,9 +2,20 @@
 
 import { Deploy } from '@zoolabs/contracts/utils/deploy'
 
-export default Deploy('Bridge', {dependencies: ['ZOO', 'DAO']}, async({ ethers, getChainId, deploy, deps }) => {
+export default Deploy('Bridge', { dependencies: ['DAO'] }, async ({ ethers, deploy, deployments, deps, hre }) => {
   const { DAO } = deps
   const tx = await deploy([DAO.address, 25])
-  const ZOO = await ethers.getContract('ZOO')
-  await ZOO.configure(tx.address)
+
+  await deployments.fixture(["ZOO"]);
+
+  const myContract = await deployments.get("ZOO");
+
+  const zoo = await ethers.getContractAt(
+    myContract.abi,
+    myContract.address
+  );
+
+
+
+  await zoo.configure(tx.address)
 })

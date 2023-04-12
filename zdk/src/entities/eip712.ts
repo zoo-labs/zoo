@@ -68,7 +68,7 @@ export const getTypedDataBento = (message: BentoApprovalMessage, chainId: ChainI
 }
 
 export const getTypeHash = (typedData: any) => {
-  let message = getMessage(typedData, true).toString('hex')
+  let message = getMessage(typedData, true).toString()
   return `0x${message}`
 }
 
