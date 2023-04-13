@@ -39,7 +39,6 @@ import {
 } from "@apollo/client";
 import { SubgraphProvider } from "../providers/SubgraphProvider";
 import { initTranslation, loadTranslation } from "../entities";
-import { MoralisProvider } from "react-moralis";
 import { useActiveWeb3React } from "hooks/useActiveWeb3React";
 import { ChainId } from "constants/chainIds";
 
@@ -235,18 +234,13 @@ function MyApp({
                     showOnShallow={true}
                     options={{ showSpinner: false }}
                   />
-                  <MoralisProvider
-                    serverUrl="https://hyrix9h7cyfi.usemoralis.com:2053/server"
-                    appId="ILIieVqZyWlL0ErAjiG9L1X6fep2KEFkKczcGOmJ"
-                  >
-                    <Provider>
-                      <Layout>
-                        <Guard>
-                          <Component {...pageProps} />
-                        </Guard>
-                      </Layout>
-                    </Provider>
-                  </MoralisProvider>
+                  <Provider>
+                    <Layout>
+                      <Guard>
+                        <Component {...pageProps} />
+                      </Guard>
+                    </Layout>
+                  </Provider>
                 </PersistGate>
               </GifProvider>
             </SubgraphProvider>
