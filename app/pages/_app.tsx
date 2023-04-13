@@ -62,6 +62,8 @@ const wagmiClient = createClient({
   provider,
 })
 
+
+
 //CONFIGURABLE: Here you can override any of the theme tokens provided by RK: https://docs.reservoir.tools/docs/reservoir-kit-theming-and-customization
 const themeOverrides = {
   headlineFont: inter.style.fontFamily,
@@ -109,6 +111,15 @@ function MyApp({
     | undefined
   >()
 
+  let source = process.env.NEXT_PUBLIC_MARKETPLACE_SOURCE
+
+  if (!source && process.env.NEXT_PUBLIC_HOST_URL) {
+    try {
+      const url = new URL(process.env.NEXT_PUBLIC_HOST_URL)
+      source = url.host
+    } catch (e) { }
+  }
+
   useEffect(() => {
     if (theme == 'dark') {
       setTheme(darkTheme(themeOverrides))
@@ -150,7 +161,7 @@ function MyApp({
                 default: marketplaceChain.id === id,
               }
             }),
-            // source: 'YOUR_DOMAIN',
+            source: source,
             normalizeRoyalties: NORMALIZE_ROYALTIES,
           }}
           theme={currentTheme}
