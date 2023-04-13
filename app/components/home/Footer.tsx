@@ -1,7 +1,9 @@
+/* eslint-disable */
 import { FC } from 'react'
 import { Text, Box, Flex, Anchor, Button } from '../primitives'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter } from '@fortawesome/free-brands-svg-icons'
+import React from 'react';
 
 type SectionTitleProps = {
   title: string

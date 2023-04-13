@@ -5,6 +5,7 @@ import { Box, Flex, Switch, Text } from 'components/primitives'
 import { useRouter } from 'next/router'
 import { FC, useState } from 'react'
 import { addParam, hasParam, removeParam } from 'utils/router'
+import React from 'react';
 
 type Props = {
   attribute: NonNullable<ReturnType<typeof useAttributes>['data']>[0]

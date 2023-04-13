@@ -9,6 +9,7 @@ import { AttributeSelector } from './AttributeSelector'
 import { clearAllAttributes } from 'utils/router'
 import { FullscreenModal } from 'components/common/FullscreenModal'
 import { NAVBAR_HEIGHT_MOBILE } from 'components/navbar'
+import React from 'react';
 
 type Props = {
   attributes: ReturnType<typeof useAttributes>['data'] | undefined

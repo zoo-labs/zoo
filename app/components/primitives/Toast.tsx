@@ -1,7 +1,9 @@
+import React from 'react';
 import { FC, ReactNode, useContext } from 'react'
 import { keyframes, styled } from '@stitches/react'
 import * as ToastPrimitive from '@radix-ui/react-toast'
 import { ToastContext } from 'context/ToastContextProvider'
+
 
 const VIEWPORT_PADDING = 25
 

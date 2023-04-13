@@ -5,6 +5,7 @@ import { AttributeSelector } from './AttributeSelector'
 import * as Collapsible from '@radix-ui/react-collapsible'
 import { CollapsibleContent } from 'components/primitives/Collapsible'
 import { NAVBAR_HEIGHT } from 'components/navbar'
+import React from 'react';
 
 type Props = {
   open: boolean

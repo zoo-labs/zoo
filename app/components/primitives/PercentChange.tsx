@@ -1,6 +1,7 @@
 import { ComponentProps, FC } from 'react'
 import round from 'utils/round'
 import { Text } from './'
+import React from 'react';
 
 type PercentChangeProps = {
   value: number | undefined | null

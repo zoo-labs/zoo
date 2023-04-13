@@ -27,6 +27,7 @@ import { useMarketplaceChain } from 'hooks'
 import { COLLECTION_SET_ID, COMMUNITY } from 'pages/_app'
 import wrappedContracts from 'utils/wrappedContracts'
 import { NAVBAR_HEIGHT } from 'components/navbar'
+import React from 'react';
 
 type Props = {
   address: Address | undefined

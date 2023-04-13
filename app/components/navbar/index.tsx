@@ -16,6 +16,7 @@ import { useMounted } from '../../hooks'
 import { useAccount } from 'wagmi'
 import { ProfileDropdown } from './ProfileDropdown'
 import CartButton from './CartButton'
+import React from 'react';
 
 export const NAVBAR_HEIGHT = 81
 export const NAVBAR_HEIGHT_MOBILE = 77

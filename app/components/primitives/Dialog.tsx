@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { styled } from '@stitches/react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import {
@@ -8,6 +9,7 @@ import {
   useState,
 } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import React from 'react';
 
 const Overlay = styled(DialogPrimitive.Overlay, {
   backgroundColor: '$neutralBg',

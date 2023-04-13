@@ -13,6 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FullscreenModal } from 'components/common/FullscreenModal'
 import { useCollectionActivity } from '@zoolabs/ui'
+import React from 'react';
 
 type ActivityTypes = Exclude<
   NonNullable<

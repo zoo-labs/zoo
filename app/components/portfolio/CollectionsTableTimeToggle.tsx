@@ -1,5 +1,6 @@
 import { ToggleGroup, ToggleGroupItem, Text } from '../primitives'
 import { FC } from 'react'
+import React from 'react';
 
 export type CollectionsTableSortingOption = typeof sortingOptions[number]
 
