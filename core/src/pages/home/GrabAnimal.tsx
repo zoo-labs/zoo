@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import dynamic from 'next/dynamic'
 
 const ModelViewer = dynamic(() => import("components/ModelViewer"), {
   ssr: false,
