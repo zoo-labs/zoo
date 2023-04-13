@@ -24,6 +24,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { COLLECTION_SET_ID, COMMUNITY } from 'pages/_app'
 import { PercentChange } from 'components/primitives/PercentChange'
 import { NAVBAR_HEIGHT } from 'components/navbar'
+import React from 'react';
 
 type Props = {
   address: Address | undefined

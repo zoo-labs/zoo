@@ -3,6 +3,7 @@ import { useTokens } from '@zoolabs/ui'
 import { formatNumber } from 'utils/numbers'
 import Link from 'next/link'
 import { useMarketplaceChain } from '../../hooks'
+import React, { FC } from 'react';
 
 type Token = NonNullable<
   NonNullable<ReturnType<typeof useTokens>['data']>[0]
@@ -14,7 +15,7 @@ type Props = {
   collectionId?: string
 }
 
-export default ({ attribute, collectionTokenCount, collectionId }: Props) => {
+export const SomeFunction: FC<Props> = ({ attribute, collectionTokenCount, collectionId }: Props) => {
   const { routePrefix } = useMarketplaceChain()
   const attributeTokenCount = attribute?.tokenCount || 0
   const totalTokens = collectionTokenCount ? Number(collectionTokenCount) : 0
@@ -64,3 +65,5 @@ export default ({ attribute, collectionTokenCount, collectionId }: Props) => {
     </Link>
   )
 }
+
+export default SomeFunction;

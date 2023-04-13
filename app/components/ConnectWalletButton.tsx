@@ -4,6 +4,7 @@ import Box from 'components/primitives/Box'
 import Button from 'components/primitives/Button'
 import { FC } from 'react'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
+import React from 'react';
 
 type Props = {}
 

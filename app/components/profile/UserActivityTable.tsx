@@ -2,6 +2,7 @@ import { FC, useEffect } from 'react'
 import { ActivityTable } from 'components/common/ActivityTable'
 import { useUsersActivity } from '@zoolabs/ui'
 import { COLLECTION_SET_ID, COMMUNITY } from 'pages/_app'
+import React from 'react';
 
 type ActivityQuery = NonNullable<
   Exclude<Parameters<typeof useUsersActivity>['1'], boolean>

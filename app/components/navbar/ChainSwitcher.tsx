@@ -7,6 +7,7 @@ import { useMounted } from 'hooks'
 import { Dropdown, DropdownMenuItem } from 'components/primitives/Dropdown'
 import { useContext } from 'react'
 import { ChainContext } from 'context/ChainContextProvider'
+import React from 'react';
 
 const ChainSwitcher = () => {
   const isMounted = useMounted()

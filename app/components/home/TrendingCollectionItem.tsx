@@ -5,6 +5,7 @@ import { useMarketplaceChain } from '../../hooks'
 import { TrendingCollections } from 'components/home/TrendingCollectionsList'
 import { PercentChange } from 'components/primitives/PercentChange'
 import { OpenSeaVerified } from 'components/common/OpenSeaVerified'
+import React from 'react';
 
 type Props = {
   rank: string | number

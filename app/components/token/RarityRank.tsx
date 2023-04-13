@@ -5,6 +5,7 @@ import {
   useTokens,
 } from '@zoolabs/ui'
 import { formatNumber } from 'utils/numbers'
+import React , {FC} from 'react';
 
 type Props = {
   token: ReturnType<typeof useTokens>['data'][0] | null
@@ -12,7 +13,7 @@ type Props = {
   collectionAttributes?: ReturnType<typeof useAttributes>['data']
 }
 
-export default ({ token, collection, collectionAttributes }: Props) => {
+export const SomeFunction: FC<Props> =  ({ token, collection, collectionAttributes }: Props) => {
   const rarityRank = token?.token?.rarityRank as number
   const tokenCount = collection?.tokenCount as string
   const rankPercentile = Math.floor((rarityRank / parseInt(tokenCount)) * 100)
@@ -95,3 +96,6 @@ export default ({ token, collection, collectionAttributes }: Props) => {
     </Tooltip>
   )
 }
+
+
+export default SomeFunction;

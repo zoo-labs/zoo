@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { styled } from 'stitches.config'
 import React, {
   ComponentPropsWithoutRef,

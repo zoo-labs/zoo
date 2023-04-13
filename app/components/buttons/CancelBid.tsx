@@ -5,6 +5,7 @@ import { SWRResponse } from 'swr'
 import { useNetwork, useSigner, useSwitchNetwork } from 'wagmi'
 import { ToastContext } from '../../context/ToastContextProvider'
 import { useMarketplaceChain } from 'hooks'
+import React from 'react';
 
 type Props = {
   bidId: string

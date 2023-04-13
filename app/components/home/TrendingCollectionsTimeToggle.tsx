@@ -1,6 +1,7 @@
 import { useCollections } from '@zoolabs/ui'
 import { ToggleGroup, ToggleGroupItem, Text } from '../primitives'
 import { FC } from 'react'
+import React from 'react';
 
 export type CollectionsSortingOption = NonNullable<
   Exclude<Parameters<typeof useCollections>[0], false | undefined>['sortBy']
