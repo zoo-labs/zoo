@@ -91,11 +91,11 @@ function MyApp({
   }, [pathname, query]);
 
   useEffect(() => {
-    if (pageProps.messages) {
-      i18n.load(locale, pageProps.messages);
+    if ((pageProps as any).messages) {
+      i18n.load(locale, (pageProps as any).messages);
       i18n.activate(locale);
     }
-  }, [locale, pageProps.messages]);
+  }, [locale, (pageProps as any).messages]);
 
   // Allows for conditionally setting a provider to be hoisted per page
   const Provider = Component.Provider || Fragment;
@@ -208,7 +208,7 @@ function MyApp({
           href="https://fonts.googleapis.com/css?family=Inter:200,300,400,500,600,700,800,900"
         />
       </Head>
-      {/* 
+      {/*
   // @ts-ignore */}
       <I18nProvider i18n={i18n} forceRenderOnLocaleChange={false}>
         <ReduxProvider store={store}>
