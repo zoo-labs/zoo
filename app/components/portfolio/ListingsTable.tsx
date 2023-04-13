@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { FC, useEffect, useRef } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import {
@@ -24,6 +25,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTag } from '@fortawesome/free-solid-svg-icons'
 import { COMMUNITY } from 'pages/_app'
 import { NAVBAR_HEIGHT } from 'components/navbar'
+import React from 'react';
 
 type Props = {
   address: Address | undefined

@@ -3,6 +3,7 @@ import { Box, Flex, Text } from '../primitives'
 import { ComponentPropsWithoutRef, FC } from 'react'
 import { TrendingCollectionItem } from './TrendingCollectionItem'
 import LoadingSpinner from 'components/common/LoadingSpinner'
+import React from 'react';
 
 export type TrendingCollections = ReturnType<typeof useCollections>['data']
 

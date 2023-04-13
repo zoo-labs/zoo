@@ -1,6 +1,7 @@
 import { FC, useEffect } from 'react'
 import { ActivityTable } from 'components/common/ActivityTable'
 import { useCollectionActivity } from '@zoolabs/ui'
+import React from 'react';
 
 type Props = {
   id: string | undefined

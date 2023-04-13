@@ -6,6 +6,8 @@ import Document, {
   DocumentContext,
 } from 'next/document'
 import { getCssText } from '../stitches.config'
+import React from 'react';
+
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {

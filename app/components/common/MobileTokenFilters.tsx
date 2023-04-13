@@ -8,6 +8,8 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { paths } from '@zoolabs/sdk'
 import { useUserCollections } from '@zoolabs/ui'
 import { NAVBAR_HEIGHT_MOBILE } from 'components/navbar'
+import React from 'react';
+
 
 type Collections =
   | paths['/users/{user}/collections/v2']['get']['responses']['200']['schema']['collections']

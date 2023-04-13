@@ -29,6 +29,8 @@ import supportedChains from 'utils/chains'
 import { useMarketplaceChain } from 'hooks'
 import ChainContextProvider from 'context/ChainContextProvider'
 import AnalyticsProvider from 'components/AnalyticsProvider'
+import React from 'react';
+
 
 const inter = Inter({
   subsets: ['latin'],
@@ -161,7 +163,7 @@ function MyApp({
                 default: marketplaceChain.id === id,
               }
             }),
-            source: source,
+            // source: source,
             normalizeRoyalties: NORMALIZE_ROYALTIES,
           }}
           theme={currentTheme}

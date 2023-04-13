@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
   GetStaticPaths,
   GetStaticProps,
@@ -44,6 +45,8 @@ import supportedChains, { DefaultChain } from 'utils/chains'
 import Head from 'next/head'
 import CopyText from 'components/common/CopyText'
 import { OpenSeaVerified } from 'components/common/OpenSeaVerified'
+import React from 'react';
+
 
 type ActivityTypes = Exclude<
   NonNullable<

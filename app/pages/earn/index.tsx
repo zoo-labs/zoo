@@ -19,6 +19,7 @@ import { CollectionsTable } from 'components/portfolio/CollectionsTable'
 import { faWallet } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { COLLECTION_SET_ID, COMMUNITY } from 'pages/_app'
+import React from 'react';
 
 const EarnPage: NextPage = () => {
   const { address, isConnected } = useAccount()

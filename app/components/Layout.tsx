@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { FC, ReactNode, useContext } from 'react'
 import Navbar from './navbar'
 import { ToastContext } from '../context/ToastContextProvider'
+import React from 'react';
 
 type Props = {
   children: ReactNode

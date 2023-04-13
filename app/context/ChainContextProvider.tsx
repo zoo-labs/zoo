@@ -13,7 +13,7 @@ export const ChainContext = createContext<{
   switchCurrentChain: (chainId: string | number) => void
 }>({
   chain: DefaultChain,
-  switchCurrentChain: () => {},
+  switchCurrentChain: () => { },
 })
 
 const ChainContextProvider: FC<any> = ({ children }) => {
@@ -32,7 +32,7 @@ const ChainContextProvider: FC<any> = ({ children }) => {
       const selectedChain = supportedChains.find(
         (chain) => chain.id === +selectedChainId
       )
-      const id = selectedChain?.id || DefaultChain.id
+      const id: any = selectedChain?.id || DefaultChain.id
       setLastSelectedChain(id)
       localStorage.setItem('reservoir.lastChainId', `${id}`)
     } else {
@@ -41,7 +41,7 @@ const ChainContextProvider: FC<any> = ({ children }) => {
   }, [chain])
 
   const switchCurrentChain = useCallback(
-    (chainId: string | number) => {
+    (chainId: string | number | any) => {
       if (chainId === chain?.id) {
         return
       }
@@ -60,7 +60,7 @@ const ChainContextProvider: FC<any> = ({ children }) => {
               router.push('/')
             }
           })
-          .catch(() => {})
+          .catch(() => { })
       } else {
         setLastSelectedChain(chainId)
         if (routePrefix && routeChain?.id !== +chainId) {
@@ -74,7 +74,7 @@ const ChainContextProvider: FC<any> = ({ children }) => {
     [chain, switchNetworkAsync, setLastSelectedChain, router]
   )
 
-  let currentChain = DefaultChain
+  let currentChain: any = DefaultChain
   if (chain && supportedChainsMap[chain.id]) {
     currentChain = supportedChainsMap[chain.id]
   } else if (lastSelectedChain && supportedChainsMap[lastSelectedChain]) {

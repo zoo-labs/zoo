@@ -3,6 +3,7 @@ import { Flex, FormatCryptoCurrency, Text } from 'components/primitives'
 import { useMarketplaceChain } from 'hooks'
 import { FC } from 'react'
 import { formatDollar } from 'utils/numbers'
+import React from 'react';
 
 type Props = {
   token: ReturnType<typeof useTokens>['data'][0] | null

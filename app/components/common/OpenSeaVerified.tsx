@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { paths } from '@zoolabs/sdk'
 import { Tooltip, Text } from 'components/primitives'
+import React from 'react';
 
 type Props = {
   openseaVerificationStatus: NonNullable<

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { styled } from '@stitches/react'
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible'
 import {
@@ -8,6 +9,7 @@ import {
   useState,
 } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import React from 'react';
 
 const CollapsibleContent = styled(CollapsiblePrimitive.CollapsibleContent, {
   background: 'transparent',

@@ -2,6 +2,7 @@ import { styled } from "../../stitches.config";
 import Flex from "./Flex";
 import Box from "./Box";
 import Text from "./Text";
+import React from 'react';
 
 const Value = ({ type, value, size = 11, fontSize = 16 }: any) => (
   <Flex align="center">

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { faCheck, faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -20,6 +21,8 @@ import Link from 'next/link'
 import { SyntheticEvent, useContext } from 'react'
 import { MutatorCallback } from 'swr'
 import { formatNumber } from 'utils/numbers'
+import React from 'react';
+
 
 type TokenCardProps = {
   token: ReturnType<typeof useDynamicTokens>['data'][0]

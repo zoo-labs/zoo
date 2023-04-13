@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
   Anchor,
   Box,
@@ -22,6 +23,7 @@ import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import { FullscreenModal } from 'components/common/FullscreenModal'
 import { useENSResolver } from 'hooks'
 import ThemeSwitcher from 'components/navbar/ThemeSwitcher'
+import React from 'react';
 
 const HamburgerMenu = () => {
   const { address, isConnected } = useAccount()

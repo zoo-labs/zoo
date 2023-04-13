@@ -16,6 +16,7 @@ import { useMediaQuery } from 'react-responsive'
 import fetcher from 'utils/fetcher'
 import { ToastContext } from 'context/ToastContextProvider'
 import { spin } from 'components/common/LoadingSpinner'
+import React from 'react';
 
 type CollectionActionsProps = {
   collection: NonNullable<ReturnType<typeof useCollections>['data']>['0']

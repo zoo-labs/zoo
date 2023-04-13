@@ -2,6 +2,7 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CartPopover, useCart } from '@zoolabs/ui'
 import { Flex, Button, Text } from 'components/primitives'
+import React from 'react';
 
 const CartButton = () => {
   const { data: cartItems } = useCart((cart) => cart.items)

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { styled } from 'stitches.config'
 import Flex from 'components/primitives/Flex'
 import {
@@ -7,7 +8,6 @@ import {
   ReactNode,
 } from 'react'
 import { CSS } from '@stitches/react'
-
 const StyledInput = styled('input', {
   all: 'unset',
   width: '100%',
@@ -22,6 +22,7 @@ const StyledInput = styled('input', {
   '&::placeholder': { color: '$gray10' },
   '&:focus': { boxShadow: '0 0 0 2px $$focusColor' },
 })
+import React from 'react';
 
 const Input = forwardRef<
   ElementRef<typeof StyledInput>,

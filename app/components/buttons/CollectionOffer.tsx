@@ -9,6 +9,7 @@ import { CSS } from '@stitches/react'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { ToastContext } from 'context/ToastContextProvider'
 import { useMarketplaceChain } from 'hooks'
+import React from 'react';
 
 type Props = {
   collection: NonNullable<ReturnType<typeof useCollections>['data']>[0]

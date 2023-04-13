@@ -14,6 +14,7 @@ import { useMarketplaceChain, useMounted } from 'hooks'
 import { truncateAddress } from 'utils/truncate'
 import ReactMarkdown from 'react-markdown'
 import { OpenSeaVerified } from 'components/common/OpenSeaVerified'
+import React from 'react';
 
 type Props = {
   token: ReturnType<typeof useTokens>['data'][0] | null

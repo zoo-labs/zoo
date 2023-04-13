@@ -12,6 +12,8 @@ import {
   faTag,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
+import React from 'react';
+
 
 type ActivityTypes = Exclude<
   NonNullable<

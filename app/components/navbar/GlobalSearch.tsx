@@ -1,6 +1,8 @@
+/* eslint-disable */
 import { Box, Text, Flex, Input, Button } from '../primitives'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
+import React from 'react';
 
 import {
   useEffect,

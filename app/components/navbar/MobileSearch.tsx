@@ -12,6 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import GlobalSearch from './GlobalSearch'
+import React from 'react';
 
 const MobileSearch = () => {
   const children = (

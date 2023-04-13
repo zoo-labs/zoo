@@ -6,6 +6,7 @@ import { paths } from '@zoolabs/sdk'
 import Image from 'next/image'
 import { NAVBAR_HEIGHT } from 'components/navbar'
 import { useUserCollections } from '@zoolabs/ui'
+import React from 'react';
 
 type Collections =
   | paths['/users/{user}/collections/v2']['get']['responses']['200']['schema']['collections']

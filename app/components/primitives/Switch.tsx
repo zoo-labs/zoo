@@ -1,5 +1,6 @@
 import { styled } from '@stitches/react'
 import * as SwitchPrimitive from '@radix-ui/react-switch'
+import React from 'react';
 
 const StyledSwitch = styled(SwitchPrimitive.Root, {
   all: 'unset',

@@ -14,6 +14,7 @@ import { useAccount, useNetwork, useSigner, useSwitchNetwork } from 'wagmi'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { ToastContext } from 'context/ToastContextProvider'
 import { useMarketplaceChain } from 'hooks'
+import React from 'react';
 
 type ListingCurrencies = ComponentPropsWithoutRef<
   typeof ListModal

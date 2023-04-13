@@ -5,6 +5,8 @@ import {
   DialogTrigger,
   DialogPortal,
 } from '@radix-ui/react-dialog'
+import React from 'react';
+
 
 type Props = {
   trigger: ReactNode

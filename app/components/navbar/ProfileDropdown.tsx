@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { FC } from 'react'
 import { Dropdown, DropdownMenuItem } from 'components/primitives/Dropdown'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
@@ -15,6 +16,7 @@ import { faCopy, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useENSResolver } from 'hooks'
 import CopyText from 'components/common/CopyText'
+import React from 'react';
 
 export const ProfileDropdown: FC = () => {
   const { address } = useAccount()

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
   GetStaticPaths,
   GetStaticProps,
@@ -38,6 +39,7 @@ import { useENSResolver } from 'hooks'
 import { COLLECTION_SET_ID, COMMUNITY, NORMALIZE_ROYALTIES } from 'pages/_app'
 import Head from 'next/head'
 import CopyText from 'components/common/CopyText'
+import React from 'react';
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 

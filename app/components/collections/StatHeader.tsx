@@ -4,6 +4,7 @@ import { useMounted } from 'hooks'
 import { FC, ReactNode } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { formatNumber } from 'utils/numbers'
+import React from 'react';
 
 type Props = {
   label: string

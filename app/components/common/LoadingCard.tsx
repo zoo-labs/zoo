@@ -1,5 +1,6 @@
 import { keyframes } from '@stitches/react'
 import { Box, Flex } from 'components/primitives'
+import React from 'react';
 
 const pulse = keyframes({
   '0%': { backgroundColor: '$gray6' },
