@@ -2,7 +2,9 @@ import React from "react";
 import Image from "next/image";
 
 import Modal from "../../components/Modal/";
-import TransactionHistory from "../wallet/TransactionHistorySection";
+
+// This used to use moralis, it's now broken
+// import TransactionHistory from "../wallet/TransactionHistorySection";
 
 const NftInfo = () => {
   const [openMoal, setOpenModal] = React.useState(false);

@@ -39,7 +39,6 @@ import {
 } from "@apollo/client";
 import { SubgraphProvider } from "../providers/SubgraphProvider";
 import { initTranslation, loadTranslation } from "../entities";
-import { MoralisProvider } from "react-moralis";
 import { useActiveWeb3React } from "hooks/useActiveWeb3React";
 import { ChainId } from "constants/chainIds";
 
@@ -91,11 +90,11 @@ function MyApp({
   }, [pathname, query]);
 
   useEffect(() => {
-    if (pageProps.messages) {
-      i18n.load(locale, pageProps.messages);
+    if ((pageProps as any).messages) {
+      i18n.load(locale, (pageProps as any).messages);
       i18n.activate(locale);
     }
-  }, [locale, pageProps.messages]);
+  }, [locale, (pageProps as any).messages]);
 
   // Allows for conditionally setting a provider to be hoisted per page
   const Provider = Component.Provider || Fragment;
@@ -208,7 +207,7 @@ function MyApp({
           href="https://fonts.googleapis.com/css?family=Inter:200,300,400,500,600,700,800,900"
         />
       </Head>
-      {/* 
+      {/*
   // @ts-ignore */}
       <I18nProvider i18n={i18n} forceRenderOnLocaleChange={false}>
         <ReduxProvider store={store}>
@@ -235,18 +234,13 @@ function MyApp({
                     showOnShallow={true}
                     options={{ showSpinner: false }}
                   />
-                  <MoralisProvider
-                    serverUrl="https://hyrix9h7cyfi.usemoralis.com:2053/server"
-                    appId="ILIieVqZyWlL0ErAjiG9L1X6fep2KEFkKczcGOmJ"
-                  >
-                    <Provider>
-                      <Layout>
-                        <Guard>
-                          <Component {...pageProps} />
-                        </Guard>
-                      </Layout>
-                    </Provider>
-                  </MoralisProvider>
+                  <Provider>
+                    <Layout>
+                      <Guard>
+                        <Component {...pageProps} />
+                      </Guard>
+                    </Layout>
+                  </Provider>
                 </PersistGate>
               </GifProvider>
             </SubgraphProvider>

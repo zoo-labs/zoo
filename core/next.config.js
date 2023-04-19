@@ -1,4 +1,4 @@
-const withPWA = require("next-pwa")
+//const withPWA = require("next-pwa")
 const { withSentryConfig } = require("@sentry/nextjs");
 
 const linguiConfig = require("./lingui.config.js");
@@ -37,7 +37,7 @@ const SentryWebpackPluginOptions = {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 };
-module.exports = withPWA(withBundleAnalyzer(nextConfig));
+module.exports = withBundleAnalyzer(nextConfig);
 
 // withSentryConfig(
 //   withPWA(withBundleAnalyzer(nextConfig)),
