@@ -18,6 +18,11 @@ const nextConfig = {
         destination: "/store/checkout/cart",
         permanent: true,
       },
+      {
+        source : "/market",
+        destination : "http://localhost:3000/",
+        permanent: true,
+      }
     ];
   },
   i18n: {
