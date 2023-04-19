@@ -2819,13 +2819,10 @@
   dependencies:
     cross-fetch "^3.1.5"
 
-"@google/model-viewer@1.12.1":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@google/model-viewer/-/model-viewer-1.12.1.tgz#0abe0166f649199557c291734f4d2c02db65cd75"
-  integrity sha512-GOf/By81rbxSmwWRVxBtlY5b3050msJ+BDWqonPj7M0/I7rNS/vVNjbLxTofbGjZObS3n0ELHj8TZ47UtkZbtg==
-  dependencies:
-    lit "^2.2.3"
-    three "^0.139.2"
+"@google/model-viewer@1.10.1":
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/@google/model-viewer/-/model-viewer-1.10.1.tgz#521d6112685f629514a7fbd1be1dcc476f58c9b1"
+  integrity sha512-mQ7FhALWLj1rc4P7NXUNVG4glfgIeKK18X5UlQ0C+InkTsaLvfdTkOz5ixTwDWaw3ba8j6DMyGcN0mzMqc/OyA==
 
 "@graphiql/react@^0.10.0":
   version "0.10.0"
@@ -25129,7 +25126,7 @@ lit-html@^2.2.0, lit-html@^2.6.0:
   dependencies:
     "@types/trusted-types" "^2.0.2"
 
-lit@2.6.1, lit@^2.2.3:
+lit@2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/lit/-/lit-2.6.1.tgz#5951a2098b9bde5b328c73b55c15fdc0eefd96d7"
   integrity sha512-DT87LD64f8acR7uVp7kZfhLRrHkfC/N4BVzAtnw9Yg8087mbBJ//qedwdwX0kzDbxgPccWRW6mFwGbRQIxy0pw==
@@ -35132,11 +35129,6 @@ thread-stream@^0.15.1:
   integrity sha512-UkEhKIg2pD+fjkHQKyJO3yoIvAP3N6RlNFt2dUhcS1FGvCD1cQa1M/PGknCLFIyZdtJOWQjejp7bdNqmN7zwdA==
   dependencies:
     real-require "^0.1.0"
-
-three@^0.139.2:
-  version "0.139.2"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.139.2.tgz#b110799a15736df673b9293e31653a4ac73648dd"
-  integrity sha512-gV7q7QY8rogu7HLFZR9cWnOQAUedUhu2WXAnpr2kdXZP9YDKsG/0ychwQvWkZN5PlNw9mv5MoCTin6zNTXoONg==
 
 throat@^5.0.0:
   version "5.0.0"
