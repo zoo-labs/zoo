@@ -59,7 +59,7 @@ const Navbar = () => {
     >
       <Box css={{ flex: 1 }}>
         <Flex align="center">
-          <Link href="/">
+          <Link href="/zoo">
             <Box css={{ width: 34, cursor: 'pointer' }}>
               <img src="/reservoirLogo.svg" style={{ width: '100%' }} />
             </Box>
@@ -94,7 +94,7 @@ const Navbar = () => {
     >
       <Box css={{ flex: 1 }}>
         <Flex align="center">
-          <Link href="/">
+          <Link href="/zoo">
             <Box css={{ width: 112, cursor: 'pointer' }}>
               {theme == 'dark' ? (
                 <img src="/reservoirMarketLogo.svg" style={{ width: '100%' }} />
