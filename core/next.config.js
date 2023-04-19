@@ -20,7 +20,7 @@ const nextConfig = {
       },
       {
         source : "/market",
-        destination : "http://localhost:3000/",
+        destination : process.env.appURL + "/",
         permanent: true,
       }
     ];
