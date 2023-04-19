@@ -5,7 +5,7 @@ export default {
     return [
       {
         source: '/zoo',
-        destination: 'http://localhost:3006/',
+        destination: process.env.coreURL + '/',
         permanent: true,
       },
     ];
