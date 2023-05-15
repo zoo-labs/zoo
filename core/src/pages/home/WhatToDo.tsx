@@ -5,35 +5,35 @@ import React from "react";
 const utilities = [
   {
     title: "Play 👩‍💻🕹️",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/game-play/gameplay-functions",
   },
   {
     title: "Hatch 🐣",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/introduction/core-concept-of-zoo/generations-of-nft",
   },
   {
     title: "Pools 🐋",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/differentiators/zoo-an-nft-liquidity-protocol",
   },
   {
     title: "Feed 🍼 💳",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/game-play/gameplay-functions",
   },
   {
     title: "Burning 🔥",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/differentiators/zoo-an-nft-liquidity-protocol/sustainability-tax#nft-tax",
   },
   {
     title: "Buy / Sell 🛍️",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/game-play/zoo-animal-utility",
   },
   {
     title: "Grow 💗 🐥",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/game-play/zoo-animal-utility",
   },
   {
     title: "Boosts 💲↗️",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/game-play/collateral-backed-nfts#boosts",
   },
   {
     title: "Make Offers 🕊️",
@@ -41,15 +41,15 @@ const utilities = [
   },
   {
     title: "Breed 🥚",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/introduction/core-concept-of-zoo",
   },
   {
     title: "Earns 🎁️ 🤑",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/introduction/abstract",
   },
   {
     title: "Metaverse 👽",
-    link: "",
+    link: "https://zoolabs.gitbook.io/whitepaper/game-play/metaverse-companion",
   },
 ];
 

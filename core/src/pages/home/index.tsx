@@ -61,7 +61,7 @@ const grabAnimal = [
 
 const grabAnimal2 = [
   {
-    title: "Breed up to 7X",
+    title: "Breed Gen 1 Animals up to 7x",
     icon: "/images/circle-tiger.png",
     description: (
       <>
