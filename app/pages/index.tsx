@@ -96,17 +96,17 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
             css={{ mx: 'auto', maxWidth: 728, pt: '$5', textAlign: 'center' }}
           >
             <Text style="h3" css={{ mb: 24 }}>
-              Open Source Marketplace
+              Zoo Market
             </Text>
-            <Text style="body1" css={{ mb: 48 }}>
-              Reservoir Marketplace is an open-source project that showcases the
-              latest and greatest features of the Reservoir Platform.
+            <Text style="body1" css={{ mb: 42 }}>
+            Explore Web3's future in a world of digital creatures <br/>
+            and surreal landscapes, all aimed at halting extinction.
             </Text>
             <a
               href="https://github.com/reservoirprotocol/marketplace-v2"
               target="_blank"
             >
-              <Button color="gray3">View Source Code</Button>
+              
             </a>
           </Flex>
         )}
