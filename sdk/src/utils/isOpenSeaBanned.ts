@@ -1,6 +1,7 @@
-import axios from 'axios'
+import { axios } from '../utils'
+import { AxiosRequestHeaders } from 'axios'
 import { getClient } from '../actions'
-// import { version } from '../../package.json'
+import { version } from '../../package.json'
 
 /**
  * Check if tokens are banned on OpenSea
@@ -18,8 +19,8 @@ export async function isOpenSeaBanned(ids: string[]) {
   const res = await axios.get(url)
   const json = res.data
   const client = getClient()
-  const currentChain = client?.currentChain()
-  const baseApiUrl = currentChain?.apiKey
+  const currentReservoirChain = client?.currentChain()
+  const baseApiUrl = currentReservoirChain?.apiKey
   const statuses: Record<string, boolean> = json.assets.reduce(
     (statuses: Record<string, boolean>, asset: any) => {
       statuses[`${asset.asset_contract.address}:${asset.token_id}`] =
@@ -29,10 +30,10 @@ export async function isOpenSeaBanned(ids: string[]) {
     {} as Record<string, boolean>
   )
   if (res.status === 200 && baseApiUrl) {
-    const apiKey = currentChain.apiKey
-    const headers: any = {
+    const apiKey = currentReservoirChain.apiKey
+    const headers: AxiosRequestHeaders = {
       'Content-Type': 'application/json',
-      'x-rkc-version': '0.4.0',
+      'x-rkc-version': version,
     }
     Object.keys(statuses).forEach((token) => {
       const status = statuses[token]

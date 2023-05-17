@@ -1,23 +1,24 @@
-/* eslint-disable */
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 import { Text, Flex, Box, Button } from 'components/primitives'
-import TrendingCollectionsList from 'components/home/TrendingCollectionsList'
 import Layout from 'components/Layout'
-import { ComponentPropsWithoutRef, useEffect, useRef, useState } from 'react'
-import TrendingCollectionsTimeToggle, {
-  CollectionsSortingOption,
-} from 'components/home/TrendingCollectionsTimeToggle'
+import { ComponentPropsWithoutRef, useContext, useState } from 'react'
 import { Footer } from 'components/home/Footer'
 import { useMediaQuery } from 'react-responsive'
 import { useMarketplaceChain, useMounted } from 'hooks'
 import { useAccount } from 'wagmi'
-import LoadingSpinner from 'components/common/LoadingSpinner'
-import { paths } from '@zoolabs/sdk'
-import { useCollections } from '@zoolabs/ui'
+import { paths } from '@reservoir0x/reservoir-sdk'
+import { useCollections } from '@reservoir0x/reservoir-kit-ui'
 import fetcher from 'utils/fetcher'
-import { NORMALIZE_ROYALTIES, COLLECTION_SET_ID, COMMUNITY } from './_app'
+import { NORMALIZE_ROYALTIES } from './_app'
 import supportedChains from 'utils/chains'
-import { useIntersectionObserver } from 'usehooks-ts'
+import Link from 'next/link'
+import ChainToggle from 'components/common/ChainToggle'
+import CollectionsTimeDropdown, {
+  CollectionsSortingOption,
+} from 'components/common/CollectionsTimeDropdown'
+import { Head } from 'components/Head'
+import { CollectionRankingsTable } from 'components/rankings/CollectionRankingsTable'
+import { ChainContext } from 'context/ChainContextProvider'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -31,39 +32,27 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
   const { isDisconnected } = useAccount()
 
   let collectionQuery: Parameters<typeof useCollections>['0'] = {
-    limit: 12,
+    limit: 10,
     sortBy: sortByTime,
+    includeTopBid: true,
   }
 
-  if (COLLECTION_SET_ID) {
-    collectionQuery.collectionsSetId = COLLECTION_SET_ID
-  } else if (COMMUNITY) {
-    collectionQuery.community = COMMUNITY
+  const { chain } = useContext(ChainContext)
+
+  if (chain.collectionSetId) {
+    collectionQuery.collectionsSetId = chain.collectionSetId
+  } else if (chain.community) {
+    collectionQuery.community = chain.community
   }
 
-  const { data, hasNextPage, fetchNextPage, isFetchingPage, isValidating } =
-    useCollections(collectionQuery, {
-      fallbackData: [ssr.collections[marketplaceChain.id]],
-    })
+  const { data, isValidating } = useCollections(collectionQuery, {
+    fallbackData: [ssr.collections[marketplaceChain.id]],
+  })
 
   let collections = data || []
-  const showViewAllButton = collections.length <= 12 && hasNextPage
-  if (showViewAllButton) {
-    collections = collections?.slice(0, 12)
-  }
-
-  const loadMoreRef = useRef<HTMLDivElement>(null)
-  const loadMoreObserver = useIntersectionObserver(loadMoreRef, {})
-
-  useEffect(() => {
-    let isVisible = !!loadMoreObserver?.isIntersecting
-    if (isVisible) {
-      fetchNextPage()
-    }
-  }, [loadMoreObserver?.isIntersecting, isFetchingPage])
 
   let volumeKey: ComponentPropsWithoutRef<
-    typeof TrendingCollectionsList
+    typeof CollectionRankingsTable
   >['volumeKey'] = 'allTime'
 
   switch (sortByTime) {
@@ -80,6 +69,7 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
 
   return (
     <Layout>
+      <Head />
       <Box
         css={{
           p: 24,
@@ -126,43 +116,37 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
             <Text style="h4" as="h4">
               Popular Collections
             </Text>
-            <TrendingCollectionsTimeToggle
-              compact={compactToggleNames && isMounted}
-              option={sortByTime}
-              onOptionSelected={(option) => {
-                setSortByTime(option)
-              }}
-            />
+            <Flex align="center" css={{ gap: '$4' }}>
+              <CollectionsTimeDropdown
+                compact={compactToggleNames && isMounted}
+                option={sortByTime}
+                onOptionSelected={(option) => {
+                  setSortByTime(option)
+                }}
+              />
+              <ChainToggle />
+            </Flex>
           </Flex>
           {isSSR || !isMounted ? null : (
-            <TrendingCollectionsList
+            <CollectionRankingsTable
               collections={collections}
-              loading={isValidating && showViewAllButton}
+              loading={isValidating}
               volumeKey={volumeKey}
             />
           )}
-          {(isFetchingPage || isValidating) && !showViewAllButton && (
-            <Flex align="center" justify="center" css={{ py: '$4' }}>
-              <LoadingSpinner />
-            </Flex>
-          )}
-          {showViewAllButton && (
-            <Button
-              disabled={isValidating}
-              onClick={() => {
-                fetchNextPage()
-              }}
-              css={{
-                minWidth: 224,
-                justifyContent: 'center',
-                alignSelf: 'center',
-              }}
-              size="large"
-            >
-              View All
-            </Button>
-          )}
-          {!showViewAllButton && <Box ref={loadMoreRef}></Box>}
+          <Box css={{ alignSelf: 'center' }}>
+            <Link href="/collection-rankings">
+              <Button
+                css={{
+                  minWidth: 224,
+                  justifyContent: 'center',
+                }}
+                size="large"
+              >
+                View All
+              </Button>
+            </Link>
+          </Box>
         </Flex>
         <Footer />
       </Box>
@@ -183,19 +167,20 @@ export const getStaticProps: GetStaticProps<{
     {
       sortBy: '1DayVolume',
       normalizeRoyalties: NORMALIZE_ROYALTIES,
-      limit: 12,
+      includeTopBid: true,
+      limit: 10,
     }
-
-  if (COLLECTION_SET_ID) {
-    collectionQuery.collectionsSetId = COLLECTION_SET_ID
-  } else if (COMMUNITY) {
-    collectionQuery.community = COMMUNITY
-  }
 
   const promises: ReturnType<typeof fetcher>[] = []
   supportedChains.forEach((chain) => {
+    const query = { ...collectionQuery }
+    if (chain.collectionSetId) {
+      query.collectionsSetId = chain.collectionSetId
+    } else if (chain.community) {
+      query.community = chain.community
+    }
     promises.push(
-      fetcher(`${chain.reservoirBaseUrl}/collections/v5`, collectionQuery, {
+      fetcher(`${chain.reservoirBaseUrl}/collections/v5`, query, {
         headers: {
           'x-api-key': chain.apiKey || '',
         },

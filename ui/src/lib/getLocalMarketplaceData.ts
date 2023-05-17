@@ -1,4 +1,4 @@
-import { getClient } from '@zoolabs/sdk'
+import { getClient } from '@reservoir0x/reservoir-sdk'
 
 export default () => {
   const client = getClient()

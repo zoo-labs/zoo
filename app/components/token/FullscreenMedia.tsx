@@ -13,12 +13,11 @@ import {
   TokenMedia,
   useTokens,
   extractMediaType,
-} from '@zoolabs/ui'
+} from '@reservoir0x/reservoir-kit-ui'
 import { motion } from 'framer-motion'
-import React from 'react';
 
 type Props = {
-  token: ReturnType<typeof useTokens>['data'][0]
+  token?: ReturnType<typeof useTokens>['data'][0]
 }
 
 const FullscreenMedia: FC<Props> = ({ token }) => {

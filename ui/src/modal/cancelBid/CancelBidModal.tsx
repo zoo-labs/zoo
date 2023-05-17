@@ -1,4 +1,4 @@
-import { useFallbackState, useZooClient, useTimeSince } from '../../hooks'
+import { useFallbackState, useReservoirClient, useTimeSince } from '../../hooks'
 import React, { ReactElement, Dispatch, SetStateAction, useEffect } from 'react'
 import { Flex, Text, Box, Button, Loader, Anchor } from '../../primitives'
 import { CancelBidModalRenderer, CancelStep } from './CancelBidModalRenderer'
@@ -7,7 +7,10 @@ import TokenPrimitive from '../../modal/TokenPrimitive'
 import Progress from '../Progress'
 import { useNetwork } from 'wagmi'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCircleExclamation,
+  faGasPump,
+} from '@fortawesome/free-solid-svg-icons'
 
 type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
   openState?: [boolean, Dispatch<SetStateAction<boolean>>]
@@ -31,7 +34,7 @@ export function CancelBidModal({
     openState ? openState[0] : false,
     openState
   )
-  const client = useZooClient()
+  const client = useReservoirClient()
   const { chain: activeChain } = useNetwork()
   const reservoirChain = client?.currentChain()
 
@@ -84,6 +87,8 @@ export function CancelBidModal({
           (bid.status === 'active' || bid.status === 'inactive') &&
           !loading
 
+        const isOracleOrder = bid?.isNativeOffChainCancellable
+
         return (
           <Modal
             trigger={trigger}
@@ -129,7 +134,7 @@ export function CancelBidModal({
                       width={16}
                       height={16}
                     />
-                    <Text style="body2" color="errorLight">
+                    <Text style="body3" color="errorLight">
                       {transactionError.message}
                     </Text>
                   </Flex>
@@ -143,20 +148,25 @@ export function CancelBidModal({
                     collection={bid?.criteria?.data?.collection?.name || ''}
                     currencyContract={bid?.price?.currency?.contract}
                     currencyDecimals={bid?.price?.currency?.decimals}
+                    currencySymbol={bid?.price?.currency?.symbol}
                     expires={expires}
                     source={(bid?.source?.icon as string) || ''}
-                    isOffer={true}
+                    priceSubtitle="Offer"
                   />
                 </Box>
                 <Text
-                  style="body3"
+                  style="body2"
                   color="subtle"
                   css={{ mt: '$3', mr: '$3', ml: '$3', textAlign: 'center' }}
                 >
-                  This will cancel your offer. You will be asked to confirm this
-                  cancelation from your wallet.
+                  {!isOracleOrder
+                    ? 'This action will cancel your offer. You will be prompted to confirm this cancellation from your wallet. A gas fee is required.'
+                    : 'This will cancel your offer for free. You will be prompted to confirm this cancellation from your wallet.'}
                 </Text>
                 <Button onClick={cancelOrder} css={{ m: '$4' }}>
+                  {!isOracleOrder && (
+                    <FontAwesomeIcon icon={faGasPump} width="16" height="16" />
+                  )}
                   Continue to Cancel
                 </Button>
               </Flex>
@@ -172,9 +182,10 @@ export function CancelBidModal({
                     collection={bid?.criteria?.data?.collection?.name || ''}
                     currencyContract={bid?.price?.currency?.contract}
                     currencyDecimals={bid?.price?.currency?.decimals}
+                    currencySymbol={bid?.price?.currency?.symbol}
                     expires={expires}
                     source={(bid?.source?.icon as string) || ''}
-                    isOffer={true}
+                    priceSubtitle="Offer"
                   />
                 </Box>
                 {!stepData && <Loader css={{ height: 206 }} />}
@@ -192,7 +203,7 @@ export function CancelBidModal({
                     {isAttributeOffer && !stepData?.currentStepItem.txHash && (
                       <Flex justify="center">
                         <Text
-                          style="body3"
+                          style="body2"
                           color="subtle"
                           css={{ maxWidth: 400, textAlign: 'center', mx: '$3' }}
                         >
@@ -225,14 +236,14 @@ export function CancelBidModal({
                   <Text style="h5" css={{ mb: '$2' }}>
                     Offer Canceled!
                   </Text>
-                  <Text style="body3" color="subtle" css={{ mb: 24 }}>
+                  <Text style="body2" color="subtle" css={{ mb: 24 }}>
                     <>
                       Your{' '}
-                      <Text style="body3" color="accent">
+                      <Text style="body2" color="accent">
                         {bid?.source?.name as string}
                       </Text>{' '}
                       offer for{' '}
-                      <Text style="body3" color="accent">
+                      <Text style="body2" color="accent">
                         {bid?.criteria?.data?.token?.name ||
                           bid?.criteria?.data?.collection?.name}{' '}
                       </Text>

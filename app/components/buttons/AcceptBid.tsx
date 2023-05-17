@@ -2,7 +2,7 @@ import {
   AcceptBidModal,
   AcceptBidStep,
   useTokens,
-} from '@zoolabs/ui'
+} from '@reservoir0x/reservoir-kit-ui'
 import { cloneElement, ComponentProps, FC, ReactNode, useContext } from 'react'
 import { CSS } from '@stitches/react'
 import { SWRResponse } from 'swr'
@@ -11,12 +11,11 @@ import { useAccount, useNetwork, useSigner, useSwitchNetwork } from 'wagmi'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { ToastContext } from '../../context/ToastContextProvider'
 import { useMarketplaceChain } from 'hooks'
-import React from 'react';
 
 type Props = {
-  token?: ReturnType<typeof useTokens>['data'][0]
-  bidId?: string | undefined
-  collectionId?: string | undefined
+  tokenId?: string
+  bidId?: string
+  collectionId?: string
   disabled?: boolean
   openState?: [boolean, React.Dispatch<React.SetStateAction<boolean>>]
   buttonCss?: CSS
@@ -26,7 +25,7 @@ type Props = {
 }
 
 const AcceptBid: FC<Props> = ({
-  token,
+  tokenId,
   bidId,
   collectionId,
   disabled,
@@ -80,7 +79,7 @@ const AcceptBid: FC<Props> = ({
         openState={openState}
         bidId={bidId}
         collectionId={collectionId}
-        tokenId={token?.token?.tokenId}
+        tokenId={tokenId}
         onClose={(data, stepData, currentStep) => {
           if (mutate && currentStep == AcceptBidStep.Complete) mutate()
         }}

@@ -3,9 +3,8 @@ import {
   useAttributes,
   useCollections,
   useTokens,
-} from '@zoolabs/ui'
+} from '@reservoir0x/reservoir-kit-ui'
 import { formatNumber } from 'utils/numbers'
-import React , {FC} from 'react';
 
 type Props = {
   token: ReturnType<typeof useTokens>['data'][0] | null
@@ -13,7 +12,7 @@ type Props = {
   collectionAttributes?: ReturnType<typeof useAttributes>['data']
 }
 
-export const SomeFunction: FC<Props> =  ({ token, collection, collectionAttributes }: Props) => {
+export default ({ token, collection, collectionAttributes }: Props) => {
   const rarityRank = token?.token?.rarityRank as number
   const tokenCount = collection?.tokenCount as string
   const rankPercentile = Math.floor((rarityRank / parseInt(tokenCount)) * 100)
@@ -62,13 +61,13 @@ export const SomeFunction: FC<Props> =  ({ token, collection, collectionAttribut
     <Tooltip
       content={
         <Flex direction="column" align="start">
-          <Text style="body2">{topPercentileText}</Text>
-          <Text style="body2" ellipsify>
+          <Text style="body3">{topPercentileText}</Text>
+          <Text style="body3" ellipsify>
             Rarity rank:{' '}
             {`${formatNumber(rarityRank)}/
             ${formatNumber(tokenCount)}`}
           </Text>
-          <Text style="body2" color="subtle">
+          <Text style="body3" color="subtle">
             By Poprank
           </Text>
         </Flex>
@@ -96,6 +95,3 @@ export const SomeFunction: FC<Props> =  ({ token, collection, collectionAttribut
     </Tooltip>
   )
 }
-
-
-export default SomeFunction;

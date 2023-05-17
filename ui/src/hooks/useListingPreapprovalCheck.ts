@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import useZooClient from './useZooClient'
+import useReservoirClient from './useReservoirClient'
 import { Marketplace } from './useMarketplaces'
 import { Listings } from '../modal/list/ListModalRenderer'
 import { useSigner } from 'wagmi'
-import { Execute } from '@zoolabs/sdk'
+import { Execute } from '@reservoir0x/reservoir-sdk'
 
 export default function (
   marketplaces: Marketplace[],
@@ -14,7 +14,7 @@ export default function (
     Marketplace[]
   >([])
   const [isFetching, setIsFetching] = useState(false)
-  const client = useZooClient()
+  const client = useReservoirClient()
   const { data: signer } = useSigner()
 
   useEffect(() => {
@@ -54,11 +54,15 @@ export default function (
               approvalStep.items.reduce((unapproved, item) => {
                 if (
                   item.status === 'incomplete' &&
-                  item.orderIndex !== undefined
+                  item.orderIndexes !== undefined
                 ) {
-                  const listing = listings[item.orderIndex]
+                  const listingOrderKinds = listings
+                    .filter((_, i) => item.orderIndexes?.includes(i))
+                    .map((listing) => listing.orderKind)
                   marketplaces.forEach((marketplace) => {
-                    if (marketplace.orderKind === listing.orderKind) {
+                    if (
+                      listingOrderKinds.includes(marketplace.orderKind as any)
+                    ) {
                       unapproved.push(marketplace)
                     }
                   })

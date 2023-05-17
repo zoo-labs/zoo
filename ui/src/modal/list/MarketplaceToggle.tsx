@@ -20,11 +20,11 @@ const MarketplaceToggle = ({
         style={{ height: 32, width: 32, borderRadius: 4 }}
       />
     </Box>
-    <Text style="body3" css={{ flex: 1 }}>
+    <Text style="body2" css={{ flex: 1 }}>
       {marketplace.name}
     </Text>
     <Text style="subtitle2" color="subtle" css={{ mr: '$2' }}>
-      Marketplace fee: {(marketplace.feeBps || 0) * 100}%
+      Marketplace fee: {marketplace.fee?.percent}%
     </Text>
     <Switch checked={marketplace.isSelected} onCheckedChange={onSelection} />
   </Flex>

@@ -1,4 +1,4 @@
-import { setParams } from '@zoolabs/sdk'
+import { setParams } from '@reservoir0x/reservoir-sdk'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import supportedChains, { DefaultChain } from 'utils/chains'
 import { constants } from 'ethers'
@@ -40,7 +40,7 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
     // versions without any padding
     endpoint = endpoint.toLowerCase()
     if (
-      [mainnet.id, 137, goerli.id].includes(chain.id) &&
+      [mainnet.id as number, goerli.id].includes(chain.id) &&
       endpoint.includes('currency')
     ) {
       if (endpoint.includes(constants.AddressZero)) {

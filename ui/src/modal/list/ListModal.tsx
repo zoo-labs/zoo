@@ -15,7 +15,7 @@ import {
   Loader,
   Select,
   ErrorWell,
-  CryptoCurrencyIcon,
+  Popover,
 } from '../../primitives'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -24,21 +24,27 @@ import {
   ListingData,
   ListModalRenderer,
   ListStep,
-  StepData,
+  ListModalStepData,
 } from './ListModalRenderer'
 import { ModalSize } from '../Modal'
-import { faChevronLeft, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import {
+  faChevronLeft,
+  faCheckCircle,
+  faInfoCircle,
+} from '@fortawesome/free-solid-svg-icons'
 import TokenStats from './TokenStats'
 import MarketplaceToggle from './MarketplaceToggle'
 import MarketplacePriceInput from './MarketplacePriceInput'
 import TokenListingDetails from './TokenListingDetails'
-import { useFallbackState, useZooClient } from '../../hooks'
+import { useFallbackState, useReservoirClient } from '../../hooks'
 import TransactionProgress from '../../modal/TransactionProgress'
 import ProgressBar from '../../modal/ProgressBar'
 import InfoTooltip from '../../primitives/InfoTooltip'
 import { Marketplace } from '../../hooks/useMarketplaces'
 import { Currency } from '../../types/Currency'
 import { constants } from 'ethers'
+import SigninStep from '../SigninStep'
+import { CurrencySelector } from './CurrencySelector'
 
 type ListingCallbackData = {
   listings?: ListingData[]
@@ -53,12 +59,14 @@ type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
   currencies?: Currency[]
   nativeOnly?: boolean
   normalizeRoyalties?: boolean
+  enableOnChainRoyalties?: boolean
+  oracleEnabled?: boolean
   onGoToToken?: () => any
   onListingComplete?: (data: ListingCallbackData) => void
   onListingError?: (error: Error, data: ListingCallbackData) => void
   onClose?: (
     data: ListingCallbackData,
-    stepData: StepData | null,
+    stepData: ListModalStepData | null,
     currentStep: ListStep
   ) => void
 }
@@ -98,6 +106,8 @@ export function ListModal({
   currencies,
   nativeOnly,
   normalizeRoyalties,
+  enableOnChainRoyalties = false,
+  oracleEnabled = false,
   onGoToToken,
   onListingComplete,
   onListingError,
@@ -107,12 +117,15 @@ export function ListModal({
     openState ? openState[0] : false,
     openState
   )
-  const [stepTitle, setStepTitle] = useState('')
-  const client = useZooClient()
+  const client = useReservoirClient()
   const reservoirChain = client?.currentChain()
   const [marketplacesToApprove, setMarketplacesToApprove] = useState<
     Marketplace[]
   >([])
+
+  if (oracleEnabled) {
+    nativeOnly = true
+  }
 
   return (
     <ListModalRenderer
@@ -121,6 +134,8 @@ export function ListModal({
       collectionId={collectionId}
       currencies={currencies}
       normalizeRoyalties={normalizeRoyalties}
+      enableOnChainRoyalties={enableOnChainRoyalties}
+      oracleEnabled={oracleEnabled}
     >
       {({
         token,
@@ -132,6 +147,7 @@ export function ListModal({
         expirationOptions,
         marketplaces,
         unapprovedMarketplaces,
+        isFetchingOnChainRoyalties,
         localMarketplace,
         listingData,
         transactionError,
@@ -139,6 +155,7 @@ export function ListModal({
         currencies,
         currency,
         quantity,
+        royaltyBps,
         setListStep,
         listToken,
         setMarketPrice,
@@ -153,32 +170,10 @@ export function ListModal({
             : (collection?.image as string)
 
         useEffect(() => {
-          if (stepData) {
-            const isNativeOrder =
-              stepData.listingData.marketplace.orderbook === 'reservoir'
-            const isSeaportOrder =
-              stepData.listingData.marketplace.orderKind === 'seaport'
-            const marketplaceName =
-              isNativeOrder && isSeaportOrder
-                ? `${stepData.listingData.marketplace.name} (on Seaport)`
-                : stepData.listingData.marketplace.name
-
-            switch (stepData.currentStep.kind) {
-              case 'transaction': {
-                setStepTitle(
-                  `Approve ${marketplaceName} to access item\nin your wallet`
-                )
-                break
-              }
-              case 'signature': {
-                setStepTitle(
-                  `Confirm listing on ${marketplaceName}\nin your wallet`
-                )
-                break
-              }
-            }
+          if (nativeOnly) {
+            setListStep(ListStep.SetPrice)
           }
-        }, [stepData])
+        }, [nativeOnly, open])
 
         useEffect(() => {
           if (unapprovedMarketplaces.length > 0) {
@@ -245,6 +240,11 @@ export function ListModal({
             marketplace.orderbook === 'opensea'
         )
 
+        let loading =
+          !token ||
+          !collection ||
+          (enableOnChainRoyalties ? isFetchingOnChainRoyalties : false)
+
         return (
           <Modal
             trigger={trigger}
@@ -263,11 +263,15 @@ export function ListModal({
 
               setOpen(open)
             }}
-            loading={!token}
+            loading={loading}
           >
-            {token && listStep == ListStep.SelectMarkets && (
+            {!loading && listStep == ListStep.SelectMarkets && (
               <ContentContainer>
-                <TokenStats token={token} collection={collection} />
+                <TokenStats
+                  token={token}
+                  collection={collection}
+                  royaltyBps={royaltyBps}
+                />
 
                 <MainContainer>
                   <Box css={{ p: '$4', flex: 1 }}>
@@ -278,60 +282,11 @@ export function ListModal({
                         css={{ mb: '$4', gap: '$2', alignItems: 'center' }}
                       >
                         List item in
-                        <Select
-                          trigger={
-                            <Select.Trigger
-                              css={{
-                                width: 'auto',
-                                p: 0,
-                                backgroundColor: 'transparent',
-                              }}
-                            >
-                              <Select.Value asChild>
-                                <Flex align="center">
-                                  <CryptoCurrencyIcon
-                                    address={currency.contract}
-                                    css={{ height: 18 }}
-                                  />
-                                  <Text
-                                    style="subtitle1"
-                                    color="subtle"
-                                    css={{ ml: '$1' }}
-                                  >
-                                    {currency.symbol}
-                                  </Text>
-                                  <Select.DownIcon style={{ marginLeft: 6 }} />
-                                </Flex>
-                              </Select.Value>
-                            </Select.Trigger>
-                          }
-                          value={currency.contract}
-                          onValueChange={(value: string) => {
-                            const option = currencies.find(
-                              (option) => option.contract == value
-                            )
-                            if (option) {
-                              setCurrency(option)
-                            }
-                          }}
-                        >
-                          {currencies.map((option) => (
-                            <Select.Item
-                              key={option.contract}
-                              value={option.contract}
-                            >
-                              <Select.ItemText>
-                                <Flex align="center" css={{ gap: '$1' }}>
-                                  <CryptoCurrencyIcon
-                                    address={option.contract}
-                                    css={{ height: 18 }}
-                                  />
-                                  {option.symbol}
-                                </Flex>
-                              </Select.ItemText>
-                            </Select.Item>
-                          ))}
-                        </Select>
+                        <CurrencySelector
+                          currency={currency}
+                          currencies={currencies}
+                          setCurrency={setCurrency}
+                        />
                       </Text>
                     ) : (
                       <Text style="subtitle1" as="h3" css={{ mb: '$4' }}>
@@ -362,7 +317,7 @@ export function ListModal({
                         <Text style="body3">{localMarketplace?.name}</Text>
                         <Flex css={{ alignItems: 'center', gap: 8 }}>
                           <Text style="body3" color="subtle" as="div">
-                            on Zoo
+                            on Reservoir
                           </Text>
                           <InfoTooltip
                             side="bottom"
@@ -420,6 +375,21 @@ export function ListModal({
                           .join(', ')})`}
                       </Text>
                     )}
+                    {oracleEnabled && (
+                      <Text
+                        style="body3"
+                        color="subtle"
+                        css={{
+                          mb: 10,
+                          textAlign: 'center',
+                          width: '100%',
+                          display: 'block',
+                        }}
+                      >
+                        You can change or cancel your listing for free on{' '}
+                        {localMarketplace?.name}.
+                      </Text>
+                    )}
                     <Button
                       onClick={() => setListStep(ListStep.SetPrice)}
                       css={{ width: '100%' }}
@@ -430,25 +400,31 @@ export function ListModal({
                 </MainContainer>
               </ContentContainer>
             )}
-            {token && listStep == ListStep.SetPrice && (
+            {!loading && listStep == ListStep.SetPrice && (
               <ContentContainer>
-                <TokenStats token={token} collection={collection} />
+                <TokenStats
+                  token={token}
+                  collection={collection}
+                  royaltyBps={royaltyBps}
+                />
 
                 <MainContainer>
                   <Box css={{ p: '$4', flex: 1 }}>
                     <Flex align="center" css={{ mb: '$4' }}>
-                      <Button
-                        color="ghost"
-                        size="none"
-                        css={{ mr: '$2', color: '$neutralText' }}
-                        onClick={() => setListStep(ListStep.SelectMarkets)}
-                      >
-                        <FontAwesomeIcon
-                          icon={faChevronLeft}
-                          width={16}
-                          height={16}
-                        />
-                      </Button>
+                      {!nativeOnly ? (
+                        <Button
+                          color="ghost"
+                          size="none"
+                          css={{ mr: '$2', color: '$neutralText' }}
+                          onClick={() => setListStep(ListStep.SelectMarkets)}
+                        >
+                          <FontAwesomeIcon
+                            icon={faChevronLeft}
+                            width={16}
+                            height={16}
+                          />
+                        </Button>
+                      ) : null}
                       <Text style="subtitle1" as="h3">
                         Set Your Price
                       </Text>
@@ -497,11 +473,41 @@ export function ListModal({
                             ? 'Total Profit'
                             : 'Profit'}
                         </Text>
-                        <InfoTooltip
-                          side="left"
-                          width={200}
-                          content={`How much ${currency.symbol} you will receive after marketplace fees and creator royalties are subtracted.`}
-                        />
+                        {nativeOnly ? (
+                          <Popover
+                            side="left"
+                            content={
+                              <Flex direction="column" css={{ gap: '$3' }}>
+                                <Flex justify="between" css={{ gap: '$4' }}>
+                                  <Text style="body3">Marketplace Fee</Text>
+                                  <Text style="subtitle2" color="subtle">
+                                    {marketplaces[0].fee?.percent || 0}%
+                                  </Text>
+                                </Flex>
+                                <Flex justify="between" css={{ gap: '$4' }}>
+                                  <Text style="body3">Creator Royalties</Text>
+                                  <Text style="subtitle2" color="subtle">
+                                    {(royaltyBps || 0) * 0.01}%
+                                  </Text>
+                                </Flex>
+                              </Flex>
+                            }
+                          >
+                            <Box
+                              css={{
+                                color: '$neutralText',
+                              }}
+                            >
+                              <FontAwesomeIcon icon={faInfoCircle} />
+                            </Box>
+                          </Popover>
+                        ) : (
+                          <InfoTooltip
+                            side="left"
+                            width={200}
+                            content={`How much ${currency.symbol} you will receive after marketplace fees and creator royalties are subtracted.`}
+                          />
+                        )}
                       </Flex>
                     </Flex>
 
@@ -511,8 +517,11 @@ export function ListModal({
                           marketplace={marketplace}
                           collection={collection}
                           currency={currency}
+                          currencies={currencies}
+                          setCurrency={setCurrency}
                           usdPrice={usdPrice}
                           quantity={quantity}
+                          nativeOnly={nativeOnly}
                           onChange={(e) => {
                             setMarketPrice(e.target.value, marketplace)
                           }}
@@ -605,7 +614,7 @@ export function ListModal({
                 </MainContainer>
               </ContentContainer>
             )}
-            {token && listStep == ListStep.ListItem && (
+            {!loading && listStep == ListStep.ListItem && (
               <ContentContainer>
                 <TokenListingDetails
                   token={token}
@@ -619,18 +628,25 @@ export function ListModal({
                     max={stepData?.totalSteps || 0}
                   />
                   {transactionError && <ErrorWell css={{ mt: 24 }} />}
-                  {stepData && (
+                  {stepData && stepData.currentStep.id === 'auth' ? (
+                    <SigninStep css={{ mt: 48, mb: '$4', gap: 20 }} />
+                  ) : null}
+                  {stepData && stepData.currentStep.id !== 'auth' ? (
                     <>
                       <Text
                         css={{ textAlign: 'center', mt: 48, mb: 28 }}
                         style="subtitle1"
                       >
-                        {stepTitle}
+                        {stepData.currentStep.kind === 'transaction'
+                          ? 'Approve access to items\nin your wallet'
+                          : 'Confirm listing in your wallet'}
                       </Text>
                       <TransactionProgress
                         justify="center"
                         fromImg={tokenImage}
-                        toImg={stepData?.listingData.marketplace.imageUrl || ''}
+                        toImgs={stepData?.listingData.map(
+                          (listing) => listing.marketplace.imageUrl || ''
+                        )}
                       />
                       <Text
                         css={{
@@ -646,7 +662,7 @@ export function ListModal({
                         {stepData?.currentStep.description}
                       </Text>
                     </>
-                  )}
+                  ) : null}
                   {!stepData && (
                     <Flex
                       css={{ height: '100%' }}
@@ -679,7 +695,7 @@ export function ListModal({
                 </MainContainer>
               </ContentContainer>
             )}
-            {token && listStep == ListStep.Complete && (
+            {!loading && listStep == ListStep.Complete && (
               <ContentContainer>
                 <TokenListingDetails
                   token={token}
@@ -730,12 +746,12 @@ export function ListModal({
                           data.listing.orderbook === 'reservoir' &&
                           client?.source
                             ? client?.source
-                            : data.marketplace.name
+                            : data.marketplace.domain
                         return (
                           <a
                             key={data.listing.orderbook}
                             target="_blank"
-                            href={`${reservoirChain?.baseApiUrl}/redirect/sources/${source}/tokens/${token.token?.contract}:${token?.token?.tokenId}/link/v2`}
+                            href={`${reservoirChain?.baseApiUrl}/redirect/sources/${source}/tokens/${token?.token?.contract}:${token?.token?.tokenId}/link/v2`}
                           >
                             <Image
                               css={{ width: 24 }}

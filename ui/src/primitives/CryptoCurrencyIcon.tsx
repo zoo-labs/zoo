@@ -1,6 +1,6 @@
 import EthLogo from './EthLogo'
 import React, { FC } from 'react'
-import { useZooClient, useChainCurrency } from '../hooks/index'
+import { useReservoirClient, useChainCurrency } from '../hooks/index'
 import { constants } from 'ethers'
 import { styled } from '../../stitches.config'
 import { StyledComponent } from '@stitches/react/types/styled-component'
@@ -20,7 +20,7 @@ const CryptoCurrencyIcon: FC<Props> = ({
   chainId,
   css,
 }) => {
-  const client = useZooClient()
+  const client = useReservoirClient()
   const chainCurrency = useChainCurrency(chainId)
   const chain = client?.chains.find(
     (chain) => chain.id === chainCurrency.chainId

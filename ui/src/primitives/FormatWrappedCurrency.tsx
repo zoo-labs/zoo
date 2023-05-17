@@ -1,16 +1,14 @@
 import React, { FC, ComponentProps } from 'react'
-import FormatCrypto from './FormatCrypto'
 import wrappedContracts from '../constants/wrappedContracts'
 import { useNetwork } from 'wagmi'
 import FormatCryptoCurrency from './FormatCryptoCurrency'
 
-type FormatWEthProps = {
+type Props = ComponentProps<typeof FormatCryptoCurrency> & {
   logoWidth?: number
+  address?: string
 }
 
-type Props = ComponentProps<typeof FormatCrypto> & FormatWEthProps
-
-const FormatWrappedCurrency: FC<Props> = ({ logoWidth, ...props }) => {
+const FormatWrappedCurrency: FC<Props> = ({ logoWidth, address, ...props }) => {
   const { chain: activeChain, chains } = useNetwork()
   let chain = chains.find((chain) => activeChain?.id === chain.id)
 
@@ -25,7 +23,9 @@ const FormatWrappedCurrency: FC<Props> = ({ logoWidth, ...props }) => {
       ? wrappedContracts[chain.id]
       : wrappedContracts[1]
 
-  return <FormatCryptoCurrency {...props} address={contractAddress} />
+  return (
+    <FormatCryptoCurrency {...props} address={address || contractAddress} />
+  )
 }
 
 export default FormatWrappedCurrency

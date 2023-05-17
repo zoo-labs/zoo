@@ -12,8 +12,7 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FullscreenModal } from 'components/common/FullscreenModal'
-import { useCollectionActivity } from '@zoolabs/ui'
-import React from 'react';
+import { useCollectionActivity } from '@reservoir0x/reservoir-kit-ui'
 
 type ActivityTypes = Exclude<
   NonNullable<

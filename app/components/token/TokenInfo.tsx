@@ -1,4 +1,4 @@
-import { useCollections, useTokens } from '@zoolabs/ui'
+import { useCollections, useTokens } from '@reservoir0x/reservoir-kit-ui'
 import { Anchor, Button, Flex, Text, Tooltip } from 'components/primitives'
 import { ComponentPropsWithoutRef, FC, useRef, useState } from 'react'
 import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
@@ -14,7 +14,8 @@ import { useMarketplaceChain, useMounted } from 'hooks'
 import { truncateAddress } from 'utils/truncate'
 import ReactMarkdown from 'react-markdown'
 import { OpenSeaVerified } from 'components/common/OpenSeaVerified'
-import React from 'react';
+import titleCase from 'utils/titleCase'
+import { useRouter } from 'next/router'
 
 type Props = {
   token: ReturnType<typeof useTokens>['data'][0] | null
@@ -27,6 +28,9 @@ export const TokenInfo: FC<Props> = ({ token, collection }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const descriptionRef = useRef<HTMLParagraphElement | null>(null)
   const isMounted = useMounted()
+  const router = useRouter()
+
+  let chain = titleCase(router.query.chain as string)
 
   const CollectionAction = styled(Flex, {
     px: '$4',
@@ -88,11 +92,11 @@ export const TokenInfo: FC<Props> = ({ token, collection }) => {
       <Flex direction="column" css={{ gap: '$3', maxWidth: '100%' }}>
         <Flex css={{ gap: '$2', flex: 1 }} align="center">
           <img
-            src={collection?.image}
+            src={token?.token?.collection?.image || collection?.image}
             style={{ width: 36, height: 36, borderRadius: 4 }}
           />
           <Text style="h6" ellipsify>
-            {collection?.name}
+            {token?.token?.collection?.name || collection?.name}
           </Text>
           <OpenSeaVerified
             openseaVerificationStatus={collection?.openseaVerificationStatus}
@@ -201,6 +205,15 @@ export const TokenInfo: FC<Props> = ({ token, collection }) => {
           <Flex justify="between" css={{ width: '100%' }}>
             <Text
               style="subtitle1"
+              css={{ color: '$gray11', fontWeight: 'normal' }}
+            >
+              Chain
+            </Text>
+            <Text style="subtitle1">{chain}</Text>
+          </Flex>
+          <Flex justify="between" css={{ width: '100%' }}>
+            <Text
+              style="subtitle1"
               css={{
                 color: '$gray11',
                 fontWeight: 'normal',
@@ -235,7 +248,7 @@ export const TokenInfo: FC<Props> = ({ token, collection }) => {
               </Text>
               <Tooltip
                 content={
-                  <Text style="body2" as="p">
+                  <Text style="body3" as="p">
                     A fee on every order that goes to the collection creator.
                   </Text>
                 }

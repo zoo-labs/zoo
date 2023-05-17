@@ -10,7 +10,6 @@ import {
   FormatCurrency,
   FormatCryptoCurrency,
   Loader,
-  Select,
 } from '../../primitives'
 import Progress from '../Progress'
 import Popover from '../../primitives/Popover'
@@ -23,10 +22,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import TokenLineItem from '../TokenLineItem'
-import { BuyModalRenderer, BuyStep, StepData } from './BuyModalRenderer'
-import { Execute } from '@zoolabs/sdk'
+import { BuyModalRenderer, BuyStep, BuyModalStepData } from './BuyModalRenderer'
+import { Execute } from '@reservoir0x/reservoir-sdk'
 import ProgressBar from '../ProgressBar'
 import { useNetwork } from 'wagmi'
+import QuantitySelector from '../QuantitySelector'
+import { formatNumber } from '../../lib/numbers'
 
 type PurchaseData = {
   tokenId?: string
@@ -41,6 +42,7 @@ type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
   collectionId?: string
   orderId?: string
   referrerFeeBps?: number | null
+  referrerFeeFixed?: number | null
   referrer?: string | null
   normalizeRoyalties?: boolean
   onGoToToken?: () => any
@@ -48,7 +50,7 @@ type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
   onPurchaseError?: (error: Error, data: PurchaseData) => void
   onClose?: (
     data: PurchaseData,
-    stepData: StepData | null,
+    stepData: BuyModalStepData | null,
     currentStep: BuyStep
   ) => void
 }
@@ -72,6 +74,7 @@ export function BuyModal({
   orderId,
   referrer,
   referrerFeeBps,
+  referrerFeeFixed,
   normalizeRoyalties,
   onPurchaseComplete,
   onPurchaseError,
@@ -93,6 +96,7 @@ export function BuyModal({
       orderId={orderId}
       referrer={referrer}
       referrerFeeBps={referrerFeeBps}
+      referrerFeeFixed={referrerFeeFixed}
       normalizeRoyalties={normalizeRoyalties}
     >
       {({
@@ -102,7 +106,9 @@ export function BuyModal({
         listing,
         quantityAvailable,
         quantity,
+        averageUnitPrice,
         currency,
+        mixedCurrencies,
         totalPrice,
         referrerFee,
         buyStep,
@@ -154,15 +160,11 @@ export function BuyModal({
           executableSteps[executableSteps.length - 1]?.items || []
         let finalTxHash = lastStepItems[lastStepItems.length - 1]?.txHash
 
-        let price = (listing?.price?.amount?.decimal || 0) * quantity
+        let price = listing?.price?.amount?.decimal || 0
 
-        if (!price && token?.token?.lastSell?.value) {
-          price = token?.token.lastSell.value
+        if (!price && token?.token?.lastSale?.price?.amount?.decimal) {
+          price = token?.token.lastSale?.price.amount.decimal
         }
-
-        const sourceImg = listing?.source
-          ? (listing?.source['icon'] as string)
-          : undefined
 
         return (
           <Modal
@@ -197,9 +199,10 @@ export function BuyModal({
                   isSuspicious={isBanned}
                   usdConversion={usdPrice || 0}
                   isUnavailable={true}
-                  price={price}
+                  price={quantity > 1 ? averageUnitPrice : price}
                   currency={currency}
-                  sourceImg={sourceImg}
+                  priceSubtitle={quantity > 1 ? 'Average Price' : undefined}
+                  showRoyalties={true}
                 />
                 <Button
                   onClick={() => {
@@ -229,8 +232,29 @@ export function BuyModal({
                       width={16}
                       height={16}
                     />
-                    <Text style="body2" color="errorLight">
+                    <Text style="body3" color="errorLight">
                       {transactionError.message}
+                    </Text>
+                  </Flex>
+                )}
+                {mixedCurrencies && (
+                  <Flex
+                    css={{
+                      color: '$errorAccent',
+                      p: '$4',
+                      gap: '$2',
+                      background: '$wellBackground',
+                    }}
+                    align="center"
+                  >
+                    <FontAwesomeIcon
+                      icon={faCircleExclamation}
+                      width={16}
+                      height={16}
+                    />
+                    <Text style="body3" color="errorLight">
+                      Mixed currency listings are only available to checkout
+                      with {currency?.symbol || 'ETH'}.
                     </Text>
                   </Flex>
                 )}
@@ -239,32 +263,31 @@ export function BuyModal({
                   collection={collection}
                   usdConversion={usdPrice || 0}
                   isSuspicious={isBanned}
-                  price={price}
+                  price={quantity > 1 ? averageUnitPrice : price}
                   currency={currency}
-                  sourceImg={sourceImg}
+                  css={{ border: 0 }}
+                  priceSubtitle={quantity > 1 ? 'Average Price' : undefined}
+                  showRoyalties={true}
                 />
                 {quantityAvailable > 1 && (
                   <Flex
-                    css={{ pt: '$4', px: '$4' }}
-                    align="center"
+                    css={{ p: '$4', borderBottom: '1px solid $borderColor' }}
                     justify="between"
                   >
-                    <Text style="body2" color="subtle">
-                      {quantityAvailable} listings are available at this price
-                    </Text>
-                    <Select
-                      css={{ minWidth: 77, width: 'auto', flexGrow: 0 }}
-                      value={`${quantity}`}
-                      onValueChange={(value: string) => {
-                        setQuantity(Number(value))
+                    <Flex direction="column" css={{ gap: '$1' }}>
+                      <Text style="body3">Quantity</Text>
+                      <Text style="body3" color="subtle">
+                        {formatNumber(quantityAvailable)} items available
+                      </Text>
+                    </Flex>
+                    <QuantitySelector
+                      min={1}
+                      max={quantityAvailable}
+                      quantity={quantity}
+                      setQuantity={(quantity) => {
+                        setQuantity(quantity)
                       }}
-                    >
-                      {[...Array(quantityAvailable)].map((_a, i) => (
-                        <Select.Item key={i} value={`${i + 1}`}>
-                          <Select.ItemText>{i + 1}</Select.ItemText>
-                        </Select.Item>
-                      ))}
-                    </Select>
+                    />
                   </Flex>
                 )}
                 {referrerFee > 0 && (
@@ -279,6 +302,7 @@ export function BuyModal({
                         amount={referrerFee}
                         address={currency?.contract}
                         decimals={currency?.decimals}
+                        symbol={currency?.symbol}
                       />
                     </Flex>
                     <Flex justify="end">
@@ -302,6 +326,7 @@ export function BuyModal({
                     amount={totalPrice}
                     address={currency?.contract}
                     decimals={currency?.decimals}
+                    symbol={currency?.symbol}
                   />
                 </Flex>
                 <Flex justify="end">
@@ -324,7 +349,7 @@ export function BuyModal({
                   ) : (
                     <Flex direction="column" align="center">
                       <Flex align="center" css={{ mb: '$3' }}>
-                        <Text css={{ mr: '$3' }} color="error" style="body2">
+                        <Text css={{ mr: '$3' }} color="error" style="body3">
                           Insufficient Balance
                         </Text>
 
@@ -332,7 +357,8 @@ export function BuyModal({
                           amount={balance}
                           address={currency?.contract}
                           decimals={currency?.decimals}
-                          textStyle="body2"
+                          symbol={currency?.symbol}
+                          textStyle="body3"
                         />
                       </Flex>
 
@@ -357,9 +383,10 @@ export function BuyModal({
                   collection={collection}
                   usdConversion={usdPrice || 0}
                   isSuspicious={isBanned}
-                  price={price}
+                  price={quantity > 1 ? averageUnitPrice : price}
                   currency={currency}
-                  sourceImg={sourceImg}
+                  priceSubtitle={quantity > 1 ? 'Average Price' : undefined}
+                  quantity={quantity}
                 />
                 {stepData && stepData.totalSteps > 1 && (
                   <ProgressBar
@@ -517,7 +544,7 @@ export function BuyModal({
                   <Text style="subtitle1" css={{ my: 24 }}>
                     <Popover
                       content={
-                        <Text style={'body2'}>
+                        <Text style={'body3'}>
                           Trade one crypto for another on a crypto exchange.
                           Popular decentralized exchanges include{' '}
                           <Anchor

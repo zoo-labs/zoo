@@ -1,16 +1,18 @@
 /// <reference path="./types/parcel.d.ts" />
 
 //Providers
-export { ZooProvider } from './ZooProvider'
-export { ZooClientProvider } from './ZooClientProvider'
+export { ReservoirKitProvider } from './ReservoirKitProvider'
+export { ReservoirClientProvider } from './ReservoirClientProvider'
 
 // Hooks
 export {
   useCollections,
   useCollectionActivity,
   useUsersActivity,
-  useZooClient,
+  useReservoirClient,
   useTokens,
+  useTokenActivity,
+  useCoinConversion,
   useTokenOpenseaBanned,
   useListings,
   useOwnerListings,
@@ -25,7 +27,7 @@ export {
 
 // Themes
 export { lightTheme, darkTheme } from './themes'
-export type { Theme } from './themes/Theme'
+export type { ReservoirKitTheme } from './themes/ReservoirKitTheme'
 
 //Components
 export { BuyModal } from './modal/buy/BuyModal'
@@ -45,6 +47,15 @@ export { CancelStep as CancelBidStep } from './modal/cancelBid/CancelBidModalRen
 
 export { CancelListingModal } from './modal/cancelListing/CancelListingModal'
 export { CancelStep as CancelListingStep } from './modal/cancelListing/CancelListingModalRenderer'
+
+export { EditBidModal } from './modal/editBid/EditBidModal'
+export { EditBidStep } from './modal/editBid/EditBidModalRenderer'
+
+export { EditListingModal } from './modal/editListing/EditListingModal'
+export { EditListingStep } from './modal/editListing/EditListingModalRenderer'
+
+export { SweepModal } from './modal/sweep/SweepModal'
+export { SweepStep } from './modal/sweep/SweepModalRenderer'
 
 export {
   default as TokenMedia,

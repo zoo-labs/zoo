@@ -8,13 +8,13 @@ import {
   green,
 } from '@radix-ui/colors'
 import {
-  SharedThemeConfig,
-  Theme,
-  ThemeOverrides,
-} from './Theme'
+  sharedThemeConfig,
+  ReservoirKitTheme,
+  ReservoirKitOverrides,
+} from './ReservoirKitTheme'
 
-export default function (overrides?: ThemeOverrides): Theme {
-  let sharedTheme = SharedThemeConfig(overrides)
+export default function (overrides?: ReservoirKitOverrides): ReservoirKitTheme {
+  let sharedTheme = sharedThemeConfig(overrides)
 
   return {
     colors: {
@@ -47,7 +47,7 @@ export default function (overrides?: ThemeOverrides): Theme {
       neutralBg: '$gray3',
       neutralBgHover: '$gray2',
       neutralBgActive: '$gray5',
-      neutalLine: '$gray6',
+      neutralLine: '$gray6',
       neutralBorder: '$gray7',
       neutralBorderHover: '$gray8',
       neutralSolid: '$gray9',

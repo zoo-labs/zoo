@@ -2,10 +2,12 @@ import { Execute, paths } from '../types'
 import { Signer } from 'ethers'
 import { getClient } from '.'
 import { executeSteps } from '../utils/executeSteps'
-import axios, { AxiosRequestConfig } from 'axios'
+import { axios } from '../utils'
+import { AxiosRequestConfig } from 'axios'
+import { version } from '../../package.json'
 
 type ListTokenBody = NonNullable<
-  paths['/execute/list/v4']['post']['parameters']['body']['body']
+  paths['/execute/list/v5']['post']['parameters']['body']['body']
 >
 
 type Data = {
@@ -32,13 +34,13 @@ export async function listToken(
   const baseApiUrl = client.currentChain()?.baseApiUrl
 
   if (!baseApiUrl) {
-    throw new ReferenceError('ZooClient missing chain configuration')
+    throw new ReferenceError('ReservoirClient missing chain configuration')
   }
 
   try {
     const data: ListTokenBody = {
       maker,
-      source: client.source || '',
+      source: client.source || undefined,
     }
 
     listings.forEach((listing) => {
@@ -64,11 +66,11 @@ export async function listToken(
     data.params = listings
 
     const request: AxiosRequestConfig = {
-      url: `${baseApiUrl}/execute/list/v4`,
+      url: `${baseApiUrl}/execute/list/v5`,
       method: 'post',
       data,
       headers: {
-        'x-rkc-version': '0.4.0',
+        'x-rkc-version': version,
       },
     }
 
