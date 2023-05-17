@@ -2,8 +2,8 @@ import React, { FC, ComponentPropsWithoutRef, CSSProperties } from 'react'
 import { Button, Flex, Text } from '../../primitives'
 import TokenMedia from './index'
 import { defaultHeaders } from '../../lib/swr'
-import { useZooClient } from '../../hooks'
-import { paths } from '@zoolabs/sdk'
+import { useReservoirClient } from '../../hooks'
+import { paths } from '@reservoir0x/reservoir-sdk'
 
 type TokenFallbackProps = {
   style?: CSSProperties
@@ -20,7 +20,7 @@ const TokenFallback: FC<TokenFallbackProps> = ({
   chainId,
   onRefreshClicked,
 }) => {
-  const client = useZooClient()
+  const client = useReservoirClient()
   const reservoirChain = chainId
     ? client?.chains.find((chain) => chain.id === chainId)
     : client?.currentChain()
@@ -39,14 +39,15 @@ const TokenFallback: FC<TokenFallbackProps> = ({
           src={token?.collection?.image}
         />
       )}
-      <Text style="body3" css={{ textAlign: 'center' }}>
+      <Text style="body2" css={{ textAlign: 'center' }}>
         No Content Available
       </Text>
       <Button
         color="secondary"
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault()
           if (!reservoirChain) {
-            throw 'ZooClient missing chain configuration'
+            throw 'ReservoirClient missing chain configuration'
           }
           onRefreshClicked()
           const url = `${reservoirChain?.baseApiUrl}/tokens/refresh/v1`

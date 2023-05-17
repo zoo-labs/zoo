@@ -4,19 +4,18 @@ import GlobalSearch from './GlobalSearch'
 import { useRouter } from 'next/router'
 import { useHotkeys } from 'react-hotkeys-hook'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ConnectWalletButton } from 'components/ConnectWalletButton'
 import NavItem from './NavItem'
 import ThemeSwitcher from './ThemeSwitcher'
-import ChainSwitcher from './ChainSwitcher'
 import HamburgerMenu from './HamburgerMenu'
 import MobileSearch from './MobileSearch'
 import { useTheme } from 'next-themes'
 import { useMediaQuery } from 'react-responsive'
 import { useMounted } from '../../hooks'
 import { useAccount } from 'wagmi'
-import { ProfileDropdown } from './ProfileDropdown'
 import CartButton from './CartButton'
-import React from 'react';
+import { AccountSidebar } from 'components/navbar/AccountSidebar'
 
 export const NAVBAR_HEIGHT = 81
 export const NAVBAR_HEIGHT_MOBILE = 77
@@ -68,7 +67,6 @@ const Navbar = () => {
       </Box>
       <Flex align="center" css={{ gap: '$3' }}>
         <MobileSearch key={`${router.asPath}-search`} />
-        <ChainSwitcher />
         <CartButton />
         <HamburgerMenu key={`${router.asPath}-hamburger`} />
       </Flex>
@@ -115,8 +113,10 @@ const Navbar = () => {
             />
           </Box>
           <Flex align="center" css={{ gap: '$5', mr: '$5' }}>
-            <Link href="/">
-              <NavItem active={router.pathname == '/'}>Explore</NavItem>
+            <Link href="/collection-rankings">
+              <NavItem active={router.pathname == '/collection-rankings'}>
+                Collections
+              </NavItem>
             </Link>
             <Link href="/portfolio">
               <NavItem active={router.pathname == '/portfolio'}>Sell</NavItem>
@@ -131,9 +131,8 @@ const Navbar = () => {
       <Flex css={{ gap: '$3' }} justify="end" align="center">
         <ThemeSwitcher />
         <CartButton />
-        <ChainSwitcher />
         {isConnected ? (
-          <ProfileDropdown />
+          <AccountSidebar />
         ) : (
           <Box css={{ maxWidth: '185px' }}>
             <ConnectWalletButton />

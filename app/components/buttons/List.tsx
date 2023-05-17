@@ -1,4 +1,4 @@
-import { ListModal, ListStep, useTokens } from '@zoolabs/ui'
+import { ListModal, ListStep, useTokens } from '@reservoir0x/reservoir-kit-ui'
 import { Button } from 'components/primitives'
 import {
   cloneElement,
@@ -14,7 +14,6 @@ import { useAccount, useNetwork, useSigner, useSwitchNetwork } from 'wagmi'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { ToastContext } from 'context/ToastContextProvider'
 import { useMarketplaceChain } from 'hooks'
-import React from 'react';
 
 type ListingCurrencies = ComponentPropsWithoutRef<
   typeof ListModal

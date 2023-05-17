@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState, useCallback, ReactNode } from 'react'
-import { useCoinConversion, useZooClient, useListings } from '../../hooks'
+import { useCoinConversion, useReservoirClient, useListings } from '../../hooks'
 import { useSigner, useNetwork } from 'wagmi'
-import { Execute } from '@zoolabs/sdk'
+import { Execute } from '@reservoir0x/reservoir-sdk'
 
 export enum CancelStep {
   Cancel,
@@ -9,7 +9,7 @@ export enum CancelStep {
   Complete,
 }
 
-export type StepData = {
+export type CancelListingStepData = {
   totalSteps: number
   stepProgress: number
   currentStep: Execute['steps'][0]
@@ -27,7 +27,7 @@ type ChildrenProps = {
   usdPrice: ReturnType<typeof useCoinConversion>
   blockExplorerBaseUrl: string
   steps: Execute['steps'] | null
-  stepData: StepData | null
+  stepData: CancelListingStepData | null
   setCancelStep: React.Dispatch<React.SetStateAction<CancelStep>>
   cancelOrder: () => void
 }
@@ -48,7 +48,7 @@ export const CancelListingModalRenderer: FC<Props> = ({
   const { data: signer } = useSigner()
   const [cancelStep, setCancelStep] = useState<CancelStep>(CancelStep.Cancel)
   const [transactionError, setTransactionError] = useState<Error | null>()
-  const [stepData, setStepData] = useState<StepData | null>(null)
+  const [stepData, setStepData] = useState<CancelListingStepData | null>(null)
   const [steps, setSteps] = useState<Execute['steps'] | null>(null)
   const { chain: activeChain } = useNetwork()
   const blockExplorerBaseUrl =
@@ -59,6 +59,7 @@ export const CancelListingModalRenderer: FC<Props> = ({
       ids: listingId,
       normalizeRoyalties,
       includeCriteriaMetadata: true,
+      includeRawData: true,
     },
     {
       revalidateFirstPage: true,
@@ -79,7 +80,7 @@ export const CancelListingModalRenderer: FC<Props> = ({
       : 0
   const totalUsd = usdPrice * (listing?.price?.amount?.decimal || 0)
 
-  const client = useZooClient()
+  const client = useReservoirClient()
 
   const cancelOrder = useCallback(() => {
     if (!signer) {
@@ -95,7 +96,7 @@ export const CancelListingModalRenderer: FC<Props> = ({
     }
 
     if (!client) {
-      const error = new Error('ZooClient was not initialized')
+      const error = new Error('ReservoirClient was not initialized')
       setTransactionError(error)
       throw error
     }
@@ -104,7 +105,7 @@ export const CancelListingModalRenderer: FC<Props> = ({
 
     client.actions
       .cancelOrder({
-        id: listingId,
+        ids: [listingId],
         signer,
         onProgress: (steps: Execute['steps']) => {
           if (!steps) {
@@ -155,7 +156,11 @@ export const CancelListingModalRenderer: FC<Props> = ({
       })
       .catch((e: any) => {
         const error = e as Error
-        const message = 'Oops, something went wrong. Please try again.'
+        const errorStatus = (error as any)?.statusCode
+        let message = 'Oops, something went wrong. Please try again.'
+        if (errorStatus >= 400 && errorStatus < 500) {
+          message = error.message 
+        }
         //@ts-ignore: Should be fixed in an update to typescript
         const transactionError = new Error(message, {
           cause: error,

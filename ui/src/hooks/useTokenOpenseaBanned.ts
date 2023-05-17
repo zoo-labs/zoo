@@ -1,4 +1,4 @@
-import { isOpenSeaBanned } from '@zoolabs/sdk'
+import { isOpenSeaBanned } from '@reservoir0x/reservoir-sdk'
 import { useEffect, useState } from 'react'
 
 export default function (contract?: string, tokenId?: number | string) {

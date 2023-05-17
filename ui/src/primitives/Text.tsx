@@ -70,11 +70,11 @@ export default styled('span', {
       },
       body2: {
         fontWeight: 400,
-        fontSize: 12,
+        fontSize: 14,
       },
       body3: {
         fontWeight: 400,
-        fontSize: 14,
+        fontSize: 12,
       },
       tiny: {
         fontWeight: 500,
@@ -95,7 +95,15 @@ export default styled('span', {
       },
     },
   },
-
+  compoundVariants: [
+    {
+      style: 'tiny',
+      color: 'base',
+      css: {
+        color: '$textColor',
+      },
+    },
+  ],
   defaultVariants: {
     style: 'body1',
     color: 'base',

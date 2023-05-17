@@ -1,10 +1,9 @@
-import { useCollections } from '@zoolabs/ui'
+import { useCollections } from '@reservoir0x/reservoir-kit-ui'
 import { Text, Box, FormatCryptoCurrency, Grid } from 'components/primitives'
 import { useMounted } from 'hooks'
 import { FC, ReactNode } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { formatNumber } from 'utils/numbers'
-import React from 'react';
 
 type Props = {
   label: string

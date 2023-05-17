@@ -3,15 +3,16 @@ import React, {
   ElementRef,
   forwardRef,
   ReactNode,
-  // useContext,
+  useContext,
 } from 'react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { Button, Flex, Text, Loader, Box } from '../primitives'
+import { Anchor, Button, Flex, Text, Loader, Box } from '../primitives'
 import { styled } from '../../stitches.config'
 import { Dialog } from '../primitives/Dialog'
-// import { ProviderOptionsContext } from '../ZooProvider'
+import ReservoirLogoWhiteText from '../img/ReservoirLogoWhiteText'
+import { ProviderOptionsContext } from '../ReservoirKitProvider'
 
 const Title = styled(DialogPrimitive.Title, {
   margin: 0,
@@ -37,6 +38,12 @@ type Props = {
   | 'onFocusCapture'
 >
 
+export const Logo = styled(ReservoirLogoWhiteText, {
+  '& .letter': {
+    fill: '$reservoirLogoColor',
+  },
+})
+
 export const Modal = forwardRef<ElementRef<typeof Dialog>, Props>(
   (
     {
@@ -53,7 +60,7 @@ export const Modal = forwardRef<ElementRef<typeof Dialog>, Props>(
     },
     forwardedRef
   ) => {
-    // const providerOptionsContext = useContext(ProviderOptionsContext)
+    const providerOptionsContext = useContext(ProviderOptionsContext)
 
     return (
       <Dialog
@@ -103,6 +110,29 @@ export const Modal = forwardRef<ElementRef<typeof Dialog>, Props>(
           />
         )}
         <Box css={{ maxHeight: '85vh', overflowY: 'auto' }}>{children}</Box>
+        {!providerOptionsContext.disablePoweredByReservoir && (
+          <Flex
+            css={{
+              mx: 'auto',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '$footerBackground',
+              py: 10.5,
+              visibility: '$poweredByReservoirVisibility',
+              borderBottomRightRadius: '$borderRadius',
+              borderBottomLeftRadius: '$borderRadius',
+            }}
+          >
+            <Anchor href="https://reservoir.tools/" target="_blank">
+              <Text
+                style="body3"
+                css={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}
+              >
+                Powered by <Logo />
+              </Text>
+            </Anchor>
+          </Flex>
+        )}
       </Dialog>
     )
   }

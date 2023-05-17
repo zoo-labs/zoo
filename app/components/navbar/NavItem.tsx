@@ -1,6 +1,4 @@
-/* eslint-disable */
 import { Text } from 'components/primitives'
-import React from 'react';
 import { ComponentPropsWithoutRef, forwardRef, ReactNode } from 'react'
 
 type NavItemProps = {

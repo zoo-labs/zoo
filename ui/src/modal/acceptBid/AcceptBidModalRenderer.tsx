@@ -9,12 +9,12 @@ import React, {
 import {
   useTokens,
   useCoinConversion,
-  useZooClient,
+  useReservoirClient,
   useCollections,
   useBids,
 } from '../../hooks'
 import { useAccount, useSigner, useNetwork } from 'wagmi'
-import { Execute } from '@zoolabs/sdk'
+import { Execute, ReservoirClientActions } from '@reservoir0x/reservoir-sdk'
 import Fees from './Fees'
 
 export enum AcceptBidStep {
@@ -26,7 +26,7 @@ export enum AcceptBidStep {
   Unavailable,
 }
 
-export type StepData = {
+export type AcceptBidStepData = {
   totalSteps: number
   currentStep: Execute['steps'][0]
   currentStepItem?: NonNullable<Execute['steps'][0]['items']>[0]
@@ -51,6 +51,8 @@ type ChildrenProps = {
   bidAmountCurrency?: {
     contract?: string
     decimals?: number
+    name?: string
+    symbol?: string
   }
   ethBidAmount?: number
   acceptBidStep: AcceptBidStep
@@ -61,7 +63,7 @@ type ChildrenProps = {
   usdPrice: ReturnType<typeof useCoinConversion>
   address?: string
   etherscanBaseUrl: string
-  stepData: StepData | null
+  stepData: AcceptBidStepData | null
   acceptBid: () => void
   setAcceptBidStep: React.Dispatch<React.SetStateAction<AcceptBidStep>>
 }
@@ -84,7 +86,7 @@ export const AcceptBidModalRenderer: FC<Props> = ({
   children,
 }) => {
   const { data: signer } = useSigner()
-  const [stepData, setStepData] = useState<StepData | null>(null)
+  const [stepData, setStepData] = useState<AcceptBidStepData | null>(null)
   const [totalPrice, setTotalPrice] = useState(0)
   const [acceptBidStep, setAcceptBidStep] = useState<AcceptBidStep>(
     AcceptBidStep.Checkout
@@ -134,7 +136,7 @@ export const AcceptBidModalRenderer: FC<Props> = ({
   const collection = collections && collections[0] ? collections[0] : undefined
   const token = tokens && tokens.length > 0 ? tokens[0] : undefined
 
-  const client = useZooClient()
+  const client = useReservoirClient()
 
   let feeBreakdown
   let source
@@ -186,7 +188,7 @@ export const AcceptBidModalRenderer: FC<Props> = ({
     }
 
     if (!client) {
-      const error = new Error('ZooClient was not initialized')
+      const error = new Error('ReservoirClient was not initialized')
       setTransactionError(error)
       setTransactionError(null)
       throw error
@@ -195,27 +197,31 @@ export const AcceptBidModalRenderer: FC<Props> = ({
     const contract = collectionId.split(':')[0]
 
     type AcceptOfferOptions = Parameters<
-      typeof client.actions.acceptOffer
+      ReservoirClientActions['acceptOffer']
     >['0']['options']
-    let options: NonNullable<AcceptOfferOptions> = {}
+    let options: AcceptOfferOptions = {}
 
-    if (bidId) {
-      options = {
-        ...options,
-        orderId: bidId,
-      }
+    if (normalizeRoyalties !== undefined) {
+      options.normalizeRoyalties = normalizeRoyalties
     }
 
     setAcceptBidStep(AcceptBidStep.Confirming)
+
+    const item: Parameters<
+      ReservoirClientActions['acceptOffer']
+    >[0]['items'][0] = {
+      token: `${contract}:${tokenId}`,
+    }
+
+    if (bidId) {
+      item.orderId = bidId
+    }
 
     client.actions
       .acceptOffer({
         expectedPrice: totalPrice,
         signer,
-        token: {
-          tokenId: tokenId,
-          contract,
-        },
+        items: [item],
         onProgress: (steps: Execute['steps']) => {
           if (!steps) return
           const executableSteps = steps.filter(
@@ -314,17 +320,17 @@ export const AcceptBidModalRenderer: FC<Props> = ({
       if (
         bid &&
         bid.status === 'active' &&
-        bid.price?.netAmount?.native &&
+        bid.price?.netAmount?.decimal !== undefined &&
         bid.criteria?.data?.collection?.id === collectionId
       ) {
         if (bid.criteria?.kind === 'token') {
           const tokenSetPieces = bid.tokenSetId.split(':')
           const bidTokenId = tokenSetPieces[tokenSetPieces.length - 1]
           if (tokenId === bidTokenId) {
-            price = bid.price?.netAmount?.native
+            price = bid.price?.netAmount?.decimal
           }
         } else {
-          price = bid.price?.netAmount?.native
+          price = bid.price?.netAmount?.decimal
         }
       }
       if (!isFetchingBidData) {
@@ -334,8 +340,8 @@ export const AcceptBidModalRenderer: FC<Props> = ({
         )
       }
     } else if (token) {
-      let topBid = token.market?.topBid?.price?.netAmount?.native
-      if (topBid) {
+      let topBid = token.market?.topBid?.price?.netAmount?.decimal
+      if (topBid !== undefined) {
         setTotalPrice(topBid)
         setAcceptBidStep(AcceptBidStep.Checkout)
       } else {

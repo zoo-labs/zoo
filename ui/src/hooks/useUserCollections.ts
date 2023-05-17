@@ -1,11 +1,11 @@
-import { paths, setParams } from '@zoolabs/sdk'
-import { useZooClient, useInfiniteApi } from './'
+import { paths, setParams } from '@reservoir0x/reservoir-sdk'
+import { useReservoirClient, useInfiniteApi } from './'
 import { SWRInfiniteConfiguration } from 'swr/infinite'
 
 type UserCollections =
-  paths['/users/{user}/collections/v2']['get']['responses']['200']['schema']
+  paths['/users/{user}/collections/v3']['get']['responses']['200']['schema']
 type UserCollectionsQuery =
-  paths['/users/{user}/collections/v2']['get']['parameters']['query']
+  paths['/users/{user}/collections/v3']['get']['parameters']['query']
 
 export default function (
   user?: string,
@@ -13,7 +13,7 @@ export default function (
   swrOptions: SWRInfiniteConfiguration = {},
   chainId?: number
 ) {
-  const client = useZooClient()
+  const client = useReservoirClient()
   const chain =
     chainId !== undefined
       ? client?.chains.find((chain) => chain.id === chainId)
@@ -27,7 +27,7 @@ export default function (
         return null
       }
       const url = new URL(
-        `${chain?.baseApiUrl || ''}/users/${user}/collections/v2`
+        `${chain?.baseApiUrl || ''}/users/${user}/collections/v3`
       )
       let query: UserCollectionsQuery = {
         offset: pageIndex * (options?.limit || defaultLimit),
@@ -53,7 +53,8 @@ export default function (
     options?.limit || defaultLimit
   )
 
-  const collections = response.data?.flatMap((page) => page.collections) ?? []
+  const collections =
+    response.data?.flatMap((page) => page.collections || []) ?? []
 
   return {
     ...response,

@@ -1,4 +1,4 @@
-import { useFallbackState, useZooClient, useTimeSince } from '../../hooks'
+import { useFallbackState, useReservoirClient, useTimeSince } from '../../hooks'
 import React, { ReactElement, Dispatch, SetStateAction, useEffect } from 'react'
 import { Flex, Text, Box, Button, Loader, Anchor } from '../../primitives'
 import {
@@ -10,7 +10,10 @@ import TokenPrimitive from '../TokenPrimitive'
 import Progress from '../Progress'
 import { useNetwork } from 'wagmi'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCircleExclamation,
+  faGasPump,
+} from '@fortawesome/free-solid-svg-icons'
 
 type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
   openState?: [boolean, Dispatch<SetStateAction<boolean>>]
@@ -34,7 +37,7 @@ export function CancelListingModal({
     openState ? openState[0] : false,
     openState
   )
-  const client = useZooClient()
+  const client = useReservoirClient()
   const { chain: activeChain } = useNetwork()
   const reservoirChain = client?.currentChain()
 
@@ -86,6 +89,8 @@ export function CancelListingModal({
           (listing.status === 'active' || listing.status === 'inactive') &&
           !loading
 
+        const isOracleOrder = listing?.isNativeOffChainCancellable
+
         return (
           <Modal
             trigger={trigger}
@@ -131,7 +136,7 @@ export function CancelListingModal({
                       width={16}
                       height={16}
                     />
-                    <Text style="body2" color="errorLight">
+                    <Text style="body3" color="errorLight">
                       {transactionError.message}
                     </Text>
                   </Flex>
@@ -145,19 +150,24 @@ export function CancelListingModal({
                     collection={listing.criteria?.data?.collection?.name || ''}
                     currencyContract={listing.price?.currency?.contract}
                     currencyDecimals={listing?.price?.currency?.decimals}
+                    currencySymbol={listing?.price?.currency?.symbol}
                     expires={expires}
                     source={(listing?.source?.icon as string) || ''}
                   />
                 </Box>
                 <Text
-                  style="body3"
+                  style="body2"
                   color="subtle"
                   css={{ mt: '$3', mr: '$3', ml: '$3', textAlign: 'center' }}
                 >
-                  This will cancel your listing. You will be asked to confirm
-                  this cancelation from your wallet.
+                  {!isOracleOrder
+                    ? 'This action will cancel your listing. You will be prompted to confirm this cancellation from your wallet. A gas fee is required.'
+                    : 'This will cancel your listing for free. You will be prompted to confirm this cancellation from your wallet.'}
                 </Text>
                 <Button onClick={cancelOrder} css={{ m: '$4' }}>
+                  {!isOracleOrder && (
+                    <FontAwesomeIcon icon={faGasPump} width="16" height="16" />
+                  )}
                   Continue to Cancel
                 </Button>
               </Flex>
@@ -173,6 +183,7 @@ export function CancelListingModal({
                     collection={listing?.criteria?.data?.collection?.name || ''}
                     currencyContract={listing?.price?.currency?.contract}
                     currencyDecimals={listing?.price?.currency?.decimals}
+                    currencySymbol={listing?.price?.currency?.symbol}
                     expires={expires}
                     source={(listing?.source?.icon as string) || ''}
                   />
@@ -213,14 +224,14 @@ export function CancelListingModal({
                   <Text style="h5" css={{ mb: '$2' }}>
                     Listing Canceled!
                   </Text>
-                  <Text style="body3" color="subtle" css={{ mb: 24 }}>
+                  <Text style="body2" color="subtle" css={{ mb: 24 }}>
                     <>
                       Your{' '}
-                      <Text style="body3" color="accent">
+                      <Text style="body2" color="accent">
                         {listing?.source?.name as string}
                       </Text>{' '}
                       listing for{' '}
-                      <Text style="body3" color="accent">
+                      <Text style="body2" color="accent">
                         {listing?.criteria?.data?.token?.name ||
                           listing?.criteria?.data?.collection?.name}{' '}
                       </Text>

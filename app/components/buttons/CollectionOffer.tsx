@@ -1,15 +1,14 @@
-import { BidModal, BidStep, Trait } from '@zoolabs/ui'
+import { BidModal, BidStep, Trait } from '@reservoir0x/reservoir-kit-ui'
 import { Button } from 'components/primitives'
 import { useRouter } from 'next/router'
 import { ComponentProps, FC, useContext, useEffect, useState } from 'react'
 import { useAccount, useNetwork, useSigner, useSwitchNetwork } from 'wagmi'
-import { useCollections } from '@zoolabs/ui'
+import { useCollections } from '@reservoir0x/reservoir-kit-ui'
 import { SWRResponse } from 'swr'
 import { CSS } from '@stitches/react'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { ToastContext } from 'context/ToastContextProvider'
 import { useMarketplaceChain } from 'hooks'
-import React from 'react';
 
 type Props = {
   collection: NonNullable<ReturnType<typeof useCollections>['data']>[0]

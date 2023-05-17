@@ -5,7 +5,7 @@ import {
   faRefresh,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useCollections } from '@zoolabs/ui'
+import { useCollections } from '@reservoir0x/reservoir-kit-ui'
 import { styled } from '../../stitches.config'
 import { Box, Flex } from 'components/primitives'
 import { ComponentPropsWithoutRef, FC, useContext, useState } from 'react'
@@ -16,7 +16,7 @@ import { useMediaQuery } from 'react-responsive'
 import fetcher from 'utils/fetcher'
 import { ToastContext } from 'context/ToastContextProvider'
 import { spin } from 'components/common/LoadingSpinner'
-import React from 'react';
+import { DATE_REGEX, timeTill } from 'utils/till'
 
 type CollectionActionsProps = {
   collection: NonNullable<ReturnType<typeof useCollections>['data']>['0']
@@ -111,7 +111,7 @@ const CollectionActions: FC<CollectionActionsProps> = ({ collection }) => {
         }
         setIsRefreshing(true)
         fetcher(
-          `${window.location.origin}/${marketplaceChain.proxyApi}/collections/refresh/v1`,
+          `${window.location.origin}/${marketplaceChain.proxyApi}/collections/refresh/v2`,
           undefined,
           {
             method: 'POST',
@@ -121,22 +121,27 @@ const CollectionActions: FC<CollectionActionsProps> = ({ collection }) => {
             body: JSON.stringify({ collection: collection.id }),
           }
         )
-          .then(({ response }) => {
+          .then(({ data, response }) => {
             if (response.status === 200) {
               addToast?.({
                 title: 'Refresh collection',
                 description: 'Request to refresh collection was accepted.',
               })
             } else {
-              throw 'Request Failed'
+              throw data
             }
             setIsRefreshing(false)
           })
           .catch((e) => {
+            const ratelimit = DATE_REGEX.exec(e?.message)?.[0]
+
             addToast?.({
               title: 'Refresh collection failed',
-              description:
-                'We have queued this collection for an update, check back in a few.',
+              description: ratelimit
+                ? `This collection was recently refreshed. The next available refresh is ${timeTill(
+                    ratelimit
+                  )}.`
+                : `This collection was recently refreshed. Please try again later.`,
             })
             setIsRefreshing(false)
             throw e

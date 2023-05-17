@@ -8,9 +8,10 @@ import InfoTooltip from '../../primitives/InfoTooltip'
 type Props = {
   token?: NonNullable<NonNullable<ReturnType<typeof useTokens>>['data']>['0']
   collection?: NonNullable<ReturnType<typeof useCollections>['data']>[0]
+  royaltyBps?: number
 }
 
-const TokenStats: FC<Props> = ({ token, collection }) => {
+const TokenStats: FC<Props> = ({ token, collection, royaltyBps = 0 }) => {
   let attributeFloor = token?.token?.attributes
     ? Math.max(
         ...token.token.attributes.map((attr: any) =>
@@ -64,7 +65,7 @@ const TokenStats: FC<Props> = ({ token, collection }) => {
                 />
               </>
             ),
-            value: (collection?.royalties?.bps || 0) * 0.01 + '%',
+            value: `${royaltyBps * 0.01}%`,
           },
           {
             id: 1,
@@ -78,7 +79,9 @@ const TokenStats: FC<Props> = ({ token, collection }) => {
                 Last Sale
               </Text>
             ),
-            value: token?.token?.lastSell?.value || null,
+            value: token?.token?.lastSale?.price?.amount?.decimal || null,
+            address: token?.token?.lastSale?.price?.currency?.contract,
+            symbol: token?.token?.lastSale?.price?.currency?.symbol,
             asNative: true,
           },
           {
@@ -94,6 +97,8 @@ const TokenStats: FC<Props> = ({ token, collection }) => {
               </Text>
             ),
             value: collection?.floorAsk?.price?.amount?.native || 0,
+            address: collection?.floorAsk?.price?.currency?.contract,
+            symbol: collection?.floorAsk?.price?.currency?.symbol,
             asNative: true,
           },
           {
@@ -121,6 +126,9 @@ const TokenStats: FC<Props> = ({ token, collection }) => {
               attributeFloor ||
               collection?.floorAsk?.price?.amount?.native ||
               0,
+            symbol: attributeFloor
+              ? undefined
+              : collection?.floorAsk?.price?.currency?.symbol,
             asNative: true,
           },
         ].map((stat) => (

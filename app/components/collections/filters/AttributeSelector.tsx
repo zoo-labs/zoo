@@ -1,11 +1,10 @@
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useAttributes } from '@zoolabs/ui'
+import { useAttributes } from '@reservoir0x/reservoir-kit-ui'
 import { Box, Flex, Switch, Text } from 'components/primitives'
 import { useRouter } from 'next/router'
 import { FC, useState } from 'react'
 import { addParam, hasParam, removeParam } from 'utils/router'
-import React from 'react';
 
 type Props = {
   attribute: NonNullable<ReturnType<typeof useAttributes>['data']>[0]
@@ -67,6 +66,27 @@ export const AttributeSelector: FC<Props> = ({ attribute, scrollToTop }) => {
                 key={value.value}
                 css={{ mb: '$3', gap: '$3' }}
                 align="center"
+                onClick={() => {
+                  if (
+                    hasParam(
+                      router,
+                      `attributes[${attribute.key}]`,
+                      value.value
+                    )
+                  ) {
+                    removeParam(
+                      router,
+                      `attributes[${attribute.key}]`,
+                      value.value
+                    )
+                  } else {
+                    addParam(
+                      router,
+                      `attributes[${attribute.key}]`,
+                      value.value
+                    )
+                  }
+                }}
               >
                 <Text
                   style="body1"
@@ -81,7 +101,7 @@ export const AttributeSelector: FC<Props> = ({ attribute, scrollToTop }) => {
                   {value.value}
                 </Text>
 
-                <Text style="body2" css={{ color: '$gray11' }}>
+                <Text style="body3" css={{ color: '$gray11' }}>
                   {value.count}
                 </Text>
                 <Flex align="center">
