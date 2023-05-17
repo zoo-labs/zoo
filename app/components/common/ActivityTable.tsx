@@ -1,7 +1,7 @@
 import {
   useCollectionActivity,
   useUsersActivity,
-} from '@zoolabs/ui'
+} from '@reservoir0x/reservoir-kit-ui'
 import { FC, useEffect, useRef } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import {
@@ -30,8 +30,7 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 import LoadingSpinner from './LoadingSpinner'
-import React from 'react';
-
+import Img from 'components/primitives/Img'
 
 type CollectionActivityResponse = ReturnType<typeof useCollectionActivity>
 type CollectionActivity = CollectionActivityResponse['data'][0]
@@ -62,7 +61,7 @@ export const ActivityTable: FC<Props> = ({ data }) => {
     if (isVisible) {
       data.fetchNextPage()
     }
-  }, [loadMoreObserver?.isIntersecting, data.isFetchingPage])
+  }, [loadMoreObserver?.isIntersecting])
 
   return (
     <>
@@ -156,6 +155,23 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
   ) as string
 
   let activityDescription = activityTypeToDesciption(activity?.type || '')
+  let attributeDescription = ''
+
+  /*
+  Ignoring typescript warnings as API types for the 
+  criteria object are incorrectly assigned due to joi.alternatives
+  */
+  if (activityDescription === 'Offer') {
+    /* @ts-ignore */
+    if (activity.order?.criteria?.kind === 'collection') {
+      activityDescription = 'Collection Offer'
+      /* @ts-ignore */
+    } else if (activity.order?.criteria?.kind === 'attribute') {
+      activityDescription = 'Attribute Offer'
+      /* @ts-ignore */
+      attributeDescription = `${activity.order?.criteria?.data?.attribute?.key}: ${activity.order?.criteria?.data.attribute.value}`
+    }
+  }
 
   const { displayName: toDisplayName } = useENSResolver(activity?.toAddress)
   const { displayName: fromDisplayName } = useENSResolver(activity?.fromAddress)
@@ -230,11 +246,19 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
                       height={48}
                     />
                   )}
-                  <Text ellipsify css={{ ml: '$2', fontSize: '14px' }}>
-                    {activity.token?.tokenName ||
-                      activity.token?.tokenId ||
-                      activity.collection?.collectionName}
-                  </Text>
+                  <Flex align="start" direction="column" css={{ ml: '$2' }}>
+                    <Text ellipsify css={{ fontSize: '14px' }}>
+                      {activity.token?.tokenName ||
+                        activity.token?.tokenId ||
+                        activity.collection?.collectionName}
+                    </Text>
+                    <Text
+                      ellipsify
+                      css={{ fontSize: '12px', color: '$gray11' }}
+                    >
+                      {attributeDescription}
+                    </Text>
+                  </Flex>
                 </Flex>
               </Link>
               {activity.price &&
@@ -267,7 +291,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
               </Text>
               {activity.fromAddress &&
               activity.fromAddress !== constants.AddressZero ? (
-                <Link href={`/profile/${activity.fromAddress}`}>
+                <Link href={`/portfolio/${activity.fromAddress}`}>
                   <Text
                     style="subtitle3"
                     css={{
@@ -291,7 +315,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
               </Text>
               {activity.toAddress &&
               activity.toAddress !== constants.AddressZero ? (
-                <Link href={`/profile/${activity.toAddress}`}>
+                <Link href={`/portfolio/${activity.toAddress}`}>
                   <Text
                     style="subtitle3"
                     css={{
@@ -319,12 +343,18 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
       key={activity.txHash}
       css={{ gridTemplateColumns: '.75fr 1.25fr .9fr 1fr 1fr 1fr 1.1fr' }}
     >
-      <TableCell css={{ color: '$gray11' }}>
-        <Flex align="center">
+      <TableCell css={{ color: '$gray11', minWidth: 0 }}>
+        <Flex align="center" title={activityDescription}>
           {activity.type && logos[activity.type]}
           <Text
             style="subtitle1"
-            css={{ ml: '$2', color: '$gray11', fontSize: '14px' }}
+            ellipsify
+            css={{
+              ml: '$2',
+              color: '$gray11',
+              fontSize: '14px',
+              cursor: 'default',
+            }}
           >
             {activityDescription}
           </Text>
@@ -335,20 +365,30 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
         <Link href={href} passHref>
           <Flex align="center">
             {imageSrc && (
-              <Image
+              <Img
                 style={{ borderRadius: '4px', objectFit: 'cover' }}
                 loader={({ src }) => src}
                 src={imageSrc}
-                alt={`${activity.token?.tokenName} Token Image`}
+                alt="Activity Token Image"
                 width={48}
                 height={48}
               />
             )}
-            <Text ellipsify css={{ ml: '$2', fontSize: '14px' }}>
-              {activity.token?.tokenName ||
-                activity.token?.tokenId ||
-                activity.collection?.collectionName}
-            </Text>
+            <Flex
+              align="start"
+              direction="column"
+              css={{ ml: '$2' }}
+              style={{ maxWidth: '100%', minWidth: 0, overflow: 'hidden' }}
+            >
+              <Text ellipsify css={{ fontSize: '14px' }}>
+                {activity.token?.tokenName ||
+                  activity.token?.tokenId ||
+                  activity.collection?.collectionName}
+              </Text>
+              <Text ellipsify css={{ fontSize: '12px', color: '$gray11' }}>
+                {attributeDescription}
+              </Text>
+            </Flex>
           </Flex>
         </Link>
       </TableCell>
@@ -381,14 +421,23 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
           <span>-</span>
         )}
       </TableCell>
-      <TableCell>
+      <TableCell css={{ minWidth: 0 }}>
         {activity.fromAddress &&
         activity.fromAddress !== constants.AddressZero ? (
           <Flex direction="column" align="start">
             <Text style="subtitle3" color="subtle">
               From
             </Text>
-            <Link href={`/profile/${activity.fromAddress}`}>
+            <Link
+              href={`/portfolio/${activity.fromAddress}`}
+              style={{
+                maxWidth: '100%',
+                minWidth: 0,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
               <Text
                 style="subtitle3"
                 css={{
@@ -397,6 +446,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
                     color: '$primary10',
                   },
                 }}
+                ellipsify
               >
                 {fromDisplayName}
               </Text>
@@ -406,13 +456,22 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
           <span>-</span>
         )}
       </TableCell>
-      <TableCell>
+      <TableCell css={{ minWidth: 0 }}>
         {activity.toAddress && activity.toAddress !== constants.AddressZero ? (
           <Flex direction="column" align="start">
             <Text style="subtitle3" color="subtle">
               To
             </Text>
-            <Link href={`/profile/${activity.toAddress}`}>
+            <Link
+              href={`/portfolio/${activity.toAddress}`}
+              style={{
+                maxWidth: '100%',
+                minWidth: 0,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
               <Text
                 style="subtitle3"
                 css={{
@@ -421,6 +480,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
                     color: '$primary10',
                   },
                 }}
+                ellipsify
               >
                 {toDisplayName}
               </Text>
@@ -430,7 +490,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
           <span>-</span>
         )}
       </TableCell>
-      <TableCell>
+      <TableCell css={{ minWidth: 0 }}>
         <Flex align="center" justify="end" css={{ gap: '$3' }}>
           {!!activity.order?.source?.icon && (
             <img
@@ -440,7 +500,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
               alt={`${activity.order?.source?.name} Source`}
             />
           )}
-          <Text style="subtitle3" color="subtle">
+          <Text style="subtitle3" color="subtle" ellipsify>
             {useTimeSince(activity?.timestamp)}
           </Text>
 

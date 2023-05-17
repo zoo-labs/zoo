@@ -1,5 +1,5 @@
 import { useFallbackState } from '../../hooks'
-import { keyframes } from '../../../stitches.config'
+import { keyframes, styled } from '../../../stitches.config'
 import {
   Box,
   Flex,
@@ -17,7 +17,7 @@ import React, {
   ReactElement,
   ReactNode,
   SetStateAction,
-  // useContext,
+  useContext,
   useEffect,
   useMemo,
   useState,
@@ -25,11 +25,11 @@ import React, {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faClose,
-  faCube,
   faRefresh,
   faShoppingCart,
 } from '@fortawesome/free-solid-svg-icons'
-// import { ProviderOptionsContext } from '../../ZooProvider'
+import { ProviderOptionsContext } from '../../ReservoirKitProvider'
+import ReservoirLogoWhiteText from '../../img/ReservoirLogoWhiteText'
 import CartItem from './CartItem'
 import CartToast from './CartToast'
 import CartPopoverRenderer from './CartPopoverRenderer'
@@ -37,6 +37,8 @@ import {
   CheckoutStatus,
   CheckoutTransactionError,
 } from '../../context/CartProvider'
+import { useAccount } from 'wagmi'
+import { CartCheckoutModal } from './CartCheckoutModal'
 
 const scaleUp = keyframes({
   '0%': { opacity: 0, transform: 'scale(0.9) translateY(-10px)' },
@@ -48,11 +50,18 @@ const scaleDown = keyframes({
   '100%': { opacity: 0, transform: 'scale(0.9) translateY(-10px)' },
 })
 
+const Logo = styled(ReservoirLogoWhiteText, {
+  '& .letter': {
+    fill: '$reservoirLogoColor',
+  },
+})
+
 type Props = {
   trigger: ReactNode
   side?: ComponentPropsWithRef<typeof Popover>['side']
   openState?: [boolean, Dispatch<SetStateAction<boolean>>]
   tokenUrl?: string
+  onConnectWallet: () => void
 }
 
 const CONTENT_OFFSET = 8
@@ -62,6 +71,7 @@ export function CartPopover({
   side,
   openState,
   tokenUrl,
+  onConnectWallet,
 }: Props): ReactElement {
   const [popoverTrigger, setPopoverTrigger] =
     useState<HTMLButtonElement | null>(null)
@@ -69,10 +79,11 @@ export function CartPopover({
     openState ? openState[0] : false,
     openState
   )
-  // const providerOptionsContext = useContext(ProviderOptionsContext)
+  const providerOptionsContext = useContext(ProviderOptionsContext)
   const [displayPendingTransaction, setDisplayPendingTransaction] =
     useState(false)
   const [purchaseComplete, setPurchaseComplete] = useState(false)
+  const { isConnected } = useAccount()
 
   useEffect(() => {
     if (!open) {
@@ -103,6 +114,7 @@ export function CartPopover({
         hasEnoughCurrency,
         balance,
         currency,
+        cartCurrencyConverted,
         transaction,
         blockExplorerBaseUrl,
         cartChain,
@@ -213,6 +225,12 @@ export function CartPopover({
                   <FontAwesomeIcon icon={faClose} width="16" height="16" />
                 </Button>
               </Flex>
+              {cartCurrencyConverted && (
+                <CartToast
+                  kind="warning"
+                  message={`Mixed currency items are only available to be checked out with ${currency?.symbol}`}
+                />
+              )}
               {flaggedItems.length > 0 && (
                 <CartToast
                   kind="warning"
@@ -265,11 +283,17 @@ export function CartPopover({
                   message={`${priceChangeItems.length} ${priceChangeItemsSubject} updated`}
                 />
               )}
-              {transaction?.error &&
-                transaction.errorType !==
-                  CheckoutTransactionError.UserDenied && (
-                  <CartToast kind="error" message={transaction.error.message} />
-                )}
+              {transaction?.error && (
+                <CartToast
+                  kind="error"
+                  message={
+                    transaction.errorType ===
+                    CheckoutTransactionError.UserDenied
+                      ? 'User denied transaction signature.'
+                      : transaction.error.message
+                  }
+                />
+              )}
               {purchaseComplete && (
                 <CartToast
                   message={`Transaction Complete`}
@@ -318,30 +342,9 @@ export function CartPopover({
                       height="30"
                       style={{ height: 30 }}
                     />
-                    <Text style="body3" color="subtle">
+                    <Text style="body2" color="subtle">
                       No items in your cart
                     </Text>
-                  </Flex>
-                )}
-              {displayPendingTransaction &&
-                transaction?.status === CheckoutStatus.Finalizing && (
-                  <Flex
-                    direction="column"
-                    align="center"
-                    justify="center"
-                    css={{ color: '$neutralBorderHover', flex: 1, gap: '$5' }}
-                  >
-                    <Text style="h6">Finalizing on blockchain</Text>
-                    <FontAwesomeIcon icon={faCube} width="24" />
-                    <Anchor
-                      href={`${blockExplorerBaseUrl}/tx/${transaction?.txHash}`}
-                      color="primary"
-                      weight="medium"
-                      target="_blank"
-                      css={{ fontSize: 12 }}
-                    >
-                      View on Etherscan
-                    </Anchor>
                   </Flex>
                 )}
               <Flex direction="column" css={{ mt: 'auto', pb: 10 }}>
@@ -358,6 +361,7 @@ export function CartPopover({
                         amount={referrerFee}
                         address={currency?.contract}
                         decimals={currency?.decimals}
+                        symbol={currency?.symbol}
                         logoWidth={12}
                         chainId={cartChain?.id}
                       />
@@ -385,6 +389,7 @@ export function CartPopover({
                         amount={totalPrice}
                         address={currency?.contract}
                         decimals={currency?.decimals}
+                        symbol={currency?.symbol}
                         logoWidth={18}
                         chainId={cartChain?.id}
                       />
@@ -399,31 +404,38 @@ export function CartPopover({
                     </Flex>
                   </Flex>
                 )}
+                <CartCheckoutModal
+                  open={
+                    (transaction?.status == CheckoutStatus.Approving ||
+                      transaction?.status == CheckoutStatus.Finalizing ||
+                      transaction?.status == CheckoutStatus.Complete) &&
+                    !transaction?.error
+                  }
+                  items={items}
+                  currency={currency}
+                  totalPrice={totalPrice}
+                  usdPrice={usdPrice}
+                  transaction={transaction}
+                  cartChain={cartChain}
+                  blockExplorerBaseUrl={blockExplorerBaseUrl}
+                  setCartPopoverOpen={setOpen}
+                />
 
-                {displayPendingTransaction &&
-                  transaction?.status === CheckoutStatus.Approving && (
-                    <Text
-                      style="body2"
-                      color="subtle"
-                      css={{ mb: '$2', textAlign: 'center' }}
-                    >
-                      Please confirm purchase in your wallet{' '}
-                    </Text>
-                  )}
-                {!hasEnoughCurrency && (
+                {!hasEnoughCurrency && isConnected && (
                   <Flex
                     align="center"
                     justify="center"
                     css={{ mb: '$2', gap: '$2' }}
                   >
-                    <Text style="body2" color="error">
+                    <Text style="body3" color="error">
                       Insufficient balance
                     </Text>
                     <FormatCryptoCurrency
-                      textStyle="body2"
+                      textStyle="body3"
                       amount={balance}
                       address={currency?.contract}
                       decimals={currency?.decimals}
+                      symbol={currency?.symbol}
                       logoWidth={10}
                     />
                   </Flex>
@@ -436,19 +448,25 @@ export function CartPopover({
                   (transaction?.status === CheckoutStatus.Idle ||
                     !displayPendingTransaction) && (
                     <Button
-                      disabled={!hasEnoughCurrency}
+                      disabled={!hasEnoughCurrency && isConnected}
                       onClick={async () => {
-                        checkout()
-                          .then(() => {
-                            setDisplayPendingTransaction(true)
-                          })
-                          .catch((e) => {
-                            console.error(e)
-                            setDisplayPendingTransaction(false)
-                          })
+                        if (!isConnected) {
+                          onConnectWallet?.()
+                        } else {
+                          checkout()
+                            .then(() => {
+                              setDisplayPendingTransaction(true)
+                            })
+                            .catch((e) => {
+                              console.error(e)
+                              setDisplayPendingTransaction(false)
+                            })
+                        }
                       }}
                     >
-                      {hasEnoughCurrency ? 'Purchase' : 'Add Funds to Purchase'}
+                      {hasEnoughCurrency || !isConnected
+                        ? 'Purchase'
+                        : 'Add Funds to Purchase'}
                     </Button>
                   )}
                 {!isCartEmpty && !hasValidItems && (
@@ -462,20 +480,31 @@ export function CartPopover({
                     Refresh Cart
                   </Button>
                 )}
-                {displayPendingTransaction &&
-                  transaction?.status === CheckoutStatus.Approving && (
-                    <Button disabled={true}>
-                      <Loader />
-                      Waiting for Approval...
-                    </Button>
-                  )}
-                {displayPendingTransaction &&
-                  transaction?.status === CheckoutStatus.Finalizing && (
-                    <Button disabled={true}>
-                      <Loader />
-                      Waiting to be Validated...
-                    </Button>
-                  )}
+
+                {!providerOptionsContext.disablePoweredByReservoir && (
+                  <Flex
+                    css={{
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      visibility: '$poweredByReservoirVisibility',
+                      mt: 26,
+                    }}
+                  >
+                    <Anchor href="https://reservoir.tools/" target="_blank">
+                      <Text
+                        style="body3"
+                        color="subtle"
+                        css={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: 4,
+                        }}
+                      >
+                        Powered by <Logo />
+                      </Text>
+                    </Anchor>
+                  </Flex>
+                )}
               </Flex>
             </Popover.Content>
             {open && (

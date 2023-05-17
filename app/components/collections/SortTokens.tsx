@@ -1,5 +1,4 @@
 import { Box, Button } from 'components/primitives'
-import React from 'react';
 import {
   DropdownMenuItem,
   DropdownMenuContent,
@@ -11,6 +10,7 @@ import { faChevronDown, faSort } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMounted } from 'hooks'
 import { useMediaQuery } from 'react-responsive'
+import { CSS } from '@stitches/react'
 
 type Options =
   | 'Price low to high'
@@ -25,7 +25,11 @@ const options: { [x: string]: { sortBy: string; sortDirection: string } } = {
   'Common to rare': { sortBy: 'rarity', sortDirection: 'desc' },
 }
 
-export const SortTokens: FC = () => {
+type Props = {
+  css?: CSS
+}
+
+export const SortTokens: FC<Props> = ({ css }) => {
   const router = useRouter()
   const [sortSelection, setSortSelection] =
     useState<Options>('Price low to high')
@@ -58,13 +62,7 @@ export const SortTokens: FC = () => {
         <Button
           color="gray3"
           css={{
-            px: '14px',
-            justifyContent: 'center',
-            '@md': {
-              width: '220px',
-              minWidth: 'max-content',
-              px: '$5',
-            },
+            ...css,
           }}
         >
           {isSmallDevice ? (

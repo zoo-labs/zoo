@@ -1,4 +1,4 @@
-import { useCoinConversion, useCart, useZooClient } from '../../hooks'
+import { useCoinConversion, useCart, useReservoirClient } from '../../hooks'
 import React, { FC, ReactNode, useEffect, useMemo, useState } from 'react'
 import { useAccount, useBalance, useNetwork } from 'wagmi'
 import { BigNumber, constants, utils } from 'ethers'
@@ -13,6 +13,7 @@ import {
 type ChildrenProps = {
   loading: boolean
   currency?: NonNullable<Cart['items'][0]['price']>['currency']
+  cartCurrencyConverted?: Boolean
   totalPrice: number
   referrerFee?: number
   usdPrice: ReturnType<typeof useCoinConversion>
@@ -38,7 +39,7 @@ type Props = {
 }
 
 export const CartPopoverRenderer: FC<Props> = ({ open, children }) => {
-  const client = useZooClient()
+  const client = useReservoirClient()
   const [hasEnoughCurrency, setHasEnoughCurrency] = useState(true)
   const { data, clear, clearTransaction, validate, remove, add, checkout } =
     useCart((cart) => cart)
@@ -60,6 +61,10 @@ export const CartPopoverRenderer: FC<Props> = ({ open, children }) => {
   const chain = chains.find((chain) => chain.id === transaction?.chain.id)
   const blockExplorerBaseUrl =
     chain?.blockExplorers?.default?.url || 'https://etherscan.io'
+  const cartCurrencyConverted = items.some(
+    (item) =>
+      item.price && item.price?.currency?.contract !== currency?.contract
+  )
 
   useEffect(() => {
     if (open) {
@@ -137,6 +142,7 @@ export const CartPopoverRenderer: FC<Props> = ({ open, children }) => {
         unavailableItems,
         priceChangeItems,
         currency,
+        cartCurrencyConverted,
         totalPrice,
         referrerFee,
         usdPrice,

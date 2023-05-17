@@ -22,10 +22,10 @@ import TokenLineItem from '../TokenLineItem'
 import {
   AcceptBidStep,
   AcceptBidModalRenderer,
-  StepData,
+  AcceptBidStepData,
 } from './AcceptBidModalRenderer'
 import Fees from './Fees'
-import { useFallbackState, useZooClient, useTimeSince } from '../../hooks'
+import { useFallbackState, useReservoirClient, useTimeSince } from '../../hooks'
 import { useNetwork } from 'wagmi'
 
 type BidData = {
@@ -44,11 +44,11 @@ type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
   onBidAccepted?: (data: BidData) => void
   onClose?: (
     data: BidData,
-    stepData: StepData | null,
+    stepData: AcceptBidStepData | null,
     currentStep: AcceptBidStep
   ) => void
   onBidAcceptError?: (error: Error, data: BidData) => void
-  onCurrentStepUpdate?: (data: StepData) => void
+  onCurrentStepUpdate?: (data: AcceptBidStepData) => void
 }
 
 function titleForStep(step: AcceptBidStep) {
@@ -76,7 +76,7 @@ export function AcceptBidModal({
     openState ? openState[0] : false,
     openState
   )
-  const client = useZooClient()
+  const client = useReservoirClient()
   const { chain: activeChain } = useNetwork()
   const reservoirChain = client?.currentChain()
 
@@ -193,7 +193,7 @@ export function AcceptBidModal({
                   warning={warning}
                   currency={bidAmountCurrency}
                   expires={expires}
-                  isOffer={true}
+                  priceSubtitle="Offer"
                   sourceImg={source?.icon ? (source.icon as string) : undefined}
                 />
                 <Button onClick={() => setOpen(false)} css={{ m: '$4' }}>
@@ -219,7 +219,7 @@ export function AcceptBidModal({
                       width={16}
                       height={16}
                     />
-                    <Text style="body2" color="errorLight">
+                    <Text style="body3" color="errorLight">
                       {transactionError.message}
                     </Text>
                   </Flex>
@@ -232,7 +232,7 @@ export function AcceptBidModal({
                   warning={warning}
                   currency={bidAmountCurrency}
                   expires={expires}
-                  isOffer={true}
+                  priceSubtitle="Offer"
                   sourceImg={source?.icon ? (source.icon as string) : undefined}
                 />
                 <Fees fees={fees} marketplace={marketplace.name} />
@@ -248,6 +248,7 @@ export function AcceptBidModal({
                     amount={totalPrice}
                     address={bidAmountCurrency?.contract}
                     logoWidth={16}
+                    symbol={bidAmountCurrency?.symbol}
                   />
                 </Flex>
                 <Flex justify="end">
@@ -287,7 +288,7 @@ export function AcceptBidModal({
                     warning={warning}
                     currency={bidAmountCurrency}
                     expires={expires}
-                    isOffer={true}
+                    priceSubtitle="Offer"
                     sourceImg={
                       source?.icon ? (source.icon as string) : undefined
                     }

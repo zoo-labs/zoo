@@ -1,9 +1,8 @@
 import { Flex, FormatCryptoCurrency, Text } from 'components/primitives'
-import { useTokens } from '@zoolabs/ui'
+import { useTokens } from '@reservoir0x/reservoir-kit-ui'
 import { formatNumber } from 'utils/numbers'
 import Link from 'next/link'
 import { useMarketplaceChain } from '../../hooks'
-import React, { FC } from 'react';
 
 type Token = NonNullable<
   NonNullable<ReturnType<typeof useTokens>['data']>[0]
@@ -15,7 +14,7 @@ type Props = {
   collectionId?: string
 }
 
-export const SomeFunction: FC<Props> = ({ attribute, collectionTokenCount, collectionId }: Props) => {
+export default ({ attribute, collectionTokenCount, collectionId }: Props) => {
   const { routePrefix } = useMarketplaceChain()
   const attributeTokenCount = attribute?.tokenCount || 0
   const totalTokens = collectionTokenCount ? Number(collectionTokenCount) : 0
@@ -54,10 +53,10 @@ export const SomeFunction: FC<Props> = ({ attribute, collectionTokenCount, colle
           />
         </Flex>
         <Flex justify="between">
-          <Text style="body2" css={{ color: '$gray11' }}>
+          <Text style="body3" css={{ color: '$gray11' }}>
             {formatNumber(attribute.tokenCount)} ({attributeRarity}%) have this
           </Text>
-          <Text style="body2" css={{ color: '$gray11' }}>
+          <Text style="body3" css={{ color: '$gray11' }}>
             floor
           </Text>
         </Flex>
@@ -65,5 +64,3 @@ export const SomeFunction: FC<Props> = ({ attribute, collectionTokenCount, colle
     </Link>
   )
 }
-
-export default SomeFunction;

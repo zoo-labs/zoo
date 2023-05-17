@@ -1,6 +1,6 @@
-import { paths, setParams } from '@zoolabs/sdk'
+import { paths, setParams } from '@reservoir0x/reservoir-sdk'
 import { SWRInfiniteConfiguration } from 'swr/infinite'
-import { useInfiniteApi, useZooClient } from './'
+import { useInfiniteApi, useReservoirClient } from './'
 
 type Bids = paths['/orders/bids/v5']['get']['responses']['200']['schema']
 type BidsQuery = paths['/orders/bids/v5']['get']['parameters']['query']
@@ -11,7 +11,7 @@ export default function (
   enabled: boolean = true,
   chainId?: number
 ) {
-  const client = useZooClient()
+  const client = useReservoirClient()
 
   const response = useInfiniteApi<Bids>(
     (pageIndex, previousPageData) => {
@@ -50,7 +50,7 @@ export default function (
     }
   )
 
-  const bids = response.data?.flatMap((page) => page.orders) ?? []
+  const bids = response.data?.flatMap((page) => page.orders || []) ?? []
 
   return {
     ...response,

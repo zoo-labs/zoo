@@ -1,19 +1,27 @@
-import React, { FC, useState, ReactNode, useCallback, useEffect } from 'react'
+import React, {
+  FC,
+  useState,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react'
 import {
   useTokens,
   useCoinConversion,
-  useZooClient,
+  useReservoirClient,
   useMarketplaces,
   useListingPreapprovalCheck,
   useCollections,
   useTokenOpensea,
   useUserTokens,
   useChainCurrency,
+  useOnChainRoyalties,
 } from '../../hooks'
 import { useAccount, useSigner } from 'wagmi'
 
-import { Execute, ZooClientActions } from '@zoolabs/sdk'
-import { parseUnits } from 'ethers/lib/utils.js'
+import { Execute, ReservoirClientActions } from '@reservoir0x/reservoir-sdk'
+import { formatUnits, parseUnits } from 'ethers/lib/utils.js'
 import dayjs from 'dayjs'
 import { Marketplace } from '../../hooks/useMarketplaces'
 import { ExpirationOption } from '../../types/ExpirationOption'
@@ -29,7 +37,7 @@ export enum ListStep {
 }
 
 export type Listings = Parameters<
-  ZooClientActions['listToken']
+  ReservoirClientActions['listToken']
 >['0']['listings']
 
 export type ListingData = {
@@ -37,11 +45,11 @@ export type ListingData = {
   marketplace: Marketplace
 }
 
-export type StepData = {
+export type ListModalStepData = {
   totalSteps: number
   stepProgress: number
   currentStep: Execute['steps'][0]
-  listingData: ListingData
+  listingData: ListingData[]
 }
 
 type ChildrenProps = {
@@ -55,13 +63,15 @@ type ChildrenProps = {
   marketplaces: Marketplace[]
   unapprovedMarketplaces: Marketplace[]
   isFetchingUnapprovedMarketplaces: boolean
+  isFetchingOnChainRoyalties: boolean
   localMarketplace: Marketplace | null
   listingData: ListingData[]
   transactionError?: Error | null
-  stepData: StepData | null
+  stepData: ListModalStepData | null
   currencies: Currency[]
   currency: Currency
   quantity: number
+  royaltyBps?: number
   setListStep: React.Dispatch<React.SetStateAction<ListStep>>
   toggleMarketplace: (marketplace: Marketplace) => void
   setExpirationOption: React.Dispatch<React.SetStateAction<ExpirationOption>>
@@ -77,6 +87,8 @@ type Props = {
   collectionId?: string
   currencies?: Currency[]
   normalizeRoyalties?: boolean
+  enableOnChainRoyalties: boolean
+  oracleEnabled: boolean
   children: (props: ChildrenProps) => ReactNode
 }
 
@@ -111,18 +123,19 @@ export const ListModalRenderer: FC<Props> = ({
   collectionId,
   currencies,
   normalizeRoyalties,
+  enableOnChainRoyalties = false,
+  oracleEnabled = false,
   children,
 }) => {
   const { data: signer } = useSigner()
   const account = useAccount()
-  const client = useZooClient()
+  const client = useReservoirClient()
   const [listStep, setListStep] = useState<ListStep>(ListStep.SelectMarkets)
   const [listingData, setListingData] = useState<ListingData[]>([])
-  const [allMarketplaces] = useMarketplaces(true)
-  const [marketplaces, setMarketplaces] = useMarketplaces(true)
+  const [allMarketplaces] = useMarketplaces(collectionId, true)
   const [loadedInitalPrice, setLoadedInitalPrice] = useState(false)
   const [transactionError, setTransactionError] = useState<Error | null>()
-  const [stepData, setStepData] = useState<StepData | null>(null)
+  const [stepData, setStepData] = useState<ListModalStepData | null>(null)
   const [localMarketplace, setLocalMarketplace] = useState<Marketplace | null>(
     null
   )
@@ -136,6 +149,48 @@ export const ListModalRenderer: FC<Props> = ({
   )
   const [quantity, setQuantity] = useState(1)
   const contract = collectionId ? collectionId?.split(':')[0] : undefined
+  const { data: collections } = useCollections(
+    open && {
+      id: collectionId,
+      normalizeRoyalties,
+    }
+  )
+  const collection = collections && collections[0] ? collections[0] : undefined
+
+  const [expirationOption, setExpirationOption] = useState<ExpirationOption>(
+    expirationOptions[5]
+  )
+
+  const { data: onChainRoyalties, isFetching: isFetchingOnChainRoyalties } =
+    useOnChainRoyalties({
+      contract,
+      tokenId,
+      chainId: chainCurrency.chainId,
+      enabled: enableOnChainRoyalties && open,
+    })
+
+  let royaltyBps = collection?.royalties?.bps
+
+  const onChainRoyaltyBps = useMemo(() => {
+    const totalRoyalty = onChainRoyalties?.[1].reduce((total, royalty) => {
+      total += parseFloat(formatUnits(royalty, currency.decimals))
+      return total
+    }, 0)
+    if (totalRoyalty) {
+      return (totalRoyalty / 1) * 10000
+    }
+    return 0
+  }, [onChainRoyalties, chainCurrency])
+
+  if (enableOnChainRoyalties && onChainRoyaltyBps) {
+    royaltyBps = onChainRoyaltyBps
+  }
+
+  const [marketplaces, setMarketplaces] = useMarketplaces(
+    collectionId,
+    true,
+    royaltyBps
+  )
   const {
     data: unapprovedMarketplaces,
     isFetching: isFetchingUnapprovedMarketplaces,
@@ -145,24 +200,15 @@ export const ListModalRenderer: FC<Props> = ({
     open ? contract : undefined
   )
 
-  const [expirationOption, setExpirationOption] = useState<ExpirationOption>(
-    expirationOptions[5]
-  )
-
   const { data: tokens } = useTokens(
     open && {
       tokens: [`${contract}:${tokenId}`],
       includeAttributes: true,
+      includeLastSale: true,
       normalizeRoyalties,
     },
     {
       revalidateFirstPage: true,
-    }
-  )
-  const { data: collections } = useCollections(
-    open && {
-      id: collectionId,
-      normalizeRoyalties,
     }
   )
 
@@ -172,8 +218,6 @@ export const ListModalRenderer: FC<Props> = ({
   )
 
   const paymentTokens = openSeaToken?.collection?.payment_tokens
-
-  const collection = collections && collections[0] ? collections[0] : undefined
 
   const token = tokens && tokens.length > 0 ? tokens[0] : undefined
   const is1155 = token?.token?.kind === 'erc1155'
@@ -190,7 +234,11 @@ export const ListModalRenderer: FC<Props> = ({
       ? Number(userTokens[0].ownership?.tokenCount || 1)
       : 1
 
-  const usdPrice = useCoinConversion(open ? 'USD' : undefined, currency.symbol)
+  const usdPrice = useCoinConversion(
+    open ? 'USD' : undefined,
+    currency.symbol,
+    currency.coinGeckoId
+  )
 
   const toggleMarketplace = (marketplace: Marketplace) => {
     const updatedMarketplaces = marketplaces.map((market) => {
@@ -326,7 +374,7 @@ export const ListModalRenderer: FC<Props> = ({
     }
 
     if (!client) {
-      const error = new Error('ZooClient was not initialized')
+      const error = new Error('ReservoirClient was not initialized')
       setTransactionError(error)
       throw error
     }
@@ -343,8 +391,6 @@ export const ListModalRenderer: FC<Props> = ({
         .toString()
     }
 
-    const contract = collectionId ? collectionId?.split(':')[0] : undefined
-
     marketplaces.forEach((market) => {
       if (market.isSelected) {
         const listing: Listings[0] = {
@@ -358,6 +404,33 @@ export const ListModalRenderer: FC<Props> = ({
           orderKind: market.orderKind,
         }
 
+        if (
+          enableOnChainRoyalties &&
+          onChainRoyalties &&
+          listing.orderKind?.includes('seaport')
+        ) {
+          const royalties = onChainRoyalties.recipients.map((recipient, i) => {
+            const bps =
+              (parseFloat(
+                formatUnits(onChainRoyalties.amounts[i], currency.decimals)
+              ) /
+                1) *
+              10000
+            return `${recipient}:${bps}`
+          })
+          listing.automatedRoyalties = false
+          listing.fees = [...royalties]
+          if (
+            client.marketplaceFee &&
+            client.marketplaceFeeRecipient &&
+            listing.orderbook === 'reservoir'
+          ) {
+            listing.fees.push(
+              `${client.marketplaceFeeRecipient}:${client.marketplaceFee}`
+            )
+          }
+        }
+
         if (quantity > 1) {
           listing.quantity = quantity
         }
@@ -368,6 +441,14 @@ export const ListModalRenderer: FC<Props> = ({
 
         if (currency && currency.contract != constants.AddressZero) {
           listing.currency = currency.contract
+        }
+
+        if (oracleEnabled) {
+          listing.options = {
+            [`${listing.orderKind}`]: {
+              useOffChainCancellation: true,
+            },
+          }
         }
 
         listingData.push({
@@ -416,24 +497,32 @@ export const ListModalRenderer: FC<Props> = ({
               ? currentStep.items[currentStep.items.length]
               : null
             setListStep(ListStep.Complete)
+            const listings =
+              currentStepItem && currentStepItem.orderIndexes !== undefined
+                ? listingData.filter((_, i) =>
+                    currentStepItem.orderIndexes?.includes(i)
+                  )
+                : [listingData[listingData.length - 1]]
             setStepData({
               totalSteps: stepCount,
               stepProgress: stepCount,
               currentStep,
-              listingData:
-                currentStepItem && currentStepItem.orderIndex !== undefined
-                  ? listingData[currentStepItem.orderIndex]
-                  : listingData[listingData.length - 1],
+              listingData: listings,
             })
           } else {
             const currentStep = executableSteps[incompleteStepIndex]
-            const currentStepItem = currentStep.items
-              ? currentStep.items[incompleteStepItemIndex]
-              : null
-            const listings =
-              currentStepItem?.orderIndex !== undefined
-                ? listingData[currentStepItem.orderIndex]
-                : listingData[listingData.length - 1]
+            const listingIndexes: Set<number> = new Set()
+            currentStep.items?.forEach(({ orderIndexes, status }) => {
+              if (status === 'incomplete') {
+                orderIndexes?.forEach((orderIndex) => {
+                  listingIndexes.add(orderIndex)
+                })
+              }
+            })
+            const listings = Array.from(listingIndexes).map(
+              (index) => listingData[index]
+            )
+
             setStepData({
               totalSteps: stepCount,
               stepProgress: incompleteStepIndex,
@@ -459,6 +548,8 @@ export const ListModalRenderer: FC<Props> = ({
     expirationOption,
     currency,
     quantity,
+    enableOnChainRoyalties,
+    onChainRoyalties,
   ])
 
   return (
@@ -474,6 +565,7 @@ export const ListModalRenderer: FC<Props> = ({
         marketplaces,
         unapprovedMarketplaces,
         isFetchingUnapprovedMarketplaces,
+        isFetchingOnChainRoyalties,
         localMarketplace,
         listingData,
         transactionError,
@@ -481,6 +573,7 @@ export const ListModalRenderer: FC<Props> = ({
         currencies: currencies || [defaultCurrency],
         currency,
         quantity,
+        royaltyBps,
         setListStep,
         toggleMarketplace,
         setMarketPrice,

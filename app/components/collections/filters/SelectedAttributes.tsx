@@ -4,7 +4,6 @@ import { FC, useEffect, useState } from 'react'
 import { Button, Flex, Text } from 'components/primitives'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
-import React from 'react';
 
 type Attribute = {
   key: string

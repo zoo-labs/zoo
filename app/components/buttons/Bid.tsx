@@ -1,4 +1,4 @@
-import { BidModal, BidStep } from '@zoolabs/ui'
+import { BidModal, BidStep } from '@reservoir0x/reservoir-kit-ui'
 import { Button } from 'components/primitives'
 import { cloneElement, ComponentProps, FC, useContext } from 'react'
 import { CSS } from '@stitches/react'
@@ -7,7 +7,6 @@ import { useAccount, useNetwork, useSigner, useSwitchNetwork } from 'wagmi'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { ToastContext } from 'context/ToastContextProvider'
 import { useMarketplaceChain } from 'hooks'
-import React from 'react';
 
 type Props = {
   tokenId?: string | undefined

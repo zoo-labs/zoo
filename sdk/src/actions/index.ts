@@ -1,16 +1,23 @@
 import actions from './actions'
 import * as utils from '../utils'
-// import { version } from '../../package.json'
+import { version } from '../../package.json'
+import { LogLevel, log as logUtil } from '../utils/logger'
+import { ReservoirEvent } from '../utils/events'
 
-export type ZooChain = {
+export type ReservoirChain = {
   id: number
   baseApiUrl: string
-  default: boolean
+  active: boolean
   apiKey?: string
 }
 
+export type ReservoirEventListener = (
+  event: ReservoirEvent,
+  chainId: number
+) => void
+
 /**
- * ZooClient Configuration Options
+ * ReservoirClient Configuration Options
  * @param chains List of chain objects with configuration (id, baseApiUrl, apiKey and if it's the default)
  * @param source Used to manually override the source domain used to attribute local orders
  * @param automatedRoyalties If true, royalties will be automatically included, defaults to true. Only relevant for creating orders.
@@ -18,59 +25,56 @@ export type ZooChain = {
  * @param marketplaceFeeRecipient Marketplace fee recipient
  * @param normalizeRoyalties Normalize orders that don't have royalties by apply royalties on top of them
  */
-export type ZooClientOptions = {
-  chains: ZooChain[]
+export type ReservoirClientOptions = {
+  chains: ReservoirChain[]
   uiVersion?: string
   source?: string
   automatedRoyalties?: boolean
   marketplaceFee?: number
   marketplaceFeeRecipient?: string
   normalizeRoyalties?: boolean
+  logLevel?: LogLevel
 }
 
-export type ZooClientActions = typeof actions
+export type ReservoirClientActions = typeof actions
 
-let _client: ZooClient
+let _client: ReservoirClient
+let _eventListeners: ReservoirEventListener[] = []
 
-export class ZooClient {
+export class ReservoirClient {
   version: string
-  chains: ZooChain[]
+  chains: ReservoirChain[]
   source?: string
   uiVersion?: string
   marketplaceFee?: number
   marketplaceFeeRecipient?: string
   automatedRoyalties?: boolean
   normalizeRoyalties?: boolean
+  logLevel: LogLevel
+  log(
+    message: Parameters<typeof logUtil>['0'],
+    level: LogLevel = LogLevel.Info
+  ) {
+    return logUtil(message, level, this.logLevel)
+  }
 
   readonly utils = { ...utils }
-  readonly actions: ZooClientActions = actions
+  readonly actions: ReservoirClientActions = actions
 
-  constructor(options: ZooClientOptions) {
-    this.version = '0.4.0' // hardcode this for now
+  constructor(options: ReservoirClientOptions) {
+    this.version = version
     this.chains = options.chains
     this.uiVersion = options.uiVersion
     this.automatedRoyalties = options.automatedRoyalties
     this.marketplaceFee = options.marketplaceFee
     this.marketplaceFeeRecipient = options.marketplaceFeeRecipient
     this.normalizeRoyalties = options.normalizeRoyalties
-
-    if (!options.source) {
-      if (typeof window !== 'undefined') {
-        let host = location.hostname
-        if (host.indexOf('www.') === 0) {
-          host = host.replace('www.', '')
-        }
-        this.source = host
-        console.warn(
-          'ZDK automatically generated a source based on the url, we recommend providing a source when initializing ZDK. Refer to our docs for steps on how to do this: http://docs.reservoir.tools'
-        )
-      }
-    } else {
-      this.source = options.source
-    }
+    this.source = options.source
+    this.logLevel =
+      options.logLevel !== undefined ? options.logLevel : LogLevel.None
   }
 
-  configure(options: ZooClientOptions) {
+  configure(options: ReservoirClientOptions) {
     this.source = options.source ? options.source : this.source
     this.uiVersion = options.uiVersion ? options.uiVersion : this.uiVersion
     this.chains = options.chains ? options.chains : this.chains
@@ -85,11 +89,13 @@ export class ZooClient {
       options.normalizeRoyalties !== undefined
         ? options.normalizeRoyalties
         : this.normalizeRoyalties
+    this.logLevel =
+      options.logLevel !== undefined ? options.logLevel : LogLevel.None
   }
 
   currentChain() {
     if (this.chains && this.chains.length > 0) {
-      const defaultChain = this.chains.find((chain) => chain.default)
+      const defaultChain = this.chains.find((chain) => chain.active)
       if (defaultChain) {
         return defaultChain
       }
@@ -97,16 +103,56 @@ export class ZooClient {
     }
     return null
   }
+
+  /**
+   * Add an Event Listener
+   * @param listener A function to callback whenever an event is emitted
+   */
+  addEventListener(listener: ReservoirEventListener) {
+    _eventListeners.push(listener)
+  }
+
+  /**
+   * Remove an Event Listener
+   * @param listener The listener function to remove
+   */
+  removeEventListener(listener: ReservoirEventListener) {
+    _eventListeners = _eventListeners.filter((item) => listener !== item)
+  }
+
+  /**
+   * Remove all Event Listeners
+   */
+  clearEventListeners() {
+    _eventListeners = []
+  }
+
+  /**
+   * Internal method to send events to listeners, not to be used directly
+   * @param listener A function to callback whenever an event is emitted
+   */
+  _sendEvent(event: ReservoirEvent, chainId: number) {
+    this.log(
+      [
+        `ReservoirClient: Sending Event to ${_eventListeners.length} listeners`,
+        event,
+        chainId,
+      ],
+      LogLevel.Verbose
+    )
+    _eventListeners.forEach((listener) => {
+      listener(event, chainId)
+    })
+  }
 }
 
 export function getClient() {
-  //throw an error
   return _client
 }
 
-export function createClient(options: ZooClientOptions) {
+export function createClient(options: ReservoirClientOptions) {
   if (!_client) {
-    _client = new ZooClient(options)
+    _client = new ReservoirClient(options)
   } else {
     _client.configure(options)
   }

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { styled } from '@stitches/react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import {
@@ -9,7 +8,6 @@ import {
   useState,
 } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import React from 'react';
 
 const Overlay = styled(DialogPrimitive.Overlay, {
   backgroundColor: '$neutralBg',
@@ -19,8 +17,8 @@ const Overlay = styled(DialogPrimitive.Overlay, {
 })
 
 const AnimatedOverlay = forwardRef<
-  ElementRef<typeof DialogPrimitive.Overlay>,
-  ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
+  ElementRef<typeof Overlay>,
+  ComponentPropsWithoutRef<typeof Overlay>
 >(({ ...props }, forwardedRef) => (
   <Overlay {...props} forceMount asChild>
     <motion.div

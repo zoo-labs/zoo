@@ -1,7 +1,6 @@
 import { FC, useEffect } from 'react'
 import { ActivityTable } from 'components/common/ActivityTable'
-import { useCollectionActivity } from '@zoolabs/ui'
-import React from 'react';
+import { useCollectionActivity } from '@reservoir0x/reservoir-kit-ui'
 
 type Props = {
   id: string | undefined
@@ -10,13 +9,12 @@ type Props = {
   >['types']
 }
 
-export const CollectionAcivityTable: FC<Props> = ({ id, activityTypes }) => {
+export const CollectionActivityTable: FC<Props> = ({ id, activityTypes }) => {
   const data = useCollectionActivity(
     { collection: id, types: activityTypes, limit: 20 },
     {
       revalidateOnMount: true,
       fallbackData: [],
-      revalidateFirstPage: true,
     }
   )
 

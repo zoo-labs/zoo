@@ -12,8 +12,6 @@ import {
   DialogPortal,
 } from '@radix-ui/react-dialog'
 import { Box, Button, Flex, Text } from 'components/primitives'
-import React from 'react';
-
 
 type Props = {
   title: string

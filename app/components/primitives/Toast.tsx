@@ -1,13 +1,15 @@
-import React from 'react';
 import { FC, ReactNode, useContext } from 'react'
 import { keyframes, styled } from '@stitches/react'
 import * as ToastPrimitive from '@radix-ui/react-toast'
 import { ToastContext } from 'context/ToastContextProvider'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Box from './Box'
+import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons'
+import Flex from './Flex'
 
 const VIEWPORT_PADDING = 25
 
-const ToastViewport = styled(ToastPrimitive.Viewport, {
+export const ToastViewport = styled(ToastPrimitive.Viewport, {
   padding: VIEWPORT_PADDING,
   position: 'fixed',
   bottom: 0,
@@ -25,11 +27,6 @@ const hide = keyframes({
   '100%': { opacity: 0 },
 })
 
-const slideIn = keyframes({
-  from: { transform: `translateX(calc(100% + ${VIEWPORT_PADDING}px))` },
-  to: { transform: 'translateX(0)' },
-})
-
 const swipeOut = keyframes({
   from: { transform: 'translateX(var(--radix-toast-swipe-end-x))' },
   to: { transform: `translateX(calc(100% + ${VIEWPORT_PADDING}px))` },
@@ -39,15 +36,10 @@ const ToastRoot = styled(ToastPrimitive.Root, {
   backgroundColor: '$gray3',
   borderRadius: 6,
   padding: 12,
-  display: 'grid',
-  gridTemplateAreas: "'title action' 'description action'",
-  gridTemplateColumns: 'auto max-content',
-  columnGap: '15px',
-  alignItems: 'center',
+  display: 'flex',
+  gap: 8,
+  alignItems: 'start',
 
-  '&[data-state="open"]:last-child': {
-    animation: `${slideIn} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
-  },
   '&[data-state="closed"]:first-child': {
     animation: `${hide} 100ms ease-in`,
   },
@@ -67,7 +59,6 @@ const ToastTitle = styled(ToastPrimitive.Title, {
   gridArea: 'title',
   fontSize: '14px',
   fontWeight: 500,
-  marginBottom: '2px',
 })
 
 const ToastDescription = styled(ToastPrimitive.Description, {
@@ -77,38 +68,48 @@ const ToastDescription = styled(ToastPrimitive.Description, {
   color: '$gray11',
 })
 
-const ToastAction = styled(ToastPrimitive.Action, {
-  gridArea: 'action',
-})
+const ToastAction = styled(ToastPrimitive.Action, {})
 
 type Props = {
+  id?: string
   title?: string
   description?: string
   action?: ReactNode
+  status?: 'success' | 'error'
 }
 
-const Toast: FC<Props> = ({ title, description, action }) => {
+const Toast: FC<Props> = ({ id, title, description, action, status }) => {
   const { toasts, setToasts } = useContext(ToastContext)
+
   return (
     <>
       <ToastRoot
-        duration={5000}
+        key={title}
         onOpenChange={(open) => {
           if (!open) {
             setTimeout(
-              () => setToasts?.(toasts.filter((toast) => toast.title != title)),
+              () => setToasts?.(toasts.filter((toast) => toast.id != id)),
               100
             )
           }
         }}
       >
-        <ToastTitle>{title}</ToastTitle>
-        <ToastDescription>{description}</ToastDescription>
-        <ToastAction asChild altText="Toast action">
-          {action}
-        </ToastAction>
+        {status !== undefined ? (
+          <Box css={{ color: status === 'error' ? '$red10' : '$green10' }}>
+            <FontAwesomeIcon
+              icon={status === 'error' ? faCircleXmark : faCircleCheck}
+              width={16}
+            />
+          </Box>
+        ) : null}
+        <Flex direction="column">
+          <ToastTitle>{title}</ToastTitle>
+          <ToastDescription>{description}</ToastDescription>
+          <ToastAction asChild altText="Toast action">
+            {action}
+          </ToastAction>
+        </Flex>
       </ToastRoot>
-      <ToastViewport />
     </>
   )
 }

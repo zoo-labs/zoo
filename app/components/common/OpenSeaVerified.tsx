@@ -1,7 +1,6 @@
 import { FC } from 'react'
-import { paths } from '@zoolabs/sdk'
+import { paths } from '@reservoir0x/reservoir-sdk'
 import { Tooltip, Text } from 'components/primitives'
-import React from 'react';
 
 type Props = {
   openseaVerificationStatus: NonNullable<
@@ -15,7 +14,7 @@ export const OpenSeaVerified: FC<Props> = ({ openseaVerificationStatus }) => {
       <Tooltip
         sideOffset={4}
         content={
-          <Text style="body2" css={{ display: 'block' }}>
+          <Text style="body3" css={{ display: 'block' }}>
             Verified by OpenSea
           </Text>
         }

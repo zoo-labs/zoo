@@ -1,51 +1,47 @@
 {
-    "name": "@zoolabs/sdk",
-    "version": "5.4.3",
-    "description": "An SDK that can be used in any javascript/typescript context to easily interact with Zoo liquidity APIs",
+    "name": "@reservoir0x/reservoir-sdk",
+    "version": "0.10.2",
+    "description": "An SDK that can be used in any javascript/typescript context to easily interact with Reservoir liquidity APIs",
     "source": "src/index.ts",
-    "module": "dist/index.mjs",
-    "type": "module",
+    "main": "dist/index.js",
+    "module": "dist/index.module.js",
     "types": "dist/index.d.ts",
-    "author": "Zoo Labs Foundation",
+    "author": "Reservoir Protocol",
     "license": "MIT",
     "files": [
         "dist"
     ],
     "scripts": {
-        "build": "tsc -p .",
         "clean": "rm -rf dist",
         "version": "yarn version",
         "version:package": "sh ../../scripts/package-version.sh",
-        "version:update": "yarn version ${0}; PACKAGE_VERSION=$(yarn version:package); git add -A; git commit -m \"🎉 Release client package v$PACKAGE_VERSION\"; git push",
+        "version:update": "yarn version ${0}; PACKAGE_VERSION=$(yarn version:package); git add -A; git commit -m \"🎉 Release client package v$PACKAGE_VERSION\"; git tag v${PACKAGE_VERSION}-SDK; git push --tags;",
         "syncApi": "node ./sync-api.mjs",
         "changelog": "node ../../scripts/generate-changelog.js package=sdk"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/zoo-labs/zdk"
+        "url": "https://github.com/reservoirprotocol/reservoir-kit"
     },
     "sideEffects": false,
     "keywords": [
         "nft",
-        "zoo",
-        "zoo-sdk",
-        "zdk",
+        "reservoir",
+        "reservoir-sdk",
+        "reservoirkit",
         "protocol",
         "sdk"
     ],
     "peerDependencies": {
-        "ethers": "^5.7.2"
+        "ethers": "^5.6.1"
     },
     "dependencies": {
-        "@types/node": "^18.14.0",
-        "axios": "^1.3.3",
-        "typescript": "^4.9.5"
+        "axios": "^0.27.2"
     },
     "publishConfig": {
         "access": "public"
     },
     "devDependencies": {
-        "@babel/core": "^7.20.12",
-        "openapi-typescript": "^6.1.0"
+        "openapi-typescript": "^5.4.1"
     }
 }

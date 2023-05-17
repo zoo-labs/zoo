@@ -4,9 +4,8 @@ import Box from './Box'
 import { styled } from 'stitches.config'
 import { useMediaQuery } from 'react-responsive'
 import { useMounted } from 'hooks'
-import React from 'react';
 
-const TooltipArrow = styled(TooltipPrimitive.Arrow, {
+export const TooltipArrow = styled(TooltipPrimitive.Arrow, {
   fill: '$neutralBgSubtle',
 })
 

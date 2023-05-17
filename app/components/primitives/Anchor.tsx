@@ -1,7 +1,5 @@
-/* eslint-disable */
 import { ElementRef, forwardRef, ComponentPropsWithoutRef } from 'react'
 import { styled } from 'stitches.config'
-import React from 'react';
 
 export const StyledAnchor = styled('a', {
   cursor: 'pointer',

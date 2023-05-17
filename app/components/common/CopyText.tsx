@@ -2,8 +2,6 @@ import { Box, Text, Tooltip } from 'components/primitives'
 import { FC, ReactNode, useState } from 'react'
 import { CSS } from '@stitches/react'
 import { useCopyToClipboard } from 'usehooks-ts'
-import React from 'react';
-
 
 type Props = {
   children: ReactNode
@@ -28,7 +26,7 @@ const CopyText: FC<Props> = ({ children, text, css }) => {
       align="center"
       side="top"
       content={
-        <Text style="body2" as="p">
+        <Text style="body3" as="p">
           {isCopied ? 'Copied!' : 'Copy'}
         </Text>
       }

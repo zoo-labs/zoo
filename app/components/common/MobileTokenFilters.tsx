@@ -1,15 +1,15 @@
-import { Dispatch, FC, SetStateAction } from 'react'
+import { Dispatch, FC, SetStateAction, useRef } from 'react'
 import * as RadixDialog from '@radix-ui/react-dialog'
 import { Button, Flex, Text } from 'components/primitives'
 import Image from 'next/image'
 import { FullscreenModal } from 'components/common/FullscreenModal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { paths } from '@zoolabs/sdk'
-import { useUserCollections } from '@zoolabs/ui'
+import { paths } from '@reservoir0x/reservoir-sdk'
+import { useUserCollections } from '@reservoir0x/reservoir-kit-ui'
 import { NAVBAR_HEIGHT_MOBILE } from 'components/navbar'
-import React from 'react';
-
+import { OpenSeaVerified } from './OpenSeaVerified'
+import LoadMoreCollections from 'components/common/LoadMoreCollections'
 
 type Collections =
   | paths['/users/{user}/collections/v2']['get']['responses']['200']['schema']['collections']
@@ -19,13 +19,17 @@ type Props = {
   collections: Collections
   filterCollection: string | undefined
   setFilterCollection: Dispatch<SetStateAction<string | undefined>>
+  loadMoreCollections: () => void
 }
 
 export const MobileTokenFilters: FC<Props> = ({
   collections,
   filterCollection,
   setFilterCollection,
+  loadMoreCollections,
 }) => {
+  const triggerRef = useRef<HTMLButtonElement>(null)
+
   const trigger = (
     <Flex
       justify="center"
@@ -38,6 +42,7 @@ export const MobileTokenFilters: FC<Props> = ({
       }}
     >
       <Button
+        ref={triggerRef}
         css={{
           justifyContent: 'center',
           alignItems: 'center',
@@ -52,6 +57,22 @@ export const MobileTokenFilters: FC<Props> = ({
         color="gray3"
       >
         <Text style="h6">Filter</Text>
+        {filterCollection && (
+          <Flex
+            justify="center"
+            align="center"
+            css={{
+              height: '24px',
+              width: '24px',
+              backgroundColor: '$gray4',
+              borderRadius: '100%',
+              fontSize: 'medium',
+              fontWeight: '500',
+            }}
+          >
+            1
+          </Flex>
+        )}
       </Button>
     </Flex>
   )
@@ -139,6 +160,7 @@ export const MobileTokenFilters: FC<Props> = ({
                   } else {
                     setFilterCollection(collection?.collection?.id)
                   }
+                  triggerRef?.current?.click()
                 }}
               >
                 {collection?.collection?.image && (
@@ -164,12 +186,18 @@ export const MobileTokenFilters: FC<Props> = ({
                 >
                   {collection?.collection?.name}
                 </Text>
+                <OpenSeaVerified
+                  openseaVerificationStatus={
+                    collection?.collection?.openseaVerificationStatus
+                  }
+                />
                 <Text style="subtitle2" css={{ color: '$gray10' }}>
                   {collection?.ownership?.tokenCount}
                 </Text>
               </Flex>
             )
           })}
+          <LoadMoreCollections loadMore={loadMoreCollections} />
         </Flex>
       </Flex>
     </FullscreenModal>

@@ -13,7 +13,7 @@ import React, {
 } from 'react'
 import { useTokens } from '../../hooks'
 import { useModelViewer } from '../../hooks'
-import { ThemeContext } from '../../ZooProvider'
+import { ThemeContext } from '../../ReservoirKitProvider'
 import { Box } from '../../primitives'
 import MediaPlayButton from './MediaPlayButton'
 import { useMeasure } from '@react-hookz/web'

@@ -2,7 +2,6 @@ import { faChevronLeft, faFilter } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from 'components/primitives'
 import { FC } from 'react'
-import React from 'react';
 
 type Props = {
   open: boolean

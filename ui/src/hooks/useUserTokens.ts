@@ -1,12 +1,12 @@
-import { paths, setParams } from '@zoolabs/sdk'
-import { useZooClient, useInfiniteApi } from './'
+import { paths, setParams } from '@reservoir0x/reservoir-sdk'
+import { useReservoirClient, useInfiniteApi } from './'
 import { SWRInfiniteConfiguration } from 'swr/infinite'
 
 type UserTokenResponse =
-  paths['/users/{user}/tokens/v6']['get']['responses']['200']['schema']
+  paths['/users/{user}/tokens/v7']['get']['responses']['200']['schema']
 
 type UserTokenQuery =
-  paths['/users/{user}/tokens/v6']['get']['parameters']['query']
+  paths['/users/{user}/tokens/v7']['get']['parameters']['query']
 
 export default function (
   user?: string | undefined,
@@ -14,7 +14,7 @@ export default function (
   swrOptions: SWRInfiniteConfiguration = {},
   chainId?: number
 ) {
-  const client = useZooClient()
+  const client = useReservoirClient()
   const chain =
     chainId !== undefined
       ? client?.chains.find((chain) => chain.id === chainId)
@@ -26,7 +26,7 @@ export default function (
         return null
       }
 
-      const url = new URL(`${chain?.baseApiUrl}/users/${user}/tokens/v6`)
+      const url = new URL(`${chain?.baseApiUrl}/users/${user}/tokens/v7`)
 
       let query: UserTokenQuery = { ...options }
 
@@ -54,7 +54,7 @@ export default function (
     }
   )
 
-  const tokens = response.data?.flatMap((page) => page.tokens) ?? []
+  const tokens = response.data?.flatMap((page) => page.tokens || []) ?? []
 
   return {
     ...response,

@@ -17,11 +17,17 @@ import {
 import { createStitches } from '@stitches/react'
 import type * as Stitches from '@stitches/react'
 import { reset } from 'utils/css/reset'
-import { Inter } from "next/font/google"
+import { Inter } from '@next/font/google'
 
 const inter = Inter({
   subsets: ['latin'],
 })
+
+// CONFIGURABLE: Here you can update all your theming (outside of ReservoirKit which can be configured in the app.tsx)
+// The theme colors are all already hooked up to stitches scales, so you just need to swap them.
+// Don't forget to check the dark mode themes below.
+// More on Stitches theme tokens: https://stitches.dev/docs/tokens
+// More on Radix color scales: https://www.radix-ui.com/docs/colors/palette-composition/the-scales
 
 export const { createTheme, keyframes, styled, globalCss, getCssText } =
   createStitches({
@@ -35,6 +41,7 @@ export const { createTheme, keyframes, styled, globalCss, getCssText } =
         ...whiteA,
         ...blackA,
         ...green,
+        ...indigo,
 
         //Aliases
 
@@ -99,6 +106,8 @@ export const { createTheme, keyframes, styled, globalCss, getCssText } =
         panelShadow: 'rgba(0,0,0,0.1)',
         panelBg: '$gray2',
         panelBorder: 'transparent',
+        dropdownBg: 'white',
+        sidebarOverlay: 'black',
       },
       space: {
         1: '4px',
@@ -214,6 +223,7 @@ export const { createTheme, keyframes, styled, globalCss, getCssText } =
       bp1200: '(min-width: 1200px)',
       bp1300: '(min-width: 1300px)',
       bp1400: '(min-width: 1400px)',
+      bp1500: '(min-width: 1500px)',
       motion: '(prefers-reduced-motion)',
       hover: '(any-hover: hover)',
       dark: '(prefers-color-scheme: dark)',
@@ -286,5 +296,7 @@ export const darkTheme = createTheme({
     panelBg: '$gray3',
     panelBorder: '$slate7',
     panelShadow: 'transparent',
+    dropdownBg: '$gray3',
+    sidebarOverlay: 'black',
   },
 })

@@ -1,5 +1,5 @@
-import { paths, setParams } from '@zoolabs/sdk'
-import useZooClient from './useZooClient'
+import { paths, setParams } from '@reservoir0x/reservoir-sdk'
+import useReservoirClient from './useReservoirClient'
 import { SWRInfiniteConfiguration } from 'swr/infinite'
 import useInfiniteApi from './useInfiniteApi'
 
@@ -12,7 +12,7 @@ export default function (
   enabled: boolean = true,
   chainId?: number
 ) {
-  const client = useZooClient()
+  const client = useReservoirClient()
   const chain =
     chainId !== undefined
       ? client?.chains.find((chain) => chain.id === chainId)
@@ -50,7 +50,7 @@ export default function (
     }
   )
 
-  const listings = response.data?.flatMap((page) => page.orders) ?? []
+  const listings = response.data?.flatMap((page) => page.orders || []) ?? []
 
   return {
     ...response,

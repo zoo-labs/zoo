@@ -1,18 +1,18 @@
-import { paths, setParams } from '@zoolabs/sdk'
+import { paths, setParams } from '@reservoir0x/reservoir-sdk'
 import { SWRInfiniteConfiguration } from 'swr/infinite'
-import { useInfiniteApi, useZooClient } from './'
+import { useInfiniteApi, useReservoirClient } from './'
 
 type TokenDetailsResponse =
-  paths['/tokens/v5']['get']['responses']['200']['schema']
+  paths['/tokens/v6']['get']['responses']['200']['schema']
 
-type TokensQuery = paths['/tokens/v5']['get']['parameters']['query']
+type TokensQuery = paths['/tokens/v6']['get']['parameters']['query']
 
 export default function (
   options?: TokensQuery | false,
   swrOptions: SWRInfiniteConfiguration = {},
   chainId?: number
 ) {
-  const client = useZooClient()
+  const client = useReservoirClient()
   const chain =
     chainId !== undefined
       ? client?.chains.find((chain) => chain.id === chainId)
@@ -24,7 +24,7 @@ export default function (
         return null
       }
 
-      const url = new URL(`${chain?.baseApiUrl}/tokens/v5`)
+      const url = new URL(`${chain?.baseApiUrl}/tokens/v6`)
       let query: TokensQuery = { ...options }
 
       if (previousPageData && !previousPageData.continuation) {
@@ -50,7 +50,7 @@ export default function (
     }
   )
 
-  const tokens = response.data?.flatMap((page) => page.tokens) ?? []
+  const tokens = response.data?.flatMap((page) => page.tokens || []) ?? []
 
   return {
     ...response,

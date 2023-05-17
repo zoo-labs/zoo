@@ -3,7 +3,6 @@ import { Text, Flex, Box } from 'components/primitives'
 import Layout from 'components/Layout'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFolderOpen } from '@fortawesome/free-solid-svg-icons'
-import React from 'react';
 
 const IndexPage: NextPage = () => {
   return (

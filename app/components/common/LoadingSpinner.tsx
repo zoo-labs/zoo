@@ -2,7 +2,6 @@ import { keyframes } from '@stitches/react'
 import { Box } from 'components/primitives'
 import { CSS } from '@stitches/react'
 import { FC } from 'react'
-import React from 'react';
 
 export const spin = keyframes({
   '0%': { transform: 'rotate(0deg)' },

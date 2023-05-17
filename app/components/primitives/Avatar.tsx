@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { styled } from 'stitches.config'
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import {
@@ -7,7 +6,6 @@ import {
   ElementRef,
   forwardRef,
 } from 'react'
-import React from 'react';
 
 type AvatarRootProps = ComponentProps<typeof AvatarRoot>
 

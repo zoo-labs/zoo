@@ -1,4 +1,3 @@
-/* eslint-disable */
 import {
   Anchor,
   Box,
@@ -15,19 +14,19 @@ import {
   faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 import Link from 'next/link'
-import { useAccount, useBalance, useDisconnect } from 'wagmi'
+import Image from 'next/image'
+import { useAccount, useDisconnect } from 'wagmi'
 import { ConnectWalletButton } from 'components/ConnectWalletButton'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import { FullscreenModal } from 'components/common/FullscreenModal'
 import { useENSResolver } from 'hooks'
 import ThemeSwitcher from 'components/navbar/ThemeSwitcher'
-import React from 'react';
+import Wallet from 'components/navbar/Wallet'
 
 const HamburgerMenu = () => {
   const { address, isConnected } = useAccount()
-  const { data: balance } = useBalance({ address })
   const {
     avatar: ensAvatar,
     shortAddress,
@@ -53,7 +52,6 @@ const HamburgerMenu = () => {
         css={{
           flexDirection: 'column',
           justifyContent: 'space-between',
-          height: '100%',
         }}
       >
         <Flex
@@ -100,7 +98,7 @@ const HamburgerMenu = () => {
               px: '$4',
             }}
           >
-            <Link href={`/profile/${address}`} legacyBehavior>
+            <Link href={`/portfolio/${address}`} legacyBehavior>
               <Flex
                 css={{
                   justifyContent: 'space-between',
@@ -124,7 +122,7 @@ const HamburgerMenu = () => {
                 </Flex>
               </Flex>
             </Link>
-            <Link href="/" legacyBehavior>
+            <Link href="/collection-rankings" legacyBehavior>
               <Text
                 style="subtitle1"
                 css={{
@@ -147,31 +145,27 @@ const HamburgerMenu = () => {
                   pt: '24px',
                 }}
               >
-                Portfolio
+                Sell
               </Text>
             </Link>
-            <Flex
-              css={{
-                justifyContent: 'space-between',
-                borderBottom: '1px solid $gray4',
-              }}
-            >
-              <Text
-                style="subtitle1"
+            <Link href="/portfolio" legacyBehavior>
+              <Flex
+                direction="column"
                 css={{
+                  borderBottom: '1px solid $gray4',
+                  cursor: 'pointer',
                   pb: '$4',
                   pt: '24px',
+                  gap: '$1',
                 }}
               >
-                Balance
-              </Text>
-              <FormatCryptoCurrency
-                amount={balance?.value}
-                decimals={balance?.decimals}
-                textStyle="subtitle1"
-                logoHeight={14}
-              />
-            </Flex>
+                <Text style="subtitle1">Portfolio</Text>
+                <Text style="body3" color="subtle">
+                  Manage your items, collections, listings and offers
+                </Text>
+              </Flex>
+            </Link>
+            <Wallet />
             <Flex
               css={{
                 justifyContent: 'space-between',
@@ -275,16 +269,6 @@ const HamburgerMenu = () => {
               color="gray3"
             >
               <FontAwesomeIcon icon={faTwitter} width={20} height={20} />
-            </Button>
-          </a>
-          <a href="https://discord.gg/j5K9fESNwh" target="_blank">
-            <Button
-              css={{ justifyContent: 'center', width: '44px', height: '44px' }}
-              type="button"
-              size="small"
-              color="gray3"
-            >
-              <FontAwesomeIcon icon={faDiscord} width={20} height={20} />
             </Button>
           </a>
           <ThemeSwitcher />
