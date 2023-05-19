@@ -39,8 +39,8 @@ class MyDocument extends Document {
         />
 
         {/* Reservoir meta tags */}
-        <meta property="reservoir:title" content="Reservoir Market" />
-        <meta property="reservoir:icon" content="/reservoir-source-icon.png" />
+        <meta property="reservoir:title" content="ZOO" />
+        <meta property="reservoir:icon" content="/ZooLogo.svg" />
         <meta
           property="reservoir:token-url-mainnet"
           content="/collection/ethereum/${contract}/${tokenId}"

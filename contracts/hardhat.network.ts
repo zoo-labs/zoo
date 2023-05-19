@@ -2,8 +2,6 @@ import { HardhatUserConfig } from 'hardhat/config'
 
 import fs from 'fs'
 
-const alchemyKey = 'EuD-FVgI2gMBGf0aypDghsPHYWHB9nhn'
-
 function mnemonic() {
   try {
     return fs.readFileSync(`./mnemonic.txt`).toString().trim()
@@ -50,15 +48,15 @@ const networks: HardhatUserConfig['networks'] = {
     allowUnlimitedContractSize: true,
   },
   mainnet: {
-    url: 'https://bsc-dataseed.binance.org/',
-    chainId: 56,
+    url: `https://eth-mainnet.g.alchemy.com/v2/${process.env.ETH_ALCHEMY_ID}`,
+    chainId: 1,
     accounts: {
       mnemonic: mnemonic(),
     },
   },
   testnet: {
-    url: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
-    chainId: 97,
+    url: `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_ALCHEMY_ID}`,
+    chainId: 5,
     gasPrice: 10e9,
     gas: 10e6,
     accounts: {
@@ -66,19 +64,5 @@ const networks: HardhatUserConfig['networks'] = {
     },
   },
 }
-
-// if (process.env.FORK_ENABLED == "true") {
-//   networks.hardhat = {
-//     chainId: 1,
-//     forking: {
-//       url: `https://eth-mainnet.alchemyapi.io/v2/${alchemyKey}`,
-//       // blockNumber: 12226812
-//     },
-//     accounts: {
-//       mnemonic,
-//     },
-//   }
-// }  else {
-// }
 
 export default networks
