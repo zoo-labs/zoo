@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 import { fetchWithTimeout } from 'utils/fetcher'
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
 }
 
 let ids = supportedChains.map((chain) => chain.coingeckoId).join(',')
