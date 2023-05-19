@@ -5443,10 +5443,10 @@
   dependencies:
     glob "7.1.7"
 
-"@next/font@13.1.6":
-  version "13.1.6"
-  resolved "https://registry.yarnpkg.com/@next/font/-/font-13.1.6.tgz#2bf99e3321ec9b4d65781c0d0ebff072e8752e1a"
-  integrity sha512-AITjmeb1RgX1HKMCiA39ztx2mxeAyxl4ljv2UoSBUGAbFFMg8MO7YAvjHCgFhD39hL7YTbFjol04e/BPBH5RzQ==
+"@next/font@^13.1.6":
+  version "13.4.3"
+  resolved "https://registry.yarnpkg.com/@next/font/-/font-13.4.3.tgz#e7cb065f4daceaa64fd2f90cb7065b8421d48aee"
+  integrity sha512-plrCwj4s9fjjcMdkAo+MAVkKuSemRz6XLcow6RdkesEfNyfSD8eMU9+rR3khrXnCZ9zjsf9mcPG5ubvqDXU0mg==
 
 "@next/swc-android-arm-eabi@12.3.4":
   version "12.3.4"
@@ -7548,6 +7548,40 @@
     redux "^4.2.1"
     redux-thunk "^2.4.2"
     reselect "^4.1.8"
+
+"@reservoir0x/reservoir-kit-ui@^0.16.6":
+  version "0.16.7"
+  resolved "https://registry.yarnpkg.com/@reservoir0x/reservoir-kit-ui/-/reservoir-kit-ui-0.16.7.tgz#a3b02f0cc76363cd705dd4629a658168d9666b42"
+  integrity sha512-CtdXjBfkg3wV4NsV3InraWeNfEz29tXoGYLBavdsEVAGccbi/q9U6uzHb7sG4hncVzKsvex418fKk0Z1CoXUKg==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^6.1.1"
+    "@fortawesome/free-solid-svg-icons" "^6.1.1"
+    "@fortawesome/react-fontawesome" "^0.2.0"
+    "@radix-ui/colors" "^0.1.8"
+    "@radix-ui/react-collapsible" "^1.0.2"
+    "@radix-ui/react-dialog" "1.0.1-rc.2"
+    "@radix-ui/react-popover" "1.0.1-rc.2"
+    "@radix-ui/react-scroll-area" "1.0.1-rc.2"
+    "@radix-ui/react-select" "1.0.1-rc.2"
+    "@radix-ui/react-slider" "^1.1.1"
+    "@radix-ui/react-switch" "1.0.0"
+    "@radix-ui/react-toggle-group" "^1.0.0"
+    "@radix-ui/react-tooltip" "^1.0.5"
+    "@react-hookz/web" "^19.2.0"
+    "@reservoir0x/reservoir-sdk" "0.10.5"
+    "@stitches/react" "1.3.1-1"
+    dayjs "^1.11.4"
+    flatpickr "^4.6.13"
+    framer-motion "^6.4.2"
+    react-flatpickr "^3.10.13"
+    swr "2.0.1"
+
+"@reservoir0x/reservoir-sdk@0.10.5":
+  version "0.10.5"
+  resolved "https://registry.yarnpkg.com/@reservoir0x/reservoir-sdk/-/reservoir-sdk-0.10.5.tgz#b301aef276ef4eead2524598ee7ce1d326096535"
+  integrity sha512-soFaCuxEzlZ3ldCuSCdkdjxGp4z+XVcbvT1LgnP7W2b4THakjU+bvKD/P54oSZhcNFEYRhqJ5JxWJt3sq4HyvQ==
+  dependencies:
+    axios "^0.27.2"
 
 "@reservoir0x/reservoir-sdk@workspace:*":
   version "0.10.4"
