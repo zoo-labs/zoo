@@ -158,7 +158,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
   let attributeDescription = ''
 
   /*
-  Ignoring typescript warnings as API types for the 
+  Ignoring typescript warnings as API types for the
   criteria object are incorrectly assigned due to joi.alternatives
   */
   if (activityDescription === 'Offer') {

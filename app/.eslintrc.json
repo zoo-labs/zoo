@@ -3,7 +3,7 @@
         "browser": true,
         "es2021": true
     },
-    "extends": "plugin:react/recommended",
+    "extends": "plugin:@next/next/recommended",
     "overrides": [
     ],
     "parser": "@typescript-eslint/parser",
@@ -16,6 +16,8 @@
         "@typescript-eslint"
     ],
     "rules": {
+      "@next/next/no-img-element": "off",
+      "react/no-unescaped-entities": "off",
       "react/react-in-jsx-scope": "off",
       "react/display-name": "off",
       "react/jsx-no-target-blank": "off",
