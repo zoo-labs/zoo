@@ -2,7 +2,7 @@
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  transpilePackages: ['@reservoir0x/reservoir-kit-ui'],
+  transpilePackages: ['@reservoir0x/reservoir-kit-ui', "@zoolabs/ui", "@zoolabs/sdk"],
   async headers() {
     return [
       {
