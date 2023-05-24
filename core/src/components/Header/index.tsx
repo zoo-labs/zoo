@@ -24,7 +24,9 @@ import { useZoobalance } from "state/zoo/hooks";
 import { metaMask } from "connectors/metaMask";
 import { CartItem } from "types/cart";
 import { useAppSelector } from "state/hooks";
+import { useTheme } from 'next-themes'
 import CartSideNav from "components/CartSideNav";
+import ThemeSwitcher from './ThemeSwitcher'
 import NetworkModal from "modals/NetworkModal";
 import NetworkPopup from "modals/NetworkPopup";
 import { useNetworkModalToggle } from "state/application/hooks";
@@ -43,8 +45,8 @@ function AppBar(props: {
   const { account, chainId, library, connector } = useActiveWeb3React();
   const getZooBalance = useZoobalance();
   const [showBg, setShowBg] = useState(true);
+  const { theme, setTheme } = useTheme()
   const router = useRouter();
-
   let linkStyle =
     "p-0 text-baseline hover:text-green focus:text-high-emphesis md:p-0 whitespace-nowrap m-0";
 
@@ -77,7 +79,7 @@ function AppBar(props: {
       className={`absoulte flex-shrink-0 w-full ${
         !props.isModal && !props.transparent
           ? " bg-black"
-          : `fixed bg-${showBg ? "black" : "transparent"}`
+          : `fixed bg-${theme=='dark' ? "black" : "white"}`
       } z-999`}
     >
       {!props.isModal && props.banner && <Banner type="network_migration" />}
@@ -110,8 +112,8 @@ function AppBar(props: {
                   </div>
                 ) : (
                   <div className="flex  items-center">
-                    <NavLink href="/">
-                      <div className=" h-full pl-2 cursor-pointer logo w-[70px] flex text-white">
+                    <NavLink href="/" activeClassName=''>
+                      <div className={`h-full pl-2 cursor-pointer logo w-[70px] flex text-${ theme == 'dark' ? 'white' : 'black'}`}>
                         ZOO
                       </div>
                     </NavLink>
@@ -141,10 +143,11 @@ function AppBar(props: {
                 <div className="flex items-center justify-end">
                   <div className=" text-xs flex flex-row-reverse items-center rounded p-0.5 whitespace-nowrap  font-bold select-none pointer-events-auto">
                     <More />
+                    {/* <ThemeSwitcher /> */}
                     <div
                       className={`${
                         account &&
-                        "flex flex-row-reverse items-center bg-black border border-white-20 rounded-[10px] p-1 cursor-pointer"
+                        `flex flex-row-reverse items-center bg-${theme == 'dark' ? 'black' : 'white'} border border-${theme == 'dark' ? 'white' : 'black'}-20 rounded-[10px] p-1 cursor-pointer`
                       }`}
                     >
                       <Web3Status
@@ -156,7 +159,7 @@ function AppBar(props: {
                       )}
                     </div>
                     <Link href="/wallet" passHref>
-                      <div className="mr-2 bg-black border border-white-20 rounded-md cursor-pointer px-2 h-[42px] hidden sm:inline-flex justify-center items-center">
+                      <div className={`mr-2 bg-${theme == 'dark' ? 'black' : 'white'} border border-${theme == 'dark' ? 'white' : 'black'}-20 rounded-md cursor-pointer px-2 h-[42px] hidden sm:inline-flex justify-center items-center`}>
                         <svg
                           width="31"
                           height="30"

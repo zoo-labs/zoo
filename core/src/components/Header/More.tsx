@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import { useGif } from "context/GifContext";
 import { toggleImage, toggleGif } from "context/GifContext";
 import Link from "next/link";
-
+import { useTheme } from 'next-themes'
 import ExternalLink from "../ExternalLink";
 import { I18n } from "@lingui/core";
 import Image from "next/image";
@@ -58,7 +58,7 @@ export default function Menu() {
   const { i18n } = useLingui();
   const solutions = items(i18n);
   const [animationMode, toggleSetAnimationMode] = useAnimationModeManager();
-
+  const { theme, setTheme } = useTheme()
   const { state, dispatch } = useGif();
 
   const toggleGifMode = () => {
@@ -79,7 +79,7 @@ export default function Menu() {
         <>
           <Popover.Button
             className={classNames(
-              open ? "text-high-emphesis" : "text-white",
+              `text-${theme=='dark' ? "white" : "black"}`,
               "focus:outline-none hover:opacity-70"
             )}
           >
@@ -130,8 +130,8 @@ export default function Menu() {
               className="absolute z-50 w-screen max-w-xs px-2 mt-3 transform -translate-x-full bottom-12 lg:top-12 left-full sm:px-0"
             >
               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                <div className="relative grid gap-6 px-5 py-6 bg-dark-900 sm:gap-8 sm:p-8">
-                  <div className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white">
+                <div className={`relative grid gap-6 px-5 py-6 bg-${theme=='dark' ? "dark-900" : "light-100"} sm:gap-8 sm:p-8`}>
+                  <div className={`flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-${theme==='dark' ? "white" : "black"}`}>
                     {state.gifMode === "gif" ? "3D" : "Gif"} Mode
                     <div className="ml-4 sm:ml-14">
                       <Toggle
@@ -142,10 +142,9 @@ export default function Menu() {
                     </div>
                   </div>
                   <Link href="/wallet">
-                    <a className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white">
+                    <a className={`flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-${theme=='dark' ? "white" : "black"}`}>
                       Wallet
-                      <div className="ml-4 sm:ml-14">
-                        <svg
+                      <div className="ml-4 sm:ml-14">                        <svg
                           width="31"
                           height="30"
                           viewBox="0 0 31 30"
@@ -163,7 +162,7 @@ export default function Menu() {
                   </Link>
 
                   <div
-                    className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
+                    className={`flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-${theme=='dark' ? "white" : "black"}`}
                     onClick={() =>
                       window.open(
                         "https://charts.bogged.finance/0x09E2b83Fe5485a7c8BeAa5DffD1D324A2B2D5c13"
@@ -196,7 +195,7 @@ export default function Menu() {
                     </div>
                   </div> */}
                   <div
-                    className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
+                    className={`flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-${theme=='dark' ? "white" : "black"}`}
                     onClick={() => window.open("https://github.com/zoo-labs")}
                   >
                     Code
@@ -216,7 +215,7 @@ export default function Menu() {
                     </div>
                   </div>
                   <div
-                    className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
+                    className={`flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-${theme=='dark' ? "white" : "black"}`}
                     onClick={() =>
                       window.open(
                         "https://discord.com/channels/@me/878753766248177685/880493331010945095"
@@ -236,7 +235,7 @@ export default function Menu() {
                     </div>
                   </div>
                   <div
-                    className="flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-white"
+                    className={`flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-${theme=='dark' ? "white" : "black"}`}
                     onClick={() =>
                       window.open(
                         "https://dex.guru/token/0x09e2b83fe5485a7c8beaa5dffd1d324a2b2d5c13-bsc"

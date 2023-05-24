@@ -18,11 +18,13 @@ import styled from "styled-components";
 import { t } from "@lingui/macro";
 import useENSName from "../../hooks/useENSName";
 import { useLingui } from "@lingui/react";
+import { useTheme } from 'next-themes'
 import { useWalletModalToggle } from "../../state/application/hooks";
 import { UserIcon } from "@heroicons/react/solid";
 import { useActiveWeb3React } from "hooks";
 import { getName } from "state/application/HooksProvider";
 import HatchEggModal from "modals/HatchEggModal";
+
 const IconWrapper = styled.div<{ size?: number }>`
   display: flex;
   flex-flow: column nowrap;
@@ -138,6 +140,7 @@ function StatusIcon({ connector }: { connector: Connector }) {
 function Web3StatusInner({ title, className }) {
   const { i18n } = useLingui();
   const { account, connector } = useActiveWeb3React();
+  const { theme, setTheme } = useTheme()
 
   const { ENSName } = useENSName(account ?? undefined);
 
@@ -168,7 +171,7 @@ function Web3StatusInner({ title, className }) {
     return (
       <div
         id="web3-status-connected"
-        className="flex items-center px-3 py-2 text-sm rounded-[10px] bg-dark-900 text-white cursor-pointer"
+        className={`flex items-center px-3 py-2 text-sm rounded-[10px] bg-${theme=='dark' ? "dark" : "light"}-800 text-${theme=='dark' ? "white" : "black"} cursor-pointer`}
         onClick={toggleWalletModal}
       >
         {hasPendingTransactions ? (

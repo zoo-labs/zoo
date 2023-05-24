@@ -226,12 +226,22 @@ video {
 .bg-dark-800 {
   background-color: #333;
 }
+.bg-light-800 {
+  background-color: #a6a6a6;
+}
+.bg-light-100 {
+  background-color: #f6f6f6;
+}
 .bg-black100 {
   background-color: #111;
 }
 
 .text-secondary {
   color: #777;
+}
+.hover\:text-black:hover {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .text-4xl {

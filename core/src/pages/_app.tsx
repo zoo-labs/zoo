@@ -8,6 +8,7 @@ import store, { persistor } from "../state";
 import { GifProvider } from "context/GifContext";
 
 import type { AppProps } from "next/app";
+import { ThemeProvider } from 'next-themes'
 import ApplicationUpdater from "../state/application/updater";
 import DefaultLayout from "../layouts/Default";
 import Dots from "../components/Dots";
@@ -130,6 +131,7 @@ function MyApp({
   };
 
   return (
+    <ThemeProvider>
     <Fragment>
       <Head>
         <meta charSet="utf-8" />
@@ -248,6 +250,7 @@ function MyApp({
         </ReduxProvider>
       </I18nProvider>
     </Fragment>
+    </ThemeProvider>
   );
 }
 
