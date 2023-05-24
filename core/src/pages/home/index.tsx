@@ -61,11 +61,11 @@ const grabAnimal = [
 
 const grabAnimal2 = [
   {
-    title: "Breed Gen 1 Animals up to 7x",
+    title: "Breed up to 7x",
     icon: "/images/circle-tiger.png",
     description: (
       <>
-        First generation can breed up to 7x, while every future generation will
+        First generation can breed up to 7x, while every latter generation will
         be able to breed 1 less time.
       </>
     ),
