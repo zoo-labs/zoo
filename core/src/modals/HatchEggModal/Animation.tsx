@@ -54,7 +54,7 @@ export default function HatchEggAnimationModal({ nft }) {
               }}
             >
               {/* <source src={animation} type="video/mp4" /> */}
-              <source src={"/videoes/StealthEggHatch.mp4"} type="video/mp4" />
+              <source src={"/videoes/StealthEggHatch.webm"} type="video/mp4" />
             </video>
           </div>
         </div>
