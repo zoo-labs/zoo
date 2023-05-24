@@ -111,7 +111,7 @@ function AppBar(props: {
                 ) : (
                   <div className="flex  items-center">
                     <NavLink href="/">
-                      <div className=" h-full pl-2 cursor-pointer logo w-[70px] flex">
+                      <div className=" h-full pl-2 cursor-pointer logo w-[70px] flex text-white">
                         ZOO
                       </div>
                     </NavLink>

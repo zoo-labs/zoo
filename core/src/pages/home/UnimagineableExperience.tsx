@@ -18,7 +18,7 @@ const UnimagineableExperience = () => {
         className=" h-screen object-cover min-h-screen max-h-screen w-screen min-w-[100vw]"
       >
         <source
-          src={"/videoes/trippy_animals_short.mov"}
+          src={"/videoes/trippy_animals_short.webm"}
           type="video/mp4"
         ></source>
       </video>
