@@ -121,7 +121,7 @@ const MarketPlaceSection = ({ slideData }) => {
               </p>
               <div className="grid grid-cols-2 w-full gap-4 mb-8 md:m">
                 <div className="px-2 lg:px-6 py-3 text-[16px] font-semibold bg-[#A6A6A6] text-[#000000] flex items-center justify-between rounded-full md:text-lg w-full hover:cursor-pointer">
-                  {/* <Link href="/partnerships">
+                  <Link href="/partnerships"><a className="flex items-center justify-between w-full">
                     <span className="mr-2">Donate Now</span>
                     <Image
                       src="/icons/forward-arrow-black.svg"
@@ -129,7 +129,8 @@ const MarketPlaceSection = ({ slideData }) => {
                       height={32}
                       alt=""
                     />
-                  </Link> */}
+                    </a>
+                  </Link> 
                 </div>
                 <div className="px-2 lg:px-6 py-3 text-[16px] font-semibold bg-transparent border border-[#A6A6A6] text-[#A6A6A6] flex items-center justify-between rounded-full w-full md:text-lg md:px-6 hover:cursor-pointer">
                   <span className="mr-2">Join Dao</span>
