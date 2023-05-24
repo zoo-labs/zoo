@@ -2,6 +2,7 @@ import { Popover, Transition } from "@headlessui/react";
 import React, { Fragment } from "react";
 import Link from "next/link";
 import { classNames } from "../../functions/styling";
+import { useTheme } from 'next-themes'
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import {
   AVAILABLE_NETWORKS,
@@ -15,7 +16,7 @@ import cookie from "cookie-cutter";
 
 export default function NetworkPopup({ userEthBalance, NATIVE }) {
   const { chainId, library, account } = useActiveWeb3React();
-
+  const { theme, setTheme } = useTheme()
   if (!chainId) return null;
   return (
     <Popover className="relative ml-auto cursor-pointer md:m-0">
@@ -23,7 +24,7 @@ export default function NetworkPopup({ userEthBalance, NATIVE }) {
         <>
           <Popover.Button
             className={classNames(
-              open ? "text-high-emphesis" : "text-white",
+              open ? "text-high-emphesis" : `text-${theme=='dark' ? "white" : "black"}`,
               "py-2 pl-1 mr-2 font-semibold cursor-pointer"
             )}
           >
@@ -45,7 +46,7 @@ export default function NetworkPopup({ userEthBalance, NATIVE }) {
               className="absolute z-50 w-screen max-w-xs px-2 mt-3 transform -translate-x-full bottom-12 lg:top-12 left-full sm:px-0"
             >
               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                <div className="relative grid gap-6 px-5 py-6 bg-dark-900 sm:gap-8 sm:p-8">
+                <div className={`relative grid gap-6 px-5 py-6 bg-${theme=='dark' ? "dark" : "light"}-900 sm:gap-8 sm:p-8`}>
                   {AVAILABLE_NETWORKS.map((key: number, i: number) => {
                     if (chainId === key) {
                       return (
