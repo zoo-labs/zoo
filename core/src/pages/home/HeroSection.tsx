@@ -152,7 +152,7 @@ const HeroSection = () => {
           className="w-screen md:h-screen md:min-h-screen min-w-[100vh] object-cover"
         >
           <source
-            src="/videoes/videoplayback-trimmed.mov"
+            src="/videoes/videoplayback-trimmed.webm"
             type="video/mp4"
           ></source>
         </video>

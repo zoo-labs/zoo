@@ -108,7 +108,7 @@ export default function HatchEggModal({ nftItem, success }) {
               }}
             />
             <img
-              src="/videoes/StealthEggHatch.mp4"
+              src="/videoes/StealthEggHatch.webm"
               alt=""
               className="absolute top-10 inset-x-[35%]"
               style={{ height: 219 }}
