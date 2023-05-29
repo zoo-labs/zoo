@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 function Detail() {
   return (
-    <div className="bg-black xl:px-56 lg:px-40 px-32">
+    <div className="bg-black xl:px-56 lg:px-40 px-32 max-md:hidden">
       <div className='flex items-center justify-between py-20 px-16 space-x-16'>
         <div className='md:w-1/2 max-md:absolute max-md:w-4/5 max-md:right-0 max-md:z-0'>
             <Image
@@ -13,7 +13,7 @@ function Detail() {
                 alt=''
             />
         </div>
-        <div className='w-1/2 max-md:w-full max-md:z-10 max-md:pt-[280px] flex flex-col  max-md:pl-15 max-md:pr-15 pl-10 md:pl-32 pr-8'>
+        <div className='w-1/2 max-md:w-full max-md:z-10 max-md:pt-[280px] flex flex-col  max-md:pl-15 max-md:pr-15 pl-10 xl:pl-16 pr-8'>
             <p className='text-white md:text-sm lg:text-md xl:text-lg'>ENDANGERED SPECIES WE SUPPORT</p>
             <h1 className='text-white md:text-3xl xl:text-5xl max-md:text-2xl mt-5 mb-12'>The Red Wolf</h1>
             <p className='text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>Visual guides also allow you to define the information hierarchy of the design</p>

@@ -24,7 +24,7 @@ function Comment() {
       ];
   return (
     <div className="bg-black">
-      <div className='flex max-md:flex-col py-52 px-20'>
+      <div className='flex max-md:flex-col pt-52 px-20'>
       {comments.map((data, index) => (
         <div className='max-md:w-full flex flex-col justify-between w-1/4 px-5'>
             <h1 className='text-white md:text-3xl xl:text-4xl max-md:text-2xl max-md:my-5'>{data.title}</h1>
