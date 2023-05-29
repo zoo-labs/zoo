@@ -18,10 +18,10 @@ function Donation() {
         }
       ];
   return (
-    <div className="bg-black py-52">
+    <div className="bg-black">
         <p className='text-gray-300 text-sm text-center'>Fuel Conservation Impact</p>
         <h1 className='text-white text-center md:text-3xl xl:text-5xl max-md:text-2xl mt-5 mb-12'>Select your donation</h1>
-      <div className='flex max-md:flex-col xl:px-56 lg:px-40 px-32 space-x-16'>
+      <div className='flex max-md:flex-col xl:px-56 lg:px-40 md:px-32 max-md:px-5 md:space-x-16 max-md:space-y-8'>
       {comments.map((data, index) => (
         <div className='max-md:w-full flex flex-col items-center justify-between w-1/3 px-16 py-16 border rounded-xl border-white'>
             <h1 className='text-white md:text-xl xl:text-2xl max-md:text-xl max-md:my-5'>{data.title}</h1>

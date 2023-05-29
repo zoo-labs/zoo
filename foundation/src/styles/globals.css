@@ -134,3 +134,34 @@
   width: 100%;
   height: auto;
 }
+.dog-bg {
+  width: 52%;
+}
+.space-dog-bg {
+  width: 48%;
+}
+.slick-dots li button:before {
+  color: white !important;
+}
+.slick-dots {
+  left: 0;
+  bottom: -50px !important;
+}
+.bg-blue {
+  background-color: #2517FF;
+}
+@media not all and (min-width: 768px) {
+  .dog-bg {
+    width: 82%;
+  }
+  .space-dog-bg {
+    width: 18%;
+  }
+}
+.involved-header {
+  top: calc(50% - 48px);
+}
+.collect-link > .active {
+  border:1px solid #fff;
+  border-radius: 20px;
+}

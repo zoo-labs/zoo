@@ -50,25 +50,25 @@ function Navbar() {
             <div className="hidden md:block">
                 <div className="mx-10 flex items-baseline space-x-16">
                 <a
-                    href="#"
+                    href="/"
                     className="text-gray-300  hover:text-white px-3 py-2  text-sm font-medium"
                 >
                     Home
                 </a>
                 <a
-                    href="#"
+                    href="/about"
                     className="text-gray-300  hover:text-white px-3 py-2  text-sm font-medium"
                 >
                     About
                 </a>
                 <a
-                    href="#"
+                    href="/getinvolved"
                     className="text-gray-300  hover:text-white px-3 py-2  text-sm font-medium"
                 >
                     Get Involved
                 </a>
                 <a
-                    href="#"
+                    href="/collect"
                     className="text-gray-300  hover:text-white px-3 py-2  text-sm font-medium"
                 >
                     Collect
@@ -78,7 +78,7 @@ function Navbar() {
             </div>
             <div className='flex items-center'>
                 <a
-                    href="#"
+                    href="/donation"
                     className="text-black hover:bg-gray-700 bg-white hover:text-white px-6 py-1 rounded-full text-sm font-medium hidden md:block"
                 >
                     Donate

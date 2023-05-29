@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 function Principles() {
   return (
-    <div className="bg-black">
+    <div className="bg-black py-52">
         <div className='w-full text-center flex flex-col justify-between pb-20'>
             <h1 className='text-white md:text-4xl xl:text-6xl max-md:text-3xl max-md:my-5'>The principles that drive <u>us.</u></h1>
             <p className='text-white md:text-md lg:text-lg xl:text-xl max-md:pb-10 pb-5 pt-16'>We <b>promote wildlife</b> conservation.</p>
