@@ -1,0 +1,60 @@
+import React, { useState } from 'react';
+import Slider from 'react-slick';
+import Image from 'next/image';
+declare module 'react-slick' {
+  export default class Slider extends React.Component<any> {}
+}
+function Carosuel() {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    arrows: false
+  };
+  const animals = [
+    {
+      title: "Nubian Giraffe",
+      img: "/images/giraffe.png"
+    },
+    {
+      title: "Amur Leopard",
+      img: "/images/leopard.png"
+    },
+    {
+      title: "Sumatran Elephant",
+      img: "/images/elephant.png"
+    },
+    {
+      title: "Siberian Tiger",
+      img: "/images/tiger.png"
+    }
+    
+  ];
+  return (
+    <div className="bg-black text-center px-52 pt-32">
+        <p className='text-gray-300 text-sm text-center'>Emotionally Intelligent</p>
+        <h1 className='text-white text-center md:text-3xl xl:text-5xl max-md:text-2xl mt-5 mb-8'>Future Upgrades</h1>
+        <p className='text-gray-300 text-sm text-center pb-16 px-52'>The future of these digital collectibles are more then what meets the eye, an ai chat feature will soon be available for all Zoo Animals!</p>
+        <Slider {...settings} className='w-1/2  m-auto p-8 border rounded-xl border-white mb-20'>
+          
+          {animals.map((data, index) => (
+          <div>
+              <Image
+                  className='carousel-img m-auto w-1/2'
+                  src={data.img}
+                  width='800'
+                  height='800'
+                  alt=''
+              />
+          </div>
+        ))}
+        </Slider>
+        <a href='#' className='bg-white text-black rounded-full px-6 py-2 '>Digital</a>
+    </div>
+  );
+}
+
+export default Carosuel;

@@ -1,0 +1,25 @@
+import React, { useState } from 'react';
+import Image from 'next/image';
+function Header() {
+  return (
+    <div className="bg-black flex flex-col relative">
+      <div className='flex'>
+        <div className='space-dog-bg'></div>
+        <div className='dog-bg'>
+            <Image
+                className='intro-bg float-right'
+                src='/images/dog.png'
+                width='1000'
+                height='1000'
+                alt=''
+            />
+        </div>
+      </div>
+      <h1 className='md:absolute w-full text-center max-md:pt-4 involved-header md:text-7xl xl:text-8xl max-md:text-5xl text-white'>Get Involved.</h1>
+      <p className='text-white md:absolute md:w-1/4  max-md:px-8 text-md bottom-0 left-[2rem]'>Supporting endangered species via human endeavors and virtual animal sales.</p>
+      <p className='hidden max-md:block text-white text-right w-full pt-4 pr-8 text-lg'>hello@zoo.NGO</p>
+    </div>
+  );
+}
+
+export default Header;
