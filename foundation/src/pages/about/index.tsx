@@ -20,8 +20,14 @@ export default function HomePage() {
       <OurEfforts />
       <Principles />
       <Donation />
+      <div className='max-md:hidden'>
       <StartCollecting />
       <Safeguard />
+      </div>
+      <div className='hidden max-md:block'>
+      <Safeguard />
+      <StartCollecting />
+      </div>
       <Newsletter />
       <Footer />
     </Layout>

@@ -20,9 +20,9 @@ function Safeguard() {
       ];
   return (
     <div className="bg-black py-32">
-        <div className='flex  xl:px-56 lg:px-40 md:px-32 max-md:px-4'>
-          <div className='w-1/2 flex flex-col md:pr-32'>
-            <h1 className='text-white md:text-4xl xl:text-5xl max-md:text-2xl pb-12'>We safeguard wildlife and restore habitats.</h1>
+        <div className='flex  max-md:flex-col xl:px-56 lg:px-40 md:px-32 max-md:px-4'>
+          <div className='w-1/2 max-md:w-full flex flex-col md:pr-32'>
+            <h1 className='text-white md:text-4xl xl:text-5xl max-md:text-5xl pb-12'>We safeguard wildlife and restore habitats.</h1>
             <a className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>
                 <span className='pr-[15px]'>Short video link</span>
                 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,11 +32,11 @@ function Safeguard() {
                 </svg>
             </a>
           </div>
-          <div className='w-1/2 grid md:grid-cols-2 grid-cols-1 gap-8'>
+          <div className='w-1/2 max-md:w-full grid md:grid-cols-2 grid-cols-1 gap-8 max-md:gap-4 max-md:px-8'>
             {contents.map((data, index) => (
               <div className='flex flex-col'>
-                  <h1 className='text-white md:text-xl xl:text-2xl max-md:text-xl max-md:my-5 pb-4'>{data.title}</h1>
-                  <p className='text-white text-md'>{data.content}</p>
+                  <h1 className='text-white md:text-xl xl:text-2xl max-md:text-2xl max-md:my-5 pb-4 max-md:pb-2'>{data.title}</h1>
+                  <p className='text-white text-md max-md:text-lg'>{data.content}</p>
               </div>
             ))}
           </div>
