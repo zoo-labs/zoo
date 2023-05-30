@@ -30,7 +30,7 @@ function Item({list}: {
         }
       ];
   return (
-    <div className="bg-black py-52">
+    <div className="bg-black py-52 max-md:py-8">
       <div className='grid md:grid-cols-3 grid-cols-1 gap-8 xl:px-56 lg:px-40 md:px-32 max-md:px-4'>
       {animals.map((data, index) => (
         <div className='max-md:w-full flex flex-col items-center justify-between px-16 py-8 border rounded-xl border-white space-y-8'>

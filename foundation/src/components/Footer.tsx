@@ -3,7 +3,8 @@ import {FaTelegram, FaTwitter, FaInstagram, FaDiscord, FaYoutube} from "react-ic
 import {BsMedium} from "react-icons/bs"
 function Footer() {
   return (
-    <div className="bg-black pb-32">
+    <div>
+    <div className="bg-black pb-32 max-md:hidden">
         <hr />
       <div className='grid md:grid-cols-5 grid-cols-1 gap-8 xl:px-56 lg:px-40 md:px-32 max-md:px-4 pt-20'>
         <div className='flex flex-col space-y-8'>
@@ -43,6 +44,35 @@ function Footer() {
             <p className='text-sm text-white'>hello@zoo.ngo</p>
         </div>
       </div>
+    </div>
+    <div className='bg-black hidden max-md:block'>
+      <div className='flex flex-col items-center justify-center'>
+        <p className='text-xl text-white'>ZOO LABS</p>
+        <div className='flex items-center pt-8 space-x-16'>
+          <a href="/" className='text-md text-white'>Home</a>
+          <a href="/about" className='text-md text-white'>About</a>
+          <a href="/getinvolved" className='text-md text-white'>Get Involved</a>
+        </div>
+        <div className='flex items-center pt-6 space-x-16'>
+          <a href="/collect" className='text-md text-white'>Collect</a>
+            <a href="/donation" className='text-md text-white'>Donate</a>
+        </div>
+        <div className='flex items-center space-x-2 text-white pt-10'>
+                <a href="#"> <FaTwitter /> </a>
+                <a href="#"> <FaTelegram /> </a>
+                <a href="#"> <FaInstagram /> </a>
+                <a href="#"> <FaDiscord /> </a>
+                <a href="#"> <BsMedium /> </a>
+                <a href="#"> <FaYoutube /> </a>
+        </div>
+        <hr className='w-full bg-white my-4'/>
+        <div className='flex items-center space-x-16'>
+          <a href="#" className='text-md text-white '>Privacy Policy</a>
+            <a href="/terms" className='text-md text-white'>Term of service</a>
+        </div>
+        <p className='text-md text-white pt-6 pb-16'>© 2023 Zoo Labs Foundation</p>
+      </div>
+    </div>
     </div>
   );
 }

@@ -23,9 +23,9 @@ function CardList() {
       ];
   return (
     <div className="bg-black">
-      <div className='grid md:grid-cols-3 grid-cols-1 gap-12 xl:px-40 lg:px-32 max-md:px-4'>
+      <div className='grid grid-cols-3 gap-12 xl:px-40 lg:px-32 max-md:px-4'>
       {cardlist.map((data, index) => (
-        <div className='max-md:w-full flex flex-col items-center justify-between'>
+        <div className=' flex flex-col items-center justify-between'>
             <Image
                 className='w-full'
                 src={data.img}
