@@ -10,7 +10,7 @@ export default function HomePage() {
     <Layout>
         <Seo />
         <Navbar />
-        <div className='flex flex-col bg-black space-y-12 px-32 pt-32'>
+        <div className='flex flex-col bg-black space-y-12 md:px-32 max-md:px-4 md:pt-32 pt-16'>
             <h1 className='text-white md:text-5xl xl:text-6xl max-md:text-3xl'>Terms of Use</h1>
             <p className='text-white text-xl'>
             At Zoo Labs Foundation, we are committed to protecting your privacy and ensuring that your personal information is handled in a safe and responsible manner. This Privacy Policy explains how we collect, use, store, and disclose your information when you visit our website, use our services, or interact with us.<br /><br />
