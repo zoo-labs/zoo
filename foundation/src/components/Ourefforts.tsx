@@ -1,11 +1,5 @@
-import React, { useState } from 'react';
 import Image from 'next/image';
 function Ourefforts() {
-    const createElementFromHTML = (htmlStr:String) => {
-        var div = document.createElement('div');
-        div.innerHTML = htmlStr.trim();
-        return div.firstChild;
-    }
     const efforts = [
         {
           title: "Restoring Habitats",

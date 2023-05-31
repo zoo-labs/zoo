@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import Link from 'next/link';
 import Slider from 'react-slick';
 import Image from 'next/image';
 
@@ -50,7 +50,7 @@ function Carosuel() {
           </div>
         ))}
         </Slider>
-        <a href='#' className='bg-white m-auto text-black text-lg rounded-full px-6 py-2 '>Digital</a>
+        <Link href='#' className='bg-white m-auto text-black text-lg rounded-full px-6 py-2 '>Digital</Link>
     </div>
   );
 }
