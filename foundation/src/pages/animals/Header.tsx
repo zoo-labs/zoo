@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import ReactCardFlip from "react-card-flip";
 function Header() {
@@ -35,30 +36,30 @@ function Header() {
             <p className='text-white md:text-lg lg:text-xl xl:text-2xl max-md:pb-10 md:pb-10'>The Amur leopard is one of 10 subspecies of leopard, and one of the world’s rarest cats, with an estimated population of under 70 individuals left in the wild. They all live in a small area that hugs Russia’s far eastern border with China.<br /><br />Many think of leopards stalking savannas of Africa but in the Russian Far East, a rare subspecies has adapted to life in the temperate forests that make up the northern-most part of the species’ range.</p>
             
             <div className='flex items-center md:pt-10 space-x-8'>
-                <a
+                <Link
                     href="#"
                     className="text-black hover:bg-gray-700 bg-white hover:text-white px-12 py-1 rounded-full border-white border-2 text-lg font-medium md:block"
                 >
                     Buy $25
-                </a>
-                <a
+                </Link>
+                <Link
                     href="#"
                     className="text-white hover:bg-gray-700 bg-black hover:text-black px-6 py-1 rounded-full border-white border-2 text-lg font-medium md:block"
                 >
                     + Cart
-                </a>
+                </Link>
             </div>
         </div>
         
       </div>
       <div className='max-md:hidden flex items-center justify-center space-x-8 collect-link'>
-        <a href="/animals/red_wolf" className="text-white px-3 py-2  text-sm font-medium">Red Wolf</a>
-        <a href="/animals/nubian_giraffe" className="text-white px-3 py-2 active text-sm font-medium">Nubian Giraffe</a>
-        <a href="/animals/amur_leopard" className="text-white px-3 py-2  text-sm font-medium">Amur Leopard</a>
-        <a href="/animals/pygmy_hippo" className="text-white px-3 py-2  text-sm font-medium">Pygmy Hippo</a>
-        <a href="/animals/siberian_tiger" className="text-white px-3 py-2  text-sm font-medium">Siberian Tiger</a>
-        <a href="/animals/sumatran_elephant" className="text-white px-3 py-2  text-sm font-medium">Sumatran Elephant</a>
-        <a href="/animals/javen_rhino" className="text-white px-3 py-2  text-sm font-medium">Javan Rhino</a>
+        <Link href="/animals/red_wolf" className="text-white px-3 py-2  text-sm font-medium">Red Wolf</Link>
+        <Link href="/animals/nubian_giraffe" className="text-white px-3 py-2 active text-sm font-medium">Nubian Giraffe</Link>
+        <Link href="/animals/amur_leopard" className="text-white px-3 py-2  text-sm font-medium">Amur Leopard</Link>
+        <Link href="/animals/pygmy_hippo" className="text-white px-3 py-2  text-sm font-medium">Pygmy Hippo</Link>
+        <Link href="/animals/siberian_tiger" className="text-white px-3 py-2  text-sm font-medium">Siberian Tiger</Link>
+        <Link href="/animals/sumatran_elephant" className="text-white px-3 py-2  text-sm font-medium">Sumatran Elephant</Link>
+        <Link href="/animals/javen_rhino" className="text-white px-3 py-2  text-sm font-medium">Javan Rhino</Link>
       </div>
     </div>
   );

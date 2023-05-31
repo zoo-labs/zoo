@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 function InvolvedContent({title,content1,content2,image,direction,type}: {
     content1: string;
@@ -26,44 +26,44 @@ function InvolvedContent({title,content1,content2,image,direction,type}: {
             <p className='text-white md:text-lg lg:text-xl xl:text-2xl '>{content2}</p>
             { type == '2' ? (
               <div className='flex items-center md:pt-10 max-md:pt-4 space-x-8'>
-                <a
-                    href="#"
+                <Link
+                    href="/donation"
                     className="text-black hover:bg-gray-700 bg-white hover:text-white px-6 py-1 rounded-full border-white border-2 text-lg font-medium  md:block"
                 >
                     Donate
-                </a>
-                <a
-                    href="#"
+                </Link>
+                <Link
+                    href="#volunteer"
                     className="text-white hover:bg-gray-700 bg-black hover:text-black px-6 py-1 rounded-full border-white border-2 text-lg font-medium  md:block"
                 >
                     Volunteer
-                </a>
+                </Link>
               </div>
             ): (
               <div>
               <div className='flex items-center md:pt-10 max-md:pt-4 space-x-16'>
-                <a className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>
+                <Link href='#volunteer' className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>
                     <span className='pr-[15px]'>Volunteer</span>
                     <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.5L1.19924 10.5L0 9.24901L3.59962 5.5L6.08905e-06 1.751L1.19924 0.5L6 5.5Z" fill="white"/>
                     </svg>
-                </a>
-                <a className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>
+                </Link>
+                <Link href='/donation' className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>
                     <span className='pr-[15px]'>Donate</span>
                     <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.5L1.19924 10.5L0 9.24901L3.59962 5.5L6.08905e-06 1.751L1.19924 0.5L6 5.5Z" fill="white"/>
                     </svg>
-                </a>
-                <a className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10 hidden md:flex'>
+                </Link>
+                <Link href='#' className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10 hidden md:flex'>
                     <span className='pr-[15px]'>Learn More</span>
                     <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.5L1.19924 10.5L0 9.24901L3.59962 5.5L6.08905e-06 1.751L1.19924 0.5L6 5.5Z" fill="white"/>
                     </svg>
-                </a>
+                </Link>
               </div>
-              <a className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10 md:hidden max-md:block'>
+              <Link href='#' className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10 md:hidden max-md:block'>
                 <u className='pr-[15px]'>Learn More</u>
-              </a>
+              </Link>
               </div>
             )
             }
