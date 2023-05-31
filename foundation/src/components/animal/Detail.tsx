@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 function Detail() {
   return (
@@ -19,24 +19,24 @@ function Detail() {
             <h1 className='text-white md:text-3xl xl:text-6xl max-md:text-2xl mt-5 mb-12'>The Red Wolf</h1>
             <p className='text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'>Visual guides also allow you to define the information hierarchy of the design</p>
             <div className='flex items-center justify-between mt-10'>
-                <a className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'>
+                <Link href='#' className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'>
                     <span className='pr-[15px]'>Volunteer</span>
                     <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.5L1.19924 10.5L0 9.24901L3.59962 5.5L6.08905e-06 1.751L1.19924 0.5L6 5.5Z" fill="white"/>
                     </svg>
-                </a>
-                <a className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>
+                </Link>
+                <Link href='/donation' className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>
                     <span className='pr-[15px]'>Donate</span>
                     <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.5L1.19924 10.5L0 9.24901L3.59962 5.5L6.08905e-06 1.751L1.19924 0.5L6 5.5Z" fill="white"/>
                     </svg>
-                </a>
-                <a className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>
+                </Link>
+                <Link href='/animals/red_wolf' className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>
                     <span className='pr-[15px]'>Learn More</span>
                     <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.5L1.19924 10.5L0 9.24901L3.59962 5.5L6.08905e-06 1.751L1.19924 0.5L6 5.5Z" fill="white"/>
                     </svg>
-                </a>
+                </Link>
             </div>
         </div>
       </div>

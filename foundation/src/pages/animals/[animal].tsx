@@ -23,15 +23,18 @@ export default function HomePage() {
     const avatars = [
         {
           title: "Baby Leopard",
-          img: "/images/baby.png"
+          img: "/images/baby.png",
+          href: "#"
         },
         {
           title: "Teen Leopard",
-          img: "/images/teen.png"
+          img: "/images/teen.png",
+          href: "#"
         },
         {
           title: "Adult Leopard",
-          img: "/images/adult.png"
+          img: "/images/adult.png",
+          href: "#"
         }
       ];
   return (

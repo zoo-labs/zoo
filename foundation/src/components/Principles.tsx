@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import Link from 'next/link';
 function Principles() {
   return (
     <div className="bg-black py-52 max-md:py-28">
@@ -10,24 +10,24 @@ function Principles() {
             <p className='text-white md:text-md lg:text-lg xl:text-3xl max-md:pb-10 pb-5'>We engage communities for <b>species protection.</b></p>
             <p className='text-white md:text-md lg:text-lg xl:text-3xl max-md:pb-10 pb-8'>We foster human-nature <b>coexistence.</b></p>
             <div className='flex items-center justify-center space-x-6'>
-                <a
-                    href="#"
+                <Link
+                    href="/donation"
                     className="text-black hover:bg-gray-700 bg-white hover:text-white px-6 py-1 rounded-full border-white border-2 text-xl font-medium hidden md:block"
                 >
                     Donate
-                </a>
-                <a
-                    href="#"
+                </Link>
+                <Link
+                    href="/getinvolved"
                     className="text-white hover:bg-gray-700 bg-black hover:text-black px-6 py-1 rounded-full border-white border-2 text-xl font-medium hidden md:block"
                 >
                     Get Involved
-                </a>
-                <a
+                </Link>
+                <Link
                     href="#"
                     className="text-white hover:bg-gray-700 bg-black hover:text-black px-6 py-1 rounded-full border-white border-2 text-xl font-medium hidden max-md:block"
                 >
                     Learn More
-                </a>
+                </Link>
             </div>
         </div>
     </div>

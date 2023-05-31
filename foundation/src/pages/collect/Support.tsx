@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 function Support() {
   return (
     <div className="bg-black md:py-52 py-28">

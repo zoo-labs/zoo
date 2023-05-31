@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 function Collecting() {
   return (
@@ -13,18 +13,18 @@ function Collecting() {
                 alt=''
             />
             <div className='flex max-md:flex-col max-md:pt-8 items-center justify-center md:space-x-8'>
-                <a className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'>
+                <Link href="#" className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'>
                     <span className='pr-[15px]'>View Endangered Cards</span>
                     <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.5L1.19924 10.5L0 9.24901L3.59962 5.5L6.08905e-06 1.751L1.19924 0.5L6 5.5Z" fill="white"/>
                     </svg>
-                </a>
-                <a className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-6'>
+                </Link>
+                <Link href="/collect" className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-6'>
                     <span className='pr-[15px]'>Shop Digital Collectibles</span>
                     <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.5L1.19924 10.5L0 9.24901L3.59962 5.5L6.08905e-06 1.751L1.19924 0.5L6 5.5Z" fill="white"/>
                     </svg>
-                </a>
+                </Link>
             </div>
         </div>
     </div>
