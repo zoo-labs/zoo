@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 function Content({title,content}: {
     content: string;
     title: string;
