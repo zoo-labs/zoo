@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
 import Image from 'next/image';
 function Volunteer() {
   return (
-    <div className="bg-black md:pt-52 max-md:py-32">
+    <div className="bg-black md:pt-52 max-md:py-32" id='volunteer'>
       <div className="flex max-md:flex-col max-md:flex-col-reverse items-center justify-between">
         <div className='w-1/2 max-md:w-full flex flex-col justify-between  max-md:px-12 max-md:pt-4 md:pl-48 xl:pr-52'>
             <p className='text-white md:text-lg lg:text-xl xl:text-2xl max-md:text-lg max-md:pb-4 md:pb-6'>Doing good feels great</p>
