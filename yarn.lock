@@ -32930,6 +32930,11 @@ react-calendar@^3.9.0:
     merge-class-names "^1.1.1"
     prop-types "^15.6.0"
 
+react-card-flip@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-card-flip/-/react-card-flip-1.2.0.tgz#b81b76e2ba18360a66df400b4f776d3ebbbece55"
+  integrity sha512-5/tbaSBoTTdxV2glail7fr7W7CqNG/4BOm17pNmI1b6TwtRRUrElPdAO4h235MGU2dDwqyWBzO+H8y2Ax6BTpA==
+
 react-countdown-hook@^1.1.1:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/react-countdown-hook/-/react-countdown-hook-1.1.3.tgz#04609f3243ee71aadceb5ddfcd538a813a3443ea"
