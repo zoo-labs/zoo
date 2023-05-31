@@ -17,11 +17,13 @@
     ],
     "rules": {
       "@next/next/no-img-element": "off",
+      "@next/next/no-html-link-for-pages": "off",
       "react/no-unescaped-entities": "off",
       "react/react-in-jsx-scope": "off",
       "react/display-name": "off",
       "react/jsx-no-target-blank": "off",
       "react/prop-types": "off",
-      "react/jsx-key": "off"
+      "react/jsx-key": "off",
+      "react/no-unknown-property": "off"
     }
 }
