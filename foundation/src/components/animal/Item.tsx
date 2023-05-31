@@ -1,32 +1,38 @@
-import React, { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 function Item({list}: {
-  list?: { title: string; img: string; }[];
+  list?: { title: string; img: string; href: string;}[];
 }) {
     const animals = list != undefined ? list : [
         {
           title: "Nubian Giraffe",
-          img: "/images/giraffe.png"
+          img: "/images/giraffe.png",
+          href: "/animals/nubian_giraffe"
         },
         {
           title: "Amur Leopard",
-          img: "/images/leopard.png"
+          img: "/images/leopard.png",
+          href: "/animals/amur_leopard"
         },
         {
           title: "Sumatran Elephant",
-          img: "/images/elephant.png"
+          img: "/images/elephant.png",
+          href: "/animals/sumatran_elephant"
         },
         {
           title: "Siberian Tiger",
-          img: "/images/tiger.png"
+          img: "/images/tiger.png",
+          href: "/animals/sibertian_tiger"
         },
         {
           title: "Pygmy Hippo",
-          img: "/images/hippo.png"
+          img: "/images/hippo.png",
+          href: "/animals/pygmy_hippo"
         },
         {
           title: "Javan Rhino",
-          img: "/images/rhino.png"
+          img: "/images/rhino.png",
+          href: "/animals/javan_rhino"
         }
       ];
   return (
@@ -41,12 +47,12 @@ function Item({list}: {
                 height='800'
                 alt=''
             />
-            <a className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'>
+            <Link href={data.href} className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'>
                 <span className='pr-[15px]'>{data.title}</span>
                 <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.5L1.19924 10.5L0 9.24901L3.59962 5.5L6.08905e-06 1.751L1.19924 0.5L6 5.5Z" fill="white"/>
                 </svg>
-            </a>
+            </Link>
         </div>
       ))}
       </div>
