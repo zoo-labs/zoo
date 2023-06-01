@@ -1,12 +1,12 @@
-<h3 align="center">Reservoir Market v2 [BETA]</h3>
+<h3 align="center">Zoo Market v2 [BETA]</h3>
   <p align="center">
-An open source NFT marketplace built on Reservoir.
+An open source NFT marketplace built on Zoo.
 
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
 
-Reservoir Market v2 is an open source marketplace built with Reservoir APIs that enables access to instant liquidity aggregated from major marketplace. We encourage developers to use this project as a reference for their own implementation or even fork the project and make their own meaningful changes. The project is lightly configurable refer to the configuration variables below. If you're looking for a no-code solution check out our [v1 marketplace](https://github.com/reservoirprotocol/marketplace-v1).
+Zoo Market v2 is an open source marketplace built with Zoo APIs that enables access to instant liquidity aggregated from major marketplace. We encourage developers to use this project as a reference for their own implementation or even fork the project and make their own meaningful changes. The project is lightly configurable refer to the configuration variables below. If you're looking for a no-code solution check out our [v1 marketplace](https://github.com/reservoirprotocol/marketplace-v1).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -18,12 +18,12 @@ Reservoir Market v2 is an open source marketplace built with Reservoir APIs that
 
 1. Install [Node.js and NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 2. Install [Yarn](https://classic.yarnpkg.com/en/docs/install)
-3. Request free [Reservoir API key](https://reservoir.tools/request-api-key)
+3. Request free [Zoo API key](https://reservoir.tools/request-api-key)
 
 ### Built With
 
-- [ReservoirKit](https://docs.reservoir.tools/docs/reservoir-kit)
-- [Reservoir Protocol and API](https://reservoirprotocol.github.io/)
+- [ZooKit](https://docs.reservoir.tools/docs/reservoir-kit)
+- [Zoo Protocol and API](https://reservoirprotocol.github.io/)
 - [Next.js](https://nextjs.org/)
 - [React.js](https://reactjs.org/)
 - [Ethers.io](https://ethers.io/)
@@ -48,15 +48,15 @@ $ npm install
 
 ### Configuration
 
-Reservoir Market v2 is lightly configurable with the configurations below. You can either add these to a `.env.production` and `.env.development` or add env variables to a deployment platform like [vercel](https://vercel.com/).
+Zoo Market v2 is lightly configurable with the configurations below. You can either add these to a `.env.production` and `.env.development` or add env variables to a deployment platform like [vercel](https://vercel.com/).
 
 **Environment Variables**
 | Environment Variable | Required | Description | Example |
 |--------------------------------|----------|-------------------------------------------------------------------------------------|---------------------|
 | NEXT_PUBLIC_HOST_URL | `true` | The domain that the deployed project is hosted on. | http://localhost:3000 |
-| ETH_RESERVOIR_API_KEY | `false` | Ethereum Reservoir API key provided by the Reservoir Protocol. [Get your own API key](https://reservoir.tools/request-api-key). | 123e4567-e89b-12d3-a456-426614174000 |
-| GOERLI_RESERVOIR_API_KEY | `false` | Goerli Reservoir API key provided by the Reservoir Protocol. [Get your own API key](https://reservoir.tools/request-api-key). | 123e4567-e89b-12d3-a456-426614174000 |
-| POLYGON_RESERVOIR_API_KEY | `false` | Polygon Reservoir API key provided by the Reservoir Protocol. [Get your own API key](https://reservoir.tools/request-api-key). | 123e4567-e89b-12d3-a456-426614174000 |
+| ETH_RESERVOIR_API_KEY | `false` | Ethereum Zoo API key provided by the Zoo Protocol. [Get your own API key](https://reservoir.tools/request-api-key). | 123e4567-e89b-12d3-a456-426614174000 |
+| GOERLI_RESERVOIR_API_KEY | `false` | Goerli Zoo API key provided by the Zoo Protocol. [Get your own API key](https://reservoir.tools/request-api-key). | 123e4567-e89b-12d3-a456-426614174000 |
+| POLYGON_RESERVOIR_API_KEY | `false` | Polygon Zoo API key provided by the Zoo Protocol. [Get your own API key](https://reservoir.tools/request-api-key). | 123e4567-e89b-12d3-a456-426614174000 |
 | NEXT_PUBLIC_ALCHEMY_ID | `true` | Alchemy API key required for removing rate limiting restrictions. [Get your own API key here](https://docs.alchemy.com/alchemy/introduction/getting-started#1.create-an-alchemy-key). | 123e4567-e89b-12d3-a456-426614174000 |
 | NEXT_PUBLIC_COLLECTION_SET_ID | `false` | Use this to configure a community marketplace. Generate your collection set ID [here](https://docs.reservoir.tools/reference/postcollectionssetsv1). | f566ba09c14f56aedeed3f77e3ae7f5ff28b9177714d3827a87b7a182f8f90ff |
 | NEXT_PUBLIC_COMMUNITY | `false` | Use this to configure a community marketplace. Note: Community IDs are only available for certain communities. | artblocks |
@@ -88,7 +88,7 @@ This is a Next.js app that can be easily deployed using [Vercel](https://vercel.
 
 ## Contact
 
-Twitter: [@reservoir0x](https://twitter.com/reservoir0x)
-Project Link: [Reservoir](https://reservoirprotocol.github.io/)
+Twitter: [@reservoir0x](https://twitter.com/zoo_labs)
+Project Link: [Zoo](https://github.com/zoo-labs/zoo)
 
 <p align="right">(<a href="#top">back to top</a>)</p>

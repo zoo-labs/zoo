@@ -15,8 +15,8 @@ type Props = {
  */
 export const Head: FC<Props> = ({
   ogImage = 'https://marketplace.reservoir.tools/og-image.png',
-  title = 'Reservoir Market | Open Source NFT Marketplace',
-  description = 'Reservoir Market is an open source NFT marketplace built with Reservoir.',
+  title = 'Zoo Market',
+  description = 'Explore a world of digital creatures and surreal landscapes, all aimed at halting extinction.',
 }) => {
   return (
     <NextHead>
