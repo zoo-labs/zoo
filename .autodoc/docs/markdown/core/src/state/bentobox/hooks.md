@@ -1,0 +1,20 @@
+[View code on GitHub](zoo-labs/zoo/blob/master/core/src/state/bentobox/hooks.ts)
+
+The code is a TypeScript module that exports three functions: `useBentoBalances`, `useBentoBalance`, and `useBentoMasterContractAllowed`. The module imports several dependencies, including `@zoolabs/zdk`, `react`, `@ethersproject/bignumber`, and `@ethersproject/address`. 
+
+The `useBentoBalances` function returns an array of `BentoBalance` objects. Each `BentoBalance` object represents a token balance in the BentoBox smart contract. The function retrieves the user's account and the chain ID from the `useActiveWeb3React` hook. It then uses the `useAllTokens` hook to get a list of all tokens and the `useBoringHelperContract` hook to get the BoringHelper smart contract instance. The function calls the `getBalances` and `getUIInfo` methods of the BoringHelper contract to retrieve the user's token balances and the exchange rates of the tokens in USD. The function then calculates the USD value of each token balance and returns an array of `BentoBalance` objects that have a non-zero balance or BentoBox balance.
+
+The `useBentoBalance` function returns an object that represents the user's balance of a specific token in the BentoBox smart contract. The function takes a `tokenAddress` parameter and retrieves the user's account from the `useActiveWeb3React` hook. It then uses the `useBoringHelperContract`, `useBentoBoxContract`, and `useContract` hooks to get the BoringHelper, BentoBox, and token smart contract instances, respectively. The function calls the `getBalances` method of the BoringHelper contract to retrieve the user's token balance in the BentoBox contract. The function then calculates the user's balance of the token in the BentoBox contract and returns an object that has the balance value and the number of decimals.
+
+The `useBentoMasterContractAllowed` function returns a boolean value that indicates whether the user has approved a master contract to interact with the BentoBox smart contract. The function takes `masterContract` and `user` parameters and uses the `useBentoBoxContract` hook to get the BentoBox smart contract instance. The function calls the `masterContractApproved` method of the BentoBox contract to check if the user has approved the master contract to interact with the BentoBox contract. The function returns `true` if the user has approved the master contract, `false` if the user has not approved the master contract, and `undefined` if the function is still loading. 
+
+These functions are used to retrieve and display the user's token balances and BentoBox balances in the Zoo project. The `useBentoBalances` function is used to display the user's token balances in the BentoBox contract, while the `useBentoBalance` function is used to display the user's balance of a specific token in the BentoBox contract. The `useBentoMasterContractAllowed` function is used to check if the user has approved a master contract to interact with the BentoBox contract. These functions are essential for the Zoo project to provide users with accurate and up-to-date information about their token balances and BentoBox balances.
+## Questions: 
+ 1. What is the purpose of the `useBentoBalances` function?
+- The `useBentoBalances` function returns an array of `BentoBalance` objects that represent the balances of all tokens held in the user's BentoBox. 
+
+2. What is the `useBentoBalance` function used for?
+- The `useBentoBalance` function returns the balance of a specific token held in the user's BentoBox, given the token's address. 
+
+3. What is the `useBentoMasterContractAllowed` function used for?
+- The `useBentoMasterContractAllowed` function checks whether a given master contract is approved by the user to interact with their BentoBox. It returns a boolean value indicating whether the approval is granted or not.

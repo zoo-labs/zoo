@@ -14,9 +14,9 @@ type Props = {
  * @param description - The description of the page.
  */
 export const Head: FC<Props> = ({
-  ogImage = 'https://marketplace.reservoir.tools/og-image.png',
-  title = 'Zoo Market',
-  description = 'Explore a world of digital creatures and surreal landscapes, all aimed at halting extinction.',
+  ogImage = '/og-image.png',
+  title = 'ZOO | Decentralized Animal Preservation Protocol',
+  description = 'Supporting endangered species via human endeavors and virtual animal sales.',
 }) => {
   return (
     <NextHead>
@@ -31,7 +31,7 @@ export const Head: FC<Props> = ({
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@reservoir0x" />
+      <meta name="twitter:site" content="@zoo_labs" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
@@ -46,7 +46,7 @@ export const Head: FC<Props> = ({
       <meta property="og:image:type" content="image/png" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content="Reservoir Market Banner" />
+      <meta property="og:image:alt" content="ZOO Banner" />
     </NextHead>
   )
 }

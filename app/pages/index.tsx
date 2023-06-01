@@ -86,17 +86,22 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
             css={{ mx: 'auto', maxWidth: 728, pt: '$5', textAlign: 'center' }}
           >
             <Text style="h3" css={{ mb: 24 }}>
-              Zoo Market
+              ZOO
             </Text>
-            <Text style="body1" css={{ mb: 42 }}>
-            Explore Web3's future in a world of digital creatures <br/>
-            and surreal landscapes, all aimed at halting extinction.
+            <Text style="body1" css={{ mb: 48 }}>
+              ZOO is dedicated to saving and preserving endangered species.
+            </Text>
+            <Text style="body1" css={{ mb: 48 }}>
+              The ZOO DAO allocates a portion of its revenue to supporting animals in real life through the Zoo Labs Foundation!
+            </Text>
+            <Text style="body1" css={{ mb: 48 }}>
+              The Zoo Labs Foundation, a registered non-profit, supports endangered species via human endeavors and virtual animal sales.
             </Text>
             <a
-              href="https://github.com/reservoirprotocol/marketplace-v2"
+              href="https://zoo.ngo"
               target="_blank"
             >
-              
+              <Button color="gray3">Learn More</Button>
             </a>
           </Flex>
         )}
