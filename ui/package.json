@@ -1,8 +1,8 @@
 {
   "name": "@zoolabs/ui",
-  "description": "ReservoirKit is the official frontend kit to get you started building dApps with the ReservoirProtocol.",
+  "description": "ZooKit is the official frontend kit to get you started building dApps with the Zoo Protocol.",
   "version": "0.16.3",
-  "author": "Reservoir Protocol",
+  "author": "Zoo Protocol",
   "license": "MIT",
   "source": "src/index.ts",
   "exports": "./dist/index.module.js",
@@ -14,8 +14,8 @@
   ],
   "keywords": [
     "nft",
-    "reservoir",
-    "reservoirkit",
+    "zoo",
+    "zoolabs",
     "protocol",
     "sdk"
   ],
