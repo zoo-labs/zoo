@@ -35,11 +35,11 @@ class MyDocument extends Document {
         <link
           rel="shortcut icon"
           type="image/svg"
-          href="https://marketplace.reservoir.tools/reservoir.svg"
+          href="/ZooLogo.svg"
         />
 
         {/* Reservoir meta tags */}
-        <meta property="reservoir:title" content="ZOO" />
+        <meta property="reservoir:title" content="ZOO Market" />
         <meta property="reservoir:icon" content="/ZooLogo.svg" />
         <meta
           property="reservoir:token-url-mainnet"

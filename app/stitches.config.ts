@@ -2,22 +2,23 @@ import {
   crimson,
   slate,
   crimsonDark,
-  indigoDark,
+  violetDark,
   slateDark,
   greenDark,
   green,
-  indigoDarkA,
+  violetDarkA,
   whiteA,
   redDark,
   red,
   blackA,
+  violet,
+  violetA,
   indigo,
-  indigoA,
 } from '@radix-ui/colors'
 import { createStitches } from '@stitches/react'
 import type * as Stitches from '@stitches/react'
 import { reset } from 'utils/css/reset'
-import { Inter } from 'next/font/google'
+import { Inter } from '@next/font/google'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -34,8 +35,8 @@ export const { createTheme, keyframes, styled, globalCss, getCssText } =
     theme: {
       colors: {
         ...crimson,
-        ...indigo,
-        ...indigoA,
+        ...violet,
+        ...violetA,
         ...slate,
         ...red,
         ...whiteA,
@@ -46,32 +47,32 @@ export const { createTheme, keyframes, styled, globalCss, getCssText } =
         //Aliases
 
         //Primary
-        primary1: '$indigo1',
-        primary2: '$indigo2',
-        primary3: '$indigo3',
-        primary4: '$indigo4',
-        primary5: '$indigo5',
-        primary6: '$indigo6',
-        primary7: '$indigo7',
-        primary8: '$indigo8',
-        primary9: '$indigo9',
-        primary10: '$indigo10',
-        primary11: '$indigo11',
-        primary12: '$indigo12',
+        primary1: '$violet1',
+        primary2: '$violet2',
+        primary3: '$violet3',
+        primary4: '$violet4',
+        primary5: '$violet5',
+        primary6: '$violet6',
+        primary7: '$violet7',
+        primary8: '$violet8',
+        primary9: '$violet9',
+        primary10: '$violet10',
+        primary11: '$violet11',
+        primary12: '$violet12',
 
         //Secondary
-        secondary1: '$indigoA1',
-        secondary2: '$indigoA2',
-        secondary3: '$indigoA3',
-        secondary4: '$indigoA4',
-        secondary5: '$indigoA5',
-        secondary6: '$indigoA6',
-        secondary7: '$indigoA7',
-        secondary8: '$indigoA8',
-        secondary9: '$indigoA9',
-        secondary10: '$indigoA10',
-        secondary11: '$indigoA11',
-        secondary12: '$indigoA12',
+        secondary1: '$violetA1',
+        secondary2: '$violetA2',
+        secondary3: '$violetA3',
+        secondary4: '$violetA4',
+        secondary5: '$violetA5',
+        secondary6: '$violetA6',
+        secondary7: '$violetA7',
+        secondary8: '$violetA8',
+        secondary9: '$violetA9',
+        secondary10: '$violetA10',
+        secondary11: '$violetA11',
+        secondary12: '$violetA12',
 
         //Gray
         gray1: '$slate1',
@@ -236,8 +237,8 @@ export const globalReset = globalCss(reset)
 export const darkTheme = createTheme({
   colors: {
     ...crimsonDark,
-    ...indigoDark,
-    ...indigoDarkA,
+    ...violetDark,
+    ...violetDarkA,
     ...slateDark,
     ...greenDark,
     ...whiteA,
@@ -247,32 +248,32 @@ export const darkTheme = createTheme({
     //Aliases
 
     //Primary
-    primary1: '$indigo1',
-    primary2: '$indigo2',
-    primary3: '$indigo3',
-    primary4: '$indigo4',
-    primary5: '$indigo5',
-    primary6: '$indigo6',
-    primary7: '$indigo7',
-    primary8: '$indigo8',
-    primary9: '$indigo9',
-    primary10: '$indigo10',
-    primary11: '$indigo11',
-    primary12: '$indigo12',
+    primary1: '$violet1',
+    primary2: '$violet2',
+    primary3: '$violet3',
+    primary4: '$violet4',
+    primary5: '$violet5',
+    primary6: '$violet6',
+    primary7: '$violet7',
+    primary8: '$violet8',
+    primary9: '$violet9',
+    primary10: '$violet10',
+    primary11: '$violet11',
+    primary12: '$violet12',
 
     //Secondary
-    secondary1: '$indigoA1',
-    secondary2: '$indigoA2',
-    secondary3: '$indigoA3',
-    secondary4: '$indigoA4',
-    secondary5: '$indigoA5',
-    secondary6: '$indigoA6',
-    secondary7: '$indigoA7',
-    secondary8: '$indigoA8',
-    secondary9: '$indigoA9',
-    secondary10: '$indigoA10',
-    secondary11: '$indigoA11',
-    secondary12: '$indigoA12',
+    secondary1: '$violetA1',
+    secondary2: '$violetA2',
+    secondary3: '$violetA3',
+    secondary4: '$violetA4',
+    secondary5: '$violetA5',
+    secondary6: '$violetA6',
+    secondary7: '$violetA7',
+    secondary8: '$violetA8',
+    secondary9: '$violetA9',
+    secondary10: '$violetA10',
+    secondary11: '$violetA11',
+    secondary12: '$violetA12',
 
     //Gray
     gray1: '$slate1',
@@ -288,7 +289,7 @@ export const darkTheme = createTheme({
     gray11: '$slate11',
     gray12: '$slate12',
 
-    accent: '#2517FF',
+    accent: '#7000FF',
 
     neutralBgSubtle: '$gray3',
     neutralBg: '$gray1',

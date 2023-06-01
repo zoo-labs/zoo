@@ -60,7 +60,12 @@ const Navbar = () => {
         <Flex align="center">
           <Link href="/">
             <Box css={{ width: 34, cursor: 'pointer' }}>
-              <img src="/ZooLogo.svg" style={{ width: '100%' }} />
+              <Image
+                src="/zooLogo.svg"
+                width={34}
+                height={39}
+                alt="ZOO"
+              />
             </Box>
           </Link>
         </Flex>
@@ -93,13 +98,20 @@ const Navbar = () => {
       <Box css={{ flex: 1 }}>
         <Flex align="center">
           <Link href="/">
-            <Box css={{ width: 64, marginTop: 25 ,cursor: 'pointer' }}>
+            <Box css={{ width: 112, cursor: 'pointer' }}>
               {theme == 'dark' ? (
-                <img src="/ZooLogo.svg" style={{ width: '100%' }} />
+                <Image
+                  src="/zooLogo.svg"
+                  width={112}
+                  height={36}
+                  alt="ZOO"
+                />
               ) : (
-                <img
-                  src="/ZooLogo.svg"
-                  style={{ width: '100%' }}
+                <Image
+                  src="/zooLogoLight.svg"
+                  width={112}
+                  height={36}
+                  alt="ZOO"
                 />
               )}
             </Box>
@@ -119,10 +131,10 @@ const Navbar = () => {
               </NavItem>
             </Link>
             <Link href="/portfolio">
-              <NavItem active={router.pathname == '/portfolio'}>Sell</NavItem>
+              <NavItem active={router.pathname == '/portfolio'}>Trade</NavItem>
             </Link>
-            <Link href="https://docs.reservoir.tools/docs">
-              <NavItem active={false}>Docs</NavItem>
+            <Link href="https://zoo.ngo">
+              <NavItem active={false}>Foundation</NavItem>
             </Link>
           </Flex>
         </Flex>

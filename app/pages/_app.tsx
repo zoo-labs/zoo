@@ -2,6 +2,7 @@ import AnalyticsProvider, {
   initializeAnalytics,
 } from 'components/AnalyticsProvider'
 initializeAnalytics()
+import ErrorTrackingProvider from 'components/ErrorTrackingProvider'
 
 import { Inter } from 'next/font/google'
 import type { AppContext, AppProps } from 'next/app'
@@ -49,7 +50,7 @@ const { chains, provider } = configureChains(supportedChains, [
 ])
 
 const { connectors } = getDefaultWallets({
-  appName: 'Zoo Market',
+  appName: process.env.NEXT_PUBLIC_APP_NAME,
   chains,
 })
 
@@ -80,7 +81,9 @@ function AppWrapper(props: AppProps & { baseUrl: string }) {
       <WagmiConfig client={wagmiClient}>
         <ChainContextProvider>
           <AnalyticsProvider>
-            <MyApp {...props} />
+            <ErrorTrackingProvider>
+              <MyApp {...props} />
+            </ErrorTrackingProvider>
           </AnalyticsProvider>
         </ChainContextProvider>
       </WagmiConfig>
@@ -157,6 +160,7 @@ function MyApp({
                 active: marketplaceChain.id === id,
               }
             }),
+            logLevel: 4,
             source: source,
             normalizeRoyalties: NORMALIZE_ROYALTIES,
             //CONFIGURABLE: Set your marketplace fee and recipient, (fee is in BPS)

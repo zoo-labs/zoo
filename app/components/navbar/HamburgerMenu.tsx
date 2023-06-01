@@ -66,7 +66,12 @@ const HamburgerMenu = () => {
         >
           <Link href="/">
             <Box css={{ width: 34, cursor: 'pointer' }}>
-              <img src="/ZooLogo.svg" style={{ width: '100%' }} />
+              <Image
+                src="/zooLogo.svg"
+                width={34}
+                height={39}
+                alt="ZOO"
+              />
             </Box>
           </Link>
           <RadixDialog.Close>
@@ -161,7 +166,7 @@ const HamburgerMenu = () => {
               >
                 <Text style="subtitle1">Portfolio</Text>
                 <Text style="body3" color="subtle">
-                  Manage your items, collections, listings and offers
+                  Manage your digital animals, collections, listings and offers
                 </Text>
               </Flex>
             </Link>
@@ -233,7 +238,7 @@ const HamburgerMenu = () => {
                 </Text>
               </Link>
               <Anchor
-                href="https://docs.reservoir.tools/docs"
+                href="https://zoo.ngo"
                 target="_blank"
                 css={{
                   borderBottom: '1px solid $gray4',
@@ -243,7 +248,7 @@ const HamburgerMenu = () => {
                   width: '100%',
                 }}
               >
-                <Text style="subtitle1">Docs</Text>
+                <Text style="subtitle1">Foundation</Text>
               </Anchor>
             </Flex>
             <Box>
