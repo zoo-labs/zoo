@@ -1,12 +1,12 @@
 {
     "name": "@zoolabs/sdk",
     "version": "0.10.2",
-    "description": "An SDK that can be used in any javascript/typescript context to easily interact with Reservoir liquidity APIs",
+    "description": "An SDK that can be used in any javascript/typescript context to easily interact with Zoo liquidity APIs",
     "source": "src/index.ts",
     "main": "dist/index.js",
     "module": "dist/index.module.js",
     "types": "dist/index.d.ts",
-    "author": "Reservoir Protocol",
+    "author": "Zoo Protocol",
     "license": "MIT",
     "files": [
         "dist"
@@ -26,9 +26,9 @@
     "sideEffects": false,
     "keywords": [
         "nft",
-        "reservoir",
-        "reservoir-sdk",
-        "reservoirkit",
+        "zoo",
+        "zoo-sdk",
+        "zoolabs",
         "protocol",
         "sdk"
     ],
