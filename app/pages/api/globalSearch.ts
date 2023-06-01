@@ -22,7 +22,7 @@ type Collection = NonNullable<
 >[0]
 
 export const config = {
-  runtime: 'edge',
+  runtime: 'experimental-edge',
 }
 
 export default async function handler(req: Request) {

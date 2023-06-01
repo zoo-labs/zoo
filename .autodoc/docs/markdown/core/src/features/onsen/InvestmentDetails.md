@@ -1,0 +1,22 @@
+[View code on GitHub](zoo-labs/zoo/blob/master/core/src/features/onsen/InvestmentDetails.tsx)
+
+The `InvestmentDetails` component is a React functional component that displays information about a particular investment in a farming pool. The component takes a single prop `farm`, which is an object containing information about the farming pool. 
+
+The component imports several hooks and components from various packages and files. The `useLingui` hook and `Typography` component are imported from the `@lingui` package and are used for internationalization. The `Image` component is imported from the `../../components/Image` file and is used to display images. The `useKashiPair` hook is imported from the `../kashi/context` file and is used to get information about a Kashi pair. The `useActiveWeb3React` hook is imported from the `../../hooks` file and is used to get information about the active Web3 connection. The `CurrencyAmount`, `JSBI`, `Token`, `USDC`, and `ZERO` objects are imported from the `@zoolabs/zdk` package and are used for currency calculations. The `getAddress` function is imported from the `@ethersproject/address` package and is used to get the address of a contract. The `PairType` enum is imported from the `./enum` file and is used to determine the type of farming pool. The `usePendingSushi` and `useUserInfo` hooks are imported from the `./hooks` file and are used to get information about pending Sushi rewards and user information, respectively. The `easyAmount` and `formatNumber` functions are imported from the `../../functions` file and are used for formatting numbers. The `BigNumber` object is imported from the `@ethersproject/bignumber` package and is used for big number calculations. The `usePendingReward` and `useMasterChef` hooks are imported from the `./usePendingReward` and `./useMasterChef` files, respectively, and are used to get information about pending rewards and the MasterChef contract.
+
+The component renders a div that contains two sections: one for displaying information about the user's deposits and one for displaying information about the user's rewards. The deposits section displays the amount of liquidity tokens staked by the user, the value of the staked tokens in USD, and the amount of each token staked. The rewards section displays the amount of pending Sushi and other rewards, the value of the pending rewards in USD, and a button to harvest the rewards.
+
+The component uses several hooks to get the necessary information for rendering the deposit and reward sections. The `useKashiPair` hook is used to get information about a Kashi pair, which is used to calculate the amount of KMP staked by the user. The `useUserInfo` hook is used to get information about the user's staked amount, which is used to calculate the amount of each token staked. The `usePendingReward` and `usePendingSushi` hooks are used to get information about the user's pending rewards. The `useMasterChef` hook is used to get the `harvest` function, which is called when the user clicks the harvest button.
+
+The component also uses several functions to calculate the necessary values for rendering the deposit and reward sections. The `onHarvest` function is called when the user clicks the harvest button and calls the `harvest` function from the `useMasterChef` hook. The `positionFiatValue` function calculates the value of the staked tokens in USD. The `rewardValue` function calculates the value of the pending rewards in USD.
+
+Overall, the `InvestmentDetails` component is a reusable component that can be used to display information about a particular investment in a farming pool. It uses several hooks and functions to get and calculate the necessary information for rendering the deposit and reward sections.
+## Questions: 
+ 1. What is the purpose of the `InvestmentDetails` component?
+- The `InvestmentDetails` component is used to display information about a particular investment, including the user's deposits, rewards, and details about the investment pair.
+
+2. What external libraries and APIs are being used in this code?
+- The code is using several external libraries and APIs, including Lingui for internationalization, Next.js for routing, and the ZDK library for working with tokens and currencies.
+
+3. What is the difference between `PairType.KASHI` and `PairType.SWAP`?
+- `PairType.KASHI` and `PairType.SWAP` are two different types of pairs that can be used for investments. Kashi pairs are used for lending and borrowing, while swap pairs are used for trading one token for another.
