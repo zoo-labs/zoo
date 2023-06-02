@@ -4,7 +4,7 @@ import AnalyticsProvider, {
 initializeAnalytics()
 import ErrorTrackingProvider from 'components/ErrorTrackingProvider'
 
-import { Inter } from 'next/font/google'
+import { Inter } from '@next/font/google'
 import type { AppContext, AppProps } from 'next/app'
 import { default as NextApp } from 'next/app'
 import { ThemeProvider, useTheme } from 'next-themes'
@@ -50,7 +50,7 @@ const { chains, provider } = configureChains(supportedChains, [
 ])
 
 const { connectors } = getDefaultWallets({
-  appName: process.env.NEXT_PUBLIC_APP_NAME,
+  appName: 'Reservoir Marketplace',
   chains,
 })
 
