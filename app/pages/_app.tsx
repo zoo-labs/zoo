@@ -49,7 +49,7 @@ const { chains, provider } = configureChains(supportedChains, [
 ])
 
 const { connectors } = getDefaultWallets({
-  appName: 'Reservoir Marketplace',
+  appName: 'Zoo Market',
   chains,
 })
 
