@@ -1,18 +1,26 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import dynamic from "next/dynamic";
+const ModelViewer = dynamic(() => import("@/components/ModelViewer"), {
+  ssr: false,
+});
 function Detail() {
   return (
     <div>
     <div className="bg-black xl:px-56 lg:px-40 px-32 max-md:hidden">
       <div className='flex items-center justify-between py-20 px-16 space-x-16'>
         <div className='md:w-1/2 max-md:absolute max-md:w-4/5 max-md:right-0 max-md:z-0'>
-            <Image
+            {/* <Image
                 className='w-4/5'
                 src='/images/red_wolf.png'
                 width='800'
                 height='800'
                 alt=''
-            />
+            /> */}
+            <ModelViewer className='w-4/5 aspect-square border rounded-xl p-4'
+              usdz="/models/Wolf/WOLF_ADULT.usdz"
+              glb="/models/Wolf/WOLF_ADULT.glb"
+            ></ModelViewer>
         </div>
         <div className='w-1/2 max-md:w-full max-md:z-10 max-md:pt-[280px] flex flex-col  max-md:pl-15 max-md:pr-15 pl-10 xl:pl-16 pr-8'>
             <p className='text-white md:text-sm lg:text-md xl:text-xl'>ENDANGERED SPECIES WE SUPPORT</p>

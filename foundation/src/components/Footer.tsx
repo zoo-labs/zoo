@@ -28,7 +28,7 @@ function Footer() {
         </div>
         <div className='flex flex-col space-y-8'>
             <Link href="/collect" className='text-lg text-white'>Digital Collectibles</Link>
-            <Link href="/animals/red_wolf" className='text-lg text-white'>Red Wolf</Link>
+            <Link href="/animals/red_wolf"  className='text-lg text-white'>Red Wolf</Link>
             <Link href="/animals/nubian_giraffe" className='text-lg text-white'>Nubian Giraffe</Link>
             <Link href="/animals/amur_leopard" className='text-lg text-white'>Amur Leopard</Link>
             <Link href="/animals/sumatran_elephant" className='text-lg text-white'>Sumatran Elephant</Link>
