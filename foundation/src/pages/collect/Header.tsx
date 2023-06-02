@@ -19,7 +19,7 @@ function Header() {
       </div>
       <div className='flex max-md:flex-col items-center justify-center md:space-x-8 max-md:space-y-8 collect-link'>
       <Link href="/animals/red_wolf" className="text-white px-5 py-2  text-lg font-medium">Red Wolf</Link>
-        <Link href="/animals/nubian_giraffe" className="text-white px-5 py-2 active text-lg font-medium">Nubian Giraffe</Link>
+        <Link href="/animals/nubian_giraffe" className="text-white px-5 py-2  text-lg font-medium">Nubian Giraffe</Link>
         <Link href="/animals/amur_leopard" className="text-white px-5 py-2  text-lg font-medium">Amur Leopard</Link>
         <Link href="/animals/pygmy_hippo" className="text-white px-5 py-2  text-lg font-medium">Pygmy Hippo</Link>
         <Link href="/animals/siberian_tiger" className="text-white px-5 py-2  text-lg font-medium">Siberian Tiger</Link>
