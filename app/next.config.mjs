@@ -1,8 +1,21 @@
+import { withSentryConfig } from '@sentry/nextjs'
+
+const sentryWebpackPluginOptions = {
+  org: process.env.SENTRY_ORG,
+  project: 'javascript-nextjs',
+  silent: true,
+}
+
 /**
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  transpilePackages: ['@reservoir0x/reservoir-kit-ui', "@zoolabs/ui", "@zoolabs/sdk"],
+  sentry: {
+    hideSourceMaps: false,
+  },
+  experimental: {
+    transpilePackages: ['@reservoir0x/reservoir-kit-ui'],
+  },
   async headers() {
     return [
       {
@@ -22,4 +35,4 @@ const nextConfig = {
   },
 }
 
-export default nextConfig
+export default withSentryConfig(nextConfig, sentryWebpackPluginOptions)
