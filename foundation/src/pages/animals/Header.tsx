@@ -2,24 +2,29 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import ReactCardFlip from "react-card-flip";
-function Header() {
+function Header({title,content,front,back}: {
+  content: string;
+  title: string;
+  front: string;
+  back: string;
+}) {
   const [flip, setFlip] = useState(false);
   return (
-    <div className="bg-black md:px-64">
+    <div className="bg-black md:px-24 lg:px-32 xl:px-40 2xl:px-64">
       <div className="flex max-md:flex-col items-center justify-between py-20">
-        <div className='relative md:w-1/2 max-md:w-full md:pr-32'>
+        <div className='relative md:w-1/2 max-md:w-full 2xl:pr-32 xl:pr-28 lg:pr-24 md:pr-16'>
             <ReactCardFlip isFlipped={flip} 
               flipDirection="horizontal">
               <Image
                   className='intro-bg border rounded-xl p-3'
-                  src="/images/trading_card1.png"
+                  src={front}
                   width='1000'
                   height='1000'
                   alt=''
               />
               <Image
                   className='intro-bg border rounded-xl p-3'
-                  src="/images/trading_card2.png"
+                  src={back}
                   width='1000'
                   height='1000'
                   alt=''
@@ -32,8 +37,8 @@ function Header() {
             </div>
         </div>
         <div className='w-1/2 max-md:w-full flex flex-col justify-between max-md:px-4'>
-            <h1 className='text-white md:text-5xl xl:text-6xl max-md:text-3xl max-md:my-5 md:pb-16'>Amur Leopard</h1>
-            <p className='text-white md:text-lg lg:text-xl xl:text-2xl max-md:pb-10 md:pb-10'>The Amur leopard is one of 10 subspecies of leopard, and one of the world’s rarest cats, with an estimated population of under 70 individuals left in the wild. They all live in a small area that hugs Russia’s far eastern border with China.<br /><br />Many think of leopards stalking savannas of Africa but in the Russian Far East, a rare subspecies has adapted to life in the temperate forests that make up the northern-most part of the species’ range.</p>
+            <h1 className='text-white md:text-5xl xl:text-6xl max-md:text-3xl max-md:my-5 md:pb-16'>{title}</h1>
+            <p className='text-white md:text-lg lg:text-xl xl:text-2xl max-md:pb-10 md:pb-10' dangerouslySetInnerHTML={{__html: content}}></p>
             
             <div className='flex items-center md:pt-10 space-x-8'>
                 <Link
@@ -53,13 +58,13 @@ function Header() {
         
       </div>
       <div className='max-md:hidden flex items-center justify-center space-x-8 collect-link'>
-        <Link href="/animals/red_wolf" className="text-white px-3 py-2  text-sm font-medium">Red Wolf</Link>
-        <Link href="/animals/nubian_giraffe" className="text-white px-3 py-2 active text-sm font-medium">Nubian Giraffe</Link>
-        <Link href="/animals/amur_leopard" className="text-white px-3 py-2  text-sm font-medium">Amur Leopard</Link>
-        <Link href="/animals/pygmy_hippo" className="text-white px-3 py-2  text-sm font-medium">Pygmy Hippo</Link>
-        <Link href="/animals/siberian_tiger" className="text-white px-3 py-2  text-sm font-medium">Siberian Tiger</Link>
-        <Link href="/animals/sumatran_elephant" className="text-white px-3 py-2  text-sm font-medium">Sumatran Elephant</Link>
-        <Link href="/animals/javen_rhino" className="text-white px-3 py-2  text-sm font-medium">Javan Rhino</Link>
+        <Link href="/animals/red_wolf" className={`text-white px-3 py-2 ${ title == "Red Wolf" ? 'active' : ''} text-sm font-medium`}>Red Wolf</Link>
+        <Link href="/animals/nubian_giraffe" className={`text-white px-3 py-2 ${ title == "Nubian Giraffe" ? 'active' : ''} text-sm font-medium`}>Nubian Giraffe</Link>
+        <Link href="/animals/amur_leopard" className={`text-white px-3 py-2 ${ title == "Amur Leopard" ? 'active' : ''} text-sm font-medium`}>Amur Leopard</Link>
+        <Link href="/animals/pygmy_hippo" className={`text-white px-3 py-2 ${ title == "Pygmy Hippo" ? 'active' : ''} text-sm font-medium`}>Pygmy Hippo</Link>
+        <Link href="/animals/siberian_tiger" className={`text-white px-3 py-2 ${ title == "Siberian Tiger" ? 'active' : ''} text-sm font-medium`}>Siberian Tiger</Link>
+        <Link href="/animals/sumatran_elephant" className={`text-white px-3 py-2 ${ title == "Sumatran Elephant" ? 'active' : ''} text-sm font-medium`}>Sumatran Elephant</Link>
+        <Link href="/animals/javen_rhino" className={`text-white px-3 py-2 ${ title == "Javan Rhino" ? 'active' : ''} text-sm font-medium`}>Javan Rhino</Link>
       </div>
     </div>
   );
