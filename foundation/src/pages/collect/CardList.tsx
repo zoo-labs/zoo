@@ -2,22 +2,22 @@ import Image from 'next/image';
 function CardList() {
     const cardlist = [
         {
-            img: "/images/trading_card2.png"
+            card: "/videos/TIGER_Card_front.webm"
         },
         {
-            img: "/images/trading_card3.png"
+            card: "/videos/Redwolf_Card_front.webm"
         },
         {
-            img: "/images/trading_card4.png"
+            card: "/videos/GIRAFFE_Card_Front.webm"
         },
         {
-            img: "/images/trading_card5.png"
+            card: "/videos/elephant_card_front.webm"
         },
         {
-            img: "/images/trading_card5.png"
+            card: "/videos/RHINO_Card_front.webm"
         },
         {
-            img: "/images/trading_card5.png"
+            card: "/videos/Hippo_Card_front.webm"
         },
       ];
   return (
@@ -25,13 +25,16 @@ function CardList() {
       <div className='grid grid-cols-3 gap-12 xl:px-40 lg:px-32 max-md:px-4'>
       {cardlist.map((data, index) => (
         <div className=' flex flex-col items-center justify-between'>
-            <Image
+            {/* <Image
                 className='w-full'
-                src={data.img}
+                src={data.card}
                 width='800'
                 height='800'
                 alt=''
-            />
+            /> */}
+            <video autoPlay loop className="border rounded-xl p-1" src={data.card}>
+                {/* <source src={front} /> */}
+            </video>
         </div>
       ))}
       </div>

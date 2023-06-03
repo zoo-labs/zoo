@@ -15,7 +15,7 @@ function Header({title,content,front,back}: {
         <div className='relative md:w-1/2 max-md:w-full 2xl:pr-32 xl:pr-28 lg:pr-24 md:pr-16'>
             <ReactCardFlip isFlipped={flip} 
               flipDirection="horizontal">
-              <Image
+              {/* <Image
                   className='intro-bg border rounded-xl p-3'
                   src={front}
                   width='1000'
@@ -28,7 +28,13 @@ function Header({title,content,front,back}: {
                   width='1000'
                   height='1000'
                   alt=''
-              />
+              /> */}
+              <video autoPlay loop className="border rounded-xl p-1" src={front}>
+                {/* <source src={front} /> */}
+              </video>
+              <video autoPlay loop className="border rounded-xl p-1" src={back}>
+                {/* <source src={back} /> */}
+              </video>
             </ReactCardFlip>
             <div className='absolute top-4 md:right-36 cursor-pointer max-md:right-4 w-[45px] h-[45px] flex justify-center bg-white rounded-full' onClick={() => setFlip(!flip)}>
                 <svg width="15" height="45" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">

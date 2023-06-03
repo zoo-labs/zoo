@@ -6,13 +6,16 @@ function TradingCard() {
       <h1 className='text-white max-md:text-3xl max-md:block hidden pb-8'>Select any trading card to start learning.</h1>
       <div className="flex items-center justify-between md:pt-20 flex-row-reverse">
         <div className='md:w-1/2 md:pl-32 pl-8'>
-            <Image
+            {/* <Image
                 className='intro-bg'
                 src="/images/trading_card1.png"
                 width='1000'
                 height='1000'
                 alt=''
-            />
+            /> */}
+            <video autoPlay loop className="border rounded-xl p-1" src="/videos/Leopard_Card_Front.webm">
+                {/* <source src={front} /> */}
+            </video>
         </div>
         <div className='w-1/2 max-md:w-full flex flex-col justify-between'>
             <h1 className='text-white md:text-5xl xl:text-6xl max-md:text-3xl max-md:my-5 md:pb-16 max-md:hidden'>Select any trading card to start learning.</h1>
