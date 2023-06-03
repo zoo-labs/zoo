@@ -1,5 +1,8 @@
 import Link from 'next/link';
-import Image from 'next/image';
+import dynamic from "next/dynamic";
+const ModelViewer = dynamic(() => import("@/components/ModelViewer"), {
+  ssr: false,
+});
 function Header() {
   return (
     <div className="bg-black">
@@ -7,14 +10,18 @@ function Header() {
         <div className='w-7/12 max-md:w-full md:pl-52 max-md:px-8 md:pr-8 md:pb-32'>
             <h1 className='text-white md:text-7xl xl:text-9xl max-md:text-5xl max-md:my-5'>Animals we support.</h1>
         </div>
-        <div className='md:w-5/12 max-md:ml-16 md:pr-32 '>
-            <Image
+        <div className='md:w-5/12 max-md:ml-16 '>
+            {/* <Image
                 className='intro-bg float-right'
                 src='/images/collect-elephant.png'
                 width='1000'
                 height='1000'
                 alt=''
-            />
+            /> */}
+            <ModelViewer className='float-right aspect-square'
+              usdz="/models/Elephant/ELEPHANT_ADULT.usdz"
+              glb="/models/Elephant/ELEPHANT_ADULT.glb"
+            ></ModelViewer>
         </div>
       </div>
       <div className='flex max-md:flex-col items-center justify-center md:space-x-8 max-md:space-y-8 collect-link'>

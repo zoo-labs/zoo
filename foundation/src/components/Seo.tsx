@@ -6,9 +6,9 @@ const defaultMeta = {
   title: 'Zoo Foundation',
   siteName: 'Zoo Foundation',
   description:
-    'A starter for Next.js, Tailwind CSS, and TypeScript with Absolute Import, Seo, Link component, pre-configured with Husky',
+    "Zoo Labs Foundation's mission is to protect our planet's precious wildlife biodiversity through research, education, and collaboration with aligned charities.",
   /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
-  url: 'https://tsnext-tw.thcl.dev',
+  url: 'https://zoo.ngo/',
   type: 'website',
   robots: 'follow, index',
   /**
@@ -55,14 +55,14 @@ export default function Seo(props: SeoProps) {
       <meta property='og:site_name' content={meta.siteName} />
       <meta property='og:description' content={meta.description} />
       <meta property='og:title' content={meta.title} />
-      <meta name='image' property='og:image' content={meta.image} />
+      {/* <meta name='image' property='og:image' content={meta.image} /> */}
       {/* Twitter */}
       <meta name='twitter:card' content='summary_large_image' />
       {/* // !STARTERCONF Remove or change to your handle */}
       {/* <meta name='twitter:site' content='@th_clarence' /> */}
       <meta name='twitter:title' content={meta.title} />
       <meta name='twitter:description' content={meta.description} />
-      <meta name='twitter:image' content={meta.image} />
+      {/* <meta name='twitter:image' content={meta.image} /> */}
       {meta.date && (
         <>
           <meta property='article:published_time' content={meta.date} />
@@ -75,7 +75,7 @@ export default function Seo(props: SeoProps) {
           <meta
             name='author'
             property='article:author'
-            content='Theodorus Clarence'
+            content='Woo Bin'
           />
         </>
       )}
@@ -94,28 +94,5 @@ export default function Seo(props: SeoProps) {
 // !STARTERCONF this is the default favicon, you can generate your own from https://realfavicongenerator.net/
 // ! then replace the whole /public/favicon folder and favicon.ico
 const favicons: Array<React.ComponentPropsWithoutRef<'link'>> = [
-  {
-    rel: 'apple-touch-icon',
-    sizes: '180x180',
-    href: '/favicon/apple-touch-icon.png',
-  },
-  {
-    rel: 'icon',
-    type: 'image/png',
-    sizes: '32x32',
-    href: '/favicon/favicon-32x32.png',
-  },
-  {
-    rel: 'icon',
-    type: 'image/png',
-    sizes: '16x16',
-    href: '/favicon/favicon-16x16.png',
-  },
-  { rel: 'manifest', href: '/favicon/site.webmanifest' },
-  {
-    rel: 'mask-icon',
-    href: '/favicon/safari-pinned-tab.svg',
-    color: '#00e887',
-  },
-  { rel: 'shortcut icon', href: '/favicon/favicon.ico' },
+  { rel: 'shortcut icon', href: '/favicon/logo.png' },
 ];
