@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import Slider from 'react-slick';
-import Image from 'next/image';
-
+import dynamic from "next/dynamic";
+const ModelViewer = dynamic(() => import("@/components/ModelViewer"), {
+  ssr: false,
+});
+import animals from "@/pages/animals/animals.json";
 function Carosuel() {
   const settings = {
     dots: true,
@@ -12,25 +15,7 @@ function Carosuel() {
     autoplay: true,
     arrows: false
   };
-  const animals = [
-    {
-      title: "Nubian Giraffe",
-      img: "/images/giraffe.png"
-    },
-    {
-      title: "Amur Leopard",
-      img: "/images/leopard.png"
-    },
-    {
-      title: "Sumatran Elephant",
-      img: "/images/elephant.png"
-    },
-    {
-      title: "Siberian Tiger",
-      img: "/images/tiger.png"
-    }
-
-  ];
+  
   return (
     <div className="bg-black text-center md:px-52 px-6 pt-32">
         <p className='text-gray-300 text-lg md:text-center text-left'>Emotionally Intelligent</p>
@@ -40,13 +25,17 @@ function Carosuel() {
 
           {animals.map((data, index) => (
           <div>
-              <Image
+              {/* <Image
                   className='carousel-img m-auto w-1/2 max-md:w-full'
                   src={data.img}
                   width='800'
                   height='800'
                   alt=''
-              />
+              /> */}
+               <ModelViewer className='aspect-square'
+              usdz={data.avatars[2].usdz}
+              glb={data.avatars[2].glb}
+            ></ModelViewer>
           </div>
         ))}
         </Slider>
