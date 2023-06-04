@@ -98,18 +98,18 @@ const Navbar = () => {
       <Box css={{ flex: 1 }}>
         <Flex align="center">
           <Link href="/">
-            <Box css={{ width: 112, cursor: 'pointer' }}>
+            <Box css={{ width: 36, cursor: 'pointer' }}>
               {theme == 'dark' ? (
                 <Image
                   src="/zooLogo.svg"
-                  width={112}
+                  width={36}
                   height={36}
                   alt="ZOO"
                 />
               ) : (
                 <Image
                   src="/zooLogoLight.svg"
-                  width={112}
+                  width={36}
                   height={36}
                   alt="ZOO"
                 />
@@ -119,12 +119,15 @@ const Navbar = () => {
           <Box css={{ flex: 1, px: '$5', maxWidth: 460 }}>
             <GlobalSearch
               ref={searchRef}
-              placeholder="Search collections and addresses"
+              placeholder="Search collections"
               containerCss={{ width: '100%' }}
               key={router.asPath}
             />
           </Box>
           <Flex align="center" css={{ gap: '$5', mr: '$5' }}>
+          <Link href="https://zoo.ngo/animals">
+              <NavItem active={false}>Animals</NavItem>
+            </Link>
             <Link href="/collection-rankings">
               <NavItem active={router.pathname == '/collection-rankings'}>
                 Collections
@@ -132,9 +135,6 @@ const Navbar = () => {
             </Link>
             <Link href="/portfolio">
               <NavItem active={router.pathname == '/portfolio'}>Trade</NavItem>
-            </Link>
-            <Link href="https://zoo.ngo">
-              <NavItem active={false}>Foundation</NavItem>
             </Link>
           </Flex>
         </Flex>
