@@ -25,13 +25,13 @@ function Header() {
         </div>
       </div>
       <div className='flex max-md:flex-col items-center justify-center md:space-x-8 max-md:space-y-8 collect-link'>
-      <Link href="/animals/red_wolf" className="text-white px-5 py-2  text-lg font-medium">Red Wolf</Link>
-        <Link href="/animals/nubian_giraffe" className="text-white px-5 py-2  text-lg font-medium">Nubian Giraffe</Link>
-        <Link href="/animals/amur_leopard" className="text-white px-5 py-2  text-lg font-medium">Amur Leopard</Link>
-        <Link href="/animals/pygmy_hippo" className="text-white px-5 py-2  text-lg font-medium">Pygmy Hippo</Link>
-        <Link href="/animals/siberian_tiger" className="text-white px-5 py-2  text-lg font-medium">Siberian Tiger</Link>
-        <Link href="/animals/sumatran_elephant" className="text-white px-5 py-2  text-lg font-medium">Sumatran Elephant</Link>
-        <Link href="/animals/javen_rhino" className="text-white px-5 py-2  text-lg font-medium">Javan Rhino</Link>
+        <Link href="/animals/red_wolf" className="text-white px-5 py-2  text-lg font-medium"><a>Red Wolf</a></Link>
+        <Link href="/animals/nubian_giraffe" className="text-white px-5 py-2  text-lg font-medium"><a>Nubian Giraffe</a></Link>
+        <Link href="/animals/amur_leopard" className="text-white px-5 py-2  text-lg font-medium"><a>Amur Leopard</a></Link>
+        <Link href="/animals/pygmy_hippo" className="text-white px-5 py-2  text-lg font-medium"><a>Pygmy Hippo</a></Link>
+        <Link href="/animals/siberian_tiger" className="text-white px-5 py-2  text-lg font-medium"><a>Siberian Tiger</a></Link>
+        <Link href="/animals/sumatran_elephant" className="text-white px-5 py-2  text-lg font-medium"><a>Sumatran Elephant</a></Link>
+        <Link href="/animals/javen_rhino" className="text-white px-5 py-2  text-lg font-medium"><a>Javan Rhino</a></Link>
       </div>
     </div>
   );
