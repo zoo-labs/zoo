@@ -29,10 +29,9 @@ const GrabAnimal = ({ grabAnimal, grabAnimal2 }) => {
                       {_.icon && (
                         <Image
                           src={_.icon}
-                          width="100%"
-                          height="100%"
+                          width={100}
+                          height={100}
                           alt=""
-                          layout="fill"
                           className="md:object-cover"
                         />
                       )}
@@ -44,7 +43,7 @@ const GrabAnimal = ({ grabAnimal, grabAnimal2 }) => {
                     {_.title}
                   </p>
 
-                  <Link href="/coming-soon" passHref>
+                  <Link href="/coming-soon" passHref legacyBehavior>
                     <div className="px-5 py-3 text-[16px] font-semibold bg-black text-white flex items-center rounded-full w-max md:text-lg lg:px-16 hover:cursor-pointer mx-auto mt-4 md:mt-0">
                       <span className="">Buy Now</span>
                     </div>
@@ -62,10 +61,9 @@ const GrabAnimal = ({ grabAnimal, grabAnimal2 }) => {
                   {_.icon && (
                     <Image
                       src={_.icon}
-                      width="100%"
-                      height="100%"
                       alt=""
-                      layout="fill"
+                      width={100}
+                      height={100}
                       className="object-cover"
                     />
                   )}

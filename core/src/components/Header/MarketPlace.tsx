@@ -42,27 +42,29 @@ export default function Marketplace() {
               </Menu.Item> */}
               <Menu.Item>
                 {({ active }) => (
-                  <Link href="/market" passHref>
-                    <a
-                      className={`${
-                        active ? "bg-black text-white" : "text-white"
-                      } hover:text-green group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                    >
+                  <Link
+                    href="/market"
+                    passHref
+                    className={`${
+                      active ? "bg-black text-white" : "text-white"
+                    } hover:text-green group flex rounded-md items-center w-full px-2 py-2 text-sm`}>
+                    
                       All NFTs
-                    </a>
+                    
                   </Link>
                 )}
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <Link href="/coming-soon" passHref>
-                    <a
-                      className={`${
-                        active ? "bg-black text-white" : "text-white"
-                      } hover:text-green group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                    >
+                  <Link
+                    href="/coming-soon"
+                    passHref
+                    className={`${
+                      active ? "bg-black text-white" : "text-white"
+                    } hover:text-green group flex rounded-md items-center w-full px-2 py-2 text-sm`}>
+                    
                       Pools
-                    </a>
+                    
                   </Link>
                 )}
               </Menu.Item>

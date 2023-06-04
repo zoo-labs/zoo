@@ -132,7 +132,7 @@ const SingleDrop = ({}: AppProps & {
                           Coming Soon
                         </div>
                       ) : (
-                        <Link href={`/market/egg/${datum.id}`} passHref>
+                        <Link href={`/market/egg/${datum.id}`} passHref legacyBehavior>
                           <div className="flex items-center justify-center w-20 h-20 text-sm font-medium border-2 rounded-full cursor-pointer">
                             BUY
                           </div>
