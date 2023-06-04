@@ -13,7 +13,9 @@ const nextConfig = {
   sentry: {
     hideSourceMaps: false,
   },
-  transpilePackages: ['@reservoir0x/reservoir-kit-ui', "@zoolabs/ui", "@zoolabs/sdk"],
+  experimental: {
+    transpilePackages: ['@reservoir0x/reservoir-kit-ui', "@zoolabs/ui", "@zoolabs/sdk"],
+  },
   async headers() {
     return [
       {

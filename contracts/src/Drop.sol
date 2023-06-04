@@ -19,10 +19,10 @@ contract Drop is IDrop, Ownable {
 
     Counters.Counter public eggId;
 
- struct  DropData {
-    string image;
-    string description;
-  }
+    struct  DropData {
+        string image;
+        string description;
+    }
 
     // Title of drop
     string override public title;
@@ -82,7 +82,7 @@ contract Drop is IDrop, Ownable {
 
     function modifyDrop (string memory description, string memory image) public onlyOwner {
         dropInformation[title] = DropData({description: description, image: image});
-  }
+    }
 
     function getAdultHoodURIs(string memory name, IZoo.AdultHood stage) public view override returns(IMedia.MediaData memory){
         IZoo.URIs storage data = adultHoodURIs[name];
@@ -97,14 +97,13 @@ contract Drop is IDrop, Ownable {
         }
     }
 
-
     function totalSupply() public override view returns (uint256) {
         return eggId.current();
     }
 
     function getAllEggs() public view returns(Egg[] memory) {
         Egg[] memory availableEggs = new Egg[](eggId.current());
-        
+
         for (uint256 i = 0; i < eggId.current(); i++) {
             if(eggs[i + 1].exist == true){
                 availableEggs[i] = eggs[i + 1];
@@ -140,7 +139,6 @@ contract Drop is IDrop, Ownable {
     function eggStatus(uint256 egg, bool status) public onlyOwner {
         eggs[egg].exist = status;
     }
-
 
     // Add or configure a given rarity
     function setRarity(string memory name, uint256 probability, uint256 yields, uint256 boost) public onlyOwner {
@@ -430,6 +428,4 @@ contract Drop is IDrop, Ownable {
         uint256 randomNumber = uint256(keccak256(abi.encodePacked(block.number, msg.sender, block.timestamp))) % randomLimit;
         return randomNumber;
     }
-
-
 }
