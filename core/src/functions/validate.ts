@@ -11,7 +11,7 @@ import { getAddress } from '@ethersproject/address'
  * @param hexNumberString
  */
 export function isZero(hexNumberString: string): boolean {
-  return /^0x0*$/.test(hexNumberString)
+  return /^0x0*$/.test(hexNumberString);
 }
 export const isEmptyObj = (obj: any) =>
   (obj !== null || obj !== undefined) &&

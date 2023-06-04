@@ -107,10 +107,12 @@ const Cart = () => {
             </div>
 
             {CartItems && CartItems.length > 0 && (
-              <Link href="/store/checkout/shipping">
-                <a className="block w-full px-6 py-4 mt-8 font-semibold text-center text-black rounded-sm bg-green">
+              <Link
+                href="/store/checkout/shipping"
+                className="block w-full px-6 py-4 mt-8 font-semibold text-center text-black rounded-sm bg-green">
+                
                   Checkout
-                </a>
+                
               </Link>
             )}
           </div>

@@ -269,9 +269,7 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                         <Text style="body1" color="subtle">
                           Chain{' '}
                         </Text>
-                        <Link
-                          href={`/collection-rankings?chain=${router.query.chain}`}
-                        >
+                        <Link href={`/collection-rankings?chain=${router.query.chain}`} legacyBehavior>
                           <Text style="body1">{chain}</Text>
                         </Link>
                       </Box>
@@ -567,7 +565,7 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
         <Box />
       )}
     </Layout>
-  )
+  );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

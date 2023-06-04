@@ -11,12 +11,12 @@ function Footer() {
             <p className='text-lg text-white'>ZOO FOUNDATION</p>
             <p className='text-md text-white'>All rights reserved.© 2023 Zoo Labs Foundation. </p>
             <div className='flex items-center space-x-2 text-white'>
-                <Link href="#"> <FaTwitter /> </Link>
-                <Link href="#"> <FaTelegram /> </Link>
-                <Link href="#"> <FaInstagram /> </Link>
-                <Link href="#"> <FaDiscord /> </Link>
-                <Link href="#"> <BsMedium /> </Link>
-                <Link href="#"> <FaYoutube /> </Link>
+                <Link href="#" legacyBehavior> <FaTwitter /> </Link>
+                <Link href="#" legacyBehavior> <FaTelegram /> </Link>
+                <Link href="#" legacyBehavior> <FaInstagram /> </Link>
+                <Link href="#" legacyBehavior> <FaDiscord /> </Link>
+                <Link href="#" legacyBehavior> <BsMedium /> </Link>
+                <Link href="#" legacyBehavior> <FaYoutube /> </Link>
             </div>
         </div>
         <div className='flex flex-col space-y-8'>
@@ -58,12 +58,12 @@ function Footer() {
             <Link href="/donation" className='text-lg text-white'>Donate</Link>
         </div>
         <div className='flex items-center space-x-2 text-white pt-10'>
-                <Link href="#"> <FaTwitter /> </Link>
-                <Link href="#"> <FaTelegram /> </Link>
-                <Link href="#"> <FaInstagram /> </Link>
-                <Link href="#"> <FaDiscord /> </Link>
-                <Link href="#"> <BsMedium /> </Link>
-                <Link href="#"> <FaYoutube /> </Link>
+                <Link href="#" legacyBehavior> <FaTwitter /> </Link>
+                <Link href="#" legacyBehavior> <FaTelegram /> </Link>
+                <Link href="#" legacyBehavior> <FaInstagram /> </Link>
+                <Link href="#" legacyBehavior> <FaDiscord /> </Link>
+                <Link href="#" legacyBehavior> <BsMedium /> </Link>
+                <Link href="#" legacyBehavior> <FaYoutube /> </Link>
         </div>
         <hr className='w-full bg-white my-4'/>
         <div className='flex items-center space-x-16'>

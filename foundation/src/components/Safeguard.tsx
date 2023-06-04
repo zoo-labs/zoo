@@ -23,7 +23,10 @@ function Safeguard() {
         <div className='flex  max-md:flex-col xl:px-56 lg:px-40 md:px-32 max-md:px-4'>
           <div className='w-1/2 max-md:w-full flex flex-col md:pr-32'>
             <h1 className='text-white md:text-4xl xl:text-6xl max-md:text-5xl pb-12'>We safeguard wildlife and restore habitats.</h1>
-            <Link href='#' className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'>
+            <Link
+              href='#'
+              className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'
+              legacyBehavior>
                 <span className='pr-[15px]'>Short video link</span>
                 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M7.40173 12.0243L11.6111 9.44867L7.40173 7.10596V12.0243Z" fill="#F5F9FC"/>

@@ -198,7 +198,7 @@ const OfferTableRow: FC<OfferTableRowProps> = ({
             <Link
               href={`/portfolio/${offer.maker}`}
               style={{ lineHeight: '14.5px' }}
-            >
+              legacyBehavior>
               <Text
                 style="subtitle2"
                 css={{
@@ -319,5 +319,5 @@ const OfferTableRow: FC<OfferTableRowProps> = ({
         </Text>
       </Flex>
     </TableRow>
-  )
+  );
 }

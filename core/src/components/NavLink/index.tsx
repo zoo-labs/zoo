@@ -21,12 +21,12 @@ const NavLink = ({ children, exact = false, activeClassName = 'text-high-emphesi
   // console.log({ asPath, pathname, route, query })
 
   return (
-    <Link href={props.href} {...props}>
+    <Link href={props.href} {...props} legacyBehavior>
       {React.cloneElement(child, {
         className: className || null,
       })}
     </Link>
-  )
+  );
 }
 
 export default NavLink

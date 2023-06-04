@@ -61,7 +61,7 @@ const Footer = () => {
         <div className="flex items-start justify-between flex-auto px-4 mx-auto max-w-7xl">
           <div className="flex items-start justify-between px-6 py-16 basis-2/3 ">
             <div>
-              <Link href="/" passHref>
+              <Link href="/" passHref legacyBehavior>
                 <Image
                   src="/img/logo.svg"
                   width={80}
@@ -115,12 +115,12 @@ const Footer = () => {
               </div> */}
               <div className="mb-2">
                 <Link href="/wallet">
-                  <a>Marketplace</a>
+                  Marketplace
                 </Link>
               </div>
               <div className="mb-2">
                 <Link href="/market">
-                  <a>Chart</a>
+                  Chart
                 </Link>
               </div>
               <div className="mb-2">
@@ -134,7 +134,7 @@ const Footer = () => {
               </div>
               <div className="mb-2">
                 <Link href="/about">
-                  <a>About</a>
+                  About
                 </Link>
               </div>
               {/* <div className="mb-2">
@@ -170,27 +170,27 @@ const Footer = () => {
             </div> */}
             <div className="mb-2">
               <Link href="https://zoolabs.gitbook.io/whitepaper/introduction/what-is-zoo">
-                <a>Whitepaper</a>
+                Whitepaper
               </Link>
             </div>
             <div className="mb-2">
               <Link href="/blog">
-                <a>Blogs</a>
+                Blogs
               </Link>
             </div>
             <div className="mb-2">
               <Link href="/faqs">
-                <a>FAQs</a>
+                FAQs
               </Link>
             </div>
             <div className="mb-2">
               <Link href="/animal-list">
-                <a>Our Animals</a>
+                Our Animals
               </Link>
             </div>
             <div className="mb-2">
               <Link href="/partnerships">
-                <a>Partnerships</a>
+                Partnerships
               </Link>
             </div>
             {/* <div className="mb-0">

@@ -153,7 +153,7 @@ const OfferTableRow: FC<OfferTableRowProps> = ({ offer, isOwner, mutate }) => {
                 ? `/collection/${routePrefix}/${offer?.contract}${attributeQueryParam}`
                 : `/collection/${routePrefix}/${offer?.contract}/${criteriaData?.token?.tokenId}`
             }
-          >
+            legacyBehavior>
             <Flex align="center">
               <Img
                 css={{
@@ -255,7 +255,7 @@ const OfferTableRow: FC<OfferTableRowProps> = ({ offer, isOwner, mutate }) => {
           ) : null}
         </Flex>
       </Flex>
-    )
+    );
   }
 
   return (
@@ -270,7 +270,7 @@ const OfferTableRow: FC<OfferTableRowProps> = ({ offer, isOwner, mutate }) => {
               ? `/collection/${routePrefix}/${offer?.contract}${attributeQueryParam}`
               : `/collection/${routePrefix}/${offer?.contract}/${criteriaData?.token?.tokenId}`
           }
-        >
+          legacyBehavior>
           <Flex align="center">
             <Img
               css={{
@@ -385,7 +385,7 @@ const OfferTableRow: FC<OfferTableRowProps> = ({ offer, isOwner, mutate }) => {
         </Flex>
       </TableCell>
     </TableRow>
-  )
+  );
 }
 
 const headings = ['Items', 'Offer Amount', 'Expiration', 'Marketplace', '']

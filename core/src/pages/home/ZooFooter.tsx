@@ -177,17 +177,17 @@ export default ZooFooter;
 const CustomLink = ({ link, title }) => {
   return (
     <Link href={link}>
-      <a>{title}</a>
+      {title}
     </Link>
   );
 };
 
 const CustomIconLink = ({ link, icon }) => {
   return (
-    <Link href={link}>
-      <a target={"_blank"} rel="noopenner noreferrer">
-        <Image src={icon} width={16} height={16} alt="" />
-      </a>
-    </Link>
+    (<Link href={link} target={"_blank"} rel="noopenner noreferrer">
+
+      <Image src={icon} width={16} height={16} alt="" />
+
+    </Link>)
   );
 };

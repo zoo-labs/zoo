@@ -49,7 +49,7 @@ const Info = () => {
           <div className="lg:w-[60%]">
             <nav className="flex gap-4 pb-4 border-b border-gray-600 cursor-pointer">
               <Link href="/store/checkout/cart">
-                <a>Cart {">"}</a>
+                Cart{">"}
               </Link>
               <p className="cursor-pointer text-green">Shipping {">"}</p>
               <p>Payment {">"}</p>
@@ -159,15 +159,19 @@ const Info = () => {
             </div>
             {/* Form Buttons */}
             <div className="flex flex-col gap-6 mt-8 lg:flex-row">
-              <Link href="/store/checkout/payment">
-                <a className="px-6 py-4 font-semibold text-black rounded-sm bg-green">
+              <Link
+                href="/store/checkout/payment"
+                className="px-6 py-4 font-semibold text-black rounded-sm bg-green">
+                
                   Continue to Payments
-                </a>
+                
               </Link>
-              <Link href="/store/cart">
-                <a className="px-6 py-4 font-semibold text-white bg-transparent rounded-sm">
+              <Link
+                href="/store/cart"
+                className="px-6 py-4 font-semibold text-white bg-transparent rounded-sm">
+                
                   Return to cart
-                </a>
+                
               </Link>
             </div>
           </div>

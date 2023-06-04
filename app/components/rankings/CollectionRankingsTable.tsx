@@ -104,7 +104,7 @@ const RankingsTableRow: FC<RankingsTableRowProps> = ({
         href={`/collection/${routePrefix}/${collection.id}`}
         style={{ display: 'inline-block', minWidth: 0, marginBottom: 24 }}
         key={collection.id}
-      >
+        legacyBehavior>
         <Flex align="center" css={{ cursor: 'pointer' }}>
           <Text css={{ mr: '$4', width: 15 }} style="subtitle3">
             {rank}
@@ -165,7 +165,7 @@ const RankingsTableRow: FC<RankingsTableRowProps> = ({
           </Flex>
         </Flex>
       </Link>
-    )
+    );
   } else {
     return (
       <TableRow
@@ -178,7 +178,7 @@ const RankingsTableRow: FC<RankingsTableRowProps> = ({
           <Link
             href={`/collection/${routePrefix}/${collection.id}`}
             style={{ display: 'inline-block', width: '100%', minWidth: 0 }}
-          >
+            legacyBehavior>
             <Flex
               align="center"
               css={{
@@ -297,7 +297,7 @@ const RankingsTableRow: FC<RankingsTableRowProps> = ({
           />
         </TableCell>
       </TableRow>
-    )
+    );
   }
 }
 

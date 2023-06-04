@@ -21,14 +21,14 @@ const HeroSection = () => {
             </div>
           </div>
           <div className="flex">
-            <Link href="/store/checkout/cart">
-              <a className="bg-[#1f1f1f] py-4 px-6 flex gap-1">
-                <img src="/img/cart.png" alt="" />
-                Cart({CartItems.length})
-              </a>
+            <Link href="/store/checkout/cart" className="bg-[#1f1f1f] py-4 px-6 flex gap-1">
+
+              <img src="/img/cart.png" alt="" />Cart({CartItems.length})
             </Link>
-            <Link href="/store/checkout/shipping">
-              <a className="bg-[#393939] py-4 px-6 border-none">Checkout</a>
+            <Link
+              href="/store/checkout/shipping"
+              className="bg-[#393939] py-4 px-6 border-none">
+              Checkout
             </Link>
           </div>
         </div>

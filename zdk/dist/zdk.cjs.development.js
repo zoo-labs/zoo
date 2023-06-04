@@ -281,7 +281,7 @@ function _regeneratorRuntime() {
           }
         }
         if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) {
-          if ("suspendedStart" === state) throw state = "completed", context.arg;
+          if ("suspendedStart" === state) throw (state = "completed", context.arg);
           context.dispatchException(context.arg);
         } else "return" === context.method && context.abrupt("return", context.arg);
         state = "executing";

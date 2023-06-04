@@ -62,8 +62,8 @@ function StatusIcon({ connector }: { connector: Connector }) {
         <Image
           src="/images/wallets/metamask.png"
           alt={"Metamask"}
-          width="16px"
-          height="16px"
+          width={16}
+          height={16}
         />
       </IconWrapper>
     );
@@ -73,8 +73,8 @@ function StatusIcon({ connector }: { connector: Connector }) {
         <Image
           src="/images/wallets/wallet-connect.svg"
           alt={"Wallet Connect"}
-          width="16px"
-          height="16px"
+          width={16}
+          height={16}
         />
       </IconWrapper>
     );
@@ -84,8 +84,8 @@ function StatusIcon({ connector }: { connector: Connector }) {
         <Image
           src="/images/wallets/lattice.png"
           alt={"Lattice"}
-          width="16px"
-          height="16px"
+          width={16}
+          height={16}
         />
       </IconWrapper>
     );
@@ -95,8 +95,8 @@ function StatusIcon({ connector }: { connector: Connector }) {
         <Image
           src="/images/wallets/coinbase.svg"
           alt={"Coinbase Wallet"}
-          width="16px"
-          height="16px"
+          width={16}
+          height={16}
         />
       </IconWrapper>
     );
@@ -106,8 +106,8 @@ function StatusIcon({ connector }: { connector: Connector }) {
         <Image
           src="/images/wallets/fortmatic.png"
           alt={"Fortmatic"}
-          width="16px"
-          height="16px"
+          width={16}
+          height={16}
         />
       </IconWrapper>
     );
@@ -117,8 +117,8 @@ function StatusIcon({ connector }: { connector: Connector }) {
         <Image
           src="/images/wallets/portis.png"
           alt={"Portis"}
-          width="16px"
-          height="16px"
+          width={16}
+          height={16}
         />
       </IconWrapper>
     );
@@ -128,8 +128,8 @@ function StatusIcon({ connector }: { connector: Connector }) {
         <Image
           src="/images/wallets/keystone.png"
           alt={"Keystone"}
-          width="16px"
-          height="16px"
+          width={16}
+          height={16}
         />
       </IconWrapper>
     );

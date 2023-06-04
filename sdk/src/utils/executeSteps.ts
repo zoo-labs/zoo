@@ -429,7 +429,7 @@ export async function executeSteps(
             }
             reject(error)
           }
-        })
+        });
       })
 
     await Promise.all(promises)

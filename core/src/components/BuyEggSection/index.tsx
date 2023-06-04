@@ -66,7 +66,7 @@ const BuyEggSection: FC<BuyEggSectionProps> = ({}) => {
                     </div>
                   </div>
                   <div className="pr-4 w-full text-center flex justify-end">
-                    <Link href={`/market/egg/${data.id}`} passHref>
+                    <Link href={`/market/egg/${data.id}`} passHref legacyBehavior>
                       <button className="outline-none rounded-full bg-33 w-12 h-12 flex items-center justify-center ">
                           <Image
                             src="/icons/forward-arrow.svg"
