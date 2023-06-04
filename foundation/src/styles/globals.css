@@ -172,6 +172,9 @@ model-viewer {
 .involved-header {
   top: calc(50% - 48px);
 }
+.collect-link {
+  color: white;
+}
 .collect-link > .active {
   border:1px solid #fff;
   border-radius: 20px;
