@@ -70,7 +70,7 @@ const WhatToDo = () => {
             key={index}
           >
             <p>{data?.title}</p>
-            <Link href={data?.link} passHref={true}>
+            <Link href={data?.link} passHref={true} legacyBehavior>
               <Image
                 src="/icons/forward-arrow.svg"
                 width={32}
@@ -90,7 +90,7 @@ const WhatToDo = () => {
               It all starts with 1 egg.
             </p>
 
-            <Link href="/coming-soon" passHref>
+            <Link href="/coming-soon" passHref legacyBehavior>
               <div className="px-5 py-3 text-[16px] font-semibold bg-black text-white flex items-center rounded-full w-max md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer mx-auto">
                 <span className="mr-2">Start Collecting</span>
               </div>

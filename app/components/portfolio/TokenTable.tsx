@@ -286,7 +286,7 @@ const TokenTableRow: FC<TokenTableRowProps> = ({
       >
         <Link
           href={`/collection/${routePrefix}/${token?.token?.contract}/${token?.token?.tokenId}`}
-        >
+          legacyBehavior>
           <Flex align="center">
             {imageSrc && (
               <Image
@@ -559,7 +559,7 @@ const TokenTableRow: FC<TokenTableRowProps> = ({
           </Dropdown>
         </Flex>
       </Flex>
-    )
+    );
   }
 
   return (
@@ -587,7 +587,7 @@ const TokenTableRow: FC<TokenTableRowProps> = ({
           ) : null}
           <Link
             href={`/collection/${routePrefix}/${token?.token?.contract}/${token?.token?.tokenId}`}
-          >
+            legacyBehavior>
             <Flex align="center">
               {imageSrc && (
                 <Image
@@ -979,7 +979,7 @@ const TokenTableRow: FC<TokenTableRowProps> = ({
         </TableCell>
       )}
     </TableRow>
-  )
+  );
 }
 const TableHeading: FC<{ isOwner: boolean }> = ({ isOwner }) => (
   <HeaderRow

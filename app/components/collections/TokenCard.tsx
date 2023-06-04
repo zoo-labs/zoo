@@ -152,7 +152,7 @@ export default ({
       <Link
         passHref
         href={`/collection/${routePrefix}/${token?.token?.contract}/${token?.token?.tokenId}`}
-      >
+        legacyBehavior>
         <Box css={{ background: '$gray3', overflow: 'hidden' }}>
           <TokenMedia
             token={token?.token}
@@ -187,7 +187,7 @@ export default ({
       </Link>
       <Link
         href={`/collection/${routePrefix}/${token?.token?.contract}/${token?.token?.tokenId}`}
-      >
+        legacyBehavior>
         <Flex
           css={{ p: '$4', minHeight: 132, cursor: 'pointer' }}
           direction="column"
@@ -345,5 +345,5 @@ export default ({
         </Flex>
       ) : null}
     </Box>
-  )
+  );
 }

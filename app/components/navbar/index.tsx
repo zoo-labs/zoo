@@ -58,7 +58,7 @@ const Navbar = () => {
     >
       <Box css={{ flex: 1 }}>
         <Flex align="center">
-          <Link href="/">
+          <Link href="/" legacyBehavior>
             <Box css={{ width: 48, cursor: 'pointer' }}>
               <Image
                 src="/zooLogo.svg"
@@ -97,7 +97,7 @@ const Navbar = () => {
     >
       <Box css={{ flex: 1 }}>
         <Flex align="center">
-          <Link href="/">
+          <Link href="/" legacyBehavior>
             <Box css={{ width: 64, cursor: 'pointer' }}>
               {theme == 'dark' ? (
                 <Image
@@ -125,18 +125,18 @@ const Navbar = () => {
             />
           </Box>
           <Flex align="center" css={{ gap: '$5', mr: '$5' }}>
-            <Link href="https://zoo.ngo/collect">
+            <Link href="https://zoo.ngo/collect" legacyBehavior>
               <NavItem active={false}>Animals</NavItem>
             </Link>
-            <Link href="/collection-rankings">
+            <Link href="/collection-rankings" legacyBehavior>
               <NavItem active={router.pathname == '/collection-rankings'}>
                 Drops
               </NavItem>
             </Link>
-            <Link href="https://zoo.ngo/about">
+            <Link href="https://zoo.ngo/about" legacyBehavior>
               <NavItem active={false}>Foundation</NavItem>
             </Link>
-            <Link href="/portfolio">
+            <Link href="/portfolio" legacyBehavior>
               <NavItem active={router.pathname == '/portfolio'}>Trade</NavItem>
             </Link>
           </Flex>
@@ -155,7 +155,7 @@ const Navbar = () => {
         )}
       </Flex>
     </Flex>
-  )
+  );
 }
 
 export default Navbar
