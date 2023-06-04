@@ -151,7 +151,7 @@ const MarketPlaceSection = ({ slideData }) => {
           Resources for Getting Started
         </p>
         <div className="mt-16">
-          {/* <div className="flex gap-6 oveflow-x-auto ">
+          { <div className="flex gap-6 oveflow-x-auto ">
             {slideData &&
               slideData.map((_, i) => (
                 <Slider ref={setSliderRef} {...settings} key={i} className="">
@@ -171,7 +171,7 @@ const MarketPlaceSection = ({ slideData }) => {
                   </div>
                 </Slider>
               ))}
-          </div> */}
+          </div> }
         </div>
       </div>
     </section>
