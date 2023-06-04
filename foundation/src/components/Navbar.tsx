@@ -50,7 +50,7 @@ function Navbar() {
                     href="/"
                     className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
                 >
-                <span className="text-white logo">ZOO</span>
+                  <img alt="ZOO" src="/zooLogo.svg" style={{ width: 64, height: 64 }}/>
                 </Link>
                 </div>
             </div>
