@@ -42,24 +42,24 @@ export default function RemoveLiquidityReceiveDetails({
             <RowBetween className="text-sm">
               {hasWETH ? (
                 (<Link
-                  href={`/remove/${currencyId(currencyA)}/${currencyId(
-                    currencyB
-                  )}`}
-                >
+                href={`/remove/${currencyId(currencyA)}/${currencyId(
+                  currencyB
+                )}`}
+                legacyBehavior>
                   Receive{WNATIVE[chainId].symbol}
                 </Link>)
               ) : hasETH ? (
                 (<Link
-                  href={`/remove/${
-                    currencyA && currencyEquals(currencyA, WNATIVE[chainId])
-                      ? NATIVE[chainId].symbol
-                      : currencyId(currencyA)
-                  }/${
-                    currencyB && currencyEquals(currencyB, WNATIVE[chainId])
-                      ? NATIVE[chainId].symbol
-                      : currencyId(currencyB)
-                  }`}
-                >
+                href={`/remove/${
+                  currencyA && currencyEquals(currencyA, WNATIVE[chainId])
+                    ? NATIVE[chainId].symbol
+                    : currencyId(currencyA)
+                }/${
+                  currencyB && currencyEquals(currencyB, WNATIVE[chainId])
+                    ? NATIVE[chainId].symbol
+                    : currencyId(currencyB)
+                }`}
+                legacyBehavior>
                   Receive{NATIVE[chainId].symbol}
                 </Link>)
               ) : null}

@@ -50,7 +50,7 @@ function Navbar() {
                       href="/"
                       className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
                       legacyBehavior>
-                    <img alt="ZOO" src="/zooLogo.svg" style={{ width: 64, height: 64 }}/>
+                      <img alt="ZOO" src="/zooLogo.svg" style={{ width: 64, height: 64 }} />
                   </Link>
                   </div>
               </div>
@@ -118,9 +118,9 @@ function Navbar() {
                 href="/getinvolved"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-              <a>
+
                 Get Involved
-              </a>
+
               </Link>
               {/* Add more links here */}
             </div>

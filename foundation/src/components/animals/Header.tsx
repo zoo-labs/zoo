@@ -51,30 +51,30 @@ function Header({title,content,front,back}: {
                     href="/donate"
                     className="text-black hover:bg-gray-700 bg-white hover:text-white px-12 py-1 rounded-full border-white border-2 text-lg font-medium md:block"
                 >
-                  <a>
+                  
                     Donate
-                  </a>
+                  
                 </Link>
                 <Link
                     href="#save"
                     className="text-white hover:bg-gray-700 bg-black hover:text-black px-6 py-1 rounded-full border-white border-2 text-lg font-medium md:block"
                 >
-                  <a>
+                  
                     + Save
-                  </a>
+                  
                 </Link>
             </div>
         </div>
 
       </div>
       <div className='max-md:hidden flex items-center justify-center space-x-8 collect-link'>
-        <Link href="/animals/red_wolf" className={`text-white px-3 py-2 ${ title == "Red Wolf" ? 'active' : ''} text-sm font-medium`}><a>Red Wolf</a></Link>
-        <Link href="/animals/nubian_giraffe" className={`text-white px-3 py-2 ${ title == "Nubian Giraffe" ? 'active' : ''} text-sm font-medium`}><a>Nubian Giraffe</a></Link>
-        <Link href="/animals/amur_leopard" className={`text-white px-3 py-2 ${ title == "Amur Leopard" ? 'active' : ''} text-sm font-medium`}><a>Amur Leopard</a></Link>
-        <Link href="/animals/pygmy_hippo" className={`text-white px-3 py-2 ${ title == "Pygmy Hippo" ? 'active' : ''} text-sm font-medium`}><a>Pygmy Hippo</a></Link>
-        <Link href="/animals/siberian_tiger" className={`text-white px-3 py-2 ${ title == "Siberian Tiger" ? 'active' : ''} text-sm font-medium`}><a>Siberian Tiger</a></Link>
-        <Link href="/animals/sumatran_elephant" className={`text-white px-3 py-2 ${ title == "Sumatran Elephant" ? 'active' : ''} text-sm font-medium`}><a>Sumatran Elephant</a></Link>
-        <Link href="/animals/javen_rhino" className={`text-white px-3 py-2 ${ title == "Javan Rhino" ? 'active' : ''} text-sm font-medium`}><a>Javan Rhino</a></Link>
+        <Link href="/animals/red_wolf" className={`text-white px-3 py-2 ${ title == "Red Wolf" ? 'active' : ''} text-sm font-medium`}>Red Wolf</Link>
+        <Link href="/animals/nubian_giraffe" className={`text-white px-3 py-2 ${ title == "Nubian Giraffe" ? 'active' : ''} text-sm font-medium`}>Nubian Giraffe</Link>
+        <Link href="/animals/amur_leopard" className={`text-white px-3 py-2 ${ title == "Amur Leopard" ? 'active' : ''} text-sm font-medium`}>Amur Leopard</Link>
+        <Link href="/animals/pygmy_hippo" className={`text-white px-3 py-2 ${ title == "Pygmy Hippo" ? 'active' : ''} text-sm font-medium`}>Pygmy Hippo</Link>
+        <Link href="/animals/siberian_tiger" className={`text-white px-3 py-2 ${ title == "Siberian Tiger" ? 'active' : ''} text-sm font-medium`}>Siberian Tiger</Link>
+        <Link href="/animals/sumatran_elephant" className={`text-white px-3 py-2 ${ title == "Sumatran Elephant" ? 'active' : ''} text-sm font-medium`}>Sumatran Elephant</Link>
+        <Link href="/animals/javen_rhino" className={`text-white px-3 py-2 ${ title == "Javan Rhino" ? 'active' : ''} text-sm font-medium`}>Javan Rhino</Link>
       </div>
     </div>
   );

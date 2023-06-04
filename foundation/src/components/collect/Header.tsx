@@ -25,13 +25,13 @@ function Header() {
         </div>
       </div>
       <div className='flex max-md:flex-col items-center justify-center md:space-x-8 max-md:space-y-8 collect-link'>
-        <Link href="/animals/red_wolf" className="text-white px-5 py-2  text-lg font-medium"><a>Red Wolf</a></Link>
-        <Link href="/animals/nubian_giraffe" className="text-white px-5 py-2  text-lg font-medium"><a>Nubian Giraffe</a></Link>
-        <Link href="/animals/amur_leopard" className="text-white px-5 py-2  text-lg font-medium"><a>Amur Leopard</a></Link>
-        <Link href="/animals/pygmy_hippo" className="text-white px-5 py-2  text-lg font-medium"><a>Pygmy Hippo</a></Link>
-        <Link href="/animals/siberian_tiger" className="text-white px-5 py-2  text-lg font-medium"><a>Siberian Tiger</a></Link>
-        <Link href="/animals/sumatran_elephant" className="text-white px-5 py-2  text-lg font-medium"><a>Sumatran Elephant</a></Link>
-        <Link href="/animals/javen_rhino" className="text-white px-5 py-2  text-lg font-medium"><a>Javan Rhino</a></Link>
+        <Link href="/animals/red_wolf" className="text-white px-5 py-2  text-lg font-medium" legacyBehavior><a>Red Wolf</a></Link>
+        <Link href="/animals/nubian_giraffe" className="text-white px-5 py-2  text-lg font-medium" legacyBehavior><a>Nubian Giraffe</a></Link>
+        <Link href="/animals/amur_leopard" className="text-white px-5 py-2  text-lg font-medium" legacyBehavior><a>Amur Leopard</a></Link>
+        <Link href="/animals/pygmy_hippo" className="text-white px-5 py-2  text-lg font-medium" legacyBehavior><a>Pygmy Hippo</a></Link>
+        <Link href="/animals/siberian_tiger" className="text-white px-5 py-2  text-lg font-medium" legacyBehavior><a>Siberian Tiger</a></Link>
+        <Link href="/animals/sumatran_elephant" className="text-white px-5 py-2  text-lg font-medium" legacyBehavior><a>Sumatran Elephant</a></Link>
+        <Link href="/animals/javen_rhino" className="text-white px-5 py-2  text-lg font-medium" legacyBehavior><a>Javan Rhino</a></Link>
       </div>
     </div>
   );

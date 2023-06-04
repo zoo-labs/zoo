@@ -21,7 +21,10 @@ const HeroSection = () => {
             </div>
           </div>
           <div className="flex">
-            <Link href="/store/checkout/cart" className="bg-[#1f1f1f] py-4 px-6 flex gap-1">
+            <Link
+              href="/store/checkout/cart"
+              className="bg-[#1f1f1f] py-4 px-6 flex gap-1"
+              legacyBehavior>
 
               <img src="/img/cart.png" alt="" />Cart({CartItems.length})
             </Link>
