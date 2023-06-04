@@ -130,7 +130,7 @@ const Navbar = () => {
             </Link>
             <Link href="/collection-rankings" legacyBehavior>
               <NavItem active={router.pathname == '/collection-rankings'}>
-                Drops
+                Collections
               </NavItem>
             </Link>
             <Link href="https://zoo.ngo/about" legacyBehavior>
