@@ -27,12 +27,14 @@ function Safeguard() {
               href='#'
               className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'
               legacyBehavior>
-                <span className='pr-[15px]'>Short video link</span>
-                <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.40173 12.0243L11.6111 9.44867L7.40173 7.10596V12.0243Z" fill="#F5F9FC"/>
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M7 6.2998L12.2 9.4998L7 12.6998V6.2998ZM7.60051 11.6259L11.0567 9.4998L7.60051 7.37346V11.6259Z" fill="#F5F9FC"/>
-                  <circle cx="9" cy="9.5" r="8.5" stroke="white"/>
-                </svg>
+                <a>
+                  <span className='pr-[15px]'>Short video link</span>
+                  <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.40173 12.0243L11.6111 9.44867L7.40173 7.10596V12.0243Z" fill="#F5F9FC"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 6.2998L12.2 9.4998L7 12.6998V6.2998ZM7.60051 11.6259L11.0567 9.4998L7.60051 7.37346V11.6259Z" fill="#F5F9FC"/>
+                    <circle cx="9" cy="9.5" r="8.5" stroke="white"/>
+                  </svg>
+                </a>
             </Link>
           </div>
           <div className='w-1/2 max-md:w-full grid md:grid-cols-2 grid-cols-1 gap-8 max-md:gap-4 max-md:px-8'>
