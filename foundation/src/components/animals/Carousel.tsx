@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 const ModelViewer = dynamic(() => import("@/components/ModelViewer"), {
   ssr: false,
 });
-import animals from "@/pages/animals/animals.json";
+import animals from "@/components/animals/animals.json";
 function Carosuel() {
   const settings = {
     dots: true,
@@ -15,7 +15,7 @@ function Carosuel() {
     autoplay: true,
     arrows: false
   };
-  
+
   return (
     <div className="bg-black text-center md:px-52 px-6 pt-32">
         <p className='text-gray-300 text-lg md:text-center text-left'>Emotionally Intelligent</p>
