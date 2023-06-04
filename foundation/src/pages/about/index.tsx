@@ -16,7 +16,7 @@ export default function HomePage() {
     <Layout>
       <Seo />
       <Navbar />
-      <Intro breadcrumbs="ZOO LABS FOUNDATION > ABOUT" title="About Zoo." comment="Dedicated to preserving the world's vulnerable wildlife by embracing the power of research, education, and partnership to create a thriving future for all species on our planet."/>
+      <Intro breadcrumbs="Zoo Labs Foundation" title="Mission" comment="Dedicated to preserving the world's vulnerable wildlife by embracing the power of research, education, and partnership to create a thriving future for all species on our planet."/>
       <OurEfforts />
       <Principles />
       <Donation />
