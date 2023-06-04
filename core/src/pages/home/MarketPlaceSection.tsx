@@ -121,7 +121,10 @@ const MarketPlaceSection = ({ slideData }) => {
               </p>
               <div className="grid grid-cols-2 w-full gap-4 mb-8 md:m">
                 <div className="px-2 lg:px-6 py-3 text-[16px] font-semibold bg-[#A6A6A6] text-[#000000] flex items-center justify-between rounded-full md:text-lg w-full hover:cursor-pointer">
-                  <Link href="/partnerships" className="flex items-center justify-between w-full">
+                  <Link
+                    href="/partnerships"
+                    className="flex items-center justify-between w-full"
+                    legacyBehavior>
                     <span className="mr-2">Donate Now</span>
                     <Image
                       src="/icons/forward-arrow-black.svg"

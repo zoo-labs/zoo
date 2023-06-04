@@ -48,7 +48,7 @@ const Info = () => {
           {/* Contact Information Section */}
           <div className="lg:w-[60%]">
             <nav className="flex gap-4 pb-4 border-b border-gray-600 cursor-pointer">
-              <Link href="/store/checkout/cart">
+              <Link href="/store/checkout/cart" legacyBehavior>
                 Cart{">"}
               </Link>
               <p className="cursor-pointer text-green">Shipping {">"}</p>

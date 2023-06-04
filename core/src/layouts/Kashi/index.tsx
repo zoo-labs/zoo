@@ -29,7 +29,10 @@ export default function Layout({
         <Container className="px-4 py-4 md:py-8 lg:py-12" maxWidth="7xl">
           <div className={`mb-2 grid grid-cols-12 gap-4`}>
             <div className="flex justify-center col-span-12 xl:col-span-3 lg:justify-start">
-              <Link href="/borrow" className="flex justify-center xl:justify-start xl:mx-8">
+              <Link
+                href="/borrow"
+                className="flex justify-center xl:justify-start xl:mx-8"
+                legacyBehavior>
 
                 <Image src={kashiLogo} alt="Kashi" height={64} width={250} />
 

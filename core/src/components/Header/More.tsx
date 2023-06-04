@@ -143,7 +143,8 @@ export default function Menu() {
                   </div>
                   <Link
                     href="/wallet"
-                    className={`flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-${theme=='dark' ? "white" : "black"}`}>
+                    className={`flex items-center justify-between -m-3 text-gray-500 transition duration-150 ease-in-out rounded-md cursor-pointer hover:text-${theme=='dark' ? "white" : "black"}`}
+                    legacyBehavior>
                     Wallet<div className="ml-4 sm:ml-14">                        <svg
                         width="31"
                         height="30"

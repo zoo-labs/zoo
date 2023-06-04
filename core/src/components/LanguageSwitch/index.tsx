@@ -64,13 +64,14 @@ export default function LangSwitcher() {
                     <Menu.Item key={locale}>
                       {({ active }) => (
                         (<Link
-                          href={asPath}
-                          locale={locale}
-                          className={classNames(
-                            active ? 'bg-dark-700 text-high-emphesis' : 'text-primary',
-                            'group flex items-center p-2 text-sm hover:bg-dark-700 focus:bg-dark-700 rounded font-bold'
-                          )}
-                          onClick={() => cookieCutter.set('NEXT_LOCALE', locale)}>
+                        href={asPath}
+                        locale={locale}
+                        className={classNames(
+                          active ? 'bg-dark-700 text-high-emphesis' : 'text-primary',
+                          'group flex items-center p-2 text-sm hover:bg-dark-700 focus:bg-dark-700 rounded font-bold'
+                        )}
+                        onClick={() => cookieCutter.set('NEXT_LOCALE', locale)}
+                        legacyBehavior>
 
                           <Image
                             className="inline w-3 h-3 mr-1 align-middle"
