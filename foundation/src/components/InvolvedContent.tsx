@@ -65,7 +65,7 @@ function InvolvedContent({title,content1,content2,image,direction,type}: {
                       </a>
                   </Link>
                   <Link
-                      href='#'
+                      href='#somelink'
                       className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10 hidden md:flex'
                       legacyBehavior>
                       <a>
@@ -77,7 +77,7 @@ function InvolvedContent({title,content1,content2,image,direction,type}: {
                   </Link>
                 </div>
                 <Link
-                    href='#'
+                    href='#learnmore'
                     className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10 md:hidden max-md:block'
                     legacyBehavior>
                   <u className='pr-[15px]'>Learn More</u>

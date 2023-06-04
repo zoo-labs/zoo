@@ -28,7 +28,7 @@ function Detail() {
               <p className='text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'>Visual guides also allow you to define the information hierarchy of the design</p>
               <div className='flex items-center justify-between mt-10'>
                   <Link
-                      href='#'
+                      href='#volunteer'
                       className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'
                       legacyBehavior>
                       <a>

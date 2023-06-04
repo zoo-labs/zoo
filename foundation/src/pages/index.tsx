@@ -13,7 +13,8 @@ import Safeguard from '@/components/Safeguard';
 import StartCollecting from '@/components/Collecting';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
-export default function HomePage() {
+
+export default function IndexPage() {
   return (
     <Layout>
       <Seo />

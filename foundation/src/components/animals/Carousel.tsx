@@ -39,7 +39,7 @@ function Carosuel() {
           </div>
         ))}
         </Slider>
-        <Link href='#' className='bg-white m-auto text-black text-lg rounded-full px-6 py-2 '>Digital</Link>
+        <Link href='#digital' className='bg-white m-auto text-black text-lg rounded-full px-6 py-2 '>Digital</Link>
     </div>
   );
 }

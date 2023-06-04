@@ -20,13 +20,17 @@ function Principles() {
                     href="/getinvolved"
                     className="text-white hover:bg-gray-700 bg-black hover:text-black px-6 py-1 rounded-full border-white border-2 text-xl font-medium hidden md:block"
                 >
+                  <a>
                     Get Involved
+                  </a>
                 </Link>
                 <Link
-                    href="#"
+                    href="#learnmore"
                     className="text-white hover:bg-gray-700 bg-black hover:text-black px-6 py-1 rounded-full border-white border-2 text-xl font-medium hidden max-md:block"
                 >
+                  <a>
                     Learn More
+                  </a>
                 </Link>
             </div>
         </div>
