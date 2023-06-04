@@ -62,8 +62,8 @@ const Navbar = () => {
             <Box css={{ width: 34, cursor: 'pointer' }}>
               <Image
                 src="/zooLogo.svg"
-                width={34}
-                height={39}
+                width={48}
+                height={48}
                 alt="ZOO"
               />
             </Box>
@@ -98,19 +98,19 @@ const Navbar = () => {
       <Box css={{ flex: 1 }}>
         <Flex align="center">
           <Link href="/">
-            <Box css={{ width: 36, cursor: 'pointer' }}>
+            <Box css={{ width: 48, cursor: 'pointer' }}>
               {theme == 'dark' ? (
                 <Image
                   src="/zooLogo.svg"
-                  width={36}
-                  height={36}
+                  width={48}
+                  height={48}
                   alt="ZOO"
                 />
               ) : (
                 <Image
                   src="/zooLogoLight.svg"
-                  width={36}
-                  height={36}
+                  width={48}
+                  height={48}
                   alt="ZOO"
                 />
               )}
@@ -119,7 +119,7 @@ const Navbar = () => {
           <Box css={{ flex: 1, px: '$5', maxWidth: 460 }}>
             <GlobalSearch
               ref={searchRef}
-              placeholder="Search collections"
+              placeholder="Search ...or chat"
               containerCss={{ width: '100%' }}
               key={router.asPath}
             />
