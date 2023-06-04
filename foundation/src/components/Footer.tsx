@@ -21,25 +21,25 @@ function Footer() {
         </div>
         <div className='flex flex-col space-y-8'>
             <Link href="/about" className='text-lg text-white'>About</Link>
-            <Link href="/getinvolved" className='text-lg text-white'><a>Get Involved</a></Link>
+            <Link href="/getinvolved" className='text-lg text-white'>Get Involved</Link>
             <Link href="/donation" className='text-lg text-white'>Donate</Link>
             <Link href="#volunteer" className='text-lg text-white'>Volunteer</Link>
             <Link href="#initiatives" className='text-lg text-white'>Initiatives</Link>
         </div>
         <div className='flex flex-col space-y-8'>
-            <Link href="/collect" className='text-lg text-white'><a>Digital Collectibles</a></Link>
-            <Link href="/animals/red_wolf"  className='text-lg text-white'><a>Red Wolf</a></Link>
-            <Link href="/animals/nubian_giraffe" className='text-lg text-white'><a>Nubian Giraffe</a></Link>
-            <Link href="/animals/amur_leopard" className='text-lg text-white'><a>Amur Leopard</a></Link>
-            <Link href="/animals/sumatran_elephant" className='text-lg text-white'><a>Sumatran Elephant</a></Link>
+            <Link href="/collect" className='text-lg text-white'>Digital Collectibles</Link>
+            <Link href="/animals/red_wolf"  className='text-lg text-white'>Red Wolf</Link>
+            <Link href="/animals/nubian_giraffe" className='text-lg text-white'>Nubian Giraffe</Link>
+            <Link href="/animals/amur_leopard" className='text-lg text-white'>Amur Leopard</Link>
+            <Link href="/animals/sumatran_elephant" className='text-lg text-white'>Sumatran Elephant</Link>
         </div>
         <div className='flex flex-col space-y-8'>
-            <Link href="/animals/javen_rhino" className='text-lg text-white'><a>Javan Rhino</a></Link>
-            <Link href="/animals/pygmy_hippo" className='text-lg text-white'><a>Pygmy Hippo</a></Link>
-            <Link href="/animals/siberian_tiger" className='text-lg text-white'><a>Siberian Tiger</a></Link>
+            <Link href="/animals/javen_rhino" className='text-lg text-white'>Javan Rhino</Link>
+            <Link href="/animals/pygmy_hippo" className='text-lg text-white'>Pygmy Hippo</Link>
+            <Link href="/animals/siberian_tiger" className='text-lg text-white'>Siberian Tiger</Link>
         </div>
         <div className='flex flex-col space-y-8'>
-            <Link href="/terms" className='text-lg text-white'><a>Terms of Use</a></Link>
+            <Link href="/terms" className='text-lg text-white'>Terms of Use</Link>
             <Link href="https://zoolabs.io" className='text-md text-white'>Labs</Link>
             <p className='text-md text-white'>hello@zoo.ngo</p>
         </div>
@@ -51,7 +51,7 @@ function Footer() {
         <div className='flex items-center pt-8 space-x-16'>
           <Link href="/" className='text-lg text-white'>Home</Link>
           <Link href="/about" className='text-lg text-white'>About</Link>
-          <Link href="/getinvolved" className='text-lg text-white'><a>Get Involved</a></Link>
+          <Link href="/getinvolved" className='text-lg text-white'>Get Involved</Link>
         </div>
         <div className='flex items-center pt-6 space-x-16'>
             <Link href="/collect" className='text-lg text-white'>Animals</Link>
@@ -67,8 +67,8 @@ function Footer() {
         </div>
         <hr className='w-full bg-white my-4'/>
         <div className='flex items-center space-x-16'>
-          <Link href="/privacy" className='text-lg text-white '><a>Privacy Policy</a></Link>
-          <Link href="/terms" className='text-lg text-white'><a>Term of service</a></Link>
+          <Link href="/privacy" className='text-lg text-white '>Privacy Policy</Link>
+          <Link href="/terms" className='text-lg text-white'>Term of service</Link>
         </div>
         <p className='text-lg text-white pt-6 pb-16'>© 2023 Zoo Labs Foundation Inc</p>
       </div>

@@ -192,7 +192,8 @@ const AnimalList = () => {
                 <div className="mt-4">
                   <Link
                     href={`nft-product/${animal.slug}`}
-                    className="AnimalFamily__image w-full bg-[#000]	 h-auto flex flex-col items-center lg:basis-1/3   p-4">
+                    className="AnimalFamily__image w-full bg-[#000]	 h-auto flex flex-col items-center lg:basis-1/3   p-4"
+                    legacyBehavior>
 
                     {animal.name}
 
@@ -213,7 +214,8 @@ const AnimalList = () => {
 
                 <Link
                   href={`nft-product/${animal.slug}`}
-                  className="AnimalFamily__image w-full bg-[#000] border border-[#000] rounded-3xl	 h-auto flex flex-col items-center lg:basis-1/3 p-4">
+                  className="AnimalFamily__image w-full bg-[#000] border border-[#000] rounded-3xl	 h-auto flex flex-col items-center lg:basis-1/3 p-4"
+                  legacyBehavior>
 
                   {animal.name}
 

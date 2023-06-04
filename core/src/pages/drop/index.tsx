@@ -224,7 +224,8 @@ const Drop = ({}: AppProps & {
                       <Link
                         href={`/market/egg/${_.id}`}
                         passHref
-                        className="absolute flex items-center justify-center w-6 h-6 rounded-full md:w-10 md:h-10 bg-33 bottom-2 right-2">
+                        className="absolute flex items-center justify-center w-6 h-6 rounded-full md:w-10 md:h-10 bg-33 bottom-2 right-2"
+                        legacyBehavior>
 
                         <Image
                           src="/icons/arrow-right-light.svg"

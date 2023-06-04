@@ -43,7 +43,8 @@ export default function Tools() {
               <div className="flex-1 min-w-0">
                 <Link
                   href={tool.href}
-                  className="flex items-center justify-between focus:outline-none">
+                  className="flex items-center justify-between focus:outline-none"
+                  legacyBehavior>
 
                   <span className="absolute inset-0" aria-hidden="true" />
                   <div className="space-y-1">
