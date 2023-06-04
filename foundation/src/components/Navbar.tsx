@@ -66,7 +66,7 @@ function Navbar() {
                     href="/about"
                     className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
                 >
-                    Foundation
+                    Mission
                 </Link>
                 <Link
                     href="https://app.zoolabs.io"
@@ -106,7 +106,7 @@ function Navbar() {
               href="/about"
               className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             >
-              Foundation
+              Mission
             </Link>
             <Link
               href="https://app.zoolabs.io"
