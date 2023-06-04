@@ -13,7 +13,7 @@ function Header({title,content,front,back}: {
     <div className="bg-black md:px-24 lg:px-32 xl:px-40 2xl:px-64">
       <div className="flex max-md:flex-col items-center justify-between py-20">
         <div className='relative md:w-1/2 max-md:w-full 2xl:pr-32 xl:pr-28 lg:pr-24 md:pr-16'>
-            <ReactCardFlip isFlipped={flip} 
+            <ReactCardFlip isFlipped={flip}
               flipDirection="horizontal">
               {/* <Image
                   className='intro-bg border rounded-xl p-3'
@@ -45,32 +45,36 @@ function Header({title,content,front,back}: {
         <div className='w-1/2 max-md:w-full flex flex-col justify-between max-md:px-4'>
             <h1 className='text-white md:text-5xl xl:text-6xl max-md:text-3xl max-md:my-5 md:pb-16'>{title}</h1>
             <p className='text-white md:text-lg lg:text-xl xl:text-2xl max-md:pb-10 md:pb-10' dangerouslySetInnerHTML={{__html: content}}></p>
-            
+
             <div className='flex items-center md:pt-10 space-x-8'>
                 <Link
                     href="#"
                     className="text-black hover:bg-gray-700 bg-white hover:text-white px-12 py-1 rounded-full border-white border-2 text-lg font-medium md:block"
                 >
+                  <a>
                     Buy $25
+                  </a>
                 </Link>
                 <Link
                     href="#"
                     className="text-white hover:bg-gray-700 bg-black hover:text-black px-6 py-1 rounded-full border-white border-2 text-lg font-medium md:block"
                 >
+                  <a>
                     + Cart
+                  </a>
                 </Link>
             </div>
         </div>
-        
+
       </div>
       <div className='max-md:hidden flex items-center justify-center space-x-8 collect-link'>
-        <Link href="/animals/red_wolf" className={`text-white px-3 py-2 ${ title == "Red Wolf" ? 'active' : ''} text-sm font-medium`}>Red Wolf</Link>
-        <Link href="/animals/nubian_giraffe" className={`text-white px-3 py-2 ${ title == "Nubian Giraffe" ? 'active' : ''} text-sm font-medium`}>Nubian Giraffe</Link>
-        <Link href="/animals/amur_leopard" className={`text-white px-3 py-2 ${ title == "Amur Leopard" ? 'active' : ''} text-sm font-medium`}>Amur Leopard</Link>
-        <Link href="/animals/pygmy_hippo" className={`text-white px-3 py-2 ${ title == "Pygmy Hippo" ? 'active' : ''} text-sm font-medium`}>Pygmy Hippo</Link>
-        <Link href="/animals/siberian_tiger" className={`text-white px-3 py-2 ${ title == "Siberian Tiger" ? 'active' : ''} text-sm font-medium`}>Siberian Tiger</Link>
-        <Link href="/animals/sumatran_elephant" className={`text-white px-3 py-2 ${ title == "Sumatran Elephant" ? 'active' : ''} text-sm font-medium`}>Sumatran Elephant</Link>
-        <Link href="/animals/javen_rhino" className={`text-white px-3 py-2 ${ title == "Javan Rhino" ? 'active' : ''} text-sm font-medium`}>Javan Rhino</Link>
+        <Link href="/animals/red_wolf" className={`text-white px-3 py-2 ${ title == "Red Wolf" ? 'active' : ''} text-sm font-medium`}><a>Red Wolf</a></Link>
+        <Link href="/animals/nubian_giraffe" className={`text-white px-3 py-2 ${ title == "Nubian Giraffe" ? 'active' : ''} text-sm font-medium`}><a>Nubian Giraffe</a></Link>
+        <Link href="/animals/amur_leopard" className={`text-white px-3 py-2 ${ title == "Amur Leopard" ? 'active' : ''} text-sm font-medium`}><a>Amur Leopard</a></Link>
+        <Link href="/animals/pygmy_hippo" className={`text-white px-3 py-2 ${ title == "Pygmy Hippo" ? 'active' : ''} text-sm font-medium`}><a>Pygmy Hippo</a></Link>
+        <Link href="/animals/siberian_tiger" className={`text-white px-3 py-2 ${ title == "Siberian Tiger" ? 'active' : ''} text-sm font-medium`}><a>Siberian Tiger</a></Link>
+        <Link href="/animals/sumatran_elephant" className={`text-white px-3 py-2 ${ title == "Sumatran Elephant" ? 'active' : ''} text-sm font-medium`}><a>Sumatran Elephant</a></Link>
+        <Link href="/animals/javen_rhino" className={`text-white px-3 py-2 ${ title == "Javan Rhino" ? 'active' : ''} text-sm font-medium`}><a>Javan Rhino</a></Link>
       </div>
     </div>
   );
