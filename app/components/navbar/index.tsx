@@ -125,13 +125,16 @@ const Navbar = () => {
             />
           </Box>
           <Flex align="center" css={{ gap: '$5', mr: '$5' }}>
-          <Link href="https://zoo.ngo/animals">
+            <Link href="https://zoo.ngo/collect">
               <NavItem active={false}>Animals</NavItem>
             </Link>
             <Link href="/collection-rankings">
               <NavItem active={router.pathname == '/collection-rankings'}>
-                Collections
+                Drops
               </NavItem>
+            </Link>
+            <Link href="https://zoo.ngo/about">
+              <NavItem active={false}>Foundation</NavItem>
             </Link>
             <Link href="/portfolio">
               <NavItem active={router.pathname == '/portfolio'}>Trade</NavItem>
