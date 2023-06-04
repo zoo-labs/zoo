@@ -179,3 +179,10 @@ model-viewer {
   border:1px solid #fff;
   border-radius: 20px;
 }
+
+a {
+  color: white;
+}
+svg {
+  display: inline;
+}
