@@ -9,7 +9,7 @@ function InvolvedContent({title,content1,content2,image,direction,type}: {
     type: string;
   }) {
   return (
-    <div className="bg-black md:pt-52 max-md:pt-32">
+    <div className="bg-black lg:pt-52 md:pt-32 max-md:pt-32">
       <div className={`flex max-md:flex-col items-center justify-between md:pt-20 ${direction == '2' ? 'flex-row-reverse' : ''}`}>
         <div className='md:w-1/2 w-full'>
             <Image
@@ -20,7 +20,7 @@ function InvolvedContent({title,content1,content2,image,direction,type}: {
                 alt=''
             />
         </div>
-        <div className='w-1/2 max-md:w-full flex flex-col justify-between  px-8 md:pl-32 xl:pr-48'>
+        <div className='w-1/2 max-md:w-full flex flex-col justify-between  px-8 xl:pl-32 lg:pl-16 md:pl-8 xl:pr-48'>
             <h1 className='text-white md:text-5xl xl:text-6xl max-md:text-3xl max-md:my-5 md:pb-16'>{title}</h1>
             <p className='text-white md:text-lg lg:text-xl xl:text-2xl max-md:pb-4 md:pb-10'>{content1}</p>
             <p className='text-white md:text-lg lg:text-xl xl:text-2xl '>{content2}</p>
@@ -42,7 +42,7 @@ function InvolvedContent({title,content1,content2,image,direction,type}: {
               </div>
             ): (
               <div>
-              <div className='flex items-center md:pt-10 max-md:pt-4 space-x-16'>
+              <div className='flex items-center md:pt-10 max-md:pt-4 xl:space-x-16 lg:space-x-12 md:space-x-8'>
                 <Link href='#volunteer' className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>
                     <span className='pr-[15px]'>Volunteer</span>
                     <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">

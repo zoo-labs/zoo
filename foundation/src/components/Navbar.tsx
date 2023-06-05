@@ -55,7 +55,7 @@ function Navbar() {
                   </div>
               </div>
               <div className="hidden md:block">
-                  <div className="mx-10 flex items-baseline space-x-16">
+                  <div className="mx-10 flex items-baseline xl:space-x-16 md:space-x-4 lg:space-x-8 2xl:space-x-20">
                   <Link
                       href="/collect"
                       className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
