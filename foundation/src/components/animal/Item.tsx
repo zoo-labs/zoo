@@ -41,7 +41,7 @@ function Item({list}: {
           title: "Javan Rhino",
           href: "/animals/javan_rhino",
           usdz: "/models/Rhino/RHINO_ADULT.usdz",
-          glb: "/models/Rhino/RHINO.glb",
+          glb: "/models/Rhino/RHINO_ADULT.glb",
         }
       ];
   return (

@@ -13,9 +13,11 @@ function TradingCard() {
                 height='1000'
                 alt=''
             /> */}
+            <Link href="/animals/amur_leopard" >
             <video autoPlay loop className="border rounded-xl p-1" src="/videos/Leopard_Card_Front.webm">
                 {/* <source src={front} /> */}
             </video>
+            </Link>
         </div>
         <div className='w-1/2 max-md:w-full flex flex-col justify-between'>
             <h1 className='text-white md:text-5xl xl:text-6xl max-md:text-3xl max-md:my-5 md:pb-16 max-md:hidden'>Select any trading card to start learning.</h1>
