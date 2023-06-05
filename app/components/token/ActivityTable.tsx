@@ -285,7 +285,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
             >
               {activity.fromAddress &&
               activity.fromAddress !== constants.AddressZero ? (
-                <Link href={`/portfolio/${activity.fromAddress}`}>
+                <Link href={`/portfolio/${activity.fromAddress}`} legacyBehavior>
                   <Text
                     style="subtitle3"
                     css={{
@@ -309,7 +309,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
               </Text>
               {activity.toAddress &&
               activity.toAddress !== constants.AddressZero ? (
-                <Link href={`/portfolio/${activity.toAddress}`}>
+                <Link href={`/portfolio/${activity.toAddress}`} legacyBehavior>
                   <Text
                     style="subtitle3"
                     css={{
@@ -329,7 +329,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
           </Flex>
         </TableCell>
       </TableRow>
-    )
+    );
   }
 
   return (
@@ -409,7 +409,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
                   display: 'flex',
                 }}
                 href={`/portfolio/${activity.fromAddress}`}
-              >
+                legacyBehavior>
                 <Text
                   style="subtitle2"
                   css={{
@@ -435,7 +435,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
                   display: 'flex',
                 }}
                 href={`/portfolio/${activity.toAddress}`}
-              >
+                legacyBehavior>
                 <Text
                   style="subtitle2"
                   css={{
@@ -455,5 +455,5 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
         </Flex>
       </TableCell>
     </TableRow>
-  )
+  );
 }

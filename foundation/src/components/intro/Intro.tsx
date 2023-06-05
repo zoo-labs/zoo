@@ -11,7 +11,7 @@ function Intro({breadcrumbs,title,comment}: {
           <source src="/videos/Giraffe_teen.webm" />
         </video>
         <div className='absolute xl:top-32 top-20 w-3/5 flex flex-col justify-between  pl-10 md:pl-32 pr-8'>
-            <p className='text-white md:text-sm lg:text-lg xl:text-2xl pb-32 2xl:pb-44'>{breadcrumbs}</p>
+            <p className='text-white md:text-sm lg:text-lg xl:text-2xl pb-12 2xl:pb-22'>{breadcrumbs}</p>
             <h1 className='text-white md:text-7xl  2xl:text-9xl max-md:text-5xl max-md:my-5 pb-12 2xl:pb-16'>{title}</h1>
             <p className='text-white md:text-lg lg:text-2xl xl:text-3xl pr-20 max-md:pb-10 pb-12 2xl:pb-16'>{comment}</p>
             <hr className='max-md:hidden mr-20'/>
@@ -39,7 +39,7 @@ function Intro({breadcrumbs,title,comment}: {
             </video>
         </div>
       </div>
-      
+
     </div>
   );
 }

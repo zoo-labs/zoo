@@ -58,12 +58,12 @@ const Navbar = () => {
     >
       <Box css={{ flex: 1 }}>
         <Flex align="center">
-          <Link href="/">
-            <Box css={{ width: 34, cursor: 'pointer' }}>
+          <Link href="/" legacyBehavior>
+            <Box css={{ width: 48, cursor: 'pointer' }}>
               <Image
                 src="/zooLogo.svg"
-                width={34}
-                height={39}
+                width={48}
+                height={48}
                 alt="ZOO"
               />
             </Box>
@@ -97,20 +97,20 @@ const Navbar = () => {
     >
       <Box css={{ flex: 1 }}>
         <Flex align="center">
-          <Link href="/">
-            <Box css={{ width: 112, cursor: 'pointer' }}>
+          <Link href="/" legacyBehavior>
+            <Box css={{ width: 64, cursor: 'pointer' }}>
               {theme == 'dark' ? (
                 <Image
                   src="/zooLogo.svg"
-                  width={112}
-                  height={36}
+                  width={64}
+                  height={64}
                   alt="ZOO"
                 />
               ) : (
                 <Image
                   src="/zooLogoLight.svg"
-                  width={112}
-                  height={36}
+                  width={64}
+                  height={64}
                   alt="ZOO"
                 />
               )}
@@ -119,22 +119,25 @@ const Navbar = () => {
           <Box css={{ flex: 1, px: '$5', maxWidth: 460 }}>
             <GlobalSearch
               ref={searchRef}
-              placeholder="Search collections and addresses"
+              placeholder="Search for animal"
               containerCss={{ width: '100%' }}
               key={router.asPath}
             />
           </Box>
           <Flex align="center" css={{ gap: '$5', mr: '$5' }}>
-            <Link href="/collection-rankings">
+            <Link href="https://zoo.ngo/collect" legacyBehavior>
+              <NavItem active={false}>Animals</NavItem>
+            </Link>
+            <Link href="/collection-rankings" legacyBehavior>
               <NavItem active={router.pathname == '/collection-rankings'}>
                 Collections
               </NavItem>
             </Link>
-            <Link href="/portfolio">
-              <NavItem active={router.pathname == '/portfolio'}>Trade</NavItem>
-            </Link>
-            <Link href="https://zoo.ngo">
+            <Link href="https://zoo.ngo/about" legacyBehavior>
               <NavItem active={false}>Foundation</NavItem>
+            </Link>
+            <Link href="/portfolio" legacyBehavior>
+              <NavItem active={router.pathname == '/portfolio'}>Trade</NavItem>
             </Link>
           </Flex>
         </Flex>
@@ -152,7 +155,7 @@ const Navbar = () => {
         )}
       </Flex>
     </Flex>
-  )
+  );
 }
 
 export default Navbar

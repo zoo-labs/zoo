@@ -31,33 +31,31 @@ export const Input = React.memo(
       }
     };
 
-    return (
-      <>
-        <input
-          value={value}
-          onChange={(event) => {
-            // replace commas with periods, because uniswap exclusively uses period as the decimal separator
-            enforcer(event.target.value.replace(/,/g, ".").replace(/%/g, ""));
-          }}
-          // universal input options
-          inputMode="decimal"
-          title="Token Amount"
-          autoComplete="off"
-          autoCorrect="off"
-          // text-specific options
-          type="text"
-          pattern="^[0-9]*$"
-          placeholder={placeholder || "100"}
-          maxLength={3}
-          className={classNames(
-            align === "right" && "text-right",
-            "font-medium bg-transparent whitespace-nowrap overflow-ellipsis flex-auto",
-            className
-          )}
-          style={{ fontSize }}
-        />
-      </>
-    );
+    return <>
+      <input
+        value={value}
+        onChange={(event) => {
+          // replace commas with periods, because uniswap exclusively uses period as the decimal separator
+          enforcer(event.target.value.replace(/,/g, ".").replace(/%/g, ""));
+        }}
+        // universal input options
+        inputMode="decimal"
+        title="Token Amount"
+        autoComplete="off"
+        autoCorrect="off"
+        // text-specific options
+        type="text"
+        pattern="^[0-9]*$"
+        placeholder={placeholder || "100"}
+        maxLength={3}
+        className={classNames(
+          align === "right" && "text-right",
+          "font-medium bg-transparent whitespace-nowrap overflow-ellipsis flex-auto",
+          className
+        )}
+        style={{ fontSize }}
+      />
+    </>;
   }
 );
 

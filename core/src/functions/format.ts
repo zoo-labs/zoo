@@ -128,7 +128,7 @@ export function formatNumberScale(number: any, usd = false) {
 }
 
 export function escapeRegExp(string: string): string {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
 export const formatBalance = (value: BigNumberish, decimals = 18, maxFraction = 0) => {
@@ -190,7 +190,7 @@ export const formatCurrencyFromRawAmount = (token: Currency, amount: BigintIsh) 
 
 export const numberWithCommas = (num: number | string) => {
   const values = num.toString().split('.')
-  return values[0].replace(/.(?=(?:.{3})+$)/g, '$&,') + (values.length == 2 ? '.' + values[1] : '')
+  return values[0].replace(/.(?=(?:.{3})+$)/g, '$&,') + (values.length == 2 ? '.' + values[1] : '');
 }
 
 export const formatCurrencyAmountWithCommas = (token: Currency, amount: BigintIsh) => {
@@ -199,10 +199,10 @@ export const formatCurrencyAmountWithCommas = (token: Currency, amount: BigintIs
 
 export const formatError = (err: any) => {
   if (err?.data?.message) {
-    return err?.data?.message?.replace(/Error: Returned error: /, '')
+    return err?.data?.message?.replace(/Error: Returned error: /, '');
   } else if (err.code) {
     return err.message
   } else {
-    return err.toString().replace(/Error: Returned error: /, '')
+    return err.toString().replace(/Error: Returned error: /, '');
   }
 }

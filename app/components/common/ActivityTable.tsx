@@ -234,7 +234,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
                 href={href}
                 passHref
                 style={{ maxWidth: '100%', minWidth: 0 }}
-              >
+                legacyBehavior>
                 <Flex align="center">
                   {imageSrc && (
                     <Image
@@ -292,7 +292,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
               </Text>
               {activity.fromAddress &&
               activity.fromAddress !== constants.AddressZero ? (
-                <Link href={`/portfolio/${activity.fromAddress}`}>
+                <Link href={`/portfolio/${activity.fromAddress}`} legacyBehavior>
                   <Text
                     style="subtitle3"
                     css={{
@@ -316,7 +316,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
               </Text>
               {activity.toAddress &&
               activity.toAddress !== constants.AddressZero ? (
-                <Link href={`/portfolio/${activity.toAddress}`}>
+                <Link href={`/portfolio/${activity.toAddress}`} legacyBehavior>
                   <Text
                     style="subtitle3"
                     css={{
@@ -336,7 +336,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
           </Flex>
         </TableCell>
       </TableRow>
-    )
+    );
   }
 
   return (
@@ -363,7 +363,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
       </TableCell>
 
       <TableCell css={{ minWidth: 0 }}>
-        <Link href={href} passHref>
+        <Link href={href} passHref legacyBehavior>
           <Flex align="center">
             {imageSrc && (
               <Img
@@ -439,7 +439,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
               }}
-            >
+              legacyBehavior>
               <Text
                 style="subtitle3"
                 css={{
@@ -473,7 +473,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
               }}
-            >
+              legacyBehavior>
               <Text
                 style="subtitle3"
                 css={{
@@ -519,5 +519,5 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
         </Flex>
       </TableCell>
     </TableRow>
-  )
+  );
 }

@@ -28,19 +28,18 @@ class MyDocument extends Document {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         {/* Meta tags */}
-        <meta name="keywords" content="nft, ethereum, protocol" />
-        <meta name="keywords" content="NFT, API, Protocol" />
+        <meta name="keywords" content="animals, nft, ethereum, protocol" />
 
         {/* Favicon */}
         <link
           rel="shortcut icon"
           type="image/svg"
-          href="/ZooLogo.svg"
+          href="https://marketplace.reservoir.tools/reservoir.svg"
         />
 
         {/* Reservoir meta tags */}
-        <meta property="reservoir:title" content="ZOO Market" />
-        <meta property="reservoir:icon" content="/ZooLogo.svg" />
+        <meta property="reservoir:title" content="ZOO" />
+        <meta property="reservoir:icon" content="/zooLogo.png" />
         <meta
           property="reservoir:token-url-mainnet"
           content="/collection/ethereum/${contract}/${tokenId}"

@@ -143,7 +143,7 @@ const ListingTableRow: FC<ListingTableRowProps> = ({
         <Flex justify="between" css={{ width: '100%' }}>
           <Link
             href={`/collection/${routePrefix}/${listing?.contract}/${criteriaData?.token?.tokenId}`}
-          >
+            legacyBehavior>
             <Flex align="center">
               <Img
                 css={{
@@ -254,7 +254,7 @@ const ListingTableRow: FC<ListingTableRowProps> = ({
           )}
         </Flex>
       </Flex>
-    )
+    );
   }
 
   return (
@@ -265,7 +265,7 @@ const ListingTableRow: FC<ListingTableRowProps> = ({
       <TableCell css={{ minWidth: 0 }}>
         <Link
           href={`/collection/${routePrefix}/${listing?.contract}/${criteriaData?.token?.tokenId}`}
-        >
+          legacyBehavior>
           <Flex align="center">
             <Img
               css={{
@@ -389,7 +389,7 @@ const ListingTableRow: FC<ListingTableRowProps> = ({
         </Flex>
       </TableCell>
     </TableRow>
-  )
+  );
 }
 
 const headings = ['Items', 'Listed Price', 'Expiration', 'Marketplace', '']

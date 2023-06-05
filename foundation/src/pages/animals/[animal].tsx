@@ -5,12 +5,12 @@ import Seo from '@/components/Seo';
 import Navbar from '@/components/Navbar';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
-import Header from '@/pages/animals/Header';
+import Header from '@/components/animals/Header';
 import Aiding from '@/components/Aiding';
 import Avatars from '@/components/animal/Item';
-import Content from '@/pages/animals/Content';
-import Carousel from '@/pages/animals/Carousel';
-import animals from "@/pages/animals/animals.json";
+import Content from '@/components/animals/Content';
+import Carousel from '@/components/animals/Carousel';
+import animals from "@/components/animals/animals.json";
 import NotFoundPage from "../404";
 export default function HomePage() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function HomePage() {
       setAnimal(animals.find((animal) => animal.route === router.query.animal));
     }
   }, [router]);
-  
+
   return (
     <Layout>
         { animal == undefined ? <NotFoundPage /> : <>
@@ -34,7 +34,7 @@ export default function HomePage() {
         <Content title={animal.description.subtitle} content={animal.description.desc} />
         <Carousel />
         <Aiding />
-        
+
         <Newsletter />
         <Footer />
         </> }

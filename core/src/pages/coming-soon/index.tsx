@@ -22,8 +22,8 @@ const ComingSoon = () => {
           </h1>
           <p>
             Go back to the{" "}
-            <Link href="/">
-              <a className="text-green underline">homepage</a>
+            <Link href="/" className="text-green underline">
+              homepage
             </Link>
           </p>
         </div>

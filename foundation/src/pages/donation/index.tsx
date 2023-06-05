@@ -7,8 +7,9 @@ import StartCollecting from '@/components/Collecting';
 import Newsletter from '@/components/Newsletter';
 import Campaign from '@/components/Campaign';
 import Footer from '@/components/Footer';
-import Header from '@/pages/donation/Header';
-export default function HomePage() {
+import Header from '@/components/donation/Header';
+
+export default function DonationPage() {
   return (
     <Layout>
         <Seo />
