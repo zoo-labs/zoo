@@ -15,7 +15,7 @@ function Collecting() {
             />
             </Link>
             <div className='flex max-md:flex-col pt-8 items-center justify-center md:space-x-8'>
-                <Link href="/collect"  className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'>
+                <Link href="/collect"  className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10' legacyBehavior>
                   <a>
                     <span className='pr-[15px]'>View Endangered Cards</span>
                     <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
