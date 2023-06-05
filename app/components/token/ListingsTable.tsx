@@ -224,7 +224,7 @@ const ListingTableRow: FC<ListingTableRowProps> = ({
             <Link
               href={`/portfolio/${listing.maker}`}
               style={{ lineHeight: '14.5px' }}
-            >
+              legacyBehavior>
               <Text
                 style="subtitle2"
                 css={{
@@ -354,5 +354,5 @@ const ListingTableRow: FC<ListingTableRowProps> = ({
         </Text>
       </Flex>
     </TableRow>
-  )
+  );
 }

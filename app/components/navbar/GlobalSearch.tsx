@@ -50,7 +50,7 @@ const CollectionItem: FC<Props> = ({ collection, handleSelectResult }) => {
       href={`/collection/${collection.chainName}/${collection.collectionId}`}
       style={{ overflow: 'hidden', width: '100%', minWidth: 0 }}
       onClick={() => handleSelectResult(collection)}
-    >
+      legacyBehavior>
       <Flex
         css={{
           p: '$2',
@@ -111,7 +111,7 @@ const CollectionItem: FC<Props> = ({ collection, handleSelectResult }) => {
         )}
       </Flex>
     </Link>
-  )
+  );
 }
 
 type WalletItemProps = {
@@ -126,7 +126,7 @@ type WalletItemProps = {
 
 const WalletItem: FC<WalletItemProps> = ({ wallet }) => {
   return (
-    <Link href={`/portfolio/${wallet.address}`}>
+    <Link href={`/portfolio/${wallet.address}`} legacyBehavior>
       <Flex
         css={{
           p: '$2',
@@ -151,7 +151,7 @@ const WalletItem: FC<WalletItemProps> = ({ wallet }) => {
         <Text style="subtitle1">{wallet.displayName}</Text>
       </Flex>
     </Link>
-  )
+  );
 }
 
 type SearchResultProps = {

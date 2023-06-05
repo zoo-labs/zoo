@@ -168,7 +168,7 @@ export const AccountSidebar: FC = () => {
                     </CopyText>
                   </Flex>
                   <Grid css={{ gridTemplateColumns: '1fr 1fr', mt: 32 }}>
-                    <Link href="/portfolio?tab=items">
+                    <Link href="/portfolio?tab=items" legacyBehavior>
                       <Flex
                         align="center"
                         css={{
@@ -182,7 +182,7 @@ export const AccountSidebar: FC = () => {
                         <Text style="body1">My Items</Text>
                       </Flex>
                     </Link>
-                    <Link href="/portfolio?tab=listings">
+                    <Link href="/portfolio?tab=listings" legacyBehavior>
                       <Flex
                         align="center"
                         css={{
@@ -196,7 +196,7 @@ export const AccountSidebar: FC = () => {
                         <Text style="body1">Listings</Text>
                       </Flex>
                     </Link>
-                    <Link href="/portfolio?tab=offers">
+                    <Link href="/portfolio?tab=offers" legacyBehavior>
                       <Flex
                         align="center"
                         css={{
@@ -210,7 +210,7 @@ export const AccountSidebar: FC = () => {
                         <Text style="body1">Offers Made</Text>
                       </Flex>
                     </Link>
-                    <Link href="/portfolio?tab=activity">
+                    <Link href="/portfolio?tab=activity" legacyBehavior>
                       <Flex
                         align="center"
                         css={{
@@ -252,5 +252,5 @@ export const AccountSidebar: FC = () => {
         )}
       </AnimatePresence>
     </DialogPrimitive.Root>
-  )
+  );
 }

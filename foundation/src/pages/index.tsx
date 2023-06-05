@@ -13,12 +13,13 @@ import Safeguard from '@/components/Safeguard';
 import StartCollecting from '@/components/Collecting';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
-export default function HomePage() {
+
+export default function IndexPage() {
   return (
     <Layout>
       <Seo />
       <Navbar />
-      <Intro breadcrumbs="ZOO LABS FOUNDATION" title="Preserve" comment="The foundation's mission is to protect our planet's precious wildlife biodiversity through research, education, and collaboration with aligned charities."/>
+      <Intro breadcrumbs="Zoo Labs Foundation" title="Preserve" comment="Dedicated to protecting wildlife biodiversity through aligned charities, education, research and active conservation efforts."/>
       <Comment />
       <Principles />
       <Donation />

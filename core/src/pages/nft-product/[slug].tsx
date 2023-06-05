@@ -611,7 +611,7 @@ const NFTProduct = ({ animal }) => {
               key={index}
             >
               <p>{data?.title}</p>
-              <Link href={data?.link} passHref={true}>
+              <Link href={data?.link} passHref={true} legacyBehavior>
                 <Image
                   src="/icons/forward-arrow.svg"
                   width={32}

@@ -38,7 +38,7 @@ const fetcher: any = (queries: string[]) => {
         webSocket.send(`40/${openQuery},`)
       })
     })
-  })
+  });
 }
 
 export const getAssets = async (account: string) => {

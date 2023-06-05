@@ -34,33 +34,31 @@ export const AddressInput = React.memo(
       }
     };
 
-    return (
-      <>
-        <input
-          value={value}
-          onChange={(event) => {
-            enforcer(event.target.value.replace(/\s+/g, ""));
-          }}
-          // universal input options
-          inputMode="text"
-          title="Wallet Address or ENS name"
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-          spellCheck="false"
-          placeholder="Wallet Address or ENS name"
-          pattern="^(0x[a-fA-F0-9]{40})$"
-          // text-specific options
-          type="text"
-          className={classNames(
-            align === "right" && "text-right",
-            "font-medium bg-transparent whitespace-nowrap overflow-ellipsis flex-auto",
-            className
-          )}
-          style={{ fontSize }}
-        />
-      </>
-    );
+    return <>
+      <input
+        value={value}
+        onChange={(event) => {
+          enforcer(event.target.value.replace(/\s+/g, ""));
+        }}
+        // universal input options
+        inputMode="text"
+        title="Wallet Address or ENS name"
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck="false"
+        placeholder="Wallet Address or ENS name"
+        pattern="^(0x[a-fA-F0-9]{40})$"
+        // text-specific options
+        type="text"
+        className={classNames(
+          align === "right" && "text-right",
+          "font-medium bg-transparent whitespace-nowrap overflow-ellipsis flex-auto",
+          className
+        )}
+        style={{ fontSize }}
+      />
+    </>;
   }
 );
 

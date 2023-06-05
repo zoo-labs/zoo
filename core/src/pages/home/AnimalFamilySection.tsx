@@ -131,7 +131,7 @@ const AnimalFamilySection = () => {
                   <p className="mt-[3px] text-xs md:text-base font-medium text-white mb-1">
                     {data.name}
                   </p>
-                  <Link href={`/market/egg/${data.id}`} passHref>
+                  <Link href={`/market/egg/${data.id}`} passHref legacyBehavior>
                     <button className="outline-none w-full bg-33 rounded-md py-2 flex items-center justify-center">
                       <p className="mr-2 text-[10px] md:text-sm">
                         {data.price} ZOO
@@ -150,7 +150,7 @@ const AnimalFamilySection = () => {
         </h1>
         <p className="text-[10px] md:text-sm text-white text-center mb-14 mt-8">
           Coming Soon{" "}
-          <Link href="/animal-list" passHref>
+          <Link href="/animal-list" passHref legacyBehavior>
             <span className="font-bold">See All</span>
           </Link>
         </p>

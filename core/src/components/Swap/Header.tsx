@@ -65,10 +65,10 @@ const ExchangeHeader: FC<ExchangeHeaderProps> = ({
               // state: getQuery(input, output),
             }}
             passHref
-          >
-            <a className="flex items-center justify-center text-lg font-medium text-center text-white rounded-md hover:text-high-emphesis">
+            className="flex items-center justify-center text-lg font-medium text-center text-white rounded-md hover:text-high-emphesis">
+            
               Completely secure, completely private.
-            </a>
+            
           </Link>
         ) : bothSelected && crossChain ? (
           <>

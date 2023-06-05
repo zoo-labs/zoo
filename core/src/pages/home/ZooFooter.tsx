@@ -176,18 +176,18 @@ export default ZooFooter;
 
 const CustomLink = ({ link, title }) => {
   return (
-    <Link href={link}>
-      <a>{title}</a>
+    <Link href={link} legacyBehavior>
+      {title}
     </Link>
   );
 };
 
 const CustomIconLink = ({ link, icon }) => {
   return (
-    <Link href={link}>
-      <a target={"_blank"} rel="noopenner noreferrer">
+    <Link href={link} target={"_blank"} rel="noopenner noreferrer" legacyBehavior>
+
         <Image src={icon} width={16} height={16} alt="" />
-      </a>
-    </Link>
+
+      </Link>
   );
 };

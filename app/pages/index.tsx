@@ -119,7 +119,7 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
             }}
           >
             <Text style="h4" as="h4">
-              Popular Collections
+              Trending
             </Text>
             <Flex align="center" css={{ gap: '$4' }}>
               <CollectionsTimeDropdown
@@ -140,7 +140,7 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
             />
           )}
           <Box css={{ alignSelf: 'center' }}>
-            <Link href="/collection-rankings">
+            <Link href="/collection-rankings" legacyBehavior>
               <Button
                 css={{
                   minWidth: 224,
@@ -156,7 +156,7 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
         <Footer />
       </Box>
     </Layout>
-  )
+  );
 }
 
 type CollectionSchema =

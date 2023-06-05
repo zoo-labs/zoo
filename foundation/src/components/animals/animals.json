@@ -13,13 +13,13 @@
     "avatars": [
       {
         "title": "Baby Hippo",
-        "href": "#",
+        "href": "#babyhippo",
         "usdz": "/models/Hippo/HIPPO_BABY.usdz",
         "glb": "/models/Hippo/HIPPO_BABY.glb"
       },
       {
         "title": "Teen Hippo",
-        "href": "#",
+        "href": "#teenhippo",
         "usdz": "/models/Hippo/HIPPO_TEEN.usdz",
         "glb": "/models/Hippo/HIPPO_TEEN.glb"
       },

@@ -70,5 +70,5 @@ export function useSortedTokensByQuery(tokens: Token[] | undefined, searchQuery:
         })
 
         return [...exactMatches, ...symbolSubtrings, ...rest]
-    }, [tokens, searchQuery])
+    }, [tokens, searchQuery]);
 }

@@ -57,16 +57,19 @@ const Voting = ({}: AppProps & {
               dapibus nunc nullam mi elementum tempus
             </p>
             <div className="flex flex-col">
-              <Link href="" passHref>
-                <a className="px-6 py-3 border-l-2 border-activeGreen text-activeGreen text-lg">
+              <Link
+                href=""
+                passHref
+                className="px-6 py-3 border-l-2 border-activeGreen text-activeGreen text-lg">
+                
                   Proposals
-                </a>
+                
               </Link>
-              <Link href="/dao/proposal/create" passHref>
-                <a className="px-6 py-3 text-lg">Create Proposal</a>
+              <Link href="/dao/proposal/create" passHref className="px-6 py-3 text-lg">
+                Create Proposal
               </Link>
-              <Link href="/dao/about" passHref>
-                <a className="px-6 py-3 text-lg">About</a>
+              <Link href="/dao/about" passHref className="px-6 py-3 text-lg">
+                About
               </Link>
             </div>
           </div>

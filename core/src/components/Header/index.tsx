@@ -158,7 +158,7 @@ function AppBar(props: {
                         <NetworkPopup {...{ userEthBalance, NATIVE }} />
                       )}
                     </div>
-                    <Link href="/wallet" passHref>
+                    <Link href="/wallet" passHref legacyBehavior>
                       <div className={`mr-2 bg-${theme == 'dark' ? 'black' : 'white'} border border-${theme == 'dark' ? 'white' : 'black'}-20 rounded-md cursor-pointer px-2 h-[42px] hidden sm:inline-flex justify-center items-center`}>
                         <svg
                           width="31"
@@ -231,8 +231,8 @@ function AppBar(props: {
                                 <Image
                                   src="/img/egg.png"
                                   alt="zoo"
-                                  width="31px"
-                                  height="36px"
+                                  width={31}
+                                  height={36}
                                   // objectFit="contain"
                                   className="rounded-md"
                                 />

@@ -63,29 +63,30 @@ export default function LangSwitcher() {
                   return (
                     <Menu.Item key={locale}>
                       {({ active }) => (
-                        <Link href={asPath} locale={locale}>
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? 'bg-dark-700 text-high-emphesis' : 'text-primary',
-                              'group flex items-center p-2 text-sm hover:bg-dark-700 focus:bg-dark-700 rounded font-bold'
-                            )}
-                            onClick={() => cookieCutter.set('NEXT_LOCALE', locale)}
-                          >
-                            <Image
-                              className="inline w-3 h-3 mr-1 align-middle"
-                              src={`/images/flags/${locale}-flag.png`}
-                              width={20}
-                              height={20}
-                              alt={locale}
-                              aria-hidden="true"
-                            />
-                            <span className="ml-2">{LANG_TO_COUNTRY[locale]}</span>
-                          </a>
-                        </Link>
+                        (<Link
+                        href={asPath}
+                        locale={locale}
+                        className={classNames(
+                          active ? 'bg-dark-700 text-high-emphesis' : 'text-primary',
+                          'group flex items-center p-2 text-sm hover:bg-dark-700 focus:bg-dark-700 rounded font-bold'
+                        )}
+                        onClick={() => cookieCutter.set('NEXT_LOCALE', locale)}
+                        legacyBehavior>
+
+                          <Image
+                            className="inline w-3 h-3 mr-1 align-middle"
+                            src={`/images/flags/${locale}-flag.png`}
+                            width={20}
+                            height={20}
+                            alt={locale}
+                            aria-hidden="true"
+                          />
+                          <span className="ml-2">{LANG_TO_COUNTRY[locale]}</span>
+
+                        </Link>)
                       )}
                     </Menu.Item>
-                  )
+                  );
                 })}
               </div>
             </Menu.Items>
@@ -93,5 +94,5 @@ export default function LangSwitcher() {
         </>
       )}
     </Menu>
-  )
+  );
 }

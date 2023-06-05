@@ -20,8 +20,8 @@ const ComingSoon = () => {
           <h1 className="text-4xl lg:text-[44px] leading-[3rem] lg:leading-4 font-bold mb-8">Coming Soon</h1>
           <p>
             Go back to the{" "}
-            <Link href="/">
-              <a className="underline text-green">home page</a>
+            <Link href="/" className="underline text-green">
+              home page
             </Link>
           </p>
         </div>

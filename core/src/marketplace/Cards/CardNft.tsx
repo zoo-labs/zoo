@@ -64,7 +64,7 @@ const CardNft = ({
                     pathname: "/marketplace/[animalNFT]",
                   }}
                   passHref
-                >
+                  legacyBehavior>
                   <button className="text-xs  bg-transparent w-full border-solid border-[#06047a] hover:bg-[#06047a] transition ease-in-out border-2 p-2 hover:bg-gradient-to-r from-gray-700 via-gray-900 to-black">
                     {abbreviateNumber(nft?.reservePrice)} ZOO
                   </button>
