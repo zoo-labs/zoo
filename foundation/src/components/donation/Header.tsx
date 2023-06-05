@@ -33,13 +33,13 @@ function Header() {
             />
         </div>
       </div>
-      <div className='md:flex pl-16 lg:hidden w-2/3 items-center justify-between md:pb-32'>
-          <div className='flex flex-col items-center space-y-2'>
+      <div className='md:flex md:pl-16 max-md:flex max-md:space-x-4 max-md:px-4 lg:hidden w-2/3 max-md:w-full items-center justify-between md:pb-32'>
+          <div className='flex w-1/3 flex-col items-center space-y-2'>
               <Switch onChange={handleChange} checked={checked} />
               <p className='text-xs text-center text-white'>Switch to Monthly</p>
           </div>
-          <input className=' w-1/3 rounded-md outline-none text-center px-4 py-2 md:text-sm lg:text-md xl:text-lg' placeholder='Enter $ Amount' />
-          <button className='w-1/3 rounded-md px-4 py-2 text-white bg-blue'>Donate Now</button>
+          <input className=' w-1/3 rounded-md max-md:rounded-full outline-none max-md:text-xs  text-center px-4 py-2 md:text-sm lg:text-md xl:text-lg' placeholder='Enter $ Amount' />
+          <button className='w-1/3 rounded-md max-md:rounded-full px-4 py-2 max-md:px-2 max-md:text-xs text-white bg-blue'>Donate Now</button>
       </div>
     </div>
   );
