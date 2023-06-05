@@ -11,7 +11,7 @@ const PartnersSection = () => {
             href={
               "https://www.wcs.org/?ms=M_SEM_ADV_03_F02_stg-grant-eng-all-dtg-allndn--wildliferesponsive&utm_source=google&utm_medium=cpc&utm_campaign=stg-grant-eng-all-dtg-allndn_10759525129&utm_term=_104464437005&utm_content=wildliferesponsive_454654852027"
             }
-          >
+            legacyBehavior>
             <Image
               className="cursor-pointer"
               src="/img/wcs.svg"
@@ -21,7 +21,7 @@ const PartnersSection = () => {
             />
           </Link>
           <div className="lg:-ml-16">
-            <Link href={"https://defenders.org/"}>
+            <Link href={"https://defenders.org/"} legacyBehavior>
               <Image
                 className="cursor-pointer"
                 src="/img/dfw.svg"
@@ -33,7 +33,7 @@ const PartnersSection = () => {
           </div>
         </div>
         <div className="mx-2">
-          <Link href={"https://www.worldwildlife.org/"}>
+          <Link href={"https://www.worldwildlife.org/"} legacyBehavior>
             <Image
               className="cursor-pointer"
               src="/img/wwf.svg"
@@ -44,7 +44,7 @@ const PartnersSection = () => {
           </Link>
         </div>
         <div className="flex flex-col gap-2 lg:justify-between">
-          <Link href={"https://www.zsl.org/"}>
+          <Link href={"https://www.zsl.org/"} legacyBehavior>
             <Image
               className="cursor-pointer"
               src="/img/zsl.svg"
@@ -53,7 +53,7 @@ const PartnersSection = () => {
               alt=""
             />
           </Link>
-          <Link href={"https://www.iucn.org/"}>
+          <Link href={"https://www.iucn.org/"} legacyBehavior>
             <Image
               className="cursor-pointer"
               src="/img/iucn.svg"
@@ -63,7 +63,7 @@ const PartnersSection = () => {
             />
           </Link>
         </div>
-        <Link href={"https://rhinos.org/"}>
+        <Link href={"https://rhinos.org/"} legacyBehavior>
           <Image
             className="cursor-pointer"
             src="/img/irf.svg"
@@ -72,7 +72,7 @@ const PartnersSection = () => {
             alt=""
           />
         </Link>
-        <Link href={"https://panthera.org/"}>
+        <Link href={"https://panthera.org/"} legacyBehavior>
           <Image
             className="cursor-pointer"
             src="/img/panthera.svg"

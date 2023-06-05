@@ -29,27 +29,27 @@ export default function Learn() {
             <div className="px-2 py-2 lg:py-6">
               <Menu.Item>
                 {({ active }) => (
-                  <Link href="/animal-list">
-                    <a
-                      className={`${
-                        active ? "bg-black text-white" : "text-white"
-                      } hover:bg-black group flex rounded-md items-center w-full min-w-max px-2 py-2 text-sm`}
-                    >
+                  <Link
+                    href="/animal-list"
+                    className={`${
+                      active ? "bg-black text-white" : "text-white"
+                    } hover:bg-black group flex rounded-md items-center w-full min-w-max px-2 py-2 text-sm`}>
+                    
                       Our Animals
-                    </a>
+                    
                   </Link>
                 )}
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <Link href="https://zoolabs.gitbook.io/whitepaper">
-                    <a
-                      className={`${
-                        active ? "bg-black text-white" : "text-white"
-                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                    >
+                  <Link
+                    href="https://zoolabs.gitbook.io/whitepaper"
+                    className={`${
+                      active ? "bg-black text-white" : "text-white"
+                    } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}>
+                    
                       Whitepaper
-                    </a>
+                    
                   </Link>
                 )}
               </Menu.Item>
@@ -70,27 +70,27 @@ export default function Learn() {
 
               <Menu.Item>
                 {({ active }) => (
-                  <Link href="/about">
-                    <a
-                      className={`${
-                        active ? "bg-black text-white" : "text-white"
-                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                    >
+                  <Link
+                    href="/about"
+                    className={`${
+                      active ? "bg-black text-white" : "text-white"
+                    } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}>
+                    
                       About
-                    </a>
+                    
                   </Link>
                 )}
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <Link href="/reward-calculator">
-                    <a
-                      className={`${
-                        active ? "bg-black text-white" : "text-white"
-                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm min-w-max`}
-                    >
+                  <Link
+                    href="/reward-calculator"
+                    className={`${
+                      active ? "bg-black text-white" : "text-white"
+                    } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm min-w-max`}>
+                    
                       Reward Calculator
-                    </a>
+                    
                   </Link>
                 )}
               </Menu.Item>
@@ -126,27 +126,27 @@ export default function Learn() {
               </Menu.Item> */}
               <Menu.Item>
                 {({ active }) => (
-                  <Link href="/faqs">
-                    <a
-                      className={`${
-                        active ? "bg-black text-white" : "text-white"
-                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                    >
+                  <Link
+                    href="/faqs"
+                    className={`${
+                      active ? "bg-black text-white" : "text-white"
+                    } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm`}>
+                    
                       FAQs
-                    </a>
+                    
                   </Link>
                 )}
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <Link href="/partnerships">
-                    <a
-                      className={`${
-                        active ? "bg-black text-white" : "text-white"
-                      } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm min-w-max`}
-                    >
+                  <Link
+                    href="/partnerships"
+                    className={`${
+                      active ? "bg-black text-white" : "text-white"
+                    } hover:bg-black group flex rounded-md items-center w-full px-2 py-2 text-sm min-w-max`}>
+                    
                       Zoo Foundation
-                    </a>
+                    
                   </Link>
                 )}
               </Menu.Item>

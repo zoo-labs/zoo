@@ -39,7 +39,7 @@ function CardList() {
                 height='800'
                 alt=''
             /> */}
-            <Link href={data.url} >
+            <Link href={data.url} legacyBehavior>
             <video autoPlay loop className="border rounded-xl p-1" src={data.card}>
                 {/* <source src={front} /> */}
             </video>

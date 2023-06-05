@@ -64,7 +64,7 @@ const HamburgerMenu = () => {
           align="center"
           justify="between"
         >
-          <Link href="/">
+          <Link href="/" legacyBehavior>
             <Box css={{ width: 34, cursor: 'pointer' }}>
               <Image
                 src="/zooLogo.svg"
@@ -280,7 +280,7 @@ const HamburgerMenu = () => {
         </Flex>
       </Flex>
     </FullscreenModal>
-  )
+  );
 }
 
 export default HamburgerMenu

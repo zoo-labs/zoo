@@ -126,7 +126,7 @@ const HeroSection = () => {
                       {slide.title}
                     </h1>
 
-                    <Link href={slide.uri} passHref>
+                    <Link href={slide.uri} passHref legacyBehavior>
                       <button
                         onMouseOut={() => videoCurrent?.play()}
                         onMouseOver={() => videoCurrent?.pause()}

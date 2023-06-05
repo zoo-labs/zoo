@@ -8,7 +8,7 @@ const StartCollecting = () => {
         <p className="text-3xl md:text-6xl font-bold mb-4 md:mb-9">
           It all starts with one egg.
         </p>
-        <Link href="/drop" passHref>
+        <Link href="/drop" passHref legacyBehavior>
           <div className="px-5 py-3 text-sm font-medium text-white bg-33 rounded-full md:text-lg md:px-6 md:py-4 lg:px-10 hover:cursor-pointer w-max">
             Start Collecting
           </div>

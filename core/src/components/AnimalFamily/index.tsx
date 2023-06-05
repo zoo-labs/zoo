@@ -11,10 +11,13 @@ const AnimalFamily = ({ image, name, title, content }) => {
         </div>
         <div className="text-center AnimalFamily__name lg:basis-2/3">
           <h2 className="mb-6 text-3xl font-bold lg:4xl">{name}</h2>
-          <Link href="/nft" passHref>
-            <a className="px-8 py-3 text-sm font-bold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 lg:px-16">
+          <Link
+            href="/nft"
+            passHref
+            className="px-8 py-3 text-sm font-bold text-white rounded-full bg-gradient-to-b from-purple to-blue md:text-base md:px-6 lg:px-16">
+            
               Buy NFT
-            </a>
+            
           </Link>
         </div>
         <AnimalInfo />

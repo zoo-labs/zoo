@@ -273,7 +273,17 @@ model-viewer {
 .involved-header {
   top: calc(50% - 48px);
 }
+.collect-link {
+  color: white;
+}
 .collect-link > .active {
   border:1px solid #fff;
   border-radius: 9999px;
+}
+
+a {
+  color: white;
+}
+svg {
+  display: inline;
 }

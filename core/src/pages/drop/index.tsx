@@ -168,7 +168,7 @@ const Drop = ({}: AppProps & {
             <p className="mb-8 text-sm leading-7 text-muted-20">
               {drop.description}
             </p>
-            <Link href={`/drop/${drop.dropId}`} passHref>
+            <Link href={`/drop/${drop.dropId}`} passHref legacyBehavior>
               <div className="text-left flex items-center font-normal mb-3 text-sm leading-10 w-max relative before:absolute before:h-1 before:w-[70%] before:left-0 before:-top-2 before:bg-black cursor-pointer">
                 <a className="mr-1">View {drop.name}</a>
                 <Image
@@ -221,15 +221,19 @@ const Drop = ({}: AppProps & {
                           />
                         )}
                       </div>
-                      <Link href={`/market/egg/${_.id}`} passHref>
-                        <a className="absolute flex items-center justify-center w-6 h-6 rounded-full md:w-10 md:h-10 bg-33 bottom-2 right-2">
-                          <Image
-                            src="/icons/arrow-right-light.svg"
-                            alt=""
-                            width={20}
-                            height={20}
-                          />
-                        </a>
+                      <Link
+                        href={`/market/egg/${_.id}`}
+                        passHref
+                        className="absolute flex items-center justify-center w-6 h-6 rounded-full md:w-10 md:h-10 bg-33 bottom-2 right-2"
+                        legacyBehavior>
+
+                        <Image
+                          src="/icons/arrow-right-light.svg"
+                          alt=""
+                          width={20}
+                          height={20}
+                        />
+
                       </Link>
                     </div>
                   </div>
@@ -263,7 +267,7 @@ const Drop = ({}: AppProps & {
                 the real-world. The species determines the rarity and which
                 animal will be benefited through future donation.
               </p>
-              <Link href="/market" passHref>
+              <Link href="/market" passHref legacyBehavior>
                 <button className="bg-black border border-gray-150 py-3.5 px-8 rounded-full">
                   Enter Marketplace
                 </button>
@@ -326,7 +330,7 @@ const Drop = ({}: AppProps & {
           </div>
           {Drops}
           <div className="flex justify-center mb-28">
-            <Link href="/market" passHref>
+            <Link href="/market" passHref legacyBehavior>
               <button className="p-px rounded-full bg-gray-150">
                 <button className="bg-black py-3.5 px-8 rounded-full">
                   View Marketplace
