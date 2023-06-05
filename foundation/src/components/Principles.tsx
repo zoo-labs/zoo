@@ -1,7 +1,7 @@
 import Link from 'next/link';
 function Principles() {
   return (
-      <div className="bg-black py-52 max-md:py-28">
+      <div className="bg-black md:py-32 lg:py-52 max-md:py-28">
           <div className='w-full text-center flex flex-col justify-between pb-20 max-md:px-16'>
               <h1 className='text-white md:text-4xl xl:text-7xl max-md:text-3xl max-md:my-5'>The principles that drive <u>us.</u></h1>
               <p className='text-white md:text-md lg:text-lg xl:text-3xl max-md:pb-10 pb-5 pt-16'>We <b>promote wildlife</b> conservation.</p>
