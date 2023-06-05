@@ -1,12 +1,54 @@
 import Link from 'next/link';
 import dynamic from "next/dynamic";
+import React,{useState} from "react";
 const ModelViewer = dynamic(() => import("@/components/ModelViewer"), {
   ssr: false,
 });
+
+const animals = [
+  {
+    usdz: "/models/Wolf/WOLF_ADULT.usdz",
+    glb: "/models/Wolf/WOLF_ADULT.glb",
+    index: 0
+  },
+  {
+    usdz: "/models/Giraffe/GIRAFFE_ADULT.usdz",
+    glb: "/models/Giraffe/GIRAFFE_ADULT.glb",
+    index: 1
+  },
+  {
+    usdz: "/models/Leopard/LEOPARD_ADULT.usdz",
+    glb: "/models/Leopard/LEOPARD_ADULT.glb",
+    index: 2
+  },
+  {
+    usdz: "/models/Elephant/ELEPHANT_ADULT.usdz",
+    glb: "/models/Elephant/ELEPHANT_ADULT.glb",
+    index: 3
+  },
+  {
+    usdz: "/models/Tiger/TIGER_ADULT.usdz",
+    glb: "/models/Tiger/TIGER_ADULT.glb",
+    index: 4
+  },
+  {
+    usdz: "/models/Hippo/HIPPO_ADULT.usdz",
+    glb: "/models/Hippo/HIPPO_ADULT.glb",
+    index: 5
+  },
+  {
+    usdz: "/models/Rhino/RHINO_ADULT.usdz",
+    glb: "/models/Rhino/RHINO_ADULT.glb",
+    index: 6
+  }
+];
+
 function Header() {
+  const [animal ,setAnimal] = useState(animals[3]);
+  
   return (
     <div className="bg-black">
-      <div className='flex max-md:flex-col items-center justify-between pt-20'>
+      <div className='flex max-md:flex-col items-center justify-between pt-20 max-md:pt-8'>
         <div className='w-7/12 max-md:w-full md:pl-52 max-md:px-8 md:pr-8 md:pb-32'>
             <h1 className='text-white md:text-7xl xl:text-9xl max-md:text-5xl max-md:my-5'>Animals we support.</h1>
         </div>
@@ -18,20 +60,20 @@ function Header() {
                 height='1000'
                 alt=''
             /> */}
-            <ModelViewer className='float-right aspect-square'
-              usdz="/models/Elephant/ELEPHANT_ADULT.usdz"
-              glb="/models/Elephant/ELEPHANT_ADULT.glb"
+            <ModelViewer className='float-right max-md:h-[190px] aspect-square'
+              usdz={animal.usdz}
+              glb={animal.glb}
             ></ModelViewer>
         </div>
       </div>
-      <div className='flex max-md:flex-col items-center justify-center md:space-x-8 max-md:space-y-8 collect-link'>
-        <Link href="/animals/red_wolf" className="text-white px-5 py-2  text-lg font-medium" legacyBehavior><a>Red Wolf</a></Link>
-        <Link href="/animals/nubian_giraffe" className="text-white px-5 py-2  text-lg font-medium" legacyBehavior><a>Nubian Giraffe</a></Link>
-        <Link href="/animals/amur_leopard" className="text-white px-5 py-2  text-lg font-medium" legacyBehavior><a>Amur Leopard</a></Link>
-        <Link href="/animals/pygmy_hippo" className="text-white px-5 py-2  text-lg font-medium" legacyBehavior><a>Pygmy Hippo</a></Link>
-        <Link href="/animals/siberian_tiger" className="text-white px-5 py-2  text-lg font-medium" legacyBehavior><a>Siberian Tiger</a></Link>
-        <Link href="/animals/sumatran_elephant" className="text-white px-5 py-2  text-lg font-medium" legacyBehavior><a>Sumatran Elephant</a></Link>
-        <Link href="/animals/javen_rhino" className="text-white px-5 py-2  text-lg font-medium" legacyBehavior><a>Javan Rhino</a></Link>
+      <div className='flex max-md:flex-col items-center justify-center mt-8 md:space-x-8 max-md:space-y-8 collect-link'>
+      <Link href="/animals/red_wolf" legacyBehavior onMouseOver={()=>setAnimal(animals[0])} className={`text-white px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 0 ? 'active' : ''} text-lg font-medium`} >Red Wolf</Link>
+        <Link href="/animals/nubian_giraffe" legacyBehavior onMouseOver={()=>setAnimal(animals[1])} className={`text-white px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 1 ? 'active' : ''} text-lg font-medium`}>Nubian Giraffe</Link>
+        <Link href="/animals/amur_leopard" legacyBehavior onMouseOver={()=>setAnimal(animals[2])} className={`text-white px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 2 ? 'active' : ''} text-lg font-medium`}>Amur Leopard</Link>
+        <Link href="/animals/pygmy_hippo" legacyBehavior onMouseOver={()=>setAnimal(animals[5])} className={`text-white px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 5 ? 'active' : ''} text-lg font-medium`}>Pygmy Hippo</Link>
+        <Link href="/animals/siberian_tiger" legacyBehavior onMouseOver={()=>setAnimal(animals[4])} className={`text-white px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 4 ? 'active' : ''} text-lg font-medium`}>Siberian Tiger</Link>
+        <Link href="/animals/sumatran_elephant" legacyBehavior onMouseOver={()=>setAnimal(animals[3])} className={`text-white px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 3 ? 'active' : ''} text-lg font-medium`}>Sumatran Elephant</Link>
+        <Link href="/animals/javen_rhino" legacyBehavior onMouseOver={()=>setAnimal(animals[6])} className={`text-white px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 6 ? 'active' : ''} text-lg font-medium`}>Javan Rhino</Link>
       </div>
     </div>
   );
