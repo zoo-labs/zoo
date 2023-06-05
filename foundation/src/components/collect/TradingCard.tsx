@@ -24,7 +24,7 @@ function TradingCard() {
               <Link
                   href='/collect'
                   className='flex items-center md:pt-10 cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'
-                  legacyBehavior>
+                  >
                   <a>
                     <span className='pr-[15px]'>View All Cards</span>
                     <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
