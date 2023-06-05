@@ -12,8 +12,8 @@ function Newsletter() {
                 alt=''
             />
         </div>
-        <div className='w-2/3 max-md:w-full flex flex-col md:pr-48 md:pl-32 max-md:px-8'>
-            <h1 className='text-white md:text-3xl xl:text-5xl  pb-24'>The foundation's mission is to protect our planet's precious wildlife biodiversity through research, education, and collaboration with aligned charities. 
+        <div className='w-2/3 max-md:w-full flex flex-col xl:pr-32 lg:pr-16 xl:pl-32 lg:pl-16 md:pr-8 max-md:px-8'>
+            <h1 className='text-white lg:text-3xl md:text-2xl xl:text-5xl  md:pb-8 lg:pb-16 xl:pb-24'>The foundation's mission is to protect our planet's precious wildlife biodiversity through research, education, and collaboration with aligned charities. 
 </h1>
             <p className='text-white md:text-lg lg:text-xl xl:text-2xl max-md:pb-4'>Join our newsletter for events and progress reports.</p>
             <div className='flex max-md:flex-col items-center justify-between mt-10 md:space-x-16 max-md:space-y-8'>

@@ -23,12 +23,12 @@ function Ourefforts() {
         }
       ];
   return (
-    <div className="bg-black py-52 max-md:py-32 xl:px-56 lg:px-40 md:px-32 max-md:px-4">
+    <div className="bg-black xl:py-52 md:py-32 max-md:py-32 xl:px-56 lg:px-24 md:px-8 max-md:px-4">
         <p className='text-gray-300 text-md xl:text-2xl text-center'>Over 38,000 endangered species</p>
-        <h1 className='text-white text-center md:text-2xl xl:text-5xl max-md:text-xl mt-8 mb-12 md:px-48'>We've started initiating efforts with 7 species to raise awareness, secure funding, and strive for their conservation.</h1>
+        <h1 className='text-white text-center md:text-2xl xl:text-5xl max-md:text-xl mt-8 mb-12 xl:px-48 lg:px-32 md:px-16'>We've started initiating efforts with 7 species to raise awareness, secure funding, and strive for their conservation.</h1>
       <div className='grid md:grid-cols-2 grid-cols-1 md:px-8'>
       {efforts.map((data, index) => (
-        <div className='flex items-center text-white pt-16 md:space-x-16 md:mx-12'>
+        <div className='flex items-center text-white pt-16 xl:space-x-16 lg::space-x-8 md:space-x-4 xl:mx-12 lg:mx-8 md:mx-4'>
             <Image
                 className='w-1/3 pr-4'
                 src={data.icon}
