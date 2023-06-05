@@ -20,7 +20,7 @@ function Safeguard() {
       ];
   return (
     <div className="bg-black py-32">
-        <div className='flex  max-md:flex-col xl:px-56 lg:px-40 md:px-32 max-md:px-4'>
+        <div className='flex  max-md:flex-col xl:px-56 lg:px-40 md:px-20 max-md:px-4'>
           <div className='w-1/2 max-md:w-full flex flex-col md:pr-32'>
             <h1 className='text-white md:text-4xl xl:text-6xl max-md:text-5xl pb-12'>We safeguard wildlife and restore habitats.</h1>
             <Link
