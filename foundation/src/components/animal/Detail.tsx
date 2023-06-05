@@ -7,8 +7,8 @@ const ModelViewer = dynamic(() => import("@/components/ModelViewer"), {
 function Detail() {
   return (
     <div>
-    <div className="bg-black xl:px-56 lg:px-40 px-32 max-md:hidden">
-      <div className='flex items-center justify-between py-20 px-16 space-x-16'>
+    <div className="bg-black xl:px-56 lg:px-36 px-16 max-md:hidden">
+      <div className='flex items-center justify-between py-20  lg:space-x-16 2xl:space-x-32 space-x-8'>
         <div className='md:w-1/2 max-md:absolute max-md:w-4/5 max-md:right-0 max-md:z-0'>
             {/* <Image
                 className='w-4/5'
@@ -22,7 +22,7 @@ function Detail() {
               glb="/models/Wolf/WOLF_ADULT.glb"
             ></ModelViewer>
         </div>
-        <div className='w-1/2 max-md:w-full max-md:z-10 max-md:pt-[280px] flex flex-col  max-md:pl-15 max-md:pr-15 pl-10 xl:pl-16 pr-8'>
+        <div className='w-1/2 max-md:w-full max-md:z-10 max-md:pt-[280px] flex flex-col  max-md:pl-15 max-md:pr-15   lg:pr-8'>
             <p className='text-white md:text-sm lg:text-md xl:text-xl'>ENDANGERED SPECIES WE SUPPORT</p>
             <h1 className='text-white md:text-3xl xl:text-6xl max-md:text-2xl mt-5 mb-12'>The Red Wolf</h1>
             <p className='text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'>Visual guides also allow you to define the information hierarchy of the design</p>

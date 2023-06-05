@@ -28,7 +28,7 @@ function Comment() {
       ];
   return (
     <div className="bg-black">
-      <div className='flex max-md:flex-col pt-52 px-20 max-md:px-4 max-md:pt-32'>
+      <div className='flex max-md:flex-col md:pt-32 lg:pt-52 md:px-8 lg:px-20 max-md:px-4 max-md:pt-32'>
       {comments.map((data, index) => (
         <div className='max-md:w-full flex flex-col  w-1/4 px-5'>
             <h1 className='text-white md:text-3xl xl:text-5xl max-md:text-2xl'>{data.title}</h1>
