@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useAppDispatch } from "state/hooks";
 import { Auction, AuctionHistory, AvailableEgg, Egg } from "types";
 
-import { useMoralisWeb3Api } from "react-moralis";
+//import { useMoralisWeb3Api } from "react-moralis";
 import {
   useMedia,
   useZooKeeper,
@@ -186,123 +186,124 @@ export function useHatch(): (
 }
 
 export function useFetchMyNFTs(): () => Promise<any> {
-  const dispatch = useDispatch();
+  return []
+  // const dispatch = useDispatch();
 
-  const Web3Api = useMoralisWeb3Api();
+  // //const Web3Api = useMoralisWeb3Api();
 
-  const { account, chainId } = useActiveWeb3React();
-  const media = useMedia();
-  const zooKeeper = useZooKeeper();
+  // const { account, chainId } = useActiveWeb3React();
+  // const media = useMedia();
+  // const zooKeeper = useZooKeeper();
 
-  return useCallback(async () => {
-    // get NFTs for current user on Mainnet
-    // bsc nfts
-    try {
-      // bsc testnet nfts
-      const options: { chain?: any; address: string; token_address: string } = {
-        chain: "bsc testnet",
-        address: account,
-        token_address: media?.address,
-      };
+  // return useCallback(async () => {
+  //   // get NFTs for current user on Mainnet
+  //   // bsc nfts
+  //   try {
+  //     // bsc testnet nfts
+  //     const options: { chain?: any; address: string; token_address: string } = {
+  //       chain: "bsc testnet",
+  //       address: account,
+  //       token_address: media?.address,
+  //     };
 
-      let returnNFTs = [];
+  //     let returnNFTs = [];
 
-      const nfts = await Web3Api.account.getNFTsForContract(options);
-      const structuredNft = nfts.result;
-      let newStruct = [];
-      let _eggsCount = 0;
-      let _animalsCount = 0;
-      let _breedCount = 0;
-      structuredNft.forEach(async (nft, index) => {
-        const id = nft.token_id;
+  //     const nfts = await Web3Api.account.getNFTsForContract(options);
+  //     const structuredNft = nfts.result;
+  //     let newStruct = [];
+  //     let _eggsCount = 0;
+  //     let _animalsCount = 0;
+  //     let _breedCount = 0;
+  //     structuredNft.forEach(async (nft, index) => {
+  //       const id = nft.token_id;
 
-        const deet = await zooKeeper?.tokens(Number(id));
+  //       const deet = await zooKeeper?.tokens(Number(id));
 
-        const data = await getMetaData(
-          deet.data.metadataURI,
-          "dataa_IN__useFetchMyNFTs"
-        );
-        const {
-          name,
-          attributes,
-          image,
-          animation_url,
-          glb_animation_url,
-          usdz_animation_url,
-          description,
-        } = data;
-        if (deet?.kind === 0) _eggsCount++;
-        else if (deet?.kind === 1) _animalsCount++;
-        else if (deet?.kind === 2) _eggsCount++;
-        else if (deet?.kind === 3) _animalsCount++;
-        dispatch(eggsCount(_eggsCount));
-        dispatch(animalsCount(_animalsCount));
-        dispatch(breedsCount(_breedCount));
-        const newNft: MyNFT = {
-          index,
-          description,
-          customName: deet?.customName,
-          name,
-          kind: deet?.kind,
-          id: Number(deet?.id),
-          timestamp: Number(deet?.birthValues?.timestamp),
-          birthday: Number(deet?.birthValues?.birthday),
-          dropId: Number(deet?.meta?.dropID),
-          eggId: Number(deet?.meta?.eggID),
-          dropEgg: Number(deet?.dropEgg),
-          swapped: deet?.meta?.swapped,
-          burned: deet?.meta?.burned,
-          parents: {
-            animalA: deet?.birthValues?.parents?.animalB,
-            animalB: deet?.birthValues?.parents?.animalB,
-            tokenA: Number(deet?.birthValues?.parents?.tokenA),
-            tokenB: Number(deet?.birthValues?.parents?.tokenB),
-          },
-          // data: deet?.data,
-          breed: {
-            count: Number(deet?.breed?.count),
-            timestamp: Number(deet?.breed?.timestamp),
-          },
-          stage: deet?.stage,
-          meta: {
-            eggID: Number(deet?.meta?.eggID),
-            dropID: Number(deet?.meta?.dropID),
-            swapped: deet?.meta?.swapped,
-            burned: deet?.meta?.burned,
-            metaUri: deet?.data.metadataURI,
-          },
-          rarity: deet?.rarity?.name,
-          token_uri: animation_url
-            ? `https://zoolabs.mypinata.cloud/ipfs/${animation_url.slice(7)}`
-            : "",
-          attributes: attributes || "",
-          image: image || "",
-          animation_url: animation_url || "",
-          glb_animation_url: glb_animation_url
-            ? `https://zoolabs.mypinata.cloud/ipfs/${glb_animation_url.slice(
-                7
-              )}`
-            : "",
-          usdz_animation_url: usdz_animation_url
-            ? `https://zoolabs.mypinata.cloud/ipfs/${usdz_animation_url.slice(
-                7
-              )}`
-            : "",
-        };
+  //       const data = await getMetaData(
+  //         deet.data.metadataURI,
+  //         "dataa_IN__useFetchMyNFTs"
+  //       );
+  //       const {
+  //         name,
+  //         attributes,
+  //         image,
+  //         animation_url,
+  //         glb_animation_url,
+  //         usdz_animation_url,
+  //         description,
+  //       } = data;
+  //       if (deet?.kind === 0) _eggsCount++;
+  //       else if (deet?.kind === 1) _animalsCount++;
+  //       else if (deet?.kind === 2) _eggsCount++;
+  //       else if (deet?.kind === 3) _animalsCount++;
+  //       dispatch(eggsCount(_eggsCount));
+  //       dispatch(animalsCount(_animalsCount));
+  //       dispatch(breedsCount(_breedCount));
+  //       const newNft: MyNFT = {
+  //         index,
+  //         description,
+  //         customName: deet?.customName,
+  //         name,
+  //         kind: deet?.kind,
+  //         id: Number(deet?.id),
+  //         timestamp: Number(deet?.birthValues?.timestamp),
+  //         birthday: Number(deet?.birthValues?.birthday),
+  //         dropId: Number(deet?.meta?.dropID),
+  //         eggId: Number(deet?.meta?.eggID),
+  //         dropEgg: Number(deet?.dropEgg),
+  //         swapped: deet?.meta?.swapped,
+  //         burned: deet?.meta?.burned,
+  //         parents: {
+  //           animalA: deet?.birthValues?.parents?.animalB,
+  //           animalB: deet?.birthValues?.parents?.animalB,
+  //           tokenA: Number(deet?.birthValues?.parents?.tokenA),
+  //           tokenB: Number(deet?.birthValues?.parents?.tokenB),
+  //         },
+  //         // data: deet?.data,
+  //         breed: {
+  //           count: Number(deet?.breed?.count),
+  //           timestamp: Number(deet?.breed?.timestamp),
+  //         },
+  //         stage: deet?.stage,
+  //         meta: {
+  //           eggID: Number(deet?.meta?.eggID),
+  //           dropID: Number(deet?.meta?.dropID),
+  //           swapped: deet?.meta?.swapped,
+  //           burned: deet?.meta?.burned,
+  //           metaUri: deet?.data.metadataURI,
+  //         },
+  //         rarity: deet?.rarity?.name,
+  //         token_uri: animation_url
+  //           ? `https://zoolabs.mypinata.cloud/ipfs/${animation_url.slice(7)}`
+  //           : "",
+  //         attributes: attributes || "",
+  //         image: image || "",
+  //         animation_url: animation_url || "",
+  //         glb_animation_url: glb_animation_url
+  //           ? `https://zoolabs.mypinata.cloud/ipfs/${glb_animation_url.slice(
+  //               7
+  //             )}`
+  //           : "",
+  //         usdz_animation_url: usdz_animation_url
+  //           ? `https://zoolabs.mypinata.cloud/ipfs/${usdz_animation_url.slice(
+  //               7
+  //             )}`
+  //           : "",
+  //       };
 
-        dispatch(updateMyNfts(newNft));
-        returnNFTs = [newNft, ...returnNFTs];
-      });
+  //       dispatch(updateMyNfts(newNft));
+  //       returnNFTs = [newNft, ...returnNFTs];
+  //     });
 
-      return returnNFTs;
-    } catch (error) {
-      console.error("error_in_fetch_nfts_func", error);
-    }
-  }, [chainId, dispatch]);
+  //     return returnNFTs;
+  //   } catch (error) {
+  //     console.error("error_in_fetch_nfts_func", error);
+  //   }
+  // }, [chainId, dispatch]);
 }
 
 export function useGetNftTransfers(): () => void {
-  const Web3Api = useMoralisWeb3Api();
+  //const Web3Api = useMoralisWeb3Api();
   const { account, chainId } = useActiveWeb3React();
   const media = useMedia();
   const dispatch = useDispatch();

@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { ChainId } from "constants/chainIds";
+import { ChainId } from "../../constants/chainIds";
 import { Balance, MoralisError, Token, TokenSelect, ChainSelect } from "./types";
 export enum Field {
   INPUT = "from",

@@ -55,7 +55,7 @@ export function useBentoBalances(): BentoBalance[] {
   // (balances[i].bentoAmount, balances[i].bentoShare) = bentoBox.totals(token);
   // balances[i].rate = getETHRate(token);
 
-  return useMemo(() => {
+  return useMemo<BentoBalance[]>(() => {
     if (
       uiData.loading ||
       balanceData.loading ||
@@ -68,28 +68,29 @@ export function useBentoBalances(): BentoBalance[] {
     return tokenAddresses
       .map((key: string, i: number) => {
         const token = tokens[key]
-
-        const usd = e10(token.decimals).mulDiv(uiData.result[0].ethRate, balanceData.result[0][i].rate)
-
+        const usd = uiData.result && balanceData.result ? e10(token.decimals).mul(uiData.result[0].ethRate).div(balanceData.result?.[0]?.[i]?.rate) : null;
+        const name = token.name ?? ''
+        const symbol = token.symbol ?? ''
         const full = {
           ...token,
-          ...balanceData.result[0][i],
+          ...balanceData.result?.[0]?.[i],
           usd,
         }
+
+        const balance = token.address === weth ? (uiData.result ? uiData.result[0].ethBalance : null) : (balanceData.result?.[0]?.[i]?.balance ?? null);
+        const bentoBalance = balanceData.result?.[0]?.[i]?.bentoBalance ?? null;
+
         return {
           ...token,
           usd,
           address: token.address,
-          name: token.name,
-          symbol: token.symbol,
+          name: name,
+          symbol: symbol,
           decimals: token.decimals,
-          balance: token.address === weth ? uiData.result[0].ethBalance : balanceData.result[0][i].balance,
-          bentoBalance: balanceData.result[0][i].bentoBalance,
-          wallet: easyAmount(
-            token.address === weth ? uiData.result[0].ethBalance : balanceData.result[0][i].balance,
-            full
-          ),
-          bento: easyAmount(toAmount(full, balanceData.result[0][i].bentoBalance), full),
+          balance,
+          bentoBalance,
+          wallet: easyAmount(balance, full),
+          bento: easyAmount(toAmount(full, bentoBalance), full),
         }
       })
       .filter((token) => token.balance.gt('0') || token.bentoBalance.gt('0'))

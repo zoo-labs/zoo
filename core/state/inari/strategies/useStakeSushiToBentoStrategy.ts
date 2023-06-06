@@ -62,7 +62,7 @@ const useStakeSushiToBentoStrategy = (): StrategyHook => {
 
     setBalances({
       inputTokenBalance: balances[SUSHI[ChainId.MAINNET].address],
-      outputTokenBalance: tryParseAmount(xSushiBentoBalance?.value?.toFixed(18) || '0', XSUSHI),
+      outputTokenBalance: tryParseAmount(xSushiBentoBalance?.value?.toNumber().toFixed(18) || '0', XSUSHI),
     })
   }, [balances, setBalances, xSushiBentoBalance?.value])
 

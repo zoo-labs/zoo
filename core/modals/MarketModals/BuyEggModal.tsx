@@ -228,6 +228,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
               <div className="flex h-20 ">
                 <div className="flex items-center justify-center mr-2 rounded w-14">
                   <Image
+                    alt='basic'
                     layout="fill"
                     src={`/static/images/basic.jpg`}
                     className="w-full h-full transition-transform duration-1000 rounded"
@@ -307,6 +308,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
           <div className="flex h-20 ">
             <div className="flex items-center justify-center mr-2 rounded w-14">
               <Image
+                alt="basic"
                 layout="fill"
                 src={`/static/images/basic.jpg`}
                 className="w-full h-full transition-transform duration-1000 rounded"

@@ -88,8 +88,8 @@ const Component: FC<NetworkGuardProps> = ({ children, networks = [] }) => {
                     src={NETWORK_ICON[key]}
                     alt="Switch Network"
                     className="rounded-md filter drop-shadow-currencyLogo"
-                    width="40px"
-                    height="40px"
+                    width={40}
+                    height={40}
                   />
                 </div>
                 <Typography className="text-sm">

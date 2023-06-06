@@ -6,7 +6,7 @@ import { NextComponentType, NextPageContext } from "next";
 import { AppProps } from "next/app";
 import Image from "next/image";
 import Link from "next/link";
-import GrabAnimal from "pages/home/GrabAnimal";
+import GrabAnimal from "../../components/home/GrabAnimal";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useGetAvailableEggs } from "state/zoo/hooks";
@@ -309,7 +309,7 @@ const Drop = ({}: AppProps & {
                   Animals. But once you incubate the Egg the Egg NFT will be
                   burned forever and a baby will be born. If you want the collateral value
                   back but do not want to burn or incubate your egg you can sell
-                  it on the marketplace for a higher value then you may have spent previously. 
+                  it on the marketplace for a higher value then you may have spent previously.
                 </p>
               </div>
             </div>

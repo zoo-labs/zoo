@@ -1,4 +1,4 @@
-import useMatchBreakpoints from "hooks/useMatchBreakpoints";
+import useMatchBreakpoints from "../../hooks/useMatchBreakpoints";
 import React from "react";
 import { TransitionGroup } from "react-transition-group";
 import styled from "styled-components";

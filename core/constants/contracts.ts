@@ -1,4 +1,20 @@
-import contractsJSON from '../contracts.json'
+interface Contract {
+  [key: string]: {
+    [key: string]: {
+      name: string;
+      chainId: string;
+      contracts: {
+        [key: string]: {
+          address: string;
+          abi: any[]; // TODO: Replace `any` with the actual type of `abi`
+        };
+      };
+    };
+  };
+}
+
+import contractsJSONData from '../contracts.json';
+const contractsJSON: Contract = contractsJSONData;
 
 const networkIds = Object.keys(contractsJSON)
 const networkNames = networkIds.reduce(
@@ -20,7 +36,7 @@ const contractsByChainIdAndNetwork = networkIds.reduce((sum: any, id: string) =>
  * By the way, this function is terrible. Change it at your own peril
  **/
 const getContractsByKey = (key: string) =>
-  Object.keys(contractsByChainIdAndNetwork).reduce((sum: string[], id: string) => {
+  Object.keys(contractsByChainIdAndNetwork).reduce((sum: Record<string, any>, id: string) => {
     Object.keys(contractsByChainIdAndNetwork[id]).forEach((networkName: string) => {
       const networks = Object.keys(contractsByChainIdAndNetwork[id])
       sum[id] = networks.reduce((coll: any, network: any) => {

@@ -1,13 +1,13 @@
 import { addDrops } from "./action";
 import { createReducer } from "@reduxjs/toolkit";
-import { AvailableEgg as Drop } from "types";
+import type { AvailableEgg, Drop } from "../../types";
 
 const initialState = {
-  drops: [],
+  drops: [] as Drop[],
 };
 
 export default createReducer(initialState, (builder) =>
   builder.addCase(addDrops, (state, action) => {
-    state.drops = action.payload;
+    state.drops = action.payload as unknown as Drop[];
   })
 );

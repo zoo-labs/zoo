@@ -17,12 +17,12 @@ const MarketPlaceSection = dynamic(() => import("@zoolabs/core/components/home/M
 const AnimalFamilySection = dynamic(() => import("@zoolabs/core/components/home/AnimalFamilySection"));
 const JoinZooSection = dynamic(() => import("@zoolabs/core/components/home/JoinZooSection"));
 const FaqSection = dynamic(() => import("@zoolabs/core/components/Footer"));
-import CardsSection from "@zoolabs/core/components/Cards";
-import GrabAnimal from "@zoolabs/core/components/GrabAnimal";
+import CardsSection from "@zoolabs/core/components/home/Cards";
+import GrabAnimal from "@zoolabs/core/components/home/GrabAnimal";
 import InfoSection from "@zoolabs/core/components/home/InfoSection";
 import StartCollecting from "@zoolabs/core/components/home/StartCollecting";
 import UnimagineableExperience from "@zoolabs/core/components/home/UnimagineableExperience";
-import BuyEggSection from "@zoolabs/core/components/home/BuyEggSection";
+import BuyEggSection from "@zoolabs/core/components/BuyEggSection";
 import ReliableGovernance from "@zoolabs/core/components/home/ReliableGovernance";
 import WhatToDo from "@zoolabs/core/components/home//WhatToDo";
 
@@ -147,8 +147,6 @@ const experiences = [
 ];
 
 export default function Home() {
-  const typeUri = getTypeURIs("turtleblob");
-  console.log("getTypeURIs", typeUri);
   const [hideLeft, setHideLeft] = useState(true);
   const [hideRight, setHideRight] = useState(false);
   const [blogs, setBlogs] = useState([]);

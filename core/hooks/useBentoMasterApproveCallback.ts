@@ -1,11 +1,12 @@
+import { useCallback, useMemo, useState } from 'react'
+import { AddressZero, HashZero } from '@ethersproject/constants'
+import { Contract } from '@ethersproject/contracts'
+import { splitSignature } from '@ethersproject/bytes'
+
 import { useBentoMasterContractAllowed } from '../state/bentobox/hooks'
 import { useActiveWeb3React, useBentoBoxContract } from './index'
 import { useAllTransactions, useTransactionAdder } from '../state/transactions/hooks'
-import { useCallback, useMemo, useState } from 'react'
 import { signMasterContractApproval } from '../entities/KashiCooker'
-import { Contract } from '@ethersproject/contracts'
-import { AddressZero, HashZero } from '@ethersproject/constants'
-import { splitSignature } from '@ethersproject/bytes'
 
 export enum BentoApprovalState {
   UNKNOWN,
@@ -62,43 +63,138 @@ export interface BentoMasterApproveCallbackOptions {
   functionFragment?: string
 }
 
+// const useBentoMasterApproveCallback = (
+//   masterContract: string,
+//   { otherBentoBoxContract, contractName, functionFragment }: BentoMasterApproveCallbackOptions
+// ): BentoMasterApproveCallback => {
+//   const { account, chainId, library } = useActiveWeb3React()
+//   const bentoBoxContract = useBentoBoxContract()
+//   const addTransaction = useTransactionAdder()
+//   const currentAllowed = useBentoMasterContractAllowed(masterContract, account || AddressZero)
+//   const pendingApproval = useBentoHasPendingApproval(masterContract, account, contractName)
+//   const [permit, setPermit] = useState<BentoPermit>(null)
+//
+//   const approvalState: BentoApprovalState = useMemo(() => {
+//     if (permit) return BentoApprovalState.APPROVED
+//     if (pendingApproval) return BentoApprovalState.PENDING
+//
+//     // We might not have enough data to know whether or not we need to approve
+//     if (currentAllowed === undefined) return BentoApprovalState.UNKNOWN
+//     if (!masterContract || !account) return BentoApprovalState.UNKNOWN
+//     if (!currentAllowed) return BentoApprovalState.NOT_APPROVED
+//
+//     return BentoApprovalState.APPROVED
+//   }, [account, currentAllowed, masterContract, pendingApproval, permit])
+//
+//   const getPermit = useCallback(async () => {
+//     if (approvalState !== BentoApprovalState.NOT_APPROVED) {
+//       console.error('approve was called unnecessarily')
+//       return
+//     }
+//
+//     if (!masterContract) {
+//       console.error('masterContract is null')
+//       return
+//     }
+//
+//     if (!account) {
+//       console.error('no account')
+//       return
+//     }
+//
+//     try {
+//       const signature = await signMasterContractApproval(
+//         bentoBoxContract,
+//         masterContract,
+//         account,
+//         library,
+//         true,
+//         chainId
+//       )
+//
+//       const { v, r, s } = splitSignature(signature)
+//       const permit = {
+//         outcome: BentoApproveOutcome.SUCCESS,
+//         signature: { v, r, s },
+//         data: (otherBentoBoxContract || bentoBoxContract)?.interface?.encodeFunctionData(
+//           functionFragment || 'setMasterContractApproval',
+//           [account, masterContract, true, v, r, s]
+//         ),
+//       }
+//
+//       setPermit(permit)
+//       return permit
+//     } catch (e: any) {
+//       return {
+//         outcome: e.code === 4001 ? BentoApproveOutcome.REJECTED : BentoApproveOutcome.FAILED,
+//       }
+//     }
+//   }, [
+//     account,
+//     approvalState,
+//     bentoBoxContract,
+//     chainId,
+//     functionFragment,
+//     library,
+//     masterContract,
+//     otherBentoBoxContract,
+//   ])
+//
+//   const approve = useCallback(async () => {
+//     try {
+//       const tx = await bentoBoxContract?.setMasterContractApproval(account, masterContract, true, 0, HashZero, HashZero)
+//
+//       return addTransaction(tx, {
+//         summary: `Approving ${contractName} Master Contract`,
+//       })
+//     } catch (e) {}
+//   }, [account, addTransaction, bentoBoxContract, contractName, masterContract])
+//
+//   return {
+//     approvalState,
+//     approve,
+//     getPermit,
+//     permit,
+//   }
+// }
+
 const useBentoMasterApproveCallback = (
   masterContract: string,
   { otherBentoBoxContract, contractName, functionFragment }: BentoMasterApproveCallbackOptions
 ): BentoMasterApproveCallback => {
-  const { account, chainId, library } = useActiveWeb3React()
-  const bentoBoxContract = useBentoBoxContract()
-  const addTransaction = useTransactionAdder()
-  const currentAllowed = useBentoMasterContractAllowed(masterContract, account || AddressZero)
-  const pendingApproval = useBentoHasPendingApproval(masterContract, account, contractName)
-  const [permit, setPermit] = useState<BentoPermit>(null)
+  const { account, chainId, library } = useActiveWeb3React();
+  const bentoBoxContract = useBentoBoxContract();
+  const addTransaction = useTransactionAdder();
+  const currentAllowed = useBentoMasterContractAllowed(masterContract, account || AddressZero);
+  const pendingApproval = useBentoHasPendingApproval(masterContract, account, contractName);
+  const [permit, setPermit] = useState<BentoPermit>({} as BentoPermit);
 
   const approvalState: BentoApprovalState = useMemo(() => {
-    if (permit) return BentoApprovalState.APPROVED
-    if (pendingApproval) return BentoApprovalState.PENDING
+    if (typeof permit !== 'function' && permit) return BentoApprovalState.APPROVED;
+    if (pendingApproval) return BentoApprovalState.PENDING;
 
     // We might not have enough data to know whether or not we need to approve
-    if (currentAllowed === undefined) return BentoApprovalState.UNKNOWN
-    if (!masterContract || !account) return BentoApprovalState.UNKNOWN
-    if (!currentAllowed) return BentoApprovalState.NOT_APPROVED
+    if (currentAllowed === undefined) return BentoApprovalState.UNKNOWN;
+    if (!masterContract || !account) return BentoApprovalState.UNKNOWN;
+    if (!currentAllowed) return BentoApprovalState.NOT_APPROVED;
 
-    return BentoApprovalState.APPROVED
-  }, [account, currentAllowed, masterContract, pendingApproval, permit])
+    return BentoApprovalState.APPROVED;
+  }, [account, currentAllowed, masterContract, pendingApproval, permit]);
 
-  const getPermit = useCallback(async () => {
+  const getPermit = useCallback(async (): Promise<BentoPermit> => {
     if (approvalState !== BentoApprovalState.NOT_APPROVED) {
-      console.error('approve was called unnecessarily')
-      return
+      console.error('approve was called unnecessarily');
+      throw new Error('approve was called unnecessarily');
     }
 
     if (!masterContract) {
-      console.error('masterContract is null')
-      return
+      console.error('masterContract is null');
+      throw new Error('masterContract is null');
     }
 
     if (!account) {
-      console.error('no account')
-      return
+      console.error('no account');
+      throw new Error('no account');
     }
 
     try {
@@ -109,24 +205,24 @@ const useBentoMasterApproveCallback = (
         library,
         true,
         chainId
-      )
+      );
 
-      const { v, r, s } = splitSignature(signature)
-      const permit = {
+      const { v, r, s } = splitSignature(signature);
+      const permit: BentoPermit = {
         outcome: BentoApproveOutcome.SUCCESS,
         signature: { v, r, s },
         data: (otherBentoBoxContract || bentoBoxContract)?.interface?.encodeFunctionData(
           functionFragment || 'setMasterContractApproval',
           [account, masterContract, true, v, r, s]
         ),
-      }
+      };
 
-      setPermit(permit)
-      return permit
-    } catch (e) {
+      setPermit(() => permit);
+      return permit;
+    } catch (e: any) {
       return {
         outcome: e.code === 4001 ? BentoApproveOutcome.REJECTED : BentoApproveOutcome.FAILED,
-      }
+      };
     }
   }, [
     account,
@@ -137,24 +233,24 @@ const useBentoMasterApproveCallback = (
     library,
     masterContract,
     otherBentoBoxContract,
-  ])
+  ]);
 
   const approve = useCallback(async () => {
     try {
-      const tx = await bentoBoxContract?.setMasterContractApproval(account, masterContract, true, 0, HashZero, HashZero)
+      const tx = await bentoBoxContract?.setMasterContractApproval(account, masterContract, true, 0, HashZero, HashZero);
 
       return addTransaction(tx, {
         summary: `Approving ${contractName} Master Contract`,
-      })
+      });
     } catch (e) {}
-  }, [account, addTransaction, bentoBoxContract, contractName, masterContract])
+  }, [account, addTransaction, bentoBoxContract, contractName, masterContract]);
 
   return {
     approvalState,
     approve,
     getPermit,
     permit,
-  }
-}
+  };
+};
 
 export default useBentoMasterApproveCallback

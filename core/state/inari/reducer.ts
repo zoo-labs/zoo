@@ -9,7 +9,15 @@ const initialState: InariState = {
   zapIn: true,
   inputValue: '',
   outputValue: '',
-  general: null,
+  general: {
+    name: '',
+    steps: [],
+    zapMethod: '',
+    unzapMethod: '',
+    description: '',
+    inputSymbol: '',
+    outputSymbol: '',
+  },
   tokens: tokenDefinitions,
 }
 

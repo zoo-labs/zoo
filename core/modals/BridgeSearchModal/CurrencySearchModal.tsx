@@ -119,6 +119,4 @@ function CurrencySearchModal({
   );
 }
 
-CurrencySearchModal.whyDidYouRender = true;
-
 export default CurrencySearchModal;

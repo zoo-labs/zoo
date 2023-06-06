@@ -1,17 +1,20 @@
 import React, { useEffect } from "react";
-import AnimalFamilyInfo from "components/AnimalInfo";
+import AnimalFamilyInfo from "../../components/AnimalInfo";
 import Image from "next/image";
 import Link from "next/link";
+
 import animals from "../../animals.json";
 import { ANIMAL_TYPE } from "../../types";
 
-import { useGif } from "context/GifContext";
+import { useGif } from "../../context/GifContext";
 //import BabylonAnim from "components/Babylon";
 import dynamic from "next/dynamic";
-import SingleAnimal from "pages/home/SingleAnimal";
+import SingleAnimal from "../../components/home/SingleAnimal";
+
 const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
   ssr: false,
 });
+
 const animalFamilyData = [
   {
     id: "1",

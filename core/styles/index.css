@@ -10,46 +10,6 @@
 
 @import "./react-morphing-modal.css";
 
-@font-face {
-  font-family: "Made Outer Sans";
-  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Alt\ Bold\ PERSONAL\ USE.otf");
-}
-
-@font-face {
-  font-family: "Made Outer Sans";
-  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Alt\ Medium\ PERSONAL\ USE.otf");
-}
-
-@font-face {
-  font-family: "Made Outer Sans";
-  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Alt\ Light\ PERSONAL\ USE.otf");
-}
-
-@font-face {
-  font-family: "Made Outer Sans";
-  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Alt\ Regular\ PERSONAL\ USE.otf");
-}
-
-@font-face {
-  font-family: "Made Outer Sans";
-  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Medium\ PERSONAL\ USE.otf");
-}
-
-@font-face {
-  font-family: "Made Outer Sans";
-  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Black\ PERSONAL\ USE.otf");
-}
-
-@font-face {
-  font-family: "Made Outer Sans";
-  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Bold\ PERSONAL\ USE.otf");
-}
-
-@font-face {
-  font-family: "Made Outer Sans";
-  src: url("./fonts/made-outer-sans/MADE\ Outer\ Sans\ Light\ PERSONAL\ USE.otf");
-}
-
 @layer components {
   .player__button {
     @apply absolute inset-x-[50%] top-[40%] z-999;
@@ -481,7 +441,7 @@ video {
   top: 30px;
   left: -50px;
 }
-/* 
+/*
 @media only screen and (min-width: 601px) {
   .big-circle {
     width: 400px;

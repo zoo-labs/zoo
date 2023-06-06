@@ -31,7 +31,7 @@
     "@radix-ui/react-tooltip": "^1.0.2",
     "@rainbow-me/rainbowkit": "0.12.2",
     "@reservoir0x/reservoir-kit-ui": "^0.16.6",
-    "@sentry/nextjs": "^7.53.1",
+    "@sentry/nextjs": "^7.54.0",
     "@types/next": "^9.0.0",
     "@types/uuid": "^9.0.1",
     "dayjs": "^1.11.6",

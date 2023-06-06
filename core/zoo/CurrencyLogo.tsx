@@ -16,8 +16,8 @@ const CurrencyLogo = ({ symbol, size = 32, className }: CurrencyLogoProps) => {
           src={logo}
           alt={`Select ${symbol} currency`}
           className={`rounded-full ${className || ""}`}
-          width={`${size}px`}
-          height={`${size}px`}
+          width={size}
+          height={size}
         />
       )}
     </>

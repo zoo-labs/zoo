@@ -1,12 +1,13 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
-import { useGif } from "context/GifContext";
-import { useZooKeeper } from "hooks";
 import Link from "next/link";
+import Image from "next/image";
 import React, { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useGetAvailableEggs } from "state/zoo/hooks";
-import CustomLoader from "components/CustomLoader";
-import Image from "next/image";
+
+import CustomLoader from "../CustomLoader";
+import { useGetAvailableEggs } from "../../state/zoo/hooks";
+import { useGif } from "../../context/GifContext";
+import { useZooKeeper } from "../../hooks";
 
 interface BuyEggSectionProps {}
 
@@ -28,23 +29,23 @@ const BuyEggSection: FC<BuyEggSectionProps> = ({}) => {
     <div>
       <div className="px-6 py-10 md:py-20 mx-auto max-w-5xl 2xl:max-w-6xl">
         <h1 className="font-bold text-3xl md:text-[44px] leading-[3rem] lg:leading-4 text-center ">
-       
-        <Link href="/drop"> 
+
+        <Link href="/drop">
        Buy Gen 0 NFTs.
-       </Link> 
+       </Link>
 
         </h1>
         <p className="text-sm sm:text-base mt-4 mb-8 sm:mt-12 sm:mb-16 text-center">
-          <Link href="/drop"> 
+          <Link href="/drop">
             Each Egg from the Gen 0 drop could mint 1,500+ NFT Animals.
-          </Link> 
+          </Link>
         </p>
 
         {isLoadingEggs ? (
           <CustomLoader />
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {availableEggs.map((data) => {
+            {availableEggs.map((data: any) => {
               return (
                 <div
                   className="w-full flex flex-col items-center mb-4 AnimalFamily__nfts bg-black rounded-md pb-4"

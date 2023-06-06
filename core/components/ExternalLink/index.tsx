@@ -5,6 +5,7 @@ import { classNames } from "../../functions";
 
 const COLOR = {
   default: "text-primary hover:text-high-emphesis focus:text-high-emphesis",
+  'string': "text-primary hover:text-high-emphesis focus:text-high-emphesis",
   blue: "text-blue opacity-80 hover:opacity-100 focus:opacity-100",
 };
 
@@ -50,8 +51,9 @@ const ExternalLink: FC<ExternalLinkProps> = ({
       onClick={handleClick}
       className={classNames(
         "text-baseline whitespace-nowrap",
-        COLOR[color],
-        (startIcon || endIcon) && "space-x-1 flex items-center justify-center",
+        "default",
+        //COLOR[color],
+        (startIcon ? startIcon : (endIcon ? endIcon : '')) && "space-x-1 flex items-center justify-center",
         className
       )}
       {...rest}

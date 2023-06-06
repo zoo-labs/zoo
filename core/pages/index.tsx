@@ -3,8 +3,10 @@ import { nanoid } from "@reduxjs/toolkit";
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import { loadTranslation } from "../entities";
-import Home from "./home";
+
+// import Home from "./home";
 import HomeLayout from "layouts/Home";
+
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const sessionId = nanoid();
 
@@ -20,6 +22,22 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     },
   };
 };
+
+//export default function Dashboard(props) {
+//  return (
+//    <div>
+//      <Head>
+//        <title>ZOO</title>
+//        <meta name="description" content="Zoo" />
+//      </Head>
+//      <Home />
+//    </div>
+//  );
+//}
+
+//Dashboard.Layout = HomeLayout;
+
+// Home is gone now
 export default function Dashboard(props) {
   return (
     <div>
@@ -27,7 +45,6 @@ export default function Dashboard(props) {
         <title>ZOO</title>
         <meta name="description" content="Zoo" />
       </Head>
-      <Home />
     </div>
   );
 }

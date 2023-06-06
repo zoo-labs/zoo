@@ -8,6 +8,8 @@ import { e10, tryParseAmount } from '../../../functions'
 import useSushiPerXSushi from '../../../hooks/useXSushiPerSushi'
 import { BentoPermit } from '../../../hooks/useBentoMasterApproveCallback'
 
+import { BigNumber } from "@ethersproject/bignumber"
+
 export interface useBaseStrategyInterface {
   id: string
   general: StrategyGeneralInfo
@@ -84,15 +86,46 @@ const useBaseStrategy = ({ id, general, tokenDefinitions }: useBaseStrategyInter
   // Default function for calculating the output based on the input
   // This one is converting Sushi to xSushi and vice-versa.
   // Function can be overridden or enhanced if you need custom input to output calculations
-  const calculateOutputFromInput = useCallback(
-    (zapIn: boolean, inputValue: string, inputToken: Token, outputToken: Token) => {
-      if (!sushiPerXSushi || !inputValue) return null
+  //const calculateOutputFromInput = useCallback(
+  //  (zapIn: boolean, inputValue: string, inputToken: Token, outputToken: Token) => {
+  //    if (!sushiPerXSushi || !inputValue) return null
 
-      return (
-        zapIn
-          ? inputValue.toBigNumber(18).mulDiv(e10(18), sushiPerXSushi.toString().toBigNumber(18))
-          : inputValue.toBigNumber(18).mulDiv(sushiPerXSushi.toString().toBigNumber(18), e10(18))
-      )?.toFixed(18)
+  //  const inputValueBigNumber = BigNumber.from(inputValue);
+  //  const sushiPerXSushiBigNumber = BigNumber.from(sushiPerXSushi);
+
+  //  return zapIn
+  //    ? inputValueBigNumber
+  //        .mul(BigNumber.from(10).pow(18))
+  //        .div(sushiPerXSushiBigNumber.mul(BigNumber.from(10).pow(18)))
+  //    : inputValueBigNumber
+  //        .mul(sushiPerXSushiBigNumber.mul(BigNumber.from(10).pow(18)))
+  //        .div(BigNumber.from(10).pow(18));
+
+  //    //return (
+  //    //  zapIn
+  //    //    ? inputValue.toBigNumber(18).mulDiv(e10(18), sushiPerXSushi.toString().toBigNumber(18))
+  //    //    : inputValue.toBigNumber(18).mulDiv(sushiPerXSushi.toString().toBigNumber(18), e10(18))
+  //    //)?.toFixed(18)
+  //  },
+  //  [sushiPerXSushi]
+  //)
+
+  const calculateOutputFromInput = useCallback(
+    async (zapIn: boolean, inputValue: string, inputToken: Token, outputToken: Token): Promise<string> => {
+      if (!sushiPerXSushi || !inputValue) return '';
+
+      const inputValueBigNumber = BigNumber.from(inputValue);
+      const sushiPerXSushiBigNumber = BigNumber.from(sushiPerXSushi);
+
+      const outputValueBigNumber = zapIn
+        ? inputValueBigNumber
+            .mul(BigNumber.from(10).pow(18))
+            .div(sushiPerXSushiBigNumber.mul(BigNumber.from(10).pow(18)))
+        : inputValueBigNumber
+            .mul(sushiPerXSushiBigNumber.mul(BigNumber.from(10).pow(18)))
+            .div(BigNumber.from(10).pow(18));
+
+      return outputValueBigNumber.toString();
     },
     [sushiPerXSushi]
   )
@@ -107,7 +140,7 @@ const useBaseStrategy = ({ id, general, tokenDefinitions }: useBaseStrategyInter
       inputTokenBalance?: CurrencyAmount<Token>
       outputTokenBalance?: CurrencyAmount<Token>
     }) => {
-      _setBalances((prevState) => ({
+      _setBalances((prevState: any) => ({
         ...prevState,
         inputTokenBalance,
         outputTokenBalance,

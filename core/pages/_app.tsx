@@ -106,27 +106,27 @@ function MyApp({
   // Allows for conditionally setting a guard to be hoisted per page
   const Guard = Component.Guard || Fragment;
 
-  const useEagerWalletConnect = () => {
-    const { chainId, connector } = useActiveWeb3React();
-    useEffect(() => {
-      if (chainId) {
-        const isTestnet = chainId === ChainId.GÖRLI;
-        const isMainnet = chainId === ChainId.MAINNET;
+  // const useEagerWalletConnect = () => {
+  //   const { chainId, connector } = useActiveWeb3React();
+  //   useEffect(() => {
+  //     if (chainId) {
+  //       const isTestnet = chainId === ChainId.GÖRLI;
+  //       const isMainnet = chainId === ChainId.MAINNET;
 
-        if (isTestnet || isMainnet) {
-          connector.activate();
-        } else {
-          connector.activate();
-        }
-      } else {
-        connector.activate();
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [connector]);
-  };
+  //       if (isTestnet || isMainnet) {
+  //         connector.activate();
+  //       } else {
+  //         connector.activate();
+  //       }
+  //     } else {
+  //       connector.activate();
+  //     }
+  //     // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   }, [connector]);
+  // };
 
   const GlobalHooks = () => {
-    useEagerWalletConnect();
+    //useEagerWalletConnect();
     return null;
   };
 

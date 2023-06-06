@@ -1,12 +1,12 @@
-import { AbstractConnector } from '@web3-react/abstract-connector'
+//import { AbstractConnector } from '@web3-react/abstract-connector'
 import { ChainId } from '@zoolabs/zdk'
-import { InjectedConnector } from '@web3-react/injected-connector'
+//import { InjectedConnector } from '@web3-react/injected-connector'
 // import { NetworkConnector } from '../entities/NetworkConnector'
 import RPC from './rpc'
 import { AVAILABLE_NETWORKS, SUPPORTED_NETWORKS } from './networks'
-import { hooks as metaMaskHooks, metaMask } from 'connectors/metaMask'
-import { hooks as walletConnectHooks, walletConnect } from 'connectors/walletConnect'
-import { coinbaseWallet } from 'connectors/coinbaseWallet'
+//import { hooks as metaMaskHooks, metaMask } from '../connectors/metaMask'
+//import { hooks as walletConnectHooks, walletConnect } from '../connectors/walletConnect'
+//import { coinbaseWallet } from '../connectors/coinbaseWallet'
 // export const network = new NetworkConnector({
 //   defaultChainId: 1,
 //   urls: RPC,
@@ -14,9 +14,9 @@ import { coinbaseWallet } from 'connectors/coinbaseWallet'
 
 const supportedChainIds = Object.values(AVAILABLE_NETWORKS) as number[]
 
-export const injected = new InjectedConnector({
-  supportedChainIds,
-})
+//export const injected = new InjectedConnector({
+//  supportedChainIds,
+//})
 
 // export interface WalletInfo {
 //   connector?: (() => Promise<AbstractConnector>) | AbstractConnector
@@ -106,7 +106,7 @@ export const injected = new InjectedConnector({
 // }
 
 export interface WalletInfo {
-  connector?: (() => Promise<AbstractConnector>) | AbstractConnector | any
+  connector?: (() => Promise<any>) | any
   name: string
   iconName: string
   description: string
@@ -127,7 +127,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   //   primary: true,
   // },
   METAMASK: {
-    connector: metaMask,
+    //connector: metaMask,
     name: 'MetaMask',
     iconName: 'metamask.png',
     description: 'Easy-to-use browser extension.',
@@ -137,7 +137,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   },
   WALLET_CONNECT: {
     mobile: true,
-    connector: walletConnect,
+    //connector: walletConnect,
     name: 'WalletConnect',
     iconName: 'wallet-connect.svg',
     description: 'Connect to Trust Wallet, Rainbow Wallet and more...',
@@ -145,7 +145,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     color: '#4196FC',
   },
   COINBASE: {
-    connector: coinbaseWallet,
+    //connector: coinbaseWallet,
     name: 'Coinbase Wallet',
     iconName: 'coinbase.svg',
     description: 'Use Coinbase Wallet app on mobile device',
@@ -162,12 +162,12 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     mobileOnly: true,
   },
   Binance: {
-    connector: async () => {
-      const BscConnector = (await import('@binance-chain/bsc-connector')).BscConnector
-      return new BscConnector({
-        supportedChainIds: [56],
-      })
-    },
+    //connector: async () => {
+    //  const BscConnector = (await import('@binance-chain/bsc-connector')).BscConnector
+    //  return new BscConnector({
+    //    supportedChainIds: [56],
+    //  })
+    //},
     name: 'Binance',
     iconName: 'bsc.jpg',
     description: 'Login using Binance hosted wallet',
@@ -177,7 +177,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   },
   TrustWallet: {
     mobile: true,
-    connector: walletConnect,
+    //connector: walletConnect,
     name: 'TrustWallet',
     iconName: 'trust-wallet.svg',
     description: 'Connect to Trust Wallet, Rainbow Wallet and more...',

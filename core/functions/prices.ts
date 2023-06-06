@@ -33,19 +33,19 @@ export function formatExecutionPrice(
 
 // computes realized lp fee as a percent
 export function computeRealizedLPFeePercent(trade: Trade<Currency, Currency, TradeType>): Percent {
-  let percent: Percent
   if (trade instanceof Trade) {
     // for each hop in our trade, take away the x*y=k price impact from 0.3% fees
     // e.g. for 3 tokens/2 hops: 1 - ((1 - .03) * (1-.03))
-    percent = ONE_HUNDRED_PERCENT.subtract(
+    const percent = ONE_HUNDRED_PERCENT.subtract(
       trade.route.pairs.reduce<Percent>(
         (currentFee: Percent): Percent => currentFee.multiply(INPUT_FRACTION_AFTER_FEE),
         ONE_HUNDRED_PERCENT
       )
     )
+    return new Percent(percent.numerator, percent.denominator)
   }
 
-  return new Percent(percent.numerator, percent.denominator)
+  return new Percent(0, 0);
 }
 
 // computes price breakdown for the trade

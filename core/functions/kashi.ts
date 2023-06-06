@@ -49,8 +49,9 @@ export function interestAccrue(pair: any, interest: BigNumber): BigNumber {
 
   let currentInterest = interest
   if (pair.utilization.lt(MINIMUM_TARGET_UTILIZATION)) {
-    const underFactor = MINIMUM_TARGET_UTILIZATION.sub(pair.utilization).mulDiv(
-      FACTOR_PRECISION,
+    const underFactor = MINIMUM_TARGET_UTILIZATION.sub(pair.utilization).mul(
+      FACTOR_PRECISION
+    ).div(
       MINIMUM_TARGET_UTILIZATION
     )
     const scale = INTEREST_ELASTICITY.add(underFactor.mul(underFactor).mul(pair.elapsedSeconds))
@@ -82,7 +83,7 @@ export function getUSDString(amount: BigNumberish, token: any): string {
   return BigNumber.from(amount)
     .mul(token.usd)
     .div(e10(token?.decimals ? token.decimals : token.tokenInfo.decimals))
-    .toFixed(getCurrency(token?.chainId ? token.chainId : token.tokenInfo.chainId).decimals)
+    .toNumber().toFixed(getCurrency(token?.chainId ? token.chainId : token.tokenInfo.chainId).decimals)
 }
 
 export function easyAmount(
@@ -91,7 +92,7 @@ export function easyAmount(
 ): { value: BigNumber; string: string; usdValue: BigNumber; usd: string } {
   return {
     value: amount,
-    string: amount.toFixed(token?.decimals ? token.decimals : token.tokenInfo.decimals),
+    string: amount.toNumber().toFixed(token?.decimals ? token.decimals : token.tokenInfo.decimals),
     usdValue: getUSDValue(amount, token),
     usd: getUSDString(amount, token),
   }
@@ -110,6 +111,6 @@ export function getFraction({
   totalAssetElastic,
   totalBorrowElastic,
   token0: { totalSupplyBase, totalSupplyElastic },
-}) {
+}: any) {
   return totalAssetBase / (Number(totalAssetElastic) + (totalBorrowElastic * totalSupplyBase) / totalSupplyElastic)
 }

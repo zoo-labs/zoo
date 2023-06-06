@@ -20,7 +20,6 @@ const STABLECOIN_AMOUNT_OUT: { [chainId: number]: CurrencyAmount<Token> } = {
   [ChainId.OKEX]: CurrencyAmount.fromRawAmount(USDC[ChainId.OKEX], 100_000e18),
   [ChainId.XDAI]: CurrencyAmount.fromRawAmount(USDC[ChainId.XDAI], 100_000e6),
   [ChainId.ARBITRUM]: CurrencyAmount.fromRawAmount(USDC[ChainId.ARBITRUM], 100_000e6),
-  [ChainId.CELO]: undefined,
 }
 
 /**

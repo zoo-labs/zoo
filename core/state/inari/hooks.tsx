@@ -1,5 +1,5 @@
 import { useAppSelector } from "../hooks";
-import { Token } from "@zoolabs/zdk";
+import { CurrencyAmount, Token } from "@zoolabs/zdk";
 import { tryParseAmount } from "../../functions";
 import useStakeSushiToBentoStrategy from "./strategies/useStakeSushiToBentoStrategy";
 import { DerivedInariState, InariState } from "./types";
@@ -51,11 +51,16 @@ export function useDerivedInariState(): DerivedInariState {
     ]
   );
 
+  const parsedInputValue = tryParseAmount(inputValue, inputToken);
+  const parsedOutputValue = tryParseAmount(outputValue, outputToken);
+  const inputV = parsedInputValue || CurrencyAmount.fromRawAmount(inputToken, "0");
+  const outputV = parsedOutputValue || CurrencyAmount.fromRawAmount(outputToken, "0");
+
   return useMemo(
     () => ({
       ...rest,
-      inputValue: tryParseAmount(inputValue, inputToken),
-      outputValue: tryParseAmount(outputValue, outputToken),
+      inputValue: inputV,
+      outputValue: outputV,
       general,
       tokens: {
         inputToken,

@@ -57,10 +57,10 @@ function useKashiApproveCallback(): [
     setKashiPermit(undefined)
   }, [account, chainId])
 
-  const masterContract = chainId && KASHI_ADDRESS[chainId]
+  const masterContract = chainId && KASHI_ADDRESS[chainId]?.toString();
 
   const pendingApproval = useKashiApprovalPending()
-  const currentAllowed = useBentoMasterContractAllowed(masterContract, account || AddressZero)
+  const currentAllowed = useBentoMasterContractAllowed(masterContract.toString(), account)
   const addTransaction = useTransactionAdder()
 
   // check the current approval status
@@ -111,7 +111,7 @@ function useKashiApproveCallback(): [
         outcome: BentoApproveOutcome.SUCCESS,
         permit: { account, masterContract, v, r, s },
       }
-    } catch (e) {
+    } catch (e: any) {
       return {
         outcome: e.code === 4001 ? BentoApproveOutcome.REJECTED : BentoApproveOutcome.FAILED,
       }

@@ -170,8 +170,8 @@ export default function Meowshi() {
           <Image
             src="/neon-cat.png"
             alt="neon-cat"
-            width="168px"
-            height="168px"
+            width={168}
+            height={168}
           />
         </div>
 

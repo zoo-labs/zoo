@@ -7,7 +7,7 @@ import { formatUnits } from '@ethersproject/units'
 import Numeral from 'numeral'
 import { getAddress } from '@ethersproject/address'
 
-export const capitalize = (s) => {
+export const capitalize = (s: string) => {
   if (typeof s !== 'string') return ''
   return s.charAt(0).toUpperCase() + s.slice(1)
 }

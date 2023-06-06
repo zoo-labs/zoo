@@ -14,7 +14,7 @@ const Layout = ({ children, banner = undefined, bg = "bg-[#000]" }) => {
   }, [library]);
   return (
     <div className="z-0 flex flex-col items-center w-full h-screen pb-16 lg:pb-0">
-      <Header banner={banner} />
+      <Header />
       <Main isModal={false} bgColor={bg}>
         {children}
       </Main>

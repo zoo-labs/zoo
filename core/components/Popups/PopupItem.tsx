@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 
 import { PopupContent } from '../../state/application/actions'
-import TransactionPopup from './TransactionPopup'
+//import TransactionPopup from './TransactionPopup'
 import { XIcon } from '@heroicons/react/outline'
 import { useRemovePopup } from '../../state/application/hooks'
 
@@ -52,12 +52,12 @@ export default function PopupItem({
   }, [removeAfterMs, removeThisPopup])
 
   let popupContent
-  if ('txn' in content) {
-    const {
-      txn: { hash, success, summary },
-    } = content
-    popupContent = <TransactionPopup hash={hash} success={success} summary={summary} />
-  }
+  //if ('txn' in content) {
+  //  const {
+  //    txn: { hash, success, summary },
+  //  } = content
+  //  popupContent = <TransactionPopup hash={hash} success={success} summary={summary} />
+  //}
 
   return (
     <div className="mb-4">

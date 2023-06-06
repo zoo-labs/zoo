@@ -89,7 +89,7 @@ export default function Alert({
     <div
       className={classNames(
         "block relative w-full rounded text-sm p-4",
-        (show || defaultShow) && "pr-10",
+        //(show || defaultShow) && "pr-10",
         color,
         className
       )}

@@ -9,7 +9,7 @@ import { Contract } from '@ethersproject/contracts'
 import IUniswapV2Router02ABI from '../constants/abis/uniswap-v2-router-02.json'
 import IUniswapV2Router02NoETHABI from '../constants/abis/uniswap-v2-router-02-no-eth.json'
 import { isAddress } from '../functions/validate'
-import { SUPPORTED_NETWORKS } from 'config/networks'
+import { SUPPORTED_NETWORKS } from '../config/networks'
 
 // account is not optional
 export function getSigner(library: Web3Provider, account: string): JsonRpcSigner {
@@ -51,7 +51,7 @@ export function getArcherRouterContract(chainId: number, library: Web3Provider, 
   return getContract(ARCHER_ROUTER_ADDRESS[chainId as ChainId] ?? '', ArcherSwapRouterABI, library, account)
 }
 
-export async function switchChain(chainId, library, account) {
+export async function switchChain(chainId: any, library: any, account: any) {
 
   const params = SUPPORTED_NETWORKS[chainId];
   try {

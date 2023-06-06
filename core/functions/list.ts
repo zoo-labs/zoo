@@ -19,25 +19,18 @@ export async function getTokenList(
   resolveENSContentHash: (ensName: string) => Promise<string>
 ): Promise<TokenList> {
   const parsedENS = parseENSAddress(listUrl)
-  let urls: string[]
+  let urls = uriToHttp(listUrl)
   if (parsedENS) {
-    let contentHashUri
+    let contentHashUri: string
     try {
       contentHashUri = await resolveENSContentHash(parsedENS.ensName)
+      let translatedUri: string
+      translatedUri = contenthashToUri(contentHashUri)
+      urls = uriToHttp(`${translatedUri}${parsedENS.ensPath ?? ''}`)
     } catch (error) {
-      // console.debug(`Failed to resolve ENS name: ${parsedENS.ensName}`, error)
+      console.debug(`Failed to resolve ENS name: ${parsedENS}`, error)
       // throw new Error(`Failed to resolve ENS name: ${parsedENS.ensName}`)
     }
-    let translatedUri
-    try {
-      translatedUri = contenthashToUri(contentHashUri)
-    } catch (error) {
-      // console.debug('Failed to translate contenthash to URI', contentHashUri)
-      // throw new Error(`Failed to translate contenthash to URI: ${contentHashUri}`)
-    }
-    urls = uriToHttp(`${translatedUri}${parsedENS.ensPath ?? ''}`)
-  } else {
-    urls = uriToHttp(listUrl)
   }
   for (let i = 0; i < urls.length; i++) {
     const url = urls[i]
