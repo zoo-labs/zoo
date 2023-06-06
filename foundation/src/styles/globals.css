@@ -293,6 +293,9 @@ svg {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 }
+.btn-flex {
+  transform: rotateY(180deg);
+}
 .react-card-flipper > div {
   -webkit-transform-style: preserve-3d;
     -ms-transform-style: preserve-3d;
