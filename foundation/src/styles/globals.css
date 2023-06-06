@@ -293,3 +293,14 @@ svg {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 }
+.react-card-flipper > div {
+  -webkit-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+}

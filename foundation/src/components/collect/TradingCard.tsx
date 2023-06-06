@@ -14,7 +14,7 @@ function TradingCard() {
                 alt=''
             /> */}
             <Link href="/animals/amur_leopard">
-              <video autoPlay loop className="border rounded-xl p-1" >
+              <video autoPlay loop muted className="border rounded-xl p-1" >
                 <source src="/videos/Leopard_Card_Front.webm"  type="video/webm"/>
                 <source src="/videos/Leopard_Card_Front.mp4"  type="video/mp4"/>
               </video>
