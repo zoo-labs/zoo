@@ -60,7 +60,7 @@ function Detail() {
         <div className='max-md:w-full aspect-square relative flex flex-col items-center justify-between border rounded-xl border-white '>
             <video
                 className='w-full m-1 h-full'
-                autoPlay loop muted
+                autoPlay loop muted playsInline
             >
               <source src='/videos/teen_wolf.webm'  type="video/webm"/>
                 <source src='/videos/teen_wolf.mp4'  type="video/mp4"/>
