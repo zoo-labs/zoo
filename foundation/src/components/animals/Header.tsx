@@ -41,7 +41,7 @@ function Header({title,content,front,back,front_m,back_m}: {
                 <source src={back_m}  type="video/mp4"/>
               </video>
             </ReactCardFlip>
-            <div className='absolute bottom-4 md:right-20 lg:right-28 xl:right-32 2xl:pr-36 max-md:right-8 cursor-pointer max-md:right-4 w-[45px] h-[45px] flex justify-center bg-white rounded-full' onClick={() => setFlip(!flip)}>
+            <div className='absolute bottom-4 md:right-20 lg:right-28 xl:right-32 2xl:right-36 max-md:right-8 cursor-pointer max-md:right-4 w-[45px] h-[45px] flex justify-center bg-white rounded-full' onClick={() => setFlip(!flip)}>
                 <svg width="15" height="45" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12.7586 2.72001H3.53201L4.52469 1.74131C4.78597 1.48362 4.88806 1.108 4.79244 0.756034C4.69675 0.403999 4.41795 0.129101 4.06091 0.0347546C3.70395 -0.059523 3.32299 0.0411294 3.06163 0.298754L0.303024 3.01872C0.109057 3.21004 0 3.46949 0 3.74C0 4.01051 0.109052 4.26997 0.303024 4.46128L3.06163 7.18124C3.32299 7.43886 3.70395 7.53951 4.06091 7.44524C4.41795 7.35089 4.69676 7.076 4.79244 6.72396C4.88806 6.372 4.78598 5.99637 4.52469 5.73868L3.53201 4.75998H12.7586C14.1305 4.75998 15.4461 5.29732 16.4162 6.2537C17.3862 7.21014 17.9311 8.50728 17.9311 9.86001C17.9311 11.2127 17.3862 12.5098 16.4162 13.4663C15.4462 14.4227 14.1306 14.96 12.7586 14.96H6.55177C6.18216 14.96 5.84071 15.1545 5.65587 15.47C5.4711 15.7856 5.4711 16.1745 5.65587 16.49C5.84071 16.8056 6.18216 17 6.55177 17H12.7586C16.7516 17 20 13.7972 20 9.8601C20 5.92304 16.7516 2.72019 12.7586 2.72019V2.72001Z" fill="black"/>
                 </svg>
