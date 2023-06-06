@@ -31,12 +31,12 @@ function Header({title,content,front,back,front_m,back_m}: {
                   height='1000'
                   alt=''
               /> */}
-              <video autoPlay loop className="border rounded-xl p-1" >
+              <video autoPlay loop muted className="border rounded-xl p-1" src={front_m}>
                 <source src={front}  type="video/webm"/>
                 <source src={front_m}  type="video/mp4"/>
                 
               </video>
-              <video autoPlay loop className="border rounded-xl p-1" >
+              <video autoPlay loop muted className="border rounded-xl p-1" src={back_m}>
               <source src={back}  type="video/webm"/>
                 <source src={back_m}  type="video/mp4"/>
               </video>

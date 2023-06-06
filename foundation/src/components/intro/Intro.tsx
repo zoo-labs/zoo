@@ -7,7 +7,7 @@ function Intro({breadcrumbs,title,comment}: {
   return (
     <div className="bg-black relative max-md:pt-20">
       <div className='max-md:hidden block relative'>
-        <video autoPlay loop className="w-full">
+        <video autoPlay loop muted className="w-full">
           <source src="/videos/Giraffe_teen.webm" type="video/webm"/>
           <source src="/videos/Giraffe_teen.mp4" type="video/mp4"/>
         </video>
@@ -35,7 +35,7 @@ function Intro({breadcrumbs,title,comment}: {
                 height='1000'
                 alt=''
             /> */}
-            <video  autoPlay loop className="w-full">
+            <video  autoPlay loop muted className="w-full">
               <source src="/videos/Giraffe_teen.webm" type="video/webm"/>
               <source src="/videos/Giraffe_teen.mp4" type="video/mp4"/>
             </video>
