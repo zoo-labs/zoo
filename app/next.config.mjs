@@ -14,7 +14,7 @@ const nextConfig = {
     hideSourceMaps: false,
   },
   experimental: {
-    transpilePackages: ['@reservoir0x/reservoir-kit-ui', "@zoolabs/ui", "@zoolabs/sdk"],
+    transpilePackages: ['@reservoir0x/reservoir-kit-ui', "@zoolabs/core", "@zoolabs/ui", "@zoolabs/sdk"],
   },
   async headers() {
     return [

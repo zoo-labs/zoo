@@ -1,38 +1,30 @@
 /* eslint-disable @next/next/no-img-element */
+
 import _ from "lodash";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-const ModelViewer = dynamic(() => import("../../components/ModelViewer"), {
+
+const ModelViewer = dynamic(() => import("@zoolabs/core/components/ModelViewer"), {
   ssr: false,
 });
 
-const HeroSection = dynamic(() => import("./HeroSection"));
-const OpportunitySection = dynamic(() => import("./OpportunitySection"));
-const MarketPlaceSection = dynamic(() => import("./MarketPlaceSection"));
-const AnimalFamilySection = dynamic(() => import("./AnimalFamilySection"));
-const JoinZooSection = dynamic(() => import("./JoinZooSection"));
-const FaqSection = dynamic(() => import("../../components/Footer"));
-import { useTokenTypes } from "zoo/state";
-import CardsSection from "./Cards";
-import GrabAnimal from "./GrabAnimal";
-import InfoSection from "./InfoSection";
-import StartCollecting from "./StartCollecting";
-import UnimagineableExperience from "./UnimagineableExperience";
-import BuyEggSection from "components/BuyEggSection";
-import ReliableGovernance from "./ReliableGovernance";
-import WhatToDo from "./WhatToDo";
-
-const BASE_NFT_URL = "https://db.zoolabs.io";
-
-const getTypeURIs = (type: string) => {
-  return {
-    contentURI: BASE_NFT_URL + `/${type}.jpg`,
-    metadataURI: BASE_NFT_URL + `/${type}.json`,
-  };
-};
+const HeroSection = dynamic(() => import("@zoolabs/core/components/home/HeroSection"));
+const OpportunitySection = dynamic(() => import("@zoolabs/core/components/home/OpportunitySection"));
+const MarketPlaceSection = dynamic(() => import("@zoolabs/core/components/home/MarketPlaceSection"));
+const AnimalFamilySection = dynamic(() => import("@zoolabs/core/components/home/AnimalFamilySection"));
+const JoinZooSection = dynamic(() => import("@zoolabs/core/components/home/JoinZooSection"));
+const FaqSection = dynamic(() => import("@zoolabs/core/components/Footer"));
+import CardsSection from "@zoolabs/core/components/Cards";
+import GrabAnimal from "@zoolabs/core/components/GrabAnimal";
+import InfoSection from "@zoolabs/core/components/home/InfoSection";
+import StartCollecting from "@zoolabs/core/components/home/StartCollecting";
+import UnimagineableExperience from "@zoolabs/core/components/home/UnimagineableExperience";
+import BuyEggSection from "@zoolabs/core/components/home/BuyEggSection";
+import ReliableGovernance from "@zoolabs/core/components/home/ReliableGovernance";
+import WhatToDo from "@zoolabs/core/components/home//WhatToDo";
 
 const grabAnimal = [
   {
@@ -157,8 +149,6 @@ const experiences = [
 export default function Home() {
   const typeUri = getTypeURIs("turtleblob");
   console.log("getTypeURIs", typeUri);
-  const { tokenTypes } = useTokenTypes();
-  console.log("tokenTypes", tokenTypes);
   const [hideLeft, setHideLeft] = useState(true);
   const [hideRight, setHideRight] = useState(false);
   const [blogs, setBlogs] = useState([]);

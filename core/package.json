@@ -15,11 +15,11 @@
   "next-unused": {
     "debug": true,
     "include": [
-      "src"
+      "*"
     ],
     "exclude": [],
     "entrypoints": [
-      "src/pages"
+      "pages"
     ]
   },
   "dependencies": {
