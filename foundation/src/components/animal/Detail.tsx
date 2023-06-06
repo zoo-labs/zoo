@@ -60,9 +60,11 @@ function Detail() {
         <div className='max-md:w-full aspect-square relative flex flex-col items-center justify-between border rounded-xl border-white '>
             <video
                 className='w-full m-1 h-full'
-                src='/videos/teen_wolf.webm'
                 autoPlay loop
-            ></video>
+            >
+              <source src='/videos/teen_wolf.webm'  type="video/webm"/>
+                <source src='/videos/teen_wolf.mp4'  type="video/mp4"/>
+            </video>
             <Link href='/animals/red_wolf' className='flex items-center absolute bottom-[0px] cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>
               <>
                 <span className='pr-[15px]'>Red Wolf</span>
