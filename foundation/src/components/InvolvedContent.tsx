@@ -20,12 +20,12 @@ function InvolvedContent({title,content1,content2,image,direction,type}: {
                 alt=''
             />
         </div>
-        <div className='w-1/2 max-md:w-full flex flex-col justify-between  px-8 xl:pl-32 lg:pl-16 md:pl-8 xl:pr-48'>
-            <h1 className='text-white md:text-5xl xl:text-6xl max-md:text-3xl max-md:my-5 md:pb-16'>{title}</h1>
-            <p className='text-white md:text-lg lg:text-xl xl:text-2xl max-md:pb-4 md:pb-10'>{content1}</p>
-            <p className='text-white md:text-lg lg:text-xl xl:text-2xl '>{content2}</p>
+        <div className='w-1/2 max-md:w-full flex flex-col justify-between  px-8 xl:pl-24 2xl:pl-32 lg:pl-16 md:pl-8 2xl:pr-48'>
+            <h1 className='text-white md:text-4xl lg:text-5xl xl:text-6xl max-md:text-3xl max-md:my-5 md:pb-4 lg:pb-8 xl:pb-10'>{title}</h1>
+            <p className='text-white md:text-sm lg:text-lg xl:text-2xl max-md:pb-4 md:pb-4 lg:pb-8 '>{content1}</p>
+            <p className='text-white md:text-sm lg:text-lg xl:text-2xl '>{content2}</p>
             { type == '2' ? (
-              <div className='flex items-center md:pt-10 max-md:pt-4 space-x-8'>
+              <div className='flex items-center md:pt-4 lg:pt-10 max-md:pt-4 space-x-8'>
                 <Link
                     href="/donation"
                     rel="noopener noreferrer" target="_blank"
