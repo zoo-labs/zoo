@@ -45,7 +45,7 @@ const animals = [
 
 function Header() {
   const [animal ,setAnimal] = useState(animals[3]);
-  
+
   return (
     <div className="bg-black">
       <div className='flex max-md:flex-col items-center justify-between pt-20 max-md:pt-8'>
@@ -67,13 +67,13 @@ function Header() {
         </div>
       </div>
       <div className='flex max-md:flex-col items-center justify-center mt-8 lg:space-x-8 md:space-x-2 md:px-4 max-md:space-y-8 collect-link'>
-      <Link href="/animals/red_wolf"  onMouseOver={()=>setAnimal(animals[0])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 0 ? 'active' : ''} text-lg md:text-sm font-medium`} >Red Wolf</Link>
-        <Link href="/animals/nubian_giraffe"  onMouseOver={()=>setAnimal(animals[1])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 1 ? 'active' : ''} text-lg md:text-sm font-medium`}>Nubian Giraffe</Link>
-        <Link href="/animals/amur_leopard"  onMouseOver={()=>setAnimal(animals[2])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 2 ? 'active' : ''} text-lg md:text-sm font-medium`}>Amur Leopard</Link>
-        <Link href="/animals/pygmy_hippo"  onMouseOver={()=>setAnimal(animals[5])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 5 ? 'active' : ''} text-lg md:text-sm font-medium`}>Pygmy Hippo</Link>
-        <Link href="/animals/siberian_tiger"  onMouseOver={()=>setAnimal(animals[4])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 4 ? 'active' : ''} text-lg md:text-sm font-medium`}>Siberian Tiger</Link>
-        <Link href="/animals/sumatran_elephant"  onMouseOver={()=>setAnimal(animals[3])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 3 ? 'active' : ''} text-lg md:text-sm font-medium`}>Sumatran Elephant</Link>
-        <Link href="/animals/javen_rhino"  onMouseOver={()=>setAnimal(animals[6])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 6 ? 'active' : ''} text-lg md:text-sm font-medium`}>Javan Rhino</Link>
+        <Link href="/animals/red_wolf"  onMouseOver={()=>setAnimal(animals[0])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 0 ? 'active' : ''} text-lg md:text-sm font-medium`}>{'Red Wolf'}</Link>
+        <Link href="/animals/nubian_giraffe"  onMouseOver={()=>setAnimal(animals[1])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 1 ? 'active' : ''} text-lg md:text-sm font-medium`}>{'Nubian Giraffe'}</Link>
+        <Link href="/animals/amur_leopard"  onMouseOver={()=>setAnimal(animals[2])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 2 ? 'active' : ''} text-lg md:text-sm font-medium`} >{'Amur Leopard'}</Link>
+        <Link href="/animals/pygmy_hippo"  onMouseOver={()=>setAnimal(animals[5])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 5 ? 'active' : ''} text-lg md:text-sm font-medium`} >{'Pygmy Hippo'}</Link>
+        <Link href="/animals/siberian_tiger"  onMouseOver={()=>setAnimal(animals[4])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 4 ? 'active' : ''} text-lg md:text-sm font-medium`} >{'Siberian Tiger'}</Link>
+        <Link href="/animals/sumatran_elephant"  onMouseOver={()=>setAnimal(animals[3])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 3 ? 'active' : ''} text-lg md:text-sm font-medium`} >{'Sumatran Elephant'}</Link>
+        <Link href="/animals/javen_rhino"  onMouseOver={()=>setAnimal(animals[6])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 6 ? 'active' : ''} text-lg md:text-sm font-medium`} >{'Javan Rhino'}</Link>
       </div>
     </div>
   );
