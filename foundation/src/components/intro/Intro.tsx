@@ -19,7 +19,7 @@ function Intro({breadcrumbs,title,comment}: {
         </div>
       </div>
       <div className='max-md:flex hidden justify-between pt-10 z-10'>
-        <div className='w-1/2 max-md:w-full max-md:z-10 max-md:pt-[280px] flex flex-col justify-between  max-md:pl-15 max-md:pr-15 pl-10 md:pl-32 pr-8'>
+        <div className='w-1/2 max-md:w-full max-md:z-10 max-md:pt-[350px] flex flex-col justify-between  max-md:pl-15 max-md:pr-15 pl-10 md:pl-32 pr-8'>
             <p className='text-white md:text-sm lg:text-lg xl:text-2xl'>{breadcrumbs}</p>
             <h1 className='text-white md:text-7xl xl:text-9xl max-md:text-5xl max-md:my-5'>{title}</h1>
             <p className='text-white md:text-lg lg:text-2xl xl:text-3xl max-md:pb-10'>{comment}</p>

@@ -29,7 +29,7 @@ function CardList() {
       ];
   return (
     <div className="bg-black">
-      <div className='grid grid-cols-3 lg:gap-12 md:gap-8 xl:px-40 lg:px-32 md:px-8 max-md:px-4'>
+      <div className='grid cardlist md:grid-cols-3 gap-12 lg:gap-12 md:gap-8  xl:px-40 lg:px-32 md:px-8 max-md:px-4'>
       {cardlist.map((data, index) => (
         <div className=' flex flex-col items-center justify-between'>
             {/* <Image
