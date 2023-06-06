@@ -54,6 +54,7 @@
     "@sushiswap/chainlink-whitelist": "^0.2.5",
     "@sushiswap/core": "^1.4.2",
     "@sushiswap/default-token-list": "^20.18.0",
+    "@sushiswap/sushi-data": "^1.0.27",
     "@transak/transak-sdk": "^1.0.31",
     "@uniswap/token-lists": "^1.0.0-beta.31",
     "@visx/axis": "^2.18.0",

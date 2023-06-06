@@ -44,7 +44,7 @@ export function useGetAvailableTokens(): (chain?: number) => void {
         ZOO: string
       } =
         (addresses[chain] as any) || (addresses[ChainId.MAINNET] as any);
-      const result: { tokens: { [address in string]?: Token[] } } =
+      const result: { tokens: { [address: string]: Token[] } } = { tokens: {} };
         // await Moralis.Plugins.oneInch.getSupportedTokens({
         //   chain:
         //     SUPPORTED_NETWORKS[chain].nativeCurrency.symbol.toLowerCase(), // The blockchain you want to use (eth/bsc/polygon)
