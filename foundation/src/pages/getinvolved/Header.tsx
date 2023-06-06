@@ -1,7 +1,7 @@
 import Image from 'next/image';
 function Header() {
   return (
-    <div className="bg-black flex flex-col relative">
+    <div className="bg-black flex flex-col relative max-md:pt-20">
       <div className='flex'>
         <div className='space-dog-bg'></div>
         <div className='dog-bg'>
