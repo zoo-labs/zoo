@@ -10,7 +10,7 @@ function Navbar() {
 
   return (
       <nav className="bg-black">
-        <div className="px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div className="max-md:fixed max-md:w-full max-md:left-0 max-md:z-[999] max-md:bg-black px-4 sm:px-6 lg:px-8 xl:px-12">
           <div className="flex items-center justify-between h-20">
               <div className="md:hidden">
                   <button
@@ -43,7 +43,7 @@ function Navbar() {
                   )}
                   </button>
               </div>
-              <div className="flex items-center max-md:mr-[36px]">
+              <div className="flex items-center max-md:ml-[36px]">
                   <div className="flex-shrink-0">
 
                   <Link
@@ -87,7 +87,7 @@ function Navbar() {
               <div className='flex items-center'>
                   <Link
                       href="/donation"
-                      className="text-black hover:bg-gray-700 bg-white hover:text-white px-6 py-1 rounded-full text-md font-medium hidden md:block"
+                      className="text-black hover:bg-gray-700 bg-white hover:text-white px-6 py-1 rounded-full text-md font-medium  md:block"
                   >
                       Donate
                   </Link>
@@ -95,7 +95,7 @@ function Navbar() {
           </div>
         </div>
         {isOpen && (
-          <div className="md:hidden absolute z-50 h-[100vh] w-full bg-black" id="mobile-menu">
+          <div className="md:hidden fixed z-50 h-[100vh] top-20 w-full bg-black" id="mobile-menu">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <Link
                 href="/collect"

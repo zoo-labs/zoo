@@ -10,7 +10,7 @@ function Header({title,content,front,back}: {
 }) {
   const [flip, setFlip] = useState(false);
   return (
-    <div className="bg-black md:px-16 lg:px-32 xl:px-40 2xl:px-64">
+    <div className="bg-black md:px-16 lg:px-32 xl:px-40 2xl:px-64 max-md:pt-20">
       <div className="flex max-md:flex-col items-center justify-between md:py-20 max-md:py-8">
         <div className='relative md:w-1/2 max-md:w-full max-md:px-4 2xl:pr-32 xl:pr-28 lg:pr-24 md:pr-16'>
             <ReactCardFlip isFlipped={flip}

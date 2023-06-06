@@ -47,7 +47,7 @@ function Header() {
   const [animal ,setAnimal] = useState(animals[3]);
 
   return (
-    <div className="bg-black">
+    <div className="bg-black max-md:pt-20">
       <div className='flex max-md:flex-col items-center justify-between pt-20 max-md:pt-8'>
         <div className='w-7/12 max-md:w-full md:pl-24 lg:pl-36 xl:pl-52 max-md:px-8 md:pr-8 md:pb-32'>
             <h1 className='text-white md:text-7xl xl:text-9xl max-md:text-5xl max-md:my-5'>Animals we support.</h1>

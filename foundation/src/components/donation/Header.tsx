@@ -7,7 +7,7 @@ function Header() {
         setChecked(e);
     }
   return (
-    <div className="bg-black">
+    <div className="bg-black max-md:pt-20">
       <div className='flex max-md:flex-col items-center justify-between pt-20'>
         <div className='w-1/2 max-md:w-full max-md:px-8 flex flex-col xl:pl-52 lg:pl-28 md:pl-16 pr-8 lg:pb-32'>
             <p className='text-lg text-white pb-8'>End the road to extinction</p>

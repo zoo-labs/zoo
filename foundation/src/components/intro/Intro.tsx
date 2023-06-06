@@ -5,7 +5,7 @@ function Intro({breadcrumbs,title,comment}: {
     comment?: string;
   }) {
   return (
-    <div className="bg-black relative">
+    <div className="bg-black relative max-md:pt-20">
       <div className='max-md:hidden block relative'>
         <video autoPlay loop className="w-full">
           <source src="/videos/Giraffe_teen.webm" />
