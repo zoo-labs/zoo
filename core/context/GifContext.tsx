@@ -8,17 +8,17 @@ let initialState: any = {};
 
 if (typeof window === "undefined") {
   initialState = {};
-  
+
 } else {
   initialState = {
     gifMode: localStorage?.getItem("gifMode")
-      ? JSON.parse(localStorage.getItem("gifMode"))
+      ? JSON.parse(localStorage.getItem("gifMode") ?? "{}")
       : "gif",
   };
 }
 
 // Action
-export const toggleGif = (dispatch) => {
+export const toggleGif = (dispatch: any) => {
   localStorage.setItem("gifMode", JSON.stringify("gif"));
 
   return dispatch({
@@ -27,7 +27,7 @@ export const toggleGif = (dispatch) => {
   });
 };
 
-export const toggleImage = (dispatch) => {
+export const toggleImage = (dispatch: any) => {
   localStorage.setItem("gifMode", JSON.stringify("image"));
 
   return dispatch({
@@ -37,7 +37,7 @@ export const toggleImage = (dispatch) => {
 };
 
 // Reducer
-const reducer = (state: GifProps, action) => {
+const reducer = (state: GifProps, action: any) => {
   switch (action.type) {
     case "TOGGLE_GIFMODE":
       return { ...state, gifMode: action.payload };
@@ -60,7 +60,7 @@ export const useGif = () => {
 };
 
 
-export function GifProvider(props) {
+export function GifProvider(props: any) {
   const [state, dispatch] = React.useReducer<any>(reducer, initialState);
 
   return (

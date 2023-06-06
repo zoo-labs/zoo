@@ -50,8 +50,8 @@ const CurrencyInputPanel: FC<CurrencyInputPanelProps> = ({
                     : "/images/tokens/nyan-square.jpg"
                 }
                 alt="SUSHI"
-                width="62px"
-                height="62px"
+                width={62}
+                height={62}
                 objectFit="contain"
                 className="rounded-full"
               />

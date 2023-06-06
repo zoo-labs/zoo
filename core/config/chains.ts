@@ -63,7 +63,7 @@ export const CHAINS: {
         ? `https://eth-mainnet.alchemyapi.io/v2/${process.env.alchemyKey}`
         : undefined,
       "https://cloudflare-eth.com",
-    ].filter((url) => url !== undefined),
+    ].filter((url): url is string => url !== undefined),
     name: "Mainnet",
   },
   3: {
@@ -71,7 +71,7 @@ export const CHAINS: {
       process.env.infuraKey
         ? `https://ropsten.infura.io/v3/${process.env.infuraKey}`
         : undefined,
-    ].filter((url) => url !== undefined),
+    ].filter((url): url is string => url !== undefined),
     name: "Ropsten",
   },
   4: {
@@ -79,7 +79,7 @@ export const CHAINS: {
       process.env.infuraKey
         ? `https://rinkeby.infura.io/v3/${process.env.infuraKey}`
         : undefined,
-    ].filter((url) => url !== undefined),
+    ].filter((url): url is string => url !== undefined),
     name: "Rinkeby",
   },
   5: {
@@ -87,7 +87,7 @@ export const CHAINS: {
       process.env.infuraKey
         ? `https://goerli.infura.io/v3/${process.env.infuraKey}`
         : undefined,
-    ].filter((url) => url !== undefined),
+    ].filter((url): url is string => url !== undefined),
     name: "Görli",
   },
   42: {
@@ -95,7 +95,7 @@ export const CHAINS: {
       process.env.infuraKey
         ? `https://kovan.infura.io/v3/${process.env.infuraKey}`
         : undefined,
-    ].filter((url) => url !== undefined),
+    ].filter((url): url is string => url !== undefined),
     name: "Kovan",
   },
   // Optimism
@@ -105,7 +105,7 @@ export const CHAINS: {
         ? `https://optimism-mainnet.infura.io/v3/${process.env.infuraKey}`
         : undefined,
       "https://mainnet.optimism.io",
-    ].filter((url) => url !== undefined),
+    ].filter((url): url is string => url !== undefined),
     name: "Optimistic Ethereum",
     nativeCurrency: ETH,
     blockExplorerUrls: ["https://optimistic.etherscan.io"],
@@ -116,7 +116,7 @@ export const CHAINS: {
         ? `https://optimism-kovan.infura.io/v3/${process.env.infuraKey}`
         : undefined,
       "https://kovan.optimism.io",
-    ].filter((url) => url !== undefined),
+    ].filter((url): url is string => url !== undefined),
     name: "Optimistic Kovan",
     nativeCurrency: ETH,
     blockExplorerUrls: ["https://kovan-optimistic.etherscan.io"],
@@ -128,7 +128,7 @@ export const CHAINS: {
         ? `https://arbitrum-mainnet.infura.io/v3/${process.env.infuraKey}`
         : undefined,
       "https://arb1.arbitrum.io/rpc",
-    ].filter((url) => url !== undefined),
+    ].filter((url): url is string => url !== undefined),
     name: "Arbitrum One",
     nativeCurrency: ETH,
     blockExplorerUrls: ["https://arbiscan.io"],
@@ -139,7 +139,7 @@ export const CHAINS: {
         ? `https://arbitrum-rinkeby.infura.io/v3/${process.env.infuraKey}`
         : undefined,
       "https://rinkeby.arbitrum.io/rpc",
-    ].filter((url) => url !== undefined),
+    ].filter((url): url is string => url !== undefined),
     name: "Arbitrum Testnet",
     nativeCurrency: ETH,
     blockExplorerUrls: ["https://testnet.arbiscan.io"],
@@ -151,7 +151,7 @@ export const CHAINS: {
         ? `https://polygon-mainnet.infura.io/v3/${process.env.infuraKey}`
         : undefined,
       "https://polygon-rpc.com",
-    ].filter((url) => url !== undefined),
+    ].filter((url): url is string => url !== undefined),
     name: "Polygon Mainnet",
     nativeCurrency: MATIC,
     blockExplorerUrls: ["https://polygonscan.com"],
@@ -161,7 +161,7 @@ export const CHAINS: {
       process.env.infuraKey
         ? `https://polygon-mumbai.infura.io/v3/${process.env.infuraKey}`
         : undefined,
-    ].filter((url) => url !== undefined),
+    ].filter((url): url is string => url !== undefined),
     name: "Polygon Mumbai",
     nativeCurrency: MATIC,
     blockExplorerUrls: ["https://mumbai.polygonscan.com"],

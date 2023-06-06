@@ -3,13 +3,14 @@ import { ChainId } from '@zoolabs/zdk'
 export const sortData = (data: Array<any>, byType: string) => {
   return data.sort((a, b) => Number(b.tokenID) - Number(a.tokenID))
 }
-export const wait = (timeout) => {
+
+export const wait = (timeout: number) => {
   return new Promise((resolve) => {
     setTimeout(resolve, timeout)
   })
 }
 
-export const waitOnHardhat = (chainId: ChainId, timeout) => {
+export const waitOnHardhat = (chainId: ChainId, timeout: number) => {
   return new Promise((resolve) => {
     if ([ChainId.HARDHAT, ChainId.HARDHAT2].includes(chainId)) {
       setTimeout(resolve, timeout)
@@ -19,7 +20,7 @@ export const waitOnHardhat = (chainId: ChainId, timeout) => {
   })
 }
 
-export const timer = (countDownDate) => {
+export const timer = (countDownDate: any) => {
   // Update the count down every 1 second
   const x = setInterval(function () {
     // Get today's date and time
@@ -37,15 +38,16 @@ export const timer = (countDownDate) => {
     // If the count down is finished, write some text
     if (distance < 0) {
       clearInterval(x)
-      document.getElementById('demo').innerHTML = 'EXPIRED'
+      const el = document.getElementById('demo')
+      if (el) el.innerHTML = 'EXPIRED'
     }
     return days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's '
   }, 1000)
 }
 
-export const accountEllipsis = (account) => `${account.substring(0, 6)}...${account.substring(account.length - 4)}`
+export const accountEllipsis = (account: any) => `${account.substring(0, 6)}...${account.substring(account.length - 4)}`
 
-export const getEmoji = (rarity) => {
+export const getEmoji = (rarity: any) => {
   switch (rarity) {
     case 'Common':
       return '🌕'
@@ -61,7 +63,8 @@ export const getEmoji = (rarity) => {
       return ''
   }
 }
-export const getAge = (stage) => {
+
+export const getAge = (stage: any) => {
   switch (stage) {
     case 0:
       return 'BABY'

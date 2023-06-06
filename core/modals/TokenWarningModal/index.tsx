@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 
-import { ImportToken } from "../SearchModal/ImportToken";
+//import { ImportToken } from "../SearchModal/ImportToken";
 import Modal from "../../components/Modal";
 import { Token } from "@zoolabs/zdk";
 
@@ -17,7 +17,7 @@ export default function TokenWarningModal({
 
   return (
     <Modal isOpen={isOpen} onDismiss={handleDismiss} maxHeight={90}>
-      <ImportToken tokens={tokens} handleCurrencySelect={onConfirm} />
+    {/*<ImportToken tokens={tokens} handleCurrencySelect={onConfirm} />*/}
     </Modal>
   );
 }

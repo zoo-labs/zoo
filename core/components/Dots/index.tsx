@@ -18,7 +18,7 @@ export default function Dots({ children = <span />, className }: DotsProps) {
       <span
         className={classNames(
           "after:inline-block dots after:animate-ellipsis after:w-4 after:text-left",
-          className
+          className ? className : ''
         )}
       >
         <>{children}</>

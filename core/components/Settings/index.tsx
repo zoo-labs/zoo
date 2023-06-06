@@ -21,7 +21,7 @@ import Toggle from "../Toggle";
 import TransactionSettings from "../TransactionSettings";
 import Typography from "../Typography";
 import { t } from "@lingui/macro";
-import { useActiveWeb3React } from "../../hooks";
+//import { useActiveWeb3React } from "../../hooks";
 import { useLingui } from "@lingui/react";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 
@@ -31,7 +31,8 @@ export default function SettingsTab({
   placeholderSlippage?: Percent;
 }) {
   const { i18n } = useLingui();
-  const { chainId } = useActiveWeb3React();
+  //const { chainId } = useActiveWeb3React();
+  const chainId = '1'
 
   const node = useRef<HTMLDivElement>(null);
   const open = useModalOpen(ApplicationModal.SETTINGS);

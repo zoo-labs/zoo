@@ -24,7 +24,7 @@ const ModalLayout = ({
   }, [library]);
   return (
     <div className="z-0 flex flex-col items-center w-full h-screen pb-16 lg:pb-0">
-      <Header arrowBg={arrowBg} isModal={true} banner={banner} />
+      <Header />
       <Main isModal={true} bgColor={bg}>
         {children}
       </Main>

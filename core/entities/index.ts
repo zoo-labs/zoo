@@ -3,7 +3,7 @@ import { remoteLoader } from '@lingui/remote-loader'
 
 export { default as Fraction } from './Fraction'
 export { default as BigNumberMath } from './BigNumberMath'
-export { default as KashiCooker } from './KashiCooker'
+//export { default as KashiCooker } from './KashiCooker'
 export { ChainlinkOracle, SushiSwapTWAP0Oracle, SushiSwapTWAP1Oracle } from './Oracle'
 import * as plurals from "make-plural/plurals";
 import {
@@ -40,12 +40,12 @@ export async function loadTranslation(locale: string, sessionId: string, isProdu
 
 
         if (isProduction) {
-            const { messages } = await import(`../../locale/${locale}.json`);
+            const { messages } = await import(`../locale/${locale}.json`);
             return messages
         } else {
             // const newMessages = await import(`../../locale/${locale}.json`);
             // console.log("hitting newMessages", newMessages);
-            const { messages } = await import(`../../locale/${locale}.json`);
+            const { messages } = await import(`../locale/${locale}.json`);
 
             // const { messages } = await import(`@lingui/loader!./../../locale/${locale}.json?raw-lingui`)
             return messages

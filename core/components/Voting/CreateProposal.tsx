@@ -13,16 +13,16 @@ import TextField from "@mui/material/TextField";
 import { DefaultEditor } from "react-simple-wysiwyg";
 import { DatePicker, MobileDatePicker } from "@mui/x-date-pickers";
 // import { useGetVotingPower } from "hooks/useVote";
-import { useCreateProposals } from "state/voting/hooks";
-import { Proposal } from "types";
+import { useCreateProposals } from "../../state/voting/hooks";
+import { Proposal } from "../../types";
 import {
   ApprovalState,
   useVotingApproveCallback,
-} from "hooks/useApproveCallback";
-import { ChainId } from "constants/chainIds";
+} from "../../hooks/useApproveCallback";
+import { ChainId } from "../../constants/chainIds";
 import BlockIcon from "@mui/icons-material/Block";
 import * as sanitizeHtml from "sanitize-html";
-import { useZooVoting } from "hooks";
+import { useZooVoting } from "../../hooks";
 
 const MakeProposals = () => {
   const router = useRouter();

@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react'
 import { splitSignature } from '@ethersproject/bytes'
 import { useActiveWeb3React } from './useActiveWeb3React'
 import { useEIP2612Contract } from './useContract'
-import useIsArgentWallet from './useIsArgentWallet'
+//import useIsArgentWallet from './useIsArgentWallet'
 import { useSingleCallResult } from '../state/multicall/hooks'
 import useTransactionDeadline from './useTransactionDeadline'
 
@@ -136,7 +136,8 @@ export function useERC20Permit(
   const transactionDeadline = useTransactionDeadline()
   const tokenAddress = currencyAmount?.currency?.isToken ? currencyAmount.currency.address : undefined
   const eip2612Contract = useEIP2612Contract(tokenAddress)
-  const isArgentWallet = useIsArgentWallet()
+  //const isArgentWallet = useIsArgentWallet()
+  const isArgentWallet = false
   const nonceInputs = useMemo(() => [account ?? undefined], [account])
   const tokenNonceState = useSingleCallResult(eip2612Contract, 'nonces', nonceInputs)
   const permitInfo =
@@ -231,7 +232,7 @@ export function useERC20Permit(
         return library
           .send('eth_signTypedData_v4', [account, data])
           .then(splitSignature)
-          .then((signature) => {
+          .then((signature: any) => {
             setSignatureData({
               v: signature.v,
               r: signature.r,

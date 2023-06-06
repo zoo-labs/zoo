@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useActiveWeb3React } from "hooks";
-import Web3Status from "../../components/Web3Status";
+//import Web3Status from "../../components/Web3Status";
 import { i18n } from "@lingui/core";
 import { t } from "@lingui/macro";
 
@@ -159,7 +159,7 @@ const CompareYield = () => {
                 </a>
               </div>
               <div className="flex items-center px-8 mb-4 lg:mb-1">
-                {!account ? (
+                {/*!account ? (
                   <a>
                     <Web3Status
                       title={i18n._(t`Connect Wallet`)}
@@ -175,7 +175,7 @@ const CompareYield = () => {
                   >
                     Marketplace
                   </a>
-                )}
+                )*/}
               </div>
               <div className="flex items-center px-8">
                 <a

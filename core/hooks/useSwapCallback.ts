@@ -85,7 +85,6 @@ export function useSwapCallArguments(
 
   const routerContract = useRouterContract(useArcher)
   const factoryContract = useFactoryContract()
-
   const argentWalletContract = useArgentWalletContract()
 
   const [archerETHTip] = useUserArcherETHTip()

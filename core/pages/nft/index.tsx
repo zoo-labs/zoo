@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 
-import PopularNftsSection from "pages/home/PopularNftsSection";
+import PopularNftsSection from "../../components/home/PopularNftsSection";
 
 // animation
 import { fadeInFromLeft, fadeInFromRight } from "animation";

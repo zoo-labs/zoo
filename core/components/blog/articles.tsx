@@ -17,8 +17,8 @@ const Article: FC<Props> = ({ article: { name, image, link, date, writtenBy, isN
         <div className="mb-4 rounded overflow-hidden border-b border-opacity-30 bg-dark">
           <Image
             src={image}
-            width="100%"
-            height="100%"
+            width={100}
+            height={100}
             layout="responsive"
             objectFit="contain"
             alt=""
@@ -57,7 +57,7 @@ const Article: FC<Props> = ({ article: { name, image, link, date, writtenBy, isN
 export default Article;
 
 {
-  /* 
+  /*
    <div className="bg-dark-blue">
         <Image src="/img/lion.png" width={300} height={300} alt="" />
       </div>

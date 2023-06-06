@@ -1,12 +1,12 @@
 import Fuse from 'fuse.js'
 import { useState } from 'react'
 
-function fuzzySearch({ fuse, data, term }) {
+function fuzzySearch({ fuse, data, term }: any) {
   const results = fuse.search(term)
-  return term ? results.map((result) => result.item) : data
+  return term ? results.map((result: any) => result.item) : data
 }
 
-function useFuse({ data, options }) {
+function useFuse({ data, options }: any) {
   const [term, setTerm] = useState<string>('')
   const fuseOptions = {
     ...options,

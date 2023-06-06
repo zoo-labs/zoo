@@ -79,27 +79,18 @@ export function useContract(
   altAddress?: string
 ): Contract | null {
   const { library, account, chainId } = useActiveWeb3React();
-  const { ethereum } = window;
 
-  const provider = ethereum
-    ? new ethers.providers.Web3Provider(ethereum)
-    : null;
+  const provider = ethers.getDefaultProvider()
 
   let address: string | AddressMap | undefined = nameOrAddress;
-  let chainIdStr = chainId ? chainId.toString() : "97";
+  let chainIdStr = chainId ? chainId.toString() : "1";
 
-  if (!isAddress(nameOrAddress) || nameOrAddress === AddressZero) {
-    try {
-      address = addresses[chainIdStr][nameOrAddress.toString()];
-      ABI =
-        ABI || abis[chainIdStr]
-          ? abis[chainIdStr][nameOrAddress.toString()]
-          : null;
-    } catch (e) {
-      // console.log(
-      //   `Unable to fetch contract ${nameOrAddress} on ${chainIdStr}: address = ${addresses[chainIdStr]["Drop"]}`
-      // );
-    }
+  if (nameOrAddress && addresses[chainIdStr] && addresses[chainIdStr][nameOrAddress.toString()]) {
+    address = addresses[chainIdStr][nameOrAddress.toString()];
+    ABI =
+      ABI || (abis[chainIdStr] && abis[chainIdStr][nameOrAddress.toString()])
+        ? abis[chainIdStr][nameOrAddress.toString()]
+        : null;
   }
 
   const newLibrary = library ?? (canUseDefaultProvider && provider);
@@ -155,7 +146,7 @@ export function useWETH9Contract(
 ): Contract | null {
   const { chainId } = useActiveWeb3React();
   return useContract(
-    chainId && WNATIVE_ADDRESS[chainId],
+    WNATIVE_ADDRESS[chainId],
     WETH9_ABI,
     withSignerIfPossible
   );
@@ -177,7 +168,7 @@ export function useENSRegistrarContract(
 ): Contract | null {
   const { chainId } = useActiveWeb3React();
   return useContract(
-    chainId && ENS_REGISTRAR_ADDRESS[chainId],
+    ENS_REGISTRAR_ADDRESS[chainId],
     ENS_ABI,
     withSignerIfPossible
   );
@@ -216,7 +207,7 @@ export function useMerkleDistributorContract(): Contract | null {
 export function useBoringHelperContract(): Contract | null {
   const { chainId } = useActiveWeb3React();
   return useContract(
-    chainId && BORING_HELPER_ADDRESS[chainId],
+    BORING_HELPER_ADDRESS[chainId],
     BORING_HELPER_ABI,
     false
   );
@@ -231,7 +222,7 @@ export function useMulticall2Contract() {
 export function useSushiContract(withSignerIfPossible = true): Contract | null {
   const { chainId } = useActiveWeb3React();
   return useContract(
-    chainId && SUSHI_ADDRESS[chainId],
+    SUSHI_ADDRESS[chainId],
     SUSHI_ABI,
     withSignerIfPossible
   );
@@ -242,7 +233,7 @@ export function useMasterChefContract(
 ): Contract | null {
   const { chainId } = useActiveWeb3React();
   return useContract(
-    chainId && MASTERCHEF_ADDRESS[chainId],
+    MASTERCHEF_ADDRESS[chainId],
     MASTERCHEF_ABI,
     withSignerIfPossible
   );
@@ -253,7 +244,7 @@ export function useMasterChefV2Contract(
 ): Contract | null {
   const { chainId } = useActiveWeb3React();
   return useContract(
-    chainId && MASTERCHEF_V2_ADDRESS[chainId],
+    MASTERCHEF_V2_ADDRESS[chainId],
     MASTERCHEF_V2_ABI,
     withSignerIfPossible
   );
@@ -263,7 +254,7 @@ export function useMiniChefContract(
 ): Contract | null {
   const { chainId } = useActiveWeb3React();
   return useContract(
-    chainId && MINICHEF_ADDRESS[chainId],
+    MINICHEF_ADDRESS[chainId],
     MINICHEF_ABI,
     withSignerIfPossible
   );
@@ -271,7 +262,7 @@ export function useMiniChefContract(
 
 export function useFactoryContract(): Contract | null {
   const { chainId } = useActiveWeb3React();
-  return useContract(chainId && FACTORY_ADDRESS[chainId], FACTORY_ABI, false);
+  return useContract(FACTORY_ADDRESS[chainId], FACTORY_ABI, false);
 }
 
 export function useRouterContract(
@@ -293,7 +284,7 @@ export function useSushiBarContract(
 ): Contract | null {
   const { chainId } = useActiveWeb3React();
   return useContract(
-    chainId && BAR_ADDRESS[chainId],
+    BAR_ADDRESS[chainId],
     BAR_ABI,
     withSignerIfPossible
   );
@@ -301,12 +292,12 @@ export function useSushiBarContract(
 
 export function useMakerContract(): Contract | null {
   const { chainId } = useActiveWeb3React();
-  return useContract(chainId && MAKER_ADDRESS[chainId], MAKER_ABI, false);
+  return useContract(MAKER_ADDRESS[chainId], MAKER_ABI, false);
 }
 
 export function useTimelockContract(): Contract | null {
   const { chainId } = useActiveWeb3React();
-  return useContract(chainId && TIMELOCK_ADDRESS[chainId], TIMELOCK_ABI, false);
+  return useContract(TIMELOCK_ADDRESS[chainId], TIMELOCK_ABI, false);
 }
 
 export function useBentoBoxContract(
@@ -314,7 +305,7 @@ export function useBentoBoxContract(
 ): Contract | null {
   const { chainId } = useActiveWeb3React();
   return useContract(
-    chainId && BENTOBOX_ADDRESS[chainId],
+    BENTOBOX_ADDRESS[chainId],
     BENTOBOX_ABI,
     withSignerIfPossible
   );
@@ -323,7 +314,7 @@ export function useBentoBoxContract(
 export function useChainlinkOracle(): Contract | null {
   const { chainId } = useActiveWeb3React();
   return useContract(
-    chainId && CHAINLINK_ORACLE_ADDRESS[chainId],
+    CHAINLINK_ORACLE_ADDRESS[chainId],
     CHAINLINK_ORACLE_ABI,
     false
   );
@@ -334,14 +325,14 @@ export function useUniV2FactoryContract(): Contract | null {
 }
 
 export function useComplexRewarderContract(
-  address,
+  address: any,
   withSignerIfPossible?: boolean
 ): Contract | null {
   return useContract(address, COMPLEX_REWARDER_ABI, withSignerIfPossible);
 }
 
 export function useCloneRewarderContract(
-  address,
+  address: any,
   withSignerIfPossibe?: boolean
 ): Contract | null {
   return useContract(address, CLONE_REWARDER_ABI, withSignerIfPossibe);
@@ -410,9 +401,9 @@ export function useZooKeeper(useDefaultProvider?: boolean): Contract | null {
   return zooKeeperContract;
 }
 export function useFaucet(): Contract | null {
-  const faucetContrac = useContract("Faucet");
+  const faucetContract = useContract("Faucet");
 
-  return faucetContrac;
+  return faucetContract;
 }
 
 export function useBnbToken(): Contract | null {
@@ -432,7 +423,7 @@ export function useAuction(useDefaultProvider?: boolean): Contract | null {
   );
 }
 
-export function useTeleportContract(): (chain) => Contract | null {
+export function useTeleportContract(): (chain: any) => Contract | null {
   const { account, library } = useActiveWeb3React();
   const dispatch = useDispatch();
   return useCallback(
@@ -445,10 +436,11 @@ export function useTeleportContract(): (chain) => Contract | null {
   );
 }
 
-export function useLbtcContract(chain?): Contract | null {
+export function useLbtcContract(chain?: any): Contract | null {
   return useContract("LBTC", chain); // DYNAMICALLY FETCHES THE RIGHT CONTRACT BASED ON THE CURRENT CHAIN..USERS CAN ONLY BRIDGE FROM AN ACTIVE CHAIN
 }
-export const altContract = (nameOrAddress, chain, account, library) => {
+
+export const altContract = (nameOrAddress: any, chain: any, account: any, library: any) => {
   let chainIdStr = chain ? chain : "4";
   let address: string | undefined = nameOrAddress;
   let ABI;

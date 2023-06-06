@@ -16,14 +16,14 @@ import {
 import { MaxUint256 } from "@ethersproject/constants";
 import { TransactionResponse } from "@ethersproject/providers";
 import { calculateGasMargin } from "../functions/trade";
-import { useActiveWeb3React } from "./useActiveWeb3React";
+//import { useActiveWeb3React } from "./useActiveWeb3React";
 import { useTokenAllowance } from "./useTokenAllowance";
 import { useTokenContract, useZooToken } from "./useContract";
 import { wait } from "../functions/zoo";
 import { ChainId } from "@zoolabs/zdk";
 import { useDispatch, useSelector } from "react-redux";
-import addresses from "constants/addresses";
-import { getVoterAllowance } from "state/voting/actions";
+//import addresses from "constants/addresses";
+import { getVoterAllowance } from "../state/voting/actions";
 
 export enum ApprovalState {
   UNKNOWN = "UNKNOWN",
@@ -37,7 +37,9 @@ export function useApproveCallback(
   amountToApprove?: CurrencyAmount<Currency>,
   spender?: string
 ): [ApprovalState, () => Promise<void>] {
-  const { account, chainId } = useActiveWeb3React();
+  //const { account, chainId } = useActiveWeb3React();
+  const chainId = '1'
+  const account = null
   const token = amountToApprove?.currency?.isToken
     ? amountToApprove.currency
     : undefined;
@@ -140,7 +142,8 @@ export function useApproveCallbackFromTrade(
   allowedSlippage: Percent,
   doArcher: boolean = false
 ) {
-  const { chainId } = useActiveWeb3React();
+  //const { chainId } = useActiveWeb3React();
+  const chainId = '1'
   const amountToApprove = useMemo(
     () =>
       trade && trade.inputAmount.currency.isToken
@@ -165,25 +168,27 @@ export function useVotingApproveCallback(
   amountToApprove?: number,
   spender?: string
 ): [ApprovalState, () => Promise<void>] {
-  const { account, chainId } = useActiveWeb3React();
+  //const { account, chainId } = useActiveWeb3React();
+  const account = '0x00000000000000000dead'
+  const chainId = '1'
   const { loading, voterAllowance } = useSelector((state: any) => state.voting);
 
   const dispatch = useDispatch();
   console.log("amountToApprove", amountToApprove, spender);
   const contract = useZooToken();
 
-  const chainAddresses =
-    (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
+  //const chainAddresses =
+  //  (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
 
   // const currentAllowance = useTokenAllowance(account ?? undefined, spender)
   contract
     ?.allowance(account, spender, {
       gasLimit: 4000000,
     })
-    .then((val) => {
+    .then((val: any) => {
       dispatch(getVoterAllowance(Number(val)));
     })
-    .catch((err) => console.log("err", err));
+    .catch((err: any) => console.log("err", err));
 
   const pendingApproval = useHasPendingApproval(account, spender);
   // console.log('currentAllowance', currentAllowance)
@@ -249,7 +254,8 @@ export function useVotingApproveCallback(
         addTransaction(response, {
           summary: "Approve " + amountToApprove,
           approval: {
-            tokenAddress: chainAddresses?.ZOOVOTING,
+            tokenAddress: '',
+            //tokenAddress: chainAddresses?.ZOOVOTING,
             spender: spender,
           },
         });
@@ -264,7 +270,7 @@ export function useVotingApproveCallback(
     amountToApprove,
     spender,
     addTransaction,
-    chainAddresses?.ZOOVOTING,
+    '' //chainAddresses?.ZOOVOTING,
   ]);
 
   return [approvalState, approve];

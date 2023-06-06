@@ -1,6 +1,6 @@
 import { shortenAddress, shortenString } from "functions/format";
 
-import useActiveWeb3React from "hooks/useActiveWeb3React";
+//import useActiveWeb3React from "hooks/useActiveWeb3React";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -9,7 +9,7 @@ const TransactionDetail = ({ evmToAddress, amount, token, bridgeState }) => {
   const [isHashCopied, setIsHashCopied] = useState(false);
   const [isSigCopied, setIsSigCopied] = useState(false);
 
-  const { library } = useActiveWeb3React();
+  //const { library } = useActiveWeb3React();
   const copyTextToClipboard = async (text) => {
     if ("clipboard" in navigator) {
       return await navigator.clipboard.writeText(text);

@@ -7,7 +7,7 @@ const QUERY = `{
     }
 }`
 
-const fetcher = (query) => request('https://api.thegraph.com/subgraphs/name/matthewlilley/bar', query)
+const fetcher = (query: any) => request('https://api.thegraph.com/subgraphs/name/matthewlilley/bar', query)
 
 // Returns ratio of XSushi:Sushi
 export default function useSushiPerXSushi(parse = true) {

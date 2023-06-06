@@ -3,7 +3,7 @@ import { ChainId } from "constants/chainIds";
 import { addresses } from "constants/contracts";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import { useCallback } from "react";
-import { useMoralis, useMoralisWeb3Api } from "react-moralis";
+//import { useMoralis, useMoralisWeb3Api } from "react-moralis";
 import { useDispatch, useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "state/hooks";
 import { Balance, Token, TokenSelect } from "./types";
@@ -31,7 +31,7 @@ export function useGetAvailableTokens(): (chain?: number) => void {
   );
 
   const dispatch = useDispatch();
-  const { Moralis } = useMoralis();
+  //const { Moralis } = useMoralis();
 
   // console.log("activeChainToFetch", activeChain, aChain);
   return useCallback(async (chain) => {
@@ -45,10 +45,10 @@ export function useGetAvailableTokens(): (chain?: number) => void {
       } =
         (addresses[chain] as any) || (addresses[ChainId.MAINNET] as any);
       const result: { tokens: { [address in string]?: Token[] } } =
-        await Moralis.Plugins.oneInch.getSupportedTokens({
-          chain:
-            SUPPORTED_NETWORKS[chain].nativeCurrency.symbol.toLowerCase(), // The blockchain you want to use (eth/bsc/polygon)
-        });
+        // await Moralis.Plugins.oneInch.getSupportedTokens({
+        //   chain:
+        //     SUPPORTED_NETWORKS[chain].nativeCurrency.symbol.toLowerCase(), // The blockchain you want to use (eth/bsc/polygon)
+        // });
       const customTokens: any = {
 
         [chainAddresses.ZOO]: {
@@ -145,7 +145,7 @@ export function useFetchUserBalances(): () => void {
 
   const { chainId, account } = useActiveWeb3React();
   const dispatch = useDispatch();
-  const Web3Api = useMoralisWeb3Api();
+  //const Web3Api = useMoralisWeb3Api();
   // const getCurrentBalances = useGetCurrentBalances();
   const { activeChains } = useAppSelector((state) => state.bridge);
 
@@ -279,7 +279,7 @@ export function useGetQuote(): (
   side?: "from" | "to"
 ) => void {
   const dispatch = useDispatch();
-  const { Moralis } = useMoralis();
+  //const { Moralis } = useMoralis();
   const { currentTrade, currentSelectSide } = useAppSelector(
     (state: AppState) => state.bridge
   );
@@ -291,27 +291,27 @@ export function useGetQuote(): (
         if (!currentTrade.from || !currentTrade.to || !currentAmount[newSide])
           return;
         // const amount = Number(toAmount * 10 ** currentTrade.from.decimals);
-        const amount = Moralis.Units.Token(
-          currentAmount[newSide],
-          currentTrade[newSide].decimals
-        ).toString();
+        // const amount = Moralis.Units.Token(
+        //   currentAmount[newSide],
+        //   currentTrade[newSide].decimals
+        // ).toString();
 
-        const quote = await Moralis.Plugins.oneInch.quote({
-          chain: "eth", // The blockchain you want to use (eth/bsc/polygon)
-          fromTokenAddress: currentTrade[newSide].address, // The token you want to swap
-          toTokenAddress:
-            currentTrade[newSide === "from" ? "to" : "from"].address, // The token you want to receive
-          amount,
-        });
-        dispatch(
-          updateCurrentAmount({
-            ...currentAmount,
-            [newSide === "from" ? "to" : "from"]: (
-              quote.toTokenAmount /
-              10 ** quote.toToken.decimals
-            ).toFixed(8),
-          })
-        );
+        // const quote = await Moralis.Plugins.oneInch.quote({
+        //   chain: "eth", // The blockchain you want to use (eth/bsc/polygon)
+        //   fromTokenAddress: currentTrade[newSide].address, // The token you want to swap
+        //   toTokenAddress:
+        //     currentTrade[newSide === "from" ? "to" : "from"].address, // The token you want to receive
+        //   amount,
+        // });
+        // dispatch(
+        //   updateCurrentAmount({
+        //     ...currentAmount,
+        //     [newSide === "from" ? "to" : "from"]: (
+        //       quote.toTokenAmount /
+        //       10 ** quote.toToken.decimals
+        //     ).toFixed(8),
+        //   })
+        // );
 
       } catch (error) {
         console.log("error useGetQuote,", error);
@@ -327,7 +327,7 @@ export function useGetQuote(): (
 }
 
 export function useSwap(): () => void {
-  const { Moralis } = useMoralis();
+  //const { Moralis } = useMoralis();
   const { account } = useActiveWeb3React();
   const { currentTrade, currentAmount } = useAppSelector(
     (state: AppState) => state.bridge
@@ -400,7 +400,7 @@ export function useSwap(): () => void {
 }
 
 export function useGetTokenFiatValue(): (address) => Promise<number> {
-  const Web3Api = useMoralisWeb3Api();
+  //const Web3Api = useMoralisWeb3Api();
   const { chainId } = useActiveWeb3React();
 
   return useCallback(
@@ -422,7 +422,7 @@ export function useGetTokenFiatValue(): (address) => Promise<number> {
 }
 
 export const useTokenBalance = (token) => {
-  const { Moralis } = useMoralis();
+  //const { Moralis } = useMoralis();
   const { balances } = useAppSelector((state: AppState) => state.bridge);
   const tokenBalance = balances.find(
     (balance) => balance.symbol === token.symbol

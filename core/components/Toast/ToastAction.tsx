@@ -1,5 +1,5 @@
-import Button from "components/Button";
-import getExternalLinkProps from "config/getExternalLinkProps";
+import Button from "../Button";
+import getExternalLinkProps from "../../config/getExternalLinkProps";
 import React from "react";
 // import { Link } from "react-router-dom";
 import { ToastAction as Action } from "./types";

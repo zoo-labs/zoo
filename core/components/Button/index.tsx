@@ -13,6 +13,7 @@ const FILLED = {
   default: "bg-transparent opacity-80 hover:opacity-100",
   red: "bg-red bg-opacity-80 w-full rounded text-high-emphesis hover:bg-opacity-100 disabled:bg-opacity-80",
   blue: "bg-blue bg-opacity-80 w-full rounded text-high-emphesis hover:bg-opacity-100 disabled:bg-opacity-80",
+  indigo: "bg-blue bg-opacity-80 w-full rounded text-high-emphesis hover:bg-opacity-100 disabled:bg-opacity-80",
   pink: "bg-gradient-to-r from-pink to-opaque-pink w-full rounded text-high-emphesis opacity-80 hover:opacity-100 disabled:bg-opacity-80",
   gray: "border rounded shadow-sm focus:ring-2 focus:ring-offset-2 bg-dark-700 bg-opacity-80 w-full text-primary border-dark-800 hover:bg-opacity-100 focus:ring-offset-dark-700 focus:ring-dark-800 disabled:bg-opacity-80",
   green:
@@ -38,12 +39,39 @@ const OUTLINED = {
 const EMPTY = {
   default:
     "flex bg-transparent justify-center items-center disabled:opacity-50 disabled:cursor-auto bg-opacity-80 hover:bg-opacity-100",
+  blue:
+    "flex bg-transparent justify-center items-center disabled:opacity-50 disabled:cursor-auto bg-opacity-80 hover:bg-opacity-100",
+  pink:
+    "flex bg-transparent justify-center items-center disabled:opacity-50 disabled:cursor-auto bg-opacity-80 hover:bg-opacity-100",
+  gray:
+    "flex bg-transparent justify-center items-center disabled:opacity-50 disabled:cursor-auto bg-opacity-80 hover:bg-opacity-100",
+  green:
+    "flex bg-transparent justify-center items-center disabled:opacity-50 disabled:cursor-auto bg-opacity-80 hover:bg-opacity-100",
+  gradient:
+    "flex bg-transparent justify-center items-center disabled:opacity-50 disabled:cursor-auto bg-opacity-80 hover:bg-opacity-100",
+  indigo:
+    "flex bg-transparent justify-center items-center disabled:opacity-50 disabled:cursor-auto bg-opacity-80 hover:bg-opacity-100",
+  red:
+    "flex bg-transparent justify-center items-center disabled:opacity-50 disabled:cursor-auto bg-opacity-80 hover:bg-opacity-100",
 };
 
 const LINK = {
   default:
     "text-primary hover:text-high-emphesis focus:text-high-emphesis whitespace-nowrap focus:ring-0",
-  blue: "text-blue text-opacity-80 hover:text-opacity-100 focus:text-opacity-100 whitespace-nowrap focus:ring-0",
+  blue:
+    "text-primary hover:text-high-emphesis focus:text-high-emphesis whitespace-nowrap focus:ring-0",
+  pink:
+    "text-primary hover:text-high-emphesis focus:text-high-emphesis whitespace-nowrap focus:ring-0",
+  gray:
+    "text-primary hover:text-high-emphesis focus:text-high-emphesis whitespace-nowrap focus:ring-0",
+  green:
+    "text-primary hover:text-high-emphesis focus:text-high-emphesis whitespace-nowrap focus:ring-0",
+  gradient:
+    "text-primary hover:text-high-emphesis focus:text-high-emphesis whitespace-nowrap focus:ring-0",
+  red:
+    "text-primary hover:text-high-emphesis focus:text-high-emphesis whitespace-nowrap focus:ring-0",
+  indigo:
+    "text-primary hover:text-high-emphesis focus:text-high-emphesis whitespace-nowrap focus:ring-0",
 };
 
 const VARIANT = {
@@ -88,10 +116,10 @@ function Button({
     <button
       className={classNames(
         VARIANT[variant][color],
-        variant !== "empty" && SIZE[size],
+        variant ? "empty" : SIZE[size],
         " disabled:cursor-not-allowed focus:outline-none",
         // 'rounded focus:outline-none focus:ring disabled:opacity-50 disabled:cursor-not-allowed font-medium',
-        className
+        className ? className : ''
       )}
       {...rest}
     >
@@ -114,7 +142,7 @@ export function ButtonConfirmed({
         color="green"
         size="lg"
         className={classNames(
-          disabled && "cursor-not-allowed",
+          disabled ? "cursor-not-allowed" : '',
           "border opacity-50"
         )}
         disabled={disabled}

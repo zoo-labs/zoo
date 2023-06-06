@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { ChainId } from "constants/chainIds";
+import { ChainId } from "../../constants/chainIds";
 import { Balance, MoralisError, Token, TokenSelect, ChainSelect, CurrentTrade } from "./types";
 import Web3 from "web3";
 import {

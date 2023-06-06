@@ -80,8 +80,8 @@ const Partnership = () => {
           <div className="relative w-full h-96 overflow-y-hidden">
             <Image
               src={"/images/sheep.png"}
-              width="100%"
-              height="100%"
+              width={100}
+              height={100}
               alt=""
               layout="fill"
               className="object-cover"

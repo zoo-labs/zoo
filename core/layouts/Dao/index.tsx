@@ -14,7 +14,7 @@ const DaoLayout = ({ children, banner = undefined }) => {
   }, [library]);
   return (
     <div className="z-0 flex flex-col items-center w-full h-screen pb-16 lg:pb-0">
-      <Header transparent={true} banner={banner} />
+      <Header />
       <Main isModal={false} bgColor="dao-bg">
         {children}
       </Main>

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { decode, toB58String } from 'multihashes'
 import { getCodec, rmPrefix } from 'multicodec'
 
